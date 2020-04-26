@@ -8,4 +8,12 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\Sergey\Documents\GitHub\SymOntoClay\SymOntoClayUnityAssetCore\SymOntoClay.UnityAsset.Core.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SymOntoClayCore\SymOntoClayCore.csproj" />
+  </ItemGroup>
+
 </Project>

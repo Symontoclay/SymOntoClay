@@ -10,4 +10,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\Sergey\Documents\GitHub\SymOntoClay\SymOntoClayCore\SymOntoClay.Core.xml</DocumentationFile>
+  </PropertyGroup>
+
 </Project>

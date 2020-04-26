@@ -4,10 +4,7 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core
 {
-    public static class GameCore
+    public class Settings
     {
-        public static void SetSettings()
-        {
-        }
     }
 }

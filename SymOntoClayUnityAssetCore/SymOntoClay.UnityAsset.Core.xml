@@ -4,5 +4,28 @@
         <name>SymOntoClay.UnityAsset.Core</name>
     </assembly>
     <members>
+        <member name="M:SymOntoClay.UnityAsset.Core.LoggingSettings.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.LoggingSettings.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Settings.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Settings.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.WorldCore.Instance">
+            <summary>
+            Gets instance of the class.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.SetSettings(SymOntoClay.UnityAsset.Core.Settings)">
+            <summary>
+            Sets settings into the instance.
+            </summary>
+            <param name="settings">Set settings value.</param>
+        </member>
     </members>
 </doc>

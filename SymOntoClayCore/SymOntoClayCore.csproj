@@ -14,4 +14,8 @@
     <DocumentationFile>C:\Users\Sergey\Documents\GitHub\SymOntoClay\SymOntoClayCore\SymOntoClay.Core.xml</DocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
+  </ItemGroup>
+
 </Project>

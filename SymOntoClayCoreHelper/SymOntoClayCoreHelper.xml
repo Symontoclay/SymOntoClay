@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SymOntoClayCoreHelper</name>
+    </assembly>
+    <members>
+        <member name="T:SymOntoClay.CoreHelper.DebugHelpers.IObjectToBriefString">
+            <summary>
+            Provides methods for helping in generating debug string image.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.DebugHelpers.IObjectToBriefString.ToBriefString">
+            <summary>
+            Returns a string that represents the current instance in very short way.
+            </summary>
+            <returns>A string that represents the current instance in very short way.</returns>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.DebugHelpers.IObjectToBriefString.ToBriefString(System.UInt32)">
+            <summary>
+            Returns a string that represents the current instance in very short way.
+            </summary>
+            <param name="n">Count of spaces in the string for more comfortable representation.</param>
+            <returns>A string that represents the current instance in very short way.</returns>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.DebugHelpers.IObjectToBriefString.PropertiesToBriefString(System.UInt32)">
+            <summary>
+            Internal method which returns a string that represents the current instance in very short way without additional information, only pair name of property - value.
+            </summary>
+            <param name="n">Count of spaces in the string for more comfortable representation.</param>
+            <returns>A string that represents the current instance in very short way without additional information, only pair name of property - value.</returns>
+        </member>
+        <member name="T:SymOntoClay.CoreHelper.DebugHelpers.IObjectToString">
+            <summary>
+            Provides methods for helping in generating debug string image.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.DebugHelpers.IObjectToString.ToString(System.UInt32)">
+            <summary>
+            Returns a string that represents the current instance.
+            </summary>
+            <param name="n">Count of spaces in the string for more comfortable representation.</param>
+            <returns>A string that represents the current instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.DebugHelpers.IObjectToString.PropertiesToString(System.UInt32)">
+            <summary>
+            Internal method which returns a string that represents the current instance without additional information, only pair name of property - value.
+            </summary>
+            <param name="n">Count of spaces in the string for more comfortable representation.</param>
+            <returns>A string that represents the current instance without additional information, only pair name of property - value.</returns>
+        </member>
+        <member name="T:SymOntoClay.CoreHelper.DebugHelpers.IShortObjectToString">
+            <summary>
+            Provides methods for helping in generating debug string image.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.DebugHelpers.IShortObjectToString.ToShortString">
+            <summary>
+            Returns a string that represents the current instance in short way.
+            </summary>
+            <returns>A string that represents the current instance in short way.</returns>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.DebugHelpers.IShortObjectToString.ToShortString(System.UInt32)">
+            <summary>
+            Returns a string that represents the current instance in short way.
+            </summary>
+            <param name="n">Count of spaces in the string for more comfortable representation.</param>
+            <returns>A string that represents the current instance in short way.</returns>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.DebugHelpers.IShortObjectToString.PropertiesToShortString(System.UInt32)">
+            <summary>
+            Internal method which returns a string that represents the current instance in short way without additional information, only pair name of property - value.
+            </summary>
+            <param name="n">Count of spaces in the string for more comfortable representation.</param>
+            <returns>A string that represents the current instance in short way without additional information, only pair name of property - value.</returns>
+        </member>
+    </members>
+</doc>

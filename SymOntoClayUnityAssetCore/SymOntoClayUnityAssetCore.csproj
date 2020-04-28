@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\Sergey\Documents\GitHub\SymOntoClay\SymOntoClayUnityAssetCore\SymOntoClay.UnityAsset.Core.xml</DocumentationFile>
+    <DocumentationFile>SymOntoClay.UnityAsset.Core.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

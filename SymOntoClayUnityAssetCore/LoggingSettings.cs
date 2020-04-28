@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core
@@ -14,15 +15,30 @@ namespace SymOntoClay.UnityAsset.Core
         public IList<IPlatformLogger> PlatformLoggers { get; set; }
 
         /// <inheritdoc/>
+        public override string ToString()
+        {
+            return ToString(0u);
+        }
+
+        /// <inheritdoc/>
         public string PropertiesToString(uint n)
         {
-            throw new NotImplementedException();
+            var spaces = DisplayHelper.Spaces(n);
+            var nextN = n + 4;
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(LogDir)} = {LogDir}");
+            sb.AppendLine($"{spaces}{nameof(RootContractName)} = {RootContractName}");
+            sb.AppendLine($"{spaces}{nameof(EnableLogging)} = {EnableLogging}");
+            sb.AppendLine($"{spaces}{nameof(EnableRemoteConnection)} = {EnableRemoteConnection}");
+            var platformLoggersMark = PlatformLoggers == null ? "No" : PlatformLoggers.Any() ? "Yes" : "No";
+            sb.AppendLine($"{spaces}{nameof(PlatformLoggers)} = {platformLoggersMark}");
+            return sb.ToString();
         }
 
         /// <inheritdoc/>
         public string ToString(uint n)
         {
-            throw new NotImplementedException();
+            return this.GetDefaultToStringInformation(n);
         }
     }
 }

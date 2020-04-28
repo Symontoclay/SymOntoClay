@@ -10,15 +10,36 @@ namespace SymOntoClay.UnityAsset.Core
         public LoggingSettings Logging { get; set; }
 
         /// <inheritdoc/>
+        public override string ToString()
+        {
+            return ToString(0u);
+        }
+
+        /// <inheritdoc/>
         public string PropertiesToString(uint n)
         {
-            throw new NotImplementedException();
+            var spaces = DisplayHelper.Spaces(n);
+            var nextN = n + 4;
+            var sb = new StringBuilder();
+
+            if(Logging == null)
+            {
+                sb.AppendLine($"{spaces}{nameof(Logging)} = NULL");
+            }
+            else
+            {
+                sb.AppendLine($"{spaces}Begin {nameof(Logging)}");
+                sb.Append(Logging.ToString(nextN));
+                sb.AppendLine($"{spaces}End {nameof(Logging)}");
+            }
+
+            return sb.ToString();
         }
 
         /// <inheritdoc/>
         public string ToString(uint n)
         {
-            throw new NotImplementedException();
+            return this.GetDefaultToStringInformation(n);
         }
     }
 }

@@ -3,13 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.UnityAsset.Core.InternalImplementations.NPC
+namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
 {
     /// <inheritdoc/>
-    public class NPCImplementation: INPC
+    public class PlaceImplementation: IPlace
     {
-        public NPCImplementation(NPCSettings settings, WorldContext context)
+        public PlaceImplementation(PlaceSettings settings, WorldContext context)
         {
+
         }
 
         /// <inheritdoc/>

@@ -5,7 +5,7 @@ using System.Text;
 namespace SymOntoClay.UnityAsset.Core
 {
     /// <summary>
-    /// Represents each game object which is not NPC, Player, Area or Point.
+    /// Represents each game object which is not NPC, Player or Place.
     /// </summary>
     public interface IObject : IWorldComponentDisposable
     {

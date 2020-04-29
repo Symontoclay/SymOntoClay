@@ -5,6 +5,9 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core
 {
+    /// <summary>
+    /// NPC (Non-Player Character) setting.
+    /// </summary>
     public class NPCSettings: IObjectToString
     {
         /// <inheritdoc/>

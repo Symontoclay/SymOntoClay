@@ -6,9 +6,9 @@ using System.Text;
 namespace SymOntoClay.UnityAsset.Core
 {
     /// <summary>
-    /// Player settings.
+    /// Game object settings.
     /// </summary>
-    public class PlayerSettings: IObjectToString
+    public class ObjectSettings : IObjectToString
     {
         /// <inheritdoc/>
         public override string ToString()

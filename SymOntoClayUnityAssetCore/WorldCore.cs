@@ -1,6 +1,6 @@
 ﻿using SymOntoClay.UnityAsset.Core.Internal;
-using SymOntoClay.UnityAsset.Core.InternalImplementations.NPC;
-using SymOntoClay.UnityAsset.Core.InternalImplementations.Obj;
+using SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC;
+using SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.Place;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.Player;
 using System;
@@ -36,7 +36,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// You can not call the method after disposing the instance.
         /// </summary>
         /// <param name="settings">Instance of settings.</param>
-        public void SetSettings(Settings settings)
+        public void SetSettings(WorldSettings settings)
         {
             //throw new NotImplementedException();
         }
@@ -60,9 +60,9 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         /// <param name="settings">Instance of settings.</param>
         /// <returns>Instance of agent.</returns>
-        public INPC GetNPC(NPCSettings settings)
+        public IBipedNPC GetBipedNPC(BipedNPCSettings settings)
         {
-            return new NPCImplementation(settings, _context);
+            return new BipedNPCImplementation(settings, _context);
         }
 
         /// <summary>
@@ -82,9 +82,9 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         /// <param name="settings">Instance of settings.</param>
         /// <returns>Instance of agent.</returns>
-        public IObject GetObject(ObjectSettings settings)
+        public IGameObject GetGameObject(GameObjectSettings settings)
         {
-            return new ObjImplementation(settings, _context);
+            return new GameObjectImplementation(settings, _context);
         }
 
         /// <summary>

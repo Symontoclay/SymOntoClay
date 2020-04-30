@@ -20,7 +20,7 @@ namespace TestSandbox.Handlers
 
             var instance = WorldCore.Instance;
 
-            var settings = new Settings();
+            var settings = new WorldSettings();
             settings.Logging = new LoggingSettings()
             {
                 LogDir = logDir,
@@ -34,11 +34,11 @@ namespace TestSandbox.Handlers
 
             instance.SetSettings(settings);
 
-            var npcSettings = new NPCSettings();
+            var npcSettings = new BipedNPCSettings();
 
             _logger.Info($"npcSettings = {npcSettings}");
 
-            var npc = instance.GetNPC(npcSettings);
+            var npc = instance.GetBipedNPC(npcSettings);
 
             _logger.Info("End");
         }

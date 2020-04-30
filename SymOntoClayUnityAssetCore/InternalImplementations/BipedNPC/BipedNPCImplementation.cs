@@ -3,14 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
+namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
 {
     /// <inheritdoc/>
-    public class PlayerImlementation : IPlayer
+    public class BipedNPCImplementation: IBipedNPC
     {
-        public PlayerImlementation(PlayerSettings settings, WorldContext context)
+        public BipedNPCImplementation(BipedNPCSettings settings, WorldContext context)
         {
-
         }
 
         /// <inheritdoc/>
@@ -45,5 +44,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         {
             throw new NotImplementedException();
         }
+
     }
 }

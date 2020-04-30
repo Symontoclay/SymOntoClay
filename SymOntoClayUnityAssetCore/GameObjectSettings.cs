@@ -8,8 +8,14 @@ namespace SymOntoClay.UnityAsset.Core
     /// <summary>
     /// Game object settings.
     /// </summary>
-    public class ObjectSettings : IObjectToString
+    public class GameObjectSettings : IObjectToString
     {
+        /// <summary>
+        /// Gets or sets file name of SymOntoClay host file.
+        /// The file describes facts which are visible for other NPCs or can be recognized in some way by player.
+        /// </summary>
+        public string HostFile { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -28,6 +34,9 @@ namespace SymOntoClay.UnityAsset.Core
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(HostFile)} = {HostFile}");
+
             return sb.ToString();
         }
     }

@@ -8,7 +8,7 @@ namespace SymOntoClay.UnityAsset.Core
     /// <summary>
     /// General settings of a game world.
     /// </summary>
-    public class Settings: IObjectToString
+    public class WorldSettings: IObjectToString
     {
         /// <summary>
         /// Gets or sets list of file paths for describing places for searching required source files.
@@ -21,9 +21,20 @@ namespace SymOntoClay.UnityAsset.Core
         public string ImagesRootDir { get; set; }
 
         /// <summary>
+        /// Gets or sets list of file paths for describing places searching dictionaries of translation text to facts.
+        /// </summary>
+        public IList<string> DictionariesDirs { get; set; }
+
+        /// <summary>
         /// Gets or sets logging settings.
         /// </summary>
         public LoggingSettings Logging { get; set; }
+
+        /// <summary>
+        /// Gets or sets file name of SymOntoClay host file.
+        /// The file describes facts which are visible for other NPCs or can be recognized in some way by player.
+        /// </summary>
+        public string HostFile { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -39,32 +50,11 @@ namespace SymOntoClay.UnityAsset.Core
             var nextNSpaces = DisplayHelper.Spaces(nextN);
             var sb = new StringBuilder();
 
-            if(Logging == null)
-            {
-                sb.AppendLine($"{spaces}{nameof(Logging)} = NULL");
-            }
-            else
-            {
-                sb.AppendLine($"{spaces}Begin {nameof(Logging)}");
-                sb.Append(Logging.ToString(nextN));
-                sb.AppendLine($"{spaces}End {nameof(Logging)}");
-            }
-
-            if(SourceFilesDirs == null)
-            {
-                sb.AppendLine($"{spaces}{nameof(SourceFilesDirs)} = NULL");
-            }
-            else
-            {
-                sb.AppendLine($"{spaces}Begin {nameof(SourceFilesDirs)}");
-                foreach(var item in SourceFilesDirs)
-                {
-                    sb.AppendLine($"{nextNSpaces}{item}");
-                }
-                sb.AppendLine($"{spaces}End {nameof(SourceFilesDirs)}");
-            }
-
+            sb.PrintObjProp(n, nameof(Logging), Logging);
+            sb.PrintPODList(n, nameof(SourceFilesDirs), SourceFilesDirs);
             sb.AppendLine($"{spaces}{nameof(ImagesRootDir)} = {ImagesRootDir}");
+            sb.PrintPODList(n, nameof(DictionariesDirs), DictionariesDirs);
+            sb.AppendLine($"{spaces}{nameof(HostFile)} = {HostFile}");
 
             return sb.ToString();
         }

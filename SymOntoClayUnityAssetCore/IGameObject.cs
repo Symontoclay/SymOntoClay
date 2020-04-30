@@ -7,7 +7,7 @@ namespace SymOntoClay.UnityAsset.Core
     /// <summary>
     /// Represents each game object which is not NPC, Player or Place.
     /// </summary>
-    public interface IObject : IWorldComponentDisposable
+    public interface IGameObject : IWorldComponentDisposable
     {
     }
 }

@@ -5,9 +5,9 @@ using System.Text;
 namespace SymOntoClay.UnityAsset.Core
 {
     /// <summary>
-    /// Represents NPC (Non-Player Character)
+    /// Represents biped NPC (Non-Player Character)
     /// </summary>
-    public interface INPC: IWorldComponentDisposable
+    public interface IBipedNPC: IManualControlling, IWorldComponentDisposable
     {
     }
 }

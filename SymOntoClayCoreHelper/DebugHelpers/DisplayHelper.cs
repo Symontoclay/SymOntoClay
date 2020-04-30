@@ -58,5 +58,77 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             sb.AppendLine($"{spaces}End {nameOfType}");
             return sb.ToString();
         }
+
+        public static void PrintObjProp(this StringBuilder sb, uint n, string propName, IObjectToString obj)
+        {
+            var spaces = Spaces(n);
+            var nextN = n + 4;
+
+            if (obj == null)
+            {
+                sb.AppendLine($"{spaces}{propName} = NULL");
+            }
+            else
+            {
+                sb.AppendLine($"{spaces}Begin {propName}");
+                sb.Append(obj.ToString(nextN));
+                sb.AppendLine($"{spaces}End {propName}");
+            }
+        }
+
+        public static void PrintShortObjProp(this StringBuilder sb, uint n, string propName, IShortObjectToString obj)
+        {
+            var spaces = Spaces(n);
+            var nextN = n + 4;
+
+            if (obj == null)
+            {
+                sb.AppendLine($"{spaces}{propName} = NULL");
+            }
+            else
+            {
+                sb.AppendLine($"{spaces}Begin {propName}");
+                sb.Append(obj.ToShortString(nextN));
+                sb.AppendLine($"{spaces}End {propName}");
+            }
+        }
+
+        public static void PrintBriefObjProp(this StringBuilder sb, uint n, string propName, IObjectToBriefString obj)
+        {
+            var spaces = Spaces(n);
+            var nextN = n + 4;
+
+            if (obj == null)
+            {
+                sb.AppendLine($"{spaces}{propName} = NULL");
+            }
+            else
+            {
+                sb.AppendLine($"{spaces}Begin {propName}");
+                sb.Append(obj.ToBriefString(nextN));
+                sb.AppendLine($"{spaces}End {propName}");
+            }
+        }
+
+        public static void PrintPODList<T>(this StringBuilder sb, uint n, string propName, IList<T> items)
+        {
+            var spaces = Spaces(n);
+            var nextN = n + 4;
+            var nextNSpaces = Spaces(nextN);
+
+            if (items == null)
+            {
+                sb.AppendLine($"{spaces}{propName} = NULL");
+            }
+            else
+            {
+                sb.AppendLine($"{spaces}Begin {propName}");
+                foreach (var item in items)
+                {
+                    sb.AppendLine($"{nextNSpaces}{item}");
+                }
+                sb.AppendLine($"{spaces}End {propName}");
+            }
+        }
     }
 }

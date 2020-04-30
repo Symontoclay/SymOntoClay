@@ -7,7 +7,7 @@ namespace SymOntoClay.UnityAsset.Core
     /// <summary>
     /// Represents Player.
     /// </summary>
-    public interface IPlayer: IWorldComponentDisposable
+    public interface IPlayer: IManualControlling, IWorldComponentDisposable
     {
     }
 }

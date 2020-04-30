@@ -4,6 +4,9 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core
 {
+    /// <summary>
+    /// Provides small improving of mechanism for releasing unmanaged resources by adding additional members.
+    /// </summary>
     public interface IWorldComponentDisposable: IDisposable
     {
         /// <summary>

@@ -4,27 +4,161 @@
         <name>SymOntoClay.UnityAsset.Core</name>
     </assembly>
     <members>
-        <member name="T:SymOntoClay.UnityAsset.Core.INPC">
+        <member name="T:SymOntoClay.UnityAsset.Core.BipedNPCSettings">
             <summary>
-            Represents NPC (Non-Player Character)
+            Biped NPC (Non-Player Character) setting.
             </summary>
         </member>
-        <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.NPC.NPCImplementation">
+        <member name="P:SymOntoClay.UnityAsset.Core.BipedNPCSettings.LogicFile">
+            <summary>
+            Gets or sets file name of SymOntoClay logic file.
+            The file describes active logic which will be executed on the NPC.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.BipedNPCSettings.HostFile">
+            <summary>
+            Gets or sets file name of SymOntoClay host file.
+            The file describes facts which are visible for other NPCs or can be recognized in some way by player.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.BipedNPCSettings.ToString">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.NPC.NPCImplementation.IsDisposed">
+        <member name="M:SymOntoClay.UnityAsset.Core.BipedNPCSettings.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.NPC.NPCImplementation.Dispose">
+        <member name="M:SymOntoClay.UnityAsset.Core.BipedNPCSettings.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.Obj.ObjImplementation">
+        <member name="T:SymOntoClay.UnityAsset.Core.DeviceOfBiped">
+            <summary>
+            Represents part of body of the NPC or Player which are required for doing actions or using things (game objects). 
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.UnityAsset.Core.DeviceOfBiped.Head">
+            <summary>
+            Represents the head of the NPC or Player.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.UnityAsset.Core.DeviceOfBiped.RightHand">
+            <summary>
+            Represents the right hand  of the NPC or Player.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.UnityAsset.Core.DeviceOfBiped.LeftHand">
+            <summary>
+            Represents the left hand  of the NPC or Player.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.UnityAsset.Core.DeviceOfBiped.RightLeg">
+            <summary>
+            Represents the right  of the NPC or Player.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.UnityAsset.Core.DeviceOfBiped.LeftLeg">
+            <summary>
+            Represents the left leg  of the NPC or Player.
+            </summary>
+        </member>
+        <member name="T:SymOntoClay.UnityAsset.Core.GameObjectSettings">
+            <summary>
+            Game object settings.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.GameObjectSettings.HostFile">
+            <summary>
+            Gets or sets file name of SymOntoClay host file.
+            The file describes facts which are visible for other NPCs or can be recognized in some way by player.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.GameObjectSettings.ToString">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Obj.ObjImplementation.IsDisposed">
+        <member name="M:SymOntoClay.UnityAsset.Core.GameObjectSettings.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Obj.ObjImplementation.Dispose">
+        <member name="M:SymOntoClay.UnityAsset.Core.GameObjectSettings.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SymOntoClay.UnityAsset.Core.IBipedNPC">
+            <summary>
+            Represents biped NPC (Non-Player Character)
+            </summary>
+        </member>
+        <member name="T:SymOntoClay.UnityAsset.Core.IGameObject">
+            <summary>
+            Represents each game object which is not NPC, Player or Place.
+            </summary>
+        </member>
+        <member name="T:SymOntoClay.UnityAsset.Core.IManualControlledObject">
+            <summary>
+            Repseresents manual controlled game object.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.IManualControlledObject.GameObject">
+            <summary>
+            Gets  manual controlled game object.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.IManualControlledObject.Devices">
+            <summary>
+            Gets list of devices of of the NPC or Player which are using the game object.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IManualControlling.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,SymOntoClay.UnityAsset.Core.DeviceOfBiped)">
+            <summary>
+            Adds a game object into manual controlled area of the NPC or Player.
+            </summary>
+            <param name="obj">Instance of the game object.</param>
+            <param name="device">Describes biped device which will be using the game object.</param>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IManualControlling.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,System.Collections.Generic.IList{SymOntoClay.UnityAsset.Core.DeviceOfBiped})">
+            <summary>
+            Adds a game object into manual controlled area of the NPC or Player.
+            </summary>
+            <param name="obj">Instance of the game object.</param>
+            <param name="devices">Describes list of biped devices which will be using the game object.</param>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IManualControlling.RemoveFromManualControl(SymOntoClay.UnityAsset.Core.IGameObject)">
+            <summary>
+            Removes a game object from manual controlled area of an NPC or Player.
+            </summary>
+            <param name="obj">Instance of the game object.</param>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IManualControlling.GetManualControlledObjects">
+            <summary>
+            Gets list of manual controlled game objects by the NPC or Player.
+            </summary>
+            <returns>List of manual controlled game objects.</returns>
+        </member>
+        <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCImplementation">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCImplementation.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,SymOntoClay.UnityAsset.Core.DeviceOfBiped)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCImplementation.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,System.Collections.Generic.IList{SymOntoClay.UnityAsset.Core.DeviceOfBiped})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCImplementation.RemoveFromManualControl(SymOntoClay.UnityAsset.Core.IGameObject)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCImplementation.GetManualControlledObjects">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCImplementation.IsDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCImplementation.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.IsDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.Dispose">
             <inheritdoc/>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation">
@@ -39,16 +173,23 @@
         <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,SymOntoClay.UnityAsset.Core.DeviceOfBiped)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,System.Collections.Generic.IList{SymOntoClay.UnityAsset.Core.DeviceOfBiped})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.RemoveFromManualControl(SymOntoClay.UnityAsset.Core.IGameObject)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.GetManualControlledObjects">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.IsDisposed">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.Dispose">
             <inheritdoc/>
-        </member>
-        <member name="T:SymOntoClay.UnityAsset.Core.IObject">
-            <summary>
-            Represents each game object which is not NPC, Player or Place.
-            </summary>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.IPlace">
             <summary>
@@ -134,37 +275,15 @@
         <member name="M:SymOntoClay.UnityAsset.Core.LoggingSettings.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="T:SymOntoClay.UnityAsset.Core.NPCSettings">
-            <summary>
-            NPC (Non-Player Character) setting.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.NPCSettings.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.NPCSettings.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.NPCSettings.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="T:SymOntoClay.UnityAsset.Core.ObjectSettings">
-            <summary>
-            Game object settings.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.ObjectSettings.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.ObjectSettings.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.ObjectSettings.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
         <member name="T:SymOntoClay.UnityAsset.Core.PlaceSettings">
             <summary>
             Place settings.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.PlaceSettings.HostFile">
+            <summary>
+            Gets or sets file name of SymOntoClay host file.
+            The file describes facts which are visible for other NPCs or can be recognized in some way by player.
             </summary>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.PlaceSettings.ToString">
@@ -179,6 +298,12 @@
         <member name="T:SymOntoClay.UnityAsset.Core.PlayerSettings">
             <summary>
             Player settings.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.PlayerSettings.HostFile">
+            <summary>
+            Gets or sets file name of SymOntoClay host file.
+            The file describes facts which are visible for other NPCs or can be recognized in some way by player.
             </summary>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.PlayerSettings.ToString">
@@ -209,35 +334,6 @@
         <member name="M:SymOntoClay.UnityAsset.Core.RunTimeImageSettings.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="T:SymOntoClay.UnityAsset.Core.Settings">
-            <summary>
-            General settings of a game world.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.Settings.SourceFilesDirs">
-            <summary>
-            Gets or sets list of file paths for describing places for searching required source files.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.Settings.ImagesRootDir">
-            <summary>
-            Gets or sets root dir for saving and loading images of executed code.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.Settings.Logging">
-            <summary>
-            Gets or sets logging settings.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Settings.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Settings.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Settings.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
         <member name="T:SymOntoClay.UnityAsset.Core.WorldCore">
             <summary>
             Represents core of a game world.
@@ -248,7 +344,7 @@
             Gets instance of the class.
             </summary>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.SetSettings(SymOntoClay.UnityAsset.Core.Settings)">
+        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.SetSettings(SymOntoClay.UnityAsset.Core.WorldSettings)">
             <summary>
             Sets general settings into the instance.
             This method can be run just once in the start of game or application.
@@ -271,7 +367,7 @@
             It doesn't touch local logging.
             </summary>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.GetNPC(SymOntoClay.UnityAsset.Core.NPCSettings)">
+        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.GetBipedNPC(SymOntoClay.UnityAsset.Core.BipedNPCSettings)">
             <summary>
             Registers an instance of NPC by passed settings.
             Returned agent provides communication between game level in Unity3D and logical core.
@@ -287,7 +383,7 @@
             <param name="settings">Instance of settings.</param>
             <returns>Instance of agent.</returns>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.GetObject(SymOntoClay.UnityAsset.Core.ObjectSettings)">
+        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.GetGameObject(SymOntoClay.UnityAsset.Core.GameObjectSettings)">
             <summary>
             Registers an instance of game object by passed settings.
             Returned agent provides communication between game level in Unity3D and logical core.
@@ -376,6 +472,46 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.WorldCore.IsDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="T:SymOntoClay.UnityAsset.Core.WorldSettings">
+            <summary>
+            General settings of a game world.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.WorldSettings.SourceFilesDirs">
+            <summary>
+            Gets or sets list of file paths for describing places for searching required source files.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.WorldSettings.ImagesRootDir">
+            <summary>
+            Gets or sets root dir for saving and loading images of executed code.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.WorldSettings.DictionariesDirs">
+            <summary>
+            Gets or sets list of file paths for describing places searching dictionaries of translation text to facts.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.WorldSettings.Logging">
+            <summary>
+            Gets or sets logging settings.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.WorldSettings.HostFile">
+            <summary>
+            Gets or sets file name of SymOntoClay host file.
+            The file describes facts which are visible for other NPCs or can be recognized in some way by player.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.WorldSettings.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.WorldSettings.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.WorldSettings.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
     </members>

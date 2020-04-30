@@ -3,13 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.UnityAsset.Core.InternalImplementations.NPC
+namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
 {
     /// <inheritdoc/>
-    public class NPCImplementation: INPC
+    public class GameObjectImplementation: IGameObject
     {
-        public NPCImplementation(NPCSettings settings, WorldContext context)
+        public GameObjectImplementation(GameObjectSettings settings, WorldContext context)
         {
+
         }
 
         /// <inheritdoc/>

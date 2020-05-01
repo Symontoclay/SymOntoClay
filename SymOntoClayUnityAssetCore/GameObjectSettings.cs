@@ -16,6 +16,11 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         public string HostFile { get; set; }
 
+        /// <summary>
+        /// Gets or sets host listener.
+        /// </summary>
+        public IHostListener HostListener { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -36,6 +41,9 @@ namespace SymOntoClay.UnityAsset.Core
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(HostFile)} = {HostFile}");
+
+            var hostListenerMark = HostListener == null ? "No" : "Yes";
+            sb.AppendLine($"{spaces}{nameof(HostListener)} = {hostListenerMark}");
 
             return sb.ToString();
         }

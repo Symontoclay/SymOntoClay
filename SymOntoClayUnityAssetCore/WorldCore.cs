@@ -38,21 +38,21 @@ namespace SymOntoClay.UnityAsset.Core
         /// <param name="settings">Instance of settings.</param>
         public void SetSettings(WorldSettings settings)
         {
-            //throw new NotImplementedException();
+            _context.SetSettings(settings);
         }
 
         /// <summary>
         /// Gets or sets value of enable logging.
         /// It alows enable or disable logging or remote connection for whole components synchronously.
         /// </summary>
-        public bool EnableLogging { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool EnableLogging { get => _context.EnableLogging; set => _context.EnableLogging = value; }
 
         /// <summary>
         /// Gets or sets value of enable remote connection.
         /// It alows enable or disable remote connection for whole components synchronously.
         /// It doesn't touch local logging.
         /// </summary>
-        public bool EnableRemoteConnection { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool EnableRemoteConnection { get => _context.EnableRemoteConnection; set => _context.EnableRemoteConnection = value; }
 
         /// <summary>
         /// Registers an instance of NPC by passed settings.
@@ -104,7 +104,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// <param name="imageInfo">Instance of image info.</param>
         public void Load(IRunTimeImageInfo imageInfo)
         {
-            throw new NotImplementedException();
+            _context.Load(imageInfo);
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// <param name="id">Image id.</param>
         public void Load(string id)
         {
-            throw new NotImplementedException();
+            _context.Load(id);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         public void Load()
         {
-            throw new NotImplementedException();
+            _context.Load();
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         public void Start()
         {
-            throw new NotImplementedException();
+            _context.Start();
         }
 
         /// <summary>
@@ -138,17 +138,22 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         public void Stop()
         {
-            throw new NotImplementedException();
+            _context.Stop();
         }
+
+        /// <summary>
+        /// Returns <c>true</c> if execution was started, otherwise returns <c>false</c>.
+        /// </summary>
+        public bool IsActive { get => _context.IsActive; }
 
         /// <summary>
         /// Creates (saves) image of execured code by settings.
         /// </summary>
-        /// <param name="settings">Instance of image info about created (saved) image.</param>
-        /// <returns></returns>
+        /// <param name="settings">Setting of created (saved) image.</param>
+        /// <returns>Instance of image info about created (saved) image.</returns>
         public IRunTimeImageInfo CreateImage(RunTimeImageSettings settings)
         {
-            throw new NotImplementedException();
+            return _context.CreateImage(settings);
         }
 
         /// <summary>
@@ -157,18 +162,13 @@ namespace SymOntoClay.UnityAsset.Core
         /// <returns>Instance of image info about created (saved) image.</returns>
         public IRunTimeImageInfo CreateImage()
         {
-            throw new NotImplementedException();
+            return _context.CreateImage();
         }
-
-        /// <summary>
-        /// Returns <c>true</c> if execution was started, otherwise returns <c>false</c>.
-        /// </summary>
-        public bool IsActive { get => throw new NotImplementedException(); }
 
         /// <summary>
         /// Returns image info about last created (saved) image.
         /// </summary>
-        public IRunTimeImageInfo CurrentImage { get => throw new NotImplementedException(); }
+        public IRunTimeImageInfo CurrentImage { get => _context.CurrentImage; }
 
         /// <summary>
         /// Returns list of all available image info.
@@ -176,7 +176,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// <returns>Instnce of list of all available image info.</returns>
         public IList<IRunTimeImageInfo> GetImages()
         {
-            throw new NotImplementedException();
+            return _context.GetImages();
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// <param name="imageInfo">Instance of image info.</param>
         public void DeleteImage(IRunTimeImageInfo imageInfo)
         {
-            throw new NotImplementedException();
+            _context.DeleteImage(imageInfo);
         }
 
         /// <summary>
@@ -194,16 +194,16 @@ namespace SymOntoClay.UnityAsset.Core
         /// <param name="id">Image id.</param>
         public void DeleteImage(string id)
         {
-            throw new NotImplementedException();
+            _context.DeleteImage(id);
         }
 
         /// <inheritdoc/>
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _context.Dispose();
         }
 
         /// <inheritdoc/>
-        public bool IsDisposed { get => throw new NotImplementedException(); }
+        public bool IsDisposed { get => _context.IsDisposed; }
     }
 }

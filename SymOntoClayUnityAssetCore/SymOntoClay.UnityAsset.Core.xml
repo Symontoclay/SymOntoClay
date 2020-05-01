@@ -21,6 +21,11 @@
             The file describes facts which are visible for other NPCs or can be recognized in some way by player.
             </summary>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.BipedNPCSettings.HostListener">
+            <summary>
+            Gets or sets host listener.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.BipedNPCSettings.ToString">
             <inheritdoc/>
         </member>
@@ -71,6 +76,11 @@
             The file describes facts which are visible for other NPCs or can be recognized in some way by player.
             </summary>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.GameObjectSettings.HostListener">
+            <summary>
+            Gets or sets host listener.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.GameObjectSettings.ToString">
             <inheritdoc/>
         </member>
@@ -103,6 +113,11 @@
         <member name="P:SymOntoClay.UnityAsset.Core.IManualControlledObject.Devices">
             <summary>
             Gets list of devices of of the NPC or Player which are using the game object.
+            </summary>
+        </member>
+        <member name="T:SymOntoClay.UnityAsset.Core.IManualControlling">
+            <summary>
+            Represent aspect as manual controlling things by the NPC or Player.
             </summary>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.IManualControlling.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,SymOntoClay.UnityAsset.Core.DeviceOfBiped)">
@@ -225,6 +240,11 @@
         <member name="P:SymOntoClay.UnityAsset.Core.IRunTimeImageInfo.ParentId">
             <summary>
             Gets parent image id or <c>null</c> if the image was created directly from source code.
+            </summary>
+        </member>
+        <member name="T:SymOntoClay.UnityAsset.Core.IWorldComponentDisposable">
+            <summary>
+            Provides small improving of mechanism for releasing unmanaged resources by adding additional members.
             </summary>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.IWorldComponentDisposable.IsDisposed">
@@ -427,23 +447,23 @@
             Stop execution.
             </summary>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.WorldCore.IsActive">
+            <summary>
+            Returns <c>true</c> if execution was started, otherwise returns <c>false</c>.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.CreateImage(SymOntoClay.UnityAsset.Core.RunTimeImageSettings)">
             <summary>
             Creates (saves) image of execured code by settings.
             </summary>
-            <param name="settings">Instance of image info about created (saved) image.</param>
-            <returns></returns>
+            <param name="settings">Setting of created (saved) image.</param>
+            <returns>Instance of image info about created (saved) image.</returns>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.CreateImage">
             <summary>
             Creates (saves) image of execured code.
             </summary>
             <returns>Instance of image info about created (saved) image.</returns>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.WorldCore.IsActive">
-            <summary>
-            Returns <c>true</c> if execution was started, otherwise returns <c>false</c>.
-            </summary>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.WorldCore.CurrentImage">
             <summary>

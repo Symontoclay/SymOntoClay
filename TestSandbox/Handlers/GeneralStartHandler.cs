@@ -21,6 +21,9 @@ namespace TestSandbox.Handlers
             var instance = WorldCore.Instance;
 
             var settings = new WorldSettings();
+
+            settings.SourceFilesDirs = new List<string>() { Path.Combine(Directory.GetCurrentDirectory(), "Sources") };
+
             settings.Logging = new LoggingSettings()
             {
                 LogDir = logDir,

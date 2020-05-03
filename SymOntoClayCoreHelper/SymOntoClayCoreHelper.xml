@@ -73,5 +73,15 @@
             <param name="n">Count of spaces in the string for more comfortable representation.</param>
             <returns>A string that represents the current instance in short way without additional information, only pair name of property - value.</returns>
         </member>
+        <member name="T:SymOntoClay.CoreHelper.ISymOntoClayDisposable">
+            <summary>
+            Provides small improving of mechanism for releasing unmanaged resources by adding additional members.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.ISymOntoClayDisposable.IsDisposed">
+            <summary>
+            Returns <c>true</c> if the instance was disposed, otherwise returns <c>false</c>.
+            </summary>
+        </member>
     </members>
 </doc>

@@ -1,21 +1,37 @@
-﻿using SymOntoClay.UnityAsset.Core.Internal.Validators;
+﻿using SymOntoClay.UnityAsset.Core.Internal.Logging;
+using SymOntoClay.UnityAsset.Core.Internal.Validators;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
 {
-    public class WorldContext: IWorlCoreContext, IWorlCoreComponentContext
+    public class WorldContext: IWorlCoreContext, IWorlCoreGameComponentContext
     {
         //TODO: fix me!
         public void SetSettings(WorldSettings settings)
         {
             WorldSettingsValidator.Validate(settings);
 
+            CreateLogging(settings);
+            CreateComponents(settings);
             //throw new NotImplementedException();
         }
 
-        public bool EnableLogging { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        private void CreateLogging(WorldSettings settings)
+        {
+            CoreLogger = new CoreLogger(settings.Logging, this);
+        }
+
+        private void CreateComponents(WorldSettings settings)
+        {
+            ImagesRegistry = new ImagesRegistry(this);
+        }
+
+        public CoreLogger CoreLogger { get; private set; }
+        public ImagesRegistry ImagesRegistry { get; private set; }
+
+        public bool EnableLogging { get => CoreLogger.EnableLogging; set => CoreLogger.EnableLogging = value; }
 
         public bool EnableRemoteConnection { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 

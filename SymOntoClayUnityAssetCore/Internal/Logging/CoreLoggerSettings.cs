@@ -1,26 +1,23 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
-namespace SymOntoClay.UnityAsset.Core
+namespace SymOntoClay.UnityAsset.Core.Internal.Logging
 {
-    /// <summary>
-    /// Place settings.
-    /// </summary>
-    public class PlaceSettings : IObjectToString
+    public class CoreLoggerSettings : IObjectToString
     {
         /// <summary>
-        /// Gets or sets unique Id.
-        /// It allows us to identify each item of the game.
+        /// Gets or sets root dir for file logging.
         /// </summary>
-        public string Id { get; set; }
+        public string LogDir { get; set; }
 
         /// <summary>
-        /// Gets or sets file name of SymOntoClay host file.
-        /// The file describes facts which are visible for other NPCs or can be recognized in some way by player.
+        /// Gets or sets list of platform specific loggers.
+        /// It alows us to add, for example, console logger for Unity3D.
         /// </summary>
-        public string HostFile { get; set; }
+        public IList<IPlatformLogger> PlatformLoggers { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -40,10 +37,9 @@ namespace SymOntoClay.UnityAsset.Core
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;
             var sb = new StringBuilder();
-
-            sb.AppendLine($"{spaces}{nameof(Id)} = {Id}");
-            sb.AppendLine($"{spaces}{nameof(HostFile)} = {HostFile}");
-
+            sb.AppendLine($"{spaces}{nameof(LogDir)} = {LogDir}");
+            var platformLoggersMark = PlatformLoggers == null ? "No" : PlatformLoggers.Any() ? "Yes" : "No";
+            sb.AppendLine($"{spaces}{nameof(PlatformLoggers)} = {platformLoggersMark}");
             return sb.ToString();
         }
     }

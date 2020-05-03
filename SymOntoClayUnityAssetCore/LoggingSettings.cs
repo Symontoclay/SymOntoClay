@@ -47,7 +47,13 @@ namespace SymOntoClay.UnityAsset.Core
         }
 
         /// <inheritdoc/>
-        public string PropertiesToString(uint n)
+        public string ToString(uint n)
+        {
+            return this.GetDefaultToStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToString.PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;
@@ -59,12 +65,6 @@ namespace SymOntoClay.UnityAsset.Core
             var platformLoggersMark = PlatformLoggers == null ? "No" : PlatformLoggers.Any() ? "Yes" : "No";
             sb.AppendLine($"{spaces}{nameof(PlatformLoggers)} = {platformLoggersMark}");
             return sb.ToString();
-        }
-
-        /// <inheritdoc/>
-        public string ToString(uint n)
-        {
-            return this.GetDefaultToStringInformation(n);
         }
     }
 }

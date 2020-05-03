@@ -13,6 +13,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
         }
 
         /// <inheritdoc/>
+        public bool EnableLogging { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        /// <inheritdoc/>
         public void AddToManualControl(IGameObject obj, DeviceOfBiped device)
         {
             throw new NotImplementedException();

@@ -28,7 +28,7 @@ namespace SymOntoClay.UnityAsset.Core
         }
 
         /// <inheritdoc/>
-        public string PropertiesToString(uint n)
+        string IObjectToString.PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;

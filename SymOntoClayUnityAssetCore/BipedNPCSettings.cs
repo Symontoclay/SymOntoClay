@@ -11,6 +11,12 @@ namespace SymOntoClay.UnityAsset.Core
     public class BipedNPCSettings: IObjectToString
     {
         /// <summary>
+        /// Gets or sets unique Id.
+        /// It allows us to identify each item of the game.
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
         /// Gets or sets file name of SymOntoClay logic file.
         /// The file describes active logic which will be executed on the NPC.
         /// </summary>
@@ -40,12 +46,13 @@ namespace SymOntoClay.UnityAsset.Core
         }
 
         /// <inheritdoc/>
-        public string PropertiesToString(uint n)
+        string IObjectToString.PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(Id)} = {Id}");
             sb.AppendLine($"{spaces}{nameof(LogicFile)} = {LogicFile}");
             sb.AppendLine($"{spaces}{nameof(HostFile)} = {HostFile}");
 

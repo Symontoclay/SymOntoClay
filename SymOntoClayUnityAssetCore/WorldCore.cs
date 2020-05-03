@@ -1,4 +1,5 @@
-﻿using SymOntoClay.UnityAsset.Core.Internal;
+﻿using SymOntoClay.CoreHelper;
+using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.Place;
@@ -12,7 +13,7 @@ namespace SymOntoClay.UnityAsset.Core
     /// <summary>
     /// Represents core of a game world.
     /// </summary>
-    public class WorldCore: IWorldComponentDisposable
+    public class WorldCore: ISymOntoClayDisposable
     {
         private static readonly WorldCore __instance = new WorldCore();
 

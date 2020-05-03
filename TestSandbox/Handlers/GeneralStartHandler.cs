@@ -22,7 +22,9 @@ namespace TestSandbox.Handlers
 
             var settings = new WorldSettings();
 
-            settings.SourceFilesDirs = new List<string>() { Path.Combine(Directory.GetCurrentDirectory(), "Sources") };
+            settings.SourceFilesDirs = new List<string>() { Path.Combine(Directory.GetCurrentDirectory(), "Scripts", "Modules") };
+
+            settings.ImagesRootDir = Path.Combine(Directory.GetCurrentDirectory(), "Images");
 
             settings.Logging = new LoggingSettings()
             {

@@ -9,6 +9,12 @@
             Biped NPC (Non-Player Character) setting.
             </summary>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.BipedNPCSettings.Id">
+            <summary>
+            Gets or sets unique Id.
+            It allows us to identify each item of the game.
+            </summary>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.BipedNPCSettings.LogicFile">
             <summary>
             Gets or sets file name of SymOntoClay logic file.
@@ -32,7 +38,7 @@
         <member name="M:SymOntoClay.UnityAsset.Core.BipedNPCSettings.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.BipedNPCSettings.PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.UnityAsset.Core.BipedNPCSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.DeviceOfBiped">
@@ -70,6 +76,12 @@
             Game object settings.
             </summary>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.GameObjectSettings.Id">
+            <summary>
+            Gets or sets unique Id.
+            It allows us to identify each item of the game.
+            </summary>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.GameObjectSettings.HostFile">
             <summary>
             Gets or sets file name of SymOntoClay host file.
@@ -87,12 +99,18 @@
         <member name="M:SymOntoClay.UnityAsset.Core.GameObjectSettings.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.GameObjectSettings.PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.UnityAsset.Core.GameObjectSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.IBipedNPC">
             <summary>
             Represents biped NPC (Non-Player Character)
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.IBipedNPC.EnableLogging">
+            <summary>
+            Gets or sets value of enable logging.
+            It alows enable or disable logging or remote connection for the NPC.
             </summary>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.IGameObject">
@@ -147,6 +165,9 @@
             <returns>List of manual controlled game objects.</returns>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCImplementation">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCImplementation.EnableLogging">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCImplementation.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,SymOntoClay.UnityAsset.Core.DeviceOfBiped)">
@@ -206,6 +227,44 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.Dispose">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.ILoggerContext.Enable">
+            <summary>
+            Gets value of enable logging.
+            It alows enable or disable logging or remote connection for whole components synchronously.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.Logging.CoreLogger.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.Logging.CoreLogger.IsDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.Logging.CoreLoggerSettings.LogDir">
+            <summary>
+            Gets or sets root dir for file logging.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.Logging.CoreLoggerSettings.PlatformLoggers">
+            <summary>
+            Gets or sets list of platform specific loggers.
+            It alows us to add, for example, console logger for Unity3D.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.Logging.CoreLoggerSettings.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.Logging.CoreLoggerSettings.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.Logging.CoreLoggerSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SymOntoClay.UnityAsset.Core.Internal.Logging.LoggerContext">
+            <inheritdoc cref='T:SymOntoClay.UnityAsset.Core.Internal.ILoggerContext'/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.Logging.LoggerContext.Enable">
+            <inheritdoc/>
+        </member>
         <member name="T:SymOntoClay.UnityAsset.Core.IPlace">
             <summary>
             Represents some place of a game world. It can be both a point and an area.
@@ -240,16 +299,6 @@
         <member name="P:SymOntoClay.UnityAsset.Core.IRunTimeImageInfo.ParentId">
             <summary>
             Gets parent image id or <c>null</c> if the image was created directly from source code.
-            </summary>
-        </member>
-        <member name="T:SymOntoClay.UnityAsset.Core.IWorldComponentDisposable">
-            <summary>
-            Provides small improving of mechanism for releasing unmanaged resources by adding additional members.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.IWorldComponentDisposable.IsDisposed">
-            <summary>
-            Returns <c>true</c> if the instance was disposed, otherwise returns <c>false</c>.
             </summary>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.LoggingSettings">
@@ -289,15 +338,21 @@
         <member name="M:SymOntoClay.UnityAsset.Core.LoggingSettings.ToString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.LoggingSettings.PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.UnityAsset.Core.LoggingSettings.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.LoggingSettings.ToString(System.UInt32)">
+        <member name="M:SymOntoClay.UnityAsset.Core.LoggingSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.PlaceSettings">
             <summary>
             Place settings.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.PlaceSettings.Id">
+            <summary>
+            Gets or sets unique Id.
+            It allows us to identify each item of the game.
             </summary>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.PlaceSettings.HostFile">
@@ -312,12 +367,18 @@
         <member name="M:SymOntoClay.UnityAsset.Core.PlaceSettings.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.PlaceSettings.PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.UnityAsset.Core.PlaceSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.PlayerSettings">
             <summary>
             Player settings.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.PlayerSettings.Id">
+            <summary>
+            Gets or sets unique Id.
+            It allows us to identify each item of the game.
             </summary>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.PlayerSettings.HostFile">
@@ -332,7 +393,7 @@
         <member name="M:SymOntoClay.UnityAsset.Core.PlayerSettings.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.PlayerSettings.PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.UnityAsset.Core.PlayerSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.RunTimeImageSettings">
@@ -351,7 +412,7 @@
         <member name="M:SymOntoClay.UnityAsset.Core.RunTimeImageSettings.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.RunTimeImageSettings.PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.UnityAsset.Core.RunTimeImageSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.WorldCore">
@@ -528,7 +589,7 @@
         <member name="M:SymOntoClay.UnityAsset.Core.WorldSettings.ToString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.WorldSettings.PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.UnityAsset.Core.WorldSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.WorldSettings.ToString(System.UInt32)">

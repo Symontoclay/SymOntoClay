@@ -1,4 +1,6 @@
-﻿using SymOntoClay.UnityAsset.Core.Internal.Logging;
+﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.UnityAsset.Core.Internal.Images;
+using SymOntoClay.UnityAsset.Core.Internal.Logging;
 using SymOntoClay.UnityAsset.Core.Internal.Validators;
 using System;
 using System.Collections.Generic;
@@ -6,7 +8,7 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
 {
-    public class WorldContext: IWorlCoreContext, IWorlCoreGameComponentContext
+    public class WorldContext: IWorldCoreContext, IWorldCoreGameComponentContext
     {
         //TODO: fix me!
         public void SetSettings(WorldSettings settings)
@@ -29,7 +31,28 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         }
 
         public CoreLogger CoreLogger { get; private set; }
+
+        public ILogger Logger => CoreLogger?.WordCoreLogger;
+
         public ImagesRegistry ImagesRegistry { get; private set; }
+
+        private readonly object _wordComponentsListLockObj = new object();
+        private List<IWorldCoreComponent> _wordComponentsList = new List<IWorldCoreComponent>();
+
+        void IWorldCoreContext.AddWorldComponent(IWorldCoreComponent component)
+        {
+            lock(_wordComponentsListLockObj)
+            {
+                if(_wordComponentsList.Contains(component))
+                {
+                    return;
+                }
+
+                _wordComponentsList.Add(component);
+            }
+        }
+
+        private List<IGameComponent> _gameComponentsList = new List<IGameComponent>();
 
         public bool EnableLogging { get => CoreLogger.EnableLogging; set => CoreLogger.EnableLogging = value; }
 

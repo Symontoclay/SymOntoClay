@@ -17,5 +17,10 @@ namespace TestSandbox.PlatformImplementations
         private ConsoleLogger()
         {
         }
+
+        public void WriteLn(string message)
+        {
+            Console.WriteLine(message);
+        }
     }
 }

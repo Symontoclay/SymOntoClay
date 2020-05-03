@@ -1,5 +1,6 @@
 ﻿using NLog;
 using System;
+using System.Threading;
 using TestSandbox.Handlers;
 
 namespace TestSandbox
@@ -13,6 +14,8 @@ namespace TestSandbox
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             TstGeneralStartHandler();
+
+            //Thread.Sleep(10000);
         }
 
         private static void TstGeneralStartHandler()

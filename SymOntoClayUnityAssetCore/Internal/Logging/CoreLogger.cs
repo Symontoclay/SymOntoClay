@@ -1,18 +1,21 @@
-﻿using System;
+﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.Logging
 {
-    public class CoreLogger: IWordCoreComponent
+    public class CoreLogger: IWorldCoreComponent
     {
         private readonly object _lockObj = new object();
-        private readonly IWorlCoreContext _coreContext;
+        private readonly IWorldCoreContext _coreContext;
         private readonly CoreLoggerSettings _settings;
         private readonly LoggerContext _loggerContext = new LoggerContext();
+        private readonly ILogger _coreLogger;
 
-        public CoreLogger(LoggingSettings settings, IWorlCoreContext coreContext)
+        public CoreLogger(LoggingSettings settings, IWorldCoreContext coreContext)
         {
             _coreContext = coreContext;
             _settings = new CoreLoggerSettings();
@@ -20,8 +23,26 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
             _settings.PlatformLoggers = settings.PlatformLoggers?.ToList();
 
             _loggerContext.Enable = settings.Enable;
+
+            if(!string.IsNullOrWhiteSpace(_settings.LogDir))
+            {
+                Directory.CreateDirectory(_settings.LogDir);
+
+                var now = DateTime.Now;
+                var todaysDir = $"{now.Year}_{now.Month}_{now.Day}_{now.Hour}_{now.Minute}_{now.Second}";
+
+                _settings.LogDir = Path.Combine(_settings.LogDir, todaysDir);
+
+                Directory.CreateDirectory(_settings.LogDir);
+            }
+
+            _coreLogger = new InternalLogger(_loggerContext, "Core", _settings);
         }
 
+        /// <summary>
+        /// Gets or sets value of enable logging.
+        /// It alows enable or disable logging or remote connection for whole components synchronously.
+        /// </summary>
         public bool EnableLogging
         {
             get
@@ -41,13 +62,19 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
             }
         }
 
-        /// <inheritdoc/>
-        public void Dispose()
+        public ILogger WordCoreLogger => _coreLogger;
+
+        public ILogger CreateLogger(string name)
         {
-            throw new NotImplementedException();
+            return new InternalLogger(_loggerContext, name, _settings);
         }
 
         /// <inheritdoc/>
-        public bool IsDisposed { get => throw new NotImplementedException(); }
+        public void Dispose()
+        {
+        }
+
+        /// <inheritdoc/>
+        public bool IsDisposed { get => false; }
     }
 }

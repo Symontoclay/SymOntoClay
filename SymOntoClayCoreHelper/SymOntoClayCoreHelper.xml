@@ -4,6 +4,15 @@
         <name>SymOntoClayCoreHelper</name>
     </assembly>
     <members>
+        <member name="M:SymOntoClay.CoreHelper.DebugHelpers.DiagnosticsCallInfo.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.DebugHelpers.DiagnosticsCallInfo.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.DebugHelpers.DiagnosticsCallInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="T:SymOntoClay.CoreHelper.DebugHelpers.IObjectToBriefString">
             <summary>
             Provides methods for helping in generating debug string image.

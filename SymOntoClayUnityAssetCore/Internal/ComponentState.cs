@@ -4,7 +4,13 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
 {
-    public interface IWorlCoreContext
+    public enum ComponentState
     {
+        Created,
+        Loaded,
+        Started,
+        Stopped,
+        Died,
+        Disposed
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
 {
-    public interface IWordCoreComponent: ISymOntoClayDisposable
+    public interface IWorldCoreComponent: ISymOntoClayDisposable
     {
     }
 }

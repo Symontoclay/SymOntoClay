@@ -6,5 +6,6 @@ namespace SymOntoClay.UnityAsset.Core
 {
     public interface IPlatformLogger
     {
+        void WriteLn(string message);
     }
 }

@@ -8,8 +8,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
     /// <inheritdoc/>
     public class BipedNPCImplementation: IBipedNPC
     {
-        public BipedNPCImplementation(BipedNPCSettings settings, WorldContext context)
+        private readonly BipedNPCGameComponent _gameComponent;
+
+        public BipedNPCImplementation(BipedNPCSettings settings, IWorldCoreGameComponentContext context)
         {
+            _gameComponent = new BipedNPCGameComponent(settings, context);
         }
 
         /// <inheritdoc/>

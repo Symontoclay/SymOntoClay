@@ -8,7 +8,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
     /// <inheritdoc/>
     public class PlayerImlementation : IPlayer
     {
-        public PlayerImlementation(PlayerSettings settings, WorldContext context)
+        public PlayerImlementation(PlayerSettings settings, IWorldCoreGameComponentContext context)
         {
 
         }

@@ -227,6 +227,84 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.Dispose">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.SetSettings(SymOntoClay.UnityAsset.Core.WorldSettings)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.EnableLogging">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.EnableRemoteConnection">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.GetBipedNPC(SymOntoClay.UnityAsset.Core.BipedNPCSettings)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.GetPlayer(SymOntoClay.UnityAsset.Core.PlayerSettings)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.GetGameObject(SymOntoClay.UnityAsset.Core.GameObjectSettings)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.GetPlace(SymOntoClay.UnityAsset.Core.PlaceSettings)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.Load(SymOntoClay.UnityAsset.Core.IRunTimeImageInfo)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.Load(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.Load">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.Start">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.Stop">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.IsActive">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.CreateImage(SymOntoClay.UnityAsset.Core.RunTimeImageSettings)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.CreateImage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.CurrentImage">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.GetImages">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.DeleteImage(SymOntoClay.UnityAsset.Core.IRunTimeImageInfo)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.DeleteImage(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.IsDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.Log(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.Warning(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.Error(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.IsDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.Dispose">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseWorldCoreComponent.Log(System.String)">
             <inheritdoc/>
         </member>
@@ -295,6 +373,15 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.Logging.LoggerContext.Enable">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.Log(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.Warning(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.Error(System.String)">
+            <inheritdoc/>
+        </member>
         <member name="T:SymOntoClay.UnityAsset.Core.IPlace">
             <summary>
             Represents some place of a game world. It can be both a point and an area.
@@ -330,6 +417,135 @@
             <summary>
             Gets parent image id or <c>null</c> if the image was created directly from source code.
             </summary>
+        </member>
+        <member name="T:SymOntoClay.UnityAsset.Core.IWorld">
+            <summary>
+            Represents core of a game world.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.SetSettings(SymOntoClay.UnityAsset.Core.WorldSettings)">
+            <summary>
+            Sets general settings into the instance.
+            This method can be run just once in the start of game or application.
+            You can not use the framework before calling this method.
+            Calling other methods before this will provoke exceptions.
+            You can not call the method after disposing the instance.
+            </summary>
+            <param name="settings">Instance of settings.</param>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.IWorld.EnableLogging">
+            <summary>
+            Gets or sets value of enable logging.
+            It alows enable or disable logging or remote connection for whole components synchronously.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.IWorld.EnableRemoteConnection">
+            <summary>
+            Gets or sets value of enable remote connection.
+            It alows enable or disable remote connection for whole components synchronously.
+            It doesn't touch local logging.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.GetBipedNPC(SymOntoClay.UnityAsset.Core.BipedNPCSettings)">
+            <summary>
+            Registers an instance of NPC by passed settings.
+            Returned agent provides communication between game level in Unity3D and logical core.
+            </summary>
+            <param name="settings">Instance of settings.</param>
+            <returns>Instance of agent.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.GetPlayer(SymOntoClay.UnityAsset.Core.PlayerSettings)">
+            <summary>
+            Registers an instance of Player by passed settings.
+            Returned agent provides communication between game level in Unity3D and logical core.
+            </summary>
+            <param name="settings">Instance of settings.</param>
+            <returns>Instance of agent.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.GetGameObject(SymOntoClay.UnityAsset.Core.GameObjectSettings)">
+            <summary>
+            Registers an instance of game object by passed settings.
+            Returned agent provides communication between game level in Unity3D and logical core.
+            </summary>
+            <param name="settings">Instance of settings.</param>
+            <returns>Instance of agent.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.GetPlace(SymOntoClay.UnityAsset.Core.PlaceSettings)">
+            <summary>
+            Registers an instance of place by passed settings.
+            Returned agent provides communication between game level in Unity3D and logical core.
+            </summary>
+            <param name="settings">Instance of settings.</param>
+            <returns>Instance of agent.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.Load(SymOntoClay.UnityAsset.Core.IRunTimeImageInfo)">
+            <summary>
+            Loads image by image info.
+            </summary>
+            <param name="imageInfo">Instance of image info.</param>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.Load(System.String)">
+            <summary>
+            Loads image by Id.
+            </summary>
+            <param name="id">Image id.</param>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.Load">
+            <summary>
+            Loads last image.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.Start">
+            <summary>
+            Starts execution loaded image.
+            If there was not loading image default image will be created from source code.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.Stop">
+            <summary>
+            Stops execution.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.IWorld.IsActive">
+            <summary>
+            Returns <c>true</c> if execution was started, otherwise returns <c>false</c>.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.CreateImage(SymOntoClay.UnityAsset.Core.RunTimeImageSettings)">
+            <summary>
+            Creates (saves) image of execured code by settings.
+            </summary>
+            <param name="settings">Setting of created (saved) image.</param>
+            <returns>Instance of image info about created (saved) image.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.CreateImage">
+            <summary>
+            Creates (saves) image of execured code.
+            </summary>
+            <returns>Instance of image info about created (saved) image.</returns>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.IWorld.CurrentImage">
+            <summary>
+            Returns image info about last created (saved) image.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.GetImages">
+            <summary>
+            Returns list of all available image info.
+            </summary>
+            <returns>Instnce of list of all available image info.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.DeleteImage(SymOntoClay.UnityAsset.Core.IRunTimeImageInfo)">
+            <summary>
+            Deletes image by image info.
+            </summary>
+            <param name="imageInfo">Instance of image info.</param>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.DeleteImage(System.String)">
+            <summary>
+            Deletes image by Id.
+            </summary>
+            <param name="id">Image id.</param>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.LoggingSettings">
             <summary>
@@ -445,145 +661,10 @@
         <member name="M:SymOntoClay.UnityAsset.Core.RunTimeImageSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="T:SymOntoClay.UnityAsset.Core.WorldCore">
-            <summary>
-            Represents core of a game world.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.WorldCore.Instance">
+        <member name="P:SymOntoClay.UnityAsset.Core.WorldFactory.WorldInstance">
             <summary>
             Gets instance of the class.
             </summary>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.SetSettings(SymOntoClay.UnityAsset.Core.WorldSettings)">
-            <summary>
-            Sets general settings into the instance.
-            This method can be run just once in the start of game or application.
-            You can not use the framework before calling this method.
-            Calling other methods before this will provoke exceptions.
-            You can not call the method after disposing the instance.
-            </summary>
-            <param name="settings">Instance of settings.</param>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.WorldCore.EnableLogging">
-            <summary>
-            Gets or sets value of enable logging.
-            It alows enable or disable logging or remote connection for whole components synchronously.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.WorldCore.EnableRemoteConnection">
-            <summary>
-            Gets or sets value of enable remote connection.
-            It alows enable or disable remote connection for whole components synchronously.
-            It doesn't touch local logging.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.GetBipedNPC(SymOntoClay.UnityAsset.Core.BipedNPCSettings)">
-            <summary>
-            Registers an instance of NPC by passed settings.
-            Returned agent provides communication between game level in Unity3D and logical core.
-            </summary>
-            <param name="settings">Instance of settings.</param>
-            <returns>Instance of agent.</returns>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.GetPlayer(SymOntoClay.UnityAsset.Core.PlayerSettings)">
-            <summary>
-            Registers an instance of Player by passed settings.
-            Returned agent provides communication between game level in Unity3D and logical core.
-            </summary>
-            <param name="settings">Instance of settings.</param>
-            <returns>Instance of agent.</returns>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.GetGameObject(SymOntoClay.UnityAsset.Core.GameObjectSettings)">
-            <summary>
-            Registers an instance of game object by passed settings.
-            Returned agent provides communication between game level in Unity3D and logical core.
-            </summary>
-            <param name="settings">Instance of settings.</param>
-            <returns>Instance of agent.</returns>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.GetPlace(SymOntoClay.UnityAsset.Core.PlaceSettings)">
-            <summary>
-            Registers an instance of place by passed settings.
-            Returned agent provides communication between game level in Unity3D and logical core.
-            </summary>
-            <param name="settings">Instance of settings.</param>
-            <returns>Instance of agent.</returns>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.Load(SymOntoClay.UnityAsset.Core.IRunTimeImageInfo)">
-            <summary>
-            Load image by image info.
-            </summary>
-            <param name="imageInfo">Instance of image info.</param>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.Load(System.String)">
-            <summary>
-            Load image by Id.
-            </summary>
-            <param name="id">Image id.</param>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.Load">
-            <summary>
-            Load last image.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.Start">
-            <summary>
-            Start execution loaded image.
-            If there was not loading image default image will be created from source code.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.Stop">
-            <summary>
-            Stop execution.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.WorldCore.IsActive">
-            <summary>
-            Returns <c>true</c> if execution was started, otherwise returns <c>false</c>.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.CreateImage(SymOntoClay.UnityAsset.Core.RunTimeImageSettings)">
-            <summary>
-            Creates (saves) image of execured code by settings.
-            </summary>
-            <param name="settings">Setting of created (saved) image.</param>
-            <returns>Instance of image info about created (saved) image.</returns>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.CreateImage">
-            <summary>
-            Creates (saves) image of execured code.
-            </summary>
-            <returns>Instance of image info about created (saved) image.</returns>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.WorldCore.CurrentImage">
-            <summary>
-            Returns image info about last created (saved) image.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.GetImages">
-            <summary>
-            Returns list of all available image info.
-            </summary>
-            <returns>Instnce of list of all available image info.</returns>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.DeleteImage(SymOntoClay.UnityAsset.Core.IRunTimeImageInfo)">
-            <summary>
-            Deletes image by image info.
-            </summary>
-            <param name="imageInfo">Instance of image info.</param>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.DeleteImage(System.String)">
-            <summary>
-            Deletes image by Id.
-            </summary>
-            <param name="id">Image id.</param>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.WorldCore.Dispose">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.WorldCore.IsDisposed">
-            <inheritdoc/>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.WorldSettings">
             <summary>

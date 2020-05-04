@@ -8,7 +8,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
     /// <inheritdoc/>
     public class PlaceImplementation: IPlace
     {
-        public PlaceImplementation(PlaceSettings settings, WorldContext context)
+        public PlaceImplementation(PlaceSettings settings, IWorldCoreGameComponentContext context)
         {
 
         }

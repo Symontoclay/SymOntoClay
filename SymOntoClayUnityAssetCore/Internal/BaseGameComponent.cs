@@ -5,17 +5,23 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
 {
-    public abstract class BaseWorldCoreComponent : IWorldCoreComponent
+    public abstract class BaseGameComponent : IGameComponent
     {
-        private readonly IWorldCoreContext _coreContext;
+        private readonly IWorldCoreGameComponentContext _worldContext;
         private readonly ILogger _logger;
 
-        protected BaseWorldCoreComponent(IWorldCoreContext coreContext)
+        protected BaseGameComponent(string id, IWorldCoreGameComponentContext worldContext)
         {
-            coreContext.AddWorldComponent(this);
-            _coreContext = coreContext;
-            _logger = _coreContext.Logger;
+            worldContext.AddGameComponent(this);
+            _worldContext = worldContext;
+            _logger = _worldContext.CreateLogger(id);
         }
+
+        public virtual void BeginStarting()
+        {
+        }
+
+        public virtual bool IsReadyForActivating { get; }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
@@ -46,7 +52,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         {
             get
             {
-                lock(_stateLockObj)
+                lock (_stateLockObj)
                 {
                     return _componentState == ComponentState.Disposed;
                 }
@@ -58,13 +64,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         {
             lock (_stateLockObj)
             {
-                if(_componentState == ComponentState.Disposed)
+                if (_componentState == ComponentState.Disposed)
                 {
                     return;
                 }
 
                 _componentState = ComponentState.Disposed;
             }
+
+            _worldContext.RemoveGameComponent(this);
 
             OnDispose();
         }

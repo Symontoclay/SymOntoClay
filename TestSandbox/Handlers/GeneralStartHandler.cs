@@ -18,7 +18,7 @@ namespace TestSandbox.Handlers
 
             var logDir = Path.Combine(Directory.GetCurrentDirectory(), "NpcLogs");
 
-            var instance = WorldCore.Instance;
+            var instance = WorldFactory.WorldInstance;
 
             var settings = new WorldSettings();
 
@@ -40,10 +40,13 @@ namespace TestSandbox.Handlers
             instance.SetSettings(settings);
 
             var npcSettings = new BipedNPCSettings();
+            npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
 
             _logger.Info($"npcSettings = {npcSettings}");
 
             var npc = instance.GetBipedNPC(npcSettings);
+
+            instance.Start();
 
             _logger.Info("End");
         }

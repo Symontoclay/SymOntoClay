@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject;
@@ -30,6 +31,9 @@ namespace SymOntoClay.UnityAsset.Core.World
 
         /// <inheritdoc/>
         public bool EnableRemoteConnection { get => _context.EnableRemoteConnection; set => _context.EnableRemoteConnection = value; }
+
+        /// <inheritdoc/>
+        public ILogger Logger => _context.Logger;
 
         /// <inheritdoc/>
         public IBipedNPC GetBipedNPC(BipedNPCSettings settings)

@@ -1,4 +1,5 @@
-﻿using SymOntoClay.UnityAsset.Core.Internal;
+﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,6 +13,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         {
 
         }
+
+        /// <inheritdoc/>
+        public ILogger Logger => throw new NotImplementedException();
 
         /// <inheritdoc/>
         public void AddToManualControl(IGameObject obj, DeviceOfBiped device)

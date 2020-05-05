@@ -7,7 +7,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 {
     public interface IGameComponent: ISymOntoClayDisposable
     {
+        void LoadFromSourceCode();
         void BeginStarting();
-        bool IsReadyForActivating { get; }
+        bool IsWaited { get; }
     }
 }

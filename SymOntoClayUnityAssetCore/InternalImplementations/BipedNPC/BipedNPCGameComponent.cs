@@ -14,22 +14,32 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
         }
 
         /// <inheritdoc/>
-        public override void BeginStarting()
+        public override void LoadFromSourceCode()
         {
 #if IMAGINE_WORKING
-            Log("BeginStarting");
+            Log("Do");
 #else
             throw new NotImplementedException();
 #endif
         }
 
         /// <inheritdoc/>
-        public override bool IsReadyForActivating
+        public override void BeginStarting()
+        {
+#if IMAGINE_WORKING
+            Log("Do");
+#else
+            throw new NotImplementedException();
+#endif
+        }
+
+        /// <inheritdoc/>
+        public override bool IsWaited
         {
             get
             {
 #if IMAGINE_WORKING
-                Log("IsReadyForActivating");
+                Log("Do");
                 return true;
 #else
             throw new NotImplementedException();

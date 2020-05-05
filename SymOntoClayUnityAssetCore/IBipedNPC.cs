@@ -8,7 +8,7 @@ namespace SymOntoClay.UnityAsset.Core
     /// <summary>
     /// Represents biped NPC (Non-Player Character)
     /// </summary>
-    public interface IBipedNPC: IManualControlling, ISymOntoClayDisposable
+    public interface IBipedNPC: IManualControlling, IWorldComponent
     {
         /// <summary>
         /// Gets or sets value of enable logging.

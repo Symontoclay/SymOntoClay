@@ -17,11 +17,20 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _logger = _worldContext.CreateLogger(id);
         }
 
+        public ILogger Logger => _logger;
+
+        /// <inheritdoc/>
+        public virtual void LoadFromSourceCode()
+        {
+        }
+
+        /// <inheritdoc/>
         public virtual void BeginStarting()
         {
         }
 
-        public virtual bool IsReadyForActivating { get; }
+        /// <inheritdoc/>
+        public virtual bool IsWaited { get; }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]

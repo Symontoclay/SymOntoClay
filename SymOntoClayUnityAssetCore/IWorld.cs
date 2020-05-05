@@ -8,7 +8,7 @@ namespace SymOntoClay.UnityAsset.Core
     /// <summary>
     /// Represents core of a game world.
     /// </summary>
-    public interface IWorld: ISymOntoClayDisposable
+    public interface IWorld: IWorldComponent
     {
         /// <summary>
         /// Sets general settings into the instance.

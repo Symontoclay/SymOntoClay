@@ -6,6 +6,7 @@ using SymOntoClay.UnityAsset.Core.Internal.Threads;
 using SymOntoClay.UnityAsset.Core.Internal.Validators;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
@@ -133,11 +134,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         private void NLoadFromSourceCode()
         {
-#if IMAGINE_WORKING
-            Log("NLoadFromSourceCode");
-#else
-            throw new NotImplementedException();
-#endif
+            lock (_gameComponentsListLockObj)
+            {
+                foreach (var item in _gameComponentsList)
+                {
+                    item.LoadFromSourceCode();
+                }
+            }
         }
 
         public void Start()
@@ -162,9 +165,29 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         {
             ThreadsComponent.Lock();
 
+            lock (_gameComponentsListLockObj)
+            {
+                foreach (var item in _gameComponentsList)
+                {
+                    item.BeginStarting();
+                }
+            }
 
+            WaitForAllGameComponentsWaiting();
 
-            throw new NotImplementedException();
+            ThreadsComponent.UnLock();
+
+            _state = ComponentState.Started;
+        }
+
+        private void WaitForAllGameComponentsWaiting()
+        {
+            lock (_gameComponentsListLockObj)
+            {
+                while(!_gameComponentsList.All(p => p.IsWaited))
+                {
+                }
+            }
         }
 
         public void Stop()
@@ -299,7 +322,17 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 _state = ComponentState.Disposed;
             }
 
-            //TODO: fix me. Do something.
+            foreach(var item in _gameComponentsList)
+            {
+                item.Dispose();
+            }
+
+            foreach(var item in _worldComponentsList)
+            {
+                item.Dispose();
+            }
+
+            CoreLogger.Dispose();
         }
 
         /// <inheritdoc/>

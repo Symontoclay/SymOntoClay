@@ -1,4 +1,5 @@
-﻿using SymOntoClay.UnityAsset.Core.Internal;
+﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,6 +18,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
 
         /// <inheritdoc/>
         public bool EnableLogging { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        /// <inheritdoc/>
+        public ILogger Logger => _gameComponent.Logger;
 
         /// <inheritdoc/>
         public void AddToManualControl(IGameObject obj, DeviceOfBiped device)

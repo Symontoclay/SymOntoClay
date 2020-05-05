@@ -1,14 +1,13 @@
 ﻿using SymOntoClay.CoreHelper;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core
 {
-    /// <summary>
-    /// Represents Player.
-    /// </summary>
-    public interface IPlayer: IManualControlling, IWorldComponent
+    public interface IWorldComponent : ISymOntoClayDisposable
     {
+        ILogger Logger { get; }
     }
 }

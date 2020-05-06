@@ -1,4 +1,5 @@
 ﻿using NLog.Fluent;
+using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal.Images;
 using SymOntoClay.UnityAsset.Core.Internal.Logging;
@@ -45,6 +46,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         public ImagesRegistry ImagesRegistry { get; private set; }
         public ThreadsCoreComponent ThreadsComponent { get; private set; }
+
+        ISyncContext IWorldCoreGameComponentContext.SyncContext => ThreadsComponent;
 
         private readonly object _worldComponentsListLockObj = new object();
         private List<IWorldCoreComponent> _worldComponentsList = new List<IWorldCoreComponent>();
@@ -309,7 +312,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             }
         }
 
-        //TODO: fix me.
         public void Dispose()
         {
             lock (_stateLockObj)

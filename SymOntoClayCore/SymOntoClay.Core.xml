@@ -4,5 +4,142 @@
         <name>SymOntoClay.Core</name>
     </assembly>
     <members>
+        <member name="P:SymOntoClay.Core.Engine.IsDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Engine.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.EngineSettings.Id">
+            <summary>
+            Gets or sets unique Id.
+            It allows us to identify each item of the game.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.EngineSettings.AppFile">
+            <summary>
+            Gets or sets app file.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.EngineSettings.Logger">
+            <summary>
+            Gets or sets reference to logger.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.EngineSettings.Dictionary">
+            <summary>
+            Gets or ses reference to shared dictionary.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.EngineSettings.ModulesStorage">
+            <summary>
+            Gets or ses reference to shared modules storage.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.EngineSettings.ParentStorage">
+            <summary>
+            Gets or sets parent storage.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.Core.EngineSettings.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.EngineSettings.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.EngineSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.ModulesStorage.IsDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.ModulesStorage.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.ModulesStorageSettings.Logger">
+            <summary>
+            Gets or sets reference to logger.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.ModulesStorageSettings.Dictionary">
+            <summary>
+            Gets or ses reference to shared dictionary.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.Core.ModulesStorageSettings.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.ModulesStorageSettings.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.ModulesStorageSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.SharedDictionary.IsDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.SharedDictionary.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.SharedDictionarySettings.Logger">
+            <summary>
+            Gets or sets reference to logger.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.Core.SharedDictionarySettings.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.SharedDictionarySettings.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.SharedDictionarySettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.StandaloneStorage.IsDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.StandaloneStorage.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.StandaloneStorageSettings.Id">
+            <summary>
+            Gets or sets unique Id.
+            It allows us to identify each item of the game.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.StandaloneStorageSettings.AppFile">
+            <summary>
+            Gets or sets app file.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.StandaloneStorageSettings.Logger">
+            <summary>
+            Gets or sets reference to logger.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.StandaloneStorageSettings.Dictionary">
+            <summary>
+            Gets or ses reference to shared dictionary.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.StandaloneStorageSettings.ModulesStorage">
+            <summary>
+            Gets or ses reference to shared modules storage.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.StandaloneStorageSettings.ParentStorage">
+            <summary>
+            Gets or sets parent storage.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.Core.StandaloneStorageSettings.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.StandaloneStorageSettings.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.StandaloneStorageSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
     </members>
 </doc>

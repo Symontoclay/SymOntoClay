@@ -130,5 +130,12 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
                 sb.AppendLine($"{spaces}End {propName}");
             }
         }
+
+        public static void PrintExisting(this StringBuilder sb, uint n, string propName, object value)
+        {
+            var spaces = Spaces(n);
+            var mark = value == null ? "No" : "Yes";
+            sb.AppendLine($"{spaces}{propName} = {mark}");
+        }
     }
 }

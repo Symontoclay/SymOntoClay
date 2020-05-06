@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.CoreHelper;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,5 +11,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         void AddGameComponent(IGameComponent component);
         void RemoveGameComponent(IGameComponent component);
         ILogger CreateLogger(string name);
+        ISyncContext SyncContext { get; }
     }
 }

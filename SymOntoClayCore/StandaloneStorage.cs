@@ -7,6 +7,10 @@ namespace SymOntoClay.Core
 {
     public class StandaloneStorage: IStandaloneStorage, ISymOntoClayDisposable
     {
+        public StandaloneStorage(StandaloneStorageSettings settings)
+        {
+        }
+
         /// <inheritdoc/>
         public bool IsDisposed => throw new NotImplementedException();
 

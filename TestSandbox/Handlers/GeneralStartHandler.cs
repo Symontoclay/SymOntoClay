@@ -22,9 +22,11 @@ namespace TestSandbox.Handlers
 
             var settings = new WorldSettings();
 
-            settings.SourceFilesDirs = new List<string>() { Path.Combine(Directory.GetCurrentDirectory(), "Scripts", "Modules") };
+            settings.SourceFilesDirs = new List<string>() { Path.Combine(Directory.GetCurrentDirectory(), "Source", "Modules") };
 
             settings.ImagesRootDir = Path.Combine(Directory.GetCurrentDirectory(), "Images");
+
+            settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\World\World.txt");
 
             settings.Logging = new LoggingSettings()
             {
@@ -41,6 +43,8 @@ namespace TestSandbox.Handlers
 
             var npcSettings = new BipedNPCSettings();
             npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
+            npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PixKeeper\PixKeeper.txt");
+            npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Apps\PixKeeper\PixKeeper.txt");
 
             _logger.Info($"npcSettings = {npcSettings}");
 

@@ -7,6 +7,11 @@ namespace SymOntoClay.Core
 {
     public class SharedDictionary : IDictionary, ISymOntoClayDisposable
     {
+        public SharedDictionary(SharedDictionarySettings settings)
+        {
+
+        }
+
         /// <inheritdoc/>
         public bool IsDisposed => throw new NotImplementedException();
 

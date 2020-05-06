@@ -7,6 +7,10 @@ namespace SymOntoClay.Core
 {
     public class ModulesStorage : IModulesStorage, ISymOntoClayDisposable
     {
+        public ModulesStorage(ModulesStorageSettings settings)
+        {
+        }
+
         /// <inheritdoc/>
         public bool IsDisposed => throw new NotImplementedException();
 

@@ -17,6 +17,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _logger = _coreContext.Logger;
         }
 
+        protected ILogger Logger => _logger;
+
         /// <inheritdoc/>
         [MethodForLoggingSupport]
         protected void Log(string message)

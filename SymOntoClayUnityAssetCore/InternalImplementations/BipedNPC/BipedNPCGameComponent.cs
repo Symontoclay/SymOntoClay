@@ -11,17 +11,33 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
         public BipedNPCGameComponent(BipedNPCSettings settings, IWorldCoreGameComponentContext worldContext)
             : base(settings.Id, worldContext)
         {
+            var standaloneStorageSettings = new StandaloneStorageSettings();
+            standaloneStorageSettings.Id = settings.Id;
+            standaloneStorageSettings.AppFile = settings.HostFile;
+            standaloneStorageSettings.Logger = Logger;
+            standaloneStorageSettings.Dictionary = worldContext.SharedDictionary;
+            standaloneStorageSettings.ModulesStorage = worldContext.ModulesStorage;
+            standaloneStorageSettings.ParentStorage = worldContext.StandaloneStorage;
+
+            Log($"standaloneStorageSettings = {standaloneStorageSettings}");
+
+            _hostStorage = new StandaloneStorage(standaloneStorageSettings);
+
             var coreEngineSettings = new EngineSettings();
             coreEngineSettings.Id = settings.Id;
             coreEngineSettings.AppFile = settings.LogicFile;
             coreEngineSettings.Logger = Logger;
             coreEngineSettings.SyncContext = worldContext.SyncContext;
+            coreEngineSettings.Dictionary = worldContext.SharedDictionary;
+            coreEngineSettings.ModulesStorage = worldContext.ModulesStorage;
+            coreEngineSettings.ParentStorage = _hostStorage;
 
             Log($"coreEngineSettings = {coreEngineSettings}");
 
             _coreEngine = new Engine(coreEngineSettings);           
         }
 
+        private readonly StandaloneStorage _hostStorage;
         private readonly Engine _coreEngine;
 
         /// <inheritdoc/>

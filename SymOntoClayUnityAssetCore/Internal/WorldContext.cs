@@ -1,8 +1,12 @@
 ﻿using NLog.Fluent;
+using SymOntoClay.Core;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal.Images;
 using SymOntoClay.UnityAsset.Core.Internal.Logging;
+using SymOntoClay.UnityAsset.Core.Internal.ModulesStorage;
+using SymOntoClay.UnityAsset.Core.Internal.SharedDictionary;
+using SymOntoClay.UnityAsset.Core.Internal.Storage;
 using SymOntoClay.UnityAsset.Core.Internal.Threads;
 using SymOntoClay.UnityAsset.Core.Internal.Validators;
 using System;
@@ -34,6 +38,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         {
             ImagesRegistry = new ImagesRegistry(this);
             ThreadsComponent = new ThreadsCoreComponent(this);
+            SharedDictionary = new SharedDictionaryComponent(this);
+            ModulesStorage = new ModulesStorageComponent(this);
+            StandaloneStorage = new StandaloneStorageComponent(settings, this);
         }
 
         public CoreLogger CoreLogger { get; private set; }
@@ -48,6 +55,20 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public ThreadsCoreComponent ThreadsComponent { get; private set; }
 
         ISyncContext IWorldCoreGameComponentContext.SyncContext => ThreadsComponent;
+
+        public SharedDictionaryComponent SharedDictionary { get; private set; }
+
+        SymOntoClay.Core.IDictionary IWorldCoreGameComponentContext.SharedDictionary => SharedDictionary.Dictionary;
+        SymOntoClay.Core.IDictionary IWorldCoreContext.SharedDictionary => SharedDictionary.Dictionary;
+
+        public ModulesStorageComponent ModulesStorage { get; private set; }
+
+        IModulesStorage IWorldCoreGameComponentContext.ModulesStorage => ModulesStorage.ModulesStorage;
+        IModulesStorage IWorldCoreContext.ModulesStorage => ModulesStorage.ModulesStorage;
+
+        public StandaloneStorageComponent StandaloneStorage { get; private set; }
+
+        IStandaloneStorage IWorldCoreGameComponentContext.StandaloneStorage => StandaloneStorage.StandaloneStorage;
 
         private readonly object _worldComponentsListLockObj = new object();
         private List<IWorldCoreComponent> _worldComponentsList = new List<IWorldCoreComponent>();

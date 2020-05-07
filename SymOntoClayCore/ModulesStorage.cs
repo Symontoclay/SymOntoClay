@@ -1,23 +1,70 @@
-﻿using SymOntoClay.CoreHelper;
+﻿using SymOntoClay.Core.Internal;
+using SymOntoClay.CoreHelper;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Core
 {
-    public class ModulesStorage : IModulesStorage, ISymOntoClayDisposable
+    public class ModulesStorage : BaseComponent, IModulesStorage, ISerializableEngine
     {
         public ModulesStorage(ModulesStorageSettings settings)
+            : base(settings.Logger)
         {
         }
 
         /// <inheritdoc/>
-        public bool IsDisposed => throw new NotImplementedException();
+        public void LoadFromSourceCode()
+        {
+            lock (_stateLockObj)
+            {
+                if (_state == ComponentState.Disposed)
+                {
+                    throw new ObjectDisposedException(null);
+                }
+
+#if IMAGINE_WORKING
+                Log("Do");
+#else
+                throw new NotImplementedException();
+#endif
+            }
+        }
 
         /// <inheritdoc/>
-        public void Dispose()
+        public void LoadFromImage(string path)
         {
-            throw new NotImplementedException();
+            lock (_stateLockObj)
+            {
+                if (_state == ComponentState.Disposed)
+                {
+                    throw new ObjectDisposedException(null);
+                }
+
+#if IMAGINE_WORKING
+                Log("Do");
+#else
+                throw new NotImplementedException();
+#endif
+            }
+        }
+
+        /// <inheritdoc/>
+        public void SaveToImage(string path)
+        {
+            lock (_stateLockObj)
+            {
+                if (_state == ComponentState.Disposed)
+                {
+                    throw new ObjectDisposedException(null);
+                }
+
+#if IMAGINE_WORKING
+                Log("Do");
+#else
+                throw new NotImplementedException();
+#endif
+            }
         }
     }
 }

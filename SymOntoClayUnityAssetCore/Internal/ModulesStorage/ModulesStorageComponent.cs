@@ -22,5 +22,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.ModulesStorage
         private readonly SymOntoClay.Core.ModulesStorage _modulesStorage;
 
         public SymOntoClay.Core.IModulesStorage ModulesStorage => _modulesStorage;
+
+        public void LoadFromSourceCode()
+        {
+            _modulesStorage.LoadFromSourceCode();
+        }
     }
 }

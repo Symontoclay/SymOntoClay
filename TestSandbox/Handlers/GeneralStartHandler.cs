@@ -26,6 +26,8 @@ namespace TestSandbox.Handlers
 
             settings.ImagesRootDir = Path.Combine(Directory.GetCurrentDirectory(), "Images");
 
+            settings.TmpDir = Path.Combine(Directory.GetCurrentDirectory(), "Tmp");
+
             settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\World\World.txt");
 
             settings.Logging = new LoggingSettings()

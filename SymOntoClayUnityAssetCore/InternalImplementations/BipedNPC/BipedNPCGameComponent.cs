@@ -2,6 +2,7 @@
 using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
@@ -11,6 +12,13 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
         public BipedNPCGameComponent(BipedNPCSettings settings, IWorldCoreGameComponentContext worldContext)
             : base(settings.Id, worldContext)
         {
+            Log($"settings = {settings}");
+            Log($"worldContext.TmpDir = {worldContext.TmpDir}");
+
+            var tmpDir = Path.Combine(worldContext.TmpDir, settings.Id);
+
+            Directory.CreateDirectory(worldContext.TmpDir);
+
             var standaloneStorageSettings = new StandaloneStorageSettings();
             standaloneStorageSettings.Id = settings.Id;
             standaloneStorageSettings.AppFile = settings.HostFile;
@@ -31,6 +39,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
             coreEngineSettings.Dictionary = worldContext.SharedDictionary;
             coreEngineSettings.ModulesStorage = worldContext.ModulesStorage;
             coreEngineSettings.ParentStorage = _hostStorage;
+            coreEngineSettings.TmpDir = tmpDir;
 
             Log($"coreEngineSettings = {coreEngineSettings}");
 
@@ -43,21 +52,14 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
         /// <inheritdoc/>
         public override void LoadFromSourceCode()
         {
-#if IMAGINE_WORKING
-            Log("Do");
-#else
-            throw new NotImplementedException();
-#endif
+            _hostStorage.LoadFromSourceCode();
+            _coreEngine.LoadFromSourceCode();
         }
 
         /// <inheritdoc/>
         public override void BeginStarting()
         {
-#if IMAGINE_WORKING
-            Log("Do");
-#else
-            throw new NotImplementedException();
-#endif
+            _coreEngine.BeginStarting();
         }
 
         /// <inheritdoc/>
@@ -65,13 +67,16 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
         {
             get
             {
-#if IMAGINE_WORKING
-                Log("Do");
-                return true;
-#else
-            throw new NotImplementedException();
-#endif
+                return _coreEngine.IsWaited;
             }
+        }
+
+        protected override void OnDisposed()
+        {
+            _hostStorage.Dispose();
+            _coreEngine.Dispose();
+
+            base.OnDisposed();
         }
     }
 }

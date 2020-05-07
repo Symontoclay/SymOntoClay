@@ -16,5 +16,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         SymOntoClay.Core.IDictionary SharedDictionary { get; }
         IModulesStorage ModulesStorage { get; }
         IStandaloneStorage StandaloneStorage { get; }
+        string TmpDir { get; }
     }
 }

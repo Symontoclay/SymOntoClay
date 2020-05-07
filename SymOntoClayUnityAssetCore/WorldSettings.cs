@@ -25,6 +25,8 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         public IList<string> DictionariesDirs { get; set; }
 
+        public string TmpDir { get; set; }
+
         /// <summary>
         /// Gets or sets logging settings.
         /// </summary>
@@ -54,6 +56,7 @@ namespace SymOntoClay.UnityAsset.Core
             sb.PrintPODList(n, nameof(SourceFilesDirs), SourceFilesDirs);
             sb.AppendLine($"{spaces}{nameof(ImagesRootDir)} = {ImagesRootDir}");
             sb.PrintPODList(n, nameof(DictionariesDirs), DictionariesDirs);
+            sb.AppendLine($"{spaces}{nameof(TmpDir)} = {TmpDir}");
             sb.AppendLine($"{spaces}{nameof(HostFile)} = {HostFile}");
 
             return sb.ToString();

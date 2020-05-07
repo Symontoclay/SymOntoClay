@@ -21,5 +21,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SharedDictionary
         private readonly SymOntoClay.Core.SharedDictionary _sharedDictionary;
 
         public SymOntoClay.Core.IDictionary Dictionary => _sharedDictionary;
+
+        public void LoadFromSourceCode()
+        {
+            _sharedDictionary.LoadFromSourceCode();
+        }
     }
 }

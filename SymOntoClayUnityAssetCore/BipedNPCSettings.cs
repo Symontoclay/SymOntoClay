@@ -55,10 +55,7 @@ namespace SymOntoClay.UnityAsset.Core
             sb.AppendLine($"{spaces}{nameof(Id)} = {Id}");
             sb.AppendLine($"{spaces}{nameof(LogicFile)} = {LogicFile}");
             sb.AppendLine($"{spaces}{nameof(HostFile)} = {HostFile}");
-
-            var hostListenerMark = HostListener == null ? "No" : "Yes";
-            sb.AppendLine($"{spaces}{nameof(HostListener)} = {hostListenerMark}");
-
+            sb.PrintExisting(n, nameof(HostListener), HostListener);
             return sb.ToString();
         }
     }

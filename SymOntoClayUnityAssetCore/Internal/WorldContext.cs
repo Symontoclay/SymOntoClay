@@ -11,6 +11,7 @@ using SymOntoClay.UnityAsset.Core.Internal.Threads;
 using SymOntoClay.UnityAsset.Core.Internal.Validators;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -23,9 +24,17 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         {
             WorldSettingsValidator.Validate(settings);
 
+            ImplementGeneralSettings(settings);
             CreateLogging(settings);
             CreateComponents(settings);
             //throw new NotImplementedException();
+        }
+
+        private void ImplementGeneralSettings(WorldSettings settings)
+        {
+            _tmpDir = settings.TmpDir;
+
+            Directory.CreateDirectory(_tmpDir);
         }
 
         private void CreateLogging(WorldSettings settings)
@@ -42,6 +51,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             ModulesStorage = new ModulesStorageComponent(this);
             StandaloneStorage = new StandaloneStorageComponent(settings, this);
         }
+
+        private string _tmpDir;
+        public string TmpDir => _tmpDir;
 
         public CoreLogger CoreLogger { get; private set; }
         public ILogger Logger { get; private set; }
@@ -158,6 +170,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         private void NLoadFromSourceCode()
         {
+            SharedDictionary.LoadFromSourceCode();
+            ModulesStorage.LoadFromSourceCode();
+            StandaloneStorage.LoadFromSourceCode();
+
             lock (_gameComponentsListLockObj)
             {
                 foreach (var item in _gameComponentsList)

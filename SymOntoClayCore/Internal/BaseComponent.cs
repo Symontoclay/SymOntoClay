@@ -1,33 +1,19 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.CoreHelper;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.UnityAsset.Core.Internal
+namespace SymOntoClay.Core.Internal
 {
-    public abstract class BaseGameComponent : IGameComponent
+    public abstract class BaseComponent: ISymOntoClayDisposable
     {
-        private readonly IWorldCoreGameComponentContext _worldContext;
+        protected BaseComponent(ILogger logger)
+        {
+            _logger = logger;
+        }
+
         private readonly ILogger _logger;
-
-        protected BaseGameComponent(string id, IWorldCoreGameComponentContext worldContext)
-        {
-            worldContext.AddGameComponent(this);
-            _worldContext = worldContext;
-            _logger = _worldContext.CreateLogger(id);
-        }
-
-        public ILogger Logger => _logger;
-
-        /// <inheritdoc/>
-        public virtual void LoadFromSourceCode()
-        {
-        }
-
-        /// <inheritdoc/>
-        public virtual void BeginStarting()
-        {
-        }
 
         /// <inheritdoc/>
         public virtual bool IsWaited { get; }
@@ -53,7 +39,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _logger.Error(message);
         }
 
-        protected ComponentState _componentState = ComponentState.Created;
+        protected ComponentState _state = ComponentState.Created;
         protected readonly object _stateLockObj = new object();
 
         /// <inheritdoc/>
@@ -63,7 +49,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             {
                 lock (_stateLockObj)
                 {
-                    return _componentState == ComponentState.Disposed;
+                    return _state == ComponentState.Disposed;
                 }
             }
         }
@@ -73,15 +59,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         {
             lock (_stateLockObj)
             {
-                if (_componentState == ComponentState.Disposed)
+                if (_state == ComponentState.Disposed)
                 {
                     return;
                 }
 
-                _componentState = ComponentState.Disposed;
+                _state = ComponentState.Disposed;
             }
-
-            _worldContext.RemoveGameComponent(this);
 
             OnDisposed();
         }

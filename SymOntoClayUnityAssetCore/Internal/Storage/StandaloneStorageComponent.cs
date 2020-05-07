@@ -25,5 +25,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Storage
         private readonly StandaloneStorage _standaloneStorage;
 
         public IStandaloneStorage StandaloneStorage => _standaloneStorage;
+
+        public void LoadFromSourceCode()
+        {
+            _standaloneStorage.LoadFromSourceCode();
+        }
     }
 }

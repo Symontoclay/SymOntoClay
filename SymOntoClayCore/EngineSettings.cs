@@ -20,6 +20,11 @@ namespace SymOntoClay.Core
         public string AppFile { get; set; }
 
         /// <summary>
+        /// Gets or sets host listener.
+        /// </summary>
+        public IHostListener HostListener { get; set; }
+
+        /// <summary>
         /// Gets or sets reference to logger.
         /// </summary>
         public ILogger Logger { get; set; }
@@ -41,6 +46,8 @@ namespace SymOntoClay.Core
 
         public ISyncContext SyncContext { get; set; }
 
+        public string TmpDir { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -61,11 +68,13 @@ namespace SymOntoClay.Core
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(Id)} = {Id}");
             sb.AppendLine($"{spaces}{nameof(AppFile)} = {AppFile}");
+            sb.PrintExisting(n, nameof(HostListener), HostListener);
             sb.PrintExisting(n, nameof(Logger), Logger);
             sb.PrintExisting(n, nameof(Dictionary), Dictionary);
             sb.PrintExisting(n, nameof(ModulesStorage), ModulesStorage);
             sb.PrintExisting(n, nameof(ParentStorage), ParentStorage);
             sb.PrintExisting(n, nameof(SyncContext), SyncContext);
+            sb.AppendLine($"{spaces}{nameof(TmpDir)} = {TmpDir}");
             return sb.ToString();
         }
     }

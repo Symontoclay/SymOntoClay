@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Serialization
 {
-    public class LoaderFromSourceCode : BaseComponent
+    public class LoaderFromSourceCode : BaseComponent, ILoaderFromSourceCode
     {
         public LoaderFromSourceCode(IEngineContext context)
             : base(context.Logger)
@@ -15,7 +15,7 @@ namespace SymOntoClay.Core.Internal.Serialization
 
         private readonly IEngineContext _context;
 
-        public void Run()
+        public void LoadFromSourceFiles()
         {
 #if DEBUG
             Log("Begin");
@@ -29,6 +29,17 @@ namespace SymOntoClay.Core.Internal.Serialization
             foreach (var file in filesList)
             {
                 Log($"file = {file}");
+            }
+#endif
+
+            var parsedFilesList = _context.Parser.Parse(filesList);
+
+#if DEBUG
+            Log($"parsedFilesList.Count = {parsedFilesList.Count}");
+
+            foreach (var parsedFile in parsedFilesList)
+            {
+                Log($"parsedFile = {parsedFile}");
             }
 #endif
 

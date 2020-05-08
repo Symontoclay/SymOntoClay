@@ -1,4 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.Parsing;
+using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.TriggerExecution;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -17,5 +19,7 @@ namespace SymOntoClay.Core.Internal
         IStorageComponent Storage { get; }
         ICodeExecutorComponent CodeExecutor { get; }
         ITriggerExecutorComponent TriggerExecutor { get; }
+        ILoaderFromSourceCode LoaderFromSourceCode { get; }
+        IParser Parser { get; }
     }
 }

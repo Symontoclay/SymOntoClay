@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.TriggerExecution;
@@ -32,6 +33,8 @@ namespace SymOntoClay.Core
             _context.Storage = new StorageComponent(_context);
             _context.CodeExecutor = new CodeExecutorComponent(_context);
             _context.TriggerExecutor = new TriggerExecutorComponent(_context);
+            _context.LoaderFromSourceCode = new LoaderFromSourceCode(_context);
+            _context.Parser = new Parser(_context);
         }
 
         /// <inheritdoc/>
@@ -52,8 +55,7 @@ namespace SymOntoClay.Core
                         throw new ObjectDisposedException(null);
                 }
 
-                var loader = new LoaderFromSourceCode(_context);
-                loader.Run();
+                _context.LoaderFromSourceCode.LoadFromSourceFiles();
 
                 _state = ComponentState.Loaded;
             }

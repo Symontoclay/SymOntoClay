@@ -1,4 +1,8 @@
 ﻿using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.Serialization;
+using SymOntoClay.Core.Internal.Storage;
+using SymOntoClay.Core.Internal.TriggerExecution;
 using SymOntoClay.CoreHelper;
 using System;
 using System.Collections.Generic;
@@ -11,6 +15,23 @@ namespace SymOntoClay.Core
         public Engine(EngineSettings settings)
             : base(settings.Logger)
         {
+            _context = new EngineContext(settings.Logger);
+
+            InitContext(settings);
+        }
+
+        private readonly EngineContext _context;
+
+        private void InitContext(EngineSettings settings)
+        {
+            Log($"settings = {settings}");
+
+            _context.Id = settings.Id;
+            _context.AppFile = settings.AppFile;
+
+            _context.Storage = new StorageComponent(_context);
+            _context.CodeExecutor = new CodeExecutorComponent(_context);
+            _context.TriggerExecutor = new TriggerExecutorComponent(_context);
         }
 
         /// <inheritdoc/>
@@ -18,16 +39,23 @@ namespace SymOntoClay.Core
         {
             lock (_stateLockObj)
             {
-                if (_state == ComponentState.Disposed)
+                switch(_state)
                 {
-                    throw new ObjectDisposedException(null);
+                    case ComponentState.Loaded:
+                    case ComponentState.Stopped:
+                        throw new NotImplementedException();
+
+                    case ComponentState.Started:
+                        throw new NotImplementedException();
+
+                    case ComponentState.Disposed:
+                        throw new ObjectDisposedException(null);
                 }
 
-#if IMAGINE_WORKING
-                Log("Do");
-#else
-                throw new NotImplementedException();
-#endif
+                var loader = new LoaderFromSourceCode(_context);
+                loader.Run();
+
+                _state = ComponentState.Loaded;
             }
         }
 
@@ -106,6 +134,13 @@ namespace SymOntoClay.Core
 #endif
                 }
             }
+        }
+
+        protected override void OnDisposed()
+        {
+            _context.Dispose();
+
+            base.OnDisposed();
         }
     }
 }

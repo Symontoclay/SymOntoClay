@@ -1,5 +1,8 @@
-﻿using NLog;
+﻿using Newtonsoft.Json;
+using NLog;
+using SymOntoClay.Core.Internal.Helpers;
 using System;
+using System.IO;
 using System.Threading;
 using TestSandbox.Handlers;
 
@@ -14,6 +17,7 @@ namespace TestSandbox
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             TstGeneralStartHandler();
+            //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
         }
@@ -24,6 +28,23 @@ namespace TestSandbox
 
             var handler = new GeneralStartHandler();
             handler.Run();
+
+            _logger.Info("End");
+        }
+
+        private static void TstGetParsedFilesInfo()
+        {
+            _logger.Info("Begin");
+
+            var fileName = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Apps\PixKeeper\PixKeeper.txt");
+
+            _logger.Info($"fileName = {fileName}");
+
+            var id = "#020ED339-6313-459A-900D-92F809CEBDC5";
+
+            var resultList = FileHelper.GetParsedFilesInfo(fileName, id);
+
+            _logger.Info($"resultList = {JsonConvert.SerializeObject(resultList, Formatting.Indented)}");
 
             _logger.Info("End");
         }

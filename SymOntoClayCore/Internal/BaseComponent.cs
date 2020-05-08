@@ -15,8 +15,7 @@ namespace SymOntoClay.Core.Internal
 
         private readonly ILogger _logger;
 
-        /// <inheritdoc/>
-        public virtual bool IsWaited { get; }
+        public ILogger Logger => _logger;
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]

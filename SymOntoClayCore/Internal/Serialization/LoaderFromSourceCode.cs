@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.Helpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -26,10 +27,7 @@ namespace SymOntoClay.Core.Internal.Serialization
 #if DEBUG
             Log($"filesList.Count = {filesList.Count}");
 
-            foreach (var file in filesList)
-            {
-                Log($"file = {file}");
-            }
+            Log($"filesList = {filesList.WriteListToString()}");
 #endif
 
             var parsedFilesList = _context.Parser.Parse(filesList);
@@ -37,10 +35,7 @@ namespace SymOntoClay.Core.Internal.Serialization
 #if DEBUG
             Log($"parsedFilesList.Count = {parsedFilesList.Count}");
 
-            foreach (var parsedFile in parsedFilesList)
-            {
-                Log($"parsedFile = {parsedFile}");
-            }
+            Log($"parsedFilesList = {parsedFilesList.WriteListToString()}");
 #endif
 
 #if DEBUG

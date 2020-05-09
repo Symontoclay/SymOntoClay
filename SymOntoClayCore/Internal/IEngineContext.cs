@@ -10,16 +10,15 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal
 {
-    public interface IEngineContext
+    public interface IEngineContext: IBaseLoaderFromSourceCodeContext
     {
         string Id { get; }
         string AppFile { get; }
 
-        ILogger Logger { get; }
+        
         IStorageComponent Storage { get; }
         ICodeExecutorComponent CodeExecutor { get; }
         ITriggerExecutorComponent TriggerExecutor { get; }
         ILoaderFromSourceCode LoaderFromSourceCode { get; }
-        IParser Parser { get; }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class CodeFile: IObjectToString, IShortObjectToString, IObjectToBriefString
+    public class CodeFile: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         /// <inheritdoc/>
         public override string ToString()
@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        string IShortObjectToString.PropertiesToShortString(uint n)
+        string IObjectToShortString.PropertiesToShortString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;

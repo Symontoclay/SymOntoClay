@@ -35,7 +35,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             return sb.ToString();
         }
 
-        public static string GetDefaultToShortStringInformation(this IShortObjectToString targetObject, uint n)
+        public static string GetDefaultToShortStringInformation(this IObjectToShortString targetObject, uint n)
         {
             var spaces = Spaces(n);
             var nextN = n + 4;
@@ -76,7 +76,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             }
         }
 
-        public static void PrintShortObjProp(this StringBuilder sb, uint n, string propName, IShortObjectToString obj)
+        public static void PrintShortObjProp(this StringBuilder sb, uint n, string propName, IObjectToShortString obj)
         {
             var spaces = Spaces(n);
             var nextN = n + 4;
@@ -136,6 +136,42 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             var spaces = Spaces(n);
             var mark = value == null ? "No" : "Yes";
             sb.AppendLine($"{spaces}{propName} = {mark}");
+        }
+
+        public static string WriteListToString<T>(this IEnumerable<T> items) where T: IObjectToString
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("Begin List");
+            foreach(var item in items)
+            {
+                sb.Append(item.ToString(4u));
+            }
+            sb.AppendLine("End List");
+            return sb.ToString();
+        }
+
+        public static string WriteListToShortString<T>(this IEnumerable<T> items) where T : IObjectToShortString
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("Begin List");
+            foreach (var item in items)
+            {
+                sb.Append(item.ToShortString(4u));
+            }
+            sb.AppendLine("End List");
+            return sb.ToString();
+        }
+
+        public static string WriteListToBriefString<T>(this IEnumerable<T> items) where T : IObjectToBriefString
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("Begin List");
+            foreach (var item in items)
+            {
+                sb.Append(item.ToBriefString(4u));
+            }
+            sb.AppendLine("End List");
+            return sb.ToString();
         }
     }
 }

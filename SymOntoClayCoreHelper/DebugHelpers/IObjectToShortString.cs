@@ -7,7 +7,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
     /// <summary>
     /// Provides methods for helping in generating debug string image.
     /// </summary>
-    public interface IShortObjectToString
+    public interface IObjectToShortString
     {
         /// <summary>
         /// Returns a string that represents the current instance in short way.

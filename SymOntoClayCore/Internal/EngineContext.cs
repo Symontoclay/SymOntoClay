@@ -38,6 +38,6 @@ namespace SymOntoClay.Core.Internal
         ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;
         ITriggerExecutorComponent IEngineContext.TriggerExecutor => TriggerExecutor;
         ILoaderFromSourceCode IEngineContext.LoaderFromSourceCode => LoaderFromSourceCode;
-        IParser IEngineContext.Parser => Parser;
+        IParser IBaseLoaderFromSourceCodeContext.Parser => Parser;
     }
 }

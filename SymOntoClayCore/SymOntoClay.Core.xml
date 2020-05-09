@@ -144,6 +144,20 @@
             Gets or sets app file.
             </summary>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.Token.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.Token.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.Token.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.Unknown">
+            <summary>
+            Default value. Represents nothing.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.ParsedFileInfo.ToString">
             <inheritdoc/>
         </member>

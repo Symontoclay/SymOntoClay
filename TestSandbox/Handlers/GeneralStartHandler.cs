@@ -10,7 +10,7 @@ namespace TestSandbox.Handlers
 {
     public class GeneralStartHandler
     {
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public void Run()
         {

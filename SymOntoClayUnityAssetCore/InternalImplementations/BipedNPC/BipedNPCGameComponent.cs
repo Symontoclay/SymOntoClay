@@ -71,6 +71,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
             }
         }
 
+        /// <inheritdoc/>
         protected override void OnDisposed()
         {
             _hostStorage.Dispose();

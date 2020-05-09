@@ -173,6 +173,9 @@
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCGameComponent.IsWaited">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCGameComponent.OnDisposed">
+            <inheritdoc/>
+        </member>
         <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCImplementation">
             <inheritdoc/>
         </member>

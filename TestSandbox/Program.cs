@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Threading;
 using TestSandbox.Handlers;
+using TestSandbox.Parsing;
 
 namespace TestSandbox
 {
@@ -16,10 +17,21 @@ namespace TestSandbox
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-            TstGeneralStartHandler();
+            TstParsing();
+            //TstGeneralStartHandler();
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstParsing()
+        {
+            _logger.Info("Begin");
+
+            var handler = new ParsingHandler();
+            handler.Run();
+
+            _logger.Info("End");
         }
 
         private static void TstGeneralStartHandler()

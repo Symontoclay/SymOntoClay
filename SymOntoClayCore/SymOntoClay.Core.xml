@@ -144,6 +144,30 @@
             Gets or sets app file.
             </summary>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.BaseInternalParser.Log(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.BaseInternalParser.Warning(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.BaseInternalParser.Error(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Parsing.Internal.InternalParserContext.Count">
+            <summary>
+            Number of remaining characters.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.KeyWordTokenKind.Unknown">
+            <summary>
+            Default value. Represents nothing.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Parsing.Internal.Lexer.Count">
+            <summary>
+            Number of remaining characters.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.Token.ToString">
             <inheritdoc/>
         </member>
@@ -156,6 +180,21 @@
         <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.Unknown">
             <summary>
             Default value. Represents nothing.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.OpenFigureBracket">
+            <summary>
+            Represents symbol `{`.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.CloseFigureBracket">
+            <summary>
+            Represents symbol `}`.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.Semicolon">
+            <summary>
+            Represents symbol `;`.
             </summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.ParsedFileInfo.ToString">

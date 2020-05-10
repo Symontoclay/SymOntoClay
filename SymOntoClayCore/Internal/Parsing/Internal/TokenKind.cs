@@ -9,6 +9,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <summary>
         /// Default value. Represents nothing.
         /// </summary>
-        Unknown
+        Unknown,
+        Word,
+        Number,
+        String,
+        Identifier,
+        /// <summary>
+        /// Represents symbol `{`.
+        /// </summary>
+        OpenFigureBracket,
+
+        /// <summary>
+        /// Represents symbol `}`.
+        /// </summary>
+        CloseFigureBracket,
+        /// <summary>
+        /// Represents symbol `;`.
+        /// </summary>
+        Semicolon,
     }
 }

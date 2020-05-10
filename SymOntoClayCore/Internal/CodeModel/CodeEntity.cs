@@ -7,6 +7,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class CodeEntity : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
+        public KindOfCodeEntity Kind { get; set; }
+        public string Name { get; set; } = string.Empty;
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -25,6 +28,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;
             var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
             return sb.ToString();
         }
 
@@ -46,6 +51,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;
             var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
             return sb.ToString();
         }
 
@@ -67,6 +74,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;
             var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
             return sb.ToString();
         }
     }

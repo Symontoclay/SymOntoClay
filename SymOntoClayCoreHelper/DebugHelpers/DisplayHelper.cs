@@ -122,10 +122,70 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             }
             else
             {
-                sb.AppendLine($"{spaces}Begin {propName}");
+                sb.AppendLine($"{spaces}{propName} = Begin List");
                 foreach (var item in items)
                 {
                     sb.AppendLine($"{nextNSpaces}{item}");
+                }
+                sb.AppendLine($"{spaces}End List");
+            }
+        }
+
+        public static void PrintObjListProp<T>(this StringBuilder sb, uint n, string propName, IEnumerable<T> items) where T : IObjectToString
+        {
+            var spaces = Spaces(n);
+            var nextN = n + 4;
+
+            if (items == null)
+            {
+                sb.AppendLine($"{spaces}{propName} = NULL");
+            }
+            else
+            {
+                sb.AppendLine($"{spaces}Begin {propName}");
+                foreach (var item in items)
+                {
+                    sb.Append(item.ToString(nextN));
+                }
+                sb.AppendLine($"{spaces}End {propName}");
+            }
+        }
+
+        public static void PrintShortObjListProp<T>(this StringBuilder sb, uint n, string propName, IEnumerable<T> items) where T: IObjectToShortString
+        {
+            var spaces = Spaces(n);
+            var nextN = n + 4;
+
+            if (items == null)
+            {
+                sb.AppendLine($"{spaces}{propName} = NULL");
+            }
+            else
+            {
+                sb.AppendLine($"{spaces}Begin {propName}");
+                foreach (var item in items)
+                {
+                    sb.Append(item.ToShortString(nextN));
+                }
+                sb.AppendLine($"{spaces}End {propName}");
+            }
+        }
+
+        public static void PrintBriefObjListProp<T>(this StringBuilder sb, uint n, string propName, IEnumerable<T> items) where T : IObjectToBriefString
+        {
+            var spaces = Spaces(n);
+            var nextN = n + 4;
+
+            if (items == null)
+            {
+                sb.AppendLine($"{spaces}{propName} = NULL");
+            }
+            else
+            {
+                sb.AppendLine($"{spaces}Begin {propName}");
+                foreach (var item in items)
+                {
+                    sb.Append(item.ToBriefString(nextN));
                 }
                 sb.AppendLine($"{spaces}End {propName}");
             }

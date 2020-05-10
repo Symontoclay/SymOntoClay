@@ -8,7 +8,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
     public class Token: IObjectToString
     {
         public TokenKind TokenKind { get; set; } = TokenKind.Unknown;
-        public TokenKind KeyWordTokenKind { get; set; } = TokenKind.Unknown;
+        public KeyWordTokenKind KeyWordTokenKind { get; set; } = KeyWordTokenKind.Unknown;
         public string Content { get; set; } = string.Empty;
 
         public int Pos { get; set; }

@@ -7,6 +7,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class CodeFile: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
+        public string FileName { get; set; }
+        public bool IsMain { get; set; }
+        public List<CodeEntity> CodeEntities { get; set; } = new List<CodeEntity>();
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -25,6 +29,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;
             var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(FileName)} = {FileName}");
+            sb.AppendLine($"{spaces}{nameof(IsMain)} = {IsMain}");
+            sb.PrintObjListProp(n, nameof(CodeEntities), CodeEntities);
             return sb.ToString();
         }
 
@@ -46,6 +53,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;
             var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(FileName)} = {FileName}");
+            sb.AppendLine($"{spaces}{nameof(IsMain)} = {IsMain}");
             return sb.ToString();
         }
 
@@ -67,6 +76,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;
             var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(FileName)} = {FileName}");
+            sb.AppendLine($"{spaces}{nameof(IsMain)} = {IsMain}");
             return sb.ToString();
         }
     }

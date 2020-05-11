@@ -9,6 +9,5 @@ namespace SymOntoClay.Core.Internal.Parsing
     {
         CodeFile Parse(ParsedFileInfo parsedFileInfo);
         List<CodeFile> Parse(List<ParsedFileInfo> parsedFileInfoList);
-        List<CodeEntity> Parse(string text);
     }
 }

@@ -25,7 +25,10 @@ namespace SymOntoClay.Core.Internal.Parsing
 
             var text = File.ReadAllText(parsedFileInfo.FileName);
 
-            var parsedEntitiesList = Parse(text);
+#if DEBUG
+            Log($"text = {text}");
+#endif
+
 
 
 
@@ -46,15 +49,6 @@ namespace SymOntoClay.Core.Internal.Parsing
             }
 
             return result;
-        }
-
-        public List<CodeEntity> Parse(string text)
-        {
-#if DEBUG
-            Log($"text = {text}");
-#endif
-
-            throw new NotImplementedException();
         }
     }
 }

@@ -34,7 +34,7 @@ namespace TestSandbox.Parsing
 
             var internalParserContext = new InternalParserContext(text, parserContext);
 
-            var parser = new TopLevelParser(internalParserContext);
+            var parser = new SourceCodeParser(internalParserContext);
             parser.Run();
 
             var result = parser.Result;

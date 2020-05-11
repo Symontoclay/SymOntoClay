@@ -144,6 +144,17 @@
             Gets or sets app file.
             </summary>
         </member>
+        <member name="T:SymOntoClay.Core.Internal.Parsing.Internal.AppPaser">
+            <summary>
+            It is parser for app.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.AppPaser.OnEnter">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.AppPaser.OnRun">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.BaseInternalParser.Log(System.String)">
             <inheritdoc/>
         </member>
@@ -167,6 +178,14 @@
             <summary>
             Number of remaining characters.
             </summary>
+        </member>
+        <member name="T:SymOntoClay.Core.Internal.Parsing.Internal.SourceCodeParser">
+            <summary>
+            It is top level parser for source code file.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.SourceCodeParser.OnRun">
+            <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.Token.ToString">
             <inheritdoc/>

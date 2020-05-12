@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Parsing.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -29,10 +30,23 @@ namespace SymOntoClay.Core.Internal.Parsing
             Log($"text = {text}");
 #endif
 
+            var internalParserContext = new InternalParserContext(text, _context);
 
+            var parser = new SourceCodeParser(internalParserContext);
+            parser.Run();
 
+            var codeEntitiesList = parser.Result;
 
-            throw new NotImplementedException();
+#if DEBUG
+            Log($"codeEntitiesList = {codeEntitiesList.WriteListToString()}");
+#endif
+
+            var result = new CodeFile();
+            result.IsMain = parsedFileInfo.IsMain;
+            result.FileName = parsedFileInfo.FileName;
+            result.CodeEntities = codeEntitiesList;
+
+            return result;
         }
 
         public List<CodeFile> Parse(List<ParsedFileInfo> parsedFileInfoList)

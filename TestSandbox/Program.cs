@@ -17,8 +17,8 @@ namespace TestSandbox
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-            TstParsing();
-            //TstGeneralStartHandler();
+            //TstParsing();
+            TstGeneralStartHandler();
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

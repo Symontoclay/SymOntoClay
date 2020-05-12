@@ -39,12 +39,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(_currToken.KeyWordTokenKind), _currToken.KeyWordTokenKind, null);
+                            throw new UnexpectedTokenException(_currToken);
                     }
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(_currToken.TokenKind), _currToken.TokenKind, null);
+                    throw new UnexpectedTokenException(_currToken);
             }
         }
     }

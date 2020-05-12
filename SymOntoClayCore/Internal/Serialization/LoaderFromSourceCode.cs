@@ -38,6 +38,8 @@ namespace SymOntoClay.Core.Internal.Serialization
             Log($"parsedFilesList = {parsedFilesList.WriteListToString()}");
 #endif
 
+            throw new NotImplementedException();
+
 #if DEBUG
             Log("End");
 #endif

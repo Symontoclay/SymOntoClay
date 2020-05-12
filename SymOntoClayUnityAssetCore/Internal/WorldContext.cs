@@ -56,9 +56,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public string TmpDir => _tmpDir;
 
         public CoreLogger CoreLogger { get; private set; }
-        public ILogger Logger { get; private set; }
+        public IEntityLogger Logger { get; private set; }
 
-        ILogger IWorldCoreGameComponentContext.CreateLogger(string name)
+        IEntityLogger IWorldCoreGameComponentContext.CreateLogger(string name)
         {
             return CoreLogger.CreateLogger(name);
         }
@@ -70,8 +70,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         public SharedDictionaryComponent SharedDictionary { get; private set; }
 
-        SymOntoClay.Core.IDictionary IWorldCoreGameComponentContext.SharedDictionary => SharedDictionary.Dictionary;
-        SymOntoClay.Core.IDictionary IWorldCoreContext.SharedDictionary => SharedDictionary.Dictionary;
+        SymOntoClay.Core.IEntityDictionary IWorldCoreGameComponentContext.SharedDictionary => SharedDictionary.Dictionary;
+        SymOntoClay.Core.IEntityDictionary IWorldCoreContext.SharedDictionary => SharedDictionary.Dictionary;
 
         public ModulesStorageComponent ModulesStorage { get; private set; }
 

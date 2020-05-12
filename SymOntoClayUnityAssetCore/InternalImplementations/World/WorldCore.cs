@@ -33,7 +33,7 @@ namespace SymOntoClay.UnityAsset.Core.World
         public bool EnableRemoteConnection { get => _context.EnableRemoteConnection; set => _context.EnableRemoteConnection = value; }
 
         /// <inheritdoc/>
-        public ILogger Logger => _context.Logger;
+        public IEntityLogger Logger => _context.Logger;
 
         /// <inheritdoc/>
         public IBipedNPC GetBipedNPC(BipedNPCSettings settings)

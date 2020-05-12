@@ -9,8 +9,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
     public interface IWorldCoreContext
     {
         void AddWorldComponent(IWorldCoreComponent component);
-        ILogger Logger { get; }
-        SymOntoClay.Core.IDictionary SharedDictionary { get; }
+        IEntityLogger Logger { get; }
+        SymOntoClay.Core.IEntityDictionary SharedDictionary { get; }
         IModulesStorage ModulesStorage { get; }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TestSandbox.PlatformImplementations
 {
-    public class LoggerImpementation: ILogger
+    public class LoggerImpementation: IEntityLogger
     {
         private readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 

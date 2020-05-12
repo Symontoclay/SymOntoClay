@@ -17,7 +17,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _lexer = new Lexer(text, context.Logger);
         }
 
-        public ILogger Logger => _context.Logger;
+        public IEntityLogger Logger => _context.Logger;
+        public IEntityDictionary Dictionary => _context.Dictionary;
 
         private IParserContext _context;
         private Lexer _lexer;

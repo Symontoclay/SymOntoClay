@@ -7,8 +7,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class CodeEntity : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public KindOfCodeEntity Kind { get; set; }
-        public string Name { get; set; } = string.Empty;
+        public KindOfCodeEntity Kind { get; set; } = KindOfCodeEntity.Unknown;
+        public Name Name { get; set; } = new Name();
 
         /// <inheritdoc/>
         public override string ToString()
@@ -29,7 +29,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var nextN = n + 4;
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
-            sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
+            sb.PrintObjProp(n, nameof(Name), Name);
             return sb.ToString();
         }
 

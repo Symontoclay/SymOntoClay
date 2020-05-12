@@ -20,13 +20,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
         }
 
-        public Lexer(string text, ILogger logger)
+        public Lexer(string text, IEntityLogger logger)
         {
             _logger = logger;
             _items = new Queue<char>(text.ToList());
         }
 
-        private ILogger _logger;
+        private IEntityLogger _logger;
         private Queue<char> _items;
         private State _state = State.Init;
 

@@ -38,8 +38,12 @@ namespace SymOntoClay.Unity3DAsset.Test
 
             var firstItem = result.Single();
 
+            var nameKey = _parserContext.Dictionary.GetKey("Enemy");
+
+            Assert.AreNotEqual(nameKey, 0);
+
             Assert.AreEqual(firstItem.Kind, KindOfCodeEntity.App);
-            Assert.AreEqual(firstItem.Name, "Enemy");
+            Assert.AreEqual(firstItem.Name.Key, nameKey);
         }
     }
 }

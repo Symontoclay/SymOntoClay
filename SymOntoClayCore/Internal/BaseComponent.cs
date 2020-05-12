@@ -8,14 +8,14 @@ namespace SymOntoClay.Core.Internal
 {
     public abstract class BaseComponent: ISymOntoClayDisposable
     {
-        protected BaseComponent(ILogger logger)
+        protected BaseComponent(IEntityLogger logger)
         {
             _logger = logger;
         }
 
-        private readonly ILogger _logger;
+        private readonly IEntityLogger _logger;
 
-        public ILogger Logger => _logger;
+        public IEntityLogger Logger => _logger;
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]

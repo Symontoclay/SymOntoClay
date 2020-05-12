@@ -15,7 +15,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
         }
 
         /// <inheritdoc/>
-        public ILogger Logger => throw new NotImplementedException();
+        public IEntityLogger Logger => throw new NotImplementedException();
 
         /// <inheritdoc/>
         public bool IsDisposed => throw new NotImplementedException();

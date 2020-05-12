@@ -8,7 +8,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
     public abstract class BaseGameComponent : IGameComponent
     {
         private readonly IWorldCoreGameComponentContext _worldContext;
-        private readonly ILogger _logger;
+        private readonly IEntityLogger _logger;
 
         protected BaseGameComponent(string id, IWorldCoreGameComponentContext worldContext)
         {
@@ -17,7 +17,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _logger = _worldContext.CreateLogger(id);
         }
 
-        public ILogger Logger => _logger;
+        public IEntityLogger Logger => _logger;
 
         /// <inheritdoc/>
         public virtual void LoadFromSourceCode()

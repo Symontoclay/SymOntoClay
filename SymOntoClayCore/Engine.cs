@@ -1,7 +1,9 @@
 ﻿using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Serialization;
+using SymOntoClay.Core.Internal.States;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.TriggerExecution;
 using SymOntoClay.CoreHelper;
@@ -29,12 +31,15 @@ namespace SymOntoClay.Core
 
             _context.Id = settings.Id;
             _context.AppFile = settings.AppFile;
+            _context.Dictionary = settings.Dictionary;
 
             _context.Storage = new StorageComponent(_context);
             _context.CodeExecutor = new CodeExecutorComponent(_context);
             _context.TriggerExecutor = new TriggerExecutorComponent(_context);
             _context.LoaderFromSourceCode = new LoaderFromSourceCode(_context);
             _context.Parser = new Parser(_context);
+            _context.InstancesStorage = new InstancesStorageComponent(_context);
+            _context.StatesStorage = new StatesStorageComponent(_context);
         }
 
         /// <inheritdoc/>

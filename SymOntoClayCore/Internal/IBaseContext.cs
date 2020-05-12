@@ -7,6 +7,6 @@ namespace SymOntoClay.Core.Internal
 {
     public interface IBaseContext
     {
-        ILogger Logger { get; }
+        IEntityLogger Logger { get; }
     }
 }

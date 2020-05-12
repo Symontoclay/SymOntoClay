@@ -7,7 +7,7 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.Logging
 {
-    public class InternalLogger: ILogger
+    public class InternalLogger: IEntityLogger
     {
         private readonly object _lockObj = new object();
         private readonly IList<IPlatformLogger> _platformLoggers;

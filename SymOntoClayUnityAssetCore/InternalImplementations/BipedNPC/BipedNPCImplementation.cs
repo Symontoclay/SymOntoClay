@@ -20,7 +20,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
         public bool EnableLogging { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         /// <inheritdoc/>
-        public ILogger Logger => _gameComponent.Logger;
+        public IEntityLogger Logger => _gameComponent.Logger;
 
         /// <inheritdoc/>
         public void AddToManualControl(IGameObject obj, DeviceOfBiped device)

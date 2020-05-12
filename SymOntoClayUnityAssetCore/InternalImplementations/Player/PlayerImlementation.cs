@@ -15,7 +15,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        public ILogger Logger => throw new NotImplementedException();
+        public IEntityLogger Logger => throw new NotImplementedException();
 
         /// <inheritdoc/>
         public void AddToManualControl(IGameObject obj, DeviceOfBiped device)

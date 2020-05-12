@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.Dict;
 using SymOntoClay.CoreHelper;
 using System;
 using System.Collections.Generic;
@@ -6,11 +7,58 @@ using System.Text;
 
 namespace SymOntoClay.Core
 {
-    public class SharedDictionary : BaseComponent, IDictionary, ISerializableEngine
+    public class SharedDictionary : BaseComponent, IEntityDictionary, ISerializableEngine
     {
         public SharedDictionary(SharedDictionarySettings settings)
             :base(settings.Logger)
         {
+            _dictionary = new EntityDictionary(settings.Logger);
+        }
+
+        private readonly EntityDictionary _dictionary;
+
+        public string Name
+        {
+            get
+            {
+                lock (_stateLockObj)
+                {
+                    if (_state == ComponentState.Disposed)
+                    {
+                        throw new ObjectDisposedException(null);
+                    }
+
+                    return _dictionary.Name;
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public ulong GetKey(string name)
+        {
+            lock (_stateLockObj)
+            {
+                if (_state == ComponentState.Disposed)
+                {
+                    throw new ObjectDisposedException(null);
+                }
+
+                return _dictionary.GetKey(name);
+            }
+        }
+
+        /// <inheritdoc/>
+        public string GetName(ulong key)
+        {
+            lock (_stateLockObj)
+            {
+                if (_state == ComponentState.Disposed)
+                {
+                    throw new ObjectDisposedException(null);
+                }
+
+                return _dictionary.GetName(key);
+            }
         }
 
         /// <inheritdoc/>
@@ -23,11 +71,7 @@ namespace SymOntoClay.Core
                     throw new ObjectDisposedException(null);
                 }
 
-#if IMAGINE_WORKING
-                Log("Do");
-#else
-                throw new NotImplementedException();
-#endif
+                _dictionary.LoadFromSourceCode();
             }
         }
 
@@ -41,11 +85,7 @@ namespace SymOntoClay.Core
                     throw new ObjectDisposedException(null);
                 }
 
-#if IMAGINE_WORKING
-                Log("Do");
-#else
-                throw new NotImplementedException();
-#endif
+                _dictionary.LoadFromImage(path);
             }
         }
 
@@ -59,11 +99,7 @@ namespace SymOntoClay.Core
                     throw new ObjectDisposedException(null);
                 }
 
-#if IMAGINE_WORKING
-                Log("Do");
-#else
-                throw new NotImplementedException();
-#endif
+                _dictionary.SaveToImage(path);
             }
         }
     }

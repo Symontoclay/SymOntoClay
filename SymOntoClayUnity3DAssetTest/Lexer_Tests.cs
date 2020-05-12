@@ -16,7 +16,7 @@ namespace SymOntoClay.Unity3DAsset.Test
             _logger = new EmptyLogger();
         }
 
-        private ILogger _logger;
+        private IEntityLogger _logger;
 
         [Test]
         public void Lexer_Tests_Case1()

@@ -8,6 +8,6 @@ namespace SymOntoClay.UnityAsset.Core
 {
     public interface IWorldComponent : ISymOntoClayDisposable
     {
-        ILogger Logger { get; }
+        IEntityLogger Logger { get; }
     }
 }

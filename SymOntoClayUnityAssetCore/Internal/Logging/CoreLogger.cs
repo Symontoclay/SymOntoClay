@@ -13,7 +13,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
         private readonly IWorldCoreContext _coreContext;
         private readonly CoreLoggerSettings _settings;
         private readonly LoggerContext _loggerContext = new LoggerContext();
-        private readonly ILogger _coreLogger;
+        private readonly IEntityLogger _coreLogger;
 
         public CoreLogger(LoggingSettings settings, IWorldCoreContext coreContext)
         {
@@ -62,9 +62,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
             }
         }
 
-        public ILogger WordCoreLogger => _coreLogger;
+        public IEntityLogger WordCoreLogger => _coreLogger;
 
-        public ILogger CreateLogger(string name)
+        public IEntityLogger CreateLogger(string name)
         {
             return new InternalLogger(_loggerContext, name, _settings);
         }

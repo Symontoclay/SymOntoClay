@@ -10,7 +10,7 @@ namespace SymOntoClay.Core
         /// <summary>
         /// Gets or sets reference to logger.
         /// </summary>
-        public ILogger Logger { get; set; }
+        public IEntityLogger Logger { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

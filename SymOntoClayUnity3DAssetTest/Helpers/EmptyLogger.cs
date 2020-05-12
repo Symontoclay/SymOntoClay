@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SymOntoClay.Unity3DAsset.Test.Helpers
 {
-    public class EmptyLogger : ILogger
+    public class EmptyLogger : IEntityLogger
     {
         public void Error(string message)
         {

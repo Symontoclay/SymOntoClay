@@ -3,19 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core
+namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class ModulesStorageSettings : IObjectToString
+    public class Name: IObjectToString
     {
-        /// <summary>
-        /// Gets or sets reference to logger.
-        /// </summary>
-        public IEntityLogger Logger { get; set; }
-
-        /// <summary>
-        /// Gets or ses reference to shared dictionary.
-        /// </summary>
-        public IEntityDictionary Dictionary { get; set; }
+        public ulong Key { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -35,8 +27,7 @@ namespace SymOntoClay.Core
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;
             var sb = new StringBuilder();
-            sb.PrintExisting(n, nameof(Logger), Logger);
-            sb.PrintExisting(n, nameof(Dictionary), Dictionary);
+            sb.AppendLine($"{spaces}{nameof(Key)} = {Key}");
             return sb.ToString();
         }
     }

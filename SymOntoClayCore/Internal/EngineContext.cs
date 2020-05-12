@@ -1,6 +1,8 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Serialization;
+using SymOntoClay.Core.Internal.States;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.TriggerExecution;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -12,7 +14,7 @@ namespace SymOntoClay.Core.Internal
 {
     public class EngineContext : BaseComponent, IEngineContext
     {
-        public EngineContext(ILogger logger)
+        public EngineContext(IEntityLogger logger)
             : base(logger)
         {
         }
@@ -28,11 +30,15 @@ namespace SymOntoClay.Core.Internal
         /// </summary>
         public string AppFile { get; set; }
 
+        public IEntityDictionary Dictionary { get; set; }
+
         public StorageComponent Storage { get; set; }
         public CodeExecutorComponent CodeExecutor { get; set; }
         public TriggerExecutorComponent TriggerExecutor { get; set; }
         public LoaderFromSourceCode LoaderFromSourceCode { get; set; }
         public Parser Parser { get; set; }
+        public InstancesStorageComponent InstancesStorage { get; set; }
+        public StatesStorageComponent StatesStorage { get; set; }
 
         IStorageComponent IEngineContext.Storage => Storage;
         ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;

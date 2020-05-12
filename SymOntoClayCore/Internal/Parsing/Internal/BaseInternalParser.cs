@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,10 +12,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _context = context;
             _logger = context.Logger;
+            _dictionary = context.Dictionary;
         }
 
         protected readonly InternalParserContext _context;
-        private ILogger _logger;
+        private IEntityLogger _logger;
+        private IEntityDictionary _dictionary;
 
         public void Run()
         {
@@ -57,6 +60,27 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected void Exit()
         {
             _isExited = true;
+        }
+
+        protected ulong GetKey(string name)
+        {
+            return _dictionary.GetKey(name);
+        }
+
+        protected Name ParseName(string text)
+        {
+#if DEBUG
+            Log($"text = {text}");
+#endif
+
+            var name = new Name();
+
+            if (!text.Contains("::") && !text.Contains("("))
+            {
+                name.Key = GetKey(text);
+                return name;
+            }
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>

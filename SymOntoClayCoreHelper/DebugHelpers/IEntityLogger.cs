@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SymOntoClay.CoreHelper.DebugHelpers
 {
-    public interface ILogger
+    public interface IEntityLogger
     {
         void Log(string message);
         void Error(string message);

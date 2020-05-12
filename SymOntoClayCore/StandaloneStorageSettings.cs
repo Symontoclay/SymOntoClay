@@ -21,12 +21,12 @@ namespace SymOntoClay.Core
         /// <summary>
         /// Gets or sets reference to logger.
         /// </summary>
-        public ILogger Logger { get; set; }
+        public IEntityLogger Logger { get; set; }
 
         /// <summary>
         /// Gets or ses reference to shared dictionary.
         /// </summary>
-        public IDictionary Dictionary { get; set; }
+        public IEntityDictionary Dictionary { get; set; }
 
         /// <summary>
         /// Gets or ses reference to shared modules storage.

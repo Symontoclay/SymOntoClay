@@ -6,36 +6,11 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal
 {
-    public abstract class BaseComponent: ISymOntoClayDisposable
+    public abstract class BaseComponent: BaseLoggedComponent, ISymOntoClayDisposable
     {
         protected BaseComponent(IEntityLogger logger)
+            : base(logger)
         {
-            _logger = logger;
-        }
-
-        private readonly IEntityLogger _logger;
-
-        public IEntityLogger Logger => _logger;
-
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
-        protected void Log(string message)
-        {
-            _logger.Log(message);
-        }
-
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
-        protected void Warning(string message)
-        {
-            _logger.Warning(message);
-        }
-
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
-        protected void Error(string message)
-        {
-            _logger.Error(message);
         }
 
         protected ComponentState _state = ComponentState.Created;

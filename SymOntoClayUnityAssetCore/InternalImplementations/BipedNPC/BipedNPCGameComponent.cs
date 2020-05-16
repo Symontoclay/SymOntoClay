@@ -21,6 +21,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
 
             var standaloneStorageSettings = new StandaloneStorageSettings();
             standaloneStorageSettings.Id = settings.Id;
+            standaloneStorageSettings.IsWorld = false;
             standaloneStorageSettings.AppFile = settings.HostFile;
             standaloneStorageSettings.Logger = Logger;
             standaloneStorageSettings.Dictionary = worldContext.SharedDictionary;

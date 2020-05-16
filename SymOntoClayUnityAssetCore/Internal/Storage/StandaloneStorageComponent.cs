@@ -12,6 +12,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Storage
         {
             var standaloneStorageSettings = new StandaloneStorageSettings();
             standaloneStorageSettings.Id = "world";
+            standaloneStorageSettings.IsWorld = true;
             standaloneStorageSettings.Logger = coreContext.Logger;
             standaloneStorageSettings.ModulesStorage = coreContext.ModulesStorage;
             standaloneStorageSettings.Dictionary = coreContext.SharedDictionary;

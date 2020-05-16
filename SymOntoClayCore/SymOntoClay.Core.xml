@@ -64,19 +64,19 @@
         <member name="M:SymOntoClay.Core.EngineSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.BaseComponent.Log(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.BaseComponent.Warning(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.BaseComponent.Error(System.String)">
-            <inheritdoc/>
-        </member>
         <member name="P:SymOntoClay.Core.Internal.BaseComponent.IsDisposed">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.BaseComponent.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.BaseLoggedComponent.Log(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.BaseLoggedComponent.Warning(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.BaseLoggedComponent.Error(System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeEntity.ToString">

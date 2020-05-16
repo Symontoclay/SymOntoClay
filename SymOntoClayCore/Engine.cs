@@ -60,6 +60,8 @@ namespace SymOntoClay.Core
                         throw new ObjectDisposedException(null);
                 }
 
+                _context.Storage.LoadFromSourceCode();
+                _context.StatesStorage.LoadFromSourceCode();
                 _context.LoaderFromSourceCode.LoadFromSourceFiles();
 
                 _state = ComponentState.Loaded;

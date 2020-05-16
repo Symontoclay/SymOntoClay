@@ -13,5 +13,23 @@ namespace SymOntoClay.Core.Internal.Storage
         }
 
         private readonly IEngineContext _context;
+
+        private GlobalStorage _globalStorage;
+
+        private List<RealStorage> _storagesList;
+
+        public void LoadFromSourceCode()
+        {
+            _storagesList = new List<RealStorage>();
+
+            _globalStorage = new GlobalStorage(Logger, _context.Dictionary);
+            _storagesList.Add(_globalStorage);
+
+#if IMAGINE_WORKING
+            Log("Do");
+#else
+                throw new NotImplementedException();
+#endif
+        }
     }
 }

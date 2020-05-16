@@ -13,5 +13,14 @@ namespace SymOntoClay.Core.Internal.States
         }
 
         private readonly IEngineContext _context;
+
+        public void LoadFromSourceCode()
+        {
+#if IMAGINE_WORKING
+            Log("Do");
+#else
+                throw new NotImplementedException();
+#endif
+        }
     }
 }

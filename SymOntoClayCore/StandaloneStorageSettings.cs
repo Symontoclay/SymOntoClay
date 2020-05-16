@@ -7,6 +7,8 @@ namespace SymOntoClay.Core
 {
     public class StandaloneStorageSettings: IObjectToString
     {
+        public bool IsWorld { get; set; }
+
         /// <summary>
         /// Gets or sets unique Id.
         /// It allows us to identify each item of the game.
@@ -56,6 +58,7 @@ namespace SymOntoClay.Core
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;
             var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(IsWorld)} = {IsWorld}");
             sb.AppendLine($"{spaces}{nameof(Id)} = {Id}");
             sb.AppendLine($"{spaces}{nameof(AppFile)} = {AppFile}");
             sb.PrintExisting(n, nameof(Logger), Logger);

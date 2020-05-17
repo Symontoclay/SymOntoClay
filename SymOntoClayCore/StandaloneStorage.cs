@@ -20,6 +20,22 @@ namespace SymOntoClay.Core
         private readonly StandaloneStorageSettings _settings;
         private RealStorage _storage;
 
+        IStorage IStandaloneStorage.Storage
+        {
+            get
+            {
+                lock (_stateLockObj)
+                {
+                    if (_state == ComponentState.Disposed)
+                    {
+                        throw new ObjectDisposedException(null);
+                    }
+
+                    return _storage;
+                }
+            }
+        }
+
         /// <inheritdoc/>
         public void LoadFromSourceCode()
         {
@@ -30,13 +46,22 @@ namespace SymOntoClay.Core
                     throw new ObjectDisposedException(null);
                 }
 
-                if(_settings.IsWorld)
+                var storageSettings = new RealStorageSettings();
+                storageSettings.Logger = Logger;
+                storageSettings.EntityDictionary = _settings.Dictionary;
+
+                if(_settings?.ParentStorage?.Storage != null)
                 {
-                    _storage = new WorldStorage(_settings.Logger, _settings.Dictionary);
+                    storageSettings.ParentsStorages = new List<IStorage>() { _settings.ParentStorage.Storage };
+                }
+
+                if (_settings.IsWorld)
+                {
+                    _storage = new WorldStorage(storageSettings);
                 }
                 else
                 {
-                    _storage = new HostStorage(_settings.Logger, _settings.Dictionary);
+                    _storage = new HostStorage(storageSettings);
                 }
 
 #if IMAGINE_WORKING

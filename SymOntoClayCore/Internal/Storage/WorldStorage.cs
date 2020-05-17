@@ -7,8 +7,8 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class WorldStorage: RealStorage
     {
-        public WorldStorage(IEntityLogger logger, IEntityDictionary entityDictionary)
-            : base(KindOfStorage.World, logger, entityDictionary)
+        public WorldStorage(RealStorageSettings settings)
+            : base(KindOfStorage.World, settings)
         {
         }
     }

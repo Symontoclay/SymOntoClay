@@ -45,7 +45,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
         }
 
         /// <inheritdoc/>
-        string IShortObjectToString.PropertiesToShortString(uint n)
+        string IObjectToShortString.PropertiesToShortString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;

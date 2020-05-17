@@ -6,5 +6,6 @@ namespace SymOntoClay.Core
 {
     public interface IStandaloneStorage
     {
+        IStorage Storage { get; }
     }
 }

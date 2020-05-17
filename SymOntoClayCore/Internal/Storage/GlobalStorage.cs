@@ -7,8 +7,8 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class GlobalStorage: RealStorage
     {
-        public GlobalStorage(IEntityLogger logger, IEntityDictionary entityDictionary)
-            : base(KindOfStorage.Global, logger, entityDictionary)
+        public GlobalStorage(RealStorageSettings settings)
+            : base(KindOfStorage.Global, settings)
         {
         }
     }

@@ -7,13 +7,29 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class RealStorage : BaseLoggedComponent, IStorage
     {
-        public RealStorage(KindOfStorage kind, IEntityLogger logger, IEntityDictionary entityDictionary)
-            : base(logger)
+        public RealStorage(KindOfStorage kind, RealStorageSettings settings)
+            : base(settings.Logger)
         {
+#if DEBUG
+            Log($"kind = {kind}");
+            Log($"settings = {settings}");
+#endif
+
             _kind = kind;
             _realStorageContext = new RealStorageContext();
-            _realStorageContext.Logger = logger;
-            _realStorageContext.EntityDictionary = entityDictionary;
+            _realStorageContext.Logger = settings.Logger;
+            _realStorageContext.EntityDictionary = settings.EntityDictionary;
+
+            var parents = settings.ParentsStorages;
+
+            if(parents == null)
+            {
+                _realStorageContext.Parents = new List<IStorage>();
+            }
+            else
+            {
+                _realStorageContext.Parents = parents;
+            }
 
             _logicalStorage = new LogicalStorage.LogicalStorage(_kind, _realStorageContext);
             _realStorageContext.LogicalStorage = _logicalStorage;
@@ -43,5 +59,90 @@ namespace SymOntoClay.Core.Internal.Storage
         public IMethodsStorage MethodsStorage => _methodsStorage;
         public ITriggersStorage TriggersStorage => _triggersStorage;
         public IInheritanceStorage InheritanceStorage => _inheritanceStorage;
+
+        IStorage IStorage.GetConsolidatedStorage()
+        {
+#if DEBUG
+            Log("Do");
+#endif
+
+            throw new NotImplementedException();
+        }
+
+        void IStorage.CollectParents(IList<IStorage> result, uint level)
+        {
+#if DEBUG
+            Log($"result?.Count = {result?.Count}");
+            Log($"level = {level}");
+#endif
+
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return ToString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(uint n)
+        {
+            return this.GetDefaultToStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToString.PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var nextN = n + 4;
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {_kind}");
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToShortString()
+        {
+            return ToShortString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToShortString(uint n)
+        {
+            return this.GetDefaultToShortStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToShortString.PropertiesToShortString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var nextN = n + 4;
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {_kind}");
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToBriefString()
+        {
+            return ToBriefString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToBriefString(uint n)
+        {
+            return this.GetDefaultToBriefStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToBriefString.PropertiesToBriefString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var nextN = n + 4;
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {_kind}");
+            return sb.ToString();
+        }
     }
 }

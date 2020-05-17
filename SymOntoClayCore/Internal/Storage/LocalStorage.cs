@@ -7,8 +7,8 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class LocalStorage: RealStorage
     {
-        public LocalStorage(IEntityLogger logger, IEntityDictionary entityDictionary)
-            : base(KindOfStorage.Local, logger, entityDictionary)
+        public LocalStorage(RealStorageSettings settings)
+            : base(KindOfStorage.Local, settings)
         {
         }
     }

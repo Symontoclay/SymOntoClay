@@ -33,7 +33,7 @@ namespace SymOntoClay.Core
             _context.AppFile = settings.AppFile;
             _context.Dictionary = settings.Dictionary;
 
-            _context.Storage = new StorageComponent(_context);
+            _context.Storage = new StorageComponent(_context, settings.ParentStorage);
             _context.CodeExecutor = new CodeExecutorComponent(_context);
             _context.TriggerExecutor = new TriggerExecutorComponent(_context);
             _context.LoaderFromSourceCode = new LoaderFromSourceCode(_context);

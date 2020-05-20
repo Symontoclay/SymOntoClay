@@ -7,12 +7,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class PrimaryRulePart: BaseRulePart
     {
+        public List<SecondaryRulePart> SecondaryParts { get; set; } = new List<SecondaryRulePart>();
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-
+            sb.PrintBriefObjListProp(n, nameof(SecondaryParts), SecondaryParts);
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -22,7 +24,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-
+            sb.PrintBriefObjListProp(n, nameof(SecondaryParts), SecondaryParts);
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -32,7 +34,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-
+            sb.PrintBriefObjListProp(n, nameof(SecondaryParts), SecondaryParts);
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }

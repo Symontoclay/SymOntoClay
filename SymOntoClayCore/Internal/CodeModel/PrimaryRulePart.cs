@@ -5,20 +5,14 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class CodeEntity : AnnotatedItem
+    public class PrimaryRulePart: BaseRulePart
     {
-        public KindOfCodeEntity Kind { get; set; } = KindOfCodeEntity.Unknown;
-        public Name Name { get; set; } = new Name();
-        public List<InheritanceItem> InheritanceItems { get; set; } = new List<InheritanceItem>();
-
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
-            sb.PrintObjProp(n, nameof(Name), Name);
-            sb.PrintObjListProp(n, nameof(InheritanceItems), InheritanceItems);
+
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -28,8 +22,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
-            sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -39,8 +32,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
-            sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
+
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }

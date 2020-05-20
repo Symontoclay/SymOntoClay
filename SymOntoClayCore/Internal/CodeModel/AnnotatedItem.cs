@@ -5,12 +5,8 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class Name: IObjectToString, IObjectToShortString, IObjectToBriefString
+    public abstract class AnnotatedItem: IAnnotatedItem, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public string OriginalValue { get; set; }
-        public ulong OriginalKey { get; set; }
-        public ulong Key { get; set; }
-
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -26,12 +22,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         string IObjectToString.PropertiesToString(uint n)
         {
+            return PropertiesToString(n);
+        }
+
+        protected virtual string PropertiesToString(uint n)
+        {
             var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(OriginalValue)} = {OriginalValue}");
-            sb.AppendLine($"{spaces}{nameof(OriginalKey)} = {OriginalKey}");
-            sb.AppendLine($"{spaces}{nameof(Key)} = {Key}");
             return sb.ToString();
         }
 
@@ -50,12 +47,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         string IObjectToShortString.PropertiesToShortString(uint n)
         {
+            return PropertiesToShortString(n);
+        }
+
+        protected virtual string PropertiesToShortString(uint n)
+        {
             var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(OriginalValue)} = {OriginalValue}");
-            sb.AppendLine($"{spaces}{nameof(OriginalKey)} = {OriginalKey}");
-            sb.AppendLine($"{spaces}{nameof(Key)} = {Key}");
             return sb.ToString();
         }
 
@@ -74,12 +72,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         string IObjectToBriefString.PropertiesToBriefString(uint n)
         {
+            return PropertiesToBriefString(n);
+        }
+
+        protected virtual string PropertiesToBriefString(uint n)
+        {
             var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(OriginalValue)} = {OriginalValue}");
-            sb.AppendLine($"{spaces}{nameof(OriginalKey)} = {OriginalKey}");
-            sb.AppendLine($"{spaces}{nameof(Key)} = {Key}");
             return sb.ToString();
         }
     }

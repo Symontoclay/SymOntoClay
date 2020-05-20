@@ -39,7 +39,8 @@ namespace SymOntoClay.Core.Internal.Storage
             _realStorageContext.TriggersStorage = _triggersStorage;
             _inheritanceStorage = new InheritanceStorage.InheritanceStorage(_kind, _realStorageContext);
             _realStorageContext.InheritanceStorage = _inheritanceStorage;
-
+            _synonymsStorage = new SynonymsStorage.SynonymsStorage(_kind, _realStorageContext);
+            _realStorageContext.SynonymsStorage = _synonymsStorage;
         }
 
         private readonly KindOfStorage _kind;
@@ -59,6 +60,10 @@ namespace SymOntoClay.Core.Internal.Storage
         public IMethodsStorage MethodsStorage => _methodsStorage;
         public ITriggersStorage TriggersStorage => _triggersStorage;
         public IInheritanceStorage InheritanceStorage => _inheritanceStorage;
+
+        private SynonymsStorage.SynonymsStorage _synonymsStorage;
+
+        public ISynonymsStorage SynonymsStorage => _synonymsStorage;
 
         IStorage IStorage.GetConsolidatedStorage()
         {

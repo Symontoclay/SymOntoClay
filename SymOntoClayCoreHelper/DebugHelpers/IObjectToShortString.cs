@@ -48,7 +48,6 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
         string IObjectToShortString.PropertiesToShortString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
             var sb = new StringBuilder();
             return sb.ToString();
         } 

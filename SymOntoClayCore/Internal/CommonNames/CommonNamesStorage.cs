@@ -15,7 +15,7 @@ namespace SymOntoClay.Core.Internal.CommonNames
 
         private readonly IEngineContext _context;
 
-        public IName ApplicationName { get; private set; }
+        public Name ApplicationName { get; private set; }
 
         public void LoadFromSourceCode()
         {

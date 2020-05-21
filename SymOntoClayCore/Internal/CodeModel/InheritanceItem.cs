@@ -7,7 +7,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class InheritanceItem: AnnotatedItem
     {
-        public IName Name { get; set; } = new Name();
+        public Name Name { get; set; } = new Name();
         public IFuzzyExpr Range { get; set; }
         public bool IsSystemDefined { get; set; }
 

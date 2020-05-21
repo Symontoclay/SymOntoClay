@@ -22,12 +22,12 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 
         private readonly RealStorageContext _realStorageContext;
 
-        public void SetInheritance(IName subItem, InheritanceItem inheritanceItem)
+        public void SetInheritance(Name subItem, InheritanceItem inheritanceItem)
         {
             SetInheritance(subItem, inheritanceItem, true);
         }
 
-        public void SetInheritance(IName subItem, InheritanceItem inheritanceItem, bool isPrimary)
+        public void SetInheritance(Name subItem, InheritanceItem inheritanceItem, bool isPrimary)
         {
 #if DEBUG
             Log($"subItem = {subItem}");

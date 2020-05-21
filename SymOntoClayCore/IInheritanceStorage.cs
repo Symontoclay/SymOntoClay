@@ -8,7 +8,7 @@ namespace SymOntoClay.Core
     public interface IInheritanceStorage
     {
         KindOfStorage Kind { get; }
-        void SetInheritance(IName subItem, InheritanceItem inheritanceItem);
-        void SetInheritance(IName subItem, InheritanceItem inheritanceItem, bool isPrimary);
+        void SetInheritance(Name subItem, InheritanceItem inheritanceItem);
+        void SetInheritance(Name subItem, InheritanceItem inheritanceItem, bool isPrimary);
     }
 }

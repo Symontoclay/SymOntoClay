@@ -6,7 +6,7 @@ using System.Text;
 namespace SymOntoClay.Core.Internal.CodeModel
 {
     /// <inheritdoc/>
-    public class Name: IName
+    public class Name: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         /// <inheritdoc/>
         public string OriginalValue { get; set; }

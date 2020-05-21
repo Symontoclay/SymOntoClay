@@ -43,7 +43,7 @@ namespace SymOntoClay.Unity3DAsset.Test
             Assert.AreNotEqual(nameKey, 0);
 
             Assert.AreEqual(firstItem.Kind, KindOfCodeEntity.App);
-            Assert.AreEqual(firstItem.Name.Key, nameKey);
+            Assert.AreEqual(firstItem.Name.NameKey, nameKey);
         }
     }
 }

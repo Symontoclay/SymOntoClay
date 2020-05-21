@@ -5,17 +5,13 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    /// <inheritdoc/>
     public class Name: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        /// <inheritdoc/>
-        public string OriginalValue { get; set; }
+        public string OriginalNameValue { get; set; }
+        public ulong OriginalNameKey { get; set; }
+        public ulong NameKey { get; set; }
 
-        /// <inheritdoc/>
-        public ulong OriginalKey { get; set; }
 
-        /// <inheritdoc/>
-        public ulong Key { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -35,9 +31,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(OriginalValue)} = {OriginalValue}");
-            sb.AppendLine($"{spaces}{nameof(OriginalKey)} = {OriginalKey}");
-            sb.AppendLine($"{spaces}{nameof(Key)} = {Key}");
+            sb.AppendLine($"{spaces}{nameof(OriginalNameValue)} = {OriginalNameValue}");
+            sb.AppendLine($"{spaces}{nameof(OriginalNameKey)} = {OriginalNameKey}");
+            sb.AppendLine($"{spaces}{nameof(NameKey)} = {NameKey}");
             return sb.ToString();
         }
 
@@ -59,9 +55,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(OriginalValue)} = {OriginalValue}");
-            sb.AppendLine($"{spaces}{nameof(OriginalKey)} = {OriginalKey}");
-            sb.AppendLine($"{spaces}{nameof(Key)} = {Key}");
+            sb.AppendLine($"{spaces}{nameof(OriginalNameValue)} = {OriginalNameValue}");
+            sb.AppendLine($"{spaces}{nameof(OriginalNameKey)} = {OriginalNameKey}");
+            sb.AppendLine($"{spaces}{nameof(NameKey)} = {NameKey}");
             return sb.ToString();
         }
 
@@ -83,9 +79,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(OriginalValue)} = {OriginalValue}");
-            sb.AppendLine($"{spaces}{nameof(OriginalKey)} = {OriginalKey}");
-            sb.AppendLine($"{spaces}{nameof(Key)} = {Key}");
+            sb.AppendLine($"{spaces}{nameof(OriginalNameValue)} = {OriginalNameValue}");
+            sb.AppendLine($"{spaces}{nameof(OriginalNameKey)} = {OriginalNameKey}");
+            sb.AppendLine($"{spaces}{nameof(NameKey)} = {NameKey}");
             return sb.ToString();
         }
     }

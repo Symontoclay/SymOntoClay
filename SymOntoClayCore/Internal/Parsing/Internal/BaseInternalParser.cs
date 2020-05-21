@@ -74,12 +74,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #endif
 
             var name = new Name();
-            name.OriginalValue = text;
+            name.OriginalNameValue = text;
 
             if (!text.Contains("::") && !text.Contains("("))
             {
-                name.OriginalKey = GetKey(text);
-                name.Key = name.OriginalKey;
+                name.OriginalNameKey = GetKey(text);
+                name.NameKey = name.OriginalNameKey;
                 return name;
             }
             throw new NotImplementedException();

@@ -20,9 +20,9 @@ namespace SymOntoClay.Core.Internal.CommonNames
         public void LoadFromSourceCode()
         {
             var applicationName = new Name();
-            applicationName.OriginalValue = StandardNamesConstants.ApplicationTypeName;
-            applicationName.OriginalKey = _context.Dictionary.GetKey(applicationName.OriginalValue);
-            applicationName.Key = applicationName.OriginalKey;
+            applicationName.OriginalNameValue = StandardNamesConstants.ApplicationTypeName;
+            applicationName.OriginalNameKey = _context.Dictionary.GetKey(applicationName.OriginalNameValue);
+            applicationName.NameKey = applicationName.OriginalNameKey;
 
             ApplicationName = applicationName;
 

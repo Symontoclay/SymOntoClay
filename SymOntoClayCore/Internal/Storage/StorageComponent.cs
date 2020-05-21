@@ -18,6 +18,8 @@ namespace SymOntoClay.Core.Internal.Storage
 
         private GlobalStorage _globalStorage;
 
+        public IStorage GlobalStorage => _globalStorage;
+
         private List<RealStorage> _storagesList;
 
         public void LoadFromSourceCode()

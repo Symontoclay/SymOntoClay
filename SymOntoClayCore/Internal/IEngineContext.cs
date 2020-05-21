@@ -20,5 +20,6 @@ namespace SymOntoClay.Core.Internal
         ICodeExecutorComponent CodeExecutor { get; }
         ITriggerExecutorComponent TriggerExecutor { get; }
         ILoaderFromSourceCode LoaderFromSourceCode { get; }
+        ICommonNamesStorage CommonNamesStorage { get; }
     }
 }

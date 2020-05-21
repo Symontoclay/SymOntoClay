@@ -46,6 +46,11 @@ namespace SymOntoClay.Core.Internal.Parsing
             result.FileName = parsedFileInfo.FileName;
             result.CodeEntities = codeEntitiesList;
 
+            foreach(var codeEntity in codeEntitiesList)
+            {
+                codeEntity.CodeFile = result;
+            }
+
             return result;
         }
 

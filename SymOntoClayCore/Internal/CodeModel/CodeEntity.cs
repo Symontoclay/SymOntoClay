@@ -12,6 +12,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public List<InheritanceItem> InheritanceItems { get; set; } = new List<InheritanceItem>();
         public RuleInstance RuleInstance { get; set; }
 
+        public CodeFile CodeFile { get; set; }
+        public CodeEntity ParentCodeEntity { get; set; }
+        public List<CodeEntity> SubItems { get; set; } = new List<CodeEntity>();
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
@@ -21,6 +25,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjProp(n, nameof(Name), Name);
             sb.PrintObjListProp(n, nameof(InheritanceItems), InheritanceItems);
             sb.PrintObjProp(n, nameof(RuleInstance), RuleInstance);
+
+            sb.PrintBriefObjProp(n, nameof(CodeFile), CodeFile);
+            sb.PrintBriefObjProp(n, nameof(ParentCodeEntity), ParentCodeEntity);
+            sb.PrintObjListProp(n, nameof(SubItems), SubItems);
+
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -34,6 +43,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
             sb.PrintShortObjListProp(n, nameof(InheritanceItems), InheritanceItems);
             sb.PrintShortObjProp(n, nameof(RuleInstance), RuleInstance);
+
+            sb.PrintBriefObjProp(n, nameof(CodeFile), CodeFile);
+            sb.PrintBriefObjProp(n, nameof(ParentCodeEntity), ParentCodeEntity);
+            sb.PrintShortObjListProp(n, nameof(SubItems), SubItems);
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -47,6 +61,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
             sb.PrintBriefObjListProp(n, nameof(InheritanceItems), InheritanceItems);
             sb.PrintBriefObjProp(n, nameof(RuleInstance), RuleInstance);
+
+            sb.PrintBriefObjProp(n, nameof(CodeFile), CodeFile);
+            sb.PrintBriefObjProp(n, nameof(ParentCodeEntity), ParentCodeEntity);
+            sb.PrintBriefObjListProp(n, nameof(SubItems), SubItems);
+
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }

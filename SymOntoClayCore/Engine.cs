@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CommonNames;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Serialization;
@@ -40,6 +41,7 @@ namespace SymOntoClay.Core
             _context.Parser = new Parser(_context);
             _context.InstancesStorage = new InstancesStorageComponent(_context);
             _context.StatesStorage = new StatesStorageComponent(_context);
+            _context.CommonNamesStorage = new CommonNamesStorage(_context);
         }
 
         /// <inheritdoc/>
@@ -60,6 +62,7 @@ namespace SymOntoClay.Core
                         throw new ObjectDisposedException(null);
                 }
 
+                _context.CommonNamesStorage.LoadFromSourceCode();
                 _context.Storage.LoadFromSourceCode();
                 _context.StatesStorage.LoadFromSourceCode();
                 _context.LoaderFromSourceCode.LoadFromSourceFiles();

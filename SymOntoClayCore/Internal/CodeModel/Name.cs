@@ -5,10 +5,16 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class Name: IObjectToString, IObjectToShortString, IObjectToBriefString
+    /// <inheritdoc/>
+    public class Name: IName
     {
+        /// <inheritdoc/>
         public string OriginalValue { get; set; }
+
+        /// <inheritdoc/>
         public ulong OriginalKey { get; set; }
+
+        /// <inheritdoc/>
         public ulong Key { get; set; }
 
         /// <inheritdoc/>

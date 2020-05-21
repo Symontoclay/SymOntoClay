@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SymOntoClay.CoreHelper.CollectionsHelpers;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -202,9 +203,12 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
         {
             var sb = new StringBuilder();
             sb.AppendLine("Begin List");
-            foreach(var item in items)
+            if(!items.IsNullOrEmpty())
             {
-                sb.Append(item.ToString(4u));
+                foreach (var item in items)
+                {
+                    sb.Append(item.ToString(4u));
+                }
             }
             sb.AppendLine("End List");
             return sb.ToString();
@@ -214,9 +218,12 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
         {
             var sb = new StringBuilder();
             sb.AppendLine("Begin List");
-            foreach (var item in items)
+            if (!items.IsNullOrEmpty())
             {
-                sb.Append(item.ToShortString(4u));
+                foreach (var item in items)
+                {
+                    sb.Append(item.ToShortString(4u));
+                }
             }
             sb.AppendLine("End List");
             return sb.ToString();
@@ -226,9 +233,12 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
         {
             var sb = new StringBuilder();
             sb.AppendLine("Begin List");
-            foreach (var item in items)
+            if (!items.IsNullOrEmpty())
             {
-                sb.Append(item.ToBriefString(4u));
+                foreach (var item in items)
+                {
+                    sb.Append(item.ToBriefString(4u));
+                }
             }
             sb.AppendLine("End List");
             return sb.ToString();

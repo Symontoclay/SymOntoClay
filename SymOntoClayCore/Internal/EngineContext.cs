@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CommonNames;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Serialization;
@@ -39,11 +40,14 @@ namespace SymOntoClay.Core.Internal
         public Parser Parser { get; set; }
         public InstancesStorageComponent InstancesStorage { get; set; }
         public StatesStorageComponent StatesStorage { get; set; }
+        public CommonNamesStorage CommonNamesStorage { get; set; }
 
         IStorageComponent IEngineContext.Storage => Storage;
         ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;
         ITriggerExecutorComponent IEngineContext.TriggerExecutor => TriggerExecutor;
         ILoaderFromSourceCode IEngineContext.LoaderFromSourceCode => LoaderFromSourceCode;
         IParser IBaseLoaderFromSourceCodeContext.Parser => Parser;
+        ICommonNamesStorage IEngineContext.CommonNamesStorage => CommonNamesStorage;
+
     }
 }

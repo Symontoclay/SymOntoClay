@@ -6,5 +6,6 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public interface IStorageComponent
     {
+        IStorage GlobalStorage { get; }
     }
 }

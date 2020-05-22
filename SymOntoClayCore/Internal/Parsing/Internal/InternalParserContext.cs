@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,6 +20,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         public IEntityLogger Logger => _context.Logger;
         public IEntityDictionary Dictionary => _context.Dictionary;
+        public ICodeModelContext CodeModelContext => _context.CodeModelContext;
 
         private IParserContext _context;
         private Lexer _lexer;

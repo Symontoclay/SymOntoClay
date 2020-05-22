@@ -5,15 +5,15 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class AnnotatedItem: BaseLoggedComponent, IAnnotatedItem, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class Namespace : BaseLoggedComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        protected AnnotatedItem(ICodeModelContext context)
+        public Namespace(ICodeModelContext context)
             : base(context.Logger)
         {
             _context = context;
         }
 
-        protected readonly ICodeModelContext _context;
+        private readonly ICodeModelContext _context;
 
         /// <inheritdoc/>
         public override string ToString()
@@ -29,11 +29,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         string IObjectToString.PropertiesToString(uint n)
-        {
-            return PropertiesToString(n);
-        }
-
-        protected virtual string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
@@ -55,11 +50,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         string IObjectToShortString.PropertiesToShortString(uint n)
         {
-            return PropertiesToShortString(n);
-        }
-
-        protected virtual string PropertiesToShortString(uint n)
-        {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             return sb.ToString();
@@ -79,11 +69,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         string IObjectToBriefString.PropertiesToBriefString(uint n)
-        {
-            return PropertiesToBriefString(n);
-        }
-
-        protected virtual string PropertiesToBriefString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();

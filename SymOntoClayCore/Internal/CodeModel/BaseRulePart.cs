@@ -7,6 +7,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class BaseRulePart: AnnotatedItem
     {
+        protected BaseRulePart(ICodeModelContext context)
+            : base(context)
+        {
+        }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {

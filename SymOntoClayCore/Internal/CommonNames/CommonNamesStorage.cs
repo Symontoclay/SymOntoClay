@@ -19,12 +19,19 @@ namespace SymOntoClay.Core.Internal.CommonNames
 
         public void LoadFromSourceCode()
         {
-            var applicationName = new Name();
-            applicationName.OriginalNameValue = StandardNamesConstants.ApplicationTypeName;
-            applicationName.OriginalNameKey = _context.Dictionary.GetKey(applicationName.OriginalNameValue);
-            applicationName.NameKey = applicationName.OriginalNameKey;
+            throw new NotImplementedException();
 
-            ApplicationName = applicationName;
+            //TODO: Resolve this after refactoring.
+            //var applicationName = new Name(_context.CodeModelContext);
+            //applicationName.OriginalNameValue = StandardNamesConstants.ApplicationTypeName;
+
+            throw new NotImplementedException();
+
+            //TODO: Resolve this after refactoring.
+            //applicationName.OriginalNameKey = _context.Dictionary.GetKey(applicationName.OriginalNameValue);
+            //applicationName.NameKey = applicationName.OriginalNameKey;
+
+            //ApplicationName = applicationName;
 
 #if IMAGINE_WORKING
             Log("Do");

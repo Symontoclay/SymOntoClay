@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.Parsing;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Parsing;
 using System;
 using System.Collections.Generic;
 using System.Text;

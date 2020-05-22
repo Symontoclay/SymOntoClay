@@ -7,6 +7,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class FuzzyValue: AnnotatedItem
     {
+        public FuzzyValue(ICodeModelContext context)
+            : base(context)
+        {
+        }
+
         public float Value { get; set; }
 
         /// <inheritdoc/>

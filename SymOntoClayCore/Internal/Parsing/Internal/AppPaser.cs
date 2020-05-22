@@ -25,11 +25,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
 
         private State _state = State.Init;
-        public CodeEntity Result { get; set; } = new CodeEntity();
+        public CodeEntity Result { get; set; }
 
         /// <inheritdoc/>
         protected override void OnEnter()
         {
+            Result = new CodeEntity(_context.CodeModelContext);
             Result.Kind = KindOfCodeEntity.App;
         }
 

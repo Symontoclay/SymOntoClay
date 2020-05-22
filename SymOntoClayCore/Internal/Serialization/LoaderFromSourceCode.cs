@@ -120,13 +120,13 @@ namespace SymOntoClay.Core.Internal.Serialization
 
         private void AddSystemDefinedSettingsToApp(CodeEntity codeEntity)
         {
-            var applicationInheritanceItem = new InheritanceItem()
+            var applicationInheritanceItem = new InheritanceItem(_context.CodeModelContext)
             {
                 IsSystemDefined = true
             };
 
             applicationInheritanceItem.Name = _context.CommonNamesStorage.ApplicationName;
-            applicationInheritanceItem.Range = new FuzzyConstExpr(1.0F);
+            applicationInheritanceItem.Range = new FuzzyConstExpr(1.0F, _context.CodeModelContext);
 
 #if DEBUG
             Log($"applicationInheritanceItem = {applicationInheritanceItem}");

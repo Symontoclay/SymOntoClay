@@ -5,8 +5,9 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public interface IFuzzyExpr: IObjectToString, IObjectToShortString, IObjectToBriefString
+    public interface ICodeModelContext
     {
-        FuzzyValue Deffuzzificate(IStorage execContext);
+        IEntityLogger Logger { get; }
+        IEntityDictionary Dictionary { get; }
     }
 }

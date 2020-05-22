@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Dict;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -9,7 +10,7 @@ using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.Parsing
 {
-    public class TstParserContext : IParserContext
+    public class TstParserContext : IParserContext, ICodeModelContext
     {
         public TstParserContext()
         {
@@ -24,5 +25,7 @@ namespace TestSandbox.Parsing
         private readonly EntityDictionary _dictionary;
 
         public IEntityDictionary Dictionary => _dictionary;
+
+        ICodeModelContext IParserContext.CodeModelContext => this;
     }
 }

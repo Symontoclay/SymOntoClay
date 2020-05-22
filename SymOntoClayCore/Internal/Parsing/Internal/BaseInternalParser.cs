@@ -73,15 +73,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Log($"text = {text}");
 #endif
 
-            var name = new Name();
-            name.OriginalNameValue = text;
+            //var name = new Name(_context.CodeModelContext);
+            //name.OriginalNameValue = text;
 
-            if (!text.Contains("::") && !text.Contains("("))
-            {
-                name.OriginalNameKey = GetKey(text);
-                name.NameKey = name.OriginalNameKey;
-                return name;
-            }
+            //if (!text.Contains("::") && !text.Contains("("))
+            //{
+            //    name.OriginalNameKey = GetKey(text);
+            //    name.NameKey = name.OriginalNameKey;
+            //    return name;
+            //}
             throw new NotImplementedException();
         }
 

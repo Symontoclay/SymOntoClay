@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CommonNames;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Parsing;
@@ -13,7 +14,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal
 {
-    public class EngineContext : BaseComponent, IEngineContext
+    public class EngineContext : BaseComponent, IEngineContext, ICodeModelContext
     {
         public EngineContext(IEntityLogger logger)
             : base(logger)
@@ -49,5 +50,6 @@ namespace SymOntoClay.Core.Internal
         IParser IBaseLoaderFromSourceCodeContext.Parser => Parser;
         ICommonNamesStorage IEngineContext.CommonNamesStorage => CommonNamesStorage;
 
+        ICodeModelContext IParserContext.CodeModelContext => this;
     }
 }

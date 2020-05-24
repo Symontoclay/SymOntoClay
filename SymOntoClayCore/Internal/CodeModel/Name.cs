@@ -12,8 +12,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             : base(context.Logger)
         {
             _context = context;
+            _isEmpty = false;
 
-            if(text.Contains("::") || text.Contains("("))
+            if (text.Contains("::") || text.Contains("("))
             {
                 throw new NotSupportedException("Symbols `::`, `(` and `)` are not supported yet!");
             }
@@ -23,7 +24,21 @@ namespace SymOntoClay.Core.Internal.CodeModel
             CalculateIndex();
         }
 
+        public Name(string text, ICodeModelContext context)
+            : this(text, null, context)
+        {
+        }
+
+        public Name(ICodeModelContext context)
+            : base(context.Logger)
+        {
+            _context = context;
+            _isEmpty = true;
+        }
+
         private readonly ICodeModelContext _context;
+
+        private readonly bool _isEmpty;
 
         public string NameValue { get; private set; }
         public ulong NameKey { get; private set; }
@@ -34,6 +49,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public void CalculateIndex()
         {
+            if(_isEmpty)
+            {
+                return;
+            }
+
             var dictionary = _context.Dictionary;
 
             NameKey = dictionary.GetKey(NameValue);

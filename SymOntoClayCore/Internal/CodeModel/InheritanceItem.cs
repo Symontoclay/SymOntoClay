@@ -10,10 +10,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public InheritanceItem(ICodeModelContext context)
             : base(context)
         {
-            throw new NotImplementedException();
-
-            //TODO: fix me!!!!
-            //Name = new Name(context);
+            Name = new Name(context);
         }
 
         public Name Name { get; set; }

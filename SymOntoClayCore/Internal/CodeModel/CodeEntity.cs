@@ -12,11 +12,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             _context = context;
 
-            throw new NotImplementedException();
-
-            //TODO: fix me!!!!
-
-            //Name = new Name(context);
+            Name = new Name(context);
         }
 
         private readonly ICodeModelContext _context;

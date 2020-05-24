@@ -18,6 +18,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected readonly InternalParserContext _context;
         private IEntityLogger _logger;
         private IEntityDictionary _dictionary;
+        protected readonly List<string> _currentNamespaces;
 
         public void Run()
         {
@@ -73,16 +74,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Log($"text = {text}");
 #endif
 
-            //var name = new Name(_context.CodeModelContext);
-            //name.OriginalNameValue = text;
-
-            //if (!text.Contains("::") && !text.Contains("("))
-            //{
-            //    name.OriginalNameKey = GetKey(text);
-            //    name.NameKey = name.OriginalNameKey;
-            //    return name;
-            //}
-            throw new NotImplementedException();
+            var name = new Name(text, _currentNamespaces, _context.CodeModelContext);
+            return name;
         }
 
         /// <inheritdoc/>

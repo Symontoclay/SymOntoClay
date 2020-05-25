@@ -1,7 +1,9 @@
 ﻿using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CommonNames;
+using SymOntoClay.Core.Internal.InheritanceEngine;
 using SymOntoClay.Core.Internal.Instances;
+using SymOntoClay.Core.Internal.LogicalEngine;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.Core.Internal.States;
@@ -42,6 +44,8 @@ namespace SymOntoClay.Core
             _context.InstancesStorage = new InstancesStorageComponent(_context);
             _context.StatesStorage = new StatesStorageComponent(_context);
             _context.CommonNamesStorage = new CommonNamesStorage(_context);
+            _context.LogicalEngine = new LogicalEngineComponent(_context);
+            _context.InheritanceEngine = new InheritanceEngineComponent(_context);
         }
 
         /// <inheritdoc/>

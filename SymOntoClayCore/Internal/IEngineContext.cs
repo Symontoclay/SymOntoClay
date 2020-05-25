@@ -1,4 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.InheritanceEngine;
+using SymOntoClay.Core.Internal.LogicalEngine;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.Core.Internal.Storage;
@@ -21,5 +23,7 @@ namespace SymOntoClay.Core.Internal
         ITriggerExecutorComponent TriggerExecutor { get; }
         ILoaderFromSourceCode LoaderFromSourceCode { get; }
         ICommonNamesStorage CommonNamesStorage { get; }
+        ILogicalEngine LogicalEngine { get; }
+        IInheritanceEngine InheritanceEngine { get; }
     }
 }

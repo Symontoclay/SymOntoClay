@@ -1,7 +1,9 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CommonNames;
+using SymOntoClay.Core.Internal.InheritanceEngine;
 using SymOntoClay.Core.Internal.Instances;
+using SymOntoClay.Core.Internal.LogicalEngine;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.Core.Internal.States;
@@ -42,6 +44,8 @@ namespace SymOntoClay.Core.Internal
         public InstancesStorageComponent InstancesStorage { get; set; }
         public StatesStorageComponent StatesStorage { get; set; }
         public CommonNamesStorage CommonNamesStorage { get; set; }
+        public LogicalEngineComponent LogicalEngine { get; set; }
+        public InheritanceEngineComponent InheritanceEngine { get; set; }
 
         IStorageComponent IEngineContext.Storage => Storage;
         ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;
@@ -49,6 +53,9 @@ namespace SymOntoClay.Core.Internal
         ILoaderFromSourceCode IEngineContext.LoaderFromSourceCode => LoaderFromSourceCode;
         IParser IBaseLoaderFromSourceCodeContext.Parser => Parser;
         ICommonNamesStorage IEngineContext.CommonNamesStorage => CommonNamesStorage;
+        ILogicalEngine IEngineContext.LogicalEngine => LogicalEngine;
+        IInheritanceEngine IEngineContext.InheritanceEngine => InheritanceEngine;
+
 
         ICodeModelContext IParserContext.CodeModelContext => this;
     }

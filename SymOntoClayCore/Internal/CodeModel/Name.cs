@@ -47,6 +47,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public IList<ulong> FullNameKeys { get; private set; } = new List<ulong>();
 
+        public IList<SimpleName> GetSimpleNames()
+        {
+            if (Namespaces.IsNullOrEmpty())
+            {
+                var item = new SimpleName(NameValue, _context);
+                return new List<SimpleName>() { item };
+            }
+            else
+            {
+                throw new NotSupportedException("Namespaces are not supported yet!");
+            }
+        }
+
         public void CalculateIndex()
         {
             if(_isEmpty)

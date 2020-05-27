@@ -9,8 +9,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public FuzzyConstExpr(float constValue, ICodeModelContext context)
             : base(context)
         {
-            _value = new FuzzyValue(context);
-            _value.Value = constValue;
+            _value = new FuzzyValue(constValue, context);
         }
 
         private readonly FuzzyValue _value;

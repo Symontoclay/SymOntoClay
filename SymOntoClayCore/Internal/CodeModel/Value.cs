@@ -5,31 +5,27 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class FuzzyValue: Value
+    public abstract class Value: AnnotatedItem
     {
-        public FuzzyValue(float systemValue, ICodeModelContext context)
+        protected Value(ICodeModelContext context)
             : base(context)
         {
-            SystemValue = systemValue;
         }
 
-        /// <inheritdoc/>
-        public override KindOfValue Kind => KindOfValue.FuzzyValue;
+        public abstract KindOfValue Kind { get; }
 
-        /// <inheritdoc/>
-        public override bool IsFuzzyValue => true;
+        public virtual bool IsFuzzyValue => false;
+        public virtual FuzzyValue AsFuzzyValue => null;
 
-        /// <inheritdoc/>
-        public override FuzzyValue AsFuzzyValue => this;
-
-        public float SystemValue { get; private set; }
+        public virtual bool IsNumberValue => false;
+        public virtual NumberValue AsNumberValue => null;
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(SystemValue)} = {SystemValue}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -39,7 +35,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(SystemValue)} = {SystemValue}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -49,7 +45,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(SystemValue)} = {SystemValue}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }

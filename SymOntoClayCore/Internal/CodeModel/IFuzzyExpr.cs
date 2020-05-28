@@ -7,6 +7,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public interface IFuzzyExpr: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        FuzzyValue Deffuzzificate(IStorage execContext);
+        Value Deffuzzificate(IStorage execContext);
     }
 }

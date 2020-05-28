@@ -151,22 +151,25 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeFile.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.FuzzyValue.Kind">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicalValue.Kind">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.FuzzyValue.IsFuzzyValue">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicalValue.TypeName">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.FuzzyValue.AsFuzzyValue">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicalValue.IsFuzzyValue">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyValue.PropertiesToString(System.UInt32)">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicalValue.AsFuzzyValue">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyValue.PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicalValue.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyValue.PropertiesToBriefString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicalValue.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicalValue.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InheritanceItem.PropertiesToString(System.UInt32)">
@@ -242,6 +245,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NumberValue.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.NumberValue.TypeName">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NumberValue.IsNumberValue">

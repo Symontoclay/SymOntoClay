@@ -14,8 +14,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public abstract KindOfValue Kind { get; }
 
+        public abstract string TypeName { get; }
+
         public virtual bool IsFuzzyValue => false;
-        public virtual FuzzyValue AsFuzzyValue => null;
+        public virtual FuzzyLogicalValue AsFuzzyValue => null;
 
         public virtual bool IsNumberValue => false;
         public virtual NumberValue AsNumberValue => null;

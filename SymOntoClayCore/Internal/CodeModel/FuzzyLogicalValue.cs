@@ -5,22 +5,25 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class FuzzyValue: Value
+    public class FuzzyLogicalValue: Value
     {
-        public FuzzyValue(float systemValue, ICodeModelContext context)
+        public FuzzyLogicalValue(float systemValue, ICodeModelContext context)
             : base(context)
         {
             SystemValue = systemValue;
         }
 
         /// <inheritdoc/>
-        public override KindOfValue Kind => KindOfValue.FuzzyValue;
+        public override KindOfValue Kind => KindOfValue.FuzzyLogicalValue;
+
+        /// <inheritdoc/>
+        public override string TypeName => "fuzzy";
 
         /// <inheritdoc/>
         public override bool IsFuzzyValue => true;
 
         /// <inheritdoc/>
-        public override FuzzyValue AsFuzzyValue => this;
+        public override FuzzyLogicalValue AsFuzzyValue => this;
 
         public float SystemValue { get; private set; }
 

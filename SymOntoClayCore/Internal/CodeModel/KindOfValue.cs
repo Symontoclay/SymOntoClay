@@ -7,7 +7,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public enum KindOfValue
     {
         Unknown,
-        FuzzyValue,
+        FuzzyLogicalValue,
         NumberValue
     }
 }

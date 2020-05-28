@@ -62,8 +62,7 @@ namespace SymOntoClay.UnityAsset.Core
             sb.AppendLine($"{spaces}{nameof(RootContractName)} = {RootContractName}");
             sb.AppendLine($"{spaces}{nameof(Enable)} = {Enable}");
             sb.AppendLine($"{spaces}{nameof(EnableRemoteConnection)} = {EnableRemoteConnection}");
-            var platformLoggersMark = PlatformLoggers == null ? "No" : PlatformLoggers.Any() ? "Yes" : "No";
-            sb.AppendLine($"{spaces}{nameof(PlatformLoggers)} = {platformLoggersMark}");
+            sb.PrintExistingList(n, nameof(PlatformLoggers), PlatformLoggers);
             return sb.ToString();
         }
     }

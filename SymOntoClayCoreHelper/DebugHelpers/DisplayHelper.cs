@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.CoreHelper.DebugHelpers
@@ -197,6 +198,13 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             var spaces = Spaces(n);
             var mark = value == null ? "No" : "Yes";
             sb.AppendLine($"{spaces}{propName} = {mark}");
+        }
+
+        public static void PrintExistingList<T>(this StringBuilder sb, uint n, string propName, IEnumerable<T> items)
+        {
+            var spaces = Spaces(n);
+            var mark = items == null ? "No" : items.Any() ? "Yes" : "No";
+            sb.AppendLine($"{spaces}{nameof(propName)} = {mark}");
         }
 
         public static string WriteListToString<T>(this IEnumerable<T> items) where T: IObjectToString

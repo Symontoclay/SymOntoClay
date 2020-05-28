@@ -5,23 +5,21 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class BaseRulePart: AnnotatedItem
+    public class LogicalQueryNode: AnnotatedItem
     {
-        protected BaseRulePart(ICodeModelContext context)
+        public LogicalQueryNode(ICodeModelContext context)
             : base(context)
         {
         }
 
-        public LogicalQueryNode Expression { get; set; }
+        public KindOfLogicalQueryNode Kind { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-
-            sb.PrintObjProp(n, nameof(Expression), Expression);
-
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -31,9 +29,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            
-            sb.PrintShortObjProp(n, nameof(Expression), Expression);
-
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -43,9 +39,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            
-            sb.PrintBriefObjProp(n, nameof(Expression), Expression);
-
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }

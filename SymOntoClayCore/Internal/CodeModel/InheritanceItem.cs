@@ -22,6 +22,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// Represents rank of inheritance between two objects.
         /// It must be resolved to LogicalValue.
         /// </summary>
+        [ResolveToType(typeof(LogicalValue))]
         public Value Rank { get; set; }
         public bool IsSystemDefined { get; set; }
 

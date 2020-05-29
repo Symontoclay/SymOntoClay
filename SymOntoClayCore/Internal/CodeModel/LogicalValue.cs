@@ -19,13 +19,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override KindOfValue Kind => KindOfValue.FuzzyLogicalValue;
+        public override KindOfValue Kind => KindOfValue.LogicalValue;
 
         /// <inheritdoc/>
-        public override bool IsFuzzyValue => true;
+        public override bool IsLogicalValue => true;
 
         /// <inheritdoc/>
-        public override LogicalValue AsFuzzyValue => this;
+        public override LogicalValue AsLogicalValue => this;
 
         public float SystemValue { get; private set; }
 

@@ -172,10 +172,10 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalValue.Kind">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalValue.IsFuzzyValue">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalValue.IsLogicalValue">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalValue.AsFuzzyValue">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalValue.AsLogicalValue">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.PropertiesToString(System.UInt32)">

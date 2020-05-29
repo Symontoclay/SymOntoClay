@@ -99,8 +99,8 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                 }
 
 #if DEBUG
-                Log($"_nonIndexedInfo = {JsonConvert.SerializeObject(_nonIndexedInfo, Formatting.Indented)}");
-                Log($"_indexedInfo = {JsonConvert.SerializeObject(_indexedInfo, Formatting.Indented)}");
+                //Log($"_nonIndexedInfo = {JsonConvert.SerializeObject(_nonIndexedInfo, Formatting.Indented)}");
+                //Log($"_indexedInfo = {JsonConvert.SerializeObject(_indexedInfo, Formatting.Indented)}");
 #endif
 
 #if IMAGINE_WORKING

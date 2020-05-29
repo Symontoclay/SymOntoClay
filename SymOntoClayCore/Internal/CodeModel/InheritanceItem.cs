@@ -13,14 +13,22 @@ namespace SymOntoClay.Core.Internal.CodeModel
             Name = new Name(context);
         }
 
+        /// <summary>
+        /// Represents ancestor.
+        /// </summary>
         public Name Name { get; set; }
-        public Value Range { get; set; }
+
+        /// <summary>
+        /// Represents rank of inheritance between two objects.
+        /// It must be resolved to LogicalValue.
+        /// </summary>
+        public Value Rank { get; set; }
         public bool IsSystemDefined { get; set; }
 
         private void PrintHeader(StringBuilder sb, uint n, string spaces)
         {
             sb.PrintObjProp(n, nameof(Name), Name);
-            sb.PrintObjProp(n, nameof(Range), Range);
+            sb.PrintObjProp(n, nameof(Rank), Rank);
             sb.AppendLine($"{spaces}{nameof(IsSystemDefined)} = {IsSystemDefined}");
         }
 

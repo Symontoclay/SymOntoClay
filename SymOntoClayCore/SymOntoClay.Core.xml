@@ -151,6 +151,17 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeFile.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.InheritanceItem.Name">
+            <summary>
+            Represents ancestor.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.InheritanceItem.Rank">
+            <summary>
+            Represents rank of inheritance between two objects.
+            It must be resolved to LogicalValue.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InheritanceItem.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>

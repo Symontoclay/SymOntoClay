@@ -14,7 +14,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         public Name Name { get; set; }
-        public IFuzzyExpr Range { get; set; }
+        public Value Range { get; set; }
         public bool IsSystemDefined { get; set; }
 
         private void PrintHeader(StringBuilder sb, uint n, string spaces)

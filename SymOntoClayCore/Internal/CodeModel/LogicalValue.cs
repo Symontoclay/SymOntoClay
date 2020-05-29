@@ -5,11 +5,16 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class FuzzyLogicalValue: Value
+    public class LogicalValue: Value
     {
-        public FuzzyLogicalValue(float systemValue, ICodeModelContext context)
+        public LogicalValue(float systemValue, ICodeModelContext context)
             : base(context)
         {
+            if(systemValue > 1F || systemValue < 0F)
+            {
+                throw new ArgumentOutOfRangeException(nameof(systemValue), systemValue, "The system (C#) value which represents SymOntoCklay's logical value must be between 0 and 1.");
+            }
+
             SystemValue = systemValue;
         }
 
@@ -17,13 +22,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override KindOfValue Kind => KindOfValue.FuzzyLogicalValue;
 
         /// <inheritdoc/>
-        public override string TypeName => "fuzzy";
-
-        /// <inheritdoc/>
         public override bool IsFuzzyValue => true;
 
         /// <inheritdoc/>
-        public override FuzzyLogicalValue AsFuzzyValue => this;
+        public override LogicalValue AsFuzzyValue => this;
 
         public float SystemValue { get; private set; }
 

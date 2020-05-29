@@ -126,7 +126,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             };
 
             applicationInheritanceItem.Name = _context.CommonNamesStorage.ApplicationName;
-            applicationInheritanceItem.Range = new FuzzyLogicalConstValueExpr(1.0F, _context.CodeModelContext);
+            applicationInheritanceItem.Range = new LogicalValue(1.0F, _context.CodeModelContext);
 
 #if DEBUG
             Log($"applicationInheritanceItem = {applicationInheritanceItem}");

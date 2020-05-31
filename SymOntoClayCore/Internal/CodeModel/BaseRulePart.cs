@@ -7,11 +7,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class BaseRulePart: AnnotatedItem
     {
-        protected BaseRulePart(ICodeModelContext context)
-            : base(context)
-        {
-        }
-
         public LogicalQueryNode Expression { get; set; }
 
         /// <inheritdoc/>

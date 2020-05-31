@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -74,7 +75,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Log($"text = {text}");
 #endif
 
-            var name = new Name(text, _currentNamespaces, _context.CodeModelContext);
+            var name = NameHelpers.CreateName(text, _currentNamespaces, _context.Dictionary);
             return name;
         }
 

@@ -5,16 +5,8 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class AnnotatedItem: BaseLoggedComponent, IAnnotatedItem, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public abstract class AnnotatedItem: IAnnotatedItem, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        protected AnnotatedItem(ICodeModelContext context)
-            : base(context.Logger)
-        {
-            _context = context;
-        }
-
-        protected readonly ICodeModelContext _context;
-
         /// <inheritdoc/>
         public override string ToString()
         {

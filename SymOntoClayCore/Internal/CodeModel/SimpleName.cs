@@ -5,33 +5,35 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class SimpleName : BaseLoggedComponent, IEquatable<SimpleName>, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class SimpleName: IEquatable<SimpleName>, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public SimpleName(string text, string nspace, ICodeModelContext context)
-            : base(context.Logger)
-        {
-            throw new NotSupportedException("Namespaces are not supported yet!");
+        //public SimpleName(string text, string nspace, ICodeModelContext context)
+        //    : base(context.Logger)
+        //{
+        //    throw new NotSupportedException("Namespaces are not supported yet!");
 
-            _context = context;
-        }
+        //    _context = context;
+        //}
 
-        public SimpleName(string text, ICodeModelContext context)
-            : base(context.Logger)
-        {
-            _context = context;
+        //public SimpleName(string text, ICodeModelContext context)
+        //    : base(context.Logger)
+        //{
+        //    _context = context;
 
-            NameValue = text;
-            FullNameValue = text;
+        //    NameValue = text;
+        //    FullNameValue = text;
 
-            CalculateIndex();
-        }
+        //    CalculateIndex();
+        //}
 
-        private readonly ICodeModelContext _context;
+        //private readonly ICodeModelContext _context;
 
-        public string NameValue { get; private set; }
-        public string FullNameValue { get; private set; }
+        public string DictionaryName { get; set; }
 
-        public ulong FullNameKey { get; private set; }
+        public string NameValue { get; set; }
+        public string FullNameValue { get; set; }
+
+        public ulong FullNameKey { get; set; }
 
         public void CalculateIndex()
         {
@@ -88,6 +90,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
+
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
             sb.AppendLine($"{spaces}{nameof(FullNameValue)} = {FullNameValue}");
             sb.AppendLine($"{spaces}{nameof(FullNameKey)} = {FullNameKey}");
@@ -111,6 +116,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
+
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
             sb.AppendLine($"{spaces}{nameof(FullNameValue)} = {FullNameValue}");
             sb.AppendLine($"{spaces}{nameof(FullNameKey)} = {FullNameKey}");
@@ -134,6 +142,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
+
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
             sb.AppendLine($"{spaces}{nameof(FullNameValue)} = {FullNameValue}");
             sb.AppendLine($"{spaces}{nameof(FullNameKey)} = {FullNameKey}");

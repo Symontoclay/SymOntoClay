@@ -7,11 +7,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class LogicalQueryNode: AnnotatedItem
     {
-        public LogicalQueryNode(ICodeModelContext context)
-            : base(context)
-        {
-        }
-
         public KindOfLogicalQueryNode Kind { get; set; }
 
         public LogicalQueryNode Left { get; set; }

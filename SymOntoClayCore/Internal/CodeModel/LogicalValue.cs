@@ -7,8 +7,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class LogicalValue: Value
     {
-        public LogicalValue(float systemValue, ICodeModelContext context)
-            : base(context)
+        public LogicalValue(float systemValue)
         {
             if(systemValue > 1F || systemValue < 0F)
             {
@@ -27,7 +26,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override LogicalValue AsLogicalValue => this;
 
-        public float SystemValue { get; private set; }
+        public float? SystemValue { get; private set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

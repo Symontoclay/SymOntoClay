@@ -20,7 +20,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         public IEntityLogger Logger => _context.Logger;
         public IEntityDictionary Dictionary => _context.Dictionary;
-        public ICodeModelContext CodeModelContext => _context.CodeModelContext;
 
         private IParserContext _context;
         private Lexer _lexer;

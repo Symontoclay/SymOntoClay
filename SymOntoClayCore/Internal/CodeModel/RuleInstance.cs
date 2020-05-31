@@ -7,11 +7,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class RuleInstance: AnnotatedItem
     {
-        public RuleInstance(ICodeModelContext context)
-            : base(context)
-        {
-        }
-
         public PrimaryRulePart PrimaryPart { get; set; }
         public List<SecondaryRulePart> SecondaryParts { get; set; } = new List<SecondaryRulePart>();
 

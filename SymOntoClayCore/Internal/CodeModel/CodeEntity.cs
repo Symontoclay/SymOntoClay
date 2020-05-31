@@ -7,18 +7,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class CodeEntity : AnnotatedItem
     {
-        public CodeEntity(ICodeModelContext context)
-            : base(context)
-        {
-            _context = context;
-
-            Name = new Name(context);
-        }
-
-        private readonly ICodeModelContext _context;
-
         public KindOfCodeEntity Kind { get; set; } = KindOfCodeEntity.Unknown;
-        public Name Name { get; set; }
+        public Name Name { get; set; } = new Name();
         public List<InheritanceItem> InheritanceItems { get; set; } = new List<InheritanceItem>();
         public RuleInstance RuleInstance { get; set; }
 

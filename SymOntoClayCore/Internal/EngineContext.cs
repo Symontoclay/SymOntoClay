@@ -16,7 +16,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal
 {
-    public class EngineContext : BaseComponent, IEngineContext, ICodeModelContext
+    public class EngineContext : BaseComponent, IEngineContext
     {
         public EngineContext(IEntityLogger logger)
             : base(logger)
@@ -55,8 +55,5 @@ namespace SymOntoClay.Core.Internal
         ICommonNamesStorage IEngineContext.CommonNamesStorage => CommonNamesStorage;
         ILogicalEngine IEngineContext.LogicalEngine => LogicalEngine;
         IInheritanceEngine IEngineContext.InheritanceEngine => InheritanceEngine;
-
-
-        ICodeModelContext IParserContext.CodeModelContext => this;
     }
 }

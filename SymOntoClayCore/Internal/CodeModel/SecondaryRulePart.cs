@@ -7,11 +7,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class SecondaryRulePart: BaseRulePart
     {
-        public SecondaryRulePart(ICodeModelContext context)
-            : base(context)
-        {
-        }
-
         public PrimaryRulePart PrimaryPart { get; set; }
 
         /// <inheritdoc/>

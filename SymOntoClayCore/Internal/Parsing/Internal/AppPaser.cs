@@ -30,7 +30,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            Result = new CodeEntity(_context.CodeModelContext);
+            Result = new CodeEntity();
             Result.Kind = KindOfCodeEntity.App;
         }
 

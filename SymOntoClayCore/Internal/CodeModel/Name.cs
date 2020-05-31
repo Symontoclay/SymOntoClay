@@ -6,46 +6,48 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class Name: BaseLoggedComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class Name: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public Name(string text, List<string> targetNamespaces, ICodeModelContext context)
-            : base(context.Logger)
-        {
-            _context = context;
-            _isEmpty = false;
+        //public Name(string text, List<string> targetNamespaces, ICodeModelContext context)
+        //    : base(context.Logger)
+        //{
+        //    _context = context;
+        //    IsEmpty = false;
 
-            if (text.Contains("::") || text.Contains("("))
-            {
-                throw new NotSupportedException("Symbols `::`, `(` and `)` are not supported yet!");
-            }
+        //    if (text.Contains("::") || text.Contains("("))
+        //    {
+        //        throw new NotSupportedException("Symbols `::`, `(` and `)` are not supported yet!");
+        //    }
 
-            NameValue = text;
+        //    NameValue = text;
 
-            CalculateIndex();
-        }
+        //    CalculateIndex();
+        //}
 
-        public Name(string text, ICodeModelContext context)
-            : this(text, null, context)
-        {
-        }
+        //public Name(string text, ICodeModelContext context)
+        //    : this(text, null, context)
+        //{
+        //}
 
-        public Name(ICodeModelContext context)
-            : base(context.Logger)
-        {
-            _context = context;
-            _isEmpty = true;
-        }
+        //public Name(ICodeModelContext context)
+        //    : base(context.Logger)
+        //{
+        //    _context = context;
+        //    IsEmpty = true;
+        //}
 
-        private readonly ICodeModelContext _context;
+        //private readonly ICodeModelContext _context;
 
-        private readonly bool _isEmpty;
+        public string DictionaryName { get; set; }
 
-        public string NameValue { get; private set; }
-        public ulong NameKey { get; private set; }
+        public bool IsEmpty { get; set; } = true;
 
-        public IList<Namespace> Namespaces { get; private set; } = new List<Namespace>();
+        public string NameValue { get; set; }
+        public ulong NameKey { get; set; }
 
-        public IList<ulong> FullNameKeys { get; private set; } = new List<ulong>();
+        public IList<Namespace> Namespaces { get;  set; } = new List<Namespace>();
+
+        public IList<ulong> FullNameKeys { get; set; } = new List<ulong>();
 
         public IList<SimpleName> GetSimpleNames()
         {
@@ -60,26 +62,26 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
         }
 
-        public void CalculateIndex()
-        {
-            if(_isEmpty)
-            {
-                return;
-            }
+        //public void CalculateIndex()
+        //{
+        //    if(IsEmpty)
+        //    {
+        //        return;
+        //    }
 
-            var dictionary = _context.Dictionary;
+        //    var dictionary = _context.Dictionary;
 
-            NameKey = dictionary.GetKey(NameValue);
+        //    NameKey = dictionary.GetKey(NameValue);
 
-            if(Namespaces.IsNullOrEmpty())
-            {
-                FullNameKeys = new List<ulong>() { NameKey };
-            }
-            else
-            {
-                throw new NotSupportedException("Namespaces are not supported yet!");
-            }
-        }
+        //    if(Namespaces.IsNullOrEmpty())
+        //    {
+        //        FullNameKeys = new List<ulong>() { NameKey };
+        //    }
+        //    else
+        //    {
+        //        throw new NotSupportedException("Namespaces are not supported yet!");
+        //    }
+        //}
 
         /// <inheritdoc/>
         public override string ToString()
@@ -99,6 +101,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
+
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
             sb.AppendLine($"{spaces}{nameof(NameKey)} = {NameKey}");
 
@@ -127,6 +132,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
+
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
             sb.AppendLine($"{spaces}{nameof(NameKey)} = {NameKey}");
 
@@ -155,6 +163,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
+
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
             sb.AppendLine($"{spaces}{nameof(NameKey)} = {NameKey}");
 

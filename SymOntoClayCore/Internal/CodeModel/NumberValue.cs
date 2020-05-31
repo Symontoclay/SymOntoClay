@@ -7,8 +7,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class NumberValue: Value
     {
-        public NumberValue(double systemValue, ICodeModelContext context)
-            : base(context)
+        public NumberValue(double systemValue)
         {
             SystemValue = systemValue;
         }
@@ -22,7 +21,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override NumberValue AsNumberValue => this;
 
-        public double SystemValue { get; private set; }
+        public double? SystemValue { get; private set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

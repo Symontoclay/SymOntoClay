@@ -8,6 +8,5 @@ namespace SymOntoClay.Core.Internal.Parsing
     public interface IParserContext: IBaseContext
     {
         IEntityDictionary Dictionary { get; }
-        ICodeModelContext CodeModelContext { get; }
     }
 }

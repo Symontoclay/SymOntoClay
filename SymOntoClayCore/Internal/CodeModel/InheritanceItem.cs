@@ -7,16 +7,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class InheritanceItem: AnnotatedItem
     {
-        public InheritanceItem(ICodeModelContext context)
-            : base(context)
-        {
-            Name = new Name(context);
-        }
-
         /// <summary>
         /// Represents ancestor.
         /// </summary>
-        public Name Name { get; set; }
+        public Name Name { get; set; } = new Name();
 
         /// <summary>
         /// Represents rank of inheritance between two objects.

@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,7 +20,7 @@ namespace SymOntoClay.Core.Internal.CommonNames
 
         public void LoadFromSourceCode()
         {
-            ApplicationName = new Name(StandardNamesConstants.ApplicationTypeName, _context.CodeModelContext);
+            ApplicationName = NameHelpers.CreateName(StandardNamesConstants.ApplicationTypeName, new List<string>(), _context.Dictionary);
 
 #if IMAGINE_WORKING
             Log("Do");

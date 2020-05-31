@@ -7,11 +7,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class Value: AnnotatedItem
     {
-        protected Value(ICodeModelContext context)
-            : base(context)
-        {
-        }
-
         public abstract KindOfValue Kind { get; }
 
         public virtual bool IsLogicalValue => false;

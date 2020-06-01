@@ -103,13 +103,27 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                 //Log($"_nonIndexedInfo = {JsonConvert.SerializeObject(_nonIndexedInfo, Formatting.Indented)}");
                 //Log($"_indexedInfo = {JsonConvert.SerializeObject(_indexedInfo, Formatting.Indented)}");
 #endif
-
-#if IMAGINE_WORKING
-                Log("Do: Please! Write an information to logical storage about this inheritance record!!!!!!!!!!");
-#else
-                throw new NotImplementedException();
-#endif
             }
+
+            if(isPrimary)
+            {
+                var inheritanceFact = CreateInheritanceFact(subItem, inheritanceItem);
+
+#if DEBUG
+                Log($"inheritanceFact = {inheritanceFact}");
+#endif
+
+                throw new NotImplementedException();
+            }
+
+#if DEBUG
+            Log("End");
+#endif
+        }
+
+        private RuleInstance CreateInheritanceFact(Name subItem, InheritanceItem inheritanceItem)
+        {
+            throw new NotImplementedException();
         }
     }
 }

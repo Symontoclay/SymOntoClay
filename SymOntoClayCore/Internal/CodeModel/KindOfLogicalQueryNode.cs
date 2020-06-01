@@ -6,6 +6,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public enum KindOfLogicalQueryNode
     {
-        Unknown
+        Unknown,
+        Relation,
+        Concept,
+        EntityRef,
+        EntityCondition,
+        Var,
+        QuestionParam,
+        BinaryOperator,
+        UnaryOperator,
+        StubParam,
+        Value
     }
 }

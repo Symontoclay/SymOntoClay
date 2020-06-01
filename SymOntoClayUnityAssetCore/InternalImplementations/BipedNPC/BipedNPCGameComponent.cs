@@ -12,39 +12,51 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
         public BipedNPCGameComponent(BipedNPCSettings settings, IWorldCoreGameComponentContext worldContext)
             : base(settings.Id, worldContext)
         {
-            Log($"settings = {settings}");
-            Log($"worldContext.TmpDir = {worldContext.TmpDir}");
+            try
+            {
+#if DEBUG
+                Log($"settings = {settings}");
+                Log($"worldContext.TmpDir = {worldContext.TmpDir}");
+#endif
+                var tmpDir = Path.Combine(worldContext.TmpDir, settings.Id);
 
-            var tmpDir = Path.Combine(worldContext.TmpDir, settings.Id);
+                Directory.CreateDirectory(worldContext.TmpDir);
 
-            Directory.CreateDirectory(worldContext.TmpDir);
+                var standaloneStorageSettings = new StandaloneStorageSettings();
+                standaloneStorageSettings.Id = settings.Id;
+                standaloneStorageSettings.IsWorld = false;
+                standaloneStorageSettings.AppFile = settings.HostFile;
+                standaloneStorageSettings.Logger = Logger;
+                standaloneStorageSettings.Dictionary = worldContext.SharedDictionary;
+                standaloneStorageSettings.ModulesStorage = worldContext.ModulesStorage;
+                standaloneStorageSettings.ParentStorage = worldContext.StandaloneStorage;
 
-            var standaloneStorageSettings = new StandaloneStorageSettings();
-            standaloneStorageSettings.Id = settings.Id;
-            standaloneStorageSettings.IsWorld = false;
-            standaloneStorageSettings.AppFile = settings.HostFile;
-            standaloneStorageSettings.Logger = Logger;
-            standaloneStorageSettings.Dictionary = worldContext.SharedDictionary;
-            standaloneStorageSettings.ModulesStorage = worldContext.ModulesStorage;
-            standaloneStorageSettings.ParentStorage = worldContext.StandaloneStorage;
+#if DEBUG
+                Log($"standaloneStorageSettings = {standaloneStorageSettings}");
+#endif
+                _hostStorage = new StandaloneStorage(standaloneStorageSettings);
 
-            Log($"standaloneStorageSettings = {standaloneStorageSettings}");
+                var coreEngineSettings = new EngineSettings();
+                coreEngineSettings.Id = settings.Id;
+                coreEngineSettings.AppFile = settings.LogicFile;
+                coreEngineSettings.Logger = Logger;
+                coreEngineSettings.SyncContext = worldContext.SyncContext;
+                coreEngineSettings.Dictionary = worldContext.SharedDictionary;
+                coreEngineSettings.ModulesStorage = worldContext.ModulesStorage;
+                coreEngineSettings.ParentStorage = _hostStorage;
+                coreEngineSettings.TmpDir = tmpDir;
 
-            _hostStorage = new StandaloneStorage(standaloneStorageSettings);
+#if DEBUG
+                Log($"coreEngineSettings = {coreEngineSettings}");
+#endif
+                _coreEngine = new Engine(coreEngineSettings);
+            }
+            catch (Exception e)
+            {
+                Log(e.ToString());
 
-            var coreEngineSettings = new EngineSettings();
-            coreEngineSettings.Id = settings.Id;
-            coreEngineSettings.AppFile = settings.LogicFile;
-            coreEngineSettings.Logger = Logger;
-            coreEngineSettings.SyncContext = worldContext.SyncContext;
-            coreEngineSettings.Dictionary = worldContext.SharedDictionary;
-            coreEngineSettings.ModulesStorage = worldContext.ModulesStorage;
-            coreEngineSettings.ParentStorage = _hostStorage;
-            coreEngineSettings.TmpDir = tmpDir;
-
-            Log($"coreEngineSettings = {coreEngineSettings}");
-
-            _coreEngine = new Engine(coreEngineSettings);           
+                throw e;
+            }     
         }
 
         private readonly StandaloneStorage _hostStorage;
@@ -53,14 +65,32 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
         /// <inheritdoc/>
         public override void LoadFromSourceCode()
         {
-            _hostStorage.LoadFromSourceCode();
-            _coreEngine.LoadFromSourceCode();
+            try
+            {
+                _hostStorage.LoadFromSourceCode();
+                _coreEngine.LoadFromSourceCode();
+            }
+            catch(Exception e)
+            {
+                Log(e.ToString());
+
+                throw e;
+            }
         }
 
         /// <inheritdoc/>
         public override void BeginStarting()
         {
-            _coreEngine.BeginStarting();
+            try
+            {
+                _coreEngine.BeginStarting();
+            }
+            catch (Exception e)
+            {
+                Log(e.ToString());
+
+                throw e;
+            }           
         }
 
         /// <inheritdoc/>

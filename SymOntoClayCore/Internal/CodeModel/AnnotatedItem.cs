@@ -5,8 +5,10 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class AnnotatedItem: IAnnotatedItem, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public abstract class AnnotatedItem : IAnnotatedItem, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
+        public IList<Value> QuantityQualityModalities {get;set;}
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -29,6 +31,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
+
             return sb.ToString();
         }
 
@@ -54,6 +59,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintShortObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
+
             return sb.ToString();
         }
 
@@ -79,6 +87,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintExistingList(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
+
             return sb.ToString();
         }
     }

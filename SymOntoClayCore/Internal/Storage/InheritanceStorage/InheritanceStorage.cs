@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
@@ -111,6 +112,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 
 #if DEBUG
                 Log($"inheritanceFact = {inheritanceFact}");
+                Log($"inheritanceFact = {DebugHelperForRuleInstance.ToString(inheritanceFact)}");
 #endif
 
                 _realStorageContext.LogicalStorage.Append(inheritanceFact, false);

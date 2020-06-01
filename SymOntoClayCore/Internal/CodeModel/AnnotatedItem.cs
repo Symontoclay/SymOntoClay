@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +10,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         [ResolveToType(typeof(LogicalValue))]
         public IList<Value> QuantityQualityModalities { get; set; } = new List<Value>();
+
+        public bool HasModalitiesOrSections => !QuantityQualityModalities.IsNullOrEmpty();
 
         public void AppendAnnotations(AnnotatedItem source)
         {
@@ -50,6 +53,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
+
             sb.PrintObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
 
             return sb.ToString();
@@ -78,6 +83,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
+
             sb.PrintShortObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
 
             return sb.ToString();
@@ -105,6 +112,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
 
             sb.PrintExistingList(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
 

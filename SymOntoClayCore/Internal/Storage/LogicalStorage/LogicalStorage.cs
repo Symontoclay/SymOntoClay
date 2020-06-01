@@ -28,8 +28,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         public void Append(RuleInstance ruleInstance, bool isPrimary)
         {
 #if DEBUG
-            Log($"ruleInstance = {ruleInstance}");
-            Log($"isPrimary = {isPrimary}");
+            //Log($"ruleInstance = {ruleInstance}");
+            //Log($"isPrimary = {isPrimary}");
 #endif
 
             //throw new NotImplementedException();

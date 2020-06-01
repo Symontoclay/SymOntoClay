@@ -7,6 +7,12 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 {
     public static class NameHelpers
     {
+        public static Name CreateRuleOrFactName(IEntityDictionary dictionary)
+        {
+            var text = $"#{Guid.NewGuid().ToString("D")}";
+            return CreateName(text, new List<string>(), dictionary);
+        }
+
         public static Name CreateName(string text, List<string> targetNamespaces, IEntityDictionary dictionary)
         {
             var name = new Name() { IsEmpty = false };

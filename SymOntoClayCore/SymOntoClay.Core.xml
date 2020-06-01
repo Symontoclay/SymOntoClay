@@ -189,6 +189,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalValue.AsLogicalValue">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.CloneValue">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -255,6 +258,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NullValue.Kind">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.NullValue.CloneValue">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NumberValue.Kind">
             <inheritdoc/>
         </member>
@@ -262,6 +268,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NumberValue.AsNumberValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.CloneValue">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.PropertiesToString(System.UInt32)">

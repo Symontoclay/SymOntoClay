@@ -10,6 +10,23 @@ namespace SymOntoClay.Core.Internal.CodeModel
         [ResolveToType(typeof(LogicalValue))]
         public IList<Value> QuantityQualityModalities { get; set; }
 
+        public void AppendAnnotations(AnnotatedItem source)
+        {
+            if (source.QuantityQualityModalities == null)
+            {
+                QuantityQualityModalities = null;
+            }
+            else
+            {
+                QuantityQualityModalities = new List<Value>();
+
+                foreach(var item in source.QuantityQualityModalities)
+                {
+                    QuantityQualityModalities.Add(item.CloneValue());
+                }
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {

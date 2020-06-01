@@ -8,5 +8,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         /// <inheritdoc/>
         public override KindOfValue Kind => KindOfValue.NullValue;
+
+        /// <inheritdoc/>
+        public override Value CloneValue()
+        {
+            var result = new NullValue();
+            result.AppendAnnotations(this);
+
+            return result;
+        }
     }
 }

@@ -15,6 +15,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsNumberValue => false;
         public virtual NumberValue AsNumberValue => null;
 
+        public abstract Value CloneValue();
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {

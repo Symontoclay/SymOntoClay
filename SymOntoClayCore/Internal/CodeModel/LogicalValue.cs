@@ -32,6 +32,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public float? SystemValue { get; private set; }
 
         /// <inheritdoc/>
+        public override Value CloneValue()
+        {
+            var result = new LogicalValue(SystemValue);
+            result.AppendAnnotations(this);
+            return result;
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

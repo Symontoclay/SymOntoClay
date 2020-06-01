@@ -113,7 +113,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                 Log($"inheritanceFact = {inheritanceFact}");
 #endif
 
-                throw new NotImplementedException();
+                _realStorageContext.LogicalStorage.Append(inheritanceFact, false);
             }
 
 #if DEBUG

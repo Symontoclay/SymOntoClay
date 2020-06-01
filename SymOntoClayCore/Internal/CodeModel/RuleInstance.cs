@@ -9,6 +9,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         public string DictionaryName { get; set; }
         public Name Name { get; set; }
+        public bool IsRule { get; set; }
         public PrimaryRulePart PrimaryPart { get; set; }
         public List<SecondaryRulePart> SecondaryParts { get; set; } = new List<SecondaryRulePart>();
 
@@ -20,6 +21,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
             sb.PrintObjProp(n, nameof(Name), Name);
+
+            sb.AppendLine($"{spaces}{nameof(IsRule)} = {IsRule}");
 
             sb.PrintObjProp(n, nameof(PrimaryPart), PrimaryPart);
             sb.PrintObjListProp(n, nameof(SecondaryParts), SecondaryParts);
@@ -36,6 +39,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
             sb.PrintShortObjProp(n, nameof(Name), Name);
 
+            sb.AppendLine($"{spaces}{nameof(IsRule)} = {IsRule}");
+
             sb.PrintShortObjProp(n, nameof(PrimaryPart), PrimaryPart);
             sb.PrintShortObjListProp(n, nameof(SecondaryParts), SecondaryParts);
             sb.Append(base.PropertiesToShortString(n));
@@ -50,6 +55,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
             sb.PrintBriefObjProp(n, nameof(Name), Name);
+
+            sb.AppendLine($"{spaces}{nameof(IsRule)} = {IsRule}");
 
             sb.PrintExisting(n, nameof(PrimaryPart), PrimaryPart);
             sb.PrintExistingList(n, nameof(SecondaryParts), SecondaryParts);

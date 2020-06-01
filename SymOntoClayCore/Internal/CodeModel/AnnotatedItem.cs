@@ -8,7 +8,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public abstract class AnnotatedItem : IAnnotatedItem, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         [ResolveToType(typeof(LogicalValue))]
-        public IList<Value> QuantityQualityModalities { get; set; }
+        public IList<Value> QuantityQualityModalities { get; set; } = new List<Value>();
 
         public void AppendAnnotations(AnnotatedItem source)
         {

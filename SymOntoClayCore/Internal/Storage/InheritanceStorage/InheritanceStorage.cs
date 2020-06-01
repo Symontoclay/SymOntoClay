@@ -129,7 +129,35 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
             Log($"factName = {factName}");
 #endif
 
-            throw new NotImplementedException();
+            var fact = new RuleInstance();
+            fact.AppendAnnotations(inheritanceItem);
+            fact.DictionaryName = _realStorageContext.EntityDictionary.Name;
+            fact.Name = factName;
+
+            var primaryPart = new PrimaryRulePart();
+            fact.PrimaryPart = primaryPart;
+            primaryPart.Parent = fact;
+
+            primaryPart.QuantityQualityModalities.Add(inheritanceItem.Rank);
+
+            var isExpr = new LogicalQueryNode();
+            isExpr.Kind = KindOfLogicalQueryNode.BinaryOperator;
+            isExpr.KindOfOperator = KindOfOperatorOfLogicalQueryNode.Is;
+
+            primaryPart.Expression = isExpr;
+
+            var subItemNode = new LogicalQueryNode();
+            isExpr.Left = subItemNode;
+            subItemNode.Kind = KindOfLogicalQueryNode.Concept;
+            subItemNode.Name = subItem;
+
+
+            var superItemNode = new LogicalQueryNode();
+            isExpr.Right = superItemNode;
+            superItemNode.Kind = KindOfLogicalQueryNode.Concept;
+            superItemNode.Name = inheritanceItem.Name;
+
+            return fact;
         }
     }
 }

@@ -7,6 +7,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class BaseRulePart: AnnotatedItem
     {
+        public RuleInstance Parent { get; set; }
         public LogicalQueryNode Expression { get; set; }
 
         /// <inheritdoc/>
@@ -15,6 +16,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintBriefObjProp(n, nameof(Parent), Parent);
             sb.PrintObjProp(n, nameof(Expression), Expression);
 
             sb.Append(base.PropertiesToString(n));
@@ -26,7 +28,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            
+
+            sb.PrintBriefObjProp(n, nameof(Parent), Parent);
             sb.PrintShortObjProp(n, nameof(Expression), Expression);
 
             sb.Append(base.PropertiesToShortString(n));
@@ -38,7 +41,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            
+
+            sb.PrintBriefObjProp(n, nameof(Parent), Parent);
             sb.PrintBriefObjProp(n, nameof(Expression), Expression);
 
             sb.Append(base.PropertiesToBriefString(n));

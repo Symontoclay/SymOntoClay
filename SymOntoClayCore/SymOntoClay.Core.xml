@@ -252,6 +252,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Namespace.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.NullValue.Kind">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NumberValue.Kind">
             <inheritdoc/>
         </member>

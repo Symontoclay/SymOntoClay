@@ -7,11 +7,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class LogicalValue: Value
     {
-        public LogicalValue(float systemValue)
+        public LogicalValue(float? systemValue)
         {
-            if(systemValue > 1F || systemValue < 0F)
+            if(systemValue.HasValue)
             {
-                throw new ArgumentOutOfRangeException(nameof(systemValue), systemValue, "The system (C#) value which represents SymOntoCklay's logical value must be between 0 and 1.");
+                if (systemValue > 1F || systemValue < 0F)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(systemValue), systemValue, "The system (C#) value which represents SymOntoCklay's logical value must be between 0 and 1.");
+                }
             }
 
             SystemValue = systemValue;

@@ -23,8 +23,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             switch(sourceKind)
             {
+                case KindOfValue.NullValue:
+                    return new LogicalValue(null);
+
                 case KindOfValue.LogicalValue:
                     return source.AsLogicalValue;
+
+                case KindOfValue.NumberValue:
+                    return new LogicalValue((float?)source.AsNumberValue.SystemValue);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(sourceKind), sourceKind, null);

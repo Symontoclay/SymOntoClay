@@ -4,11 +4,9 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public enum KindOfValue
+    public class NullValue : Value
     {
-        Unknown,
-        NullValue,
-        LogicalValue,
-        NumberValue
+        /// <inheritdoc/>
+        public override KindOfValue Kind => KindOfValue.NullValue;
     }
 }

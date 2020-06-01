@@ -7,40 +7,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class SimpleName: IEquatable<SimpleName>, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        //public SimpleName(string text, string nspace, ICodeModelContext context)
-        //    : base(context.Logger)
-        //{
-        //    throw new NotSupportedException("Namespaces are not supported yet!");
-
-        //    _context = context;
-        //}
-
-        //public SimpleName(string text, ICodeModelContext context)
-        //    : base(context.Logger)
-        //{
-        //    _context = context;
-
-        //    NameValue = text;
-        //    FullNameValue = text;
-
-        //    CalculateIndex();
-        //}
-
-        //private readonly ICodeModelContext _context;
-
         public string DictionaryName { get; set; }
 
         public string NameValue { get; set; }
         public string FullNameValue { get; set; }
 
         public ulong FullNameKey { get; set; }
-
-        public void CalculateIndex()
-        {
-            var dictionary = _context.Dictionary;
-
-            FullNameKey = dictionary.GetKey(FullNameValue);
-        }
 
         public bool Equals(SimpleName other)
         {

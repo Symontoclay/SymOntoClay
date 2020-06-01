@@ -8,36 +8,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class Name: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        //public Name(string text, List<string> targetNamespaces, ICodeModelContext context)
-        //    : base(context.Logger)
-        //{
-        //    _context = context;
-        //    IsEmpty = false;
-
-        //    if (text.Contains("::") || text.Contains("("))
-        //    {
-        //        throw new NotSupportedException("Symbols `::`, `(` and `)` are not supported yet!");
-        //    }
-
-        //    NameValue = text;
-
-        //    CalculateIndex();
-        //}
-
-        //public Name(string text, ICodeModelContext context)
-        //    : this(text, null, context)
-        //{
-        //}
-
-        //public Name(ICodeModelContext context)
-        //    : base(context.Logger)
-        //{
-        //    _context = context;
-        //    IsEmpty = true;
-        //}
-
-        //private readonly ICodeModelContext _context;
-
         public string DictionaryName { get; set; }
 
         public bool IsEmpty { get; set; } = true;
@@ -48,40 +18,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public IList<Namespace> Namespaces { get;  set; } = new List<Namespace>();
 
         public IList<ulong> FullNameKeys { get; set; } = new List<ulong>();
-
-        public IList<SimpleName> GetSimpleNames()
-        {
-            if (Namespaces.IsNullOrEmpty())
-            {
-                var item = new SimpleName(NameValue, _context);
-                return new List<SimpleName>() { item };
-            }
-            else
-            {
-                throw new NotSupportedException("Namespaces are not supported yet!");
-            }
-        }
-
-        //public void CalculateIndex()
-        //{
-        //    if(IsEmpty)
-        //    {
-        //        return;
-        //    }
-
-        //    var dictionary = _context.Dictionary;
-
-        //    NameKey = dictionary.GetKey(NameValue);
-
-        //    if(Namespaces.IsNullOrEmpty())
-        //    {
-        //        FullNameKeys = new List<ulong>() { NameKey };
-        //    }
-        //    else
-        //    {
-        //        throw new NotSupportedException("Namespaces are not supported yet!");
-        //    }
-        //}
 
         /// <inheritdoc/>
         public override string ToString()

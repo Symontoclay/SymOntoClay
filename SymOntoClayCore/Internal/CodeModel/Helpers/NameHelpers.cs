@@ -16,6 +16,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 throw new NotSupportedException("Symbols `::`, `(` and `)` are not supported yet!");
             }
 
+            name.DictionaryName = dictionary.Name;
             name.NameValue = text;
 
             CalculateIndex(name, dictionary);
@@ -40,6 +41,28 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             {
                 throw new NotSupportedException("Namespaces are not supported yet!");
             }
+        }
+
+        public static List<SimpleName> CreateSimpleNames(Name name, IEntityDictionary dictionary)
+        {
+            if (name.Namespaces.IsNullOrEmpty())
+            {
+                var item = new SimpleName();
+                item.DictionaryName = dictionary.Name;
+                item.NameValue = name.NameValue;
+                item.FullNameValue = name.NameValue;
+                CalculateIndex(item, dictionary);
+                return new List<SimpleName>() { item };
+            }
+            else
+            {
+                throw new NotSupportedException("Namespaces are not supported yet!");
+            }
+        }
+
+        public static void CalculateIndex(SimpleName name, IEntityDictionary dictionary)
+        {
+            name.FullNameKey = dictionary.GetKey(name.FullNameValue);
         }
     }
 }

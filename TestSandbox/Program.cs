@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
 using System;
 using System.Collections.Generic;
@@ -95,7 +96,7 @@ namespace TestSandbox
 
             //_logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
-            var name = new Name(nameVal1, new List<string>(), parserContext);
+            var name = NameHelpers.CreateName(nameVal1, new List<string>(), parserContext.Dictionary);
 
             _logger.Info($"name = {name}");
 

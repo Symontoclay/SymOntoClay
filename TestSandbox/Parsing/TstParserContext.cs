@@ -10,7 +10,7 @@ using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.Parsing
 {
-    public class TstParserContext : IParserContext, ICodeModelContext
+    public class TstParserContext : IParserContext
     {
         public TstParserContext()
         {
@@ -25,7 +25,5 @@ namespace TestSandbox.Parsing
         private readonly EntityDictionary _dictionary;
 
         public IEntityDictionary Dictionary => _dictionary;
-
-        ICodeModelContext IParserContext.CodeModelContext => this;
     }
 }

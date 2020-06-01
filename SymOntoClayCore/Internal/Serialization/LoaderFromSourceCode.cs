@@ -120,13 +120,13 @@ namespace SymOntoClay.Core.Internal.Serialization
 
         private void AddSystemDefinedSettingsToApp(CodeEntity codeEntity)
         {
-            var applicationInheritanceItem = new InheritanceItem(_context.CodeModelContext)
+            var applicationInheritanceItem = new InheritanceItem()
             {
                 IsSystemDefined = true
             };
 
             applicationInheritanceItem.Name = _context.CommonNamesStorage.ApplicationName;
-            applicationInheritanceItem.Rank = new LogicalValue(1.0F, _context.CodeModelContext);
+            applicationInheritanceItem.Rank = new LogicalValue(1.0F);
 
 #if DEBUG
             Log($"applicationInheritanceItem = {applicationInheritanceItem}");

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -42,12 +43,12 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                 Log($"inheritanceItem = {inheritanceItem}");
                 Log($"isPrimary = {isPrimary}");
 
-                var subItemSimpleNames = subItem.GetSimpleNames();
+                var subItemSimpleNames = NameHelpers.CreateSimpleNames(subItem, _realStorageContext.EntityDictionary);
 
                 Log($"subItemSimpleNames = {subItemSimpleNames.WriteListToString()}");
 #endif
 
-                var superItemSimpleNames = inheritanceItem.Name.GetSimpleNames();
+                var superItemSimpleNames = NameHelpers.CreateSimpleNames(inheritanceItem.Name, _realStorageContext.EntityDictionary);
 
                 if (subItemSimpleNames.IsNullOrEmpty() || superItemSimpleNames.IsNullOrEmpty())
                 {

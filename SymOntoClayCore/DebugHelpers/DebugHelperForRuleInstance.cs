@@ -2,12 +2,17 @@
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.Core.DebugHelpers
 {
     public static class DebugHelperForRuleInstance
     {
+        private static readonly CultureInfo _cultureInfo = new CultureInfo("en-GB");
+
         public static string ToString(RuleInstance source)
         {
             var sb = new StringBuilder();
@@ -36,7 +41,7 @@ namespace SymOntoClay.Core.DebugHelpers
         public static string ToString(PrimaryRulePart primaryRulePart)
         {
             var sb = new StringBuilder();
-            sb.Append(" >:{ ");
+            sb.Append(" >: { ");
 
             sb.Append(ToString(primaryRulePart.Expression));
 
@@ -120,12 +125,89 @@ namespace SymOntoClay.Core.DebugHelpers
         {
             var sb = new StringBuilder(mark);
 
-            sb.Append("{");
+            sb.Append(" {");
 
-            throw new NotImplementedException();
+            if (source.Count == 1)
+            {
+                sb.Append($" {ToString(source.First())} ");
+            }
+            else
+            {
+                var list = new List<string>();
+
+                foreach (var item in source)
+                {
+                    list.Add($"{{ {ToString(item)} }}");
+                }
+
+                sb.Append(string.Join(",", list));
+            }
 
             sb.Append("}");
 
+            return sb.ToString();
+        }
+
+        public static string ToString(Value value)
+        {
+            switch(value.Kind)
+            {
+                case KindOfValue.NullValue:
+                    return NullValueToString(value);
+
+                case KindOfValue.LogicalValue:
+                    return LogicalValueToString(value.AsLogicalValue);
+
+                case KindOfValue.NumberValue:
+                    return NumberValueToString(value.AsNumberValue);
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(value.Kind), value.Kind, null);
+            }
+        }
+
+        private static string NullValueToString(Value value)
+        {
+            var sb = new StringBuilder("NULL");
+            sb.Append(AnnotatedItemToString(value));
+            return sb.ToString();
+        }
+
+        private static string NumberValueToString(NumberValue value)
+        {
+            var systemValue = value.SystemValue;
+
+            var sb = new StringBuilder();
+
+            if (systemValue.HasValue)
+            {
+                sb.Append(systemValue.Value.ToString(_cultureInfo));
+            }
+            else
+            {
+                sb.Append("NULL");
+            }
+
+            sb.Append(AnnotatedItemToString(value));
+            return sb.ToString();
+        }
+
+        private static string LogicalValueToString(LogicalValue value)
+        {
+            var systemValue = value.SystemValue;
+
+            var sb = new StringBuilder();
+
+            if(systemValue.HasValue)
+            {
+                sb.Append(systemValue.Value.ToString(_cultureInfo));
+            }
+            else
+            {
+                sb.Append("NULL");
+            }
+
+            sb.Append(AnnotatedItemToString(value));
             return sb.ToString();
         }
     }

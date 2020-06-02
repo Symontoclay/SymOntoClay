@@ -11,6 +11,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         [ResolveToType(typeof(LogicalValue))]
         public IList<Value> QuantityQualityModalities { get; set; } = new List<Value>();
 
+        /// <summary>
+        /// Returns <c>true</c> if the instance has modalities or additional sections, otherwise returns <c>false</c>.
+        /// </summary>
         public bool HasModalitiesOrSections => !QuantityQualityModalities.IsNullOrEmpty();
 
         public void AppendAnnotations(AnnotatedItem source)

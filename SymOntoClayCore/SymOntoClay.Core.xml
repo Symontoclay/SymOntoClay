@@ -79,6 +79,11 @@
         <member name="M:SymOntoClay.Core.Internal.BaseLoggedComponent.Error(System.String)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.HasModalitiesOrSections">
+            <summary>
+            Returns <c>true</c> if the instance has modalities or additional sections, otherwise returns <c>false</c>.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.ToString">
             <inheritdoc/>
         </member>

@@ -65,17 +65,17 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
         /// <inheritdoc/>
         public override void LoadFromSourceCode()
         {
-            try
-            {
+            //try
+            //{
                 _hostStorage.LoadFromSourceCode();
                 _coreEngine.LoadFromSourceCode();
-            }
-            catch(Exception e)
-            {
-                Log(e.ToString());
+            //}
+            //catch(Exception e)
+            //{
+            //    Log(e.ToString());
 
-                throw e;
-            }
+            //    throw e;
+            //}
         }
 
         /// <inheritdoc/>

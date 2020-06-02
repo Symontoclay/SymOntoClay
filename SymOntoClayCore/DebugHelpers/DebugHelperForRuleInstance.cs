@@ -110,6 +110,12 @@ namespace SymOntoClay.Core.DebugHelpers
                     sb.Append(QuantityQualityModalitiesToString(source.QuantityQualityModalities));
                 }
 
+                if(!source.WhereSection.IsNullOrEmpty())
+                {
+                    sb.Append(" ");
+                    sb.Append(WhereSectionToString(source.WhereSection));
+                }
+
                 sb.Append(" :|");
             }
 
@@ -119,6 +125,11 @@ namespace SymOntoClay.Core.DebugHelpers
         private static string QuantityQualityModalitiesToString(IList<Value> source)
         {
             return PrintModalityOrSection("=:", source);
+        }
+
+        private static string WhereSectionToString(IList<Value> source)
+        {
+            return PrintModalityOrSection("where:", source);
         }
 
         private static string PrintModalityOrSection(string mark, IList<Value> source)

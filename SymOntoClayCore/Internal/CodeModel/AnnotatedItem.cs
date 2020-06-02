@@ -12,9 +12,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public IList<Value> QuantityQualityModalities { get; set; } = new List<Value>();
 
         /// <summary>
+        /// It is 'Clauses section' in the documentation.
+        /// </summary>
+        public IList<Value> WhereSection { get; set; } = new List<Value>();
+
+        /// <summary>
         /// Returns <c>true</c> if the instance has modalities or additional sections, otherwise returns <c>false</c>.
         /// </summary>
-        public bool HasModalitiesOrSections => !QuantityQualityModalities.IsNullOrEmpty();
+        public bool HasModalitiesOrSections => !QuantityQualityModalities.IsNullOrEmpty() || !WhereSection.IsNullOrEmpty();
 
         public void AppendAnnotations(AnnotatedItem source)
         {
@@ -59,6 +64,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
 
             sb.PrintObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
+            sb.PrintObjListProp(n, nameof(WhereSection), WhereSection);
 
             return sb.ToString();
         }
@@ -89,6 +95,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
 
             sb.PrintShortObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
+            sb.PrintShortObjListProp(n, nameof(WhereSection), WhereSection);
 
             return sb.ToString();
         }
@@ -119,6 +126,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
 
             sb.PrintExistingList(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
+            sb.PrintExistingList(n, nameof(WhereSection), WhereSection);
 
             return sb.ToString();
         }

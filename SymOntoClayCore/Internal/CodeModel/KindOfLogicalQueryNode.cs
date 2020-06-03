@@ -12,7 +12,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         EntityRef,
         EntityCondition,
         Var,
-        QuestionParam,
+        QuestionVar,
         BinaryOperator,
         UnaryOperator,
         StubParam,

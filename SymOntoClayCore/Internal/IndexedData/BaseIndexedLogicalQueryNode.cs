@@ -2,6 +2,7 @@
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
@@ -10,6 +11,10 @@ namespace SymOntoClay.Core.Internal.IndexedData
     {
         public abstract KindOfLogicalQueryNode Kind { get; }
         public abstract KindOfOperatorOfLogicalQueryNode KindOfOperator { get; }
+
+        public LogicalQueryNode Origin { get; set; }
+        public IndexedRuleInstance RuleInstance { get; set; }
+        public IndexedBaseRulePart RulePart { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

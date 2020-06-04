@@ -125,7 +125,8 @@ namespace SymOntoClay.Core.Internal.Serialization
                 IsSystemDefined = true
             };
 
-            applicationInheritanceItem.Name = _context.CommonNamesStorage.ApplicationName;
+            applicationInheritanceItem.SubName = codeEntity.Name;
+            applicationInheritanceItem.SuperName = _context.CommonNamesStorage.ApplicationName;
             applicationInheritanceItem.Rank = new LogicalValue(1.0F);
 
 #if DEBUG

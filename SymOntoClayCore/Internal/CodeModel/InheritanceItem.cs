@@ -7,10 +7,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class InheritanceItem: AnnotatedItem
     {
+        public Name SubName { get; set; } = new Name();
+
         /// <summary>
         /// Represents ancestor.
         /// </summary>
-        public Name Name { get; set; } = new Name();
+        public Name SuperName { get; set; } = new Name();
 
         /// <summary>
         /// Represents rank of inheritance between two objects.
@@ -22,7 +24,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private void PrintHeader(StringBuilder sb, uint n, string spaces)
         {
-            sb.PrintObjProp(n, nameof(Name), Name);
+            sb.PrintObjProp(n, nameof(SubName), SubName);
+            sb.PrintObjProp(n, nameof(SuperName), SuperName);
             sb.PrintObjProp(n, nameof(Rank), Rank);
             sb.AppendLine($"{spaces}{nameof(IsSystemDefined)} = {IsSystemDefined}");
         }

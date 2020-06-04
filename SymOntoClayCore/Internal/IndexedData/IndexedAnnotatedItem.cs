@@ -1,4 +1,6 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,7 +8,20 @@ using System.Text;
 namespace SymOntoClay.Core.Internal.IndexedData
 {
     public abstract class IndexedAnnotatedItem: IObjectToString, IObjectToShortString, IObjectToBriefString
-    {
+    {   
+        [ResolveToType(typeof(IndexedLogicalValue))]
+        public IList<IndexedValue> QuantityQualityModalities { get; set; } = new List<IndexedValue>();
+
+        /// <summary>
+        /// It is 'Clauses section' in the documentation.
+        /// </summary>
+        public IList<IndexedValue> WhereSection { get; set; } = new List<IndexedValue>();
+
+        /// <summary>
+        /// Returns <c>true</c> if the instance has modalities or additional sections, otherwise returns <c>false</c>.
+        /// </summary>
+        public bool HasModalitiesOrSections => !QuantityQualityModalities.IsNullOrEmpty() || !WhereSection.IsNullOrEmpty();
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -30,7 +45,10 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
 
+            sb.PrintObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
+            sb.PrintObjListProp(n, nameof(WhereSection), WhereSection);
 
             return sb.ToString();
         }
@@ -58,7 +76,10 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
 
+            sb.PrintShortObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
+            sb.PrintShortObjListProp(n, nameof(WhereSection), WhereSection);
 
             return sb.ToString();
         }
@@ -86,7 +107,10 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
 
+            sb.PrintExistingList(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
+            sb.PrintExistingList(n, nameof(WhereSection), WhereSection);
 
             return sb.ToString();
         }

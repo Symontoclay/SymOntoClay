@@ -49,7 +49,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                 Log($"subItemSimpleNames = {subItemSimpleNames.WriteListToString()}");
 #endif
 
-                var superItemSimpleNames = NameHelpers.CreateSimpleNames(inheritanceItem.Name, _realStorageContext.EntityDictionary);
+                var superItemSimpleNames = NameHelpers.CreateSimpleNames(inheritanceItem.SuperName, _realStorageContext.EntityDictionary);
 
                 if (subItemSimpleNames.IsNullOrEmpty() || superItemSimpleNames.IsNullOrEmpty())
                 {
@@ -157,7 +157,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
             var superItemNode = new LogicalQueryNode();
             isExpr.Right = superItemNode;
             superItemNode.Kind = KindOfLogicalQueryNode.Concept;
-            superItemNode.Name = inheritanceItem.Name;
+            superItemNode.Name = inheritanceItem.SuperName;
 
             return fact;
         }

@@ -36,6 +36,20 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     QuantityQualityModalities.Add(item.CloneValue());
                 }
             }
+
+            if(source.WhereSection == null)
+            {
+                WhereSection = null;
+            }
+            else
+            {
+                WhereSection = new List<Value>();
+
+                foreach (var item in source.WhereSection)
+                {
+                    WhereSection.Add(item.CloneValue());
+                }
+            }
         }
 
         /// <inheritdoc/>

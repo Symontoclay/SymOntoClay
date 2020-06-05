@@ -2,6 +2,7 @@
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -28,7 +29,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
         private readonly RealStorageContext _realStorageContext;
 
         private readonly Dictionary<SimpleName, Dictionary<SimpleName, List<InheritanceItem>>> _nonIndexedInfo = new Dictionary<SimpleName, Dictionary<SimpleName, List<InheritanceItem>>>();
-        private readonly Dictionary<ulong, Dictionary<ulong, List<InheritanceItem>>> _indexedInfo = new Dictionary<ulong, Dictionary<ulong, List<InheritanceItem>>>();
+        private readonly Dictionary<ulong, Dictionary<ulong, List<IndexedInheritanceItem>>> _indexedInfo = new Dictionary<ulong, Dictionary<ulong, List<IndexedInheritanceItem>>>();
 
         public void SetInheritance(Name subItem, InheritanceItem inheritanceItem)
         {
@@ -43,13 +44,20 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                 Log($"subItem = {subItem}");
                 Log($"inheritanceItem = {inheritanceItem}");
                 Log($"isPrimary = {isPrimary}");
+#endif
+                var indexedInheritanceItem = ConvertorToIndexed.ConvertInheritanceItem(inheritanceItem, _realStorageContext.EntityDictionary);
 
-                var subItemSimpleNames = NameHelpers.CreateSimpleNames(subItem, _realStorageContext.EntityDictionary);
+#if DEBUG
+                Log($"indexedInheritanceItem = {indexedInheritanceItem}");
+#endif
 
+                var subItemSimpleNames = indexedInheritanceItem.SubNames;
+
+#if DEBUG
                 Log($"subItemSimpleNames = {subItemSimpleNames.WriteListToString()}");
 #endif
 
-                var superItemSimpleNames = NameHelpers.CreateSimpleNames(inheritanceItem.SuperName, _realStorageContext.EntityDictionary);
+                var superItemSimpleNames = indexedInheritanceItem.SuperNames;
 
                 if (subItemSimpleNames.IsNullOrEmpty() || superItemSimpleNames.IsNullOrEmpty())
                 {
@@ -79,12 +87,12 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                             if (dict.ContainsKey(superItemSimpleName))
                             {
                                 dict[superItemSimpleName].Add(inheritanceItem);
-                                indexedDict[superKey].Add(inheritanceItem);
+                                indexedDict[superKey].Add(indexedInheritanceItem);
                             }
                             else
                             {
                                 dict[superItemSimpleName] = new List<InheritanceItem>() { inheritanceItem };
-                                indexedDict[superKey] = new List<InheritanceItem>() { inheritanceItem };
+                                indexedDict[superKey] = new List<IndexedInheritanceItem>() { indexedInheritanceItem };
                             }
                         }
                         else
@@ -93,9 +101,9 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                             _nonIndexedInfo[subItemSimpleName] = dict;
                             dict[superItemSimpleName] = new List<InheritanceItem>() { inheritanceItem };
 
-                            var indexedDict = new Dictionary<ulong, List<InheritanceItem>>();
+                            var indexedDict = new Dictionary<ulong, List<IndexedInheritanceItem>>();
                             _indexedInfo[subKey] = indexedDict;
-                            indexedDict[superKey] = new List<InheritanceItem>() { inheritanceItem };
+                            indexedDict[superKey] = new List<IndexedInheritanceItem>() { indexedInheritanceItem };
                         }
                     }
                 }

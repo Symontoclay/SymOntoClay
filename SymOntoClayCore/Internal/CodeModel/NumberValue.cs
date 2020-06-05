@@ -24,10 +24,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public double? SystemValue { get; private set; }
 
         /// <inheritdoc/>
-        public override Value CloneValue()
+        public override Value CloneValue(Dictionary<object, object> cloneContext)
         {
             var result = new NumberValue(SystemValue);
-            result.AppendAnnotations(this);
+            result.AppendAnnotations(this, cloneContext);
             return result;
         }
 

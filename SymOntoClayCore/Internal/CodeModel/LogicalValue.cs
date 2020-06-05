@@ -32,10 +32,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public float? SystemValue { get; private set; }
 
         /// <inheritdoc/>
-        public override Value CloneValue()
+        public override Value CloneValue(Dictionary<object, object> cloneContext)
         {
             var result = new LogicalValue(SystemValue);
-            result.AppendAnnotations(this);
+            result.AppendAnnotations(this, cloneContext);
             return result;
         }
 

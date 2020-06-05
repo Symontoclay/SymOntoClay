@@ -23,6 +23,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public void AppendAnnotations(AnnotatedItem source)
         {
+            var cloneContext = new Dictionary<object, object>();
+            AppendAnnotations(source, cloneContext);
+        }
+
+        public void AppendAnnotations(AnnotatedItem source, Dictionary<object, object> cloneContext)
+        {
             if (source.QuantityQualityModalities == null)
             {
                 QuantityQualityModalities = null;
@@ -33,7 +39,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 foreach(var item in source.QuantityQualityModalities)
                 {
-                    QuantityQualityModalities.Add(item.CloneValue());
+                    QuantityQualityModalities.Add(item.CloneValue(cloneContext));
                 }
             }
 
@@ -47,7 +53,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 foreach (var item in source.WhereSection)
                 {
-                    WhereSection.Add(item.CloneValue());
+                    WhereSection.Add(item.CloneValue(cloneContext));
                 }
             }
         }

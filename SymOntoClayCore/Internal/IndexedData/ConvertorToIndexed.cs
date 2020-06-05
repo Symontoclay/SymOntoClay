@@ -1,0 +1,105 @@
+﻿using NLog;
+using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
+using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
+
+namespace SymOntoClay.Core.Internal.IndexedData
+{
+    public static class ConvertorToIndexed
+    {
+#if DEBUG
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
+        public static IndexedInheritanceItem ConvertInheritanceItem(InheritanceItem source, IEntityDictionary entityDictionary)
+        {
+            var convertingContext = new Dictionary<object, object>();
+            return ConvertInheritanceItem(source, entityDictionary, convertingContext);
+        }
+
+        private static IndexedInheritanceItem ConvertInheritanceItem(InheritanceItem source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        {
+            if(convertingContext.ContainsKey(source))
+            {
+                return (IndexedInheritanceItem)convertingContext[source];
+            }
+
+            var result = new IndexedInheritanceItem();
+            convertingContext[source] = result;
+
+            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+
+            result.SubNames = NameHelpers.CreateSimpleNames(source.SubName, entityDictionary);
+            result.SuperNames = NameHelpers.CreateSimpleNames(source.SuperName, entityDictionary);
+
+            result.Rank = ConvertValue(source.Rank, entityDictionary, convertingContext);
+
+            result.IsSystemDefined = source.IsSystemDefined;
+
+            return result;
+        }
+
+        private static IndexedValue ConvertValue(Value source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        {
+            switch(source.Kind)
+            {
+                case KindOfValue.LogicalValue:
+                    return NConvertLogicalValue(source.AsLogicalValue, entityDictionary, convertingContext);
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, null);
+            }
+        }
+
+        private static IndexedLogicalValue NConvertLogicalValue(LogicalValue source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        {
+            if (convertingContext.ContainsKey(source))
+            {
+                return (IndexedLogicalValue)convertingContext[source];
+            }
+
+            var result = new IndexedLogicalValue();
+            convertingContext[source] = result;
+
+            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+
+            result.OriginalLogicalValue = source;
+            result.SystemValue = source.SystemValue;
+
+            return result;
+        }
+
+        private static void FillAnnotationsModalitiesAndSections(AnnotatedItem source, IndexedAnnotatedItem dest, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        {
+            if(dest.QuantityQualityModalities == null)
+            {
+                dest.QuantityQualityModalities = new List<IndexedValue>();
+            }
+
+            if(!source.QuantityQualityModalities.IsNullOrEmpty())
+            {
+                foreach(var item in source.QuantityQualityModalities)
+                {
+                    dest.QuantityQualityModalities.Add(ConvertValue(item, entityDictionary, convertingContext));
+                }
+            }
+
+            if(dest.WhereSection == null)
+            {
+                dest.WhereSection = new List<IndexedValue>();
+            }
+
+            if(!source.WhereSection.IsNullOrEmpty())
+            {
+                foreach(var item in source.WhereSection)
+                {
+                    dest.WhereSection.Add(ConvertValue(item, entityDictionary, convertingContext));
+                }
+            }
+        }
+    }
+}

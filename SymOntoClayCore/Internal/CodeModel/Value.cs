@@ -15,7 +15,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsNumberValue => false;
         public virtual NumberValue AsNumberValue => null;
 
-        public abstract Value CloneValue();
+        public Value CloneValue()
+        {
+            var cloneContext = new Dictionary<object, object>();
+            return CloneValue(cloneContext);
+        }
+
+        public abstract Value CloneValue(Dictionary<object, object> cloneContext);
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

@@ -204,7 +204,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
         {
             var spaces = Spaces(n);
             var mark = items == null ? "No" : items.Any() ? "Yes" : "No";
-            sb.AppendLine($"{spaces}{nameof(propName)} = {mark}");
+            sb.AppendLine($"{spaces}{propName} = {mark}");
         }
 
         public static string WriteListToString<T>(this IEnumerable<T> items) where T: IObjectToString

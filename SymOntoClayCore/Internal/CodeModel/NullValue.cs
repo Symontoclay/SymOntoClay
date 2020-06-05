@@ -10,10 +10,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override KindOfValue Kind => KindOfValue.NullValue;
 
         /// <inheritdoc/>
-        public override Value CloneValue()
+        public override Value CloneValue(Dictionary<object, object> cloneContext)
         {
             var result = new NullValue();
-            result.AppendAnnotations(this);
+            result.AppendAnnotations(this, cloneContext);
 
             return result;
         }

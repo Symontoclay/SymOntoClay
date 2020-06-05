@@ -29,7 +29,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
                 Directory.CreateDirectory(_settings.LogDir);
 
                 var now = DateTime.Now;
-                var todaysDir = $"{now.Year}_{now.Month}_{now.Day}_{now.Hour}_{now.Minute}_{now.Second}";
+                var todaysDir = $"{now.Year}_{now.Month.ToString("00")}_{now.Day.ToString("00")}_{now.Hour.ToString("00")}_{now.Minute.ToString("00")}_{now.Second.ToString("00")}";
 
                 _settings.LogDir = Path.Combine(_settings.LogDir, todaysDir);
 

@@ -18,7 +18,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             _gbcLogger.Info($"indexedRuleInstance = {indexedRuleInstance}");
 #endif
 
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
 
 #if IMAGINE_WORKING
             _gbcLogger.Info("End");

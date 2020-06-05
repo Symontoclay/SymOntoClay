@@ -157,11 +157,16 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             result.PrimaryPart = ConvertPrimaryRulePart(source.PrimaryPart, entityDictionary, convertingContext);
 
+            if (!source.SecondaryParts.IsNullOrEmpty())
+            {
+                throw new NotImplementedException();
+            }
+
 #if DEBUG
             _gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
-            throw new NotImplementedException();
+            return result;
         }
 
         private static IndexedPrimaryRulePart ConvertPrimaryRulePart(PrimaryRulePart source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
@@ -192,11 +197,16 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             FillBaseRulePart(source, result, entityDictionary, convertingContext);
 
+            if(!source.SecondaryParts.IsNullOrEmpty())
+            {
+                throw new NotImplementedException();
+            }
+
 #if DEBUG
             _gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
-            throw new NotImplementedException();
+            return result;
         }
 
         private static void FillBaseRulePart(BaseRulePart source, IndexedBaseRulePart dest, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
@@ -261,7 +271,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             _gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
-            throw new NotImplementedException();
+            return result;
         }
 
         private static ConceptIndexedLogicalQueryNode ConvertConceptLogicalQueryNode(LogicalQueryNode source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
@@ -284,7 +294,17 @@ namespace SymOntoClay.Core.Internal.IndexedData
             _gbcLogger.Info("NEXT");
 #endif
 
-            throw new NotImplementedException();
+            var result = new ConceptIndexedLogicalQueryNode();
+            convertingContext[source] = result;
+            result.Origin = source;
+
+            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+
+#if DEBUG
+            _gbcLogger.Info($"result (snapshot) = {result}");
+#endif
+
+            return result;
         }
     }
 }

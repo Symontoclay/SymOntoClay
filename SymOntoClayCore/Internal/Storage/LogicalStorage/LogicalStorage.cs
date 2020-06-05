@@ -24,7 +24,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
         private readonly object _lockObj = new object();
 
-        private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData;
+        private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData();
 
         public void Append(RuleInstance ruleInstance)
         {
@@ -51,10 +51,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(indexedRuleInstance);
 
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
 
-#if DEBUG
+#if IMAGINE_WORKING
             Log("End");
+#else
+            throw new NotImplementedException();
 #endif
         }
     }

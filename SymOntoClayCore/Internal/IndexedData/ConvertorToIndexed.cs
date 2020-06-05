@@ -214,18 +214,21 @@ namespace SymOntoClay.Core.Internal.IndexedData
                     switch(source.KindOfOperator)
                     {
                         case KindOfOperatorOfLogicalQueryNode.Is:
-                            return ConvertIsOperator(source, entityDictionary, convertingContext);
+                            return ConvertIsOperatorLogicalQueryNode(source, entityDictionary, convertingContext);
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(source.KindOfOperator), source.KindOfOperator, null);
                     }
+
+                case KindOfLogicalQueryNode.Concept:
+                    return ConvertConceptLogicalQueryNode(source, entityDictionary, convertingContext);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, null);
             }
         }
 
-        private static IsOperatorIndexedLogicalQueryNode ConvertIsOperator(LogicalQueryNode source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        private static IsOperatorIndexedLogicalQueryNode ConvertIsOperatorLogicalQueryNode(LogicalQueryNode source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
         {
 #if DEBUG
             _gbcLogger.Info($"source = {source}");
@@ -256,6 +259,29 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
 #if DEBUG
             _gbcLogger.Info($"result (snapshot) = {result}");
+#endif
+
+            throw new NotImplementedException();
+        }
+
+        private static ConceptIndexedLogicalQueryNode ConvertConceptLogicalQueryNode(LogicalQueryNode source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        {
+#if DEBUG
+            _gbcLogger.Info($"source = {source}");
+#endif
+
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (ConceptIndexedLogicalQueryNode)convertingContext[source];
+            }
+
+#if DEBUG
+            _gbcLogger.Info("NEXT");
 #endif
 
             throw new NotImplementedException();

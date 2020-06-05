@@ -17,7 +17,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public bool HasVars { get; set; }
         public bool HasQuestionVars { get; set; }
 
-        public IDictionary<ulong, IList<RelationIndexedLogicalQueryNode>> RelationsDict { get; set; }
+        //public IDictionary<ulong, IList<RelationIndexedLogicalQueryNode>> RelationsDict { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -35,26 +35,26 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintBriefObjProp(n, nameof(Parent), Parent);
             sb.PrintObjProp(n, nameof(Expression), Expression);
 
-            if (RelationsDict == null)
-            {
-                sb.AppendLine($"{spaces}{nameof(RelationsDict)} = null");
-            }
-            else
-            {
-                sb.AppendLine($"{spaces}Begin {nameof(RelationsDict)}");
-                var nextNextN = nextN + 4;
-                foreach (var relationsKVPItem in RelationsDict)
-                {
-                    sb.AppendLine($"{nextNSpace}key of relation = {relationsKVPItem.Key}");
-                    var tmpRelationsList = relationsKVPItem.Value;
-                    sb.AppendLine($"{nextNSpace}count of relations = {tmpRelationsList.Count}");
-                    foreach (var relation in tmpRelationsList)
-                    {
-                        sb.Append(relation.ToShortString(nextNextN));
-                    }
-                }
-                sb.AppendLine($"{spaces}End {nameof(RelationsDict)}");
-            }
+            //if (RelationsDict == null)
+            //{
+            //    sb.AppendLine($"{spaces}{nameof(RelationsDict)} = null");
+            //}
+            //else
+            //{
+            //    sb.AppendLine($"{spaces}Begin {nameof(RelationsDict)}");
+            //    var nextNextN = nextN + 4;
+            //    foreach (var relationsKVPItem in RelationsDict)
+            //    {
+            //        sb.AppendLine($"{nextNSpace}key of relation = {relationsKVPItem.Key}");
+            //        var tmpRelationsList = relationsKVPItem.Value;
+            //        sb.AppendLine($"{nextNSpace}count of relations = {tmpRelationsList.Count}");
+            //        foreach (var relation in tmpRelationsList)
+            //        {
+            //            sb.Append(relation.ToShortString(nextNextN));
+            //        }
+            //    }
+            //    sb.AppendLine($"{spaces}End {nameof(RelationsDict)}");
+            //}
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();

@@ -23,6 +23,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
         private static IndexedInheritanceItem ConvertInheritanceItem(InheritanceItem source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
         {
+            if(source == null)
+            {
+                return null;
+            }
+
             if(convertingContext.ContainsKey(source))
             {
                 return (IndexedInheritanceItem)convertingContext[source];
@@ -57,6 +62,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
         private static IndexedLogicalValue NConvertLogicalValue(LogicalValue source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
         {
+            if (source == null)
+            {
+                return null;
+            }
+
             if (convertingContext.ContainsKey(source))
             {
                 return (IndexedLogicalValue)convertingContext[source];
@@ -121,6 +131,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
             _gbcLogger.Info($"source = {source}");
 #endif
 
+            if (source == null)
+            {
+                return null;
+            }
+
             if (convertingContext.ContainsKey(source))
             {
                 return (IndexedRuleInstance)convertingContext[source];
@@ -132,12 +147,69 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             var result = new IndexedRuleInstance();
             convertingContext[source] = result;
+            result.Origin = source;
 
             FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+
+            result.Names = NameHelpers.CreateSimpleNames(source.Name, entityDictionary);
+
+            result.IsRule = source.IsRule;
+
+            result.PrimaryPart = ConvertPrimaryRulePart(source.PrimaryPart, entityDictionary, convertingContext);
 
 #if DEBUG
             _gbcLogger.Info($"result (snapshot) = {result}");
 #endif
+
+            throw new NotImplementedException();
+        }
+
+        private static IndexedPrimaryRulePart ConvertPrimaryRulePart(PrimaryRulePart source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        {
+#if DEBUG
+            _gbcLogger.Info($"source = {source}");
+#endif
+
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (IndexedPrimaryRulePart)convertingContext[source];
+            }
+
+#if DEBUG
+            _gbcLogger.Info("NEXT");
+#endif
+
+            var result = new IndexedPrimaryRulePart();
+            convertingContext[source] = result;
+            result.OriginPrimaryRulePart = source;
+
+            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+
+            FillBaseRulePart(source, result, entityDictionary, convertingContext);
+
+#if DEBUG
+            _gbcLogger.Info($"result (snapshot) = {result}");
+#endif
+
+            throw new NotImplementedException();
+        }
+
+        private static void FillBaseRulePart(BaseRulePart source, IndexedBaseRulePart dest, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        {
+            dest.Parent = (IndexedRuleInstance)convertingContext[source.Parent];
+
+            dest.Expression = ConvertLogicalQueryNode();
+
+        //public BaseIndexedLogicalQueryNode Expression { get; set; }
+
+            //public bool IsActive { get; set; }
+            //public bool HasVars { get; set; }
+            //public bool HasQuestionVars { get; set; }
 
             throw new NotImplementedException();
         }

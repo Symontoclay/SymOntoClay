@@ -8,10 +8,10 @@ namespace SymOntoClay.Core.Internal.IndexedData
 {
     public class IndexedPrimaryRulePart: IndexedBaseRulePart
     {
-        public PrimaryRulePart OriginalPrimaryRulePart { get; set; }
+        public PrimaryRulePart OriginPrimaryRulePart { get; set; }
 
         /// <inheritdoc/>
-        public override BaseRulePart OriginRulePart => OriginalPrimaryRulePart;
+        public override BaseRulePart OriginRulePart => OriginPrimaryRulePart;
 
         public List<IndexedSecondaryRulePart> SecondaryParts { get; set; } = new List<IndexedSecondaryRulePart>();
 

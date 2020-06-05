@@ -16,6 +16,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         BinaryOperator,
         UnaryOperator,
         StubParam,
-        Value
+        Value,
+        Group
     }
 }

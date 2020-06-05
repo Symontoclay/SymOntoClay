@@ -101,5 +101,45 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 }
             }
         }
+
+        public static IndexedRuleInstance ConvertRuleInstance(RuleInstance source, IEntityDictionary entityDictionary)
+        {
+            var convertingContext = new Dictionary<object, object>();
+
+            var result = ConvertRuleInstance(source, entityDictionary, convertingContext);
+
+#if DEBUG
+            _gbcLogger.Info($"result = {result}");
+#endif
+
+            return result;
+        }
+
+        private static IndexedRuleInstance ConvertRuleInstance(RuleInstance source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        {
+#if DEBUG
+            _gbcLogger.Info($"source = {source}");
+#endif
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (IndexedRuleInstance)convertingContext[source];
+            }
+
+#if DEBUG
+            _gbcLogger.Info("NEXT");
+#endif
+
+            var result = new IndexedRuleInstance();
+            convertingContext[source] = result;
+
+            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+
+#if DEBUG
+            _gbcLogger.Info($"result (snapshot) = {result}");
+#endif
+
+            throw new NotImplementedException();
+        }
     }
 }

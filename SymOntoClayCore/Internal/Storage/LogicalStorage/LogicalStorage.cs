@@ -1,4 +1,6 @@
-﻿using SymOntoClay.Core.Internal.CodeModel;
+﻿using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,6 +22,10 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
         private readonly RealStorageContext _realStorageContext;
 
+        private readonly object _lockObj = new object();
+
+        private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData;
+
         public void Append(RuleInstance ruleInstance)
         {
             Append(ruleInstance, true);
@@ -27,17 +33,28 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
         public void Append(RuleInstance ruleInstance, bool isPrimary)
         {
+            lock (_lockObj)
+            {
+                NAppend(ruleInstance, isPrimary);
+            }
+        }
+
+        private void NAppend(RuleInstance ruleInstance, bool isPrimary)
+        {
 #if DEBUG
-            //Log($"ruleInstance = {ruleInstance}");
-            //Log($"isPrimary = {isPrimary}");
+            Log($"ruleInstance = {ruleInstance}");
+            Log($"isPrimary = {isPrimary}");
+            Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
 #endif
 
-            //throw new NotImplementedException();
+            var indexedRuleInstance = ConvertorToIndexed.ConvertRuleInstance(ruleInstance, _realStorageContext.EntityDictionary);
 
-#if IMAGINE_WORKING
-            Log("End");
-#else
+            _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(indexedRuleInstance);
+
             throw new NotImplementedException();
+
+#if DEBUG
+            Log("End");
 #endif
         }
     }

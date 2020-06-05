@@ -13,9 +13,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public IndexedRuleInstance Parent { get; set; }
         public BaseIndexedLogicalQueryNode Expression { get; set; }
 
-        public bool IsActive { get; set; }
-        public bool HasVars { get; set; }
-        public bool HasQuestionVars { get; set; }
+        //public bool IsActive { get; set; }
+        //public bool HasVars { get; set; }
+        //public bool HasQuestionVars { get; set; }
 
         //public IDictionary<ulong, IList<RelationIndexedLogicalQueryNode>> RelationsDict { get; set; }
 
@@ -27,9 +27,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var nextN = n + 4;
             var nextNSpace = DisplayHelper.Spaces(nextN);
 
-            sb.AppendLine($"{spaces}{nameof(IsActive)} = {IsActive}");
-            sb.AppendLine($"{spaces}{nameof(HasVars)} = {HasVars}");
-            sb.AppendLine($"{spaces}{nameof(HasQuestionVars)} = {HasQuestionVars}");
+            //sb.AppendLine($"{spaces}{nameof(IsActive)} = {IsActive}");
+            //sb.AppendLine($"{spaces}{nameof(HasVars)} = {HasVars}");
+            //sb.AppendLine($"{spaces}{nameof(HasQuestionVars)} = {HasQuestionVars}");
 
             sb.PrintBriefObjProp(n, nameof(OriginRulePart), OriginRulePart);
             sb.PrintBriefObjProp(n, nameof(Parent), Parent);
@@ -66,9 +66,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(IsActive)} = {IsActive}");
-            sb.AppendLine($"{spaces}{nameof(HasVars)} = {HasVars}");
-            sb.AppendLine($"{spaces}{nameof(HasQuestionVars)} = {HasQuestionVars}");
+            //sb.AppendLine($"{spaces}{nameof(IsActive)} = {IsActive}");
+            //sb.AppendLine($"{spaces}{nameof(HasVars)} = {HasVars}");
+            //sb.AppendLine($"{spaces}{nameof(HasQuestionVars)} = {HasQuestionVars}");
 
             sb.PrintBriefObjProp(n, nameof(OriginRulePart), OriginRulePart);
             sb.PrintBriefObjProp(n, nameof(Parent), Parent);
@@ -84,9 +84,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(IsActive)} = {IsActive}");
-            sb.AppendLine($"{spaces}{nameof(HasVars)} = {HasVars}");
-            sb.AppendLine($"{spaces}{nameof(HasQuestionVars)} = {HasQuestionVars}");
+            //sb.AppendLine($"{spaces}{nameof(IsActive)} = {IsActive}");
+            //sb.AppendLine($"{spaces}{nameof(HasVars)} = {HasVars}");
+            //sb.AppendLine($"{spaces}{nameof(HasQuestionVars)} = {HasQuestionVars}");
 
             sb.PrintBriefObjProp(n, nameof(OriginRulePart), OriginRulePart);
             sb.PrintBriefObjProp(n, nameof(Parent), Parent);

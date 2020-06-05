@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
-    public class IsOperatorIndexedLogicalQueryNode: BaseIndexedLogicalQueryNode
+    public class IsOperatorIndexedLogicalQueryNode: BinaryOperatorIndexedLogicalQueryNode
     {
         /// <inheritdoc/>
         public override KindOfLogicalQueryNode Kind => KindOfLogicalQueryNode.BinaryOperator;

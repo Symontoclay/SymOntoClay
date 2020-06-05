@@ -203,13 +203,60 @@ namespace SymOntoClay.Core.Internal.IndexedData
         {
             dest.Parent = (IndexedRuleInstance)convertingContext[source.Parent];
 
-            dest.Expression = ConvertLogicalQueryNode();
+            dest.Expression = ConvertLogicalQueryNode(source.Expression, entityDictionary, convertingContext);
+        }
 
-        //public BaseIndexedLogicalQueryNode Expression { get; set; }
+        private static BaseIndexedLogicalQueryNode ConvertLogicalQueryNode(LogicalQueryNode source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        {
+            switch(source.Kind)
+            {
+                case KindOfLogicalQueryNode.BinaryOperator:
+                    switch(source.KindOfOperator)
+                    {
+                        case KindOfOperatorOfLogicalQueryNode.Is:
+                            return ConvertIsOperator(source, entityDictionary, convertingContext);
 
-            //public bool IsActive { get; set; }
-            //public bool HasVars { get; set; }
-            //public bool HasQuestionVars { get; set; }
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(source.KindOfOperator), source.KindOfOperator, null);
+                    }
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, null);
+            }
+        }
+
+        private static IsOperatorIndexedLogicalQueryNode ConvertIsOperator(LogicalQueryNode source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        {
+#if DEBUG
+            _gbcLogger.Info($"source = {source}");
+#endif
+
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (IsOperatorIndexedLogicalQueryNode)convertingContext[source];
+            }
+
+#if DEBUG
+            _gbcLogger.Info("NEXT");
+#endif
+
+            var result = new IsOperatorIndexedLogicalQueryNode();
+            convertingContext[source] = result;
+            result.Origin = source;
+
+            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+
+            result.Left = ConvertLogicalQueryNode(source.Left, entityDictionary, convertingContext);
+            result.Right = ConvertLogicalQueryNode(source.Right, entityDictionary, convertingContext);
+
+#if DEBUG
+            _gbcLogger.Info($"result (snapshot) = {result}");
+#endif
 
             throw new NotImplementedException();
         }

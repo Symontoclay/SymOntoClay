@@ -10,8 +10,12 @@ namespace SymOntoClay.Core.Internal.IndexedData
     {
         public InheritanceItem OriginalInheritanceItem { get; set; }
 
-        public IList<SimpleName> SubNames { get; set; }
-        public IList<SimpleName> SuperNames { get; set; }
+        public Name SubName { get; set; } = new Name();
+
+        /// <summary>
+        /// Represents ancestor.
+        /// </summary>
+        public Name SuperName { get; set; } = new Name();
 
         /// <summary>
         /// Represents rank of inheritance between two objects.
@@ -24,8 +28,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
         private void PrintHeader(StringBuilder sb, uint n, string spaces)
         {
             sb.PrintBriefObjProp(n, nameof(OriginalInheritanceItem), OriginalInheritanceItem);
-            sb.PrintObjListProp(n, nameof(SubNames), SubNames);
-            sb.PrintObjListProp(n, nameof(SuperNames), SuperNames);
+            sb.PrintObjProp(n, nameof(SubName), SubName);
+            sb.PrintObjProp(n, nameof(SuperName), SuperName);
             sb.PrintObjProp(n, nameof(Rank), Rank);
             sb.AppendLine($"{spaces}{nameof(IsSystemDefined)} = {IsSystemDefined}");
         }

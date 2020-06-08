@@ -35,11 +35,13 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             var result = new IndexedInheritanceItem();
             convertingContext[source] = result;
+            result.OriginalInheritanceItem = source;
+            source.Indexed = result;
 
             FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
 
-            result.SubNames = NameHelpers.CreateSimpleNames(source.SubName, entityDictionary);
-            result.SuperNames = NameHelpers.CreateSimpleNames(source.SuperName, entityDictionary);
+            result.SubName = source.SubName;
+            result.SuperName = source.SuperName;
 
             result.Rank = ConvertValue(source.Rank, entityDictionary, convertingContext);
 
@@ -148,10 +150,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var result = new IndexedRuleInstance();
             convertingContext[source] = result;
             result.Origin = source;
+            source.Indexed = result;
 
             FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
 
-            result.Names = NameHelpers.CreateSimpleNames(source.Name, entityDictionary);
+            result.Name = source.Name;
 
             result.IsRule = source.IsRule;
 
@@ -192,6 +195,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var result = new IndexedPrimaryRulePart();
             convertingContext[source] = result;
             result.OriginPrimaryRulePart = source;
+            source.Indexed = result;
 
             FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
 

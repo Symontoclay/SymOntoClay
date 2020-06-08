@@ -15,10 +15,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public string NameValue { get; set; }
         public ulong NameKey { get; set; }
 
-        public IList<Namespace> Namespaces { get;  set; } = new List<Namespace>();
-
-        public IList<ulong> FullNameKeys { get; set; } = new List<ulong>();
-
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -42,10 +38,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
             sb.AppendLine($"{spaces}{nameof(NameKey)} = {NameKey}");
-
-            sb.PrintObjListProp(n, nameof(Namespaces), Namespaces);
-
-            sb.PrintPODList(n, nameof(FullNameKeys), FullNameKeys);
 
             return sb.ToString();
         }
@@ -74,10 +66,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
             sb.AppendLine($"{spaces}{nameof(NameKey)} = {NameKey}");
 
-            sb.PrintShortObjListProp(n, nameof(Namespaces), Namespaces);
-
-            sb.PrintPODList(n, nameof(FullNameKeys), FullNameKeys);
-
             return sb.ToString();
         }
 
@@ -104,10 +92,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
             sb.AppendLine($"{spaces}{nameof(NameKey)} = {NameKey}");
-
-            sb.PrintBriefObjListProp(n, nameof(Namespaces), Namespaces);
-
-            sb.PrintPODList(n, nameof(FullNameKeys), FullNameKeys);
 
             return sb.ToString();
         }

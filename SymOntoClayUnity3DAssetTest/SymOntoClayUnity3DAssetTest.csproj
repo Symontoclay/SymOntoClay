@@ -6,6 +6,8 @@
     <IsPackable>false</IsPackable>
 
     <RootNamespace>SymOntoClay.Unity3DAsset.Test</RootNamespace>
+
+    <Version>0.1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -28,7 +28,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 
         private readonly RealStorageContext _realStorageContext;
 
-        private readonly Dictionary<SimpleName, Dictionary<SimpleName, List<InheritanceItem>>> _nonIndexedInfo = new Dictionary<SimpleName, Dictionary<SimpleName, List<InheritanceItem>>>();
+        private readonly Dictionary<Name, Dictionary<Name, List<InheritanceItem>>> _nonIndexedInfo = new Dictionary<Name, Dictionary<Name, List<InheritanceItem>>>();
         private readonly Dictionary<ulong, Dictionary<ulong, List<IndexedInheritanceItem>>> _indexedInfo = new Dictionary<ulong, Dictionary<ulong, List<IndexedInheritanceItem>>>();
 
         public void SetInheritance(Name subItem, InheritanceItem inheritanceItem)
@@ -51,67 +51,43 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                 Log($"indexedInheritanceItem = {indexedInheritanceItem}");
 #endif
 
-                var subItemSimpleNames = indexedInheritanceItem.SubNames;
+                var subName = indexedInheritanceItem.SubName;
+                var superName = indexedInheritanceItem.SuperName;
 
-#if DEBUG
-                Log($"subItemSimpleNames = {subItemSimpleNames.WriteListToString()}");
-#endif
-
-                var superItemSimpleNames = indexedInheritanceItem.SuperNames;
-
-                if (subItemSimpleNames.IsNullOrEmpty() || superItemSimpleNames.IsNullOrEmpty())
+                if (subName.IsEmpty || superName.IsEmpty)
                 {
                     return;
                 }
 
-                foreach (var subItemSimpleName in subItemSimpleNames)
+                var subKey = subName.NameKey;
+                var superKey = superName.NameKey;
+
+                if (_nonIndexedInfo.ContainsKey(subName))
                 {
-#if DEBUG
-                    Log($"subItemSimpleName = {subItemSimpleName}");
-#endif
+                    var dict = _nonIndexedInfo[subName];
+                    var indexedDict = _indexedInfo[subKey];
 
-                    foreach(var superItemSimpleName in superItemSimpleNames)
+                    if (dict.ContainsKey(superName))
                     {
-#if DEBUG
-                        Log($"superItemSimpleName = {superItemSimpleName}");
-#endif
-
-                        var subKey = subItemSimpleName.FullNameKey;
-                        var superKey = superItemSimpleName.FullNameKey;
-
-                        if (_nonIndexedInfo.ContainsKey(subItemSimpleName))
-                        {
-                            var dict = _nonIndexedInfo[subItemSimpleName];
-                            var indexedDict = _indexedInfo[subKey];
-
-                            if (dict.ContainsKey(superItemSimpleName))
-                            {
-                                dict[superItemSimpleName].Add(inheritanceItem);
-                                indexedDict[superKey].Add(indexedInheritanceItem);
-                            }
-                            else
-                            {
-                                dict[superItemSimpleName] = new List<InheritanceItem>() { inheritanceItem };
-                                indexedDict[superKey] = new List<IndexedInheritanceItem>() { indexedInheritanceItem };
-                            }
-                        }
-                        else
-                        {
-                            var dict = new Dictionary<SimpleName, List<InheritanceItem>>();
-                            _nonIndexedInfo[subItemSimpleName] = dict;
-                            dict[superItemSimpleName] = new List<InheritanceItem>() { inheritanceItem };
-
-                            var indexedDict = new Dictionary<ulong, List<IndexedInheritanceItem>>();
-                            _indexedInfo[subKey] = indexedDict;
-                            indexedDict[superKey] = new List<IndexedInheritanceItem>() { indexedInheritanceItem };
-                        }
+                        dict[superName].Add(inheritanceItem);
+                        indexedDict[superKey].Add(indexedInheritanceItem);
+                    }
+                    else
+                    {
+                        dict[superName] = new List<InheritanceItem>() { inheritanceItem };
+                        indexedDict[superKey] = new List<IndexedInheritanceItem>() { indexedInheritanceItem };
                     }
                 }
+                else
+                {
+                    var dict = new Dictionary<Name, List<InheritanceItem>>();
+                    _nonIndexedInfo[subName] = dict;
+                    dict[superName] = new List<InheritanceItem>() { inheritanceItem };
 
-#if DEBUG
-                //Log($"_nonIndexedInfo = {JsonConvert.SerializeObject(_nonIndexedInfo, Formatting.Indented)}");
-                //Log($"_indexedInfo = {JsonConvert.SerializeObject(_indexedInfo, Formatting.Indented)}");
-#endif
+                    var indexedDict = new Dictionary<ulong, List<IndexedInheritanceItem>>();
+                    _indexedInfo[subKey] = indexedDict;
+                    indexedDict[superKey] = new List<IndexedInheritanceItem>() { indexedInheritanceItem };
+                }
             }
 
             if(isPrimary)
@@ -150,9 +126,11 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 
             primaryPart.QuantityQualityModalities.Add(inheritanceItem.Rank);
 
-            var isExpr = new LogicalQueryNode();
-            isExpr.Kind = KindOfLogicalQueryNode.BinaryOperator;
-            isExpr.KindOfOperator = KindOfOperatorOfLogicalQueryNode.Is;
+            var isExpr = new LogicalQueryNode
+            {
+                Kind = KindOfLogicalQueryNode.BinaryOperator,
+                KindOfOperator = KindOfOperatorOfLogicalQueryNode.Is
+            };
 
             primaryPart.Expression = isExpr;
 

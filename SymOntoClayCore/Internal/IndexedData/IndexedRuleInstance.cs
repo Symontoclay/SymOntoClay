@@ -9,7 +9,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
     public class IndexedRuleInstance: IndexedAnnotatedItem
     {
         public RuleInstance Origin { get; set; }
-        public IList<SimpleName> Names { get; set; }
+        public Name Name { get; set; }
 
         public bool IsRule { get; set; }
         public IndexedPrimaryRulePart PrimaryPart { get; set; }
@@ -22,7 +22,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var sb = new StringBuilder();
 
             sb.PrintExisting(n, nameof(Origin), Origin);
-            sb.PrintObjListProp(n, nameof(Names), Names);
+            sb.PrintObjProp(n, nameof(Name), Name);
 
             sb.AppendLine($"{spaces}{nameof(IsRule)} = {IsRule}");
 
@@ -39,7 +39,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var sb = new StringBuilder();
 
             sb.PrintExisting(n, nameof(Origin), Origin);
-            sb.PrintShortObjListProp(n, nameof(Names), Names);
+            sb.PrintShortObjProp(n, nameof(Name), Name);
 
             sb.AppendLine($"{spaces}{nameof(IsRule)} = {IsRule}");
 
@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var sb = new StringBuilder();
 
             sb.PrintExisting(n, nameof(Origin), Origin);
-            sb.PrintBriefObjListProp(n, nameof(Names), Names);
+            sb.PrintBriefObjProp(n, nameof(Name), Name);
 
             sb.AppendLine($"{spaces}{nameof(IsRule)} = {IsRule}");
 

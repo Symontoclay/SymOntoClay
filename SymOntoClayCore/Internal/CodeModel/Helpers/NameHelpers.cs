@@ -10,10 +10,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
         public static Name CreateRuleOrFactName(IEntityDictionary dictionary)
         {
             var text = $"#{Guid.NewGuid().ToString("D")}";
-            return CreateName(text, new List<string>(), dictionary);
+            return CreateName(text, dictionary);
         }
 
-        public static Name CreateName(string text, List<string> targetNamespaces, IEntityDictionary dictionary)
+        public static Name CreateName(string text, IEntityDictionary dictionary)
         {
             var name = new Name() { IsEmpty = false };
 
@@ -38,37 +38,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             }
 
             name.NameKey = dictionary.GetKey(name.NameValue);
-
-            if (name.Namespaces.IsNullOrEmpty())
-            {
-                name.FullNameKeys = new List<ulong>() { name.NameKey };
-            }
-            else
-            {
-                throw new NotSupportedException("Namespaces are not supported yet!");
-            }
-        }
-
-        public static List<SimpleName> CreateSimpleNames(Name name, IEntityDictionary dictionary)
-        {
-            if (name.Namespaces.IsNullOrEmpty())
-            {
-                var item = new SimpleName();
-                item.DictionaryName = dictionary.Name;
-                item.NameValue = name.NameValue;
-                item.FullNameValue = name.NameValue;
-                CalculateIndex(item, dictionary);
-                return new List<SimpleName>() { item };
-            }
-            else
-            {
-                throw new NotSupportedException("Namespaces are not supported yet!");
-            }
-        }
-
-        public static void CalculateIndex(SimpleName name, IEntityDictionary dictionary)
-        {
-            name.FullNameKey = dictionary.GetKey(name.FullNameValue);
         }
     }
 }

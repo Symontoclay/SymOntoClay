@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,12 +23,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public Value Rank { get; set; }
         public bool IsSystemDefined { get; set; }
 
+        public IndexedInheritanceItem Indexed { get; set; }
+
         private void PrintHeader(StringBuilder sb, uint n, string spaces)
         {
             sb.PrintObjProp(n, nameof(SubName), SubName);
             sb.PrintObjProp(n, nameof(SuperName), SuperName);
             sb.PrintObjProp(n, nameof(Rank), Rank);
             sb.AppendLine($"{spaces}{nameof(IsSystemDefined)} = {IsSystemDefined}");
+            sb.PrintExisting(n, nameof(Indexed), Indexed);
         }
 
         /// <inheritdoc/>

@@ -19,7 +19,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected readonly InternalParserContext _context;
         private IEntityLogger _logger;
         private IEntityDictionary _dictionary;
-        protected readonly List<string> _currentNamespaces;
 
         public void Run()
         {
@@ -75,7 +74,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Log($"text = {text}");
 #endif
 
-            var name = NameHelpers.CreateName(text, _currentNamespaces, _context.Dictionary);
+            var name = NameHelpers.CreateName(text, _context.Dictionary);
             return name;
         }
 

@@ -12,6 +12,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public bool IsEmpty { get; set; } = true;
 
+        public KindOfName Kind { get; set; } = KindOfName.Unknown;
         public string NameValue { get; set; }
         public ulong NameKey { get; set; }
 
@@ -35,6 +36,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
+
+            sb.AppendLine($"{spaces}{nameof(IsEmpty)} = {IsEmpty}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
 
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
             sb.AppendLine($"{spaces}{nameof(NameKey)} = {NameKey}");
@@ -63,6 +67,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
 
+            sb.AppendLine($"{spaces}{nameof(IsEmpty)} = {IsEmpty}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
             sb.AppendLine($"{spaces}{nameof(NameKey)} = {NameKey}");
 
@@ -89,6 +96,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
+
+            sb.AppendLine($"{spaces}{nameof(IsEmpty)} = {IsEmpty}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
 
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
             sb.AppendLine($"{spaces}{nameof(NameKey)} = {NameKey}");

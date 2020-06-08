@@ -13,7 +13,19 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Init,
             InWord,
             InString,
-            InIdentifier
+            InIdentifier,
+            At
+        }
+
+        private enum KindOfPrefix
+        {
+            Unknown,
+            Var,
+            SystemVar,
+            LogicalVar,
+            Channel,
+            Entity,
+            EntityCondition
         }
 
         public Lexer()
@@ -35,6 +47,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private int _currentPos;
         private int _currentLine = 1;
 
+        private char _closeBracket;
+        private KindOfPrefix _kindOfPrefix = KindOfPrefix.Unknown;
+
         public Token GetToken()
         {
             if (_recoveriesTokens.Count > 0)
@@ -52,12 +67,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
 #if DEBUG
                 //_logger.Log($"tmpChar = {tmpChar}");
+                //_logger.Log($"(int)tmpChar = {(int)tmpChar}");
                 //_logger.Log($"_currentPos = {_currentPos}");
+                //_logger.Log($"_state = {_state}");
+                //_logger.Log($"tmpBuffer?.ToString() = {tmpBuffer?.ToString()}");
 #endif
 
                 switch (_state)
                 {
                     case State.Init:
+                        _kindOfPrefix = KindOfPrefix.Unknown;
+
                         if (char.IsLetterOrDigit(tmpChar))
                         {
                             tmpBuffer = new StringBuilder();
@@ -81,24 +101,52 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             case ';':
                                 return CreateToken(TokenKind.Semicolon);
 
+                            case '=':
+                                return CreateToken(TokenKind.Assign);
+
+                            case '>':
+                                return CreateToken(TokenKind.More);
+
+                            case '\'':
+                                _closeBracket = '\'';
+                                _state = State.InString;
+                                tmpBuffer = new StringBuilder();
+                                break;
+
+                            case '"':
+                                _closeBracket = '"';
+                                _state = State.InString;
+                                tmpBuffer = new StringBuilder();
+                                break;
+
+                            case '@':
+                                tmpBuffer = new StringBuilder();
+                                tmpBuffer.Append(tmpChar);
+                                _state = State.At;
+                                break;
+
                             default:
                                 {
                                     var intCharCode = (int)tmpChar;
 
-                                    if (intCharCode == 13)
+                                    switch(intCharCode)
                                     {
-                                        break;
-                                    }
+                                        case 9:
+                                            break;
 
-                                    if (intCharCode == 10)
-                                    {
-                                        _currentPos = 0;
-                                        _currentLine++;
-                                        break;
-                                    }
+                                        case 10:
+                                            _currentPos = 0;
+                                            _currentLine++;
+                                            break;
 
-                                    throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                        case 13:
+                                            break;
+
+                                        default:
+                                            throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                    }         
                                 }
+                                break;
                         }
                         break;
 
@@ -109,7 +157,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             if (_items.Count == 0)
                             {
                                 _state = State.Init;
-                                return CreateToken(TokenKind.Word, tmpBuffer.ToString());
+
+                                switch(_kindOfPrefix)
+                                {
+                                    case KindOfPrefix.Unknown:
+                                        return CreateToken(TokenKind.Word, tmpBuffer.ToString());
+
+                                    case KindOfPrefix.Channel:
+                                        return CreateToken(TokenKind.Channel, tmpBuffer.ToString());
+
+                                    default:
+                                        throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                }
                             }
 
                             var tmpNextChar = _items.Peek();
@@ -117,16 +176,64 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             if (!char.IsLetterOrDigit(tmpNextChar) && tmpNextChar != '_')
                             {
                                 _state = State.Init;
-                                return CreateToken(TokenKind.Word, tmpBuffer.ToString());
+
+                                switch (_kindOfPrefix)
+                                {
+                                    case KindOfPrefix.Unknown:
+                                        return CreateToken(TokenKind.Word, tmpBuffer.ToString());
+
+                                    case KindOfPrefix.Channel:
+                                        return CreateToken(TokenKind.Channel, tmpBuffer.ToString());
+
+                                    default:
+                                        throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                }
                             }
                         }
                         break;
 
                     case State.InString:
-                        throw new NotImplementedException();
+                        {
+                            if(tmpChar == _closeBracket)
+                            {
+                                _state = State.Init;
+                                return CreateToken(TokenKind.String, tmpBuffer.ToString());
+                            }
+                            else
+                            {
+                                tmpBuffer.Append(tmpChar);
+                            }
+                        }
+                        break;
 
                     case State.InIdentifier:
                         throw new NotImplementedException();
+
+                    case State.At:
+                        switch (tmpChar)
+                        {
+                            case '>':
+                                {
+                                    tmpBuffer.Append(tmpChar);
+                                    _kindOfPrefix = KindOfPrefix.Channel;
+
+                                    var nextChar = _items.Peek();
+
+                                    if(nextChar == '`')
+                                    {
+                                        _state = State.InIdentifier;
+                                    }
+                                    else
+                                    {
+                                        _state = State.InWord;
+                                    }
+                                }
+                                break;                                    
+
+                            default:
+                                throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                        }
+                        break;
 
                     default:
                         throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
@@ -162,6 +269,42 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         {
                             kindOfKeyWord = KeyWordTokenKind.App;
                             break;
+                        }
+
+                        if (string.Compare(content, "on", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.On;
+                            break;
+                        }
+                    }
+                    break;
+
+                case TokenKind.Assign:
+                    {
+                        var nextChar = _items.Peek();
+
+                        switch(nextChar)
+                        {
+                            case '>':
+                                _items.Dequeue();
+                                content = "=>";
+                                kind = TokenKind.Lambda;
+                                break;
+                        }
+                    }
+                    break;
+
+                case TokenKind.More:
+                    {
+                        var nextChar = _items.Peek();
+
+                        switch (nextChar)
+                        {
+                            case '>':
+                                _items.Dequeue();
+                                content = ">>";
+                                kind = TokenKind.LeftRightStream;
+                                break;
                         }
                     }
                     break;

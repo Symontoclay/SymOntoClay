@@ -23,6 +23,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             }
 
             name.DictionaryName = dictionary.Name;
+            name.Kind = KindOfName.Concept;
             name.NameValue = text;
 
             CalculateIndex(name, dictionary);

@@ -15,8 +15,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Init,
             GotApp,
             GotName,
-            ContentStarted,
-            ContentEnded
+            ContentStarted
         }
 
         public AppPaser(InternalParserContext context)
@@ -86,18 +85,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.CloseFigureBracket:
-                            _state = State.ContentEnded;
-                            break;
-
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
-                    }
-                    break;
-
-                case State.ContentEnded:
-                    switch (_currToken.TokenKind)
-                    {
-                        case TokenKind.Semicolon:
                             Exit();
                             break;
 

@@ -238,33 +238,6 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Name.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Namespace.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Namespace.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Namespace.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Namespace.ToShortString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Namespace.ToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Namespace.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Namespace.ToBriefString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Namespace.ToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Namespace.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NullValue.Kind">
             <inheritdoc/>
         </member>
@@ -655,6 +628,26 @@
         <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.Semicolon">
             <summary>
             Represents symbol `;`.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.Assign">
+            <summary>
+            Represents symbol `=`.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.Lambda">
+            <summary>
+            Represents symbol `=>`.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.More">
+            <summary>
+            Represents symbol `&gt;`.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.LeftRightStream">
+            <summary>
+            Represents symbol `&gt;&gt;`.
             </summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.ParsedFileInfo.ToString">

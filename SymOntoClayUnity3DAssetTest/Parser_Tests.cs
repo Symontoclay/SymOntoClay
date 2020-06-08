@@ -47,6 +47,7 @@ namespace SymOntoClay.Unity3DAsset.Test
             Assert.AreEqual(firstItem.Name.NameValue, "Enemy");
             Assert.AreEqual(firstItem.Name.DictionaryName, _parserContext.Dictionary.Name);
             Assert.AreNotEqual(firstItem.Name.DictionaryName, string.Empty);
+            Assert.AreEqual(firstItem.Name.Kind, KindOfName.Concept);
         }
     }
 }

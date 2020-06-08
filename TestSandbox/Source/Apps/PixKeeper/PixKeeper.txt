@@ -1,3 +1,6 @@
 ﻿app PixKeeper
 {
+    on Init => {
+	     "Hello world!" >> @>log;
+	}
 }

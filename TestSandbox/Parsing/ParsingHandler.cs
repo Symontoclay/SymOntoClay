@@ -16,19 +16,25 @@ namespace TestSandbox.Parsing
         {
             _logger.Info("Begin");
 
-            TstParser();
-            //TstLexer();
+            //TstParser2();
+            TstLexer2();
+            //TstParser1();
+            //TstLexer1();
 
             _logger.Info("End");
         }
 
-        private void TstParser()
+        private void TstParser2()
         {
             _logger.Info("Begin");
 
             var text = @"app Enemy
 {
-};";
+    on Init => {
+	     'Hello world!' >> @>log;
+
+    }
+}";
 
             var parserContext = new TstParserContext();
 
@@ -51,7 +57,62 @@ namespace TestSandbox.Parsing
             _logger.Info("End");
         }
 
-        private void TstLexer()
+        private void TstLexer2()
+        {
+            _logger.Info("Begin");
+
+            var logger = new LoggerImpementation();
+
+            var text = @"app Enemy
+{
+    on Init => {
+	     'Hello world!' >> @>log;
+
+    }
+}";
+
+            var lexer = new Lexer(text, logger);
+
+            Token token = null;
+
+            while ((token = lexer.GetToken()) != null)
+            {
+                _logger.Info($"token = {token}");
+            }
+
+            _logger.Info("End");
+        }
+
+        private void TstParser1()
+        {
+            _logger.Info("Begin");
+
+            var text = @"app Enemy
+{
+}";
+
+            var parserContext = new TstParserContext();
+
+            var internalParserContext = new InternalParserContext(text, parserContext);
+
+            var parser = new SourceCodeParser(internalParserContext);
+            parser.Run();
+
+            var result = parser.Result;
+
+            _logger.Info($"parsedFileInfoList = {result.WriteListToString()}");
+
+            //Token token = null;
+
+            //while ((token = internalParserContext.GetToken()) != null)
+            //{
+            //    _logger.Info($"token = {token}");
+            //}
+
+            _logger.Info("End");
+        }
+
+        private void TstLexer1()
         {
             _logger.Info("Begin");
 

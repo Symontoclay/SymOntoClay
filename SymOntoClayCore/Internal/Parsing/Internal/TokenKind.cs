@@ -14,6 +14,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Number,
         String,
         Identifier,
+        Channel,
         /// <summary>
         /// Represents symbol `{`.
         /// </summary>
@@ -27,5 +28,25 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// Represents symbol `;`.
         /// </summary>
         Semicolon,
+
+        /// <summary>
+        /// Represents symbol `=`.
+        /// </summary>
+        Assign,
+
+        /// <summary>
+        /// Represents symbol `=>`.
+        /// </summary>
+        Lambda,
+
+        /// <summary>
+        /// Represents symbol `&gt;`.
+        /// </summary>
+        More,
+
+        /// <summary>
+        /// Represents symbol `&gt;&gt;`.
+        /// </summary>
+        LeftRightStream
     }
 }

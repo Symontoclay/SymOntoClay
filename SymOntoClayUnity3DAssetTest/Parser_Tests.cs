@@ -25,7 +25,7 @@ namespace SymOntoClay.Unity3DAsset.Test
         {
             var text = @"app Enemy
 {
-};";
+}";
 
             var internalParserContext = new InternalParserContext(text, _parserContext);
 
@@ -44,6 +44,9 @@ namespace SymOntoClay.Unity3DAsset.Test
 
             Assert.AreEqual(firstItem.Kind, KindOfCodeEntity.App);
             Assert.AreEqual(firstItem.Name.NameKey, nameKey);
+            Assert.AreEqual(firstItem.Name.NameValue, "Enemy");
+            Assert.AreEqual(firstItem.Name.DictionaryName, _parserContext.Dictionary.Name);
+            Assert.AreNotEqual(firstItem.Name.DictionaryName, string.Empty);
         }
     }
 }

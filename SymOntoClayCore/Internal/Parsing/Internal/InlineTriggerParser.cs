@@ -21,12 +21,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
 
         private State _state = State.Init;
-        public InlineTrigger Result { get; set; }
+        public CodeEntity Result { get; set; }
+        private InlineTrigger _inlineTrigger;
 
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            Result = new InlineTrigger();
+            Result = new CodeEntity();
+            Result.Kind = KindOfCodeEntity.InlineTrigger;
+            _inlineTrigger = new InlineTrigger();
+            Result.InlineTrigger = _inlineTrigger;
         }
 
         /// <inheritdoc/>
@@ -67,8 +71,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             switch(_currToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.Init:
-                                    Result.Kind = KindOfInlineTrigger.SystemEvents;
-                                    Result.KindOfSystemEvent = KindOfSystemEventOfInlineTrigger.Init;
+                                    _inlineTrigger.Kind = KindOfInlineTrigger.SystemEvents;
+                                    _inlineTrigger.KindOfSystemEvent = KindOfSystemEventOfInlineTrigger.Init;
                                     _state = State.GotCondition;
                                     break;
 

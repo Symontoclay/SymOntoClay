@@ -97,7 +97,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         _context.Recovery(_currToken);
                                         var parser = new InlineTriggerParser(_context);
                                         parser.Run();
-                                        Result.InlineTrigger = parser.Result;
+                                        Result.SubItems.Add(parser.Result);
                                     }
                                     break;
 

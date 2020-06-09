@@ -7,6 +7,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public enum KindOfCodeEntity
     {
         Unknown,
-        App
+        App,
+        InlineTrigger
     }
 }

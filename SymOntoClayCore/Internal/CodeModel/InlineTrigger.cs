@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +10,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         public KindOfInlineTrigger Kind { get; set; } = KindOfInlineTrigger.Unknown;
         public KindOfSystemEventOfInlineTrigger KindOfSystemEvent { get; set; } = KindOfSystemEventOfInlineTrigger.Unknown;
+        public List<AstStatement> Statements { get; set; } = new List<AstStatement>();
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -17,6 +19,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
+            sb.PrintObjListProp(n, nameof(Statements), Statements);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -30,6 +33,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
 
+            sb.PrintShortObjListProp(n, nameof(Statements), Statements);
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -41,6 +46,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
+
+            sb.PrintBriefObjListProp(n, nameof(Statements), Statements);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

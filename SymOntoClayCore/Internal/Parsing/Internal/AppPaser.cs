@@ -39,6 +39,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #if DEBUG
             Log($"_currToken = {_currToken}");
             Log($"Result = {Result}");
+            Log($"_state = {_state}");
 #endif
 
             switch (_state)
@@ -86,6 +87,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.CloseFigureBracket:
                             Exit();
+                            break;
+
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.On:
+                                    {
+                                        _context.Recovery(_currToken);
+                                        var parser = new InlineTriggerParser(_context);
+                                        parser.Run();
+                                        Result.InlineTrigger = parser.Result;
+                                    }
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
                             break;
 
                         default:

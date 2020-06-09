@@ -587,6 +587,12 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.BaseInternalParser.Error(System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.InlineTriggerParser.OnEnter">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.InlineTriggerParser.OnRun">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Parsing.Internal.InternalParserContext.Count">
             <summary>
             Number of remaining characters.

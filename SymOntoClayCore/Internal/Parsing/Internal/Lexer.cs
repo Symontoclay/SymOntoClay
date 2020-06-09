@@ -276,6 +276,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.On;
                             break;
                         }
+
+                        if (string.Compare(content, "init", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Init;
+                            break;
+                        }
                     }
                     break;
 

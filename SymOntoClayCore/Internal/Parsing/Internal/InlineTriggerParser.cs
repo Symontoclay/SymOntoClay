@@ -9,7 +9,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
     {
         private enum State
         {
-            Init
+            Init,
+            WaitForCondition,
+            GotCondition,
+            GotAction
         }
 
         public InlineTriggerParser(InternalParserContext context)
@@ -37,6 +40,56 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             switch (_state)
             {
+                case State.Init:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.On:
+                                    _state = State.WaitForCondition;
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForCondition:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Init:
+                                    Result.Kind = KindOfInlineTrigger.SystemEvents;
+                                    Result.KindOfSystemEvent = KindOfSystemEventOfInlineTrigger.Init;
+                                    _state = State.GotCondition;
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotCondition:
+                    switch (_currToken.TokenKind)
+                    {
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }

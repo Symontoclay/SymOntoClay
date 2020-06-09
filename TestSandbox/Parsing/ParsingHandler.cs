@@ -16,8 +16,8 @@ namespace TestSandbox.Parsing
         {
             _logger.Info("Begin");
 
-            //TstParser2();
-            TstLexer2();
+            TstParser2();
+            //TstLexer2();
             //TstParser1();
             //TstLexer1();
 

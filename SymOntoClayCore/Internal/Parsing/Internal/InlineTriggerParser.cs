@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.CodeModel;
+﻿using NLog.LayoutRenderers.Wrappers;
+using SymOntoClay.Core.Internal.CodeModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,6 +13,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Init,
             WaitForCondition,
             GotCondition,
+            WaitForAction,
             GotAction
         }
 
@@ -89,6 +91,28 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotCondition:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.Lambda:
+                            _state = State.WaitForAction;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForAction:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenFigureBracket:
+                            {
+                                _context.Recovery(_currToken);
+                                var parser = new FunctionBodyParser(_context);
+                                parser.Run();
+                                _inlineTrigger.Statements = parser.Result;
+                                _state = State.GotAction;
+                            }
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

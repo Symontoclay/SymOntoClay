@@ -7,6 +7,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
 {
     public abstract class AstStatement: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
+        public abstract KindOfAstStatement Kind { get; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -30,10 +32,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
-
-            //sb.PrintObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
-            //sb.PrintObjListProp(n, nameof(WhereSection), WhereSection);
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
 
             return sb.ToString();
         }
@@ -61,10 +60,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
-
-            //sb.PrintShortObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
-            //sb.PrintShortObjListProp(n, nameof(WhereSection), WhereSection);
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
 
             return sb.ToString();
         }
@@ -92,10 +88,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
-
-            //sb.PrintExistingList(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
-            //sb.PrintExistingList(n, nameof(WhereSection), WhereSection);
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
 
             return sb.ToString();
         }

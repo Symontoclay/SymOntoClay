@@ -48,6 +48,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.WaitForStatement:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.String:
+                            ProcessExpressionStatement();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -55,6 +59,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
+            }
+        }
+
+        private void ProcessExpressionStatement()
+        {
+            _context.Recovery(_currToken);
+            var parser = new CodeExpressionStatementParser(_context);
+            parser.Run();
+            AddStatement(parser.Result);
+        }
+
+        private void AddStatement(AstStatement statement)
+        {
+            if (statement != null)
+            {
+                Result.Add(statement);
             }
         }
     }

@@ -4,9 +4,10 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
 {
-    public enum KindOfAstStatement
+    public class AstExpressionStatement: AstStatement
     {
-        Unknown,
-        Expression
+        public override KindOfAstStatement Kind => KindOfAstStatement.Expression;
+
+
     }
 }

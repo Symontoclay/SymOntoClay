@@ -21,7 +21,8 @@ namespace TestSandbox
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             //TstCreateName();
-            TstParsing();
+            TstExprNodeHandler();
+            //TstParsing();
             //TstGeneralStartHandler();
             //TstGetParsedFilesInfo();
 
@@ -124,6 +125,16 @@ namespace TestSandbox
             }
 
             throw new NotImplementedException();
+        }
+
+        private static void TstExprNodeHandler()
+        {
+            _logger.Info("Begin");
+
+            var handler = new ExprNodeHandler();
+            handler.Run();
+
+            _logger.Info("End");
         }
 
         private static void TstParsing()

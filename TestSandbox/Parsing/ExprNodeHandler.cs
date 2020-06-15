@@ -22,8 +22,8 @@ namespace TestSandbox.Parsing
         {
             _logger.Info("Begin");
 
-            Run1();
-            //Run2();
+            //Run1();
+            Run2();
             //Run3();
             //Run4();
             //Run5();

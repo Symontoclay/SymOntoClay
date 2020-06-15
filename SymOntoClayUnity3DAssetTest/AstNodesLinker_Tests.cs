@@ -232,13 +232,106 @@ namespace SymOntoClay.Unity3DAsset.Test
         [Test]
         public void AstNodesLinker_Tests_Case5()
         {
-            throw new NotImplementedException();
+            var nodePoint = new IntermediateAstNodePoint();
+
+            var numNode = new TstNumberAstExpressionNode();
+            numNode.Value = 12;
+
+            var intermediateNode = new IntermediateAstNode(numNode);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            var binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Plus;
+
+            var priority = GetPriority(binOpNode.Kind, binOpNode.KindOfOperator);
+
+            intermediateNode = new IntermediateAstNode(binOpNode, KindOfIntermediateAstNode.BinaryOperator, priority);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            var unaryOp = new TstUnaryAstExpression();
+            unaryOp.KindOfOperator = TstKindOfOperator.Minus;
+
+            priority = GetPriority(unaryOp.Kind, unaryOp.KindOfOperator);
+
+            intermediateNode = new IntermediateAstNode(unaryOp, KindOfIntermediateAstNode.UnaryOperator, priority);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            numNode = new TstNumberAstExpressionNode();
+            numNode.Value = 5;
+
+            intermediateNode = new IntermediateAstNode(numNode);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            var resultExr = (TstBaseAstExpression)nodePoint.BuildExpr();
+
+            var str = resultExr.GetDbgString();
+
+            Assert.AreEqual(str, "12 + - 5");
+
+            var calcResult = resultExr.Calc();
+
+            Assert.AreEqual(calcResult, 7);
         }
 
         [Test]
         public void AstNodesLinker_Tests_Case6()
         {
-            throw new NotImplementedException();
+            var nodePoint = new IntermediateAstNodePoint();
+
+            var numNode = new TstNumberAstExpressionNode();
+            numNode.Value = 12;
+
+            var intermediateNode = new IntermediateAstNode(numNode);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            var binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Plus;
+
+            var priority = GetPriority(binOpNode.Kind, binOpNode.KindOfOperator);
+
+            intermediateNode = new IntermediateAstNode(binOpNode, KindOfIntermediateAstNode.BinaryOperator, priority);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            var unaryOp = new TstUnaryAstExpression();
+            unaryOp.KindOfOperator = TstKindOfOperator.Minus;
+
+            priority = GetPriority(unaryOp.Kind, unaryOp.KindOfOperator);
+
+            intermediateNode = new IntermediateAstNode(unaryOp, KindOfIntermediateAstNode.UnaryOperator, priority);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            unaryOp = new TstUnaryAstExpression();
+            unaryOp.KindOfOperator = TstKindOfOperator.Minus;
+
+            priority = GetPriority(unaryOp.Kind, unaryOp.KindOfOperator);
+
+            intermediateNode = new IntermediateAstNode(unaryOp, KindOfIntermediateAstNode.UnaryOperator, priority);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            numNode = new TstNumberAstExpressionNode();
+            numNode.Value = 5;
+
+            intermediateNode = new IntermediateAstNode(numNode);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            var resultExr = (TstBaseAstExpression)nodePoint.BuildExpr();
+
+            var str = resultExr.GetDbgString();
+
+            Assert.AreEqual(str, "12 + - - 5");
+
+            var calcResult = resultExr.Calc();
+
+            Assert.AreEqual(calcResult, 17);
         }
 
         [Test]

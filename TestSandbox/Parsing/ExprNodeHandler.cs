@@ -25,9 +25,9 @@ namespace TestSandbox.Parsing
             //Run1();
             //Run2();
             //Run3();
-            Run4();
+            //Run4();
             //Run5();
-            //Run6();
+            Run6();
             //Run7();
             //Run8();
             //Run9();

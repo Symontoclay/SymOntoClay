@@ -6,9 +6,9 @@ using System.Text;
 
 namespace SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy
 {
-    public abstract class BaseAstExpression : IAstNode, IObjectToString
+    public abstract class TstBaseAstExpression : IAstNode, IObjectToString
     {
-        public abstract KindOfNode Kind { get; }
+        public abstract TstKindOfNode Kind { get; }
 
         protected virtual IAstNode NLeft { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         protected virtual IAstNode NRight { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

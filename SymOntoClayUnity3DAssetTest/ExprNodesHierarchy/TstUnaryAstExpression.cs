@@ -6,16 +6,16 @@ using System.Text;
 
 namespace SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy
 {
-    public class UnaryAstExpression : BaseAstExpression
+    public class TstUnaryAstExpression : TstBaseAstExpression
     {
         /// <inheritdoc/>
-        public override KindOfNode Kind => KindOfNode.UnaryOperator;
+        public override TstKindOfNode Kind => TstKindOfNode.UnaryOperator;
 
-        public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
+        public TstKindOfOperator KindOfOperator { get; set; } = TstKindOfOperator.Unknown;
 
-        public BaseAstExpression Left { get; set; }
+        public TstBaseAstExpression Left { get; set; }
 
-        protected override IAstNode NLeft { get => Left; set => Left = (BaseAstExpression)value; }
+        protected override IAstNode NLeft { get => Left; set => Left = (TstBaseAstExpression)value; }
 
         protected override string PropertiesToString(uint n)
         {
@@ -37,11 +37,11 @@ namespace SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy
 
             switch (KindOfOperator)
             {
-                case KindOfOperator.Plus:
+                case TstKindOfOperator.Plus:
                     mark = "+";
                     break;
 
-                case KindOfOperator.Minus:
+                case TstKindOfOperator.Minus:
                     mark = "-";
                     break;
 
@@ -56,10 +56,10 @@ namespace SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy
         {
             switch (KindOfOperator)
             {
-                case KindOfOperator.Plus:
+                case TstKindOfOperator.Plus:
                     return +(int)Left.Calc();
 
-                case KindOfOperator.Minus:
+                case TstKindOfOperator.Minus:
                     return -(int)Left.Calc();
 
                 default:

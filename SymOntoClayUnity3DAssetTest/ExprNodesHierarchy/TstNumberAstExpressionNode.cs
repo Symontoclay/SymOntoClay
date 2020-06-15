@@ -5,12 +5,11 @@ using System.Text;
 
 namespace SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy
 {
-    public class VarAstExpression : BaseAstExpression
+    public class TstNumberAstExpressionNode : TstBaseAstExpression
     {
         /// <inheritdoc/>
-        public override KindOfNode Kind => KindOfNode.VarNode;
+        public override TstKindOfNode Kind => TstKindOfNode.NumberNode;
 
-        public string Name { get; set; }
         public int Value { get; set; }
 
         protected override string PropertiesToString(uint n)
@@ -18,7 +17,6 @@ namespace SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
             sb.AppendLine($"{spaces}{nameof(Value)} = {Value}");
 
             sb.Append(base.PropertiesToString(n));
@@ -28,7 +26,7 @@ namespace SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy
 
         public override string GetDbgString()
         {
-            return Name;
+            return Value.ToString();
         }
 
         public override object Calc()

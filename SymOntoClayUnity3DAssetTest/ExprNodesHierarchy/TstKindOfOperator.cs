@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy
 {
-    public enum KindOfOperator
+    public enum TstKindOfOperator
     {
         Unknown,
         Plus,

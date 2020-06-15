@@ -41,7 +41,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var numNode = new NumberAstExpressionNode();
+            var numNode = new TstNumberAstExpressionNode();
             numNode.Value = 12;
 
             _logger.Info($"numNode = {numNode}");
@@ -54,8 +54,8 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var binOpNode = new BinaryAstExpression();
-            binOpNode.KindOfOperator = KindOfOperator.Plus;
+            var binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Plus;
 
             _logger.Info($"binOpNode = {binOpNode}");
 
@@ -71,7 +71,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            numNode = new NumberAstExpressionNode();
+            numNode = new TstNumberAstExpressionNode();
             numNode.Value = 5;
 
             _logger.Info($"numNode = {numNode}");
@@ -84,7 +84,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var resultExr = (BaseAstExpression)_nodePoint.BuildExpr();
+            var resultExr = (TstBaseAstExpression)_nodePoint.BuildExpr();
 
             _logger.Info($"resultExr = {resultExr}");
 
@@ -103,7 +103,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var numNode = new NumberAstExpressionNode();
+            var numNode = new TstNumberAstExpressionNode();
             numNode.Value = 12;
 
             _logger.Info($"numNode = {numNode}");
@@ -116,8 +116,8 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var binOpNode = new BinaryAstExpression();
-            binOpNode.KindOfOperator = KindOfOperator.Plus;
+            var binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Plus;
 
             _logger.Info($"binOpNode = {binOpNode}");
 
@@ -133,7 +133,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            numNode = new NumberAstExpressionNode();
+            numNode = new TstNumberAstExpressionNode();
             numNode.Value = 5;
 
             _logger.Info($"numNode = {numNode}");
@@ -146,8 +146,8 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            binOpNode = new BinaryAstExpression();
-            binOpNode.KindOfOperator = KindOfOperator.Plus;
+            binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Plus;
 
             _logger.Info($"binOpNode = {binOpNode}");
 
@@ -163,7 +163,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            numNode = new NumberAstExpressionNode();
+            numNode = new TstNumberAstExpressionNode();
             numNode.Value = 3;
 
             _logger.Info($"numNode = {numNode}");
@@ -176,7 +176,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var resultExr = (BaseAstExpression)_nodePoint.BuildExpr();
+            var resultExr = (TstBaseAstExpression)_nodePoint.BuildExpr();
 
             _logger.Info($"resultExr = {resultExr}");
 
@@ -195,7 +195,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var numNode = new NumberAstExpressionNode();
+            var numNode = new TstNumberAstExpressionNode();
             numNode.Value = 12;
 
             _logger.Info($"numNode = {numNode}");
@@ -208,8 +208,8 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var binOpNode = new BinaryAstExpression();
-            binOpNode.KindOfOperator = KindOfOperator.Plus;
+            var binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Plus;
 
             _logger.Info($"binOpNode = {binOpNode}");
 
@@ -225,7 +225,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            numNode = new NumberAstExpressionNode();
+            numNode = new TstNumberAstExpressionNode();
             numNode.Value = 5;
 
             _logger.Info($"numNode = {numNode}");
@@ -238,8 +238,8 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            binOpNode = new BinaryAstExpression();
-            binOpNode.KindOfOperator = KindOfOperator.Mul;
+            binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Mul;
 
             _logger.Info($"binOpNode = {binOpNode}");
 
@@ -255,7 +255,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            numNode = new NumberAstExpressionNode();
+            numNode = new TstNumberAstExpressionNode();
             numNode.Value = 3;
 
             _logger.Info($"numNode = {numNode}");
@@ -269,7 +269,7 @@ namespace TestSandbox.Parsing
             _logger.Info($"_nodePoint = {_nodePoint}");
 
 
-            var resultExr = (BaseAstExpression)_nodePoint.BuildExpr();
+            var resultExr = (TstBaseAstExpression)_nodePoint.BuildExpr();
 
             _logger.Info($"resultExr = {resultExr}");
 
@@ -288,7 +288,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var numNode = new NumberAstExpressionNode();
+            var numNode = new TstNumberAstExpressionNode();
             numNode.Value = 12;
 
             _logger.Info($"numNode = {numNode}");
@@ -301,8 +301,8 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var binOpNode = new BinaryAstExpression();
-            binOpNode.KindOfOperator = KindOfOperator.Plus;
+            var binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Plus;
 
             _logger.Info($"binOpNode = {binOpNode}");
 
@@ -318,7 +318,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            numNode = new NumberAstExpressionNode();
+            numNode = new TstNumberAstExpressionNode();
             numNode.Value = 5;
 
             _logger.Info($"numNode = {numNode}");
@@ -331,8 +331,8 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            binOpNode = new BinaryAstExpression();
-            binOpNode.KindOfOperator = KindOfOperator.Mul;
+            binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Mul;
 
             _logger.Info($"binOpNode = {binOpNode}");
 
@@ -348,7 +348,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            numNode = new NumberAstExpressionNode();
+            numNode = new TstNumberAstExpressionNode();
             numNode.Value = 3;
 
             _logger.Info($"numNode = {numNode}");
@@ -361,8 +361,8 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            binOpNode = new BinaryAstExpression();
-            binOpNode.KindOfOperator = KindOfOperator.Plus;
+            binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Plus;
 
             _logger.Info($"binOpNode = {binOpNode}");
 
@@ -378,7 +378,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            numNode = new NumberAstExpressionNode();
+            numNode = new TstNumberAstExpressionNode();
             numNode.Value = 2;
 
             _logger.Info($"numNode = {numNode}");
@@ -391,7 +391,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var resultExr = (BaseAstExpression)_nodePoint.BuildExpr();
+            var resultExr = (TstBaseAstExpression)_nodePoint.BuildExpr();
 
             _logger.Info($"resultExr = {resultExr}");
 
@@ -410,7 +410,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var numNode = new NumberAstExpressionNode();
+            var numNode = new TstNumberAstExpressionNode();
             numNode.Value = 12;
 
             _logger.Info($"numNode = {numNode}");
@@ -423,8 +423,8 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var binOpNode = new BinaryAstExpression();
-            binOpNode.KindOfOperator = KindOfOperator.Plus;
+            var binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Plus;
 
             _logger.Info($"binOpNode = {binOpNode}");
 
@@ -440,8 +440,8 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var unaryOp = new UnaryAstExpression();
-            unaryOp.KindOfOperator = KindOfOperator.Minus;
+            var unaryOp = new TstUnaryAstExpression();
+            unaryOp.KindOfOperator = TstKindOfOperator.Minus;
 
             priority = GetPriority(unaryOp.Kind, unaryOp.KindOfOperator);
 
@@ -455,7 +455,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            numNode = new NumberAstExpressionNode();
+            numNode = new TstNumberAstExpressionNode();
             numNode.Value = 5;
 
             _logger.Info($"numNode = {numNode}");
@@ -468,7 +468,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var resultExr = (BaseAstExpression)_nodePoint.BuildExpr();
+            var resultExr = (TstBaseAstExpression)_nodePoint.BuildExpr();
 
             _logger.Info($"resultExr = {resultExr}");
 
@@ -487,7 +487,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var numNode = new NumberAstExpressionNode();
+            var numNode = new TstNumberAstExpressionNode();
             numNode.Value = 12;
 
             _logger.Info($"numNode = {numNode}");
@@ -500,8 +500,8 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var binOpNode = new BinaryAstExpression();
-            binOpNode.KindOfOperator = KindOfOperator.Plus;
+            var binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Plus;
 
             _logger.Info($"binOpNode = {binOpNode}");
 
@@ -517,8 +517,8 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var unaryOp = new UnaryAstExpression();
-            unaryOp.KindOfOperator = KindOfOperator.Minus;
+            var unaryOp = new TstUnaryAstExpression();
+            unaryOp.KindOfOperator = TstKindOfOperator.Minus;
 
             priority = GetPriority(unaryOp.Kind, unaryOp.KindOfOperator);
 
@@ -532,8 +532,8 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            unaryOp = new UnaryAstExpression();
-            unaryOp.KindOfOperator = KindOfOperator.Minus;
+            unaryOp = new TstUnaryAstExpression();
+            unaryOp.KindOfOperator = TstKindOfOperator.Minus;
 
             priority = GetPriority(unaryOp.Kind, unaryOp.KindOfOperator);
 
@@ -547,7 +547,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            numNode = new NumberAstExpressionNode();
+            numNode = new TstNumberAstExpressionNode();
             numNode.Value = 5;
 
             _logger.Info($"numNode = {numNode}");
@@ -560,7 +560,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var resultExr = (BaseAstExpression)_nodePoint.BuildExpr();
+            var resultExr = (TstBaseAstExpression)_nodePoint.BuildExpr();
 
             _logger.Info($"resultExr = {resultExr}");
 
@@ -579,8 +579,8 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var unaryOp = new UnaryAstExpression();
-            unaryOp.KindOfOperator = KindOfOperator.Minus;
+            var unaryOp = new TstUnaryAstExpression();
+            unaryOp.KindOfOperator = TstKindOfOperator.Minus;
 
             var priority = GetPriority(unaryOp.Kind, unaryOp.KindOfOperator);
 
@@ -594,7 +594,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var numNode = new NumberAstExpressionNode();
+            var numNode = new TstNumberAstExpressionNode();
             numNode.Value = 12;
 
             _logger.Info($"numNode = {numNode}");
@@ -607,8 +607,8 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var binOpNode = new BinaryAstExpression();
-            binOpNode.KindOfOperator = KindOfOperator.Plus;
+            var binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Plus;
 
             _logger.Info($"binOpNode = {binOpNode}");
 
@@ -624,7 +624,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            numNode = new NumberAstExpressionNode();
+            numNode = new TstNumberAstExpressionNode();
             numNode.Value = 5;
 
             _logger.Info($"numNode = {numNode}");
@@ -637,7 +637,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var resultExr = (BaseAstExpression)_nodePoint.BuildExpr();
+            var resultExr = (TstBaseAstExpression)_nodePoint.BuildExpr();
 
             _logger.Info($"resultExr = {resultExr}");
 
@@ -656,7 +656,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var varNode = new VarAstExpression();
+            var varNode = new TstVarAstExpression();
             varNode.Name = "a";
 
             var intermediateNode = new IntermediateAstNode(varNode);
@@ -667,8 +667,8 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var binOpNode = new BinaryAstExpression();
-            binOpNode.KindOfOperator = KindOfOperator.Assign;
+            var binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Assign;
 
             _logger.Info($"binOpNode = {binOpNode}");
 
@@ -684,7 +684,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var numNode = new NumberAstExpressionNode();
+            var numNode = new TstNumberAstExpressionNode();
             numNode.Value = 12;
 
             _logger.Info($"numNode = {numNode}");
@@ -697,8 +697,8 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            binOpNode = new BinaryAstExpression();
-            binOpNode.KindOfOperator = KindOfOperator.Plus;
+            binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Plus;
 
             _logger.Info($"binOpNode = {binOpNode}");
 
@@ -714,7 +714,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            numNode = new NumberAstExpressionNode();
+            numNode = new TstNumberAstExpressionNode();
             numNode.Value = 5;
 
             _logger.Info($"numNode = {numNode}");
@@ -727,7 +727,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var resultExr = (BaseAstExpression)_nodePoint.BuildExpr();
+            var resultExr = (TstBaseAstExpression)_nodePoint.BuildExpr();
 
             _logger.Info($"resultExr = {resultExr}");
 
@@ -748,7 +748,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var varNode = new VarAstExpression();
+            var varNode = new TstVarAstExpression();
             varNode.Name = "a";
 
             var intermediateNode = new IntermediateAstNode(varNode);
@@ -759,8 +759,8 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var binOpNode = new BinaryAstExpression();
-            binOpNode.KindOfOperator = KindOfOperator.Assign;
+            var binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Assign;
 
             _logger.Info($"binOpNode = {binOpNode}");
 
@@ -776,7 +776,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var varNode2 = new VarAstExpression();
+            var varNode2 = new TstVarAstExpression();
             varNode2.Name = "b";
 
             intermediateNode = new IntermediateAstNode(varNode2);
@@ -787,8 +787,8 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            binOpNode = new BinaryAstExpression();
-            binOpNode.KindOfOperator = KindOfOperator.Assign;
+            binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Assign;
 
             _logger.Info($"binOpNode = {binOpNode}");
 
@@ -804,7 +804,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var numNode = new NumberAstExpressionNode();
+            var numNode = new TstNumberAstExpressionNode();
             numNode.Value = 12;
 
             _logger.Info($"numNode = {numNode}");
@@ -817,8 +817,8 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            binOpNode = new BinaryAstExpression();
-            binOpNode.KindOfOperator = KindOfOperator.Plus;
+            binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Plus;
 
             _logger.Info($"binOpNode = {binOpNode}");
 
@@ -834,7 +834,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            numNode = new NumberAstExpressionNode();
+            numNode = new TstNumberAstExpressionNode();
             numNode.Value = 5;
 
             _logger.Info($"numNode = {numNode}");
@@ -847,7 +847,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"_nodePoint = {_nodePoint}");
 
-            var resultExr = (BaseAstExpression)_nodePoint.BuildExpr();
+            var resultExr = (TstBaseAstExpression)_nodePoint.BuildExpr();
 
             _logger.Info($"resultExr = {resultExr}");
 
@@ -863,33 +863,33 @@ namespace TestSandbox.Parsing
             _logger.Info($"varNode2.Value = {varNode2.Value}");
         }
 
-        private int GetPriority(KindOfNode kind, KindOfOperator kindOfOperator)
+        private int GetPriority(TstKindOfNode kind, TstKindOfOperator kindOfOperator)
         {
             switch (kind)
             {
-                case KindOfNode.BinaryOperator:
+                case TstKindOfNode.BinaryOperator:
                     switch (kindOfOperator)
                     {
-                        case KindOfOperator.Plus:
-                        case KindOfOperator.Minus:
+                        case TstKindOfOperator.Plus:
+                        case TstKindOfOperator.Minus:
                             return AddAndSubPriority;
 
-                        case KindOfOperator.Mul:
-                        case KindOfOperator.Div:
+                        case TstKindOfOperator.Mul:
+                        case TstKindOfOperator.Div:
                             return MulAndDivPriotiry;
 
-                        case KindOfOperator.Assign:
+                        case TstKindOfOperator.Assign:
                             return AssignPriority;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, null);
                     }
 
-                case KindOfNode.UnaryOperator:
+                case TstKindOfNode.UnaryOperator:
                     switch (kindOfOperator)
                     {
-                        case KindOfOperator.Plus:
-                        case KindOfOperator.Minus:
+                        case TstKindOfOperator.Plus:
+                        case TstKindOfOperator.Minus:
                             return UnaryPlusOrMinus;
 
                         default:

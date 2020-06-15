@@ -6,18 +6,18 @@ using System.Text;
 
 namespace SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy
 {
-    public class BinaryAstExpression : BaseAstExpression
+    public class TstBinaryAstExpression : TstBaseAstExpression
     {
         /// <inheritdoc/>
-        public override KindOfNode Kind => KindOfNode.BinaryOperator;
+        public override TstKindOfNode Kind => TstKindOfNode.BinaryOperator;
 
-        public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
+        public TstKindOfOperator KindOfOperator { get; set; } = TstKindOfOperator.Unknown;
 
-        public BaseAstExpression Left { get; set; }
-        public BaseAstExpression Right { get; set; }
+        public TstBaseAstExpression Left { get; set; }
+        public TstBaseAstExpression Right { get; set; }
 
-        protected override IAstNode NLeft { get => Left; set => Left = (BaseAstExpression)value; }
-        protected override IAstNode NRight { get => Right; set => Right = (BaseAstExpression)value; }
+        protected override IAstNode NLeft { get => Left; set => Left = (TstBaseAstExpression)value; }
+        protected override IAstNode NRight { get => Right; set => Right = (TstBaseAstExpression)value; }
 
         protected override string PropertiesToString(uint n)
         {
@@ -40,23 +40,23 @@ namespace SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy
 
             switch (KindOfOperator)
             {
-                case KindOfOperator.Plus:
+                case TstKindOfOperator.Plus:
                     mark = "+";
                     break;
 
-                case KindOfOperator.Minus:
+                case TstKindOfOperator.Minus:
                     mark = "-";
                     break;
 
-                case KindOfOperator.Mul:
+                case TstKindOfOperator.Mul:
                     mark = "*";
                     break;
 
-                case KindOfOperator.Div:
+                case TstKindOfOperator.Div:
                     mark = "/";
                     break;
 
-                case KindOfOperator.Assign:
+                case TstKindOfOperator.Assign:
                     mark = "=";
                     break;
 
@@ -71,25 +71,25 @@ namespace SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy
         {
             switch (KindOfOperator)
             {
-                case KindOfOperator.Plus:
+                case TstKindOfOperator.Plus:
                     return (int)Left.Calc() + (int)Right.Calc();
 
-                case KindOfOperator.Minus:
+                case TstKindOfOperator.Minus:
                     return (int)Left.Calc() - (int)Right.Calc();
 
-                case KindOfOperator.Mul:
+                case TstKindOfOperator.Mul:
                     return (int)Left.Calc() * (int)Right.Calc();
 
-                case KindOfOperator.Div:
+                case TstKindOfOperator.Div:
                     return (int)Left.Calc() / (int)Right.Calc();
 
-                case KindOfOperator.Assign:
+                case TstKindOfOperator.Assign:
                     {
                         var val = (int)Right.Calc();
 
-                        if (Left is VarAstExpression)
+                        if (Left is TstVarAstExpression)
                         {
-                            ((VarAstExpression)Left).Value = val;
+                            ((TstVarAstExpression)Left).Value = val;
                         }
 
                         return val;

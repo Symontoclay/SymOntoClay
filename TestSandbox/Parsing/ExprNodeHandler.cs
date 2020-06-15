@@ -23,14 +23,14 @@ namespace TestSandbox.Parsing
             _logger.Info("Begin");
 
             Run1();
-            Run2();
-            Run3();
-            Run4();
-            Run5();
-            Run6();
-            Run7();
-            Run8();
-            Run9();
+            //Run2();
+            //Run3();
+            //Run4();
+            //Run5();
+            //Run6();
+            //Run7();
+            //Run8();
+            //Run9();
 
             _logger.Info("End");
         }
@@ -90,7 +90,7 @@ namespace TestSandbox.Parsing
 
             var str = resultExr.GetDbgString();
 
-            _logger.Info($"str = {str}");
+            _logger.Info($"str = '{str}'");
 
             var calcResult = resultExr.Calc();
 
@@ -182,7 +182,7 @@ namespace TestSandbox.Parsing
 
             var str = resultExr.GetDbgString();
 
-            _logger.Info($"str = {str}");
+            _logger.Info($"str = '{str}'");
 
             var calcResult = resultExr.Calc();
 
@@ -275,7 +275,7 @@ namespace TestSandbox.Parsing
 
             var str = resultExr.GetDbgString();
 
-            _logger.Info($"str = {str}");
+            _logger.Info($"str = '{str}'");
 
             var calcResult = resultExr.Calc();
 
@@ -397,7 +397,7 @@ namespace TestSandbox.Parsing
 
             var str = resultExr.GetDbgString();
 
-            _logger.Info($"str = {str}");
+            _logger.Info($"str = '{str}'");
 
             var calcResult = resultExr.Calc();
 
@@ -474,7 +474,7 @@ namespace TestSandbox.Parsing
 
             var str = resultExr.GetDbgString();
 
-            _logger.Info($"str = {str}");
+            _logger.Info($"str = '{str}'");
 
             var calcResult = resultExr.Calc();
 
@@ -566,7 +566,7 @@ namespace TestSandbox.Parsing
 
             var str = resultExr.GetDbgString();
 
-            _logger.Info($"str = {str}");
+            _logger.Info($"str = '{str}'");
 
             var calcResult = resultExr.Calc();
 
@@ -643,7 +643,7 @@ namespace TestSandbox.Parsing
 
             var str = resultExr.GetDbgString();
 
-            _logger.Info($"str = {str}");
+            _logger.Info($"str = '{str}'");
 
             var calcResult = resultExr.Calc();
 
@@ -733,7 +733,7 @@ namespace TestSandbox.Parsing
 
             var str = resultExr.GetDbgString();
 
-            _logger.Info($"str = {str}");
+            _logger.Info($"str = '{str}'");
 
             var calcResult = resultExr.Calc();
 
@@ -853,7 +853,7 @@ namespace TestSandbox.Parsing
 
             var str = resultExr.GetDbgString();
 
-            _logger.Info($"str = {str}");
+            _logger.Info($"str = '{str}'");
 
             var calcResult = resultExr.Calc();
 

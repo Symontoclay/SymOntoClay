@@ -21,8 +21,8 @@ namespace TestSandbox
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             //TstCreateName();
-            TstExprNodeHandler();
-            //TstParsing();
+            //TstExprNodeHandler();
+            TstParsing();
             //TstGeneralStartHandler();
             //TstGetParsedFilesInfo();
 

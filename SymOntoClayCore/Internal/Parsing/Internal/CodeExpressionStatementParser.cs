@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
+using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,7 +13,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
         }
 
-        public AstExpressionStatement Result { get; set; }
+        protected override void OnEnter()
+        {
+            Result = new AstExpressionStatement();
+        }
+
+        public AstExpressionStatement Result { get; private set; }
+
+        private IntermediateAstNodePoint _nodePoint = new IntermediateAstNodePoint();
 
         /// <inheritdoc/>
         protected override void OnRun()
@@ -23,6 +31,24 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             //Log($"_state = {_state}");
 #endif
 
+            switch(_currToken.TokenKind)
+            {
+                case TokenKind.String:
+                    ProcessStringToken();
+                    break;
+
+                default:
+                    throw new UnexpectedTokenException(_currToken);
+            }
+        }
+
+        private void ProcessStringToken()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void OnFinish()
+        {
             throw new NotImplementedException();
         }
     }

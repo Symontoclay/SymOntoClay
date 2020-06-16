@@ -14,6 +14,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
         }
 
+        /// <inheritdoc/>
         protected override void OnEnter()
         {
             Result = new AstExpressionStatement();
@@ -48,6 +49,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         protected override void OnFinish()
         {
             Result.Expression = _nodePoint.BuildExpr<AstExpression>();

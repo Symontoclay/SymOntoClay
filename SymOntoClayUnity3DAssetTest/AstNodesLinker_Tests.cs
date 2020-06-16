@@ -337,19 +337,176 @@ namespace SymOntoClay.Unity3DAsset.Test
         [Test]
         public void AstNodesLinker_Tests_Case7()
         {
-            throw new NotImplementedException();
+            var nodePoint = new IntermediateAstNodePoint();
+
+            var unaryOp = new TstUnaryAstExpression();
+            unaryOp.KindOfOperator = TstKindOfOperator.Minus;
+
+            var priority = GetPriority(unaryOp.Kind, unaryOp.KindOfOperator);
+
+            var intermediateNode = new IntermediateAstNode(unaryOp, KindOfIntermediateAstNode.UnaryOperator, priority);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            var numNode = new TstNumberAstExpressionNode();
+            numNode.Value = 12;
+
+            intermediateNode = new IntermediateAstNode(numNode);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+            var binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Plus;
+
+            priority = GetPriority(binOpNode.Kind, binOpNode.KindOfOperator);
+
+            intermediateNode = new IntermediateAstNode(binOpNode, KindOfIntermediateAstNode.BinaryOperator, priority);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            numNode = new TstNumberAstExpressionNode();
+            numNode.Value = 5;
+
+            intermediateNode = new IntermediateAstNode(numNode);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            var resultExr = (TstBaseAstExpression)nodePoint.BuildExpr();
+
+            var str = resultExr.GetDbgString();
+
+            Assert.AreEqual(str, "- 12 + 5");
+
+            var calcResult = resultExr.Calc();
+
+            Assert.AreEqual(calcResult, -7);
         }
 
         [Test]
         public void AstNodesLinker_Tests_Case8()
         {
-            throw new NotImplementedException();
+            var nodePoint = new IntermediateAstNodePoint();
+
+            var varNode = new TstVarAstExpression();
+            varNode.Name = "a";
+
+            var intermediateNode = new IntermediateAstNode(varNode);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            var binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Assign;
+
+            var priority = GetPriority(binOpNode.Kind, binOpNode.KindOfOperator);
+
+            intermediateNode = new IntermediateAstNode(binOpNode, KindOfIntermediateAstNode.BinaryOperator, priority);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            var numNode = new TstNumberAstExpressionNode();
+            numNode.Value = 12;
+
+            intermediateNode = new IntermediateAstNode(numNode);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Plus;
+
+            priority = GetPriority(binOpNode.Kind, binOpNode.KindOfOperator);
+
+            intermediateNode = new IntermediateAstNode(binOpNode, KindOfIntermediateAstNode.BinaryOperator, priority);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            numNode = new TstNumberAstExpressionNode();
+            numNode.Value = 5;
+
+            intermediateNode = new IntermediateAstNode(numNode);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            var resultExr = (TstBaseAstExpression)nodePoint.BuildExpr();
+
+            var str = resultExr.GetDbgString();
+
+            Assert.AreEqual(str, "a = 12 + 5");
+
+            var calcResult = resultExr.Calc();
+
+            Assert.AreEqual(calcResult, 17);
+
+            Assert.AreEqual(varNode.Value, 17);
         }
 
         [Test]
         public void AstNodesLinker_Tests_Case9()
         {
-            throw new NotImplementedException();
+            var nodePoint = new IntermediateAstNodePoint();
+
+            var varNode = new TstVarAstExpression();
+            varNode.Name = "a";
+
+            var intermediateNode = new IntermediateAstNode(varNode);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            var binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Assign;
+
+            var priority = GetPriority(binOpNode.Kind, binOpNode.KindOfOperator);
+
+            intermediateNode = new IntermediateAstNode(binOpNode, KindOfIntermediateAstNode.BinaryOperator, priority);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            var varNode2 = new TstVarAstExpression();
+            varNode2.Name = "b";
+
+            intermediateNode = new IntermediateAstNode(varNode2);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Assign;
+
+            priority = GetPriority(binOpNode.Kind, binOpNode.KindOfOperator);
+
+            intermediateNode = new IntermediateAstNode(binOpNode, KindOfIntermediateAstNode.BinaryOperator, priority);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            var numNode = new TstNumberAstExpressionNode();
+            numNode.Value = 12;
+
+            intermediateNode = new IntermediateAstNode(numNode);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            binOpNode = new TstBinaryAstExpression();
+            binOpNode.KindOfOperator = TstKindOfOperator.Plus;
+
+            priority = GetPriority(binOpNode.Kind, binOpNode.KindOfOperator);
+
+            intermediateNode = new IntermediateAstNode(binOpNode, KindOfIntermediateAstNode.BinaryOperator, priority);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            numNode = new TstNumberAstExpressionNode();
+            numNode.Value = 5;
+
+            intermediateNode = new IntermediateAstNode(numNode);
+
+            AstNodesLinker.SetNode(intermediateNode, nodePoint);
+
+            var resultExr = (TstBaseAstExpression)nodePoint.BuildExpr();
+
+            var str = resultExr.GetDbgString();
+
+            Assert.AreEqual(str, "a = b = 12 + 5");
+
+            var calcResult = resultExr.Calc();
+
+            Assert.AreEqual(calcResult, 17);
         }
 
         private int UnaryPlusOrMinus = 1;

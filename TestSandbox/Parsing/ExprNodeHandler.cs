@@ -27,10 +27,10 @@ namespace TestSandbox.Parsing
             //Run3();
             //Run4();
             //Run5();
-            Run6();
+            //Run6();
             //Run7();
             //Run8();
-            //Run9();
+            Run9();
 
             _logger.Info("End");
         }

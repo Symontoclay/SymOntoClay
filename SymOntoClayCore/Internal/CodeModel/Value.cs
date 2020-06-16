@@ -9,11 +9,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         public abstract KindOfValue Kind { get; }
 
+        public virtual bool IsNullValue => false;
+        public virtual NullValue AsNullValue => null;
+
         public virtual bool IsLogicalValue => false;
         public virtual LogicalValue AsLogicalValue => null;
 
         public virtual bool IsNumberValue => false;
         public virtual NumberValue AsNumberValue => null;
+
+        public virtual bool IsStringValue => false;
+        public virtual StringValue AsStringValue => null;
 
         public Value CloneValue()
         {

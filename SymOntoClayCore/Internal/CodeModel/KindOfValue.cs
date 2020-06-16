@@ -9,6 +9,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         Unknown,
         NullValue,
         LogicalValue,
-        NumberValue
+        NumberValue,
+        StringValue
     }
 }

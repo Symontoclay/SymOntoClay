@@ -5,28 +5,28 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class NumberValue: Value
+    public class StringValue: Value
     {
-        public NumberValue(double? systemValue)
+        public StringValue(string systemValue)
         {
             SystemValue = systemValue;
         }
-        
-        /// <inheritdoc/>
-        public override KindOfValue Kind => KindOfValue.NumberValue;
 
         /// <inheritdoc/>
-        public override bool IsNumberValue => true;
+        public override KindOfValue Kind => KindOfValue.StringValue;
 
         /// <inheritdoc/>
-        public override NumberValue AsNumberValue => this;
+        public override bool IsStringValue => true;
 
-        public double? SystemValue { get; private set; }
+        /// <inheritdoc/>
+        public override StringValue AsStringValue => this;
+
+        public string SystemValue { get; private set; }
 
         /// <inheritdoc/>
         public override Value CloneValue(Dictionary<object, object> cloneContext)
         {
-            var result = new NumberValue(SystemValue);
+            var result = new StringValue(SystemValue);
             result.AppendAnnotations(this, cloneContext);
             return result;
         }

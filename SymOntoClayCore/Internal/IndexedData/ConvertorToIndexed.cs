@@ -54,12 +54,43 @@ namespace SymOntoClay.Core.Internal.IndexedData
         {
             switch(source.Kind)
             {
+                case KindOfValue.NullValue:
+                    return NConvertNullValue(source.AsNullValue, entityDictionary, convertingContext);
+
                 case KindOfValue.LogicalValue:
                     return NConvertLogicalValue(source.AsLogicalValue, entityDictionary, convertingContext);
+
+                case KindOfValue.NumberValue:
+                    return NConvertNumberValue(source.AsNumberValue, entityDictionary, convertingContext);
+
+                case KindOfValue.StringValue:
+                    return NConvertStringValue(source.AsStringValue, entityDictionary, convertingContext);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, null);
             }
+        }
+
+        private static IndexedNullValue NConvertNullValue(NullValue source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (IndexedNullValue)convertingContext[source];
+            }
+
+            var result = new IndexedNullValue();
+            convertingContext[source] = result;
+
+            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+
+            result.OriginalNullValue = source;
+
+            return result;
         }
 
         private static IndexedLogicalValue NConvertLogicalValue(LogicalValue source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
@@ -80,6 +111,52 @@ namespace SymOntoClay.Core.Internal.IndexedData
             FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
 
             result.OriginalLogicalValue = source;
+            result.SystemValue = source.SystemValue;
+
+            return result;
+        }
+
+        private static IndexedNumberValue NConvertNumberValue(NumberValue source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (IndexedNumberValue)convertingContext[source];
+            }
+
+            var result = new IndexedNumberValue();
+            convertingContext[source] = result;
+
+            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+
+            result.OriginalNumberValue = source;
+            result.SystemValue = source.SystemValue;
+
+            return result;
+        }
+
+        private static IndexedStringValue NConvertStringValue(StringValue source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (IndexedStringValue)convertingContext[source];
+            }
+
+            var result = new IndexedStringValue();
+            convertingContext[source] = result;
+
+            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+
+            result.OriginalStringValue = source;
             result.SystemValue = source.SystemValue;
 
             return result;

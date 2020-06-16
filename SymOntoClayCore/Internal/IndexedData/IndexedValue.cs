@@ -18,6 +18,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public virtual bool IsNumberValue => false;
         public virtual IndexedNumberValue AsNumberValue => null;
 
+        public virtual bool IsStringValue => false;
+        public virtual IndexedStringValue AsStringValue => null;
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {

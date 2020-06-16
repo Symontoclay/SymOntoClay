@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
 using System;
@@ -29,7 +30,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
 #if DEBUG
             Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result.WriteListToString()}");
+            Log($"_nodePoint = {_nodePoint}");
             //Log($"_state = {_state}");
 #endif
 
@@ -46,7 +47,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessStringToken()
         {
-            throw new NotImplementedException();
+            var node = new ConstValueAstExpression();
+            var value = new StringValue(_currToken.Content);
+            node.Value = value;
+
+            var intermediateNode = new IntermediateAstNode(node);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
         }
 
         /// <inheritdoc/>

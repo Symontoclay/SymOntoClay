@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     ProcessStringToken();
                     break;
 
+                case TokenKind.LeftRightStream:
+                    ProcessLeftRightStream();
+                    break;
+
                 default:
                     throw new UnexpectedTokenException(_currToken);
             }
@@ -52,6 +57,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             node.Value = value;
 
             var intermediateNode = new IntermediateAstNode(node);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+        }
+
+        private void ProcessLeftRightStream()
+        {
+            var node = new BinaryOperatorAstExpression();
+            node.KindOfOperator = KindOfOperator.LeftRightStream;
+
+            var priority = OperatorsHelper.GetPriority(node.KindOfOperator);
+
+            var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.BinaryOperator, priority);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
         }

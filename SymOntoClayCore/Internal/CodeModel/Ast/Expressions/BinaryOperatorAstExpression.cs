@@ -1,0 +1,72 @@
+﻿using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
+using SymOntoClay.CoreHelper.DebugHelpers;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
+{
+    public class BinaryOperatorAstExpression: AstExpression
+    {
+        /// <inheritdoc/>
+        public override KindOfAstExpression Kind => KindOfAstExpression.BinaryOperator;
+
+        public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
+
+        public AstExpression Left { get; set; }
+        public AstExpression Right { get; set; }
+
+        /// <inheritdoc/>
+        protected override IAstNode NLeft { get => Left; set => Left = (AstExpression)value; }
+        /// <inheritdoc/>
+        protected override IAstNode NRight { get => Right; set => Right = (AstExpression)value; }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
+
+            sb.PrintObjProp(n, nameof(Left), Left);
+            sb.PrintObjProp(n, nameof(Right), Right);
+
+            sb.Append(base.PropertiesToString(n));
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToShortString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
+
+            sb.PrintShortObjProp(n, nameof(Left), Left);
+            sb.PrintShortObjProp(n, nameof(Right), Right);
+
+            sb.Append(base.PropertiesToShortString(n));
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToBriefString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
+
+            sb.PrintBriefObjProp(n, nameof(Left), Left);
+            sb.PrintBriefObjProp(n, nameof(Right), Right);
+
+            sb.Append(base.PropertiesToBriefString(n));
+
+            return sb.ToString();
+        }
+    }
+}

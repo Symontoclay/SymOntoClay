@@ -16,7 +16,9 @@ namespace SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy
         public TstBaseAstExpression Left { get; set; }
         public TstBaseAstExpression Right { get; set; }
 
+        /// <inheritdoc/>
         protected override IAstNode NLeft { get => Left; set => Left = (TstBaseAstExpression)value; }
+        /// <inheritdoc/>
         protected override IAstNode NRight { get => Right; set => Right = (TstBaseAstExpression)value; }
 
         protected override string PropertiesToString(uint n)

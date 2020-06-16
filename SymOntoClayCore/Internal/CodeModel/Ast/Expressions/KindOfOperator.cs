@@ -6,6 +6,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
 {
     public enum KindOfOperator
     {
-        Unknown
+        Unknown,
+        LeftRightStream
     }
 }

@@ -12,6 +12,7 @@ namespace SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy
 
         public int Value { get; set; }
 
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
@@ -24,11 +25,13 @@ namespace SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy
             return sb.ToString();
         }
 
+        /// <inheritdoc/>
         public override string GetDbgString()
         {
             return Value.ToString();
         }
 
+        /// <inheritdoc/>
         public override object Calc()
         {
             return Value;

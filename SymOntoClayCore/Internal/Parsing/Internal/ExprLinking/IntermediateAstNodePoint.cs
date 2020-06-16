@@ -10,7 +10,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
         public IntermediateAstNode RootNode { get; set; }
         public IntermediateAstNode CurrentNode { get; set; }
 
-        public T BuildExpr<T>()
+        public T BuildExpr<T>() where T: IAstNode
         {
             return (T)BuildExpr();
         }

@@ -1,16 +1,16 @@
-﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
-using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
+namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
 {
-    public class AstExpressionStatement: AstStatement
+    public class ConstValueAstExpression: AstExpression
     {
-        public override KindOfAstStatement Kind => KindOfAstStatement.Expression;
+        /// <inheritdoc/>
+        public override KindOfAstExpression Kind => KindOfAstExpression.ConstValue;
 
-        public AstExpression Expression { get; set; }
+        public Value Value { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -18,7 +18,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(Expression), Expression);
+            sb.PrintObjProp(n, nameof(Value), Value);
 
             sb.Append(base.PropertiesToString(n));
 
@@ -31,7 +31,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjProp(n, nameof(Expression), Expression);
+            sb.PrintShortObjProp(n, nameof(Value), Value);
 
             sb.Append(base.PropertiesToShortString(n));
 
@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjProp(n, nameof(Expression), Expression);
+            sb.PrintBriefObjProp(n, nameof(Value), Value);
 
             sb.Append(base.PropertiesToBriefString(n));
 

@@ -1,13 +1,19 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
 {
-    public abstract class AstExpression : IObjectToString, IObjectToShortString, IObjectToBriefString
+    public abstract class AstExpression : IAstNode, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public abstract KindOfAstExpression Kind { get; }
+
+        protected virtual IAstNode NLeft { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        protected virtual IAstNode NRight { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        IAstNode IAstNode.Left { get => NLeft; set => NLeft = value; }
+        IAstNode IAstNode.Right { get => NRight; set => NRight = value; }
 
         /// <inheritdoc/>
         public override string ToString()

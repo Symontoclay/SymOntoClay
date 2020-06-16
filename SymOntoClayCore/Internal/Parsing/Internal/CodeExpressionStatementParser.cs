@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
+﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
 using System;
 using System.Collections.Generic;
@@ -49,7 +50,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         protected override void OnFinish()
         {
-            throw new NotImplementedException();
+            Result.Expression = _nodePoint.BuildExpr<AstExpression>();
         }
     }
 }

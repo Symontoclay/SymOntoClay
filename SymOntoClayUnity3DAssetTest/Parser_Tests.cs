@@ -49,5 +49,29 @@ namespace SymOntoClay.Unity3DAsset.Test
             Assert.AreNotEqual(firstItem.Name.DictionaryName, string.Empty);
             Assert.AreEqual(firstItem.Name.Kind, KindOfName.Concept);
         }
+
+        [Test]
+        public void Parser_Tests_Case2()
+        {
+            var text = @"app PixKeeper
+{
+    on Init => {
+	     'Hello world!' >> @>log;
+    }
+}";
+
+            var internalParserContext = new InternalParserContext(text, _parserContext);
+
+            var parser = new SourceCodeParser(internalParserContext);
+            parser.Run();
+
+            var result = parser.Result;
+
+            Assert.AreEqual(result.Count, 1);
+
+            var firstItem = result.Single();
+
+            throw new NotImplementedException();
+        }
     }
 }

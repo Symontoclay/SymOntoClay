@@ -52,6 +52,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessExpressionStatement();
                             break;
 
+                        case TokenKind.CloseFigureBracket:
+                            Exit();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

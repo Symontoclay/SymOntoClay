@@ -35,7 +35,16 @@ namespace SymOntoClay.Unity3DAsset.Test
         {
             var text = "dog";
 
-            throw new NotImplementedException();
+            var name = NameHelper.CreateName(text, _parserContext.Dictionary);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, text);
+            Assert.AreEqual(name.Kind, KindOfName.Concept);
+            Assert.AreNotEqual(name.NameKey, 0);
+
+            var key = _parserContext.Dictionary.GetKey(text);
+
+            Assert.AreEqual(name.NameKey, key);
         }
 
         [Test]
@@ -43,7 +52,16 @@ namespace SymOntoClay.Unity3DAsset.Test
         {
             var text = "@>log";
 
-            throw new NotImplementedException();
+            var name = NameHelper.CreateName(text, _parserContext.Dictionary);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, text);
+            Assert.AreEqual(name.Kind, KindOfName.Channel);
+            Assert.AreNotEqual(name.NameKey, 0);
+
+            var key = _parserContext.Dictionary.GetKey(text);
+
+            Assert.AreEqual(name.NameKey, key);
         }
 
         [Test]
@@ -51,8 +69,27 @@ namespace SymOntoClay.Unity3DAsset.Test
         {
             var name = NameHelper.CreateRuleOrFactName(_parserContext.Dictionary);
 
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreNotEqual(name.NameValue, string.Empty);
+            Assert.AreEqual(name.Kind, KindOfName.Entity);
+            Assert.AreNotEqual(name.NameKey, 0);
+        }
 
-            throw new NotImplementedException();
+        [Test]
+        public void NameHelper_Tests_Case_Entity()
+        {
+            var text = "#dog1";
+
+            var name = NameHelper.CreateName(text, _parserContext.Dictionary);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, text);
+            Assert.AreEqual(name.Kind, KindOfName.Entity);
+            Assert.AreNotEqual(name.NameKey, 0);
+
+            var key = _parserContext.Dictionary.GetKey(text);
+
+            Assert.AreEqual(name.NameKey, key);
         }
     }
 }

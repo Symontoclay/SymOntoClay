@@ -49,6 +49,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     ProcessChannel();
                     break;
 
+                case TokenKind.Semicolon:
+                    Exit();
+                    break;
+
                 default:
                     throw new UnexpectedTokenException(_currToken);
             }

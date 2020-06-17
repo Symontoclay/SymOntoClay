@@ -118,6 +118,19 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
+                case State.GotAction:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.CloseFigureBracket:
+                            _context.Recovery(_currToken);
+                            Exit();
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }

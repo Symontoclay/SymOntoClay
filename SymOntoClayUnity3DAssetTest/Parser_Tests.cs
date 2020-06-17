@@ -1,5 +1,7 @@
 ﻿using NUnit.Framework;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Parsing.Internal;
 using SymOntoClay.Unity3DAsset.Test.Helpers;
@@ -48,6 +50,8 @@ namespace SymOntoClay.Unity3DAsset.Test
             Assert.AreEqual(firstItem.Name.DictionaryName, _parserContext.Dictionary.Name);
             Assert.AreNotEqual(firstItem.Name.DictionaryName, string.Empty);
             Assert.AreEqual(firstItem.Name.Kind, KindOfName.Concept);
+
+            Assert.AreEqual(firstItem.SubItems.Count, 0);
         }
 
         [Test]
@@ -71,7 +75,49 @@ namespace SymOntoClay.Unity3DAsset.Test
 
             var firstItem = result.Single();
 
-            throw new NotImplementedException();
+            var nameKey = _parserContext.Dictionary.GetKey("PixKeeper");
+
+            Assert.AreNotEqual(nameKey, 0);
+
+            Assert.AreEqual(firstItem.Kind, KindOfCodeEntity.App);
+            Assert.AreEqual(firstItem.Name.NameKey, nameKey);
+            Assert.AreEqual(firstItem.Name.NameValue, "PixKeeper");
+            Assert.AreEqual(firstItem.Name.DictionaryName, _parserContext.Dictionary.Name);
+            Assert.AreNotEqual(firstItem.Name.DictionaryName, string.Empty);
+            Assert.AreEqual(firstItem.Name.Kind, KindOfName.Concept);
+
+            Assert.AreEqual(firstItem.SubItems.Count, 1);
+
+            var subItem = firstItem.SubItems.Single();
+
+            Assert.AreEqual(subItem.Kind, KindOfCodeEntity.InlineTrigger);
+
+            var inlineTrigger = subItem.InlineTrigger;
+
+            Assert.AreNotEqual(inlineTrigger, null);
+            Assert.AreEqual(inlineTrigger.Kind, KindOfInlineTrigger.SystemEvents);
+            Assert.AreEqual(inlineTrigger.KindOfSystemEvent, KindOfSystemEventOfInlineTrigger.Init);
+
+            Assert.AreEqual(inlineTrigger.Statements.Count, 1);
+
+            var statement = (AstExpressionStatement)inlineTrigger.Statements.Single();
+
+            Assert.AreNotEqual(statement.Expression, null);
+
+            var binOpExpr = (BinaryOperatorAstExpression)statement.Expression;
+
+            Assert.AreEqual(binOpExpr.KindOfOperator, KindOfOperator.LeftRightStream);
+
+            var leftNode = (ConstValueAstExpression)binOpExpr.Left;
+
+            var strVal = leftNode.Value.AsStringValue;
+
+            Assert.AreEqual(strVal.SystemValue, "Hello world!");
+
+            var rightNode = (ChannelAstExpression)binOpExpr.Right;
+
+            Assert.AreEqual(rightNode.Name.NameValue, "@>log");
+            Assert.AreEqual(rightNode.Name.Kind, KindOfName.Channel);
         }
     }
 }

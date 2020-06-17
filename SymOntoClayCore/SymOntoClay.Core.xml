@@ -161,6 +161,18 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.BinaryOperatorAstExpression.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.ChannelAstExpression.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.ChannelAstExpression.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.ChannelAstExpression.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.ChannelAstExpression.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.ConstValueAstExpression.Kind">
             <inheritdoc/>
         </member>

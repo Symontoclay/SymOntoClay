@@ -24,6 +24,12 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 
             name.DictionaryName = dictionary.Name;
             name.Kind = KindOfName.Concept;
+
+            if(text.StartsWith("@>"))
+            {
+                name.Kind = KindOfName.Channel;
+            }
+
             name.NameValue = text;
 
             CalculateIndex(name, dictionary);

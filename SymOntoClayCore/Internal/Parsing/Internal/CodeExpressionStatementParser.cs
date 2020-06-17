@@ -45,6 +45,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     ProcessLeftRightStream();
                     break;
 
+                case TokenKind.Channel:
+                    ProcessChannel();
+                    break;
+
                 default:
                     throw new UnexpectedTokenException(_currToken);
             }
@@ -71,6 +75,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.BinaryOperator, priority);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+        }
+
+        private void ProcessChannel()
+        {
+            var name = NameHelpers.CreateName(_currToken.Content, _context.Dictionary);
+
+#if DEBUG
+            Log($"name = {name}");
+#endif
+
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>

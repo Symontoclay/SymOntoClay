@@ -9,6 +9,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         Unknown,
         ConstValue,
         BinaryOperator,
-        UnaryOperator
+        UnaryOperator,
+        Channel
     }
 }

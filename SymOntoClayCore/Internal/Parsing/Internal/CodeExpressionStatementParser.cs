@@ -79,13 +79,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessChannel()
         {
-            var name = NameHelpers.CreateName(_currToken.Content, _context.Dictionary);
+            var name = NameHelper.CreateName(_currToken.Content, _context.Dictionary);
 
 #if DEBUG
             Log($"name = {name}");
 #endif
 
-            throw new NotImplementedException();
+            var node = new ChannelAstExpression();
+            node.Name = name;
+
+            var intermediateNode = new IntermediateAstNode(node);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
         }
 
         /// <inheritdoc/>

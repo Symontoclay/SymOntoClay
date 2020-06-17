@@ -13,7 +13,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public bool IsEmpty { get; set; } = true;
 
         public KindOfName Kind { get; set; } = KindOfName.Unknown;
-        public string NameValue { get; set; }
+        public string NameValue { get; set; } = string.Empty;
         public ulong NameKey { get; set; }
 
         /// <inheritdoc/>

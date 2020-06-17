@@ -109,7 +109,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 
         private RuleInstance CreateInheritanceFact(Name subItem, InheritanceItem inheritanceItem)
         {
-            var factName = NameHelpers.CreateRuleOrFactName(_realStorageContext.EntityDictionary);
+            var factName = NameHelper.CreateRuleOrFactName(_realStorageContext.EntityDictionary);
 
 #if DEBUG
             Log($"factName = {factName}");

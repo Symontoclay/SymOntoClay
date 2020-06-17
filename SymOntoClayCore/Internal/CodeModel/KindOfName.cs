@@ -8,6 +8,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         Unknown,
         Concept,
+        Entity,
         Channel
     }
 }

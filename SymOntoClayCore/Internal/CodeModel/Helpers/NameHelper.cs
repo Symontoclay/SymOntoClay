@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 {
-    public static class NameHelpers
+    public static class NameHelper
     {
         public static Name CreateRuleOrFactName(IEntityDictionary dictionary)
         {
@@ -28,6 +28,13 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             if(text.StartsWith("@>"))
             {
                 name.Kind = KindOfName.Channel;
+            }
+            else
+            {
+                if(text.StartsWith("#"))
+                {
+                    name.Kind = KindOfName.Entity;
+                }
             }
 
             name.NameValue = text;

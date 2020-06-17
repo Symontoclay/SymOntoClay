@@ -20,7 +20,7 @@ namespace SymOntoClay.Core.Internal.CommonNames
 
         public void LoadFromSourceCode()
         {
-            ApplicationName = NameHelpers.CreateName(StandardNamesConstants.ApplicationTypeName, _context.Dictionary);
+            ApplicationName = NameHelper.CreateName(StandardNamesConstants.ApplicationTypeName, _context.Dictionary);
 
 #if IMAGINE_WORKING
             Log("Do");

@@ -74,7 +74,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Log($"text = {text}");
 #endif
 
-            var name = NameHelpers.CreateName(text, _context.Dictionary);
+            var name = NameHelper.CreateName(text, _context.Dictionary);
             return name;
         }
 

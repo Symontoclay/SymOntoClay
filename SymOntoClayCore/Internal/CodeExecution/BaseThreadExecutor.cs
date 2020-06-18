@@ -1,13 +1,14 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.CoreHelper.Threads;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
 {
-    public class ThreadExecutor: BaseLoggedComponent
+    public abstract class BaseThreadExecutor: BaseLoggedComponent
     {
-        public ThreadExecutor(IEntityLogger logger)
+        protected BaseThreadExecutor(IEntityLogger logger, IActivePeriodicObject activeObject)
             :base(logger)
         {
         }

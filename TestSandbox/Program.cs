@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using TestSandbox.CodeExecution;
 using TestSandbox.Handlers;
 using TestSandbox.Parsing;
 
@@ -20,13 +21,24 @@ namespace TestSandbox
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
+            TstCodeExecution();
             //TstCreateName();
             //TstExprNodeHandler();
-            TstParsing();
+            //TstParsing();
             //TstGeneralStartHandler();
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstCodeExecution()
+        {
+            _logger.Info("Begin");
+
+            var handler = new CodeExecutionHandler();
+            handler.Run();
+
+            _logger.Info("Begin");
         }
 
         private static void TstCreateName()

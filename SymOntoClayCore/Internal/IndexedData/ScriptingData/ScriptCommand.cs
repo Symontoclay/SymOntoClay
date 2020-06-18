@@ -1,4 +1,6 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +10,12 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
     public class ScriptCommand : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public OperationCode OperationCode { get; set; } = OperationCode.Nop;
+
+        public int Position { get; set; }
+        public Value Value { get; set; }
+        public Name Name { get; set; }
+        public int JumpTo { get; set; }
+        public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
 
         /// <inheritdoc/>
         public override string ToString()
@@ -29,6 +37,11 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(OperationCode)} = {OperationCode}");
+            sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
+            sb.AppendLine($"{spaces}{nameof(Value)} = {Value}");
+            sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
+            sb.AppendLine($"{spaces}{nameof(JumpTo)} = {JumpTo}");
+            sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
 
             return sb.ToString();
         }
@@ -53,6 +66,11 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(OperationCode)} = {OperationCode}");
+            sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
+            sb.AppendLine($"{spaces}{nameof(Value)} = {Value}");
+            sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
+            sb.AppendLine($"{spaces}{nameof(JumpTo)} = {JumpTo}");
+            sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
 
             return sb.ToString();
         }
@@ -77,6 +95,11 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(OperationCode)} = {OperationCode}");
+            sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
+            sb.AppendLine($"{spaces}{nameof(Value)} = {Value}");
+            sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
+            sb.AppendLine($"{spaces}{nameof(JumpTo)} = {JumpTo}");
+            sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
 
             return sb.ToString();
         }

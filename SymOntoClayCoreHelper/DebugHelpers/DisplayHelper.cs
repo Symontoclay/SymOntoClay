@@ -94,7 +94,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
                 sb.AppendLine($"{spaces}End {propName}");
             }
         }
-
+        
         public static void PrintBriefObjProp(this StringBuilder sb, uint n, string propName, IObjectToBriefString obj)
         {
             var spaces = Spaces(n);

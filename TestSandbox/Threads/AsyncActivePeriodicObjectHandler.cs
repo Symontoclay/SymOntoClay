@@ -3,6 +3,7 @@ using SymOntoClay.CoreHelper.Threads;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace TestSandbox.Threads
 {
@@ -22,6 +23,30 @@ namespace TestSandbox.Threads
             activeObject.PeriodicMethod = NRun;
             activeObject.Start();
 
+            Thread.Sleep(10000);
+
+            _logger.Info($"activeObject.IsWaited = {activeObject.IsWaited}");
+
+            commonActiveContext.Lock();
+
+            Thread.Sleep(1000);
+
+            _logger.Info($"activeObject.IsWaited (2) = {activeObject.IsWaited}");
+
+            Thread.Sleep(1000);
+
+            commonActiveContext.UnLock();
+
+            Thread.Sleep(1000);
+
+            _logger.Info($"activeObject.IsWaited (3) = {activeObject.IsWaited}");
+
+            Thread.Sleep(1000);
+
+            activeObject.Stop();
+
+            Thread.Sleep(1000);
+
             _logger.Info("End");
         }
 
@@ -33,10 +58,10 @@ namespace TestSandbox.Threads
 
             _logger.Info($"_n = {_n}");
 
-            if (_n > 10)
-            {
-                return false;
-            }
+            //if (_n > 10)
+            //{
+            //    return false;
+            //}
 
             return true;
         }

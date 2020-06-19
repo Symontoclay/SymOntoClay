@@ -41,7 +41,7 @@ namespace TestSandbox
             var handler = new AsyncActivePeriodicObjectHandler();
             handler.Run();
 
-            _logger.Info("Begin");
+            _logger.Info("End");
         }
 
         private static void TstSyncActivePeriodicObjectHandler()
@@ -51,7 +51,7 @@ namespace TestSandbox
             var handler = new SyncActivePeriodicObjectHandler();
             handler.Run();
 
-            _logger.Info("Begin");
+            _logger.Info("End");
         }
 
         private static void TstCodeExecution()
@@ -61,7 +61,7 @@ namespace TestSandbox
             var handler = new CodeExecutionHandler();
             handler.Run();
 
-            _logger.Info("Begin");
+            _logger.Info("End");
         }
 
         private static void TstCreateName()
@@ -136,7 +136,7 @@ namespace TestSandbox
 
             _logger.Info($"name = {name}");
 
-            _logger.Info("Begin");
+            _logger.Info("End");
         }
 
         private class NormalizedNameValues

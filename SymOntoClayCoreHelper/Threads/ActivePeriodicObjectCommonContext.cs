@@ -15,5 +15,17 @@ namespace SymOntoClay.CoreHelper.Threads
 
         /// <inheritdoc/>
         public AutoResetEvent AutoResetEvent => _autoResetEvent;
+
+        public void Lock()
+        {
+            _autoResetEvent.Reset();
+            _isNeedWating = true;
+        }
+
+        public void UnLock()
+        {
+            _isNeedWating = false;
+            _autoResetEvent.Set();
+        }
     }
 }

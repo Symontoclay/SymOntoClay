@@ -14,7 +14,11 @@ namespace TestSandbox.Threads
         {
             _logger.Info("Begin");
 
-            var activeObject = new AsyncActivePeriodicObject();
+            var commonActiveContext = new ActivePeriodicObjectCommonContext();
+
+            var activeContext = new ActivePeriodicObjectContext(commonActiveContext);
+
+            var activeObject = new AsyncActivePeriodicObject(activeContext);
             activeObject.PeriodicMethod = NRun;
             activeObject.Start();
 

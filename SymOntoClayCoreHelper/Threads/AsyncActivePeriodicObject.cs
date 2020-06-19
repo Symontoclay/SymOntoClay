@@ -5,8 +5,12 @@ using System.Text;
 
 namespace SymOntoClay.CoreHelper.Threads
 {
-    public class AsyncActivePeriodicObject : IActivePeriodicObject
+    public class AsyncActivePeriodicObject : IActivePeriodicObject, IDisposable
     {
+        public AsyncActivePeriodicObject(IActivePeriodicObjectContext context)
+        {
+        }
+
 #if DEBUG
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
@@ -16,6 +20,12 @@ namespace SymOntoClay.CoreHelper.Threads
 
         /// <inheritdoc/>
         public void Start()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void Dispose()
         {
             throw new NotImplementedException();
         }

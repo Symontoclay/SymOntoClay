@@ -98,6 +98,9 @@
         <member name="M:SymOntoClay.CoreHelper.Threads.AsyncActivePeriodicObject.Start">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.CoreHelper.Threads.AsyncActivePeriodicObject.Dispose">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.CoreHelper.Threads.SyncActivePeriodicObject.PeriodicMethod">
             <inheritdoc/>
         </member>

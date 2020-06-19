@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,6 +7,17 @@ namespace SymOntoClay.CoreHelper.Threads
 {
     public class AsyncActivePeriodicObject : IActivePeriodicObject
     {
-        public PeriodicDelegate PeriodicMethod { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+#if DEBUG
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+#endif
+
+        /// <inheritdoc/>
+        public PeriodicDelegate PeriodicMethod { get; set; }
+
+        /// <inheritdoc/>
+        public void Start()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

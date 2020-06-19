@@ -92,5 +92,17 @@
             Returns <c>true</c> if the instance was disposed, otherwise returns <c>false</c>.
             </summary>
         </member>
+        <member name="P:SymOntoClay.CoreHelper.Threads.AsyncActivePeriodicObject.PeriodicMethod">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.Threads.AsyncActivePeriodicObject.Start">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.CoreHelper.Threads.SyncActivePeriodicObject.PeriodicMethod">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.CoreHelper.Threads.SyncActivePeriodicObject.Start">
+            <inheritdoc/>
+        </member>
     </members>
 </doc>

@@ -7,5 +7,6 @@ namespace SymOntoClay.CoreHelper.Threads
     public interface IActivePeriodicObject
     {
         PeriodicDelegate PeriodicMethod { get; set; }
+        void Start();
     }
 }

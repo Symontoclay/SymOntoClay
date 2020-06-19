@@ -409,6 +409,12 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.Logging.LoggerContext.Enable">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent.SymOntoClay#CoreHelper#ISyncContext#Wait">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent.OnDispose">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.Log(System.String)">
             <inheritdoc/>
         </member>

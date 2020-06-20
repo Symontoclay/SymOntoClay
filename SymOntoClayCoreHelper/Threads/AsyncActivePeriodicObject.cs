@@ -11,6 +11,8 @@ namespace SymOntoClay.CoreHelper.Threads
         public AsyncActivePeriodicObject(IActivePeriodicObjectContext context)
         {
             _context = context;
+
+            context.AddChildActiveObject(this);
         }
 
         private readonly IActivePeriodicObjectContext _context;
@@ -24,30 +26,35 @@ namespace SymOntoClay.CoreHelper.Threads
 
         private volatile bool _isWaited;
 
+        /// <inheritdoc/>
         public bool IsWaited => _isWaited;
 
-        private volatile bool _isExited;
+        private volatile bool _isExited = true;
+
+        /// <inheritdoc/>
+        public bool IsActive => !_isExited && !_isWaited;
 
         /// <inheritdoc/>
         public void Start()
         {
+            if (_isDisposed)
+            {
+                return;
+            }
+
+            if (!_isExited)
+            {
+                return;
+            }
+
+            _isExited = false;
+            _isWaited = false;
+
             var task = new Task(() => {
-#if DEBUG
-                _logger.Info("Hi!");
-#endif
-
-                while(true)
+                while (true)
                 {
-#if DEBUG
-                    _logger.Info($"_context.IsNeedWating = {_context.IsNeedWating}");
-#endif
-
                     if(_context.IsNeedWating)
                     {
-#if DEBUG
-                        _logger.Info("_context.IsNeedWating");
-#endif
-
                         _isWaited = true;
                         _context.AutoResetEvent.WaitOne();
                         _isWaited = false;
@@ -55,41 +62,51 @@ namespace SymOntoClay.CoreHelper.Threads
 
                     if(_isExited)
                     {
-#if DEBUG
-                        _logger.Info("_isExited return;");
-#endif
-
                         return;
                     }
 
                     if (!PeriodicMethod())
                     {
-#if DEBUG
-                        _logger.Info("!PeriodicMethod() return;");
-#endif
-
                         return;
                     }
-
-#if DEBUG
-                    _logger.Info("Do!!!");
-#endif
                 }
             });
 
             task.Start();
         }
 
+        /// <inheritdoc/>
         public void Stop()
         {
+            if (_isDisposed)
+            {
+                return;
+            }
+
+            if(_isExited)
+            {
+                return;
+            }
+
             _isExited = true;
             _isWaited = false;
         }
 
+        private bool _isDisposed;
+
         /// <inheritdoc/>
         public void Dispose()
         {
-            throw new NotImplementedException();
+            if (_isDisposed)
+            {
+                return;
+            }
+
+            _isDisposed = true;
+
+            _isExited = true;
+
+            _context.RemoveChildActiveObject(this);
         }
     }
 }

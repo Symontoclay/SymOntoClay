@@ -19,19 +19,29 @@ namespace TestSandbox.Threads
 
             var activeContext = new ActivePeriodicObjectContext(commonActiveContext);
 
-            var activeObject = new AsyncActivePeriodicObject(activeContext);
-            activeObject.PeriodicMethod = NRun;
+            var activeObject = new AsyncActivePeriodicObject(activeContext)
+            {
+                PeriodicMethod = NRun
+            };
+
+            _logger.Info($"activeObject.IsWaited (0) = {activeObject.IsWaited}");
+            _logger.Info($"activeObject.IsActive (0) = {activeObject.IsActive}");
+
             activeObject.Start();
 
             Thread.Sleep(10000);
 
             _logger.Info($"activeObject.IsWaited = {activeObject.IsWaited}");
+            _logger.Info($"activeObject.IsActive = {activeObject.IsActive}");
 
             commonActiveContext.Lock();
+
+            activeContext.WaitWhenAllIsNotWaited();
 
             Thread.Sleep(1000);
 
             _logger.Info($"activeObject.IsWaited (2) = {activeObject.IsWaited}");
+            _logger.Info($"activeObject.IsActive (2) = {activeObject.IsActive}");
 
             Thread.Sleep(1000);
 
@@ -40,10 +50,30 @@ namespace TestSandbox.Threads
             Thread.Sleep(1000);
 
             _logger.Info($"activeObject.IsWaited (3) = {activeObject.IsWaited}");
+            _logger.Info($"activeObject.IsActive (3) = {activeObject.IsActive}");
 
             Thread.Sleep(1000);
 
             activeObject.Stop();
+
+            _logger.Info($"activeObject.IsWaited (4) = {activeObject.IsWaited}");
+            _logger.Info($"activeObject.IsActive (4) = {activeObject.IsActive}");
+
+            Thread.Sleep(10000);
+
+            activeObject.Start();
+
+            Thread.Sleep(1000);
+
+            activeObject.Stop();
+
+            Thread.Sleep(1000);
+
+            activeObject.Dispose();
+
+            Thread.Sleep(1000);
+
+            activeObject.Start();
 
             Thread.Sleep(1000);
 

@@ -14,24 +14,32 @@ namespace SymOntoClay.CoreHelper.Threads
         /// <inheritdoc/>
         public PeriodicDelegate PeriodicMethod { get; set; }
 
+        private volatile bool _isActive;
+
+        /// <inheritdoc/>
+        public bool IsActive => _isActive;
+
+        /// <inheritdoc/>
+        public bool IsWaited => false;
+
         /// <inheritdoc/>
         public void Start()
         {
-#if DEBUG
-            _logger.Info("Begin");
-#endif
-            
-            while(true)
+            _isActive = true;
+
+            while (true)
             {
                 if(!PeriodicMethod())
                 {
-#if DEBUG
-                    _logger.Info("!PeriodicMethod() return;");
-#endif
-
+                    _isActive = false;
                     return;
                 }
             }
+        }
+
+        /// <inheritdoc/>
+        public void Stop()
+        {
         }
     }
 }

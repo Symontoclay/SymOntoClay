@@ -13,7 +13,6 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
         public int Position { get; set; }
         public Value Value { get; set; }
-        public Name Name { get; set; }
         public int JumpTo { get; set; }
         public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
 
@@ -39,7 +38,6 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
             sb.AppendLine($"{spaces}{nameof(OperationCode)} = {OperationCode}");
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
             sb.AppendLine($"{spaces}{nameof(Value)} = {Value}");
-            sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
             sb.AppendLine($"{spaces}{nameof(JumpTo)} = {JumpTo}");
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
 
@@ -68,7 +66,6 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
             sb.AppendLine($"{spaces}{nameof(OperationCode)} = {OperationCode}");
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
             sb.AppendLine($"{spaces}{nameof(Value)} = {Value}");
-            sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
             sb.AppendLine($"{spaces}{nameof(JumpTo)} = {JumpTo}");
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
 
@@ -97,7 +94,6 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
             sb.AppendLine($"{spaces}{nameof(OperationCode)} = {OperationCode}");
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
             sb.AppendLine($"{spaces}{nameof(Value)} = {Value}");
-            sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
             sb.AppendLine($"{spaces}{nameof(JumpTo)} = {JumpTo}");
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
 

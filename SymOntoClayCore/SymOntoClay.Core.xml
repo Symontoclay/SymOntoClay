@@ -779,6 +779,21 @@
             Does nothing.
             </summary>
         </member>
+        <member name="F:SymOntoClay.Core.Internal.IndexedData.ScriptingData.OperationCode.PushVal">
+            <summary>
+            Pushes a value into a current stack.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.IndexedData.ScriptingData.OperationCode.CallUnOp">
+            <summary>
+            Calls an unary operator
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.IndexedData.ScriptingData.OperationCode.CallBinOp">
+            <summary>
+            Calls a binary operator
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.ScriptCommand.ToString">
             <inheritdoc/>
         </member>

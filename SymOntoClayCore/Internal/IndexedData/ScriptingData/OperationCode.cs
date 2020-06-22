@@ -9,6 +9,21 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         /// <summary>
         /// Does nothing.
         /// </summary>
-        Nop
+        Nop,
+
+        /// <summary>
+        /// Pushes a value into a current stack.
+        /// </summary>
+        PushVal,
+
+        /// <summary>
+        /// Calls an unary operator
+        /// </summary>
+        CallUnOp,
+
+        /// <summary>
+        /// Calls a binary operator
+        /// </summary>
+        CallBinOp
     }
 }

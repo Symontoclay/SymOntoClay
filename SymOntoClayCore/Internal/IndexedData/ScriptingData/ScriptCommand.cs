@@ -37,7 +37,9 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
             sb.AppendLine($"{spaces}{nameof(OperationCode)} = {OperationCode}");
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
-            sb.AppendLine($"{spaces}{nameof(Value)} = {Value}");
+
+            sb.PrintObjProp(n, nameof(Value), Value);
+
             sb.AppendLine($"{spaces}{nameof(JumpTo)} = {JumpTo}");
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
 
@@ -65,7 +67,9 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
             sb.AppendLine($"{spaces}{nameof(OperationCode)} = {OperationCode}");
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
-            sb.AppendLine($"{spaces}{nameof(Value)} = {Value}");
+
+            sb.PrintShortObjProp(n, nameof(Value), Value);
+
             sb.AppendLine($"{spaces}{nameof(JumpTo)} = {JumpTo}");
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
 
@@ -93,7 +97,9 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
             sb.AppendLine($"{spaces}{nameof(OperationCode)} = {OperationCode}");
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
-            sb.AppendLine($"{spaces}{nameof(Value)} = {Value}");
+
+            sb.PrintBriefObjProp(n, nameof(Value), Value);
+
             sb.AppendLine($"{spaces}{nameof(JumpTo)} = {JumpTo}");
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
 

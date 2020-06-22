@@ -60,6 +60,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         _currentCodeFrame.CurrentPosition++;
                         break;
 
+                    case OperationCode.PushVal:
+                        _currentCodeFrame.ValuesStack.Push(currentCommand.Value);
+                        _currentCodeFrame.CurrentPosition++;
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(currentCommand.OperationCode), currentCommand.OperationCode, null);
                 }

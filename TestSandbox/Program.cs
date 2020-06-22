@@ -22,9 +22,9 @@ namespace TestSandbox
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-            TstAsyncActivePeriodicObjectHandler();
+            //TstAsyncActivePeriodicObjectHandler();
             //TstSyncActivePeriodicObjectHandler();
-            //TstCodeExecution();
+            TstCodeExecution();
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();

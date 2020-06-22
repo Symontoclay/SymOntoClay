@@ -12,5 +12,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             : base(logger, new SyncActivePeriodicObject())
         {
         }
+
+        public void Start()
+        {
+            _activeObject.Start();
+        }
     }
 }

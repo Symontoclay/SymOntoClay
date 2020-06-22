@@ -36,5 +36,12 @@ namespace SymOntoClay.Core.Internal
         {
             _logger.Error(message);
         }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        protected void Error(Exception e)
+        {
+            _logger.Error(e.ToString());
+        }
     }
 }

@@ -4,6 +4,7 @@ using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.CodeExecution
 {
@@ -27,8 +28,15 @@ namespace TestSandbox.CodeExecution
             var codeFrame = new CodeFrame();
             codeFrame.CompiledFunctionBody = compiledFunctionBody;
 
-
             _logger.Info($"codeFrame = {codeFrame}");
+
+            var logger = new LoggerImpementation();
+
+            var threadExecutor = new SyncThreadExecutor(logger);
+
+            threadExecutor.SetCodeFrame(codeFrame);
+
+            threadExecutor.Start();
 
             _logger.Info("End");
         }

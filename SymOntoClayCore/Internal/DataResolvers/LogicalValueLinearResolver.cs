@@ -19,7 +19,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             Log($"source = {source}");
 #endif
 
-            var sourceKind = source.Kind;
+            var sourceKind = source.KindOfValue;
 
             switch(sourceKind)
             {

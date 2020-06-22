@@ -21,7 +21,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override KindOfValue Kind => KindOfValue.LogicalValue;
+        public override KindOfValue KindOfValue => KindOfValue.LogicalValue;
 
         /// <inheritdoc/>
         public override bool IsLogicalValue => true;

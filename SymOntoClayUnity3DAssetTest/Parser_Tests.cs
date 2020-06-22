@@ -49,7 +49,7 @@ namespace SymOntoClay.Unity3DAsset.Test
             Assert.AreEqual(firstItem.Name.NameValue, "Enemy");
             Assert.AreEqual(firstItem.Name.DictionaryName, _parserContext.Dictionary.Name);
             Assert.AreNotEqual(firstItem.Name.DictionaryName, string.Empty);
-            Assert.AreEqual(firstItem.Name.Kind, KindOfName.Concept);
+            Assert.AreEqual(firstItem.Name.KindOfName, KindOfName.Concept);
 
             Assert.AreEqual(firstItem.SubItems.Count, 0);
         }
@@ -84,7 +84,7 @@ namespace SymOntoClay.Unity3DAsset.Test
             Assert.AreEqual(firstItem.Name.NameValue, "PixKeeper");
             Assert.AreEqual(firstItem.Name.DictionaryName, _parserContext.Dictionary.Name);
             Assert.AreNotEqual(firstItem.Name.DictionaryName, string.Empty);
-            Assert.AreEqual(firstItem.Name.Kind, KindOfName.Concept);
+            Assert.AreEqual(firstItem.Name.KindOfName, KindOfName.Concept);
 
             Assert.AreEqual(firstItem.SubItems.Count, 1);
 
@@ -117,7 +117,7 @@ namespace SymOntoClay.Unity3DAsset.Test
             var rightNode = (ChannelAstExpression)binOpExpr.Right;
 
             Assert.AreEqual(rightNode.Name.NameValue, "@>log");
-            Assert.AreEqual(rightNode.Name.Kind, KindOfName.Channel);
+            Assert.AreEqual(rightNode.Name.KindOfName, KindOfName.Channel);
         }
     }
 }

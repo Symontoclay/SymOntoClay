@@ -26,7 +26,7 @@ namespace SymOntoClay.Unity3DAsset.Test
 
             Assert.AreEqual(name.IsEmpty, true);
             Assert.AreEqual(name.NameValue, string.Empty);
-            Assert.AreEqual(name.Kind, KindOfName.Unknown);
+            Assert.AreEqual(name.KindOfName, KindOfName.Unknown);
             Assert.AreEqual(name.NameKey, 0);
         }
 
@@ -39,7 +39,7 @@ namespace SymOntoClay.Unity3DAsset.Test
 
             Assert.AreEqual(name.IsEmpty, false);
             Assert.AreEqual(name.NameValue, text);
-            Assert.AreEqual(name.Kind, KindOfName.Concept);
+            Assert.AreEqual(name.KindOfName, KindOfName.Concept);
             Assert.AreNotEqual(name.NameKey, 0);
 
             var key = _parserContext.Dictionary.GetKey(text);
@@ -56,7 +56,7 @@ namespace SymOntoClay.Unity3DAsset.Test
 
             Assert.AreEqual(name.IsEmpty, false);
             Assert.AreEqual(name.NameValue, text);
-            Assert.AreEqual(name.Kind, KindOfName.Channel);
+            Assert.AreEqual(name.KindOfName, KindOfName.Channel);
             Assert.AreNotEqual(name.NameKey, 0);
 
             var key = _parserContext.Dictionary.GetKey(text);
@@ -71,7 +71,7 @@ namespace SymOntoClay.Unity3DAsset.Test
 
             Assert.AreEqual(name.IsEmpty, false);
             Assert.AreNotEqual(name.NameValue, string.Empty);
-            Assert.AreEqual(name.Kind, KindOfName.Entity);
+            Assert.AreEqual(name.KindOfName, KindOfName.Entity);
             Assert.AreNotEqual(name.NameKey, 0);
         }
 
@@ -84,7 +84,7 @@ namespace SymOntoClay.Unity3DAsset.Test
 
             Assert.AreEqual(name.IsEmpty, false);
             Assert.AreEqual(name.NameValue, text);
-            Assert.AreEqual(name.Kind, KindOfName.Entity);
+            Assert.AreEqual(name.KindOfName, KindOfName.Entity);
             Assert.AreNotEqual(name.NameKey, 0);
 
             var key = _parserContext.Dictionary.GetKey(text);

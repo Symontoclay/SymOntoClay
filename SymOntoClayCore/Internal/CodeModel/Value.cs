@@ -7,7 +7,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class Value: AnnotatedItem
     {
-        public abstract KindOfValue Kind { get; }
+        public abstract KindOfValue KindOfValue { get; }
 
         public virtual bool IsNullValue => false;
         public virtual NullValue AsNullValue => null;
@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(KindOfValue)} = {KindOfValue}");
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(KindOfValue)} = {KindOfValue}");
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -54,7 +54,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(KindOfValue)} = {KindOfValue}");
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }

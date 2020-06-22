@@ -23,17 +23,17 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             }
 
             name.DictionaryName = dictionary.Name;
-            name.Kind = KindOfName.Concept;
+            name.KindOfName = KindOfName.Concept;
 
             if(text.StartsWith("@>"))
             {
-                name.Kind = KindOfName.Channel;
+                name.KindOfName = KindOfName.Channel;
             }
             else
             {
                 if(text.StartsWith("#"))
                 {
-                    name.Kind = KindOfName.Entity;
+                    name.KindOfName = KindOfName.Entity;
                 }
             }
 

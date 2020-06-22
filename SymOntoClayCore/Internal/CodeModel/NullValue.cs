@@ -7,7 +7,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class NullValue : Value
     {
         /// <inheritdoc/>
-        public override KindOfValue Kind => KindOfValue.NullValue;
+        public override KindOfValue KindOfValue => KindOfValue.NullValue;
 
         /// <inheritdoc/>
         public override bool IsNullValue => true;

@@ -6,13 +6,13 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class Name: IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class Name: Value
     {
         public string DictionaryName { get; set; }
 
         public bool IsEmpty { get; set; } = true;
 
-        public KindOfName Kind { get; set; } = KindOfName.Unknown;
+        public KindOfName KindOfName { get; set; } = KindOfName.Unknown;
         public string NameValue { get; set; } = string.Empty;
         public ulong NameKey { get; set; }
 
@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
 
             sb.AppendLine($"{spaces}{nameof(IsEmpty)} = {IsEmpty}");
-            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(KindOfName)} = {KindOfName}");
 
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
             sb.AppendLine($"{spaces}{nameof(NameKey)} = {NameKey}");
@@ -68,7 +68,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
 
             sb.AppendLine($"{spaces}{nameof(IsEmpty)} = {IsEmpty}");
-            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(KindOfName)} = {KindOfName}");
 
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
             sb.AppendLine($"{spaces}{nameof(NameKey)} = {NameKey}");
@@ -98,7 +98,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
 
             sb.AppendLine($"{spaces}{nameof(IsEmpty)} = {IsEmpty}");
-            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(KindOfName)} = {KindOfName}");
 
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
             sb.AppendLine($"{spaces}{nameof(NameKey)} = {NameKey}");

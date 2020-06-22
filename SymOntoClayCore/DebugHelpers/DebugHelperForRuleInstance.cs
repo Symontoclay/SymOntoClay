@@ -161,7 +161,7 @@ namespace SymOntoClay.Core.DebugHelpers
 
         public static string ToString(Value value)
         {
-            switch(value.Kind)
+            switch(value.KindOfValue)
             {
                 case KindOfValue.NullValue:
                     return NullValueToString(value);
@@ -173,7 +173,7 @@ namespace SymOntoClay.Core.DebugHelpers
                     return NumberValueToString(value.AsNumberValue);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(value.Kind), value.Kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(value.KindOfValue), value.KindOfValue, null);
             }
         }
 

@@ -52,7 +52,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
         private static IndexedValue ConvertValue(Value source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
         {
-            switch(source.Kind)
+            switch(source.KindOfValue)
             {
                 case KindOfValue.NullValue:
                     return NConvertNullValue(source.AsNullValue, entityDictionary, convertingContext);
@@ -67,7 +67,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
                     return NConvertStringValue(source.AsStringValue, entityDictionary, convertingContext);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, null);
+                    throw new ArgumentOutOfRangeException(nameof(source.KindOfValue), source.KindOfValue, null);
             }
         }
 

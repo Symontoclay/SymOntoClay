@@ -13,7 +13,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override KindOfValue Kind => KindOfValue.StringValue;
+        public override KindOfValue KindOfValue => KindOfValue.StringValue;
 
         /// <inheritdoc/>
         public override bool IsStringValue => true;

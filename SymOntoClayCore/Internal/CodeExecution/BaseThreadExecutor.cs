@@ -69,14 +69,21 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     case OperationCode.CallBinOp:
-                        switch(currentCommand.KindOfOperator)
                         {
-                            case KindOfOperator.LeftRightStream:
-                                ProcessLeftRightStream();
-                                break;
+                            var rightOperand = _currentCodeFrame.ValuesStack.Pop();
+                            var leftOperand = _currentCodeFrame.ValuesStack.Pop();
 
-                            default:
-                                throw new ArgumentOutOfRangeException(nameof(currentCommand.KindOfOperator), currentCommand.KindOfOperator, null);
+                            switch (currentCommand.KindOfOperator)
+                            {
+                                case KindOfOperator.LeftRightStream:
+                                    ProcessLeftRightStream(leftOperand, rightOperand);
+                                    break;
+
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(currentCommand.KindOfOperator), currentCommand.KindOfOperator, null);
+                            }
+
+                            _currentCodeFrame.CurrentPosition++;
                         }
                         break;
 
@@ -99,7 +106,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void ProcessLeftRightStream(Value leftOperand, Value rightOperand)
         {
 #if DEBUG
-
+            Log($"leftOperand = {leftOperand}");
+            Log($"rightOperand = {rightOperand}");
+            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
             throw new NotImplementedException();

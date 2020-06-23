@@ -55,11 +55,13 @@ namespace TestSandbox.CodeExecution
             compiledFunctionBody.Commands[2] = command;
 
             _logger.Info($"compiledFunctionBody = {compiledFunctionBody}");
+            _logger.Info($"compiledFunctionBody = {compiledFunctionBody.ToDbgString()}");
 
             var codeFrame = new CodeFrame();
             codeFrame.CompiledFunctionBody = compiledFunctionBody;
 
             _logger.Info($"codeFrame = {codeFrame}");
+            _logger.Info($"codeFrame = {codeFrame.ToDbgString()}");
 
             var threadExecutor = new SyncThreadExecutor(parserContext.Logger);
 

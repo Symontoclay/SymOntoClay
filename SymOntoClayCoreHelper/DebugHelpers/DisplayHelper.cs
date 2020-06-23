@@ -61,6 +61,11 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             return sb.ToString();
         }
 
+        public static string GetDefaultToDbgStringInformation(this IObjectToDbgString targetObject, uint n)
+        {
+            return targetObject.PropertiesToDbgString(n);
+        }
+
         public static void PrintObjProp(this StringBuilder sb, uint n, string propName, IObjectToString obj)
         {
             var spaces = Spaces(n);

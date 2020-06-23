@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 {
-    public class CompiledFunctionBody : IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class CompiledFunctionBody : IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
     {
         public Dictionary<int, ScriptCommand> Commands { get; set; } = new Dictionary<int, ScriptCommand>();
 
@@ -139,6 +139,32 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                     sb.AppendLine($"{nextNSpaces}End Item");
                 }
                 sb.AppendLine($"{spaces}End {nameof(Commands)}");
+            }
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToDbgString()
+        {
+            return ToDbgString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToDbgString(uint n)
+        {
+            return this.GetDefaultToDbgStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToDbgString.PropertiesToDbgString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            foreach(var commandItem in Commands)
+            {
+                sb.AppendLine($"{spaces}{commandItem.Key}: {commandItem.Value.ToDbgString()}");
             }
 
             return sb.ToString();

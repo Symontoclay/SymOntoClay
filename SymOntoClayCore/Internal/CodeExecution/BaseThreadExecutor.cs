@@ -1,4 +1,6 @@
-﻿using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.CoreHelper.Threads;
 using System;
@@ -52,9 +54,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 Log($"currentCommand = {currentCommand}");
+                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
-                switch(currentCommand.OperationCode)
+                switch (currentCommand.OperationCode)
                 {
                     case OperationCode.Nop:
                         _currentCodeFrame.CurrentPosition++;
@@ -63,6 +66,18 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     case OperationCode.PushVal:
                         _currentCodeFrame.ValuesStack.Push(currentCommand.Value);
                         _currentCodeFrame.CurrentPosition++;
+                        break;
+
+                    case OperationCode.CallBinOp:
+                        switch(currentCommand.KindOfOperator)
+                        {
+                            case KindOfOperator.LeftRightStream:
+                                ProcessLeftRightStream();
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(currentCommand.KindOfOperator), currentCommand.KindOfOperator, null);
+                        }
                         break;
 
                     default:
@@ -79,6 +94,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 throw;
 #endif
             }
+        }
+
+        private void ProcessLeftRightStream(Value leftOperand, Value rightOperand)
+        {
+#if DEBUG
+
+#endif
+
+            throw new NotImplementedException();
         }
     }
 }

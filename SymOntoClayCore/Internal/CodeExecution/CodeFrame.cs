@@ -8,7 +8,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
 {
-    public class CodeFrame : IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class CodeFrame : IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
     {
         public CompiledFunctionBody CompiledFunctionBody { get; set; }
         public int CurrentPosition { get; set; }
@@ -39,12 +39,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             sb.PrintObjListProp(n, nameof(ValuesStack), ValuesStack.ToList());
 
-            //sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
-            //sb.AppendLine($"{spaces}{nameof(Value)} = {Value}");
-            //sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
-            //sb.AppendLine($"{spaces}{nameof(JumpTo)} = {JumpTo}");
-            //sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
-
             return sb.ToString();
         }
 
@@ -72,13 +66,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(CurrentPosition)} = {CurrentPosition}");
 
             sb.PrintShortObjListProp(n, nameof(ValuesStack), ValuesStack.ToList());
-
-            //sb.AppendLine($"{spaces}{nameof(OperationCode)} = {OperationCode}");
-            //sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
-            //sb.AppendLine($"{spaces}{nameof(Value)} = {Value}");
-            //sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
-            //sb.AppendLine($"{spaces}{nameof(JumpTo)} = {JumpTo}");
-            //sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
 
             return sb.ToString();
         }
@@ -108,13 +95,48 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             sb.PrintBriefObjListProp(n, nameof(ValuesStack), ValuesStack.ToList());
 
-            //sb.AppendLine($"{spaces}{nameof(OperationCode)} = {OperationCode}");
-            //sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
-            //sb.AppendLine($"{spaces}{nameof(Value)} = {Value}");
-            //sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
-            //sb.AppendLine($"{spaces}{nameof(JumpTo)} = {JumpTo}");
-            //sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
+            return sb.ToString();
+        }
 
+        /// <inheritdoc/>
+        public string ToDbgString()
+        {
+            return ToDbgString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToDbgString(uint n)
+        {
+            return this.GetDefaultToDbgStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToDbgString.PropertiesToDbgString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var nextN = n + 4;
+            var nextNSpaces = DisplayHelper.Spaces(nextN);
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}Begin Code");
+
+            foreach (var commandItem in CompiledFunctionBody.Commands)
+            {
+                var currentMark = string.Empty;
+
+                if(commandItem.Key == CurrentPosition)
+                {
+                    currentMark = "-> ";
+                }
+
+                sb.AppendLine($"{nextNSpaces}{currentMark}{commandItem.Key}: {commandItem.Value.ToDbgString()}");
+            }
+            sb.AppendLine($"{spaces}End Code");
+            sb.AppendLine($"{spaces}Begin Values Stack");
+            foreach(var stackItem in ValuesStack)
+            {
+                sb.AppendLine($"{nextNSpaces}{stackItem.ToDbgString()}");
+            }
+            sb.AppendLine($"{spaces}End Values Stack");
             return sb.ToString();
         }
     }

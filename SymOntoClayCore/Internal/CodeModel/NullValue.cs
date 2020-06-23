@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -22,6 +23,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.AppendAnnotations(this, cloneContext);
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToDbgString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            return $"{spaces}NULL";
         }
     }
 }

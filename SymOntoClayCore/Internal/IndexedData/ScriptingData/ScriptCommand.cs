@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 {
-    public class ScriptCommand : IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class ScriptCommand : IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
     {
         public OperationCode OperationCode { get; set; } = OperationCode.Nop;
 
@@ -104,6 +105,36 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
 
             return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToDbgString()
+        {
+            return ToDbgString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToDbgString(uint n)
+        {
+            return this.GetDefaultToDbgStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToDbgString.PropertiesToDbgString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+
+            switch(OperationCode)
+            {
+                case OperationCode.PushVal:
+                    return $"{spaces}{OperationCode} {Value.ToDbgString()}";
+
+                case OperationCode.CallBinOp:
+                    return $"{spaces}{OperationCode} {OperatorsHelper.GetSymbol(KindOfOperator)}";
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(OperationCode), OperationCode, null);
+            }
         }
     }
 }

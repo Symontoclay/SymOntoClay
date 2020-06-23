@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class AnnotatedItem : IAnnotatedItem, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public abstract class AnnotatedItem : IAnnotatedItem, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
     {
         [ResolveToType(typeof(LogicalValue))]
         public IList<Value> QuantityQualityModalities { get; set; } = new List<Value>();
@@ -149,6 +149,29 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintExistingList(n, nameof(WhereSection), WhereSection);
 
             return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToDbgString()
+        {
+            return ToDbgString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToDbgString(uint n)
+        {
+            return this.GetDefaultToDbgStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToDbgString.PropertiesToDbgString(uint n)
+        {
+            return PropertiesToDbgString(n);
+        }
+
+        protected virtual string PropertiesToDbgString(uint n)
+        {
+            throw new NotImplementedException();
         }
     }
 }

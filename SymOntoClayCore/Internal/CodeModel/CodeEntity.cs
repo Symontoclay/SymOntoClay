@@ -12,6 +12,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public List<InheritanceItem> InheritanceItems { get; set; } = new List<InheritanceItem>();
         public RuleInstance RuleInstance { get; set; }
         public InlineTrigger InlineTrigger { get; set; }
+        public Operator Operator { get; set; }
 
         public CodeFile CodeFile { get; set; }
         public CodeEntity ParentCodeEntity { get; set; }
@@ -28,6 +29,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjListProp(n, nameof(InheritanceItems), InheritanceItems);
             sb.PrintObjProp(n, nameof(RuleInstance), RuleInstance);
             sb.PrintObjProp(n, nameof(InlineTrigger), InlineTrigger);
+            sb.PrintObjProp(n, nameof(Operator), Operator);
 
             sb.PrintBriefObjProp(n, nameof(CodeFile), CodeFile);
             sb.PrintBriefObjProp(n, nameof(ParentCodeEntity), ParentCodeEntity);
@@ -48,6 +50,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjListProp(n, nameof(InheritanceItems), InheritanceItems);
             sb.PrintShortObjProp(n, nameof(RuleInstance), RuleInstance);
             sb.PrintShortObjProp(n, nameof(InlineTrigger), InlineTrigger);
+            sb.PrintShortObjProp(n, nameof(Operator), Operator);
 
             sb.PrintBriefObjProp(n, nameof(CodeFile), CodeFile);
             sb.PrintBriefObjProp(n, nameof(ParentCodeEntity), ParentCodeEntity);
@@ -68,6 +71,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjListProp(n, nameof(InheritanceItems), InheritanceItems);
             sb.PrintBriefObjProp(n, nameof(RuleInstance), RuleInstance);
             sb.PrintBriefObjProp(n, nameof(InlineTrigger), InlineTrigger);
+            sb.PrintBriefObjProp(n, nameof(Operator), Operator);
 
             sb.PrintBriefObjProp(n, nameof(CodeFile), CodeFile);
             sb.PrintBriefObjProp(n, nameof(ParentCodeEntity), ParentCodeEntity);

@@ -19,6 +19,9 @@
         <member name="P:SymOntoClay.Core.Engine.IsWaited">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Engine.OnDisposed">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.EngineSettings.Id">
             <summary>
             Gets or sets unique Id.

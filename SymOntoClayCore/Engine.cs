@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CommonNames;
+using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.InheritanceEngine;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.LogicalEngine;
@@ -21,32 +22,14 @@ namespace SymOntoClay.Core
         public Engine(EngineSettings settings)
             : base(settings.Logger)
         {
-            _context = new EngineContext(settings.Logger);
+#if DEBUG
+            Log($"settings = {settings}");
+#endif
 
-            InitContext(settings);
+            _context = EngineContextHelper.CreateAndInitContext(settings);
         }
 
         private readonly EngineContext _context;
-
-        private void InitContext(EngineSettings settings)
-        {
-            Log($"settings = {settings}");
-
-            _context.Id = settings.Id;
-            _context.AppFile = settings.AppFile;
-            _context.Dictionary = settings.Dictionary;
-
-            _context.Storage = new StorageComponent(_context, settings.ParentStorage);
-            _context.CodeExecutor = new CodeExecutorComponent(_context);
-            _context.TriggerExecutor = new TriggerExecutorComponent(_context);
-            _context.LoaderFromSourceCode = new LoaderFromSourceCode(_context);
-            _context.Parser = new Parser(_context);
-            _context.InstancesStorage = new InstancesStorageComponent(_context);
-            _context.StatesStorage = new StatesStorageComponent(_context);
-            _context.CommonNamesStorage = new CommonNamesStorage(_context);
-            _context.LogicalEngine = new LogicalEngineComponent(_context);
-            _context.InheritanceEngine = new InheritanceEngineComponent(_context);
-        }
 
         /// <inheritdoc/>
         public void LoadFromSourceCode()
@@ -152,6 +135,7 @@ namespace SymOntoClay.Core
             }
         }
 
+        /// <inheritdoc/>
         protected override void OnDisposed()
         {
             _context.Dispose();

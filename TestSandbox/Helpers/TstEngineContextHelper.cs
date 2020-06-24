@@ -1,7 +1,10 @@
 ﻿using NLog;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.UnityAsset.Core;
+using SymOntoClay.UnityAsset.Core.Internal;
+using SymOntoClay.UnityAsset.Core.Internal.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -39,12 +42,17 @@ namespace TestSandbox.Helpers
 
             _logger.Info($"worldSettings = {worldSettings}");
 
+            var worldContext = new WorldContext();
+            worldContext.SetSettings(worldSettings);
+
             var npcSettings = new BipedNPCSettings();
             npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
             npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PixKeeper\PixKeeper.txt");
             npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Apps\PixKeeper\PixKeeper.txt");
 
             _logger.Info($"npcSettings = {npcSettings}");
+
+            var entityLogger = worldContext.CoreLogger.CreateLogger(npcSettings.Id);
 
             var tmpDir = Path.Combine(worldSettings.TmpDir, npcSettings.Id);
 
@@ -54,10 +62,10 @@ namespace TestSandbox.Helpers
             standaloneStorageSettings.Id = npcSettings.Id;
             standaloneStorageSettings.IsWorld = false;
             standaloneStorageSettings.AppFile = npcSettings.HostFile;
-            standaloneStorageSettings.Logger = Logger;
-            standaloneStorageSettings.Dictionary = worldContext.SharedDictionary;
-            standaloneStorageSettings.ModulesStorage = worldContext.ModulesStorage;
-            standaloneStorageSettings.ParentStorage = worldContext.StandaloneStorage;
+            standaloneStorageSettings.Logger = entityLogger;
+            standaloneStorageSettings.Dictionary = worldContext.SharedDictionary.Dictionary;
+            standaloneStorageSettings.ModulesStorage = worldContext.ModulesStorage.ModulesStorage;
+            standaloneStorageSettings.ParentStorage = worldContext.StandaloneStorage.StandaloneStorage;
 
 #if DEBUG
             _logger.Info($"standaloneStorageSettings = {standaloneStorageSettings}");
@@ -67,10 +75,10 @@ namespace TestSandbox.Helpers
             var coreEngineSettings = new EngineSettings();
             coreEngineSettings.Id = npcSettings.Id;
             coreEngineSettings.AppFile = npcSettings.LogicFile;
-            coreEngineSettings.Logger = Logger;
-            coreEngineSettings.SyncContext = worldContext.SyncContext;
-            coreEngineSettings.Dictionary = worldContext.SharedDictionary;
-            coreEngineSettings.ModulesStorage = worldContext.ModulesStorage;
+            coreEngineSettings.Logger = entityLogger;
+            coreEngineSettings.SyncContext = worldContext.ThreadsComponent;
+            coreEngineSettings.Dictionary = worldContext.SharedDictionary.Dictionary;
+            coreEngineSettings.ModulesStorage = worldContext.ModulesStorage.ModulesStorage;
             coreEngineSettings.ParentStorage = _hostStorage;
             coreEngineSettings.TmpDir = tmpDir;
 
@@ -78,7 +86,7 @@ namespace TestSandbox.Helpers
             _logger.Info($"coreEngineSettings = {coreEngineSettings}");
 #endif
 
-            throw new NotImplementedException();
+            return EngineContextHelper.CreateAndInitContext(coreEngineSettings);
         }
     }
 }

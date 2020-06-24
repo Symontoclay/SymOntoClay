@@ -70,13 +70,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     case OperationCode.CallBinOp:
                         {
-                            var rightOperand = _currentCodeFrame.ValuesStack.Pop();
-                            var leftOperand = _currentCodeFrame.ValuesStack.Pop();
+                            var paramsList = TakePositionedParameters(2);
 
                             switch (currentCommand.KindOfOperator)
                             {
                                 case KindOfOperator.LeftRightStream:
-                                    ProcessLeftRightStream(leftOperand, rightOperand);
+                                    ProcessLeftRightStream(paramsList);
                                     break;
 
                                 default:
@@ -103,11 +102,26 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private void ProcessLeftRightStream(Value leftOperand, Value rightOperand)
+        private List<Value> TakePositionedParameters(int count)
+        {
+            var result = new List<Value>();
+
+            var valueStack = _currentCodeFrame.ValuesStack;
+
+            for (var i = 0; i < count; i++)
+            {
+                result.Add(valueStack.Pop());
+            }
+
+            result.Reverse();
+
+            return result;
+        }
+
+        private void ProcessLeftRightStream(IList<Value> paramsList)
         {
 #if DEBUG
-            Log($"leftOperand = {leftOperand}");
-            Log($"rightOperand = {rightOperand}");
+            Log($"paramsList = {paramsList.WriteListToString()}");
             Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 

@@ -41,30 +41,46 @@ namespace SymOntoClay.Core.Internal.Storage
             _realStorageContext.InheritanceStorage = _inheritanceStorage;
             _synonymsStorage = new SynonymsStorage.SynonymsStorage(_kind, _realStorageContext);
             _realStorageContext.SynonymsStorage = _synonymsStorage;
+            _operatorsStorage = new OperatorsStorage.OperatorsStorage(_kind, _realStorageContext);
+            _realStorageContext.OperatorsStorage = _operatorsStorage;
         }
 
         private readonly KindOfStorage _kind;
 
+        /// <inheritdoc/>
         public KindOfStorage Kind => _kind;
 
         private readonly RealStorageContext _realStorageContext;
 
         private LogicalStorage.LogicalStorage _logicalStorage;
 
+        /// <inheritdoc/>
         public ILogicalStorage LogicalStorage => _logicalStorage;
 
         private MethodsStorage.MethodsStorage _methodsStorage;
         private TriggersStorage.TriggersStorage _triggersStorage;
         private InheritanceStorage.InheritanceStorage _inheritanceStorage;
 
+        /// <inheritdoc/>
         public IMethodsStorage MethodsStorage => _methodsStorage;
-        public ITriggersStorage TriggersStorage => _triggersStorage;
-        public IInheritanceStorage InheritanceStorage => _inheritanceStorage;
 
+        /// <inheritdoc/>
+        public ITriggersStorage TriggersStorage => _triggersStorage;
+
+        /// <inheritdoc/>
+        public IInheritanceStorage InheritanceStorage => _inheritanceStorage;
+   
         private SynonymsStorage.SynonymsStorage _synonymsStorage;
 
+        /// <inheritdoc/>
         public ISynonymsStorage SynonymsStorage => _synonymsStorage;
 
+        private OperatorsStorage.OperatorsStorage _operatorsStorage;
+
+        /// <inheritdoc/>
+        public IOperatorsStorage OperatorsStorage => _operatorsStorage;
+
+        /// <inheritdoc/>
         IStorage IStorage.GetConsolidatedStorage()
         {
 #if DEBUG
@@ -74,6 +90,7 @@ namespace SymOntoClay.Core.Internal.Storage
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         void IStorage.CollectParents(IList<IStorage> result, uint level)
         {
 #if DEBUG

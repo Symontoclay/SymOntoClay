@@ -13,6 +13,7 @@ namespace SymOntoClay.Core
         ITriggersStorage TriggersStorage { get; }
         IInheritanceStorage InheritanceStorage { get; }
         ISynonymsStorage SynonymsStorage { get; }
+        IOperatorsStorage OperatorsStorage { get; }
         IStorage GetConsolidatedStorage();
         void CollectParents(IList<IStorage> result, uint level);
     }

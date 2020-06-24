@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.Storage.MethodsStorage
+namespace SymOntoClay.Core.Internal.Storage.OperatorsStorage
 {
-    public class MethodsStorage: BaseLoggedComponent, IMethodsStorage
+    public class OperatorsStorage : BaseLoggedComponent, IOperatorsStorage
     {
-        public MethodsStorage(KindOfStorage kind, RealStorageContext realStorageContext)
+        public OperatorsStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(realStorageContext.Logger)
         {
             _kind = kind;

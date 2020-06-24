@@ -14,6 +14,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public TriggersStorage.TriggersStorage TriggersStorage { get; set; }
         public InheritanceStorage.InheritanceStorage InheritanceStorage { get; set; }
         public SynonymsStorage.SynonymsStorage SynonymsStorage { get; set; }
+        public OperatorsStorage.OperatorsStorage OperatorsStorage { get; set; }
         public IList<IStorage> Parents { get; set; }
     }
 }

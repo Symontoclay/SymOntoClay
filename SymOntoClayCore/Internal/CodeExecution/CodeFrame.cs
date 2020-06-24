@@ -13,6 +13,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public CompiledFunctionBody CompiledFunctionBody { get; set; }
         public int CurrentPosition { get; set; }
         public Stack<Value> ValuesStack { get; private set; } = new Stack<Value>();
+        public IStorage Storage { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

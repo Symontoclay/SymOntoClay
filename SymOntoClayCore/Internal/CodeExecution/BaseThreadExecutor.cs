@@ -77,6 +77,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
+                            var operatorInfo = _currentCodeFrame.Storage.OperatorsStorage.GetOperator(currentCommand.KindOfOperator);
+
+#if DEBUG
+                            Log($"operatorInfo = {operatorInfo}");
+#endif
+
                             throw new NotImplementedException();
 
                             _currentCodeFrame.CurrentPosition++;

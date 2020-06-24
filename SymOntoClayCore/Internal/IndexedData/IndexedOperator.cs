@@ -9,13 +9,19 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
-    public class IndexedOperator : IndexedAnnotatedItem
+    public class IndexedOperator : IndexedAnnotatedItem, IExecutable
     {
         public Operator OriginalOperator { get; set; }
 
         public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
+
+        /// <inheritdoc/>
         public bool IsSystemDefined { get; set; }
+
+        /// <inheritdoc/>
         public CompiledFunctionBody CompiledFunctionBody { get; set; }
+
+        /// <inheritdoc/>
         public ISystemHandler SystemHandler { get; set; }
 
         /// <inheritdoc/>

@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,6 +16,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         public override NullValue AsNullValue => this;
+
+        public IndexedNullValue Indexed { get; set; }
 
         /// <inheritdoc/>
         public override Value CloneValue(Dictionary<object, object> cloneContext)

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.IndexedData;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -19,5 +21,14 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStorage
         public KindOfStorage Kind => _kind;
 
         private readonly RealStorageContext _realStorageContext;
+
+        public IndexedOperator GetOperator(KindOfOperator kindOfOperator)
+        {
+#if DEBUG
+            Log($"kindOfOperator = {kindOfOperator}");
+#endif
+
+            throw new NotImplementedException();
+        }
     }
 }

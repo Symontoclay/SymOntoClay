@@ -85,6 +85,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             var result = new IndexedNullValue();
             convertingContext[source] = result;
+            source.Indexed = result;
 
             FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
 
@@ -107,6 +108,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             var result = new IndexedLogicalValue();
             convertingContext[source] = result;
+            source.Indexed = result;
 
             FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
 
@@ -130,6 +132,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             var result = new IndexedNumberValue();
             convertingContext[source] = result;
+            source.Indexed = result;
 
             FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
 
@@ -153,6 +156,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             var result = new IndexedStringValue();
             convertingContext[source] = result;
+            source.Indexed = result;
 
             FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
 

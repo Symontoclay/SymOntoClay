@@ -72,15 +72,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         {
                             var paramsList = TakePositionedParameters(2);
 
-                            switch (currentCommand.KindOfOperator)
-                            {
-                                case KindOfOperator.LeftRightStream:
-                                    ProcessLeftRightStream(paramsList);
-                                    break;
+#if DEBUG
+                            Log($"paramsList = {paramsList.WriteListToString()}");
+                            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
 
-                                default:
-                                    throw new ArgumentOutOfRangeException(nameof(currentCommand.KindOfOperator), currentCommand.KindOfOperator, null);
-                            }
+                            throw new NotImplementedException();
 
                             _currentCodeFrame.CurrentPosition++;
                         }
@@ -116,16 +113,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             result.Reverse();
 
             return result;
-        }
-
-        private void ProcessLeftRightStream(IList<Value> paramsList)
-        {
-#if DEBUG
-            Log($"paramsList = {paramsList.WriteListToString()}");
-            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-#endif
-
-            throw new NotImplementedException();
         }
     }
 }

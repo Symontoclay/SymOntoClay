@@ -690,6 +690,15 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedNumberValue.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedOperator.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedOperator.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedOperator.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedPrimaryRulePart.OriginRulePart">
             <inheritdoc/>
         </member>

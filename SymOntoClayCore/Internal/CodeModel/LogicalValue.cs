@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,6 +32,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public float? SystemValue { get; private set; }
 
+        public IndexedLogicalValue Indexed { get; set; }
+
         /// <inheritdoc/>
         public override Value CloneValue(Dictionary<object, object> cloneContext)
         {
@@ -45,6 +48,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(SystemValue)} = {SystemValue}");
+
+            sb.PrintExisting(n, nameof(Indexed), Indexed);
+
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -55,6 +61,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(SystemValue)} = {SystemValue}");
+
+            sb.PrintExisting(n, nameof(Indexed), Indexed);
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -65,6 +74,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(SystemValue)} = {SystemValue}");
+
+            sb.PrintExisting(n, nameof(Indexed), Indexed);
+
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }

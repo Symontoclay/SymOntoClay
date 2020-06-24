@@ -9,6 +9,7 @@ using System.IO;
 using System.Threading;
 using TestSandbox.CodeExecution;
 using TestSandbox.Handlers;
+using TestSandbox.Helpers;
 using TestSandbox.Parsing;
 using TestSandbox.Threads;
 
@@ -22,9 +23,10 @@ namespace TestSandbox
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
+            TstCreateEngineContext();
             //TstAsyncActivePeriodicObjectHandler();
             //TstSyncActivePeriodicObjectHandler();
-            TstCodeExecution();
+            //TstCodeExecution();
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
@@ -32,6 +34,15 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstCreateEngineContext()
+        {
+            _logger.Info("Begin");
+
+            var context = TstEngineContextHelper.CreateAndInitContext();
+
+            _logger.Info("End");
         }
 
         private static void TstAsyncActivePeriodicObjectHandler()

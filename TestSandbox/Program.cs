@@ -23,7 +23,8 @@ namespace TestSandbox
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-            TstCreateEngineContext();
+            TstRegOperatorsHandler();
+            //TstCreateEngineContext();
             //TstAsyncActivePeriodicObjectHandler();
             //TstSyncActivePeriodicObjectHandler();
             //TstCodeExecution();
@@ -34,6 +35,16 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstRegOperatorsHandler()
+        {
+            _logger.Info("Begin");
+
+            var handler = new RegOperatorsHandler();
+            handler.Run();
+
+            _logger.Info("End");
         }
 
         private static void TstCreateEngineContext()

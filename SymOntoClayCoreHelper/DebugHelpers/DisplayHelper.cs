@@ -142,6 +142,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
         {
             var spaces = Spaces(n);
             var nextN = n + 4;
+            var nextNSpaces = Spaces(nextN);
 
             if (items == null)
             {
@@ -152,7 +153,14 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
                 sb.AppendLine($"{spaces}Begin {propName}");
                 foreach (var item in items)
                 {
-                    sb.Append(item.ToString(nextN));
+                    if(item == null)
+                    {
+                        sb.AppendLine($"{nextNSpaces}NULL");
+                    }
+                    else
+                    {
+                        sb.Append(item.ToString(nextN));
+                    }           
                 }
                 sb.AppendLine($"{spaces}End {propName}");
             }
@@ -162,6 +170,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
         {
             var spaces = Spaces(n);
             var nextN = n + 4;
+            var nextNSpaces = Spaces(nextN);
 
             if (items == null)
             {
@@ -172,7 +181,14 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
                 sb.AppendLine($"{spaces}Begin {propName}");
                 foreach (var item in items)
                 {
-                    sb.Append(item.ToShortString(nextN));
+                    if (item == null)
+                    {
+                        sb.AppendLine($"{nextNSpaces}NULL");
+                    }
+                    else
+                    {
+                        sb.Append(item.ToShortString(nextN));
+                    }                  
                 }
                 sb.AppendLine($"{spaces}End {propName}");
             }
@@ -182,6 +198,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
         {
             var spaces = Spaces(n);
             var nextN = n + 4;
+            var nextNSpaces = Spaces(nextN);
 
             if (items == null)
             {
@@ -192,7 +209,14 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
                 sb.AppendLine($"{spaces}Begin {propName}");
                 foreach (var item in items)
                 {
-                    sb.Append(item.ToBriefString(nextN));
+                    if (item == null)
+                    {
+                        sb.AppendLine($"{nextNSpaces}NULL");
+                    }
+                    else
+                    {
+                        sb.Append(item.ToBriefString(nextN));
+                    }                   
                 }
                 sb.AppendLine($"{spaces}End {propName}");
             }

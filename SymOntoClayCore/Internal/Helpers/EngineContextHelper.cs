@@ -37,5 +37,13 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             return context;
         }
+
+        public static void LoadFromSourceCode(EngineContext context)
+        {
+            context.CommonNamesStorage.LoadFromSourceCode();
+            context.Storage.LoadFromSourceCode();
+            context.StatesStorage.LoadFromSourceCode();
+            context.LoaderFromSourceCode.LoadFromSourceFiles();
+        }
     }
 }

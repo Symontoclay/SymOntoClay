@@ -24,14 +24,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Threads
 
         public void Lock()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
 
             _autoResetEvent.Reset();
         }
 
         public void UnLock()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
 
             _autoResetEvent.Set();
         }

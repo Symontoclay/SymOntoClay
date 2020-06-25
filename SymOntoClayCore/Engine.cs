@@ -49,10 +49,7 @@ namespace SymOntoClay.Core
                         throw new ObjectDisposedException(null);
                 }
 
-                _context.CommonNamesStorage.LoadFromSourceCode();
-                _context.Storage.LoadFromSourceCode();
-                _context.StatesStorage.LoadFromSourceCode();
-                _context.LoaderFromSourceCode.LoadFromSourceFiles();
+                EngineContextHelper.LoadFromSourceCode(_context);
 
                 _state = ComponentState.Loaded;
             }

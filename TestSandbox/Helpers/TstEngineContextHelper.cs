@@ -86,7 +86,15 @@ namespace TestSandbox.Helpers
             _logger.Info($"coreEngineSettings = {coreEngineSettings}");
 #endif
 
-            return EngineContextHelper.CreateAndInitContext(coreEngineSettings);
+            worldContext.Start();
+
+            var context = EngineContextHelper.CreateAndInitContext(coreEngineSettings);
+
+            context.CommonNamesStorage.LoadFromSourceCode();
+            context.Storage.LoadFromSourceCode();
+            context.StatesStorage.LoadFromSourceCode();
+
+            return context;
         }
     }
 }

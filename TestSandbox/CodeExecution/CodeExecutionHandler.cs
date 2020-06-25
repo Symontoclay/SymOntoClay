@@ -7,6 +7,7 @@ using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TestSandbox.Helpers;
 using TestSandbox.Parsing;
 
 namespace TestSandbox.CodeExecution
@@ -19,7 +20,7 @@ namespace TestSandbox.CodeExecution
         {
             _logger.Info("Begin");
 
-            var parserContext = new TstParserContext();
+            var context = TstEngineContextHelper.CreateAndInitContext();
 
             var compiledFunctionBody = new CompiledFunctionBody();
             
@@ -33,7 +34,7 @@ namespace TestSandbox.CodeExecution
 
             compiledFunctionBody.Commands[0] = command;
 
-            var identifier = NameHelper.CreateName("@>log", parserContext.Dictionary);
+            var identifier = NameHelper.CreateName("@>log", context.Dictionary);
 
             command = new ScriptCommand();
             command.OperationCode = OperationCode.PushVal;
@@ -63,7 +64,7 @@ namespace TestSandbox.CodeExecution
             _logger.Info($"codeFrame = {codeFrame}");
             _logger.Info($"codeFrame = {codeFrame.ToDbgString()}");
 
-            var threadExecutor = new SyncThreadExecutor(parserContext.Logger);
+            var threadExecutor = new SyncThreadExecutor(context);
 
             threadExecutor.SetCodeFrame(codeFrame);
 

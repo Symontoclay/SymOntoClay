@@ -3,6 +3,7 @@ using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.DataResolvers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -35,7 +36,9 @@ namespace TestSandbox.CodeExecution
 
             globalOperatorsStorage.Append(op);
 
-            var targetOp = globalOperatorsStorage.GetOperator(KindOfOperator.LeftRightStream);
+            var operatorsResolver = new OperatorsResolver(context);
+
+            var targetOp = operatorsResolver.GetOperator(KindOfOperator.LeftRightStream, globalStorage);
 
             _logger.Info($"targetOp = {targetOp}");
 

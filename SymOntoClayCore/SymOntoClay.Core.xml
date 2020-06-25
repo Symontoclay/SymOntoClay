@@ -1078,7 +1078,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.OperatorsStorage.OperatorsStorage.Append(SymOntoClay.Core.Internal.CodeModel.Operator)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.OperatorsStorage.OperatorsStorage.GetOperator(SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.KindOfOperator)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.OperatorsStorage.OperatorsStorage.GetOperatorsDirectly(SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.KindOfOperator)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.Kind">

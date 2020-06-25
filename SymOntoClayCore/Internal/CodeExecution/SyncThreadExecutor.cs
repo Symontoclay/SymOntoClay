@@ -8,8 +8,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public class SyncThreadExecutor: BaseThreadExecutor
     {
-        public SyncThreadExecutor(IEntityLogger logger)
-            : base(logger, new SyncActivePeriodicObject())
+        public SyncThreadExecutor(IEngineContext context)
+            : base(context, new SyncActivePeriodicObject())
         {
         }
 

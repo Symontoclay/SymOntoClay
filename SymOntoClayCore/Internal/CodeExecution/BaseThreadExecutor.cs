@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.CoreHelper.Threads;
@@ -11,12 +12,20 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public abstract class BaseThreadExecutor: BaseLoggedComponent
     {
-        protected BaseThreadExecutor(IEntityLogger logger, IActivePeriodicObject activeObject)
-            :base(logger)
+        protected BaseThreadExecutor(IEngineContext context, IActivePeriodicObject activeObject)
+            :base(context.Logger)
         {
+            _context = context;
+
             _activeObject = activeObject;
             activeObject.PeriodicMethod = CommandLoop;
+
+            _operatorsResolver = new OperatorsResolver(_context);
         }
+
+        private IEngineContext _context;
+
+        private readonly OperatorsResolver _operatorsResolver;
 
         private Stack<CodeFrame> _codeFrames = new Stack<CodeFrame>();
         private CodeFrame _currentCodeFrame;
@@ -77,7 +86,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
-                            var operatorInfo = _currentCodeFrame.Storage.OperatorsStorage.GetOperator(currentCommand.KindOfOperator);
+                            var operatorInfo = _operatorsResolver.GetOperator(currentCommand.KindOfOperator, _currentCodeFrame.Storage);
 
 #if DEBUG
                             Log($"operatorInfo = {operatorInfo}");

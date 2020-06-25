@@ -4,8 +4,7 @@ using System.Text;
 
 namespace SymOntoClay.Core
 {
-    public interface ISynonymsStorage
+    public interface ISynonymsStorage : ISpecificStorage
     {
-        KindOfStorage Kind { get; }
     }
 }

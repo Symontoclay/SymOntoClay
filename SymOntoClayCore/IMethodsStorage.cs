@@ -4,8 +4,7 @@ using System.Text;
 
 namespace SymOntoClay.Core
 {
-    public interface IMethodsStorage
+    public interface IMethodsStorage : ISpecificStorage
     {
-        KindOfStorage Kind { get; }
     }
 }

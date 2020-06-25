@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
@@ -22,13 +23,62 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStorage
 
         private readonly RealStorageContext _realStorageContext;
 
-        public IndexedOperator GetOperator(KindOfOperator kindOfOperator)
+        private readonly object _lockObj = new object();
+
+        private readonly Dictionary<KindOfOperator, List<Operator>> _nonIndexedInfo = new Dictionary<KindOfOperator, List<Operator>>();
+        private readonly Dictionary<KindOfOperator, List<IndexedOperator>> _indexedInfo = new Dictionary<KindOfOperator, List<IndexedOperator>>();
+
+        /// <inheritdoc/>
+        public void Append(Operator op)
+        {
+#if DEBUG
+            Log($"op = {op}");
+#endif
+
+            lock(_lockObj)
+            {
+                var indexedOp = op.GetIndexed(_realStorageContext.EntityDictionary);
+
+#if DEBUG
+                Log($"indexedOp = {indexedOp}");
+#endif
+
+                var kindOfOperator = indexedOp.KindOfOperator;
+
+                if(_nonIndexedInfo.ContainsKey(kindOfOperator))
+                {
+                    var list = _nonIndexedInfo[kindOfOperator];
+
+                    if (!list.Contains(op))
+                    {
+                        list.Add(op);
+                        _indexedInfo[kindOfOperator].Add(indexedOp);
+                    }
+                }
+                else
+                {
+                    _nonIndexedInfo[kindOfOperator] = new List<Operator>() { op };
+                    _indexedInfo[kindOfOperator] = new List<IndexedOperator>() { indexedOp };
+                }              
+            }
+        }
+
+        /// <inheritdoc/>
+        public IList<IndexedOperator> GetOperatorsDirectly(KindOfOperator kindOfOperator)
         {
 #if DEBUG
             Log($"kindOfOperator = {kindOfOperator}");
 #endif
 
-            throw new NotImplementedException();
+            lock (_lockObj)
+            {
+                if(_indexedInfo.ContainsKey(kindOfOperator))
+                {
+                    return _indexedInfo[kindOfOperator];
+                }
+
+                return new List<IndexedOperator>();
+            }
         }
     }
 }

@@ -16,6 +16,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public IndexedRuleInstance Indexed { get; set; }
 
+        public IndexedRuleInstance GetIndexed(IEntityDictionary entityDictionary)
+        {
+            if (Indexed == null)
+            {
+                return ConvertorToIndexed.ConvertRuleInstance(this, entityDictionary);
+            }
+
+            return Indexed;
+        }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {

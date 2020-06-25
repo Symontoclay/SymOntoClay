@@ -51,7 +51,7 @@ namespace SymOntoClay.Core.Internal
         ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;
         ITriggerExecutorComponent IEngineContext.TriggerExecutor => TriggerExecutor;
         ILoaderFromSourceCode IEngineContext.LoaderFromSourceCode => LoaderFromSourceCode;
-        IParser IBaseLoaderFromSourceCodeContext.Parser => Parser;
+        IParser IMainStorageContext.Parser => Parser;
         ICommonNamesStorage IEngineContext.CommonNamesStorage => CommonNamesStorage;
         ILogicalEngine IEngineContext.LogicalEngine => LogicalEngine;
         IInheritanceEngine IEngineContext.InheritanceEngine => InheritanceEngine;

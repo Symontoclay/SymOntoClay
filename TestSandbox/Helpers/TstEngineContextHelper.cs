@@ -52,7 +52,7 @@ namespace TestSandbox.Helpers
 
             _logger.Info($"npcSettings = {npcSettings}");
 
-            var entityLogger = worldContext.CoreLogger.CreateLogger(npcSettings.Id);
+            var entityLogger = new LoggerImpementation();
 
             var tmpDir = Path.Combine(worldSettings.TmpDir, npcSettings.Id);
 

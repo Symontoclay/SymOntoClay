@@ -45,7 +45,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                 Log($"inheritanceItem = {inheritanceItem}");
                 Log($"isPrimary = {isPrimary}");
 #endif
-                var indexedInheritanceItem = ConvertorToIndexed.ConvertInheritanceItem(inheritanceItem, _realStorageContext.EntityDictionary);
+                var indexedInheritanceItem = inheritanceItem.GetIndexed(_realStorageContext.EntityDictionary);
 
 #if DEBUG
                 Log($"indexedInheritanceItem = {indexedInheritanceItem}");

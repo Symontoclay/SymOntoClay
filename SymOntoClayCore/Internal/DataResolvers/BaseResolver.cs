@@ -7,12 +7,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public abstract class BaseResolver: BaseLoggedComponent
     {
-        protected BaseResolver(IEngineContext context)
+        protected BaseResolver(IMainStorageContext context)
             : base(context.Logger)
         {
             _context = context;
         }
 
-        protected readonly IEngineContext _context;
+        protected readonly IMainStorageContext _context;
     }
 }

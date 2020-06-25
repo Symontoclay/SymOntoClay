@@ -25,6 +25,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public IndexedInheritanceItem Indexed { get; set; }
 
+        public IndexedInheritanceItem GetIndexed(IEntityDictionary entityDictionary)
+        {
+            if(Indexed == null)
+            {
+                return ConvertorToIndexed.ConvertInheritanceItem(this, entityDictionary);
+            }
+
+            return Indexed;
+        }
+
         private void PrintHeader(StringBuilder sb, uint n, string spaces)
         {
             sb.PrintObjProp(n, nameof(SubName), SubName);

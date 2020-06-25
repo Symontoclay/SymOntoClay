@@ -18,6 +18,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
         private readonly KindOfStorage _kind;
 
+        /// <inheritdoc/>
         public KindOfStorage Kind => _kind;
 
         private readonly RealStorageContext _realStorageContext;
@@ -26,11 +27,13 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
         private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData();
 
+        /// <inheritdoc/>
         public void Append(RuleInstance ruleInstance)
         {
             Append(ruleInstance, true);
         }
 
+        /// <inheritdoc/>
         public void Append(RuleInstance ruleInstance, bool isPrimary)
         {
             lock (_lockObj)
@@ -47,7 +50,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
 #endif
 
-            var indexedRuleInstance = ConvertorToIndexed.ConvertRuleInstance(ruleInstance, _realStorageContext.EntityDictionary);
+            var indexedRuleInstance = ruleInstance.GetIndexed(_realStorageContext.EntityDictionary);
 
             _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(indexedRuleInstance);
 

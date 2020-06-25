@@ -4,7 +4,8 @@ using System.Text;
 
 namespace SymOntoClay.Core
 {
-    public interface ITriggersStorage : ISpecificStorage
+    public interface ISpecificStorage
     {
+        KindOfStorage Kind { get; }
     }
 }

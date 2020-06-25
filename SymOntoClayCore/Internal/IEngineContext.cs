@@ -12,7 +12,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal
 {
-    public interface IEngineContext: IBaseLoaderFromSourceCodeContext
+    public interface IEngineContext: IMainStorageContext
     {
         string Id { get; }
         string AppFile { get; }

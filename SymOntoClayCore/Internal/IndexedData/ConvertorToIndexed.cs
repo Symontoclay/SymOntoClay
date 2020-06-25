@@ -391,5 +391,47 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             return result;
         }
+
+        public static IndexedOperator ConvertOperator(Operator source, IEntityDictionary entityDictionary)
+        {
+            var convertingContext = new Dictionary<object, object>();
+
+            return ConvertOperator(source, entityDictionary, convertingContext);
+        }
+
+        private static IndexedOperator ConvertOperator(Operator source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (IndexedOperator)convertingContext[source];
+            }
+
+            var result = new IndexedOperator();
+            convertingContext[source] = result;
+            result.OriginalOperator = source;
+            source.Indexed = result;
+
+            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+
+            result.KindOfOperator = source.KindOfOperator;
+            result.IsSystemDefined = source.IsSystemDefined;
+
+            if(result.IsSystemDefined)
+            {
+                result.SystemHandler = source.SystemHandler;
+            }
+            else
+            {
+                //CompiledFunctionBody
+                throw new NotImplementedException();
+            }
+
+            return result;
+        }
     }
 }

@@ -5,9 +5,8 @@ using System.Text;
 
 namespace SymOntoClay.Core
 {
-    public interface ILogicalStorage
+    public interface ILogicalStorage: ISpecificStorage
     {
-        KindOfStorage Kind { get; }
         void Append(RuleInstance ruleInstance);
         void Append(RuleInstance ruleInstance, bool isPrimary);
     }

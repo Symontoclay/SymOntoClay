@@ -18,6 +18,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public IndexedOperator Indexed { get; set; }
 
+        public IndexedOperator GetIndexed(IEntityDictionary entityDictionary)
+        {
+            if(Indexed == null)
+            {
+                return ConvertorToIndexed.ConvertOperator(this, entityDictionary);
+            }
+
+            return Indexed;
+        }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {

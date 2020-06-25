@@ -28,6 +28,9 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 
         private readonly RealStorageContext _realStorageContext;
 
+        /// <inheritdoc/>
+        public IStorage Storage => _realStorageContext.Storage;
+
         private readonly Dictionary<Name, Dictionary<Name, List<InheritanceItem>>> _nonIndexedInfo = new Dictionary<Name, Dictionary<Name, List<InheritanceItem>>>();
         private readonly Dictionary<ulong, Dictionary<ulong, List<IndexedInheritanceItem>>> _indexedInfo = new Dictionary<ulong, Dictionary<ulong, List<IndexedInheritanceItem>>>();
 

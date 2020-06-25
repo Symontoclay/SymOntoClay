@@ -23,6 +23,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
         private readonly RealStorageContext _realStorageContext;
 
+        /// <inheritdoc/>
+        public IStorage Storage => _realStorageContext.Storage;
+
         private readonly object _lockObj = new object();
 
         private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData();

@@ -17,6 +17,7 @@ namespace SymOntoClay.Core.Internal.Storage
 
             _kind = kind;
             _realStorageContext = new RealStorageContext();
+            _realStorageContext.Storage = this;
             _realStorageContext.Logger = settings.Logger;
             _realStorageContext.EntityDictionary = settings.EntityDictionary;
 
@@ -81,17 +82,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public IOperatorsStorage OperatorsStorage => _operatorsStorage;
 
         /// <inheritdoc/>
-        IStorage IStorage.GetConsolidatedStorage()
-        {
-#if DEBUG
-            Log("Do");
-#endif
-
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        void IStorage.CollectParents(IList<IStorage> result, uint level)
+        void IStorage.CollectParents(IList<KeyValuePair<int, IStorage>> result, uint level)
         {
 #if DEBUG
             Log($"result?.Count = {result?.Count}");

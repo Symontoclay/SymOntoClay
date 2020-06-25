@@ -7,5 +7,6 @@ namespace SymOntoClay.Core
     public interface ISpecificStorage
     {
         KindOfStorage Kind { get; }
+        IStorage Storage { get; }
     }
 }

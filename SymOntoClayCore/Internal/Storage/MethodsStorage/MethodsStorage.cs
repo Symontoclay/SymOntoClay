@@ -19,5 +19,8 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStorage
         public KindOfStorage Kind => _kind;
 
         private readonly RealStorageContext _realStorageContext;
+
+        /// <inheritdoc/>
+        public IStorage Storage => _realStorageContext.Storage;
     }
 }

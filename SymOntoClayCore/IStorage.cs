@@ -14,7 +14,6 @@ namespace SymOntoClay.Core
         IInheritanceStorage InheritanceStorage { get; }
         ISynonymsStorage SynonymsStorage { get; }
         IOperatorsStorage OperatorsStorage { get; }
-        IStorage GetConsolidatedStorage();
-        void CollectParents(IList<IStorage> result, uint level);
+        void CollectParents(IList<KeyValuePair<int,IStorage>> result, uint level);
     }
 }

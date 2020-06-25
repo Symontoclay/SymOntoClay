@@ -1060,7 +1060,13 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.ParsedFileInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.InheritanceStorage.InheritanceStorage.Storage">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.Storage">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.Append(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
@@ -1072,7 +1078,13 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.MethodsStorage.MethodsStorage.Kind">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.MethodsStorage.MethodsStorage.Storage">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.OperatorsStorage.OperatorsStorage.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.OperatorsStorage.OperatorsStorage.Storage">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.OperatorsStorage.OperatorsStorage.Append(SymOntoClay.Core.Internal.CodeModel.Operator)">
@@ -1102,10 +1114,7 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.OperatorsStorage">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.SymOntoClay#Core#IStorage#GetConsolidatedStorage">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.SymOntoClay#Core#IStorage#CollectParents(System.Collections.Generic.IList{SymOntoClay.Core.IStorage},System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.SymOntoClay#Core#IStorage#CollectParents(System.Collections.Generic.IList{System.Collections.Generic.KeyValuePair{System.Int32,SymOntoClay.Core.IStorage}},System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.ToString">
@@ -1142,6 +1151,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RealStorageSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.SynonymsStorage.SynonymsStorage.Storage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.TriggersStorage.TriggersStorage.Storage">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.ModulesStorage.LoadFromSourceCode">

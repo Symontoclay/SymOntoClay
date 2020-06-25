@@ -23,6 +23,9 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStorage
 
         private readonly RealStorageContext _realStorageContext;
 
+        /// <inheritdoc/>
+        public IStorage Storage => _realStorageContext.Storage;
+
         private readonly object _lockObj = new object();
 
         private readonly Dictionary<KindOfOperator, List<Operator>> _nonIndexedInfo = new Dictionary<KindOfOperator, List<Operator>>();

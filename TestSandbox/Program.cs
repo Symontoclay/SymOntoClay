@@ -3,6 +3,7 @@ using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,23 +12,24 @@ using TestSandbox.CodeExecution;
 using TestSandbox.Handlers;
 using TestSandbox.Helpers;
 using TestSandbox.Parsing;
+using TestSandbox.PlatformImplementations;
 using TestSandbox.Threads;
 
 namespace TestSandbox
 {
     class Program
     {
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private static readonly IEntityLogger _logger = new LoggerImpementation();
 
         static void Main(string[] args)
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-            TstRegOperatorsHandler();
+            //TstRegOperatorsHandler();
             //TstCreateEngineContext();
             //TstAsyncActivePeriodicObjectHandler();
             //TstSyncActivePeriodicObjectHandler();
-            //TstCodeExecution();
+            TstCodeExecution();
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
@@ -39,62 +41,62 @@ namespace TestSandbox
 
         private static void TstRegOperatorsHandler()
         {
-            _logger.Info("Begin");
+            _logger.Log("Begin");
 
             var handler = new RegOperatorsHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Log("End");
         }
 
         private static void TstCreateEngineContext()
         {
-            _logger.Info("Begin");
+            _logger.Log("Begin");
 
             var context = TstEngineContextHelper.CreateAndInitContext();
 
-            _logger.Info("End");
+            _logger.Log("End");
         }
 
         private static void TstAsyncActivePeriodicObjectHandler()
         {
-            _logger.Info("Begin");
+            _logger.Log("Begin");
 
             var handler = new AsyncActivePeriodicObjectHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Log("End");
         }
 
         private static void TstSyncActivePeriodicObjectHandler()
         {
-            _logger.Info("Begin");
+            _logger.Log("Begin");
 
             var handler = new SyncActivePeriodicObjectHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Log("End");
         }
 
         private static void TstCodeExecution()
         {
-            _logger.Info("Begin");
+            _logger.Log("Begin");
 
             var handler = new CodeExecutionHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Log("End");
         }
 
         private static void TstCreateName()
         {
-            _logger.Info("Begin");
+            _logger.Log("Begin");
 
             var parserContext = new TstParserContext();
 
             var nameVal1 = "dog";
 
-            _logger.Info($"{nameof(nameVal1)} = {nameVal1}");
+            _logger.Log($"{nameof(nameVal1)} = {nameVal1}");
 
 
 
@@ -156,9 +158,9 @@ namespace TestSandbox
 
             var name = NameHelper.CreateName(nameVal1, parserContext.Dictionary);
 
-            _logger.Info($"name = {name}");
+            _logger.Log($"name = {name}");
 
-            _logger.Info("End");
+            _logger.Log("End");
         }
 
         private class NormalizedNameValues
@@ -170,7 +172,7 @@ namespace TestSandbox
         private static NormalizedNameValues ParseName(string text)
         {
 #if DEBUG
-            _logger.Info($"test = {text}");
+            _logger.Log($"test = {text}");
 #endif
 
             var result = new NormalizedNameValues();
@@ -186,54 +188,54 @@ namespace TestSandbox
 
         private static void TstExprNodeHandler()
         {
-            _logger.Info("Begin");
+            _logger.Log("Begin");
 
             var handler = new ExprNodeHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Log("End");
         }
 
         private static void TstParsing()
         {
-            _logger.Info("Begin");
+            _logger.Log("Begin");
 
             var handler = new ParsingHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Log("End");
         }
 
         private static void TstGeneralStartHandler()
         {
-            _logger.Info("Begin");
+            _logger.Log("Begin");
 
             var handler = new GeneralStartHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Log("End");
         }
 
         private static void TstGetParsedFilesInfo()
         {
-            _logger.Info("Begin");
+            _logger.Log("Begin");
 
             var fileName = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Apps\PixKeeper\PixKeeper.txt");
 
-            _logger.Info($"fileName = {fileName}");
+            _logger.Log($"fileName = {fileName}");
 
             var id = "#020ED339-6313-459A-900D-92F809CEBDC5";
 
             var resultList = FileHelper.GetParsedFilesInfo(fileName, id);
 
-            _logger.Info($"resultList = {JsonConvert.SerializeObject(resultList, Formatting.Indented)}");
+            _logger.Log($"resultList = {JsonConvert.SerializeObject(resultList, Formatting.Indented)}");
 
-            _logger.Info("End");
+            _logger.Log("End");
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            _logger.Info($"e.ExceptionObject = {e.ExceptionObject}");
+            _logger.Log($"e.ExceptionObject = {e.ExceptionObject}");
         }
     }
 }

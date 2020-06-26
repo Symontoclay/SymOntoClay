@@ -8,7 +8,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
     {
         public static string BuildLogString(DateTime dateTime, string levelName, string className, string methodName, string message)
         {
-            return $"{dateTime}|{levelName}|{className}|{methodName}|{message}";
+            return $"{dateTime.ToString("dd-MM-yyyy HH:mm:ss.fffff")} {className} {methodName} {levelName} {message}";
         }
     }
 }

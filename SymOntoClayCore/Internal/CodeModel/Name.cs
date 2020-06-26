@@ -20,6 +20,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public ulong NameKey { get; set; }
 
         /// <inheritdoc/>
+        public override bool IsIdentifierValue => true;
+
+        /// <inheritdoc/>
+        public override Name AsIdentifierValue => this;
+
+        /// <inheritdoc/>
         public override Value CloneValue(Dictionary<object, object> cloneContext)
         {
             var result = new Name();

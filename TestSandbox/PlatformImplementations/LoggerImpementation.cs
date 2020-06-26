@@ -12,19 +12,35 @@ namespace TestSandbox.PlatformImplementations
         [MethodForLoggingSupport]
         public void Log(string message)
         {
-            _logger.Info(message);
+            var callInfo = DiagnosticsHelper.GetNotLoggingSupportCallInfo();
+            var result = LogHelper.BuildLogString(DateTime.Now, KindOfLogLevel.LOG.ToString(), callInfo.FullClassName, callInfo.MethodName, message);
+
+            _logger.Info(result);
         }
 
         [MethodForLoggingSupport]
         public void Warning(string message)
         {
-            _logger.Warn(message);
+            var callInfo = DiagnosticsHelper.GetNotLoggingSupportCallInfo();
+            var result = LogHelper.BuildLogString(DateTime.Now, KindOfLogLevel.WARNING.ToString(), callInfo.FullClassName, callInfo.MethodName, message);
+
+            _logger.Warn(result);
         }
 
         [MethodForLoggingSupport]
         public void Error(string message)
         {
-            _logger.Error(message);
+            var callInfo = DiagnosticsHelper.GetNotLoggingSupportCallInfo();
+            var result = LogHelper.BuildLogString(DateTime.Now, KindOfLogLevel.ERROR.ToString(), callInfo.FullClassName, callInfo.MethodName, message);
+
+            _logger.Error(result);
+        }
+
+        private enum KindOfLogLevel
+        {
+            LOG,
+            WARNING,
+            ERROR
         }
     }
 }

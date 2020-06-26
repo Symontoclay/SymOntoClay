@@ -6,6 +6,7 @@ using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.LogicalEngine;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Serialization;
+using SymOntoClay.Core.Internal.StandardLibrary;
 using SymOntoClay.Core.Internal.States;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.TriggerExecution;
@@ -46,6 +47,7 @@ namespace SymOntoClay.Core.Internal
         public CommonNamesStorage CommonNamesStorage { get; set; }
         public LogicalEngineComponent LogicalEngine { get; set; }
         public InheritanceEngineComponent InheritanceEngine { get; set; }
+        public StandardLibraryLoader StandardLibraryLoader { get; set; }
 
         IStorageComponent IEngineContext.Storage => Storage;
         ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;

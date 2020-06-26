@@ -4,21 +4,23 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using TestSandbox.Helpers;
 using TestSandbox.Parsing;
+using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.CodeExecution
 {
     public class CodeExecutionHandler
     {
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private static readonly IEntityLogger _logger = new LoggerImpementation();
 
         public void Run()
         {
-            _logger.Info("Begin");
+            _logger.Log("Begin");
 
             var context = TstEngineContextHelper.CreateAndInitContext();
 
@@ -30,7 +32,7 @@ namespace TestSandbox.CodeExecution
             command.OperationCode = OperationCode.PushVal;
             command.Value = strVal;
 
-            _logger.Info($"command = {command}");
+            _logger.Log($"command = {command}");
 
             compiledFunctionBody.Commands[0] = command;
 
@@ -41,7 +43,7 @@ namespace TestSandbox.CodeExecution
             command.Value = identifier;
             command.Position = 1;
 
-            _logger.Info($"command = {command}");
+            _logger.Log($"command = {command}");
 
             compiledFunctionBody.Commands[1] = command;
 
@@ -51,18 +53,19 @@ namespace TestSandbox.CodeExecution
             command.KindOfOperator = KindOfOperator.LeftRightStream;
             command.Position = 2;
 
-            _logger.Info($"command = {command}");
+            _logger.Log($"command = {command}");
 
             compiledFunctionBody.Commands[2] = command;
 
-            _logger.Info($"compiledFunctionBody = {compiledFunctionBody}");
-            _logger.Info($"compiledFunctionBody = {compiledFunctionBody.ToDbgString()}");
+            _logger.Log($"compiledFunctionBody = {compiledFunctionBody}");
+            _logger.Log($"compiledFunctionBody = {compiledFunctionBody.ToDbgString()}");
 
             var codeFrame = new CodeFrame();
             codeFrame.CompiledFunctionBody = compiledFunctionBody;
+            codeFrame.Storage = context.Storage.GlobalStorage;
 
-            _logger.Info($"codeFrame = {codeFrame}");
-            _logger.Info($"codeFrame = {codeFrame.ToDbgString()}");
+            _logger.Log($"codeFrame = {codeFrame}");
+            _logger.Log($"codeFrame = {codeFrame.ToDbgString()}");
 
             var threadExecutor = new SyncThreadExecutor(context);
 
@@ -70,7 +73,7 @@ namespace TestSandbox.CodeExecution
 
             threadExecutor.Start();
 
-            _logger.Info("End");
+            _logger.Log("End");
         }
     }
 }

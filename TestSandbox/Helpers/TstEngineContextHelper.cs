@@ -2,6 +2,7 @@
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.Helpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.Internal.Logging;
@@ -15,7 +16,7 @@ namespace TestSandbox.Helpers
 {
     public static class TstEngineContextHelper
     {
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private static readonly IEntityLogger _logger = new LoggerImpementation();
 
         public static EngineContext CreateAndInitContext()
         {
@@ -40,7 +41,7 @@ namespace TestSandbox.Helpers
                 EnableRemoteConnection = true
             };
 
-            _logger.Info($"worldSettings = {worldSettings}");
+            _logger.Log($"worldSettings = {worldSettings}");
 
             var worldContext = new WorldContext();
             worldContext.SetSettings(worldSettings);
@@ -50,7 +51,7 @@ namespace TestSandbox.Helpers
             npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PixKeeper\PixKeeper.txt");
             npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Apps\PixKeeper\PixKeeper.txt");
 
-            _logger.Info($"npcSettings = {npcSettings}");
+            _logger.Log($"npcSettings = {npcSettings}");
 
             var entityLogger = new LoggerImpementation();
 
@@ -68,7 +69,7 @@ namespace TestSandbox.Helpers
             standaloneStorageSettings.ParentStorage = worldContext.StandaloneStorage.StandaloneStorage;
 
 #if DEBUG
-            _logger.Info($"standaloneStorageSettings = {standaloneStorageSettings}");
+            _logger.Log($"standaloneStorageSettings = {standaloneStorageSettings}");
 #endif
             var _hostStorage = new StandaloneStorage(standaloneStorageSettings);
 
@@ -83,7 +84,7 @@ namespace TestSandbox.Helpers
             coreEngineSettings.TmpDir = tmpDir;
 
 #if DEBUG
-            _logger.Info($"coreEngineSettings = {coreEngineSettings}");
+            _logger.Log($"coreEngineSettings = {coreEngineSettings}");
 #endif
 
             worldContext.Start();
@@ -92,6 +93,7 @@ namespace TestSandbox.Helpers
 
             context.CommonNamesStorage.LoadFromSourceCode();
             context.Storage.LoadFromSourceCode();
+            context.StandardLibraryLoader.LoadFromSourceCode();
             context.StatesStorage.LoadFromSourceCode();
 
             return context;

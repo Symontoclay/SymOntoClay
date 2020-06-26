@@ -92,7 +92,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             Log($"operatorInfo = {operatorInfo}");
 #endif
 
-                            throw new NotImplementedException();
+                            CallExecutable(operatorInfo, paramsList);
 
                             _currentCodeFrame.CurrentPosition++;
                         }
@@ -128,6 +128,28 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             result.Reverse();
 
             return result;
+        }
+
+        private void CallExecutable(IExecutable executable, IList<Value> paramsList)
+        {
+            if(executable.IsSystemDefined)
+            {
+                var result = executable.SystemHandler.Call(paramsList, _currentCodeFrame.Storage);
+
+#if DEBUG
+                Log($"result = {result}");
+#endif
+
+                _currentCodeFrame.ValuesStack.Push(result);
+
+#if DEBUG
+                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+                return;
+            }
+
+            throw new NotImplementedException();
         }
     }
 }

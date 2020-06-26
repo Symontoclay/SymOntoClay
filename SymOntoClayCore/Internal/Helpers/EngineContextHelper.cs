@@ -5,6 +5,7 @@ using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.LogicalEngine;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Serialization;
+using SymOntoClay.Core.Internal.StandardLibrary;
 using SymOntoClay.Core.Internal.States;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.TriggerExecution;
@@ -25,6 +26,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.Dictionary = settings.Dictionary;
 
             context.Storage = new StorageComponent(context, settings.ParentStorage);
+            context.StandardLibraryLoader = new StandardLibraryLoader(context);
             context.CodeExecutor = new CodeExecutorComponent(context);
             context.TriggerExecutor = new TriggerExecutorComponent(context);
             context.LoaderFromSourceCode = new LoaderFromSourceCode(context);
@@ -40,8 +42,9 @@ namespace SymOntoClay.Core.Internal.Helpers
 
         public static void LoadFromSourceCode(EngineContext context)
         {
-            context.CommonNamesStorage.LoadFromSourceCode();
+            context.CommonNamesStorage.LoadFromSourceCode();            
             context.Storage.LoadFromSourceCode();
+            context.StandardLibraryLoader.LoadFromSourceCode();
             context.StatesStorage.LoadFromSourceCode();
             context.LoaderFromSourceCode.LoadFromSourceFiles();
         }

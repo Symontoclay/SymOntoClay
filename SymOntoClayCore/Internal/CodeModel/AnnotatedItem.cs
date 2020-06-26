@@ -21,6 +21,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// </summary>
         public bool HasModalitiesOrSections => !QuantityQualityModalities.IsNullOrEmpty() || !WhereSection.IsNullOrEmpty();
 
+        public bool HasConditionalSections => !WhereSection.IsNullOrEmpty();
+
         public void AppendAnnotations(AnnotatedItem source)
         {
             var cloneContext = new Dictionary<object, object>();
@@ -82,6 +84,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
+            sb.AppendLine($"{spaces}{nameof(HasConditionalSections)} = {HasConditionalSections}");
 
             sb.PrintObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintObjListProp(n, nameof(WhereSection), WhereSection);
@@ -113,6 +116,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
+            sb.AppendLine($"{spaces}{nameof(HasConditionalSections)} = {HasConditionalSections}");
 
             sb.PrintShortObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintShortObjListProp(n, nameof(WhereSection), WhereSection);
@@ -144,6 +148,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
+            sb.AppendLine($"{spaces}{nameof(HasConditionalSections)} = {HasConditionalSections}");
 
             sb.PrintExistingList(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintExistingList(n, nameof(WhereSection), WhereSection);

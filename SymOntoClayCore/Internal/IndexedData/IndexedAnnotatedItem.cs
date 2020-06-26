@@ -22,6 +22,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
         /// </summary>
         public bool HasModalitiesOrSections => !QuantityQualityModalities.IsNullOrEmpty() || !WhereSection.IsNullOrEmpty();
 
+        public bool HasConditionalSections => !WhereSection.IsNullOrEmpty();
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -46,6 +48,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
+            sb.AppendLine($"{spaces}{nameof(HasConditionalSections)} = {HasConditionalSections}");
 
             sb.PrintObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintObjListProp(n, nameof(WhereSection), WhereSection);
@@ -77,6 +80,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
+            sb.AppendLine($"{spaces}{nameof(HasConditionalSections)} = {HasConditionalSections}");
 
             sb.PrintShortObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintShortObjListProp(n, nameof(WhereSection), WhereSection);
@@ -108,6 +112,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
+            sb.AppendLine($"{spaces}{nameof(HasConditionalSections)} = {HasConditionalSections}");
 
             sb.PrintExistingList(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintExistingList(n, nameof(WhereSection), WhereSection);

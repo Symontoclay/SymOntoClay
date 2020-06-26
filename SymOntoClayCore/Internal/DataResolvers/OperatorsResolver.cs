@@ -19,6 +19,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             Log($"kindOfOperator = {kindOfOperator}");
 #endif
 
+            var storesList = GetStoresList(storage);
+
+#if DEBUG
+            Log($"storesList.Count = {storesList.Count}");
+            foreach(var tmpStore in storesList)
+            {
+                Log($"tmpStore.Key = {tmpStore.Key}; tmpStore.Value.Kind = '{tmpStore.Value.Kind}'");
+            }
+#endif
+
             throw new NotImplementedException();
         }
     }

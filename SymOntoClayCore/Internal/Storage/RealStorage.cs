@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage
@@ -82,14 +83,26 @@ namespace SymOntoClay.Core.Internal.Storage
         public IOperatorsStorage OperatorsStorage => _operatorsStorage;
 
         /// <inheritdoc/>
-        void IStorage.CollectParents(IList<KeyValuePair<int, IStorage>> result, uint level)
+        void IStorage.CollectChainOfStorages(IList<KeyValuePair<uint, IStorage>> result, uint level)
         {
 #if DEBUG
             Log($"result?.Count = {result?.Count}");
             Log($"level = {level}");
 #endif
 
-            throw new NotImplementedException();
+            level++;
+
+            result.Add(new KeyValuePair<uint, IStorage>(level, this));
+
+            var parentsList = _realStorageContext.Parents;
+
+            if (parentsList.Any())
+            {
+                foreach(var parent in parentsList)
+                {
+                    parent.CollectChainOfStorages(result, level);
+                }
+            }
         }
 
         /// <inheritdoc/>

@@ -14,5 +14,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         protected readonly IMainStorageContext _context;
+
+        protected IList<KeyValuePair<uint, IStorage>> GetStoresList(IStorage storage)
+        {
+            var result = new List<KeyValuePair<uint, IStorage>>();
+
+            var n = 0u;
+
+            storage.CollectChainOfStorages(result, n);
+
+            return result;
+        }
     }
 }

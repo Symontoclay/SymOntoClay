@@ -1114,7 +1114,7 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.OperatorsStorage">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.SymOntoClay#Core#IStorage#CollectParents(System.Collections.Generic.IList{System.Collections.Generic.KeyValuePair{System.Int32,SymOntoClay.Core.IStorage}},System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.SymOntoClay#Core#IStorage#CollectChainOfStorages(System.Collections.Generic.IList{System.Collections.Generic.KeyValuePair{System.UInt32,SymOntoClay.Core.IStorage}},System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.ToString">

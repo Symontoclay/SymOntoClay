@@ -13,6 +13,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public RuleInstance RuleInstance { get; set; }
         public InlineTrigger InlineTrigger { get; set; }
         public Operator Operator { get; set; }
+        public Channel Channel { get; set; }
 
         public CodeFile CodeFile { get; set; }
         public CodeEntity ParentCodeEntity { get; set; }
@@ -30,6 +31,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjProp(n, nameof(RuleInstance), RuleInstance);
             sb.PrintObjProp(n, nameof(InlineTrigger), InlineTrigger);
             sb.PrintObjProp(n, nameof(Operator), Operator);
+            sb.PrintObjProp(n, nameof(Channel), Channel);
 
             sb.PrintBriefObjProp(n, nameof(CodeFile), CodeFile);
             sb.PrintBriefObjProp(n, nameof(ParentCodeEntity), ParentCodeEntity);
@@ -51,6 +53,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjProp(n, nameof(RuleInstance), RuleInstance);
             sb.PrintShortObjProp(n, nameof(InlineTrigger), InlineTrigger);
             sb.PrintShortObjProp(n, nameof(Operator), Operator);
+            sb.PrintShortObjProp(n, nameof(Channel), Channel);
 
             sb.PrintBriefObjProp(n, nameof(CodeFile), CodeFile);
             sb.PrintBriefObjProp(n, nameof(ParentCodeEntity), ParentCodeEntity);
@@ -72,6 +75,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjProp(n, nameof(RuleInstance), RuleInstance);
             sb.PrintBriefObjProp(n, nameof(InlineTrigger), InlineTrigger);
             sb.PrintBriefObjProp(n, nameof(Operator), Operator);
+            sb.PrintBriefObjProp(n, nameof(Channel), Channel);
 
             sb.PrintBriefObjProp(n, nameof(CodeFile), CodeFile);
             sb.PrintBriefObjProp(n, nameof(ParentCodeEntity), ParentCodeEntity);

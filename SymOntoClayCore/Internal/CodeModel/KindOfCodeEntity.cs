@@ -9,6 +9,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         Unknown,
         App,
         InlineTrigger,
-        Operator
+        Operator,
+        Channel
     }
 }

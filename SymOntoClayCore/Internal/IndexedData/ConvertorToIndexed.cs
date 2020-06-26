@@ -433,5 +433,36 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             return result;
         }
+
+        public static IndexedChannel ConvertChannel(Channel source, IEntityDictionary entityDictionary)
+        {
+            var convertingContext = new Dictionary<object, object>();
+            return ConvertChannel(source, entityDictionary, convertingContext);
+        }
+
+        private static IndexedChannel ConvertChannel(Channel source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (IndexedChannel)convertingContext[source];
+            }
+
+            var result = new IndexedChannel();
+            convertingContext[source] = result;
+            result.OriginalChannel = source;
+            source.Indexed = result;
+
+            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+
+            result.Name = source.Name;
+            result.Handler = source.Handler;
+
+            return result;
+        }
     }
 }

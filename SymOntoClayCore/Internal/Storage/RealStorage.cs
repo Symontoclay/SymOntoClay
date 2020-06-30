@@ -45,6 +45,8 @@ namespace SymOntoClay.Core.Internal.Storage
             _realStorageContext.SynonymsStorage = _synonymsStorage;
             _operatorsStorage = new OperatorsStorage.OperatorsStorage(_kind, _realStorageContext);
             _realStorageContext.OperatorsStorage = _operatorsStorage;
+            _channelsStorage = new ChannelsStorage.ChannelsStorage(_kind, _realStorageContext);
+            _realStorageContext.ChannelsStorage = _channelsStorage;
         }
 
         private readonly KindOfStorage _kind;
@@ -81,6 +83,11 @@ namespace SymOntoClay.Core.Internal.Storage
 
         /// <inheritdoc/>
         public IOperatorsStorage OperatorsStorage => _operatorsStorage;
+
+        private ChannelsStorage.ChannelsStorage _channelsStorage;
+
+        /// <inheritdoc/>
+        public IChannelsStorage ChannelsStorage => _channelsStorage;
 
         /// <inheritdoc/>
         void IStorage.CollectChainOfStorages(IList<KeyValuePair<uint, IStorage>> result, uint level)

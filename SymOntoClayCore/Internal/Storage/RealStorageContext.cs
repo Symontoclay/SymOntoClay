@@ -15,6 +15,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public InheritanceStorage.InheritanceStorage InheritanceStorage { get; set; }
         public SynonymsStorage.SynonymsStorage SynonymsStorage { get; set; }
         public OperatorsStorage.OperatorsStorage OperatorsStorage { get; set; }
+        public ChannelsStorage.ChannelsStorage ChannelsStorage { get; set; }
         public RealStorage Storage { get; set; }
         public IList<IStorage> Parents { get; set; }
     }

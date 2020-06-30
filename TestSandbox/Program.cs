@@ -29,11 +29,11 @@ namespace TestSandbox
             //TstCreateEngineContext();
             //TstAsyncActivePeriodicObjectHandler();
             //TstSyncActivePeriodicObjectHandler();
-            TstCodeExecution();
+            //TstCodeExecution();
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
-            //TstGeneralStartHandler();
+            TstGeneralStartHandler();
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

@@ -113,6 +113,9 @@ namespace SymOntoClay.Core.Internal.Serialization
                     AddSystemDefinedSettingsToApp(codeEntity);
                     break;
 
+                case KindOfCodeEntity.InlineTrigger:
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(codeEntity.Kind), codeEntity.Kind, null);
             }
@@ -158,6 +161,12 @@ namespace SymOntoClay.Core.Internal.Serialization
             {
                 inheritanceStorage.SetInheritance(codeEntityName, inheritanceItem);
             }
+
+#if DEBUG
+            Log($"codeEntity (2) = {codeEntity}");
+#endif
+
+            //throw new NotImplementedException();
 
 #if IMAGINE_WORKING
             Log("End");

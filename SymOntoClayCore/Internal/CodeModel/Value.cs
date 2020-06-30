@@ -24,6 +24,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsIdentifierValue => false;
         public virtual Name AsIdentifierValue => null;
 
+        public abstract object GetSystemValue();
+
         public Value CloneValue()
         {
             var cloneContext = new Dictionary<object, object>();

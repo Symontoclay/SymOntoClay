@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class Name: Value
+    public class Name: Value, IEquatable<Name>
     {
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.IdentifierValue;
@@ -24,6 +24,46 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         public override Name AsIdentifierValue => this;
+
+        /// <inheritdoc/>
+        public override object GetSystemValue()
+        {
+            return NameValue;
+        }
+
+        /// <inheritdoc/>
+        public bool Equals(Name other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return NameKey == other.NameKey;
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            var personObj = obj as Name;
+            if (personObj == null)
+            {
+                return false;
+            }
+
+            return Equals(personObj);
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return NameKey.GetHashCode();
+        }
 
         /// <inheritdoc/>
         public override Value CloneValue(Dictionary<object, object> cloneContext)

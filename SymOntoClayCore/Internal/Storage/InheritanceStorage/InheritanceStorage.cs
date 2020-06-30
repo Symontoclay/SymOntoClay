@@ -24,6 +24,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 
         private readonly KindOfStorage _kind;
 
+        /// <inheritdoc/>
         public KindOfStorage Kind => _kind;
 
         private readonly RealStorageContext _realStorageContext;
@@ -34,11 +35,13 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
         private readonly Dictionary<Name, Dictionary<Name, List<InheritanceItem>>> _nonIndexedInfo = new Dictionary<Name, Dictionary<Name, List<InheritanceItem>>>();
         private readonly Dictionary<ulong, Dictionary<ulong, List<IndexedInheritanceItem>>> _indexedInfo = new Dictionary<ulong, Dictionary<ulong, List<IndexedInheritanceItem>>>();
 
+        /// <inheritdoc/>
         public void SetInheritance(Name subItem, InheritanceItem inheritanceItem)
         {
             SetInheritance(subItem, inheritanceItem, true);
         }
 
+        /// <inheritdoc/>
         public void SetInheritance(Name subItem, InheritanceItem inheritanceItem, bool isPrimary)
         {
             lock(_lockObj)

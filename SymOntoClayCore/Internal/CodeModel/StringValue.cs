@@ -27,6 +27,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public IndexedStringValue Indexed { get; set; }
 
         /// <inheritdoc/>
+        public override object GetSystemValue()
+        {
+            return SystemValue;
+        }
+
+        /// <inheritdoc/>
         public override Value CloneValue(Dictionary<object, object> cloneContext)
         {
             var result = new StringValue(SystemValue);

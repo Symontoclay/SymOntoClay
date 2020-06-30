@@ -20,6 +20,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public IndexedNullValue Indexed { get; set; }
 
         /// <inheritdoc/>
+        public override object GetSystemValue()
+        {
+            return null;
+        }
+
+        /// <inheritdoc/>
         public override Value CloneValue(Dictionary<object, object> cloneContext)
         {
             var result = new NullValue();

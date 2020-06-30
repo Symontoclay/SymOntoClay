@@ -1,6 +1,8 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.StandardLibrary.Channels;
 using SymOntoClay.Core.Internal.StandardLibrary.Operators;
 using System;
 using System.Collections.Generic;
@@ -21,6 +23,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
         public void LoadFromSourceCode()
         {
             RegOperators();
+            RegChannels();
         }
 
         private void RegOperators()
@@ -35,6 +38,20 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 SystemHandler = new BinaryOperatorSystemHandler(new LeftRightStreamOperatorHandler(_context), _context.Dictionary)
             };
             globalOperatorsStorage.Append(op);
+        }
+
+        private void RegChannels()
+        {
+            var globalStorage = _context.Storage.GlobalStorage;
+            var globalChannelsStorage = globalStorage.ChannelsStorage;
+
+            var name = NameHelper.CreateName("@>log", _context.Dictionary);
+
+            var channel = new Channel();
+            channel.Name = name;
+            channel.Handler = new LogChannelHandler(_context);
+
+            globalChannelsStorage.Append(channel);
         }
     }
 }

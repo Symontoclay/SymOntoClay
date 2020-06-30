@@ -8,6 +8,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     public interface IChannelHandler
     {
         Value Read();
-        void Write(Value value);
+        Value Write(Value value);
     }
 }

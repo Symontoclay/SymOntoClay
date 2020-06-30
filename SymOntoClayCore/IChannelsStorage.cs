@@ -9,6 +9,6 @@ namespace SymOntoClay.Core
     public interface IChannelsStorage : ISpecificStorage
     {
         void Append(Channel channel);
-        IList<IndexedChannel> GetOperatorsDirectly(Name name);
+        IList<IndexedChannel> GetChannelsDirectly(Name name);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using NLog.Fluent;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.DataResolvers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,10 +14,13 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             : base(engineContext.Logger)
         {
             _engineContext = engineContext;
+            _channelsResolver = new ChannelsResolver(engineContext);
         }
 
         private readonly IEngineContext _engineContext;
+        private readonly ChannelsResolver _channelsResolver;
 
+        /// <inheritdoc/>
         public Value Call(Value leftOperand, Value rightOperand, IStorage localContext)
         {
 #if DEBUG
@@ -49,7 +53,13 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                 if(identifier.KindOfName == KindOfName.Channel)
                 {
-                    throw new NotImplementedException();
+                    var channel = _channelsResolver.GetChannel(identifier, localContext);
+
+#if DEBUG
+                    Log($"channel = {channel}");
+#endif
+
+                    return channel.Handler.Write(valueFromSource);
                 }
                 else
                 {

@@ -1,9 +1,11 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.InheritanceEngine;
+using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.LogicalEngine;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.Core.Internal.Storage;
+using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.Core.Internal.TriggerExecution;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -16,14 +18,14 @@ namespace SymOntoClay.Core.Internal
     {
         string Id { get; }
         string AppFile { get; }
-
-        
+     
         IStorageComponent Storage { get; }
         ICodeExecutorComponent CodeExecutor { get; }
         ITriggerExecutorComponent TriggerExecutor { get; }
         ILoaderFromSourceCode LoaderFromSourceCode { get; }
-        ICommonNamesStorage CommonNamesStorage { get; }
         ILogicalEngine LogicalEngine { get; }
         IInheritanceEngine InheritanceEngine { get; }
+        IInstancesStorageComponent InstancesStorage { get; }
+        IActivePeriodicObjectContext ActivePeriodicObjectContext { get; }
     }
 }

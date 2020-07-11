@@ -14,7 +14,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <summary>
         /// It is 'Clauses section' in the documentation.
         /// </summary>
+        [ResolveToType(typeof(LogicalValue))]
         public IList<Value> WhereSection { get; set; } = new List<Value>();
+
+        public Name Holder { get; set; }
 
         /// <summary>
         /// Returns <c>true</c> if the instance has modalities or additional sections, otherwise returns <c>false</c>.
@@ -58,6 +61,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     WhereSection.Add(item.CloneValue(cloneContext));
                 }
             }
+
+            if(source.Holder == null)
+            {
+                Holder = null;
+            }
+            else
+            {
+                Holder = source.Holder;
+            }
         }
 
         /// <inheritdoc/>
@@ -88,6 +100,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintObjListProp(n, nameof(WhereSection), WhereSection);
+            sb.PrintObjProp(n, nameof(Holder), Holder);
 
             return sb.ToString();
         }
@@ -120,6 +133,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintShortObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintShortObjListProp(n, nameof(WhereSection), WhereSection);
+            sb.PrintShortObjProp(n, nameof(Holder), Holder);
 
             return sb.ToString();
         }
@@ -152,6 +166,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintExistingList(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintExistingList(n, nameof(WhereSection), WhereSection);
+
+            sb.PrintBriefObjProp(n, nameof(Holder), Holder);
 
             return sb.ToString();
         }

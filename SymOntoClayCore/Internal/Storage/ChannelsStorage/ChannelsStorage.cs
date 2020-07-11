@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
@@ -27,12 +28,14 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
         /// <inheritdoc/>
         public IStorage Storage => _realStorageContext.Storage;
 
-        private readonly Dictionary<Name, List<Channel>> _nonIndexedInfo = new Dictionary<Name, List<Channel>>();
-        private readonly Dictionary<Name, List<IndexedChannel>> _indexedInfo = new Dictionary<Name, List<IndexedChannel>>();
+        private readonly Dictionary<Name, Dictionary<Name, List<Channel>>> _nonIndexedInfo = new Dictionary<Name, Dictionary<Name, List<Channel>>>();
+        private readonly Dictionary<Name, Dictionary<Name, List<IndexedChannel>>> _indexedInfo = new Dictionary<Name, Dictionary<Name, List<IndexedChannel>>>();
 
         /// <inheritdoc/>
         public void Append(Channel channel)
         {
+            AnnotatedItemHelper.CheckAndFillHolder(channel, _realStorageContext.CommonNamesStorage);
+
             lock(_lockObj)
             {
 #if DEBUG
@@ -49,24 +52,36 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
 
                 if (_nonIndexedInfo.ContainsKey(name))
                 {
-                    var list = _nonIndexedInfo[name];
+                    var dict = _nonIndexedInfo[name];
+                    var indexedDict = _indexedInfo[name];
 
-                    if (!list.Contains(channel))
+                    if (dict.ContainsKey(channel.Holder))
                     {
-                        list.Add(channel);
-                        _indexedInfo[name].Add(indexedChannel);
+                        var list = dict[channel.Holder];
+
+                        if (!list.Contains(channel))
+                        {
+                            list.Add(channel);
+
+                            indexedDict[indexedChannel.Holder].Add(indexedChannel);
+                        }
+                    }
+                    else
+                    {
+                        dict[channel.Holder] = new List<Channel>() { channel };
+                        indexedDict[indexedChannel.Holder] = new List<IndexedChannel>() { indexedChannel };
                     }
                 }
                 else
                 {
-                    _nonIndexedInfo[name] = new List<Channel>() { channel };
-                    _indexedInfo[name] = new List<IndexedChannel>() { indexedChannel };
+                    _nonIndexedInfo[name] = new Dictionary<Name, List<Channel>>() { { channel.Holder, new List<Channel>() { channel} } };
+                    _indexedInfo[name] = new Dictionary<Name, List<IndexedChannel>>() { { indexedChannel.Holder, new List<IndexedChannel>() { indexedChannel } } };
                 }              
             }         
         }
 
         /// <inheritdoc/>
-        public IList<IndexedChannel> GetChannelsDirectly(Name name)
+        public IList<WeightedInheritanceResultItem<IndexedChannel>> GetChannelsDirectly(Name name, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             lock (_lockObj)
             {
@@ -76,10 +91,29 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
 
                 if (_indexedInfo.ContainsKey(name))
                 {
-                    return _indexedInfo[name];
+                    var dict = _indexedInfo[name];
+
+                    var result = new List<WeightedInheritanceResultItem<IndexedChannel>>();
+
+                    foreach (var weightedInheritanceItem in weightedInheritanceItems)
+                    {
+                        var targetHolder = weightedInheritanceItem.SuperName;
+
+                        if (dict.ContainsKey(targetHolder))
+                        {
+                            var targetList = dict[targetHolder];
+
+                            foreach (var targetVal in targetList)
+                            {
+                                result.Add(new WeightedInheritanceResultItem<IndexedChannel>(targetVal, weightedInheritanceItem));
+                            }
+                        }
+                    }
+
+                    return result;
                 }
 
-                return new List<IndexedChannel>();
+                return new List<WeightedInheritanceResultItem<IndexedChannel>>();
             }
         }
     }

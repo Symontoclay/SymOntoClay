@@ -1,4 +1,5 @@
 ﻿using NLog;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Parsing.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -38,7 +39,9 @@ namespace TestSandbox.Parsing
 
             var parserContext = new TstParserContext();
 
-            var internalParserContext = new InternalParserContext(text, parserContext);
+            var codeFile = new CodeFile();
+
+            var internalParserContext = new InternalParserContext(text, codeFile, parserContext);
 
             var parser = new SourceCodeParser(internalParserContext);
             parser.Run();
@@ -93,7 +96,9 @@ namespace TestSandbox.Parsing
 
             var parserContext = new TstParserContext();
 
-            var internalParserContext = new InternalParserContext(text, parserContext);
+            var codeFile = new CodeFile();
+
+            var internalParserContext = new InternalParserContext(text, codeFile, parserContext);
 
             var parser = new SourceCodeParser(internalParserContext);
             parser.Run();

@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper;
+﻿using SymOntoClay.Core.Internal.Threads;
+using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,7 @@ namespace SymOntoClay.Core
         /// </summary>
         public IStandaloneStorage ParentStorage { get; set; }
 
-        public ISyncContext SyncContext { get; set; }
+        public IActivePeriodicObjectCommonContext SyncContext { get; set; }
 
         public string TmpDir { get; set; }
 

@@ -1,5 +1,5 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.CoreHelper.Threads;
+﻿using SymOntoClay.Core.Internal.Threads;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,11 +11,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public SyncThreadExecutor(IEngineContext context)
             : base(context, new SyncActivePeriodicObject())
         {
-        }
-
-        public void Start()
-        {
-            _activeObject.Start();
         }
     }
 }

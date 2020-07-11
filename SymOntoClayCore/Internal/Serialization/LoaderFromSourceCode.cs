@@ -159,7 +159,7 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             foreach(var inheritanceItem in codeEntity.InheritanceItems)
             {
-                inheritanceStorage.SetInheritance(codeEntityName, inheritanceItem);
+                inheritanceStorage.SetInheritance(inheritanceItem);
             }
 
 #if DEBUG

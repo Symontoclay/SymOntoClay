@@ -1,5 +1,5 @@
 ﻿using NLog;
-using SymOntoClay.CoreHelper.Threads;
+using SymOntoClay.Core.Internal.Threads;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,7 +27,9 @@ namespace TestSandbox.Threads
             _logger.Info($"activeObject.IsWaited (0) = {activeObject.IsWaited}");
             _logger.Info($"activeObject.IsActive (0) = {activeObject.IsActive}");
 
-            activeObject.Start();
+            var taskValue = activeObject.Start();
+
+            _logger.Info($"taskValue = {taskValue}");
 
             Thread.Sleep(10000);
 
@@ -61,7 +63,9 @@ namespace TestSandbox.Threads
 
             Thread.Sleep(10000);
 
-            activeObject.Start();
+            taskValue = activeObject.Start();
+
+            _logger.Info($"taskValue = {taskValue}");
 
             Thread.Sleep(1000);
 
@@ -69,11 +73,15 @@ namespace TestSandbox.Threads
 
             Thread.Sleep(1000);
 
+            _logger.Info($"activeObject.TaskValue = {activeObject.TaskValue}");
+
             activeObject.Dispose();
 
             Thread.Sleep(1000);
 
-            activeObject.Start();
+            taskValue = activeObject.Start();
+
+            _logger.Info($"taskValue = {taskValue}");
 
             Thread.Sleep(1000);
 

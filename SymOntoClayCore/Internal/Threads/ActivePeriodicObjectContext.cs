@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace SymOntoClay.CoreHelper.Threads
+namespace SymOntoClay.Core.Internal.Threads
 {
-    public class ActivePeriodicObjectContext: IActivePeriodicObjectContext
+    public class ActivePeriodicObjectContext : IActivePeriodicObjectContext
     {
         public ActivePeriodicObjectContext(IActivePeriodicObjectCommonContext commonContext)
         {
@@ -56,7 +56,7 @@ namespace SymOntoClay.CoreHelper.Threads
         {
             lock (_lockObj)
             {
-                while(!_children.All(p => p.IsWaited))
+                while (!_children.All(p => p.IsWaited))
                 {
                 }
             }
@@ -67,7 +67,7 @@ namespace SymOntoClay.CoreHelper.Threads
         {
             lock (_lockObj)
             {
-                foreach(var child in _children)
+                foreach (var child in _children)
                 {
                     child.Start();
                 }

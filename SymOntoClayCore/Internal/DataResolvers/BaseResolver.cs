@@ -28,18 +28,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        protected List<KeyValuePair<uint, T>> Filter<T>(List<KeyValuePair<uint, T>> source) where T: IndexedAnnotatedItem
+        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> Filter<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source)
+            where T: IndexedAnnotatedItem
         {
             if(!source.Any())
             {
-                return new List<KeyValuePair<uint, T>>();
+                return new List<WeightedInheritanceResultItemWithStorageInfo<T>>();
             }
 
-            var result = new List<KeyValuePair<uint, T>>();
+            var result = new List<WeightedInheritanceResultItemWithStorageInfo<T>>();
 
             foreach(var filteredItem in source)
             {
-                if(!filteredItem.Value.HasConditionalSections)
+                if(!filteredItem.ResultItem.HasConditionalSections)
                 {
                     result.Add(filteredItem);
                     continue;
@@ -51,7 +52,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        protected virtual T ChooseTargetItem<T>(List<KeyValuePair<uint, T>> source) where T : IndexedAnnotatedItem
+        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> OrderAndDistinctByInheritance<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, ResolverOptions options)
+            where T : IndexedAnnotatedItem
+        {
+            if(options.JustDistinct)
+            {
+                return source;
+            }
+
+            return source.OrderByDescending(p => p.IsSelf).ToList();
+        }
+
+        protected virtual T ChooseTargetItem<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source) 
+            where T : IndexedAnnotatedItem
         {
             if(!source.Any())
             {
@@ -60,7 +73,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if(source.Count == 1)
             {
-                return source.Single().Value;
+                return source.Single().ResultItem;
             }
 
             throw new NotImplementedException();

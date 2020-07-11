@@ -14,14 +14,14 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             : base(engineContext.Logger)
         {
             _engineContext = engineContext;
-            _channelsResolver = new ChannelsResolver(engineContext);
+            _channelsResolver = engineContext.DataResolversFactory.GetChannelsResolver();
         }
 
         private readonly IEngineContext _engineContext;
         private readonly ChannelsResolver _channelsResolver;
 
         /// <inheritdoc/>
-        public Value Call(Value leftOperand, Value rightOperand, IStorage localContext)
+        public Value Call(Value leftOperand, Value rightOperand, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             Log($"leftOperand = {leftOperand}");
@@ -53,7 +53,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                 if(identifier.KindOfName == KindOfName.Channel)
                 {
-                    var channel = _channelsResolver.GetChannel(identifier, localContext);
+                    var channel = _channelsResolver.GetChannel(identifier, localCodeExecutionContext, ResolverOptions.GetDefaultFluentOptions());
 
 #if DEBUG
                     Log($"channel = {channel}");

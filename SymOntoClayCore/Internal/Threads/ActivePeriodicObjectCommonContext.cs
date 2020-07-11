@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
-namespace SymOntoClay.CoreHelper.Threads
+namespace SymOntoClay.Core.Internal.Threads
 {
-    public class ActivePeriodicObjectCommonContext: IActivePeriodicObjectCommonContext
+    public class ActivePeriodicObjectCommonContext : IActivePeriodicObjectCommonContext
     {
         private readonly AutoResetEvent _autoResetEvent = new AutoResetEvent(true);
         private volatile bool _isNeedWating;

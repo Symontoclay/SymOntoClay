@@ -35,7 +35,8 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
             {
                 KindOfOperator = KindOfOperator.LeftRightStream,
                 IsSystemDefined = true,
-                SystemHandler = new BinaryOperatorSystemHandler(new LeftRightStreamOperatorHandler(_context), _context.Dictionary)
+                SystemHandler = new BinaryOperatorSystemHandler(new LeftRightStreamOperatorHandler(_context), _context.Dictionary),
+                Holder = _context.CommonNamesStorage.DefaultHolder
             };
             globalOperatorsStorage.Append(op);
         }
@@ -50,6 +51,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
             var channel = new Channel();
             channel.Name = name;
             channel.Handler = new LogChannelHandler(_context);
+            channel.Holder = _context.CommonNamesStorage.DefaultHolder;
 
             globalChannelsStorage.Append(channel);
         }

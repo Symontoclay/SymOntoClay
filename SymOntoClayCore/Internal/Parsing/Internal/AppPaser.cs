@@ -24,13 +24,38 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
 
         private State _state = State.Init;
-        public CodeEntity Result { get; set; }
+        public CodeEntity Result { get; private set; }
 
         /// <inheritdoc/>
         protected override void OnEnter()
         {
+#if DEBUG
+            Log("Begin");
+#endif
             Result = new CodeEntity();
             Result.Kind = KindOfCodeEntity.App;
+            Result.CodeFile = _context.CodeFile;
+
+            Result.ParentCodeEntity = CurrentCodeEntity;
+            SetCurrentCodeEntity(Result);
+
+#if DEBUG
+            Log("End");
+#endif
+        }
+
+        /// <inheritdoc/>
+        protected override void OnFinish()
+        {
+#if DEBUG
+            Log("Begin");
+#endif
+
+            RemoveCurrentCodeEntity();
+
+#if DEBUG
+            Log("End");
+#endif
         }
 
         /// <inheritdoc/>

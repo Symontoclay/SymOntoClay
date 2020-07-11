@@ -21,6 +21,8 @@ namespace SymOntoClay.Core.Internal.Storage
             _realStorageContext.Storage = this;
             _realStorageContext.Logger = settings.Logger;
             _realStorageContext.EntityDictionary = settings.EntityDictionary;
+            _realStorageContext.Compiler = settings.Compiler;
+            _realStorageContext.CommonNamesStorage = settings.CommonNamesStorage;
 
             var parents = settings.ParentsStorages;
 
@@ -33,20 +35,14 @@ namespace SymOntoClay.Core.Internal.Storage
                 _realStorageContext.Parents = parents;
             }
 
-            _logicalStorage = new LogicalStorage.LogicalStorage(_kind, _realStorageContext);
-            _realStorageContext.LogicalStorage = _logicalStorage;
-            _methodsStorage = new MethodsStorage.MethodsStorage(_kind, _realStorageContext);
-            _realStorageContext.MethodsStorage = _methodsStorage;
-            _triggersStorage = new TriggersStorage.TriggersStorage(_kind, _realStorageContext);
-            _realStorageContext.TriggersStorage = _triggersStorage;
-            _inheritanceStorage = new InheritanceStorage.InheritanceStorage(_kind, _realStorageContext);
-            _realStorageContext.InheritanceStorage = _inheritanceStorage;
-            _synonymsStorage = new SynonymsStorage.SynonymsStorage(_kind, _realStorageContext);
-            _realStorageContext.SynonymsStorage = _synonymsStorage;
-            _operatorsStorage = new OperatorsStorage.OperatorsStorage(_kind, _realStorageContext);
-            _realStorageContext.OperatorsStorage = _operatorsStorage;
-            _channelsStorage = new ChannelsStorage.ChannelsStorage(_kind, _realStorageContext);
-            _realStorageContext.ChannelsStorage = _channelsStorage;
+            _realStorageContext.LogicalStorage = new LogicalStorage.LogicalStorage(_kind, _realStorageContext);
+            _realStorageContext.MethodsStorage = new MethodsStorage.MethodsStorage(_kind, _realStorageContext);
+            _realStorageContext.TriggersStorage = new TriggersStorage.TriggersStorage(_kind, _realStorageContext);
+            _realStorageContext.InheritanceStorage = new InheritanceStorage.InheritanceStorage(_kind, _realStorageContext);
+            _realStorageContext.SynonymsStorage = new SynonymsStorage.SynonymsStorage(_kind, _realStorageContext);
+            _realStorageContext.OperatorsStorage = new OperatorsStorage.OperatorsStorage(_kind, _realStorageContext);
+            _realStorageContext.ChannelsStorage = new ChannelsStorage.ChannelsStorage(_kind, _realStorageContext);
+            _realStorageContext.MetadataStorage = new MetadataStorage.MetadataStorage(_kind, _realStorageContext);
         }
 
         private readonly KindOfStorage _kind;
@@ -56,38 +52,29 @@ namespace SymOntoClay.Core.Internal.Storage
 
         private readonly RealStorageContext _realStorageContext;
 
-        private LogicalStorage.LogicalStorage _logicalStorage;
+        /// <inheritdoc/>
+        public ILogicalStorage LogicalStorage => _realStorageContext.LogicalStorage;
 
         /// <inheritdoc/>
-        public ILogicalStorage LogicalStorage => _logicalStorage;
-
-        private MethodsStorage.MethodsStorage _methodsStorage;
-        private TriggersStorage.TriggersStorage _triggersStorage;
-        private InheritanceStorage.InheritanceStorage _inheritanceStorage;
+        public IMethodsStorage MethodsStorage => _realStorageContext.MethodsStorage;
 
         /// <inheritdoc/>
-        public IMethodsStorage MethodsStorage => _methodsStorage;
+        public ITriggersStorage TriggersStorage => _realStorageContext.TriggersStorage;
 
         /// <inheritdoc/>
-        public ITriggersStorage TriggersStorage => _triggersStorage;
-
-        /// <inheritdoc/>
-        public IInheritanceStorage InheritanceStorage => _inheritanceStorage;
+        public IInheritanceStorage InheritanceStorage => _realStorageContext.InheritanceStorage;
    
-        private SynonymsStorage.SynonymsStorage _synonymsStorage;
+        /// <inheritdoc/>
+        public ISynonymsStorage SynonymsStorage => _realStorageContext.SynonymsStorage;
 
         /// <inheritdoc/>
-        public ISynonymsStorage SynonymsStorage => _synonymsStorage;
-
-        private OperatorsStorage.OperatorsStorage _operatorsStorage;
+        public IOperatorsStorage OperatorsStorage => _realStorageContext.OperatorsStorage;
 
         /// <inheritdoc/>
-        public IOperatorsStorage OperatorsStorage => _operatorsStorage;
-
-        private ChannelsStorage.ChannelsStorage _channelsStorage;
+        public IChannelsStorage ChannelsStorage => _realStorageContext.ChannelsStorage;
 
         /// <inheritdoc/>
-        public IChannelsStorage ChannelsStorage => _channelsStorage;
+        public IMetadataStorage MetadataStorage => _realStorageContext.MetadataStorage;
 
         /// <inheritdoc/>
         void IStorage.CollectChainOfStorages(IList<KeyValuePair<uint, IStorage>> result, uint level)

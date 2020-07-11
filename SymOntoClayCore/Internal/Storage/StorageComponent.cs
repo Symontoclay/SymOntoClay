@@ -29,11 +29,14 @@ namespace SymOntoClay.Core.Internal.Storage
             var globalStorageSettings = new RealStorageSettings();
             globalStorageSettings.Logger = Logger;
             globalStorageSettings.EntityDictionary = _context.Dictionary;
+            globalStorageSettings.Compiler = _context.Compiler;
 
-            if(_parentStorage.Storage != null)
+            if (_parentStorage.Storage != null)
             {
                 globalStorageSettings.ParentsStorages = new List<IStorage>() { _parentStorage.Storage };
             }
+
+            globalStorageSettings.CommonNamesStorage = _context.CommonNamesStorage;
 
             _globalStorage = new GlobalStorage(globalStorageSettings);
             _storagesList.Add(_globalStorage);

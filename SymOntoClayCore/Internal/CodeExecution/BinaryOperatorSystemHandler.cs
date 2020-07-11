@@ -19,21 +19,21 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private IBinaryOperatorHandler _operatorHandler;
 
         /// <inheritdoc/>
-        public Value Call(IList<Value> paramsList, IStorage localContext)
+        public Value Call(IList<Value> paramsList, LocalCodeExecutionContext localCodeExecutionContext)
         {
             var leftOperand = paramsList[0];
             var rightOperand = paramsList[1];
 
-            return _operatorHandler.Call(leftOperand, rightOperand, localContext);
+            return _operatorHandler.Call(leftOperand, rightOperand, localCodeExecutionContext);
         }
         
         /// <inheritdoc/>
-        public Value Call(IDictionary<ulong, Value> paramsDict, IStorage localContext)
+        public Value Call(IDictionary<ulong, Value> paramsDict, LocalCodeExecutionContext localCodeExecutionContext)
         {
             var leftOperand = paramsDict[_leftOperandKey];
             var rightOperand = paramsDict[_rightOperandKey];
 
-            return _operatorHandler.Call(leftOperand, rightOperand, localContext);
+            return _operatorHandler.Call(leftOperand, rightOperand, localCodeExecutionContext);
         }
     }
 }

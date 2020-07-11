@@ -1,5 +1,5 @@
 ﻿using NLog;
-using SymOntoClay.CoreHelper.Threads;
+using SymOntoClay.Core.Internal.Threads;
 using System;
 using System.Collections.Generic;
 using System.Text;

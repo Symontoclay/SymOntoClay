@@ -13,8 +13,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public CompiledFunctionBody CompiledFunctionBody { get; set; }
         public int CurrentPosition { get; set; }
         public Stack<Value> ValuesStack { get; private set; } = new Stack<Value>();
-        public IStorage Storage { get; set; }
-
+        public LocalCodeExecutionContext LocalContext { get; set; }
+        
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -39,6 +39,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(CurrentPosition)} = {CurrentPosition}");
 
             sb.PrintObjListProp(n, nameof(ValuesStack), ValuesStack.ToList());
+
+            sb.PrintObjProp(n, nameof(LocalContext), LocalContext);
 
             return sb.ToString();
         }
@@ -68,6 +70,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             sb.PrintShortObjListProp(n, nameof(ValuesStack), ValuesStack.ToList());
 
+            sb.PrintShortObjProp(n, nameof(LocalContext), LocalContext);
+
             return sb.ToString();
         }
 
@@ -95,6 +99,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(CurrentPosition)} = {CurrentPosition}");
 
             sb.PrintBriefObjListProp(n, nameof(ValuesStack), ValuesStack.ToList());
+
+            sb.PrintBriefObjProp(n, nameof(LocalContext), LocalContext);
 
             return sb.ToString();
         }

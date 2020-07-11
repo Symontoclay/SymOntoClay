@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.CollectionsHelpers;
+﻿using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,12 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
     {
         public static Name CreateRuleOrFactName(IEntityDictionary dictionary)
         {
-            var text = $"#{Guid.NewGuid().ToString("D")}";
+            return CreateEntityName(dictionary);
+        }
+
+        public static Name CreateEntityName(IEntityDictionary dictionary)
+        {
+            var text = $"#{Guid.NewGuid():D}";
             return CreateName(text, dictionary);
         }
 

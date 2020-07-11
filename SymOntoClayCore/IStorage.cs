@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,6 +16,7 @@ namespace SymOntoClay.Core
         ISynonymsStorage SynonymsStorage { get; }
         IOperatorsStorage OperatorsStorage { get; }
         IChannelsStorage ChannelsStorage { get; }
+        IMetadataStorage MetadataStorage { get; }
         void CollectChainOfStorages(IList<KeyValuePair<uint,IStorage>> result, uint level);
     }
 }

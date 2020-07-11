@@ -29,7 +29,9 @@ namespace SymOntoClay.Unity3DAsset.Test
 {
 }";
 
-            var internalParserContext = new InternalParserContext(text, _parserContext);
+            var codeFile = new CodeFile();
+
+            var internalParserContext = new InternalParserContext(text, codeFile, _parserContext);
 
             var parser = new SourceCodeParser(internalParserContext);
             parser.Run();
@@ -63,8 +65,9 @@ namespace SymOntoClay.Unity3DAsset.Test
 	     'Hello world!' >> @>log;
     }
 }";
+            var codeFile = new CodeFile();
 
-            var internalParserContext = new InternalParserContext(text, _parserContext);
+            var internalParserContext = new InternalParserContext(text, codeFile, _parserContext);
 
             var parser = new SourceCodeParser(internalParserContext);
             parser.Run();
@@ -95,7 +98,7 @@ namespace SymOntoClay.Unity3DAsset.Test
             var inlineTrigger = subItem.InlineTrigger;
 
             Assert.AreNotEqual(inlineTrigger, null);
-            Assert.AreEqual(inlineTrigger.Kind, KindOfInlineTrigger.SystemEvents);
+            Assert.AreEqual(inlineTrigger.Kind, KindOfInlineTrigger.SystemEvent);
             Assert.AreEqual(inlineTrigger.KindOfSystemEvent, KindOfSystemEventOfInlineTrigger.Init);
 
             Assert.AreEqual(inlineTrigger.Statements.Count, 1);
@@ -114,10 +117,10 @@ namespace SymOntoClay.Unity3DAsset.Test
 
             Assert.AreEqual(strVal.SystemValue, "Hello world!");
 
-            var rightNode = (ChannelAstExpression)binOpExpr.Right;
+            var rightNode = (ConstValueAstExpression)binOpExpr.Right;
 
-            Assert.AreEqual(rightNode.Name.NameValue, "@>log");
-            Assert.AreEqual(rightNode.Name.KindOfName, KindOfName.Channel);
+            Assert.AreEqual(rightNode.Value.AsIdentifierValue.NameValue, "@>log");
+            Assert.AreEqual(rightNode.Value.AsIdentifierValue.KindOfName, KindOfName.Channel);
         }
     }
 }

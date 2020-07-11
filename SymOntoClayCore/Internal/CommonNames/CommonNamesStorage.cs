@@ -17,10 +17,12 @@ namespace SymOntoClay.Core.Internal.CommonNames
         private readonly IEngineContext _context;
 
         public Name ApplicationName { get; private set; }
+        public Name DefaultHolder { get; private set; }
 
         public void LoadFromSourceCode()
         {
             ApplicationName = NameHelper.CreateName(StandardNamesConstants.ApplicationTypeName, _context.Dictionary);
+            DefaultHolder = new Name();
 
 #if IMAGINE_WORKING
             Log("Do");

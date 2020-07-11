@@ -1,5 +1,6 @@
 ﻿using NLog.LayoutRenderers.Wrappers;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,7 +24,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
 
         private State _state = State.Init;
-        public CodeEntity Result { get; set; }
+        public CodeEntity Result { get; private set; }
         private InlineTrigger _inlineTrigger;
 
         /// <inheritdoc/>
@@ -31,8 +32,24 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             Result = new CodeEntity();
             Result.Kind = KindOfCodeEntity.InlineTrigger;
+            Result.Name = NameHelper.CreateRuleOrFactName(_context.Dictionary);
             _inlineTrigger = new InlineTrigger();
+            _inlineTrigger.CodeEntity = Result;
             Result.InlineTrigger = _inlineTrigger;
+            Result.CodeFile = _context.CodeFile;
+            Result.ParentCodeEntity = CurrentCodeEntity;
+            SetCurrentCodeEntity(Result);
+
+            if(Result.ParentCodeEntity != null)
+            {
+                _inlineTrigger.Holder = Result.ParentCodeEntity.Name;
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnFinish()
+        {
+            RemoveCurrentCodeEntity();
         }
 
         /// <inheritdoc/>
@@ -73,7 +90,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             switch(_currToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.Init:
-                                    _inlineTrigger.Kind = KindOfInlineTrigger.SystemEvents;
+                                    _inlineTrigger.Kind = KindOfInlineTrigger.SystemEvent;
                                     _inlineTrigger.KindOfSystemEvent = KindOfSystemEventOfInlineTrigger.Init;
                                     _state = State.GotCondition;
                                     break;

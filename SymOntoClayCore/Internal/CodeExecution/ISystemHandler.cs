@@ -7,7 +7,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface ISystemHandler
     {
-        Value Call(IList<Value> paramsList,  IStorage localContext);
-        Value Call(IDictionary<ulong, Value> paramsDict, IStorage localContext);
+        Value Call(IList<Value> paramsList, LocalCodeExecutionContext localCodeExecutionContext);
+        Value Call(IDictionary<ulong, Value> paramsDict, LocalCodeExecutionContext localCodeExecutionContext);
     }
 }

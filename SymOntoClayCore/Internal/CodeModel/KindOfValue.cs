@@ -11,6 +11,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         LogicalValue,
         NumberValue,
         StringValue,
-        IdentifierValue
+        IdentifierValue,
+        TaskValue
     }
 }

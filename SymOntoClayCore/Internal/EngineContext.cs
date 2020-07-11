@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CommonNames;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.InheritanceEngine;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.LogicalEngine;
@@ -10,10 +11,12 @@ using SymOntoClay.Core.Internal.StandardLibrary;
 using SymOntoClay.Core.Internal.States;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.TriggerExecution;
+using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using SymOntoClay.Core.Internal.Threads;
 
 namespace SymOntoClay.Core.Internal
 {
@@ -42,20 +45,29 @@ namespace SymOntoClay.Core.Internal
         public TriggerExecutorComponent TriggerExecutor { get; set; }
         public LoaderFromSourceCode LoaderFromSourceCode { get; set; }
         public Parser Parser { get; set; }
+        public Compiler Compiler { get; set; }
         public InstancesStorageComponent InstancesStorage { get; set; }
         public StatesStorageComponent StatesStorage { get; set; }
         public CommonNamesStorage CommonNamesStorage { get; set; }
         public LogicalEngineComponent LogicalEngine { get; set; }
         public InheritanceEngineComponent InheritanceEngine { get; set; }
         public StandardLibraryLoader StandardLibraryLoader { get; set; }
+        public DataResolversFactory DataResolversFactory { get; set; }
+        public ActivePeriodicObjectContext ActivePeriodicObjectContext { get; set; }
 
         IStorageComponent IEngineContext.Storage => Storage;
         ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;
         ITriggerExecutorComponent IEngineContext.TriggerExecutor => TriggerExecutor;
         ILoaderFromSourceCode IEngineContext.LoaderFromSourceCode => LoaderFromSourceCode;
         IParser IMainStorageContext.Parser => Parser;
-        ICommonNamesStorage IEngineContext.CommonNamesStorage => CommonNamesStorage;
+        ICompiler IMainStorageContext.Compiler => Compiler;
+        ICommonNamesStorage IMainStorageContext.CommonNamesStorage => CommonNamesStorage;
         ILogicalEngine IEngineContext.LogicalEngine => LogicalEngine;
         IInheritanceEngine IEngineContext.InheritanceEngine => InheritanceEngine;
+
+        IDataResolversFactory IMainStorageContext.DataResolversFactory => DataResolversFactory;
+        IInstancesStorageComponent IEngineContext.InstancesStorage => InstancesStorage;
+
+        IActivePeriodicObjectContext IEngineContext.ActivePeriodicObjectContext => ActivePeriodicObjectContext;
     }
 }

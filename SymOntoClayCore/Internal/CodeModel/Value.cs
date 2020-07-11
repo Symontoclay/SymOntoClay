@@ -24,6 +24,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsIdentifierValue => false;
         public virtual Name AsIdentifierValue => null;
 
+        public virtual bool IsTaskValue => false;
+        public virtual TaskValue AsTaskValue => null;
+
         public abstract object GetSystemValue();
 
         public Value CloneValue()

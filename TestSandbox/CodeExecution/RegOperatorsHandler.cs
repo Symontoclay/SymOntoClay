@@ -36,16 +36,19 @@ namespace TestSandbox.CodeExecution
 
             globalOperatorsStorage.Append(op);
 
-            var operatorsResolver = new OperatorsResolver(context);
+            var operatorsResolver = context.DataResolversFactory.GetOperatorsResolver();
 
-            var targetOp = operatorsResolver.GetOperator(KindOfOperator.LeftRightStream, globalStorage);
+            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            localCodeExecutionContext.Storage = globalStorage;
+
+            var targetOp = operatorsResolver.GetOperator(KindOfOperator.LeftRightStream, localCodeExecutionContext, ResolverOptions.GetDefaultFluentOptions());
 
             _logger.Info($"targetOp = {targetOp}");
 
             _logger.Info("End");
         }
 
-        public Value Call(Value leftOperand, Value rightOperand, IStorage localContext)
+        public Value Call(Value leftOperand, Value rightOperand, LocalCodeExecutionContext localCodeExecutionContext)
         {
             _logger.Info($"leftOperand = {leftOperand}");
             _logger.Info($"rightOperand = {rightOperand}");

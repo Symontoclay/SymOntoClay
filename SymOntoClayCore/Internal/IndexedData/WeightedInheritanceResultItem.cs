@@ -3,14 +3,23 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
+namespace SymOntoClay.Core.Internal.IndexedData
 {
-    public class ChannelAstExpression : AstExpression
+    public class WeightedInheritanceResultItem<T>: WeightedInheritanceItem
+        where T: IndexedAnnotatedItem
     {
-        /// <inheritdoc/>
-        public override KindOfAstExpression Kind => KindOfAstExpression.Channel;
+        public WeightedInheritanceResultItem(T resultItem)
+        {
+            ResultItem = resultItem;
+        }
 
-        public Name Name { get; set; }
+        public WeightedInheritanceResultItem(T resultItem, WeightedInheritanceItem source)
+            : base(source)
+        {
+            ResultItem = resultItem;
+        }
+
+        public T ResultItem { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -18,10 +27,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(Name), Name);
+            sb.PrintObjProp(n, nameof(ResultItem), ResultItem);
 
             sb.Append(base.PropertiesToString(n));
-
             return sb.ToString();
         }
 
@@ -31,10 +39,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjProp(n, nameof(Name), Name);
+            sb.PrintShortObjProp(n, nameof(ResultItem), ResultItem);
 
             sb.Append(base.PropertiesToShortString(n));
-
             return sb.ToString();
         }
 
@@ -44,10 +51,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjProp(n, nameof(Name), Name);
+            sb.PrintBriefObjProp(n, nameof(ResultItem), ResultItem);
 
             sb.Append(base.PropertiesToBriefString(n));
-
             return sb.ToString();
         }
     }

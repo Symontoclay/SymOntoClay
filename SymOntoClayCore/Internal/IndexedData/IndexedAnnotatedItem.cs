@@ -15,7 +15,10 @@ namespace SymOntoClay.Core.Internal.IndexedData
         /// <summary>
         /// It is 'Clauses section' in the documentation.
         /// </summary>
+        [ResolveToType(typeof(IndexedLogicalValue))]
         public IList<IndexedValue> WhereSection { get; set; } = new List<IndexedValue>();
+
+        public Name Holder { get; set; }
 
         /// <summary>
         /// Returns <c>true</c> if the instance has modalities or additional sections, otherwise returns <c>false</c>.
@@ -52,6 +55,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             sb.PrintObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintObjListProp(n, nameof(WhereSection), WhereSection);
+            sb.PrintObjProp(n, nameof(Holder), Holder);
 
             return sb.ToString();
         }
@@ -84,6 +88,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             sb.PrintShortObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintShortObjListProp(n, nameof(WhereSection), WhereSection);
+            sb.PrintShortObjProp(n, nameof(Holder), Holder);
 
             return sb.ToString();
         }
@@ -116,6 +121,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             sb.PrintExistingList(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintExistingList(n, nameof(WhereSection), WhereSection);
+            sb.PrintBriefObjProp(n, nameof(Holder), Holder);
 
             return sb.ToString();
         }

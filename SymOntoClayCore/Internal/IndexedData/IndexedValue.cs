@@ -10,7 +10,10 @@ namespace SymOntoClay.Core.Internal.IndexedData
     {
         public abstract Value OriginalValue { get; }
 
-        public abstract KindOfValue Kind { get; }
+        public abstract KindOfValue KindOfValue { get; }
+
+        public virtual bool IsNullValue => false;
+        public virtual IndexedNullValue AsNullValue => null;
 
         public virtual bool IsLogicalValue => false;
         public virtual IndexedLogicalValue AsLogicalValue => null;
@@ -21,12 +24,17 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public virtual bool IsStringValue => false;
         public virtual IndexedStringValue AsStringValue => null;
 
+        public virtual bool IsTaskValue => false;
+        public virtual IndexedTaskValue AsTaskValue => null;
+
+        public abstract object GetSystemValue();
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(KindOfValue)} = {KindOfValue}");
 
             sb.PrintBriefObjProp(n, nameof(OriginalValue), OriginalValue);
 
@@ -39,7 +47,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(KindOfValue)} = {KindOfValue}");
 
             sb.PrintBriefObjProp(n, nameof(OriginalValue), OriginalValue);
 
@@ -52,7 +60,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(KindOfValue)} = {KindOfValue}");
 
             sb.PrintBriefObjProp(n, nameof(OriginalValue), OriginalValue);
 

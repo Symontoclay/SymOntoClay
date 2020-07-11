@@ -87,14 +87,47 @@ namespace TestSandbox.Helpers
             _logger.Log($"coreEngineSettings = {coreEngineSettings}");
 #endif
 
+#if DEBUG
+            //_logger.Log($"Begin worldContext.Start()");
+#endif
+
             worldContext.Start();
+
+#if DEBUG
+            //_logger.Log($"After worldContext.Start()");
+#endif
 
             var context = EngineContextHelper.CreateAndInitContext(coreEngineSettings);
 
+#if DEBUG
+            //_logger.Log($"After var context = EngineContextHelper.CreateAndInitContext(coreEngineSettings);");
+#endif
+
             context.CommonNamesStorage.LoadFromSourceCode();
+
+#if DEBUG
+            //_logger.Log($"After context.CommonNamesStorage.LoadFromSourceCode();");
+#endif
+
             context.Storage.LoadFromSourceCode();
+
+#if DEBUG
+            //_logger.Log($"After context.Storage.LoadFromSourceCode();");
+#endif
+
             context.StandardLibraryLoader.LoadFromSourceCode();
+
+#if DEBUG
+            //_logger.Log($"After context.StandardLibraryLoader.LoadFromSourceCode();");
+#endif
+
             context.StatesStorage.LoadFromSourceCode();
+
+#if DEBUG
+            //_logger.Log($"After context.StatesStorage.LoadFromSourceCode();");
+#endif
+
+            context.InstancesStorage.LoadFromSourceFiles();
 
             return context;
         }

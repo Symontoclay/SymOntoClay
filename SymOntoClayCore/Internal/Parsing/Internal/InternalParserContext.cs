@@ -2,6 +2,7 @@
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
@@ -12,18 +13,46 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
         }
 
-        public InternalParserContext(string text, IParserContext context)
+        public InternalParserContext(string text, CodeFile codeFile, IParserContext context)
         {
             _context = context;
+            CodeFile = codeFile;
             _lexer = new Lexer(text, context.Logger);
         }
 
         public IEntityLogger Logger => _context.Logger;
         public IEntityDictionary Dictionary => _context.Dictionary;
 
+        public CodeFile CodeFile { get; private set; }
+
         private IParserContext _context;
         private Lexer _lexer;
         private Queue<Token> _recoveriesTokens = new Queue<Token>();
+
+        private Stack<CodeEntity> _codeEntities = new Stack<CodeEntity>();
+
+        public void SetCurrentCodeEntity(CodeEntity codeEntity)
+        {
+            _codeEntities.Push(codeEntity);
+        }
+
+        public void RemoveCurrentCodeEntity()
+        {
+            _codeEntities.Pop();
+        }
+
+        public CodeEntity CurrentCodeEntity
+        {
+            get
+            {
+                if(!_codeEntities.Any())
+                {
+                    return null;
+                }
+
+                return _codeEntities.Peek();
+            }
+        }
 
         public Token GetToken()
         {

@@ -1,5 +1,6 @@
 ﻿using NLog.Fluent;
 using SymOntoClay.Core;
+using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal.Images;
@@ -66,7 +67,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public ImagesRegistry ImagesRegistry { get; private set; }
         public ThreadsCoreComponent ThreadsComponent { get; private set; }
 
-        ISyncContext IWorldCoreGameComponentContext.SyncContext => ThreadsComponent;
+        IActivePeriodicObjectCommonContext IWorldCoreGameComponentContext.SyncContext => ThreadsComponent;
 
         public SharedDictionaryComponent SharedDictionary { get; private set; }
 

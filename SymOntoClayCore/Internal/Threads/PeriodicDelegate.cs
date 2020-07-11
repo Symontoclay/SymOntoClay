@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.CoreHelper.Threads
+namespace SymOntoClay.Core.Internal.Threads
 {
     public delegate bool PeriodicDelegate();
 }

@@ -89,8 +89,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Log($"name = {name}");
 #endif
 
-            var node = new ChannelAstExpression();
-            node.Name = name;
+            var node = new ConstValueAstExpression();
+            node.Value = name;
 
             var intermediateNode = new IntermediateAstNode(node);
 

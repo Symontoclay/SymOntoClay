@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
@@ -28,8 +29,8 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStorage
 
         private readonly object _lockObj = new object();
 
-        private readonly Dictionary<KindOfOperator, List<Operator>> _nonIndexedInfo = new Dictionary<KindOfOperator, List<Operator>>();
-        private readonly Dictionary<KindOfOperator, List<IndexedOperator>> _indexedInfo = new Dictionary<KindOfOperator, List<IndexedOperator>>();
+        private readonly Dictionary<KindOfOperator, Dictionary<Name, List<Operator>>> _nonIndexedInfo = new Dictionary<KindOfOperator, Dictionary<Name, List<Operator>>>();
+        private readonly Dictionary<KindOfOperator, Dictionary<Name, List<IndexedOperator>>> _indexedInfo = new Dictionary<KindOfOperator, Dictionary<Name, List<IndexedOperator>>>();
 
         /// <inheritdoc/>
         public void Append(Operator op)
@@ -37,6 +38,8 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStorage
 #if DEBUG
             Log($"op = {op}");
 #endif
+
+            AnnotatedItemHelper.CheckAndFillHolder(op, _realStorageContext.CommonNamesStorage);
 
             lock(_lockObj)
             {
@@ -50,24 +53,36 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStorage
 
                 if(_nonIndexedInfo.ContainsKey(kindOfOperator))
                 {
-                    var list = _nonIndexedInfo[kindOfOperator];
+                    var dict = _nonIndexedInfo[kindOfOperator];
+                    var indexedDict = _indexedInfo[kindOfOperator];
 
-                    if (!list.Contains(op))
+                    if (dict.ContainsKey(op.Holder))
                     {
-                        list.Add(op);
-                        _indexedInfo[kindOfOperator].Add(indexedOp);
+                        var list = dict[op.Holder];
+
+                        if (!list.Contains(op))
+                        {
+                            list.Add(op);
+
+                            indexedDict[indexedOp.Holder].Add(indexedOp);
+                        }
+                    }
+                    else
+                    {
+                        dict[op.Holder] = new List<Operator>() { op };
+                        indexedDict[indexedOp.Holder] = new List<IndexedOperator>() { indexedOp };
                     }
                 }
                 else
                 {
-                    _nonIndexedInfo[kindOfOperator] = new List<Operator>() { op };
-                    _indexedInfo[kindOfOperator] = new List<IndexedOperator>() { indexedOp };
-                }              
+                    _nonIndexedInfo[kindOfOperator] = new Dictionary<Name, List<Operator>>() { { op.Holder, new List<Operator>() { op } } };
+                    _indexedInfo[kindOfOperator] = new Dictionary<Name, List<IndexedOperator>>() { { indexedOp.Holder, new List<IndexedOperator>() { indexedOp } } };
+                }
             }
         }
 
         /// <inheritdoc/>
-        public IList<IndexedOperator> GetOperatorsDirectly(KindOfOperator kindOfOperator)
+        public IList<WeightedInheritanceResultItem<IndexedOperator>> GetOperatorsDirectly(KindOfOperator kindOfOperator, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
             Log($"kindOfOperator = {kindOfOperator}");
@@ -77,10 +92,29 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStorage
             {
                 if(_indexedInfo.ContainsKey(kindOfOperator))
                 {
-                    return _indexedInfo[kindOfOperator];
+                    var dict = _indexedInfo[kindOfOperator];
+
+                    var result = new List<WeightedInheritanceResultItem<IndexedOperator>>();
+
+                    foreach(var weightedInheritanceItem in weightedInheritanceItems)
+                    {
+                        var targetHolder = weightedInheritanceItem.SuperName;
+
+                        if (dict.ContainsKey(targetHolder))
+                        {
+                            var targetList = dict[targetHolder];
+
+                            foreach(var targetVal in targetList)
+                            {
+                                result.Add(new WeightedInheritanceResultItem<IndexedOperator>(targetVal, weightedInheritanceItem));
+                            }
+                        }
+                    }
+
+                    return result;
                 }
 
-                return new List<IndexedOperator>();
+                return new List<WeightedInheritanceResultItem<IndexedOperator>>();
             }
         }
     }

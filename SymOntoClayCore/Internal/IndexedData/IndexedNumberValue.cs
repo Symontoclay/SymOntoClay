@@ -16,13 +16,19 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public override Value OriginalValue => OriginalNumberValue;
 
         /// <inheritdoc/>
-        public override KindOfValue Kind => KindOfValue.NumberValue;
+        public override KindOfValue KindOfValue => KindOfValue.NumberValue;
 
         /// <inheritdoc/>
         public override bool IsNumberValue => true;
 
         /// <inheritdoc/>
         public override IndexedNumberValue AsNumberValue => this;
+
+        /// <inheritdoc/>
+        public override object GetSystemValue()
+        {
+            return SystemValue;
+        }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

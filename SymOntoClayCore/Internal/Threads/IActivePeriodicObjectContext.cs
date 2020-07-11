@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.CoreHelper.Threads
+namespace SymOntoClay.Core.Internal.Threads
 {
-    public interface IActivePeriodicObjectContext: IActivePeriodicObjectCommonContext
+    public interface IActivePeriodicObjectContext : IActivePeriodicObjectCommonContext
     {
         void AddChildActiveObject(IActivePeriodicObject activeObject);
         void RemoveChildActiveObject(IActivePeriodicObject activeObject);

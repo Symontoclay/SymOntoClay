@@ -15,7 +15,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public override Value OriginalValue => OriginalLogicalValue;
 
         /// <inheritdoc/>
-        public override KindOfValue Kind => KindOfValue.LogicalValue;
+        public override KindOfValue KindOfValue => KindOfValue.LogicalValue;
 
         /// <inheritdoc/>
         public override bool IsLogicalValue => true;
@@ -24,6 +24,12 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public override IndexedLogicalValue AsLogicalValue => this;
 
         public float? SystemValue { get; set; }
+
+        /// <inheritdoc/>
+        public override object GetSystemValue()
+        {
+            return SystemValue;
+        }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

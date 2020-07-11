@@ -1,9 +1,11 @@
 ﻿using NLog;
+using SymOntoClay.Core.Internal.CodeModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace SymOntoClay.CoreHelper.Threads
+namespace SymOntoClay.Core.Internal.Threads
 {
     public class SyncActivePeriodicObject : IActivePeriodicObject
     {
@@ -22,17 +24,22 @@ namespace SymOntoClay.CoreHelper.Threads
         /// <inheritdoc/>
         public bool IsWaited => false;
 
+        private Value _taskValue = new NullValue();
+
         /// <inheritdoc/>
-        public void Start()
+        public Value TaskValue => _taskValue;
+
+        /// <inheritdoc/>
+        public Value Start()
         {
             _isActive = true;
 
             while (true)
             {
-                if(!PeriodicMethod())
+                if (!PeriodicMethod())
                 {
                     _isActive = false;
-                    return;
+                    return _taskValue;
                 }
             }
         }

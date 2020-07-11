@@ -1,5 +1,7 @@
-﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+﻿using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +16,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
         }
 
-        public IndexedOperator GetOperator(KindOfOperator kindOfOperator, IStorage storage)
+        public IndexedOperator GetOperator(KindOfOperator kindOfOperator, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             Log($"kindOfOperator = {kindOfOperator}");
 #endif
+
+            var storage = localCodeExecutionContext.Storage;
 
             var storagesList = GetStoragesList(storage);
 
@@ -30,26 +34,27 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 #endif
 
-            var rawList = GetRawList(kindOfOperator, storagesList);
+            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
+
+            var optionsForInheritanceResolver = options.Clone();
+            optionsForInheritanceResolver.AddSelf = true;
+
+            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
-            Log($"rawList.Count = {rawList.Count}");
-            foreach(var tmpItem in rawList)
-            {
-                Log($"tmpItem.Key = {tmpItem.Key}");
-                Log($"tmpItem.Value = {tmpItem.Value}");
-            }
+            Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
+#endif
+
+            var rawList = GetRawList(kindOfOperator, storagesList, weightedInheritanceItems);
+
+#if DEBUG
+            Log($"rawList = {rawList.WriteListToString()}");
 #endif
 
             var filteredList = Filter(rawList);
 
 #if DEBUG
-            Log($"filteredList.Count = {filteredList.Count}");
-            foreach (var tmpFilteredItem in filteredList)
-            {
-                Log($"tmpFilteredItem.Key = {tmpFilteredItem.Key}");
-                Log($"tmpFilteredItem.Value = {tmpFilteredItem.Value}");
-            }
+            Log($"filteredList = {filteredList.WriteListToString()}");
 #endif
 
             var targetOp = ChooseTargetItem(filteredList);
@@ -57,7 +62,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return targetOp;
         }
 
-        private List<KeyValuePair<uint, IndexedOperator>> GetRawList(KindOfOperator kindOfOperator, List<KeyValuePair<uint, IStorage>> storagesList)
+        private List<WeightedInheritanceResultItemWithStorageInfo<IndexedOperator>> GetRawList(KindOfOperator kindOfOperator, List<KeyValuePair<uint, IStorage>> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
             Log($"kindOfOperator = {kindOfOperator}");
@@ -65,14 +70,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if(!storagesList.Any())
             {
-                return new List<KeyValuePair<uint, IndexedOperator>>();
+                return new List<WeightedInheritanceResultItemWithStorageInfo<IndexedOperator>>();
             }
 
-            var result = new List<KeyValuePair<uint, IndexedOperator>>();
+            var result = new List<WeightedInheritanceResultItemWithStorageInfo<IndexedOperator>>();
 
             foreach(var storageItem in storagesList)
             {
-                var operatorsList = storageItem.Value.OperatorsStorage.GetOperatorsDirectly(kindOfOperator);
+                var operatorsList = storageItem.Value.OperatorsStorage.GetOperatorsDirectly(kindOfOperator, weightedInheritanceItems);
 
                 if(!operatorsList.Any())
                 {
@@ -80,10 +85,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 var distance = storageItem.Key;
+                var storage = storageItem.Value;
 
                 foreach(var op in operatorsList)
                 {
-                    result.Add(new KeyValuePair<uint, IndexedOperator>(distance, op));
+                    result.Add(new WeightedInheritanceResultItemWithStorageInfo<IndexedOperator>(op, distance, storage));
                 }
             }
 

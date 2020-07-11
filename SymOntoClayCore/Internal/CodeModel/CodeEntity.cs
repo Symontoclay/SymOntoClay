@@ -25,6 +25,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+
             sb.PrintObjProp(n, nameof(Name), Name);
 
             sb.PrintObjListProp(n, nameof(InheritanceItems), InheritanceItems);
@@ -47,7 +48,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
-            sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
+
+            sb.PrintShortObjProp(n, nameof(Name), Name);
 
             sb.PrintShortObjListProp(n, nameof(InheritanceItems), InheritanceItems);
             sb.PrintShortObjProp(n, nameof(RuleInstance), RuleInstance);
@@ -69,17 +71,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
-            sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
-
-            sb.PrintBriefObjListProp(n, nameof(InheritanceItems), InheritanceItems);
-            sb.PrintBriefObjProp(n, nameof(RuleInstance), RuleInstance);
-            sb.PrintBriefObjProp(n, nameof(InlineTrigger), InlineTrigger);
-            sb.PrintBriefObjProp(n, nameof(Operator), Operator);
-            sb.PrintBriefObjProp(n, nameof(Channel), Channel);
-
-            sb.PrintBriefObjProp(n, nameof(CodeFile), CodeFile);
-            sb.PrintBriefObjProp(n, nameof(ParentCodeEntity), ParentCodeEntity);
-            sb.PrintBriefObjListProp(n, nameof(SubItems), SubItems);
+            sb.PrintBriefObjProp(n, nameof(Name), Name);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

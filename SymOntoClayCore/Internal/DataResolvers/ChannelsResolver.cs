@@ -1,5 +1,7 @@
-﻿using SymOntoClay.Core.Internal.CodeModel;
+﻿using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +16,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
         }
 
-        public IndexedChannel GetChannel(Name name, IStorage storage)
+        public IndexedChannel GetChannel(Name name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             Log($"name = {name}");
 #endif
+
+            var storage = localCodeExecutionContext.Storage;
 
             var storagesList = GetStoragesList(storage);
 
@@ -30,26 +34,27 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 #endif
 
-            var rawList = GetRawList(name, storagesList);
+            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
+
+            var optionsForInheritanceResolver = options.Clone();
+            optionsForInheritanceResolver.AddSelf = true;
+
+            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
-            Log($"rawList.Count = {rawList.Count}");
-            foreach (var tmpItem in rawList)
-            {
-                Log($"tmpItem.Key = {tmpItem.Key}");
-                Log($"tmpItem.Value = {tmpItem.Value}");
-            }
+            Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
+#endif
+
+            var rawList = GetRawList(name, storagesList, weightedInheritanceItems);
+
+#if DEBUG
+            Log($"rawList = {rawList.WriteListToString()}");
 #endif
 
             var filteredList = Filter(rawList);
 
 #if DEBUG
-            Log($"filteredList.Count = {filteredList.Count}");
-            foreach (var tmpFilteredItem in filteredList)
-            {
-                Log($"tmpFilteredItem.Key = {tmpFilteredItem.Key}");
-                Log($"tmpFilteredItem.Value = {tmpFilteredItem.Value}");
-            }
+            Log($"filteredList = {filteredList.WriteListToString()}");
 #endif
 
             var targetChannel = ChooseTargetItem(filteredList);
@@ -57,7 +62,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return targetChannel;
         }
 
-        private List<KeyValuePair<uint, IndexedChannel>> GetRawList(Name name, List<KeyValuePair<uint, IStorage>> storagesList)
+        private List<WeightedInheritanceResultItemWithStorageInfo<IndexedChannel>> GetRawList(Name name, List<KeyValuePair<uint, IStorage>> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
             Log($"name = {name}");
@@ -65,14 +70,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!storagesList.Any())
             {
-                return new List<KeyValuePair<uint, IndexedChannel>>();
+                return new List<WeightedInheritanceResultItemWithStorageInfo<IndexedChannel>>();
             }
 
-            var result = new List<KeyValuePair<uint, IndexedChannel>>();
+            var result = new List<WeightedInheritanceResultItemWithStorageInfo<IndexedChannel>>();
 
             foreach (var storageItem in storagesList)
             {
-                var itemsList = storageItem.Value.ChannelsStorage.GetChannelsDirectly(name);
+                var itemsList = storageItem.Value.ChannelsStorage.GetChannelsDirectly(name, weightedInheritanceItems);
 
                 if (!itemsList.Any())
                 {
@@ -80,10 +85,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 var distance = storageItem.Key;
+                var storage = storageItem.Value;
 
                 foreach (var item in itemsList)
                 {
-                    result.Add(new KeyValuePair<uint, IndexedChannel>(distance, item));
+                    result.Add(new WeightedInheritanceResultItemWithStorageInfo<IndexedChannel>(item, distance, storage));
                 }
             }
 

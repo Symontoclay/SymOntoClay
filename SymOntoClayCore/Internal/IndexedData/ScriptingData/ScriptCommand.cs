@@ -14,7 +14,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
         public int Position { get; set; }
         public Value Value { get; set; }
-        public int JumpTo { get; set; }
+        public ScriptCommand JumpToMe { get; set; }
         public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
 
         /// <inheritdoc/>
@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
             sb.PrintObjProp(n, nameof(Value), Value);
 
-            sb.AppendLine($"{spaces}{nameof(JumpTo)} = {JumpTo}");
+            sb.PrintBriefObjProp(n, nameof(JumpToMe), JumpToMe);
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
 
             return sb.ToString();
@@ -71,7 +71,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
             sb.PrintShortObjProp(n, nameof(Value), Value);
 
-            sb.AppendLine($"{spaces}{nameof(JumpTo)} = {JumpTo}");
+            sb.PrintBriefObjProp(n, nameof(JumpToMe), JumpToMe);
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
 
             return sb.ToString();
@@ -101,7 +101,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
             sb.PrintBriefObjProp(n, nameof(Value), Value);
 
-            sb.AppendLine($"{spaces}{nameof(JumpTo)} = {JumpTo}");
+            sb.PrintBriefObjProp(n, nameof(JumpToMe), JumpToMe);
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
 
             return sb.ToString();
@@ -126,6 +126,11 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
             switch(OperationCode)
             {
+                case OperationCode.Nop:
+                case OperationCode.ClearStack:
+                case OperationCode.Return:
+                    return $"{spaces}{OperationCode}";
+
                 case OperationCode.PushVal:
                     return $"{spaces}{OperationCode} {Value.ToDbgString()}";
 

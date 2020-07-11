@@ -24,6 +24,10 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         /// <summary>
         /// Calls a binary operator
         /// </summary>
-        CallBinOp
+        CallBinOp,
+
+        ClearStack,
+        Return,
+        ReturnVal
     }
 }

@@ -13,6 +13,18 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public override Value OriginalValue => OriginalNullValue;
 
         /// <inheritdoc/>
-        public override KindOfValue Kind => KindOfValue.NullValue;
+        public override KindOfValue KindOfValue => KindOfValue.NullValue;
+
+        /// <inheritdoc/>
+        public override bool IsNullValue => true;
+
+        /// <inheritdoc/>
+        public override IndexedNullValue AsNullValue => this;
+
+        /// <inheritdoc/>
+        public override object GetSystemValue()
+        {
+            return null;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CommonNames;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.InheritanceEngine;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.LogicalEngine;
@@ -9,9 +10,11 @@ using SymOntoClay.Core.Internal.StandardLibrary;
 using SymOntoClay.Core.Internal.States;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.TriggerExecution;
+using SymOntoClay.Core.Internal.Compiling;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using SymOntoClay.Core.Internal.Threads;
 
 namespace SymOntoClay.Core.Internal.Helpers
 {
@@ -31,21 +34,25 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.TriggerExecutor = new TriggerExecutorComponent(context);
             context.LoaderFromSourceCode = new LoaderFromSourceCode(context);
             context.Parser = new Parser(context);
+            context.Compiler = new Compiler(context);
             context.InstancesStorage = new InstancesStorageComponent(context);
             context.StatesStorage = new StatesStorageComponent(context);
             context.CommonNamesStorage = new CommonNamesStorage(context);
             context.LogicalEngine = new LogicalEngineComponent(context);
             context.InheritanceEngine = new InheritanceEngineComponent(context);
+            context.DataResolversFactory = new DataResolversFactory(context);
+            context.ActivePeriodicObjectContext = new ActivePeriodicObjectContext(settings.SyncContext);
 
             return context;
         }
 
         public static void LoadFromSourceCode(EngineContext context)
         {
-            context.CommonNamesStorage.LoadFromSourceCode();            
+            context.CommonNamesStorage.LoadFromSourceCode();
             context.Storage.LoadFromSourceCode();
             context.StandardLibraryLoader.LoadFromSourceCode();
             context.StatesStorage.LoadFromSourceCode();
+            context.InstancesStorage.LoadFromSourceFiles();
             context.LoaderFromSourceCode.LoadFromSourceFiles();
         }
     }

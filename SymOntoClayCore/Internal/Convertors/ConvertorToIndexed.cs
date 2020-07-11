@@ -1,13 +1,15 @@
 ﻿using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.IndexedData
+namespace SymOntoClay.Core.Internal.Convertors
 {
     public static class ConvertorToIndexed
     {
@@ -50,6 +52,12 @@ namespace SymOntoClay.Core.Internal.IndexedData
             return result;
         }
 
+        public static IndexedValue ConvertValue(Value source, IEntityDictionary entityDictionary)
+        {
+            var convertingContext = new Dictionary<object, object>();
+            return ConvertValue(source, entityDictionary, convertingContext);
+        }
+
         private static IndexedValue ConvertValue(Value source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
         {
             switch(source.KindOfValue)
@@ -65,6 +73,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
                 case KindOfValue.StringValue:
                     return NConvertStringValue(source.AsStringValue, entityDictionary, convertingContext);
+
+                //case KindOfValue.TaskValue:
+                //    return NConvertTaskValue(source.AsTaskValue, entityDictionary, convertingContext);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(source.KindOfValue), source.KindOfValue, null);
@@ -166,6 +177,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
             return result;
         }
 
+        //NConvertTaskValue
+
         private static void FillAnnotationsModalitiesAndSections(AnnotatedItem source, IndexedAnnotatedItem dest, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
         {
             if(dest.QuantityQualityModalities == null)
@@ -193,6 +206,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
                     dest.WhereSection.Add(ConvertValue(item, entityDictionary, convertingContext));
                 }
             }
+
+            dest.Holder = source.Holder;
         }
 
         public static IndexedRuleInstance ConvertRuleInstance(RuleInstance source, IEntityDictionary entityDictionary)
@@ -461,6 +476,39 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             result.Name = source.Name;
             result.Handler = source.Handler;
+
+            return result;
+        }
+
+        public static IndexedInlineTrigger ConvertInlineTrigger(InlineTrigger source, IEntityDictionary entityDictionary, ICompiler compiler)
+        {
+            var convertingContext = new Dictionary<object, object>();
+            return ConvertInlineTrigger(source, entityDictionary, compiler, convertingContext);
+        }
+
+        private static IndexedInlineTrigger ConvertInlineTrigger(InlineTrigger source, IEntityDictionary entityDictionary, ICompiler compiler, Dictionary<object, object> convertingContext)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (IndexedInlineTrigger)convertingContext[source];
+            }
+
+            var result = new IndexedInlineTrigger();
+            convertingContext[source] = result;
+            result.OriginalInlineTrigger = source;
+            source.Indexed = result;
+
+            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+
+            result.Kind = source.Kind;
+            result.KindOfSystemEvent = source.KindOfSystemEvent;
+
+            result.CompiledFunctionBody = compiler.Compile(source.Statements);
 
             return result;
         }

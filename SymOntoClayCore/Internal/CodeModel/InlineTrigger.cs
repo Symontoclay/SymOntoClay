@@ -1,4 +1,7 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
+using SymOntoClay.Core.Internal.Convertors;
+using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -12,6 +15,20 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public KindOfSystemEventOfInlineTrigger KindOfSystemEvent { get; set; } = KindOfSystemEventOfInlineTrigger.Unknown;
         public List<AstStatement> Statements { get; set; } = new List<AstStatement>();
 
+        public CodeEntity CodeEntity { get; set; }
+
+        public IndexedInlineTrigger Indexed { get; set; }
+
+        public IndexedInlineTrigger GetIndexed(IEntityDictionary entityDictionary, ICompiler compiler)
+        {
+            if (Indexed == null)
+            {
+                return ConvertorToIndexed.ConvertInlineTrigger(this, entityDictionary, compiler);
+            }
+
+            return Indexed;
+        }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
@@ -20,6 +37,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
             sb.PrintObjListProp(n, nameof(Statements), Statements);
+
+            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -35,6 +54,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintShortObjListProp(n, nameof(Statements), Statements);
 
+            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -48,6 +69,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
 
             sb.PrintBriefObjListProp(n, nameof(Statements), Statements);
+
+            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

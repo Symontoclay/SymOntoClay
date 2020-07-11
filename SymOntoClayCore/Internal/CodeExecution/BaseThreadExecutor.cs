@@ -2,10 +2,11 @@
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
+using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.CoreHelper.Threads;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
@@ -20,7 +21,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _activeObject = activeObject;
             activeObject.PeriodicMethod = CommandLoop;
 
-            _operatorsResolver = new OperatorsResolver(_context);
+            _operatorsResolver = context.DataResolversFactory.GetOperatorsResolver();
         }
 
         private IEngineContext _context;
@@ -38,10 +39,35 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentCodeFrame = codeFrame;
         }
 
+        public void SetCodeFrames(List<CodeFrame> codeFramesList)
+        {
+            var reverseCodeFramesList = codeFramesList.ToList();
+            reverseCodeFramesList.Reverse();
+
+            foreach(var codeFrame in reverseCodeFramesList)
+            {
+                SetCodeFrame(codeFrame);
+            }
+        }
+
+        public Value Start()
+        {
+            return _activeObject.Start();
+        }
+
         private bool CommandLoop()
         {
             try
             {
+                if(_currentCodeFrame == null)
+                {
+#if DEBUG
+                    Log("_currentCodeFrame == null return false;");
+#endif
+
+                    return false;
+                }
+
                 var currentPosition = _currentCodeFrame.CurrentPosition;
 
 #if DEBUG
@@ -56,6 +82,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (currentPosition >= compiledFunctionBodyCommands.Count)
                 {
+#if DEBUG
+                    Log("currentPosition >= compiledFunctionBodyCommands.Count return false;");
+#endif
+
                     return false;
                 }
 
@@ -69,6 +99,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 switch (currentCommand.OperationCode)
                 {
                     case OperationCode.Nop:
+                        _currentCodeFrame.CurrentPosition++;
+                        break;
+
+                    case OperationCode.ClearStack:
+                        _currentCodeFrame.ValuesStack.Clear();
                         _currentCodeFrame.CurrentPosition++;
                         break;
 
@@ -86,7 +121,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
-                            var operatorInfo = _operatorsResolver.GetOperator(currentCommand.KindOfOperator, _currentCodeFrame.Storage);
+                            var operatorInfo = _operatorsResolver.GetOperator(currentCommand.KindOfOperator, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultFluentOptions());
 
 #if DEBUG
                             Log($"operatorInfo = {operatorInfo}");
@@ -95,6 +130,21 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             CallExecutable(operatorInfo, paramsList);
 
                             _currentCodeFrame.CurrentPosition++;
+                        }
+                        break;
+
+                    case OperationCode.Return:
+                        {
+                            _codeFrames.Pop();
+
+                            if(_codeFrames.Count == 0)
+                            {
+                                _currentCodeFrame = null;
+                            }
+                            else
+                            {
+                                _currentCodeFrame = _codeFrames.Peek();
+                            }                      
                         }
                         break;
 
@@ -134,7 +184,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             if(executable.IsSystemDefined)
             {
-                var result = executable.SystemHandler.Call(paramsList, _currentCodeFrame.Storage);
+                var result = executable.SystemHandler.Call(paramsList, _currentCodeFrame.LocalContext);
 
 #if DEBUG
                 Log($"result = {result}");

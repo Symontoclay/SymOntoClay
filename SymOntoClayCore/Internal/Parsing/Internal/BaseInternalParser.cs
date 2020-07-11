@@ -78,6 +78,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             return name;
         }
 
+        protected void SetCurrentCodeEntity(CodeEntity codeEntity)
+        {
+            _context.SetCurrentCodeEntity(codeEntity);
+        }
+
+        protected void RemoveCurrentCodeEntity()
+        {
+            _context.RemoveCurrentCodeEntity();
+        }
+
+        protected CodeEntity CurrentCodeEntity => _context.CurrentCodeEntity;
+
         /// <inheritdoc/>
         [MethodForLoggingSupport]
         protected void Log(string message)

@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper;
+﻿using SymOntoClay.Core.Internal.Threads;
+using SymOntoClay.CoreHelper;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,42 +7,37 @@ using System.Threading;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.Threads
 {
-    public class ThreadsCoreComponent: BaseWorldCoreComponent, ISyncContext
+    public class ThreadsCoreComponent: BaseWorldCoreComponent, IActivePeriodicObjectCommonContext
     {
         public ThreadsCoreComponent(IWorldCoreContext coreContext)
             : base(coreContext)
         {
         }
 
-        private AutoResetEvent _autoResetEvent = new AutoResetEvent(false);
+        private readonly ActivePeriodicObjectCommonContext _commonActiveContext = new ActivePeriodicObjectCommonContext();
 
         /// <inheritdoc/>
-        void ISyncContext.Wait()
-        {
-            throw new NotImplementedException();
-            _autoResetEvent.WaitOne();
-        }
+        bool IActivePeriodicObjectCommonContext.IsNeedWating => _commonActiveContext.IsNeedWating;
+
+        /// <inheritdoc/>
+        AutoResetEvent IActivePeriodicObjectCommonContext.AutoResetEvent => _commonActiveContext.AutoResetEvent;
 
         public void Lock()
         {
-            //throw new NotImplementedException();
-
-            _autoResetEvent.Reset();
+            _commonActiveContext.Lock();
         }
 
         public void UnLock()
         {
-            //throw new NotImplementedException();
-
-            _autoResetEvent.Set();
+            _commonActiveContext.UnLock();
         }
 
-        /// <inheritdoc/>
-        protected override void OnDispose()
-        {
-            base.OnDispose();
+        ///// <inheritdoc/>
+        //protected override void OnDispose()
+        //{
+        //    base.OnDispose();
 
-            _autoResetEvent.Dispose();
-        }
+        //    _commonActiveContext.Dispose();
+        //}
     }
 }

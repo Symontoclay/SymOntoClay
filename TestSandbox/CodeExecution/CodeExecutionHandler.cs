@@ -24,6 +24,17 @@ namespace TestSandbox.CodeExecution
 
             var context = TstEngineContextHelper.CreateAndInitContext();
 
+            var applicationInheritanceItem = new InheritanceItem()
+            {
+                IsSystemDefined = true
+            };
+
+            applicationInheritanceItem.SubName = NameHelper.CreateName("PixKeeper", context.Dictionary);
+            applicationInheritanceItem.SuperName = context.CommonNamesStorage.ApplicationName;
+            applicationInheritanceItem.Rank = new LogicalValue(1.0F);
+
+            context.Storage.GlobalStorage.InheritanceStorage.SetInheritance(applicationInheritanceItem);
+
             var compiledFunctionBody = new CompiledFunctionBody();
             
             var strVal = new StringValue("The beatles!");
@@ -57,12 +68,23 @@ namespace TestSandbox.CodeExecution
 
             compiledFunctionBody.Commands[2] = command;
 
+            command = new ScriptCommand();
+            command.OperationCode = OperationCode.Return;
+            command.Position = 3;
+
+            _logger.Log($"command = {command}");
+
+            compiledFunctionBody.Commands[3] = command;
+
             _logger.Log($"compiledFunctionBody = {compiledFunctionBody}");
             _logger.Log($"compiledFunctionBody = {compiledFunctionBody.ToDbgString()}");
 
             var codeFrame = new CodeFrame();
             codeFrame.CompiledFunctionBody = compiledFunctionBody;
-            codeFrame.Storage = context.Storage.GlobalStorage;
+            codeFrame.LocalContext = new LocalCodeExecutionContext();
+            codeFrame.LocalContext.Storage = context.Storage.GlobalStorage;
+            codeFrame.LocalContext.Holder = NameHelper.CreateName("PixKeeper", context.Dictionary);
+            //codeFrame.LocalContext.Holder = new Name();
 
             _logger.Log($"codeFrame = {codeFrame}");
             _logger.Log($"codeFrame = {codeFrame.ToDbgString()}");

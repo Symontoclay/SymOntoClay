@@ -30,7 +30,11 @@ namespace SymOntoClay.Core.Internal.Parsing
             Log($"text = {text}");
 #endif
 
-            var internalParserContext = new InternalParserContext(text, _context);
+            var result = new CodeFile();
+            result.IsMain = parsedFileInfo.IsMain;
+            result.FileName = parsedFileInfo.FileName;
+            
+            var internalParserContext = new InternalParserContext(text, result, _context);
 
             var parser = new SourceCodeParser(internalParserContext);
             parser.Run();
@@ -41,15 +45,7 @@ namespace SymOntoClay.Core.Internal.Parsing
             Log($"codeEntitiesList = {codeEntitiesList.WriteListToString()}");
 #endif
 
-            var result = new CodeFile();
-            result.IsMain = parsedFileInfo.IsMain;
-            result.FileName = parsedFileInfo.FileName;
             result.CodeEntities = codeEntitiesList;
-
-            foreach(var codeEntity in codeEntitiesList)
-            {
-                codeEntity.CodeFile = result;
-            }
 
             return result;
         }

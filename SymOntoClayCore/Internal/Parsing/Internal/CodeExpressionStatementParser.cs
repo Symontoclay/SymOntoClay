@@ -30,8 +30,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
-            Log($"_nodePoint = {_nodePoint}");
+            //Log($"_currToken = {_currToken}");
+            //Log($"_nodePoint = {_nodePoint}");
             //Log($"_state = {_state}");
 #endif
 
@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var name = NameHelper.CreateName(_currToken.Content, _context.Dictionary);
 
 #if DEBUG
-            Log($"name = {name}");
+            //Log($"name = {name}");
 #endif
 
             var node = new ConstValueAstExpression();

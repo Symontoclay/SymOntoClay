@@ -24,8 +24,8 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         public Value Call(Value leftOperand, Value rightOperand, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Log($"leftOperand = {leftOperand}");
-            Log($"rightOperand = {rightOperand}");
+            //Log($"leftOperand = {leftOperand}");
+            //Log($"rightOperand = {rightOperand}");
 #endif
 
             Value valueFromSource = null;
@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             }
 
 #if DEBUG
-            Log($"valueFromSource = {valueFromSource}");
+            //Log($"valueFromSource = {valueFromSource}");
 #endif
 
             if(rightOperand.KindOfValue == KindOfValue.IdentifierValue)
@@ -48,7 +48,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 var identifier = rightOperand.AsIdentifierValue;
 
 #if DEBUG
-                Log($"identifier = {identifier}");
+                //Log($"identifier = {identifier}");
 #endif
 
                 if(identifier.KindOfName == KindOfName.Channel)
@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                     var channel = _channelsResolver.GetChannel(identifier, localCodeExecutionContext, ResolverOptions.GetDefaultFluentOptions());
 
 #if DEBUG
-                    Log($"channel = {channel}");
+                    //Log($"channel = {channel}");
 #endif
 
                     return channel.Handler.Write(valueFromSource);

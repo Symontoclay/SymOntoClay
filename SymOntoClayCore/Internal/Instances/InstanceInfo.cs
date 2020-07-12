@@ -24,7 +24,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _localCodeExecutionContext.Holder = _name;
 
 #if DEBUG
-            Log($"_localCodeExecutionContext = {_localCodeExecutionContext}");
+            //Log($"_localCodeExecutionContext = {_localCodeExecutionContext}");
 #endif
 
             _triggersResolver = new TriggersResolver(context);
@@ -45,7 +45,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var targetTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger.Init, _name, _localCodeExecutionContext, ResolverOptions.GetDefaultFluentOptions());
 
 #if DEBUG
-            Log($"targetTriggersList = {targetTriggersList.WriteListToString()}");
+            //Log($"targetTriggersList = {targetTriggersList.WriteListToString()}");
 #endif
 
             var codeFramesList = new List<CodeFrame>();
@@ -66,13 +66,13 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Log($"codeFramesList = {codeFramesList.WriteListToString()}");
+            //Log($"codeFramesList = {codeFramesList.WriteListToString()}");
 #endif
 
             var taskValue = _context.CodeExecutor.ExecuteBatchAsync(codeFramesList);
 
 #if DEBUG
-            Log($"taskValue = {taskValue}");
+            //Log($"taskValue = {taskValue}");
 #endif
 
             _instanceState = InstanceState.Initialized;

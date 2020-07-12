@@ -20,7 +20,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public Value ExecuteBatchAsync(List<CodeFrame> codeFramesList)
         {
 #if DEBUG
-            Log($"codeFramesList = {codeFramesList.WriteListToString()}");
+            //Log($"codeFramesList = {codeFramesList.WriteListToString()}");
 #endif
 
             var threadExecutor = new AsyncThreadExecutor(_context);

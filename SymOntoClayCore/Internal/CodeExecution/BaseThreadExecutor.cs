@@ -62,7 +62,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 if(_currentCodeFrame == null)
                 {
 #if DEBUG
-                    Log("_currentCodeFrame == null return false;");
+                    //Log("_currentCodeFrame == null return false;");
 #endif
 
                     return false;
@@ -71,19 +71,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var currentPosition = _currentCodeFrame.CurrentPosition;
 
 #if DEBUG
-                Log($"currentPosition = {currentPosition}");
+                //Log($"currentPosition = {currentPosition}");
 #endif
 
                 var compiledFunctionBodyCommands = _currentCodeFrame.CompiledFunctionBody.Commands;
 
 #if DEBUG
-                Log($"compiledFunctionBodyCommands.Count = {compiledFunctionBodyCommands.Count}");
+                //Log($"compiledFunctionBodyCommands.Count = {compiledFunctionBodyCommands.Count}");
 #endif
 
                 if (currentPosition >= compiledFunctionBodyCommands.Count)
                 {
 #if DEBUG
-                    Log("currentPosition >= compiledFunctionBodyCommands.Count return false;");
+                    //Log("currentPosition >= compiledFunctionBodyCommands.Count return false;");
 #endif
 
                     return false;
@@ -92,8 +92,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var currentCommand = compiledFunctionBodyCommands[currentPosition];
 
 #if DEBUG
-                Log($"currentCommand = {currentCommand}");
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                //Log($"currentCommand = {currentCommand}");
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -117,14 +117,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             var paramsList = TakePositionedParameters(2);
 
 #if DEBUG
-                            Log($"paramsList = {paramsList.WriteListToString()}");
-                            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                            //Log($"paramsList = {paramsList.WriteListToString()}");
+                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                             var operatorInfo = _operatorsResolver.GetOperator(currentCommand.KindOfOperator, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultFluentOptions());
 
 #if DEBUG
-                            Log($"operatorInfo = {operatorInfo}");
+                            //Log($"operatorInfo = {operatorInfo}");
 #endif
 
                             CallExecutable(operatorInfo, paramsList);
@@ -187,13 +187,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var result = executable.SystemHandler.Call(paramsList, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-                Log($"result = {result}");
+                //Log($"result = {result}");
 #endif
 
                 _currentCodeFrame.ValuesStack.Push(result);
 
 #if DEBUG
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 return;

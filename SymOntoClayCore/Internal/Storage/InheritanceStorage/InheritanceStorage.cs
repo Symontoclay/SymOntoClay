@@ -50,14 +50,14 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"subItem = {subItem}");
-                Log($"inheritanceItem = {inheritanceItem}");
-                Log($"isPrimary = {isPrimary}");
+                //Log($"subItem = {subItem}");
+                //Log($"inheritanceItem = {inheritanceItem}");
+                //Log($"isPrimary = {isPrimary}");
 #endif
                 var indexedInheritanceItem = inheritanceItem.GetIndexed(_realStorageContext.EntityDictionary);
 
 #if DEBUG
-                Log($"indexedInheritanceItem = {indexedInheritanceItem}");
+                //Log($"indexedInheritanceItem = {indexedInheritanceItem}");
 #endif
 
                 var subName = indexedInheritanceItem.SubName;
@@ -101,15 +101,15 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                 var inheritanceFact = CreateInheritanceFact(subItem, inheritanceItem);
 
 #if DEBUG
-                Log($"inheritanceFact = {inheritanceFact}");
-                Log($"inheritanceFact = {DebugHelperForRuleInstance.ToString(inheritanceFact)}");
+                //Log($"inheritanceFact = {inheritanceFact}");
+                //Log($"inheritanceFact = {DebugHelperForRuleInstance.ToString(inheritanceFact)}");
 #endif
 
                 _realStorageContext.LogicalStorage.Append(inheritanceFact, false);
             }
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
@@ -118,7 +118,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
             var factName = NameHelper.CreateRuleOrFactName(_realStorageContext.EntityDictionary);
 
 #if DEBUG
-            Log($"factName = {factName}");
+            //Log($"factName = {factName}");
 #endif
 
             var fact = new RuleInstance();
@@ -160,7 +160,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"superName = {subName}");
+                //Log($"superName = {subName}");
 #endif
 
                 if(subName.IsEmpty)
@@ -169,7 +169,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                 }
 
 #if DEBUG
-                Log("Next");
+                //Log("Next");
 #endif
 
                 if(_indexedInfo.ContainsKey(subName))

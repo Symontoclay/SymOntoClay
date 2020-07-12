@@ -27,7 +27,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
         public Value Write(Value value)
         {
 #if DEBUG
-            Log($"value = {value}");
+            //Log($"value = {value}");
 #endif
 
             Log(value.GetSystemValue()?.ToString());

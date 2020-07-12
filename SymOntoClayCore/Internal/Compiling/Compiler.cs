@@ -26,7 +26,7 @@ namespace SymOntoClay.Core.Internal.Compiling
             var resultCommandsList = node.Result;
 
 #if DEBUG
-            Log($"resultCommandsList = {resultCommandsList.WriteListToString()}");
+            //Log($"resultCommandsList = {resultCommandsList.WriteListToString()}");
 #endif
 
             var n = 0;

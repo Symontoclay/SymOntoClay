@@ -217,7 +217,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             var result = ConvertRuleInstance(source, entityDictionary, convertingContext);
 
 #if DEBUG
-            _gbcLogger.Info($"result = {result}");
+            //_gbcLogger.Info($"result = {result}");
 #endif
 
             return result;
@@ -226,7 +226,7 @@ namespace SymOntoClay.Core.Internal.Convertors
         private static IndexedRuleInstance ConvertRuleInstance(RuleInstance source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
         {
 #if DEBUG
-            _gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"source = {source}");
 #endif
 
             if (source == null)
@@ -240,7 +240,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             }
 
 #if DEBUG
-            _gbcLogger.Info("NEXT");
+            //_gbcLogger.Info("NEXT");
 #endif
 
             var result = new IndexedRuleInstance();
@@ -262,7 +262,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             }
 
 #if DEBUG
-            _gbcLogger.Info($"result (snapshot) = {result}");
+            //_gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
             return result;
@@ -271,7 +271,7 @@ namespace SymOntoClay.Core.Internal.Convertors
         private static IndexedPrimaryRulePart ConvertPrimaryRulePart(PrimaryRulePart source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
         {
 #if DEBUG
-            _gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"source = {source}");
 #endif
 
             if (source == null)
@@ -285,7 +285,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             }
 
 #if DEBUG
-            _gbcLogger.Info("NEXT");
+            //_gbcLogger.Info("NEXT");
 #endif
 
             var result = new IndexedPrimaryRulePart();
@@ -303,7 +303,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             }
 
 #if DEBUG
-            _gbcLogger.Info($"result (snapshot) = {result}");
+            //_gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
             return result;
@@ -341,7 +341,7 @@ namespace SymOntoClay.Core.Internal.Convertors
         private static IsOperatorIndexedLogicalQueryNode ConvertIsOperatorLogicalQueryNode(LogicalQueryNode source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
         {
 #if DEBUG
-            _gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"source = {source}");
 #endif
 
             if (source == null)
@@ -355,7 +355,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             }
 
 #if DEBUG
-            _gbcLogger.Info("NEXT");
+            //_gbcLogger.Info("NEXT");
 #endif
 
             var result = new IsOperatorIndexedLogicalQueryNode();
@@ -368,7 +368,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.Right = ConvertLogicalQueryNode(source.Right, entityDictionary, convertingContext);
 
 #if DEBUG
-            _gbcLogger.Info($"result (snapshot) = {result}");
+            //_gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
             return result;
@@ -377,7 +377,7 @@ namespace SymOntoClay.Core.Internal.Convertors
         private static ConceptIndexedLogicalQueryNode ConvertConceptLogicalQueryNode(LogicalQueryNode source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
         {
 #if DEBUG
-            _gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"source = {source}");
 #endif
 
             if (source == null)
@@ -391,7 +391,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             }
 
 #if DEBUG
-            _gbcLogger.Info("NEXT");
+            //_gbcLogger.Info("NEXT");
 #endif
 
             var result = new ConceptIndexedLogicalQueryNode();
@@ -401,7 +401,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
 
 #if DEBUG
-            _gbcLogger.Info($"result (snapshot) = {result}");
+            //_gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
             return result;

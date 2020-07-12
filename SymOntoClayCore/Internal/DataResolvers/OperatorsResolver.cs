@@ -19,7 +19,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public IndexedOperator GetOperator(KindOfOperator kindOfOperator, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"kindOfOperator = {kindOfOperator}");
+            //Log($"kindOfOperator = {kindOfOperator}");
 #endif
 
             var storage = localCodeExecutionContext.Storage;
@@ -27,11 +27,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var storagesList = GetStoragesList(storage);
 
 #if DEBUG
-            Log($"storagesList.Count = {storagesList.Count}");
-            foreach(var tmpStorage in storagesList)
-            {
-                Log($"tmpStorage.Key = {tmpStorage.Key}; tmpStorage.Value.Kind = '{tmpStorage.Value.Kind}'");
-            }
+            //Log($"storagesList.Count = {storagesList.Count}");
+            //foreach(var tmpStorage in storagesList)
+            //{
+            //    Log($"tmpStorage.Key = {tmpStorage.Key}; tmpStorage.Value.Kind = '{tmpStorage.Value.Kind}'");
+            //}
 #endif
 
             var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
@@ -42,19 +42,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
-            Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
+            //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
 #endif
 
             var rawList = GetRawList(kindOfOperator, storagesList, weightedInheritanceItems);
 
 #if DEBUG
-            Log($"rawList = {rawList.WriteListToString()}");
+            //Log($"rawList = {rawList.WriteListToString()}");
 #endif
 
             var filteredList = Filter(rawList);
 
 #if DEBUG
-            Log($"filteredList = {filteredList.WriteListToString()}");
+            //Log($"filteredList = {filteredList.WriteListToString()}");
 #endif
 
             var targetOp = ChooseTargetItem(filteredList);
@@ -65,7 +65,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private List<WeightedInheritanceResultItemWithStorageInfo<IndexedOperator>> GetRawList(KindOfOperator kindOfOperator, List<KeyValuePair<uint, IStorage>> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
-            Log($"kindOfOperator = {kindOfOperator}");
+            //Log($"kindOfOperator = {kindOfOperator}");
 #endif
 
             if(!storagesList.Any())

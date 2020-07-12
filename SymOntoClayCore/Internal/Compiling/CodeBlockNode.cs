@@ -18,13 +18,13 @@ namespace SymOntoClay.Core.Internal.Compiling
         public void Run(List<AstStatement> statements)
         {
 #if DEBUG
-            Log($"statements = {statements.WriteListToString()}");
+            //Log($"statements = {statements.WriteListToString()}");
 #endif
 
             foreach (var statement in statements)
             {
 #if DEBUG
-                Log($"statement = {statement}");
+                //Log($"statement = {statement}");
 #endif
 
                 var kind = statement.Kind;

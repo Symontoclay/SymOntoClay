@@ -30,7 +30,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnEnter()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
             Result = new CodeEntity();
             Result.Kind = KindOfCodeEntity.App;
@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             SetCurrentCodeEntity(Result);
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
@@ -48,13 +48,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnFinish()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             RemoveCurrentCodeEntity();
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
@@ -62,9 +62,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
-            Log($"Result = {Result}");
-            Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
+            //Log($"Result = {Result}");
+            //Log($"_state = {_state}");
 #endif
 
             switch (_state)

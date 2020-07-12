@@ -24,14 +24,14 @@ namespace SymOntoClay.Core.Internal.Instances
         public void LoadFromSourceFiles()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             _namesDict = new Dictionary<Name, InstanceInfo>();
             _rootInstanceInfo = null;
 
 #if IMAGINE_WORKING
-            Log("End");
+            //Log("End");
 #else
             throw new NotImplementedException();
 #endif
@@ -45,7 +45,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var mainEntity = globalStorage.MetadataStorage.MainCodeEntity;
 
 #if DEBUG
-            Log($"mainEntity = {mainEntity}");
+            //Log($"mainEntity = {mainEntity}");
 #endif
 
             if(mainEntity.Name.KindOfName != KindOfName.Entity)
@@ -54,7 +54,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Log($"NEXT mainEntity = {mainEntity}");
+            //Log($"NEXT mainEntity = {mainEntity}");
 #endif
 
             InstanceInfo instanceInfo;
@@ -79,7 +79,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Log($"instanceInfo = {instanceInfo}");
+            //Log($"instanceInfo = {instanceInfo}");
 #endif
             instanceInfo.Init();
         }
@@ -106,7 +106,7 @@ namespace SymOntoClay.Core.Internal.Instances
             result.InheritanceItems.Add(inheritanceItem);
 
 #if DEBUG
-            Log($"result = {result}");
+            //Log($"result = {result}");
 #endif
 
             var globalStorage = _context.Storage.GlobalStorage;

@@ -18,13 +18,13 @@ namespace SymOntoClay.Core.Internal.Serialization
         public override void LoadFromSourceFiles()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             base.LoadFromSourceFiles();
 
 #if DEBUG
-            Log("Next --");
+            //Log("Next --");
 #endif
 
             var instancesStorage = _context.InstancesStorage;
@@ -32,7 +32,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             instancesStorage.ActivateMainEntity();
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
     }

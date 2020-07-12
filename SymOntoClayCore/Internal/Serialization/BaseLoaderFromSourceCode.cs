@@ -22,45 +22,45 @@ namespace SymOntoClay.Core.Internal.Serialization
         public virtual void LoadFromSourceFiles()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             var filesList = FileHelper.GetParsedFilesInfo(_context.AppFile, _context.Id);
 
 #if DEBUG
-            Log($"filesList.Count = {filesList.Count}");
+            //Log($"filesList.Count = {filesList.Count}");
 
-            Log($"filesList = {filesList.WriteListToString()}");
+            //Log($"filesList = {filesList.WriteListToString()}");
 #endif
 
             var parsedFilesList = _context.Parser.Parse(filesList);
 
 #if DEBUG
-            Log($"parsedFilesList.Count = {parsedFilesList.Count}");
+            //Log($"parsedFilesList.Count = {parsedFilesList.Count}");
 
-            Log($"parsedFilesList = {parsedFilesList.WriteListToString()}");
+            //Log($"parsedFilesList = {parsedFilesList.WriteListToString()}");
 #endif
 
             var parsedCodeEntitiesList = LinearizeSubItems(parsedFilesList);
 
 #if DEBUG
-            Log($"parsedCodeEntitiesList.Count = {parsedCodeEntitiesList.Count}");
+            //Log($"parsedCodeEntitiesList.Count = {parsedCodeEntitiesList.Count}");
 
-            Log($"parsedCodeEntitiesList = {parsedCodeEntitiesList.WriteListToString()}");
+            //Log($"parsedCodeEntitiesList = {parsedCodeEntitiesList.WriteListToString()}");
 #endif
 
             AddSystemDefinedSettings(parsedCodeEntitiesList);
 
 #if DEBUG
-            Log($"parsedCodeEntitiesList.Count (2) = {parsedCodeEntitiesList.Count}");
+            //Log($"parsedCodeEntitiesList.Count (2) = {parsedCodeEntitiesList.Count}");
 
-            Log($"parsedCodeEntitiesList (2) = {parsedCodeEntitiesList.WriteListToString()}");
+            //Log($"parsedCodeEntitiesList (2) = {parsedCodeEntitiesList.WriteListToString()}");
 #endif
 
             SaveItems(parsedCodeEntitiesList);
 
 #if IMAGINE_WORKING
-            Log("End");
+            //Log("End");
 #else
             throw new NotImplementedException();
 #endif
@@ -104,7 +104,7 @@ namespace SymOntoClay.Core.Internal.Serialization
         private void AddSystemDefinedSettings(CodeEntity codeEntity)
         {
 #if DEBUG
-            Log($"codeEntity = {codeEntity}");
+            //Log($"codeEntity = {codeEntity}");
 #endif
 
             switch(codeEntity.Kind)
@@ -133,7 +133,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             applicationInheritanceItem.Rank = new LogicalValue(1.0F);
 
 #if DEBUG
-            Log($"applicationInheritanceItem = {applicationInheritanceItem}");
+            //Log($"applicationInheritanceItem = {applicationInheritanceItem}");
 #endif
 
             codeEntity.InheritanceItems.Add(applicationInheritanceItem);
@@ -150,7 +150,7 @@ namespace SymOntoClay.Core.Internal.Serialization
         private void SaveItem(CodeEntity codeEntity)
         {
 #if DEBUG
-            Log($"codeEntity = {codeEntity}");
+            //Log($"codeEntity = {codeEntity}");
 #endif
 
             var codeEntityName = codeEntity.Name;
@@ -169,7 +169,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
 
 #if DEBUG
-            Log($"codeEntity (2) = {codeEntity}");
+            //Log($"codeEntity (2) = {codeEntity}");
 #endif
 
             var kindOfEntity = codeEntity.Kind;
@@ -188,7 +188,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
     }

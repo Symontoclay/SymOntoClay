@@ -12,8 +12,8 @@ namespace SymOntoClay.Core.Internal.Storage
             : base(settings.Logger)
         {
 #if DEBUG
-            Log($"kind = {kind}");
-            Log($"settings = {settings}");
+            //Log($"kind = {kind}");
+            //Log($"settings = {settings}");
 #endif
 
             _kind = kind;
@@ -80,8 +80,8 @@ namespace SymOntoClay.Core.Internal.Storage
         void IStorage.CollectChainOfStorages(IList<KeyValuePair<uint, IStorage>> result, uint level)
         {
 #if DEBUG
-            Log($"result?.Count = {result?.Count}");
-            Log($"level = {level}");
+            //Log($"result?.Count = {result?.Count}");
+            //Log($"level = {level}");
 #endif
 
             level++;

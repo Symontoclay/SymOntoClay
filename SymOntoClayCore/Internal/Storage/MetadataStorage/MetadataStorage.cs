@@ -36,13 +36,13 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStorage
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"codeEntity = {codeEntity}");
+                //Log($"codeEntity = {codeEntity}");
 #endif
 
                 var name = codeEntity.Name;
 
 #if DEBUG
-                Log($"name = {name}");
+                //Log($"name = {name}");
 #endif
 
                 if (_codeEntitiesDict.ContainsKey(name))

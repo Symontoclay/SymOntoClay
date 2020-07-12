@@ -71,7 +71,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected Name ParseName(string text)
         {
 #if DEBUG
-            Log($"text = {text}");
+            //Log($"text = {text}");
 #endif
 
             var name = NameHelper.CreateName(text, _context.Dictionary);

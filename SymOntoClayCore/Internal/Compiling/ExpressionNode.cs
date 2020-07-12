@@ -16,7 +16,7 @@ namespace SymOntoClay.Core.Internal.Compiling
         public void Run(AstExpression expression)
         {
 #if DEBUG
-            Log($"expression = {expression}");
+            //Log($"expression = {expression}");
 #endif
 
             var kind = expression.Kind;

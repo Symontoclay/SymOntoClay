@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.Storage
             _storagesList.Add(_globalStorage);
 
 #if IMAGINE_WORKING
-            Log("Do");
+            //Log("Do");
 #else
                 throw new NotImplementedException();
 #endif

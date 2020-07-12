@@ -55,7 +55,7 @@ namespace TestSandbox.Handlers
 
             instance.Start();
 
-            Thread.Sleep(10000);
+            Thread.Sleep(5000);
 
             _logger.Info("End");
         }

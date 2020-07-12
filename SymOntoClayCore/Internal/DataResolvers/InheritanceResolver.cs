@@ -24,7 +24,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(Name subName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"localCodeExecutionContext = {localCodeExecutionContext}");
+            //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
 #endif
 
             var storage = localCodeExecutionContext.Storage;
@@ -32,11 +32,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var storagesList = GetStoragesList(storage);
 
 #if DEBUG
-            Log($"storagesList.Count = {storagesList.Count}");
-            foreach (var tmpStorage in storagesList)
-            {
-                Log($"tmpStorage.Key = {tmpStorage.Key}; tmpStorage.Value.Kind = '{tmpStorage.Value.Kind}'");
-            }
+            //Log($"storagesList.Count = {storagesList.Count}");
+            //foreach (var tmpStorage in storagesList)
+            //{
+            //    Log($"tmpStorage.Key = {tmpStorage.Key}; tmpStorage.Value.Kind = '{tmpStorage.Value.Kind}'");
+            //}
 #endif
 
             var rawResult = new Dictionary<Name, WeightedInheritanceItem>();
@@ -44,13 +44,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             GetWeightedInheritanceItemsBySuperName(subName, localCodeExecutionContext, rawResult, 1, 0, storagesList);
 
 #if DEBUG
-            Log($"rawResult.Count = {rawResult.Count}");
-            foreach (var resultItem in rawResult)
-            {
-                Log($"resultItem.Key = {resultItem.Key}");
-                Log($"resultItem.Value.Rank = {resultItem.Value.Rank}");
-                Log($"resultItem.Value.Distance = {resultItem.Value.Distance}");
-            }
+            //Log($"rawResult.Count = {rawResult.Count}");
+            //foreach (var resultItem in rawResult)
+            //{
+            //    Log($"resultItem.Key = {resultItem.Key}");
+            //    Log($"resultItem.Value.Rank = {resultItem.Value.Rank}");
+            //    Log($"resultItem.Value.Distance = {resultItem.Value.Distance}");
+            //}
 #endif
 
             var result = rawResult.Select(p => p.Value).ToList();
@@ -96,33 +96,33 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private void GetWeightedInheritanceItemsBySuperName(Name subName, LocalCodeExecutionContext localCodeExecutionContext, Dictionary<Name, WeightedInheritanceItem> result, float currentRank, uint currentDistance, List<KeyValuePair<uint, IStorage>> storagesList)
         {
 #if DEBUG
-            Log($"subName = {subName}");
-            Log($"currentRank = {currentRank}");
-            Log($"currentDistance = {currentDistance}");
-            Log($"result.Count = {result.Count}");
-            foreach(var resultItem in result)
-            {
-                Log($"resultItem.Key = {resultItem.Key}");
-                Log($"resultItem.Value.Rank = {resultItem.Value.Rank}");
-                Log($"resultItem.Value.Distance = {resultItem.Value.Distance}");
-            }
+            //Log($"subName = {subName}");
+            //Log($"currentRank = {currentRank}");
+            //Log($"currentDistance = {currentDistance}");
+            //Log($"result.Count = {result.Count}");
+            //foreach(var resultItem in result)
+            //{
+            //    Log($"resultItem.Key = {resultItem.Key}");
+            //    Log($"resultItem.Value.Rank = {resultItem.Value.Rank}");
+            //    Log($"resultItem.Value.Distance = {resultItem.Value.Distance}");
+            //}
 #endif
 
             currentDistance++;
 #if DEBUG
-            Log($"currentDistance (after) = {currentDistance}");
+            //Log($"currentDistance (after) = {currentDistance}");
 #endif
 
             var rawList = GetRawList(subName, storagesList);
 
 #if DEBUG
-            Log($"rawList = {rawList.WriteListToString()}");
+            //Log($"rawList = {rawList.WriteListToString()}");
 #endif
 
             var filteredList = Filter(rawList);
 
 #if DEBUG
-            Log($"filteredList = {filteredList.WriteListToString()}");
+            //Log($"filteredList = {filteredList.WriteListToString()}");
 #endif
 
             var logicalValueLinearResolver = _context.DataResolversFactory.GetLogicalValueLinearResolver();
@@ -132,7 +132,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var targetItem = filteredItem.ResultItem;
 
 #if DEBUG
-                Log($"targetItem = {targetItem}");
+                //Log($"targetItem = {targetItem}");
 #endif
 
                 var resolvedRankValue = logicalValueLinearResolver.Resolve(targetItem.Rank, localCodeExecutionContext, ResolverOptions.GetDefaultFluentOptions());
@@ -147,13 +147,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var calculatedRank = currentRank * systemValue.Value;
 
 #if DEBUG
-                Log($"calculatedRank = {calculatedRank}");
+                //Log($"calculatedRank = {calculatedRank}");
 #endif
 
                 var superName = targetItem.SuperName;
 
 #if DEBUG
-                Log($"superName = {superName}");
+                //Log($"superName = {superName}");
 #endif
 
                 if (result.ContainsKey(superName))
@@ -168,7 +168,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
 
 #if DEBUG
-                    Log($"item (w 1)= {item}");
+                    //Log($"item (w 1)= {item}");
 #endif
                 }
                 else
@@ -180,7 +180,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     item.OriginalIndexedItem = targetItem;
 
 #if DEBUG
-                    Log($"item (w 2) = {item}");
+                    //Log($"item (w 2) = {item}");
 #endif
 
                     result[superName] = item;
@@ -193,7 +193,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private List<WeightedInheritanceResultItemWithStorageInfo<IndexedInheritanceItem>> GetRawList(Name subName, List<KeyValuePair<uint, IStorage>> storagesList)
         {
 #if DEBUG
-            Log($"subName = {subName}");
+            //Log($"subName = {subName}");
 #endif
 
             if (!storagesList.Any())

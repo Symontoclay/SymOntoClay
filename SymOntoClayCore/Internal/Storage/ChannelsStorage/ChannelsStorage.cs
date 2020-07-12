@@ -39,13 +39,13 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
             lock(_lockObj)
             {
 #if DEBUG
-                Log($"channel = {channel}");
+                //Log($"channel = {channel}");
 #endif
 
                 var indexedChannel = channel.GetIndexed(_realStorageContext.EntityDictionary);
 
 #if DEBUG
-                Log($"indexedChannel = {indexedChannel}");
+                //Log($"indexedChannel = {indexedChannel}");
 #endif
 
                 var name = channel.Name;
@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"name = {name}");
+                //Log($"name = {name}");
 #endif
 
                 if (_indexedInfo.ContainsKey(name))

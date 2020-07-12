@@ -21,13 +21,13 @@ namespace SymOntoClay.Core.Internal.Parsing
         public CodeFile Parse(ParsedFileInfo parsedFileInfo)
         {
 #if DEBUG
-            Log($"parsedFileInfo = {parsedFileInfo}");
+            //Log($"parsedFileInfo = {parsedFileInfo}");
 #endif
 
             var text = File.ReadAllText(parsedFileInfo.FileName);
 
 #if DEBUG
-            Log($"text = {text}");
+            //Log($"text = {text}");
 #endif
 
             var result = new CodeFile();
@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.Parsing
             var codeEntitiesList = parser.Result;
 
 #if DEBUG
-            Log($"codeEntitiesList = {codeEntitiesList.WriteListToString()}");
+            //Log($"codeEntitiesList = {codeEntitiesList.WriteListToString()}");
 #endif
 
             result.CodeEntities = codeEntitiesList;
@@ -53,7 +53,7 @@ namespace SymOntoClay.Core.Internal.Parsing
         public List<CodeFile> Parse(List<ParsedFileInfo> parsedFileInfoList)
         {
 #if DEBUG
-            Log($"parsedFileInfoList = {parsedFileInfoList.WriteListToString()}");
+            //Log($"parsedFileInfoList = {parsedFileInfoList.WriteListToString()}");
 #endif
 
             var result = new List<CodeFile>();

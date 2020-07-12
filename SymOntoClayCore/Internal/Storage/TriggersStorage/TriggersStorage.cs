@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
         public void Append(InlineTrigger inlineTrigger)
         {
 #if DEBUG
-            Log($"inlineTrigger = {inlineTrigger}");
+            //Log($"inlineTrigger = {inlineTrigger}");
 #endif
 
             AnnotatedItemHelper.CheckAndFillHolder(inlineTrigger, _realStorageContext.CommonNamesStorage);
@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                 var indexedItem = inlineTrigger.GetIndexed(_realStorageContext.EntityDictionary, _realStorageContext.Compiler);
 
 #if DEBUG
-                Log($"indexedItem = {indexedItem}");
+                //Log($"indexedItem = {indexedItem}");
 #endif
 
                 var kindOfSystemEvent = inlineTrigger.KindOfSystemEvent;
@@ -99,7 +99,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
         public IList<WeightedInheritanceResultItem<IndexedInlineTrigger>> GetSystemEventsTriggersDirectly(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
-            Log($"kindOfSystemEvent = {kindOfSystemEvent}");
+            //Log($"kindOfSystemEvent = {kindOfSystemEvent}");
 #endif
 
             lock (_lockObj)

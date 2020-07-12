@@ -18,7 +18,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public IndexedNumberValue Resolve(IndexedValue source, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"source = {source}");
+            //Log($"source = {source}");
 #endif
 
             var sourceKind = source.KindOfValue;

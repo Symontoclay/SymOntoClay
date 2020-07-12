@@ -36,7 +36,7 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStorage
         public void Append(Operator op)
         {
 #if DEBUG
-            Log($"op = {op}");
+            //Log($"op = {op}");
 #endif
 
             AnnotatedItemHelper.CheckAndFillHolder(op, _realStorageContext.CommonNamesStorage);
@@ -46,7 +46,7 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStorage
                 var indexedOp = op.GetIndexed(_realStorageContext.EntityDictionary);
 
 #if DEBUG
-                Log($"indexedOp = {indexedOp}");
+                //Log($"indexedOp = {indexedOp}");
 #endif
 
                 var kindOfOperator = indexedOp.KindOfOperator;
@@ -85,7 +85,7 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStorage
         public IList<WeightedInheritanceResultItem<IndexedOperator>> GetOperatorsDirectly(KindOfOperator kindOfOperator, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
-            Log($"kindOfOperator = {kindOfOperator}");
+            //Log($"kindOfOperator = {kindOfOperator}");
 #endif
 
             lock (_lockObj)

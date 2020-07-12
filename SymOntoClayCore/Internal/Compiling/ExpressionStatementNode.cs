@@ -16,7 +16,7 @@ namespace SymOntoClay.Core.Internal.Compiling
         public void Run(AstExpressionStatement statement)
         {
 #if DEBUG
-            Log($"statement = {statement}");
+            //Log($"statement = {statement}");
 #endif
 
             var node = new ExpressionNode(_context);

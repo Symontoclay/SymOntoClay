@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal
         public StorageComponent Storage { get; set; }
         public CodeExecutorComponent CodeExecutor { get; set; }
         public TriggerExecutorComponent TriggerExecutor { get; set; }
-        public LoaderFromSourceCode LoaderFromSourceCode { get; set; }
+        public BaseLoaderFromSourceCode LoaderFromSourceCode { get; set; }
         public Parser Parser { get; set; }
         public Compiler Compiler { get; set; }
         public InstancesStorageComponent InstancesStorage { get; set; }
@@ -55,7 +55,7 @@ namespace SymOntoClay.Core.Internal
         public DataResolversFactory DataResolversFactory { get; set; }
         public ActivePeriodicObjectContext ActivePeriodicObjectContext { get; set; }
 
-        IStorageComponent IEngineContext.Storage => Storage;
+        IStorageComponent IMainStorageContext.Storage => Storage;
         ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;
         ITriggerExecutorComponent IEngineContext.TriggerExecutor => TriggerExecutor;
         ILoaderFromSourceCode IEngineContext.LoaderFromSourceCode => LoaderFromSourceCode;

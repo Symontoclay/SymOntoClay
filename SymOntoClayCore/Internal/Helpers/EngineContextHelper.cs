@@ -32,7 +32,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.StandardLibraryLoader = new StandardLibraryLoader(context);
             context.CodeExecutor = new CodeExecutorComponent(context);
             context.TriggerExecutor = new TriggerExecutorComponent(context);
-            context.LoaderFromSourceCode = new LoaderFromSourceCode(context);
+            context.LoaderFromSourceCode = new ActiveLoaderFromSourceCode(context);
             context.Parser = new Parser(context);
             context.Compiler = new Compiler(context);
             context.InstancesStorage = new InstancesStorageComponent(context);

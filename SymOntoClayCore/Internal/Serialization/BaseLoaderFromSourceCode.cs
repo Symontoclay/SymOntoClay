@@ -9,17 +9,17 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Serialization
 {
-    public class LoaderFromSourceCode : BaseComponent, ILoaderFromSourceCode
+    public class BaseLoaderFromSourceCode : BaseComponent, ILoaderFromSourceCode
     {
-        public LoaderFromSourceCode(IEngineContext context)
+        public BaseLoaderFromSourceCode(IMainStorageContext context)
             : base(context.Logger)
         {
             _context = context;
         }
 
-        private readonly IEngineContext _context;
+        private readonly IMainStorageContext _context;
 
-        public void LoadFromSourceFiles()
+        public virtual void LoadFromSourceFiles()
         {
 #if DEBUG
             Log("Begin");
@@ -147,7 +147,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
         }
 
-        public void SaveItem(CodeEntity codeEntity)
+        private void SaveItem(CodeEntity codeEntity)
         {
 #if DEBUG
             Log($"codeEntity = {codeEntity}");
@@ -155,7 +155,13 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             var codeEntityName = codeEntity.Name;
 
-            var inheritanceStorage = _context.Storage.GlobalStorage.InheritanceStorage;
+            var globalStorage = _context.Storage.GlobalStorage;
+
+            var metadataStorage = globalStorage.MetadataStorage;
+
+            metadataStorage.Append(codeEntity);
+
+            var inheritanceStorage = globalStorage.InheritanceStorage;
 
             foreach(var inheritanceItem in codeEntity.InheritanceItems)
             {
@@ -166,12 +172,23 @@ namespace SymOntoClay.Core.Internal.Serialization
             Log($"codeEntity (2) = {codeEntity}");
 #endif
 
-            //throw new NotImplementedException();
+            var kindOfEntity = codeEntity.Kind;
 
-#if IMAGINE_WORKING
+            switch(kindOfEntity)
+            {
+                case KindOfCodeEntity.App:
+                    break;
+
+                case KindOfCodeEntity.InlineTrigger:
+                    globalStorage.TriggersStorage.Append(codeEntity.InlineTrigger);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfEntity), kindOfEntity, null);
+            }
+
+#if DEBUG
             Log("End");
-#else
-            throw new NotImplementedException();
 #endif
         }
     }

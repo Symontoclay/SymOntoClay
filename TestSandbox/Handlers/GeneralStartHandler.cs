@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
 using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.Handlers
@@ -53,6 +54,8 @@ namespace TestSandbox.Handlers
             var npc = instance.GetBipedNPC(npcSettings);
 
             instance.Start();
+
+            Thread.Sleep(10000);
 
             _logger.Info("End");
         }

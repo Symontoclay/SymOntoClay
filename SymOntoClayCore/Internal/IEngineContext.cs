@@ -15,11 +15,7 @@ using System.Text;
 namespace SymOntoClay.Core.Internal
 {
     public interface IEngineContext: IMainStorageContext
-    {
-        string Id { get; }
-        string AppFile { get; }
-     
-        IStorageComponent Storage { get; }
+    {   
         ICodeExecutorComponent CodeExecutor { get; }
         ITriggerExecutorComponent TriggerExecutor { get; }
         ILoaderFromSourceCode LoaderFromSourceCode { get; }

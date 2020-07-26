@@ -48,7 +48,14 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log($"mainEntity = {mainEntity}");
 #endif
 
-            if(mainEntity.Name.KindOfName != KindOfName.Entity)
+            if (mainEntity.Name.KindOfName == KindOfName.Entity)
+            {
+                if(mainEntity.Name.NameValue != _context.Id)
+                {
+                    throw new Exception("Id of main entity is invalid");
+                }
+            }
+            else
             {
                 mainEntity = CreateAndSaveEntity(mainEntity);
             }
@@ -89,7 +96,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var result = new CodeEntity();
             result.Kind = KindOfCodeEntity.Instance;
 
-            var newName = NameHelper.CreateEntityName(_context.Dictionary);
+            var newName = NameHelper.CreateName(_context.Id, _context.Dictionary);
             result.Name = newName;
 
             result.Holder = _context.CommonNamesStorage.DefaultHolder;

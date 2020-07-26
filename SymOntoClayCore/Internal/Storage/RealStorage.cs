@@ -100,6 +100,9 @@ namespace SymOntoClay.Core.Internal.Storage
         }
 
         /// <inheritdoc/>
+        public DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get; set; }
+
+        /// <inheritdoc/>
         public override string ToString()
         {
             return ToString(0u);

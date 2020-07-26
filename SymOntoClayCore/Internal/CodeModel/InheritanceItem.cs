@@ -36,6 +36,46 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return Indexed;
         }
 
+        /// <inheritdoc/>
+        public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
+        {
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public InheritanceItem Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public InheritanceItem Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (InheritanceItem)context[this];
+            }
+
+            var result = new InheritanceItem();
+            context[this] = result;
+            result.SubName = SubName.Clone(context);
+            result.SuperName = SuperName.Clone(context);
+            result.Rank = Rank.CloneValue(context);
+            result.IsSystemDefined = IsSystemDefined;
+
+            result.AppendAnnotations(this, context);
+
+            return result;
+        }
+
         private void PrintHeader(StringBuilder sb, uint n, string spaces)
         {
             sb.PrintObjProp(n, nameof(SubName), SubName);

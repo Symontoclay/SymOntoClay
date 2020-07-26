@@ -35,7 +35,7 @@ namespace TestSandbox.Handlers
             {
                 LogDir = logDir,
                 RootContractName = "Hi1",
-                PlatformLoggers = new List<IPlatformLogger>() { ConsoleLogger.Instance },
+                PlatformLoggers = new List<IPlatformLogger>() { ConsoleLogger.Instance, CommonNLogLogger.Instance },
                 Enable = true,
                 EnableRemoteConnection = true
             };
@@ -46,8 +46,8 @@ namespace TestSandbox.Handlers
 
             var npcSettings = new BipedNPCSettings();
             npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
-            npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PixKeeper\PixKeeper.txt");
-            npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Apps\PixKeeper\PixKeeper.txt");
+            npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.txt");
+            npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Apps\PeaceKeeper\PeaceKeeper.txt");
 
             _logger.Info($"npcSettings = {npcSettings}");
 
@@ -55,7 +55,7 @@ namespace TestSandbox.Handlers
 
             instance.Start();
 
-            Thread.Sleep(5000);
+            Thread.Sleep(50000);
 
             _logger.Info("End");
         }

@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
     public class InternalParserContext
     {
-        public InternalParserContext()
+        private InternalParserContext()
         {
         }
 
@@ -51,6 +52,44 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 }
 
                 return _codeEntities.Peek();
+            }
+        }
+
+        private Stack<DefaultSettingsOfCodeEntity> _defaultSettingsOfCodeEntity = new Stack<DefaultSettingsOfCodeEntity>();
+        private DefaultSettingsOfCodeEntity _currentDefaultSetings;
+
+        public DefaultSettingsOfCodeEntity CurrentDefaultSetings => _currentDefaultSetings;
+
+        public void SetCurrentDefaultSetings(DefaultSettingsOfCodeEntity defaultSettings)
+        {
+            if (!_defaultSettingsOfCodeEntity.Any())
+            {
+                _defaultSettingsOfCodeEntity.Push(defaultSettings);
+                _currentDefaultSetings = defaultSettings;
+                return;
+            }
+
+            DefaultSettingsOfCodeEntityHelper.Mix(_currentDefaultSetings, defaultSettings);
+            _defaultSettingsOfCodeEntity.Push(defaultSettings);
+            _currentDefaultSetings = defaultSettings;
+        }
+
+        public void RemoveCurrentDefaultSetings()
+        {
+            if (!_defaultSettingsOfCodeEntity.Any())
+            {
+                return;
+            }
+
+            _defaultSettingsOfCodeEntity.Pop();
+
+            if(_defaultSettingsOfCodeEntity.Any())
+            {
+                _currentDefaultSetings = _defaultSettingsOfCodeEntity.Peek();
+            }
+            else
+            {
+                _currentDefaultSetings = null;
             }
         }
 
@@ -99,7 +138,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var result = new InternalParserContext();
             result._context = _context;
             result._lexer = _lexer.Fork();
-            result._recoveriesTokens = new Queue<Token>(_recoveriesTokens);
+            result._recoveriesTokens = new Queue<Token>(_recoveriesTokens.ToList());
+            result.CodeFile = CodeFile;
+            result._codeEntities = new Stack<CodeEntity>(_codeEntities.Select(p => p.Clone()).ToList());
+
+            result._defaultSettingsOfCodeEntity = new Stack<DefaultSettingsOfCodeEntity>(_defaultSettingsOfCodeEntity.Select(p => p.Clone()).ToList());
+            result._currentDefaultSetings = result._defaultSettingsOfCodeEntity.Peek();
+
             return result;
         }
 

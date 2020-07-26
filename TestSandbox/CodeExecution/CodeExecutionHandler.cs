@@ -29,7 +29,7 @@ namespace TestSandbox.CodeExecution
                 IsSystemDefined = true
             };
 
-            applicationInheritanceItem.SubName = NameHelper.CreateName("PixKeeper", context.Dictionary);
+            applicationInheritanceItem.SubName = NameHelper.CreateName("PeaseKeeper", context.Dictionary);
             applicationInheritanceItem.SuperName = context.CommonNamesStorage.ApplicationName;
             applicationInheritanceItem.Rank = new LogicalValue(1.0F);
 

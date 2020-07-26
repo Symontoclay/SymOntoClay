@@ -11,7 +11,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// </summary>
         Unknown,
         App,
+        Class,
+        Is,
         On,
-        Init
+        Init,
+        Use
     }
 }

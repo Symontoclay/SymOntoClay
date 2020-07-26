@@ -52,6 +52,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessExpressionStatement();
                             break;
 
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Unknown:
+                                    ProcessExpressionStatement();
+                                    break;
+
+                                case KeyWordTokenKind.Use:
+                                    ProcessUseStatement();
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
                         case TokenKind.CloseFigureBracket:
                             Exit();
                             break;
@@ -70,6 +86,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _context.Recovery(_currToken);
             var parser = new CodeExpressionStatementParser(_context);
+            parser.Run();
+            AddStatement(parser.Result);
+        }
+
+        private void ProcessUseStatement()
+        {
+            _context.Recovery(_currToken);
+            var parser = new UseStatementParser(_context);
             parser.Run();
             AddStatement(parser.Result);
         }

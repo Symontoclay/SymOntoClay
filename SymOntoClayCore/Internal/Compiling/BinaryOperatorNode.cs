@@ -28,6 +28,12 @@ namespace SymOntoClay.Core.Internal.Compiling
             AddCommands(rightNode.Result);
 
             var command = new ScriptCommand();
+            command.OperationCode = OperationCode.PushVal;
+            command.Value = expression.GetAnnotationValue();
+
+            AddCommand(command);
+
+            command = new ScriptCommand();
             command.OperationCode = OperationCode.CallBinOp;
             command.KindOfOperator = expression.KindOfOperator;
 

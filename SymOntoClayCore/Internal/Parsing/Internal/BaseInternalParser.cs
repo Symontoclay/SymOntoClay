@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -89,6 +90,38 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
 
         protected CodeEntity CurrentCodeEntity => _context.CurrentCodeEntity;
+
+        protected DefaultSettingsOfCodeEntity CurrentDefaultSetings => _context.CurrentDefaultSetings;
+        protected void SetCurrentDefaultSetings(DefaultSettingsOfCodeEntity defaultSettings)
+        {
+            _context.SetCurrentDefaultSetings(defaultSettings);
+        }
+
+        protected void RemoveCurrentDefaultSetings()
+        {
+            _context.RemoveCurrentDefaultSetings();
+        }
+
+        protected CodeEntity CreateCodeEntity()
+        {
+            var result = new CodeEntity();
+            DefaultSettingsOfCodeEntityHelper.SetUpCodeEntity(result, CurrentDefaultSetings);
+            return result;
+        }
+
+        protected InlineTrigger CreateInlineTrigger()
+        {
+            var result = new InlineTrigger();
+            DefaultSettingsOfCodeEntityHelper.SetUpInlineTrigger(result, CurrentDefaultSetings);
+            return result;
+        }
+
+        protected InheritanceItem CreateInheritanceItem()
+        {
+            var result = new InheritanceItem();
+            DefaultSettingsOfCodeEntityHelper.SetUpInheritanceItem(result, CurrentDefaultSetings);
+            return result;
+        }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]

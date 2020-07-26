@@ -26,9 +26,22 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
+        {
+            return CloneValue(context);
+        }
+
+        /// <inheritdoc/>
         public override Value CloneValue(Dictionary<object, object> cloneContext)
         {
+            if (cloneContext.ContainsKey(this))
+            {
+                return (Value)cloneContext[this];
+            }
+
             var result = new NullValue();
+            cloneContext[this] = result;
+
             result.AppendAnnotations(this, cloneContext);
 
             return result;

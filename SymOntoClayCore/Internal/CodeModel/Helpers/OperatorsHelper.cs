@@ -15,6 +15,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 case KindOfOperator.LeftRightStream:
                     return 15;
 
+                case KindOfOperator.Is:
+                    return 10;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
@@ -26,6 +29,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             {
                 case KindOfOperator.LeftRightStream:
                     return ">>";
+
+                case KindOfOperator.Is:
+                    return "IS";
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);

@@ -7,6 +7,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
     public enum KindOfAstStatement
     {
         Unknown,
-        Expression
+        Expression,
+        UseInheritance
     }
 }

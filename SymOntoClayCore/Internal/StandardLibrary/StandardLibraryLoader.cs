@@ -39,6 +39,15 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
             globalOperatorsStorage.Append(op);
+
+            op = new Operator
+            {
+                KindOfOperator = KindOfOperator.Is,
+                IsSystemDefined = true,
+                SystemHandler = new BinaryOperatorSystemHandler(new IsOperatorHandler(_context), _context.Dictionary),
+                Holder = _context.CommonNamesStorage.DefaultHolder
+            };
+            globalOperatorsStorage.Append(op);
         }
 
         private void RegChannels()

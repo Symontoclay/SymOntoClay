@@ -38,6 +38,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case KeyWordTokenKind.Class:
+                            {
+                                _context.Recovery(_currToken);
+                                var parser = new ClassPaser(_context);
+                                parser.Run();
+                                Result.Add(parser.Result);
+                            }
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

@@ -1,6 +1,8 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
@@ -17,6 +19,53 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public bool IsGroup { get; set; }
         public Value Value { get; set; }
         public bool IsQuestion { get; set; }
+
+        /// <inheritdoc/>
+        public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
+        {
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public LogicalQueryNode Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public LogicalQueryNode Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (LogicalQueryNode)context[this];
+            }
+
+            var result = new LogicalQueryNode();
+            context[this] = result;
+
+            result.Kind = Kind;
+            result.KindOfOperator = KindOfOperator;
+            result.Name = Name.Clone(context);
+            result.Left = Left.Clone(context);
+            result.Right = Right.Clone(context);
+            result.ParamsList = ParamsList.Select(p => p.Clone(context)).ToList();
+            result.VarsList = VarsList.Select(p => p.Clone(context)).ToList();
+            result.IsGroup = IsGroup;
+            result.Value = Value.CloneValue(context);
+            result.IsQuestion = IsQuestion;
+
+            result.AppendAnnotations(this, context);
+
+            return result;
+        }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

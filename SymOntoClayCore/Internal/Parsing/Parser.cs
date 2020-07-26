@@ -10,13 +10,13 @@ namespace SymOntoClay.Core.Internal.Parsing
 {
     public class Parser : BaseComponent, IParser
     {
-        public Parser(IParserContext context)
+        public Parser(IMainStorageContext context)
             : base(context.Logger)
         {
             _context = context;
         }
 
-        private readonly IParserContext _context;
+        private readonly IMainStorageContext _context;
 
         public CodeFile Parse(ParsedFileInfo parsedFileInfo)
         {
@@ -35,6 +35,9 @@ namespace SymOntoClay.Core.Internal.Parsing
             result.FileName = parsedFileInfo.FileName;
             
             var internalParserContext = new InternalParserContext(text, result, _context);
+
+            var globalStorage = _context.Storage.GlobalStorage;
+            internalParserContext.SetCurrentDefaultSetings(globalStorage.DefaultSettingsOfCodeEntity);
 
             var parser = new SourceCodeParser(internalParserContext);
             parser.Run();

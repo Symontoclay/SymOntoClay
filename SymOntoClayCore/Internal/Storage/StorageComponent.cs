@@ -41,11 +41,20 @@ namespace SymOntoClay.Core.Internal.Storage
             _globalStorage = new GlobalStorage(globalStorageSettings);
             _storagesList.Add(_globalStorage);
 
+            _globalStorage.DefaultSettingsOfCodeEntity = CreateDefaultSettingsOfCodeEntity();
+
 #if IMAGINE_WORKING
             //Log("Do");
 #else
                 throw new NotImplementedException();
 #endif
+        }
+
+        private DefaultSettingsOfCodeEntity CreateDefaultSettingsOfCodeEntity()
+        {
+            var result = new DefaultSettingsOfCodeEntity();
+
+            return result;
         }
     }
 }

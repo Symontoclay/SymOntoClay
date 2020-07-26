@@ -8,6 +8,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         Unknown,
         App,
+        Class,
         Instance,
         InlineTrigger,
         Operator,

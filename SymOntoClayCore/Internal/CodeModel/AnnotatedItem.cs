@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.CollectionsHelpers;
+﻿using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,23 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public bool HasModalitiesOrSections => !QuantityQualityModalities.IsNullOrEmpty() || !WhereSection.IsNullOrEmpty();
 
         public bool HasConditionalSections => !WhereSection.IsNullOrEmpty();
+
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public AnnotatedItem CloneAnnotatedItem()
+        {
+            var context = new Dictionary<object, object>();
+            return CloneAnnotatedItem(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public abstract AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context);
 
         public void AppendAnnotations(AnnotatedItem source)
         {
@@ -70,6 +88,22 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 Holder = source.Holder;
             }
+        }
+
+        private Value _annotationValue;
+        private readonly object _annotationValueLockObj = new object();
+
+        public Value GetAnnotationValue()
+        {
+            lock(_annotationValueLockObj)
+            {
+                if(_annotationValue == null)
+                {
+                    _annotationValue = new AnnotationValue() { AnnotatedItem = this};
+                }
+
+                return _annotationValue;
+            }            
         }
 
         /// <inheritdoc/>

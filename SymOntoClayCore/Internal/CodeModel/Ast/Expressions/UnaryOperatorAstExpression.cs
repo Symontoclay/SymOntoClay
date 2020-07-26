@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
+﻿using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,31 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
 
         /// <inheritdoc/>
         protected override IAstNode NLeft { get => Left; set => Left = (AstExpression)value; }
+
+        /// <inheritdoc/>
+        public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
+        {
+            return CloneAstExpression(context);
+        }
+
+        /// <inheritdoc/>
+        public override AstExpression CloneAstExpression(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (AstExpression)context[this];
+            }
+
+            var result = new UnaryOperatorAstExpression();
+            context[this] = result;
+
+            result.KindOfOperator = KindOfOperator;
+            result.Left = Left.CloneAstExpression(context);
+
+            result.AppendAnnotations(this, context);
+
+            return result;
+        }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

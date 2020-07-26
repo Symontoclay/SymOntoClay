@@ -15,6 +15,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         String,
         Identifier,
         Channel,
+        SystemVar,
+        Point,
+        Comma,
         /// <summary>
         /// Represents symbol `{`.
         /// </summary>
@@ -24,6 +27,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// Represents symbol `}`.
         /// </summary>
         CloseFigureBracket,
+        /// <summary>
+        /// Represents symbol `[`.
+        /// </summary>
+        OpenSquareBracket,
+        /// <summary>
+        /// Represents symbol `]`.
+        /// </summary>
+        CloseSquareBracket,
+        /// <summary>
+        /// Represents symbol `(`.
+        /// </summary>
+        OpenRoundBracket,
+        /// <summary>
+        /// Represents symbol `)`.
+        /// </summary>
+        CloseRoundBracket,
         /// <summary>
         /// Represents symbol `;`.
         /// </summary>

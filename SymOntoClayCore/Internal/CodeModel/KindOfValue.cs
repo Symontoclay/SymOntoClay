@@ -12,6 +12,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         NumberValue,
         StringValue,
         IdentifierValue,
-        TaskValue
+        TaskValue,
+        AnnotationValue
     }
 }

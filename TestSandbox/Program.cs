@@ -25,6 +25,7 @@ namespace TestSandbox
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
+            //TstDefaultSettingsOfCodeEntityHandler();
             //TstActivateMainEntity();
             //TstCompileInlineTrigger();
             //TstRegOperatorsHandler();
@@ -35,10 +36,20 @@ namespace TestSandbox
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
-            TstGeneralStartHandler();
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstDefaultSettingsOfCodeEntityHandler()
+        {
+            _logger.Log("Begin");
+
+            var handler = new DefaultSettingsOfCodeEntityHandler();
+            handler.Run();
+
+            _logger.Log("End");
         }
 
         private static void TstActivateMainEntity()

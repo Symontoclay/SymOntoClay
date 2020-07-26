@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -32,9 +33,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #if DEBUG
             //Log("Begin");
 #endif
-            Result = new CodeEntity();
+            Result = CreateCodeEntity();
+
             Result.Kind = KindOfCodeEntity.App;
-            Result.CodeFile = _context.CodeFile;
+            Result.CodeFile = _context.CodeFile;            
 
             Result.ParentCodeEntity = CurrentCodeEntity;
             SetCurrentCodeEntity(Result);
@@ -62,9 +64,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");
-            //Log($"_state = {_state}");
+            Log($"_state = {_state}");
 #endif
 
             switch (_state)
@@ -100,6 +102,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.OpenFigureBracket:
                             _state = State.ContentStarted;
+                            break;
+
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Is:
+                                    {
+                                        _context.Recovery(_currToken);
+                                        var parser = new InheritanceParser(_context, Result.Name);
+                                        parser.Run();
+                                        Result.InheritanceItems.AddRange(parser.Result);
+                                    }
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
                             break;
 
                         default:

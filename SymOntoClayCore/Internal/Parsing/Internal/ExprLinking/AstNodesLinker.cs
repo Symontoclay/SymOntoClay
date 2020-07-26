@@ -37,6 +37,24 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
             }
         }
 
+        public static bool CanBeLeafNow(IntermediateAstNodePoint point)
+        {
+            var currentNode = point.CurrentNode;
+
+            switch(currentNode.Kind)
+            {
+                case KindOfIntermediateAstNode.BinaryOperator:
+                case KindOfIntermediateAstNode.UnaryOperator:
+                    return true;
+
+                case KindOfIntermediateAstNode.Leaf:
+                    return false;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(currentNode.Kind), currentNode.Kind, null);
+            }
+        }
+
         private static void SetLeafNode(IntermediateAstNode node, IntermediateAstNodePoint point)
         {
             var currentNode = point.CurrentNode;

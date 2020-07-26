@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.CollectionsHelpers;
+﻿using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -66,9 +67,35 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override Value CloneValue(Dictionary<object, object> cloneContext)
+        public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
         {
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public Name Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public Name Clone(Dictionary<object, object> context)
+        {
+            if(context.ContainsKey(this))
+            {
+                return (Name)context[this];
+            }
+
             var result = new Name();
+            context[this] = result;
 
             result.DictionaryName = DictionaryName;
 
@@ -78,8 +105,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.NameValue = NameValue;
             result.NameKey = NameKey;
 
-            result.AppendAnnotations(this, cloneContext);
+            result.AppendAnnotations(this, context);
             return result;
+        }
+
+        /// <inheritdoc/>
+        public override Value CloneValue(Dictionary<object, object> cloneContext)
+        {
+            return Clone(cloneContext);
         }
 
         /// <inheritdoc/>

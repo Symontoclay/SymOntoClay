@@ -16,6 +16,38 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
         }
 
+        public Value GetInheritanceRank(Name subName, Name superName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+#if DEBUG
+            Log($"subName = {subName}");
+            Log($"superName = {superName}");
+#endif
+
+            var weightedInheritanceItemsList = GetWeightedInheritanceItems(subName, localCodeExecutionContext, options);
+
+#if DEBUG
+            Log($"weightedInheritanceItemsList = {weightedInheritanceItemsList.WriteListToString()}");
+#endif
+
+            if(!weightedInheritanceItemsList.Any())
+            {
+                return new LogicalValue(0);
+            }
+
+            var targetWeightedInheritanceItemsList = weightedInheritanceItemsList.Where(p => p.SuperName.Equals(superName)).ToList();
+
+#if DEBUG
+            Log($"targetWeightedInheritanceItemsList = {targetWeightedInheritanceItemsList.WriteListToString()}");
+#endif
+
+            if(targetWeightedInheritanceItemsList.Count == 1)
+            {
+                return new LogicalValue(targetWeightedInheritanceItemsList.First().Rank);
+            }
+
+            throw new NotImplementedException();
+        }
+
         public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             return GetWeightedInheritanceItems(localCodeExecutionContext.Holder, localCodeExecutionContext, options);

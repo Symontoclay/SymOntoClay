@@ -23,6 +23,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
         {
             var name = new Name() { IsEmpty = false };
 
+            text = text.ToLower().Trim();
+
             if (text.Contains("::") || text.Contains("("))
             {
                 throw new NotSupportedException("Symbols `::`, `(` and `)` are not supported yet!");

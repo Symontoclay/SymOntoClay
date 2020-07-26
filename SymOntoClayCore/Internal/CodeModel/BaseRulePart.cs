@@ -10,6 +10,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public RuleInstance Parent { get; set; }
         public LogicalQueryNode Expression { get; set; }
 
+        protected void AppendBaseRulePart(BaseRulePart source, Dictionary<object, object> context)
+        {
+            Parent = source.Parent.Clone(context);
+            Expression = source.Expression.Clone(context);
+
+            AppendAnnotations(source, context);
+        }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {

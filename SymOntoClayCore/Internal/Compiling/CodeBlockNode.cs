@@ -39,6 +39,14 @@ namespace SymOntoClay.Core.Internal.Compiling
                         }
                         break;
 
+                    case KindOfAstStatement.UseInheritance:
+                        {
+                            var node = new UseInheritanceStatementNode(_context);
+                            node.Run(statement as AstUseInheritanceStatement);
+                            AddCommands(node.Result);
+                        }
+                        break;
+
                     default: 
                         throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
                 }

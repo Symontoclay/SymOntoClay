@@ -1,6 +1,7 @@
 ﻿using NLog.LayoutRenderers.Wrappers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,10 +31,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            Result = new CodeEntity();
+            Result = Result = CreateCodeEntity();
+
             Result.Kind = KindOfCodeEntity.InlineTrigger;
             Result.Name = NameHelper.CreateRuleOrFactName(_context.Dictionary);
-            _inlineTrigger = new InlineTrigger();
+            _inlineTrigger = CreateInlineTrigger();
             _inlineTrigger.CodeEntity = Result;
             Result.InlineTrigger = _inlineTrigger;
             Result.CodeFile = _context.CodeFile;

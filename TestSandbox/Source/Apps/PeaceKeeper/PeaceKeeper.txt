@@ -1,0 +1,14 @@
+﻿app PeaceKeeper is exampleClass[0.5]
+{
+    on Init => {
+	     "Begin" >> @>log;
+
+		 exampleClass is human >> @>log;
+
+		 use exampleClass is human [0.5];
+
+		 exampleClass is human >> @>log;
+
+		 "End" >> @>log;
+	}
+}

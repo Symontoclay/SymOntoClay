@@ -26,6 +26,45 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
+        {
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public Channel Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public Channel Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (Channel)context[this];
+            }
+
+            var result = new Channel();
+            context[this] = result;
+
+            result.Name = Name.Clone(context);
+            result.Handler = Handler;
+
+            result.AppendAnnotations(this, context);
+
+            return result;
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

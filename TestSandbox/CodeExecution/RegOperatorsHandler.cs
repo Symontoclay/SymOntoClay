@@ -48,7 +48,7 @@ namespace TestSandbox.CodeExecution
             _logger.Info("End");
         }
 
-        public Value Call(Value leftOperand, Value rightOperand, LocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(Value leftOperand, Value rightOperand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
             _logger.Info($"leftOperand = {leftOperand}");
             _logger.Info($"rightOperand = {rightOperand}");

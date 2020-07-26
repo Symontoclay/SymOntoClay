@@ -3,6 +3,7 @@ using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
@@ -25,6 +26,48 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
 
             return Indexed;
+        }
+
+        /// <inheritdoc/>
+        public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
+        {
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public RuleInstance Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public RuleInstance Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (RuleInstance)context[this];
+            }
+
+            var result = new RuleInstance();
+            context[this] = result;
+
+            result.DictionaryName = DictionaryName;
+            result.Name = Name.Clone(context);
+            result.IsRule = IsRule;
+            result.PrimaryPart = PrimaryPart.Clone(context);
+            result.SecondaryParts = SecondaryParts.Select(p => p.Clone(context)).ToList();
+
+            result.AppendAnnotations(this, context);
+
+            return result;
         }
 
         /// <inheritdoc/>

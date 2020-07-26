@@ -8,6 +8,7 @@ namespace SymOntoClay.Core.Internal
     public interface ICommonNamesStorage
     {
         Name ApplicationName { get; }
+        Name ClassName { get; }
         Name DefaultHolder { get; }
     }
 }

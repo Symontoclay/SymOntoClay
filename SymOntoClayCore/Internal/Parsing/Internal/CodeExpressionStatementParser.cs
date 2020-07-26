@@ -30,8 +30,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"_nodePoint = {_nodePoint}");
+            Log($"_currToken = {_currToken}");
+            Log($"_nodePoint = {_nodePoint}");
             //Log($"_state = {_state}");
 #endif
 
@@ -39,6 +39,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             {
                 case TokenKind.String:
                     ProcessStringToken();
+                    break;
+
+                case TokenKind.Word:
+                    ProcessWordToken();
                     break;
 
                 case TokenKind.LeftRightStream:
@@ -69,10 +73,61 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
         }
 
+        private void ProcessWordToken()
+        {
+#if DEBUG
+            Log("Begin");
+#endif
+
+            switch(_currToken.KeyWordTokenKind)
+            {
+                case KeyWordTokenKind.Unknown:
+                    ProcessConceptLeaf();
+                    break;
+
+                case KeyWordTokenKind.Is:
+                    if(AstNodesLinker.CanBeLeafNow(_nodePoint))
+                    {
+                        ProcessConceptLeaf();
+                    }
+                    else
+                    {
+                        ProcessIsOperator();
+                    }                    
+                    break;
+
+                default:
+                    throw new UnexpectedTokenException(_currToken);
+            }
+        }
+
+        private void ProcessConceptLeaf()
+        {
+            var node = new ConstValueAstExpression();
+            var value = NameHelper.CreateName(_currToken.Content, _context.Dictionary);
+            node.Value = value;
+
+            var intermediateNode = new IntermediateAstNode(node);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+        }
+
         private void ProcessLeftRightStream()
         {
             var node = new BinaryOperatorAstExpression();
             node.KindOfOperator = KindOfOperator.LeftRightStream;
+
+            var priority = OperatorsHelper.GetPriority(node.KindOfOperator);
+
+            var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.BinaryOperator, priority);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+        }
+
+        private void ProcessIsOperator()
+        {
+            var node = new BinaryOperatorAstExpression();
+            node.KindOfOperator = KindOfOperator.Is;
 
             var priority = OperatorsHelper.GetPriority(node.KindOfOperator);
 

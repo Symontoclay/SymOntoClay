@@ -16,12 +16,20 @@ namespace SymOntoClay.Core.Internal.CommonNames
 
         private readonly IEngineContext _context;
 
+        /// <inheritdoc/>
         public Name ApplicationName { get; private set; }
+
+        /// <inheritdoc/>
+        public Name ClassName { get; private set; }
+
+        /// <inheritdoc/>
         public Name DefaultHolder { get; private set; }
 
         public void LoadFromSourceCode()
         {
             ApplicationName = NameHelper.CreateName(StandardNamesConstants.ApplicationTypeName, _context.Dictionary);
+            ClassName = NameHelper.CreateName(StandardNamesConstants.ClassTypeName, _context.Dictionary);
+
             DefaultHolder = new Name();
 
 #if IMAGINE_WORKING

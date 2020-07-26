@@ -114,23 +114,27 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     case OperationCode.CallBinOp:
                         {
-                            var paramsList = TakePositionedParameters(2);
+                            var paramsList = TakePositionedParameters(3);
 
 #if DEBUG
-                            //Log($"paramsList = {paramsList.WriteListToString()}");
-                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                            Log($"paramsList = {paramsList.WriteListToString()}");
+                            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                             var operatorInfo = _operatorsResolver.GetOperator(currentCommand.KindOfOperator, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultFluentOptions());
 
 #if DEBUG
-                            //Log($"operatorInfo = {operatorInfo}");
+                            Log($"operatorInfo = {operatorInfo}");
 #endif
 
                             CallExecutable(operatorInfo, paramsList);
 
                             _currentCodeFrame.CurrentPosition++;
                         }
+                        break;
+
+                    case OperationCode.UseInheritance:
+                        ProcessUseInheritance();
                         break;
 
                     case OperationCode.Return:
@@ -187,19 +191,33 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var result = executable.SystemHandler.Call(paramsList, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-                //Log($"result = {result}");
+                Log($"result = {result}");
 #endif
 
                 _currentCodeFrame.ValuesStack.Push(result);
 
 #if DEBUG
-                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 return;
             }
 
             throw new NotImplementedException();
+        }
+
+        private void ProcessUseInheritance()
+        {
+            var paramsList = TakePositionedParameters(4);
+
+#if DEBUG
+            Log($"paramsList = {paramsList.WriteListToString()}");
+            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+            throw new NotImplementedException();
+
+            _currentCodeFrame.CurrentPosition++;
         }
     }
 }

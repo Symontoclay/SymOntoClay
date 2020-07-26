@@ -6,6 +6,7 @@ using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
@@ -27,6 +28,47 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
 
             return Indexed;
+        }
+
+        /// <inheritdoc/>
+        public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
+        {
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public Operator Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public Operator Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (Operator)context[this];
+            }
+
+            var result = new Operator();
+            context[this] = result;
+
+            result.KindOfOperator = KindOfOperator;
+            result.IsSystemDefined = IsSystemDefined;
+            result.Statements = Statements.Select(p => p.CloneAstStatement(context)).ToList();
+            result.SystemHandler = SystemHandler;
+
+            result.AppendAnnotations(this, context);
+
+            return result;
         }
 
         /// <inheritdoc/>

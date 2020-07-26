@@ -28,6 +28,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
         ClearStack,
         Return,
-        ReturnVal
+        ReturnVal,
+        UseInheritance
     }
 }

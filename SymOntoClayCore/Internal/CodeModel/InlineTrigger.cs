@@ -6,6 +6,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
@@ -27,6 +28,47 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
 
             return Indexed;
+        }
+
+        /// <inheritdoc/>
+        public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
+        {
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public InlineTrigger Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public InlineTrigger Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (InlineTrigger)context[this];
+            }
+
+            var result = new InlineTrigger();
+            context[this] = result;
+
+            result.Kind = Kind;
+            result.KindOfSystemEvent = KindOfSystemEvent;
+            result.Statements = Statements.Select(p => p.CloneAstStatement(context)).ToList();
+            result.CodeEntity = CodeEntity.Clone(context);
+
+            result.AppendAnnotations(this, context);
+
+            return result;
         }
 
         /// <inheritdoc/>

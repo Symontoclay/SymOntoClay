@@ -2,6 +2,7 @@
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
@@ -11,6 +12,44 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public List<SecondaryRulePart> SecondaryParts { get; set; } = new List<SecondaryRulePart>();
 
         public IndexedPrimaryRulePart Indexed { get; set; }
+
+        /// <inheritdoc/>
+        public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
+        {
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public PrimaryRulePart Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public PrimaryRulePart Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (PrimaryRulePart)context[this];
+            }
+
+            var result = new PrimaryRulePart();
+            context[this] = result;
+
+            result.SecondaryParts = SecondaryParts.Select(p => p.Clone(context)).ToList();
+
+            result.AppendBaseRulePart(this, context);
+
+            return result;
+        }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

@@ -10,6 +10,7 @@ namespace SymOntoClay.Core.Internal
         public const string UniversalTypeName = "⊤";
         public const string NullTypeName = "null";
         public const string ApplicationTypeName = "application";
+        public const string ClassTypeName = "class";
         #endregion
     }
 }

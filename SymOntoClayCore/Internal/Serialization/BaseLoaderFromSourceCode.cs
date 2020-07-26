@@ -104,13 +104,17 @@ namespace SymOntoClay.Core.Internal.Serialization
         private void AddSystemDefinedSettings(CodeEntity codeEntity)
         {
 #if DEBUG
-            //Log($"codeEntity = {codeEntity}");
+            Log($"codeEntity = {codeEntity}");
 #endif
 
             switch(codeEntity.Kind)
             {
                 case KindOfCodeEntity.App:
                     AddSystemDefinedSettingsToApp(codeEntity);
+                    break;
+
+                case KindOfCodeEntity.Class:
+                    AddSystemDefinedSettingsToClass(codeEntity);
                     break;
 
                 case KindOfCodeEntity.InlineTrigger:
@@ -123,20 +127,38 @@ namespace SymOntoClay.Core.Internal.Serialization
 
         private void AddSystemDefinedSettingsToApp(CodeEntity codeEntity)
         {
-            var applicationInheritanceItem = new InheritanceItem()
+            var inheritanceItem = new InheritanceItem()
             {
                 IsSystemDefined = true
             };
 
-            applicationInheritanceItem.SubName = codeEntity.Name;
-            applicationInheritanceItem.SuperName = _context.CommonNamesStorage.ApplicationName;
-            applicationInheritanceItem.Rank = new LogicalValue(1.0F);
+            inheritanceItem.SubName = codeEntity.Name;
+            inheritanceItem.SuperName = _context.CommonNamesStorage.ApplicationName;
+            inheritanceItem.Rank = new LogicalValue(1.0F);
 
 #if DEBUG
-            //Log($"applicationInheritanceItem = {applicationInheritanceItem}");
+            //Log($"inheritanceItem = {inheritanceItem}");
 #endif
 
-            codeEntity.InheritanceItems.Add(applicationInheritanceItem);
+            codeEntity.InheritanceItems.Add(inheritanceItem);
+        }
+
+        private void AddSystemDefinedSettingsToClass(CodeEntity codeEntity)
+        {
+            var inheritanceItem = new InheritanceItem()
+            {
+                IsSystemDefined = true
+            };
+
+            inheritanceItem.SubName = codeEntity.Name;
+            inheritanceItem.SuperName = _context.CommonNamesStorage.ClassName;
+            inheritanceItem.Rank = new LogicalValue(1.0F);
+
+#if DEBUG
+            //Log($"inheritanceItem = {inheritanceItem}");
+#endif
+
+            codeEntity.InheritanceItems.Add(inheritanceItem);
         }
 
         private void SaveItems(List<CodeEntity> source)
@@ -150,7 +172,7 @@ namespace SymOntoClay.Core.Internal.Serialization
         private void SaveItem(CodeEntity codeEntity)
         {
 #if DEBUG
-            //Log($"codeEntity = {codeEntity}");
+            Log($"codeEntity = {codeEntity}");
 #endif
 
             var codeEntityName = codeEntity.Name;
@@ -177,6 +199,9 @@ namespace SymOntoClay.Core.Internal.Serialization
             switch(kindOfEntity)
             {
                 case KindOfCodeEntity.App:
+                    break;
+
+                case KindOfCodeEntity.Class:
                     break;
 
                 case KindOfCodeEntity.InlineTrigger:

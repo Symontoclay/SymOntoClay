@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,14 +28,26 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsTaskValue => false;
         public virtual TaskValue AsTaskValue => null;
 
+        public virtual bool IsAnnotationValue => false;
+        public virtual AnnotationValue AsAnnotationValue => null;
+
         public abstract object GetSystemValue();
 
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
         public Value CloneValue()
         {
             var cloneContext = new Dictionary<object, object>();
             return CloneValue(cloneContext);
         }
 
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="cloneContext">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
         public abstract Value CloneValue(Dictionary<object, object> cloneContext);
 
         /// <inheritdoc/>

@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
@@ -18,6 +19,54 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public CodeFile CodeFile { get; set; }
         public CodeEntity ParentCodeEntity { get; set; }
         public List<CodeEntity> SubItems { get; set; } = new List<CodeEntity>();
+
+        /// <inheritdoc/>
+        public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
+        {
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public CodeEntity Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public CodeEntity Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (CodeEntity)context[this];
+            }
+
+            var result = new CodeEntity();
+            context[this] = result;
+
+            result.Kind = Kind;
+            result.Name = Name?.Clone(context);
+            result.InheritanceItems = InheritanceItems?.Select(p => p.Clone(context)).ToList();
+            result.RuleInstance = RuleInstance?.Clone(context);
+            result.InlineTrigger = InlineTrigger?.Clone(context);
+            result.Operator = Operator?.Clone(context);
+            result.Channel = Channel?.Clone(context);
+
+            result.CodeFile = CodeFile;
+            result.ParentCodeEntity = ParentCodeEntity;
+            result.SubItems = SubItems?.Select(p => p.Clone(context)).ToList();
+
+            result.AppendAnnotations(this, context);
+
+            return result;            
+        }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

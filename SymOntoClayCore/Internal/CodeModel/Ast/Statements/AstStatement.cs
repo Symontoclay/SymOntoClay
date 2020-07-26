@@ -5,91 +5,60 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
 {
-    public abstract class AstStatement: IObjectToString, IObjectToShortString, IObjectToBriefString
+    public abstract class AstStatement: AnnotatedItem
     {
         public abstract KindOfAstStatement Kind { get; }
 
-        /// <inheritdoc/>
-        public override string ToString()
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public AstStatement CloneAstStatement()
         {
-            return ToString(0u);
+            var context = new Dictionary<object, object>();
+            return CloneAstStatement(context);
         }
 
-        /// <inheritdoc/>
-        public string ToString(uint n)
-        {
-            return this.GetDefaultToStringInformation(n);
-        }
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public abstract AstStatement CloneAstStatement(Dictionary<object, object> context);
 
         /// <inheritdoc/>
-        string IObjectToString.PropertiesToString(uint n)
-        {
-            return PropertiesToString(n);
-        }
-
-        protected virtual string PropertiesToString(uint n)
+        protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
 
+            sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
 
         /// <inheritdoc/>
-        public string ToShortString()
-        {
-            return ToShortString(0u);
-        }
-
-        /// <inheritdoc/>
-        public string ToShortString(uint n)
-        {
-            return this.GetDefaultToShortStringInformation(n);
-        }
-
-        /// <inheritdoc/>
-        string IObjectToShortString.PropertiesToShortString(uint n)
-        {
-            return PropertiesToShortString(n);
-        }
-
-        protected virtual string PropertiesToShortString(uint n)
+        protected override string PropertiesToShortString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
 
+            sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
 
         /// <inheritdoc/>
-        public string ToBriefString()
-        {
-            return ToBriefString(0u);
-        }
-
-        /// <inheritdoc/>
-        public string ToBriefString(uint n)
-        {
-            return this.GetDefaultToBriefStringInformation(n);
-        }
-
-        /// <inheritdoc/>
-        string IObjectToBriefString.PropertiesToBriefString(uint n)
-        {
-            return PropertiesToBriefString(n);
-        }
-
-        protected virtual string PropertiesToBriefString(uint n)
+        protected override string PropertiesToBriefString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
 
+            sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }
     }

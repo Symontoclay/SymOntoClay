@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,30 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         public override KindOfAstStatement Kind => KindOfAstStatement.Expression;
 
         public AstExpression Expression { get; set; }
+
+        /// <inheritdoc/>
+        public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
+        {
+            return CloneAstStatement(context);
+        }
+
+        /// <inheritdoc/>
+        public override AstStatement CloneAstStatement(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (AstStatement)context[this];
+            }
+
+            var result = new AstExpressionStatement();
+            context[this] = result;
+
+            result.Expression = Expression.CloneAstExpression(context);
+
+            result.AppendAnnotations(this, context);
+
+            return result;
+        }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

@@ -129,6 +129,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.Nop:
                 case OperationCode.ClearStack:
                 case OperationCode.Return:
+                case OperationCode.UseInheritance:
                     return $"{spaces}{OperationCode}";
 
                 case OperationCode.PushVal:

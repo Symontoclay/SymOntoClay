@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <Version>0.1.1.0</Version>
+    <Version>0.1.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,10 +22,13 @@
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Source\Apps\PixKeeper\PixKeeper.txt">
+    <None Update="Source\Apps\PeaceKeeper\ExampleClass.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Source\Hosts\PixKeeper\PixKeeper.txt">
+    <None Update="Source\Apps\PeaceKeeper\PeaceKeeper.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Source\Hosts\PeaceKeeper\PeaceKeeper.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Source\World\World.txt">

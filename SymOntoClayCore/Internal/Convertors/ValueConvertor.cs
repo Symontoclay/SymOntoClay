@@ -7,43 +7,43 @@ namespace SymOntoClay.Core.Internal.Convertors
 {
     public static class ValueConvertor
     {
-        public static LogicalValue ConvertNullValueToLogicalValue(NullValue source, IEntityDictionary entityDictionary)
+        public static LogicalValue ConvertNullValueToLogicalValue(NullValue source, IMainStorageContext mainStorageContext)
         {
             var result = new LogicalValue(null);
 
-            FillAnnotationsModalitiesAndSections(source, result, entityDictionary);
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext);
 
             return result;
         }
 
-        public static LogicalValue ConvertNumberValueToLogicalValue(NumberValue source, IEntityDictionary entityDictionary)
+        public static LogicalValue ConvertNumberValueToLogicalValue(NumberValue source, IMainStorageContext mainStorageContext)
         {
             var result = new LogicalValue((float?)source.AsNumberValue.SystemValue);
 
-            FillAnnotationsModalitiesAndSections(source, result, entityDictionary);
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext);
 
             return result;
         }
 
-        public static NumberValue ConvertNullValueToNumberValue(NullValue source, IEntityDictionary entityDictionary)
+        public static NumberValue ConvertNullValueToNumberValue(NullValue source, IMainStorageContext mainStorageContext)
         {
             var result = new NumberValue(null);
 
-            FillAnnotationsModalitiesAndSections(source, result, entityDictionary);
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext);
 
             return result;
         }
 
-        public static NumberValue ConvertLogicalValueToNumberValue(LogicalValue source, IEntityDictionary entityDictionary)
+        public static NumberValue ConvertLogicalValueToNumberValue(LogicalValue source, IMainStorageContext mainStorageContext)
         {
             var result = new NumberValue(source.AsLogicalValue.SystemValue);
 
-            FillAnnotationsModalitiesAndSections(source, result, entityDictionary);
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext);
 
             return result;
         }
 
-        private static void FillAnnotationsModalitiesAndSections(AnnotatedItem source, AnnotatedItem dest, IEntityDictionary entityDictionary)
+        private static void FillAnnotationsModalitiesAndSections(AnnotatedItem source, AnnotatedItem dest, IMainStorageContext mainStorageContext)
         {
             throw new NotImplementedException();
         }

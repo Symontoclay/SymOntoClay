@@ -6,17 +6,19 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class StorageComponent: BaseComponent, IStorageComponent
     {
-        public StorageComponent(IEngineContext context, IStandaloneStorage parentStorage)
+        public StorageComponent(IMainStorageContext context, IStandaloneStorage parentStorage, KindOfStorage kindGlobalOfStorage)
             : base(context.Logger)
         {
             _context = context;
             _parentStorage = parentStorage;
+            _kindGlobalOfStorage = kindGlobalOfStorage;
         }
 
-        private readonly IEngineContext _context;
+        private readonly IMainStorageContext _context;
         private readonly IStandaloneStorage _parentStorage;
+        private readonly KindOfStorage _kindGlobalOfStorage;
 
-        private GlobalStorage _globalStorage;
+        private RealStorage _globalStorage;
 
         public IStorage GlobalStorage => _globalStorage;
 
@@ -27,18 +29,31 @@ namespace SymOntoClay.Core.Internal.Storage
             _storagesList = new List<RealStorage>();
 
             var globalStorageSettings = new RealStorageSettings();
-            globalStorageSettings.Logger = Logger;
-            globalStorageSettings.EntityDictionary = _context.Dictionary;
-            globalStorageSettings.Compiler = _context.Compiler;
+            globalStorageSettings.MainStorageContext = _context;
 
-            if (_parentStorage.Storage != null)
+            if (_parentStorage != null && _parentStorage.Storage != null)
             {
                 globalStorageSettings.ParentsStorages = new List<IStorage>() { _parentStorage.Storage };
             }
 
-            globalStorageSettings.CommonNamesStorage = _context.CommonNamesStorage;
+            switch(_kindGlobalOfStorage)
+            {
+                case KindOfStorage.Global:
+                    _globalStorage = new GlobalStorage(globalStorageSettings);
+                    break;
 
-            _globalStorage = new GlobalStorage(globalStorageSettings);
+                case KindOfStorage.World:
+                    _globalStorage = new WorldStorage(globalStorageSettings);
+                    break;
+
+                case KindOfStorage.Host:
+                    _globalStorage = new HostStorage(globalStorageSettings);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(_kindGlobalOfStorage), _kindGlobalOfStorage, null);
+            }
+            
             _storagesList.Add(_globalStorage);
 
             _globalStorage.DefaultSettingsOfCodeEntity = CreateDefaultSettingsOfCodeEntity();

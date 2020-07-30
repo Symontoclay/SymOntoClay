@@ -13,7 +13,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         public OperationCode OperationCode { get; set; } = OperationCode.Nop;
 
         public int Position { get; set; }
-        public Value Value { get; set; }
+        public IndexedValue Value { get; set; }
         public ScriptCommand JumpToMe { get; set; }
         public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
 
@@ -130,9 +130,11 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.ClearStack:
                 case OperationCode.Return:
                 case OperationCode.UseInheritance:
+                case OperationCode.UseNotInheritance:          
                     return $"{spaces}{OperationCode}";
 
                 case OperationCode.PushVal:
+                case OperationCode.PushValFromVar:
                     return $"{spaces}{OperationCode} {Value.ToDbgString()}";
 
                 case OperationCode.CallBinOp:

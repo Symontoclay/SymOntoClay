@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public class LocalCodeExecutionContext: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public Name Holder { get; set; }
+        public IndexedStrongIdentifierValue Holder { get; set; }
         public IStorage Storage { get; set; }
 
         /// <inheritdoc/>

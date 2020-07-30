@@ -7,12 +7,12 @@ namespace SymOntoClay.Core.Internal.LogicalEngine
 {
     public class LogicalEngineComponent: BaseComponent, ILogicalEngine
     {
-        public LogicalEngineComponent(IParserContext context)
+        public LogicalEngineComponent(IEngineContext context)
             : base(context.Logger)
         {
             _context = context;
         }
 
-        private readonly IParserContext _context;
+        private readonly IEngineContext _context;
     }
 }

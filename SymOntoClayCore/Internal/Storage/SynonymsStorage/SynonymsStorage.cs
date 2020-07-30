@@ -7,7 +7,7 @@ namespace SymOntoClay.Core.Internal.Storage.SynonymsStorage
     public class SynonymsStorage: BaseLoggedComponent, ISynonymsStorage
     {
         public SynonymsStorage(KindOfStorage kind, RealStorageContext realStorageContext)
-            : base(realStorageContext.Logger)
+            : base(realStorageContext.MainStorageContext.Logger)
         {
             _kind = kind;
             _realStorageContext = realStorageContext;
@@ -15,6 +15,7 @@ namespace SymOntoClay.Core.Internal.Storage.SynonymsStorage
 
         private readonly KindOfStorage _kind;
 
+        /// <inheritdoc/>
         public KindOfStorage Kind => _kind;
 
         private readonly RealStorageContext _realStorageContext;

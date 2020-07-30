@@ -16,36 +16,30 @@ namespace SymOntoClay.Core.Internal.Compiling
         public void Run(AstUseInheritanceStatement statement)
         {
 #if DEBUG
-            Log($"statement = {statement}");
+            //Log($"statement = {statement}");
 #endif
+
+            CompileValue(statement.SubName);
+            CompileValue(statement.SuperName);
+            CompileValue(statement.Rank);
 
             var command = new ScriptCommand();
             command.OperationCode = OperationCode.PushVal;
-            command.Value = statement.SubName;
+            command.Value = statement.GetAnnotationValue().GetIndexedValue(_context);
 
             AddCommand(command);
 
             command = new ScriptCommand();
-            command.OperationCode = OperationCode.PushVal;
-            command.Value = statement.SuperName;
 
-            AddCommand(command);
-
-            command = new ScriptCommand();
-            command.OperationCode = OperationCode.PushVal;
-            command.Value = statement.Rank;
-
-            AddCommand(command);
-
-            command = new ScriptCommand();
-            command.OperationCode = OperationCode.PushVal;
-            command.Value = statement.GetAnnotationValue();
-
-            AddCommand(command);
-
-            command = new ScriptCommand();
-            command.OperationCode = OperationCode.UseInheritance;
-
+            if (statement.HasNot)
+            {
+                command.OperationCode = OperationCode.UseNotInheritance;
+            }
+            else
+            {
+                command.OperationCode = OperationCode.UseInheritance;
+            }
+            
             AddCommand(command);
 
             AddCommand(new ScriptCommand()

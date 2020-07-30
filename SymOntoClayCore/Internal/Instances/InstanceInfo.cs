@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -11,17 +12,18 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class InstanceInfo : BaseLoggedComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public InstanceInfo(Name name, IEngineContext context, IStorage parentStorage)
+        public InstanceInfo(StrongIdentifierValue name, IEngineContext context, IStorage parentStorage)
             : base(context.Logger)
         {
             _name = name;
             _context = context;
+            _indexedName = _name.GetIndexed(context);
 
             _localCodeExecutionContext = new LocalCodeExecutionContext();
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
             _storage = new LocalStorage(localStorageSettings);
             _localCodeExecutionContext.Storage = _storage;
-            _localCodeExecutionContext.Holder = _name;
+            _localCodeExecutionContext.Holder = _indexedName;
 
 #if DEBUG
             //Log($"_localCodeExecutionContext = {_localCodeExecutionContext}");
@@ -30,7 +32,8 @@ namespace SymOntoClay.Core.Internal.Instances
             _triggersResolver = new TriggersResolver(context);
         }
 
-        private readonly Name _name;
+        private readonly StrongIdentifierValue _name;
+        private readonly IndexedStrongIdentifierValue _indexedName;
         private readonly IEngineContext _context;
         private readonly IStorage _storage;
         private readonly LocalCodeExecutionContext _localCodeExecutionContext;
@@ -42,7 +45,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             _instanceState = InstanceState.Initializing;
 
-            var targetTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger.Init, _name, _localCodeExecutionContext, ResolverOptions.GetDefaultFluentOptions());
+            var targetTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger.Init, _indexedName, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
             //Log($"targetTriggersList = {targetTriggersList.WriteListToString()}");
@@ -56,7 +59,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
                 localCodeExecutionContext.Storage = new LocalStorage(localStorageSettings);
-                localCodeExecutionContext.Holder = _name;
+
+                localCodeExecutionContext.Holder = _indexedName;
 
                 var codeFrame = new CodeFrame();
                 codeFrame.CompiledFunctionBody = targetTrigger.ResultItem.CompiledFunctionBody;

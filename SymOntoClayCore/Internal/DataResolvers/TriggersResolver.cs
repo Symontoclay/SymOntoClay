@@ -16,7 +16,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
         }
 
-        public List<WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>> ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, Name holder, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>> ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IndexedStrongIdentifierValue holder, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"kindOfSystemEvent = {kindOfSystemEvent}");
@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>> GetSystemEventsRawList(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, Name holder, List<KeyValuePair<uint, IStorage>> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>> GetSystemEventsRawList(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IndexedStrongIdentifierValue holder, List<KeyValuePair<uint, IStorage>> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
             //Log($"kindOfSystemEvent = {kindOfSystemEvent}");

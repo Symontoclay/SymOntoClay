@@ -16,33 +16,42 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
         }
 
-        public Value GetInheritanceRank(Name subName, Name superName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public IndexedValue GetInheritanceRank(IndexedStrongIdentifierValue subName, IndexedStrongIdentifierValue superName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"subName = {subName}");
-            Log($"superName = {superName}");
+            //Log($"subName = {subName}");
+            //Log($"superName = {superName}");
 #endif
 
             var weightedInheritanceItemsList = GetWeightedInheritanceItems(subName, localCodeExecutionContext, options);
 
 #if DEBUG
-            Log($"weightedInheritanceItemsList = {weightedInheritanceItemsList.WriteListToString()}");
+            //Log($"weightedInheritanceItemsList = {weightedInheritanceItemsList.WriteListToString()}");
 #endif
 
             if(!weightedInheritanceItemsList.Any())
             {
-                return new LogicalValue(0);
+                var result = new LogicalValue(0);
+                return result.GetIndexedValue(_context);
             }
 
             var targetWeightedInheritanceItemsList = weightedInheritanceItemsList.Where(p => p.SuperName.Equals(superName)).ToList();
 
 #if DEBUG
-            Log($"targetWeightedInheritanceItemsList = {targetWeightedInheritanceItemsList.WriteListToString()}");
+            //Log($"targetWeightedInheritanceItemsList = {targetWeightedInheritanceItemsList.WriteListToString()}");
 #endif
 
-            if(targetWeightedInheritanceItemsList.Count == 1)
+            if (!targetWeightedInheritanceItemsList.Any())
             {
-                return new LogicalValue(targetWeightedInheritanceItemsList.First().Rank);
+                var result = new LogicalValue(0);
+                return result.GetIndexedValue(_context);
+            }
+
+            if (targetWeightedInheritanceItemsList.Count == 1)
+            {
+                var result = new LogicalValue(targetWeightedInheritanceItemsList.First().Rank);
+                
+                return result.GetIndexedValue(_context);
             }
 
             throw new NotImplementedException();
@@ -53,7 +62,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return GetWeightedInheritanceItems(localCodeExecutionContext.Holder, localCodeExecutionContext, options);
         }
 
-        public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(Name subName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(IndexedStrongIdentifierValue subName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
@@ -71,7 +80,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //}
 #endif
 
-            var rawResult = new Dictionary<Name, WeightedInheritanceItem>();
+            var rawResult = new Dictionary<IndexedStrongIdentifierValue, WeightedInheritanceItem>();
 
             GetWeightedInheritanceItemsBySuperName(subName, localCodeExecutionContext, rawResult, 1, 0, storagesList);
 
@@ -97,9 +106,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return OrderAndDistinct(result, localCodeExecutionContext, options);
         }
 
-        private WeightedInheritanceItem GetTopTypeWeightedInheritanceItem(Name subName)
+        private WeightedInheritanceItem GetTopTypeWeightedInheritanceItem(IndexedStrongIdentifierValue subName)
         {
-            var topTypeName = _context.CommonNamesStorage.DefaultHolder;
+            var topTypeName = _context.CommonNamesStorage.IndexedDefaultHolder;
 
             var item = new WeightedInheritanceItem();
             item.SuperName = topTypeName;
@@ -109,7 +118,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return item;
         }
 
-        private WeightedInheritanceItem GetSelfWeightedInheritanceItem(Name subName)
+        private WeightedInheritanceItem GetSelfWeightedInheritanceItem(IndexedStrongIdentifierValue subName)
         {
             var item = new WeightedInheritanceItem();
             item.SuperName = subName;
@@ -125,7 +134,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return source.OrderByDescending(p => p.IsSelf).ToList();
         }
 
-        private void GetWeightedInheritanceItemsBySuperName(Name subName, LocalCodeExecutionContext localCodeExecutionContext, Dictionary<Name, WeightedInheritanceItem> result, float currentRank, uint currentDistance, List<KeyValuePair<uint, IStorage>> storagesList)
+        private void GetWeightedInheritanceItemsBySuperName(IndexedStrongIdentifierValue subName, LocalCodeExecutionContext localCodeExecutionContext, Dictionary<IndexedStrongIdentifierValue, WeightedInheritanceItem> result, float currentRank, uint currentDistance, List<KeyValuePair<uint, IStorage>> storagesList)
         {
 #if DEBUG
             //Log($"subName = {subName}");
@@ -167,7 +176,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //Log($"targetItem = {targetItem}");
 #endif
 
-                var resolvedRankValue = logicalValueLinearResolver.Resolve(targetItem.Rank, localCodeExecutionContext, ResolverOptions.GetDefaultFluentOptions());
+                var resolvedRankValue = logicalValueLinearResolver.Resolve(targetItem.Rank, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
                 var systemValue = resolvedRankValue.SystemValue;
 
@@ -181,6 +190,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
                 //Log($"calculatedRank = {calculatedRank}");
 #endif
+
+                if(calculatedRank == 0)
+                {
+                    continue;
+                }
 
                 var superName = targetItem.SuperName;
 
@@ -222,7 +236,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<IndexedInheritanceItem>> GetRawList(Name subName, List<KeyValuePair<uint, IStorage>> storagesList)
+        private List<WeightedInheritanceResultItemWithStorageInfo<IndexedInheritanceItem>> GetRawList(IndexedStrongIdentifierValue subName, List<KeyValuePair<uint, IStorage>> storagesList)
         {
 #if DEBUG
             //Log($"subName = {subName}");

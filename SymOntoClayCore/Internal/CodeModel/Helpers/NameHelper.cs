@@ -8,20 +8,20 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 {
     public static class NameHelper
     {
-        public static Name CreateRuleOrFactName(IEntityDictionary dictionary)
+        public static StrongIdentifierValue CreateRuleOrFactName(IEntityDictionary dictionary)
         {
             return CreateEntityName(dictionary);
         }
 
-        public static Name CreateEntityName(IEntityDictionary dictionary)
+        public static StrongIdentifierValue CreateEntityName(IEntityDictionary dictionary)
         {
             var text = $"#{Guid.NewGuid():D}";
             return CreateName(text, dictionary);
         }
 
-        public static Name CreateName(string text, IEntityDictionary dictionary)
+        public static StrongIdentifierValue CreateName(string text, IEntityDictionary dictionary)
         {
-            var name = new Name() { IsEmpty = false };
+            var name = new StrongIdentifierValue() { IsEmpty = false };
 
             text = text.ToLower().Trim();
 
@@ -37,29 +37,22 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             {
                 name.KindOfName = KindOfName.Channel;
             }
-            else
+            else if (text.StartsWith("@@"))
             {
-                if(text.StartsWith("#"))
-                {
-                    name.KindOfName = KindOfName.Entity;
-                }
+                name.KindOfName = KindOfName.SystemVar;
+            }
+            else if (text.StartsWith("@"))
+            {
+                name.KindOfName = KindOfName.Var;
+            }
+            else if (text.StartsWith("#"))
+            {
+                name.KindOfName = KindOfName.Entity;
             }
 
             name.NameValue = text;
 
-            CalculateIndex(name, dictionary);
-
             return name;
-        }
-
-        public static void CalculateIndex(Name name, IEntityDictionary dictionary)
-        {
-            if (name.IsEmpty)
-            {
-                return;
-            }
-
-            name.NameKey = dictionary.GetKey(name.NameValue);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,15 +21,15 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly InheritanceResolver _inheritanceResolver;
 
         /// <inheritdoc/>
-        public Value Call(Value leftOperand, Value rightOperand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
+        public IndexedValue Call(IndexedValue leftOperand, IndexedValue rightOperand, IndexedValue annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Log($"leftOperand = {leftOperand}");
-            Log($"rightOperand = {rightOperand}");
-            Log($"annotation = {annotation}");
+            //Log($"leftOperand = {leftOperand}");
+            //Log($"rightOperand = {rightOperand}");
+            //Log($"annotation = {annotation}");
 #endif
 
-            if (leftOperand.IsIdentifierValue && leftOperand.IsIdentifierValue)
+            if (leftOperand.IsStrongIdentifierValue && leftOperand.IsStrongIdentifierValue)
             {
                 return GetInheritanceRank(leftOperand, rightOperand, localCodeExecutionContext);
             }
@@ -36,9 +37,9 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             throw new NotImplementedException();
         }
 
-        private Value GetInheritanceRank(Value leftOperand, Value rightOperand, LocalCodeExecutionContext localCodeExecutionContext)
+        private IndexedValue GetInheritanceRank(IndexedValue leftOperand, IndexedValue rightOperand, LocalCodeExecutionContext localCodeExecutionContext)
         {
-            return _inheritanceResolver.GetInheritanceRank(leftOperand.AsIdentifierValue, rightOperand.AsIdentifierValue, localCodeExecutionContext, ResolverOptions.GetDefaultFluentOptions());
+            return _inheritanceResolver.GetInheritanceRank(leftOperand.AsStrongIdentifierValue, rightOperand.AsStrongIdentifierValue, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.IndexedData;
+﻿using SymOntoClay.Core.Internal.Convertors;
+using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,42 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public Task SystemTask { get; set; }
 
         public IndexedTaskValue Indexed { get; set; }
+
+        public IndexedTaskValue GetIndexed(IMainStorageContext mainStorageContext)
+        {
+            if (Indexed == null)
+            {
+                return ConvertorToIndexed.ConvertTaskValue(this, mainStorageContext);
+            }
+
+            return Indexed;
+        }
+
+        /// <inheritdoc/>
+        public override IndexedValue GetIndexedValue(IMainStorageContext mainStorageContext)
+        {
+            return GetIndexed(mainStorageContext);
+        }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
+        {
+            return GetIndexed(mainStorageContext);
+        }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            if (Indexed == null)
+            {
+                return ConvertorToIndexed.ConvertTaskValue(this, mainStorageContext, convertingContext);
+            }
+
+            return Indexed;
+        }
 
         /// <inheritdoc/>
         public override bool IsTaskValue => true;
@@ -54,6 +91,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             result.TaskId = TaskId;
             result.AppendAnnotations(this, cloneContext);
+
             return result;
         }
 

@@ -9,12 +9,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class InheritanceItem: AnnotatedItem
     {
-        public Name SubName { get; set; } = new Name();
+        public StrongIdentifierValue SubName { get; set; } = new StrongIdentifierValue();
 
         /// <summary>
         /// Represents ancestor.
         /// </summary>
-        public Name SuperName { get; set; } = new Name();
+        public StrongIdentifierValue SuperName { get; set; } = new StrongIdentifierValue();
 
         /// <summary>
         /// Represents rank of inheritance between two objects.
@@ -26,11 +26,31 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public IndexedInheritanceItem Indexed { get; set; }
 
-        public IndexedInheritanceItem GetIndexed(IEntityDictionary entityDictionary)
+        public IndexedInheritanceItem GetIndexed(IMainStorageContext mainStorageContext)
         {
             if(Indexed == null)
             {
-                return ConvertorToIndexed.ConvertInheritanceItem(this, entityDictionary);
+                return ConvertorToIndexed.ConvertInheritanceItem(this, mainStorageContext);
+            }
+
+            return Indexed;
+        }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
+        {
+            return GetIndexed(mainStorageContext);
+        }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            if (Indexed == null)
+            {
+                return ConvertorToIndexed.ConvertInheritanceItem(this, mainStorageContext, convertingContext);
             }
 
             return Indexed;

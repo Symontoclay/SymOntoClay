@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Parsing.Internal.RawStatements;
 using System;
@@ -15,6 +16,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotUse,
             GotFirstName,
             GotIs,
+            GotIsNot,
             GotSecondName,
             WaitForInheritanceRank,
             GotInheritanceRankValue,
@@ -41,7 +43,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnFinish()
         {
 #if DEBUG
-            Log($"_rawStatement = {_rawStatement}");
+            //Log($"_rawStatement = {_rawStatement}");
 #endif
             var kindOfUseRawStatement = _rawStatement.KindOfUseRawStatement;
 
@@ -66,7 +68,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             result.SubName = _rawStatement.FirstName;
             result.SuperName = _rawStatement.SecondName;
-            result.Rank = _rawStatement.Rank;
+
+            if(_rawStatement.Rank == null)
+            {
+                result.Rank = new LogicalValue(1);
+            }
+            else
+            {
+                result.Rank = _rawStatement.Rank;
+            }
+
+            result.HasNot = _rawStatement.HasNot;
 
             Result = result;
         }
@@ -75,10 +87,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
-            Log($"_rawStatement = {_rawStatement}");
+            //Log($"_currToken = {_currToken}");
+            //Log($"_rawStatement = {_rawStatement}");
             //Log($"Result = {Result}");
-            Log($"_state = {_state}");
+            //Log($"_state = {_state}");
 #endif
 
             switch (_state)
@@ -107,6 +119,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
+                        case TokenKind.SystemVar:
                             _rawStatement.FirstName = ParseName(_currToken.Content);
                             _state = State.GotFirstName;
                             break;
@@ -140,9 +153,30 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
-                            _rawStatement.SecondName = ParseName(_currToken.Content);
-                            _rawStatement.KindOfUseRawStatement = KindOfUseRawStatement.UseInheritance;
-                            _state = State.GotSecondName;                   
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Not:
+                                    _rawStatement.HasNot = true;
+                                    _state = State.GotIsNot;
+                                    break;
+
+                                case KeyWordTokenKind.Unknown:
+                                default:
+                                    ProcessGotUseInheritanceSecondName();
+                                    break;
+                            }                 
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotIsNot:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                            ProcessGotUseInheritanceSecondName();
                             break;
 
                         default:
@@ -157,6 +191,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _state = State.WaitForInheritanceRank;
                             break;
 
+                        case TokenKind.Semicolon:
+                            Exit();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -168,7 +206,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Number:
                             {
                                 _context.Recovery(_currToken);
-                                var parser = new NumberParser(_context);
+                                var parser = new NumberParser(_context, true);
                                 parser.Run();
                                 _rawStatement.Rank = parser.Result;
                                 _state = State.GotInheritanceRankValue;
@@ -207,6 +245,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
+        }
+
+        private void ProcessGotUseInheritanceSecondName()
+        {
+            _rawStatement.SecondName = ParseName(_currToken.Content);
+            _rawStatement.KindOfUseRawStatement = KindOfUseRawStatement.UseInheritance;
+            _state = State.GotSecondName;
         }
     }
 }

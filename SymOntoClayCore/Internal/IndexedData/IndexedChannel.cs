@@ -11,7 +11,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
     {
         public Channel OriginalChannel { get; set; }
 
-        public Name Name { get; set; }
+        public IndexedStrongIdentifierValue Name { get; set; }
         public IChannelHandler Handler { get; set; }
 
         /// <inheritdoc/>

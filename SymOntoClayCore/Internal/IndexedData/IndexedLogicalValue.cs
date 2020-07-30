@@ -31,6 +31,13 @@ namespace SymOntoClay.Core.Internal.IndexedData
             return SystemValue;
         }
 
+        public IndexedLogicalValue Inverse(IMainStorageContext mainStorageContext)
+        {
+            var result = OriginalLogicalValue.Inverse();
+
+            return result.GetIndexed(mainStorageContext);
+        }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
@@ -62,6 +69,13 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToDbgString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            return $"{spaces}{SystemValue}";
         }
     }
 }

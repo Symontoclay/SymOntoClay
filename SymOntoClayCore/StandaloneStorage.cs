@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.CoreHelper;
 using System;
@@ -12,13 +13,13 @@ namespace SymOntoClay.Core
         public StandaloneStorage(StandaloneStorageSettings settings)
             : base(settings.Logger)
         {
-            _settings = settings;
+            Log($"settings = {settings}");
 
-            Log($"_settings = {_settings}");
+            _context = EngineContextHelper.CreateAndInitMainStorageContext(settings);
         }
 
-        private readonly StandaloneStorageSettings _settings;
-        private RealStorage _storage;
+        private readonly MainStorageContext _context;
+        private IStorage _storage;
 
         IStorage IStandaloneStorage.Storage
         {
@@ -46,23 +47,9 @@ namespace SymOntoClay.Core
                     throw new ObjectDisposedException(null);
                 }
 
-                var storageSettings = new RealStorageSettings();
-                storageSettings.Logger = Logger;
-                storageSettings.EntityDictionary = _settings.Dictionary;
+                EngineContextHelper.LoadFromSourceCode(_context);
 
-                if(_settings?.ParentStorage?.Storage != null)
-                {
-                    storageSettings.ParentsStorages = new List<IStorage>() { _settings.ParentStorage.Storage };
-                }
-
-                if (_settings.IsWorld)
-                {
-                    _storage = new WorldStorage(storageSettings);
-                }
-                else
-                {
-                    _storage = new HostStorage(storageSettings);
-                }
+                _storage = _context.Storage.GlobalStorage;
 
 #if IMAGINE_WORKING
                 Log("Do");

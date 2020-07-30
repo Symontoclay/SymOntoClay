@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,7 +20,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private IBinaryOperatorHandler _operatorHandler;
 
         /// <inheritdoc/>
-        public Value Call(IList<Value> paramsList, LocalCodeExecutionContext localCodeExecutionContext)
+        public IndexedValue Call(IList<IndexedValue> paramsList, LocalCodeExecutionContext localCodeExecutionContext)
         {
             var leftOperand = paramsList[0];
             var rightOperand = paramsList[1];
@@ -29,7 +30,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
         
         /// <inheritdoc/>
-        public Value Call(IDictionary<ulong, Value> paramsDict, Value anotation, LocalCodeExecutionContext localCodeExecutionContext)
+        public IndexedValue Call(IDictionary<ulong, IndexedValue> paramsDict, IndexedValue anotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
             var leftOperand = paramsDict[_leftOperandKey];
             var rightOperand = paramsDict[_rightOperandKey];

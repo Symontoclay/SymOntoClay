@@ -7,12 +7,12 @@ namespace SymOntoClay.Core.Internal.InheritanceEngine
 {
     public class InheritanceEngineComponent: BaseComponent, IInheritanceEngine
     {
-        public InheritanceEngineComponent(IParserContext context)
+        public InheritanceEngineComponent(IEngineContext context)
             : base(context.Logger)
         {
             _context = context;
         }
 
-        private readonly IParserContext _context;
+        private readonly IEngineContext _context;
     }
 }

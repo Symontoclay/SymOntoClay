@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Parsing;
@@ -14,20 +15,20 @@ namespace SymOntoClay.Unity3DAsset.Test
         [SetUp]
         public void Setup()
         {
-            _parserContext = new TstParserContext();
+            _mainStorageContext = new TstMainStorageContext();
         }
 
-        private IParserContext _parserContext;
+        private IMainStorageContext _mainStorageContext;
 
         [Test]
         public void NameHelper_Tests_Case_Empty()
         {
-            var name = new Name();
+            var name = new StrongIdentifierValue();
 
             Assert.AreEqual(name.IsEmpty, true);
             Assert.AreEqual(name.NameValue, string.Empty);
             Assert.AreEqual(name.KindOfName, KindOfName.Unknown);
-            Assert.AreEqual(name.NameKey, 0);
+            //Assert.AreEqual(name.NameKey, 0);
         }
 
         [Test]
@@ -35,16 +36,16 @@ namespace SymOntoClay.Unity3DAsset.Test
         {
             var text = "dog";
 
-            var name = NameHelper.CreateName(text, _parserContext.Dictionary);
+            var name = NameHelper.CreateName(text, _mainStorageContext.Dictionary);
 
             Assert.AreEqual(name.IsEmpty, false);
             Assert.AreEqual(name.NameValue, text);
             Assert.AreEqual(name.KindOfName, KindOfName.Concept);
-            Assert.AreNotEqual(name.NameKey, 0);
+            //Assert.AreNotEqual(name.NameKey, 0);
 
-            var key = _parserContext.Dictionary.GetKey(text);
+            //var key = _parserContext.Dictionary.GetKey(text);
 
-            Assert.AreEqual(name.NameKey, key);
+            //Assert.AreEqual(name.NameKey, key);
         }
 
         [Test]
@@ -52,27 +53,27 @@ namespace SymOntoClay.Unity3DAsset.Test
         {
             var text = "@>log";
 
-            var name = NameHelper.CreateName(text, _parserContext.Dictionary);
+            var name = NameHelper.CreateName(text, _mainStorageContext.Dictionary);
 
             Assert.AreEqual(name.IsEmpty, false);
             Assert.AreEqual(name.NameValue, text);
             Assert.AreEqual(name.KindOfName, KindOfName.Channel);
-            Assert.AreNotEqual(name.NameKey, 0);
+            //Assert.AreNotEqual(name.NameKey, 0);
 
-            var key = _parserContext.Dictionary.GetKey(text);
+            //var key = _parserContext.Dictionary.GetKey(text);
 
-            Assert.AreEqual(name.NameKey, key);
+            //Assert.AreEqual(name.NameKey, key);
         }
 
         [Test]
         public void NameHelper_Tests_Case_CreateRuleOrFactName()
         {
-            var name = NameHelper.CreateRuleOrFactName(_parserContext.Dictionary);
+            var name = NameHelper.CreateRuleOrFactName(_mainStorageContext.Dictionary);
 
             Assert.AreEqual(name.IsEmpty, false);
             Assert.AreNotEqual(name.NameValue, string.Empty);
             Assert.AreEqual(name.KindOfName, KindOfName.Entity);
-            Assert.AreNotEqual(name.NameKey, 0);
+            //Assert.AreNotEqual(name.NameKey, 0);
         }
 
         [Test]
@@ -80,16 +81,16 @@ namespace SymOntoClay.Unity3DAsset.Test
         {
             var text = "#dog1";
 
-            var name = NameHelper.CreateName(text, _parserContext.Dictionary);
+            var name = NameHelper.CreateName(text, _mainStorageContext.Dictionary);
 
             Assert.AreEqual(name.IsEmpty, false);
             Assert.AreEqual(name.NameValue, text);
             Assert.AreEqual(name.KindOfName, KindOfName.Entity);
-            Assert.AreNotEqual(name.NameKey, 0);
+            //Assert.AreNotEqual(name.NameKey, 0);
 
-            var key = _parserContext.Dictionary.GetKey(text);
+            //var key = _parserContext.Dictionary.GetKey(text);
 
-            Assert.AreEqual(name.NameKey, key);
+            //Assert.AreEqual(name.NameKey, key);
         }
     }
 }

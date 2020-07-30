@@ -20,11 +20,31 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public IndexedInlineTrigger Indexed { get; set; }
 
-        public IndexedInlineTrigger GetIndexed(IEntityDictionary entityDictionary, ICompiler compiler)
+        public IndexedInlineTrigger GetIndexed(IMainStorageContext mainStorageContext)
         {
             if (Indexed == null)
             {
-                return ConvertorToIndexed.ConvertInlineTrigger(this, entityDictionary, compiler);
+                return ConvertorToIndexed.ConvertInlineTrigger(this, mainStorageContext);
+            }
+
+            return Indexed;
+        }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
+        {
+            return GetIndexed(mainStorageContext);
+        }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            if (Indexed == null)
+            {
+                return ConvertorToIndexed.ConvertInlineTrigger(this, mainStorageContext, convertingContext);
             }
 
             return Indexed;

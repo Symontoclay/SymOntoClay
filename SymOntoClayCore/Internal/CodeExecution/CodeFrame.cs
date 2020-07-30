@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -12,7 +13,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     {
         public CompiledFunctionBody CompiledFunctionBody { get; set; }
         public int CurrentPosition { get; set; }
-        public Stack<Value> ValuesStack { get; private set; } = new Stack<Value>();
+        public Stack<IndexedValue> ValuesStack { get; private set; } = new Stack<IndexedValue>();
         public LocalCodeExecutionContext LocalContext { get; set; }
         
         /// <inheritdoc/>

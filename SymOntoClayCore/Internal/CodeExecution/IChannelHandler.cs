@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +8,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface IChannelHandler
     {
-        Value Read();
-        Value Write(Value value);
+        IndexedValue Read();
+        IndexedValue Write(IndexedValue value);
     }
 }

@@ -26,18 +26,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             switch (sourceKind)
             {
                 case KindOfValue.NullValue:
-                    if(options.IsDeepMode)
-                    {
-                        return IndexedValueConvertor.ConvertDeeplyNullValueToNumberValue(source.AsNullValue, _context.Dictionary);
-                    }                    
-                    return IndexedValueConvertor.ConvertFluentlyNullValueToNumberValue(source.AsNullValue, _context.Dictionary);
+                    return IndexedValueConvertor.ConvertNullValueToNumberValue(source.AsNullValue, _context);
 
                 case KindOfValue.LogicalValue:
-                    if (options.IsDeepMode)
-                    {
-                        return IndexedValueConvertor.ConvertDeeplyLogicalValueToNumberValue(source.AsLogicalValue, _context.Dictionary);
-                    }
-                    return IndexedValueConvertor.ConvertFluentlyLogicalValueToNumberValue(source.AsLogicalValue, _context.Dictionary);
+                    return IndexedValueConvertor.ConvertLogicalValueToNumberValue(source.AsLogicalValue, _context);
 
                 case KindOfValue.NumberValue:
                     return source.AsNumberValue;

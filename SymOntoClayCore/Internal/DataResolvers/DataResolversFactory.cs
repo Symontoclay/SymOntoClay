@@ -21,7 +21,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private OperatorsResolver _operatorsResolver;
         private NumberValueLinearResolver _numberValueLinearResolver;
         private TriggersResolver _triggersResolver;
-
+        private VarsResolver _varsResolver;
 
         /// <inheritdoc/>
         public ChannelsResolver GetChannelsResolver()
@@ -104,6 +104,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 return _triggersResolver;
+            }
+        }
+
+        /// <inheritdoc/>
+        public VarsResolver GetVarsResolver()
+        {
+            lock (_lockObj)
+            {
+                if(_varsResolver == null)
+                {
+                    _varsResolver = new VarsResolver(_context);
+                }
+
+                return _varsResolver;
             }
         }
     }

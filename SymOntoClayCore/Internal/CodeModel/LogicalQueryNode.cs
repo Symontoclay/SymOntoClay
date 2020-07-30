@@ -11,14 +11,29 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         public KindOfLogicalQueryNode Kind { get; set; } = KindOfLogicalQueryNode.Unknown;
         public KindOfOperatorOfLogicalQueryNode KindOfOperator { get; set; } = KindOfOperatorOfLogicalQueryNode.Unknown;
-        public Name Name { get; set; }
+        public StrongIdentifierValue Name { get; set; }
         public LogicalQueryNode Left { get; set; }
         public LogicalQueryNode Right { get; set; }
         public List<LogicalQueryNode> ParamsList { get; set; }
-        public List<Name> VarsList { get; set; }
+        public List<StrongIdentifierValue> VarsList { get; set; }
         public bool IsGroup { get; set; }
         public Value Value { get; set; }
         public bool IsQuestion { get; set; }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem IndexedAnnotatedItem => null;
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
+        {
+            return null;
+        }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            return null;
+        }
 
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)

@@ -20,11 +20,31 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public IndexedOperator Indexed { get; set; }
 
-        public IndexedOperator GetIndexed(IEntityDictionary entityDictionary)
+        public IndexedOperator GetIndexed(IMainStorageContext mainStorageContext)
         {
             if(Indexed == null)
             {
-                return ConvertorToIndexed.ConvertOperator(this, entityDictionary);
+                return ConvertorToIndexed.ConvertOperator(this, mainStorageContext);
+            }
+
+            return Indexed;
+        }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
+        {
+            return GetIndexed(mainStorageContext);
+        }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            if (Indexed == null)
+            {
+                return ConvertorToIndexed.ConvertOperator(this, mainStorageContext, convertingContext);
             }
 
             return Indexed;

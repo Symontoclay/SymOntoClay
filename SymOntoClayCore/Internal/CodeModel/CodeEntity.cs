@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class CodeEntity : AnnotatedItem
     {
         public KindOfCodeEntity Kind { get; set; } = KindOfCodeEntity.Unknown;
-        public Name Name { get; set; } = new Name();
+        public StrongIdentifierValue Name { get; set; }
         public List<InheritanceItem> InheritanceItems { get; set; } = new List<InheritanceItem>();
         public RuleInstance RuleInstance { get; set; }
         public InlineTrigger InlineTrigger { get; set; }
@@ -19,6 +20,21 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public CodeFile CodeFile { get; set; }
         public CodeEntity ParentCodeEntity { get; set; }
         public List<CodeEntity> SubItems { get; set; } = new List<CodeEntity>();
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem IndexedAnnotatedItem => null;
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
+        {
+            return null;
+        }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            return null;
+        }
 
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)

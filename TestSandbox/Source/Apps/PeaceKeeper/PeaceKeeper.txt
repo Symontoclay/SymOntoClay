@@ -5,9 +5,23 @@
 
 		 exampleClass is human >> @>log;
 
+		 exampleClass is not human >> @>log;
+
 		 use exampleClass is human [0.5];
 
 		 exampleClass is human >> @>log;
+
+		 exampleClass is not human >> @>log;
+
+		 use exampleClass is not human;
+
+		 exampleClass is human >> @>log;
+
+		 exampleClass is not human >> @>log;
+
+		 use @@self is linux;
+
+		 @@self is linux >> @>log;
 
 		 "End" >> @>log;
 	}

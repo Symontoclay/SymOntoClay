@@ -11,18 +11,38 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class RuleInstance: AnnotatedItem
     {
         public string DictionaryName { get; set; }
-        public Name Name { get; set; }
+        public StrongIdentifierValue Name { get; set; }
         public bool IsRule { get; set; }
         public PrimaryRulePart PrimaryPart { get; set; }
         public List<SecondaryRulePart> SecondaryParts { get; set; } = new List<SecondaryRulePart>();
 
         public IndexedRuleInstance Indexed { get; set; }
 
-        public IndexedRuleInstance GetIndexed(IEntityDictionary entityDictionary)
+        public IndexedRuleInstance GetIndexed(IMainStorageContext mainStorageContext)
         {
             if (Indexed == null)
             {
-                return ConvertorToIndexed.ConvertRuleInstance(this, entityDictionary);
+                return ConvertorToIndexed.ConvertRuleInstance(this, mainStorageContext);
+            }
+
+            return Indexed;
+        }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
+        {
+            return GetIndexed(mainStorageContext);
+        }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            if (Indexed == null)
+            {
+                return ConvertorToIndexed.ConvertRuleInstance(this, mainStorageContext, convertingContext);
             }
 
             return Indexed;

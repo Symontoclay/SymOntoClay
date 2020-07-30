@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +8,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface ISystemHandler
     {
-        Value Call(IList<Value> paramsList, LocalCodeExecutionContext localCodeExecutionContext);
-        Value Call(IDictionary<ulong, Value> paramsDict, Value anotation, LocalCodeExecutionContext localCodeExecutionContext);
+        IndexedValue Call(IList<IndexedValue> paramsList, LocalCodeExecutionContext localCodeExecutionContext);
+        IndexedValue Call(IDictionary<ulong, IndexedValue> paramsDict, IndexedValue anotation, LocalCodeExecutionContext localCodeExecutionContext);
     }
 }

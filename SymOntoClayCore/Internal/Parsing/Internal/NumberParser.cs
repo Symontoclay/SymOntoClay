@@ -18,16 +18,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotFractionPart
         }
 
-        public NumberParser(InternalParserContext context)
+        public NumberParser(InternalParserContext context, bool createLogicalValue = false)
             : base(context)
         {
-
+            _createLogicalValue = createLogicalValue;
         }
 
         private State _state = State.Init;
 
-        public NumberValue Result { get; private set; }
+        public Value Result { get; private set; }
         public StringBuilder _buffer;
+        private readonly bool _createLogicalValue;
 
         /// <inheritdoc/>
         protected override void OnEnter()
@@ -39,9 +40,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
-            Log($"buffer = {_buffer}");
-            Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
+            //Log($"buffer = {_buffer}");
+            //Log($"_state = {_state}");
 #endif
 
             switch (_state)
@@ -71,7 +72,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var nextToken = _context.GetToken();
 
 #if DEBUG
-                                Log($"nextToken = {nextToken}");
+                                //Log($"nextToken = {nextToken}");
 #endif
 
                                 if(nextToken.TokenKind == TokenKind.Number)
@@ -89,6 +90,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     Exit();
                                 }                              
                             }
+                            break;
+
+                        case TokenKind.CloseSquareBracket:
+                            ProcessCloseSquareBracket();
                             break;
 
                         default:
@@ -117,8 +122,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.CloseSquareBracket:
-                            _context.Recovery(_currToken);
-                            Exit();
+                            ProcessCloseSquareBracket();
                             break;
 
                         default:
@@ -131,20 +135,39 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             }
         }
 
+        private void ProcessCloseSquareBracket()
+        {
+            _context.Recovery(_currToken);
+            Exit();
+        }
+
         /// <inheritdoc/>
         protected override void OnFinish()
         {
 #if DEBUG
-            Log($"buffer = {_buffer}");
+            //Log($"buffer = {_buffer}");
 #endif
 
-            var numberValue = double.Parse(_buffer.ToString(), _targetCulture);
+            if(_createLogicalValue)
+            {
+                var numberValue = float.Parse(_buffer.ToString(), _targetCulture);
 
 #if DEBUG
-            Log($"numberValue = {numberValue}");
+                //Log($"numberValue = {numberValue}");
 #endif
 
-            Result = new NumberValue(numberValue);
+                Result = new LogicalValue(numberValue);
+            }
+            else
+            {
+                var numberValue = double.Parse(_buffer.ToString(), _targetCulture);
+
+#if DEBUG
+                //Log($"numberValue = {numberValue}");
+#endif
+
+                Result = new NumberValue(numberValue);
+            }
         }
     }
 }

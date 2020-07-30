@@ -25,6 +25,8 @@ namespace TestSandbox
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
+            //TstNullableArithmetic();
+            //TstInheritanceItemsHandler();
             //TstDefaultSettingsOfCodeEntityHandler();
             //TstActivateMainEntity();
             //TstCompileInlineTrigger();
@@ -42,6 +44,30 @@ namespace TestSandbox
             //Thread.Sleep(10000);
         }
 
+        private static void TstNullableArithmetic()
+        {
+            _logger.Log("Begin");
+
+            float? a = null;
+
+            var b = 1 - a;
+
+            _logger.Log($"b = {b}");
+            _logger.Log($"b == null = {b == null}");
+
+            _logger.Log("End");
+        }
+
+        private static void TstInheritanceItemsHandler()
+        {
+            _logger.Log("Begin");
+
+            var handler = new InheritanceItemsHandler();
+            handler.Run();
+
+            _logger.Log("End");
+        }
+            
         private static void TstDefaultSettingsOfCodeEntityHandler()
         {
             _logger.Log("Begin");
@@ -125,13 +151,11 @@ namespace TestSandbox
         {
             _logger.Log("Begin");
 
-            var parserContext = new TstParserContext();
+            var parserContext = new TstMainStorageContext();
 
             var nameVal1 = "dog";
 
             _logger.Log($"{nameof(nameVal1)} = {nameVal1}");
-
-
 
             //var result = ParseName(nameVal1);
 

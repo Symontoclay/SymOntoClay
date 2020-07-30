@@ -69,7 +69,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             return _dictionary.GetKey(name);
         }
 
-        protected Name ParseName(string text)
+        protected StrongIdentifierValue ParseName(string text)
         {
 #if DEBUG
             //Log($"text = {text}");

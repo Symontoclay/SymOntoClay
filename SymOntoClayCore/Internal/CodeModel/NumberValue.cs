@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.IndexedData;
+﻿using SymOntoClay.Core.Internal.Convertors;
+using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,42 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public IndexedNumberValue Indexed { get; set; }
 
+        public IndexedNumberValue GetIndexed(IMainStorageContext mainStorageContext)
+        {
+            if (Indexed == null)
+            {
+                return ConvertorToIndexed.ConvertNumberValue(this, mainStorageContext);
+            }
+
+            return Indexed;
+        }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
+
+        /// <inheritdoc/>
+        public override IndexedValue GetIndexedValue(IMainStorageContext mainStorageContext)
+        {
+            return GetIndexed(mainStorageContext);
+        }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
+        {
+            return GetIndexed(mainStorageContext);
+        }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            if (Indexed == null)
+            {
+                return ConvertorToIndexed.ConvertNumberValue(this, mainStorageContext, convertingContext);
+            }
+
+            return Indexed;
+        }
+
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
@@ -50,6 +87,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             cloneContext[this] = result;
 
             result.AppendAnnotations(this, cloneContext);
+
             return result;
         }
 

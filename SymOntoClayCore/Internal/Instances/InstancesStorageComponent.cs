@@ -18,7 +18,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly IEngineContext _context;
         private readonly object _registryLockObj = new object();
 
-        private Dictionary<Name, InstanceInfo> _namesDict;
+        private Dictionary<StrongIdentifierValue, InstanceInfo> _namesDict;
         private InstanceInfo _rootInstanceInfo;
 
         public void LoadFromSourceFiles()
@@ -27,7 +27,7 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log("Begin");
 #endif
 
-            _namesDict = new Dictionary<Name, InstanceInfo>();
+            _namesDict = new Dictionary<StrongIdentifierValue, InstanceInfo>();
             _rootInstanceInfo = null;
 
 #if IMAGINE_WORKING
@@ -83,6 +83,8 @@ namespace SymOntoClay.Core.Internal.Instances
                 instanceInfo = new InstanceInfo(name: mainEntity.Name, context: _context, parentStorage: globalStorage);
                 _rootInstanceInfo = instanceInfo;
                 _namesDict[mainEntityName] = instanceInfo;
+
+                globalStorage.VarStorage.SetSystemValue(_context.CommonNamesStorage.IndexedSelfSystemVarName, mainEntityName.GetIndexedValue(_context));
             }
 
 #if DEBUG

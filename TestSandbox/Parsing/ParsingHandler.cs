@@ -5,6 +5,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TestSandbox.Helpers;
 using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.Parsing
@@ -37,7 +38,7 @@ namespace TestSandbox.Parsing
     }
 }";
 
-            var parserContext = new TstParserContext();
+            var parserContext = new TstMainStorageContext();
 
             var codeFile = new CodeFile();
 
@@ -94,7 +95,7 @@ namespace TestSandbox.Parsing
 {
 }";
 
-            var parserContext = new TstParserContext();
+            var parserContext = new TstMainStorageContext();
 
             var codeFile = new CodeFile();
 

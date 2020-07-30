@@ -22,8 +22,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsStringValue => false;
         public virtual StringValue AsStringValue => null;
 
-        public virtual bool IsIdentifierValue => false;
-        public virtual Name AsIdentifierValue => null;
+        public virtual bool IsStrongIdentifierValue => false;
+        public virtual StrongIdentifierValue AsStrongIdentifierValue => null;
 
         public virtual bool IsTaskValue => false;
         public virtual TaskValue AsTaskValue => null;
@@ -32,6 +32,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual AnnotationValue AsAnnotationValue => null;
 
         public abstract object GetSystemValue();
+
+        public abstract IndexedValue GetIndexedValue(IMainStorageContext mainStorageContext);
 
         /// <summary>
         /// Clones the instance and returns cloned instance.

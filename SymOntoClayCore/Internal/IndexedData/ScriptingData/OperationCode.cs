@@ -12,9 +12,14 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         Nop,
 
         /// <summary>
-        /// Pushes a value into a current stack.
+        /// Pushes a constant value into a current stack.
         /// </summary>
         PushVal,
+
+        /// <summary>
+        /// Pushes a value from a variable into a current stack.
+        /// </summary>
+        PushValFromVar,
 
         /// <summary>
         /// Calls an unary operator
@@ -29,6 +34,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         ClearStack,
         Return,
         ReturnVal,
-        UseInheritance
+        UseInheritance,
+        UseNotInheritance
     }
 }

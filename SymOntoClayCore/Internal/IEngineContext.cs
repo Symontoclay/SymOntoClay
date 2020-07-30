@@ -18,7 +18,6 @@ namespace SymOntoClay.Core.Internal
     {   
         ICodeExecutorComponent CodeExecutor { get; }
         ITriggerExecutorComponent TriggerExecutor { get; }
-        ILoaderFromSourceCode LoaderFromSourceCode { get; }
         ILogicalEngine LogicalEngine { get; }
         IInheritanceEngine InheritanceEngine { get; }
         IInstancesStorageComponent InstancesStorage { get; }

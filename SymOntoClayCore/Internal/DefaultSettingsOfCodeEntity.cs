@@ -13,7 +13,7 @@ namespace SymOntoClay.Core.Internal
 
         public IList<Value> WhereSection { get; set; }
 
-        public Name Holder { get; set; }
+        public StrongIdentifierValue Holder { get; set; }
 
         /// <summary>
         /// Clones the instance and returns cloned instance.

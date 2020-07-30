@@ -7,64 +7,24 @@ namespace SymOntoClay.Core.Internal.Convertors
 {
     public static class IndexedValueConvertor
     {
-        public static IndexedLogicalValue ConvertDeeplyNullValueToLogicalValue(IndexedNullValue source, IEntityDictionary entityDictionary)
+        public static IndexedLogicalValue ConvertNullValueToLogicalValue(IndexedNullValue source, IMainStorageContext mainStorageContext)
         {
-            throw new NotImplementedException();
+            return ValueConvertor.ConvertNullValueToLogicalValue(source.OriginalNullValue, mainStorageContext).GetIndexed(mainStorageContext);
         }
 
-        public static IndexedLogicalValue ConvertFluentlyNullValueToLogicalValue(IndexedNullValue source, IEntityDictionary entityDictionary)
+        public static IndexedLogicalValue ConvertNumberValueToLogicalValue(IndexedNumberValue source, IMainStorageContext mainStorageContext)
         {
-            var result = new IndexedLogicalValue();
-            result.SystemValue = null;
-
-            return result;
+            return ValueConvertor.ConvertNumberValueToLogicalValue(source.OriginalNumberValue, mainStorageContext).GetIndexed(mainStorageContext);
         }
 
-        public static IndexedLogicalValue ConvertDeeplyNumberValueToLogicalValue(IndexedNumberValue source, IEntityDictionary entityDictionary)
+        public static IndexedNumberValue ConvertNullValueToNumberValue(IndexedNullValue source, IMainStorageContext mainStorageContext)
         {
-            throw new NotImplementedException();
+            return ValueConvertor.ConvertNullValueToNumberValue(source.OriginalNullValue, mainStorageContext).GetIndexed(mainStorageContext);
         }
 
-        public static IndexedLogicalValue ConvertFluentlyNumberValueToLogicalValue(IndexedNumberValue source, IEntityDictionary entityDictionary)
+        public static IndexedNumberValue ConvertLogicalValueToNumberValue(IndexedLogicalValue source, IMainStorageContext mainStorageContext)
         {
-            var result = new IndexedLogicalValue();
-            if(source.SystemValue.HasValue)
-            {
-                result.SystemValue = (float)source.SystemValue.Value;
-            }
-
-            return result;
-        }
-
-        public static IndexedNumberValue ConvertDeeplyNullValueToNumberValue(IndexedNullValue source, IEntityDictionary entityDictionary)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static IndexedNumberValue ConvertFluentlyNullValueToNumberValue(IndexedNullValue source, IEntityDictionary entityDictionary)
-        {
-            var result = new IndexedNumberValue();
-
-            result.SystemValue = null;
-
-            return result;
-        }
-
-        public static IndexedNumberValue ConvertDeeplyLogicalValueToNumberValue(IndexedLogicalValue source, IEntityDictionary entityDictionary)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static IndexedNumberValue ConvertFluentlyLogicalValueToNumberValue(IndexedLogicalValue source, IEntityDictionary entityDictionary)
-        {
-            var result = new IndexedNumberValue();
-
-            if (source.SystemValue.HasValue)
-            {
-                result.SystemValue = source.SystemValue.Value;
-            }
-
-            return result;
+            return ValueConvertor.ConvertLogicalValueToNumberValue(source.OriginalLogicalValue, mainStorageContext).GetIndexed(mainStorageContext);
         }
     }
 }

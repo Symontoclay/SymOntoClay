@@ -49,6 +49,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.String:
+                        case TokenKind.SystemVar:
                             ProcessExpressionStatement();
                             break;
 

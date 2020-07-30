@@ -9,7 +9,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
     public class IndexedRuleInstance: IndexedAnnotatedItem
     {
         public RuleInstance Origin { get; set; }
-        public Name Name { get; set; }
+        public IndexedStrongIdentifierValue Name { get; set; }
 
         public bool IsRule { get; set; }
         public IndexedPrimaryRulePart PrimaryPart { get; set; }

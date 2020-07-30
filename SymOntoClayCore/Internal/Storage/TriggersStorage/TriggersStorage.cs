@@ -1,8 +1,10 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
@@ -10,7 +12,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
     public class TriggersStorage: BaseLoggedComponent, ITriggersStorage
     {
         public TriggersStorage(KindOfStorage kind, RealStorageContext realStorageContext)
-            : base(realStorageContext.Logger)
+            : base(realStorageContext.MainStorageContext.Logger)
         {
             _kind = kind;
             _realStorageContext = realStorageContext;
@@ -20,6 +22,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
 
         private readonly KindOfStorage _kind;
 
+        /// <inheritdoc/>
         public KindOfStorage Kind => _kind;
 
         private readonly RealStorageContext _realStorageContext;
@@ -27,8 +30,8 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
         /// <inheritdoc/>
         public IStorage Storage => _realStorageContext.Storage;
 
-        private readonly Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<Name, List<InlineTrigger>>> _nonIndexedSystemEventsInfo = new Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<Name, List<InlineTrigger>>>();
-        private readonly Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<Name, List<IndexedInlineTrigger>>> _indexedSystemEventsInfo = new Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<Name, List<IndexedInlineTrigger>>>();
+        private readonly Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<StrongIdentifierValue, List<InlineTrigger>>> _nonIndexedSystemEventsInfo = new Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<StrongIdentifierValue, List<InlineTrigger>>>();
+        private readonly Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<IndexedStrongIdentifierValue, List<IndexedInlineTrigger>>> _indexedSystemEventsInfo = new Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<IndexedStrongIdentifierValue, List<IndexedInlineTrigger>>>();
 
         /// <inheritdoc/>
         public void Append(InlineTrigger inlineTrigger)
@@ -37,7 +40,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
             //Log($"inlineTrigger = {inlineTrigger}");
 #endif
 
-            AnnotatedItemHelper.CheckAndFillHolder(inlineTrigger, _realStorageContext.CommonNamesStorage);
+            AnnotatedItemHelper.CheckAndFillHolder(inlineTrigger, _realStorageContext.MainStorageContext.CommonNamesStorage);
 
             var kind = inlineTrigger.Kind;
 
@@ -56,7 +59,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
         {
             lock (_lockObj)
             {
-                var indexedItem = inlineTrigger.GetIndexed(_realStorageContext.EntityDictionary, _realStorageContext.Compiler);
+                var indexedItem = inlineTrigger.GetIndexed(_realStorageContext.MainStorageContext);
 
 #if DEBUG
                 //Log($"indexedItem = {indexedItem}");
@@ -71,14 +74,40 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
 
                     if (dict.ContainsKey(inlineTrigger.Holder))
                     {
-                        var list = dict[inlineTrigger.Holder];
+                        var targetList = dict[inlineTrigger.Holder];
 
-                        if (!list.Contains(inlineTrigger))
+#if DEBUG
+                        Log($"dict[superName].Count = {dict[inlineTrigger.Holder].Count}");
+                        Log($"targetList = {targetList.WriteListToString()}");
+#endif
+                        var targetLongConditionalHashCode = indexedItem.GetLongConditionalHashCode();
+
+#if DEBUG
+                        Log($"targetLongConditionalHashCode = {targetLongConditionalHashCode}");
+#endif
+
+                        var targetIndexedList = indexedDict[indexedItem.Holder];
+
+                        var indexedItemsWithTheSameLongConditionalHashCodeList = targetIndexedList.Where(p => p.GetLongConditionalHashCode() == targetLongConditionalHashCode).ToList();
+
+                        foreach (var indexedItemWithTheSameLongConditionalHashCode in indexedItemsWithTheSameLongConditionalHashCodeList)
                         {
-                            list.Add(inlineTrigger);
-
-                            indexedDict[indexedItem.Holder].Add(indexedItem);
+                            targetIndexedList.Remove(indexedItemWithTheSameLongConditionalHashCode);
                         }
+
+                        var itemsWithTheSameLongConditionalHashCodeList = indexedItemsWithTheSameLongConditionalHashCodeList.Select(p => p.OriginalInlineTrigger).ToList();
+
+#if DEBUG
+                        Log($"itemsWithTheSameLongConditionalHashCodeList = {itemsWithTheSameLongConditionalHashCodeList.WriteListToString()}");
+#endif
+
+                        foreach (var itemWithTheSameLongConditionalHashCode in itemsWithTheSameLongConditionalHashCodeList)
+                        {
+                            targetList.Remove(itemWithTheSameLongConditionalHashCode);
+                        }
+
+                        targetList.Add(inlineTrigger);
+                        targetIndexedList.Add(indexedItem);
                     }
                     else
                     {
@@ -88,11 +117,10 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                 }
                 else
                 {
-                    _nonIndexedSystemEventsInfo[kindOfSystemEvent] = new Dictionary<Name, List<InlineTrigger>>() { { inlineTrigger.Holder, new List<InlineTrigger>() { inlineTrigger } } };
-                    _indexedSystemEventsInfo[kindOfSystemEvent] = new Dictionary<Name, List<IndexedInlineTrigger>>() { { indexedItem.Holder, new List<IndexedInlineTrigger>() { indexedItem } } };
+                    _nonIndexedSystemEventsInfo[kindOfSystemEvent] = new Dictionary<StrongIdentifierValue, List<InlineTrigger>>() { { inlineTrigger.Holder, new List<InlineTrigger>() { inlineTrigger } } };
+                    _indexedSystemEventsInfo[kindOfSystemEvent] = new Dictionary<IndexedStrongIdentifierValue, List<IndexedInlineTrigger>>() { { indexedItem.Holder, new List<IndexedInlineTrigger>() { indexedItem } } };
                 }
             }
-            
         }
 
         /// <inheritdoc/>

@@ -9,7 +9,7 @@ namespace SymOntoClay.Core.Internal.Storage
     public class RealStorage : BaseLoggedComponent, IStorage
     {
         public RealStorage(KindOfStorage kind, RealStorageSettings settings)
-            : base(settings.Logger)
+            : base(settings.MainStorageContext.Logger)
         {
 #if DEBUG
             //Log($"kind = {kind}");
@@ -19,10 +19,9 @@ namespace SymOntoClay.Core.Internal.Storage
             _kind = kind;
             _realStorageContext = new RealStorageContext();
             _realStorageContext.Storage = this;
-            _realStorageContext.Logger = settings.Logger;
-            _realStorageContext.EntityDictionary = settings.EntityDictionary;
-            _realStorageContext.Compiler = settings.Compiler;
-            _realStorageContext.CommonNamesStorage = settings.CommonNamesStorage;
+            _realStorageContext.MainStorageContext = settings.MainStorageContext;
+
+            DefaultSettingsOfCodeEntity = settings.DefaultSettingsOfCodeEntity;
 
             var parents = settings.ParentsStorages;
 
@@ -43,6 +42,7 @@ namespace SymOntoClay.Core.Internal.Storage
             _realStorageContext.OperatorsStorage = new OperatorsStorage.OperatorsStorage(_kind, _realStorageContext);
             _realStorageContext.ChannelsStorage = new ChannelsStorage.ChannelsStorage(_kind, _realStorageContext);
             _realStorageContext.MetadataStorage = new MetadataStorage.MetadataStorage(_kind, _realStorageContext);
+            _realStorageContext.VarStorage = new VarStorage.VarStorage(_kind, _realStorageContext);
         }
 
         private readonly KindOfStorage _kind;
@@ -75,6 +75,9 @@ namespace SymOntoClay.Core.Internal.Storage
 
         /// <inheritdoc/>
         public IMetadataStorage MetadataStorage => _realStorageContext.MetadataStorage;
+
+        /// <inheritdoc/>
+        public IVarStorage VarStorage => _realStorageContext.VarStorage;
 
         /// <inheritdoc/>
         void IStorage.CollectChainOfStorages(IList<KeyValuePair<uint, IStorage>> result, uint level)

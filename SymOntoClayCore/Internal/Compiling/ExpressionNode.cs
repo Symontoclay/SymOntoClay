@@ -32,13 +32,11 @@ namespace SymOntoClay.Core.Internal.Compiling
                     break;
 
                 case KindOfAstExpression.ConstValue:
-                    {
-                        var command = new ScriptCommand();
-                        command.OperationCode = OperationCode.PushVal;
-                        command.Value = (expression as ConstValueAstExpression).Value;
+                    CompilePushVal((expression as ConstValueAstExpression).Value);
+                    break;
 
-                        AddCommand(command);
-                    }
+                case KindOfAstExpression.Var:
+                    CompilePushValFromVar((expression as VarAstExpression).Name);
                     break;
 
                 default: 

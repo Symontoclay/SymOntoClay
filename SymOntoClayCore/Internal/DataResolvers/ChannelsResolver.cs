@@ -16,7 +16,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
         }
 
-        public IndexedChannel GetChannel(Name name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public IndexedChannel GetChannel(IndexedStrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"name = {name}");
@@ -62,7 +62,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return targetChannel;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<IndexedChannel>> GetRawList(Name name, List<KeyValuePair<uint, IStorage>> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<IndexedChannel>> GetRawList(IndexedStrongIdentifierValue name, List<KeyValuePair<uint, IStorage>> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
             //Log($"name = {name}");

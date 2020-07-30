@@ -8,6 +8,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
     {
         Unknown,
         Is,
+        IsNot,
         LeftRightStream
     }
 }

@@ -14,7 +14,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
         }
 
-        public InternalParserContext(string text, CodeFile codeFile, IParserContext context)
+        public InternalParserContext(string text, CodeFile codeFile, IMainStorageContext context)
         {
             _context = context;
             CodeFile = codeFile;
@@ -26,7 +26,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         public CodeFile CodeFile { get; private set; }
 
-        private IParserContext _context;
+        private IMainStorageContext _context;
         private Lexer _lexer;
         private Queue<Token> _recoveriesTokens = new Queue<Token>();
 

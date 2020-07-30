@@ -10,12 +10,12 @@ namespace SymOntoClay.Core.Internal.IndexedData
     {
         public InheritanceItem OriginalInheritanceItem { get; set; }
 
-        public Name SubName { get; set; } = new Name();
+        public IndexedStrongIdentifierValue SubName { get; set; } = new IndexedStrongIdentifierValue();
 
         /// <summary>
         /// Represents ancestor.
         /// </summary>
-        public Name SuperName { get; set; } = new Name();
+        public IndexedStrongIdentifierValue SuperName { get; set; } = new IndexedStrongIdentifierValue();
 
         /// <summary>
         /// Represents rank of inheritance between two objects.

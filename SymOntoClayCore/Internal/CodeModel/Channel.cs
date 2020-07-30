@@ -10,16 +10,36 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class Channel : AnnotatedItem
     {
-        public Name Name { get; set; }
+        public StrongIdentifierValue Name { get; set; }
         public IChannelHandler Handler { get; set; }
 
         public IndexedChannel Indexed { get; set; }
 
-        public IndexedChannel GetIndexed(IEntityDictionary entityDictionary)
+        public IndexedChannel GetIndexed(IMainStorageContext mainStorageContext)
         {
             if (Indexed == null)
             {
-                return ConvertorToIndexed.ConvertChannel(this, entityDictionary);
+                return ConvertorToIndexed.ConvertChannel(this, mainStorageContext);
+            }
+
+            return Indexed;
+        }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
+        {
+            return GetIndexed(mainStorageContext);
+        }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            if (Indexed == null)
+            {
+                return ConvertorToIndexed.ConvertChannel(this, mainStorageContext, convertingContext);
             }
 
             return Indexed;

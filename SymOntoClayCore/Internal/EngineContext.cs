@@ -20,54 +20,27 @@ using SymOntoClay.Core.Internal.Threads;
 
 namespace SymOntoClay.Core.Internal
 {
-    public class EngineContext : BaseComponent, IEngineContext
+    public class EngineContext : MainStorageContext, IEngineContext
     {
         public EngineContext(IEntityLogger logger)
             : base(logger)
         {
         }
 
-        /// <summary>
-        /// Gets or sets unique Id.
-        /// It allows us to identify each item of the game.
-        /// </summary>
-        public string Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets app file.
-        /// </summary>
-        public string AppFile { get; set; }
-
-        public IEntityDictionary Dictionary { get; set; }
-
-        public StorageComponent Storage { get; set; }
         public CodeExecutorComponent CodeExecutor { get; set; }
-        public TriggerExecutorComponent TriggerExecutor { get; set; }
-        public BaseLoaderFromSourceCode LoaderFromSourceCode { get; set; }
-        public Parser Parser { get; set; }
-        public Compiler Compiler { get; set; }
+        public TriggerExecutorComponent TriggerExecutor { get; set; }      
         public InstancesStorageComponent InstancesStorage { get; set; }
-        public StatesStorageComponent StatesStorage { get; set; }
-        public CommonNamesStorage CommonNamesStorage { get; set; }
+        public StatesStorageComponent StatesStorage { get; set; }       
         public LogicalEngineComponent LogicalEngine { get; set; }
         public InheritanceEngineComponent InheritanceEngine { get; set; }
-        public StandardLibraryLoader StandardLibraryLoader { get; set; }
-        public DataResolversFactory DataResolversFactory { get; set; }
+        public StandardLibraryLoader StandardLibraryLoader { get; set; }       
         public ActivePeriodicObjectContext ActivePeriodicObjectContext { get; set; }
-
-        IStorageComponent IMainStorageContext.Storage => Storage;
+   
         ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;
-        ITriggerExecutorComponent IEngineContext.TriggerExecutor => TriggerExecutor;
-        ILoaderFromSourceCode IEngineContext.LoaderFromSourceCode => LoaderFromSourceCode;
-        IParser IMainStorageContext.Parser => Parser;
-        ICompiler IMainStorageContext.Compiler => Compiler;
-        ICommonNamesStorage IMainStorageContext.CommonNamesStorage => CommonNamesStorage;
+        ITriggerExecutorComponent IEngineContext.TriggerExecutor => TriggerExecutor;     
         ILogicalEngine IEngineContext.LogicalEngine => LogicalEngine;
-        IInheritanceEngine IEngineContext.InheritanceEngine => InheritanceEngine;
-
-        IDataResolversFactory IMainStorageContext.DataResolversFactory => DataResolversFactory;
+        IInheritanceEngine IEngineContext.InheritanceEngine => InheritanceEngine;     
         IInstancesStorageComponent IEngineContext.InstancesStorage => InstancesStorage;
-
         IActivePeriodicObjectContext IEngineContext.ActivePeriodicObjectContext => ActivePeriodicObjectContext;
     }
 }

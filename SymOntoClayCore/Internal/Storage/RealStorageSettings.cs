@@ -8,11 +8,9 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class RealStorageSettings: IObjectToString
     {
-        public IEntityLogger Logger { get; set; }
-        public IEntityDictionary EntityDictionary { get; set; }
-        public ICompiler Compiler { get; set; }
-        public ICommonNamesStorage CommonNamesStorage { get; set; }
+        public IMainStorageContext MainStorageContext { get; set; }
         public IList<IStorage> ParentsStorages { get; set; }
+        public DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -32,10 +30,9 @@ namespace SymOntoClay.Core.Internal.Storage
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;
             var sb = new StringBuilder();
-            sb.PrintExisting(n, nameof(Logger), Logger);
-            sb.PrintExisting(n, nameof(EntityDictionary), EntityDictionary);
-            sb.PrintExisting(n, nameof(Compiler), Compiler);
+            sb.PrintExisting(n, nameof(MainStorageContext), MainStorageContext);
             sb.PrintObjListProp(n, nameof(ParentsStorages), ParentsStorages);
+            sb.PrintObjProp(n, nameof(DefaultSettingsOfCodeEntity), DefaultSettingsOfCodeEntity);
             return sb.ToString();
         }
     }

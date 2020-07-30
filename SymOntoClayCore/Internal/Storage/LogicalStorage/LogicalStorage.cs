@@ -10,7 +10,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
     public class LogicalStorage: BaseLoggedComponent, ILogicalStorage
     {
         public LogicalStorage(KindOfStorage kind, RealStorageContext realStorageContext)
-            : base(realStorageContext.Logger)
+            : base(realStorageContext.MainStorageContext.Logger)
         {
             _kind = kind;
             _realStorageContext = realStorageContext;
@@ -53,7 +53,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
 #endif
 
-            var indexedRuleInstance = ruleInstance.GetIndexed(_realStorageContext.EntityDictionary);
+            var indexedRuleInstance = ruleInstance.GetIndexed(_realStorageContext.MainStorageContext);
 
             _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(indexedRuleInstance);
 

@@ -1,6 +1,8 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.Core.Internal.Helpers;
+using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -18,15 +20,24 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             _context = context;
 
+            _globalStorage = context.Storage.GlobalStorage;
+
             _activeObject = activeObject;
             activeObject.PeriodicMethod = CommandLoop;
 
-            _operatorsResolver = context.DataResolversFactory.GetOperatorsResolver();
+            var dataResolversFactory = context.DataResolversFactory;
+
+            _operatorsResolver = dataResolversFactory.GetOperatorsResolver();
+            _logicalValueLinearResolver = dataResolversFactory.GetLogicalValueLinearResolver();
+            _varsResolver = dataResolversFactory.GetVarsResolver();
         }
 
         private IEngineContext _context;
+        private IStorage _globalStorage;
 
         private readonly OperatorsResolver _operatorsResolver;
+        private readonly LogicalValueLinearResolver _logicalValueLinearResolver;
+        private readonly VarsResolver _varsResolver;
 
         private Stack<CodeFrame> _codeFrames = new Stack<CodeFrame>();
         private CodeFrame _currentCodeFrame;
@@ -112,22 +123,78 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         _currentCodeFrame.CurrentPosition++;
                         break;
 
+                    case OperationCode.PushValFromVar:
+                        {
+                            var varName = currentCommand.Value.AsStrongIdentifierValue;
+
+#if DEBUG
+                            //Log($"varName = {varName}");
+#endif
+
+                            var targetValue = _varsResolver.GetVarValue(varName, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+
+#if DEBUG
+                            //Log($"targetValue = {targetValue}");
+#endif
+
+                            _currentCodeFrame.ValuesStack.Push(targetValue);
+
+#if DEBUG
+                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+                            _currentCodeFrame.CurrentPosition++;
+                        }
+                        break;
+
                     case OperationCode.CallBinOp:
                         {
                             var paramsList = TakePositionedParameters(3);
 
 #if DEBUG
-                            Log($"paramsList = {paramsList.WriteListToString()}");
-                            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                            //Log($"paramsList = {paramsList.WriteListToString()}");
+                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
-                            var operatorInfo = _operatorsResolver.GetOperator(currentCommand.KindOfOperator, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultFluentOptions());
+                            var kindOfOperator = currentCommand.KindOfOperator;
+
+                            if(kindOfOperator == KindOfOperator.IsNot)
+                            {
+                                kindOfOperator = KindOfOperator.Is;
+                            }
+
+                            var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
-                            Log($"operatorInfo = {operatorInfo}");
+                            //Log($"operatorInfo = {operatorInfo}");
 #endif
 
                             CallExecutable(operatorInfo, paramsList);
+
+#if DEBUG
+                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+                            if(currentCommand.KindOfOperator == KindOfOperator.IsNot)
+                            {
+                                var result = _currentCodeFrame.ValuesStack.Pop();
+
+#if DEBUG
+                                //Log($"result = {result}");
+#endif
+
+                                result = result.AsLogicalValue.Inverse(_context);
+
+#if DEBUG
+                                //Log($"result (2) = {result}");
+#endif
+
+                                _currentCodeFrame.ValuesStack.Push(result);
+
+#if DEBUG
+                                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+                            }
 
                             _currentCodeFrame.CurrentPosition++;
                         }
@@ -135,6 +202,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     case OperationCode.UseInheritance:
                         ProcessUseInheritance();
+                        break;
+
+                    case OperationCode.UseNotInheritance:
+                        ProcessUseNotInheritance();
                         break;
 
                     case OperationCode.Return:
@@ -168,9 +239,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private List<Value> TakePositionedParameters(int count)
+        private List<IndexedValue> TakePositionedParameters(int count)
         {
-            var result = new List<Value>();
+            var result = new List<IndexedValue>();
 
             var valueStack = _currentCodeFrame.ValuesStack;
 
@@ -184,20 +255,20 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return result;
         }
 
-        private void CallExecutable(IExecutable executable, IList<Value> paramsList)
+        private void CallExecutable(IExecutable executable, IList<IndexedValue> paramsList)
         {
             if(executable.IsSystemDefined)
             {
                 var result = executable.SystemHandler.Call(paramsList, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-                Log($"result = {result}");
+                //Log($"result = {result}");
 #endif
 
                 _currentCodeFrame.ValuesStack.Push(result);
 
 #if DEBUG
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 return;
@@ -211,11 +282,79 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var paramsList = TakePositionedParameters(4);
 
 #if DEBUG
-            Log($"paramsList = {paramsList.WriteListToString()}");
-            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            //Log($"paramsList = {paramsList.WriteListToString()}");
+            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
-            throw new NotImplementedException();
+            var inheritenceItem = new InheritanceItem();
+            DefaultSettingsOfCodeEntityHelper.SetUpInheritanceItem(inheritenceItem, _currentCodeFrame.LocalContext.Storage.DefaultSettingsOfCodeEntity);
+
+            var subName = paramsList[0].AsStrongIdentifierValue;
+
+            var superName = paramsList[1].AsStrongIdentifierValue;
+
+#if DEBUG
+            //Log($"paramsList[2] = {paramsList[2]}");
+#endif
+
+            var rank = _logicalValueLinearResolver.Resolve(paramsList[2], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+
+#if DEBUG
+            //Log($"subName = {subName}");
+            //Log($"superName = {superName}");
+            //Log($"rank = {rank}");
+#endif
+
+            inheritenceItem.SubName = subName.OriginalStrongIdentifierValue;
+            inheritenceItem.SuperName = superName.OriginalStrongIdentifierValue;
+            inheritenceItem.Rank = rank.OriginalLogicalValue;
+
+#if DEBUG
+            //Log($"inheritenceItem = {inheritenceItem}");
+#endif
+
+            _globalStorage.InheritanceStorage.SetInheritance(inheritenceItem);
+
+            _currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessUseNotInheritance()
+        {
+            var paramsList = TakePositionedParameters(4);
+
+#if DEBUG
+            //Log($"paramsList = {paramsList.WriteListToString()}");
+            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+            var inheritenceItem = new InheritanceItem();
+            DefaultSettingsOfCodeEntityHelper.SetUpInheritanceItem(inheritenceItem, _currentCodeFrame.LocalContext.Storage.DefaultSettingsOfCodeEntity);
+
+            var subName = paramsList[0].AsStrongIdentifierValue;
+
+            var superName = paramsList[1].AsStrongIdentifierValue;
+
+#if DEBUG
+            //Log($"paramsList[2] = {paramsList[2]}");
+#endif
+
+            var rank = _logicalValueLinearResolver.Resolve(paramsList[2], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions()).Inverse(_context);
+
+#if DEBUG
+            //Log($"subName = {subName}");
+            //Log($"superName = {superName}");
+            //Log($"rank = {rank}");
+#endif
+
+            inheritenceItem.SubName = subName.OriginalStrongIdentifierValue;
+            inheritenceItem.SuperName = superName.OriginalStrongIdentifierValue;
+            inheritenceItem.Rank = rank.OriginalLogicalValue;
+
+#if DEBUG
+            //Log($"inheritenceItem = {inheritenceItem}");
+#endif
+
+            _globalStorage.InheritanceStorage.SetInheritance(inheritenceItem);
 
             _currentCodeFrame.CurrentPosition++;
         }

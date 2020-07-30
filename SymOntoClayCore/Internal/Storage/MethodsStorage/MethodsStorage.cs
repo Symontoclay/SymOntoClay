@@ -7,7 +7,7 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStorage
     public class MethodsStorage: BaseLoggedComponent, IMethodsStorage
     {
         public MethodsStorage(KindOfStorage kind, RealStorageContext realStorageContext)
-            : base(realStorageContext.Logger)
+            : base(realStorageContext.MainStorageContext.Logger)
         {
             _kind = kind;
             _realStorageContext = realStorageContext;

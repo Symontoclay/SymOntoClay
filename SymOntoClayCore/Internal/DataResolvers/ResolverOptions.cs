@@ -7,14 +7,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class ResolverOptions : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public bool IsDeepMode { get; set; }
         public bool AddSelf { get; set; }
         public bool JustDistinct { get; set; }
 
         public ResolverOptions Clone()
         {
             var result = new ResolverOptions();
-            result.IsDeepMode = IsDeepMode;
             result.AddSelf = AddSelf;
             result.JustDistinct = JustDistinct;
 
@@ -39,7 +37,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(IsDeepMode)} = {IsDeepMode}");
             sb.AppendLine($"{spaces}{nameof(AddSelf)} = {AddSelf}");
             sb.AppendLine($"{spaces}{nameof(JustDistinct)} = {JustDistinct}");
 
@@ -64,7 +61,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(IsDeepMode)} = {IsDeepMode}");
             sb.AppendLine($"{spaces}{nameof(AddSelf)} = {AddSelf}");
             sb.AppendLine($"{spaces}{nameof(JustDistinct)} = {JustDistinct}");
 
@@ -89,21 +85,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(IsDeepMode)} = {IsDeepMode}");
             sb.AppendLine($"{spaces}{nameof(AddSelf)} = {AddSelf}");
             sb.AppendLine($"{spaces}{nameof(JustDistinct)} = {JustDistinct}");
 
             return sb.ToString();
         }
 
-        public static ResolverOptions GetDefaultDeepOptions()
+        public static ResolverOptions GetDefaultOptions()
         {
-            return new ResolverOptions() { IsDeepMode = true };
-        }
-
-        public static ResolverOptions GetDefaultFluentOptions()
-        {
-            return new ResolverOptions() { IsDeepMode = false };
+            return new ResolverOptions();
         }
     }
 }

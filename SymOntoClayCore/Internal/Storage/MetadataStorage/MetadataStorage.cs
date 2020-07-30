@@ -8,7 +8,7 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStorage
     public class MetadataStorage: BaseLoggedComponent, IMetadataStorage
     {
         public MetadataStorage(KindOfStorage kind, RealStorageContext realStorageContext)
-            : base(realStorageContext.Logger)
+            : base(realStorageContext.MainStorageContext.Logger)
         {
             _kind = kind;
             _realStorageContext = realStorageContext;
@@ -28,7 +28,7 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStorage
 
         private CodeEntity _mainCodeEntity;
 
-        private Dictionary<Name, CodeEntity> _codeEntitiesDict = new Dictionary<Name, CodeEntity>();
+        private Dictionary<StrongIdentifierValue, CodeEntity> _codeEntitiesDict = new Dictionary<StrongIdentifierValue, CodeEntity>();
 
         /// <inheritdoc/>
         public void Append(CodeEntity codeEntity)

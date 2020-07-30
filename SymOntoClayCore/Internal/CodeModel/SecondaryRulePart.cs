@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.IndexedData;
+﻿using SymOntoClay.Core.Internal.Convertors;
+using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,38 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class SecondaryRulePart: BaseRulePart
     {
         public PrimaryRulePart PrimaryPart { get; set; }
+
+        public IndexedSecondaryRulePart Indexed { get; set; }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
+
+        public IndexedSecondaryRulePart GetIndexed(IMainStorageContext mainStorageContext)
+        {
+            if (Indexed == null)
+            {
+                ConvertorToIndexed.ConvertRuleInstance(Parent, mainStorageContext);
+            }
+
+            return Indexed;
+        }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
+        {
+            return GetIndexed(mainStorageContext);
+        }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            if (Indexed == null)
+            {
+                ConvertorToIndexed.ConvertRuleInstance(Parent, mainStorageContext, convertingContext);
+            }
+
+            return Indexed;
+        }
 
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
@@ -46,8 +79,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.AppendBaseRulePart(this, context);
 
             return result;
-
-            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>

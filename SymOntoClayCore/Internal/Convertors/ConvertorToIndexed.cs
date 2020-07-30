@@ -17,13 +17,13 @@ namespace SymOntoClay.Core.Internal.Convertors
         private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
-        public static IndexedInheritanceItem ConvertInheritanceItem(InheritanceItem source, IEntityDictionary entityDictionary)
+        public static IndexedInheritanceItem ConvertInheritanceItem(InheritanceItem source, IMainStorageContext mainStorageContext)
         {
             var convertingContext = new Dictionary<object, object>();
-            return ConvertInheritanceItem(source, entityDictionary, convertingContext);
+            return ConvertInheritanceItem(source, mainStorageContext, convertingContext);
         }
 
-        private static IndexedInheritanceItem ConvertInheritanceItem(InheritanceItem source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        public static IndexedInheritanceItem ConvertInheritanceItem(InheritanceItem source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {
             if(source == null)
             {
@@ -40,49 +40,63 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.OriginalInheritanceItem = source;
             source.Indexed = result;
 
-            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
 
-            result.SubName = source.SubName;
-            result.SuperName = source.SuperName;
+            result.SubName = ConvertStrongIdentifierValue(source.SubName, mainStorageContext, convertingContext);
+            result.SuperName = ConvertStrongIdentifierValue(source.SuperName, mainStorageContext, convertingContext);
 
-            result.Rank = ConvertValue(source.Rank, entityDictionary, convertingContext);
+            result.Rank = ConvertValue(source.Rank, mainStorageContext, convertingContext);
 
             result.IsSystemDefined = source.IsSystemDefined;
+
+            result.CalculateLongConditionalHashCode();
 
             return result;
         }
 
-        public static IndexedValue ConvertValue(Value source, IEntityDictionary entityDictionary)
+        public static IndexedValue ConvertValue(Value source, IMainStorageContext mainStorageContext)
         {
             var convertingContext = new Dictionary<object, object>();
-            return ConvertValue(source, entityDictionary, convertingContext);
+            return ConvertValue(source, mainStorageContext, convertingContext);
         }
 
-        private static IndexedValue ConvertValue(Value source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        public static IndexedValue ConvertValue(Value source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {
             switch(source.KindOfValue)
             {
                 case KindOfValue.NullValue:
-                    return NConvertNullValue(source.AsNullValue, entityDictionary, convertingContext);
+                    return ConvertNullValue(source.AsNullValue, mainStorageContext, convertingContext);
 
                 case KindOfValue.LogicalValue:
-                    return NConvertLogicalValue(source.AsLogicalValue, entityDictionary, convertingContext);
+                    return ConvertLogicalValue(source.AsLogicalValue, mainStorageContext, convertingContext);
 
                 case KindOfValue.NumberValue:
-                    return NConvertNumberValue(source.AsNumberValue, entityDictionary, convertingContext);
+                    return ConvertNumberValue(source.AsNumberValue, mainStorageContext, convertingContext);
 
                 case KindOfValue.StringValue:
-                    return NConvertStringValue(source.AsStringValue, entityDictionary, convertingContext);
+                    return ConvertStringValue(source.AsStringValue, mainStorageContext, convertingContext);
 
-                //case KindOfValue.TaskValue:
-                //    return NConvertTaskValue(source.AsTaskValue, entityDictionary, convertingContext);
+                case KindOfValue.StrongIdentifierValue:
+                    return ConvertStrongIdentifierValue(source.AsStrongIdentifierValue, mainStorageContext, convertingContext);
+
+                case KindOfValue.TaskValue:
+                    return ConvertTaskValue(source.AsTaskValue, mainStorageContext, convertingContext);
+
+                case KindOfValue.AnnotationValue:
+                    return ConvertAnnotationValue(source.AsAnnotationValue, mainStorageContext, convertingContext);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(source.KindOfValue), source.KindOfValue, null);
             }
         }
 
-        private static IndexedNullValue NConvertNullValue(NullValue source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        public static IndexedNullValue ConvertNullValue(NullValue source, IMainStorageContext mainStorageContext)
+        {
+            var convertingContext = new Dictionary<object, object>();
+            return ConvertNullValue(source, mainStorageContext, convertingContext);
+        }
+
+        public static IndexedNullValue ConvertNullValue(NullValue source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {
             if (source == null)
             {
@@ -98,14 +112,22 @@ namespace SymOntoClay.Core.Internal.Convertors
             convertingContext[source] = result;
             source.Indexed = result;
 
-            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
 
             result.OriginalNullValue = source;
+
+            result.CalculateLongConditionalHashCode();
 
             return result;
         }
 
-        private static IndexedLogicalValue NConvertLogicalValue(LogicalValue source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        public static IndexedLogicalValue ConvertLogicalValue(LogicalValue source, IMainStorageContext mainStorageContext)
+        {
+            var convertingContext = new Dictionary<object, object>();
+            return ConvertLogicalValue(source, mainStorageContext, convertingContext);
+        }
+
+        public static IndexedLogicalValue ConvertLogicalValue(LogicalValue source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {
             if (source == null)
             {
@@ -121,15 +143,23 @@ namespace SymOntoClay.Core.Internal.Convertors
             convertingContext[source] = result;
             source.Indexed = result;
 
-            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
 
             result.OriginalLogicalValue = source;
             result.SystemValue = source.SystemValue;
 
+            result.CalculateLongConditionalHashCode();
+
             return result;
         }
 
-        private static IndexedNumberValue NConvertNumberValue(NumberValue source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        public static IndexedNumberValue ConvertNumberValue(NumberValue source, IMainStorageContext mainStorageContext)
+        {
+            var convertingContext = new Dictionary<object, object>();
+            return ConvertNumberValue(source, mainStorageContext, convertingContext);
+        }
+
+        public static IndexedNumberValue ConvertNumberValue(NumberValue source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {
             if (source == null)
             {
@@ -145,15 +175,23 @@ namespace SymOntoClay.Core.Internal.Convertors
             convertingContext[source] = result;
             source.Indexed = result;
 
-            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
 
             result.OriginalNumberValue = source;
             result.SystemValue = source.SystemValue;
 
+            result.CalculateLongConditionalHashCode();
+
             return result;
         }
 
-        private static IndexedStringValue NConvertStringValue(StringValue source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        public static IndexedStringValue ConvertStringValue(StringValue source, IMainStorageContext mainStorageContext)
+        {
+            var convertingContext = new Dictionary<object, object>();
+            return ConvertStringValue(source, mainStorageContext, convertingContext);
+        }
+
+        public static IndexedStringValue ConvertStringValue(StringValue source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {
             if (source == null)
             {
@@ -169,19 +207,126 @@ namespace SymOntoClay.Core.Internal.Convertors
             convertingContext[source] = result;
             source.Indexed = result;
 
-            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
 
             result.OriginalStringValue = source;
             result.SystemValue = source.SystemValue;
 
+            result.CalculateLongConditionalHashCode();
+
             return result;
         }
 
-        //NConvertTaskValue
-
-        private static void FillAnnotationsModalitiesAndSections(AnnotatedItem source, IndexedAnnotatedItem dest, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        public static IndexedStrongIdentifierValue ConvertStrongIdentifierValue(StrongIdentifierValue source, IMainStorageContext mainStorageContext)
         {
-            if(dest.QuantityQualityModalities == null)
+            var convertingContext = new Dictionary<object, object>();
+            return ConvertStrongIdentifierValue(source, mainStorageContext, convertingContext);
+        }
+
+        public static IndexedStrongIdentifierValue ConvertStrongIdentifierValue(StrongIdentifierValue source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (IndexedStrongIdentifierValue)convertingContext[source];
+            }
+
+            var result = new IndexedStrongIdentifierValue();
+            convertingContext[source] = result;
+            source.Indexed = result;
+
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
+
+            result.OriginalStrongIdentifierValue = source;
+
+            result.DictionaryName = source.DictionaryName;
+            result.IsEmpty = source.IsEmpty;
+            result.KindOfName = source.KindOfName;
+            result.NameValue = source.NameValue;
+
+            if (!result.IsEmpty)
+            {
+                result.NameKey = mainStorageContext.Dictionary.GetKey(result.NameValue);
+            }
+
+            result.CalculateLongConditionalHashCode();
+
+            return result;
+        }
+
+        public static IndexedTaskValue ConvertTaskValue(TaskValue source, IMainStorageContext mainStorageContext)
+        {
+            var convertingContext = new Dictionary<object, object>();
+            return ConvertTaskValue(source, mainStorageContext, convertingContext);
+        }
+
+        public static IndexedTaskValue ConvertTaskValue(TaskValue source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (IndexedTaskValue)convertingContext[source];
+            }
+
+            var result = new IndexedTaskValue();
+            convertingContext[source] = result;
+            source.Indexed = result;
+
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
+
+            result.OriginalTaskValue = source;
+
+            result.TaskId = source.TaskId;
+            result.SystemTask = source.SystemTask;
+
+            result.CalculateLongConditionalHashCode();
+
+            return result;
+        }
+
+        public static IndexedAnnotationValue ConvertAnnotationValue(AnnotationValue source, IMainStorageContext mainStorageContext)
+        {
+            var convertingContext = new Dictionary<object, object>();
+            return ConvertAnnotationValue(source, mainStorageContext, convertingContext);
+        }
+
+        public static IndexedAnnotationValue ConvertAnnotationValue(AnnotationValue source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (IndexedAnnotationValue)convertingContext[source];
+            }
+
+            var result = new IndexedAnnotationValue();
+            convertingContext[source] = result;
+            source.Indexed = result;
+
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
+
+            result.OriginalAnnotationValue = source;
+            result.AnnotatedItem = source.AnnotatedItem.GetIndexedAnnotatedItem(mainStorageContext, convertingContext);
+
+            result.CalculateLongConditionalHashCode();
+
+            return result;
+        }
+
+        private static void FillAnnotationsModalitiesAndSections(AnnotatedItem source, IndexedAnnotatedItem dest, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            if (dest.QuantityQualityModalities == null)
             {
                 dest.QuantityQualityModalities = new List<IndexedValue>();
             }
@@ -190,7 +335,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             {
                 foreach(var item in source.QuantityQualityModalities)
                 {
-                    dest.QuantityQualityModalities.Add(ConvertValue(item, entityDictionary, convertingContext));
+                    dest.QuantityQualityModalities.Add(ConvertValue(item, mainStorageContext, convertingContext));
                 }
             }
 
@@ -203,18 +348,18 @@ namespace SymOntoClay.Core.Internal.Convertors
             {
                 foreach(var item in source.WhereSection)
                 {
-                    dest.WhereSection.Add(ConvertValue(item, entityDictionary, convertingContext));
+                    dest.WhereSection.Add(ConvertValue(item, mainStorageContext, convertingContext));
                 }
             }
 
-            dest.Holder = source.Holder;
+            dest.Holder = ConvertStrongIdentifierValue(source.Holder, mainStorageContext, convertingContext);
         }
 
-        public static IndexedRuleInstance ConvertRuleInstance(RuleInstance source, IEntityDictionary entityDictionary)
+        public static IndexedRuleInstance ConvertRuleInstance(RuleInstance source, IMainStorageContext mainStorageContext)
         {
             var convertingContext = new Dictionary<object, object>();
 
-            var result = ConvertRuleInstance(source, entityDictionary, convertingContext);
+            var result = ConvertRuleInstance(source, mainStorageContext, convertingContext);
 
 #if DEBUG
             //_gbcLogger.Info($"result = {result}");
@@ -223,7 +368,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             return result;
         }
 
-        private static IndexedRuleInstance ConvertRuleInstance(RuleInstance source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        public static IndexedRuleInstance ConvertRuleInstance(RuleInstance source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {
 #if DEBUG
             //_gbcLogger.Info($"source = {source}");
@@ -248,13 +393,13 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.Origin = source;
             source.Indexed = result;
 
-            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
 
-            result.Name = source.Name;
+            result.Name = ConvertStrongIdentifierValue(source.Name, mainStorageContext, convertingContext);
 
             result.IsRule = source.IsRule;
 
-            result.PrimaryPart = ConvertPrimaryRulePart(source.PrimaryPart, entityDictionary, convertingContext);
+            result.PrimaryPart = ConvertPrimaryRulePart(source.PrimaryPart, mainStorageContext, convertingContext);
 
             if (!source.SecondaryParts.IsNullOrEmpty())
             {
@@ -265,10 +410,12 @@ namespace SymOntoClay.Core.Internal.Convertors
             //_gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
+            result.CalculateLongConditionalHashCode();
+
             return result;
         }
 
-        private static IndexedPrimaryRulePart ConvertPrimaryRulePart(PrimaryRulePart source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        private static IndexedPrimaryRulePart ConvertPrimaryRulePart(PrimaryRulePart source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {
 #if DEBUG
             //_gbcLogger.Info($"source = {source}");
@@ -293,9 +440,9 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.OriginPrimaryRulePart = source;
             source.Indexed = result;
 
-            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
 
-            FillBaseRulePart(source, result, entityDictionary, convertingContext);
+            FillBaseRulePart(source, result, mainStorageContext, convertingContext);
 
             if(!source.SecondaryParts.IsNullOrEmpty())
             {
@@ -306,17 +453,19 @@ namespace SymOntoClay.Core.Internal.Convertors
             //_gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
+            result.CalculateLongConditionalHashCode();
+
             return result;
         }
 
-        private static void FillBaseRulePart(BaseRulePart source, IndexedBaseRulePart dest, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        private static void FillBaseRulePart(BaseRulePart source, IndexedBaseRulePart dest, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {
             dest.Parent = (IndexedRuleInstance)convertingContext[source.Parent];
 
-            dest.Expression = ConvertLogicalQueryNode(source.Expression, entityDictionary, convertingContext);
+            dest.Expression = ConvertLogicalQueryNode(source.Expression, mainStorageContext, convertingContext);
         }
 
-        private static BaseIndexedLogicalQueryNode ConvertLogicalQueryNode(LogicalQueryNode source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        private static BaseIndexedLogicalQueryNode ConvertLogicalQueryNode(LogicalQueryNode source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {
             switch(source.Kind)
             {
@@ -324,21 +473,21 @@ namespace SymOntoClay.Core.Internal.Convertors
                     switch(source.KindOfOperator)
                     {
                         case KindOfOperatorOfLogicalQueryNode.Is:
-                            return ConvertIsOperatorLogicalQueryNode(source, entityDictionary, convertingContext);
+                            return ConvertIsOperatorLogicalQueryNode(source, mainStorageContext, convertingContext);
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(source.KindOfOperator), source.KindOfOperator, null);
                     }
 
                 case KindOfLogicalQueryNode.Concept:
-                    return ConvertConceptLogicalQueryNode(source, entityDictionary, convertingContext);
+                    return ConvertConceptLogicalQueryNode(source, mainStorageContext, convertingContext);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, null);
             }
         }
 
-        private static IsOperatorIndexedLogicalQueryNode ConvertIsOperatorLogicalQueryNode(LogicalQueryNode source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        private static IsOperatorIndexedLogicalQueryNode ConvertIsOperatorLogicalQueryNode(LogicalQueryNode source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {
 #if DEBUG
             //_gbcLogger.Info($"source = {source}");
@@ -362,19 +511,21 @@ namespace SymOntoClay.Core.Internal.Convertors
             convertingContext[source] = result;
             result.Origin = source;
 
-            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
 
-            result.Left = ConvertLogicalQueryNode(source.Left, entityDictionary, convertingContext);
-            result.Right = ConvertLogicalQueryNode(source.Right, entityDictionary, convertingContext);
+            result.Left = ConvertLogicalQueryNode(source.Left, mainStorageContext, convertingContext);
+            result.Right = ConvertLogicalQueryNode(source.Right, mainStorageContext, convertingContext);
 
 #if DEBUG
             //_gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
+            result.CalculateLongConditionalHashCode();
+
             return result;
         }
 
-        private static ConceptIndexedLogicalQueryNode ConvertConceptLogicalQueryNode(LogicalQueryNode source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        private static ConceptIndexedLogicalQueryNode ConvertConceptLogicalQueryNode(LogicalQueryNode source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {
 #if DEBUG
             //_gbcLogger.Info($"source = {source}");
@@ -398,23 +549,25 @@ namespace SymOntoClay.Core.Internal.Convertors
             convertingContext[source] = result;
             result.Origin = source;
 
-            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
 
 #if DEBUG
             //_gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
+            result.CalculateLongConditionalHashCode();
+
             return result;
         }
 
-        public static IndexedOperator ConvertOperator(Operator source, IEntityDictionary entityDictionary)
+        public static IndexedOperator ConvertOperator(Operator source, IMainStorageContext mainStorageContext)
         {
             var convertingContext = new Dictionary<object, object>();
 
-            return ConvertOperator(source, entityDictionary, convertingContext);
+            return ConvertOperator(source, mainStorageContext, convertingContext);
         }
 
-        private static IndexedOperator ConvertOperator(Operator source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        public static IndexedOperator ConvertOperator(Operator source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {
             if (source == null)
             {
@@ -431,7 +584,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.OriginalOperator = source;
             source.Indexed = result;
 
-            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
 
             result.KindOfOperator = source.KindOfOperator;
             result.IsSystemDefined = source.IsSystemDefined;
@@ -442,20 +595,21 @@ namespace SymOntoClay.Core.Internal.Convertors
             }
             else
             {
-                //CompiledFunctionBody
-                throw new NotImplementedException();
+                result.CompiledFunctionBody = mainStorageContext.Compiler.Compile(source.Statements);
             }
+
+            result.CalculateLongConditionalHashCode();
 
             return result;
         }
 
-        public static IndexedChannel ConvertChannel(Channel source, IEntityDictionary entityDictionary)
+        public static IndexedChannel ConvertChannel(Channel source, IMainStorageContext mainStorageContext)
         {
             var convertingContext = new Dictionary<object, object>();
-            return ConvertChannel(source, entityDictionary, convertingContext);
+            return ConvertChannel(source, mainStorageContext, convertingContext);
         }
 
-        private static IndexedChannel ConvertChannel(Channel source, IEntityDictionary entityDictionary, Dictionary<object, object> convertingContext)
+        public static IndexedChannel ConvertChannel(Channel source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {
             if (source == null)
             {
@@ -472,21 +626,23 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.OriginalChannel = source;
             source.Indexed = result;
 
-            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
 
-            result.Name = source.Name;
+            result.Name = ConvertStrongIdentifierValue(source.Name, mainStorageContext, convertingContext);
             result.Handler = source.Handler;
+
+            result.CalculateLongConditionalHashCode();
 
             return result;
         }
 
-        public static IndexedInlineTrigger ConvertInlineTrigger(InlineTrigger source, IEntityDictionary entityDictionary, ICompiler compiler)
+        public static IndexedInlineTrigger ConvertInlineTrigger(InlineTrigger source, IMainStorageContext mainStorageContext)
         {
             var convertingContext = new Dictionary<object, object>();
-            return ConvertInlineTrigger(source, entityDictionary, compiler, convertingContext);
+            return ConvertInlineTrigger(source, mainStorageContext, convertingContext);
         }
 
-        private static IndexedInlineTrigger ConvertInlineTrigger(InlineTrigger source, IEntityDictionary entityDictionary, ICompiler compiler, Dictionary<object, object> convertingContext)
+        public static IndexedInlineTrigger ConvertInlineTrigger(InlineTrigger source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {
             if (source == null)
             {
@@ -503,12 +659,14 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.OriginalInlineTrigger = source;
             source.Indexed = result;
 
-            FillAnnotationsModalitiesAndSections(source, result, entityDictionary, convertingContext);
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
 
             result.Kind = source.Kind;
             result.KindOfSystemEvent = source.KindOfSystemEvent;
 
-            result.CompiledFunctionBody = compiler.Compile(source.Statements);
+            result.CompiledFunctionBody = mainStorageContext.Compiler.Compile(source.Statements);
+
+            result.CalculateLongConditionalHashCode();
 
             return result;
         }

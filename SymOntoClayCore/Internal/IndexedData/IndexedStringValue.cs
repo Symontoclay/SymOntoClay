@@ -62,5 +62,12 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToDbgString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            return $"{spaces}'{SystemValue}'";
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.IndexedData;
+﻿using SymOntoClay.Core.Internal.Convertors;
+using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -7,10 +8,10 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class Name: Value, IEquatable<Name>
+    public class StrongIdentifierValue: Value, IEquatable<StrongIdentifierValue>
     {
         /// <inheritdoc/>
-        public override KindOfValue KindOfValue => KindOfValue.IdentifierValue;
+        public override KindOfValue KindOfValue => KindOfValue.StrongIdentifierValue;
 
         public string DictionaryName { get; set; }
 
@@ -18,13 +19,50 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public KindOfName KindOfName { get; set; } = KindOfName.Unknown;
         public string NameValue { get; set; } = string.Empty;
-        public ulong NameKey { get; set; }
 
         /// <inheritdoc/>
-        public override bool IsIdentifierValue => true;
+        public override bool IsStrongIdentifierValue => true;
 
         /// <inheritdoc/>
-        public override Name AsIdentifierValue => this;
+        public override StrongIdentifierValue AsStrongIdentifierValue => this;
+
+        public IndexedStrongIdentifierValue Indexed { get; set; }
+
+        public IndexedStrongIdentifierValue GetIndexed(IMainStorageContext mainStorageContext)
+        {
+            if (Indexed == null)
+            {
+                return ConvertorToIndexed.ConvertStrongIdentifierValue(this, mainStorageContext);
+            }
+
+            return Indexed;
+        }
+
+        /// <inheritdoc/>
+        public override IndexedValue GetIndexedValue(IMainStorageContext mainStorageContext)
+        {
+            return GetIndexed(mainStorageContext);
+        }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
+        {
+            return GetIndexed(mainStorageContext);
+        }
+
+        /// <inheritdoc/>
+        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            if (Indexed == null)
+            {
+                return ConvertorToIndexed.ConvertStrongIdentifierValue(this, mainStorageContext, convertingContext);
+            }
+
+            return Indexed;
+        }
 
         /// <inheritdoc/>
         public override object GetSystemValue()
@@ -33,14 +71,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public bool Equals(Name other)
+        public bool Equals(StrongIdentifierValue other)
         {
             if (other == null)
             {
                 return false;
             }
 
-            return NameKey == other.NameKey;
+            return NameValue == other.NameValue;
         }
 
         /// <inheritdoc/>
@@ -51,7 +89,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return false;
             }
 
-            var personObj = obj as Name;
+            var personObj = obj as StrongIdentifierValue;
             if (personObj == null)
             {
                 return false;
@@ -63,7 +101,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return NameKey.GetHashCode();
+            return NameValue.GetHashCode();
         }
 
         /// <inheritdoc/>
@@ -76,7 +114,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// Clones the instance and returns cloned instance.
         /// </summary>
         /// <returns>Cloned instance.</returns>
-        public Name Clone()
+        public StrongIdentifierValue Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
@@ -87,14 +125,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// </summary>
         /// <param name="context">Special context for providing references continuity.</param>
         /// <returns>Cloned instance.</returns>
-        public Name Clone(Dictionary<object, object> context)
+        public StrongIdentifierValue Clone(Dictionary<object, object> context)
         {
             if(context.ContainsKey(this))
             {
-                return (Name)context[this];
+                return (StrongIdentifierValue)context[this];
             }
 
-            var result = new Name();
+            var result = new StrongIdentifierValue();
             context[this] = result;
 
             result.DictionaryName = DictionaryName;
@@ -103,9 +141,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             result.KindOfName = KindOfName;
             result.NameValue = NameValue;
-            result.NameKey = NameKey;
 
             result.AppendAnnotations(this, context);
+
             return result;
         }
 
@@ -127,7 +165,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(KindOfName)} = {KindOfName}");
 
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
-            sb.AppendLine($"{spaces}{nameof(NameKey)} = {NameKey}");
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -145,7 +182,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(KindOfName)} = {KindOfName}");
 
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
-            sb.AppendLine($"{spaces}{nameof(NameKey)} = {NameKey}");
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -163,7 +199,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(KindOfName)} = {KindOfName}");
 
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
-            sb.AppendLine($"{spaces}{nameof(NameKey)} = {NameKey}");
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

@@ -15,11 +15,10 @@ namespace SymOntoClay.Core.Internal.Storage
         public static RealStorageSettings Create(IMainStorageContext context, List<IStorage> parentStorages)
         {
             var result = new RealStorageSettings();
-            result.Logger = context.Logger;
-            result.EntityDictionary = context.Dictionary;
-            result.Compiler = context.Compiler;
-            result.CommonNamesStorage = context.CommonNamesStorage;
+            result.MainStorageContext = context;
+
             result.ParentsStorages = (parentStorages?.ToList()) ?? new List<IStorage>();
+            result.DefaultSettingsOfCodeEntity = parentStorages?.FirstOrDefault()?.DefaultSettingsOfCodeEntity;
 
             return result;
         }

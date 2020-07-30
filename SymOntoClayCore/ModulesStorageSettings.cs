@@ -5,38 +5,15 @@ using System.Text;
 
 namespace SymOntoClay.Core
 {
-    public class ModulesStorageSettings : IObjectToString
+    public class ModulesStorageSettings : BaseCoreSettings
     {
-        /// <summary>
-        /// Gets or sets reference to logger.
-        /// </summary>
-        public IEntityLogger Logger { get; set; }
-
-        /// <summary>
-        /// Gets or ses reference to shared dictionary.
-        /// </summary>
-        public IEntityDictionary Dictionary { get; set; }
-
         /// <inheritdoc/>
-        public override string ToString()
-        {
-            return ToString(0u);
-        }
-
-        /// <inheritdoc/>
-        public string ToString(uint n)
-        {
-            return this.GetDefaultToStringInformation(n);
-        }
-
-        /// <inheritdoc/>
-        string IObjectToString.PropertiesToString(uint n)
+        protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
             var sb = new StringBuilder();
-            sb.PrintExisting(n, nameof(Logger), Logger);
-            sb.PrintExisting(n, nameof(Dictionary), Dictionary);
+        
+            sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
     }

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
-    public abstract class IndexedAnnotatedItem: IObjectToString, IObjectToShortString, IObjectToBriefString
+    public abstract class IndexedAnnotatedItem: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
     {   
         [ResolveToType(typeof(IndexedLogicalValue))]
         public IList<IndexedValue> QuantityQualityModalities { get; set; } = new List<IndexedValue>();
@@ -18,7 +18,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         [ResolveToType(typeof(IndexedLogicalValue))]
         public IList<IndexedValue> WhereSection { get; set; } = new List<IndexedValue>();
 
-        public Name Holder { get; set; }
+        public IndexedStrongIdentifierValue Holder { get; set; }
 
         /// <summary>
         /// Returns <c>true</c> if the instance has modalities or additional sections, otherwise returns <c>false</c>.
@@ -26,6 +26,27 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public bool HasModalitiesOrSections => !QuantityQualityModalities.IsNullOrEmpty() || !WhereSection.IsNullOrEmpty();
 
         public bool HasConditionalSections => !WhereSection.IsNullOrEmpty();
+
+        private long? _longConditionalHashCode;
+
+        public long GetLongConditionalHashCode()
+        {
+#if DEBUG
+            var i = this;
+#endif
+
+            return _longConditionalHashCode.Value;
+        }
+
+        public void CalculateLongConditionalHashCode()
+        {
+            if (HasConditionalSections)
+            {
+                throw new NotImplementedException();
+            }
+
+            _longConditionalHashCode = 0;
+        }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -52,6 +73,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
             sb.AppendLine($"{spaces}{nameof(HasConditionalSections)} = {HasConditionalSections}");
+
+            sb.AppendLine($"{spaces}{nameof(_longConditionalHashCode)} = {_longConditionalHashCode}");
 
             sb.PrintObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintObjListProp(n, nameof(WhereSection), WhereSection);
@@ -86,6 +109,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
             sb.AppendLine($"{spaces}{nameof(HasConditionalSections)} = {HasConditionalSections}");
 
+            sb.AppendLine($"{spaces}{nameof(_longConditionalHashCode)} = {_longConditionalHashCode}");
+
             sb.PrintShortObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintShortObjListProp(n, nameof(WhereSection), WhereSection);
             sb.PrintShortObjProp(n, nameof(Holder), Holder);
@@ -119,11 +144,36 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
             sb.AppendLine($"{spaces}{nameof(HasConditionalSections)} = {HasConditionalSections}");
 
+            sb.AppendLine($"{spaces}{nameof(_longConditionalHashCode)} = {_longConditionalHashCode}");
+
             sb.PrintExistingList(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintExistingList(n, nameof(WhereSection), WhereSection);
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
 
             return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToDbgString()
+        {
+            return ToDbgString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToDbgString(uint n)
+        {
+            return this.GetDefaultToDbgStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToDbgString.PropertiesToDbgString(uint n)
+        {
+            return PropertiesToDbgString(n);
+        }
+
+        protected virtual string PropertiesToDbgString(uint n)
+        {
+            throw new NotImplementedException();
         }
     }
 }

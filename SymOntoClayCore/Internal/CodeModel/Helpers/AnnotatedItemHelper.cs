@@ -19,7 +19,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
         {
             if (item.Holder == null)
             {
-                item.Holder = commonNamesStorage.DefaultHolder;
+                item.Holder = commonNamesStorage.IndexedDefaultHolder;
             }
         }
     }

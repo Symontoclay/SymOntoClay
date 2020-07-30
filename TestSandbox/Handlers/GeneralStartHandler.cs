@@ -1,4 +1,5 @@
 ﻿using NLog;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,11 @@ namespace TestSandbox.Handlers
 {
     public class GeneralStartHandler
     {
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private static readonly IEntityLogger _logger = new LoggerImpementation();
 
         public void Run()
         {
-            _logger.Info("Begin");
+            _logger.Log("Begin");
 
             var logDir = Path.Combine(Directory.GetCurrentDirectory(), "NpcLogs");
 
@@ -40,7 +41,7 @@ namespace TestSandbox.Handlers
                 EnableRemoteConnection = true
             };
 
-            _logger.Info($"settings = {settings}");
+            _logger.Log($"settings = {settings}");
 
             instance.SetSettings(settings);
 
@@ -49,7 +50,7 @@ namespace TestSandbox.Handlers
             npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.txt");
             npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Apps\PeaceKeeper\PeaceKeeper.txt");
 
-            _logger.Info($"npcSettings = {npcSettings}");
+            _logger.Log($"npcSettings = {npcSettings}");
 
             var npc = instance.GetBipedNPC(npcSettings);
 
@@ -57,7 +58,7 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(50000);
 
-            _logger.Info("End");
+            _logger.Log("End");
         }
     }
 }

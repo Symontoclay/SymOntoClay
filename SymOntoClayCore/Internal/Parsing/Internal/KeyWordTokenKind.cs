@@ -15,6 +15,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Is,
         On,
         Init,
-        Use
+        Use,
+        Not
     }
 }

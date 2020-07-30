@@ -1,6 +1,7 @@
 ﻿using NLog.Fluent;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,13 +19,15 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
         private readonly IEngineContext _engineContext;
 
         /// <inheritdoc/>
-        public Value Read()
+        public IndexedValue Read()
         {
-            return new NullValue();
+            var result = new NullValue();
+            
+            return result.GetIndexed(_engineContext);
         }
 
         /// <inheritdoc/>
-        public Value Write(Value value)
+        public IndexedValue Write(IndexedValue value)
         {
 #if DEBUG
             //Log($"value = {value}");

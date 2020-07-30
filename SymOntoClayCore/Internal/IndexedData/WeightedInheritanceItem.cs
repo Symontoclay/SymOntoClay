@@ -24,7 +24,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
         public bool IsSelf { get; set; }
         public uint Distance { get; set; }
-        public Name SuperName { get; set; }
+        public IndexedStrongIdentifierValue SuperName { get; set; }
         public float Rank { get; set; }
         public IndexedInheritanceItem OriginalIndexedItem { get; set; }
 

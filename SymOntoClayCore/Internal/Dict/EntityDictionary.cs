@@ -17,7 +17,7 @@ namespace SymOntoClay.Core.Internal.Dict
         public ulong GetKey(string name)
         {
 #if DEBUG
-            Log($"name = {name}");
+            //Log($"name = {name}");
 #endif
 
             if (string.IsNullOrWhiteSpace(name))
@@ -45,7 +45,7 @@ namespace SymOntoClay.Core.Internal.Dict
         public string GetName(ulong key)
         {
 #if DEBUG
-            Log($"key = {key}");
+            //Log($"key = {key}");
 #endif
 
             lock (_lockObj)
@@ -60,7 +60,7 @@ namespace SymOntoClay.Core.Internal.Dict
 
         public void LoadFromSourceCode()
         {
-            Log("Do");
+            //Log("Do");
 
             _name = Guid.NewGuid().ToString("D");
             _currIndex = 0;

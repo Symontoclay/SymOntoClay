@@ -18,7 +18,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         [ResolveToType(typeof(LogicalValue))]
         public IList<Value> WhereSection { get; set; } = new List<Value>();
 
-        public Name Holder { get; set; }
+        public StrongIdentifierValue Holder { get; set; }
 
         /// <summary>
         /// Returns <c>true</c> if the instance has modalities or additional sections, otherwise returns <c>false</c>.
@@ -26,6 +26,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public bool HasModalitiesOrSections => !QuantityQualityModalities.IsNullOrEmpty() || !WhereSection.IsNullOrEmpty();
 
         public bool HasConditionalSections => !WhereSection.IsNullOrEmpty();
+
+        public abstract IndexedAnnotatedItem IndexedAnnotatedItem { get; }
+
+        public abstract IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext);
+        public abstract IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext);
 
         /// <summary>
         /// Clones the instance and returns cloned instance.

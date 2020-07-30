@@ -104,7 +104,7 @@ namespace SymOntoClay.Core.Internal.Serialization
         private void AddSystemDefinedSettings(CodeEntity codeEntity)
         {
 #if DEBUG
-            Log($"codeEntity = {codeEntity}");
+            //Log($"codeEntity = {codeEntity}");
 #endif
 
             switch(codeEntity.Kind)
@@ -172,7 +172,7 @@ namespace SymOntoClay.Core.Internal.Serialization
         private void SaveItem(CodeEntity codeEntity)
         {
 #if DEBUG
-            Log($"codeEntity = {codeEntity}");
+            //Log($"codeEntity = {codeEntity}");
 #endif
 
             var codeEntityName = codeEntity.Name;

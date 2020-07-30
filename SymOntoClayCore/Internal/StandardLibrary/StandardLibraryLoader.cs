@@ -38,6 +38,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 SystemHandler = new BinaryOperatorSystemHandler(new LeftRightStreamOperatorHandler(_context), _context.Dictionary),
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
+
             globalOperatorsStorage.Append(op);
 
             op = new Operator
@@ -47,6 +48,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 SystemHandler = new BinaryOperatorSystemHandler(new IsOperatorHandler(_context), _context.Dictionary),
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
+
             globalOperatorsStorage.Append(op);
         }
 
@@ -57,10 +59,12 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
 
             var name = NameHelper.CreateName("@>log", _context.Dictionary);
 
-            var channel = new Channel();
-            channel.Name = name;
-            channel.Handler = new LogChannelHandler(_context);
-            channel.Holder = _context.CommonNamesStorage.DefaultHolder;
+            var channel = new Channel
+            {
+                Name = name,
+                Handler = new LogChannelHandler(_context),
+                Holder = _context.CommonNamesStorage.DefaultHolder
+            };
 
             globalChannelsStorage.Append(channel);
         }

@@ -17,14 +17,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotRank
         }
 
-        public InheritanceParser(InternalParserContext context, Name subName)
+        public InheritanceParser(InternalParserContext context, StrongIdentifierValue subName)
             : base(context)
         {
             _subName = subName;
         }
 
         private State _state = State.Init;
-        private readonly Name _subName;
+        private readonly StrongIdentifierValue _subName;
         public List<InheritanceItem> Result { get; private set; }
         private InheritanceItem _currentItem;
 
@@ -39,10 +39,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
+            //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");
-            Log($"_state = {_state}");
-            Log($"_currentItem = {_currentItem}");
+            //Log($"_state = {_state}");
+            //Log($"_currentItem = {_currentItem}");
 #endif
 
             switch (_state)
@@ -90,7 +90,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _state = State.WaitForRank;
                             break;
 
-                        case TokenKind.Comma:
+                        case TokenKind.Comma:  
                             _currentItem.Rank = new LogicalValue(1.0F);
                             _state = State.WaitForItem;
                             break;
@@ -106,7 +106,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Number:
                             {
                                 _context.Recovery(_currToken);
-                                var parser = new NumberParser(_context);
+                                var parser = new NumberParser(_context, true);
                                 parser.Run();
                                 _currentItem.Rank = parser.Result;
                                 _state = State.GotRankValue;

@@ -24,8 +24,14 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public virtual bool IsStringValue => false;
         public virtual IndexedStringValue AsStringValue => null;
 
+        public virtual bool IsStrongIdentifierValue => false;
+        public virtual IndexedStrongIdentifierValue AsStrongIdentifierValue => null;
+
         public virtual bool IsTaskValue => false;
         public virtual IndexedTaskValue AsTaskValue => null;
+
+        public virtual bool IsAnnotationValue => false;
+        public virtual IndexedAnnotationValue AsAnnotationValue => null;
 
         public abstract object GetSystemValue();
 

@@ -2,6 +2,7 @@
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,17 +22,17 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly ChannelsResolver _channelsResolver;
 
         /// <inheritdoc/>
-        public Value Call(Value leftOperand, Value rightOperand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
+        public IndexedValue Call(IndexedValue leftOperand, IndexedValue rightOperand, IndexedValue annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Log($"leftOperand = {leftOperand}");
-            Log($"rightOperand = {rightOperand}");
-            Log($"annotation = {annotation}");
+            //Log($"leftOperand = {leftOperand}");
+            //Log($"rightOperand = {rightOperand}");
+            //Log($"annotation = {annotation}");
 #endif
 
-            Value valueFromSource = null;
+            IndexedValue valueFromSource = null;
 
-            if(leftOperand.KindOfValue == KindOfValue.IdentifierValue)
+            if(leftOperand.KindOfValue == KindOfValue.StrongIdentifierValue)
             {
                 throw new NotImplementedException();
             }
@@ -44,9 +45,9 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             //Log($"valueFromSource = {valueFromSource}");
 #endif
 
-            if(rightOperand.KindOfValue == KindOfValue.IdentifierValue)
+            if(rightOperand.KindOfValue == KindOfValue.StrongIdentifierValue)
             {
-                var identifier = rightOperand.AsIdentifierValue;
+                var identifier = rightOperand.AsStrongIdentifierValue;
 
 #if DEBUG
                 //Log($"identifier = {identifier}");
@@ -54,7 +55,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                 if(identifier.KindOfName == KindOfName.Channel)
                 {
-                    var channel = _channelsResolver.GetChannel(identifier, localCodeExecutionContext, ResolverOptions.GetDefaultFluentOptions());
+                    var channel = _channelsResolver.GetChannel(identifier, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
                     //Log($"channel = {channel}");

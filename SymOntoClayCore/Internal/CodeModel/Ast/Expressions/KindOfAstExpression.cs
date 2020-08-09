@@ -11,6 +11,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         Var,
         BinaryOperator,
         UnaryOperator,
-        Channel
+        Channel,
+        CallingFunction,
+        EntityCondition
     }
 }

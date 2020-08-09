@@ -4,13 +4,9 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
 {
-    public enum KindOfOperator
+    public enum KindOfEntityConditionAstExpression
     {
         Unknown,
-        Is,
-        IsNot,
-        LeftRightStream,
-        Point,
-        CallFunction
+        Waypoint
     }
 }

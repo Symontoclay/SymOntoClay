@@ -14,7 +14,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             InWord,
             InString,
             InIdentifier,
-            At
+            At,
+            Sharp
         }
 
         private enum KindOfPrefix
@@ -25,10 +26,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             LogicalVar,
             Channel,
             Entity,
-            EntityCondition
+            EntityCondition,
+            EntityRefByConcept
         }
 
-        public Lexer()
+        private Lexer()
         {
         }
 
@@ -123,6 +125,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             case ')':
                                 return CreateToken(TokenKind.CloseRoundBracket);
 
+                            case ':':
+                                return CreateToken(TokenKind.Colon);
+
                             case ';':
                                 return CreateToken(TokenKind.Semicolon);
 
@@ -150,10 +155,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 buffer = new StringBuilder();
                                 break;
 
+                            case '`':
+                                _state = State.InIdentifier;
+                                buffer = new StringBuilder();
+                                break;
+
                             case '@':
                                 buffer = new StringBuilder();
                                 buffer.Append(tmpChar);
                                 _state = State.At;
+                                break;
+
+                            case '#':
+                                buffer = new StringBuilder();
+                                buffer.Append(tmpChar);
+                                _state = State.Sharp;
                                 break;
 
                             default:
@@ -197,6 +213,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     case KindOfPrefix.Channel:
                                         return CreateToken(TokenKind.Channel, buffer.ToString());
 
+                                    case KindOfPrefix.EntityCondition:
+                                        return CreateToken(TokenKind.EntityCondition, buffer.ToString());
+
                                     default:
                                         throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
                                 }
@@ -223,6 +242,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     case KindOfPrefix.SystemVar:
                                         return CreateToken(TokenKind.SystemVar, buffer.ToString());
 
+                                    case KindOfPrefix.EntityCondition:
+                                        return CreateToken(TokenKind.EntityCondition, buffer.ToString());
+
                                     default:
                                         throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
                                 }
@@ -245,7 +267,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         break;
 
                     case State.InIdentifier:
-                        throw new NotImplementedException();
+                        {
+                            if (tmpChar == '`')
+                            {
+                                _state = State.Init;
+                                return CreateToken(TokenKind.Identifier, buffer.ToString());
+                            }
+                            else
+                            {
+                                buffer.Append(tmpChar);
+                            }
+                        }
+                        break;
 
                     case State.At:
                         switch (tmpChar)
@@ -263,7 +296,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     }
                                     else
                                     {
-                                        _state = State.InWord;
+                                        if (char.IsLetterOrDigit(nextChar) || nextChar == '_')
+                                        {
+                                            _state = State.InWord;
+                                        }
+                                        else
+                                        {
+                                            throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                        }
                                     }
                                 }
                                 break;
@@ -281,12 +321,132 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     }
                                     else
                                     {
-                                        _state = State.InWord;
+                                        if (char.IsLetterOrDigit(nextChar) || nextChar == '_')
+                                        {
+                                            _state = State.InWord;
+                                        }
+                                        else
+                                        {
+                                            throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                        }
                                     }
                                 }
                                 break;
 
                             default:
+                                if (char.IsLetterOrDigit(tmpChar) || tmpChar == '_')
+                                {
+                                    buffer.Append(tmpChar);
+                                    _kindOfPrefix = KindOfPrefix.Var;
+
+                                    var nextChar = _items.Peek();
+
+                                    if (nextChar == '`')
+                                    {
+                                        _state = State.InIdentifier;
+                                    }
+                                    else
+                                    {
+                                        if (char.IsLetterOrDigit(nextChar) || nextChar == '_')
+                                        {
+                                            _state = State.InWord;
+                                        }
+                                        else
+                                        {
+                                            throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                        }
+                                    }
+                                    break;
+                                }
+                                throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                        }
+                        break;
+
+                    case State.Sharp:
+                        switch (tmpChar)
+                        {
+                            case '@':
+                                {
+                                    buffer.Append(tmpChar);
+                                    _kindOfPrefix = KindOfPrefix.EntityCondition;
+
+                                    var nextChar = _items.Peek();
+
+#if DEBUG
+                                    //_logger.Log($"nextChar = {nextChar}");
+#endif
+
+                                    if (nextChar == '`')
+                                    {
+                                        _state = State.InIdentifier;
+                                    }
+                                    else
+                                    {
+                                        if (char.IsLetterOrDigit(nextChar) || nextChar == '_')
+                                        {
+                                            _state = State.InWord;
+                                        }
+                                        else
+                                        {
+                                            _state = State.Init;
+
+                                            return CreateToken(TokenKind.EntityCondition, buffer.ToString());
+                                        }                                         
+                                    }
+                                }
+                                break;
+
+                            case '#':
+                                {
+                                    buffer.Append(tmpChar);
+                                    _kindOfPrefix = KindOfPrefix.EntityRefByConcept;
+
+                                    var nextChar = _items.Peek();
+
+                                    if (nextChar == '`')
+                                    {
+                                        _state = State.InIdentifier;
+                                    }
+                                    else
+                                    {
+                                        if (char.IsLetterOrDigit(nextChar) || nextChar == '_')
+                                        {
+                                            _state = State.InWord;
+                                        }
+                                        else
+                                        {
+                                            throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                        }
+                                    }
+                                }
+                                break;
+
+                            default:
+                                if (char.IsLetterOrDigit(tmpChar) || tmpChar == '_')
+                                {
+                                    buffer.Append(tmpChar);
+
+                                    _kindOfPrefix = KindOfPrefix.Entity;
+
+                                    var nextChar = _items.Peek();
+
+                                    if (nextChar == '`')
+                                    {
+                                        _state = State.InIdentifier;
+                                    }
+                                    else
+                                    {
+                                        if (char.IsLetterOrDigit(nextChar) || nextChar == '_')
+                                        {
+                                            _state = State.InWord;
+                                        }
+                                        else
+                                        {
+                                            throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                        }
+                                    }
+                                    break;
+                                }
                                 throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
                         }
                         break;

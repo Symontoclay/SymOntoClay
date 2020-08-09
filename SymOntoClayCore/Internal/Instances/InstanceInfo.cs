@@ -51,7 +51,7 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log($"targetTriggersList = {targetTriggersList.WriteListToString()}");
 #endif
 
-            var codeFramesList = new List<CodeFrame>();
+            var processInitialInfoList = new List<ProcessInitialInfo>();
 
             foreach(var targetTrigger in targetTriggersList)
             {
@@ -62,18 +62,19 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 localCodeExecutionContext.Holder = _indexedName;
 
-                var codeFrame = new CodeFrame();
-                codeFrame.CompiledFunctionBody = targetTrigger.ResultItem.CompiledFunctionBody;
-                codeFrame.LocalContext = localCodeExecutionContext;
+                var processInitialInfo = new ProcessInitialInfo();
+                processInitialInfo.CompiledFunctionBody = targetTrigger.ResultItem.CompiledFunctionBody;
+                processInitialInfo.LocalContext = localCodeExecutionContext;
+                processInitialInfo.Metadata = targetTrigger.ResultItem.OriginalInlineTrigger.CodeEntity;
 
-                codeFramesList.Add(codeFrame);
+                processInitialInfoList.Add(processInitialInfo);
             }
 
 #if DEBUG
-            //Log($"codeFramesList = {codeFramesList.WriteListToString()}");
+            //Log($"processInitialInfoList = {processInitialInfoList.WriteListToString()}");
 #endif
 
-            var taskValue = _context.CodeExecutor.ExecuteBatchAsync(codeFramesList);
+            var taskValue = _context.CodeExecutor.ExecuteBatchAsync(processInitialInfoList);
 
 #if DEBUG
             //Log($"taskValue = {taskValue}");

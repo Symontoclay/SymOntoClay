@@ -6,7 +6,6 @@ namespace SymOntoClay.Core
 {
     public interface IHostListener
     {
-        ICommandInfo GetCommandInfo(ICommand command);
-        ICommandCallResult CallCommand(ICommand command);
+        IProcessCreatingResult CreateProcess(ICommand command);
     }
 }

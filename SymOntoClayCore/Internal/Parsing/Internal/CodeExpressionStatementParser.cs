@@ -11,6 +11,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
     public class CodeExpressionStatementParser: BaseInternalParser
     {
+        private enum State
+        {
+            Init,
+            GotName
+        }
+
         public CodeExpressionStatementParser(InternalParserContext context)
             : base(context)
         {
@@ -22,6 +28,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Result = new AstExpressionStatement();
         }
 
+        private State _state = State.Init;
         public AstExpressionStatement Result { get; private set; }
 
         private IntermediateAstNodePoint _nodePoint = new IntermediateAstNodePoint();
@@ -37,34 +44,82 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             //Log($"_state = {_state}");
 #endif
 
-            switch(_currToken.TokenKind)
+            switch(_state)
             {
-                case TokenKind.String:
-                    ProcessStringToken();
+                case State.Init:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.String:
+                            ProcessStringToken();
+                            break;
+
+                        case TokenKind.Word:
+                            ProcessWordToken();
+                            break;
+
+                        case TokenKind.Identifier:
+                            ProcessConceptLeaf();
+                            break;
+
+                        case TokenKind.SystemVar:
+                            ProcessVar();
+                            break;
+
+                        case TokenKind.LeftRightStream:
+                            ProcessLeftRightStream();
+                            break;
+
+                        case TokenKind.Point:
+                            ProcessPoint();
+                            break;
+
+                        case TokenKind.Channel:
+                            ProcessChannel();
+                            break;
+
+                        case TokenKind.Semicolon:
+                            Exit();
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
                     break;
 
-                case TokenKind.Word:
-                    ProcessWordToken();
-                    break;
+                case State.GotName:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Is:
+                                    ProcessIsOperator();
+                                    break;
 
-                case TokenKind.SystemVar:
-                    ProcessVar();
-                    break;
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
 
-                case TokenKind.LeftRightStream:
-                    ProcessLeftRightStream();
-                    break;
+                        case TokenKind.LeftRightStream:
+                            ProcessLeftRightStream();
+                            break;
 
-                case TokenKind.Channel:
-                    ProcessChannel();
-                    break;
+                        case TokenKind.Point:
+                            ProcessPoint();
+                            break;
 
-                case TokenKind.Semicolon:
-                    Exit();
+                        case TokenKind.OpenRoundBracket:
+                            ProcessCallingFunction();
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
                     break;
 
                 default:
-                    throw new UnexpectedTokenException(_currToken);
+                    throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
         }
 
@@ -102,7 +157,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     else
                     {
                         ProcessIsOperator();
-                    }                    
+                    }
                     break;
 
                 case KeyWordTokenKind.Not:
@@ -126,6 +181,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var intermediateNode = new IntermediateAstNode(node);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+            _state = State.GotName;
         }
 
         private void ProcessConceptLeaf()
@@ -148,6 +205,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         var intermediateNode = new IntermediateAstNode(node);
 
                         AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+                        _state = State.GotName;
                     }
                     break;
 
@@ -168,6 +227,24 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.BinaryOperator, priority);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+            _state = State.Init;
+        }
+
+        private void ProcessPoint()
+        {
+            _lastIsOperator = null;
+
+            var node = new BinaryOperatorAstExpression();
+            node.KindOfOperator = KindOfOperator.Point;
+
+            var priority = OperatorsHelper.GetPriority(node.KindOfOperator);
+
+            var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.BinaryOperator, priority);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+            _state = State.Init;
         }
 
         private void ProcessIsOperator()
@@ -182,6 +259,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.BinaryOperator, priority);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+            _state = State.Init;
         }
 
         private void ProcessNot()
@@ -222,6 +301,34 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var intermediateNode = new IntermediateAstNode(node);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+        }
+
+        private void ProcessCallingFunction()
+        {
+            _lastIsOperator = null;
+
+            _context.Recovery(_currToken);
+
+            var parser = new CallingFunctionExpressionParser(_context);
+            parser.Run();
+
+            var node = parser.Result;
+
+#if DEBUG
+            //Log($"node = {node}");
+#endif
+
+            var priority = OperatorsHelper.GetPriority(KindOfOperator.CallFunction);
+
+#if DEBUG
+            //Log($"priority = {priority}");
+#endif
+
+            var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.UnaryOperator, priority);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+            _state = State.Init;
         }
 
         /// <inheritdoc/>

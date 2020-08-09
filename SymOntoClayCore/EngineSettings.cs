@@ -26,7 +26,6 @@ namespace SymOntoClay.Core
 
             sb.PrintExisting(n, nameof(HostListener), HostListener);
 
-
             sb.PrintExisting(n, nameof(SyncContext), SyncContext);
             sb.AppendLine($"{spaces}{nameof(TmpDir)} = {TmpDir}");
 

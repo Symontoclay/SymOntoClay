@@ -7,6 +7,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface ICodeExecutorComponent
     {
-        Value ExecuteBatchAsync(List<CodeFrame> codeFramesList);
+        Value ExecuteBatchAsync(List<ProcessInitialInfo> processInitialInfoList);
     }
 }

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using TestSandbox.CodeExecution;
+using TestSandbox.CoreHostListener;
 using TestSandbox.Handlers;
 using TestSandbox.Helpers;
 using TestSandbox.Parsing;
@@ -25,6 +26,7 @@ namespace TestSandbox
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
+            TstCoreHostListenerHandler();
             //TstNullableArithmetic();
             //TstInheritanceItemsHandler();
             //TstDefaultSettingsOfCodeEntityHandler();
@@ -38,10 +40,20 @@ namespace TestSandbox
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstCoreHostListenerHandler()
+        {
+            _logger.Log("Begin");
+
+            var handler = new CoreHostListenerHandler();
+            handler.Run();
+
+            _logger.Log("End");
         }
 
         private static void TstNullableArithmetic()

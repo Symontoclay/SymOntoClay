@@ -96,6 +96,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessCloseSquareBracket();
                             break;
 
+                        case TokenKind.Comma:
+                            _context.Recovery(_currToken);
+                            Exit();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

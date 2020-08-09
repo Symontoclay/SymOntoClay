@@ -1,7 +1,9 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
@@ -17,9 +19,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private readonly IEngineContext _context;
         private readonly object _registryLockObj = new object();
+        private readonly object _processLockObj = new object();
 
         private Dictionary<StrongIdentifierValue, InstanceInfo> _namesDict;
         private InstanceInfo _rootInstanceInfo;
+
+        private List<IProcessInfo> _processesInfoList;
 
         public void LoadFromSourceFiles()
         {
@@ -29,6 +34,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _namesDict = new Dictionary<StrongIdentifierValue, InstanceInfo>();
             _rootInstanceInfo = null;
+
+            _processesInfoList = new List<IProcessInfo>();
 
 #if IMAGINE_WORKING
             //Log("End");
@@ -125,5 +132,50 @@ namespace SymOntoClay.Core.Internal.Instances
 
             return result;
         }
+
+        public void AppendProcessInfo(IProcessInfo processInfo)
+        {
+            lock(_processLockObj)
+            {
+#if DEBUG
+                Log($"processInfo = {processInfo}");
+#endif
+
+                if(_processesInfoList.Contains(processInfo))
+                {
+                    return;
+                }
+
+                _processesInfoList.Add(processInfo);
+            }
+        }
+
+#if DEBUG
+        public void PrintProcessesList()
+        {
+            List<IProcessInfo> tmpPprocessesInfoList;
+
+            lock (_processLockObj)
+            {
+                tmpPprocessesInfoList = _processesInfoList.ToList();
+            }
+
+            uint n = 4;
+
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.AppendLine("Begin ProcessesList");
+
+            foreach(var processInfo in tmpPprocessesInfoList)
+            {
+                sb.AppendLine($"{spaces}{processInfo.Id} {processInfo.Status}");
+            }
+
+            sb.AppendLine("End ProcessesList");
+
+            Log(sb.ToString());
+        }
+#endif
     }
 }

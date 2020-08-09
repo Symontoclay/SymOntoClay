@@ -9,6 +9,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         Unknown,
         Concept,
         Entity,
+        EntityCondition,
+        AnonymousEntityCondition,
+        EntityRefByConcept,
         Channel,
         Var,
         SystemVar

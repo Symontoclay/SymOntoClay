@@ -16,6 +16,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Identifier,
         Channel,
         SystemVar,
+        EntityCondition,
         Point,
         Comma,
         /// <summary>
@@ -43,6 +44,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// Represents symbol `)`.
         /// </summary>
         CloseRoundBracket,
+        /// <summary>
+        /// Represents symbol `:`.
+        /// </summary>
+        Colon,
         /// <summary>
         /// Represents symbol `;`.
         /// </summary>

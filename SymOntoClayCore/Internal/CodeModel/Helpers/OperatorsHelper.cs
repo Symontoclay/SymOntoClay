@@ -21,6 +21,12 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 case KindOfOperator.IsNot:
                     return 10;
 
+                case KindOfOperator.Point:
+                    return 2;
+
+                case KindOfOperator.CallFunction:
+                    return 2;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
@@ -38,6 +44,12 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 
                 case KindOfOperator.IsNot:
                     return "IS NOT";
+
+                case KindOfOperator.Point:
+                    return ".";
+
+                case KindOfOperator.CallFunction:
+                    return "()";
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);

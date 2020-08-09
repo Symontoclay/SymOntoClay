@@ -44,10 +44,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         protected IActivePeriodicObject _activeObject { get; private set; }
 
-        public void SetCodeFrame(CodeFrame codeFrame)
+        public void SetCodeFrame(CodeFrame codeFrame, bool setAsRunning = true)
         {
+#if DEBUG
+            Log($"codeFrame = {codeFrame}");
+#endif
+
             _codeFrames.Push(codeFrame);
             _currentCodeFrame = codeFrame;
+
+            if(setAsRunning)
+            {
+                _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Running;
+            }
         }
 
         public void SetCodeFrames(List<CodeFrame> codeFramesList)
@@ -57,8 +66,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             foreach(var codeFrame in reverseCodeFramesList)
             {
-                SetCodeFrame(codeFrame);
+                codeFrame.ProcessInfo.Status = ProcessStatus.WaitingToRun;
+
+                SetCodeFrame(codeFrame, false);
             }
+
+            _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Running;
+
+#if DEBUG
+            _context.InstancesStorage.PrintProcessesList();
+#endif
         }
 
         public Value Start()
@@ -210,6 +227,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     case OperationCode.Return:
                         {
+#if DEBUG
+                            Log("Begin case OperationCode.Return");
+#endif
+
+                            _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Completed;
+
                             _codeFrames.Pop();
 
                             if(_codeFrames.Count == 0)
@@ -219,7 +242,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             else
                             {
                                 _currentCodeFrame = _codeFrames.Peek();
-                            }                      
+                            }
+
+#if DEBUG
+                            _context.InstancesStorage.PrintProcessesList();
+
+                            Log("End case OperationCode.Return");
+#endif
                         }
                         break;
 

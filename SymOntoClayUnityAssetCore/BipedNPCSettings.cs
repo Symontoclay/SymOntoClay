@@ -31,7 +31,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// <summary>
         /// Gets or sets host listener.
         /// </summary>
-        public IHostListener HostListener { get; set; }
+        public IPlatformHostListener HostListener { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

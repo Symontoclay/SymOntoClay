@@ -14,7 +14,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
             {
                 point.RootNode = node;
                 point.CurrentNode = node;
-
+               
                 return;
             }
 

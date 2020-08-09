@@ -8,6 +8,11 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 {
     public static class NameHelper
     {
+        public static string GetNewEntityNameString()
+        {
+            return $"#{Guid.NewGuid():D}";
+        }
+
         public static StrongIdentifierValue CreateRuleOrFactName(IEntityDictionary dictionary)
         {
             return CreateEntityName(dictionary);
@@ -15,7 +20,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 
         public static StrongIdentifierValue CreateEntityName(IEntityDictionary dictionary)
         {
-            var text = $"#{Guid.NewGuid():D}";
+            var text = GetNewEntityNameString();
             return CreateName(text, dictionary);
         }
 
@@ -40,6 +45,18 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             else if (text.StartsWith("@@"))
             {
                 name.KindOfName = KindOfName.SystemVar;
+            }
+            else if (text == "#@")
+            {
+                name.KindOfName = KindOfName.AnonymousEntityCondition;
+            }
+            else if (text.StartsWith("#@"))
+            {
+                name.KindOfName = KindOfName.EntityCondition;
+            }
+            else if (text.StartsWith("##"))
+            {
+                name.KindOfName = KindOfName.EntityRefByConcept;
             }
             else if (text.StartsWith("@"))
             {

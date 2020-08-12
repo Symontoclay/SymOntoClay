@@ -55,9 +55,13 @@ namespace TestSandbox.CoreHostListener
             var tokenSource = new CancellationTokenSource();
             var token = tokenSource.Token;
 
+            var parameterList = new List<object>() { token, new Vector3(12, 15, 0), 25 }.ToArray();
+
             var task = new Task(() =>
             {
-                platformListener.GoToImpl(token, new Vector3(12, 15, 0));
+                //platformListener.GoToImpl(token, new Vector3(12, 15, 0));
+
+                goEndpoint.MethodInfo.Invoke(platformListener, parameterList);
             }, token);
 
             var processInfo = new PlatformProcessInfo(task, tokenSource, goEndpoint.Devices);

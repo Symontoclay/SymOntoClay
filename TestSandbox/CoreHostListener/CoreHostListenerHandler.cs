@@ -59,9 +59,18 @@ namespace TestSandbox.CoreHostListener
 
             var task = new Task(() =>
             {
-                //platformListener.GoToImpl(token, new Vector3(12, 15, 0));
-
-                goEndpoint.MethodInfo.Invoke(platformListener, parameterList);
+                try
+                {
+                    goEndpoint.MethodInfo.Invoke(platformListener, parameterList);
+                }
+                catch(TargetInvocationException)
+                {
+                }
+                catch(Exception e)
+                {
+                    _logger.Log($"e = {e}");
+                }
+                
             }, token);
 
             var processInfo = new PlatformProcessInfo(task, tokenSource, goEndpoint.Devices);

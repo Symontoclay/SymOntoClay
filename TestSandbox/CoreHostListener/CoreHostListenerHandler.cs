@@ -4,6 +4,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -44,6 +45,7 @@ namespace TestSandbox.CoreHostListener
             var platformEndpointsList = new List<PlatformEndpointInfo>();
 
             var targetAttributesList = new List<Type>(){ typeof(PlatformEndpointAttribute), typeof(BipedPlatformEndpointAttribute) };
+            var targetParameterAttributeType = typeof(PlatformEndpointParameterAttribute);
 
             var platformListener = new TstPlatformHostListener();
 
@@ -58,29 +60,29 @@ namespace TestSandbox.CoreHostListener
                 _logger.Log($"method.Name = {method.Name}");
                 _logger.Log($"method.CustomAttributes.Count() = {method.CustomAttributes.Count()}");
 
-                foreach(var customAttribute in method.CustomAttributes.Where(p => targetAttributesList.Contains(p.AttributeType)))
-                {
-                    _logger.Log($"customAttribute.AttributeType.FullName = {customAttribute.AttributeType.FullName}");
-                    _logger.Log($"customAttribute.ConstructorArguments.Count = {customAttribute.ConstructorArguments.Count}");
-                    foreach(var constructorArg in customAttribute.ConstructorArguments)
-                    {
-                        _logger.Log($"constructorArg.ArgumentType.FullName = {constructorArg.ArgumentType.FullName}");
-                        _logger.Log($"constructorArg.ArgumentType.IsArray = {constructorArg.ArgumentType.IsArray}");
+                //foreach(var customAttribute in method.CustomAttributes.Where(p => targetAttributesList.Contains(p.AttributeType)))
+                //{
+                //    _logger.Log($"customAttribute.AttributeType.FullName = {customAttribute.AttributeType.FullName}");
+                //    _logger.Log($"customAttribute.ConstructorArguments.Count = {customAttribute.ConstructorArguments.Count}");
+                //    foreach(var constructorArg in customAttribute.ConstructorArguments)
+                //    {
+                //        _logger.Log($"constructorArg.ArgumentType.FullName = {constructorArg.ArgumentType.FullName}");
+                //        _logger.Log($"constructorArg.ArgumentType.IsArray = {constructorArg.ArgumentType.IsArray}");
 
-                        if (constructorArg.ArgumentType.IsArray)
-                        {
-                            _logger.Log($"constructorArg.Value = {JsonConvert.SerializeObject(constructorArg.Value, Formatting.Indented)}");
-                        }
-                        else
-                        {
-                            _logger.Log($"constructorArg.Value = {constructorArg.Value}");
-                        }                     
-                    }
-                    _logger.Log($"customAttribute.NamedArguments.Count = {customAttribute.NamedArguments.Count}");
-                    //
-                    //_logger.Log($" = {}");
-                    //_logger.Log($" = {}");
-                }
+                //        if (constructorArg.ArgumentType.IsArray)
+                //        {
+                //            _logger.Log($"constructorArg.Value = {JsonConvert.SerializeObject(constructorArg.Value, Formatting.Indented)}");
+                //        }
+                //        else
+                //        {
+                //            _logger.Log($"constructorArg.Value = {constructorArg.Value}");
+                //        }                     
+                //    }
+                //    _logger.Log($"customAttribute.NamedArguments.Count = {customAttribute.NamedArguments.Count}");
+                //    //
+                //    //_logger.Log($" = {}");
+                //    //_logger.Log($" = {}");
+                //}
                 var parametersList = method.GetParameters();
                 _logger.Log($"parametersList.Length = {parametersList.Length}");
 
@@ -122,11 +124,13 @@ namespace TestSandbox.CoreHostListener
 
                 platformEndpointsList.Add(platformEndpointInfo);
 
+                platformEndpointInfo.MethodInfo = method;
+
                 var customAttribute = method.CustomAttributes.FirstOrDefault(p => targetAttributesList.Contains(p.AttributeType));
 
                 if(customAttribute.ConstructorArguments.Any())
                 {
-                    var skipParamsList = new List<int>();
+                    var skipParams = 0;
 
                     var firstParam = customAttribute.ConstructorArguments[0];
 
@@ -134,7 +138,7 @@ namespace TestSandbox.CoreHostListener
 
                     if(firstParam.ArgumentType == typeof(string))
                     {
-                        skipParamsList.Add(0);
+                        skipParams++;
 
                         platformEndpointInfo.Name = (string)firstParam.Value;
 
@@ -146,7 +150,7 @@ namespace TestSandbox.CoreHostListener
 
                             if(secondParam.ArgumentType == typeof(bool))
                             {
-                                skipParamsList.Add(1);
+                                skipParams++;
 
                                 platformEndpointInfo.NeedMainThread = (bool)secondParam.Value;
                             }
@@ -156,19 +160,69 @@ namespace TestSandbox.CoreHostListener
                     {
                         if(firstParam.ArgumentType == typeof(bool))
                         {
-                            skipParamsList.Add(0);
+                            skipParams++;
 
                             platformEndpointInfo.Name = method.Name.ToLower();
                             platformEndpointInfo.NeedMainThread = (bool)firstParam.Value;
                         }
                     }
 
-                    _logger.Log($"skipParamsList.Count = {skipParamsList.Count}");
-                    _logger.Log($"skipParamsList = {JsonConvert.SerializeObject(skipParamsList, Formatting.Indented)}");
+                    _logger.Log($"skipParams = {skipParams}");
+
+                    var devicesList = new List<int>();
+
+                    foreach (var constructorArg in customAttribute.ConstructorArguments.Skip(skipParams))
+                    {
+                        _logger.Log($"constructorArg.ArgumentType.FullName = {constructorArg.ArgumentType.FullName}");
+                        _logger.Log($"constructorArg.ArgumentType.IsArray = {constructorArg.ArgumentType.IsArray}");
+
+                        if (constructorArg.ArgumentType.IsArray)
+                        {
+                            devicesList.AddRange(((IEnumerable<CustomAttributeTypedArgument>)constructorArg.Value).Select(p => (int)p.Value).ToList());
+                        }
+                        else
+                        {
+                            throw new NotSupportedException();
+                        }
+                    }
+
+                    _logger.Log($"devicesList = {JsonConvert.SerializeObject(devicesList, Formatting.Indented)}");
+
+                    platformEndpointInfo.Devices = devicesList;
                 }
                 else
                 {
                     platformEndpointInfo.Name = method.Name.ToLower();
+                }
+
+                platformEndpointInfo.Arguments = new List<PlatformEndpointArgumentInfo>();
+
+                var parametersList = method.GetParameters();
+
+                foreach (var parameter in parametersList)
+                {
+                    var platformEndpointArgumentInfo = new PlatformEndpointArgumentInfo();
+
+                    platformEndpointInfo.Arguments.Add(platformEndpointArgumentInfo);
+
+                    platformEndpointArgumentInfo.ParameterInfo = parameter;
+                    platformEndpointArgumentInfo.Type = parameter.ParameterType;
+
+                    _logger.Log($"parameter.Name = {parameter.Name}");
+                    _logger.Log($"parameter.ParameterType.FullName = {parameter.ParameterType.FullName}");
+                    _logger.Log($"parameter.HasDefaultValue = {parameter.HasDefaultValue}");
+                    _logger.Log($"parameter.DefaultValue = {parameter.DefaultValue}");
+
+                    var parameterCustomAttribute = parameter.CustomAttributes.FirstOrDefault(p => p.AttributeType == targetParameterAttributeType);
+
+                    if(parameterCustomAttribute == null)
+                    {
+                        platformEndpointArgumentInfo.Name = parameter.Name;
+                    }
+                    else
+                    {
+                        //throw new NotImplementedException();
+                    }
                 }
             }
 

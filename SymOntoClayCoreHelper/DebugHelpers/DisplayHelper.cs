@@ -222,6 +222,27 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             }
         }
 
+        public static void PrintValueTypesListProp<T>(this StringBuilder sb, uint n, string propName, IEnumerable<T> items) where T : struct
+        {
+            var spaces = Spaces(n);
+            var nextN = n + 4;
+            var nextNSpaces = Spaces(nextN);
+
+            if (items == null)
+            {
+                sb.AppendLine($"{spaces}{propName} = NULL");
+            }
+            else
+            {
+                sb.AppendLine($"{spaces}Begin {propName}");
+                foreach (var item in items)
+                {
+                    sb.AppendLine($"{nextNSpaces}{item}");
+                }
+                sb.AppendLine($"{spaces}End {propName}");
+            }
+        }
+
         public static void PrintExisting(this StringBuilder sb, uint n, string propName, object value)
         {
             var spaces = Spaces(n);

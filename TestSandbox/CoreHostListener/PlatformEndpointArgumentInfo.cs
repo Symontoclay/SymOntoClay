@@ -6,13 +6,16 @@ using System.Text;
 
 namespace TestSandbox.CoreHostListener
 {
-    public class PlatformEndpointInfo : IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class PlatformEndpointArgumentInfo : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public string Name { get; set; }
-        public bool NeedMainThread { get; set; }
-        public IList<int> Devices { get; set; }
-        public IList<PlatformEndpointArgumentInfo> Arguments { get; set; }
-        public MethodInfo MethodInfo { get; set; }
+        public Type Type { get; set; }
+        public bool HasDefaultValue { get; set; }
+        public object DefaultValue { get; set; }
+        //public bool NeedMainThread { get; set; }
+        //public IList<int> Devices { get; set; }
+
+        public ParameterInfo ParameterInfo { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -33,9 +36,11 @@ namespace TestSandbox.CoreHostListener
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
-            sb.AppendLine($"{spaces}{nameof(NeedMainThread)} = {NeedMainThread}");
-            sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
-            sb.PrintObjListProp(n, nameof(Arguments), Arguments);
+            sb.AppendLine($"{spaces}{nameof(Type)} = {Type.FullName}");
+            sb.AppendLine($"{spaces}{nameof()} = {}");
+            sb.AppendLine($"{spaces}{nameof()} = {}");
+
+            //sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
 
             return sb.ToString();
         }
@@ -59,9 +64,10 @@ namespace TestSandbox.CoreHostListener
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
-            sb.AppendLine($"{spaces}{nameof(NeedMainThread)} = {NeedMainThread}");
-            sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
-            sb.PrintShortObjListProp(n, nameof(Arguments), Arguments);
+            sb.AppendLine($"{spaces}{nameof(Type)} = {Type.FullName}");
+
+            //sb.AppendLine($"{spaces}{nameof(NeedMainThread)} = {NeedMainThread}");
+            //sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
 
             return sb.ToString();
         }
@@ -85,9 +91,10 @@ namespace TestSandbox.CoreHostListener
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
-            sb.AppendLine($"{spaces}{nameof(NeedMainThread)} = {NeedMainThread}");
-            sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
-            sb.PrintBriefObjListProp(n, nameof(Arguments), Arguments);
+            sb.AppendLine($"{spaces}{nameof(Type)} = {Type.FullName}");
+
+            //sb.AppendLine($"{spaces}{nameof(NeedMainThread)} = {NeedMainThread}");
+            //sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
 
             return sb.ToString();
         }

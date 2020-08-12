@@ -6,13 +6,17 @@ using System.Text;
 
 namespace TestSandbox.CoreHostListener
 {
-    public class PlatformEndpointInfo : IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class EndpointArgumentInfo : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public string Name { get; set; }
-        public bool NeedMainThread { get; set; }
-        public IList<int> Devices { get; set; }
-        public IList<PlatformEndpointArgumentInfo> Arguments { get; set; }
-        public MethodInfo MethodInfo { get; set; }
+        public Type Type { get; set; }
+        public bool HasDefaultValue { get; set; }
+        public object DefaultValue { get; set; }
+        public int PositionNumber { get; set; }
+        public KindOfEndpointParam KindOfParameter { get; set; }
+        public bool IsSystemDefiend { get; set; }
+
+        public ParameterInfo ParameterInfo { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -33,9 +37,14 @@ namespace TestSandbox.CoreHostListener
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
-            sb.AppendLine($"{spaces}{nameof(NeedMainThread)} = {NeedMainThread}");
-            sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
-            sb.PrintObjListProp(n, nameof(Arguments), Arguments);
+            sb.AppendLine($"{spaces}{nameof(Type)} = {Type.FullName}");
+            sb.AppendLine($"{spaces}{nameof(HasDefaultValue)} = {HasDefaultValue}");
+            sb.AppendLine($"{spaces}{nameof(DefaultValue)} = {DefaultValue}");
+
+            sb.AppendLine($"{spaces}{nameof(PositionNumber)} = {PositionNumber}");
+            sb.AppendLine($"{spaces}{nameof(KindOfParameter)} = {KindOfParameter}");
+
+            sb.AppendLine($"{spaces}{nameof(IsSystemDefiend)} = {IsSystemDefiend}");
 
             return sb.ToString();
         }
@@ -59,9 +68,14 @@ namespace TestSandbox.CoreHostListener
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
-            sb.AppendLine($"{spaces}{nameof(NeedMainThread)} = {NeedMainThread}");
-            sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
-            sb.PrintShortObjListProp(n, nameof(Arguments), Arguments);
+            sb.AppendLine($"{spaces}{nameof(Type)} = {Type.FullName}");
+            sb.AppendLine($"{spaces}{nameof(HasDefaultValue)} = {HasDefaultValue}");
+            sb.AppendLine($"{spaces}{nameof(DefaultValue)} = {DefaultValue}");
+
+            sb.AppendLine($"{spaces}{nameof(PositionNumber)} = {PositionNumber}");
+            sb.AppendLine($"{spaces}{nameof(KindOfParameter)} = {KindOfParameter}");
+
+            sb.AppendLine($"{spaces}{nameof(IsSystemDefiend)} = {IsSystemDefiend}");
 
             return sb.ToString();
         }
@@ -85,9 +99,14 @@ namespace TestSandbox.CoreHostListener
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
-            sb.AppendLine($"{spaces}{nameof(NeedMainThread)} = {NeedMainThread}");
-            sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
-            sb.PrintBriefObjListProp(n, nameof(Arguments), Arguments);
+            sb.AppendLine($"{spaces}{nameof(Type)} = {Type.FullName}");
+            sb.AppendLine($"{spaces}{nameof(HasDefaultValue)} = {HasDefaultValue}");
+            sb.AppendLine($"{spaces}{nameof(DefaultValue)} = {DefaultValue}");
+
+            sb.AppendLine($"{spaces}{nameof(PositionNumber)} = {PositionNumber}");
+            sb.AppendLine($"{spaces}{nameof(KindOfParameter)} = {KindOfParameter}");
+
+            sb.AppendLine($"{spaces}{nameof(IsSystemDefiend)} = {IsSystemDefiend}");
 
             return sb.ToString();
         }

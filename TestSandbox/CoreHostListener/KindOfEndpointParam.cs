@@ -4,12 +4,9 @@ using System.Text;
 
 namespace TestSandbox.CoreHostListener
 {
-    public enum TstDevices: int
+    public enum KindOfEndpointParam
     {
-        Head,
-        LeftArm,
-        RightArm,
-        LeftFoot,
-        RightFoot
+        Unknown,
+        Position
     }
 }

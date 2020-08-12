@@ -27,9 +27,9 @@ namespace TestSandbox.CoreHostListener
             throw new NotImplementedException();
         }
 
-        [BipedPlatformEndpoint("Go")]
+        [BipedEndpoint("Go")]
         public void GoToImpl(CancellationToken cancellationToken, 
-            [PlatformEndpointParameter("To", KindOfPlatformEndpointParameter.Position)] Vector3 point,
+            [EndpointParam("To", KindOfEndpointParam.Position)] Vector3 point,
             float speed = 12)
         {
             _logger.Log("Begin");
@@ -49,7 +49,7 @@ namespace TestSandbox.CoreHostListener
             //_logger.Log("End");
         }
 
-        [BipedPlatformEndpoint]
+        [BipedEndpoint]
         private void JumpImpl(CancellationToken cancellationToken)
         {
             _logger.Log("Begin");
@@ -57,7 +57,7 @@ namespace TestSandbox.CoreHostListener
             _logger.Log("End");
         }
 
-        [BipedPlatformEndpoint("Aim", true, TstDevices.Head, TstDevices.LeftArm, TstDevices.RightArm)]
+        [BipedEndpoint("Aim", true, BipedDevices.Head, BipedDevices.LeftArm, BipedDevices.RightArm)]
         private void AimTo(CancellationToken cancellationToken)
         {
             _logger.Log("Begin");

@@ -4,9 +4,12 @@ using System.Text;
 
 namespace TestSandbox.CoreHostListener
 {
-    public enum KindOfPlatformEndpointParameter
+    public enum BipedDevices: int
     {
-        Unknown,
-        Position
+        Head,
+        LeftArm,
+        RightArm,
+        LeftFoot,
+        RightFoot
     }
 }

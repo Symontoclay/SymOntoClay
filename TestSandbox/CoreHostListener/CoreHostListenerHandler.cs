@@ -48,6 +48,32 @@ namespace TestSandbox.CoreHostListener
 
             _logger.Log($"platformEndpointsList = {platformEndpointsList.WriteListToString()}");
 
+            var goEndpoint = platformEndpointsList.FirstOrDefault(p => p.Name == "go");
+
+            _logger.Log($"goEndpoint = {goEndpoint}");
+
+            var tokenSource = new CancellationTokenSource();
+            var token = tokenSource.Token;
+
+            var task = new Task(() =>
+            {
+                platformListener.GoToImpl(token, new Vector3(12, 15, 0));
+            }, token);
+
+            var processInfo = new PlatformProcessInfo(task, tokenSource, goEndpoint.Devices);
+
+            _logger.Log($"processInfo = {processInfo}");
+
+            processInfo.Start();
+
+            Thread.Sleep(10000);
+
+            _logger.Log("Cancel");
+
+            processInfo.Cancel();
+
+            Thread.Sleep(10000);
+
             //var tokenSource = new CancellationTokenSource();
             //var token = tokenSource.Token;
 

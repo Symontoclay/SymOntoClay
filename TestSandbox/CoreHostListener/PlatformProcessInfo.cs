@@ -1,28 +1,33 @@
-﻿using SymOntoClay.Core.Internal.CodeExecution;
+﻿using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace SymOntoClay.Core.Internal.Instances
+namespace TestSandbox.CoreHostListener
 {
-    public class ProcessInfo: IProcessInfo
+    public class PlatformProcessInfo: IProcessInfo
     {
-        public ProcessInfo()
+        public PlatformProcessInfo(Task task, CancellationTokenSource cancellationTokenSource, IList<int> devices)
         {
             Id = NameHelper.GetNewEntityNameString();
+            _task = task;
+            _cancellationTokenSource = cancellationTokenSource;
+            Devices = devices;
         }
 
         /// <inheritdoc/>
         public string Id { get; private set; }
 
         /// <inheritdoc/>
-        public ProcessStatus Status 
-        { 
+        public ProcessStatus Status
+        {
             get
             {
-                lock(_lockObj)
+                lock (_lockObj)
                 {
                     return _status;
                 }
@@ -37,26 +42,34 @@ namespace SymOntoClay.Core.Internal.Instances
             }
         }
 
-        public CodeFrame CodeFrame { get; set; }
-
         /// <inheritdoc/>
-        public IList<int> Devices => throw new NotImplementedException();
+        public IList<int> Devices { get; private set; }
 
         /// <inheritdoc/>
         public void Start()
         {
-            throw new NotImplementedException();
+            lock (_lockObj)
+            {
+                _task.Start();
+                _status = ProcessStatus.Running;
+            }
         }
 
         /// <inheritdoc/>
         public void Cancel()
         {
-            throw new NotImplementedException();
+            lock (_lockObj)
+            {
+                _cancellationTokenSource.Cancel();
+                _status = ProcessStatus.Canceled;
+            }
         }
 
         #region private fields
         private readonly object _lockObj = new object();
         private ProcessStatus _status = ProcessStatus.Created;
+        private readonly Task _task;
+        private readonly CancellationTokenSource _cancellationTokenSource;
         #endregion
 
         /// <inheritdoc/>
@@ -78,7 +91,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Status)} = {Status}");
-            sb.PrintObjProp(n, nameof(CodeFrame), CodeFrame);
+            sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
 
             return sb.ToString();
         }
@@ -102,7 +115,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Status)} = {Status}");
-            sb.PrintShortObjProp(n, nameof(CodeFrame), CodeFrame);
+            sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
 
             return sb.ToString();
         }
@@ -126,7 +139,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Status)} = {Status}");
-            sb.PrintBriefObjProp(n, nameof(CodeFrame), CodeFrame);
+            sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
 
             return sb.ToString();
         }

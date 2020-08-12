@@ -27,7 +27,7 @@ namespace TestSandbox.CoreHostListener
             throw new NotImplementedException();
         }
 
-        [BipedEndpoint("Go")]
+        [BipedEndpoint("Go", true)]
         public void GoToImpl(CancellationToken cancellationToken, 
             [EndpointParam("To", KindOfEndpointParam.Position)] Vector3 point,
             float speed = 12)

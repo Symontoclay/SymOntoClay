@@ -2001,6 +2001,15 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.ProcessInfo.Status">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.ProcessInfo.Devices">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.Start">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.Cancel">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.ToString">
             <inheritdoc/>
         </member>

@@ -40,7 +40,7 @@ namespace TestSandbox.CoreHostListener
                     {
                         skipParams++;
 
-                        platformEndpointInfo.Name = (string)firstParam.Value;
+                        platformEndpointInfo.Name = ((string)firstParam.Value).ToLower();
 
                         if (customAttribute.ConstructorArguments.Count > 1)
                         {
@@ -115,7 +115,7 @@ namespace TestSandbox.CoreHostListener
 
                     if (parameterCustomAttribute == null)
                     {
-                        platformEndpointArgumentInfo.Name = parameter.Name;
+                        platformEndpointArgumentInfo.Name = parameter.Name.ToLower();
                     }
                     else
                     {
@@ -123,7 +123,7 @@ namespace TestSandbox.CoreHostListener
 
                         if (nameArg != null)
                         {
-                            platformEndpointArgumentInfo.Name = (string)nameArg.Value;
+                            platformEndpointArgumentInfo.Name = ((string)nameArg.Value).ToLower();
                         }
 
                         var kindOfParameterArg = parameterCustomAttribute.ConstructorArguments.SingleOrDefault(p => p.ArgumentType == typeof(KindOfEndpointParam));

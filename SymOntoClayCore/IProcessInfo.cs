@@ -9,5 +9,8 @@ namespace SymOntoClay.Core
     {
         string Id { get; }
         ProcessStatus Status { get; set; }
+        IList<int> Devices { get; }
+        void Start();
+        void Cancel();
     }
 }

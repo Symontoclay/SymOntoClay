@@ -25,68 +25,81 @@ namespace TestSandbox.CoreHostListener
         {
             _logger.Log("Begin");
 
-            //var context = TstEngineContextHelper.CreateAndInitContext();
+            var context = TstEngineContextHelper.CreateAndInitContext();
 
-            //var dictionary = context.Dictionary;
+            var dictionary = context.Dictionary;
 
-            //var methodName = NameHelper.CreateName("go", dictionary);
+            var methodName = NameHelper.CreateName("go", dictionary);
 
             //var listener = new TstCoreHostListener();
 
-            //var command = new Command();
-            //command.Name = methodName;
-            //command.ParamsDict = new Dictionary<StrongIdentifierValue, Value>();
+            var command = new Command();
+            command.Name = methodName;
+            command.ParamsDict = new Dictionary<StrongIdentifierValue, Value>();
+
+            var param1Value = new WaypointValue(new Vector2(25, 36), context);
+            var param1Name = NameHelper.CreateName("to", dictionary);
+
+            command.ParamsDict[param1Name] = param1Value;
+
+            var param2Value = new NumberValue(12.4);
+            var param2Name = NameHelper.CreateName("speed", dictionary);
+
+            command.ParamsDict[param2Name] = param2Value;
 
             //var param1Name = NameHelper.CreateName("count", dictionary);
             //var param1Value = new NumberValue(12.4);
 
             //command.ParamsDict[param1Name] = param1Value;
 
-            var platformListener = new TstPlatformHostListener();
+            _logger.Log($"command = {command}");
 
-            var platformEndpointsList = EndpointDescriber.GetEndpointsInfoList(platformListener);
+            //----------------------------------
+            //var platformListener = new TstPlatformHostListener();
 
-            _logger.Log($"platformEndpointsList = {platformEndpointsList.WriteListToString()}");
+            //var platformEndpointsList = EndpointDescriber.GetEndpointsInfoList(platformListener);
 
-            var goEndpoint = platformEndpointsList.FirstOrDefault(p => p.Name == "go");
+            //_logger.Log($"platformEndpointsList = {platformEndpointsList.WriteListToString()}");
 
-            _logger.Log($"goEndpoint = {goEndpoint}");
+            //var goEndpoint = platformEndpointsList.FirstOrDefault(p => p.Name == "go");
 
-            var tokenSource = new CancellationTokenSource();
-            var token = tokenSource.Token;
+            //_logger.Log($"goEndpoint = {goEndpoint}");
 
-            var parameterList = new List<object>() { token, new Vector3(12, 15, 0), 25 }.ToArray();
+            //var tokenSource = new CancellationTokenSource();
+            //var token = tokenSource.Token;
 
-            var task = new Task(() =>
-            {
-                try
-                {
-                    goEndpoint.MethodInfo.Invoke(platformListener, parameterList);
-                }
-                catch(TargetInvocationException)
-                {
-                }
-                catch(Exception e)
-                {
-                    _logger.Log($"e = {e}");
-                }
-                
-            }, token);
+            //var parameterList = new List<object>() { token, new Vector3(12, 15, 0), 25 }.ToArray();
 
-            var processInfo = new PlatformProcessInfo(task, tokenSource, goEndpoint.Devices);
+            //var task = new Task(() =>
+            //{
+            //    try
+            //    {
+            //        goEndpoint.MethodInfo.Invoke(platformListener, parameterList);
+            //    }
+            //    catch(TargetInvocationException)
+            //    {
+            //    }
+            //    catch(Exception e)
+            //    {
+            //        _logger.Log($"e = {e}");
+            //    }
 
-            _logger.Log($"processInfo = {processInfo}");
+            //}, token);
 
-            processInfo.Start();
+            //var processInfo = new PlatformProcessInfo(task, tokenSource, goEndpoint.Devices);
 
-            Thread.Sleep(10000);
+            //_logger.Log($"processInfo = {processInfo}");
 
-            _logger.Log("Cancel");
+            //processInfo.Start();
 
-            processInfo.Cancel();
+            //Thread.Sleep(10000);
 
-            Thread.Sleep(10000);
+            //_logger.Log("Cancel");
 
+            //processInfo.Cancel();
+
+            //Thread.Sleep(10000);
+            //-----------
             //var tokenSource = new CancellationTokenSource();
             //var token = tokenSource.Token;
 

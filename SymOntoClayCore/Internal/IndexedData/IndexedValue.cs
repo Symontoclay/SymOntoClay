@@ -33,6 +33,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public virtual bool IsAnnotationValue => false;
         public virtual IndexedAnnotationValue AsAnnotationValue => null;
 
+        public virtual bool IsWaypointValue => false;
+        public virtual IndexedWaypointValue AsWaypointValue => null;
+
         public abstract object GetSystemValue();
 
         /// <inheritdoc/>

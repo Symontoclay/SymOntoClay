@@ -31,6 +31,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsAnnotationValue => false;
         public virtual AnnotationValue AsAnnotationValue => null;
 
+        public virtual bool IsWaypointValue => false;
+        public virtual WaypointValue AsWaypointValue => null;
+
         public abstract object GetSystemValue();
 
         public abstract IndexedValue GetIndexedValue(IMainStorageContext mainStorageContext);

@@ -85,6 +85,9 @@ namespace SymOntoClay.Core.Internal.Convertors
                 case KindOfValue.AnnotationValue:
                     return ConvertAnnotationValue(source.AsAnnotationValue, mainStorageContext, convertingContext);
 
+                case KindOfValue.WaypointValue:
+                    return ConvertWaypointValue(source.AsWaypointValue, mainStorageContext, convertingContext);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(source.KindOfValue), source.KindOfValue, null);
             }
@@ -318,6 +321,39 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             result.OriginalAnnotationValue = source;
             result.AnnotatedItem = source.AnnotatedItem.GetIndexedAnnotatedItem(mainStorageContext, convertingContext);
+
+            result.CalculateLongConditionalHashCode();
+
+            return result;
+        }
+
+        public static IndexedWaypointValue ConvertWaypointValue(WaypointValue source, IMainStorageContext mainStorageContext)
+        {
+            var convertingContext = new Dictionary<object, object>();
+            return ConvertWaypointValue(source, mainStorageContext, convertingContext);
+        }
+
+        public static IndexedWaypointValue ConvertWaypointValue(WaypointValue source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (IndexedWaypointValue)convertingContext[source];
+            }
+
+            var result = new IndexedWaypointValue();
+            convertingContext[source] = result;
+            source.Indexed = result;
+
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
+
+            result.OriginalWaypointValue = source;
+
+
 
             result.CalculateLongConditionalHashCode();
 

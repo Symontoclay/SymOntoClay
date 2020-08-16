@@ -145,6 +145,12 @@
         <member name="P:SymOntoClay.Core.Internal.CodeExecution.Command.ParamsDict">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.Command.ParamsCount">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.Command.KindOfCommandParameters">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.Command.ToString">
             <inheritdoc/>
         </member>

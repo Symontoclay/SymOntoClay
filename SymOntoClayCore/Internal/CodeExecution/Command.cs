@@ -18,6 +18,44 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public IDictionary<StrongIdentifierValue, Value> ParamsDict { get; set; }
 
         /// <inheritdoc/>
+        public int ParamsCount
+        {
+            get
+            {
+                if(ParamsList != null)
+                {
+                    return ParamsList.Count;
+                }
+
+                if(ParamsDict != null)
+                {
+                    return ParamsDict.Count;
+                }
+
+                return 0;
+            }
+        }
+
+        /// <inheritdoc/>
+        public KindOfCommandParameters KindOfCommandParameters
+        {
+            get
+            {
+                if (ParamsList != null)
+                {
+                    return KindOfCommandParameters.ParametersByList;
+                }
+
+                if (ParamsDict != null)
+                {
+                    return KindOfCommandParameters.ParametersByDict;
+                }
+
+                return KindOfCommandParameters.NoParameters;
+            }
+        }
+
+        /// <inheritdoc/>
         public override string ToString()
         {
             return ToString(0u);
@@ -41,6 +79,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var sb = new StringBuilder();
 
             sb.PrintObjProp(n, nameof(Name), Name);
+
+            sb.AppendLine($"{spaces}{nameof(ParamsCount)} = {ParamsCount}");
+            sb.AppendLine($"{spaces}{nameof(KindOfCommandParameters)} = {KindOfCommandParameters}");
+
             sb.PrintObjListProp(n, nameof(ParamsList), ParamsList);
 
             if (ParamsDict == null)
@@ -91,6 +133,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var sb = new StringBuilder();
 
             sb.PrintShortObjProp(n, nameof(Name), Name);
+
+            sb.AppendLine($"{spaces}{nameof(ParamsCount)} = {ParamsCount}");
+            sb.AppendLine($"{spaces}{nameof(KindOfCommandParameters)} = {KindOfCommandParameters}");
+
             sb.PrintShortObjListProp(n, nameof(ParamsList), ParamsList);
 
             if (ParamsDict == null)
@@ -141,6 +187,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(Name), Name);
+
+            sb.AppendLine($"{spaces}{nameof(ParamsCount)} = {ParamsCount}");
+            sb.AppendLine($"{spaces}{nameof(KindOfCommandParameters)} = {KindOfCommandParameters}");
+
             sb.PrintBriefObjListProp(n, nameof(ParamsList), ParamsList);
 
             if (ParamsDict == null)

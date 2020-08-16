@@ -11,5 +11,7 @@ namespace SymOntoClay.Core
         StrongIdentifierValue Name { get; }
         IList<Value> ParamsList { get; }
         IDictionary<StrongIdentifierValue, Value> ParamsDict { get; }
+        int ParamsCount { get; }
+        KindOfCommandParameters KindOfCommandParameters { get; }
     }
 }

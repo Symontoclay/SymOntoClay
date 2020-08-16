@@ -36,27 +36,33 @@ namespace TestSandbox.CoreHostListener
             var platformEndpointsList = EndpointDescriber.GetEndpointsInfoList(platformListener);
 
             endpointsRegistry.AddEndpointsRange(platformEndpointsList);
+            //----------------------------------
 
-            //var methodName = NameHelper.CreateName("go", dictionary);
+            var methodName = NameHelper.CreateName("go", dictionary);
 
-            ////var listener = new TstCoreHostListener();
+            //var listener = new TstCoreHostListener();
 
-            //var command = new Command();
-            //command.Name = methodName;
-            //command.ParamsDict = new Dictionary<StrongIdentifierValue, Value>();
+            var command = new Command();
+            command.Name = methodName;
+            command.ParamsDict = new Dictionary<StrongIdentifierValue, Value>();
 
-            //var param1Value = new WaypointValue(new Vector2(25, 36), context);
-            //var param1Name = NameHelper.CreateName("to", dictionary);
+            var param1Value = new WaypointValue(new Vector2(25, 36), context);
+            var param1Name = NameHelper.CreateName("to", dictionary);
 
-            //command.ParamsDict[param1Name] = param1Value;
+            command.ParamsDict[param1Name] = param1Value;
 
-            //var param2Value = new NumberValue(12.4);
-            //var param2Name = NameHelper.CreateName("speed", dictionary);
+            var param2Value = new NumberValue(12.4);
+            var param2Name = NameHelper.CreateName("speed", dictionary);
 
-            //command.ParamsDict[param2Name] = param2Value;
+            command.ParamsDict[param2Name] = param2Value;
 
-            //_logger.Log($"command = {command}");
+            _logger.Log($"command = {command}");
 
+            //----------------------------------
+
+            var endPointInfo = endpointsRegistry.GetEndpointInfo(command);
+
+            _logger.Log($"endPointInfo = {endPointInfo}");
             //----------------------------------
             //var platformListener = new TstPlatformHostListener();
 

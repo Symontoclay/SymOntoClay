@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using SymOntoClay.Core.Internal.Threads;
+using SymOntoClay.Core.Internal.PlatformSupport;
 
 namespace SymOntoClay.Core.Internal.Helpers
 {
@@ -26,6 +27,7 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             BaseInitMainStorageContext(context, settings, KindOfStorage.Global);
 
+            context.PlatformSupport = new PlatformSupportComponent(context);
             context.StandardLibraryLoader = new StandardLibraryLoader(context);
             context.CodeExecutor = new CodeExecutorComponent(context);
             context.TriggerExecutor = new TriggerExecutorComponent(context);
@@ -33,7 +35,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.InstancesStorage = new InstancesStorageComponent(context);
             context.StatesStorage = new StatesStorageComponent(context);
             context.LogicalEngine = new LogicalEngineComponent(context);
-            context.InheritanceEngine = new InheritanceEngineComponent(context);            
+            context.InheritanceEngine = new InheritanceEngineComponent(context);
             context.ActivePeriodicObjectContext = new ActivePeriodicObjectContext(settings.SyncContext);
 
             return context;

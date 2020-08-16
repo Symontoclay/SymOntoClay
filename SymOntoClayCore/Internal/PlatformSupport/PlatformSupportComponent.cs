@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.PlatformSupport
@@ -13,5 +14,16 @@ namespace SymOntoClay.Core.Internal.PlatformSupport
         }
 
         private readonly IEngineContext _context;
+
+        /// <inheritdoc/>
+        public Vector3 ConvertFromRelativeToAbsolute(Vector2 relativeCoordinates)
+        {
+#if IMAGINE_WORKING
+            Log("Do");
+            return new Vector3(666, 999, 0);
+#else
+                throw new NotImplementedException();
+#endif
+        }
     }
 }

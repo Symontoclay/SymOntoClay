@@ -353,7 +353,8 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             result.OriginalWaypointValue = source;
 
-
+            result.AbcoluteCoordinates
+            result.Name
 
             result.CalculateLongConditionalHashCode();
 

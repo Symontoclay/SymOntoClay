@@ -14,7 +14,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             _context = context;
 
-            throw new NotImplementedException();
+            AbcoluteCoordinates = context.PlatformSupport.ConvertFromRelativeToAbsolute(relativeCoordinates);
+            Name = new StrongIdentifierValue();
         }
 
         private WaypointValue(Vector3 abcoluteCoordinates, IEngineContext context)
@@ -33,6 +34,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override WaypointValue AsWaypointValue => this;
 
         public Vector3 AbcoluteCoordinates { get; private set; }
+        public StrongIdentifierValue Name { get; private set; }
+
+
         private IEngineContext _context;
 
         public IndexedWaypointValue Indexed { get; set; }
@@ -96,6 +100,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new WaypointValue(AbcoluteCoordinates, _context);
             cloneContext[this] = result;
 
+            result.AbcoluteCoordinates = AbcoluteCoordinates;
+            result.Name = Name?.Clone(cloneContext);
+
             result.AppendAnnotations(this, cloneContext);
 
             return result;
@@ -108,6 +115,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
             
             sb.AppendLine($"{spaces}{nameof(AbcoluteCoordinates)} = {AbcoluteCoordinates}");
+            sb.PrintObjProp
 
             sb.PrintExisting(n, nameof(Indexed), Indexed);
 
@@ -122,6 +130,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(AbcoluteCoordinates)} = {AbcoluteCoordinates}");
+            sb.PrintShortObjProp
 
             sb.PrintExisting(n, nameof(Indexed), Indexed);
 
@@ -136,6 +145,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(AbcoluteCoordinates)} = {AbcoluteCoordinates}");
+            sb.PrintBriefObjProp
 
             sb.PrintExisting(n, nameof(Indexed), Indexed);
 

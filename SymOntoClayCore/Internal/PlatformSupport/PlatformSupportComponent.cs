@@ -19,7 +19,7 @@ namespace SymOntoClay.Core.Internal.PlatformSupport
         public Vector3 ConvertFromRelativeToAbsolute(Vector2 relativeCoordinates)
         {
 #if IMAGINE_WORKING
-            Log("Do");
+            Log("Do !!!!IMAGINE_WORKING!!!! FIX Me!!!!!!!!!!!!!!!!");
             return new Vector3(666, 999, 0);
 #else
                 throw new NotImplementedException();

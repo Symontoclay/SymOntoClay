@@ -80,7 +80,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
-            return null;
+            return AbcoluteCoordinates;
         }
 
         /// <inheritdoc/>
@@ -115,7 +115,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
             
             sb.AppendLine($"{spaces}{nameof(AbcoluteCoordinates)} = {AbcoluteCoordinates}");
-            sb.PrintObjProp
+            sb.PrintObjProp(n, nameof(Name), Name);
 
             sb.PrintExisting(n, nameof(Indexed), Indexed);
 
@@ -130,7 +130,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(AbcoluteCoordinates)} = {AbcoluteCoordinates}");
-            sb.PrintShortObjProp
+            sb.PrintShortObjProp(n, nameof(Name), Name);
 
             sb.PrintExisting(n, nameof(Indexed), Indexed);
 
@@ -145,7 +145,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(AbcoluteCoordinates)} = {AbcoluteCoordinates}");
-            sb.PrintBriefObjProp
+            sb.PrintBriefObjProp(n, nameof(Name), Name);
 
             sb.PrintExisting(n, nameof(Indexed), Indexed);
 

@@ -29,30 +29,33 @@ namespace TestSandbox.CoreHostListener
 
             var dictionary = context.Dictionary;
 
-            var methodName = NameHelper.CreateName("go", dictionary);
+            var endpointsRegistry = new EndpointsRegistry(context.Logger);
 
-            //var listener = new TstCoreHostListener();
+            var platformListener = new TstPlatformHostListener();
 
-            var command = new Command();
-            command.Name = methodName;
-            command.ParamsDict = new Dictionary<StrongIdentifierValue, Value>();
+            var platformEndpointsList = EndpointDescriber.GetEndpointsInfoList(platformListener);
 
-            var param1Value = new WaypointValue(new Vector2(25, 36), context);
-            var param1Name = NameHelper.CreateName("to", dictionary);
+            endpointsRegistry.AddEndpointsRange(platformEndpointsList);
 
-            command.ParamsDict[param1Name] = param1Value;
+            //var methodName = NameHelper.CreateName("go", dictionary);
 
-            var param2Value = new NumberValue(12.4);
-            var param2Name = NameHelper.CreateName("speed", dictionary);
+            ////var listener = new TstCoreHostListener();
 
-            command.ParamsDict[param2Name] = param2Value;
+            //var command = new Command();
+            //command.Name = methodName;
+            //command.ParamsDict = new Dictionary<StrongIdentifierValue, Value>();
 
-            //var param1Name = NameHelper.CreateName("count", dictionary);
-            //var param1Value = new NumberValue(12.4);
+            //var param1Value = new WaypointValue(new Vector2(25, 36), context);
+            //var param1Name = NameHelper.CreateName("to", dictionary);
 
             //command.ParamsDict[param1Name] = param1Value;
 
-            _logger.Log($"command = {command}");
+            //var param2Value = new NumberValue(12.4);
+            //var param2Name = NameHelper.CreateName("speed", dictionary);
+
+            //command.ParamsDict[param2Name] = param2Value;
+
+            //_logger.Log($"command = {command}");
 
             //----------------------------------
             //var platformListener = new TstPlatformHostListener();

@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using TestSandbox.CoreHostListener.Convertors;
 using TestSandbox.Helpers;
 using TestSandbox.PlatformImplementations;
 
@@ -29,7 +30,19 @@ namespace TestSandbox.CoreHostListener
 
             var dictionary = context.Dictionary;
 
-            var endpointsRegistry = new EndpointsRegistry(context.Logger);
+            var platformTypesConvertorsRegistry = new PlatformTypesConvertorsRegistry(context.Logger);
+
+            var convertor_1 = new Vector3AndWayPointValueConvertor();
+
+            platformTypesConvertorsRegistry.AddConvertor(convertor_1);
+
+            var convertor_2 = new FloatAndNumberValueConvertor();
+
+            platformTypesConvertorsRegistry.AddConvertor(convertor_2);
+
+            var endpointsRegistry = new EndpointsRegistry(context.Logger, platformTypesConvertorsRegistry);
+
+            var endPointActivator = new EndPointActivator(context.Logger, platformTypesConvertorsRegistry);
 
             var platformListener = new TstPlatformHostListener();
 
@@ -63,6 +76,14 @@ namespace TestSandbox.CoreHostListener
             var endPointInfo = endpointsRegistry.GetEndpointInfo(command);
 
             _logger.Log($"endPointInfo = {endPointInfo}");
+
+            if(endPointInfo != null)
+            {
+                var processInfo = endPointActivator.Activate(endPointInfo, command);
+
+                _logger.Log($"processInfo = {processInfo}");
+            }
+
             //----------------------------------
             //var platformListener = new TstPlatformHostListener();
 

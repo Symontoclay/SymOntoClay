@@ -11,12 +11,14 @@ namespace TestSandbox.CoreHostListener
 {
     public class EndpointsRegistry: BaseLoggedComponent
     {
-        public EndpointsRegistry(IEntityLogger logger)
+        public EndpointsRegistry(IEntityLogger logger, IPlatformTypesConvertorsRegistry platformTypesConvertorsRegistry)
             : base(logger)
         {
+            _platformTypesConvertorsRegistry = platformTypesConvertorsRegistry;
         }
 
         private readonly object _lockObj = new object();
+        private readonly IPlatformTypesConvertorsRegistry _platformTypesConvertorsRegistry;
         private readonly Dictionary<string, Dictionary<int, List<EndpointInfo>>> _endPointsDict = new Dictionary<string, Dictionary<int, List<EndpointInfo>>>();
 
         public void AddEndpointsRange(List<EndpointInfo> platformEndpointsList)
@@ -215,7 +217,11 @@ namespace TestSandbox.CoreHostListener
                     Log($"targetArgument = {targetArgument}");
 #endif
 
-                    throw new NotImplementedException();
+                    if (!_platformTypesConvertorsRegistry.CanConvert(targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType))
+                    {
+                        isFitEndpoint = false;
+                        break;
+                    }
                 }
 
 #if DEBUG
@@ -227,10 +233,10 @@ namespace TestSandbox.CoreHostListener
                     break;
                 }
 
-                throw new NotImplementedException();
+                resultList.Add(endPointInfo);
             }
 
-            throw new NotImplementedException();
+            return resultList.FirstOrDefault();
         }
     }
 }

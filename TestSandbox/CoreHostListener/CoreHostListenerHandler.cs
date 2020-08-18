@@ -1,18 +1,15 @@
-﻿using Newtonsoft.Json;
-using SymOntoClay.Core.Internal.CodeExecution;
+﻿using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
-using System;
-using System.Collections;
+using SymOntoClay.UnityAsset.Core.Internal.EndPoints;
+using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
+using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
+using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors.DefaultConvertors;
 using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using TestSandbox.CoreHostListener.Convertors;
 using TestSandbox.Helpers;
 using TestSandbox.PlatformImplementations;
 
@@ -42,7 +39,18 @@ namespace TestSandbox.CoreHostListener
 
             var endpointsRegistry = new EndpointsRegistry(context.Logger, platformTypesConvertorsRegistry);
 
-            var endPointActivator = new EndPointActivator(context.Logger, platformTypesConvertorsRegistry);
+            var invokingInMainThread = new InvokingInMainThread();
+
+            var task = Task.Run(() => {
+                while (true)
+                {
+                    invokingInMainThread.Update();
+
+                    Thread.Sleep(1000);
+                }
+            });
+
+            var endPointActivator = new EndPointActivator(context.Logger, platformTypesConvertorsRegistry, invokingInMainThread);
 
             var platformListener = new TstPlatformHostListener();
 
@@ -79,9 +87,19 @@ namespace TestSandbox.CoreHostListener
 
             if(endPointInfo != null)
             {
-                var processInfo = endPointActivator.Activate(endPointInfo, command);
+                var processInfo = endPointActivator.Activate(endPointInfo, command, platformListener);
 
                 _logger.Log($"processInfo = {processInfo}");
+
+                processInfo.Start();
+
+                Thread.Sleep(10000);
+
+                _logger.Log("Cancel");
+
+                processInfo.Cancel();
+
+                Thread.Sleep(10000);
             }
 
             //----------------------------------

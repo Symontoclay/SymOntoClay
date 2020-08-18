@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TestSandbox.CoreHostListener
+namespace SymOntoClay.UnityAsset.Core
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    public class EndpointAttribute: Attribute
+    public class EndpointAttribute : Attribute
     {
         public EndpointAttribute()
         {

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core
 {
-    public interface ICommandCallResult
+    public class PlatformTypesConvertorAttribute : Attribute
     {
     }
 }

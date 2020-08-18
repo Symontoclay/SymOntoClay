@@ -2,14 +2,15 @@
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TestSandbox.CoreHostListener
+namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
-    public class EndpointsRegistry: BaseLoggedComponent
+    public class EndpointsRegistry : BaseLoggedComponent
     {
         public EndpointsRegistry(IEntityLogger logger, IPlatformTypesConvertorsRegistry platformTypesConvertorsRegistry)
             : base(logger)
@@ -23,7 +24,7 @@ namespace TestSandbox.CoreHostListener
 
         public void AddEndpointsRange(List<EndpointInfo> platformEndpointsList)
         {
-            foreach(var endpointInfo in platformEndpointsList)
+            foreach (var endpointInfo in platformEndpointsList)
             {
                 AddEndpoint(endpointInfo);
             }
@@ -51,7 +52,7 @@ namespace TestSandbox.CoreHostListener
             {
                 Dictionary<int, List<EndpointInfo>> targetDict = null;
 
-                if(_endPointsDict.ContainsKey(endPointName))
+                if (_endPointsDict.ContainsKey(endPointName))
                 {
                     targetDict = _endPointsDict[endPointName];
                 }
@@ -61,7 +62,7 @@ namespace TestSandbox.CoreHostListener
                     _endPointsDict[endPointName] = targetDict;
                 }
 
-                foreach(var count in paramsCountList)
+                foreach (var count in paramsCountList)
                 {
 #if DEBUG
                     Log($"count = {count}");
@@ -69,7 +70,7 @@ namespace TestSandbox.CoreHostListener
 
                     List<EndpointInfo> targetList = null;
 
-                    if(targetDict.ContainsKey(count))
+                    if (targetDict.ContainsKey(count))
                     {
                         targetList = targetDict[count];
                     }
@@ -79,7 +80,7 @@ namespace TestSandbox.CoreHostListener
                         targetDict[count] = targetList;
                     }
 
-                    if(!targetList.Contains(endpointInfo))
+                    if (!targetList.Contains(endpointInfo))
                     {
                         targetList.Add(endpointInfo);
                     }
@@ -107,13 +108,13 @@ namespace TestSandbox.CoreHostListener
             Log($"argumentsWithoutDefaultValueCount = {argumentsWithoutDefaultValueCount}");
 #endif
 
-            if(totalCount == argumentsWithoutDefaultValueCount)
+            if (totalCount == argumentsWithoutDefaultValueCount)
             {
                 result.Add(totalCount);
                 return result;
             }
 
-            for(var i = argumentsWithoutDefaultValueCount; i <= totalCount; i++)
+            for (var i = argumentsWithoutDefaultValueCount; i <= totalCount; i++)
             {
                 result.Add(i);
             }
@@ -134,14 +135,14 @@ namespace TestSandbox.CoreHostListener
             Log($"endPointsList = {endPointsList.WriteListToString()}");
 #endif
 
-            if(endPointsList == null)
+            if (endPointsList == null)
             {
                 return null;
             }
 
             var kindOfCommandParameters = command.KindOfCommandParameters;
 
-            switch(kindOfCommandParameters)
+            switch (kindOfCommandParameters)
             {
                 case KindOfCommandParameters.NoParameters:
                     return endPointsList.SingleOrDefault();
@@ -164,11 +165,11 @@ namespace TestSandbox.CoreHostListener
 
             lock (_lockObj)
             {
-                if(_endPointsDict.ContainsKey(endPointName))
+                if (_endPointsDict.ContainsKey(endPointName))
                 {
                     var targetDict = _endPointsDict[endPointName];
 
-                    if(targetDict.ContainsKey(command.ParamsCount))
+                    if (targetDict.ContainsKey(command.ParamsCount))
                     {
                         return targetDict[command.ParamsCount];
                     }
@@ -184,7 +185,7 @@ namespace TestSandbox.CoreHostListener
 
             var commandParamsDict = command.ParamsDict.ToDictionary(p => p.Key.NameValue.ToLower(), p => p.Value);
 
-            foreach(var endPointInfo in endPointsList)
+            foreach (var endPointInfo in endPointsList)
             {
 #if DEBUG
                 Log($"endPointInfo = {endPointInfo}");
@@ -194,7 +195,7 @@ namespace TestSandbox.CoreHostListener
 
                 var isFitEndpoint = true;
 
-                foreach(var commandParamItem in commandParamsDict)
+                foreach (var commandParamItem in commandParamsDict)
                 {
 #if DEBUG
                     Log($"commandParamItem.Key = {commandParamItem.Key}");
@@ -228,7 +229,7 @@ namespace TestSandbox.CoreHostListener
                 Log($"isFitEndpoint = {isFitEndpoint}");
 #endif
 
-                if(!isFitEndpoint)
+                if (!isFitEndpoint)
                 {
                     break;
                 }

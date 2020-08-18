@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace TestSandbox.CoreHostListener
+namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
-    public class PlatformProcessInfo: IProcessInfo
+    public class PlatformProcessInfo : IProcessInfo
     {
         public PlatformProcessInfo(Task task, CancellationTokenSource cancellationTokenSource, IList<int> devices)
         {

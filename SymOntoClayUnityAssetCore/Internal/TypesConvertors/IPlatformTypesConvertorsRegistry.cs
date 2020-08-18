@@ -1,9 +1,8 @@
-﻿using SymOntoClay.Core.Internal.IndexedData;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TestSandbox.CoreHostListener
+namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors
 {
     public interface IPlatformTypesConvertorsRegistry
     {

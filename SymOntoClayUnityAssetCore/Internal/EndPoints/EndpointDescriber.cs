@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 
-namespace TestSandbox.CoreHostListener
+namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
     public static class EndpointDescriber
     {

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TestSandbox.CoreHostListener.Convertors
+namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors.DefaultConvertors
 {
     [PlatformTypesConvertor]
     public class FloatAndNumberValueConvertor : IPlatformTypesConvertor
@@ -30,7 +30,9 @@ namespace TestSandbox.CoreHostListener.Convertors
         /// <inheritdoc/>
         public object ConvertToPlatformType(object coreObject, IEntityLogger logger)
         {
-            throw new NotImplementedException();
+            var targetValue = (NumberValue)coreObject;
+
+            return (float)(double)targetValue.GetSystemValue();
         }
 
         /// <inheritdoc/>

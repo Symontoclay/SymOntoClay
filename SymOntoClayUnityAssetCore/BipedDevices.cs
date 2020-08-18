@@ -4,7 +4,12 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core
 {
-    public interface ICommand
+    public enum BipedDevices : int
     {
+        Head,
+        LeftArm,
+        RightArm,
+        LeftFoot,
+        RightFoot
     }
 }

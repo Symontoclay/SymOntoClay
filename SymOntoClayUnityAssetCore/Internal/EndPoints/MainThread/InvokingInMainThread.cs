@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TestSandbox.CoreHostListener
+namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread
 {
     public class InvokingInMainThread : IInvokingInMainThread
     {
-        public void SetInvocableObj(IInvocableInMainThreadObj invokableObj)
+        /// <inheritdoc/>
+        public void SetInvocableObj(IInvocableInMainThread invokableObj)
         {
             lock (_lockObj)
             {
@@ -17,7 +18,7 @@ namespace TestSandbox.CoreHostListener
 
         public void Update()
         {
-            List<IInvocableInMainThreadObj> invocableList = null;
+            List<IInvocableInMainThread> invocableList = null;
 
             lock (_lockObj)
             {
@@ -39,7 +40,7 @@ namespace TestSandbox.CoreHostListener
             }
         }
 
-        private object _lockObj = new object();
-        private Queue<IInvocableInMainThreadObj> _queue = new Queue<IInvocableInMainThreadObj>();
+        private readonly object _lockObj = new object();
+        private readonly Queue<IInvocableInMainThread> _queue = new Queue<IInvocableInMainThread>();
     }
 }

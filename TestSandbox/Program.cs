@@ -4,10 +4,12 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using TestSandbox.CodeExecution;
 using TestSandbox.CoreHostListener;
 using TestSandbox.Handlers;
@@ -26,6 +28,7 @@ namespace TestSandbox
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
+            //TstMainThreadSyncThread();
             TstCoreHostListenerHandler();
             //TstNullableArithmetic();
             //TstInheritanceItemsHandler();
@@ -44,6 +47,31 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstMainThreadSyncThread()
+        {
+            _logger.Log("Begin");
+
+            var invokingInMainThread = new InvokingInMainThread();
+
+            var task = Task.Run(() => { 
+                while(true)
+                {
+                    invokingInMainThread.Update();
+
+                    Thread.Sleep(1000);
+                }
+            });
+
+            Thread.Sleep(5000);
+
+            var invocableInMainThreadObj = new InvocableInMainThread(() => { _logger.Log("^)"); }, invokingInMainThread);
+            invocableInMainThreadObj.Run();
+
+            Thread.Sleep(5000);
+
+            _logger.Log("End");
         }
 
         private static void TstCoreHostListenerHandler()

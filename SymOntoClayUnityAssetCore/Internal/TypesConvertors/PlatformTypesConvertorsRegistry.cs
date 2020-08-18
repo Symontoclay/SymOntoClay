@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TestSandbox.CoreHostListener
+namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors
 {
     public class PlatformTypesConvertorsRegistry : BaseLoggedComponent, IPlatformTypesConvertorsRegistry
     {
@@ -19,7 +19,7 @@ namespace TestSandbox.CoreHostListener
         /// <inheritdoc/>
         public void AddConvertor(IPlatformTypesConvertor convertor)
         {
-            lock(_lockObj)
+            lock (_lockObj)
             {
 #if DEBUG
                 Log($"convertor = {convertor}");
@@ -27,9 +27,9 @@ namespace TestSandbox.CoreHostListener
 
                 Dictionary<Type, IPlatformTypesConvertor> targetDict = null;
 
-                if(convertor.CanConvertToCoreType)
+                if (convertor.CanConvertToCoreType)
                 {
-                    if(_convertorsDict.ContainsKey(convertor.PlatformType))
+                    if (_convertorsDict.ContainsKey(convertor.PlatformType))
                     {
                         targetDict = _convertorsDict[convertor.PlatformType];
                     }
@@ -42,9 +42,9 @@ namespace TestSandbox.CoreHostListener
                     targetDict[convertor.CoreType] = convertor;
                 }
 
-                if(convertor.CanConvertToPlatformType)
+                if (convertor.CanConvertToPlatformType)
                 {
-                    if(_convertorsDict.ContainsKey(convertor.CoreType))
+                    if (_convertorsDict.ContainsKey(convertor.CoreType))
                     {
                         targetDict = _convertorsDict[convertor.CoreType];
                     }
@@ -69,14 +69,14 @@ namespace TestSandbox.CoreHostListener
                 Log($"dest.FullName = {dest.FullName}");
 #endif
 
-                if(!_convertorsDict.ContainsKey(source))
+                if (!_convertorsDict.ContainsKey(source))
                 {
                     return false;
                 }
 
                 var targetDict = _convertorsDict[source];
 
-                if(!targetDict.ContainsKey(dest))
+                if (!targetDict.ContainsKey(dest))
                 {
                     return false;
                 }
@@ -90,7 +90,24 @@ namespace TestSandbox.CoreHostListener
         {
             lock (_lockObj)
             {
-                throw new NotImplementedException();
+#if DEBUG
+                Log($"sourceType.FullName = {sourceType.FullName}");
+                Log($"destType.FullName = {destType.FullName}");
+                Log($"sourceValue = {sourceValue}");
+#endif
+
+                var convertor = _convertorsDict[sourceType][destType];
+
+#if DEBUG
+                Log($"convertor = {convertor}");
+#endif
+
+                if (convertor.CoreType == sourceType)
+                {
+                    return convertor.ConvertToPlatformType(sourceValue, Logger);
+                }
+
+                return convertor.ConvertToCoreType(sourceValue, Logger);
             }
         }
     }

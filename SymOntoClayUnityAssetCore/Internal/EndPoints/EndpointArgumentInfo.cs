@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
-namespace TestSandbox.CoreHostListener
+namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
     public class EndpointArgumentInfo : IObjectToString, IObjectToShortString, IObjectToBriefString
     {

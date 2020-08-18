@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
-namespace TestSandbox.CoreHostListener
+namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread
 {
-    public class InvocableInMainThreadObj : IInvocableInMainThreadObj
+    public class InvocableInMainThread : IInvocableInMainThread
     {
-        public InvocableInMainThreadObj(Action function, IInvokingInMainThread invokingInMainThread)
+        public InvocableInMainThread(Action function, IInvokingInMainThread invokingInMainThread)
         {
             _function = function;
             _invokingInMainThread = invokingInMainThread;
@@ -36,6 +36,7 @@ namespace TestSandbox.CoreHostListener
             }
         }
 
+        /// <inheritdoc/>
         public void Invoke()
         {
             _function.Invoke();
@@ -47,7 +48,7 @@ namespace TestSandbox.CoreHostListener
         }
     }
 
-    public class InvocableInMainThreadObj<TResult> : IInvocableInMainThreadObj
+    public class InvocableInMainThreadObj<TResult> : IInvocableInMainThread
     {
         public InvocableInMainThreadObj(Func<TResult> function, IInvokingInMainThread invokingInMainThread)
         {
@@ -81,6 +82,7 @@ namespace TestSandbox.CoreHostListener
             return _result;
         }
 
+        /// <inheritdoc/>
         public void Invoke()
         {
             _result = _function.Invoke();

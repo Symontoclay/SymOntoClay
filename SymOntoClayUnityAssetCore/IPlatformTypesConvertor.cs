@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TestSandbox.CoreHostListener
+namespace SymOntoClay.UnityAsset.Core
 {
     public interface IPlatformTypesConvertor : IObjectToString, IObjectToShortString, IObjectToBriefString
     {

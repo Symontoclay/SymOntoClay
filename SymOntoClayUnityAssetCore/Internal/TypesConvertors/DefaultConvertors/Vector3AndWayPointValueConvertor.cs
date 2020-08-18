@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
 
-namespace TestSandbox.CoreHostListener.Convertors
+namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors.DefaultConvertors
 {
     [PlatformTypesConvertor]
     public class Vector3AndWayPointValueConvertor : IPlatformTypesConvertor
@@ -31,7 +31,9 @@ namespace TestSandbox.CoreHostListener.Convertors
         /// <inheritdoc/>
         public object ConvertToPlatformType(object coreObject, IEntityLogger logger)
         {
-            throw new NotImplementedException();
+            var targetObject = (WaypointValue)coreObject;
+
+            return targetObject.AbcoluteCoordinates;
         }
 
         /// <inheritdoc/>

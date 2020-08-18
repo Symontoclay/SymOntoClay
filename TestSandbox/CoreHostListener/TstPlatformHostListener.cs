@@ -9,23 +9,9 @@ using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.CoreHostListener
 {
-    public class TstPlatformHostListener : IPlatformHostListener
+    public class TstPlatformHostListener
     {
         private static readonly IEntityLogger _logger = new LoggerImpementation();
-
-        public IPlatformCommandCallResult CallCommand(IPlatformCommand command)
-        {
-            _logger.Log($"command = {command}");
-
-            throw new NotImplementedException();
-        }
-
-        public IPlatformCommandInfo GetCommandInfo(IPlatformCommand command)
-        {
-            _logger.Log($"command = {command}");
-
-            throw new NotImplementedException();
-        }
 
         [BipedEndpoint("Go", true)]
         public void GoToImpl(CancellationToken cancellationToken, 

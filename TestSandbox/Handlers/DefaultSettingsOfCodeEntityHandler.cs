@@ -18,7 +18,7 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("Begin");
 
-            var context = TstEngineContextHelper.CreateAndInitContext();
+            var context = TstEngineContextHelper.CreateAndInitContext().EngineContext;
 
             var defaultSettings = new DefaultSettingsOfCodeEntity();
             defaultSettings.Holder = NameHelper.CreateName("Tor", context.Dictionary);

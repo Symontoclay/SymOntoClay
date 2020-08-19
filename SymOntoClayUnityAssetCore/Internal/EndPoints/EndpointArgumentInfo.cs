@@ -6,16 +6,30 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
-    public class EndpointArgumentInfo : IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class EndpointArgumentInfo : IEndpointArgumentInfo
     {
+        /// <inheritdoc/>
         public string Name { get; set; }
+
+        /// <inheritdoc/>
         public Type Type { get; set; }
+
+        /// <inheritdoc/>
         public bool HasDefaultValue { get; set; }
+
+        /// <inheritdoc/>
         public object DefaultValue { get; set; }
+
+        /// <inheritdoc/>
         public int PositionNumber { get; set; }
+
+        /// <inheritdoc/>
         public KindOfEndpointParam KindOfParameter { get; set; }
+
+        /// <inheritdoc/>
         public bool IsSystemDefiend { get; set; }
 
+        /// <inheritdoc/>
         public ParameterInfo ParameterInfo { get; set; }
 
         /// <inheritdoc/>

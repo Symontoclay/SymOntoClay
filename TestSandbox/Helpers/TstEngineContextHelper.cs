@@ -18,8 +18,10 @@ namespace TestSandbox.Helpers
     {
         private static readonly IEntityLogger _logger = new LoggerImpementation();
 
-        public static EngineContext CreateAndInitContext()
+        public static TstComplexContext CreateAndInitContext()
         {
+            var result = new TstComplexContext();
+
             var logDir = Path.Combine(Directory.GetCurrentDirectory(), "NpcLogs");
 
             var worldSettings = new WorldSettings();
@@ -93,6 +95,8 @@ namespace TestSandbox.Helpers
 
             worldContext.Start();
 
+            result.WorldContext = worldContext;
+
 #if DEBUG
             //_logger.Log($"After worldContext.Start()");
 #endif
@@ -129,7 +133,9 @@ namespace TestSandbox.Helpers
 
             context.InstancesStorage.LoadFromSourceFiles();
 
-            return context;
+            result.EngineContext = context;
+
+            return result;
         }
     }
 }

@@ -15,11 +15,11 @@ namespace SymOntoClay.UnityAsset.Core
         {
         }
 
-        public BipedEndpointAttribute(params BipedDevices[] devices)
+        public BipedEndpointAttribute(params DeviceOfBiped[] devices)
         {
         }
 
-        public BipedEndpointAttribute(bool useMainThread, params BipedDevices[] devices)
+        public BipedEndpointAttribute(bool useMainThread, params DeviceOfBiped[] devices)
         {
         }
 
@@ -31,11 +31,11 @@ namespace SymOntoClay.UnityAsset.Core
         {
         }
 
-        public BipedEndpointAttribute(string methodName, params BipedDevices[] devices)
+        public BipedEndpointAttribute(string methodName, params DeviceOfBiped[] devices)
         {
         }
 
-        public BipedEndpointAttribute(string methodName, bool useMainThread, params BipedDevices[] devices)
+        public BipedEndpointAttribute(string methodName, bool useMainThread, params DeviceOfBiped[] devices)
         {
         }
     }

@@ -22,7 +22,7 @@ namespace TestSandbox.CodeExecution
         {
             _logger.Log("Begin");
 
-            var context = TstEngineContextHelper.CreateAndInitContext();
+            var context = TstEngineContextHelper.CreateAndInitContext().EngineContext;
 
             var applicationInheritanceItem = new InheritanceItem()
             {

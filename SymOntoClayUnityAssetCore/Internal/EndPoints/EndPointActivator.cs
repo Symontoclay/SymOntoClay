@@ -26,7 +26,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         private readonly IPlatformTypesConvertorsRegistry _platformTypesConvertorsRegistry;
         private readonly IInvokingInMainThread _invokingInMainThread;
 
-        public IProcessInfo Activate(EndpointInfo endpointInfo, ICommand command, object platformListener)
+        public IProcessInfo Activate(IEndpointInfo endpointInfo, ICommand command)
         {
 #if DEBUG
             Log($"endpointInfo = {endpointInfo}");
@@ -46,11 +46,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             if (endpointInfo.NeedMainThread)
             {
-                task = CreateTaskForMainThread(cancellationToken, endpointInfo, paramsList, platformListener);
+                task = CreateTaskForMainThread(cancellationToken, endpointInfo, paramsList);
             }
             else
             {
-                task = CreateTaskForUsualThread(cancellationToken, endpointInfo, paramsList, platformListener);
+                task = CreateTaskForUsualThread(cancellationToken, endpointInfo, paramsList);
             }
 
             var processInfo = new PlatformProcessInfo(task, cancellationTokenSource, endpointInfo.Devices);
@@ -62,8 +62,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return processInfo;
         }
 
-        private Task CreateTaskForMainThread(CancellationToken cancellationToken, EndpointInfo endpointInfo, object[] paramsList, object platformListener)
+        private Task CreateTaskForMainThread(CancellationToken cancellationToken, IEndpointInfo endpointInfo, object[] paramsList)
         {
+            var platformListener = endpointInfo.Object;
+
             var task = new Task(() =>
             {
                 try
@@ -89,8 +91,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return task;
         }
 
-        private Task CreateTaskForUsualThread(CancellationToken cancellationToken, EndpointInfo endpointInfo, object[] paramsList, object platformListener)
+        private Task CreateTaskForUsualThread(CancellationToken cancellationToken, IEndpointInfo endpointInfo, object[] paramsList)
         {
+            var platformListener = endpointInfo.Object;
+
             var task = new Task(() =>
             {
                 try
@@ -112,7 +116,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return task;
         }
 
-        private object[] MapParams(CancellationToken cancellationToken, EndpointInfo endpointInfo, ICommand command)
+        private object[] MapParams(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command)
         {
             var kindOfCommandParameters = command.KindOfCommandParameters;
 
@@ -129,7 +133,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             }
         }
 
-        private object[] MapParamsByParametersByDict(CancellationToken cancellationToken, EndpointInfo endpointInfo, ICommand command)
+        private object[] MapParamsByParametersByDict(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command)
         {
             var commandParamsDict = command.ParamsDict.ToDictionary(p => p.Key.NameValue.ToLower(), p => p.Value);
             var argumentsDict = endpointInfo.Arguments.Where(p => !p.IsSystemDefiend).ToDictionary(p => p.Name, p => p);

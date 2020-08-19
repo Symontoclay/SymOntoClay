@@ -21,7 +21,7 @@ namespace TestSandbox.Parsing
         {
             _logger.Log("Begin");
 
-            var context = TstEngineContextHelper.CreateAndInitContext();
+            var context = TstEngineContextHelper.CreateAndInitContext().EngineContext;
 
             var globalStorage = context.Storage.GlobalStorage;
 

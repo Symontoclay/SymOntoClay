@@ -6,13 +6,39 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
-    public class EndpointInfo : IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class EndpointInfo : IEndpointInfo
     {
+        public EndpointInfo()
+        {
+        }
+
+        public EndpointInfo(IEndpointInfo source)
+        {
+            Name = source.Name;
+            NeedMainThread = source.NeedMainThread;
+            Devices = source.Devices;
+            Arguments = source.Arguments;
+            MethodInfo = source.MethodInfo;
+            Object = source.Object;
+        }
+
+        /// <inheritdoc/>
         public string Name { get; set; }
+
+        /// <inheritdoc/>
         public bool NeedMainThread { get; set; }
+
+        /// <inheritdoc/>
         public IList<int> Devices { get; set; }
-        public IList<EndpointArgumentInfo> Arguments { get; set; }
+
+        /// <inheritdoc/>
+        public IList<IEndpointArgumentInfo> Arguments { get; set; }
+
+        /// <inheritdoc/>
         public MethodInfo MethodInfo { get; set; }
+
+        /// <inheritdoc/>
+        public object Object { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

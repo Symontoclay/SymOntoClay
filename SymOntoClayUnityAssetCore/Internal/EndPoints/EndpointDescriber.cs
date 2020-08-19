@@ -12,9 +12,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         private static List<Type> targetAttributesList = new List<Type>() { typeof(EndpointAttribute), typeof(BipedEndpointAttribute) };
         private static Type targetParameterAttributeType = typeof(EndpointParamAttribute);
 
-        public static List<EndpointInfo> GetEndpointsInfoList(object platformListener)
+        public static IList<IEndpointInfo> GetEndpointsInfoList(object platformListener)
         {
-            var platformEndpointsList = new List<EndpointInfo>();
+            var platformEndpointsList = new List<IEndpointInfo>();
 
             var platformListenerTypeInfo = platformListener.GetType();
 
@@ -27,6 +27,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 platformEndpointsList.Add(platformEndpointInfo);
 
                 platformEndpointInfo.MethodInfo = method;
+                platformEndpointInfo.Object = platformListener;
 
                 var customAttribute = method.CustomAttributes.FirstOrDefault(p => targetAttributesList.Contains(p.AttributeType));
 
@@ -86,7 +87,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     platformEndpointInfo.Name = method.Name.ToLower();
                 }
 
-                platformEndpointInfo.Arguments = new List<EndpointArgumentInfo>();
+                platformEndpointInfo.Arguments = new List<IEndpointArgumentInfo>();
 
                 var parametersList = method.GetParameters();
 

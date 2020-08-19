@@ -2,6 +2,7 @@
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
@@ -23,21 +24,37 @@ namespace TestSandbox.CoreHostListener
         {
             _logger.Log("Begin");
 
-            var context = TstEngineContextHelper.CreateAndInitContext();
+            var complexContext = TstEngineContextHelper.CreateAndInitContext();
+
+            var context = complexContext.EngineContext;
+            var worldContext = complexContext.WorldContext;
 
             var dictionary = context.Dictionary;
 
-            var platformTypesConvertorsRegistry = new PlatformTypesConvertorsRegistry(context.Logger);
+            var platformTypesConvertorsRegistry = worldContext.PlatformTypesConvertorsRegistry;
 
-            var convertor_1 = new Vector3AndWayPointValueConvertor();
+            //var platformTypesConvertorsRegistry = new PlatformTypesConvertorsRegistry(context.Logger);
 
-            platformTypesConvertorsRegistry.AddConvertor(convertor_1);
+            //var convertor_1 = new Vector3AndWayPointValueConvertor();
 
-            var convertor_2 = new FloatAndNumberValueConvertor();
+            //platformTypesConvertorsRegistry.AddConvertor(convertor_1);
 
-            platformTypesConvertorsRegistry.AddConvertor(convertor_2);
+            //var convertor_2 = new FloatAndNumberValueConvertor();
 
-            var endpointsRegistry = new EndpointsRegistry(context.Logger, platformTypesConvertorsRegistry);
+            //platformTypesConvertorsRegistry.AddConvertor(convertor_2);
+
+            var endpointsRegistries = new List<IEndpointsRegistry>();
+
+            var endpointsRegistry = new EndpointsRegistry(context.Logger);
+            endpointsRegistries.Add(endpointsRegistry);
+
+            var endpointsRegistry_2 = new EndpointsRegistry(context.Logger);
+            //endpointsRegistries.Add(endpointsRegistry_2);
+
+            var endpointsProxyRegistryForDevices = new EndpointsProxyRegistryForDevices(context.Logger, endpointsRegistry_2, new List<int>() { 1, 2, 3});
+            endpointsRegistries.Add(endpointsProxyRegistryForDevices);
+
+            var endPointsResolver = new EndPointsResolver(context.Logger, platformTypesConvertorsRegistry);
 
             var invokingInMainThread = new InvokingInMainThread();
 
@@ -57,6 +74,13 @@ namespace TestSandbox.CoreHostListener
             var platformEndpointsList = EndpointDescriber.GetEndpointsInfoList(platformListener);
 
             endpointsRegistry.AddEndpointsRange(platformEndpointsList);
+
+            var gunPlatformHostListener = new TstGunPlatformHostListener();
+
+            platformEndpointsList = EndpointDescriber.GetEndpointsInfoList(gunPlatformHostListener);
+
+            endpointsRegistry_2.AddEndpointsRange(platformEndpointsList);
+
             //----------------------------------
 
             var methodName = NameHelper.CreateName("go", dictionary);
@@ -81,13 +105,39 @@ namespace TestSandbox.CoreHostListener
 
             //----------------------------------
 
-            var endPointInfo = endpointsRegistry.GetEndpointInfo(command);
+            var endPointInfo = endPointsResolver.GetEndpointInfo(command, endpointsRegistries);
 
             _logger.Log($"endPointInfo = {endPointInfo}");
 
             if(endPointInfo != null)
             {
-                var processInfo = endPointActivator.Activate(endPointInfo, command, platformListener);
+                var processInfo = endPointActivator.Activate(endPointInfo, command);
+
+                _logger.Log($"processInfo = {processInfo}");
+
+                processInfo.Start();
+
+                Thread.Sleep(10000);
+
+                _logger.Log("Cancel");
+
+                processInfo.Cancel();
+
+                Thread.Sleep(10000);
+            }
+
+            methodName = NameHelper.CreateName("shoot", dictionary);
+
+            command = new Command();
+            command.Name = methodName;
+
+            endPointInfo = endPointsResolver.GetEndpointInfo(command, endpointsRegistries);
+
+            _logger.Log($"endPointInfo = {endPointInfo}");
+
+            if (endPointInfo != null)
+            {
+                var processInfo = endPointActivator.Activate(endPointInfo, command);
 
                 _logger.Log($"processInfo = {processInfo}");
 

@@ -20,7 +20,7 @@ namespace TestSandbox.CodeExecution
 
         public RegOperatorsHandler()
         {
-            _context = TstEngineContextHelper.CreateAndInitContext();
+            _context = TstEngineContextHelper.CreateAndInitContext().EngineContext;
         }
 
         public void Run()

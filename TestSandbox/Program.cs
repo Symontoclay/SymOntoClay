@@ -3,11 +3,16 @@ using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
+using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
+using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using TestSandbox.CodeExecution;
@@ -28,6 +33,8 @@ namespace TestSandbox
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
+            //TstLoadTypesPlatformTypesConvertors();
+            //TstGetTypes();
             //TstMainThreadSyncThread();
             TstCoreHostListenerHandler();
             //TstNullableArithmetic();
@@ -47,6 +54,44 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstLoadTypesPlatformTypesConvertors()
+        {
+            _logger.Log("Begin");
+
+            var targetAttributeType = typeof(PlatformTypesConvertorAttribute);
+
+            var typesList = AppDomainTypesEnumerator.GetTypes().Where(p => p.GetCustomAttributesData().Any(x => x.AttributeType == targetAttributeType));
+
+            _logger.Log($"typesList.Length = {typesList.Count()}");
+
+            foreach (var type in typesList)
+            {
+                _logger.Log($"type.FullName = {type.FullName}");
+
+                var convertor = (IPlatformTypesConvertor)Activator.CreateInstance(type);
+
+                _logger.Log($"convertor = {convertor}");
+            }
+
+            _logger.Log("End");
+        }
+
+        private static void TstGetTypes()
+        {
+            _logger.Log("Begin");
+
+            var typesList = AppDomainTypesEnumerator.GetTypes();
+
+            _logger.Log($"typesList.Length = {typesList.Count}");
+
+            foreach (var type in typesList)
+            {
+                _logger.Log($"type.FullName = {type.FullName}");
+            }
+
+            _logger.Log("End");
         }
 
         private static void TstMainThreadSyncThread()

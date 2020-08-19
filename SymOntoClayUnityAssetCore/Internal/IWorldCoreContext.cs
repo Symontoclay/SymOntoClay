@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,5 +13,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         IEntityLogger Logger { get; }
         SymOntoClay.Core.IEntityDictionary SharedDictionary { get; }
         IModulesStorage ModulesStorage { get; }
+        IPlatformTypesConvertorsRegistry PlatformTypesConvertors { get; }
     }
 }

@@ -9,6 +9,7 @@ using SymOntoClay.UnityAsset.Core.Internal.ModulesStorage;
 using SymOntoClay.UnityAsset.Core.Internal.SharedDictionary;
 using SymOntoClay.UnityAsset.Core.Internal.Storage;
 using SymOntoClay.UnityAsset.Core.Internal.Threads;
+using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
 using SymOntoClay.UnityAsset.Core.Internal.Validators;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             ImplementGeneralSettings(settings);
             CreateLogging(settings);
             CreateComponents(settings);
+            LoadTypesPlatformTypesConvertors();
+
             //throw new NotImplementedException();
         }
 
@@ -51,6 +54,21 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             SharedDictionary = new SharedDictionaryComponent(this);
             ModulesStorage = new ModulesStorageComponent(this);
             StandaloneStorage = new StandaloneStorageComponent(settings, this);
+            PlatformTypesConvertorsRegistry = new PlatformTypesConvertorsRegistry(Logger);
+        }
+
+        private void LoadTypesPlatformTypesConvertors()
+        {
+            var targetAttributeType = typeof(PlatformTypesConvertorAttribute);
+
+            var typesList = AppDomainTypesEnumerator.GetTypes().Where(p => p.GetCustomAttributesData().Any(x => x.AttributeType == targetAttributeType));
+
+            foreach (var type in typesList)
+            {
+                var convertor = (IPlatformTypesConvertor)Activator.CreateInstance(type);
+
+                PlatformTypesConvertorsRegistry.AddConvertor(convertor);
+            }
         }
 
         private string _tmpDir;
@@ -82,6 +100,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public StandaloneStorageComponent StandaloneStorage { get; private set; }
 
         IStandaloneStorage IWorldCoreGameComponentContext.StandaloneStorage => StandaloneStorage.StandaloneStorage;
+
+        public PlatformTypesConvertorsRegistry PlatformTypesConvertorsRegistry { get; private set; }
+        IPlatformTypesConvertorsRegistry IWorldCoreContext.PlatformTypesConvertors => PlatformTypesConvertorsRegistry;
 
         private readonly object _worldComponentsListLockObj = new object();
         private List<IWorldCoreComponent> _worldComponentsList = new List<IWorldCoreComponent>();

@@ -43,7 +43,7 @@ namespace TestSandbox.CoreHostListener
             _logger.Log("End");
         }
 
-        [BipedEndpoint("Aim", true, BipedDevices.Head, BipedDevices.LeftArm, BipedDevices.RightArm)]
+        [BipedEndpoint("Aim", true, DeviceOfBiped.Head, DeviceOfBiped.LeftHand, DeviceOfBiped.RightHand)]
         private void AimTo(CancellationToken cancellationToken)
         {
             _logger.Log("Begin");

@@ -17,7 +17,7 @@ namespace TestSandbox.Handlers
         {
             _logger.Log("Begin");
 
-            var context = TstEngineContextHelper.CreateAndInitContext();
+            var context = TstEngineContextHelper.CreateAndInitContext().EngineContext;
 
             var dictionary = context.Dictionary;
 

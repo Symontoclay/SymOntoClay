@@ -10,14 +10,17 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private readonly IWorldCoreGameComponentContext _worldContext;
         private readonly IEntityLogger _logger;
 
-        protected BaseGameComponent(string id, IWorldCoreGameComponentContext worldContext)
+        protected BaseGameComponent(BaseGameComponentSettings settings, IWorldCoreGameComponentContext worldContext)
         {
             worldContext.AddGameComponent(this);
             _worldContext = worldContext;
-            _logger = _worldContext.CreateLogger(id);
+            _logger = _worldContext.CreateLogger(settings.Id);
         }
 
         public IEntityLogger Logger => _logger;
+
+        /// <inheritdoc/>
+        public bool EnableLogging { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         /// <inheritdoc/>
         public virtual void LoadFromSourceCode()

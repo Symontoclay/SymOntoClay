@@ -10,5 +10,6 @@ namespace SymOntoClay.UnityAsset.Core
     /// </summary>
     public interface IGameObject: IWorldComponent
     {
+        IEndpointsRegistry EndpointsRegistry { get; }
     }
 }

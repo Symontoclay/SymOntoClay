@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
+using TestSandbox.CoreHostListener;
 using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.Handlers
@@ -45,10 +46,13 @@ namespace TestSandbox.Handlers
 
             instance.SetSettings(settings);
 
+            var platformListener = new TstPlatformHostListener();
+
             var npcSettings = new BipedNPCSettings();
             npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
             npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.txt");
             npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Apps\PeaceKeeper\PeaceKeeper.txt");
+            npcSettings.HostListener = platformListener;
 
             _logger.Log($"npcSettings = {npcSettings}");
 

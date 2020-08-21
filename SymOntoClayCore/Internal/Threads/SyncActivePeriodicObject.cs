@@ -48,5 +48,10 @@ namespace SymOntoClay.Core.Internal.Threads
         public void Stop()
         {
         }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+        }
     }
 }

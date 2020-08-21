@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread
 {
-    public interface IInvokingInMainThread
+    public interface IInvokerInMainThread
     {
         void SetInvocableObj(IInvocableInMainThread invokableObj);
     }

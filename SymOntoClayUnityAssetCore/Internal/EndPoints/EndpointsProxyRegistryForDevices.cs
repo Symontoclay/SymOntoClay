@@ -14,16 +14,16 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             : base(logger)
         {
             _sourceEndpointsRegistry = sourceEndpointsRegistry;
-            _devices = devices;
+            Devices = devices;
         }
 
         private readonly IEndpointsRegistry _sourceEndpointsRegistry;
-        private readonly IList<int> _devices;
+        public IList<int> Devices { get; set; } = new List<int>();
 
         /// <inheritdoc/>
         public IList<IEndpointInfo> GetEndpointsInfoListDirectly(string endPointName, int paramsCount)
         {
-            if(_devices.IsNullOrEmpty())
+            if(Devices.IsNullOrEmpty())
             {
                 return _sourceEndpointsRegistry.GetEndpointsInfoListDirectly(endPointName, paramsCount);
             }
@@ -40,7 +40,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             foreach(var initialEndPointInfo in initialResultList)
             {
                 var endPointInfo = new EndpointInfo(initialEndPointInfo);
-                endPointInfo.Devices = _devices.ToList();
+                endPointInfo.Devices = Devices.ToList();
                 result.Add(endPointInfo);
             }
 

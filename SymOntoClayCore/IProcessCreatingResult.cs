@@ -8,5 +8,7 @@ namespace SymOntoClay.Core
     public interface IProcessCreatingResult : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         IProcessInfo Process { get; }
+        Exception Exception { get; }
+        bool IsSuccessful { get; }
     }
 }

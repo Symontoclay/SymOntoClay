@@ -16,7 +16,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
     public class EndPointActivator : BaseLoggedComponent
     {
-        public EndPointActivator(IEntityLogger logger, IPlatformTypesConvertorsRegistry platformTypesConvertorsRegistry, IInvokingInMainThread invokingInMainThread)
+        public EndPointActivator(IEntityLogger logger, IPlatformTypesConvertorsRegistry platformTypesConvertorsRegistry, IInvokerInMainThread invokingInMainThread)
             : base(logger)
         {
             _platformTypesConvertorsRegistry = platformTypesConvertorsRegistry;
@@ -24,7 +24,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         }
 
         private readonly IPlatformTypesConvertorsRegistry _platformTypesConvertorsRegistry;
-        private readonly IInvokingInMainThread _invokingInMainThread;
+        private readonly IInvokerInMainThread _invokingInMainThread;
 
         public IProcessInfo Activate(IEndpointInfo endpointInfo, ICommand command)
         {

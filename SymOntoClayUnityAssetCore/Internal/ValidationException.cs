@@ -4,9 +4,9 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
 {
-    public class ValidateException: Exception
+    public class ValidationException: Exception
     {
-        public ValidateException(string message)
+        public ValidationException(string message)
             : base(message)
         {
         }

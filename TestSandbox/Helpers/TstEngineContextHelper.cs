@@ -5,11 +5,14 @@ using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Internal;
+using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.Helpers
@@ -20,6 +23,17 @@ namespace TestSandbox.Helpers
 
         public static TstComplexContext CreateAndInitContext()
         {
+            var invokingInMainThread = new InvokerInMainThread();
+
+            var task = Task.Run(() => {
+                while (true)
+                {
+                    invokingInMainThread.Update();
+
+                    Thread.Sleep(1000);
+                }
+            });
+
             var result = new TstComplexContext();
 
             var logDir = Path.Combine(Directory.GetCurrentDirectory(), "NpcLogs");
@@ -38,10 +52,12 @@ namespace TestSandbox.Helpers
             {
                 LogDir = logDir,
                 RootContractName = "Hi1",
-                PlatformLoggers = new List<IPlatformLogger>() { ConsoleLogger.Instance },
+                PlatformLoggers = new List<IPlatformLogger>() { ConsoleLogger.Instance/*, CommonNLogLogger.Instance */},
                 Enable = true,
                 EnableRemoteConnection = true
             };
+
+            worldSettings.InvokerInMainThread = invokingInMainThread;
 
             _logger.Log($"worldSettings = {worldSettings}");
 

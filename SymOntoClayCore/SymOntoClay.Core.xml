@@ -91,6 +91,9 @@
         <member name="M:SymOntoClay.Core.Internal.BaseLoggedComponent.Error(System.Exception)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.Dispose">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.BinaryOperatorSystemHandler.Call(System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.IndexedValue},SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
@@ -2617,6 +2620,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Threads.SyncActivePeriodicObject.Stop">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Threads.SyncActivePeriodicObject.Dispose">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.ModulesStorage.LoadFromSourceCode">

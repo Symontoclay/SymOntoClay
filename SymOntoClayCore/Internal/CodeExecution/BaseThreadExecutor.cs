@@ -83,6 +83,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return _activeObject.Start();
         }
 
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            _activeObject.Dispose();
+        }
+
         private bool CommandLoop()
         {
             try

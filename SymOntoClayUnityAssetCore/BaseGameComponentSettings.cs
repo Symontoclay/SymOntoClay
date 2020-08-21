@@ -3,21 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core
+namespace SymOntoClay.UnityAsset.Core
 {
-    public abstract class BaseCoreSettings: IObjectToString
+    public abstract class BaseGameComponentSettings : IObjectToString
     {
         /// <summary>
-        /// Gets or sets reference to logger.
+        /// Gets or sets unique Id.
+        /// It allows us to identify each item of the game.
         /// </summary>
-        public IEntityLogger Logger { get; set; }
-
-        /// <summary>
-        /// Gets or ses reference to shared dictionary.
-        /// </summary>
-        public IEntityDictionary Dictionary { get; set; }
-
-        public IDateTimeProvider DateTimeProvider { get; set; }
+        public string Id { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -43,9 +37,7 @@ namespace SymOntoClay.Core
             var nextN = n + 4;
             var sb = new StringBuilder();
 
-            sb.PrintExisting(n, nameof(Logger), Logger);
-            sb.PrintExisting(n, nameof(Dictionary), Dictionary);
-            sb.PrintExisting(n, nameof(DateTimeProvider), DateTimeProvider);
+            sb.AppendLine($"{spaces}{nameof(Id)} = {Id}");
 
             return sb.ToString();
         }

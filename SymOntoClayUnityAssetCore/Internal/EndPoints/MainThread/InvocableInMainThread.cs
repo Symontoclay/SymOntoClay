@@ -7,14 +7,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread
 {
     public class InvocableInMainThread : IInvocableInMainThread
     {
-        public InvocableInMainThread(Action function, IInvokingInMainThread invokingInMainThread)
+        public InvocableInMainThread(Action function, IInvokerInMainThread invokingInMainThread)
         {
             _function = function;
             _invokingInMainThread = invokingInMainThread;
         }
 
         private Action _function;
-        private IInvokingInMainThread _invokingInMainThread;
+        private IInvokerInMainThread _invokingInMainThread;
         private bool _hasResult;
         private readonly object _lockObj = new object();
 
@@ -50,14 +50,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread
 
     public class InvocableInMainThreadObj<TResult> : IInvocableInMainThread
     {
-        public InvocableInMainThreadObj(Func<TResult> function, IInvokingInMainThread invokingInMainThread)
+        public InvocableInMainThreadObj(Func<TResult> function, IInvokerInMainThread invokingInMainThread)
         {
             _function = function;
             _invokingInMainThread = invokingInMainThread;
         }
 
         private Func<TResult> _function;
-        private IInvokingInMainThread _invokingInMainThread;
+        private IInvokerInMainThread _invokingInMainThread;
         private bool _hasResult;
         private TResult _result;
         private readonly object _lockObj = new object();

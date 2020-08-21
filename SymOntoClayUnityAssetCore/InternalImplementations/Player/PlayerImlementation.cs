@@ -36,7 +36,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        public IList<IManualControlledObject> GetManualControlledObjects()
+        public IList<IBipedManualControlledObject> GetManualControlledObjects()
         {
             throw new NotImplementedException();
         }

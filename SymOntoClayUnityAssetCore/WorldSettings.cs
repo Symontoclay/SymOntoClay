@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,6 +39,8 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         public string HostFile { get; set; }
 
+        public IInvokerInMainThread InvokerInMainThread { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -58,6 +61,7 @@ namespace SymOntoClay.UnityAsset.Core
             sb.PrintPODList(n, nameof(DictionariesDirs), DictionariesDirs);
             sb.AppendLine($"{spaces}{nameof(TmpDir)} = {TmpDir}");
             sb.AppendLine($"{spaces}{nameof(HostFile)} = {HostFile}");
+            sb.PrintExisting(n, nameof(InvokerInMainThread), InvokerInMainThread);
 
             return sb.ToString();
         }

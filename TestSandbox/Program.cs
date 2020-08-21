@@ -17,6 +17,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TestSandbox.CodeExecution;
 using TestSandbox.CoreHostListener;
+using TestSandbox.DateTimes;
 using TestSandbox.Handlers;
 using TestSandbox.Helpers;
 using TestSandbox.Parsing;
@@ -33,10 +34,12 @@ namespace TestSandbox
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
+            //TstDateTimeHandler();
+            //TstBaseManualControllingGameComponent();
             //TstLoadTypesPlatformTypesConvertors();
             //TstGetTypes();
             //TstMainThreadSyncThread();
-            TstCoreHostListenerHandler();
+            //TstCoreHostListenerHandler();
             //TstNullableArithmetic();
             //TstInheritanceItemsHandler();
             //TstDefaultSettingsOfCodeEntityHandler();
@@ -50,10 +53,30 @@ namespace TestSandbox
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstDateTimeHandler()
+        {
+            _logger.Log("Begin");
+
+            var handler = new DateTimeHandler();
+            handler.Run();
+
+            _logger.Log("End");
+        }
+
+        private static void TstBaseManualControllingGameComponent()
+        {
+            _logger.Log("Begin");
+
+            var handler = new TstBaseManualControllingGameComponentHandler();
+            handler.Run();
+
+            _logger.Log("End");
         }
 
         private static void TstLoadTypesPlatformTypesConvertors()
@@ -98,7 +121,7 @@ namespace TestSandbox
         {
             _logger.Log("Begin");
 
-            var invokingInMainThread = new InvokingInMainThread();
+            var invokingInMainThread = new InvokerInMainThread();
 
             var task = Task.Run(() => { 
                 while(true)

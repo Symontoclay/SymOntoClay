@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Threads
 {
-    public interface IActivePeriodicObject
+    public interface IActivePeriodicObject: IDisposable
     {
         PeriodicDelegate PeriodicMethod { get; set; }
         bool IsActive { get; }

@@ -5,16 +5,13 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core
 {
-    /// <summary>
-    /// Biped NPC (Non-Player Character) setting.
-    /// </summary>
-    public class BipedNPCSettings: BaseManualControllingGameComponentSettings
+    public abstract class BaseStoredGameComponentSettings: BaseGameComponentSettings
     {
         /// <summary>
-        /// Gets or sets file name of SymOntoClay logic file.
-        /// The file describes active logic which will be executed on the NPC.
+        /// Gets or sets file name of SymOntoClay host file.
+        /// The file describes facts which are visible for other NPCs or can be recognized in some way by player.
         /// </summary>
-        public string LogicFile { get; set; }
+        public string HostFile { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -22,7 +19,7 @@ namespace SymOntoClay.UnityAsset.Core
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(LogicFile)} = {LogicFile}");
+            sb.AppendLine($"{spaces}{nameof(HostFile)} = {HostFile}");
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();

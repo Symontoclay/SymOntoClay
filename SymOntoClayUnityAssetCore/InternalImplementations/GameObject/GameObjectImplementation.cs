@@ -11,19 +11,24 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
     {
         public GameObjectImplementation(GameObjectSettings settings, IWorldCoreGameComponentContext context)
         {
-
+            _gameComponent = new GameObjectGameComponent(settings, context);
         }
 
-        /// <inheritdoc/>
-        public IEntityLogger Logger => throw new NotImplementedException();
+        private readonly GameObjectGameComponent _gameComponent;
 
         /// <inheritdoc/>
-        public bool IsDisposed => throw new NotImplementedException();
+        public IEndpointsRegistry EndpointsRegistry => _gameComponent.EndpointsRegistry;
+
+        /// <inheritdoc/>
+        public IEntityLogger Logger => _gameComponent.Logger;
+
+        /// <inheritdoc/>
+        public bool IsDisposed => _gameComponent.IsDisposed;
 
         /// <inheritdoc/>
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _gameComponent.Dispose();
         }
     }
 }

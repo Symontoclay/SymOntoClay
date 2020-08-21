@@ -3,6 +3,8 @@ using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.UnityAsset.Core.Internal.DateAndTime;
+using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.Images;
 using SymOntoClay.UnityAsset.Core.Internal.Logging;
 using SymOntoClay.UnityAsset.Core.Internal.ModulesStorage;
@@ -39,6 +41,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _tmpDir = settings.TmpDir;
 
             Directory.CreateDirectory(_tmpDir);
+
+            InvokerInMainThread = settings.InvokerInMainThread;
         }
 
         private void CreateLogging(WorldSettings settings)
@@ -55,6 +59,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             ModulesStorage = new ModulesStorageComponent(this);
             StandaloneStorage = new StandaloneStorageComponent(settings, this);
             PlatformTypesConvertorsRegistry = new PlatformTypesConvertorsRegistry(Logger);
+            DateTimeProvider = new DateTimeProvider(Logger, ThreadsComponent);
         }
 
         private void LoadTypesPlatformTypesConvertors()
@@ -103,6 +108,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         public PlatformTypesConvertorsRegistry PlatformTypesConvertorsRegistry { get; private set; }
         IPlatformTypesConvertorsRegistry IWorldCoreContext.PlatformTypesConvertors => PlatformTypesConvertorsRegistry;
+        IPlatformTypesConvertorsRegistry IWorldCoreGameComponentContext.PlatformTypesConvertors => PlatformTypesConvertorsRegistry;
+
+        /// <inheritdoc/>
+        public IInvokerInMainThread InvokerInMainThread { get; private set; }
+
+        public DateTimeProvider DateTimeProvider { get; private set; }
+        IDateTimeProvider IWorldCoreGameComponentContext.DateTimeProvider => DateTimeProvider;
 
         private readonly object _worldComponentsListLockObj = new object();
         private List<IWorldCoreComponent> _worldComponentsList = new List<IWorldCoreComponent>();
@@ -195,6 +207,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             SharedDictionary.LoadFromSourceCode();
             ModulesStorage.LoadFromSourceCode();
             StandaloneStorage.LoadFromSourceCode();
+            DateTimeProvider.LoadFromSourceCode();
 
             lock (_gameComponentsListLockObj)
             {
@@ -226,6 +239,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private void NStart()
         {
             ThreadsComponent.Lock();
+
+            DateTimeProvider.Start();
 
             lock (_gameComponentsListLockObj)
             {

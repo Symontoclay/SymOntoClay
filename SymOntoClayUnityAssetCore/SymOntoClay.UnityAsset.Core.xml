@@ -4,15 +4,41 @@
         <name>SymOntoClay.UnityAsset.Core</name>
     </assembly>
     <members>
-        <member name="T:SymOntoClay.UnityAsset.Core.BipedNPCSettings">
-            <summary>
-            Biped NPC (Non-Player Character) setting.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.BipedNPCSettings.Id">
+        <member name="P:SymOntoClay.UnityAsset.Core.BaseGameComponentSettings.Id">
             <summary>
             Gets or sets unique Id.
             It allows us to identify each item of the game.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.BaseGameComponentSettings.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.BaseGameComponentSettings.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.BaseGameComponentSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.BaseManualControllingGameComponentSettings.HostListener">
+            <summary>
+            Gets or sets host listener.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.BaseManualControllingGameComponentSettings.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.BaseStoredGameComponentSettings.HostFile">
+            <summary>
+            Gets or sets file name of SymOntoClay host file.
+            The file describes facts which are visible for other NPCs or can be recognized in some way by player.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.BaseStoredGameComponentSettings.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SymOntoClay.UnityAsset.Core.BipedNPCSettings">
+            <summary>
+            Biped NPC (Non-Player Character) setting.
             </summary>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.BipedNPCSettings.LogicFile">
@@ -21,24 +47,7 @@
             The file describes active logic which will be executed on the NPC.
             </summary>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.BipedNPCSettings.HostFile">
-            <summary>
-            Gets or sets file name of SymOntoClay host file.
-            The file describes facts which are visible for other NPCs or can be recognized in some way by player.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.BipedNPCSettings.HostListener">
-            <summary>
-            Gets or sets host listener.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.BipedNPCSettings.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.BipedNPCSettings.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.BipedNPCSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.UnityAsset.Core.BipedNPCSettings.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.DeviceOfBiped">
@@ -76,31 +85,28 @@
             Game object settings.
             </summary>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.GameObjectSettings.Id">
-            <summary>
-            Gets or sets unique Id.
-            It allows us to identify each item of the game.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.GameObjectSettings.HostFile">
-            <summary>
-            Gets or sets file name of SymOntoClay host file.
-            The file describes facts which are visible for other NPCs or can be recognized in some way by player.
-            </summary>
-        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.GameObjectSettings.HostListener">
             <summary>
             Gets or sets host listener.
             </summary>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.GameObjectSettings.ToString">
+        <member name="M:SymOntoClay.UnityAsset.Core.GameObjectSettings.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.GameObjectSettings.ToString(System.UInt32)">
-            <inheritdoc/>
+        <member name="T:SymOntoClay.UnityAsset.Core.IBipedManualControlledObject">
+            <summary>
+            Repseresents manual controlled game object.
+            </summary>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.GameObjectSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
+        <member name="P:SymOntoClay.UnityAsset.Core.IBipedManualControlledObject.GameObject">
+            <summary>
+            Gets  manual controlled game object.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.IBipedManualControlledObject.Devices">
+            <summary>
+            Gets list of devices of the NPC or Player which are using the game object.
+            </summary>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.IBipedNPC">
             <summary>
@@ -116,21 +122,6 @@
         <member name="T:SymOntoClay.UnityAsset.Core.IGameObject">
             <summary>
             Represents each game object which is not NPC, Player or Place.
-            </summary>
-        </member>
-        <member name="T:SymOntoClay.UnityAsset.Core.IManualControlledObject">
-            <summary>
-            Repseresents manual controlled game object.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.IManualControlledObject.GameObject">
-            <summary>
-            Gets  manual controlled game object.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.IManualControlledObject.Devices">
-            <summary>
-            Gets list of devices of of the NPC or Player which are using the game object.
             </summary>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.IManualControlling">
@@ -163,6 +154,21 @@
             Gets list of manual controlled game objects by the NPC or Player.
             </summary>
             <returns>List of manual controlled game objects.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BaseManualControllingGameComponent.CreateProcess(SymOntoClay.Core.ICommand)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BaseStoredGameComponent.LoadFromSourceCode">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BaseStoredGameComponent.OnDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedManualControlledObject.GameObject">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedManualControlledObject.Devices">
+            <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCGameComponent.LoadFromSourceCode">
             <inheritdoc/>
@@ -206,6 +212,9 @@
         <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.EndpointsRegistry">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.Logger">
             <inheritdoc/>
         </member>
@@ -213,6 +222,27 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.IInternalManualControlledObject">
+            <summary>
+            Repseresents manual controlled game object.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.IInternalManualControlledObject.GameObject">
+            <summary>
+            Gets  manual controlled game object.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.IInternalManualControlledObject.Devices">
+            <summary>
+            Gets list of devices of the NPC or Player which are using the game object.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.InternalManualControlledObject.GameObject">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.InternalManualControlledObject.Devices">
             <inheritdoc/>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation">
@@ -317,6 +347,9 @@
         <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.IsDisposed">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.EnableLogging">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.LoadFromSourceCode">
             <inheritdoc/>
         </member>
@@ -354,6 +387,18 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseWorldCoreComponent.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.CurrentTiks">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.Start">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.Stop">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.Dispose">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointArgumentInfo.Name">
@@ -464,7 +509,7 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread.InvocableInMainThreadObj`1.Invoke">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread.InvokingInMainThread.SetInvocableObj(SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread.IInvocableInMainThread)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread.InvokerInMainThread.SetInvocableObj(SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread.IInvocableInMainThread)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.Id">
@@ -507,6 +552,42 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.ProcessCreatingResult.Process">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.ProcessCreatingResult.Exception">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.ProcessCreatingResult.IsSuccessful">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.ProcessCreatingResult.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.ProcessCreatingResult.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.ProcessCreatingResult.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.ProcessCreatingResult.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.ProcessCreatingResult.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.ProcessCreatingResult.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.ProcessCreatingResult.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.ProcessCreatingResult.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.ProcessCreatingResult.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.ILoggerContext.Enable">
@@ -665,6 +746,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConvertors.PlatformTypesConvertorsRegistry.Convert(System.Type,System.Type,System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.InvokerInMainThread">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.Log(System.String)">
@@ -889,52 +973,10 @@
             Place settings.
             </summary>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.PlaceSettings.Id">
-            <summary>
-            Gets or sets unique Id.
-            It allows us to identify each item of the game.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.PlaceSettings.HostFile">
-            <summary>
-            Gets or sets file name of SymOntoClay host file.
-            The file describes facts which are visible for other NPCs or can be recognized in some way by player.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.PlaceSettings.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.PlaceSettings.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.PlaceSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
         <member name="T:SymOntoClay.UnityAsset.Core.PlayerSettings">
             <summary>
             Player settings.
             </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.PlayerSettings.Id">
-            <summary>
-            Gets or sets unique Id.
-            It allows us to identify each item of the game.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.PlayerSettings.HostFile">
-            <summary>
-            Gets or sets file name of SymOntoClay host file.
-            The file describes facts which are visible for other NPCs or can be recognized in some way by player.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.PlayerSettings.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.PlayerSettings.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.PlayerSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.RunTimeImageSettings">
             <summary>

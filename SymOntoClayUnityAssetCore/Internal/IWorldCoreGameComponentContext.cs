@@ -2,6 +2,8 @@
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
+using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,5 +20,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         IModulesStorage ModulesStorage { get; }
         IStandaloneStorage StandaloneStorage { get; }
         string TmpDir { get; }
+        IPlatformTypesConvertorsRegistry PlatformTypesConvertors { get; }
+        IInvokerInMainThread InvokerInMainThread { get; }
+        IDateTimeProvider DateTimeProvider { get; }
     }
 }

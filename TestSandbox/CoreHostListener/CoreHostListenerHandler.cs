@@ -56,16 +56,7 @@ namespace TestSandbox.CoreHostListener
 
             var endPointsResolver = new EndPointsResolver(context.Logger, platformTypesConvertorsRegistry);
 
-            var invokingInMainThread = new InvokerInMainThread();
-
-            var task = Task.Run(() => {
-                while (true)
-                {
-                    invokingInMainThread.Update();
-
-                    Thread.Sleep(1000);
-                }
-            });
+            var invokingInMainThread = TstInvokerInMainThreadFactory.Create();
 
             var endPointActivator = new EndPointActivator(context.Logger, platformTypesConvertorsRegistry, invokingInMainThread);
 

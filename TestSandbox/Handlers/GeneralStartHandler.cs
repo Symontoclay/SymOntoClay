@@ -7,6 +7,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using TestSandbox.CoreHostListener;
+using TestSandbox.Helpers;
 using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.Handlers
@@ -21,6 +22,8 @@ namespace TestSandbox.Handlers
 
             var logDir = Path.Combine(Directory.GetCurrentDirectory(), "NpcLogs");
 
+            var invokingInMainThread = TstInvokerInMainThreadFactory.Create();
+
             var instance = WorldFactory.WorldInstance;
 
             var settings = new WorldSettings();
@@ -32,6 +35,8 @@ namespace TestSandbox.Handlers
             settings.TmpDir = Path.Combine(Directory.GetCurrentDirectory(), "Tmp");
 
             settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\World\World.txt");
+
+            settings.InvokerInMainThread = invokingInMainThread;
 
             settings.Logging = new LoggingSettings()
             {
@@ -53,6 +58,7 @@ namespace TestSandbox.Handlers
             npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.txt");
             npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Apps\PeaceKeeper\PeaceKeeper.txt");
             npcSettings.HostListener = platformListener;
+            npcSettings.PlatformSupport = new TstPlatformSupport();
 
             _logger.Log($"npcSettings = {npcSettings}");
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.PlatformSupport
+namespace SymOntoClay.UnityAsset.Core
 {
     public interface IPlatformSupport
     {

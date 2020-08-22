@@ -3,7 +3,6 @@ using SymOntoClay.Core.Internal.InheritanceEngine;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.LogicalEngine;
 using SymOntoClay.Core.Internal.Parsing;
-using SymOntoClay.Core.Internal.PlatformSupport;
 using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Threads;
@@ -23,6 +22,6 @@ namespace SymOntoClay.Core.Internal
         IInheritanceEngine InheritanceEngine { get; }
         IInstancesStorageComponent InstancesStorage { get; }
         IActivePeriodicObjectContext ActivePeriodicObjectContext { get; }
-        IPlatformSupport PlatformSupport { get; }
+        IHostSupport HostSupport { get; }
     }
 }

@@ -14,7 +14,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             _context = context;
 
-            AbcoluteCoordinates = context.PlatformSupport.ConvertFromRelativeToAbsolute(relativeCoordinates);
+            AbcoluteCoordinates = context.HostSupport.ConvertFromRelativeToAbsolute(relativeCoordinates);
             Name = new StrongIdentifierValue();
         }
 

@@ -590,6 +590,9 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.ProcessCreatingResult.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.HostSupport.HostSupportComponent.ConvertFromRelativeToAbsolute(System.Numerics.Vector2)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.ILoggerContext.Enable">
             <summary>
             Gets value of enable logging.

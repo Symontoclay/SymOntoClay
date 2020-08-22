@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core;
 using SymOntoClay.UnityAsset.Core.Internal;
+using SymOntoClay.UnityAsset.Core.Internal.HostSupport;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,6 +23,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
 
                 Directory.CreateDirectory(worldContext.TmpDir);
 
+                _hostSupport = new HostSupportComponent(Logger, settings.PlatformSupport, worldContext);
+
                 var coreEngineSettings = new EngineSettings();
                 coreEngineSettings.Id = settings.Id;
                 coreEngineSettings.AppFile = settings.LogicFile;
@@ -33,6 +36,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
                 coreEngineSettings.TmpDir = tmpDir;
                 coreEngineSettings.HostListener = this;
                 coreEngineSettings.DateTimeProvider = worldContext.DateTimeProvider;
+                coreEngineSettings.HostSupport = _hostSupport;
 
 #if DEBUG
                 Log($"coreEngineSettings = {coreEngineSettings}");
@@ -48,6 +52,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
         }
 
         private readonly Engine _coreEngine;
+        private readonly HostSupportComponent _hostSupport;
 
         /// <inheritdoc/>
         public override void LoadFromSourceCode()

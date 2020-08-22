@@ -2367,9 +2367,6 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.ParsedFileInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.PlatformSupport.PlatformSupportComponent.ConvertFromRelativeToAbsolute(System.Numerics.Vector2)">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.Serialization.ActiveLoaderFromSourceCode.LoadFromSourceFiles">
             <inheritdoc/>
         </member>

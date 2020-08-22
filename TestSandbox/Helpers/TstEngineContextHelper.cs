@@ -13,6 +13,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using TestSandbox.CoreHostListener;
 using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.Helpers
@@ -23,16 +24,7 @@ namespace TestSandbox.Helpers
 
         public static TstComplexContext CreateAndInitContext()
         {
-            var invokingInMainThread = new InvokerInMainThread();
-
-            var task = Task.Run(() => {
-                while (true)
-                {
-                    invokingInMainThread.Update();
-
-                    Thread.Sleep(1000);
-                }
-            });
+            var invokingInMainThread = TstInvokerInMainThreadFactory.Create();
 
             var result = new TstComplexContext();
 
@@ -68,6 +60,7 @@ namespace TestSandbox.Helpers
             npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
             npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.txt");
             npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Apps\PeaceKeeper\PeaceKeeper.txt");
+            npcSettings.PlatformSupport = new TstPlatformSupport();
 
             _logger.Log($"npcSettings = {npcSettings}");
 

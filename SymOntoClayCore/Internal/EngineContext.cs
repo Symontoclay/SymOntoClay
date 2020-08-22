@@ -17,7 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using SymOntoClay.Core.Internal.Threads;
-using SymOntoClay.Core.Internal.PlatformSupport;
 
 namespace SymOntoClay.Core.Internal
 {
@@ -36,7 +35,7 @@ namespace SymOntoClay.Core.Internal
         public InheritanceEngineComponent InheritanceEngine { get; set; }
         public StandardLibraryLoader StandardLibraryLoader { get; set; }       
         public ActivePeriodicObjectContext ActivePeriodicObjectContext { get; set; }
-        public PlatformSupportComponent PlatformSupport { get; set; }
+        public IHostSupport HostSupport { get; set; }
 
         ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;
         ITriggerExecutorComponent IEngineContext.TriggerExecutor => TriggerExecutor;     
@@ -44,6 +43,5 @@ namespace SymOntoClay.Core.Internal
         IInheritanceEngine IEngineContext.InheritanceEngine => InheritanceEngine;     
         IInstancesStorageComponent IEngineContext.InstancesStorage => InstancesStorage;
         IActivePeriodicObjectContext IEngineContext.ActivePeriodicObjectContext => ActivePeriodicObjectContext;
-        IPlatformSupport IEngineContext.PlatformSupport => PlatformSupport;
     }
 }

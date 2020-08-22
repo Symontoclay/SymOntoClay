@@ -16,6 +16,8 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         public string LogicFile { get; set; }
 
+        public IPlatformSupport PlatformSupport { get; set; }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
@@ -23,6 +25,8 @@ namespace SymOntoClay.UnityAsset.Core
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(LogicFile)} = {LogicFile}");
+
+            sb.PrintExisting(n, nameof(PlatformSupport), PlatformSupport);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();

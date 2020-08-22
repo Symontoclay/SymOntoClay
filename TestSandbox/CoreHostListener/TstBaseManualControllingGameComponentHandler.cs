@@ -38,6 +38,7 @@ namespace TestSandbox.CoreHostListener
             npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.txt");
             npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Apps\PeaceKeeper\PeaceKeeper.txt");
             npcSettings.HostListener = platformListener;
+            npcSettings.PlatformSupport = new TstPlatformSupport();
 
             _logger.Log($"npcSettings = {npcSettings}");
 

@@ -18,6 +18,8 @@ namespace SymOntoClay.Core
 
         public string TmpDir { get; set; }
 
+        public IHostSupport HostSupport { get; set; }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
@@ -28,6 +30,7 @@ namespace SymOntoClay.Core
 
             sb.PrintExisting(n, nameof(SyncContext), SyncContext);
             sb.AppendLine($"{spaces}{nameof(TmpDir)} = {TmpDir}");
+            sb.PrintExisting(n, nameof(HostSupport), HostSupport);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();

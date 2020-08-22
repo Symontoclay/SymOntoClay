@@ -39,6 +39,14 @@ namespace SymOntoClay.Core.Internal.Compiling
                     CompilePushValFromVar((expression as VarAstExpression).Name);
                     break;
 
+                case KindOfAstExpression.CallingFunction:
+                    {
+                        var node = new CallingFunctionNode(_context);
+                        node.Run(expression as CallingFunctionAstExpression);
+                        AddCommands(node.Result);
+                    }
+                    break;
+
                 default: 
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }

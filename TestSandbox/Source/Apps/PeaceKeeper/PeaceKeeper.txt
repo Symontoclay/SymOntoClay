@@ -3,7 +3,7 @@
     on Init => {
 	     "Begin" >> @>log;
 
-         
+         @@host.`go`(to: #@[12, 35]);
 
 		 "End" >> @>log;
 	}

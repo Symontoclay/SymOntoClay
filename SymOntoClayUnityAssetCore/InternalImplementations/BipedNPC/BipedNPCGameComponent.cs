@@ -59,16 +59,16 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
         {
             base.LoadFromSourceCode();
 
-            try
-            {
+            //try
+            //{
                 _coreEngine.LoadFromSourceCode();
-            }
-            catch(Exception e)
-            {
-                Log(e.ToString());
+            //}
+            //catch(Exception e)
+            //{
+                //Log(e.ToString());
 
-                throw e;
-            }
+            //    throw e;
+            //}
         }
 
         /// <inheritdoc/>

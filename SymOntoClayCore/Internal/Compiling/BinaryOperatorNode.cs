@@ -12,7 +12,7 @@ namespace SymOntoClay.Core.Internal.Compiling
             : base(context)
         {
         }
-
+        
         public void Run(BinaryOperatorAstExpression expression)
         {
 #if DEBUG

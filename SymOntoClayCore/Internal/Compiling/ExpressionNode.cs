@@ -47,6 +47,14 @@ namespace SymOntoClay.Core.Internal.Compiling
                     }
                     break;
 
+                case KindOfAstExpression.EntityCondition:
+                    {
+                        var node = new EntityConditionNode(_context);
+                        node.Run(expression as EntityConditionAstExpression);
+                        AddCommands(node.Result);
+                    }
+                    break;
+
                 default: 
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }

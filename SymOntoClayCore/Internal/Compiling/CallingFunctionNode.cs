@@ -55,15 +55,6 @@ namespace SymOntoClay.Core.Internal.Compiling
                         AddCommands(node.Result);
                     }
                 }
-
-                if (isNamed)
-                {
-                    throw new NotImplementedException();
-                }
-                else
-                {
-                    throw new NotImplementedException();
-                }
             }
 
             if(!expression.AdditionalParameters.IsNullOrEmpty())
@@ -101,16 +92,9 @@ namespace SymOntoClay.Core.Internal.Compiling
                         AddCommands(node.Result);
                     }
                 }
-
-                if (isNamed)
-                {
-                    throw new NotImplementedException();
-                }
-                else
-                {
-                    throw new NotImplementedException();
-                }
             }
+
+            //var methodnode = 
 
             throw new NotImplementedException();
         }

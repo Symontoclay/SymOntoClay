@@ -16,6 +16,8 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         public IndexedValue Value { get; set; }
         public ScriptCommand JumpToMe { get; set; }
         public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
+        public int CountMainParams { get; set; }
+        public int CountAdditionalParams { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -43,6 +45,8 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
             sb.PrintBriefObjProp(n, nameof(JumpToMe), JumpToMe);
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
+            sb.AppendLine($"{spaces}{nameof(CountMainParams)} = {CountMainParams}");
+            sb.AppendLine($"{spaces}{nameof(CountAdditionalParams)} = {CountAdditionalParams}");
 
             return sb.ToString();
         }
@@ -73,6 +77,8 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
             sb.PrintBriefObjProp(n, nameof(JumpToMe), JumpToMe);
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
+            sb.AppendLine($"{spaces}{nameof(CountMainParams)} = {CountMainParams}");
+            sb.AppendLine($"{spaces}{nameof(CountAdditionalParams)} = {CountAdditionalParams}");
 
             return sb.ToString();
         }
@@ -103,6 +109,8 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
             sb.PrintBriefObjProp(n, nameof(JumpToMe), JumpToMe);
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
+            sb.AppendLine($"{spaces}{nameof(CountMainParams)} = {CountMainParams}");
+            sb.AppendLine($"{spaces}{nameof(CountAdditionalParams)} = {CountAdditionalParams}");
 
             return sb.ToString();
         }
@@ -139,6 +147,10 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
                 case OperationCode.CallBinOp:
                     return $"{spaces}{OperationCode} {OperatorsHelper.GetSymbol(KindOfOperator)}";
+
+                case OperationCode.AllocateAnonymousWaypoint:
+                case OperationCode.AllocateNamedWaypoint:
+                    return $"{spaces}{OperationCode} {CountMainParams}";
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(OperationCode), OperationCode, null);

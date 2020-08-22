@@ -35,6 +35,8 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         Return,
         ReturnVal,
         UseInheritance,
-        UseNotInheritance
+        UseNotInheritance,
+        AllocateNamedWaypoint,
+        AllocateAnonymousWaypoint
     }
 }

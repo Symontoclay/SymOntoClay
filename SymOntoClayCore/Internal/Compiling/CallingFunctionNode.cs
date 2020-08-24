@@ -129,6 +129,10 @@ namespace SymOntoClay.Core.Internal.Compiling
                 }
             }
 
+            var leftNode = new ExpressionNode(_context);
+            leftNode.Run(expression.Left);
+            AddCommands(leftNode.Result);
+
             CompilePushAnnotation(expression);
 
 #if DEBUG

@@ -9,6 +9,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
@@ -29,6 +30,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             _operatorsResolver = dataResolversFactory.GetOperatorsResolver();
             _logicalValueLinearResolver = dataResolversFactory.GetLogicalValueLinearResolver();
+            _numberValueLinearResolver = dataResolversFactory.GetNumberValueLinearResolver();
             _varsResolver = dataResolversFactory.GetVarsResolver();
         }
 
@@ -37,6 +39,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private readonly OperatorsResolver _operatorsResolver;
         private readonly LogicalValueLinearResolver _logicalValueLinearResolver;
+        private readonly NumberValueLinearResolver _numberValueLinearResolver;
         private readonly VarsResolver _varsResolver;
 
         private Stack<CodeFrame> _codeFrames = new Stack<CodeFrame>();
@@ -229,6 +232,49 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     case OperationCode.UseNotInheritance:
                         ProcessUseNotInheritance();
+                        break;
+
+                    case OperationCode.AllocateAnonymousWaypoint:
+                        {
+                            if(currentCommand.CountMainParams == 0)
+                            {
+                                throw new NotImplementedException();
+                                //break;
+                            }
+
+                            var paramsList = TakePositionedParameters(currentCommand.CountMainParams);
+
+#if DEBUG
+                            Log($"paramsList = {paramsList.WriteListToString()}");
+                            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+                            switch(currentCommand.CountMainParams)
+                            {
+                                case 3:
+                                    {
+                                        var firstParam = paramsList[0];
+
+                                        var resolvedFirstParam = _numberValueLinearResolver.Resolve(firstParam, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+
+                                        var secondParam = paramsList[1];
+
+                                        var resolvedSecondParam = _numberValueLinearResolver.Resolve(secondParam, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+
+                                        var annotationValue = paramsList[2].AsAnnotationValue;
+
+                                        var value = new WaypointValue(new Vector2((float)(double)resolvedFirstParam.GetSystemValue(), (float)(double)resolvedSecondParam.GetSystemValue()), _context).GetIndexedValue(_context);
+
+                                        _currentCodeFrame.ValuesStack.Push(value);
+
+                                        _currentCodeFrame.CurrentPosition++;
+                                    }
+                                    break;
+
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(currentCommand.CountMainParams), currentCommand.CountMainParams, null);
+                            }
+                        }
                         break;
 
                     case OperationCode.Return:

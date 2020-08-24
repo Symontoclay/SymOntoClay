@@ -14,6 +14,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.HostSupport
             : base(logger)
         {
             _worldContext = worldContext;
+            _platformSupport = platformSupport;
         }
 
         private readonly IWorldCoreGameComponentContext _worldContext;

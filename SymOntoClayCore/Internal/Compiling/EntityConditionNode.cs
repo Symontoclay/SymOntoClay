@@ -36,7 +36,7 @@ namespace SymOntoClay.Core.Internal.Compiling
                     node = new ExpressionNode(_context);
                     node.Run(expression.SecondCoordinate);
                     AddCommands(node.Result);
-                }           
+                }
             }
 
             var isNamed = false;
@@ -46,6 +46,8 @@ namespace SymOntoClay.Core.Internal.Compiling
                 isNamed = true;
                 CompilePushVal(expression.Name);
             }
+
+            count++;
 
             CompilePushAnnotation(expression);
 

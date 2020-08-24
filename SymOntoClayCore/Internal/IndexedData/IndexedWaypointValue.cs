@@ -70,5 +70,15 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }
+
+        protected override string PropertiesToDbgString(uint n)
+        {
+            if(Name != null && !Name.IsEmpty)
+            {
+                return $"{Name.NameValue}[{AbcoluteCoordinates}]";
+            }
+
+            return $"#@[{AbcoluteCoordinates}]";
+        }
     }
 }

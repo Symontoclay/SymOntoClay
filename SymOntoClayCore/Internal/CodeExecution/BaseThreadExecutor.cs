@@ -96,7 +96,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 if(_currentCodeFrame == null)
                 {
 #if DEBUG
-                    //Log("_currentCodeFrame == null return false;");
+                    Log("_currentCodeFrame == null return false;");
 #endif
 
                     return false;
@@ -105,19 +105,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var currentPosition = _currentCodeFrame.CurrentPosition;
 
 #if DEBUG
-                //Log($"currentPosition = {currentPosition}");
+                Log($"currentPosition = {currentPosition}");
 #endif
 
                 var compiledFunctionBodyCommands = _currentCodeFrame.CompiledFunctionBody.Commands;
 
 #if DEBUG
-                //Log($"compiledFunctionBodyCommands.Count = {compiledFunctionBodyCommands.Count}");
+                Log($"compiledFunctionBodyCommands.Count = {compiledFunctionBodyCommands.Count}");
 #endif
 
                 if (currentPosition >= compiledFunctionBodyCommands.Count)
                 {
 #if DEBUG
-                    //Log("currentPosition >= compiledFunctionBodyCommands.Count return false;");
+                    Log("currentPosition >= compiledFunctionBodyCommands.Count return false;");
 #endif
 
                     return false;
@@ -126,8 +126,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var currentCommand = compiledFunctionBodyCommands[currentPosition];
 
 #if DEBUG
-                //Log($"currentCommand = {currentCommand}");
-                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                Log($"currentCommand = {currentCommand}");
+                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)

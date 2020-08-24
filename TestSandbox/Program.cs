@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TestSandbox.CodeExecution;
@@ -34,6 +35,7 @@ namespace TestSandbox
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
+            //TstKindOfParametersSсaffolder();
             //TstDateTimeHandler();
             //TstBaseManualControllingGameComponent();
             //TstLoadTypesPlatformTypesConvertors();
@@ -57,6 +59,73 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private enum KindOfParameters
+        {
+            NoParameters,
+            NamedParameters,
+            PositionedParameters
+        }
+
+        private static void TstKindOfParametersSсaffolder()
+        {
+            _logger.Log("Begin");
+
+            var mainParametersList = new List<KindOfParameters>() { KindOfParameters.NoParameters, KindOfParameters.NamedParameters, KindOfParameters.PositionedParameters};
+            var additionalParametersList = new List<KindOfParameters>() { KindOfParameters.NoParameters, KindOfParameters.NamedParameters, KindOfParameters.PositionedParameters };
+
+            var strList = new StringBuilder();
+
+            foreach(var mainParameter in mainParametersList)
+            {
+                _logger.Log($"mainParameter = {mainParameter}");
+
+                var mainParameterStr = string.Empty;
+
+                switch(mainParameter)
+                {
+                    case KindOfParameters.NamedParameters:
+                        mainParameterStr = "_MN";
+                        break;
+
+                    case KindOfParameters.PositionedParameters:
+                        mainParameterStr = "_MP";
+                        break;
+                }
+
+                _logger.Log($"mainParameterStr = {mainParameterStr}");
+
+                foreach (var additionalParameter in additionalParametersList)
+                {
+                    _logger.Log($"additionalParameter = {additionalParameter}");
+
+                    var additionalParameterStr = string.Empty;
+
+                    switch(additionalParameter)
+                    {
+                        case KindOfParameters.NamedParameters:
+                            additionalParameterStr = "_AN";
+                            break;
+
+                        case KindOfParameters.PositionedParameters:
+                            additionalParameterStr = "_AP";
+                            break;
+                    }
+
+                    _logger.Log($"additionalParameterStr = {additionalParameterStr}");
+
+                    var str = $"Call{mainParameterStr}{additionalParameterStr}";
+
+                    _logger.Log($"str = {str}");
+
+                    strList.AppendLine(str);
+                }             
+            }
+
+            _logger.Log($"strList = {strList}");
+
+            _logger.Log("End");
         }
 
         private static void TstDateTimeHandler()

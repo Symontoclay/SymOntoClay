@@ -47,6 +47,8 @@ namespace SymOntoClay.Core.Internal.Compiling
                 CompilePushVal(expression.Name);
             }
 
+            CompilePushAnnotation(expression);
+
             var kindOfEntityConditionAstExpression = expression.KindOfEntityConditionAstExpression;
 
 #if DEBUG
@@ -78,7 +80,7 @@ namespace SymOntoClay.Core.Internal.Compiling
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfEntityConditionAstExpression), kindOfEntityConditionAstExpression, null);
-            }       
+            }     
         }
     }
 }

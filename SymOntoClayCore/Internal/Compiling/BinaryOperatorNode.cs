@@ -27,13 +27,9 @@ namespace SymOntoClay.Core.Internal.Compiling
             rightNode.Run(expression.Right);
             AddCommands(rightNode.Result);
 
+            CompilePushAnnotation(expression);
+
             var command = new ScriptCommand();
-            command.OperationCode = OperationCode.PushVal;
-            command.Value = expression.GetAnnotationValue().GetIndexedValue(_context);
-
-            AddCommand(command);
-
-            command = new ScriptCommand();
             command.OperationCode = OperationCode.CallBinOp;
             command.KindOfOperator = expression.KindOfOperator;
 

@@ -152,6 +152,17 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.AllocateNamedWaypoint:
                     return $"{spaces}{OperationCode} {CountMainParams}";
 
+                case OperationCode.Call:
+                case OperationCode.Call_AN:
+                case OperationCode.Call_AP:
+                case OperationCode.Call_MN:
+                case OperationCode.Call_MN_AN:
+                case OperationCode.Call_MN_AP:
+                case OperationCode.Call_MP:
+                case OperationCode.Call_MP_AN:
+                case OperationCode.Call_MP_AP:
+                    return $"{spaces}{OperationCode} {CountMainParams} {CountAdditionalParams}";
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(OperationCode), OperationCode, null);
             }

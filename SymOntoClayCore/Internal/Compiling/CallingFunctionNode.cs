@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,13 @@ namespace SymOntoClay.Core.Internal.Compiling
 {
     public class CallingFunctionNode : BaseNode
     {
+        private enum KindOfParameters
+        {
+            NoParameters,
+            NamedParameters,
+            PositionedParameters
+        }
+
         public CallingFunctionNode(IMainStorageContext context)
             : base(context)
         {
@@ -20,18 +28,34 @@ namespace SymOntoClay.Core.Internal.Compiling
             Log($"expression = {expression}");
 #endif
 
-            if(!expression.MainParameters.IsNullOrEmpty())
+            var kindOfMainParameters = KindOfParameters.NoParameters;
+            var kindOfAdditionalParameters = KindOfParameters.NoParameters;
+
+            var command = new ScriptCommand();
+
+            if (!expression.MainParameters.IsNullOrEmpty())
             {
                 if(expression.MainParameters.Any(p => p.IsNamed) && expression.MainParameters.Any(p => !p.IsNamed))
                 {
                     throw new NotSupportedException();
                 }
 
+                command.CountMainParams = expression.MainParameters.Count;
+
                 var isNamed = expression.MainParameters.Any(p => p.IsNamed);
 
 #if DEBUG
                 Log($"isNamed = {isNamed}");
 #endif
+
+                if(isNamed)
+                {
+                    kindOfMainParameters = KindOfParameters.NamedParameters;
+                }
+                else
+                {
+                    kindOfMainParameters = KindOfParameters.PositionedParameters;
+                }
 
                 foreach(var parameter in expression.MainParameters)
                 {
@@ -64,11 +88,22 @@ namespace SymOntoClay.Core.Internal.Compiling
                     throw new NotSupportedException();
                 }
 
+                command.CountAdditionalParams = expression.AdditionalParameters.Count;
+
                 var isNamed = expression.AdditionalParameters.Any(p => p.IsNamed);
 
 #if DEBUG
                 Log($"isNamed (2) = {isNamed}");
 #endif
+
+                if (isNamed)
+                {
+                    kindOfAdditionalParameters = KindOfParameters.NamedParameters;
+                }
+                else
+                {
+                    kindOfAdditionalParameters = KindOfParameters.PositionedParameters;
+                }
 
                 foreach (var parameter in expression.AdditionalParameters)
                 {
@@ -94,9 +129,84 @@ namespace SymOntoClay.Core.Internal.Compiling
                 }
             }
 
-            //var methodnode = 
+            CompilePushAnnotation(expression);
 
-            throw new NotImplementedException();
+#if DEBUG
+            Log($"kindOfMainParameters = {kindOfMainParameters}");
+            Log($"kindOfAdditionalParameters = {kindOfAdditionalParameters}");
+#endif
+
+            switch (kindOfMainParameters)
+            {
+                case KindOfParameters.NoParameters:
+                    switch (kindOfAdditionalParameters)
+                    {
+                        case KindOfParameters.NoParameters:
+                            command.OperationCode = OperationCode.Call;
+                            break;
+
+                        case KindOfParameters.NamedParameters:
+                            command.OperationCode = OperationCode.Call_AN;
+                            break;
+
+                        case KindOfParameters.PositionedParameters:
+                            command.OperationCode = OperationCode.Call_AP;
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(kindOfAdditionalParameters), kindOfAdditionalParameters, null);
+                    }
+                    break;
+
+                case KindOfParameters.NamedParameters:
+                    switch (kindOfAdditionalParameters)
+                    {
+                        case KindOfParameters.NoParameters:
+                            command.OperationCode = OperationCode.Call_MN;
+                            break;
+
+                        case KindOfParameters.NamedParameters:
+                            command.OperationCode = OperationCode.Call_MN_AN;
+                            break;
+
+                        case KindOfParameters.PositionedParameters:
+                            command.OperationCode = OperationCode.Call_MN_AP;
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(kindOfAdditionalParameters), kindOfAdditionalParameters, null);
+                    }
+                    break;
+
+                case KindOfParameters.PositionedParameters:
+                    switch (kindOfAdditionalParameters)
+                    {
+                        case KindOfParameters.NoParameters:
+                            command.OperationCode = OperationCode.Call_MP;
+                            break;
+
+                        case KindOfParameters.NamedParameters:
+                            command.OperationCode = OperationCode.Call_MP_AN;
+                            break;
+
+                        case KindOfParameters.PositionedParameters:
+                            command.OperationCode = OperationCode.Call_MP_AP;
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(kindOfAdditionalParameters), kindOfAdditionalParameters, null);
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfMainParameters), kindOfMainParameters, null);
+            }
+
+#if DEBUG
+            Log($"command = {command}");
+#endif
+
+            AddCommand(command);
         }
     }
 }

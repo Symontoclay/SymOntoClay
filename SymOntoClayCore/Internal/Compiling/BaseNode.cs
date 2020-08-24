@@ -89,5 +89,14 @@ namespace SymOntoClay.Core.Internal.Compiling
 
             AddCommand(command);
         }
+
+        protected void CompilePushAnnotation(AnnotatedItem annotatedItem)
+        {
+            var command = new ScriptCommand();
+            command.OperationCode = OperationCode.PushVal;
+            command.Value = annotatedItem.GetAnnotationValue().GetIndexedValue(_context);
+
+            AddCommand(command);
+        }
     }
 }

@@ -30,6 +30,15 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         /// Calls a binary operator
         /// </summary>
         CallBinOp,
+        Call,
+        Call_AN,
+        Call_AP,
+        Call_MN,
+        Call_MN_AN,
+        Call_MN_AP,
+        Call_MP,
+        Call_MP_AN,
+        Call_MP_AP,
 
         ClearStack,
         Return,

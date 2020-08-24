@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.Compiling
 
             var isNamed = false;
 
-            if(expression.Name != null)
+            if(expression.Name != null && !expression.Name.IsEmpty && expression.Name.NameValue != "#@")
             {
                 isNamed = true;
                 CompilePushVal(expression.Name);

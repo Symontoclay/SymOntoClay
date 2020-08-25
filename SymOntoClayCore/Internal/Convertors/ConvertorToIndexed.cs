@@ -88,6 +88,9 @@ namespace SymOntoClay.Core.Internal.Convertors
                 case KindOfValue.WaypointValue:
                     return ConvertWaypointValue(source.AsWaypointValue, mainStorageContext, convertingContext);
 
+                case KindOfValue.InstanceValue:
+                    return ConvertInstanceValue(source.AsInstanceValue, mainStorageContext, convertingContext);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(source.KindOfValue), source.KindOfValue, null);
             }
@@ -355,6 +358,39 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             result.AbcoluteCoordinates = source.AbcoluteCoordinates;
             result.Name = ConvertStrongIdentifierValue(source.Name, mainStorageContext, convertingContext);
+
+            result.CalculateLongConditionalHashCode();
+
+            return result;
+        }
+
+        public static IndexedInstanceValue ConvertInstanceValue(InstanceValue source, IMainStorageContext mainStorageContext)
+        {
+            var convertingContext = new Dictionary<object, object>();
+            return ConvertInstanceValue(source, mainStorageContext, convertingContext);
+        }
+
+        public static IndexedInstanceValue ConvertInstanceValue(InstanceValue source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (IndexedInstanceValue)convertingContext[source];
+            }
+
+            var result = new IndexedInstanceValue();
+            convertingContext[source] = result;
+            source.Indexed = result;
+
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
+
+            result.OriginalInstanceValue = source;
+
+            result.InstanceInfo = source.InstanceInfo;
 
             result.CalculateLongConditionalHashCode();
 

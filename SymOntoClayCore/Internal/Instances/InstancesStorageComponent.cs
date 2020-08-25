@@ -91,7 +91,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 _rootInstanceInfo = instanceInfo;
                 _namesDict[mainEntityName] = instanceInfo;
 
-                globalStorage.VarStorage.SetSystemValue(_context.CommonNamesStorage.IndexedSelfSystemVarName, mainEntityName.GetIndexedValue(_context));
+                globalStorage.VarStorage.SetSystemValue(_context.CommonNamesStorage.IndexedSelfSystemVarName, new InstanceValue(instanceInfo).GetIndexedValue(_context));
             }
 
 #if DEBUG

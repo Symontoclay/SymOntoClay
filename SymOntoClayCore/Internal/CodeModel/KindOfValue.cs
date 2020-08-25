@@ -14,6 +14,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         StrongIdentifierValue,
         TaskValue,
         AnnotationValue,
-        WaypointValue
+        WaypointValue,
+        InstanceValue,
+        HostValue,
+        PointRefValue
     }
 }

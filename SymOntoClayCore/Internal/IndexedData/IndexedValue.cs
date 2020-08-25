@@ -36,6 +36,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public virtual bool IsWaypointValue => false;
         public virtual IndexedWaypointValue AsWaypointValue => null;
 
+        public virtual bool IsInstanceValue => false;
+        public virtual IndexedInstanceValue AsInstanceValue => null;
+
         public abstract object GetSystemValue();
 
         /// <inheritdoc/>

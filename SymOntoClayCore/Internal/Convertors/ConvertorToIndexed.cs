@@ -91,6 +91,12 @@ namespace SymOntoClay.Core.Internal.Convertors
                 case KindOfValue.InstanceValue:
                     return ConvertInstanceValue(source.AsInstanceValue, mainStorageContext, convertingContext);
 
+                case KindOfValue.HostValue:
+                    return ConvertHostValue(source.AsHostValue, mainStorageContext, convertingContext);
+
+                case KindOfValue.PointRefValue:
+                    return ConvertPointRefValue(source.AsPointRefValue, mainStorageContext, convertingContext);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(source.KindOfValue), source.KindOfValue, null);
             }
@@ -391,6 +397,71 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.OriginalInstanceValue = source;
 
             result.InstanceInfo = source.InstanceInfo;
+
+            result.CalculateLongConditionalHashCode();
+
+            return result;
+        }
+
+        public static IndexedHostValue ConvertHostValue(HostValue source, IMainStorageContext mainStorageContext)
+        {
+            var convertingContext = new Dictionary<object, object>();
+            return ConvertHostValue(source, mainStorageContext, convertingContext);
+        }
+
+        public static IndexedHostValue ConvertHostValue(HostValue source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (IndexedHostValue)convertingContext[source];
+            }
+
+            var result = new IndexedHostValue();
+            convertingContext[source] = result;
+            source.Indexed = result;
+
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
+
+            result.OriginalHostValue = source;
+
+            result.CalculateLongConditionalHashCode();
+
+            return result;
+        }
+
+        public static IndexedPointRefValue ConvertPointRefValue(PointRefValue source, IMainStorageContext mainStorageContext)
+        {
+            var convertingContext = new Dictionary<object, object>();
+            return ConvertPointRefValue(source, mainStorageContext, convertingContext);
+        }
+        
+        public static IndexedPointRefValue ConvertPointRefValue(PointRefValue source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (IndexedPointRefValue)convertingContext[source];
+            }
+
+            var result = new IndexedPointRefValue();
+            convertingContext[source] = result;
+            source.Indexed = result;
+
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
+
+            result.OriginalPointRefValue = source;
+
+            result.LeftOperand = ConvertValue(source.LeftOperand, mainStorageContext, convertingContext);
+            result.RightOperand = ConvertValue(source.RightOperand, mainStorageContext, convertingContext);
 
             result.CalculateLongConditionalHashCode();
 

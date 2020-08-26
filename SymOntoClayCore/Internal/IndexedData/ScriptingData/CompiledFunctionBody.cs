@@ -24,32 +24,9 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         /// <inheritdoc/>
         string IObjectToString.PropertiesToString(uint n)
         {
-            var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
-            var nextNSpaces = DisplayHelper.Spaces(nextN);
-            var nextNextN = nextN + 4;
-            var nextNextNSpaces = DisplayHelper.Spaces(nextNextN);
-            var nextNextNextN = nextNextN + 4;
             var sb = new StringBuilder();
 
-            if (Commands == null)
-            {
-                sb.AppendLine($"{spaces}{nameof(Commands)} = NULL");
-            }
-            else
-            {
-                sb.AppendLine($"{spaces}Begin {nameof(Commands)}");
-                foreach (var item in Commands)
-                {
-                    sb.AppendLine($"{nextNSpaces}Begin Item");
-                    sb.AppendLine($"{nextNextNSpaces}Key = {item.Key}");
-                    sb.AppendLine($"{nextNextNSpaces}Begin Value");
-                    sb.Append(item.Value.ToString(nextNextNextN));
-                    sb.AppendLine($"{nextNextNSpaces}End Value");
-                    sb.AppendLine($"{nextNSpaces}End Item");
-                }
-                sb.AppendLine($"{spaces}End {nameof(Commands)}");
-            }
+            sb.PrintObjDict_2_Prop(n, nameof(Commands), Commands);
 
             return sb.ToString();
         }
@@ -69,32 +46,9 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         /// <inheritdoc/>
         string IObjectToShortString.PropertiesToShortString(uint n)
         {
-            var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
-            var nextNSpaces = DisplayHelper.Spaces(nextN);
-            var nextNextN = nextN + 4;
-            var nextNextNSpaces = DisplayHelper.Spaces(nextNextN);
-            var nextNextNextN = nextNextN + 4;
             var sb = new StringBuilder();
 
-            if (Commands == null)
-            {
-                sb.AppendLine($"{spaces}{nameof(Commands)} = NULL");
-            }
-            else
-            {
-                sb.AppendLine($"{spaces}Begin {nameof(Commands)}");
-                foreach (var item in Commands)
-                {
-                    sb.AppendLine($"{nextNSpaces}Begin Item");
-                    sb.AppendLine($"{nextNextNSpaces}Key = {item.Key}");
-                    sb.AppendLine($"{nextNextNSpaces}Begin Value");
-                    sb.Append(item.Value.ToShortString(nextNextNextN));
-                    sb.AppendLine($"{nextNextNSpaces}End Value");
-                    sb.AppendLine($"{nextNSpaces}End Item");
-                }
-                sb.AppendLine($"{spaces}End {nameof(Commands)}");
-            }
+            sb.PrintShortObjDict_2_Prop(n, nameof(Commands), Commands);
 
             return sb.ToString();
         }
@@ -114,32 +68,9 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         /// <inheritdoc/>
         string IObjectToBriefString.PropertiesToBriefString(uint n)
         {
-            var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
-            var nextNSpaces = DisplayHelper.Spaces(nextN);
-            var nextNextN = nextN + 4;
-            var nextNextNSpaces = DisplayHelper.Spaces(nextNextN);
-            var nextNextNextN = nextNextN + 4;
             var sb = new StringBuilder();
 
-            if (Commands == null)
-            {
-                sb.AppendLine($"{spaces}{nameof(Commands)} = NULL");
-            }
-            else
-            {
-                sb.AppendLine($"{spaces}Begin {nameof(Commands)}");
-                foreach (var item in Commands)
-                {
-                    sb.AppendLine($"{nextNSpaces}Begin Item");
-                    sb.AppendLine($"{nextNextNSpaces}Key = {item.Key}");
-                    sb.AppendLine($"{nextNextNSpaces}Begin Value");
-                    sb.Append(item.Value.ToBriefString(nextNextNextN));
-                    sb.AppendLine($"{nextNextNSpaces}End Value");
-                    sb.AppendLine($"{nextNSpaces}End Item");
-                }
-                sb.AppendLine($"{spaces}End {nameof(Commands)}");
-            }
+            sb.PrintBriefObjDict_2_Prop(n, nameof(Commands), Commands);
 
             return sb.ToString();
         }

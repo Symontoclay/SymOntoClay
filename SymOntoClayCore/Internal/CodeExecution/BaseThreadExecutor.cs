@@ -4,6 +4,7 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
+using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -11,17 +12,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public abstract class BaseThreadExecutor: BaseLoggedComponent
     {
+        private enum KindOfFunctionParameters
+        {
+            NoParameters,
+            NamedParameters,
+            PositionedParameters
+        }
+
         protected BaseThreadExecutor(IEngineContext context, IActivePeriodicObject activeObject)
             :base(context.Logger)
         {
             _context = context;
 
             _globalStorage = context.Storage.GlobalStorage;
+            _hostListener = context.HostListener;
+
+            _instancesStorage = _context.InstancesStorage;
 
             _activeObject = activeObject;
             activeObject.PeriodicMethod = CommandLoop;
@@ -31,15 +43,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _operatorsResolver = dataResolversFactory.GetOperatorsResolver();
             _logicalValueLinearResolver = dataResolversFactory.GetLogicalValueLinearResolver();
             _numberValueLinearResolver = dataResolversFactory.GetNumberValueLinearResolver();
+            _strongIdentifierLinearResolver = dataResolversFactory.GetStrongIdentifierLinearResolver();
             _varsResolver = dataResolversFactory.GetVarsResolver();
         }
 
-        private IEngineContext _context;
-        private IStorage _globalStorage;
+        private readonly IEngineContext _context;
+        private readonly IStorage _globalStorage;
+        private readonly IHostListener _hostListener;
+        private readonly IInstancesStorageComponent _instancesStorage;
 
         private readonly OperatorsResolver _operatorsResolver;
         private readonly LogicalValueLinearResolver _logicalValueLinearResolver;
         private readonly NumberValueLinearResolver _numberValueLinearResolver;
+        private readonly StrongIdentifierLinearResolver _strongIdentifierLinearResolver;
         private readonly VarsResolver _varsResolver;
 
         private Stack<CodeFrame> _codeFrames = new Stack<CodeFrame>();
@@ -77,7 +93,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Running;
 
 #if DEBUG
-            _context.InstancesStorage.PrintProcessesList();
+            _instancesStorage.PrintProcessesList();
 #endif
         }
 
@@ -226,6 +242,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         }
                         break;
 
+                    case OperationCode.Call_MN:
+                        CallFunction(KindOfFunctionParameters.NamedParameters, currentCommand.CountMainParams, KindOfFunctionParameters.NoParameters, currentCommand.CountAdditionalParams);
+                        break;
+
                     case OperationCode.UseInheritance:
                         ProcessUseInheritance();
                         break;
@@ -297,7 +317,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             }
 
 #if DEBUG
-                            _context.InstancesStorage.PrintProcessesList();
+                            _instancesStorage.PrintProcessesList();
 
                             Log("End case OperationCode.Return");
 #endif
@@ -336,6 +356,177 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return result;
         }
 
+        private Dictionary<IndexedStrongIdentifierValue, IndexedValue> TakeNamedParameters(int count)
+        {
+            var rawParamsList = TakePositionedParameters(count * 2);
+
+            var result = new Dictionary<IndexedStrongIdentifierValue, IndexedValue>();
+
+            var enumerator = rawParamsList.GetEnumerator();
+
+            while(enumerator.MoveNext())
+            {
+                var name = enumerator.Current.AsStrongIdentifierValue;
+
+                enumerator.MoveNext();
+
+                var value = enumerator.Current;
+
+                result[name] = value;
+            }
+
+            return result;
+        }
+
+        private void CallFunction(KindOfFunctionParameters kindOfMainParameters, int mainParametersCount, KindOfFunctionParameters kindOfAdditionalParameters, int additionalParametersCount)
+        {
+#if DEBUG
+            Log($"kindOfMainParameters = {kindOfMainParameters}");
+            Log($"mainParametersCount = {mainParametersCount}");
+            Log($"kindOfAdditionalParameters = {kindOfAdditionalParameters}");
+            Log($"additionalParametersCount = {additionalParametersCount}");
+#endif
+
+            var valueStack = _currentCodeFrame.ValuesStack;
+
+            var annotation = valueStack.Pop();
+
+#if DEBUG
+            Log($"annotation = {annotation}");
+            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+            var caller = valueStack.Pop();
+
+#if DEBUG
+            Log($"caller = {caller}");
+            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+            Dictionary<IndexedStrongIdentifierValue, IndexedValue> mainNamedParameters = null;
+            List<IndexedValue> mainPositionedParameters = null;
+
+            Dictionary<IndexedStrongIdentifierValue, IndexedValue> additionalNamedParameters = null;
+            List<IndexedValue> additionalPositionedParameters = null;
+
+            switch (kindOfMainParameters)
+            {
+                case KindOfFunctionParameters.NoParameters:
+                    break;
+
+                case KindOfFunctionParameters.NamedParameters:
+                    mainNamedParameters = TakeNamedParameters(mainParametersCount);
+                    break;
+
+                case KindOfFunctionParameters.PositionedParameters:
+                    mainPositionedParameters = TakePositionedParameters(mainParametersCount);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfMainParameters), kindOfMainParameters, null);
+            }
+
+            switch (kindOfAdditionalParameters)
+            {
+                case KindOfFunctionParameters.NoParameters:
+                    break;
+
+                case KindOfFunctionParameters.NamedParameters:
+                    additionalNamedParameters = TakeNamedParameters(additionalParametersCount);
+                    break;
+
+                case KindOfFunctionParameters.PositionedParameters:
+                    additionalPositionedParameters = TakePositionedParameters(additionalParametersCount);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfAdditionalParameters), kindOfAdditionalParameters, null);
+            }
+
+#if DEBUG
+            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            Log($"mainNamedParameters = {mainNamedParameters.WriteDict_1_ToString()}");
+            Log($"additionalNamedParameters = {additionalNamedParameters.WriteDict_1_ToString()}");
+#endif
+
+            if(caller.IsPointRefValue)
+            {
+                CallPointRefValue(caller.AsPointRefValue, kindOfMainParameters, mainNamedParameters, mainPositionedParameters, kindOfAdditionalParameters, additionalNamedParameters, additionalPositionedParameters);
+                return;
+            }
+
+            throw new NotImplementedException();
+        }
+
+        private void CallPointRefValue(IndexedPointRefValue caller, 
+            KindOfFunctionParameters kindOfMainParameters, Dictionary<IndexedStrongIdentifierValue, IndexedValue> mainNamedParameters, List<IndexedValue> mainPositionedParameters,
+            KindOfFunctionParameters kindOfAdditionalParameters, Dictionary<IndexedStrongIdentifierValue, IndexedValue> additionalNamedParameters, List<IndexedValue> additionalPositionedParameters)
+        {
+#if DEBUG
+            Log($"caller.LeftOperand = {caller.LeftOperand}");
+#endif
+
+            if(caller.LeftOperand.IsHostValue)
+            {
+                CallHost(caller.RightOperand.AsStrongIdentifierValue, kindOfMainParameters, mainNamedParameters, mainPositionedParameters, kindOfAdditionalParameters, additionalNamedParameters, additionalPositionedParameters);
+            }
+
+            throw new NotImplementedException();
+        }
+
+        private void CallHost(IndexedStrongIdentifierValue methodName, KindOfFunctionParameters kindOfMainParameters, Dictionary<IndexedStrongIdentifierValue, IndexedValue> mainNamedParameters, List<IndexedValue> mainPositionedParameters,
+            KindOfFunctionParameters kindOfAdditionalParameters, Dictionary<IndexedStrongIdentifierValue, IndexedValue> additionalNamedParameters, List<IndexedValue> additionalPositionedParameters)
+        {
+#if DEBUG
+            Log($"methodName = {methodName}");
+            Log($"kindOfMainParameters = {kindOfMainParameters}");
+            Log($"mainNamedParameters = {mainNamedParameters.WriteDict_1_ToString()}");
+            Log($"mainPositionedParameters = {mainPositionedParameters.WriteListToString()}");
+            Log($"kindOfAdditionalParameters = {kindOfAdditionalParameters}");
+            Log($"additionalNamedParameters = {additionalNamedParameters.WriteDict_1_ToString()}");
+            Log($"additionalPositionedParameters = {additionalPositionedParameters.WriteListToString()}");
+#endif
+
+            var command = new Command();
+            command.Name = methodName.OriginalStrongIdentifierValue;
+
+            switch(kindOfMainParameters)
+            {
+                case KindOfFunctionParameters.NoParameters:
+                    break;
+
+                case KindOfFunctionParameters.NamedParameters:
+                    command.ParamsDict = mainNamedParameters.ToDictionary(p => p.Key.OriginalStrongIdentifierValue, p => p.Value.OriginalValue);
+                    break;
+
+                case KindOfFunctionParameters.PositionedParameters:
+                    command.ParamsList = mainPositionedParameters.Select(p => p.OriginalValue).ToList();
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfMainParameters), kindOfMainParameters, null);
+            }
+
+#if DEBUG
+            Log($"command = {command}");
+#endif
+            var processCreatingResult = _hostListener.CreateProcess(command);
+
+#if DEBUG
+            Log($"processCreatingResult = {processCreatingResult}");
+#endif
+
+            if(processCreatingResult.IsSuccessful)
+            {
+                var processInfo = processCreatingResult.Process;
+
+                _instancesStorage.AppendAndTryStartProcessInfo(processInfo);
+                Task.WaitAll();
+            }            
+
+            throw new NotImplementedException();
+        }
+
         private void CallExecutable(IExecutable executable, IList<IndexedValue> paramsList)
         {
             if(executable.IsSystemDefined)
@@ -370,9 +561,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var inheritenceItem = new InheritanceItem();
             DefaultSettingsOfCodeEntityHelper.SetUpInheritanceItem(inheritenceItem, _currentCodeFrame.LocalContext.Storage.DefaultSettingsOfCodeEntity);
 
-            var subName = paramsList[0].AsStrongIdentifierValue;
+            var subName = _strongIdentifierLinearResolver.Resolve(paramsList[0], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
 
-            var superName = paramsList[1].AsStrongIdentifierValue;
+            var superName = _strongIdentifierLinearResolver.Resolve(paramsList[1], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
             //Log($"paramsList[2] = {paramsList[2]}");

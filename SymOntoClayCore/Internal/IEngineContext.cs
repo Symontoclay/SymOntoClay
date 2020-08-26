@@ -23,5 +23,6 @@ namespace SymOntoClay.Core.Internal
         IInstancesStorageComponent InstancesStorage { get; }
         IActivePeriodicObjectContext ActivePeriodicObjectContext { get; }
         IHostSupport HostSupport { get; }
+        IHostListener HostListener { get; }
     }
 }

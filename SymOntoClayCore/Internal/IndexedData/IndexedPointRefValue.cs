@@ -1,5 +1,4 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -7,29 +6,30 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
-    public class IndexedInstanceValue : IndexedValue
+    public class IndexedPointRefValue : IndexedValue
     {
-        public InstanceValue OriginalInstanceValue { get; set; }
+        public PointRefValue OriginalPointRefValue { get; set; }
 
         /// <inheritdoc/>
-        public override Value OriginalValue => OriginalInstanceValue;
-
-        public InstanceInfo InstanceInfo { get; set; }
+        public override Value OriginalValue => OriginalPointRefValue;
 
         /// <inheritdoc/>
-        public override KindOfValue KindOfValue => KindOfValue.InstanceValue;
+        public override KindOfValue KindOfValue => KindOfValue.PointRefValue;
 
         /// <inheritdoc/>
-        public override bool IsInstanceValue => true;
+        public override bool IsPointRefValue => true;
 
         /// <inheritdoc/>
-        public override IndexedInstanceValue AsInstanceValue => this;
+        public override IndexedPointRefValue AsPointRefValue => this;
 
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
-            return InstanceInfo;
+            return this;
         }
+
+        public IndexedValue LeftOperand { get; set; }
+        public IndexedValue RightOperand { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -37,7 +37,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(InstanceInfo), InstanceInfo);
+            sb.PrintObjProp(n, nameof(LeftOperand), LeftOperand);
+            sb.PrintObjProp(n, nameof(RightOperand), RightOperand);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -49,7 +50,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjProp(n, nameof(InstanceInfo), InstanceInfo);
+            sb.PrintShortObjProp(n, nameof(LeftOperand), LeftOperand);
+            sb.PrintShortObjProp(n, nameof(RightOperand), RightOperand);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -61,7 +63,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjProp(n, nameof(InstanceInfo), InstanceInfo);
+            sb.PrintBriefObjProp(n, nameof(LeftOperand), LeftOperand);
+            sb.PrintBriefObjProp(n, nameof(RightOperand), RightOperand);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
@@ -71,7 +74,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         protected override string PropertiesToDbgString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            return $"{spaces}ref: {InstanceInfo.IndexedName.NameValue}";
+            return $"{spaces}{LeftOperand.ToDbgString()}.{RightOperand.ToDbgString()}";
         }
     }
 }

@@ -3,9 +3,7 @@
     on Init => {
 	     "Begin" >> @>log;
 
-		 use @@self is linux;
-
-		 @@self is linux >> @>log;
+         @@host.`go`(to: #@[25, 30]);
 
 		 "End" >> @>log;
 	}

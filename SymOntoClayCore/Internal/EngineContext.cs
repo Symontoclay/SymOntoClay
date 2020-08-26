@@ -36,6 +36,7 @@ namespace SymOntoClay.Core.Internal
         public StandardLibraryLoader StandardLibraryLoader { get; set; }       
         public ActivePeriodicObjectContext ActivePeriodicObjectContext { get; set; }
         public IHostSupport HostSupport { get; set; }
+        public IHostListener HostListener { get; set; }
 
         ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;
         ITriggerExecutorComponent IEngineContext.TriggerExecutor => TriggerExecutor;     

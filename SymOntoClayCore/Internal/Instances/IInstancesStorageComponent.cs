@@ -8,6 +8,8 @@ namespace SymOntoClay.Core.Internal.Instances
     {
         void ActivateMainEntity();
         void AppendProcessInfo(IProcessInfo processInfo);
+        void AppendAndTryStartProcessInfo(IProcessInfo processInfo);
+
 #if DEBUG
         void PrintProcessesList();
 #endif

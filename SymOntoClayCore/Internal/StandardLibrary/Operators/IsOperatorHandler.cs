@@ -14,11 +14,16 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             : base(engineContext.Logger)
         {
             _engineContext = engineContext;
-            _inheritanceResolver = engineContext.DataResolversFactory.GetInheritanceResolver();
+
+            var dataResolversFactory = engineContext.DataResolversFactory;
+
+            _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
+            _strongIdentifierLinearResolver = dataResolversFactory.GetStrongIdentifierLinearResolver();
         }
 
         private readonly IEngineContext _engineContext;
         private readonly InheritanceResolver _inheritanceResolver;
+        private readonly StrongIdentifierLinearResolver _strongIdentifierLinearResolver;
 
         /// <inheritdoc/>
         public IndexedValue Call(IndexedValue leftOperand, IndexedValue rightOperand, IndexedValue annotation, LocalCodeExecutionContext localCodeExecutionContext)
@@ -29,7 +34,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             //Log($"annotation = {annotation}");
 #endif
 
-            if (leftOperand.IsStrongIdentifierValue && leftOperand.IsStrongIdentifierValue)
+            if ((leftOperand.IsStrongIdentifierValue || leftOperand.IsInstanceValue) && (leftOperand.IsStrongIdentifierValue || leftOperand.IsInstanceValue))
             {
                 return GetInheritanceRank(leftOperand, rightOperand, localCodeExecutionContext);
             }
@@ -39,7 +44,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
         private IndexedValue GetInheritanceRank(IndexedValue leftOperand, IndexedValue rightOperand, LocalCodeExecutionContext localCodeExecutionContext)
         {
-            return _inheritanceResolver.GetInheritanceRank(leftOperand.AsStrongIdentifierValue, rightOperand.AsStrongIdentifierValue, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var subName = _strongIdentifierLinearResolver.Resolve(leftOperand, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+
+            var superName = _strongIdentifierLinearResolver.Resolve(rightOperand, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+
+            return _inheritanceResolver.GetInheritanceRank(subName, superName, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
         }
     }
 }

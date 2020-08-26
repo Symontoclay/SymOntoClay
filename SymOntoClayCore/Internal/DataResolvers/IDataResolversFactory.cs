@@ -11,6 +11,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         LogicalValueLinearResolver GetLogicalValueLinearResolver();
         OperatorsResolver GetOperatorsResolver();
         NumberValueLinearResolver GetNumberValueLinearResolver();
+        StrongIdentifierLinearResolver GetStrongIdentifierLinearResolver();
         TriggersResolver GetTriggersResolver();
         VarsResolver GetVarsResolver();
     }

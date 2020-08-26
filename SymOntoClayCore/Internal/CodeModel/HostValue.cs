@@ -1,6 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.IndexedData;
-using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -8,31 +7,24 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class InstanceValue : Value
+    public class HostValue : Value
     {
-        public InstanceValue(InstanceInfo instanceInfo)
-        {
-            InstanceInfo = instanceInfo;
-        }
+        /// <inheritdoc/>
+        public override KindOfValue KindOfValue => KindOfValue.HostValue;
 
         /// <inheritdoc/>
-        public override KindOfValue KindOfValue => KindOfValue.InstanceValue;
+        public override bool IsHostValue => true;
 
         /// <inheritdoc/>
-        public override bool IsInstanceValue => true;
+        public override HostValue AsHostValue => this;
 
-        /// <inheritdoc/>
-        public override InstanceValue AsInstanceValue => this;
+        public IndexedHostValue Indexed { get; set; }
 
-        public InstanceInfo InstanceInfo { get; private set; }
-
-        public IndexedInstanceValue Indexed { get; set; }
-
-        public IndexedInstanceValue GetIndexed(IMainStorageContext mainStorageContext)
+        public IndexedHostValue GetIndexed(IMainStorageContext mainStorageContext)
         {
             if (Indexed == null)
             {
-                return ConvertorToIndexed.ConvertInstanceValue(this, mainStorageContext);
+                return ConvertorToIndexed.ConvertHostValue(this, mainStorageContext);
             }
 
             return Indexed;
@@ -58,7 +50,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             if (Indexed == null)
             {
-                return ConvertorToIndexed.ConvertInstanceValue(this, mainStorageContext, convertingContext);
+                return ConvertorToIndexed.ConvertHostValue(this, mainStorageContext, convertingContext);
             }
 
             return Indexed;
@@ -67,7 +59,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
-            return InstanceInfo;
+            return this;
         }
 
         /// <inheritdoc/>
@@ -84,7 +76,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return (Value)cloneContext[this];
             }
 
-            var result = new InstanceValue(InstanceInfo);
+            var result = new HostValue();
             cloneContext[this] = result;
 
             result.AppendAnnotations(this, cloneContext);
@@ -97,8 +89,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-
-            sb.PrintObjProp(n, nameof(InstanceInfo), InstanceInfo);
+            //sb.AppendLine($"{spaces}{nameof(SystemValue)} = {SystemValue}");
 
             sb.PrintExisting(n, nameof(Indexed), Indexed);
 
@@ -111,8 +102,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-
-            sb.PrintShortObjProp(n, nameof(InstanceInfo), InstanceInfo);
+            //sb.AppendLine($"{spaces}{nameof(SystemValue)} = {SystemValue}");
 
             sb.PrintExisting(n, nameof(Indexed), Indexed);
 
@@ -125,8 +115,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-
-            sb.PrintBriefObjProp(n, nameof(InstanceInfo), InstanceInfo);
+            //sb.AppendLine($"{spaces}{nameof(SystemValue)} = {SystemValue}");
 
             sb.PrintExisting(n, nameof(Indexed), Indexed);
 

@@ -37,6 +37,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsInstanceValue => false;
         public virtual InstanceValue AsInstanceValue => null;
 
+        public virtual bool IsHostValue => false;
+        public virtual HostValue AsHostValue => null;
+
+        public virtual bool IsPointRefValue => false;
+        public virtual PointRefValue AsPointRefValue => null;
+
         public abstract object GetSystemValue();
 
         public abstract IndexedValue GetIndexedValue(IMainStorageContext mainStorageContext);

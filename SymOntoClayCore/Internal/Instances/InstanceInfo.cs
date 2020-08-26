@@ -15,15 +15,15 @@ namespace SymOntoClay.Core.Internal.Instances
         public InstanceInfo(StrongIdentifierValue name, IEngineContext context, IStorage parentStorage)
             : base(context.Logger)
         {
-            _name = name;
+            Name = name;
             _context = context;
-            _indexedName = _name.GetIndexed(context);
+            IndexedName = Name.GetIndexed(context);
 
             _localCodeExecutionContext = new LocalCodeExecutionContext();
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
             _storage = new LocalStorage(localStorageSettings);
             _localCodeExecutionContext.Storage = _storage;
-            _localCodeExecutionContext.Holder = _indexedName;
+            _localCodeExecutionContext.Holder = IndexedName;
 
 #if DEBUG
             //Log($"_localCodeExecutionContext = {_localCodeExecutionContext}");
@@ -32,8 +32,8 @@ namespace SymOntoClay.Core.Internal.Instances
             _triggersResolver = new TriggersResolver(context);
         }
 
-        private readonly StrongIdentifierValue _name;
-        private readonly IndexedStrongIdentifierValue _indexedName;
+        public StrongIdentifierValue Name { get; private set; }
+        public IndexedStrongIdentifierValue IndexedName { get; private set; }
         private readonly IEngineContext _context;
         private readonly IStorage _storage;
         private readonly LocalCodeExecutionContext _localCodeExecutionContext;
@@ -45,7 +45,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             _instanceState = InstanceState.Initializing;
 
-            var targetTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger.Init, _indexedName, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var targetTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger.Init, IndexedName, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
             //Log($"targetTriggersList = {targetTriggersList.WriteListToString()}");
@@ -60,7 +60,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
                 localCodeExecutionContext.Storage = new LocalStorage(localStorageSettings);
 
-                localCodeExecutionContext.Holder = _indexedName;
+                localCodeExecutionContext.Holder = IndexedName;
 
                 var processInitialInfo = new ProcessInitialInfo();
                 processInitialInfo.CompiledFunctionBody = targetTrigger.ResultItem.CompiledFunctionBody;
@@ -101,7 +101,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(_name), _name);
+            sb.PrintObjProp(n, nameof(Name), Name);
             sb.AppendLine($"{spaces}{nameof(_instanceState)} = {_instanceState}");
 
             //sb.AppendLine($"{spaces}{nameof(AddSelf)} = {AddSelf}");
@@ -128,7 +128,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjProp(n, nameof(_name), _name);
+            sb.PrintShortObjProp(n, nameof(Name), Name);
             sb.AppendLine($"{spaces}{nameof(_instanceState)} = {_instanceState}");
 
             //sb.AppendLine($"{spaces}{nameof(IsDeepMode)} = {IsDeepMode}");
@@ -156,7 +156,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjProp(n, nameof(_name), _name);
+            sb.PrintBriefObjProp(n, nameof(Name), Name);
             sb.AppendLine($"{spaces}{nameof(_instanceState)} = {_instanceState}");
 
             //sb.AppendLine($"{spaces}{nameof(IsDeepMode)} = {IsDeepMode}");

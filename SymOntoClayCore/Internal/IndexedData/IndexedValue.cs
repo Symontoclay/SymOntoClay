@@ -39,6 +39,12 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public virtual bool IsInstanceValue => false;
         public virtual IndexedInstanceValue AsInstanceValue => null;
 
+        public virtual bool IsHostValue => false;
+        public virtual IndexedHostValue AsHostValue => null;
+
+        public virtual bool IsPointRefValue => false;
+        public virtual IndexedPointRefValue AsPointRefValue => null;
+
         public abstract object GetSystemValue();
 
         /// <inheritdoc/>

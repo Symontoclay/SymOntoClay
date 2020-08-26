@@ -37,6 +37,10 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _processesInfoList = new List<IProcessInfo>();
 
+            var globalStorage = _context.Storage.GlobalStorage;
+
+            globalStorage.VarStorage.SetSystemValue(_context.CommonNamesStorage.IndexedHostSystemVarName, new HostValue().GetIndexedValue(_context));
+
 #if IMAGINE_WORKING
             //Log("End");
 #else

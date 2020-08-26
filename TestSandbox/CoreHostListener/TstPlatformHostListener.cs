@@ -13,7 +13,7 @@ namespace TestSandbox.CoreHostListener
     {
         private static readonly IEntityLogger _logger = new LoggerImpementation();
 
-        [BipedEndpoint("Go", true)]
+        [BipedEndpoint("Go", true, DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void GoToImpl(CancellationToken cancellationToken, 
             [EndpointParam("To", KindOfEndpointParam.Position)] Vector3 point,
             float speed = 12)

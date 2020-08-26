@@ -19,5 +19,8 @@ namespace SymOntoClay.Core.Internal
 
         StrongIdentifierValue SelfSystemVarName { get; }
         IndexedStrongIdentifierValue IndexedSelfSystemVarName { get; }
+
+        StrongIdentifierValue HostSystemVarName { get; }
+        IndexedStrongIdentifierValue IndexedHostSystemVarName { get; }
     }
 }

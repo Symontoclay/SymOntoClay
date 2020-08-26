@@ -12,6 +12,7 @@ namespace SymOntoClay.Core.Internal
         public const string ApplicationTypeName = "application";
         public const string ClassTypeName = "class";
         public const string SelfSystemVarName = "@@self";
+        public const string HostSystemVarName = "@@host";
         #endregion
     }
 }

@@ -27,6 +27,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             BaseInitMainStorageContext(context, settings, KindOfStorage.Global);
 
             context.HostSupport = settings.HostSupport;
+            context.HostListener = settings.HostListener;
             context.StandardLibraryLoader = new StandardLibraryLoader(context);
             context.CodeExecutor = new CodeExecutorComponent(context);
             context.TriggerExecutor = new TriggerExecutorComponent(context);

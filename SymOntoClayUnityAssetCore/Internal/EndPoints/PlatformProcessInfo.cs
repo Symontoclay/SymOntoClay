@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
-    public class PlatformProcessInfo : IProcessInfo
+    public class PlatformProcessInfo : BaseProcessInfo
     {
-        public PlatformProcessInfo(Task task, CancellationTokenSource cancellationTokenSource, IList<int> devices)
+        public PlatformProcessInfo(CancellationTokenSource cancellationTokenSource, IReadOnlyList<int> devices)
         {
-            Id = NameHelper.GetNewEntityNameString();
-            _task = task;
             _cancellationTokenSource = cancellationTokenSource;
-            Devices = devices;
+            _devices = devices;
+        }
+
+        public void SetTask(Task task)
+        {
+            _task = task;
         }
 
         /// <inheritdoc/>
-        public string Id { get; private set; }
-
-        /// <inheritdoc/>
-        public ProcessStatus Status
+        public override ProcessStatus Status
         {
             get
             {
@@ -37,16 +37,32 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             {
                 lock (_lockObj)
                 {
+                    if (_status == value)
+                    {
+                        return;
+                    }
+
                     _status = value;
+
+                    switch(_status)
+                    {
+                        case ProcessStatus.Canceled:
+                        case ProcessStatus.Completed:
+                        case ProcessStatus.Faulted:
+                            Task.Run(() => {
+                                OnFinish?.Invoke(this);
+                            });
+                            break;
+                    }
                 }
             }
         }
 
         /// <inheritdoc/>
-        public IList<int> Devices { get; private set; }
+        public override IReadOnlyList<int> Devices => _devices;
 
         /// <inheritdoc/>
-        public void Start()
+        public override void Start()
         {
             lock (_lockObj)
             {
@@ -56,92 +72,26 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         }
 
         /// <inheritdoc/>
-        public void Cancel()
+        public override void Cancel()
         {
             lock (_lockObj)
             {
                 _cancellationTokenSource.Cancel();
                 _status = ProcessStatus.Canceled;
+
+                OnFinish?.Invoke(this);
             }
         }
+
+        /// <inheritdoc/>
+        public override event ProcessInfoEvent OnFinish;
 
         #region private fields
         private readonly object _lockObj = new object();
         private ProcessStatus _status = ProcessStatus.Created;
-        private readonly Task _task;
+        private readonly IReadOnlyList<int> _devices;
+        private Task _task;
         private readonly CancellationTokenSource _cancellationTokenSource;
         #endregion
-
-        /// <inheritdoc/>
-        public override string ToString()
-        {
-            return ToString(0u);
-        }
-
-        /// <inheritdoc/>
-        public string ToString(uint n)
-        {
-            return this.GetDefaultToStringInformation(n);
-        }
-
-        /// <inheritdoc/>
-        string IObjectToString.PropertiesToString(uint n)
-        {
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
-
-            sb.AppendLine($"{spaces}{nameof(Status)} = {Status}");
-            sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
-
-            return sb.ToString();
-        }
-
-        /// <inheritdoc/>
-        public string ToShortString()
-        {
-            return ToShortString(0u);
-        }
-
-        /// <inheritdoc/>
-        public string ToShortString(uint n)
-        {
-            return this.GetDefaultToShortStringInformation(n);
-        }
-
-        /// <inheritdoc/>
-        string IObjectToShortString.PropertiesToShortString(uint n)
-        {
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
-
-            sb.AppendLine($"{spaces}{nameof(Status)} = {Status}");
-            sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
-
-            return sb.ToString();
-        }
-
-        /// <inheritdoc/>
-        public string ToBriefString()
-        {
-            return ToBriefString(0u);
-        }
-
-        /// <inheritdoc/>
-        public string ToBriefString(uint n)
-        {
-            return this.GetDefaultToBriefStringInformation(n);
-        }
-
-        /// <inheritdoc/>
-        string IObjectToBriefString.PropertiesToBriefString(uint n)
-        {
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
-
-            sb.AppendLine($"{spaces}{nameof(Status)} = {Status}");
-            sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
-
-            return sb.ToString();
-        }
     }
 }

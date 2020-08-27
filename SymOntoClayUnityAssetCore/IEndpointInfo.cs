@@ -10,8 +10,8 @@ namespace SymOntoClay.UnityAsset.Core
     {
         string Name { get; }
         bool NeedMainThread { get; }
-        IList<int> Devices { get; }
-        IList<IEndpointArgumentInfo> Arguments { get; }
+        IReadOnlyList<int> Devices { get; }
+        IReadOnlyList<IEndpointArgumentInfo> Arguments { get; }
         MethodInfo MethodInfo { get; }
         object Object { get; }
     }

@@ -4,21 +4,14 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class ProcessInfo: IProcessInfo
+    public class ProcessInfo: BaseProcessInfo
     {
-        public ProcessInfo()
-        {
-            Id = NameHelper.GetNewEntityNameString();
-        }
-
         /// <inheritdoc/>
-        public string Id { get; private set; }
-
-        /// <inheritdoc/>
-        public ProcessStatus Status 
+        public override ProcessStatus Status 
         { 
             get
             {
@@ -32,7 +25,23 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 lock (_lockObj)
                 {
+                    if(_status == value)
+                    {
+                        return;
+                    }
+
                     _status = value;
+
+                    switch(_status)
+                    {
+                        case ProcessStatus.Completed:
+                        case ProcessStatus.Canceled:
+                        case ProcessStatus.Faulted:
+                            Task.Run(() => {
+                                OnFinish?.Invoke(this);
+                            });
+                            break;
+                    }
                 }
             }
         }
@@ -40,16 +49,19 @@ namespace SymOntoClay.Core.Internal.Instances
         public CodeFrame CodeFrame { get; set; }
 
         /// <inheritdoc/>
-        public IList<int> Devices => throw new NotImplementedException();
+        public override IReadOnlyList<int> Devices => _devices;
 
         /// <inheritdoc/>
-        public void Start()
+        public override event ProcessInfoEvent OnFinish;
+
+        /// <inheritdoc/>
+        public override void Start()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void Cancel()
+        public override void Cancel()
         {
             throw new NotImplementedException();
         }
@@ -57,76 +69,44 @@ namespace SymOntoClay.Core.Internal.Instances
         #region private fields
         private readonly object _lockObj = new object();
         private ProcessStatus _status = ProcessStatus.Created;
+        private readonly List<int> _devices = new List<int>();
         #endregion
 
         /// <inheritdoc/>
-        public override string ToString()
-        {
-            return ToString(0u);
-        }
-
-        /// <inheritdoc/>
-        public string ToString(uint n)
-        {
-            return this.GetDefaultToStringInformation(n);
-        }
-
-        /// <inheritdoc/>
-        string IObjectToString.PropertiesToString(uint n)
+        protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(Status)} = {Status}");
             sb.PrintObjProp(n, nameof(CodeFrame), CodeFrame);
 
+            sb.Append(base.PropertiesToString(n));
+
             return sb.ToString();
         }
 
         /// <inheritdoc/>
-        public string ToShortString()
-        {
-            return ToShortString(0u);
-        }
-
-        /// <inheritdoc/>
-        public string ToShortString(uint n)
-        {
-            return this.GetDefaultToShortStringInformation(n);
-        }
-
-        /// <inheritdoc/>
-        string IObjectToShortString.PropertiesToShortString(uint n)
+        protected override string PropertiesToShortString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(Status)} = {Status}");
             sb.PrintShortObjProp(n, nameof(CodeFrame), CodeFrame);
 
+            sb.Append(base.PropertiesToShortString(n));
+
             return sb.ToString();
         }
 
         /// <inheritdoc/>
-        public string ToBriefString()
-        {
-            return ToBriefString(0u);
-        }
-
-        /// <inheritdoc/>
-        public string ToBriefString(uint n)
-        {
-            return this.GetDefaultToBriefStringInformation(n);
-        }
-
-        /// <inheritdoc/>
-        string IObjectToBriefString.PropertiesToBriefString(uint n)
+        protected override string PropertiesToBriefString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(Status)} = {Status}");
-            sb.PrintBriefObjProp(n, nameof(CodeFrame), CodeFrame);
+            sb.PrintExisting(n, nameof(CodeFrame), CodeFrame);
+
+            sb.Append(base.PropertiesToBriefString(n));
 
             return sb.ToString();
         }

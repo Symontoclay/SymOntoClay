@@ -16,8 +16,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         public IndexedValue Value { get; set; }
         public ScriptCommand JumpToMe { get; set; }
         public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
-        public int CountMainParams { get; set; }
-        public int CountAdditionalParams { get; set; }
+        public int CountParams { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -45,8 +44,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
             sb.PrintBriefObjProp(n, nameof(JumpToMe), JumpToMe);
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
-            sb.AppendLine($"{spaces}{nameof(CountMainParams)} = {CountMainParams}");
-            sb.AppendLine($"{spaces}{nameof(CountAdditionalParams)} = {CountAdditionalParams}");
+            sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
 
             return sb.ToString();
         }
@@ -77,8 +75,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
             sb.PrintBriefObjProp(n, nameof(JumpToMe), JumpToMe);
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
-            sb.AppendLine($"{spaces}{nameof(CountMainParams)} = {CountMainParams}");
-            sb.AppendLine($"{spaces}{nameof(CountAdditionalParams)} = {CountAdditionalParams}");
+            sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
 
             return sb.ToString();
         }
@@ -109,8 +106,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
             sb.PrintBriefObjProp(n, nameof(JumpToMe), JumpToMe);
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
-            sb.AppendLine($"{spaces}{nameof(CountMainParams)} = {CountMainParams}");
-            sb.AppendLine($"{spaces}{nameof(CountAdditionalParams)} = {CountAdditionalParams}");
+            sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
 
             return sb.ToString();
         }
@@ -150,18 +146,15 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
                 case OperationCode.AllocateAnonymousWaypoint:
                 case OperationCode.AllocateNamedWaypoint:
-                    return $"{spaces}{OperationCode} {CountMainParams}";
+                    return $"{spaces}{OperationCode} {CountParams}";
 
                 case OperationCode.Call:
-                case OperationCode.Call_AN:
-                case OperationCode.Call_AP:
-                case OperationCode.Call_MN:
-                case OperationCode.Call_MN_AN:
-                case OperationCode.Call_MN_AP:
-                case OperationCode.Call_MP:
-                case OperationCode.Call_MP_AN:
-                case OperationCode.Call_MP_AP:
-                    return $"{spaces}{OperationCode} {CountMainParams} {CountAdditionalParams}";
+                case OperationCode.Call_N:
+                case OperationCode.Call_P:
+                case OperationCode.AsyncCall:
+                case OperationCode.AsyncCall_N:
+                case OperationCode.AsyncCall_P:
+                    return $"{spaces}{OperationCode} {CountParams}";
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(OperationCode), OperationCode, null);

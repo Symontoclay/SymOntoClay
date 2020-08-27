@@ -50,6 +50,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _state = State.WaitForMainParameter;
                             break;
 
+                        case TokenKind.AsyncMarker:
+                            Result.IsAsync = true;
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -61,7 +65,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Word:
                             {
                                 _currentParameter = new CallingParameter();
-                                Result.MainParameters.Add(_currentParameter);
+                                Result.Parameters.Add(_currentParameter);
 
                                 var value = NameHelper.CreateName(_currToken.Content, _context.Dictionary);
 

@@ -137,6 +137,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             case ',':
                                 return CreateToken(TokenKind.Comma);
 
+                            case '~':
+                                return CreateToken(TokenKind.AsyncMarker);
+
                             case '=':
                                 return CreateToken(TokenKind.Assign);
 

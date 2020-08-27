@@ -87,10 +87,10 @@ namespace TestSandbox.CoreHostListener
 
             command.ParamsDict[param1Name] = param1Value;
 
-            var param2Value = new NumberValue(12.4);
-            var param2Name = NameHelper.CreateName("speed", dictionary);
+            //var param2Value = new NumberValue(12.4);
+            //var param2Name = NameHelper.CreateName("speed", dictionary);
 
-            command.ParamsDict[param2Name] = param2Value;
+            //command.ParamsDict[param2Name] = param2Value;
 
             _logger.Log($"command = {command}");
 

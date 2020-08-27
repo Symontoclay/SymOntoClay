@@ -43,18 +43,19 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 #endif
 
             Task task = null;
+            var processInfo = new PlatformProcessInfo(cancellationTokenSource, endpointInfo.Devices);
 
             if (endpointInfo.NeedMainThread)
             {
-                task = CreateTaskForMainThread(cancellationToken, endpointInfo, paramsList);
+                task = CreateTaskForMainThread(cancellationToken, endpointInfo, paramsList, processInfo);
             }
             else
             {
-                task = CreateTaskForUsualThread(cancellationToken, endpointInfo, paramsList);
+                task = CreateTaskForUsualThread(cancellationToken, endpointInfo, paramsList, processInfo);
             }
 
-            var processInfo = new PlatformProcessInfo(task, cancellationTokenSource, endpointInfo.Devices);
-
+            
+            processInfo.SetTask(task);
 #if DEBUG
             Log($"processInfo = {processInfo}");
 #endif
@@ -62,7 +63,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return processInfo;
         }
 
-        private Task CreateTaskForMainThread(CancellationToken cancellationToken, IEndpointInfo endpointInfo, object[] paramsList)
+        private Task CreateTaskForMainThread(CancellationToken cancellationToken, IEndpointInfo endpointInfo, object[] paramsList, PlatformProcessInfo processInfo)
         {
             var platformListener = endpointInfo.Object;
 
@@ -75,6 +76,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     }, _invokingInMainThread);
 
                     invocableInMainThreadObj.Run();
+
+                    processInfo.Status = ProcessStatus.Completed;
                 }
                 catch (TargetInvocationException)
                 {
@@ -84,6 +87,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 #if DEBUG
                     Log($"e = {e}");
 #endif
+
+                    processInfo.Status = ProcessStatus.Faulted;
                 }
 
             }, cancellationToken);
@@ -91,7 +96,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return task;
         }
 
-        private Task CreateTaskForUsualThread(CancellationToken cancellationToken, IEndpointInfo endpointInfo, object[] paramsList)
+        private Task CreateTaskForUsualThread(CancellationToken cancellationToken, IEndpointInfo endpointInfo, object[] paramsList, PlatformProcessInfo processInfo)
         {
             var platformListener = endpointInfo.Object;
 
@@ -100,6 +105,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 try
                 {
                     endpointInfo.MethodInfo.Invoke(platformListener, paramsList);
+
+                    processInfo.Status = ProcessStatus.Completed;
                 }
                 catch (TargetInvocationException)
                 {
@@ -109,6 +116,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 #if DEBUG
                     Log($"e = {e}");
 #endif
+
+                    processInfo.Status = ProcessStatus.Faulted;
                 }
 
             }, cancellationToken);
@@ -141,32 +150,70 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             var resultList = new List<object>();
             resultList.Add(cancellationToken);
 
-            foreach (var commandParamItem in commandParamsDict)
+            foreach (var argumentItem in argumentsDict)
             {
-#if DEBUG
-                Log($"commandParamItem.Key = {commandParamItem.Key}");
-#endif
+                var argumentName = argumentItem.Key;
 
-                var targetCommandValue = commandParamItem.Value;
+                var argumentInfo = argumentItem.Value;
 
 #if DEBUG
-                Log($"targetCommandValue = {targetCommandValue}");
+                Log($"argumentName = {argumentName}");
+                Log($"argumentInfo = {argumentInfo}");
 #endif
 
-                var targetArgument = argumentsDict[commandParamItem.Key];
+                if(commandParamsDict.ContainsKey(argumentName))
+                {
+                    var targetCommandValue = commandParamsDict[argumentName];
 
 #if DEBUG
-                Log($"targetArgument = {targetArgument}");
+                    Log($"targetCommandValue = {targetCommandValue}");
 #endif
 
-                var targetValue = _platformTypesConvertorsRegistry.Convert(targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType, targetCommandValue);
+                    var targetValue = _platformTypesConvertorsRegistry.Convert(targetCommandValue.GetType(), argumentInfo.ParameterInfo.ParameterType, targetCommandValue);
 
 #if DEBUG
-                Log($"targetValue = {targetValue}");
+                    Log($"targetValue = {targetValue}");
 #endif
 
-                resultList.Add(targetValue);
+                    resultList.Add(targetValue);
+
+                    continue;
+                }
+
+                if(argumentInfo.HasDefaultValue)
+                {
+                    resultList.Add(argumentInfo.DefaultValue);
+                }
             }
+
+            //            foreach (var commandParamItem in commandParamsDict)
+            //            {
+            //#if DEBUG
+            //                Log($"commandParamItem.Key = {commandParamItem.Key}");
+            //#endif
+
+            //                var targetCommandValue = commandParamItem.Value;
+
+            //#if DEBUG
+            //                Log($"targetCommandValue = {targetCommandValue}");
+            //#endif
+
+            //                var targetArgument = argumentsDict[commandParamItem.Key];
+
+            //#if DEBUG
+            //                Log($"targetArgument = {targetArgument}");
+            //#endif
+
+            //                var targetValue = _platformTypesConvertorsRegistry.Convert(targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType, targetCommandValue);
+
+            //#if DEBUG
+            //                Log($"targetValue = {targetValue}");
+            //#endif
+
+            //                resultList.Add(targetValue);
+            //            }
+
+            //throw new NotImplementedException();
 
             return resultList.ToArray();
         }

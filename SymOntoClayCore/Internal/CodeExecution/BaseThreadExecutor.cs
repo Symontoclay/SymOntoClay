@@ -242,8 +242,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         }
                         break;
 
-                    case OperationCode.Call_MN:
-                        CallFunction(KindOfFunctionParameters.NamedParameters, currentCommand.CountMainParams, KindOfFunctionParameters.NoParameters, currentCommand.CountAdditionalParams);
+                    case OperationCode.Call_N:
+                        CallFunction(KindOfFunctionParameters.NamedParameters, currentCommand.CountParams, true);
+                        break;
+
+                    case OperationCode.AsyncCall_N:
+                        CallFunction(KindOfFunctionParameters.NamedParameters, currentCommand.CountParams, false);
                         break;
 
                     case OperationCode.UseInheritance:
@@ -256,20 +260,20 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     case OperationCode.AllocateAnonymousWaypoint:
                         {
-                            if(currentCommand.CountMainParams == 0)
+                            if(currentCommand.CountParams == 0)
                             {
                                 throw new NotImplementedException();
                                 //break;
                             }
 
-                            var paramsList = TakePositionedParameters(currentCommand.CountMainParams);
+                            var paramsList = TakePositionedParameters(currentCommand.CountParams);
 
 #if DEBUG
                             Log($"paramsList = {paramsList.WriteListToString()}");
                             Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
-                            switch(currentCommand.CountMainParams)
+                            switch(currentCommand.CountParams)
                             {
                                 case 3:
                                     {
@@ -292,7 +296,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                     break;
 
                                 default:
-                                    throw new ArgumentOutOfRangeException(nameof(currentCommand.CountMainParams), currentCommand.CountMainParams, null);
+                                    throw new ArgumentOutOfRangeException(nameof(currentCommand.CountParams), currentCommand.CountParams, null);
                             }
                         }
                         break;
@@ -378,13 +382,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return result;
         }
 
-        private void CallFunction(KindOfFunctionParameters kindOfMainParameters, int mainParametersCount, KindOfFunctionParameters kindOfAdditionalParameters, int additionalParametersCount)
+        private void CallFunction(KindOfFunctionParameters kindOfparameters, int parametersCount, bool isSync)
         {
 #if DEBUG
-            Log($"kindOfMainParameters = {kindOfMainParameters}");
-            Log($"mainParametersCount = {mainParametersCount}");
-            Log($"kindOfAdditionalParameters = {kindOfAdditionalParameters}");
-            Log($"additionalParametersCount = {additionalParametersCount}");
+            Log($"kindOfparameters = {kindOfparameters}");
+            Log($"parametersCount = {parametersCount}");
+            Log($"isSync = {isSync}");
 #endif
 
             var valueStack = _currentCodeFrame.ValuesStack;
@@ -403,55 +406,34 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
-            Dictionary<IndexedStrongIdentifierValue, IndexedValue> mainNamedParameters = null;
-            List<IndexedValue> mainPositionedParameters = null;
+            Dictionary<IndexedStrongIdentifierValue, IndexedValue> namedParameters = null;
+            List<IndexedValue> positionedParameters = null;
 
-            Dictionary<IndexedStrongIdentifierValue, IndexedValue> additionalNamedParameters = null;
-            List<IndexedValue> additionalPositionedParameters = null;
-
-            switch (kindOfMainParameters)
+            switch (kindOfparameters)
             {
                 case KindOfFunctionParameters.NoParameters:
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    mainNamedParameters = TakeNamedParameters(mainParametersCount);
+                    namedParameters = TakeNamedParameters(parametersCount);
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    mainPositionedParameters = TakePositionedParameters(mainParametersCount);
+                    positionedParameters = TakePositionedParameters(parametersCount);
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfMainParameters), kindOfMainParameters, null);
-            }
-
-            switch (kindOfAdditionalParameters)
-            {
-                case KindOfFunctionParameters.NoParameters:
-                    break;
-
-                case KindOfFunctionParameters.NamedParameters:
-                    additionalNamedParameters = TakeNamedParameters(additionalParametersCount);
-                    break;
-
-                case KindOfFunctionParameters.PositionedParameters:
-                    additionalPositionedParameters = TakePositionedParameters(additionalParametersCount);
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfAdditionalParameters), kindOfAdditionalParameters, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfparameters), kindOfparameters, null);
             }
 
 #if DEBUG
             Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-            Log($"mainNamedParameters = {mainNamedParameters.WriteDict_1_ToString()}");
-            Log($"additionalNamedParameters = {additionalNamedParameters.WriteDict_1_ToString()}");
+            Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
 #endif
 
             if(caller.IsPointRefValue)
             {
-                CallPointRefValue(caller.AsPointRefValue, kindOfMainParameters, mainNamedParameters, mainPositionedParameters, kindOfAdditionalParameters, additionalNamedParameters, additionalPositionedParameters);
+                CallPointRefValue(caller.AsPointRefValue, kindOfparameters, namedParameters, positionedParameters, isSync);
                 return;
             }
 
@@ -459,8 +441,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         private void CallPointRefValue(IndexedPointRefValue caller, 
-            KindOfFunctionParameters kindOfMainParameters, Dictionary<IndexedStrongIdentifierValue, IndexedValue> mainNamedParameters, List<IndexedValue> mainPositionedParameters,
-            KindOfFunctionParameters kindOfAdditionalParameters, Dictionary<IndexedStrongIdentifierValue, IndexedValue> additionalNamedParameters, List<IndexedValue> additionalPositionedParameters)
+            KindOfFunctionParameters kindOfParameters, Dictionary<IndexedStrongIdentifierValue, IndexedValue> namedParameters, List<IndexedValue> positionedParameters, 
+            bool isSync)
         {
 #if DEBUG
             Log($"caller.LeftOperand = {caller.LeftOperand}");
@@ -468,43 +450,43 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if(caller.LeftOperand.IsHostValue)
             {
-                CallHost(caller.RightOperand.AsStrongIdentifierValue, kindOfMainParameters, mainNamedParameters, mainPositionedParameters, kindOfAdditionalParameters, additionalNamedParameters, additionalPositionedParameters);
+                CallHost(caller.RightOperand.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, isSync);
+                return;
             }
 
             throw new NotImplementedException();
         }
 
-        private void CallHost(IndexedStrongIdentifierValue methodName, KindOfFunctionParameters kindOfMainParameters, Dictionary<IndexedStrongIdentifierValue, IndexedValue> mainNamedParameters, List<IndexedValue> mainPositionedParameters,
-            KindOfFunctionParameters kindOfAdditionalParameters, Dictionary<IndexedStrongIdentifierValue, IndexedValue> additionalNamedParameters, List<IndexedValue> additionalPositionedParameters)
+        private void CallHost(IndexedStrongIdentifierValue methodName, 
+            KindOfFunctionParameters kindOfParameters, Dictionary<IndexedStrongIdentifierValue, IndexedValue> namedParameters, List<IndexedValue> positionedParameters,
+            bool isSync)
         {
 #if DEBUG
             Log($"methodName = {methodName}");
-            Log($"kindOfMainParameters = {kindOfMainParameters}");
-            Log($"mainNamedParameters = {mainNamedParameters.WriteDict_1_ToString()}");
-            Log($"mainPositionedParameters = {mainPositionedParameters.WriteListToString()}");
-            Log($"kindOfAdditionalParameters = {kindOfAdditionalParameters}");
-            Log($"additionalNamedParameters = {additionalNamedParameters.WriteDict_1_ToString()}");
-            Log($"additionalPositionedParameters = {additionalPositionedParameters.WriteListToString()}");
+            Log($"kindOfParameters = {kindOfParameters}");
+            Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
+            Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+            Log($"isSync = {isSync}");
 #endif
 
             var command = new Command();
             command.Name = methodName.OriginalStrongIdentifierValue;
 
-            switch(kindOfMainParameters)
+            switch(kindOfParameters)
             {
                 case KindOfFunctionParameters.NoParameters:
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    command.ParamsDict = mainNamedParameters.ToDictionary(p => p.Key.OriginalStrongIdentifierValue, p => p.Value.OriginalValue);
+                    command.ParamsDict = namedParameters.ToDictionary(p => p.Key.OriginalStrongIdentifierValue, p => p.Value.OriginalValue);
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    command.ParamsList = mainPositionedParameters.Select(p => p.OriginalValue).ToList();
+                    command.ParamsList = positionedParameters.Select(p => p.OriginalValue).ToList();
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfMainParameters), kindOfMainParameters, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
             }
 
 #if DEBUG
@@ -521,8 +503,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var processInfo = processCreatingResult.Process;
 
                 _instancesStorage.AppendAndTryStartProcessInfo(processInfo);
-                Task.WaitAll();
-            }            
+
+                if(isSync)
+                {
+                    ProcessInfoHelper.Wait(processInfo);
+                }
+
+                _currentCodeFrame.CurrentPosition++;
+
+                return;
+            }
 
             throw new NotImplementedException();
         }

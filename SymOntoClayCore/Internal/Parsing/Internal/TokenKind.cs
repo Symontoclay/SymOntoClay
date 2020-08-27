@@ -20,6 +20,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Point,
         Comma,
         /// <summary>
+        /// Represents symbol `~`.
+        /// </summary>
+        AsyncMarker,
+        /// <summary>
         /// Represents symbol `{`.
         /// </summary>
         OpenFigureBracket,

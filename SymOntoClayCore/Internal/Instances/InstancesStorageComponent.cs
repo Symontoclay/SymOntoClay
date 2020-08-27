@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private InstanceInfo _rootInstanceInfo;
 
         private List<IProcessInfo> _processesInfoList;
+        private Dictionary<int, IProcessInfo> _processesInfoByDevicesDict = new Dictionary<int, IProcessInfo>();
 
         public void LoadFromSourceFiles()
         {
@@ -36,6 +38,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _rootInstanceInfo = null;
 
             _processesInfoList = new List<IProcessInfo>();
+            _processesInfoByDevicesDict = new Dictionary<int, IProcessInfo>();
 
             var globalStorage = _context.Storage.GlobalStorage;
 
@@ -137,6 +140,7 @@ namespace SymOntoClay.Core.Internal.Instances
             return result;
         }
 
+        /// <inheritdoc/>
         public void AppendProcessInfo(IProcessInfo processInfo)
         {
             lock(_processLockObj)
@@ -145,16 +149,110 @@ namespace SymOntoClay.Core.Internal.Instances
                 Log($"processInfo = {processInfo}");
 #endif
 
-                if(_processesInfoList.Contains(processInfo))
+                NTryAppendProcessInfo(processInfo);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void AppendAndTryStartProcessInfo(IProcessInfo processInfo)
+        {
+            if(processInfo.Devices.IsNullOrEmpty())
+            {
+                NAppendAndTryStartProcessInfoWithoutDevices(processInfo);
+                return;
+            }
+
+            lock (_processLockObj)
+            {
+#if DEBUG
+                Log($"processInfo = {processInfo}");
+#endif
+
+                if(!NTryAppendProcessInfo(processInfo))
                 {
                     return;
                 }
 
-                _processesInfoList.Add(processInfo);
+                var concurentProcessesInfoList = NGetConcurrentProcessesInfo(processInfo);
+
+#if DEBUG
+                Log($"concurentProcessesInfoList = {concurentProcessesInfoList.WriteListToString()}");
+#endif
+
+                if(concurentProcessesInfoList.IsNullOrEmpty())
+                {
+                    NAppendAndTryStartProcessInfoWithDevices(processInfo);
+                    return;
+                }
+
+                throw new NotImplementedException();
             }
         }
 
+        private bool NTryAppendProcessInfo(IProcessInfo processInfo)
+        {
+            if (_processesInfoList.Contains(processInfo))
+            {
+                return false;
+            }
+
+            _processesInfoList.Add(processInfo);
+
+            return true;
+        }
+
+        private void NAppendAndTryStartProcessInfoWithoutDevices(IProcessInfo processInfo)
+        {
+            AppendProcessInfo(processInfo);
+            processInfo.Start();
+        }
+
+        private void NAppendAndTryStartProcessInfoWithDevices(IProcessInfo processInfo)
+        {
+            foreach (var device in processInfo.Devices)
+            {
+                _processesInfoByDevicesDict[device] = processInfo;
+            }
+
+            processInfo.OnFinish += OnFinishProcessWithDevicesHandler;
+
+            processInfo.Start();
+        }
+
+        private void OnFinishProcessWithDevicesHandler(IProcessInfo sender)
+        {
 #if DEBUG
+            Log($"sender = {sender}");
+#endif
+            lock (_processLockObj)
+            {
+                foreach (var device in sender.Devices)
+                {
+                    if(_processesInfoByDevicesDict.ContainsKey(device) && _processesInfoByDevicesDict[device] == sender)
+                    {
+                        _processesInfoByDevicesDict.Remove(device);
+                    }
+                }
+            }
+        }
+
+        private List<IProcessInfo> NGetConcurrentProcessesInfo(IProcessInfo processInfo)
+        {
+            var result = new List<IProcessInfo>();
+
+            foreach(var device in processInfo.Devices)
+            {
+                if(_processesInfoByDevicesDict.ContainsKey(device))
+                {
+                    result.Add(_processesInfoByDevicesDict[device]);
+                }
+            }
+
+            return result.Distinct().ToList();
+        }
+
+#if DEBUG
+        /// <inheritdoc/>
         public void PrintProcessesList()
         {
             List<IProcessInfo> tmpPprocessesInfoList;

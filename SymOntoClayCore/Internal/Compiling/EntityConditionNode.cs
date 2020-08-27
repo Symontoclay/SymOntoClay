@@ -74,7 +74,7 @@ namespace SymOntoClay.Core.Internal.Compiling
                             command.OperationCode = OperationCode.AllocateAnonymousWaypoint;
                         }
 
-                        command.CountMainParams = count;
+                        command.CountParams = count;
 
                         AddCommand(command);
                     }

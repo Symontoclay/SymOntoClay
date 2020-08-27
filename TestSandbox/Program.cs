@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
 using NLog;
+using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
+using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
@@ -35,6 +37,8 @@ namespace TestSandbox
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
+            TstProcessInfoChildren();
+            //TstWaitIProcessInfo();
             //TstKindOfParametersSсaffolder();
             //TstDateTimeHandler();
             //TstBaseManualControllingGameComponent();
@@ -55,10 +59,42 @@ namespace TestSandbox
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstProcessInfoChildren()
+        {
+            _logger.Log("Begin");
+
+            var parentProcessInfo = new ProcessInfo();
+
+            _logger.Log("End");
+        }
+
+        private static void TstWaitIProcessInfo()
+        {
+            _logger.Log("Begin");
+
+            var processInfo = new ProcessInfo();
+
+            var task = new Task(() => {
+                processInfo.Status = ProcessStatus.Running;
+
+                Thread.Sleep(10000);
+
+                processInfo.Status = ProcessStatus.Completed;
+            });
+
+            task.Start();
+
+            _logger.Log("task.Start()");
+
+            ProcessInfoHelper.Wait(processInfo);
+
+            _logger.Log("End");
         }
 
         private enum KindOfParameters

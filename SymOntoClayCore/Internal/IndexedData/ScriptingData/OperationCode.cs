@@ -31,14 +31,11 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         /// </summary>
         CallBinOp,
         Call,
-        Call_AN,
-        Call_AP,
-        Call_MN,
-        Call_MN_AN,
-        Call_MN_AP,
-        Call_MP,
-        Call_MP_AN,
-        Call_MP_AP,
+        Call_N,
+        Call_P,
+        AsyncCall,
+        AsyncCall_N,
+        AsyncCall_P,
 
         ClearStack,
         Return,
@@ -49,14 +46,3 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         AllocateAnonymousWaypoint
     }
 }
-/*
-        Call,
-        Call_AN,
-        Call_AP,
-        Call_MN,
-        Call_MN_AN,
-        Call_MN_AP,
-        Call_MP,
-        Call_MP_AN,
-        Call_MP_AP, 
-*/

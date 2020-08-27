@@ -28,21 +28,20 @@ namespace SymOntoClay.Core.Internal.Compiling
             Log($"expression = {expression}");
 #endif
 
-            var kindOfMainParameters = KindOfParameters.NoParameters;
-            var kindOfAdditionalParameters = KindOfParameters.NoParameters;
+            var kindOfParameters = KindOfParameters.NoParameters;
 
             var command = new ScriptCommand();
 
-            if (!expression.MainParameters.IsNullOrEmpty())
+            if (!expression.Parameters.IsNullOrEmpty())
             {
-                if(expression.MainParameters.Any(p => p.IsNamed) && expression.MainParameters.Any(p => !p.IsNamed))
+                if(expression.Parameters.Any(p => p.IsNamed) && expression.Parameters.Any(p => !p.IsNamed))
                 {
                     throw new NotSupportedException();
                 }
 
-                command.CountMainParams = expression.MainParameters.Count;
+                command.CountParams = expression.Parameters.Count;
 
-                var isNamed = expression.MainParameters.Any(p => p.IsNamed);
+                var isNamed = expression.Parameters.Any(p => p.IsNamed);
 
 #if DEBUG
                 Log($"isNamed = {isNamed}");
@@ -50,62 +49,14 @@ namespace SymOntoClay.Core.Internal.Compiling
 
                 if(isNamed)
                 {
-                    kindOfMainParameters = KindOfParameters.NamedParameters;
+                    kindOfParameters = KindOfParameters.NamedParameters;
                 }
                 else
                 {
-                    kindOfMainParameters = KindOfParameters.PositionedParameters;
+                    kindOfParameters = KindOfParameters.PositionedParameters;
                 }
 
-                foreach(var parameter in expression.MainParameters)
-                {
-#if DEBUG
-                    Log($"parameter = {parameter}");
-#endif
-
-                    if (isNamed)
-                    {
-                        var node = new ExpressionNode(_context);
-                        node.Run(parameter.Name);
-                        AddCommands(node.Result);
-                        node = new ExpressionNode(_context);
-                        node.Run(parameter.Value);
-                        AddCommands(node.Result);
-                    }
-                    else
-                    {
-                        var node = new ExpressionNode(_context);
-                        node.Run(parameter.Value);
-                        AddCommands(node.Result);
-                    }
-                }
-            }
-
-            if(!expression.AdditionalParameters.IsNullOrEmpty())
-            {
-                if(expression.AdditionalParameters.Any(p => p.IsNamed) && expression.AdditionalParameters.Any(p => !p.IsNamed))
-                {
-                    throw new NotSupportedException();
-                }
-
-                command.CountAdditionalParams = expression.AdditionalParameters.Count;
-
-                var isNamed = expression.AdditionalParameters.Any(p => p.IsNamed);
-
-#if DEBUG
-                Log($"isNamed (2) = {isNamed}");
-#endif
-
-                if (isNamed)
-                {
-                    kindOfAdditionalParameters = KindOfParameters.NamedParameters;
-                }
-                else
-                {
-                    kindOfAdditionalParameters = KindOfParameters.PositionedParameters;
-                }
-
-                foreach (var parameter in expression.AdditionalParameters)
+                foreach(var parameter in expression.Parameters)
                 {
 #if DEBUG
                     Log($"parameter = {parameter}");
@@ -136,74 +87,48 @@ namespace SymOntoClay.Core.Internal.Compiling
             CompilePushAnnotation(expression);
 
 #if DEBUG
-            Log($"kindOfMainParameters = {kindOfMainParameters}");
-            Log($"kindOfAdditionalParameters = {kindOfAdditionalParameters}");
+            Log($"kindOfParameters = {kindOfParameters}");
 #endif
 
-            switch (kindOfMainParameters)
+            if(expression.IsAsync)
             {
-                case KindOfParameters.NoParameters:
-                    switch (kindOfAdditionalParameters)
-                    {
-                        case KindOfParameters.NoParameters:
-                            command.OperationCode = OperationCode.Call;
-                            break;
+                switch (kindOfParameters)
+                {
+                    case KindOfParameters.NoParameters:
+                        command.OperationCode = OperationCode.AsyncCall;
+                        break;
 
-                        case KindOfParameters.NamedParameters:
-                            command.OperationCode = OperationCode.Call_AN;
-                            break;
+                    case KindOfParameters.NamedParameters:
+                        command.OperationCode = OperationCode.AsyncCall_N;
+                        break;
 
-                        case KindOfParameters.PositionedParameters:
-                            command.OperationCode = OperationCode.Call_AP;
-                            break;
+                    case KindOfParameters.PositionedParameters:
+                        command.OperationCode = OperationCode.AsyncCall_P;
+                        break;
 
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(kindOfAdditionalParameters), kindOfAdditionalParameters, null);
-                    }
-                    break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                }
+            }
+            else
+            {
+                switch (kindOfParameters)
+                {
+                    case KindOfParameters.NoParameters:
+                        command.OperationCode = OperationCode.Call;
+                        break;
 
-                case KindOfParameters.NamedParameters:
-                    switch (kindOfAdditionalParameters)
-                    {
-                        case KindOfParameters.NoParameters:
-                            command.OperationCode = OperationCode.Call_MN;
-                            break;
+                    case KindOfParameters.NamedParameters:
+                        command.OperationCode = OperationCode.Call_N;
+                        break;
 
-                        case KindOfParameters.NamedParameters:
-                            command.OperationCode = OperationCode.Call_MN_AN;
-                            break;
+                    case KindOfParameters.PositionedParameters:
+                        command.OperationCode = OperationCode.Call_P;
+                        break;
 
-                        case KindOfParameters.PositionedParameters:
-                            command.OperationCode = OperationCode.Call_MN_AP;
-                            break;
-
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(kindOfAdditionalParameters), kindOfAdditionalParameters, null);
-                    }
-                    break;
-
-                case KindOfParameters.PositionedParameters:
-                    switch (kindOfAdditionalParameters)
-                    {
-                        case KindOfParameters.NoParameters:
-                            command.OperationCode = OperationCode.Call_MP;
-                            break;
-
-                        case KindOfParameters.NamedParameters:
-                            command.OperationCode = OperationCode.Call_MP_AN;
-                            break;
-
-                        case KindOfParameters.PositionedParameters:
-                            command.OperationCode = OperationCode.Call_MP_AP;
-                            break;
-
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(kindOfAdditionalParameters), kindOfAdditionalParameters, null);
-                    }
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfMainParameters), kindOfMainParameters, null);
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                }
             }
 
 #if DEBUG

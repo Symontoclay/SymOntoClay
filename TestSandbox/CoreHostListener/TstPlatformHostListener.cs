@@ -23,16 +23,18 @@ namespace TestSandbox.CoreHostListener
             _logger.Log($"point = {point}");
             _logger.Log($"speed = {speed}");
 
-            while(true)
-            {
-                Thread.Sleep(1000);
+            //while(true)
+            //{
+            //    Thread.Sleep(1000);
 
-                _logger.Log("Hi!");
+            //    _logger.Log("Hi!");
 
-                cancellationToken.ThrowIfCancellationRequested();
-            }
+            //    cancellationToken.ThrowIfCancellationRequested();
+            //}
 
-            //_logger.Log("End");
+            Thread.Sleep(5000);
+
+            _logger.Log("End");
         }
 
         [BipedEndpoint]

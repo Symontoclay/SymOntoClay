@@ -16,8 +16,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         {
             Name = source.Name;
             NeedMainThread = source.NeedMainThread;
-            Devices = source.Devices;
-            Arguments = source.Arguments;
+            Devices = new List<int>(source.Devices);
+            Arguments = new List<IEndpointArgumentInfo>(source.Arguments);
             MethodInfo = source.MethodInfo;
             Object = source.Object;
         }
@@ -29,10 +29,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         public bool NeedMainThread { get; set; }
 
         /// <inheritdoc/>
-        public IList<int> Devices { get; set; }
+        public List<int> Devices { get; set; }
 
         /// <inheritdoc/>
-        public IList<IEndpointArgumentInfo> Arguments { get; set; }
+        IReadOnlyList<int> IEndpointInfo.Devices => Devices;
+
+        /// <inheritdoc/>
+        public List<IEndpointArgumentInfo> Arguments { get; set; }
+
+        IReadOnlyList<IEndpointArgumentInfo> IEndpointInfo.Arguments => Arguments;
 
         /// <inheritdoc/>
         public MethodInfo MethodInfo { get; set; }

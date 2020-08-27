@@ -461,6 +461,9 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointInfo.Devices">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointInfo.SymOntoClay#UnityAsset#Core#IEndpointInfo#Devices">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointInfo.Arguments">
             <inheritdoc/>
         </member>
@@ -512,9 +515,6 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread.InvokerInMainThread.SetInvocableObj(SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread.IInvocableInMainThread)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.Id">
-            <inheritdoc/>
-        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.Status">
             <inheritdoc/>
         </member>
@@ -527,31 +527,7 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.Cancel">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.ToShortString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.ToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.ToBriefString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.ToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+        <member name="E:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.OnFinish">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.ProcessCreatingResult.Process">

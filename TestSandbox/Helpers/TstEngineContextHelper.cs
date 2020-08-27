@@ -93,6 +93,7 @@ namespace TestSandbox.Helpers
             coreEngineSettings.ModulesStorage = worldContext.ModulesStorage.ModulesStorage;
             coreEngineSettings.ParentStorage = _hostStorage;
             coreEngineSettings.TmpDir = tmpDir;
+            coreEngineSettings.HostSupport = new TstHostSupportComponent(npcSettings.PlatformSupport);
 
 #if DEBUG
             _logger.Log($"coreEngineSettings = {coreEngineSettings}");

@@ -18,8 +18,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         /// <inheritdoc/>
         protected override IAstNode NLeft { get => Left; set => Left = (AstExpression)value; }
 
-        public List<CallingParameter> MainParameters { get; set; } = new List<CallingParameter>();
-        public List<CallingParameter> AdditionalParameters { get; set; } = new List<CallingParameter>();
+        public List<CallingParameter> Parameters { get; set; } = new List<CallingParameter>();
+
+        public bool IsAsync { get; set; }
 
         /// <inheritdoc/>
         public override IndexedAnnotatedItem IndexedAnnotatedItem => null;
@@ -55,8 +56,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
 
             result.Left = Left.CloneAstExpression(context);
 
-            result.MainParameters = MainParameters?.Select(p => p.Clone(context)).ToList();
-            result.AdditionalParameters = AdditionalParameters?.Select(p => p.Clone(context)).ToList();
+            result.Parameters = Parameters?.Select(p => p.Clone(context)).ToList();
+
+            result.IsAsync = IsAsync;
+
 
             result.AppendAnnotations(this, context);
 
@@ -69,9 +72,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjListProp(n, nameof(MainParameters), MainParameters);
-            sb.PrintObjListProp(n, nameof(AdditionalParameters), AdditionalParameters);
+            sb.PrintObjListProp(n, nameof(Parameters), Parameters);
             sb.PrintObjProp(n, nameof(Left), Left);
+
+            sb.AppendLine($"{spaces}{IsAsync} = {IsAsync}");
 
             sb.Append(base.PropertiesToString(n));
 
@@ -84,9 +88,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjListProp(n, nameof(MainParameters), MainParameters);
-            sb.PrintShortObjListProp(n, nameof(AdditionalParameters), AdditionalParameters);
+            sb.PrintShortObjListProp(n, nameof(Parameters), Parameters);
             sb.PrintShortObjProp(n, nameof(Left), Left);
+
+            sb.AppendLine($"{spaces}{IsAsync} = {IsAsync}");
 
             sb.Append(base.PropertiesToShortString(n));
 
@@ -99,9 +104,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjListProp(n, nameof(MainParameters), MainParameters);
-            sb.PrintBriefObjListProp(n, nameof(AdditionalParameters), AdditionalParameters);
+            sb.PrintBriefObjListProp(n, nameof(Parameters), Parameters);
             sb.PrintBriefObjProp(n, nameof(Left), Left);
+
+            sb.AppendLine($"{spaces}{IsAsync} = {IsAsync}");
 
             sb.Append(base.PropertiesToBriefString(n));
 

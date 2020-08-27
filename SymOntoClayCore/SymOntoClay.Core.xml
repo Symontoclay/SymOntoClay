@@ -23,6 +23,66 @@
         <member name="M:SymOntoClay.Core.BaseCoreSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.BaseProcessInfo.Id">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.BaseProcessInfo.Status">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.BaseProcessInfo.IsFinished">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.BaseProcessInfo.Devices">
+            <inheritdoc/>
+        </member>
+        <member name="E:SymOntoClay.Core.BaseProcessInfo.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.Start">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.Cancel">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.BaseProcessInfo.ParentProcessInfo">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.BaseProcessInfo.GetChildrenProcessInfoList">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.AddChild(SymOntoClay.Core.IProcessInfo)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.RemoveChild(SymOntoClay.Core.IProcessInfo)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.BaseStorageSettings.Id">
             <summary>
             Gets or sets unique Id.
@@ -2274,7 +2334,13 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.ActivateMainEntity">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Instances.ProcessInfo.Id">
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.AppendProcessInfo(SymOntoClay.Core.IProcessInfo)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.AppendAndTryStartProcessInfo(SymOntoClay.Core.IProcessInfo)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.PrintProcessesList">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ProcessInfo.Status">
@@ -2283,37 +2349,22 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.ProcessInfo.Devices">
             <inheritdoc/>
         </member>
+        <member name="E:SymOntoClay.Core.Internal.Instances.ProcessInfo.OnFinish">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.Start">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.Cancel">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.ToString">
+        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.ToString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.ToShortString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.ToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.ToBriefString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.ToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.MainStorageContext.Id">
@@ -2494,6 +2545,11 @@
         <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.Unknown">
             <summary>
             Default value. Represents nothing.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.AsyncMarker">
+            <summary>
+            Represents symbol `~`.
             </summary>
         </member>
         <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.OpenFigureBracket">

@@ -110,6 +110,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.OpenRoundBracket:
+                        case TokenKind.AsyncMarker:
                             ProcessCallingFunction();
                             break;
 

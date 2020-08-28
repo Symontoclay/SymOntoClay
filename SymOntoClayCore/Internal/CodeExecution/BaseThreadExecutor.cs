@@ -501,6 +501,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             if(processCreatingResult.IsSuccessful)
             {
                 var processInfo = processCreatingResult.Process;
+                processInfo.ParentProcessInfo = _currentCodeFrame.ProcessInfo;
 
                 _instancesStorage.AppendAndTryStartProcessInfo(processInfo);
 

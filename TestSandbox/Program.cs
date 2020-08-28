@@ -37,7 +37,7 @@ namespace TestSandbox
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-            TstProcessInfoChildren();
+            //TstProcessInfoChildren();
             //TstWaitIProcessInfo();
             //TstKindOfParametersSсaffolder();
             //TstDateTimeHandler();
@@ -59,7 +59,7 @@ namespace TestSandbox
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

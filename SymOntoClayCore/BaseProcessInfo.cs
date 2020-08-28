@@ -43,7 +43,24 @@ namespace SymOntoClay.Core
         public abstract void Cancel();
 
         /// <inheritdoc/>
-        public IProcessInfo ParentProcessInfo 
+        public float Priority { get; set; } = PrioritiesOfProcesses.Normal;
+
+        /// <inheritdoc/>
+        public float GlobalPriority
+        {
+            get
+            {
+                if(ParentProcessInfo == null)
+                {
+                    return Priority;
+                }
+
+                return Priority * ParentProcessInfo.GlobalPriority;
+            }
+        }
+
+        /// <inheritdoc/>
+        public IProcessInfo ParentProcessInfo
         { 
             get
             {
@@ -72,7 +89,7 @@ namespace SymOntoClay.Core
                         _parentProcessInfo.RemoveChild(this);
                     }
 
-                    _parentProcessInfo = this;
+                    _parentProcessInfo = value;
 
                     if (_parentProcessInfo != null)
                     {
@@ -176,6 +193,12 @@ namespace SymOntoClay.Core
             sb.AppendLine($"{spaces}{nameof(IsFinished)} = {IsFinished}");
             sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
 
+            sb.AppendLine($"{spaces}{nameof(Priority)} = {Priority}");
+            sb.AppendLine($"{spaces}{nameof(GlobalPriority)} = {GlobalPriority}");
+
+            sb.PrintBriefObjProp(n, nameof(ParentProcessInfo), ParentProcessInfo);
+            sb.PrintObjListProp(n, "Children", GetChildrenProcessInfoList);
+
             return sb.ToString();
         }
 
@@ -207,6 +230,12 @@ namespace SymOntoClay.Core
             sb.AppendLine($"{spaces}{nameof(IsFinished)} = {IsFinished}");
             sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
 
+            sb.AppendLine($"{spaces}{nameof(Priority)} = {Priority}");
+            sb.AppendLine($"{spaces}{nameof(GlobalPriority)} = {GlobalPriority}");
+
+            sb.PrintBriefObjProp(n, nameof(ParentProcessInfo), ParentProcessInfo);
+            sb.PrintShortObjListProp(n, "Children", GetChildrenProcessInfoList);
+
             return sb.ToString();
         }
 
@@ -237,6 +266,12 @@ namespace SymOntoClay.Core
             sb.AppendLine($"{spaces}{nameof(Status)} = {Status}");
             sb.AppendLine($"{spaces}{nameof(IsFinished)} = {IsFinished}");
             sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
+
+            sb.AppendLine($"{spaces}{nameof(Priority)} = {Priority}");
+            sb.AppendLine($"{spaces}{nameof(GlobalPriority)} = {GlobalPriority}");
+
+            sb.PrintExisting(n, nameof(ParentProcessInfo), ParentProcessInfo);
+            sb.PrintExistingList(n, "Children", GetChildrenProcessInfoList);
 
             return sb.ToString();
         }

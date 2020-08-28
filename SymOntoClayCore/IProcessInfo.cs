@@ -17,6 +17,8 @@ namespace SymOntoClay.Core
         void Start();
         void Cancel();
         event ProcessInfoEvent OnFinish;
+        float Priority { get; }
+        float GlobalPriority { get; }
         IProcessInfo ParentProcessInfo { get; set; }
         IReadOnlyList<IProcessInfo> GetChildrenProcessInfoList { get; }
         void AddChild(IProcessInfo processInfo);

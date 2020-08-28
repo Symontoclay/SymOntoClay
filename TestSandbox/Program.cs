@@ -71,6 +71,14 @@ namespace TestSandbox
 
             var parentProcessInfo = new ProcessInfo();
 
+            var child_1 = new ProcessInfo();
+            child_1.ParentProcessInfo = parentProcessInfo;
+
+            var child_2 = new ProcessInfo();
+            parentProcessInfo.AddChild(child_2);
+
+            _logger.Log($"parentProcessInfo = {parentProcessInfo}");
+
             _logger.Log("End");
         }
 

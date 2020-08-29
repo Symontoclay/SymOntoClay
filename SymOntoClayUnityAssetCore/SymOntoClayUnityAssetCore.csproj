@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>SymOntoClay.UnityAsset.Core</AssemblyName>
     <RootNamespace>SymOntoClay.UnityAsset.Core</RootNamespace>
-    <Version>0.2.0.0</Version>
+    <Version>0.2.1.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 

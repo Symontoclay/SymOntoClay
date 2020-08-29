@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
@@ -18,10 +19,13 @@ namespace TestSandbox.CoreHostListener
             [EndpointParam("To", KindOfEndpointParam.Position)] Vector3 point,
             float speed = 12)
         {
-            _logger.Log("Begin");
+            //var name = NameHelper.GetNewEntityNameString();
+            var name = string.Empty;
 
-            _logger.Log($"point = {point}");
-            _logger.Log($"speed = {speed}");
+            _logger.Log($"Begin {name}");
+
+            _logger.Log($"{name} point = {point}");
+            _logger.Log($"{name} speed = {speed}");
 
             var n = 0;
 
@@ -36,14 +40,14 @@ namespace TestSandbox.CoreHostListener
 
                 Thread.Sleep(1000);
 
-                _logger.Log($"Hi! n = {n}");
+                _logger.Log($"{name} Hi! n = {n}");
 
                 cancellationToken.ThrowIfCancellationRequested();
             }
 
             //Thread.Sleep(5000);
 
-            _logger.Log("End");
+            _logger.Log($"End {name}");
         }
 
         [BipedEndpoint]

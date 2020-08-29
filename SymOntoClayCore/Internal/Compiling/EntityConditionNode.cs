@@ -16,7 +16,7 @@ namespace SymOntoClay.Core.Internal.Compiling
         public void Run(EntityConditionAstExpression expression)
         {
 #if DEBUG
-            Log($"expression = {expression}");
+            //Log($"expression = {expression}");
 #endif
 
             var count = 0;
@@ -54,9 +54,9 @@ namespace SymOntoClay.Core.Internal.Compiling
             var kindOfEntityConditionAstExpression = expression.KindOfEntityConditionAstExpression;
 
 #if DEBUG
-            Log($"count = {count}");
-            Log($"isNamed = {isNamed}");
-            Log($"kindOfEntityConditionAstExpression = {kindOfEntityConditionAstExpression}");
+            //Log($"count = {count}");
+            //Log($"isNamed = {isNamed}");
+            //Log($"kindOfEntityConditionAstExpression = {kindOfEntityConditionAstExpression}");
 #endif
 
             switch(kindOfEntityConditionAstExpression)

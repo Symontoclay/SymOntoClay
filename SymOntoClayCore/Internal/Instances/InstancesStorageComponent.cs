@@ -147,7 +147,7 @@ namespace SymOntoClay.Core.Internal.Instances
             lock(_processLockObj)
             {
 #if DEBUG
-                Log($"processInfo = {processInfo}");
+                //Log($"processInfo = {processInfo}");
 #endif
 
                 NTryAppendProcessInfo(processInfo);
@@ -168,7 +168,7 @@ namespace SymOntoClay.Core.Internal.Instances
             lock (_processLockObj)
             {
 #if DEBUG
-                Log($"processInfo = {processInfo}");
+                //Log($"processInfo = {processInfo}");
 #endif
 
                 if(!NTryAppendProcessInfo(processInfo))
@@ -179,7 +179,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 var concurentProcessesInfoList = NGetConcurrentProcessesInfo(processInfo);
 
 #if DEBUG
-                Log($"concurentProcessesInfoList = {concurentProcessesInfoList.WriteListToString()}");
+                //Log($"concurentProcessesInfoList = {concurentProcessesInfoList.WriteListToString()}");
 #endif
 
                 if(concurentProcessesInfoList.IsNullOrEmpty())
@@ -191,7 +191,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 if(concurentProcessesInfoList.All(p => p.ParentProcessInfo == processInfo.ParentProcessInfo))
                 {
 #if DEBUG
-                    Log("concurentProcessesInfoList.All(p => p.ParentProcessInfo == processInfo.ParentProcessInfo)");
+                    //Log("concurentProcessesInfoList.All(p => p.ParentProcessInfo == processInfo.ParentProcessInfo)");
 #endif
 
                     NAppendAndTryStartProcessInfoWithDevices(processInfo);
@@ -204,7 +204,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     });
 
 #if DEBUG
-                    Log("concurentProcessesInfoList.All(p => p.ParentProcessInfo == processInfo.ParentProcessInfo) return;");
+                    //Log("concurentProcessesInfoList.All(p => p.ParentProcessInfo == processInfo.ParentProcessInfo) return;");
 #endif
 
                     return;
@@ -215,7 +215,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 if (concurentProcessesInfoList.All(p => p.GlobalPriority >= globalPriority))
                 {
 #if DEBUG
-                    Log("concurentProcessesInfoList.All(p => p.GlobalPriority >= globalPriority)");
+                    //Log("concurentProcessesInfoList.All(p => p.GlobalPriority >= globalPriority)");
 #endif
 
                     NAppendAndTryStartProcessInfoWithDevices(processInfo);
@@ -228,7 +228,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     });
 
 #if DEBUG
-                    Log("concurentProcessesInfoList.All(p => p.GlobalPriority >= globalPriority) return;");
+                    //Log("concurentProcessesInfoList.All(p => p.GlobalPriority >= globalPriority) return;");
 #endif
 
                     return;
@@ -271,7 +271,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private void OnFinishProcessWithDevicesHandler(IProcessInfo sender)
         {
 #if DEBUG
-            Log($"sender = {sender}");
+            //Log($"sender = {sender}");
 #endif
             lock (_processLockObj)
             {
@@ -285,7 +285,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 

@@ -21,9 +21,9 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         public IndexedValue Call(IndexedValue leftOperand, IndexedValue rightOperand, IndexedValue annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Log($"leftOperand = {leftOperand}");
-            Log($"rightOperand = {rightOperand}");
-            Log($"annotation = {annotation}");
+            //Log($"leftOperand = {leftOperand}");
+            //Log($"rightOperand = {rightOperand}");
+            //Log($"annotation = {annotation}");
 #endif
 
             if(leftOperand.IsHostValue && rightOperand.IsStrongIdentifierValue)

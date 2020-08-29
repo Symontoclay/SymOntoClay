@@ -25,7 +25,7 @@ namespace SymOntoClay.Core.Internal.Compiling
         public void Run(CallingFunctionAstExpression expression)
         {
 #if DEBUG
-            Log($"expression = {expression}");
+            //Log($"expression = {expression}");
 #endif
 
             var kindOfParameters = KindOfParameters.NoParameters;
@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.Compiling
                 var isNamed = expression.Parameters.Any(p => p.IsNamed);
 
 #if DEBUG
-                Log($"isNamed = {isNamed}");
+                //Log($"isNamed = {isNamed}");
 #endif
 
                 if(isNamed)
@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.Compiling
                 foreach(var parameter in expression.Parameters)
                 {
 #if DEBUG
-                    Log($"parameter = {parameter}");
+                    //Log($"parameter = {parameter}");
 #endif
 
                     if (isNamed)
@@ -87,7 +87,7 @@ namespace SymOntoClay.Core.Internal.Compiling
             CompilePushAnnotation(expression);
 
 #if DEBUG
-            Log($"kindOfParameters = {kindOfParameters}");
+            //Log($"kindOfParameters = {kindOfParameters}");
 #endif
 
             if(expression.IsAsync)
@@ -132,7 +132,7 @@ namespace SymOntoClay.Core.Internal.Compiling
             }
 
 #if DEBUG
-            Log($"command = {command}");
+            //Log($"command = {command}");
 #endif
 
             AddCommand(command);

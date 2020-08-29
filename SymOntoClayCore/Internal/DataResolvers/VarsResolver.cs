@@ -31,7 +31,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private IndexedValue GetSystemVarValue(IndexedStrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"varName = {varName}");
+            //Log($"varName = {varName}");
 #endif
 
             var storage = localCodeExecutionContext.Storage;
@@ -39,19 +39,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var storagesList = GetStoragesList(storage);
 
 #if DEBUG
-            Log($"storagesList.Count = {storagesList.Count}");
+            //Log($"storagesList.Count = {storagesList.Count}");
 #endif
 
             foreach (var storageItem in storagesList)
             {
 #if DEBUG
-                Log($"storageItem.Key = {storageItem.Key}; storageItem.Value.Kind = '{storageItem.Value.Kind}'");
+                //Log($"storageItem.Key = {storageItem.Key}; storageItem.Value.Kind = '{storageItem.Value.Kind}'");
 #endif
 
                 var targetValue = storageItem.Value.VarStorage.GetSystemValueDirectly(varName);
 
 #if DEBUG
-                Log($"targetValue = {targetValue}");
+                //Log($"targetValue = {targetValue}");
 #endif
 
                 if(targetValue != null)

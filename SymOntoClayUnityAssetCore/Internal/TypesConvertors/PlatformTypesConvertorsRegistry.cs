@@ -22,7 +22,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"convertor = {convertor}");
+                //Log($"convertor = {convertor}");
 #endif
 
                 Dictionary<Type, IPlatformTypesConvertor> targetDict = null;
@@ -65,8 +65,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"source.FullName = {source.FullName}");
-                Log($"dest.FullName = {dest.FullName}");
+                //Log($"source.FullName = {source.FullName}");
+                //Log($"dest.FullName = {dest.FullName}");
 #endif
 
                 if (!_convertorsDict.ContainsKey(source))
@@ -91,15 +91,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"sourceType.FullName = {sourceType.FullName}");
-                Log($"destType.FullName = {destType.FullName}");
-                Log($"sourceValue = {sourceValue}");
+                //Log($"sourceType.FullName = {sourceType.FullName}");
+                //Log($"destType.FullName = {destType.FullName}");
+                //Log($"sourceValue = {sourceValue}");
 #endif
 
                 var convertor = _convertorsDict[sourceType][destType];
 
 #if DEBUG
-                Log($"convertor = {convertor}");
+                //Log($"convertor = {convertor}");
 #endif
 
                 if (convertor.CoreType == sourceType)

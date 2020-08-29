@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public void SetCodeFrame(CodeFrame codeFrame, bool setAsRunning = true)
         {
 #if DEBUG
-            Log($"codeFrame = {codeFrame}");
+            //Log($"codeFrame = {codeFrame}");
 #endif
 
             _codeFrames.Push(codeFrame);
@@ -93,7 +93,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Running;
 
 #if DEBUG
-            _instancesStorage.PrintProcessesList();
+            //_instancesStorage.PrintProcessesList();
 #endif
         }
 
@@ -115,7 +115,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 if(_currentCodeFrame == null)
                 {
 #if DEBUG
-                    Log("_currentCodeFrame == null return false;");
+                    //Log("_currentCodeFrame == null return false;");
 #endif
 
                     return false;
@@ -124,19 +124,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var currentPosition = _currentCodeFrame.CurrentPosition;
 
 #if DEBUG
-                Log($"currentPosition = {currentPosition}");
+                //Log($"currentPosition = {currentPosition}");
 #endif
 
                 var compiledFunctionBodyCommands = _currentCodeFrame.CompiledFunctionBody.Commands;
 
 #if DEBUG
-                Log($"compiledFunctionBodyCommands.Count = {compiledFunctionBodyCommands.Count}");
+                //Log($"compiledFunctionBodyCommands.Count = {compiledFunctionBodyCommands.Count}");
 #endif
 
                 if (currentPosition >= compiledFunctionBodyCommands.Count)
                 {
 #if DEBUG
-                    Log("currentPosition >= compiledFunctionBodyCommands.Count return false;");
+                    //Log("currentPosition >= compiledFunctionBodyCommands.Count return false;");
 #endif
 
                     return false;
@@ -145,8 +145,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var currentCommand = compiledFunctionBodyCommands[currentPosition];
 
 #if DEBUG
-                Log($"currentCommand = {currentCommand}");
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                //Log($"currentCommand = {currentCommand}");
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -269,8 +269,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             var paramsList = TakePositionedParameters(currentCommand.CountParams);
 
 #if DEBUG
-                            Log($"paramsList = {paramsList.WriteListToString()}");
-                            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                            //Log($"paramsList = {paramsList.WriteListToString()}");
+                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                             switch(currentCommand.CountParams)
@@ -304,7 +304,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     case OperationCode.Return:
                         {
 #if DEBUG
-                            Log("Begin case OperationCode.Return");
+                            //Log("Begin case OperationCode.Return");
 #endif
 
                             _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Completed;
@@ -321,9 +321,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             }
 
 #if DEBUG
-                            _instancesStorage.PrintProcessesList();
+                            //_instancesStorage.PrintProcessesList();
 
-                            Log("End case OperationCode.Return");
+                            //Log("End case OperationCode.Return");
 #endif
                         }
                         break;
@@ -385,9 +385,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void CallFunction(KindOfFunctionParameters kindOfparameters, int parametersCount, bool isSync)
         {
 #if DEBUG
-            Log($"kindOfparameters = {kindOfparameters}");
-            Log($"parametersCount = {parametersCount}");
-            Log($"isSync = {isSync}");
+            //Log($"kindOfparameters = {kindOfparameters}");
+            //Log($"parametersCount = {parametersCount}");
+            //Log($"isSync = {isSync}");
 #endif
 
             var valueStack = _currentCodeFrame.ValuesStack;
@@ -395,15 +395,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var annotation = valueStack.Pop();
 
 #if DEBUG
-            Log($"annotation = {annotation}");
-            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            //Log($"annotation = {annotation}");
+            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
             var caller = valueStack.Pop();
 
 #if DEBUG
-            Log($"caller = {caller}");
-            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            //Log($"caller = {caller}");
+            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
             Dictionary<IndexedStrongIdentifierValue, IndexedValue> namedParameters = null;
@@ -427,8 +427,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-            Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
+            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
 #endif
 
             if(caller.IsPointRefValue)
@@ -445,7 +445,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             bool isSync)
         {
 #if DEBUG
-            Log($"caller.LeftOperand = {caller.LeftOperand}");
+            //Log($"caller.LeftOperand = {caller.LeftOperand}");
 #endif
 
             if(caller.LeftOperand.IsHostValue)
@@ -462,11 +462,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             bool isSync)
         {
 #if DEBUG
-            Log($"methodName = {methodName}");
-            Log($"kindOfParameters = {kindOfParameters}");
-            Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
-            Log($"positionedParameters = {positionedParameters.WriteListToString()}");
-            Log($"isSync = {isSync}");
+            //Log($"methodName = {methodName}");
+            //Log($"kindOfParameters = {kindOfParameters}");
+            //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
+            //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+            //Log($"isSync = {isSync}");
 #endif
 
             var command = new Command();
@@ -490,12 +490,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Log($"command = {command}");
+            //Log($"command = {command}");
 #endif
             var processCreatingResult = _hostListener.CreateProcess(command);
 
 #if DEBUG
-            Log($"processCreatingResult = {processCreatingResult}");
+            //Log($"processCreatingResult = {processCreatingResult}");
 #endif
 
             if(processCreatingResult.IsSuccessful)

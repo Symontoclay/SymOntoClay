@@ -36,7 +36,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread
 
             foreach (var invocable in invocableList)
             {
-                invocable.Invoke();
+                try
+                {
+                    invocable.Invoke();
+                }
+                catch{
+                }
             }
         }
 

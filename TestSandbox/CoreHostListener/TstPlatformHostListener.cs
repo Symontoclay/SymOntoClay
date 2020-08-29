@@ -13,7 +13,7 @@ namespace TestSandbox.CoreHostListener
     {
         private static readonly IEntityLogger _logger = new LoggerImpementation();
 
-        [BipedEndpoint("Go", true, DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
+        [BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void GoToImpl(CancellationToken cancellationToken, 
             [EndpointParam("To", KindOfEndpointParam.Position)] Vector3 point,
             float speed = 12)
@@ -23,16 +23,25 @@ namespace TestSandbox.CoreHostListener
             _logger.Log($"point = {point}");
             _logger.Log($"speed = {speed}");
 
-            //while(true)
-            //{
-            //    Thread.Sleep(1000);
+            var n = 0;
 
-            //    _logger.Log("Hi!");
+            while (true)
+            {
+                n++;
 
-            //    cancellationToken.ThrowIfCancellationRequested();
-            //}
+                if(n > 10)
+                {
+                    break;
+                }
 
-            Thread.Sleep(5000);
+                Thread.Sleep(1000);
+
+                _logger.Log("Hi!");
+
+                cancellationToken.ThrowIfCancellationRequested();
+            }
+
+            //Thread.Sleep(5000);
 
             _logger.Log("End");
         }

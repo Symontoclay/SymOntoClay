@@ -69,6 +69,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             var task = new Task(() =>
             {
+#if DEBUG
+                Log($">>>>> processInfo = {processInfo}");
+#endif
+
                 try
                 {
                     var invocableInMainThreadObj = new InvocableInMainThread(() => {
@@ -104,6 +108,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             {
                 try
                 {
+#if DEBUG
+                    Log($"+++++++++++++ processInfo = {processInfo}");
+#endif
+
                     endpointInfo.MethodInfo.Invoke(platformListener, paramsList);
 
                     processInfo.Status = ProcessStatus.Completed;

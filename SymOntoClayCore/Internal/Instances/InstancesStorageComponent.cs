@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -162,6 +163,8 @@ namespace SymOntoClay.Core.Internal.Instances
                 return;
             }
 
+            processInfo.Status = ProcessStatus.WaitingForResources;
+
             lock (_processLockObj)
             {
 #if DEBUG
@@ -185,8 +188,54 @@ namespace SymOntoClay.Core.Internal.Instances
                     return;
                 }
 
-                throw new NotImplementedException();
+                if(concurentProcessesInfoList.All(p => p.ParentProcessInfo == processInfo.ParentProcessInfo))
+                {
+#if DEBUG
+                    Log("concurentProcessesInfoList.All(p => p.ParentProcessInfo == processInfo.ParentProcessInfo)");
+#endif
+
+                    NAppendAndTryStartProcessInfoWithDevices(processInfo);
+
+                    Task.Run(() => {
+                        foreach (var concurentProcessInfo in concurentProcessesInfoList)
+                        {
+                            concurentProcessInfo.Cancel();
+                        }
+                    });
+
+#if DEBUG
+                    Log("concurentProcessesInfoList.All(p => p.ParentProcessInfo == processInfo.ParentProcessInfo) return;");
+#endif
+
+                    return;
+                }
+
+                var globalPriority = processInfo.GlobalPriority;
+
+                if (concurentProcessesInfoList.All(p => p.GlobalPriority >= globalPriority))
+                {
+#if DEBUG
+                    Log("concurentProcessesInfoList.All(p => p.GlobalPriority >= globalPriority)");
+#endif
+
+                    NAppendAndTryStartProcessInfoWithDevices(processInfo);
+
+                    Task.Run(() => { 
+                        foreach(var concurentProcessInfo in concurentProcessesInfoList)
+                        {
+                            concurentProcessInfo.Cancel();
+                        }
+                    });
+
+#if DEBUG
+                    Log("concurentProcessesInfoList.All(p => p.GlobalPriority >= globalPriority) return;");
+#endif
+
+                    return;
+                }
             }
+
+            processInfo.Cancel();
         }
 
         private bool NTryAppendProcessInfo(IProcessInfo processInfo)
@@ -234,6 +283,10 @@ namespace SymOntoClay.Core.Internal.Instances
                     }
                 }
             }
+
+#if DEBUG
+            Log("End");
+#endif
         }
 
         private List<IProcessInfo> NGetConcurrentProcessesInfo(IProcessInfo processInfo)
@@ -271,7 +324,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             foreach(var processInfo in tmpPprocessesInfoList)
             {
-                sb.AppendLine($"{spaces}{processInfo.Id} {processInfo.Status}");
+                sb.AppendLine($"{spaces}{processInfo.Id} {processInfo.Status} {processInfo.Priority} {processInfo.GlobalPriority}");
             }
 
             sb.AppendLine("End ProcessesList");

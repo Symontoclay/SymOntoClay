@@ -36,7 +36,7 @@ namespace TestSandbox.CoreHostListener
 
                 Thread.Sleep(1000);
 
-                _logger.Log("Hi!");
+                _logger.Log($"Hi! n = {n}");
 
                 cancellationToken.ThrowIfCancellationRequested();
             }

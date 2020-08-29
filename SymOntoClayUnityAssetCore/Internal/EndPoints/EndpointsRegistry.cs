@@ -30,21 +30,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         public void AddEndpoint(IEndpointInfo endpointInfo)
         {
-#if DEBUG
-            Log($"endpointInfo = {endpointInfo}");
-#endif
-
             var paramsCountList = GetParamsCountList(endpointInfo);
 
-#if DEBUG
-            Log($"paramsCountList = {JsonConvert.SerializeObject(paramsCountList, Formatting.Indented)}");
-#endif
-
             var endPointName = endpointInfo.Name;
-
-#if DEBUG
-            Log($"endPointName = {endPointName}");
-#endif
 
             lock (_lockObj)
             {
@@ -62,10 +50,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
                 foreach (var count in paramsCountList)
                 {
-#if DEBUG
-                    Log($"count = {count}");
-#endif
-
                     List<IEndpointInfo> targetList = null;
 
                     if (targetDict.ContainsKey(count))
@@ -100,11 +84,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             var totalCount = argumentsList.Count(p => !p.IsSystemDefiend);
             var argumentsWithoutDefaultValueCount = argumentsList.Count(p => !p.IsSystemDefiend && !p.HasDefaultValue);
-
-#if DEBUG
-            Log($"totalCount = {totalCount}");
-            Log($"argumentsWithoutDefaultValueCount = {argumentsWithoutDefaultValueCount}");
-#endif
 
             if (totalCount == argumentsWithoutDefaultValueCount)
             {

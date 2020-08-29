@@ -28,19 +28,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         public IProcessInfo Activate(IEndpointInfo endpointInfo, ICommand command)
         {
-#if DEBUG
-            Log($"endpointInfo = {endpointInfo}");
-            Log($"command = {command}");
-#endif
-
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
 
             var paramsList = MapParams(cancellationToken, endpointInfo, command);
-
-#if DEBUG
-            Log($"paramsList = {JsonConvert.SerializeObject(paramsList, Formatting.Indented)}");
-#endif
 
             Task task = null;
             var processInfo = new PlatformProcessInfo(cancellationTokenSource, endpointInfo.Devices);
@@ -53,12 +44,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             {
                 task = CreateTaskForUsualThread(cancellationToken, endpointInfo, paramsList, processInfo);
             }
-
             
             processInfo.SetTask(task);
-#if DEBUG
-            Log($"processInfo = {processInfo}");
-#endif
 
             return processInfo;
         }
@@ -69,10 +56,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             var task = new Task(() =>
             {
-#if DEBUG
-                Log($">>>>> processInfo = {processInfo}");
-#endif
-
                 try
                 {
                     var invocableInMainThreadObj = new InvocableInMainThread(() => {
@@ -108,10 +91,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             {
                 try
                 {
-#if DEBUG
-                    Log($"+++++++++++++ processInfo = {processInfo}");
-#endif
-
                     endpointInfo.MethodInfo.Invoke(platformListener, paramsList);
 
                     processInfo.Status = ProcessStatus.Completed;
@@ -164,24 +143,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
                 var argumentInfo = argumentItem.Value;
 
-#if DEBUG
-                Log($"argumentName = {argumentName}");
-                Log($"argumentInfo = {argumentInfo}");
-#endif
-
                 if(commandParamsDict.ContainsKey(argumentName))
                 {
                     var targetCommandValue = commandParamsDict[argumentName];
 
-#if DEBUG
-                    Log($"targetCommandValue = {targetCommandValue}");
-#endif
-
                     var targetValue = _platformTypesConvertorsRegistry.Convert(targetCommandValue.GetType(), argumentInfo.ParameterInfo.ParameterType, targetCommandValue);
-
-#if DEBUG
-                    Log($"targetValue = {targetValue}");
-#endif
 
                     resultList.Add(targetValue);
 
@@ -193,35 +159,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     resultList.Add(argumentInfo.DefaultValue);
                 }
             }
-
-            //            foreach (var commandParamItem in commandParamsDict)
-            //            {
-            //#if DEBUG
-            //                Log($"commandParamItem.Key = {commandParamItem.Key}");
-            //#endif
-
-            //                var targetCommandValue = commandParamItem.Value;
-
-            //#if DEBUG
-            //                Log($"targetCommandValue = {targetCommandValue}");
-            //#endif
-
-            //                var targetArgument = argumentsDict[commandParamItem.Key];
-
-            //#if DEBUG
-            //                Log($"targetArgument = {targetArgument}");
-            //#endif
-
-            //                var targetValue = _platformTypesConvertorsRegistry.Convert(targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType, targetCommandValue);
-
-            //#if DEBUG
-            //                Log($"targetValue = {targetValue}");
-            //#endif
-
-            //                resultList.Add(targetValue);
-            //            }
-
-            //throw new NotImplementedException();
 
             return resultList.ToArray();
         }

@@ -21,17 +21,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         public IEndpointInfo GetEndpointInfo(ICommand command, IList<IEndpointsRegistry> endpointsRegistries)
         {
-#if DEBUG
-            //Log($"command = {command}");
-            //Log($"command.ParamsCount = {command.ParamsCount}");
-#endif
             var endPointsList = new List<IEndpointInfo>();
 
             var endPointName = command.Name.NameValue;
-
-#if DEBUG
-            //Log($"endPointName = {endPointName}");
-#endif
 
             var paramsCount = command.ParamsCount;
 
@@ -46,10 +38,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             }
 
             endPointsList = endPointsList.Distinct().ToList();
-
-#if DEBUG
-            //Log($"endPointsList = {endPointsList.WriteListToString()}");
-#endif
 
             if (endPointsList == null)
             {
@@ -79,19 +67,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             foreach (var endPointInfo in endPointsList)
             {
-#if DEBUG
-                //Log($"endPointInfo = {endPointInfo}");
-#endif
-
                 var argumentsDict = endPointInfo.Arguments.Where(p => !p.IsSystemDefiend).ToDictionary(p => p.Name, p => p);
 
                 var isFitEndpoint = true;
 
                 foreach (var commandParamItem in commandParamsDict)
                 {
-#if DEBUG
-                    //Log($"commandParamItem.Key = {commandParamItem.Key}");
-#endif
                     if (!argumentsDict.ContainsKey(commandParamItem.Key))
                     {
                         isFitEndpoint = false;
@@ -100,15 +81,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
                     var targetCommandValue = commandParamItem.Value;
 
-#if DEBUG
-                    //Log($"targetCommandValue = {targetCommandValue}");
-#endif
-
                     var targetArgument = argumentsDict[commandParamItem.Key];
-
-#if DEBUG
-                    //Log($"targetArgument = {targetArgument}");
-#endif
 
                     if (!_platformTypesConvertorsRegistry.CanConvert(targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType))
                     {
@@ -116,10 +89,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                         break;
                     }
                 }
-
-#if DEBUG
-                //Log($"isFitEndpoint = {isFitEndpoint}");
-#endif
 
                 if (!isFitEndpoint)
                 {

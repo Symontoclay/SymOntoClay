@@ -2488,6 +2488,15 @@
             Number of remaining characters.
             </summary>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalExpressionParser.OnRun">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalQueryParser.OnEnter">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalQueryParser.OnRun">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.NumberParser.OnEnter">
             <inheritdoc/>
         </member>
@@ -2495,6 +2504,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.NumberParser.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.PrimaryRulePartParser.OnEnter">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.UseRawStatement.IndexedAnnotatedItem">
@@ -2529,6 +2541,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.UseRawStatement.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RulePartParser.OnRun">
             <inheritdoc/>
         </member>
         <member name="T:SymOntoClay.Core.Internal.Parsing.Internal.SourceCodeParser">
@@ -2588,6 +2603,16 @@
             Represents symbol `)`.
             </summary>
         </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.OpenFactBracket">
+            <summary>
+            Represents symbol `{:`.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.CloseFactBracket">
+            <summary>
+            Represents symbol `:}`.
+            </summary>
+        </member>
         <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.Colon">
             <summary>
             Represents symbol `:`.
@@ -2616,6 +2641,11 @@
         <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.LeftRightStream">
             <summary>
             Represents symbol `&gt;&gt;`.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.PrimaryLogicalPartMark">
+            <summary>
+            Represents symbol `>:`.
             </summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.UseStatementParser.OnEnter">

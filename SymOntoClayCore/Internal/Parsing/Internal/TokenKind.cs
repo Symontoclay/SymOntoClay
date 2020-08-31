@@ -49,6 +49,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// </summary>
         CloseRoundBracket,
         /// <summary>
+        /// Represents symbol `{:`.
+        /// </summary>
+        OpenFactBracket,
+        /// <summary>
+        /// Represents symbol `:}`.
+        /// </summary>
+        CloseFactBracket,
+        /// <summary>
         /// Represents symbol `:`.
         /// </summary>
         Colon,
@@ -75,6 +83,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <summary>
         /// Represents symbol `&gt;&gt;`.
         /// </summary>
-        LeftRightStream
+        LeftRightStream,
+
+        /// <summary>
+        /// Represents symbol `>:`.
+        /// </summary>
+        PrimaryLogicalPartMark
     }
 }

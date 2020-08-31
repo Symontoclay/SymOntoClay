@@ -554,6 +554,42 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 content = ">>";
                                 kind = TokenKind.LeftRightStream;
                                 break;
+
+                            case ':':
+                                _items.Dequeue();
+                                content = ">:";
+                                kind = TokenKind.PrimaryLogicalPartMark;
+                                break;
+                        }
+                    }
+                    break;
+
+                case TokenKind.OpenFigureBracket:
+                    {
+                        var nextChar = _items.Peek();
+
+                        switch(nextChar)
+                        {
+                            case ':':
+                                _items.Dequeue();
+                                content = "{:";
+                                kind = TokenKind.OpenFactBracket;
+                                break;
+                        }
+                    }
+                    break;
+
+                case TokenKind.Colon:
+                    {
+                        var nextChar = _items.Peek();
+
+                        switch (nextChar)
+                        {
+                            case '}':
+                                _items.Dequeue();
+                                content = ":}";
+                                kind = TokenKind.CloseFactBracket;
+                                break;
                         }
                     }
                     break;

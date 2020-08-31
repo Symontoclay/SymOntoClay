@@ -23,6 +23,7 @@ using TestSandbox.CoreHostListener;
 using TestSandbox.DateTimes;
 using TestSandbox.Handlers;
 using TestSandbox.Helpers;
+using TestSandbox.LogicalDatabase;
 using TestSandbox.Parsing;
 using TestSandbox.PlatformImplementations;
 using TestSandbox.Threads;
@@ -37,6 +38,7 @@ namespace TestSandbox
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
+            TstLogicalDatabase();
             //TstProcessInfoChildren();
             //TstWaitIProcessInfo();
             //TstKindOfParametersSсaffolder();
@@ -59,10 +61,16 @@ namespace TestSandbox
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstLogicalDatabase()
+        {
+            var handler = new LogicalDatabaseHandler();
+            handler.Run();
         }
 
         private static void TstProcessInfoChildren()

@@ -35,7 +35,15 @@ namespace TestSandbox.LogicalDatabase
         {
             _logger.Log("Begin");
 
-            var queryStr = "{: >:{ male(#124) } :}";
+            var queryStr = string.Empty;
+
+            //queryStr = "{: >:{ male(#124) } :}";
+            //ParseQueryString(queryStr);
+
+            //queryStr = "{: male(#124) :}";
+            //ParseQueryString(queryStr);
+
+            queryStr = "{: >:{son($x, $y)} -> { male($x) & parent($y, $x)} :}";
             ParseQueryString(queryStr);
 
             _logger.Log("End");
@@ -61,7 +69,7 @@ namespace TestSandbox.LogicalDatabase
 
             _logger.Log($"parsedQuery = {parsedQuery}");
 
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +12,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             Init,
             WaitForContent,
-            WaitForPrimaryRulePart
+            WaitForPrimaryRulePart,
+            GotPrimaryRulePart
         }
 
         public LogicalQueryParser(InternalParserContext context)
@@ -26,6 +28,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnEnter()
         {
             Result = new RuleInstance();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnFinish()
+        {
+            Result.DictionaryName = _context.Dictionary.Name;
+
+            if (Result.Name == null || Result.Name.IsEmpty)
+            {
+                Result.Name = NameHelper.CreateRuleOrFactName(_context.Dictionary);
+            }
         }
 
         /// <inheritdoc/>
@@ -58,6 +71,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _state = State.WaitForPrimaryRulePart;
                             break;
 
+                        case TokenKind.Word:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var paser = new PrimaryRulePartParser(_context, TokenKind.CloseFactBracket);
+                                paser.Run();
+
+#if DEBUG
+                                Log($"paser.Result = {paser.Result}");
+#endif
+
+                                Result.PrimaryPart = paser.Result;
+
+                                _state = State.GotPrimaryRulePart;
+                            }
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -77,8 +107,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 Log($"paser.Result = {paser.Result}");
 #endif
 
-                                throw new NotImplementedException();
+                                Result.PrimaryPart = paser.Result;
+
+                                _state = State.GotPrimaryRulePart;
                             }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotPrimaryRulePart:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.CloseFactBracket:
+                            Exit();
                             break;
 
                         default:
@@ -92,6 +136,3 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
     }
 }
-/*
-
-*/

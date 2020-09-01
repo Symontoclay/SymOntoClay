@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class LogicalQueryNode: AnnotatedItem
+    public class LogicalQueryNode: AnnotatedItem, IAstNode
     {
         public KindOfLogicalQueryNode Kind { get; set; } = KindOfLogicalQueryNode.Unknown;
         public KindOfOperatorOfLogicalQueryNode KindOfOperator { get; set; } = KindOfOperatorOfLogicalQueryNode.Unknown;
@@ -19,6 +20,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public bool IsGroup { get; set; }
         public Value Value { get; set; }
         public bool IsQuestion { get; set; }
+
+        IAstNode IAstNode.Left { get => Left; set => Left = (LogicalQueryNode)value; }
+        IAstNode IAstNode.Right { get => Right; set => Right = (LogicalQueryNode)value; }
 
         /// <inheritdoc/>
         public override IndexedAnnotatedItem IndexedAnnotatedItem => null;

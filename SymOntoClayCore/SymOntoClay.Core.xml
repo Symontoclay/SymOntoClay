@@ -2488,10 +2488,16 @@
             Number of remaining characters.
             </summary>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalExpressionParser.OnFinish">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalExpressionParser.OnRun">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalQueryParser.OnEnter">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalQueryParser.OnFinish">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalQueryParser.OnRun">
@@ -2630,7 +2636,7 @@
         </member>
         <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.Lambda">
             <summary>
-            Represents symbol `=>`.
+            Represents symbol `=&gt;`.
             </summary>
         </member>
         <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.More">
@@ -2645,7 +2651,12 @@
         </member>
         <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.PrimaryLogicalPartMark">
             <summary>
-            Represents symbol `>:`.
+            Represents symbol `&gt;:`.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.LeftRightArrow">
+            <summary>
+            Represents symbol `-&gt;`.
             </summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.UseStatementParser.OnEnter">

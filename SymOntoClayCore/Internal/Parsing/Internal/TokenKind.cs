@@ -16,7 +16,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Identifier,
         Channel,
         SystemVar,
+        LogicalVar,
         EntityCondition,
+        Entity,
         Point,
         Comma,
         /// <summary>
@@ -71,7 +73,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Assign,
 
         /// <summary>
-        /// Represents symbol `=>`.
+        /// Represents symbol `=&gt;`.
         /// </summary>
         Lambda,
 
@@ -86,8 +88,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         LeftRightStream,
 
         /// <summary>
-        /// Represents symbol `>:`.
+        /// Represents symbol `&gt;:`.
         /// </summary>
-        PrimaryLogicalPartMark
+        PrimaryLogicalPartMark,
+
+        /// <summary>
+        /// Represents symbol `-&gt;`.
+        /// </summary>
+        LeftRightArrow
     }
 }

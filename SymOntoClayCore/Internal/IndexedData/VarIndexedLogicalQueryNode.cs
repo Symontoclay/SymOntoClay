@@ -8,7 +8,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
     public class VarIndexedLogicalQueryNode: BaseIndexedLogicalQueryNode
     {
         /// <inheritdoc/>
-        public override KindOfLogicalQueryNode Kind => KindOfLogicalQueryNode.Var;
+        public override KindOfLogicalQueryNode Kind => KindOfLogicalQueryNode.LogicalVar;
 
         /// <inheritdoc/>
         public override KindOfOperatorOfLogicalQueryNode KindOfOperator => KindOfOperatorOfLogicalQueryNode.Unknown;

@@ -39,7 +39,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             _baseRulePart.Expression = paser.Result;
 
-            throw new NotImplementedException();
+            var nextToken = _context.GetToken();
+
+            if(nextToken.TokenKind != _terminatingTokenKind)
+            {
+                _context.Recovery(_currToken);
+            }
+
+            Exit();
         }
     }
 }

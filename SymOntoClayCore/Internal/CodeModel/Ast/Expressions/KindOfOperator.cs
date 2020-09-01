@@ -11,6 +11,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         IsNot,
         LeftRightStream,
         Point,
-        CallFunction
+        CallFunction,
+        Predicate
     }
 }

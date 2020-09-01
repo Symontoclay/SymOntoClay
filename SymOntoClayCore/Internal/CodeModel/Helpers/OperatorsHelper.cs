@@ -25,6 +25,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                     return 2;
 
                 case KindOfOperator.CallFunction:
+                case KindOfOperator.Predicate:
                     return 2;
 
                 default:

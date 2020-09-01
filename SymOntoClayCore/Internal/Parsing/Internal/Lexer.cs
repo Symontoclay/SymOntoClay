@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using NLog.LayoutRenderers.Wrappers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             InString,
             InIdentifier,
             At,
-            Sharp
+            Sharp,
+            DollarSign
         }
 
         private enum KindOfPrefix
@@ -72,7 +74,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 //_logger.Log($"(int)tmpChar = {(int)tmpChar}");
                 //_logger.Log($"_currentPos = {_currentPos}");
                 //_logger.Log($"_state = {_state}");
-                //_logger.Log($"tmpBuffer?.ToString() = {buffer?.ToString()}");
+                //_logger.Log($"buffer?.ToString() = {buffer?.ToString()}");
 #endif
 
                 switch (_state)
@@ -82,16 +84,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         if (char.IsLetterOrDigit(tmpChar) || tmpChar == '_')
                         {
-                            var tmpNextChar = _items.Peek();
+                            var nextChar = _items.Peek();
 
 #if DEBUG
-                            //_logger.Log($"tmpNextChar = {tmpNextChar}");
+                            //_logger.Log($"nextChar = {nextChar}");
 #endif
 
                             buffer = new StringBuilder();
                             buffer.Append(tmpChar);
 
-                            if (tmpNextChar == '.' || !char.IsLetterOrDigit(tmpNextChar))
+                            if (nextChar == '.' || !char.IsLetterOrDigit(nextChar))
                             {
                                 return CreateToken(TokenKind.Word, buffer.ToString());
                             }
@@ -140,6 +142,25 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             case '~':
                                 return CreateToken(TokenKind.AsyncMarker);
 
+                            case '-':
+                                {
+                                    var nextChar = _items.Peek();
+
+#if DEBUG
+                                    //_logger.Log($"nextChar = {nextChar}");
+#endif
+
+                                    switch(nextChar)
+                                    {
+                                        case '>':
+                                            _items.Dequeue();
+                                            return CreateToken(TokenKind.LeftRightArrow);
+
+                                        default:
+                                            throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                    }
+                                }
+
                             case '=':
                                 return CreateToken(TokenKind.Assign);
 
@@ -175,6 +196,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _state = State.Sharp;
                                 break;
 
+                            case '$':
+                                buffer = new StringBuilder();
+                                buffer.Append(tmpChar);
+                                _state = State.DollarSign;
+                                break;                                
+
                             default:
                                 {
                                     var intCharCode = (int)tmpChar;
@@ -203,6 +230,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     case State.InWord:
                         {
                             buffer.Append(tmpChar);
+
+#if DEBUG
+                            //_logger.Log($"case State.InWord: buffer?.ToString() = {buffer?.ToString()}");
+#endif
 
                             if (_items.Count == 0)
                             {
@@ -247,6 +278,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                     case KindOfPrefix.EntityCondition:
                                         return CreateToken(TokenKind.EntityCondition, buffer.ToString());
+
+                                    case KindOfPrefix.Entity:
+                                        return CreateToken(TokenKind.Entity, buffer.ToString());
 
                                     default:
                                         throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
@@ -453,6 +487,44 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
                         }
                         break;
+
+                    case State.DollarSign:
+                        if (char.IsLetterOrDigit(tmpChar) || tmpChar == '_')
+                        {
+                            buffer.Append(tmpChar);
+
+#if DEBUG
+                            //_logger.Log($"case State.DollarSign: buffer?.ToString() = {buffer?.ToString()}");
+#endif
+
+                            _kindOfPrefix = KindOfPrefix.LogicalVar;
+
+                            var nextChar = _items.Peek();
+
+#if DEBUG
+                            //_logger.Log($"nextChar = {nextChar}");
+#endif
+
+                            if (nextChar == '`')
+                            {
+                                _state = State.InIdentifier;
+                            }
+                            else
+                            {
+                                if (char.IsLetterOrDigit(nextChar) || nextChar == '_')
+                                {
+                                    _state = State.InWord;
+                                }
+                                else
+                                {
+                                    _state = State.Init;
+
+                                    return CreateToken(TokenKind.LogicalVar, buffer.ToString());
+                                }
+                            }
+                            break;
+                        }
+                        throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
 
                     default:
                         throw new ArgumentOutOfRangeException(nameof(_state), _state, null);

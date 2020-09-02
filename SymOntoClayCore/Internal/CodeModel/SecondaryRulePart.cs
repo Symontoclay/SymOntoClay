@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.PrintBriefObjProp(n, nameof(PrimaryPart), PrimaryPart);
+            sb.PrintExisting(n, nameof(PrimaryPart), PrimaryPart);
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -96,7 +96,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.PrintBriefObjProp(n, nameof(PrimaryPart), PrimaryPart);
+            sb.PrintExisting(n, nameof(PrimaryPart), PrimaryPart);
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -106,7 +106,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.PrintBriefObjProp(n, nameof(PrimaryPart), PrimaryPart);
+            sb.PrintExisting(n, nameof(PrimaryPart), PrimaryPart);
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }

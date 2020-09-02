@@ -12,6 +12,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         LeftRightStream,
         Point,
         CallFunction,
-        Predicate
+        Predicate,
+        And
     }
 }

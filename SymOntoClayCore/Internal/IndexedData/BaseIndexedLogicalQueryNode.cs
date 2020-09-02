@@ -10,7 +10,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
     public abstract class BaseIndexedLogicalQueryNode : IndexedAnnotatedItem
     {
         public abstract KindOfLogicalQueryNode Kind { get; }
-        public abstract KindOfOperatorOfLogicalQueryNode KindOfOperator { get; }
+        public virtual KindOfOperatorOfLogicalQueryNode KindOfOperator => KindOfOperatorOfLogicalQueryNode.Unknown;
 
         public LogicalQueryNode Origin { get; set; }
         public IndexedRuleInstance RuleInstance { get; set; }

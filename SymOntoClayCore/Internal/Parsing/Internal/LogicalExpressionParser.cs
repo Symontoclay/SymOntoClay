@@ -17,7 +17,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotPredicateParameter,
             GotPredicate,
             GotEntity,
-            GotLogicalVar
+            GotLogicalVar,
+            GotBinaryOperator
         }
 
         public LogicalExpressionParser(InternalParserContext context, TokenKind terminatingTokenKind)
@@ -161,6 +162,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotPredicate:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.And:
+                            ProcessBinaryOperator();
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotBinaryOperator:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                            ProcessWord();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -224,6 +241,26 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
 
             _state = State.WaitForPredicateParameter;
+        }
+
+        private void ProcessBinaryOperator()
+        {
+            var node = new LogicalQueryNode();
+            _lastLogicalQueryNode = node;
+            node.Kind = KindOfLogicalQueryNode.BinaryOperator;
+            node.KindOfOperator = KindOfOperatorOfLogicalQueryNode.And;
+
+            var priority = OperatorsHelper.GetPriority(KindOfOperator.And);
+
+#if DEBUG
+            Log($"priority = {priority}");
+#endif
+
+            var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.BinaryOperator, priority);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+            _state = State.GotBinaryOperator;
         }
     }
 }

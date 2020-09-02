@@ -631,42 +631,13 @@ namespace SymOntoClay.Core.Internal.Convertors
             }
         }
 
-        private static IsOperatorIndexedLogicalQueryNode ConvertIsOperatorLogicalQueryNode(LogicalQueryNode source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        private static BaseIndexedLogicalQueryNode ConvertIsOperatorLogicalQueryNode(LogicalQueryNode source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {
 #if DEBUG
-            //_gbcLogger.Info($"source = {source}");
+            _gbcLogger.Info($"source = {source}");
 #endif
 
-            if (source == null)
-            {
-                return null;
-            }
-
-            if (convertingContext.ContainsKey(source))
-            {
-                return (IsOperatorIndexedLogicalQueryNode)convertingContext[source];
-            }
-
-#if DEBUG
-            //_gbcLogger.Info("NEXT");
-#endif
-
-            var result = new IsOperatorIndexedLogicalQueryNode();
-            convertingContext[source] = result;
-            result.Origin = source;
-
-            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
-
-            result.Left = ConvertLogicalQueryNode(source.Left, mainStorageContext, convertingContext);
-            result.Right = ConvertLogicalQueryNode(source.Right, mainStorageContext, convertingContext);
-
-#if DEBUG
-            //_gbcLogger.Info($"result (snapshot) = {result}");
-#endif
-
-            result.CalculateLongConditionalHashCode();
-
-            return result;
+            throw new NotImplementedException();
         }
 
         private static ConceptIndexedLogicalQueryNode ConvertConceptLogicalQueryNode(LogicalQueryNode source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)

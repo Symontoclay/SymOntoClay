@@ -1658,7 +1658,13 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.ConceptIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.ConceptIndexedLogicalQueryNode.KindOfOperator">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ConceptIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ConceptIndexedLogicalQueryNode.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ConceptIndexedLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.EntityConditionIndexedLogicalQueryNode.Kind">
@@ -1976,6 +1982,18 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedPrimaryRulePart.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedRelationLogicalQueryNode.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRelationLogicalQueryNode.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRelationLogicalQueryNode.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRelationLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstance.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -2115,12 +2133,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedWaypointValue.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IsOperatorIndexedLogicalQueryNode.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IsOperatorIndexedLogicalQueryNode.KindOfOperator">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.NotOperatorIndexedLogicalQueryNode.Kind">
@@ -2552,6 +2564,9 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RulePartParser.OnRun">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.SecondaryRulePartParser.OnEnter">
+            <inheritdoc/>
+        </member>
         <member name="T:SymOntoClay.Core.Internal.Parsing.Internal.SourceCodeParser">
             <summary>
             It is top level parser for source code file.
@@ -2644,6 +2659,7 @@
             Represents symbol `&gt;`.
             </summary>
         </member>
+        <!-- Badly formed XML comment ignored for member "F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.And" -->
         <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.LeftRightStream">
             <summary>
             Represents symbol `&gt;&gt;`.

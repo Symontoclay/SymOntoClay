@@ -167,6 +167,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             case '>':
                                 return CreateToken(TokenKind.More);
 
+                            case '&':
+                                return CreateToken(TokenKind.And);
+
                             case '\'':
                                 _closeBracket = '\'';
                                 _state = State.InString;

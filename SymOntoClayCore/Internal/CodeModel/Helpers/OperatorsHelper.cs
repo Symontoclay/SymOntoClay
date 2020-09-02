@@ -15,6 +15,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 case KindOfOperator.LeftRightStream:
                     return 15;
 
+                case KindOfOperator.And:
+                    return 14;
+
                 case KindOfOperator.Is:
                     return 10;
 
@@ -39,6 +42,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             {
                 case KindOfOperator.LeftRightStream:
                     return ">>";
+
+                case KindOfOperator.And:
+                    return "AND";
 
                 case KindOfOperator.Is:
                     return "IS";

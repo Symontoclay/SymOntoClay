@@ -1,7 +1,9 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
@@ -13,7 +15,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Init,
             WaitForContent,
             WaitForPrimaryRulePart,
-            GotPrimaryRulePart
+            GotPrimaryRulePart,
+            WaitForSecondaryRulePart,
+            GotSecondaryRulePart
         }
 
         public LogicalQueryParser(InternalParserContext context)
@@ -38,6 +42,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             if (Result.Name == null || Result.Name.IsEmpty)
             {
                 Result.Name = NameHelper.CreateRuleOrFactName(_context.Dictionary);
+            }
+
+            var secondaryPartsList = Result.SecondaryParts;
+
+            if (!secondaryPartsList.IsNullOrEmpty())
+            {
+                var primaryPart = Result.PrimaryPart;
+
+                primaryPart.SecondaryParts = secondaryPartsList.ToList();
+
+                foreach(var secondaryPart in secondaryPartsList)
+                {
+                    secondaryPart.PrimaryPart = primaryPart;
+                }
             }
         }
 
@@ -71,7 +89,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _state = State.WaitForPrimaryRulePart;
                             break;
 
-                        case TokenKind.Word:
+                        case TokenKind.Word:                        
                             {
                                 _context.Recovery(_currToken);
 
@@ -81,7 +99,24 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #if DEBUG
                                 Log($"paser.Result = {paser.Result}");
 #endif
+                                paser.Result.Parent = Result;
+                                Result.PrimaryPart = paser.Result;
 
+                                _state = State.GotPrimaryRulePart;
+                            }
+                            break;
+
+                        case TokenKind.OpenFigureBracket:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var paser = new PrimaryRulePartParser(_context, TokenKind.CloseFigureBracket);
+                                paser.Run();
+
+#if DEBUG
+                                Log($"paser.Result = {paser.Result}");
+#endif
+                                paser.Result.Parent = Result;
                                 Result.PrimaryPart = paser.Result;
 
                                 _state = State.GotPrimaryRulePart;
@@ -106,7 +141,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #if DEBUG
                                 Log($"paser.Result = {paser.Result}");
 #endif
-
+                                paser.Result.Parent = Result;
                                 Result.PrimaryPart = paser.Result;
 
                                 _state = State.GotPrimaryRulePart;
@@ -119,6 +154,54 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case State.GotPrimaryRulePart:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.CloseFactBracket:
+                            Exit();
+                            break;
+
+                        case TokenKind.LeftRightArrow:
+                            _state = State.WaitForSecondaryRulePart;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForSecondaryRulePart:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenFigureBracket:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var paser = new SecondaryRulePartParser(_context, TokenKind.CloseFigureBracket);
+                                paser.Run();
+
+#if DEBUG
+                                Log($"paser.Result = {paser.Result}");
+#endif
+
+                                if(Result.SecondaryParts == null)
+                                {
+                                    Result.SecondaryParts = new List<SecondaryRulePart>();
+                                }
+
+                                paser.Result.Parent = Result;
+
+                                Result.SecondaryParts.Add(paser.Result);
+
+                                _state = State.GotSecondaryRulePart;
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotSecondaryRulePart:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.CloseFactBracket:

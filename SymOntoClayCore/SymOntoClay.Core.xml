@@ -2162,6 +2162,18 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedWaypointValue.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.IndexedData.LogicalVarIndexedLogicalQueryNode.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.LogicalVarIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.LogicalVarIndexedLogicalQueryNode.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.LogicalVarIndexedLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.NotOperatorIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>

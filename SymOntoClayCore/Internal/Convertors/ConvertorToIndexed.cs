@@ -591,16 +591,55 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             if(!source.SecondaryParts.IsNullOrEmpty())
             {
-                throw new NotImplementedException();
+                foreach(var secondaryPart in source.SecondaryParts)
+                {
+                    result.SecondaryParts.Add(ConvertSecondaryRulePart(secondaryPart, ruleInstance, mainStorageContext, convertingContext));
+                }              
             }
 
 #if DEBUG
-            //_gbcLogger.Info($"result (snapshot) = {result}");
+            _gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
             result.CalculateLongConditionalHashCode();
 
             return result;
+        }
+
+        private static IndexedSecondaryRulePart ConvertSecondaryRulePart(SecondaryRulePart source, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+#if DEBUG
+            _gbcLogger.Info($"source = {source}");
+#endif
+
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (IndexedSecondaryRulePart)convertingContext[source];
+            }
+
+            var result = new IndexedSecondaryRulePart();
+            convertingContext[source] = result;
+            result.OriginalSecondaryRulePart = source;
+            source.Indexed = result;
+
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
+
+            FillBaseRulePart(source, result, ruleInstance, mainStorageContext, convertingContext);
+
+            result.PrimaryPart = ConvertPrimaryRulePart(source.PrimaryPart, ruleInstance, mainStorageContext, convertingContext);
+
+#if DEBUG
+            _gbcLogger.Info($"result (snapshot) = {result}");
+#endif
+
+            result.CalculateLongConditionalHashCode();
+
+            throw new NotImplementedException();
         }
 
         private static void FillBaseRulePart(BaseRulePart source, IndexedBaseRulePart dest, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
@@ -627,6 +666,22 @@ namespace SymOntoClay.Core.Internal.Convertors
                         case KindOfOperatorOfLogicalQueryNode.Is:
                             return ConvertIsOperatorLogicalQueryNode(source, rulePart, ruleInstance, mainStorageContext, convertingContext, contextOfConvertingExpressionNode);
 
+                        case KindOfOperatorOfLogicalQueryNode.And:
+                            return ConvertAndOperatorIndexedLogicalQueryNode(source, rulePart, ruleInstance, mainStorageContext, convertingContext, contextOfConvertingExpressionNode);
+
+                        case KindOfOperatorOfLogicalQueryNode.Or:
+                            return ConvertOrOperatorIndexedLogicalQueryNode(source, rulePart, ruleInstance, mainStorageContext, convertingContext, contextOfConvertingExpressionNode);
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(source.KindOfOperator), source.KindOfOperator, null);
+                    }
+
+                case KindOfLogicalQueryNode.UnaryOperator:
+                    switch (source.KindOfOperator)
+                    {
+                        case KindOfOperatorOfLogicalQueryNode.Not:
+                            return ConvertNotOperatorIndexedLogicalQueryNode(source, rulePart, ruleInstance, mainStorageContext, convertingContext, contextOfConvertingExpressionNode);
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(source.KindOfOperator), source.KindOfOperator, null);
                     }
@@ -634,9 +689,64 @@ namespace SymOntoClay.Core.Internal.Convertors
                 case KindOfLogicalQueryNode.Concept:
                     return ConvertConceptLogicalQueryNode(source, rulePart, ruleInstance, mainStorageContext, convertingContext);
 
+                case KindOfLogicalQueryNode.Relation:
+                    return ConvertRelationIndexedLogicalQueryNode(source, rulePart, ruleInstance, mainStorageContext, convertingContext, contextOfConvertingExpressionNode);
+
+                case KindOfLogicalQueryNode.LogicalVar:
+                    return ConvertLogicalVarIndexedLogicalQueryNode(source, rulePart, ruleInstance, mainStorageContext, convertingContext, contextOfConvertingExpressionNode);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, null);
             }
+        }
+
+        private static AndOperatorIndexedLogicalQueryNode ConvertAndOperatorIndexedLogicalQueryNode(LogicalQueryNode source, IndexedBaseRulePart rulePart, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext, ContextOfConvertingExpressionNode contextOfConvertingExpressionNode)
+        {
+#if DEBUG
+            _gbcLogger.Info($"source = {source}");
+#endif
+
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (AndOperatorIndexedLogicalQueryNode)convertingContext[source];
+            }
+
+            var result = new AndOperatorIndexedLogicalQueryNode();
+            convertingContext[source] = result;
+
+            FillBaseIndexedLogicalQueryNode(result, source, rulePart, ruleInstance, mainStorageContext, convertingContext);
+
+
+            throw new NotImplementedException();
+        }
+        
+        private static OrOperatorIndexedLogicalQueryNode ConvertOrOperatorIndexedLogicalQueryNode(LogicalQueryNode source, IndexedBaseRulePart rulePart, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext, ContextOfConvertingExpressionNode contextOfConvertingExpressionNode)
+        {
+#if DEBUG
+            _gbcLogger.Info($"source = {source}");
+#endif
+
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (OrOperatorIndexedLogicalQueryNode)convertingContext[source];
+            }
+
+            var result = new OrOperatorIndexedLogicalQueryNode();
+            convertingContext[source] = result;
+
+            FillBaseIndexedLogicalQueryNode(result, source, rulePart, ruleInstance, mainStorageContext, convertingContext);
+
+            throw new NotImplementedException();
         }
 
         private static BaseIndexedLogicalQueryNode ConvertIsOperatorLogicalQueryNode(LogicalQueryNode source, IndexedBaseRulePart rulePart, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext, ContextOfConvertingExpressionNode contextOfConvertingExpressionNode)
@@ -689,6 +799,69 @@ namespace SymOntoClay.Core.Internal.Convertors
 #endif
 
             result.CalculateLongConditionalHashCode();
+
+            return result;
+        }
+
+        private static NotOperatorIndexedLogicalQueryNode ConvertNotOperatorIndexedLogicalQueryNode(LogicalQueryNode source, IndexedBaseRulePart rulePart, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext, ContextOfConvertingExpressionNode contextOfConvertingExpressionNode)
+        {
+#if DEBUG
+            _gbcLogger.Info($"source = {source}");
+#endif
+
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (NotOperatorIndexedLogicalQueryNode)convertingContext[source];
+            }
+
+            var result = new NotOperatorIndexedLogicalQueryNode();
+            convertingContext[source] = result;
+
+            FillBaseIndexedLogicalQueryNode(result, source, rulePart, ruleInstance, mainStorageContext, convertingContext);
+
+            throw new NotImplementedException();
+        }
+
+        private static RelationIndexedLogicalQueryNode ConvertRelationIndexedLogicalQueryNode(LogicalQueryNode source, IndexedBaseRulePart rulePart, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext, ContextOfConvertingExpressionNode contextOfConvertingExpressionNode)
+        {
+#if DEBUG
+            _gbcLogger.Info($"source = {source}");
+#endif
+
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (RelationIndexedLogicalQueryNode)convertingContext[source];
+            }
+
+            var result = new RelationIndexedLogicalQueryNode();
+            convertingContext[source] = result;
+
+            FillBaseIndexedLogicalQueryNode(result, source, rulePart, ruleInstance, mainStorageContext, convertingContext);
+
+            var name = source.Name;
+
+            result.Key = mainStorageContext.Dictionary.GetKey(name.NameValue);
+
+            if (name.KindOfName == KindOfName.QueryVar)
+            {
+                result.IsQuestion = true;
+            }
+
+            FillRelationParams(result, source.ParamsList, rulePart, ruleInstance, mainStorageContext, convertingContext, contextOfConvertingExpressionNode);
+
+#if DEBUG
+            _gbcLogger.Info($"result = {result}");
+#endif
 
             return result;
         }
@@ -756,15 +929,15 @@ namespace SymOntoClay.Core.Internal.Convertors
                     //    }
                     //    break;
 
-                    //case KindOfLogicalQueryNode.Var:
-                    //    {
-                    //        var originParam = param.AsVar;
-                    //        var varInfo = new QueryExecutingCardAboutVar();
-                    //        varInfo.KeyOfVar = originParam.Key;
-                    //        varInfo.Position = i;
-                    //        varsInfoList.Add(varInfo);
-                    //    }
-                    //    break;
+                    case KindOfLogicalQueryNode.LogicalVar:
+                        {
+                            var originParam = param;
+                            var varInfo = new QueryExecutingCardAboutVar();
+                            varInfo.KeyOfVar = dictionary.GetKey(originParam.Name.NameValue);
+                            varInfo.Position = i;
+                            varsInfoList.Add(varInfo);
+                        }
+                        break;
 
                     //case KindOfLogicalQueryNode.QuestionVar:
                     //    {
@@ -821,6 +994,40 @@ namespace SymOntoClay.Core.Internal.Convertors
             dest.KnownInfoList = knownInfoList;
 
             contextOfConvertingExpressionNode.RelationsList.Add(dest);
+        }
+
+        private static LogicalVarIndexedLogicalQueryNode ConvertLogicalVarIndexedLogicalQueryNode(LogicalQueryNode source, IndexedBaseRulePart rulePart, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext, ContextOfConvertingExpressionNode contextOfConvertingExpressionNode)
+        {
+#if DEBUG
+            _gbcLogger.Info($"source = {source}");
+#endif
+
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (LogicalVarIndexedLogicalQueryNode)convertingContext[source];
+            }
+
+            var result = new LogicalVarIndexedLogicalQueryNode();
+            convertingContext[source] = result;
+
+            FillBaseIndexedLogicalQueryNode(result, source, rulePart, ruleInstance, mainStorageContext, convertingContext);
+
+            result.Key = mainStorageContext.Dictionary.GetKey(source.Name.NameValue);
+
+#if DEBUG
+            _gbcLogger.Info($"result (snapshot) = {result}");
+#endif
+
+            contextOfConvertingExpressionNode.HasVars = true;
+
+            result.CalculateLongConditionalHashCode();
+
+            return result;
         }
 
         private static ConceptIndexedLogicalQueryNode ConvertConceptLogicalQueryNode(LogicalQueryNode source, IndexedBaseRulePart rulePart, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)

@@ -50,10 +50,14 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 #if DEBUG
             //Log($"ruleInstance = {ruleInstance}");
             //Log($"isPrimary = {isPrimary}");
-            //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+            Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
 #endif
 
             var indexedRuleInstance = ruleInstance.GetIndexed(_realStorageContext.MainStorageContext);
+
+#if DEBUG
+            Log($"indexedRuleInstance = {indexedRuleInstance}");
+#endif
 
             _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(indexedRuleInstance);
 

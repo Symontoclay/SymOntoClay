@@ -50,5 +50,5 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             return sb.ToString();
-        } 
+        }
 */

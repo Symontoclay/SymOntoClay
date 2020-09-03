@@ -14,6 +14,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         EntityRefByConcept,
         Channel,
         Var,
-        SystemVar
+        SystemVar,
+        LogicalVar,
+        QueryVar
     }
 }

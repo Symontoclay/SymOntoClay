@@ -16,6 +16,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         Var,
         SystemVar,
         LogicalVar,
-        QueryVar
+        QuestionVar
     }
 }

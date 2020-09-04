@@ -17,6 +17,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Channel,
         SystemVar,
         LogicalVar,
+        QuestionVar,
         EntityCondition,
         Entity,
         Point,

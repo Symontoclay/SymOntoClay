@@ -89,8 +89,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _state = State.WaitForPrimaryRulePart;
                             break;
 
-                        case TokenKind.Word:                        
-                            {
+                        case TokenKind.Word:
+                        case TokenKind.QuestionVar:
+                        {
                                 _context.Recovery(_currToken);
 
                                 var paser = new PrimaryRulePartParser(_context, TokenKind.CloseFactBracket);

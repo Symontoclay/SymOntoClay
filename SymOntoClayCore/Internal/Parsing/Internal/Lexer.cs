@@ -17,7 +17,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             InIdentifier,
             At,
             Sharp,
-            DollarSign
+            DollarSign,
+            InQuestionVar
         }
 
         private enum KindOfPrefix
@@ -26,6 +27,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Var,
             SystemVar,
             LogicalVar,
+            QuestionVar,
             Channel,
             Entity,
             EntityCondition,
@@ -136,6 +138,27 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             case '.':
                                 return CreateToken(TokenKind.Point);
 
+                            case '?':
+                                {
+                                    var nextChar = _items.Peek();
+
+#if DEBUG
+                                    _logger.Log($"nextChar = {nextChar}");
+#endif
+
+                                    if(char.IsLetterOrDigit(nextChar) || nextChar == '_')
+                                    {
+                                        _state = State.InQuestionVar;
+
+                                        buffer = new StringBuilder();
+                                        buffer.Append(tmpChar);
+
+                                        break;
+                                    }
+
+                                    throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                }                                
+
                             case ',':
                                 return CreateToken(TokenKind.Comma);
 
@@ -203,7 +226,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 buffer = new StringBuilder();
                                 buffer.Append(tmpChar);
                                 _state = State.DollarSign;
-                                break;                                
+                                break;                           
 
                             default:
                                 {
@@ -258,13 +281,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 }
                             }
 
-                            var tmpNextChar = _items.Peek();
+                            var nextChar = _items.Peek();
 
 #if DEBUG
-                            //_logger.Log($"tmpNextChar = {tmpNextChar}");
+                            //_logger.Log($"nextChar = {nextChar}");
 #endif
 
-                            if (!char.IsLetterOrDigit(tmpNextChar) && tmpNextChar != '_')
+                            if (!char.IsLetterOrDigit(nextChar) && nextChar != '_')
                             {
                                 _state = State.Init;
 
@@ -523,6 +546,44 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     _state = State.Init;
 
                                     return CreateToken(TokenKind.LogicalVar, buffer.ToString());
+                                }
+                            }
+                            break;
+                        }
+                        throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+
+                    case State.InQuestionVar:
+                        if (char.IsLetterOrDigit(tmpChar) || tmpChar == '_')
+                        {
+                            buffer.Append(tmpChar);
+
+#if DEBUG
+                            //_logger.Log($"case State.DollarSign: buffer?.ToString() = {buffer?.ToString()}");
+#endif
+
+                            _kindOfPrefix = KindOfPrefix.QuestionVar;
+
+                            var nextChar = _items.Peek();
+
+#if DEBUG
+                            //_logger.Log($"nextChar = {nextChar}");
+#endif
+
+                            if (nextChar == '`')
+                            {
+                                _state = State.InIdentifier;
+                            }
+                            else
+                            {
+                                if (char.IsLetterOrDigit(nextChar) || nextChar == '_')
+                                {
+                                    _state = State.InWord;
+                                }
+                                else
+                                {
+                                    _state = State.Init;
+
+                                    return CreateToken(TokenKind.QuestionVar, buffer.ToString());
                                 }
                             }
                             break;

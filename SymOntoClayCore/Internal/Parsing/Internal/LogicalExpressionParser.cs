@@ -18,6 +18,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotPredicate,
             GotEntity,
             GotLogicalVar,
+            GotQuestionVar,
             GotBinaryOperator
         }
 
@@ -69,6 +70,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
+                        case TokenKind.QuestionVar:
                             ProcessWord();
                             break;
 
@@ -122,6 +124,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.Entity:
                         case TokenKind.LogicalVar:
+                        case TokenKind.QuestionVar:
                         {
                                 _context.Recovery(_currToken);
 
@@ -205,10 +208,27 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             switch (value.KindOfName)
             {
                 case KindOfName.Concept:
+                case KindOfName.QuestionVar:
                     switch(nextToken.TokenKind)
                     {
                         case TokenKind.OpenRoundBracket:
                             ProcessPredicate(value);
+                            break;
+
+                        case TokenKind.Comma:
+                            {
+                                _context.Recovery(nextToken);
+
+                                var node = new LogicalQueryNode();
+                                node.Kind = KindOfLogicalQueryNode.QuestionVar;
+                                node.Name = value;
+
+                                var intermediateNode = new IntermediateAstNode(node);
+
+                                AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+                                _state = State.GotQuestionVar;
+                            }
                             break;
 
                         default:

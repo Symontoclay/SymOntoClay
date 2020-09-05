@@ -540,7 +540,11 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
 
+            result.Kind = source.Kind;
+
             result.Name = ConvertStrongIdentifierValue(source.Name, mainStorageContext, convertingContext);
+
+            result.Key = mainStorageContext.Dictionary.GetKey(source.Name.NameValue);
 
             result.IsRule = source.IsRule;
 

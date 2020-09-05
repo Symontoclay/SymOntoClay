@@ -12,6 +12,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         public string DictionaryName { get; set; }
         public StrongIdentifierValue Name { get; set; }
+        public KindOfRuleInstance Kind { get; set; } = KindOfRuleInstance.Undefined;
         public bool IsRule { get; set; }
         public PrimaryRulePart PrimaryPart { get; set; }
         public List<SecondaryRulePart> SecondaryParts { get; set; } = new List<SecondaryRulePart>();
@@ -81,6 +82,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             result.DictionaryName = DictionaryName;
             result.Name = Name.Clone(context);
+            result.Kind = Kind;
             result.IsRule = IsRule;
             result.PrimaryPart = PrimaryPart.Clone(context);
             result.SecondaryParts = SecondaryParts.Select(p => p.Clone(context)).ToList();
@@ -98,6 +100,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
             sb.PrintObjProp(n, nameof(Name), Name);
+
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
 
             sb.AppendLine($"{spaces}{nameof(IsRule)} = {IsRule}");
 
@@ -119,6 +123,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
             sb.PrintShortObjProp(n, nameof(Name), Name);
 
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+
             sb.AppendLine($"{spaces}{nameof(IsRule)} = {IsRule}");
 
             sb.PrintShortObjProp(n, nameof(PrimaryPart), PrimaryPart);
@@ -138,6 +144,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
             sb.PrintBriefObjProp(n, nameof(Name), Name);
+
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
 
             sb.AppendLine($"{spaces}{nameof(IsRule)} = {IsRule}");
 

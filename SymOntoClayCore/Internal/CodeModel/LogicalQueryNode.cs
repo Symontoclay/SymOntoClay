@@ -21,6 +21,34 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public Value Value { get; set; }
         public bool IsQuestion { get; set; }
 
+        public bool HasQuestionVars
+        {
+            get
+            {
+                if(IsQuestion)
+                {
+                    return true;
+                }
+
+                if(Left != null && Left.HasQuestionVars)
+                {
+                    return true;
+                }
+
+                if(Right != null && Right.HasQuestionVars)
+                {
+                    return true;
+                }
+
+                if (ParamsList != null && ParamsList.Any(p => p.HasQuestionVars))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
         IAstNode IAstNode.Left { get => Left; set => Left = (LogicalQueryNode)value; }
         IAstNode IAstNode.Right { get => Right; set => Right = (LogicalQueryNode)value; }
 
@@ -73,12 +101,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.Kind = Kind;
             result.KindOfOperator = KindOfOperator;
             result.Name = Name.Clone(context);
-            result.Left = Left.Clone(context);
-            result.Right = Right.Clone(context);
-            result.ParamsList = ParamsList.Select(p => p.Clone(context)).ToList();
-            result.VarsList = VarsList.Select(p => p.Clone(context)).ToList();
+            result.Left = Left?.Clone(context);
+            result.Right = Right?.Clone(context);
+            result.ParamsList = ParamsList?.Select(p => p.Clone(context)).ToList();
+            result.VarsList = VarsList?.Select(p => p.Clone(context)).ToList();
             result.IsGroup = IsGroup;
-            result.Value = Value.CloneValue(context);
+            result.Value = Value?.CloneValue(context);
             result.IsQuestion = IsQuestion;
 
             result.AppendAnnotations(this, context);

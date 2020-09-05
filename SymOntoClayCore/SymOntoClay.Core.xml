@@ -2842,6 +2842,9 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.Append(SymOntoClay.Core.Internal.CodeModel.RuleInstance,System.Boolean)">
             <inheritdoc/>
         </member>
+        <member name="E:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.OnChanged">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.MetadataStorage.MetadataStorage.Kind">
             <inheritdoc/>
         </member>

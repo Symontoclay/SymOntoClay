@@ -78,11 +78,13 @@ namespace TestSandbox.LogicalDatabase
 
             _logger.Log($"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
 
-            var indexedQuery = parsedQuery.GetIndexed(_context);
+            //var indexedQuery = parsedQuery.GetIndexed(_context);
 
-            _logger.Log($"indexedQuery = {indexedQuery}");
+            //_logger.Log($"indexedQuery = {indexedQuery}");
 
-            _logger.Log($"DebugHelperForIndexedRuleInstance.ToString(indexedQuery) = {DebugHelperForIndexedRuleInstance.ToString(indexedQuery, _context.Dictionary)}");
+            //_logger.Log($"DebugHelperForIndexedRuleInstance.ToString(indexedQuery) = {DebugHelperForIndexedRuleInstance.ToString(indexedQuery, _context.Dictionary)}");
+
+            _context.Storage.GlobalStorage.LogicalStorage.Append(parsedQuery);
 
             //throw new NotImplementedException();
         }

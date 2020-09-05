@@ -14,6 +14,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         {
             _kind = kind;
             _realStorageContext = realStorageContext;
+            _ruleInstancesList = new List<RuleInstance>();
+            _ruleInstancesDict = new Dictionary<ulong, RuleInstance>();
+            _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData(realStorageContext.MainStorageContext.Logger);
         }
 
         private readonly KindOfStorage _kind;
@@ -28,7 +31,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
         private readonly object _lockObj = new object();
 
-        private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData();
+        private List<RuleInstance> _ruleInstancesList;
+        private Dictionary<ulong, RuleInstance> _ruleInstancesDict;
+        private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData;
 
         /// <inheritdoc/>
         public void Append(RuleInstance ruleInstance)
@@ -53,21 +58,54 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
 #endif
 
+            if (_ruleInstancesList.Contains(ruleInstance))
+            {
+                return;
+            }
+
+            ruleInstance = ruleInstance.Clone();
+
+#if DEBUG
+            Log($"ruleInstance (after) = {ruleInstance}");
+#endif
+
             var indexedRuleInstance = ruleInstance.GetIndexed(_realStorageContext.MainStorageContext);
 
 #if DEBUG
             Log($"indexedRuleInstance = {indexedRuleInstance}");
 #endif
 
+            var ruleInstanceKey = indexedRuleInstance.Key;
+
+#if DEBUG
+            Log($"ruleInstanceKey = {ruleInstanceKey}");
+#endif
+
+            if (_ruleInstancesDict.ContainsKey(ruleInstanceKey))
+            {
+                return;
+            }
+
+            _ruleInstancesList.Add(ruleInstance);
+            _ruleInstancesDict[ruleInstanceKey] = ruleInstance;
+
             _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(indexedRuleInstance);
 
-            //throw new NotImplementedException();
+            EmitOnChanged();
 
 #if IMAGINE_WORKING
-            //Log("End");
+            Log("End");
 #else
             throw new NotImplementedException();
 #endif
+        }
+
+        /// <inheritdoc/>
+        public event Action OnChanged;
+
+        protected void EmitOnChanged()
+        {
+            OnChanged?.Invoke();
         }
     }
 }

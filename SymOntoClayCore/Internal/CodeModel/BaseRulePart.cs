@@ -10,6 +10,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public RuleInstance Parent { get; set; }
         public LogicalQueryNode Expression { get; set; }
 
+        public bool HasQuestionVars
+        {
+            get
+            {
+                if(Expression == null)
+                {
+                    return false;
+                }
+
+                return Expression.HasQuestionVars;
+            }
+        }
+
         protected void AppendBaseRulePart(BaseRulePart source, Dictionary<object, object> context)
         {
             Parent = source.Parent.Clone(context);

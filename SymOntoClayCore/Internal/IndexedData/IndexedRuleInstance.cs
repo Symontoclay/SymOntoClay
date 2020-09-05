@@ -11,6 +11,10 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public RuleInstance Origin { get; set; }
         public IndexedStrongIdentifierValue Name { get; set; }
 
+        public KindOfRuleInstance Kind { get; set; } = KindOfRuleInstance.Undefined;
+
+        public ulong Key { get; set; }
+
         public bool IsRule { get; set; }
         public IndexedPrimaryRulePart PrimaryPart { get; set; }
         public List<IndexedSecondaryRulePart> SecondaryParts { get; set; } = new List<IndexedSecondaryRulePart>();
@@ -24,6 +28,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintExisting(n, nameof(Origin), Origin);
             sb.PrintObjProp(n, nameof(Name), Name);
 
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+
+            sb.AppendLine($"{spaces}{nameof(Key)} = {Key}");
             sb.AppendLine($"{spaces}{nameof(IsRule)} = {IsRule}");
 
             sb.PrintObjProp(n, nameof(PrimaryPart), PrimaryPart);
@@ -41,6 +48,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintExisting(n, nameof(Origin), Origin);
             sb.PrintShortObjProp(n, nameof(Name), Name);
 
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+
+            sb.AppendLine($"{spaces}{nameof(Key)} = {Key}");
             sb.AppendLine($"{spaces}{nameof(IsRule)} = {IsRule}");
 
             sb.PrintShortObjProp(n, nameof(PrimaryPart), PrimaryPart);
@@ -58,6 +68,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintExisting(n, nameof(Origin), Origin);
             sb.PrintBriefObjProp(n, nameof(Name), Name);
 
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+
+            sb.AppendLine($"{spaces}{nameof(Key)} = {Key}");
             sb.AppendLine($"{spaces}{nameof(IsRule)} = {IsRule}");
 
             sb.PrintExisting(n, nameof(PrimaryPart), PrimaryPart);

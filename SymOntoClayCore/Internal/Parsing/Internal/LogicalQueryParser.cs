@@ -46,8 +46,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             var secondaryPartsList = Result.SecondaryParts;
 
-            if (!secondaryPartsList.IsNullOrEmpty())
+            if (secondaryPartsList.IsNullOrEmpty())
             {
+                var primaryPart = Result.PrimaryPart;
+
+                if(primaryPart.HasQuestionVars)
+                {
+                    Result.Kind = KindOfRuleInstance.QuestionVars;
+                }
+                else
+                {
+                    Result.Kind = KindOfRuleInstance.Fact;
+                }
+            }
+            else
+            {
+                Result.Kind = KindOfRuleInstance.Rule;
+
                 var primaryPart = Result.PrimaryPart;
 
                 primaryPart.SecondaryParts = secondaryPartsList.ToList();

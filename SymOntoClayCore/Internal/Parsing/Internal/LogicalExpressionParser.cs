@@ -216,7 +216,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.Comma:
-                            {
+                        case TokenKind.CloseRoundBracket:
+                        {
                                 _context.Recovery(nextToken);
 
                                 var node = new LogicalQueryNode();

@@ -698,6 +698,9 @@ namespace SymOntoClay.Core.Internal.Convertors
                 case KindOfLogicalQueryNode.LogicalVar:
                     return ConvertLogicalVarIndexedLogicalQueryNode(source, rulePart, ruleInstance, mainStorageContext, convertingContext, contextOfConvertingExpressionNode);
 
+                case KindOfLogicalQueryNode.QuestionVar:
+                    return ConvertQuestionVarIndexedLogicalQueryNode(source, rulePart, ruleInstance, mainStorageContext, convertingContext, contextOfConvertingExpressionNode);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, null);
             }
@@ -967,15 +970,16 @@ namespace SymOntoClay.Core.Internal.Convertors
                         }
                         break;
 
-                    //case KindOfLogicalQueryNode.QuestionVar:
-                    //    {
-                    //        var originParam = param.AsQuestionVar;
-                    //        var varInfo = new QueryExecutingCardAboutVar();
-                    //        varInfo.KeyOfVar = originParam.Key;
-                    //        varInfo.Position = i;
-                    //        varsInfoList.Add(varInfo);
-                    //    }
-                    //    break;
+                    case KindOfLogicalQueryNode.QuestionVar:
+                        {
+                            var originParam = param;
+                            var varInfo = new QueryExecutingCardAboutVar();
+                            varInfo.KeyOfVar = dictionary.GetKey(originParam.Name.NameValue);
+                            varInfo.Position = i;
+                            varsInfoList.Add(varInfo);
+                        }
+                        break;
+
                     //case KindOfLogicalQueryNode.Value:
                     //    {
                     //        var originParam = param.AsValue;
@@ -1052,6 +1056,39 @@ namespace SymOntoClay.Core.Internal.Convertors
 #endif
 
             contextOfConvertingExpressionNode.HasVars = true;
+
+            result.CalculateLongConditionalHashCode();
+
+            return result;
+        }
+
+        private static QuestionVarIndexedLogicalQueryNode ConvertQuestionVarIndexedLogicalQueryNode(LogicalQueryNode source, IndexedBaseRulePart rulePart, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext, ContextOfConvertingExpressionNode contextOfConvertingExpressionNode)
+        {
+#if DEBUG
+            _gbcLogger.Info($"source = {source}");
+#endif
+
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (QuestionVarIndexedLogicalQueryNode)convertingContext[source];
+            }
+
+            var result = new QuestionVarIndexedLogicalQueryNode();
+
+            convertingContext[source] = result;
+
+            FillBaseIndexedLogicalQueryNode(result, source, rulePart, ruleInstance, mainStorageContext, convertingContext);
+
+            result.Key = mainStorageContext.Dictionary.GetKey(source.Name.NameValue);
+
+#if DEBUG
+            _gbcLogger.Info($"result (snapshot) = {result}");
+#endif
 
             result.CalculateLongConditionalHashCode();
 

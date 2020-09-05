@@ -2246,6 +2246,15 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.QuestionVarIndexedLogicalQueryNode.KindOfOperator">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.QuestionVarIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.QuestionVarIndexedLogicalQueryNode.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.QuestionVarIndexedLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.RelationIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>

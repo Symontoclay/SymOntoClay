@@ -143,7 +143,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     var nextChar = _items.Peek();
 
 #if DEBUG
-                                    _logger.Log($"nextChar = {nextChar}");
+                                    //_logger.Log($"nextChar = {nextChar}");
 #endif
 
                                     if(char.IsLetterOrDigit(nextChar) || nextChar == '_')

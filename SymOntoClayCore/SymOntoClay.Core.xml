@@ -1678,6 +1678,15 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.BaseIndexedLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.BaseKeyRefIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.BaseKeyRefIndexedLogicalQueryNode.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.BaseKeyRefIndexedLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.BinaryOperatorIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -1690,28 +1699,10 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.ConceptIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.ConceptIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.ConceptIndexedLogicalQueryNode.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.ConceptIndexedLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.EntityConditionIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.EntityIndexedLogicalQueryNode.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.EntityIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.EntityIndexedLogicalQueryNode.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.EntityIndexedLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.EntityRefIndexedLogicalQueryNode.Kind">
@@ -2179,15 +2170,6 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.LogicalVarIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.LogicalVarIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.LogicalVarIndexedLogicalQueryNode.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.LogicalVarIndexedLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.NotOperatorIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
@@ -2255,18 +2237,6 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.QuestionVarIndexedLogicalQueryNode.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.QuestionVarIndexedLogicalQueryNode.KindOfOperator">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.QuestionVarIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.QuestionVarIndexedLogicalQueryNode.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.QuestionVarIndexedLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.RelationIndexedLogicalQueryNode.Kind">

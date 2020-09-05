@@ -41,17 +41,17 @@ namespace TestSandbox.LogicalDatabase
             queryStr = "{: >:{ male(#124) } :}";
             ParseQueryString(queryStr);
 
-            //queryStr = "{: male(#124) :}";
-            //ParseQueryString(queryStr);
+            queryStr = "{: male(#124) :}";
+            ParseQueryString(queryStr);
 
-            //queryStr = "{: >:{son($x, $y)} -> { male($x) & parent($y, $x)} :}";
-            //ParseQueryString(queryStr);
+            queryStr = "{: >:{son($x, $y)} -> { male($x) & parent($y, $x)} :}";
+            ParseQueryString(queryStr);
 
-            //queryStr = "{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}";
-            //ParseQueryString(queryStr);
+            queryStr = "{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}";
+            ParseQueryString(queryStr);
 
-            //queryStr = "{: ?x(?y, ?z) :}";
-            //ParseQueryString(queryStr);
+            queryStr = "{: ?x(?y, ?z) :}";
+            ParseQueryString(queryStr);
 
             _logger.Log("End");
         }
@@ -82,7 +82,7 @@ namespace TestSandbox.LogicalDatabase
 
             _logger.Log($"indexedQuery = {indexedQuery}");
 
-            _logger.Log($"DebugHelperForIndexedRuleInstance.ToString(indexedQuery) = {DebugHelperForIndexedRuleInstance.ToString(indexedQuery)}");
+            _logger.Log($"DebugHelperForIndexedRuleInstance.ToString(indexedQuery) = {DebugHelperForIndexedRuleInstance.ToString(indexedQuery, _context.Dictionary)}");
 
             //throw new NotImplementedException();
         }

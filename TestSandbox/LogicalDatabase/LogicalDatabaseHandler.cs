@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal;
+﻿using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Parsing.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -37,17 +38,17 @@ namespace TestSandbox.LogicalDatabase
 
             var queryStr = string.Empty;
 
-            //queryStr = "{: >:{ male(#124) } :}";
-            //ParseQueryString(queryStr);
+            queryStr = "{: >:{ male(#124) } :}";
+            ParseQueryString(queryStr);
 
-            //queryStr = "{: male(#124) :}";
-            //ParseQueryString(queryStr);
+            queryStr = "{: male(#124) :}";
+            ParseQueryString(queryStr);
 
-            //queryStr = "{: >:{son($x, $y)} -> { male($x) & parent($y, $x)} :}";
-            //ParseQueryString(queryStr);
+            queryStr = "{: >:{son($x, $y)} -> { male($x) & parent($y, $x)} :}";
+            ParseQueryString(queryStr);
 
-            //queryStr = "{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}";
-            //ParseQueryString(queryStr);
+            queryStr = "{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}";
+            ParseQueryString(queryStr);
 
             queryStr = "{: ?x(?y, ?z) :}";
             ParseQueryString(queryStr);
@@ -75,9 +76,11 @@ namespace TestSandbox.LogicalDatabase
 
             _logger.Log($"parsedQuery = {parsedQuery}");
 
-            var indexedQuery = parsedQuery.GetIndexed(_context);
+            _logger.Log($"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
 
-            _logger.Log($"indexedQuery = {indexedQuery}");
+            //var indexedQuery = parsedQuery.GetIndexed(_context);
+
+            //_logger.Log($"indexedQuery = {indexedQuery}");
 
             //throw new NotImplementedException();
         }

@@ -966,6 +966,11 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="F:SymOntoClay.Core.Internal.CodeModel.KindOfLogicalQueryNode.Entity">
+            <summary>
+            Represents entity identifier. Entity identifier always atarts from symbol '#'. For example, '#123', '#Piter', '#_123W12_1', '#`Tom Jones`'.
+            </summary>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.IndexedAnnotatedItem">
             <inheritdoc/>
         </member>

@@ -27,10 +27,19 @@ namespace SymOntoClay.Core.DebugHelpers
 
             if(!source.SecondaryParts.IsNullOrEmpty())
             {
-                throw new NotImplementedException();
-            }
+                sb.Append(" -> ");
 
-            //throw new NotImplementedException();
+                if(source.SecondaryParts.Count == 1)
+                {
+                    var firstSecondaryRulePart = source.SecondaryParts.Single();
+
+                    sb.Append(ToString(firstSecondaryRulePart));
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }          
+            }
 
             sb.Append(" :}");
             sb.Append(AnnotatedItemToString(source));
@@ -51,6 +60,19 @@ namespace SymOntoClay.Core.DebugHelpers
             return sb.ToString();
         }
 
+        public static string ToString(SecondaryRulePart rulePart)
+        {
+            var sb = new StringBuilder();
+            sb.Append(" { ");
+
+            sb.Append(ToString(rulePart.Expression));
+
+            sb.Append(" }");
+            sb.Append(AnnotatedItemToString(rulePart));
+
+            return sb.ToString();
+        }
+
         public static string ToString(LogicalQueryNode expr)
         {
             switch(expr.Kind)
@@ -58,8 +80,14 @@ namespace SymOntoClay.Core.DebugHelpers
                 case KindOfLogicalQueryNode.BinaryOperator:
                     return BinaryOperatorToString(expr);
 
+                case KindOfLogicalQueryNode.Relation:
+                    return RelationToString(expr);
+
                 case KindOfLogicalQueryNode.Concept:
-                    return expr.Name.NameValue;
+                case KindOfLogicalQueryNode.QuestionVar:
+                case KindOfLogicalQueryNode.Entity:
+                case KindOfLogicalQueryNode.LogicalVar:
+                    return ConceptToString(expr);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(expr.Kind), expr.Kind, null);
@@ -91,8 +119,38 @@ namespace SymOntoClay.Core.DebugHelpers
             var sb = new StringBuilder();
             sb.Append(ToString(expr.Left));
             sb.Append($" {mark} ");
+            sb.Append(AnnotatedItemToString(expr));
             sb.Append(ToString(expr.Right));
 
+            return sb.ToString();
+        }
+
+        private static string RelationToString(LogicalQueryNode expr)
+        {
+            var sb = new StringBuilder();
+
+            sb.Append($"{expr.Name.NameValue}(");
+
+            var resultParamsList = new List<string>();
+
+            foreach(var param in expr.ParamsList)
+            {
+                resultParamsList.Add(ToString(param));
+            }
+
+            sb.Append(string.Join(",", resultParamsList));
+
+            sb.Append(")");
+            sb.Append(AnnotatedItemToString(expr));
+
+            return sb.ToString();
+        }
+
+        private static string ConceptToString(LogicalQueryNode expr)
+        {
+            var sb = new StringBuilder();
+            sb.Append(expr.Name.NameValue);
+            sb.Append(AnnotatedItemToString(expr));
             return sb.ToString();
         }
 

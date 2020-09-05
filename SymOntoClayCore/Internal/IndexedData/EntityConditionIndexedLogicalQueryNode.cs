@@ -9,8 +9,5 @@ namespace SymOntoClay.Core.Internal.IndexedData
     {
         /// <inheritdoc/>
         public override KindOfLogicalQueryNode Kind => KindOfLogicalQueryNode.EntityCondition;
-
-        /// <inheritdoc/>
-        public override KindOfOperatorOfLogicalQueryNode KindOfOperator => KindOfOperatorOfLogicalQueryNode.Unknown;
     }
 }

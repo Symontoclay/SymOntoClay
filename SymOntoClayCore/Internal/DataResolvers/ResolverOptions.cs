@@ -34,6 +34,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         /// <inheritdoc/>
         string IObjectToString.PropertiesToString(uint n)
         {
+            return PropertiesToString(n);
+        }
+
+        protected virtual string PropertiesToString(uint n)
+        {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
@@ -58,6 +63,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         /// <inheritdoc/>
         string IObjectToShortString.PropertiesToShortString(uint n)
         {
+            return PropertiesToShortString(n);
+        }
+
+        protected virtual string PropertiesToShortString(uint n)
+        {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
@@ -81,6 +91,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         /// <inheritdoc/>
         string IObjectToBriefString.PropertiesToBriefString(uint n)
+        {
+            return PropertiesToBriefString(n);
+        }
+
+        protected virtual string PropertiesToBriefString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();

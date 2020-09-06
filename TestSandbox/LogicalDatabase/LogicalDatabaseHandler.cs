@@ -51,7 +51,7 @@ namespace TestSandbox.LogicalDatabase
             ParseQueryString(queryStr);
 
             queryStr = "{: ?x(?y, ?z) :}";
-            ParseQueryString(queryStr);
+            Search(queryStr);
 
             _logger.Log("End");
         }
@@ -87,6 +87,37 @@ namespace TestSandbox.LogicalDatabase
             _context.Storage.GlobalStorage.LogicalStorage.Append(parsedQuery);
 
             //throw new NotImplementedException();
+        }
+
+        private void Search(string queryStr)
+        {
+            _logger.Log($"queryStr = {queryStr}");
+
+            var result = new CodeFile();
+            result.IsMain = false;
+            result.FileName = "Hi!";
+
+            var internalParserContext = new InternalParserContext(queryStr, result, _context);
+
+            var globalStorage = _context.Storage.GlobalStorage;
+            internalParserContext.SetCurrentDefaultSetings(globalStorage.DefaultSettingsOfCodeEntity);
+
+            var parser = new LogicalQueryParser(internalParserContext);
+            parser.Run();
+
+            var parsedQuery = parser.Result;
+
+            _logger.Log($"parsedQuery = {parsedQuery}");
+
+            _logger.Log($"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
+
+            var indexedQuery = parsedQuery.GetIndexed(_context);
+
+            _logger.Log($"indexedQuery = {indexedQuery}");
+
+            _logger.Log($"DebugHelperForIndexedRuleInstance.ToString(indexedQuery) = {DebugHelperForIndexedRuleInstance.ToString(indexedQuery, _context.Dictionary)}");
+
+            var searcher = _context.DataResolversFactory.GetLogicalSearchResolver();
         }
     }
 }

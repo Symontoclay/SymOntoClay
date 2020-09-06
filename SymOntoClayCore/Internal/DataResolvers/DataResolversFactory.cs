@@ -23,6 +23,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private StrongIdentifierLinearResolver _strongIdentifierLinearResolver;
         private TriggersResolver _triggersResolver;
         private VarsResolver _varsResolver;
+        private LogicalSearchResolver _logicalSearchResolver;
 
         /// <inheritdoc/>
         public ChannelsResolver GetChannelsResolver()
@@ -133,6 +134,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 return _varsResolver;
+            }
+        }
+
+        /// <inheritdoc/>
+        public LogicalSearchResolver GetLogicalSearchResolver()
+        {
+            lock (_lockObj)
+            {
+                if(_logicalSearchResolver == null)
+                {
+                    _logicalSearchResolver = new LogicalSearchResolver(_context);
+                }
+
+                return _logicalSearchResolver;
             }
         }
     }

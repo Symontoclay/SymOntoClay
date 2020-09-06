@@ -4,6 +4,7 @@ using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
@@ -13,7 +14,22 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         public CommonPersistIndexedLogicalData(IEntityLogger logger)
             : base(logger)
         {
+            IndexedRuleInstancesDict = new Dictionary<ulong, IndexedRuleInstance>();
+            AdditionalRuleInstancesDict = new Dictionary<ulong, IndexedRuleInstance>();
+            IndexedRulePartsOfFactsDict = new Dictionary<ulong, IList<IndexedBaseRulePart>>();
+            IndexedRulePartsWithOneRelationWithVarsDict = new Dictionary<ulong, IList<IndexedBaseRulePart>>();
+            RelationsList = new List<RelationIndexedLogicalQueryNode>();
         }
+
+        //It is temporary public for construction time. It will be private after complete construction.
+        public IDictionary<ulong, IndexedRuleInstance> IndexedRuleInstancesDict { get; set; }
+        public IDictionary<ulong, IndexedRuleInstance> AdditionalRuleInstancesDict { get; set; }
+
+        //It is temporary public for construction time. It will be private after complete construction.
+        public IDictionary<ulong, IList<IndexedBaseRulePart>> IndexedRulePartsOfFactsDict { get; set; }
+        //It is temporary public for construction time. It will be private after complete construction.
+        public IDictionary<ulong, IList<IndexedBaseRulePart>> IndexedRulePartsWithOneRelationWithVarsDict { get; set; }
+        public IList<RelationIndexedLogicalQueryNode> RelationsList { get; set; }
 
         public void NSetIndexedRuleInstanceToIndexData(IndexedRuleInstance indexedRuleInstance)
         {
@@ -30,32 +46,24 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 case KindOfRuleInstance.Fact:
                 case KindOfRuleInstance.Annotation:
                 case KindOfRuleInstance.EntityCondition:
-                    {
-                        if (indexedRuleInstance.IsPart_1_Active)
-                        {
-                            NAddIndexedRulePartToKeysOfRelationsIndex(IndexedRulePartsOfFactsDict, indexedRuleInstance.Part_1);
-                        }
-                        else
-                        {
-                            NAddIndexedRulePartToKeysOfRelationsIndex(IndexedRulePartsOfFactsDict, indexedRuleInstance.Part_2);
-                        }
-                    }
+                    NAddIndexedRulePartToKeysOfRelationsIndex(IndexedRulePartsOfFactsDict, indexedRuleInstance.PrimaryPart);
                     break;
 
                 case KindOfRuleInstance.Rule:
                     {
-                        var part_1 = indexedRuleInstance.Part_1;
+                        var part_1 = indexedRuleInstance.PrimaryPart;
 
                         if (part_1.HasVars && !part_1.HasQuestionVars && part_1.RelationsDict.Count == 1)
                         {
                             NAddIndexedRulePartToKeysOfRelationsIndex(IndexedRulePartsWithOneRelationWithVarsDict, part_1);
                         }
 
-                        var part_2 = indexedRuleInstance.Part_2;
-
-                        if (part_2.HasVars && !part_2.HasQuestionVars && part_2.RelationsDict.Count == 1)
+                        foreach(var part_2 in indexedRuleInstance.SecondaryParts)
                         {
-                            NAddIndexedRulePartToKeysOfRelationsIndex(IndexedRulePartsWithOneRelationWithVarsDict, part_2);
+                            if (part_2.HasVars && !part_2.HasQuestionVars && part_2.RelationsDict.Count == 1)
+                            {
+                                NAddIndexedRulePartToKeysOfRelationsIndex(IndexedRulePartsWithOneRelationWithVarsDict, part_2);
+                            }
                         }
                     }
                     break;
@@ -82,6 +90,38 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 #else
             throw new NotImplementedException();
 #endif
+        }
+
+        private void NAddIndexedRulePartToKeysOfRelationsIndex(IDictionary<ulong, IList<IndexedBaseRulePart>> indexData, IndexedBaseRulePart indexedRulePart)
+        {
+            var relationsList = indexedRulePart.RelationsDict.SelectMany(p => p.Value).Distinct().ToList();
+
+            foreach (var relation in relationsList)
+            {
+                if (!RelationsList.Contains(relation))
+                {
+                    RelationsList.Add(relation);
+                }
+            }
+
+            var keysOfRelationsList = indexedRulePart.RelationsDict.Keys.ToList();
+
+            foreach (var keyOfRelation in keysOfRelationsList)
+            {
+                if (indexData.ContainsKey(keyOfRelation))
+                {
+                    var tmpList = indexData[keyOfRelation];
+                    if (!tmpList.Contains(indexedRulePart))
+                    {
+                        tmpList.Add(indexedRulePart);
+                    }
+                }
+                else
+                {
+                    var tmpList = new List<IndexedBaseRulePart>() { indexedRulePart };
+                    indexData[keyOfRelation] = tmpList;
+                }
+            }
         }
     }
 }

@@ -100,7 +100,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             result.Kind = Kind;
             result.KindOfOperator = KindOfOperator;
-            result.Name = Name.Clone(context);
+            result.Name = Name?.Clone(context);
             result.Left = Left?.Clone(context);
             result.Right = Right?.Clone(context);
             result.ParamsList = ParamsList?.Select(p => p.Clone(context)).ToList();

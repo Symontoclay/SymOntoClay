@@ -1,6 +1,8 @@
 ﻿using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Parsing.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -118,6 +120,20 @@ namespace TestSandbox.LogicalDatabase
             _logger.Log($"DebugHelperForIndexedRuleInstance.ToString(indexedQuery) = {DebugHelperForIndexedRuleInstance.ToString(indexedQuery, _context.Dictionary)}");
 
             var searcher = _context.DataResolversFactory.GetLogicalSearchResolver();
+
+            var searchOptions = new LogicalSearchOptions();
+            searchOptions.QueryExpression = indexedQuery;
+
+            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            searchOptions.LocalCodeExecutionContext = localCodeExecutionContext;
+            localCodeExecutionContext.Storage = _context.Storage.GlobalStorage;
+            localCodeExecutionContext.Holder = _context.CommonNamesStorage.IndexedDefaultHolder;
+
+            //_logger.Log($"searchOptions = {searchOptions}");
+
+            var searchResult = searcher.Run(searchOptions);
+
+            _logger.Log($"searchResult = {searchResult}");
         }
     }
 }

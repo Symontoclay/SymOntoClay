@@ -48,5 +48,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }
+
+        public abstract void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, OptionsOfFillExecutingCard options);
     }
 }

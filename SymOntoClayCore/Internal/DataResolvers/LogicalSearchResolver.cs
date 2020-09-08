@@ -21,6 +21,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var optionsOfFillExecutingCard = new OptionsOfFillExecutingCard();
             optionsOfFillExecutingCard.EntityIdOnly = options.EntityIdOnly;
             optionsOfFillExecutingCard.UseAccessPolicy = !options.IgnoreAccessPolicy;
+            optionsOfFillExecutingCard.Logger = Logger;
+
+            optionsOfFillExecutingCard.StoragesList = GetStoragesList(options.LocalCodeExecutionContext.Storage);
 
 #if DEBUG
             Log($"optionsOfFillExecutingCard = {optionsOfFillExecutingCard}");
@@ -30,7 +33,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var queryExpression = options.QueryExpression;
 
-            queryExpression.FillExecutingCard(queryExecutingCard, dataSource, optionsOfFillExecutingCard);
+            queryExpression.FillExecutingCard(queryExecutingCard, optionsOfFillExecutingCard);
 
 #if DEBUG
             Log($"@!@!@!@!@!@!@! queryExecutingCard = {queryExecutingCard}");

@@ -9,5 +9,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
     {
         /// <inheritdoc/>
         public override KindOfLogicalQueryNode Kind => KindOfLogicalQueryNode.EntityCondition;
+
+        /// <inheritdoc/>
+        public override void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, OptionsOfFillExecutingCard options)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

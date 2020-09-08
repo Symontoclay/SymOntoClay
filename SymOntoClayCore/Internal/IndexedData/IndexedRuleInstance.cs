@@ -78,5 +78,22 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }
+
+        public void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, OptionsOfFillExecutingCard options)
+        {
+            options.Logger.Log("Begin");
+
+            var queryExecutingCardForPart_1 = new QueryExecutingCardForIndexedPersistLogicalData();
+            queryExecutingCardForPart_1.SenderIndexedRuleInstance = this;
+
+            PrimaryPart.FillExecutingCard(queryExecutingCardForPart_1, options);
+
+            foreach (var resultOfQueryToRelation in queryExecutingCardForPart_1.ResultsOfQueryToRelationList)
+            {
+                queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
+            }
+
+            options.Logger.Log("End");
+        }
     }
 }

@@ -70,5 +70,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }
+
+        /// <inheritdoc/>
+        public override void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, OptionsOfFillExecutingCard options)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

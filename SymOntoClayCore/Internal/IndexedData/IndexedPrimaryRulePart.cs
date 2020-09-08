@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.CodeModel;
+﻿using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,38 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintBriefObjListProp(n, nameof(SecondaryParts), SecondaryParts);
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
+        }
+
+        public string GetHumanizeDbgString()
+        {
+            return DebugHelperForRuleInstance.ToString(OriginPrimaryRulePart);
+        }
+
+        public void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, OptionsOfFillExecutingCard options)
+        {
+#if DEBUG
+            options.Logger.Log($"Begin~~~~~~ GetHumanizeDbgString() = {GetHumanizeDbgString()}");
+#endif
+
+            var senderIndexedRuleInstance = queryExecutingCard.SenderIndexedRuleInstance;
+
+            var queryExecutingCardForExpression = new QueryExecutingCardForIndexedPersistLogicalData();
+            queryExecutingCardForExpression.SenderIndexedRuleInstance = senderIndexedRuleInstance;
+            queryExecutingCardForExpression.SenderIndexedRulePart = this;
+            Expression.FillExecutingCard(queryExecutingCardForExpression, options);
+
+#if DEBUG
+            options.Logger.Log($"#$%^$%^^ queryExecutingCardForExpression = {queryExecutingCardForExpression}");
+#endif
+
+            foreach (var resultOfQueryToRelation in queryExecutingCardForExpression.ResultsOfQueryToRelationList)
+            {
+                queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
+            }
+
+#if DEBUG
+            options.Logger.Log("End");
+#endif
         }
     }
 }

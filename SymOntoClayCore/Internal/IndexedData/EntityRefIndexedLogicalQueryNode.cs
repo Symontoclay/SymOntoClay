@@ -11,6 +11,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public override KindOfLogicalQueryNode Kind => KindOfLogicalQueryNode.EntityRef;
 
         /// <inheritdoc/>
-        public override KindOfOperatorOfLogicalQueryNode KindOfOperator => KindOfOperatorOfLogicalQueryNode.Unknown;
+        public override void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, OptionsOfFillExecutingCard options)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

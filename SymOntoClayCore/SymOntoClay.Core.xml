@@ -1708,6 +1708,9 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.AndOperatorIndexedLogicalQueryNode.KindOfOperator">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.AndOperatorIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.BaseIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -1738,16 +1741,25 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.ConceptIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ConceptIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.EntityConditionIndexedLogicalQueryNode.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.EntityConditionIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.EntityIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.EntityIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.EntityRefIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.EntityRefIndexedLogicalQueryNode.KindOfOperator">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.EntityRefIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotatedItem.WhereSection">
@@ -2065,6 +2077,9 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRelationLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRelationLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstance.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -2209,10 +2224,16 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.LogicalVarIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.LogicalVarIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.NotOperatorIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.NotOperatorIndexedLogicalQueryNode.KindOfOperator">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.NotOperatorIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard.ToString">
@@ -2246,6 +2267,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.OrOperatorIndexedLogicalQueryNode.KindOfOperator">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.OrOperatorIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardAboutKnownInfo.ToString">
@@ -2302,7 +2326,37 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardAboutVar.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.QuestionVarIndexedLogicalQueryNode.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.QuestionVarIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.RelationIndexedLogicalQueryNode.Kind">
@@ -2315,6 +2369,36 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.RelationIndexedLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.RelationIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfQueryToRelation.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfQueryToRelation.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfQueryToRelation.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfQueryToRelation.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfQueryToRelation.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfQueryToRelation.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfQueryToRelation.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfQueryToRelation.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfQueryToRelation.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody.ToString">
@@ -2417,7 +2501,7 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.StubParamIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.StubParamIndexedLogicalQueryNode.KindOfOperator">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.StubParamIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.UnaryOperatorIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
@@ -2432,13 +2516,13 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.KindOfOperator">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.VarIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.VarIndexedLogicalQueryNode.KindOfOperator">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.VarIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem.ToString">

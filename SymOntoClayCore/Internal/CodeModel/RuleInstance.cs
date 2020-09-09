@@ -15,7 +15,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public KindOfRuleInstance Kind { get; set; } = KindOfRuleInstance.Undefined;
         public bool IsRule { get; set; }
         public PrimaryRulePart PrimaryPart { get; set; }
-        public List<SecondaryRulePart> SecondaryParts { get; set; } = new List<SecondaryRulePart>();
+        public IList<SecondaryRulePart> SecondaryParts { get; set; } = new List<SecondaryRulePart>();
 
         public IndexedRuleInstance Indexed { get; set; }
 

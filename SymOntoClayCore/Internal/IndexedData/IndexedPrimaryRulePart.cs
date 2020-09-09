@@ -48,6 +48,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
         public string GetHumanizeDbgString()
         {
+            if(OriginPrimaryRulePart == null)
+            {
+                return string.Empty;
+            }
+
             return DebugHelperForRuleInstance.ToString(OriginPrimaryRulePart);
         }
 

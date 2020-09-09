@@ -27,6 +27,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public bool HasConditionalSections => !WhereSection.IsNullOrEmpty();
 
+        public IList<RuleInstance> Annotations { get; set; }
+
         public abstract IndexedAnnotatedItem IndexedAnnotatedItem { get; }
 
         public abstract IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext);
@@ -93,6 +95,25 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 Holder = source.Holder;
             }
+
+            if(source.Annotations == null)
+            {
+                Annotations = null;
+            }
+            else
+            {
+                Annotations = new List<RuleInstance>();
+
+                foreach(var annotation in source.Annotations)
+                {
+                    Annotations.Add(annotation.Clone());
+                }
+            }
+        }
+
+        public IList<RuleInstance> GetAllAnnotations()
+        {
+            throw new NotImplementedException();
         }
 
         private Value _annotationValue;
@@ -140,6 +161,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintObjListProp(n, nameof(WhereSection), WhereSection);
             sb.PrintObjProp(n, nameof(Holder), Holder);
+            sb.PrintObjListProp(n, nameof(Annotations), Annotations);
 
             return sb.ToString();
         }
@@ -173,6 +195,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintShortObjListProp(n, nameof(WhereSection), WhereSection);
             sb.PrintShortObjProp(n, nameof(Holder), Holder);
+            sb.PrintShortObjListProp(n, nameof(Annotations), Annotations);
 
             return sb.ToString();
         }
@@ -207,6 +230,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintExistingList(n, nameof(WhereSection), WhereSection);
 
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
+
+            sb.PrintExistingList(n, nameof(Annotations), Annotations);
 
             return sb.ToString();
         }

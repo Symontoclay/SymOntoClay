@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.CodeModel;
+﻿using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -47,6 +48,16 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
+        }
+
+        public string GetHumanizeDbgString()
+        {
+            if (Origin == null)
+            {
+                return string.Empty;
+            }
+
+            return DebugHelperForRuleInstance.ToString(Origin);
         }
 
         public abstract void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, OptionsOfFillExecutingCard options);

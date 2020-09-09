@@ -1,4 +1,6 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -104,6 +106,62 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintExisting(n, nameof(SenderExpressionNode), SenderExpressionNode);
 
             return sb.ToString();
+        }
+
+        public string GetSenderIndexedRuleInstanceHumanizeDbgString()
+        {
+            if (SenderIndexedRuleInstance == null)
+            {
+                return string.Empty;
+            }
+
+            var origin = SenderIndexedRuleInstance.Origin;
+
+            if (origin == null)
+            {
+                return string.Empty;
+            }
+
+            return DebugHelperForRuleInstance.ToString(origin);
+        }
+
+        public string GetSenderIndexedRulePartHumanizeDbgString()
+        {
+            if (SenderIndexedRulePart == null)
+            {
+                return string.Empty;
+            }
+
+            var origin = SenderIndexedRulePart.OriginRulePart;
+
+            if (origin == null)
+            {
+                return string.Empty;
+            }
+
+            if(origin is PrimaryRulePart)
+            {
+                return DebugHelperForRuleInstance.ToString(origin as PrimaryRulePart);
+            }
+
+            return DebugHelperForRuleInstance.ToString(origin as SecondaryRulePart);
+        }
+
+        public string GetSenderExpressionNodeHumanizeDbgString()
+        {
+            if (SenderExpressionNode == null)
+            {
+                return string.Empty;
+            }
+
+            var origin = SenderExpressionNode.Origin;
+
+            if (origin == null)
+            {
+                return string.Empty;
+            }
+
+            return DebugHelperForRuleInstance.ToString(origin);
         }
     }
 }

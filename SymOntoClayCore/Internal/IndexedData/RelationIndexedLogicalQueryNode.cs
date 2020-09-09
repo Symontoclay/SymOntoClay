@@ -74,6 +74,43 @@ namespace SymOntoClay.Core.Internal.IndexedData
         /// <inheritdoc/>
         public override void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, OptionsOfFillExecutingCard options)
         {
+#if DEBUG
+            options.Logger.Log($"IsQuestion = {IsQuestion}");
+#endif
+
+            if (IsQuestion)
+            {
+                FillExecutingCardForQuestion(queryExecutingCard, options);
+                return;
+            }
+
+            throw new NotImplementedException();
+        }
+
+        private void FillExecutingCardForQuestion(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, OptionsOfFillExecutingCard options)
+        {
+#if DEBUG
+            options.Logger.Log($"Key = {Key}");
+            options.Logger.Log($"IsQuestion = {IsQuestion}");
+            options.Logger.Log($"Params.Count = {Params.Count}");
+            foreach (var param in Params)
+            {
+                options.Logger.Log($"param = {param}");
+            }
+            options.Logger.Log($"VarsInfoList.Count = {VarsInfoList.Count}");
+            foreach (var varInfo in VarsInfoList)
+            {
+                options.Logger.Log($"varInfo = {varInfo}");
+            }
+            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            options.Logger.Log($"queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString() = {queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString()}");
+            options.Logger.Log($"queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString()}");
+            options.Logger.Log($"queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
+            options.Logger.Log($"GetHumanizeDbgString() = {GetHumanizeDbgString()}");
+#endif
+
+
+
             throw new NotImplementedException();
         }
     }

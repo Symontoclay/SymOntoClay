@@ -3,6 +3,7 @@ using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
@@ -113,7 +114,43 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public IList<RuleInstance> GetAllAnnotations()
         {
-            throw new NotImplementedException();
+            var result = new List<RuleInstance>();
+            DiscoverAllAnnotations(result);
+            return result.Distinct().ToList();
+        }
+
+        public virtual void DiscoverAllAnnotations(IList<RuleInstance> result)
+        {
+            if (!Annotations.IsNullOrEmpty())
+            {
+                foreach (var annotation in Annotations)
+                {
+                    result.Add(annotation);
+
+                    annotation.DiscoverAllAnnotations(result);
+                }
+            }
+
+            if (!QuantityQualityModalities.IsNullOrEmpty())
+            {
+                foreach (var item in QuantityQualityModalities)
+                {
+                    item.DiscoverAllAnnotations(result);
+                }
+            }
+
+            if (!WhereSection.IsNullOrEmpty())
+            {
+                foreach (var item in WhereSection)
+                {
+                    item.DiscoverAllAnnotations(result);
+                }
+            }
+
+            if (Holder != null)
+            {
+                Holder.DiscoverAllAnnotations(result);
+            }
         }
 
         private Value _annotationValue;

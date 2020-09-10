@@ -44,8 +44,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             switch (kind)
             {
                 case KindOfRuleInstance.Fact:
-                case KindOfRuleInstance.Annotation:
-                case KindOfRuleInstance.EntityCondition:
+                //case KindOfRuleInstance.Annotation:
+                //case KindOfRuleInstance.EntityCondition:
                     NAddIndexedRulePartToKeysOfRelationsIndex(IndexedRulePartsOfFactsDict, indexedRuleInstance.PrimaryPart);
                     break;
 
@@ -79,10 +79,17 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             switch (kind)
             {
-                case KindOfRuleInstance.Annotation:
-                case KindOfRuleInstance.EntityCondition:
-                    AdditionalRuleInstancesDict[indexedRuleInstance.Key] = indexedRuleInstance;
+                case KindOfRuleInstance.Fact:
+                case KindOfRuleInstance.Rule:
+                case KindOfRuleInstance.QuestionVars:
                     break;
+
+                //case KindOfRuleInstance.Annotation:
+                //case KindOfRuleInstance.EntityCondition:
+                //AdditionalRuleInstancesDict[indexedRuleInstance.Key] = indexedRuleInstance;
+                //break;
+
+                default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
 
 #if IMAGINE_WORKING

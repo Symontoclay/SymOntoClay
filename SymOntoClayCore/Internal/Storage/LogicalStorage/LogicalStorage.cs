@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -46,6 +47,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         {
             lock (_lockObj)
             {
+                var annotationsList = ruleInstance.GetAllAnnotations();
+
+#if DEBUG
+                Log($"annotationsList = {annotationsList.WriteListToString()}");
+#endif
+
                 NAppend(ruleInstance, isPrimary);
             }
         }

@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public StrongIdentifierValue Name { get; set; }
         public LogicalQueryNode Left { get; set; }
         public LogicalQueryNode Right { get; set; }
-        public List<LogicalQueryNode> ParamsList { get; set; }
-        public List<StrongIdentifierValue> VarsList { get; set; }
+        public IList<LogicalQueryNode> ParamsList { get; set; }
+        public IList<StrongIdentifierValue> VarsList { get; set; }
         public bool IsGroup { get; set; }
         public Value Value { get; set; }
         public bool IsQuestion { get; set; }
@@ -112,6 +113,34 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.AppendAnnotations(this, context);
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        public override void DiscoverAllAnnotations(IList<RuleInstance> result)
+        {
+            base.DiscoverAllAnnotations(result);
+
+            Name?.DiscoverAllAnnotations(result);
+            Left?.DiscoverAllAnnotations(result);
+            Right?.DiscoverAllAnnotations(result);
+
+            if(!ParamsList.IsNullOrEmpty())
+            {
+                foreach(var item in ParamsList)
+                {
+                    item.DiscoverAllAnnotations(result);
+                }
+            }
+
+            if (!VarsList.IsNullOrEmpty())
+            {
+                foreach (var item in VarsList)
+                {
+                    item.DiscoverAllAnnotations(result);
+                }
+            }
+
+            Value?.DiscoverAllAnnotations(result);
         }
 
         /// <inheritdoc/>

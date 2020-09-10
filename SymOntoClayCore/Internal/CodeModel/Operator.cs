@@ -3,6 +3,7 @@ using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -89,6 +90,20 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.AppendAnnotations(this, context);
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        public override void DiscoverAllAnnotations(IList<RuleInstance> result)
+        {
+            base.DiscoverAllAnnotations(result);
+
+            if(!Statements.IsNullOrEmpty())
+            {
+                foreach(var item in Statements)
+                {
+                    item.DiscoverAllAnnotations(result);
+                }
+            }
         }
 
         /// <inheritdoc/>

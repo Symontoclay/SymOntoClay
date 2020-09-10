@@ -498,6 +498,27 @@ namespace SymOntoClay.Core.Internal.Convertors
             }
 
             dest.Holder = ConvertStrongIdentifierValue(source.Holder, mainStorageContext, convertingContext);
+
+            var dictionary = mainStorageContext.Dictionary;
+
+            if (!source.Annotations.IsNullOrEmpty())
+            {
+                dest.Annotations = new List<IndexedLogicalAnnotation>();
+
+                var destAnnotationsList = dest.Annotations;
+
+                foreach(var sourceAnnotation in source.Annotations)
+                {
+                    var ruleInstanceKey = dictionary.GetKey(sourceAnnotation.Name.NameValue);
+
+                    var destAnnotation = new IndexedLogicalAnnotation()
+                    {
+                        RuleInstanceKey = ruleInstanceKey
+                    };
+
+                    destAnnotationsList.Add(destAnnotation);
+                }
+            }
         }
 
         public static IndexedRuleInstance ConvertRuleInstance(RuleInstance source, IMainStorageContext mainStorageContext)

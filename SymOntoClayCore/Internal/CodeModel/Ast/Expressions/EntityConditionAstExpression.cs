@@ -62,6 +62,16 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         }
 
         /// <inheritdoc/>
+        public override void DiscoverAllAnnotations(IList<RuleInstance> result)
+        {
+            base.DiscoverAllAnnotations(result);
+
+            Name?.DiscoverAllAnnotations(result);
+            FirstCoordinate?.DiscoverAllAnnotations(result);
+            SecondCoordinate?.DiscoverAllAnnotations(result);
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

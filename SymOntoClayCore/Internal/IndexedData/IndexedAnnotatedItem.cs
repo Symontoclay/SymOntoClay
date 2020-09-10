@@ -25,6 +25,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
         /// </summary>
         public bool HasModalitiesOrSections => !QuantityQualityModalities.IsNullOrEmpty() || !WhereSection.IsNullOrEmpty();
 
+        public IList<IndexedLogicalAnnotation> Annotations { get; set; }
+
         public bool HasConditionalSections => !WhereSection.IsNullOrEmpty();
 
         private long? _longConditionalHashCode;
@@ -79,6 +81,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintObjListProp(n, nameof(WhereSection), WhereSection);
             sb.PrintObjProp(n, nameof(Holder), Holder);
+            sb.PrintObjListProp(n, nameof(Annotations), Annotations);
 
             return sb.ToString();
         }
@@ -114,6 +117,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintShortObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintShortObjListProp(n, nameof(WhereSection), WhereSection);
             sb.PrintShortObjProp(n, nameof(Holder), Holder);
+            sb.PrintShortObjListProp(n, nameof(Annotations), Annotations);
 
             return sb.ToString();
         }
@@ -149,6 +153,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintExistingList(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintExistingList(n, nameof(WhereSection), WhereSection);
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
+            sb.PrintExistingList(n, nameof(Annotations), Annotations);
 
             return sb.ToString();
         }

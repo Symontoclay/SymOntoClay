@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -90,6 +91,22 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.AppendAnnotations(this, context);
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        public override void DiscoverAllAnnotations(IList<RuleInstance> result)
+        {
+            base.DiscoverAllAnnotations(result);
+
+            PrimaryPart?.DiscoverAllAnnotations(result);
+
+            if (!SecondaryParts.IsNullOrEmpty())
+            {
+                foreach(var item in SecondaryParts)
+                {
+                    item.DiscoverAllAnnotations(result);
+                }
+            }
         }
 
         /// <inheritdoc/>

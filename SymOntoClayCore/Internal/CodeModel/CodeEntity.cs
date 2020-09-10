@@ -85,6 +85,30 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        public override void DiscoverAllAnnotations(IList<RuleInstance> result)
+        {
+            base.DiscoverAllAnnotations(result);
+
+            /*
+                     public KindOfCodeEntity Kind { get; set; } = KindOfCodeEntity.Unknown;
+        public StrongIdentifierValue Name { get; set; }
+        public List<InheritanceItem> InheritanceItems { get; set; } = new List<InheritanceItem>();
+        public RuleInstance RuleInstance { get; set; }
+        public InlineTrigger InlineTrigger { get; set; }
+        public Operator Operator { get; set; }
+        public Channel Channel { get; set; }
+
+        public CodeFile CodeFile { get; set; }
+        public CodeEntity ParentCodeEntity { get; set; }
+        public List<CodeEntity> SubItems { get; set; } = new List<CodeEntity>();
+            */
+
+            d
+
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

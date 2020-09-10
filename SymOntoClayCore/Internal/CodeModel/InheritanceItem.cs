@@ -96,6 +96,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return result;
         }
 
+        /// <inheritdoc/>
+        public override void DiscoverAllAnnotations(IList<RuleInstance> result)
+        {
+            base.DiscoverAllAnnotations(result);
+
+            SubName?.DiscoverAllAnnotations(result);
+            SuperName?.DiscoverAllAnnotations(result);
+            Rank?.DiscoverAllAnnotations(result);
+        }
+
         private void PrintHeader(StringBuilder sb, uint n, string spaces)
         {
             sb.PrintObjProp(n, nameof(SubName), SubName);

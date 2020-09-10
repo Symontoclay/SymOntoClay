@@ -53,6 +53,14 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         }
 
         /// <inheritdoc/>
+        public override void DiscoverAllAnnotations(IList<RuleInstance> result)
+        {
+            base.DiscoverAllAnnotations(result);
+
+            Expression?.DiscoverAllAnnotations(result);
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

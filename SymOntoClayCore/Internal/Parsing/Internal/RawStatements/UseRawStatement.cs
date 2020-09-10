@@ -73,6 +73,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.RawStatements
         }
 
         /// <inheritdoc/>
+        public override void DiscoverAllAnnotations(IList<RuleInstance> result)
+        {
+            base.DiscoverAllAnnotations(result);
+
+            FirstName?.DiscoverAllAnnotations(result);
+            SecondName?.DiscoverAllAnnotations(result);
+            Rank?.DiscoverAllAnnotations(result);
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

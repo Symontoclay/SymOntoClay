@@ -23,17 +23,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             optionsOfFillExecutingCard.UseAccessPolicy = !options.IgnoreAccessPolicy;
             optionsOfFillExecutingCard.Logger = Logger;
 
-            optionsOfFillExecutingCard.StoragesList = GetStoragesList(options.LocalCodeExecutionContext.Storage);
-
 #if DEBUG
             Log($"optionsOfFillExecutingCard = {optionsOfFillExecutingCard}");
 #endif
+
+            var dataSource = new ConsolidatedDataSource(GetStoragesList(options.LocalCodeExecutionContext.Storage));
 
             var queryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
 
             var queryExpression = options.QueryExpression;
 
-            queryExpression.FillExecutingCard(queryExecutingCard, optionsOfFillExecutingCard);
+            queryExpression.FillExecutingCard(queryExecutingCard, dataSource, optionsOfFillExecutingCard);
 
 #if DEBUG
             Log($"@!@!@!@!@!@!@! queryExecutingCard = {queryExecutingCard}");

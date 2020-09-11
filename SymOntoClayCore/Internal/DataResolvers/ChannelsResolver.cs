@@ -62,7 +62,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return targetChannel;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<IndexedChannel>> GetRawList(IndexedStrongIdentifierValue name, List<KeyValuePair<uint, IStorage>> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<IndexedChannel>> GetRawList(IndexedStrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
             //Log($"name = {name}");
@@ -77,15 +77,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-                var itemsList = storageItem.Value.ChannelsStorage.GetChannelsDirectly(name, weightedInheritanceItems);
+                var itemsList = storageItem.Storage.ChannelsStorage.GetChannelsDirectly(name, weightedInheritanceItems);
 
                 if (!itemsList.Any())
                 {
                     continue;
                 }
 
-                var distance = storageItem.Key;
-                var storage = storageItem.Value;
+                var distance = storageItem.Priority;
+                var storage = storageItem.Storage;
 
                 foreach (var item in itemsList)
                 {

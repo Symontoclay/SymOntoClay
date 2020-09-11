@@ -9,7 +9,6 @@ namespace SymOntoClay.Core.Internal.IndexedData
     {
         public bool EntityIdOnly { get; set; }
         public bool UseAccessPolicy { get; set; }
-        public List<KeyValuePair<uint, IStorage>> StoragesList { get; set; }
         public IEntityLogger Logger { get; set; }
 
         /// <inheritdoc/>
@@ -32,7 +31,6 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             sb.AppendLine($"{spaces}{nameof(EntityIdOnly)} = {EntityIdOnly}");
             sb.AppendLine($"{spaces}{nameof(UseAccessPolicy)} = {UseAccessPolicy}");
-            sb.PrintExistingList(n, nameof(StoragesList), StoragesList);
             sb.PrintExisting(n, nameof(Logger), Logger);
 
             return sb.ToString();
@@ -58,7 +56,6 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             sb.AppendLine($"{spaces}{nameof(EntityIdOnly)} = {EntityIdOnly}");
             sb.AppendLine($"{spaces}{nameof(UseAccessPolicy)} = {UseAccessPolicy}");
-            sb.PrintExistingList(n, nameof(StoragesList), StoragesList);
             sb.PrintExisting(n, nameof(Logger), Logger);
 
             return sb.ToString();
@@ -84,7 +81,6 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             sb.AppendLine($"{spaces}{nameof(EntityIdOnly)} = {EntityIdOnly}");
             sb.AppendLine($"{spaces}{nameof(UseAccessPolicy)} = {UseAccessPolicy}");
-            sb.PrintExistingList(n, nameof(StoragesList), StoragesList);
             sb.PrintExisting(n, nameof(Logger), Logger);
 
             return sb.ToString();

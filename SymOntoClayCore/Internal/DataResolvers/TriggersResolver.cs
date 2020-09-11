@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>> GetSystemEventsRawList(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IndexedStrongIdentifierValue holder, List<KeyValuePair<uint, IStorage>> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>> GetSystemEventsRawList(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IndexedStrongIdentifierValue holder, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
             //Log($"kindOfSystemEvent = {kindOfSystemEvent}");
@@ -82,15 +82,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-                var itemsList = storageItem.Value.TriggersStorage.GetSystemEventsTriggersDirectly(kindOfSystemEvent, weightedInheritanceItems);
+                var itemsList = storageItem.Storage.TriggersStorage.GetSystemEventsTriggersDirectly(kindOfSystemEvent, weightedInheritanceItems);
 
                 if (!itemsList.Any())
                 {
                     continue;
                 }
 
-                var distance = storageItem.Key;
-                var storage = storageItem.Value;
+                var distance = storageItem.Priority;
+                var storage = storageItem.Storage;
 
                 foreach (var item in itemsList)
                 {

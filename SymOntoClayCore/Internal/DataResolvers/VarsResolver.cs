@@ -48,7 +48,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //Log($"storageItem.Key = {storageItem.Key}; storageItem.Value.Kind = '{storageItem.Value.Kind}'");
 #endif
 
-                var targetValue = storageItem.Value.VarStorage.GetSystemValueDirectly(varName);
+                var targetValue = storageItem.Storage.VarStorage.GetSystemValueDirectly(varName);
 
 #if DEBUG
                 //Log($"targetValue = {targetValue}");

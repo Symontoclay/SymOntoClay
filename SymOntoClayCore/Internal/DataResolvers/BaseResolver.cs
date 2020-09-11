@@ -17,11 +17,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         protected readonly IMainStorageContext _context;
 
-        protected List<KeyValuePair<uint, IStorage>> GetStoragesList(IStorage storage)
+        protected List<StorageUsingOptions> GetStoragesList(IStorage storage)
         {
-            var result = new List<KeyValuePair<uint, IStorage>>();
+            var result = new List<StorageUsingOptions>();
 
-            var n = 0u;
+            var n = 0;
 
             storage.CollectChainOfStorages(result, n);
 

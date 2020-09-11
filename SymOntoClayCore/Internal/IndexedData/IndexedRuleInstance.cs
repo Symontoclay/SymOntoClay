@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -79,14 +80,14 @@ namespace SymOntoClay.Core.Internal.IndexedData
             return sb.ToString();
         }
 
-        public void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, OptionsOfFillExecutingCard options)
+        public void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             options.Logger.Log("Begin");
 
             var queryExecutingCardForPart_1 = new QueryExecutingCardForIndexedPersistLogicalData();
             queryExecutingCardForPart_1.SenderIndexedRuleInstance = this;
 
-            PrimaryPart.FillExecutingCard(queryExecutingCardForPart_1, options);
+            PrimaryPart.FillExecutingCard(queryExecutingCardForPart_1, dataSource, options);
 
             foreach (var resultOfQueryToRelation in queryExecutingCardForPart_1.ResultsOfQueryToRelationList)
             {

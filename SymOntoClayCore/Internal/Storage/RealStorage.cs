@@ -80,7 +80,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public IVarStorage VarStorage => _realStorageContext.VarStorage;
 
         /// <inheritdoc/>
-        void IStorage.CollectChainOfStorages(IList<KeyValuePair<uint, IStorage>> result, uint level)
+        void IStorage.CollectChainOfStorages(IList<StorageUsingOptions> result, int level)
         {
 #if DEBUG
             //Log($"result?.Count = {result?.Count}");
@@ -89,7 +89,16 @@ namespace SymOntoClay.Core.Internal.Storage
 
             level++;
 
-            result.Add(new KeyValuePair<uint, IStorage>(level, this));
+            var item = new StorageUsingOptions()
+            {
+                Priority = level,
+                Storage = this,
+                UseFacts = true,
+                UseProductions = true,
+                UseAdditionalInstances = true
+            };
+
+            result.Add(item);
 
             var parentsList = _realStorageContext.Parents;
 

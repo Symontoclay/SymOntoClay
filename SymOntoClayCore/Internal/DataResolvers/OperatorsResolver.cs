@@ -62,7 +62,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return targetOp;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<IndexedOperator>> GetRawList(KindOfOperator kindOfOperator, List<KeyValuePair<uint, IStorage>> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<IndexedOperator>> GetRawList(KindOfOperator kindOfOperator, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
             //Log($"kindOfOperator = {kindOfOperator}");
@@ -77,15 +77,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach(var storageItem in storagesList)
             {
-                var operatorsList = storageItem.Value.OperatorsStorage.GetOperatorsDirectly(kindOfOperator, weightedInheritanceItems);
+                var operatorsList = storageItem.Storage.OperatorsStorage.GetOperatorsDirectly(kindOfOperator, weightedInheritanceItems);
 
                 if(!operatorsList.Any())
                 {
                     continue;
                 }
 
-                var distance = storageItem.Key;
-                var storage = storageItem.Value;
+                var distance = storageItem.Priority;
+                var storage = storageItem.Storage;
 
                 foreach(var op in operatorsList)
                 {

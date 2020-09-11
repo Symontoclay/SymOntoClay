@@ -134,7 +134,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return source.OrderByDescending(p => p.IsSelf).ToList();
         }
 
-        private void GetWeightedInheritanceItemsBySuperName(IndexedStrongIdentifierValue subName, LocalCodeExecutionContext localCodeExecutionContext, Dictionary<IndexedStrongIdentifierValue, WeightedInheritanceItem> result, float currentRank, uint currentDistance, List<KeyValuePair<uint, IStorage>> storagesList)
+        private void GetWeightedInheritanceItemsBySuperName(IndexedStrongIdentifierValue subName, LocalCodeExecutionContext localCodeExecutionContext, Dictionary<IndexedStrongIdentifierValue, WeightedInheritanceItem> result, float currentRank, uint currentDistance, List<StorageUsingOptions> storagesList)
         {
 #if DEBUG
             //Log($"subName = {subName}");
@@ -236,7 +236,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<IndexedInheritanceItem>> GetRawList(IndexedStrongIdentifierValue subName, List<KeyValuePair<uint, IStorage>> storagesList)
+        private List<WeightedInheritanceResultItemWithStorageInfo<IndexedInheritanceItem>> GetRawList(IndexedStrongIdentifierValue subName, List<StorageUsingOptions> storagesList)
         {
 #if DEBUG
             //Log($"subName = {subName}");
@@ -251,15 +251,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-                var itemsList = storageItem.Value.InheritanceStorage.GetItemsDirectly(subName);
+                var itemsList = storageItem.Storage.InheritanceStorage.GetItemsDirectly(subName);
 
                 if (!itemsList.Any())
                 {
                     continue;
                 }
 
-                var distance = storageItem.Key;
-                var storage = storageItem.Value;
+                var distance = storageItem.Priority;
+                var storage = storageItem.Storage;
 
                 foreach (var item in itemsList)
                 {

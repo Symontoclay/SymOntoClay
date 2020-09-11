@@ -53,6 +53,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 Log($"annotationsList = {annotationsList.WriteListToString()}");
 #endif
 
+                foreach(var annotationRuleInstance in annotationsList)
+                {
+                    NAppend(annotationRuleInstance, false);
+                }
+
                 NAppend(ruleInstance, isPrimary);
             }
         }
@@ -70,7 +75,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 return;
             }
 
-            ruleInstance = ruleInstance.Clone();
+            //ruleInstance = ruleInstance.Clone();
 
 #if DEBUG
             Log($"ruleInstance (after) = {ruleInstance}");
@@ -113,6 +118,15 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         protected void EmitOnChanged()
         {
             OnChanged?.Invoke();
+        }
+
+        /// <inheritdoc/>
+        public IList<RelationIndexedLogicalQueryNode> GetAllRelations()
+        {
+            lock (_lockObj)
+            {
+                return _commonPersistIndexedLogicalData.GetAllRelations();
+            }
         }
     }
 }

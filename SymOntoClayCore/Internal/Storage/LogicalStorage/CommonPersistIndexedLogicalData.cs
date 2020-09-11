@@ -130,5 +130,10 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 }
             }
         }
+
+        public IList<RelationIndexedLogicalQueryNode> GetAllRelations()
+        {
+            return RelationsList.ToList();
+        }
     }
 }

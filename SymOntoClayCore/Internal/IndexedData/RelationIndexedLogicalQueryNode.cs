@@ -1,4 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -72,7 +74,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         }
 
         /// <inheritdoc/>
-        public override void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, OptionsOfFillExecutingCard options)
+        public override void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
             options.Logger.Log($"IsQuestion = {IsQuestion}");
@@ -80,14 +82,14 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             if (IsQuestion)
             {
-                FillExecutingCardForQuestion(queryExecutingCard, options);
+                FillExecutingCardForQuestion(queryExecutingCard, dataSource, options);
                 return;
             }
 
             throw new NotImplementedException();
         }
 
-        private void FillExecutingCardForQuestion(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardForQuestion(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
             options.Logger.Log($"Key = {Key}");
@@ -109,7 +111,56 @@ namespace SymOntoClay.Core.Internal.IndexedData
             options.Logger.Log($"GetHumanizeDbgString() = {GetHumanizeDbgString()}");
 #endif
 
+            var hasAnnotations = !Annotations.IsNullOrEmpty();
 
+#if DEBUG
+            options.Logger.Log($"hasAnnotations = {hasAnnotations}");
+#endif
+
+            var targetRelationsList = dataSource.AllRelationsForProductions;
+
+#if DEBUG
+            options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");
+            foreach (var targetRelation in targetRelationsList)
+            {
+                options.Logger.Log($"targetRelation.GetHumanizeDbgString() = {targetRelation.GetHumanizeDbgString()}");
+            }
+#endif
+
+            foreach (var targetRelation in targetRelationsList)
+            {
+                if (targetRelation.CountParams != CountParams)
+                {
+                    continue;
+                }
+#if DEBUG
+                options.Logger.Log($"targetRelation.GetHumanizeDbgString() = {targetRelation.GetHumanizeDbgString()}");
+                options.Logger.Log($"targetRelation = {targetRelation}");
+                options.Logger.Log($"hasAnnotations = {hasAnnotations}");
+#endif
+
+                var isCheckAnnotation = false;
+
+                if (hasAnnotations)
+                {
+                    if (targetRelation.Annotations.IsEmpty())
+                    {
+                        continue;
+                    }
+
+                    throw new NotImplementedException();
+                }
+
+                if (hasAnnotations && !isCheckAnnotation)
+                {
+                    continue;
+                }
+
+#if DEBUG
+                options.Logger.Log($"NEXT targetRelation.GetHumanizeDbgString() = {targetRelation.GetHumanizeDbgString()}");
+                options.Logger.Log($"NEXT targetRelation = {targetRelation}");
+#endif
+            }
 
             throw new NotImplementedException();
         }

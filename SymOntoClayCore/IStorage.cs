@@ -18,7 +18,7 @@ namespace SymOntoClay.Core
         IChannelsStorage ChannelsStorage { get; }
         IMetadataStorage MetadataStorage { get; }
         IVarStorage VarStorage { get; }
-        void CollectChainOfStorages(IList<KeyValuePair<uint,IStorage>> result, uint level);
+        void CollectChainOfStorages(IList<StorageUsingOptions> result, int level);
         DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get; set; }
     }
 }

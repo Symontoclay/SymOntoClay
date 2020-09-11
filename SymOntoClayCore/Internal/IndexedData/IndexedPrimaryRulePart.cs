@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -56,7 +57,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             return DebugHelperForRuleInstance.ToString(OriginPrimaryRulePart);
         }
 
-        public void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, OptionsOfFillExecutingCard options)
+        public void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
             options.Logger.Log($"Begin~~~~~~ GetHumanizeDbgString() = {GetHumanizeDbgString()}");
@@ -67,7 +68,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var queryExecutingCardForExpression = new QueryExecutingCardForIndexedPersistLogicalData();
             queryExecutingCardForExpression.SenderIndexedRuleInstance = senderIndexedRuleInstance;
             queryExecutingCardForExpression.SenderIndexedRulePart = this;
-            Expression.FillExecutingCard(queryExecutingCardForExpression, options);
+            Expression.FillExecutingCard(queryExecutingCardForExpression, dataSource, options);
 
 #if DEBUG
             options.Logger.Log($"#$%^$%^^ queryExecutingCardForExpression = {queryExecutingCardForExpression}");

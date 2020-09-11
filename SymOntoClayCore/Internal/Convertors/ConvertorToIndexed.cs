@@ -925,7 +925,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             return result;
         }
 
-        private static void FillRelationParams(RelationIndexedLogicalQueryNode dest, List<LogicalQueryNode> sourceParamsList, IndexedBaseRulePart rulePart, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext, ContextOfConvertingExpressionNode contextOfConvertingExpressionNode)
+        private static void FillRelationParams(RelationIndexedLogicalQueryNode dest, IList<LogicalQueryNode> sourceParamsList, IndexedBaseRulePart rulePart, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext, ContextOfConvertingExpressionNode contextOfConvertingExpressionNode)
         {
             dest.CountParams = sourceParamsList.Count;
 

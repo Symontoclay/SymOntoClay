@@ -10,14 +10,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
     public class WeightedInheritanceResultItemWithStorageInfo<T>: WeightedInheritanceResultItem<T>
         where T : IndexedAnnotatedItem
     {
-        public WeightedInheritanceResultItemWithStorageInfo(WeightedInheritanceResultItem<T> source, uint storageDistance, IStorage storage)
+        public WeightedInheritanceResultItemWithStorageInfo(WeightedInheritanceResultItem<T> source, int storageDistance, IStorage storage)
             : base(source.ResultItem, source)
         {
             StorageDistance = storageDistance;
             Storage = storage;
         }
 
-        public uint StorageDistance { get; set; }
+        public int StorageDistance { get; set; }
         public IStorage Storage { get; set; }
 
         /// <inheritdoc/>

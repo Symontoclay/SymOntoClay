@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -60,6 +61,6 @@ namespace SymOntoClay.Core.Internal.IndexedData
             return DebugHelperForRuleInstance.ToString(Origin);
         }
 
-        public abstract void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, OptionsOfFillExecutingCard options);
+        public abstract void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options);
     }
 }

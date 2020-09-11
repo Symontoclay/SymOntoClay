@@ -390,6 +390,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.CloneValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -451,6 +454,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.BinaryOperatorAstExpression.CloneAstExpression(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.BinaryOperatorAstExpression.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.BinaryOperatorAstExpression.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -479,6 +485,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.CallingFunctionAstExpression.CloneAstExpression(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.CallingFunctionAstExpression.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.CallingFunctionAstExpression.PropertiesToString(System.UInt32)">
@@ -515,6 +524,9 @@
             <param name="context">Special context for providing references continuity.</param>
             <returns>Cloned instance.</returns>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.CallingParameter.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.CallingParameter.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -542,6 +554,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.ConstValueAstExpression.CloneAstExpression(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.ConstValueAstExpression.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.ConstValueAstExpression.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -567,6 +582,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.EntityConditionAstExpression.CloneAstExpression(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.EntityConditionAstExpression.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.EntityConditionAstExpression.PropertiesToString(System.UInt32)">
@@ -599,6 +617,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.UnaryOperatorAstExpression.CloneAstExpression(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.UnaryOperatorAstExpression.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.UnaryOperatorAstExpression.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -626,6 +647,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.VarAstExpression.CloneAstExpression(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.VarAstExpression.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.VarAstExpression.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -648,6 +672,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstExpressionStatement.CloneAstStatement(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstExpressionStatement.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstExpressionStatement.PropertiesToString(System.UInt32)">
@@ -696,6 +723,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstUseInheritanceStatement.CloneAstStatement(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstUseInheritanceStatement.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstUseInheritanceStatement.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -703,6 +733,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstUseInheritanceStatement.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseRulePart.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseRulePart.PropertiesToString(System.UInt32)">
@@ -739,6 +772,9 @@
             <param name="context">Special context for providing references continuity.</param>
             <returns>Cloned instance.</returns>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Channel.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Channel.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -772,6 +808,9 @@
             </summary>
             <param name="context">Special context for providing references continuity.</param>
             <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeEntity.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeEntity.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -884,6 +923,9 @@
             <param name="context">Special context for providing references continuity.</param>
             <returns>Cloned instance.</returns>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.InheritanceItem.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InheritanceItem.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -917,6 +959,9 @@
             </summary>
             <param name="context">Special context for providing references continuity.</param>
             <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.InlineTrigger.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InlineTrigger.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -995,6 +1040,9 @@
             </summary>
             <param name="context">Special context for providing references continuity.</param>
             <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -1147,6 +1195,9 @@
             <param name="context">Special context for providing references continuity.</param>
             <returns>Cloned instance.</returns>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -1184,6 +1235,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.CloneValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.PropertiesToString(System.UInt32)">
@@ -1253,6 +1307,9 @@
             </summary>
             <param name="context">Special context for providing references continuity.</param>
             <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -1494,6 +1551,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointValue.CloneValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointValue.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointValue.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -1708,7 +1768,7 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.AndOperatorIndexedLogicalQueryNode.KindOfOperator">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.AndOperatorIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.AndOperatorIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.BaseIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
@@ -1741,25 +1801,25 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.ConceptIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.ConceptIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ConceptIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.EntityConditionIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.EntityConditionIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.EntityConditionIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.EntityIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.EntityIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.EntityIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.EntityRefIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.EntityRefIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.EntityRefIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotatedItem.WhereSection">
@@ -2104,7 +2164,7 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRelationLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRelationLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRelationLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstance.PropertiesToString(System.UInt32)">
@@ -2251,7 +2311,7 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.LogicalVarIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.LogicalVarIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.LogicalVarIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.NotOperatorIndexedLogicalQueryNode.Kind">
@@ -2260,7 +2320,7 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.NotOperatorIndexedLogicalQueryNode.KindOfOperator">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.NotOperatorIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.NotOperatorIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard.ToString">
@@ -2296,7 +2356,7 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.OrOperatorIndexedLogicalQueryNode.KindOfOperator">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.OrOperatorIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.OrOperatorIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardAboutKnownInfo.ToString">
@@ -2383,7 +2443,7 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.QuestionVarIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.QuestionVarIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.QuestionVarIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.RelationIndexedLogicalQueryNode.Kind">
@@ -2398,7 +2458,7 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.RelationIndexedLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.RelationIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.RelationIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfQueryToRelation.ToString">
@@ -2528,7 +2588,7 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.StubParamIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.StubParamIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.StubParamIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.UnaryOperatorIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
@@ -2543,13 +2603,13 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.VarIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.VarIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.VarIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem.ToString">
@@ -2821,6 +2881,9 @@
             <param name="context">Special context for providing references continuity.</param>
             <returns>Cloned instance.</returns>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.UseRawStatement.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.UseRawStatement.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -3022,6 +3085,9 @@
         <member name="E:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.OnChanged">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.GetAllRelations">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.MetadataStorage.MetadataStorage.Kind">
             <inheritdoc/>
         </member>
@@ -3082,7 +3148,7 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.VarStorage">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.SymOntoClay#Core#IStorage#CollectChainOfStorages(System.Collections.Generic.IList{System.Collections.Generic.KeyValuePair{System.UInt32,SymOntoClay.Core.IStorage}},System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.SymOntoClay#Core#IStorage#CollectChainOfStorages(System.Collections.Generic.IList{SymOntoClay.Core.StorageUsingOptions},System.Int32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.DefaultSettingsOfCodeEntity">
@@ -3274,6 +3340,33 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.StandaloneStorageSettings.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.StorageUsingOptions.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.StorageUsingOptions.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.StorageUsingOptions.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.StorageUsingOptions.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.StorageUsingOptions.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.StorageUsingOptions.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.StorageUsingOptions.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.StorageUsingOptions.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.StorageUsingOptions.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
     </members>

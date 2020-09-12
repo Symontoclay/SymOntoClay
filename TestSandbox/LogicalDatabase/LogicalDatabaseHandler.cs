@@ -110,6 +110,8 @@ namespace TestSandbox.LogicalDatabase
             var parser = new LogicalQueryParser(internalParserContext);
             parser.Run();
 
+            var dictionary = _context.Dictionary;
+
             var parsedQuery = parser.Result;
 
             _logger.Log($"parsedQuery = {parsedQuery}");
@@ -120,7 +122,7 @@ namespace TestSandbox.LogicalDatabase
 
             _logger.Log($"indexedQuery = {indexedQuery}");
 
-            _logger.Log($"DebugHelperForIndexedRuleInstance.ToString(indexedQuery) = {DebugHelperForIndexedRuleInstance.ToString(indexedQuery, _context.Dictionary)}");
+            _logger.Log($"DebugHelperForIndexedRuleInstance.ToString(indexedQuery) = {DebugHelperForIndexedRuleInstance.ToString(indexedQuery, dictionary)}");
 
             var searcher = _context.DataResolversFactory.GetLogicalSearchResolver();
 
@@ -136,7 +138,27 @@ namespace TestSandbox.LogicalDatabase
 
             var searchResult = searcher.Run(searchOptions);
 
-            _logger.Log($"searchResult = {searchResult}");
+            //_logger.Log($"searchResult = {searchResult}");
+            
+            _logger.Log($"searchResult.Items.Count = {searchResult.Items.Count}");
+
+            foreach(var item in searchResult.Items)
+            {
+                _logger.Log($"item.ResultOfVarOfQueryToRelationList.Count = {item.ResultOfVarOfQueryToRelationList.Count}");
+
+                foreach(var resultOfVarOfQueryToRelation in item.ResultOfVarOfQueryToRelationList)
+                {
+                    var varName = dictionary.GetName(resultOfVarOfQueryToRelation.KeyOfVar);
+
+                    _logger.Log($"varName = {varName}");
+
+                    var foundNode = resultOfVarOfQueryToRelation.FoundExpression;
+
+                    _logger.Log($"DebugHelperForRuleInstance.ToString(foundNode) = {DebugHelperForRuleInstance.ToString(foundNode)}");
+                }
+
+                //_logger.Log($" = {}");
+            }
         }
     }
 }

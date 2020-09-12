@@ -27,7 +27,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjListProp
+            sb.PrintObjListProp(n, nameof(Items), Items);
 
             return sb.ToString();
         }
@@ -49,6 +49,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintShortObjListProp(n, nameof(Items), Items);
+
             return sb.ToString();
         }
 
@@ -69,6 +72,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintBriefObjListProp(n, nameof(Items), Items);
+
             return sb.ToString();
         }
     }

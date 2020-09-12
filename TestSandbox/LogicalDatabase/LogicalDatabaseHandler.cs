@@ -29,7 +29,29 @@ namespace TestSandbox.LogicalDatabase
         {
             _logger.Log("Begin");
 
-            ParseFacts();
+            RunCase1();
+            //ParseFacts();
+
+            _logger.Log("End");
+        }
+
+        private void RunCase1()
+        {
+            _logger.Log("Begin");
+
+            var queryStr = string.Empty;
+
+            queryStr = "{: male(#Tom) :}";
+            ParseQueryString(queryStr);
+
+            queryStr = "{: parent(#Piter, #Tom) :}";
+            ParseQueryString(queryStr);
+
+            queryStr = "{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}";
+            ParseQueryString(queryStr);
+
+            queryStr = "{: son(?y, ?z) :}";
+            Search(queryStr);
 
             _logger.Log("End");
         }

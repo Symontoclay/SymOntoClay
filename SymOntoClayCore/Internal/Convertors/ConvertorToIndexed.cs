@@ -567,8 +567,6 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             result.Key = mainStorageContext.Dictionary.GetKey(source.Name.NameValue);
 
-            result.IsRule = source.IsRule;
-
             result.PrimaryPart = ConvertPrimaryRulePart(source.PrimaryPart, result, mainStorageContext, convertingContext);
 
             if (!source.SecondaryParts.IsNullOrEmpty())
@@ -680,6 +678,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             dest.RelationsDict = contextOfConvertingExpressionNode.RelationsList.GroupBy(p => p.Key).ToDictionary(p => p.Key, p => (IList<RelationIndexedLogicalQueryNode>)p.ToList());
 
+            dest.IsActive = source.IsActive;
             dest.HasQuestionVars = contextOfConvertingExpressionNode.HasQuestionVars;
             dest.HasVars = contextOfConvertingExpressionNode.HasVars;
         }

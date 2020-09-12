@@ -12,6 +12,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
         public IndexedRuleInstance Parent { get; set; }
 
+        public bool IsActive { get; set; }
         public bool HasVars { get; set; }
         public bool HasQuestionVars { get; set; }
 
@@ -27,12 +28,13 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var nextN = n + 4;
             var nextNSpace = DisplayHelper.Spaces(nextN);
 
-            //sb.AppendLine($"{spaces}{nameof(IsActive)} = {IsActive}");
+            sb.AppendLine($"{spaces}{nameof(IsActive)} = {IsActive}");
             sb.AppendLine($"{spaces}{nameof(HasVars)} = {HasVars}");
             sb.AppendLine($"{spaces}{nameof(HasQuestionVars)} = {HasQuestionVars}");
 
             sb.PrintBriefObjProp(n, nameof(OriginRulePart), OriginRulePart);
             sb.PrintBriefObjProp(n, nameof(Parent), Parent);
+
             sb.PrintObjProp(n, nameof(Expression), Expression);
 
             if (RelationsDict == null)
@@ -66,7 +68,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.AppendLine($"{spaces}{nameof(IsActive)} = {IsActive}");
+            sb.AppendLine($"{spaces}{nameof(IsActive)} = {IsActive}");
             sb.AppendLine($"{spaces}{nameof(HasVars)} = {HasVars}");
             sb.AppendLine($"{spaces}{nameof(HasQuestionVars)} = {HasQuestionVars}");
 
@@ -84,7 +86,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.AppendLine($"{spaces}{nameof(IsActive)} = {IsActive}");
+            sb.AppendLine($"{spaces}{nameof(IsActive)} = {IsActive}");
             sb.AppendLine($"{spaces}{nameof(HasVars)} = {HasVars}");
             sb.AppendLine($"{spaces}{nameof(HasQuestionVars)} = {HasQuestionVars}");
 

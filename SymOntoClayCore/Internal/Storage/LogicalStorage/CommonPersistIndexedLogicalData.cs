@@ -53,14 +53,14 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                     {
                         var part_1 = indexedRuleInstance.PrimaryPart;
 
-                        if (part_1.HasVars && !part_1.HasQuestionVars && part_1.RelationsDict.Count == 1)
+                        if (part_1.HasVars && part_1.IsActive && !part_1.HasQuestionVars && part_1.RelationsDict.Count == 1)
                         {
                             NAddIndexedRulePartToKeysOfRelationsIndex(IndexedRulePartsWithOneRelationWithVarsDict, part_1);
                         }
 
                         foreach(var part_2 in indexedRuleInstance.SecondaryParts)
                         {
-                            if (part_2.HasVars && !part_2.HasQuestionVars && part_2.RelationsDict.Count == 1)
+                            if (part_2.HasVars && part_2.IsActive && !part_2.HasQuestionVars && part_2.RelationsDict.Count == 1)
                             {
                                 NAddIndexedRulePartToKeysOfRelationsIndex(IndexedRulePartsWithOneRelationWithVarsDict, part_2);
                             }

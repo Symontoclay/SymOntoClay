@@ -89,6 +89,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             throw new NotImplementedException();
         }
 
+        [Obsolete("Now I have disagreement with this code.")]
         private void FillExecutingCardForQuestion(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
@@ -109,6 +110,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
             options.Logger.Log($"queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString()}");
             options.Logger.Log($"queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
             options.Logger.Log($"GetHumanizeDbgString() = {GetHumanizeDbgString()}");
+
+            throw new NotImplementedException();
 #endif
 
             var hasAnnotations = !Annotations.IsNullOrEmpty();

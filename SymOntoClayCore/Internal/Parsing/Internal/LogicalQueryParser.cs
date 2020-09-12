@@ -177,6 +177,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.LeftRightArrow:
+                            Result.PrimaryPart.IsActive = true;
                             _state = State.WaitForSecondaryRulePart;
                             break;
 

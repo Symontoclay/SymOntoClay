@@ -8,6 +8,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public abstract class BaseRulePart: AnnotatedItem
     {
         public RuleInstance Parent { get; set; }
+        public bool IsActive { get; set; }
         public LogicalQueryNode Expression { get; set; }
 
         public bool HasQuestionVars
@@ -25,6 +26,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         protected void AppendBaseRulePart(BaseRulePart source, Dictionary<object, object> context)
         {
+            IsActive = source.IsActive;
             Parent = source.Parent.Clone(context);
             Expression = source.Expression.Clone(context);
 
@@ -46,6 +48,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(Parent), Parent);
+
+            sb.AppendLine($"{spaces}{nameof(IsActive)} = {IsActive}");
+
             sb.PrintObjProp(n, nameof(Expression), Expression);
 
             sb.Append(base.PropertiesToString(n));
@@ -59,6 +64,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(Parent), Parent);
+
+            sb.AppendLine($"{spaces}{nameof(IsActive)} = {IsActive}");
+
             sb.PrintShortObjProp(n, nameof(Expression), Expression);
 
             sb.Append(base.PropertiesToShortString(n));
@@ -72,6 +80,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(Parent), Parent);
+
+            sb.AppendLine($"{spaces}{nameof(IsActive)} = {IsActive}");
+
             sb.PrintBriefObjProp(n, nameof(Expression), Expression);
 
             sb.Append(base.PropertiesToBriefString(n));

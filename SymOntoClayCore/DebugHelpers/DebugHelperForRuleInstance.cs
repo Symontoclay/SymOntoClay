@@ -60,6 +60,25 @@ namespace SymOntoClay.Core.DebugHelpers
             return sb.ToString();
         }
 
+        public static string BaseRulePartToString(BaseRulePart baseRulePart)
+        {
+            var b = baseRulePart as PrimaryRulePart;
+
+            if (b != null)
+            {
+                return ToString(b);
+            }
+
+            var c = baseRulePart as SecondaryRulePart;
+
+            if (c != null)
+            {
+                return ToString(c);
+            }
+
+            return string.Empty;
+        }
+
         public static string ToString(SecondaryRulePart rulePart)
         {
             var sb = new StringBuilder();

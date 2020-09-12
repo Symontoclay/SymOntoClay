@@ -63,11 +63,15 @@ namespace SymOntoClay.Core.Internal.IndexedData
             options.Logger.Log($"Begin~~~~~~ GetHumanizeDbgString() = {GetHumanizeDbgString()}");
 #endif
 
+#if DEBUG
             var senderIndexedRuleInstance = queryExecutingCard.SenderIndexedRuleInstance;
-
+#endif
             var queryExecutingCardForExpression = new QueryExecutingCardForIndexedPersistLogicalData();
+
+#if DEBUG
             queryExecutingCardForExpression.SenderIndexedRuleInstance = senderIndexedRuleInstance;
             queryExecutingCardForExpression.SenderIndexedRulePart = this;
+#endif
             Expression.FillExecutingCard(queryExecutingCardForExpression, dataSource, options);
 
 #if DEBUG

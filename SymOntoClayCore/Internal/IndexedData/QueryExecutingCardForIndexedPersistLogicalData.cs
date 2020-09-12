@@ -14,10 +14,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public IList<QueryExecutingCardAboutVar> VarsInfoList { get; set; }
         public IList<QueryExecutingCardAboutKnownInfo> KnownInfoList { get; set; }
         public IList<ResultOfQueryToRelation> ResultsOfQueryToRelationList { get; set; } = new List<ResultOfQueryToRelation>();
+#if DEBUG
         public IndexedRuleInstance SenderIndexedRuleInstance { get; set; }
         public IndexedBaseRulePart SenderIndexedRulePart { get; set; }
         public BaseIndexedLogicalQueryNode SenderExpressionNode { get; set; }
-
+#endif
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -41,10 +42,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintObjListProp(n, nameof(VarsInfoList), VarsInfoList);
             sb.PrintObjListProp(n, nameof(KnownInfoList), KnownInfoList);
             sb.PrintObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
+#if DEBUG
             sb.PrintExisting(n, nameof(SenderIndexedRuleInstance), SenderIndexedRuleInstance);
             sb.PrintExisting(n, nameof(SenderIndexedRulePart), SenderIndexedRulePart);
             sb.PrintExisting(n, nameof(SenderExpressionNode), SenderExpressionNode);
-
+#endif
             return sb.ToString();
         }
 
@@ -71,10 +73,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintShortObjListProp(n, nameof(VarsInfoList), VarsInfoList);
             sb.PrintShortObjListProp(n, nameof(KnownInfoList), KnownInfoList);
             sb.PrintShortObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
+#if DEBUG
             sb.PrintExisting(n, nameof(SenderIndexedRuleInstance), SenderIndexedRuleInstance);
             sb.PrintExisting(n, nameof(SenderIndexedRulePart), SenderIndexedRulePart);
             sb.PrintExisting(n, nameof(SenderExpressionNode), SenderExpressionNode);
-
+#endif
             return sb.ToString();
         }
 
@@ -101,13 +104,15 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintBriefObjListProp(n, nameof(VarsInfoList), VarsInfoList);
             sb.PrintBriefObjListProp(n, nameof(KnownInfoList), KnownInfoList);
             sb.PrintBriefObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
+#if DEBUG
             sb.PrintExisting(n, nameof(SenderIndexedRuleInstance), SenderIndexedRuleInstance);
             sb.PrintExisting(n, nameof(SenderIndexedRulePart), SenderIndexedRulePart);
             sb.PrintExisting(n, nameof(SenderExpressionNode), SenderExpressionNode);
-
+#endif
             return sb.ToString();
         }
 
+#if DEBUG
         public string GetSenderIndexedRuleInstanceHumanizeDbgString()
         {
             if (SenderIndexedRuleInstance == null)
@@ -163,5 +168,6 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             return DebugHelperForRuleInstance.ToString(origin);
         }
+#endif
     }
 }

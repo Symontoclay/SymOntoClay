@@ -48,5 +48,33 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
             }
         }
+
+        public IList<IndexedBaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(ulong key)
+        {
+            lock (_lockObj)
+            {
+#if DEBUG
+                //LogInstance.Log($"key = {key}");
+#endif
+
+                var result = new List<IndexedBaseRulePart>();
+
+                var dataSourcesSettingsOrderedByPriorityList = _dataSourcesSettingsOrderedByPriorityAndUseFactsList;
+
+                foreach (var dataSourcesSettings in dataSourcesSettingsOrderedByPriorityList)
+                {
+                    var indexedRulePartsOfFactsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(key);
+
+                    if (indexedRulePartsOfFactsList == null)
+                    {
+                        continue;
+                    }
+
+                    result.AddRange(indexedRulePartsOfFactsList);
+                }
+
+                return result;
+            }
+        }
     }
 }

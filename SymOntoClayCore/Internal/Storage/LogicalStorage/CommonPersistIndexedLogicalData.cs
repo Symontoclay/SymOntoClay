@@ -1,5 +1,7 @@
 ﻿using NLog;
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -101,7 +103,16 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
         private void NAddIndexedRulePartToKeysOfRelationsIndex(IDictionary<ulong, IList<IndexedBaseRulePart>> indexData, IndexedBaseRulePart indexedRulePart)
         {
+#if DEBUG
+            var dbgStr = DebugHelperForRuleInstance.BaseRulePartToString(indexedRulePart.OriginRulePart);
+            Log($"dbgStr = {dbgStr}");
+#endif
+
             var relationsList = indexedRulePart.RelationsDict.SelectMany(p => p.Value).Distinct().ToList();
+
+#if DEBUG
+            Log($" = {relationsList.WriteListToString()}");
+#endif
 
             foreach (var relation in relationsList)
             {
@@ -112,6 +123,10 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             }
 
             var keysOfRelationsList = indexedRulePart.RelationsDict.Keys.ToList();
+
+#if DEBUG
+            Log($" = {relationsList.WriteListToString()}");
+#endif
 
             foreach (var keyOfRelation in keysOfRelationsList)
             {
@@ -134,6 +149,30 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         public IList<RelationIndexedLogicalQueryNode> GetAllRelations()
         {
             return RelationsList.ToList();
+        }
+
+        public IList<IndexedBaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(ulong key)
+        {
+#if DEBUG
+            Log($"key = {key}");
+            Log($"IndexedRulePartsOfFactsDict.Count = {IndexedRulePartsOfFactsDict.Count}");
+            foreach (var tmpItem in IndexedRulePartsOfFactsDict)
+            {
+                Log($"tmpItem.Key = {tmpItem.Key}");
+                foreach(var a in tmpItem.Value)
+                {
+                    var dbgStr = DebugHelperForRuleInstance.BaseRulePartToString(a.OriginRulePart);
+                    Log($"dbgStr = {dbgStr}");
+                }                
+            }
+#endif
+
+            if (IndexedRulePartsOfFactsDict.ContainsKey(key))
+            {
+                return IndexedRulePartsOfFactsDict[key];
+            }
+
+            return null;
         }
     }
 }

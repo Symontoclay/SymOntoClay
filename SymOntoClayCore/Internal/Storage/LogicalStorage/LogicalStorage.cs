@@ -128,5 +128,18 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 return _commonPersistIndexedLogicalData.GetAllRelations();
             }
         }
+
+        /// <inheritdoc/>
+        public IList<IndexedBaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(ulong key)
+        {
+            lock (_lockObj)
+            {
+#if DEBUG
+                //LogInstance.Log($"key = {key}");
+#endif
+
+                return _commonPersistIndexedLogicalData.GetIndexedRulePartOfFactsByKeyOfRelation(key);
+            }
+        }
     }
 }

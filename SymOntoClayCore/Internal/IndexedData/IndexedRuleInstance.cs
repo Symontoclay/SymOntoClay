@@ -82,10 +82,15 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
         public void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
+#if DEBUG
             options.Logger.Log("Begin");
+#endif
 
             var queryExecutingCardForPart_1 = new QueryExecutingCardForIndexedPersistLogicalData();
+
+#if DEBUG
             queryExecutingCardForPart_1.SenderIndexedRuleInstance = this;
+#endif
 
             PrimaryPart.FillExecutingCard(queryExecutingCardForPart_1, dataSource, options);
 
@@ -93,8 +98,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
             {
                 queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
             }
-
+#if DEBUG
             options.Logger.Log("End");
+#endif
         }
     }
 }

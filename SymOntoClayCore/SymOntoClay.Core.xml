@@ -3172,6 +3172,9 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.GetAllRelations">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(System.UInt64)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.MetadataStorage.MetadataStorage.Kind">
             <inheritdoc/>
         </member>

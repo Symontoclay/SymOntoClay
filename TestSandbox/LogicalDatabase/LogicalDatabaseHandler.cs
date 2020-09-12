@@ -41,17 +41,17 @@ namespace TestSandbox.LogicalDatabase
 
             var queryStr = string.Empty;
 
-            queryStr = "{: male(#Tom) :}";
+            //queryStr = "{: male(#Tom) :}";
+            //ParseQueryString(queryStr);
+
+            //queryStr = "{: parent(#Piter, #Tom) :}";
+            //ParseQueryString(queryStr);
+
+            queryStr = "{: { son($x, $y) } -> { male($x) & parent($y, $x)} :}";
             ParseQueryString(queryStr);
 
-            queryStr = "{: parent(#Piter, #Tom) :}";
-            ParseQueryString(queryStr);
-
-            queryStr = "{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}";
-            ParseQueryString(queryStr);
-
-            queryStr = "{: son(?y, ?z) :}";
-            Search(queryStr);
+            //queryStr = "{: son(?y, ?z) :}";
+            //Search(queryStr);
 
             _logger.Log("End");
         }

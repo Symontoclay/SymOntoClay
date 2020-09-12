@@ -86,6 +86,53 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 return;
             }
 
+
+#if DEBUG
+            options.Logger.Log($"Key = {Key}");
+            options.Logger.Log($"IsQuestion = {IsQuestion}");
+            options.Logger.Log($"Params.Count = {Params.Count}");
+            foreach (var param in Params)
+            {
+                options.Logger.Log($"param = {param}");
+            }
+            options.Logger.Log($"VarsInfoList.Count = {VarsInfoList.Count}");
+            foreach (var varInfo in VarsInfoList)
+            {
+                options.Logger.Log($"varInfo = {varInfo}");
+            }
+            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            options.Logger.Log($"queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString() = {queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString()}");
+            options.Logger.Log($"queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString()}");
+            options.Logger.Log($"queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
+            options.Logger.Log($"GetHumanizeDbgString() = {GetHumanizeDbgString()}");
+#endif
+
+            NFillExecutingCard(queryExecutingCard, dataSource, options);
+
+#if DEBUG
+            options.Logger.Log($"^^^^^^queryExecutingCard = {queryExecutingCard}");
+            options.Logger.Log($"queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString() = {queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString()}");
+            options.Logger.Log($"queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString()}");
+            options.Logger.Log($"queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
+            options.Logger.Log($"GetHumanizeDbgString() = {GetHumanizeDbgString()}");
+
+            throw new NotImplementedException();
+
+            options.Logger.Log("End");
+#endif
+        }
+
+        private void NFillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        {
+            var senderIndexedRuleInstance = queryExecutingCard.SenderIndexedRuleInstance;
+            var senderIndexedRulePart = queryExecutingCard.SenderIndexedRulePart;
+
+            var indexedRulePartsOfFactsList = dataSource.GetIndexedRulePartOfFactsByKeyOfRelation(Key);
+
+#if DEBUG
+            options.Logger.Log($"indexedRulePartsOfFactsList?.Count = {indexedRulePartsOfFactsList?.Count}");
+#endif
+
             throw new NotImplementedException();
         }
 

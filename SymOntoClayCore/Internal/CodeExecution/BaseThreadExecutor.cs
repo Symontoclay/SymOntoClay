@@ -337,10 +337,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             catch (Exception e)
             {
 #if DEBUG
-                Error(e);
+                Error(e);       
+#endif
 
                 throw;
-#endif
             }
         }
 

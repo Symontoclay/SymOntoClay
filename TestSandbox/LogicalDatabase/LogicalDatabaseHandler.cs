@@ -52,6 +52,9 @@ namespace TestSandbox.LogicalDatabase
             //queryStr = "{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}";
             //ParseQueryString(queryStr);
 
+            queryStr = "{: { love($x, $y) } -> { help($x, $y) } :}";
+            ParseQueryString(queryStr);
+
             queryStr = "{: ?x(?y, ?z) :}";
             Search(queryStr);
 

@@ -27,6 +27,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             Log($"optionsOfFillExecutingCard = {optionsOfFillExecutingCard}");
 #endif
 
+            var result = new LogicalSearchResult();
+
             var dataSource = new ConsolidatedDataSource(GetStoragesList(options.LocalCodeExecutionContext.Storage));
 
             var queryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
@@ -39,7 +41,22 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             Log($"@!@!@!@!@!@!@! queryExecutingCard = {queryExecutingCard}");
 #endif
 
-            throw new NotImplementedException();
+            var resultItemsList = new List<LogicalSearchResultItem>();
+
+            foreach (var resultOfQueryToRelation in queryExecutingCard.ResultsOfQueryToRelationList)
+            {
+                var resultItem = new LogicalSearchResultItem();
+                resultItem.ResultOfVarOfQueryToRelationList = resultOfQueryToRelation.ResultOfVarOfQueryToRelationList;
+                resultItemsList.Add(resultItem);
+            }
+
+            result.Items = resultItemsList;
+
+#if DEBUG
+            Log("End");
+#endif
+
+            return result;
         }
     }
 }

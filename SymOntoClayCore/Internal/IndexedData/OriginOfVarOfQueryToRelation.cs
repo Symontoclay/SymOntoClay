@@ -3,11 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.DataResolvers
+namespace SymOntoClay.Core.Internal.IndexedData
 {
-    public class LogicalSearchResult : IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class OriginOfVarOfQueryToRelation : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public IList<LogicalSearchResultItem> Items { get; set; }
+        public ulong KeyOfRuleInstance { get; set; }
+        public IndexedRuleInstance IndexedRuleInstance { get; set; }
+        public IndexedBaseRulePart IndexedRulePart { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -27,7 +29,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjListProp
+            sb.AppendLine($"{spaces}{nameof(KeyOfRuleInstance)} = {KeyOfRuleInstance}");
+            sb.PrintObjProp(n, nameof(IndexedRuleInstance), IndexedRuleInstance);
+            sb.PrintObjProp(n, nameof(IndexedRulePart), IndexedRulePart);
 
             return sb.ToString();
         }
@@ -49,6 +53,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(KeyOfRuleInstance)} = {KeyOfRuleInstance}");
+            sb.PrintShortObjProp(n, nameof(IndexedRuleInstance), IndexedRuleInstance);
+            sb.PrintShortObjProp(n, nameof(IndexedRulePart), IndexedRulePart);
+
             return sb.ToString();
         }
 
@@ -69,6 +78,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(KeyOfRuleInstance)} = {KeyOfRuleInstance}");
+            sb.PrintBriefObjProp(n, nameof(IndexedRuleInstance), IndexedRuleInstance);
+            sb.PrintBriefObjProp(n, nameof(IndexedRulePart), IndexedRulePart);
+
             return sb.ToString();
         }
     }

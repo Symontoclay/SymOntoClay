@@ -1,13 +1,16 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.DataResolvers
+namespace SymOntoClay.Core.Internal.IndexedData
 {
-    public class LogicalSearchResult : IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class ResultOfVarOfQueryToRelation : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public IList<LogicalSearchResultItem> Items { get; set; }
+        public ulong KeyOfVar { get; set; }
+        public LogicalQueryNode FoundExpression { get; set; }
+        public IDictionary<ulong, OriginOfVarOfQueryToRelation> OriginDict { get; set; } = new Dictionary<ulong, OriginOfVarOfQueryToRelation>();
 
         /// <inheritdoc/>
         public override string ToString()
@@ -27,7 +30,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjListProp
+            sb.AppendLine($"{spaces}{nameof(KeyOfVar)} = {KeyOfVar}");
+            sb.PrintObjProp(n, nameof(FoundExpression), FoundExpression);
+            sb.PrintObjDict_2_Prop(n, nameof(OriginDict), OriginDict);
 
             return sb.ToString();
         }
@@ -49,6 +54,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(KeyOfVar)} = {KeyOfVar}");
+            sb.PrintShortObjProp(n, nameof(FoundExpression), FoundExpression);
+            sb.PrintShortObjDict_2_Prop(n, nameof(OriginDict), OriginDict);
+
             return sb.ToString();
         }
 
@@ -69,6 +79,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(KeyOfVar)} = {KeyOfVar}");
+            sb.PrintBriefObjProp(n, nameof(FoundExpression), FoundExpression);
+            sb.PrintBriefObjDict_2_Prop(n, nameof(OriginDict), OriginDict);
+
             return sb.ToString();
         }
     }

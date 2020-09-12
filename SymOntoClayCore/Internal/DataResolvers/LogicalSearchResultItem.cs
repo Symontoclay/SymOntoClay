@@ -1,13 +1,14 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
 {
-    public class LogicalSearchResult : IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class LogicalSearchResultItem : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public IList<LogicalSearchResultItem> Items { get; set; }
+        public IList<ResultOfVarOfQueryToRelation> ResultOfVarOfQueryToRelationList { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -27,7 +28,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjListProp
+            sb.PrintObjListProp(n, nameof(ResultOfVarOfQueryToRelationList), ResultOfVarOfQueryToRelationList);
 
             return sb.ToString();
         }
@@ -49,6 +50,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintShortObjListProp(n, nameof(ResultOfVarOfQueryToRelationList), ResultOfVarOfQueryToRelationList);
+
             return sb.ToString();
         }
 
@@ -69,6 +73,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintBriefObjListProp(n, nameof(ResultOfVarOfQueryToRelationList), ResultOfVarOfQueryToRelationList);
+
             return sb.ToString();
         }
     }

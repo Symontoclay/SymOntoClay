@@ -18,6 +18,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public IndexedRuleInstance RuleInstance { get; set; }
         public IndexedBaseRulePart RulePart { get; set; }
 
+        public virtual QuestionVarIndexedLogicalQueryNode AsQuestionVarIndexedLogicalQueryNode => null;
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {

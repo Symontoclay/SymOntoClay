@@ -7,6 +7,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
 {
     public class ResultOfQueryToRelation : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
+        public IList<ResultOfVarOfQueryToRelation> ResultOfVarOfQueryToRelationList { get; set; } = new List<ResultOfVarOfQueryToRelation>();
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -24,6 +26,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintObjListProp(n, nameof(ResultOfVarOfQueryToRelationList), ResultOfVarOfQueryToRelationList);
+
             return sb.ToString();
         }
 
@@ -44,6 +49,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintShortObjListProp(n, nameof(ResultOfVarOfQueryToRelationList), ResultOfVarOfQueryToRelationList);
+
             return sb.ToString();
         }
 
@@ -64,6 +72,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintBriefObjListProp(n, nameof(ResultOfVarOfQueryToRelationList), ResultOfVarOfQueryToRelationList);
+
             return sb.ToString();
         }
     }

@@ -135,7 +135,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 }
 #if DEBUG
                 options.Logger.Log($"targetRelation.GetHumanizeDbgString() = {targetRelation.GetHumanizeDbgString()}");
-                options.Logger.Log($"targetRelation = {targetRelation}");
+                //options.Logger.Log($"targetRelation = {targetRelation}");
                 options.Logger.Log($"hasAnnotations = {hasAnnotations}");
 #endif
 
@@ -143,7 +143,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
                 if (hasAnnotations)
                 {
-                    if (targetRelation.Annotations.IsEmpty())
+                    if (targetRelation.Annotations.IsNullOrEmpty())
                     {
                         continue;
                     }
@@ -158,11 +158,89 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
 #if DEBUG
                 options.Logger.Log($"NEXT targetRelation.GetHumanizeDbgString() = {targetRelation.GetHumanizeDbgString()}");
-                options.Logger.Log($"NEXT targetRelation = {targetRelation}");
+                //options.Logger.Log($"NEXT targetRelation = {targetRelation}");
+#endif
+
+                var resultOfQueryToRelation = new ResultOfQueryToRelation();
+                queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
+
+                {
+                    var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
+                    resultOfVarOfQueryToRelation.KeyOfVar = Key;
+                    resultOfVarOfQueryToRelation.FoundExpression = targetRelation.Origin;
+                    resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
+
+                    var originInfo = new OriginOfVarOfQueryToRelation();
+                    var targetRulePart = targetRelation.RulePart;
+                    originInfo.IndexedRuleInstance = targetRelation.RuleInstance;
+                    originInfo.IndexedRulePart = targetRulePart;
+
+                    var keyOfRuleInstance = targetRelation.RuleInstance.Key;
+
+                    originInfo.KeyOfRuleInstance = keyOfRuleInstance;
+
+                    resultOfVarOfQueryToRelation.OriginDict[keyOfRuleInstance] = originInfo;
+                }
+
+                var n = 0;
+
+                foreach (var param in Params)
+                {
+#if DEBUG
+                    options.Logger.Log($"n = {n} param = {param}");
+#endif
+
+                    n++;
+
+                    if (param.Kind != KindOfLogicalQueryNode.QuestionVar)
+                    {
+                        continue;
+                    }
+
+                    var foundExpression = targetRelation.Params[n - 1].Origin;
+
+                    var questionVarParam = param.AsQuestionVarIndexedLogicalQueryNode;
+
+                    var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
+                    resultOfVarOfQueryToRelation.KeyOfVar = questionVarParam.Key;
+                    resultOfVarOfQueryToRelation.FoundExpression = foundExpression;
+                    resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
+
+                    var originInfo = new OriginOfVarOfQueryToRelation();
+                    var targetRulePart = targetRelation.RulePart;
+                    originInfo.IndexedRuleInstance = targetRelation.RuleInstance;
+                    originInfo.IndexedRulePart = targetRulePart;
+
+                    var keyOfRuleInstance = targetRelation.RuleInstance.Key;
+
+                    originInfo.KeyOfRuleInstance = keyOfRuleInstance;
+
+                    resultOfVarOfQueryToRelation.OriginDict[keyOfRuleInstance] = originInfo;
+
+#if DEBUG
+                    options.Logger.Log($"resultOfVarOfQueryToRelation = {resultOfVarOfQueryToRelation}");
+                    //throw new NotImplementedException();
+#endif
+                }
+
+#if DEBUG
+                options.Logger.Log($"resultOfQueryToRelation = {resultOfQueryToRelation}");
+                //throw new NotImplementedException();
 #endif
             }
 
-            throw new NotImplementedException();
+#if DEBUG
+            //LogInstance.Log($"queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString() = {queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString()}");
+            //LogInstance.Log($"queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString()}");
+            //LogInstance.Log($"queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
+            //LogInstance.Log($"GetHumanizeDbgString() = {GetHumanizeDbgString()}");
+            //LogInstance.Log($"this = {this}");
+#endif
+
+#if DEBUG
+            //throw new NotImplementedException();
+            options.Logger.Log("End");
+#endif
         }
     }
 }

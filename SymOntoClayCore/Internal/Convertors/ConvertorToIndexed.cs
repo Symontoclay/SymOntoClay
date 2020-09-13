@@ -956,7 +956,7 @@ namespace SymOntoClay.Core.Internal.Convertors
                             var originParam = param;
                             var knownInfo = new QueryExecutingCardAboutKnownInfo();
                             knownInfo.Kind = kindOfParam;
-                            knownInfo.Expression = param;
+                            knownInfo.Expression = resultParam;
                             knownInfo.Position = i;
                             knownInfo.Key = dictionary.GetKey(originParam.Name.NameValue);
                             knownInfoList.Add(knownInfo);
@@ -968,7 +968,7 @@ namespace SymOntoClay.Core.Internal.Convertors
                             var originParam = param;
                             var knownInfo = new QueryExecutingCardAboutKnownInfo();
                             knownInfo.Kind = kindOfParam;
-                            knownInfo.Expression = param;
+                            knownInfo.Expression = resultParam;
                             knownInfo.Position = i;
                             knownInfo.Key = dictionary.GetKey(originParam.Name.NameValue);
                             knownInfoList.Add(knownInfo);

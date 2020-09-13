@@ -13,15 +13,19 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 {
     public class CommonPersistIndexedLogicalData: BaseLoggedComponent
     {
-        public CommonPersistIndexedLogicalData(IEntityLogger logger)
+        public CommonPersistIndexedLogicalData(IEntityLogger logger, IEntityDictionary entityDictionary)
             : base(logger)
         {
+            _entityDictionary = entityDictionary;
+
             IndexedRuleInstancesDict = new Dictionary<ulong, IndexedRuleInstance>();
             AdditionalRuleInstancesDict = new Dictionary<ulong, IndexedRuleInstance>();
             IndexedRulePartsOfFactsDict = new Dictionary<ulong, IList<IndexedBaseRulePart>>();
             IndexedRulePartsWithOneRelationWithVarsDict = new Dictionary<ulong, IList<IndexedBaseRulePart>>();
             RelationsList = new List<RelationIndexedLogicalQueryNode>();
         }
+
+        private IEntityDictionary _entityDictionary;
 
         //It is temporary public for construction time. It will be private after complete construction.
         public IDictionary<ulong, IndexedRuleInstance> IndexedRuleInstancesDict { get; set; }
@@ -104,14 +108,14 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         private void NAddIndexedRulePartToKeysOfRelationsIndex(IDictionary<ulong, IList<IndexedBaseRulePart>> indexData, IndexedBaseRulePart indexedRulePart)
         {
 #if DEBUG
-            var dbgStr = DebugHelperForRuleInstance.BaseRulePartToString(indexedRulePart.OriginRulePart);
-            Log($"dbgStr = {dbgStr}");
+            //var dbgStr = DebugHelperForRuleInstance.BaseRulePartToString(indexedRulePart.OriginRulePart);
+            //Log($"dbgStr = {dbgStr}");
 #endif
 
             var relationsList = indexedRulePart.RelationsDict.SelectMany(p => p.Value).Distinct().ToList();
 
 #if DEBUG
-            Log($" = {relationsList.WriteListToString()}");
+            //Log($"relationsList = {relationsList.WriteListToString()}");
 #endif
 
             foreach (var relation in relationsList)
@@ -125,11 +129,16 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             var keysOfRelationsList = indexedRulePart.RelationsDict.Keys.ToList();
 
 #if DEBUG
-            Log($" = {relationsList.WriteListToString()}");
+            //Log($" = {relationsList.WriteListToString()}");
 #endif
 
             foreach (var keyOfRelation in keysOfRelationsList)
             {
+#if DEBUG
+                //Log($"keyOfRelation = {keyOfRelation}");
+                //Log($"_entityDictionary.GetName(keyOfRelation) = {_entityDictionary.GetName(keyOfRelation)}");
+#endif
+
                 if (indexData.ContainsKey(keyOfRelation))
                 {
                     var tmpList = indexData[keyOfRelation];
@@ -154,17 +163,19 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         public IList<IndexedBaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(ulong key)
         {
 #if DEBUG
-            Log($"key = {key}");
-            Log($"IndexedRulePartsOfFactsDict.Count = {IndexedRulePartsOfFactsDict.Count}");
-            foreach (var tmpItem in IndexedRulePartsOfFactsDict)
-            {
-                Log($"tmpItem.Key = {tmpItem.Key}");
-                foreach(var a in tmpItem.Value)
-                {
-                    var dbgStr = DebugHelperForRuleInstance.BaseRulePartToString(a.OriginRulePart);
-                    Log($"dbgStr = {dbgStr}");
-                }                
-            }
+            //Log($"key = {key}");
+            //Log($"_entityDictionary.GetName(key) = {_entityDictionary.GetName(key)}");
+            //Log($"_entityDictionary = {_entityDictionary.GetDbgStr()}");
+            //Log($"IndexedRulePartsOfFactsDict.Count = {IndexedRulePartsOfFactsDict.Count}");
+            //foreach (var tmpItem in IndexedRulePartsOfFactsDict)
+            //{
+            //    Log($"tmpItem.Key = {tmpItem.Key}");
+            //    foreach(var a in tmpItem.Value)
+            //    {
+            //        var dbgStr = DebugHelperForRuleInstance.BaseRulePartToString(a.OriginRulePart);
+            //        Log($"dbgStr = {dbgStr}");
+            //    }                
+            //}
 #endif
 
             if (IndexedRulePartsOfFactsDict.ContainsKey(key))

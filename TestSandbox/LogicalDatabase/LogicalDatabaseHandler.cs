@@ -41,17 +41,17 @@ namespace TestSandbox.LogicalDatabase
 
             var queryStr = string.Empty;
 
-            //queryStr = "{: male(#Tom) :}";
-            //ParseQueryString(queryStr);
+            queryStr = "{: male(#Tom) :}";
+            ParseQueryString(queryStr);
 
-            //queryStr = "{: parent(#Piter, #Tom) :}";
-            //ParseQueryString(queryStr);
+            queryStr = "{: parent(#Piter, #Tom) :}";
+            ParseQueryString(queryStr);
 
             queryStr = "{: { son($x, $y) } -> { male($x) & parent($y, $x)} :}";
             ParseQueryString(queryStr);
 
-            //queryStr = "{: son(?y, ?z) :}";
-            //Search(queryStr);
+            queryStr = "{: son(?y, ?z) :}";
+            Search(queryStr);
 
             _logger.Log("End");
         }
@@ -176,7 +176,7 @@ namespace TestSandbox.LogicalDatabase
 
                     var foundNode = resultOfVarOfQueryToRelation.FoundExpression;
 
-                    _logger.Log($"DebugHelperForRuleInstance.ToString(foundNode) = {DebugHelperForRuleInstance.ToString(foundNode)}");
+                    _logger.Log($"DebugHelperForRuleInstance.ToString(foundNode) = {DebugHelperForIndexedRuleInstance.ToString(foundNode, dictionary)}");
                 }
 
                 //_logger.Log($" = {}");

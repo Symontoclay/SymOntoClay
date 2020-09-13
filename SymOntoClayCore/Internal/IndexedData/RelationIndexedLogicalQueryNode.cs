@@ -133,6 +133,57 @@ namespace SymOntoClay.Core.Internal.IndexedData
             options.Logger.Log($"indexedRulePartsOfFactsList?.Count = {indexedRulePartsOfFactsList?.Count}");
 #endif
 
+            var mergingResult = QueryExecutingCardAboutKnownInfoHelper.Merge(KnownInfoList, VarsInfoList, queryExecutingCard.KnownInfoList, false);
+
+            if (!mergingResult.IsSuccess)
+            {
+                return;
+            }
+
+            var targetKnownInfoList = mergingResult.KnownInfoList;
+
+#if DEBUG
+            options.Logger.Log($"targetKnownInfoList.Count = {targetKnownInfoList.Count}");
+            foreach (var tmpKnownInfo in targetKnownInfoList)
+            {
+                options.Logger.Log($"tmpKnownInfo = {tmpKnownInfo}");
+            }
+#endif
+
+            if (!indexedRulePartsOfFactsList.IsNullOrEmpty())
+            {
+                foreach (var indexedRulePartsOfFacts in indexedRulePartsOfFactsList)
+                {
+#if DEBUG
+                    options.Logger.Log($"this = {this}");
+                    options.Logger.Log($"indexedRulePartsOfFacts = {indexedRulePartsOfFacts}");
+#endif
+                    var queryExecutingCardForTargetFact = new QueryExecutingCardForIndexedPersistLogicalData();
+                    queryExecutingCardForTargetFact.TargetRelation = Key;
+                    queryExecutingCardForTargetFact.CountParams = CountParams;
+                    queryExecutingCardForTargetFact.VarsInfoList = VarsInfoList;
+                    queryExecutingCardForTargetFact.KnownInfoList = targetKnownInfoList;
+                    queryExecutingCardForTargetFact.SenderIndexedRuleInstance = senderIndexedRuleInstance;
+                    queryExecutingCardForTargetFact.SenderIndexedRulePart = senderIndexedRulePart;
+                    queryExecutingCardForTargetFact.SenderExpressionNode = this;
+
+                    indexedRulePartsOfFacts.FillExecutingCardForCallingFromRelationForFact(queryExecutingCardForTargetFact, dataSource, options);
+
+#if DEBUG
+                    options.Logger.Log($"++++++queryExecutingCardForTargetFact = {queryExecutingCardForTargetFact}");
+#endif
+
+                    foreach (var resultOfQueryToRelation in queryExecutingCardForTargetFact.ResultsOfQueryToRelationList)
+                    {
+                        queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
+                    }
+                }
+            }
+
+#if DEBUG
+            options.Logger.Log($"~~~~~~~~~~~~~~~~~queryExecutingCard = {queryExecutingCard}");
+#endif
+
             throw new NotImplementedException();
         }
 
@@ -217,7 +268,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 {
                     var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
                     resultOfVarOfQueryToRelation.KeyOfVar = Key;
-                    resultOfVarOfQueryToRelation.FoundExpression = targetRelation.Origin;
+                    resultOfVarOfQueryToRelation.FoundExpression = targetRelation;
                     resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
 
                     var originInfo = new OriginOfVarOfQueryToRelation();
@@ -247,7 +298,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
                         continue;
                     }
 
-                    var foundExpression = targetRelation.Params[n - 1].Origin;
+                    var foundExpression = targetRelation.Params[n - 1];
 
                     var questionVarParam = param.AsQuestionVarIndexedLogicalQueryNode;
 

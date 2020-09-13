@@ -1713,6 +1713,33 @@
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchResultItem.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.ResolverOptions.ToString">
             <inheritdoc/>
         </member>
@@ -1789,6 +1816,18 @@
         <member name="M:SymOntoClay.Core.Internal.DefaultSettingsOfCodeEntity.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Dict.EntityDictionary.Name">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Dict.EntityDictionary.GetKey(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Dict.EntityDictionary.GetName(System.UInt64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Dict.EntityDictionary.GetDbgStr">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.AndOperatorIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
@@ -1844,6 +1883,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.EntityRefIndexedLogicalQueryNode.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.IndexedData.EntityRefIndexedLogicalQueryNode.IsEntityRef">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.EntityRefIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
@@ -3392,6 +3434,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.SharedDictionary.GetName(System.UInt64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.SharedDictionary.GetDbgStr">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.SharedDictionary.LoadFromSourceCode">

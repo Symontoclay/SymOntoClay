@@ -17,7 +17,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             _realStorageContext = realStorageContext;
             _ruleInstancesList = new List<RuleInstance>();
             _ruleInstancesDict = new Dictionary<ulong, RuleInstance>();
-            _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData(realStorageContext.MainStorageContext.Logger);
+            _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData(realStorageContext.MainStorageContext.Logger, realStorageContext.MainStorageContext.Dictionary);
         }
 
         private readonly KindOfStorage _kind;

@@ -12,8 +12,10 @@ namespace SymOntoClay.Core.Internal.Dict
         {
         }
 
+        /// <inheritdoc/>
         public string Name => _name;
 
+        /// <inheritdoc/>
         public ulong GetKey(string name)
         {
 #if DEBUG
@@ -42,6 +44,7 @@ namespace SymOntoClay.Core.Internal.Dict
             }
         }
 
+        /// <inheritdoc/>
         public string GetName(ulong key)
         {
 #if DEBUG
@@ -57,6 +60,24 @@ namespace SymOntoClay.Core.Internal.Dict
                 return string.Empty;
             }
         }
+
+#if DEBUG
+        /// <inheritdoc/>
+        public string GetDbgStr()
+        {
+            var spaces = DisplayHelper.Spaces(4u);
+            var sb = new StringBuilder();
+
+            sb.AppendLine("Begin Dictionary");
+            foreach(var item in _caseInsensitiveBackWordsDict)
+            {
+                sb.AppendLine($"{spaces}{item.Key}: '{item.Value}'");
+            }
+            sb.AppendLine("End Dictionary");
+
+            return sb.ToString();
+        }
+#endif
 
         public void LoadFromSourceCode()
         {

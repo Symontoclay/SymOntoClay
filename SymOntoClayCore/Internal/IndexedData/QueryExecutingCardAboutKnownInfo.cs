@@ -13,7 +13,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public Value Value { get; set; }
         public ulong? KeyOfVar { get; set; }
         public int? Position { get; set; }
-        public LogicalQueryNode Expression { get; set; }
+        public BaseIndexedLogicalQueryNode Expression { get; set; }
 
         public QueryExecutingCardAboutKnownInfo Clone()
         {

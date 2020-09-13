@@ -61,6 +61,21 @@ namespace SymOntoClay.Core
             }
         }
 
+#if DEBUG
+        /// <inheritdoc/>
+        public string GetDbgStr()
+        {
+            lock (_stateLockObj)
+            {
+                if (_state == ComponentState.Disposed)
+                {
+                    throw new ObjectDisposedException(null);
+                }
+
+                return _dictionary.GetDbgStr();
+            }
+        }
+#endif
         /// <inheritdoc/>
         public void LoadFromSourceCode()
         {

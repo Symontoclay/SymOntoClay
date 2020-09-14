@@ -1846,6 +1846,12 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.BaseIndexedLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.IndexedData.BaseKeyRefIndexedLogicalQueryNode.IsKeyRef">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.IndexedData.BaseKeyRefIndexedLogicalQueryNode.AsKeyRef">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.BaseKeyRefIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -2212,6 +2218,9 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedPrimaryRulePart.OriginRulePart">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedPrimaryRulePart.GetNextPartsList">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedPrimaryRulePart.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -2246,6 +2255,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedSecondaryRulePart.OriginRulePart">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedSecondaryRulePart.GetNextPartsList">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedSecondaryRulePart.PropertiesToString(System.UInt32)">
@@ -2539,7 +2551,7 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.QuestionVarIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.QuestionVarIndexedLogicalQueryNode.AsQuestionVarIndexedLogicalQueryNode">
+        <member name="P:SymOntoClay.Core.Internal.IndexedData.QuestionVarIndexedLogicalQueryNode.AsQuestionVar">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.QuestionVarIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
@@ -3215,6 +3227,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(System.UInt64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(System.UInt64)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.MetadataStorage.MetadataStorage.Kind">

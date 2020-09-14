@@ -15,5 +15,6 @@ namespace SymOntoClay.Core
 
         IList<RelationIndexedLogicalQueryNode> GetAllRelations();
         IList<IndexedBaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(ulong key);
+        IList<IndexedBaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(ulong key);
     }
 }

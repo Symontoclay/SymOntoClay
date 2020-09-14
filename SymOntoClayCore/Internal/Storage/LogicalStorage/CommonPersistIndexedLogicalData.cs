@@ -185,5 +185,15 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             return null;
         }
+
+        public IList<IndexedBaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(ulong key)
+        {
+            if (IndexedRulePartsWithOneRelationWithVarsDict.ContainsKey(key))
+            {
+                return IndexedRulePartsWithOneRelationWithVarsDict[key];
+            }
+
+            return null;
+        }
     }
 }

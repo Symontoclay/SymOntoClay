@@ -13,7 +13,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public override KindOfLogicalQueryNode Kind => KindOfLogicalQueryNode.QuestionVar;
 
         /// <inheritdoc/>
-        public override QuestionVarIndexedLogicalQueryNode AsQuestionVarIndexedLogicalQueryNode => this;
+        public override QuestionVarIndexedLogicalQueryNode AsQuestionVar => this;
 
         /// <inheritdoc/>
         public override void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)

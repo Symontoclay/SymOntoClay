@@ -4,6 +4,7 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
@@ -15,7 +16,13 @@ namespace SymOntoClay.Core.Internal.IndexedData
         /// <inheritdoc/>
         public override BaseRulePart OriginRulePart => OriginPrimaryRulePart;
 
-        public List<IndexedSecondaryRulePart> SecondaryParts { get; set; } = new List<IndexedSecondaryRulePart>();
+        public IList<IndexedSecondaryRulePart> SecondaryParts { get; set; } = new List<IndexedSecondaryRulePart>();
+
+        /// <inheritdoc/>
+        public override IList<IndexedBaseRulePart> GetNextPartsList()
+        {
+            return SecondaryParts.Select(p => (IndexedBaseRulePart)p).ToList();
+        }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

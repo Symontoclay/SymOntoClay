@@ -21,7 +21,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var optionsOfFillExecutingCard = new OptionsOfFillExecutingCard();
             optionsOfFillExecutingCard.EntityIdOnly = options.EntityIdOnly;
             optionsOfFillExecutingCard.UseAccessPolicy = !options.IgnoreAccessPolicy;
+
+#if DEBUG
             optionsOfFillExecutingCard.Logger = Logger;
+            optionsOfFillExecutingCard.EntityDictionary = _context.Dictionary;
+#endif
 
 #if DEBUG
             Log($"optionsOfFillExecutingCard = {optionsOfFillExecutingCard}");

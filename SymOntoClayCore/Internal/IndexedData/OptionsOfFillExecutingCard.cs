@@ -9,7 +9,10 @@ namespace SymOntoClay.Core.Internal.IndexedData
     {
         public bool EntityIdOnly { get; set; }
         public bool UseAccessPolicy { get; set; }
+#if DEBUG
         public IEntityLogger Logger { get; set; }
+        public IEntityDictionary EntityDictionary { get; set; }
+#endif
 
         /// <inheritdoc/>
         public override string ToString()

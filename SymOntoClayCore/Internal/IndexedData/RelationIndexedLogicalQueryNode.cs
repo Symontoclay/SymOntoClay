@@ -116,7 +116,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             options.Logger.Log($"queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
             options.Logger.Log($"GetHumanizeDbgString() = {GetHumanizeDbgString()}");
 
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
 
             options.Logger.Log("End");
 #endif
@@ -184,7 +184,48 @@ namespace SymOntoClay.Core.Internal.IndexedData
             options.Logger.Log($"~~~~~~~~~~~~~~~~~queryExecutingCard = {queryExecutingCard}");
 #endif
 
-            throw new NotImplementedException();
+            var indexedRulePartWithOneRelationsList = dataSource.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(Key);
+
+#if DEBUG
+            options.Logger.Log($"indexedRulePartWithOneRelationsList?.Count = {indexedRulePartWithOneRelationsList?.Count}");
+#endif
+
+            if (!indexedRulePartWithOneRelationsList.IsNullOrEmpty())
+            {
+                foreach (var indexedRulePartsOfRule in indexedRulePartWithOneRelationsList)
+                {
+#if DEBUG
+                    options.Logger.Log($"this = {this}");
+                    options.Logger.Log($"indexedRulePartsOfRule = {indexedRulePartsOfRule}");
+#endif
+                    var queryExecutingCardForTargetRule = new QueryExecutingCardForIndexedPersistLogicalData();
+                    queryExecutingCardForTargetRule.TargetRelation = Key;
+                    queryExecutingCardForTargetRule.CountParams = CountParams;
+                    queryExecutingCardForTargetRule.VarsInfoList = VarsInfoList;
+                    queryExecutingCardForTargetRule.KnownInfoList = targetKnownInfoList;
+                    queryExecutingCardForTargetRule.SenderIndexedRuleInstance = senderIndexedRuleInstance;
+                    queryExecutingCardForTargetRule.SenderIndexedRulePart = senderIndexedRulePart;
+                    queryExecutingCardForTargetRule.SenderExpressionNode = this;
+
+                    indexedRulePartsOfRule.FillExecutingCardForCallingFromRelationForProduction(queryExecutingCardForTargetRule, dataSource, options);
+
+#if DEBUG
+                    options.Logger.Log($"&&&&&&&&&&&&&&&&&queryExecutingCardForTargetRule = {queryExecutingCardForTargetRule}");
+#endif
+#if DEBUG
+                    options.Logger.Log($"!!!!!!!!!!!!!!!!!!queryExecutingCard = {queryExecutingCard}");
+#endif
+
+                    foreach (var resultOfQueryToRelation in queryExecutingCardForTargetRule.ResultsOfQueryToRelationList)
+                    {
+                        queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
+                    }
+                }
+            }
+
+#if DEBUG
+            options.Logger.Log("End");
+#endif
         }
 
         [Obsolete("Now I have disagreement with this code.")]
@@ -300,7 +341,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
                     var foundExpression = targetRelation.Params[n - 1];
 
-                    var questionVarParam = param.AsQuestionVarIndexedLogicalQueryNode;
+                    var questionVarParam = param.AsQuestionVar;
 
                     var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
                     resultOfVarOfQueryToRelation.KeyOfVar = questionVarParam.Key;

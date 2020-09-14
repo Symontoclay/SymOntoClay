@@ -10,6 +10,12 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public ulong Key { get; set; }
 
         /// <inheritdoc/>
+        public override bool IsKeyRef => true;
+
+        /// <inheritdoc/>
+        public override BaseKeyRefIndexedLogicalQueryNode AsKeyRef => this;
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

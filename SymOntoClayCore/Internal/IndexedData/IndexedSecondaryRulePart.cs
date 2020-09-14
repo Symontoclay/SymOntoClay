@@ -16,6 +16,12 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public IndexedPrimaryRulePart PrimaryPart { get; set; }
 
         /// <inheritdoc/>
+        public override IList<IndexedBaseRulePart> GetNextPartsList()
+        {
+            return new List<IndexedBaseRulePart>() { PrimaryPart };
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

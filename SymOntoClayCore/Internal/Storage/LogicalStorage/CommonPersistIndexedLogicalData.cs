@@ -77,7 +77,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 //case KindOfRuleInstance.EntityCondition:
                 //break;
 
-                case KindOfRuleInstance.QuestionVars:
+                case KindOfRuleInstance.Question:
                     break;
 
                 default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
@@ -87,7 +87,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             {
                 case KindOfRuleInstance.Fact:
                 case KindOfRuleInstance.Rule:
-                case KindOfRuleInstance.QuestionVars:
+                case KindOfRuleInstance.Question:
                     break;
 
                 //case KindOfRuleInstance.Annotation:

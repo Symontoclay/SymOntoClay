@@ -11,6 +11,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         Rule,
         EntityCondition,
         Annotation,
-        QuestionVars
+        Question
     }
 }

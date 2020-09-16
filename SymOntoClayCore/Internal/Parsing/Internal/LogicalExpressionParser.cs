@@ -19,6 +19,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotEntity,
             GotLogicalVar,
             GotQuestionVar,
+            GotConcept,
             GotBinaryOperator
         }
 
@@ -221,14 +222,25 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _context.Recovery(nextToken);
 
                                 var node = new LogicalQueryNode();
-                                node.Kind = KindOfLogicalQueryNode.QuestionVar;
+                                if(value.KindOfName == KindOfName.QuestionVar)
+                                {
+                                    node.Kind = KindOfLogicalQueryNode.QuestionVar;
+                                    node.IsQuestion = true;
+                                }
                                 node.Name = value;
 
                                 var intermediateNode = new IntermediateAstNode(node);
 
                                 AstNodesLinker.SetNode(intermediateNode, _nodePoint);
 
-                                _state = State.GotQuestionVar;
+                                if (value.KindOfName == KindOfName.QuestionVar)
+                                {
+                                    _state = State.GotQuestionVar;
+                                }
+                                else
+                                {
+                                    _state = State.GotConcept;
+                                }                                    
                             }
                             break;
 
@@ -247,6 +259,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var node = new LogicalQueryNode();
             _lastLogicalQueryNode = node;
             node.Kind = KindOfLogicalQueryNode.Relation;
+
+            if (name.KindOfName == KindOfName.QuestionVar)
+            {
+                node.IsQuestion = true;
+            }
+
             node.Name = name;
 
             node.ParamsList = new List<LogicalQueryNode>();

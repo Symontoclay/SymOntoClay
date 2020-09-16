@@ -23,7 +23,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             : base(context)
         {
         }
-
+        
         private State _state = State.Init;
         public CodeEntity Result { get; private set; }
         private InlineTrigger _inlineTrigger;
@@ -31,7 +31,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            Result = Result = CreateCodeEntity();
+            Result = CreateCodeEntity();
 
             Result.Kind = KindOfCodeEntity.InlineTrigger;
             Result.Name = NameHelper.CreateRuleOrFactName(_context.Dictionary);

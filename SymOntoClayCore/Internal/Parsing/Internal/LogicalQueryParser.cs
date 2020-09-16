@@ -52,7 +52,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 if(primaryPart.HasQuestionVars)
                 {
-                    Result.Kind = KindOfRuleInstance.QuestionVars;
+                    Result.Kind = KindOfRuleInstance.Question;
                 }
                 else
                 {

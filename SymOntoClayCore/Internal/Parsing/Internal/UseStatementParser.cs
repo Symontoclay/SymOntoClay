@@ -152,8 +152,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotIs:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.OpenSquareBracket:
+                            _state = State.WaitForInheritanceRank;
+                            break;
+
                         case TokenKind.Word:
-                            switch(_currToken.KeyWordTokenKind)
+                            switch (_currToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.Not:
                                     _rawStatement.HasNot = true;
@@ -164,7 +168,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 default:
                                     ProcessGotUseInheritanceSecondName();
                                     break;
-                            }                 
+                            }
                             break;
 
                         default:
@@ -175,6 +179,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotIsNot:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.OpenSquareBracket:
+                            _state = State.WaitForInheritanceRank;
+                            break;
+
                         case TokenKind.Word:
                             ProcessGotUseInheritanceSecondName();
                             break;
@@ -187,10 +195,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotSecondName:
                     switch (_currToken.TokenKind)
                     {
-                        case TokenKind.OpenSquareBracket:
-                            _state = State.WaitForInheritanceRank;
-                            break;
-
                         case TokenKind.Semicolon:
                             Exit();
                             break;
@@ -233,9 +237,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotInheritanceRank:
                     switch (_currToken.TokenKind)
                     {
-                        case TokenKind.Semicolon:
-                            Exit();
+                        case TokenKind.Word:
+                            ProcessGotUseInheritanceSecondName();
                             break;
+
+                        //case TokenKind.Semicolon:
+                        //    Exit();
+                        //    break;
 
                         default:
                             throw new UnexpectedTokenException(_currToken);

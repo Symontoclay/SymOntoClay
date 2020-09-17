@@ -25,12 +25,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
 
         /// <inheritdoc/>
-        protected override void OnFinish()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         protected override void OnRun()
         {
 #if DEBUG
@@ -41,11 +35,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var parser = new LogicalQueryParser(_context);
             parser.Run();
 
+            var ruleInstanceItem = parser.Result;
+
 #if DEBUG
-            Log($"parser.Result = {parser.Result}");
+            Log($"ruleInstanceItem = {ruleInstanceItem}");
 #endif
 
-            throw new NotImplementedException();
+            Result.Name = ruleInstanceItem.Name;
+            Result.RuleInstance = ruleInstanceItem;
+
+            Exit();            
         }
     }
 }

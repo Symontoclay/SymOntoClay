@@ -71,11 +71,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
-                            _currentItem = CreateInheritanceItem();
-                            Result.Add(_currentItem);
-                            _currentItem.SubName = _subName;
+                            TryCreateCurrentItem();
+
+                            _currentItem.Rank = new LogicalValue(1.0F);
+                            
                             _currentItem.SuperName = ParseName(_currToken.Content);
                             _state = State.GotSuperName;
+                            break;
+
+                        case TokenKind.OpenSquareBracket:
+                            _state = State.WaitForRank;
                             break;
 
                         default:
@@ -86,12 +91,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotSuperName:
                     switch (_currToken.TokenKind)
                     {
-                        case TokenKind.OpenSquareBracket:
-                            _state = State.WaitForRank;
+                        case TokenKind.OpenFigureBracket:
+                            _context.Recovery(_currToken);
+                            Exit();
                             break;
 
-                        case TokenKind.Comma:  
-                            _currentItem.Rank = new LogicalValue(1.0F);
+                        case TokenKind.Comma:
+                            _currentItem = null;
                             _state = State.WaitForItem;
                             break;
 
@@ -105,6 +111,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.Number:
                             {
+                                TryCreateCurrentItem();
+
                                 _context.Recovery(_currToken);
                                 var parser = new NumberParser(_context, true);
                                 parser.Run();
@@ -133,9 +141,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotRank:
                     switch (_currToken.TokenKind)
                     {
-                        case TokenKind.OpenFigureBracket:
-                            _context.Recovery(_currToken);
-                            Exit();
+                        case TokenKind.Word:
+                            TryCreateCurrentItem();
+
+                            _currentItem.SuperName = ParseName(_currToken.Content);
+                            _state = State.GotSuperName;
                             break;
 
                         default:
@@ -145,6 +155,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
+            }
+        }
+
+        private void TryCreateCurrentItem()
+        {
+            if (_currentItem == null)
+            {
+                _currentItem = CreateInheritanceItem();
+                Result.Add(_currentItem);
+                _currentItem.SubName = _subName;
             }
         }
     }

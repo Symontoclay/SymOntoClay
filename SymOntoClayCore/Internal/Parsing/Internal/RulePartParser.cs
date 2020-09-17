@@ -41,9 +41,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             var nextToken = _context.GetToken();
 
-            if(nextToken.TokenKind != _terminatingTokenKind)
+#if DEBUG
+            Log($"nextToken = {nextToken}");
+            Log($"_terminatingTokenKind = {_terminatingTokenKind}");
+#endif
+
+            if ((nextToken.TokenKind != _terminatingTokenKind) || nextToken.TokenKind == TokenKind.CloseFactBracket)
             {
-                _context.Recovery(_currToken);
+                _context.Recovery(nextToken);
             }
 
             Exit();

@@ -160,6 +160,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 #endif
 
             var fact = new RuleInstance();
+            fact.Kind = KindOfRuleInstance.Fact;
             fact.AppendAnnotations(inheritanceItem);
             fact.DictionaryName = dictionary.Name;
             fact.Name = factName;

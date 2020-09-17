@@ -2976,9 +2976,6 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalQueryAsCodeEntityParser.OnEnter">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalQueryAsCodeEntityParser.OnFinish">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalQueryAsCodeEntityParser.OnRun">
             <inheritdoc/>
         </member>

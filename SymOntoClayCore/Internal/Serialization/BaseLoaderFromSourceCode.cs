@@ -120,6 +120,9 @@ namespace SymOntoClay.Core.Internal.Serialization
                 case KindOfCodeEntity.InlineTrigger:
                     break;
 
+                case KindOfCodeEntity.RuleOrFact:
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(codeEntity.Kind), codeEntity.Kind, null);
             }
@@ -206,6 +209,10 @@ namespace SymOntoClay.Core.Internal.Serialization
 
                 case KindOfCodeEntity.InlineTrigger:
                     globalStorage.TriggersStorage.Append(codeEntity.InlineTrigger);
+                    break;
+
+                case KindOfCodeEntity.RuleOrFact:
+                    globalStorage.LogicalStorage.Append(codeEntity.RuleInstance);
                     break;
 
                 default:

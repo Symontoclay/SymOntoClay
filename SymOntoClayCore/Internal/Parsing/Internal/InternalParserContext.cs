@@ -105,6 +105,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         public void Recovery(Token token)
         {
+#if DEBUG
+            Logger.Log($"token = {token}");
+#endif
+
             _recoveriesTokens.Enqueue(token);
         }
 

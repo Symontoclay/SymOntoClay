@@ -61,9 +61,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");
-            //Log($"_state = {_state}");
+            Log($"_state = {_state}");
 #endif
 
             switch (_state)
@@ -144,6 +144,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                 default:
                                     throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        case TokenKind.OpenFactBracket:
+                            {
+                                _context.Recovery(_currToken);
+                                var parser = new LogicalQueryAsCodeEntityParser(_context);
+                                parser.Run();
+                                Result.SubItems.Add(parser.Result);
                             }
                             break;
 

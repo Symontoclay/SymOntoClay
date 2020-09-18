@@ -10,28 +10,28 @@ namespace SymOntoClay.Core.Internal.IndexedData
     public abstract class IndexedAnnotatedItem: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
     {   
         [ResolveToType(typeof(IndexedLogicalValue))]
-        public IList<IndexedValue> QuantityQualityModalities { get; set; } = new List<IndexedValue>();
+        public virtual IList<IndexedValue> QuantityQualityModalities { get; set; } = new List<IndexedValue>();
 
         /// <summary>
         /// It is 'Clauses section' in the documentation.
         /// </summary>
         [ResolveToType(typeof(IndexedLogicalValue))]
-        public IList<IndexedValue> WhereSection { get; set; } = new List<IndexedValue>();
+        public virtual IList<IndexedValue> WhereSection { get; set; } = new List<IndexedValue>();
 
-        public IndexedStrongIdentifierValue Holder { get; set; }
+        public virtual IndexedStrongIdentifierValue Holder { get; set; }
 
         /// <summary>
         /// Returns <c>true</c> if the instance has modalities or additional sections, otherwise returns <c>false</c>.
         /// </summary>
         public bool HasModalitiesOrSections => !QuantityQualityModalities.IsNullOrEmpty() || !WhereSection.IsNullOrEmpty();
 
-        public IList<IndexedLogicalAnnotation> Annotations { get; set; }
+        public virtual IList<IndexedLogicalAnnotation> Annotations { get; set; }
 
         public bool HasConditionalSections => !WhereSection.IsNullOrEmpty();
 
         private long? _longConditionalHashCode;
 
-        public long GetLongConditionalHashCode()
+        public virtual long GetLongConditionalHashCode()
         {
 #if DEBUG
             var i = this;
@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             return _longConditionalHashCode.Value;
         }
 
-        public void CalculateLongConditionalHashCode()
+        public virtual void CalculateLongConditionalHashCode()
         {
             if (HasConditionalSections)
             {

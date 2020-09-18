@@ -11,15 +11,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public abstract class AnnotatedItem : IAnnotatedItem, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
     {
         [ResolveToType(typeof(LogicalValue))]
-        public IList<Value> QuantityQualityModalities { get; set; } = new List<Value>();
+        public virtual IList<Value> QuantityQualityModalities { get; set; } = new List<Value>();
 
         /// <summary>
         /// It is 'Clauses section' in the documentation.
         /// </summary>
         [ResolveToType(typeof(LogicalValue))]
-        public IList<Value> WhereSection { get; set; } = new List<Value>();
+        public virtual IList<Value> WhereSection { get; set; } = new List<Value>();
 
-        public StrongIdentifierValue Holder { get; set; }
+        public virtual StrongIdentifierValue Holder { get; set; }
 
         /// <summary>
         /// Returns <c>true</c> if the instance has modalities or additional sections, otherwise returns <c>false</c>.
@@ -28,7 +28,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public bool HasConditionalSections => !WhereSection.IsNullOrEmpty();
 
-        public IList<RuleInstance> Annotations { get; set; }
+        public virtual IList<RuleInstance> Annotations { get; set; }
 
         public abstract IndexedAnnotatedItem IndexedAnnotatedItem { get; }
 
@@ -156,7 +156,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         private Value _annotationValue;
         private readonly object _annotationValueLockObj = new object();
 
-        public Value GetAnnotationValue()
+        public virtual Value GetAnnotationValue()
         {
             lock(_annotationValueLockObj)
             {

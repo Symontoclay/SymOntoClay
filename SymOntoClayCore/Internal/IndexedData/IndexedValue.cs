@@ -45,6 +45,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public virtual bool IsPointRefValue => false;
         public virtual IndexedPointRefValue AsPointRefValue => null;
 
+        public virtual bool IsRuleInstanceValue => false;
+        public virtual IndexedRuleInstanceValue AsRuleInstanceValue => null;
+
         public abstract object GetSystemValue();
 
         /// <inheritdoc/>

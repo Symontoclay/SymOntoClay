@@ -98,6 +98,9 @@ namespace SymOntoClay.Core.Internal.Convertors
                 case KindOfValue.PointRefValue:
                     return ConvertPointRefValue(source.AsPointRefValue, mainStorageContext, convertingContext);
 
+                case KindOfValue.RuleInstanceValue:
+                    return ConvertRuleInstanceValue(source.AsRuleInstanceValue, mainStorageContext, convertingContext);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(source.KindOfValue), source.KindOfValue, null);
             }
@@ -468,6 +471,9 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             return result;
         }
+
+        ConvertRuleInstanceValue
+        ConvertRuleInstanceValue
 
         private static void FillAnnotationsModalitiesAndSections(AnnotatedItem source, IndexedAnnotatedItem dest, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {

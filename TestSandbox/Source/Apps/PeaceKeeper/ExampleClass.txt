@@ -1,3 +1,7 @@
 ﻿class exampleClass is human, [0.1] animal
 {
+	{: male(#Tom) :}
+	{: parent(#Piter, #Tom) :}
+	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+	{: { love($x, $y) } -> { help($x, $y) } :}
 }

@@ -17,6 +17,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         WaypointValue,
         InstanceValue,
         HostValue,
-        PointRefValue
+        PointRefValue,
+        RuleInstanceValue
     }
 }

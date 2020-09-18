@@ -1,10 +1,5 @@
 ﻿app PeaceKeeper is [0.5] exampleClass
 {
-	{: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
-	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
-	{: { love($x, $y) } -> { help($x, $y) } :}
-
     on Init => {
 	     "Begin" >> @>log;
 

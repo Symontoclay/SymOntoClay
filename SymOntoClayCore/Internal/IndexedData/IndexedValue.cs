@@ -48,6 +48,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public virtual bool IsRuleInstanceValue => false;
         public virtual IndexedRuleInstanceValue AsRuleInstanceValue => null;
 
+        public virtual bool IsLogicalSearchResultValue => false;
+        public virtual IndexedLogicalSearchResultValue AsLogicalSearchResultValue => null;
+
         public abstract object GetSystemValue();
 
         /// <inheritdoc/>

@@ -46,6 +46,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsRuleInstanceValue => false;
         public virtual RuleInstanceValue AsRuleInstanceValue => null;
 
+        public virtual bool IsLogicalSearchResultValue => false;
+        public virtual LogicalSearchResultValue AsLogicalSearchResultValue => null;
+
         public abstract object GetSystemValue();
 
         public abstract IndexedValue GetIndexedValue(IMainStorageContext mainStorageContext);

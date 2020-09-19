@@ -1053,6 +1053,45 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.KindOfValue">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.IsLogicalSearchResultValue">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.AsLogicalSearchResultValue">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.IndexedAnnotatedItem">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.GetIndexedValue(SymOntoClay.Core.Internal.IMainStorageContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.CloneValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalValue.KindOfValue">
             <inheritdoc/>
         </member>
@@ -2153,6 +2192,30 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalAnnotation.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.KindOfValue">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.IsLogicalSearchResultValue">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.AsLogicalSearchResultValue">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.OriginalValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalValue.OriginalValue">

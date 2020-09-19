@@ -101,6 +101,9 @@ namespace SymOntoClay.Core.Internal.Convertors
                 case KindOfValue.RuleInstanceValue:
                     return ConvertRuleInstanceValue(source.AsRuleInstanceValue, mainStorageContext, convertingContext);
 
+                case KindOfValue.LogicalSearchResultValue:
+                    return ConvertLogicalSearchResultValue(source.AsLogicalSearchResultValue, mainStorageContext, convertingContext);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(source.KindOfValue), source.KindOfValue, null);
             }
@@ -501,6 +504,37 @@ namespace SymOntoClay.Core.Internal.Convertors
             var indexedRuleInstance = ruleInstance.GetIndexed(mainStorageContext, convertingContext);
 
             result.IndexedRuleInstance = indexedRuleInstance;
+
+            result.CalculateLongConditionalHashCode();
+
+            return result;
+        }
+
+        public static IndexedLogicalSearchResultValue ConvertLogicalSearchResultValue(LogicalSearchResultValue source, IMainStorageContext mainStorageContext)
+        {
+            var convertingContext = new Dictionary<object, object>();
+            return ConvertLogicalSearchResultValue(source, mainStorageContext, convertingContext);
+        }
+
+        public static IndexedLogicalSearchResultValue ConvertLogicalSearchResultValue(LogicalSearchResultValue source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (IndexedLogicalSearchResultValue)convertingContext[source];
+            }
+
+            var result = new IndexedLogicalSearchResultValue();
+            convertingContext[source] = result;
+            source.Indexed = result;
+
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
+
+            result.LogicalSearchResult = source.LogicalSearchResult;
 
             result.CalculateLongConditionalHashCode();
 

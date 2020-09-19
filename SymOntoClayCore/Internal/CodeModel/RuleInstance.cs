@@ -29,6 +29,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return Indexed;
         }
 
+        public IndexedRuleInstance GetIndexed(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            if (Indexed == null)
+            {
+                return ConvertorToIndexed.ConvertRuleInstance(this, mainStorageContext, convertingContext);
+            }
+
+            return Indexed;
+        }
+
         /// <inheritdoc/>
         public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
 

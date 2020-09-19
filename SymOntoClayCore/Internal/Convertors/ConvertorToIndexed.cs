@@ -472,8 +472,40 @@ namespace SymOntoClay.Core.Internal.Convertors
             return result;
         }
 
-        ConvertRuleInstanceValue
-        ConvertRuleInstanceValue
+        public static IndexedRuleInstanceValue ConvertRuleInstanceValue(RuleInstanceValue source, IMainStorageContext mainStorageContext)
+        {
+            var convertingContext = new Dictionary<object, object>();
+            return ConvertRuleInstanceValue(source, mainStorageContext, convertingContext);
+        }
+
+        public static IndexedRuleInstanceValue ConvertRuleInstanceValue(RuleInstanceValue source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (IndexedRuleInstanceValue)convertingContext[source];
+            }
+
+            var result = new IndexedRuleInstanceValue();
+            convertingContext[source] = result;
+            source.Indexed = result;
+
+            var ruleInstance = source.RuleInstance;
+
+            result.RuleInstance = ruleInstance;
+
+            var indexedRuleInstance = ruleInstance.GetIndexed(mainStorageContext, convertingContext);
+
+            result.IndexedRuleInstance = indexedRuleInstance;
+
+            result.CalculateLongConditionalHashCode();
+
+            return result;
+        }
 
         private static void FillAnnotationsModalitiesAndSections(AnnotatedItem source, IndexedAnnotatedItem dest, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {

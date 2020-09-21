@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.CodeModel;
+﻿using NLog;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -8,7 +9,11 @@ using System.Text;
 namespace SymOntoClay.Core.Internal.IndexedData
 {
     public abstract class IndexedAnnotatedItem: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
-    {   
+    {
+#if DEBUG
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         [ResolveToType(typeof(IndexedLogicalValue))]
         public virtual IList<IndexedValue> QuantityQualityModalities { get; set; } = new List<IndexedValue>();
 
@@ -178,6 +183,10 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
         protected virtual string PropertiesToDbgString(uint n)
         {
+#if DEBUG
+            _gbcLogger.Info(this);
+#endif
+
             throw new NotImplementedException();
         }
     }

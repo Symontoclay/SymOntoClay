@@ -1,4 +1,5 @@
 ﻿using NLog.Fluent;
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
@@ -33,7 +34,14 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
             //Log($"value = {value}");
 #endif
 
-            Log(value.GetSystemValue()?.ToString());
+            if(value.IsLogicalSearchResultValue)
+            {
+                Log(DebugHelperForLogicalSearchResult.ToString(value.AsLogicalSearchResultValue.LogicalSearchResult, _engineContext.Dictionary));
+            }
+            else
+            {
+                Log(value.GetSystemValue()?.ToString());
+            }            
 
             return value;
         }

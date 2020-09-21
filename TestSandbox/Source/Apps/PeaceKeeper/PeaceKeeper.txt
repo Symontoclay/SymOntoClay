@@ -3,6 +3,8 @@
     on Init => {
 	     "Begin" >> @>log;
 
+		 select {: son(?x, ?y) :} >> @>log;
+
 		 "End" >> @>log;
 	}
 }

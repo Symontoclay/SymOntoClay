@@ -57,13 +57,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             switch(_currToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.Unknown:
+                                case KeyWordTokenKind.Select:
                                     ProcessExpressionStatement();
                                     break;
 
                                 case KeyWordTokenKind.Use:
                                     ProcessUseStatement();
                                     break;
-
+                                    
                                 default:
                                     throw new UnexpectedTokenException(_currToken);
                             }

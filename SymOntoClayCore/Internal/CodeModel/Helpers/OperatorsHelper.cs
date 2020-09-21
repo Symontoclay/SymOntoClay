@@ -29,6 +29,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 
                 case KindOfOperator.CallFunction:
                 case KindOfOperator.Predicate:
+                case KindOfOperator.SelectLogicalQuery:
                     return 2;
 
                 default:
@@ -57,6 +58,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 
                 case KindOfOperator.CallFunction:
                     return "()";
+
+                case KindOfOperator.SelectLogicalQuery:
+                    return "SELECT";
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);

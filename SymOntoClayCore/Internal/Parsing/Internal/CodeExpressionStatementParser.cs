@@ -14,7 +14,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private enum State
         {
             Init,
-            GotName
+            GotName,
+            GotSelectLogicalQueryOperator
         }
 
         public CodeExpressionStatementParser(InternalParserContext context)
@@ -39,9 +40,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
+            Log($"_currToken = {_currToken}");
             //Log($"_nodePoint = {_nodePoint}");
-            //Log($"_state = {_state}");
+            Log($"_state = {_state}");
 #endif
 
             switch(_state)
@@ -113,6 +114,19 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.AsyncMarker:
                             ProcessCallingFunction();
                             break;
+                            
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotSelectLogicalQueryOperator:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenFactBracket:
+                            ProcessRuleOrFact();
+                            _state = State.Init;
+                            break;
 
                         default:
                             throw new UnexpectedTokenException(_currToken);
@@ -122,6 +136,28 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
+        }
+
+        private void ProcessRuleOrFact()
+        {
+            _context.Recovery(_currToken);
+
+            var parser = new LogicalQueryParser(_context);
+            parser.Run();
+
+            var ruleInstanceItem = parser.Result;
+
+#if DEBUG
+            Log($"ruleInstanceItem = {ruleInstanceItem}");
+#endif
+
+            var value = new RuleInstanceValue(ruleInstanceItem);
+            var node = new ConstValueAstExpression();
+            node.Value = value;
+
+            var intermediateNode = new IntermediateAstNode(node);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
         }
 
         private void ProcessStringToken()
@@ -165,9 +201,50 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     ProcessNot();
                     break;
 
+                case KeyWordTokenKind.Select:
+                    {
+                        var nextToken = _context.GetToken();
+                        _context.Recovery(nextToken);
+
+#if DEBUG
+                        Log($"nextToken = {nextToken}");
+#endif
+
+                        switch(nextToken.TokenKind)
+                        {
+                            case TokenKind.OpenFactBracket:
+                                ProcessSelectOperator();
+                                break;
+
+                            default:
+                                throw new UnexpectedTokenException(_currToken);
+                        }
+                    }
+                    break;
+
                 default:
                     throw new UnexpectedTokenException(_currToken);
             }
+        }
+
+        private void ProcessSelectOperator()
+        {
+            _lastIsOperator = null;
+
+            var node = new UnaryOperatorAstExpression();
+            node.KindOfOperator = KindOfOperator.SelectLogicalQuery;
+
+            var priority = OperatorsHelper.GetPriority(node.KindOfOperator);
+
+#if DEBUG
+            Log($"priority = {priority}");
+#endif
+
+            var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.UnaryOperator, priority);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+            _state = State.GotSelectLogicalQueryOperator;
         }
 
         private void ProcessVar()

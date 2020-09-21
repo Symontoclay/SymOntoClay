@@ -30,12 +30,13 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
         {
             var globalStorage = _context.Storage.GlobalStorage;
             var globalOperatorsStorage = globalStorage.OperatorsStorage;
+            var dictionary = _context.Dictionary;
 
             var op = new Operator
             {
                 KindOfOperator = KindOfOperator.LeftRightStream,
                 IsSystemDefined = true,
-                SystemHandler = new BinaryOperatorSystemHandler(new LeftRightStreamOperatorHandler(_context), _context.Dictionary),
+                SystemHandler = new BinaryOperatorSystemHandler(new LeftRightStreamOperatorHandler(_context), dictionary),
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
@@ -45,7 +46,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
             {
                 KindOfOperator = KindOfOperator.Is,
                 IsSystemDefined = true,
-                SystemHandler = new BinaryOperatorSystemHandler(new IsOperatorHandler(_context), _context.Dictionary),
+                SystemHandler = new BinaryOperatorSystemHandler(new IsOperatorHandler(_context), dictionary),
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
@@ -55,7 +56,17 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
             {
                 KindOfOperator = KindOfOperator.Point,
                 IsSystemDefined = true,
-                SystemHandler = new BinaryOperatorSystemHandler(new PointOperatorHandler(_context), _context.Dictionary),
+                SystemHandler = new BinaryOperatorSystemHandler(new PointOperatorHandler(_context), dictionary),
+                Holder = _context.CommonNamesStorage.DefaultHolder
+            };
+
+            globalOperatorsStorage.Append(op);
+
+            op = new Operator
+            {
+                KindOfOperator = KindOfOperator.SelectLogicalQuery,
+                IsSystemDefined = true,
+                SystemHandler = new UnaryOperatorSystemHandler(new SelectLogicalQueryOperatorHandler(_context), dictionary),
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 

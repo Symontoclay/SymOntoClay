@@ -15,9 +15,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _operatorHandler = operatorHandler;
         }
 
-        private ulong _leftOperandKey;
-        private ulong _rightOperandKey;
-        private IBinaryOperatorHandler _operatorHandler;
+        private readonly ulong _leftOperandKey;
+        private readonly ulong _rightOperandKey;
+        private readonly IBinaryOperatorHandler _operatorHandler;
 
         /// <inheritdoc/>
         public IndexedValue Call(IList<IndexedValue> paramsList, LocalCodeExecutionContext localCodeExecutionContext)

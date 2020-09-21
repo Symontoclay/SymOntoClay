@@ -143,47 +143,47 @@ namespace TestSandbox.LogicalDatabase
 
             _logger.Log($"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
 
-            //var indexedQuery = parsedQuery.GetIndexed(_context);
+            var indexedQuery = parsedQuery.GetIndexed(_context);
 
-            //_logger.Log($"indexedQuery = {indexedQuery}");
+            _logger.Log($"indexedQuery = {indexedQuery}");
 
-            //_logger.Log($"DebugHelperForIndexedRuleInstance.ToString(indexedQuery) = {DebugHelperForIndexedRuleInstance.ToString(indexedQuery, dictionary)}");
+            _logger.Log($"DebugHelperForIndexedRuleInstance.ToString(indexedQuery) = {DebugHelperForIndexedRuleInstance.ToString(indexedQuery, dictionary)}");
 
-            //var searcher = _context.DataResolversFactory.GetLogicalSearchResolver();
+            var searcher = _context.DataResolversFactory.GetLogicalSearchResolver();
 
-            //var searchOptions = new LogicalSearchOptions();
-            //searchOptions.QueryExpression = indexedQuery;
+            var searchOptions = new LogicalSearchOptions();
+            searchOptions.QueryExpression = indexedQuery;
 
-            //var localCodeExecutionContext = new LocalCodeExecutionContext();
-            //searchOptions.LocalCodeExecutionContext = localCodeExecutionContext;
-            //localCodeExecutionContext.Storage = _context.Storage.GlobalStorage;
-            //localCodeExecutionContext.Holder = _context.CommonNamesStorage.IndexedDefaultHolder;
+            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            searchOptions.LocalCodeExecutionContext = localCodeExecutionContext;
+            localCodeExecutionContext.Storage = _context.Storage.GlobalStorage;
+            localCodeExecutionContext.Holder = _context.CommonNamesStorage.IndexedDefaultHolder;
 
-            ////_logger.Log($"searchOptions = {searchOptions}");
+            //_logger.Log($"searchOptions = {searchOptions}");
 
-            //var searchResult = searcher.Run(searchOptions);
+            var searchResult = searcher.Run(searchOptions);
 
-            ////_logger.Log($"searchResult = {searchResult}");
-            
-            //_logger.Log($"searchResult.Items.Count = {searchResult.Items.Count}");
+            //_logger.Log($"searchResult = {searchResult}");
 
-            //foreach(var item in searchResult.Items)
-            //{
-            //    _logger.Log($"item.ResultOfVarOfQueryToRelationList.Count = {item.ResultOfVarOfQueryToRelationList.Count}");
+            _logger.Log($"searchResult.Items.Count = {searchResult.Items.Count}");
 
-            //    foreach(var resultOfVarOfQueryToRelation in item.ResultOfVarOfQueryToRelationList)
-            //    {
-            //        var varName = dictionary.GetName(resultOfVarOfQueryToRelation.KeyOfVar);
+            foreach (var item in searchResult.Items)
+            {
+                _logger.Log($"item.ResultOfVarOfQueryToRelationList.Count = {item.ResultOfVarOfQueryToRelationList.Count}");
 
-            //        _logger.Log($"varName = {varName}");
+                foreach (var resultOfVarOfQueryToRelation in item.ResultOfVarOfQueryToRelationList)
+                {
+                    var varName = dictionary.GetName(resultOfVarOfQueryToRelation.KeyOfVar);
 
-            //        var foundNode = resultOfVarOfQueryToRelation.FoundExpression;
+                    _logger.Log($"varName = {varName}");
 
-            //        _logger.Log($"DebugHelperForRuleInstance.ToString(foundNode) = {DebugHelperForIndexedRuleInstance.ToString(foundNode, dictionary)}");
-            //    }
+                    var foundNode = resultOfVarOfQueryToRelation.FoundExpression;
 
-            //    //_logger.Log($" = {}");
-            //}
+                    _logger.Log($"DebugHelperForRuleInstance.ToString(foundNode) = {DebugHelperForIndexedRuleInstance.ToString(foundNode, dictionary)}");
+                }
+
+                //_logger.Log($" = {}");
+            }
         }
     }
 }

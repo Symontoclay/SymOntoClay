@@ -301,6 +301,12 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler.Call(System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.IndexedValue},SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler.Call(System.Collections.Generic.IDictionary{System.UInt64,SymOntoClay.Core.Internal.IndexedData.IndexedValue},SymOntoClay.Core.Internal.IndexedData.IndexedValue,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.WhereSection">
             <summary>
             It is 'Clauses section' in the documentation.
@@ -2218,6 +2224,9 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalValue.OriginalValue">
             <inheritdoc/>
         </member>
@@ -2372,6 +2381,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstance.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstance.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.KindOfValue">
@@ -3350,6 +3362,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.PointOperatorHandler.Call(SymOntoClay.Core.Internal.IndexedData.IndexedValue,SymOntoClay.Core.Internal.IndexedData.IndexedValue,SymOntoClay.Core.Internal.IndexedData.IndexedValue,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.SelectLogicalQueryOperatorHandler.Call(SymOntoClay.Core.Internal.IndexedData.IndexedValue,SymOntoClay.Core.Internal.IndexedData.IndexedValue,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.ChannelsStorage.ChannelsStorage.Kind">

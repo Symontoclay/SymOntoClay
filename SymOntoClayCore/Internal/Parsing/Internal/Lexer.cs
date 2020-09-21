@@ -661,6 +661,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Not;
                             break;
                         }
+
+                        if (string.Compare(content, "select", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Select;
+                            break;
+                        }
                     }
                     break;
 

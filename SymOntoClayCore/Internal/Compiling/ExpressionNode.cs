@@ -31,6 +31,14 @@ namespace SymOntoClay.Core.Internal.Compiling
                     }
                     break;
 
+                case KindOfAstExpression.UnaryOperator:
+                    {
+                        var node = new UnaryOperatorNode(_context);
+                        node.Run(expression as UnaryOperatorAstExpression);
+                        AddCommands(node.Result);
+                    }
+                    break;
+
                 case KindOfAstExpression.ConstValue:
                     CompilePushVal((expression as ConstValueAstExpression).Value);
                     break;

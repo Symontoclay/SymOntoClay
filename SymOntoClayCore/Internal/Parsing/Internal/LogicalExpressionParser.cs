@@ -53,9 +53,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
+            //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");
-            Log($"_state = {_state}");
+            //Log($"_state = {_state}");
 #endif
 
             if(_terminatingTokenKindList.Contains(_currToken.TokenKind))
@@ -80,7 +80,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var name = NameHelper.CreateName(_currToken.Content, _context.Dictionary);
 
 #if DEBUG
-                                Log($"name = {name}");
+                                //Log($"name = {name}");
 #endif
 
                                 var node = new LogicalQueryNode();
@@ -100,7 +100,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var name = NameHelper.CreateName(_currToken.Content, _context.Dictionary);
 
 #if DEBUG
-                                Log($"name = {name}");
+                                //Log($"name = {name}");
 #endif
 
                                 var node = new LogicalQueryNode();
@@ -133,7 +133,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 parser.Run();
 
 #if DEBUG
-                                Log($"parser.Result = {parser.Result}");
+                                //Log($"parser.Result = {parser.Result}");
 #endif
 
                                 _lastLogicalQueryNode.ParamsList.Add(parser.Result);
@@ -197,13 +197,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var value = NameHelper.CreateName(_currToken.Content, _context.Dictionary);
 
 #if DEBUG
-            Log($"value = {value}");
+            //Log($"value = {value}");
 #endif
 
             var nextToken = _context.GetToken();
 
 #if DEBUG
-            Log($"nextToken = {nextToken}");
+            //Log($"nextToken = {nextToken}");
 #endif
 
             switch (value.KindOfName)
@@ -272,7 +272,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var priority = OperatorsHelper.GetPriority(KindOfOperator.Predicate);
 
 #if DEBUG
-            Log($"priority = {priority}");
+            //Log($"priority = {priority}");
 #endif
 
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.UnaryOperator, priority);
@@ -292,7 +292,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var priority = OperatorsHelper.GetPriority(KindOfOperator.And);
 
 #if DEBUG
-            Log($"priority = {priority}");
+            //Log($"priority = {priority}");
 #endif
 
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.BinaryOperator, priority);

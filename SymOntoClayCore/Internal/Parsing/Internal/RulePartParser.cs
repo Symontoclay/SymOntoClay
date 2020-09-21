@@ -20,7 +20,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
+            //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");
             //Log($"_state = {_state}");
 #endif
@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             paser.Run();
 
 #if DEBUG
-            Log($"paser.Result = {paser.Result}");
+            //Log($"paser.Result = {paser.Result}");
 #endif
 
             _baseRulePart.Expression = paser.Result;
@@ -42,8 +42,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var nextToken = _context.GetToken();
 
 #if DEBUG
-            Log($"nextToken = {nextToken}");
-            Log($"_terminatingTokenKind = {_terminatingTokenKind}");
+            //Log($"nextToken = {nextToken}");
+            //Log($"_terminatingTokenKind = {_terminatingTokenKind}");
 #endif
 
             if ((nextToken.TokenKind != _terminatingTokenKind) || nextToken.TokenKind == TokenKind.CloseFactBracket)

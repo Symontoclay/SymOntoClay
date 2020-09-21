@@ -40,9 +40,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
+            //Log($"_currToken = {_currToken}");
             //Log($"_nodePoint = {_nodePoint}");
-            Log($"_state = {_state}");
+            //Log($"_state = {_state}");
 #endif
 
             switch(_state)
@@ -148,7 +148,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var ruleInstanceItem = parser.Result;
 
 #if DEBUG
-            Log($"ruleInstanceItem = {ruleInstanceItem}");
+            //Log($"ruleInstanceItem = {ruleInstanceItem}");
 #endif
 
             var value = new RuleInstanceValue(ruleInstanceItem);
@@ -207,7 +207,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         _context.Recovery(nextToken);
 
 #if DEBUG
-                        Log($"nextToken = {nextToken}");
+                        //Log($"nextToken = {nextToken}");
 #endif
 
                         switch(nextToken.TokenKind)
@@ -237,7 +237,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var priority = OperatorsHelper.GetPriority(node.KindOfOperator);
 
 #if DEBUG
-            Log($"priority = {priority}");
+            //Log($"priority = {priority}");
 #endif
 
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.UnaryOperator, priority);

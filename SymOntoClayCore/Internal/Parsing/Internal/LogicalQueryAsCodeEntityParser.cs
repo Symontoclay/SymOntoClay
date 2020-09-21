@@ -28,7 +28,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
+            //Log($"_currToken = {_currToken}");
 #endif
 
             _context.Recovery(_currToken);
@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var ruleInstanceItem = parser.Result;
 
 #if DEBUG
-            Log($"ruleInstanceItem = {ruleInstanceItem}");
+            //Log($"ruleInstanceItem = {ruleInstanceItem}");
 #endif
 
             Result.Name = ruleInstanceItem.Name;

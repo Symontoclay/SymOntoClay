@@ -28,8 +28,8 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         public IndexedValue Call(IndexedValue operand, IndexedValue annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Log($"operand = {operand}");
-            Log($"annotation = {annotation}");
+            //Log($"operand = {operand}");
+            //Log($"annotation = {annotation}");
 #endif
 
             if(!operand.IsRuleInstanceValue)
@@ -40,8 +40,8 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             var indexedQuery = operand.AsRuleInstanceValue.IndexedRuleInstance;
 
 #if DEBUG
-            Log($"indexedQuery = {indexedQuery}");
-            Log($"query = {DebugHelperForIndexedRuleInstance.ToString(indexedQuery, _engineContext.Dictionary)}");
+            //Log($"indexedQuery = {indexedQuery}");
+            //Log($"query = {DebugHelperForIndexedRuleInstance.ToString(indexedQuery, _engineContext.Dictionary)}");
 #endif
 
             var searchOptions = new LogicalSearchOptions();
@@ -49,14 +49,14 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             searchOptions.LocalCodeExecutionContext = localCodeExecutionContext;
 
 #if DEBUG
-            Log($"searchOptions = {searchOptions}");
+            //Log($"searchOptions = {searchOptions}");
 #endif
 
             var searchResult = _searcher.Run(searchOptions);
 
 #if DEBUG
-            Log($"searchResult = {searchResult}");
-            Log($"result = {DebugHelperForLogicalSearchResult.ToString(searchResult, _engineContext.Dictionary)}");
+            //Log($"searchResult = {searchResult}");
+            //Log($"result = {DebugHelperForLogicalSearchResult.ToString(searchResult, _engineContext.Dictionary)}");
 #endif
 
             return new LogicalSearchResultValue(searchResult).GetIndexed(_engineContext);

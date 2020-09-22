@@ -54,10 +54,8 @@ namespace SymOntoClay.Core.Internal.Helpers
         public static void LoadFromSourceCode(MainStorageContext context)
         {
             context.CommonNamesStorage.LoadFromSourceCode();
-            context.Storage.LoadFromSourceCode();
-            
-            //TODO: Uncomment me in the future sprint about loading host and world files.
-            //context.LoaderFromSourceCode.LoadFromSourceFiles();
+            context.Storage.LoadFromSourceCode();            
+            context.LoaderFromSourceCode.LoadFromSourceFiles();
         }
 
         public static MainStorageContext CreateAndInitMainStorageContext(StandaloneStorageSettings settings)

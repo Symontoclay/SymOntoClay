@@ -156,7 +156,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         break;
                                     }
 
-                                    throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                    return CreateToken(TokenKind.QuestionMark);
                                 }                                
 
                             case ',':

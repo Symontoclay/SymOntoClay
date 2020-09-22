@@ -20,6 +20,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public bool IsRule { get; set; }
         public IndexedPrimaryRulePart PrimaryPart { get; set; }
         public List<IndexedSecondaryRulePart> SecondaryParts { get; set; } = new List<IndexedSecondaryRulePart>();
+        public IList<ulong> KeysOfPrimaryRecords { get; set; } = new List<ulong>();
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -37,6 +38,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             sb.PrintObjProp(n, nameof(PrimaryPart), PrimaryPart);
             sb.PrintObjListProp(n, nameof(SecondaryParts), SecondaryParts);
+            sb.PrintPODList(n, nameof(KeysOfPrimaryRecords), KeysOfPrimaryRecords);
+
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -57,6 +60,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             sb.PrintShortObjProp(n, nameof(PrimaryPart), PrimaryPart);
             sb.PrintShortObjListProp(n, nameof(SecondaryParts), SecondaryParts);
+            sb.PrintPODList(n, nameof(KeysOfPrimaryRecords), KeysOfPrimaryRecords);
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -77,6 +82,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             sb.PrintExisting(n, nameof(PrimaryPart), PrimaryPart);
             sb.PrintExistingList(n, nameof(SecondaryParts), SecondaryParts);
+            sb.PrintPODList(n, nameof(KeysOfPrimaryRecords), KeysOfPrimaryRecords);
+
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }

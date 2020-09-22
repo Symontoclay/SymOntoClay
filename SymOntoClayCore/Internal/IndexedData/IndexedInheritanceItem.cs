@@ -10,6 +10,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
     {
         public InheritanceItem OriginalInheritanceItem { get; set; }
 
+        public ulong Key { get; set; }
+
         public IndexedStrongIdentifierValue SubName { get; set; } = new IndexedStrongIdentifierValue();
 
         /// <summary>
@@ -25,13 +27,17 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public IndexedValue Rank { get; set; }
         public bool IsSystemDefined { get; set; }
 
+        public IList<ulong> KeysOfPrimaryRecords { get; set; } = new List<ulong>();
+
         private void PrintHeader(StringBuilder sb, uint n, string spaces)
         {
-            sb.PrintBriefObjProp(n, nameof(OriginalInheritanceItem), OriginalInheritanceItem);
+            sb.PrintExisting(n, nameof(OriginalInheritanceItem), OriginalInheritanceItem);
+            sb.AppendLine($"{spaces}{nameof(Key)} = {Key}");
             sb.PrintObjProp(n, nameof(SubName), SubName);
             sb.PrintObjProp(n, nameof(SuperName), SuperName);
             sb.PrintObjProp(n, nameof(Rank), Rank);
             sb.AppendLine($"{spaces}{nameof(IsSystemDefined)} = {IsSystemDefined}");
+            sb.PrintPODList(n, nameof(KeysOfPrimaryRecords), KeysOfPrimaryRecords);
         }
 
         /// <inheritdoc/>

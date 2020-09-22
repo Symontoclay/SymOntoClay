@@ -41,6 +41,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
             Expression?.DiscoverAllAnnotations(result);
         }
 
+        public IList<LogicalQueryNode> GetInheritanceRelations()
+        {
+            var result = new List<LogicalQueryNode>();
+            Expression.DiscoverAllInheritanceRelations(result);
+            return result;
+        }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {

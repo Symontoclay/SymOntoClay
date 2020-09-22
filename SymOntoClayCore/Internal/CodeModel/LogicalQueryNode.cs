@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.IndexedData;
+﻿using NLog;
+using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -141,6 +142,36 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
 
             Value?.DiscoverAllAnnotations(result);
+        }
+
+        public void DiscoverAllInheritanceRelations(IList<LogicalQueryNode> result)
+        {
+            switch(Kind)
+            {
+                case KindOfLogicalQueryNode.Relation:
+                    if(ParamsList.Count == 1)
+                    {
+                        var param = ParamsList.Single();
+
+                        if(param.Kind == KindOfLogicalQueryNode.Entity)
+                        {
+                            result.Add(this);
+                        }                        
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.BinaryOperator:
+                    Left.DiscoverAllInheritanceRelations(result);
+                    Right.DiscoverAllInheritanceRelations(result);
+                    break;
+
+                case KindOfLogicalQueryNode.UnaryOperator:
+                    Left.DiscoverAllInheritanceRelations(result);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, string.Empty);
+            }
         }
 
         /// <inheritdoc/>

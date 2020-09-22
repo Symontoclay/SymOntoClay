@@ -22,6 +22,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Entity,
         Point,
         Comma,
+        QuestionMark,
         /// <summary>
         /// Represents symbol `~`.
         /// </summary>

@@ -82,6 +82,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             Exit();
                             break;
 
+                        case TokenKind.QuestionMark:
+                            ProcessSelectOperator();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

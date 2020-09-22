@@ -16,6 +16,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public KindOfRuleInstance Kind { get; set; } = KindOfRuleInstance.Undefined;
         public PrimaryRulePart PrimaryPart { get; set; }
         public IList<SecondaryRulePart> SecondaryParts { get; set; } = new List<SecondaryRulePart>();
+        public IList<string> KeysOfPrimaryRecords { get; set; } = new List<string>();
 
         public IndexedRuleInstance Indexed { get; set; }
 
@@ -95,6 +96,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.Kind = Kind;
             result.PrimaryPart = PrimaryPart.Clone(context);
             result.SecondaryParts = SecondaryParts.Select(p => p.Clone(context)).ToList();
+            result.KeysOfPrimaryRecords = KeysOfPrimaryRecords?.ToList();
 
             result.AppendAnnotations(this, context);
 
@@ -117,6 +119,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
         }
 
+        public IList<LogicalQueryNode> GetInheritanceRelations()
+        {
+            if(Kind != KindOfRuleInstance.Fact)
+            {
+                return new List<LogicalQueryNode>();
+            }
+
+            return PrimaryPart.GetInheritanceRelations();            
+        }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
@@ -130,6 +142,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintObjProp(n, nameof(PrimaryPart), PrimaryPart);
             sb.PrintObjListProp(n, nameof(SecondaryParts), SecondaryParts);
+            sb.PrintPODList(n, nameof(KeysOfPrimaryRecords), KeysOfPrimaryRecords);
 
             sb.PrintExisting(n, nameof(Indexed), Indexed);
 
@@ -150,6 +163,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintShortObjProp(n, nameof(PrimaryPart), PrimaryPart);
             sb.PrintShortObjListProp(n, nameof(SecondaryParts), SecondaryParts);
+            sb.PrintPODList(n, nameof(KeysOfPrimaryRecords), KeysOfPrimaryRecords);
 
             sb.PrintExisting(n, nameof(Indexed), Indexed);
 
@@ -170,6 +184,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintExisting(n, nameof(PrimaryPart), PrimaryPart);
             sb.PrintExistingList(n, nameof(SecondaryParts), SecondaryParts);
+            sb.PrintPODList(n, nameof(KeysOfPrimaryRecords), KeysOfPrimaryRecords);
 
             sb.PrintExisting(n, nameof(Indexed), Indexed);
 

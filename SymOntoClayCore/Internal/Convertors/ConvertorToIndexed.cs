@@ -43,12 +43,18 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
 
+            var dictionary = mainStorageContext.Dictionary;
+
+            result.Key = dictionary.GetKey(source.Id);
+
             result.SubName = ConvertStrongIdentifierValue(source.SubName, mainStorageContext, convertingContext);
             result.SuperName = ConvertStrongIdentifierValue(source.SuperName, mainStorageContext, convertingContext);
 
             result.Rank = ConvertValue(source.Rank, mainStorageContext, convertingContext);
 
             result.IsSystemDefined = source.IsSystemDefined;
+
+            result.KeysOfPrimaryRecords = source.KeysOfPrimaryRecords?.Select(p => dictionary.GetKey(p)).ToList();
 
             result.CalculateLongConditionalHashCode();
 
@@ -626,6 +632,8 @@ namespace SymOntoClay.Core.Internal.Convertors
             //_gbcLogger.Info("NEXT");
 #endif
 
+            var dictionary = mainStorageContext.Dictionary;
+
             var result = new IndexedRuleInstance();
             convertingContext[source] = result;
             result.Origin = source;
@@ -637,7 +645,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             result.Name = ConvertStrongIdentifierValue(source.Name, mainStorageContext, convertingContext);
 
-            result.Key = mainStorageContext.Dictionary.GetKey(source.Name.NameValue);
+            result.Key = dictionary.GetKey(source.Name.NameValue);
 
             result.PrimaryPart = ConvertPrimaryRulePart(source.PrimaryPart, result, mainStorageContext, convertingContext);
 
@@ -648,6 +656,8 @@ namespace SymOntoClay.Core.Internal.Convertors
                     result.SecondaryParts.Add(ConvertSecondaryRulePart(secondaryPart, result, mainStorageContext, convertingContext));
                 }
             }
+
+            result.KeysOfPrimaryRecords = source.KeysOfPrimaryRecords?.Select(p => dictionary.GetKey(p)).ToList();
 
 #if DEBUG
             _gbcLogger.Info($"result (snapshot) = {result}");

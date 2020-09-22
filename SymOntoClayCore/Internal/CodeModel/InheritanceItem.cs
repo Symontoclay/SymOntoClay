@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.Convertors;
+﻿using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -9,6 +10,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class InheritanceItem: AnnotatedItem
     {
+        public InheritanceItem()
+        {
+            Id = NameHelper.GetNewEntityNameString();
+        }
+
+        public string Id { get; set; }
+
         public StrongIdentifierValue SubName { get; set; } = new StrongIdentifierValue();
 
         /// <summary>
@@ -23,6 +31,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         [ResolveToType(typeof(LogicalValue))]
         public Value Rank { get; set; }
         public bool IsSystemDefined { get; set; }
+
+        public IList<string> KeysOfPrimaryRecords { get; set; } = new List<string>();
 
         public IndexedInheritanceItem Indexed { get; set; }
 
@@ -90,6 +100,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.SuperName = SuperName.Clone(context);
             result.Rank = Rank.CloneValue(context);
             result.IsSystemDefined = IsSystemDefined;
+            result.KeysOfPrimaryRecords = KeysOfPrimaryRecords;
 
             result.AppendAnnotations(this, context);
 
@@ -108,10 +119,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private void PrintHeader(StringBuilder sb, uint n, string spaces)
         {
+            sb.AppendLine($"{spaces}{nameof(Id)} = {Id}");
             sb.PrintObjProp(n, nameof(SubName), SubName);
             sb.PrintObjProp(n, nameof(SuperName), SuperName);
             sb.PrintObjProp(n, nameof(Rank), Rank);
             sb.AppendLine($"{spaces}{nameof(IsSystemDefined)} = {IsSystemDefined}");
+            sb.PrintPODList(n, nameof(KeysOfPrimaryRecords), KeysOfPrimaryRecords);
             sb.PrintExisting(n, nameof(Indexed), Indexed);
         }
 

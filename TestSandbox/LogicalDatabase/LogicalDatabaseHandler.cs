@@ -7,6 +7,7 @@ using SymOntoClay.Core.Internal.Parsing.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TestSandbox.Helpers;
 using TestSandbox.PlatformImplementations;
@@ -29,8 +30,21 @@ namespace TestSandbox.LogicalDatabase
         {
             _logger.Log("Begin");
 
-            RunCase1();
-            //ParseFacts();
+            //RunGettingInheritanceInformation();
+            //RunCase1();
+            ParseFacts();
+
+            _logger.Log("End");
+        }
+
+        private void RunGettingInheritanceInformation()
+        {
+            _logger.Log("Begin");
+
+            var queryStr = string.Empty;
+
+            queryStr = "{: male(#Tom) :}";
+            ParseQueryStringAndGetInheritanceInformation(queryStr);
 
             _logger.Log("End");
         }
@@ -68,8 +82,8 @@ namespace TestSandbox.LogicalDatabase
             //queryStr = "{: >:{ male(#124) } :}";
             //ParseQueryString(queryStr);
 
-            //queryStr = "{: male(#124) :}";
-            //ParseQueryString(queryStr);
+            queryStr = "{: male(#124) :}";
+            ParseQueryString(queryStr);
 
             //queryStr = "{: >:{son($x, $y)} -> { male($x) & parent($y, $x)} :}";
             //ParseQueryString(queryStr);
@@ -77,13 +91,55 @@ namespace TestSandbox.LogicalDatabase
             //queryStr = "{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}";
             //ParseQueryString(queryStr);
 
-            queryStr = "{: { love($x, $y) } -> { help($x, $y) } :}";
-            ParseQueryString(queryStr);
+            //queryStr = "{: { love($x, $y) } -> { help($x, $y) } :}";
+            //ParseQueryString(queryStr);
 
             //queryStr = "{: ?x(?y, ?z) :}";
             //Search(queryStr);
 
             _logger.Log("End");
+        }
+
+        private void ParseQueryStringAndGetInheritanceInformation(string queryStr)
+        {
+            _logger.Log($"queryStr = {queryStr}");
+
+            var result = new CodeFile();
+            result.IsMain = false;
+            result.FileName = "Hi!";
+
+            var internalParserContext = new InternalParserContext(queryStr, result, _context);
+
+            var globalStorage = _context.Storage.GlobalStorage;
+            internalParserContext.SetCurrentDefaultSetings(globalStorage.DefaultSettingsOfCodeEntity);
+
+            var parser = new LogicalQueryParser(internalParserContext);
+            parser.Run();
+
+            var parsedQuery = parser.Result;
+
+            _logger.Log($"parsedQuery = {parsedQuery}");
+
+            var inheritanceRelationsList = parsedQuery.GetInheritanceRelations();
+
+            //_logger.Log($"inheritanceRelationsList = {inheritanceRelationsList.WriteListToString()}");
+
+            var inheritanceItemsList = new List<InheritanceItem>();
+
+            foreach(var inheritanceRelation in inheritanceRelationsList)
+            {
+                _logger.Log($"inheritanceRelation = {inheritanceRelation}");
+
+                var inheritanceItem = new InheritanceItem();
+
+                inheritanceItem.SuperName = inheritanceRelation.Name;
+                inheritanceItem.SubName = inheritanceRelation.ParamsList.Single().Name;
+                inheritanceItem.Rank = new LogicalValue(1);
+
+                inheritanceItemsList.Add(inheritanceItem);
+            }
+
+            _logger.Log($"inheritanceItemsList = {inheritanceItemsList.WriteListToString()}");
         }
 
         private void ParseQueryString(string queryStr)

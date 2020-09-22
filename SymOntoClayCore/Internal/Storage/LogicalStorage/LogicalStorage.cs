@@ -4,6 +4,7 @@ using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
@@ -15,6 +16,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         {
             _kind = kind;
             _realStorageContext = realStorageContext;
+
             _ruleInstancesList = new List<RuleInstance>();
             _ruleInstancesDict = new Dictionary<ulong, RuleInstance>();
             _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData(realStorageContext.MainStorageContext.Logger, realStorageContext.MainStorageContext.Dictionary);
@@ -67,7 +69,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 #if DEBUG
             //Log($"ruleInstance = {ruleInstance}");
             //Log($"isPrimary = {isPrimary}");
-            Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+            //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
 #endif
 
             if (_ruleInstancesList.Contains(ruleInstance))
@@ -78,19 +80,19 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             //ruleInstance = ruleInstance.Clone();
 
 #if DEBUG
-            Log($"ruleInstance (after) = {ruleInstance}");
+            //Log($"ruleInstance (after) = {ruleInstance}");
 #endif
 
             var indexedRuleInstance = ruleInstance.GetIndexed(_realStorageContext.MainStorageContext);
 
 #if DEBUG
-            Log($"indexedRuleInstance = {indexedRuleInstance}");
+            //Log($"indexedRuleInstance = {indexedRuleInstance}");
 #endif
 
             var ruleInstanceKey = indexedRuleInstance.Key;
 
 #if DEBUG
-            Log($"ruleInstanceKey = {ruleInstanceKey}");
+            //Log($"ruleInstanceKey = {ruleInstanceKey}");
 #endif
 
             if (_ruleInstancesDict.ContainsKey(ruleInstanceKey))
@@ -103,6 +105,34 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(indexedRuleInstance);
 
+            if(isPrimary)
+            {
+                var inheritanceRelationsList = ruleInstance.GetInheritanceRelations();
+
+                if(inheritanceRelationsList.Any())
+                {
+                    var inheritanceStorage = _realStorageContext.InheritanceStorage;
+
+                    foreach (var inheritanceRelation in inheritanceRelationsList)
+                    {
+#if DEBUG
+                        //Log($"inheritanceRelation = {inheritanceRelation}");
+#endif
+                        var inheritanceItem = new InheritanceItem();
+
+                        inheritanceItem.SuperName = inheritanceRelation.Name;
+                        inheritanceItem.SubName = inheritanceRelation.ParamsList.Single().Name;
+                        inheritanceItem.Rank = new LogicalValue(1);
+
+#if DEBUG
+                        //Log($"inheritanceItem = {inheritanceItem}");
+#endif                       
+
+                        inheritanceStorage.SetInheritance(inheritanceItem, false);
+                    }
+                }
+            }
+            
             EmitOnChanged();
 
 #if IMAGINE_WORKING

@@ -50,6 +50,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.String:
                         case TokenKind.SystemVar:
+                        case TokenKind.QuestionMark:
                             ProcessExpressionStatement();
                             break;
 

@@ -109,6 +109,14 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             switch(codeEntity.Kind)
             {
+                case KindOfCodeEntity.World:
+                    AddSystemDefinedSettingsToWorld(codeEntity);
+                    break;
+
+                case KindOfCodeEntity.Host:
+                    AddSystemDefinedSettingsToHost(codeEntity);
+                    break;
+
                 case KindOfCodeEntity.App:
                     AddSystemDefinedSettingsToApp(codeEntity);
                     break;
@@ -126,6 +134,42 @@ namespace SymOntoClay.Core.Internal.Serialization
                 default:
                     throw new ArgumentOutOfRangeException(nameof(codeEntity.Kind), codeEntity.Kind, null);
             }
+        }
+
+        private void AddSystemDefinedSettingsToWorld(CodeEntity codeEntity)
+        {
+            var inheritanceItem = new InheritanceItem()
+            {
+                IsSystemDefined = true
+            };
+
+            inheritanceItem.SubName = codeEntity.Name;
+            inheritanceItem.SuperName = _context.CommonNamesStorage.WorldName;
+            inheritanceItem.Rank = new LogicalValue(1.0F);
+
+#if DEBUG
+            //Log($"inheritanceItem = {inheritanceItem}");
+#endif
+
+            codeEntity.InheritanceItems.Add(inheritanceItem);
+        }
+
+        private void AddSystemDefinedSettingsToHost(CodeEntity codeEntity)
+        {
+            var inheritanceItem = new InheritanceItem()
+            {
+                IsSystemDefined = true
+            };
+
+            inheritanceItem.SubName = codeEntity.Name;
+            inheritanceItem.SuperName = _context.CommonNamesStorage.HostName;
+            inheritanceItem.Rank = new LogicalValue(1.0F);
+
+#if DEBUG
+            //Log($"inheritanceItem = {inheritanceItem}");
+#endif
+
+            codeEntity.InheritanceItems.Add(inheritanceItem);
         }
 
         private void AddSystemDefinedSettingsToApp(CodeEntity codeEntity)
@@ -201,6 +245,12 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             switch(kindOfEntity)
             {
+                case KindOfCodeEntity.World:
+                    break;
+
+                case KindOfCodeEntity.Host:
+                    break;
+
                 case KindOfCodeEntity.App:
                     break;
 

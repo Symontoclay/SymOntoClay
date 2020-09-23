@@ -34,14 +34,20 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
             //Log($"value = {value}");
 #endif
 
-            if(value.IsLogicalSearchResultValue)
+            switch(value.KindOfValue)
             {
-                Log(DebugHelperForLogicalSearchResult.ToString(value.AsLogicalSearchResultValue.LogicalSearchResult, _engineContext.Dictionary));
+                case KindOfValue.LogicalSearchResultValue:
+                    Log(DebugHelperForLogicalSearchResult.ToString(value.AsLogicalSearchResultValue.LogicalSearchResult, _engineContext.Dictionary));
+                    break;
+
+                case KindOfValue.NullValue:
+                    Log("NULL");
+                    break;
+
+                default:
+                    Log(value.GetSystemValue()?.ToString());
+                    break;
             }
-            else
-            {
-                Log(value.GetSystemValue()?.ToString());
-            }            
 
             return value;
         }

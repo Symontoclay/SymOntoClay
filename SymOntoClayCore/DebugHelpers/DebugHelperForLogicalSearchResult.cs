@@ -19,20 +19,24 @@ namespace SymOntoClay.Core.DebugHelpers
                 return "<nothing>";
             }
 
-            var varItemsStrList = new List<string>();
+            var sb = new StringBuilder();
 
             foreach (var item in source.Items)
             {
+                var varItemsStrList = new List<string>();
+
                 foreach (var resultOfVarOfQueryToRelation in item.ResultOfVarOfQueryToRelationList)
                 {
                     var varName = entityDictionary.GetName(resultOfVarOfQueryToRelation.KeyOfVar);
                     var foundNode = resultOfVarOfQueryToRelation.FoundExpression;
 
                     varItemsStrList.Add($" {varName} = {DebugHelperForIndexedRuleInstance.ToString(foundNode, entityDictionary)}");
-                }                             
+                }
+
+                sb.AppendLine(string.Join(";", varItemsStrList).Trim());
             }
 
-            return string.Join(";", varItemsStrList).Trim();
+            return sb.ToString();
         }
     }
 }

@@ -10,6 +10,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// Default value. Represents nothing.
         /// </summary>
         Unknown,
+        World,
+        Host,
         App,
         Class,
         Is,

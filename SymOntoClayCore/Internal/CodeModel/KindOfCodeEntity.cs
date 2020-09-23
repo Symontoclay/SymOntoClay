@@ -7,6 +7,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public enum KindOfCodeEntity
     {
         Unknown,
+        World,
+        Host,
         App,
         Class,
         Instance,

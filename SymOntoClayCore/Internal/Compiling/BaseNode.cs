@@ -53,9 +53,6 @@ namespace SymOntoClay.Core.Internal.Compiling
                     case KindOfName.SystemVar:
                     case KindOfName.Var:
                         CompilePushValFromVar(value);
-                        {
-
-                        }
                         break;
 
                     default:

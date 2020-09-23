@@ -25,7 +25,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return GetSystemVarValue(varName, localCodeExecutionContext, options);
             }
 
-            throw new NotImplementedException();
+            return GetUsualVarValue(varName, localCodeExecutionContext, options);
         }
 
         private IndexedValue GetSystemVarValue(IndexedStrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
@@ -61,6 +61,41 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             throw new NotImplementedException();
+        }
+
+        private IndexedValue GetUsualVarValue(IndexedStrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+#if DEBUG
+            //Log($"varName = {varName}");
+#endif
+
+            var storage = localCodeExecutionContext.Storage;
+
+            var storagesList = GetStoragesList(storage);
+
+#if DEBUG
+            //Log($"storagesList.Count = {storagesList.Count}");
+#endif
+
+            foreach (var storageItem in storagesList)
+            {
+#if DEBUG
+                //Log($"storageItem.Key = {storageItem.Key}; storageItem.Value.Kind = '{storageItem.Value.Kind}'");
+#endif
+
+                var targetValue = storageItem.Storage.VarStorage.GetValueDirectly(varName);
+
+#if DEBUG
+                //Log($"targetValue = {targetValue}");
+#endif
+
+                if (targetValue != null)
+                {
+                    return targetValue;
+                }
+            }
+
+            return new NullValue().GetIndexedValue(_context);
         }
     }
 }

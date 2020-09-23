@@ -30,9 +30,22 @@ namespace TestSandbox.LogicalDatabase
         {
             _logger.Log("Begin");
 
+            RunGettingLongHashCode();
             //RunGettingInheritanceInformation();
             //RunCase1();
-            ParseFacts();
+            //ParseFacts();
+
+            _logger.Log("End");
+        }
+
+        private void RunGettingLongHashCode()
+        {
+            _logger.Log("Begin");
+
+            var queryStr = string.Empty;
+
+            queryStr = "{: male(#Tom) :}";
+            ParseQueryStringAndGetLongHashCode(queryStr);
 
             _logger.Log("End");
         }
@@ -100,6 +113,39 @@ namespace TestSandbox.LogicalDatabase
             _logger.Log("End");
         }
 
+        private void ParseQueryStringAndGetLongHashCode(string queryStr)
+        {
+            _logger.Log($"queryStr = {queryStr}");
+
+            var result = new CodeFile();
+            result.IsMain = false;
+            result.FileName = "Hi!";
+
+            var internalParserContext = new InternalParserContext(queryStr, result, _context);
+
+            var globalStorage = _context.Storage.GlobalStorage;
+            internalParserContext.SetCurrentDefaultSetings(globalStorage.DefaultSettingsOfCodeEntity);
+
+            var parser = new LogicalQueryParser(internalParserContext);
+            parser.Run();
+
+            var parsedQuery = parser.Result;
+
+            _logger.Log($"parsedQuery = {parsedQuery}");
+
+            _logger.Log($"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
+
+            var indexedQuery = parsedQuery.GetIndexed(_context);
+
+            var longConditionalHashCode = indexedQuery.GetLongConditionalHashCode();
+
+            _logger.Log($"longConditionalHashCode = {longConditionalHashCode}");
+
+            var longHashCode = indexedQuery.GetLongHashCode();
+
+            _logger.Log($"longHashCode = {longHashCode}");
+        }
+
         private void ParseQueryStringAndGetInheritanceInformation(string queryStr)
         {
             _logger.Log($"queryStr = {queryStr}");
@@ -126,7 +172,9 @@ namespace TestSandbox.LogicalDatabase
 
             var inheritanceItemsList = new List<InheritanceItem>();
 
-            foreach(var inheritanceRelation in inheritanceRelationsList)
+            var ruleInstanceName = parsedQuery.Name.NameValue;
+
+            foreach (var inheritanceRelation in inheritanceRelationsList)
             {
                 _logger.Log($"inheritanceRelation = {inheritanceRelation}");
 
@@ -135,6 +183,8 @@ namespace TestSandbox.LogicalDatabase
                 inheritanceItem.SuperName = inheritanceRelation.Name;
                 inheritanceItem.SubName = inheritanceRelation.ParamsList.Single().Name;
                 inheritanceItem.Rank = new LogicalValue(1);
+
+                inheritanceItem.KeysOfPrimaryRecords.Add(ruleInstanceName);
 
                 inheritanceItemsList.Add(inheritanceItem);
             }

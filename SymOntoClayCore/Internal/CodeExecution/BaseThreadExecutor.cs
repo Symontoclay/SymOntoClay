@@ -60,6 +60,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private Stack<CodeFrame> _codeFrames = new Stack<CodeFrame>();
         private CodeFrame _currentCodeFrame;
+        private IVarStorage _currentVarStorage;
 
         protected IActivePeriodicObject _activeObject { get; private set; }
 
@@ -71,8 +72,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             _codeFrames.Push(codeFrame);
             _currentCodeFrame = codeFrame;
+            _currentVarStorage = codeFrame.LocalContext.Storage.VarStorage;
 
-            if(setAsRunning)
+            if (setAsRunning)
             {
                 _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Running;
             }
@@ -180,6 +182,35 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #endif
 
                             _currentCodeFrame.ValuesStack.Push(targetValue);
+
+#if DEBUG
+                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+                            _currentCodeFrame.CurrentPosition++;
+                        }
+                        break;
+
+                    case OperationCode.PushValToVar:
+                        {
+                            var varName = currentCommand.Value.AsStrongIdentifierValue;
+
+#if DEBUG
+                            //Log($"varName = {varName}");
+#endif
+
+                            if(varName.KindOfName != KindOfName.Var)
+                            {
+                                throw new NotImplementedException();
+                            }
+
+                            var currentValue = _currentCodeFrame.ValuesStack.Peek();
+
+#if DEBUG
+                            //Log($"currentValue = {currentValue}");
+#endif
+
+                            _currentVarStorage.SetValue(varName, currentValue);
 
 #if DEBUG
                             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
@@ -366,7 +397,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
                 Error(e);       
 #endif
-
+                
                 throw;
             }
         }

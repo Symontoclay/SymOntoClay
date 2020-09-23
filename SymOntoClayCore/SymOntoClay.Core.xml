@@ -1665,6 +1665,18 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointValue.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.WorldName">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.IndexedWorldName">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.HostName">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.IndexedHostName">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.ApplicationName">
             <inheritdoc/>
         </member>
@@ -2413,6 +2425,9 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.GetLongConditionalHashCode">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.GetLongHashCode">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.CalculateLongConditionalHashCode">
             <inheritdoc/>
         </member>
@@ -3114,6 +3129,15 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.FunctionBodyParser.OnRun">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.HostPaser.OnEnter">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.HostPaser.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.HostPaser.OnRun">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.InheritanceParser.OnEnter">
             <inheritdoc/>
         </member>
@@ -3337,6 +3361,15 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.UseStatementParser.OnRun">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.WorldPaser.OnEnter">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.WorldPaser.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.WorldPaser.OnRun">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.ParsedFileInfo.ToString">
             <inheritdoc/>
         </member>
@@ -3548,6 +3581,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.GetSystemValueDirectly(SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.SetValue(SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue,SymOntoClay.Core.Internal.IndexedData.IndexedValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.GetValueDirectly(SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Threads.ActivePeriodicObjectCommonContext.IsNeedWating">

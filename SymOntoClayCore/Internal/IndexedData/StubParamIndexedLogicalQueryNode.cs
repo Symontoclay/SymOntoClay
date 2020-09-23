@@ -12,6 +12,12 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public override KindOfLogicalQueryNode Kind => KindOfLogicalQueryNode.StubParam;
 
         /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            return LongHashCodeWeights.StubWeight ^ base.CalculateLongHashCode();
+        }
+
+        /// <inheritdoc/>
         public override void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             throw new NotImplementedException();

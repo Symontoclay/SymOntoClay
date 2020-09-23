@@ -16,6 +16,12 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public override BaseKeyRefIndexedLogicalQueryNode AsKeyRef => this;
 
         /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            return base.CalculateLongHashCode() ^ Key;
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

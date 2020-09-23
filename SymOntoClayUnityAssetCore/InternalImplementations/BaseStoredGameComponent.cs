@@ -42,16 +42,16 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         {
             base.LoadFromSourceCode();
 
-            try
-            {
+            //try
+            //{
                 HostStorage.LoadFromSourceCode();
-            }
-            catch (Exception e)
-            {
-                Log(e.ToString());
+            //}
+            //catch (Exception e)
+            //{
+            //    Log(e.ToString());
 
-                throw e;
-            }
+            //    throw e;
+            //}
         }
 
         /// <inheritdoc/>

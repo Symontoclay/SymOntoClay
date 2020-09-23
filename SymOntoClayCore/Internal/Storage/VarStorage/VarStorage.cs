@@ -27,6 +27,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
         public IStorage Storage => _realStorageContext.Storage;
 
         private Dictionary<IndexedStrongIdentifierValue, IndexedValue> _indexedSystemVariables = new Dictionary<IndexedStrongIdentifierValue, IndexedValue>();
+        private Dictionary<IndexedStrongIdentifierValue, IndexedValue> _indexedVariables = new Dictionary<IndexedStrongIdentifierValue, IndexedValue>();
 
         /// <inheritdoc/>
         public void SetSystemValue(IndexedStrongIdentifierValue varName, IndexedValue value)
@@ -54,6 +55,38 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
                 if(_indexedSystemVariables.ContainsKey(varName))
                 {
                     return _indexedSystemVariables[varName];
+                }
+
+                return null;
+            }
+        }
+
+        /// <inheritdoc/>
+        public void SetValue(IndexedStrongIdentifierValue varName, IndexedValue value)
+        {
+            lock (_lockObj)
+            {
+#if DEBUG
+                //Log($"varName = {varName}");
+                //Log($"value = {value}");
+#endif
+
+                _indexedVariables[varName] = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        public IndexedValue GetValueDirectly(IndexedStrongIdentifierValue varName)
+        {
+            lock (_lockObj)
+            {
+#if DEBUG
+                //Log($"varName = {varName}");
+#endif
+
+                if (_indexedVariables.ContainsKey(varName))
+                {
+                    return _indexedVariables[varName];
                 }
 
                 return null;

@@ -29,6 +29,12 @@ namespace SymOntoClay.Core.Internal.IndexedData
         }
 
         /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            return LongHashCodeWeights.NullWeight ^ base.CalculateLongHashCode();
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToDbgString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

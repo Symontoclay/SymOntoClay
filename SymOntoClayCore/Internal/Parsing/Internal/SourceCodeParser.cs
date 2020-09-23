@@ -21,7 +21,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
+            //Log($"_currToken = {_currToken}");
 #endif
 
             switch(_currToken.TokenKind)
@@ -29,6 +29,24 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case TokenKind.Word:
                     switch(_currToken.KeyWordTokenKind)
                     {
+                        case KeyWordTokenKind.World:
+                            {
+                                _context.Recovery(_currToken);
+                                var parser = new WorldPaser(_context);
+                                parser.Run();
+                                Result.Add(parser.Result);
+                            }
+                            break;
+
+                        case KeyWordTokenKind.Host:
+                            {
+                                _context.Recovery(_currToken);
+                                var parser = new HostPaser(_context);
+                                parser.Run();
+                                Result.Add(parser.Result);
+                            }
+                            break;
+
                         case KeyWordTokenKind.App:
                             {
                                 _context.Recovery(_currToken);

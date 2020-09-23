@@ -1,4 +1,5 @@
 ﻿using NLog;
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -10,10 +11,6 @@ namespace SymOntoClay.Core.Internal.IndexedData
 {
     public abstract class IndexedAnnotatedItem: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
     {
-#if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         [ResolveToType(typeof(IndexedLogicalValue))]
         public virtual IList<IndexedValue> QuantityQualityModalities { get; set; } = new List<IndexedValue>();
 
@@ -34,26 +31,42 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
         public bool HasConditionalSections => !WhereSection.IsNullOrEmpty();
 
-        private long? _longConditionalHashCode;
+        private ulong? _longConditionalHashCode;
 
-        public virtual long GetLongConditionalHashCode()
+        public virtual ulong GetLongConditionalHashCode()
         {
-#if DEBUG
-            var i = this;
-#endif
-
             return _longConditionalHashCode.Value;
         }
 
-        public virtual void CalculateLongConditionalHashCode()
+        private ulong? _longHashCode;
+
+        public virtual ulong GetLongHashCode()
         {
-            if (HasConditionalSections)
+            return _longHashCode.Value;
+        }
+
+        public void CalculateLongHashCodes()
+        {
+            _longHashCode = CalculateLongHashCode();
+            CalculateLongConditionalHashCode();
+        }
+
+        protected virtual void CalculateLongConditionalHashCode()
+        {
+            ulong result = 0;
+
+            if (!WhereSection.IsNullOrEmpty())
             {
-                throw new NotImplementedException();
+                foreach(var whereItem in WhereSection)
+                {
+                    result ^= whereItem.GetLongHashCode();
+                }
             }
 
-            _longConditionalHashCode = 0;
+            _longConditionalHashCode = result;
         }
+
+        protected abstract ulong CalculateLongHashCode();
 
         /// <inheritdoc/>
         public override string ToString()
@@ -82,6 +95,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.AppendLine($"{spaces}{nameof(HasConditionalSections)} = {HasConditionalSections}");
 
             sb.AppendLine($"{spaces}{nameof(_longConditionalHashCode)} = {_longConditionalHashCode}");
+            sb.AppendLine($"{spaces}{nameof(_longHashCode)} = {_longHashCode}");
 
             sb.PrintObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintObjListProp(n, nameof(WhereSection), WhereSection);
@@ -118,6 +132,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.AppendLine($"{spaces}{nameof(HasConditionalSections)} = {HasConditionalSections}");
 
             sb.AppendLine($"{spaces}{nameof(_longConditionalHashCode)} = {_longConditionalHashCode}");
+            sb.AppendLine($"{spaces}{nameof(_longHashCode)} = {_longHashCode}");
 
             sb.PrintShortObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintShortObjListProp(n, nameof(WhereSection), WhereSection);
@@ -154,6 +169,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.AppendLine($"{spaces}{nameof(HasConditionalSections)} = {HasConditionalSections}");
 
             sb.AppendLine($"{spaces}{nameof(_longConditionalHashCode)} = {_longConditionalHashCode}");
+            sb.AppendLine($"{spaces}{nameof(_longHashCode)} = {_longHashCode}");
 
             sb.PrintExistingList(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintExistingList(n, nameof(WhereSection), WhereSection);
@@ -184,7 +200,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         protected virtual string PropertiesToDbgString(uint n)
         {
 #if DEBUG
-            _gbcLogger.Info(this);
+            DebugLogger.Instance.Info(this);
 #endif
 
             throw new NotImplementedException();

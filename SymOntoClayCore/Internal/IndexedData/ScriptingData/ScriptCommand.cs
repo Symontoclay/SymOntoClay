@@ -139,6 +139,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
                 case OperationCode.PushVal:
                 case OperationCode.PushValFromVar:
+                case OperationCode.PushValToVar:
                     return $"{spaces}{OperationCode} {Value.ToDbgString()}";
 
                 case OperationCode.CallUnOp:

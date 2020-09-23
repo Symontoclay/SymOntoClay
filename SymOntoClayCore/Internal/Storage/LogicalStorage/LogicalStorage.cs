@@ -108,8 +108,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             if(isPrimary)
             {
                 var inheritanceRelationsList = ruleInstance.GetInheritanceRelations();
+                var ruleInstanceName = ruleInstance.Name.NameValue;
 
-                if(inheritanceRelationsList.Any())
+                if (inheritanceRelationsList.Any())
                 {
                     var inheritanceStorage = _realStorageContext.InheritanceStorage;
 
@@ -123,7 +124,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                         inheritanceItem.SuperName = inheritanceRelation.Name;
                         inheritanceItem.SubName = inheritanceRelation.ParamsList.Single().Name;
                         inheritanceItem.Rank = new LogicalValue(1);
-
+                        inheritanceItem.KeysOfPrimaryRecords.Add(ruleInstanceName);
 #if DEBUG
                         //Log($"inheritanceItem = {inheritanceItem}");
 #endif                       

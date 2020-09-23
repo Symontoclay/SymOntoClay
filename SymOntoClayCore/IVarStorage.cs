@@ -9,5 +9,7 @@ namespace SymOntoClay.Core
     {
         void SetSystemValue(IndexedStrongIdentifierValue varName, IndexedValue value);
         IndexedValue GetSystemValueDirectly(IndexedStrongIdentifierValue varName);
+        void SetValue(IndexedStrongIdentifierValue varName, IndexedValue value);
+        IndexedValue GetValueDirectly(IndexedStrongIdentifierValue varName);
     }
 }

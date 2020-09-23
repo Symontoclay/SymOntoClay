@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _context.Recovery(_currToken);
                                 var parser = new NumberParser(_context);
                                 parser.Run();
-
+                                
                                 var node = new ConstValueAstExpression();
                                 node.Value = parser.Result;
 

@@ -40,9 +40,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
+            Log($"_currToken = {_currToken}");
             //Log($"_nodePoint = {_nodePoint}");
-            //Log($"_state = {_state}");
+            Log($"_state = {_state}");
 #endif
 
             switch(_state)
@@ -50,6 +50,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.Init:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.Number:
+                            ProcessNumberToken();
+                            break;
+
                         case TokenKind.String:
                             ProcessStringToken();
                             break;
@@ -62,6 +66,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessConceptLeaf();
                             break;
 
+                        case TokenKind.Var:
                         case TokenKind.SystemVar:
                             ProcessVar();
                             break;
@@ -118,7 +123,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.AsyncMarker:
                             ProcessCallingFunction();
                             break;
-                            
+
+                        case TokenKind.Assign:
+                            ProcessAssign();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -158,6 +167,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var value = new RuleInstanceValue(ruleInstanceItem);
             var node = new ConstValueAstExpression();
             node.Value = value;
+
+            var intermediateNode = new IntermediateAstNode(node);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+        }
+
+        private void ProcessNumberToken()
+        {
+            _context.Recovery(_currToken);
+            var parser = new NumberParser(_context);
+            parser.Run();
+
+            var node = new ConstValueAstExpression();
+            node.Value = parser.Result;
 
             var intermediateNode = new IntermediateAstNode(node);
 
@@ -297,30 +320,29 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             }
         }
 
+        private void ProcessAssign()
+        {
+            ProcessUsualBinaryOperator(KindOfOperator.Assign);
+        }
+
         private void ProcessLeftRightStream()
         {
-            _lastIsOperator = null;
-
-            var node = new BinaryOperatorAstExpression();
-            node.KindOfOperator = KindOfOperator.LeftRightStream;
-
-            var priority = OperatorsHelper.GetPriority(node.KindOfOperator);
-
-            var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.BinaryOperator, priority);
-
-            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
-
-            _state = State.Init;
+            ProcessUsualBinaryOperator(KindOfOperator.LeftRightStream);
         }
 
         private void ProcessPoint()
         {
+            ProcessUsualBinaryOperator(KindOfOperator.Point);
+        }
+
+        private void ProcessUsualBinaryOperator(KindOfOperator kindOfOperator)
+        {
             _lastIsOperator = null;
 
             var node = new BinaryOperatorAstExpression();
-            node.KindOfOperator = KindOfOperator.Point;
+            node.KindOfOperator = kindOfOperator;
 
-            var priority = OperatorsHelper.GetPriority(node.KindOfOperator);
+            var priority = OperatorsHelper.GetPriority(kindOfOperator);
 
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.BinaryOperator, priority);
 

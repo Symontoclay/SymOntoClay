@@ -40,14 +40,26 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public override IList<IndexedLogicalAnnotation> Annotations { get => IndexedRuleInstance.Annotations; set => IndexedRuleInstance.Annotations = value; }
 
         /// <inheritdoc/>
-        public override long GetLongConditionalHashCode()
+        public override ulong GetLongConditionalHashCode()
         {
             return IndexedRuleInstance.GetLongConditionalHashCode();
         }
 
         /// <inheritdoc/>
-        public override void CalculateLongConditionalHashCode()
+        public override ulong GetLongHashCode()
         {
+            return IndexedRuleInstance.GetLongHashCode();
+        }
+
+        /// <inheritdoc/>
+        protected override void CalculateLongConditionalHashCode()
+        {
+        }
+
+        /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            return IndexedRuleInstance.GetLongHashCode();
         }
 
         /// <inheritdoc/>

@@ -15,6 +15,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             InWord,
             InString,
             InIdentifier,
+            InSingleLineComment,
+            InMultiLineComment,
             At,
             Sharp,
             DollarSign,
@@ -47,6 +49,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private IEntityLogger _logger;
         private Queue<char> _items;
         private State _state = State.Init;
+        private State _stateBeforeComment = State.Init;
 
         private Queue<Token> _recoveriesTokens = new Queue<Token>();
 
@@ -184,6 +187,33 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     }
                                 }
 
+                            case '/':
+                                {
+                                    var nextChar = _items.Peek();
+
+#if DEBUG
+                                    //_logger.Log($"nextChar = {nextChar}");
+#endif
+                                    switch(nextChar)
+                                    {
+                                        case '/':
+                                            _items.Dequeue();
+                                            _stateBeforeComment = _state;
+                                            _state = State.InSingleLineComment;
+                                            break;
+
+                                        case '*':
+                                            _items.Dequeue();
+                                            _stateBeforeComment = _state;
+                                            _state = State.InMultiLineComment;
+                                            break;
+
+                                        default:
+                                            throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                    }
+                                }
+                                break;
+
                             case '=':
                                 return CreateToken(TokenKind.Assign);
 
@@ -299,6 +329,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     case KindOfPrefix.Channel:
                                         return CreateToken(TokenKind.Channel, buffer.ToString());
 
+                                    case KindOfPrefix.Var:
+                                        return CreateToken(TokenKind.Var, buffer.ToString());
+
                                     case KindOfPrefix.SystemVar:
                                         return CreateToken(TokenKind.SystemVar, buffer.ToString());
 
@@ -340,6 +373,57 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             {
                                 buffer.Append(tmpChar);
                             }
+                        }
+                        break;
+
+                    case State.InSingleLineComment:
+                        {
+                            var intCharCode = (int)tmpChar;
+
+                            switch (intCharCode)
+                            {
+                                case 10:
+                                    _state = _stateBeforeComment;
+                                    _currentPos = 0;
+                                    _currentLine++;
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }
+                        break;
+
+                    case State.InMultiLineComment:
+                        switch (tmpChar)
+                        {
+                            case '*':
+                                {
+                                    var nextChar = _items.Peek();
+
+#if DEBUG
+                                    //_logger.Log($"nextChar = {nextChar}");
+#endif
+
+                                    if(nextChar == '/')
+                                    {
+                                        _items.Dequeue();
+                                        _state = _stateBeforeComment;
+                                    }
+                                }
+                                break;
+
+                            default:
+                                {
+                                    var intCharCode = (int)tmpChar;
+
+                                    if(intCharCode == 10)
+                                    {
+                                        _currentPos = 0;
+                                        _currentLine++;
+                                    }
+                                }
+                                break;
                         }
                         break;
 
@@ -404,6 +488,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                     var nextChar = _items.Peek();
 
+#if DEBUG
+                                    //_logger.Log($"buffer?.ToString() (2) = {buffer?.ToString()}");
+                                    //_logger.Log($"nextChar = {nextChar}");
+#endif
+
                                     if (nextChar == '`')
                                     {
                                         _state = State.InIdentifier;
@@ -416,7 +505,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         }
                                         else
                                         {
-                                            throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                            _state = State.Init;
+
+                                            return CreateToken(TokenKind.Var, buffer.ToString());
                                         }
                                     }
                                     break;
@@ -617,6 +708,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         if (content.All(p => char.IsDigit(p)))
                         {
                             kind = TokenKind.Number;
+                            break;
+                        }
+
+                        if (string.Compare(content, "world", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.World;
+                            break;
+                        }
+
+                        if (string.Compare(content, "host", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Host;
                             break;
                         }
 

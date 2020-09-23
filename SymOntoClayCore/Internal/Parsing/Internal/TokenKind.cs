@@ -15,6 +15,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         String,
         Identifier,
         Channel,
+        Var,
         SystemVar,
         LogicalVar,
         QuestionVar,

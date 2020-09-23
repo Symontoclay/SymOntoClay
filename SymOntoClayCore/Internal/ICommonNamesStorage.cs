@@ -8,6 +8,12 @@ namespace SymOntoClay.Core.Internal
 {
     public interface ICommonNamesStorage
     {
+        StrongIdentifierValue WorldName { get; }
+        IndexedStrongIdentifierValue IndexedWorldName { get; }
+
+        StrongIdentifierValue HostName { get; }
+        IndexedStrongIdentifierValue IndexedHostName { get; }
+
         StrongIdentifierValue ApplicationName { get; }
         IndexedStrongIdentifierValue IndexedApplicationName { get; }
 

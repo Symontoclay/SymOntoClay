@@ -9,6 +9,8 @@ namespace SymOntoClay.Core.Internal
         #region names of types
         public const string UniversalTypeName = "⊤";
         public const string NullTypeName = "null";
+        public const string WorldTypeName = "world";
+        public const string HostTypeName = "host";
         public const string ApplicationTypeName = "application";
         public const string ClassTypeName = "class";
         public const string SelfSystemVarName = "@@self";

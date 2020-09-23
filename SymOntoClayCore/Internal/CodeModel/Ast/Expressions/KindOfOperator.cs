@@ -14,6 +14,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         CallFunction,
         Predicate,
         And,
-        SelectLogicalQuery
+        SelectLogicalQuery,
+        Assign
     }
 }

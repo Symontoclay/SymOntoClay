@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             result.KeysOfPrimaryRecords = source.KeysOfPrimaryRecords?.Select(p => dictionary.GetKey(p)).ToList();
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -141,7 +141,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             result.OriginalNullValue = source;
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -173,7 +173,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.OriginalLogicalValue = source;
             result.SystemValue = source.SystemValue;
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -205,7 +205,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.OriginalNumberValue = source;
             result.SystemValue = source.SystemValue;
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -237,7 +237,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.OriginalStringValue = source;
             result.SystemValue = source.SystemValue;
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -278,7 +278,7 @@ namespace SymOntoClay.Core.Internal.Convertors
                 result.NameKey = mainStorageContext.Dictionary.GetKey(result.NameValue);
             }
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -312,7 +312,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.TaskId = source.TaskId;
             result.SystemTask = source.SystemTask;
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -344,7 +344,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.OriginalAnnotationValue = source;
             result.AnnotatedItem = source.AnnotatedItem.GetIndexedAnnotatedItem(mainStorageContext, convertingContext);
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -378,7 +378,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.AbcoluteCoordinates = source.AbcoluteCoordinates;
             result.Name = ConvertStrongIdentifierValue(source.Name, mainStorageContext, convertingContext);
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -411,7 +411,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             result.InstanceInfo = source.InstanceInfo;
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -442,7 +442,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             result.OriginalHostValue = source;
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -476,7 +476,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.LeftOperand = ConvertValue(source.LeftOperand, mainStorageContext, convertingContext);
             result.RightOperand = ConvertValue(source.RightOperand, mainStorageContext, convertingContext);
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -511,7 +511,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             result.IndexedRuleInstance = indexedRuleInstance;
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -542,7 +542,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             result.LogicalSearchResult = source.LogicalSearchResult;
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -663,7 +663,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             _gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -709,7 +709,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             _gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -745,7 +745,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             _gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -843,7 +843,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             _gbcLogger.Info($"result = {result}");
 #endif
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -875,7 +875,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 #if DEBUG
             _gbcLogger.Info($"result = {result}");
 #endif
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -929,7 +929,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             _gbcLogger.Info($"result = {result}");
 #endif
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -960,7 +960,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 #if DEBUG
             _gbcLogger.Info($"result = {result}");
 #endif
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -1001,7 +1001,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             _gbcLogger.Info($"result = {result}");
 #endif
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -1178,7 +1178,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             contextOfConvertingExpressionNode.HasVars = true;
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -1211,7 +1211,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             _gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -1247,7 +1247,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             _gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -1283,7 +1283,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             _gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -1335,7 +1335,7 @@ namespace SymOntoClay.Core.Internal.Convertors
                 result.CompiledFunctionBody = mainStorageContext.Compiler.Compile(source.Statements);
             }
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -1368,7 +1368,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.Name = ConvertStrongIdentifierValue(source.Name, mainStorageContext, convertingContext);
             result.Handler = source.Handler;
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }
@@ -1403,7 +1403,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             result.CompiledFunctionBody = mainStorageContext.Compiler.Compile(source.Statements);
 
-            result.CalculateLongConditionalHashCode();
+            result.CalculateLongHashCodes();
 
             return result;
         }

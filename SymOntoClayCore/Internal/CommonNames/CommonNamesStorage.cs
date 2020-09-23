@@ -18,6 +18,18 @@ namespace SymOntoClay.Core.Internal.CommonNames
         private readonly IMainStorageContext _context;
 
         /// <inheritdoc/>
+        public StrongIdentifierValue WorldName { get; private set; }
+
+        /// <inheritdoc/>
+        public IndexedStrongIdentifierValue IndexedWorldName { get; private set; }
+
+        /// <inheritdoc/>
+        public StrongIdentifierValue HostName { get; private set; }
+
+        /// <inheritdoc/>
+        public IndexedStrongIdentifierValue IndexedHostName { get; private set; }
+
+        /// <inheritdoc/>
         public StrongIdentifierValue ApplicationName { get; private set; }
 
         /// <inheritdoc/>
@@ -49,20 +61,27 @@ namespace SymOntoClay.Core.Internal.CommonNames
 
         public void LoadFromSourceCode()
         {
-            ApplicationName = NameHelper.CreateName(StandardNamesConstants.ApplicationTypeName, _context.Dictionary);
+            var dictionary = _context.Dictionary;
 
+            WorldName = NameHelper.CreateName(StandardNamesConstants.WorldTypeName, dictionary);
+            IndexedWorldName = WorldName.GetIndexed(_context);
+
+            HostName = NameHelper.CreateName(StandardNamesConstants.HostTypeName, dictionary);
+            IndexedHostName = HostName.GetIndexed(_context);
+
+            ApplicationName = NameHelper.CreateName(StandardNamesConstants.ApplicationTypeName, dictionary);
             IndexedApplicationName = ApplicationName.GetIndexed(_context);
 
-            ClassName = NameHelper.CreateName(StandardNamesConstants.ClassTypeName, _context.Dictionary);
+            ClassName = NameHelper.CreateName(StandardNamesConstants.ClassTypeName, dictionary);
             IndexedClassName = ClassName.GetIndexed(_context);
 
             DefaultHolder = new StrongIdentifierValue();
             IndexedDefaultHolder = DefaultHolder.GetIndexed(_context);
 
-            SelfSystemVarName = NameHelper.CreateName(StandardNamesConstants.SelfSystemVarName, _context.Dictionary);
+            SelfSystemVarName = NameHelper.CreateName(StandardNamesConstants.SelfSystemVarName, dictionary);
             IndexedSelfSystemVarName = SelfSystemVarName.GetIndexed(_context);
 
-            HostSystemVarName = NameHelper.CreateName(StandardNamesConstants.HostSystemVarName, _context.Dictionary);
+            HostSystemVarName = NameHelper.CreateName(StandardNamesConstants.HostSystemVarName, dictionary);
             IndexedHostSystemVarName = HostSystemVarName.GetIndexed(_context);
 
 #if IMAGINE_WORKING

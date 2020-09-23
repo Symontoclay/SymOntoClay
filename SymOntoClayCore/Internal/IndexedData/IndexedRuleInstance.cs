@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,22 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public IndexedPrimaryRulePart PrimaryPart { get; set; }
         public List<IndexedSecondaryRulePart> SecondaryParts { get; set; } = new List<IndexedSecondaryRulePart>();
         public IList<ulong> KeysOfPrimaryRecords { get; set; } = new List<ulong>();
+
+        /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            var result = base.CalculateLongHashCode() ^ PrimaryPart.GetLongHashCode();
+
+            if(!SecondaryParts.IsNullOrEmpty())
+            {
+                foreach(var secondaryPart in SecondaryParts)
+                {
+                    result ^= secondaryPart.GetLongHashCode();
+                }
+            }
+
+            return result;
+        }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

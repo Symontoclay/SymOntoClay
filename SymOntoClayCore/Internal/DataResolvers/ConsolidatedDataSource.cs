@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.IndexedData;
+﻿using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,38 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         result.AddRange(targetRelationsList);
                     }
 
+#if DEBUG
+                    var tmpList = result.GroupBy(p => p.GetLongHashCode()).ToDictionary(p => p.Key, p => p.ToList());
+
+                    DebugLogger.Instance.Info($"tmpList.Count = {tmpList.Count}");
+
+                    foreach (var tmpKVPItem in tmpList)
+                    {
+                        DebugLogger.Instance.Info($"tmpKVPItem.Key = {tmpKVPItem.Key}");
+                        DebugLogger.Instance.Info($"tmpKVPItem.Value.Count = {tmpKVPItem.Value.Count}");
+
+                        if(tmpKVPItem.Value.Count > 1)
+                        {
+                            throw new NotImplementedException();
+                        }
+                    }
+
+                    var tmpList2 = result.GroupBy(p => p.Key).ToDictionary(p => p.Key, p => p.ToList());
+
+                    DebugLogger.Instance.Info($"tmpList2.Count = {tmpList2.Count}");
+
+                    foreach (var tmpKVPItem in tmpList2)
+                    {
+                        DebugLogger.Instance.Info($"tmpKVPItem.Key (2) = {tmpKVPItem.Key}");
+                        DebugLogger.Instance.Info($"tmpKVPItem.Value.Count (2) = {tmpKVPItem.Value.Count}");
+
+                        if (tmpKVPItem.Value.Count > 1)
+                        {
+                            throw new NotImplementedException();
+                        }
+                    }
+#endif
+
                     return result;
                 }
             }
@@ -54,10 +87,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             lock (_lockObj)
             {
 #if DEBUG
-                //LogInstance.Log($"key = {key}");
+                DebugLogger.Instance.Info($"key = {key}");
 #endif
 
-                var result = new List<IndexedBaseRulePart>();
+                var initialResult = new List<IndexedBaseRulePart>();
 
                 var dataSourcesSettingsOrderedByPriorityList = _dataSourcesSettingsOrderedByPriorityAndUseFactsList;
 
@@ -70,8 +103,46 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         continue;
                     }
 
-                    result.AddRange(indexedRulePartsOfFactsList);
+                    initialResult.AddRange(indexedRulePartsOfFactsList);
                 }
+
+                if (initialResult.Count <= 1)
+                {
+                    return initialResult;
+                }
+
+                var result = new List<IndexedBaseRulePart>();
+
+                var groupedDict = initialResult.GroupBy(p => p.GetLongHashCode()).ToDictionary(p => p.Key, p => p.ToList());
+
+                foreach (var kvpItem in groupedDict)
+                {
+                    result.Add(kvpItem.Value.First());
+                }
+
+#if DEBUG
+                //var tmpList = initialResult.GroupBy(p => p.GetLongHashCode()).ToDictionary(p => p.Key, p => p.ToList());
+
+                //DebugLogger.Instance.Info($"initialResult.Count = {initialResult.Count}");
+                //DebugLogger.Instance.Info($"result.Count = {result.Count}");
+                //DebugLogger.Instance.Info($"tmpList.Count = {tmpList.Count}");
+
+                //foreach (var tmpKVPItem in tmpList)
+                //{
+                //    DebugLogger.Instance.Info($"tmpKVPItem.Key = {tmpKVPItem.Key}");
+                //    DebugLogger.Instance.Info($"tmpKVPItem.Value.Count = {tmpKVPItem.Value.Count}");
+
+                //    if (tmpKVPItem.Value.Count > 1)
+                //    {
+                //        foreach (var tmpValueItem in tmpKVPItem.Value)
+                //        {
+                //            DebugLogger.Instance.Info(DebugHelperForRuleInstance.BaseRulePartToString(tmpValueItem.OriginRulePart));
+                //        }
+
+                //        throw new NotImplementedException();
+                //    }
+                //}
+#endif
 
                 return result;
             }
@@ -81,7 +152,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             lock (_lockObj)
             {
-                var result = new List<IndexedBaseRulePart>();
+#if DEBUG
+                DebugLogger.Instance.Info($"key = {key}");
+#endif
+
+                var initialResult = new List<IndexedBaseRulePart>();
 
                 var dataSourcesSettingsOrderedByPriorityAndUseProductionsList = _dataSourcesSettingsOrderedByPriorityAndUseProductionsList;
 
@@ -94,8 +169,46 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         continue;
                     }
 
-                    result.AddRange(indexedRulePartWithOneRelationsList);
+                    initialResult.AddRange(indexedRulePartWithOneRelationsList);
                 }
+
+                if(initialResult.Count <= 1)
+                {
+                    return initialResult;
+                }
+
+                var result = new List<IndexedBaseRulePart>();
+
+                var groupedDict = initialResult.GroupBy(p => p.GetLongHashCode()).ToDictionary(p => p.Key, p => p.ToList());
+
+                foreach(var kvpItem in groupedDict)
+                {
+                    result.Add(kvpItem.Value.First());
+                }
+
+#if DEBUG
+                //var tmpList = initialResult.GroupBy(p => p.GetLongHashCode()).ToDictionary(p => p.Key, p => p.ToList());
+
+                //DebugLogger.Instance.Info($"initialResult.Count = {initialResult.Count}");
+                //DebugLogger.Instance.Info($"result.Count = {result.Count}");
+                //DebugLogger.Instance.Info($"tmpList.Count = {tmpList.Count}");
+
+                //foreach (var tmpKVPItem in tmpList)
+                //{
+                //    DebugLogger.Instance.Info($"tmpKVPItem.Key = {tmpKVPItem.Key}");
+                //    DebugLogger.Instance.Info($"tmpKVPItem.Value.Count = {tmpKVPItem.Value.Count}");
+
+                //    if (tmpKVPItem.Value.Count > 1)
+                //    {
+                //        foreach(var tmpValueItem in tmpKVPItem.Value)
+                //        {
+                //            DebugLogger.Instance.Info(DebugHelperForRuleInstance.BaseRulePartToString(tmpValueItem.OriginRulePart));
+                //        }
+
+                //        throw new NotImplementedException();
+                //    }
+                //}
+#endif
 
                 return result;
             }

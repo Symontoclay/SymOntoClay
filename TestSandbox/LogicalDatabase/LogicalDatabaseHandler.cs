@@ -30,8 +30,9 @@ namespace TestSandbox.LogicalDatabase
         {
             _logger.Log("Begin");
 
-            RunGettingLongHashCode();
+            //RunGettingLongHashCode();
             //RunGettingInheritanceInformation();
+            RunCase2();
             //RunCase1();
             //ParseFacts();
 
@@ -47,6 +48,26 @@ namespace TestSandbox.LogicalDatabase
             queryStr = "{: male(#Tom) :}";
             ParseQueryStringAndGetLongHashCode(queryStr);
 
+            queryStr = "{: >:{son($x, $y)} -> { male($x) & parent($y, $x)} :}";
+            var a = ParseQueryStringAndGetLongHashCode(queryStr);
+
+            queryStr = "{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}";
+            var b = ParseQueryStringAndGetLongHashCode(queryStr);
+
+            _logger.Log($"a = {a}");
+            _logger.Log($"b = {b}");
+
+            if (a != b)
+            {
+                throw new NotImplementedException();
+            }
+
+            queryStr = "{: { love($x, $y) } -> { help($x, $y) } :}";
+            ParseQueryStringAndGetLongHashCode(queryStr);
+
+            queryStr = "{: ?x(?y, ?z) :}";
+            ParseQueryStringAndGetLongHashCode(queryStr);
+
             _logger.Log("End");
         }
 
@@ -58,6 +79,25 @@ namespace TestSandbox.LogicalDatabase
 
             queryStr = "{: male(#Tom) :}";
             ParseQueryStringAndGetInheritanceInformation(queryStr);
+
+            _logger.Log("End");
+        }
+
+        //This inheritance
+        private void RunCase2()
+        {
+            _logger.Log("Begin");
+
+            var queryStr = string.Empty;
+
+            queryStr = "{: can(bird, fly) :}";
+            ParseQueryString(queryStr);
+
+            queryStr = "{: bird(#Alisa_12) :}";
+            ParseQueryString(queryStr);
+
+            queryStr = "{: can(#Alisa_12, ?x) :}";
+            Search(queryStr);
 
             _logger.Log("End");
         }
@@ -80,8 +120,17 @@ namespace TestSandbox.LogicalDatabase
             //queryStr = "{: son(?x, ?y) :}";
             //Search(queryStr);
 
-            queryStr = "{: ?z(?x, ?y) :}";
+            //queryStr = "{: ?z(?x, ?y) :}";
+            //Search(queryStr);
+
+            queryStr = "{: son(#Tom, #Piter) :}";
             Search(queryStr);
+
+            //queryStr = "{: male(#Tom) :}";
+            //Search(queryStr);
+
+            //queryStr = "{: male(#Mary) :}";
+            //Search(queryStr);
 
             _logger.Log("End");
         }
@@ -113,7 +162,7 @@ namespace TestSandbox.LogicalDatabase
             _logger.Log("End");
         }
 
-        private void ParseQueryStringAndGetLongHashCode(string queryStr)
+        private ulong ParseQueryStringAndGetLongHashCode(string queryStr)
         {
             _logger.Log($"queryStr = {queryStr}");
 
@@ -144,6 +193,8 @@ namespace TestSandbox.LogicalDatabase
             var longHashCode = indexedQuery.GetLongHashCode();
 
             _logger.Log($"longHashCode = {longHashCode}");
+
+            return longHashCode;
         }
 
         private void ParseQueryStringAndGetInheritanceInformation(string queryStr)
@@ -271,7 +322,10 @@ namespace TestSandbox.LogicalDatabase
 
             //_logger.Log($"searchResult = {searchResult}");
 
+            _logger.Log($"searchResult.IsSuccess = {searchResult.IsSuccess}");
             _logger.Log($"searchResult.Items.Count = {searchResult.Items.Count}");
+
+            _logger.Log(DebugHelperForLogicalSearchResult.ToString(searchResult, dictionary));
 
             foreach (var item in searchResult.Items)
             {

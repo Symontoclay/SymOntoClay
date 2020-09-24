@@ -18,6 +18,25 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
         public int CountParams { get; set; }
 
+        public ulong GetLongHashCode()
+        {
+            ulong result = (ulong)Math.Abs(OperationCode.GetHashCode()) ^ (ulong)Math.Abs(Position.GetHashCode());
+
+            if(Value != null)
+            {
+                result ^= Value.GetLongHashCode();
+            }
+
+            if (JumpToMe != null)
+            {
+                result ^= JumpToMe.GetLongHashCode();
+            }
+
+            result ^= (ulong)Math.Abs(KindOfOperator.GetHashCode()) ^ (ulong)Math.Abs(CountParams.GetHashCode());
+
+            return result;
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {

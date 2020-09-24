@@ -9,6 +9,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
     {
         public ulong RuleInstanceKey { get; set; }
 
+        public ulong GetLongHashCode()
+        {
+            return RuleInstanceKey;
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {

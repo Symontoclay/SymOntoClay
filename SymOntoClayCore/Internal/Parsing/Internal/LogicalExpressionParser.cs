@@ -124,6 +124,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Entity:
+                        case TokenKind.Word:
                         case TokenKind.LogicalVar:
                         case TokenKind.QuestionVar:
                         {
@@ -197,13 +198,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var value = NameHelper.CreateName(_currToken.Content, _context.Dictionary);
 
 #if DEBUG
-            //Log($"value = {value}");
+            Log($"value = {value}");
 #endif
 
             var nextToken = _context.GetToken();
 
 #if DEBUG
-            //Log($"nextToken = {nextToken}");
+            Log($"nextToken = {nextToken}");
 #endif
 
             switch (value.KindOfName)
@@ -222,12 +223,37 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _context.Recovery(nextToken);
 
                                 var node = new LogicalQueryNode();
-                                if(value.KindOfName == KindOfName.QuestionVar)
+
+                                var kindOfName = value.KindOfName;
+
+                                switch (kindOfName)
                                 {
-                                    node.Kind = KindOfLogicalQueryNode.QuestionVar;
-                                    node.IsQuestion = true;
+                                    case KindOfName.QuestionVar:
+                                        node.Kind = KindOfLogicalQueryNode.QuestionVar;
+                                        node.IsQuestion = true;
+                                        break;
+
+                                    case KindOfName.Concept:
+                                        node.Kind = KindOfLogicalQueryNode.Concept;
+                                        break;
+
+                                    case KindOfName.Entity:
+                                        node.Kind = KindOfLogicalQueryNode.Entity;
+                                        break;
+
+                                    case KindOfName.LogicalVar:
+                                        node.Kind = KindOfLogicalQueryNode.LogicalVar;
+                                        break;
+
+                                    default:
+                                        throw new UnexpectedTokenException(_currToken);
                                 }
+
                                 node.Name = value;
+
+#if DEBUG
+                                Log($"node = {node}");
+#endif
 
                                 var intermediateNode = new IntermediateAstNode(node);
 
@@ -240,7 +266,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 else
                                 {
                                     _state = State.GotConcept;
-                                }                                    
+                                }                                  
                             }
                             break;
 

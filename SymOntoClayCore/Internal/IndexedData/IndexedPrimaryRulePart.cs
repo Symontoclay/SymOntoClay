@@ -85,6 +85,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
             options.Logger.Log($"#$%^$%^^ queryExecutingCardForExpression = {queryExecutingCardForExpression}");
 #endif
 
+            queryExecutingCard.IsSuccess = queryExecutingCardForExpression.IsSuccess;
+
             foreach (var resultOfQueryToRelation in queryExecutingCardForExpression.ResultsOfQueryToRelationList)
             {
                 queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);

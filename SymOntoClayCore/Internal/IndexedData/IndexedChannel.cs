@@ -15,6 +15,12 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public IChannelHandler Handler { get; set; }
 
         /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            return base.CalculateLongHashCode() ^ Name.GetLongHashCode() ^ (ulong)Math.Abs(Handler.GetHashCode());
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

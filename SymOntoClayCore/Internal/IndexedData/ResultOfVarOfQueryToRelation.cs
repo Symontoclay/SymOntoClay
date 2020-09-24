@@ -12,6 +12,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public BaseIndexedLogicalQueryNode FoundExpression { get; set; }
         public IDictionary<ulong, OriginOfVarOfQueryToRelation> OriginDict { get; set; } = new Dictionary<ulong, OriginOfVarOfQueryToRelation>();
 
+        public ulong GetLongHashCode()
+        {
+            return (ulong)Math.Abs(KeyOfVar.GetHashCode()) ^ FoundExpression.GetLongHashCode();
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {

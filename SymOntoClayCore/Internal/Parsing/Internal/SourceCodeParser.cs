@@ -70,6 +70,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
+                case TokenKind.OpenFactBracket:
+                    {
+                        _context.Recovery(_currToken);
+                        var parser = new LogicalQueryAsCodeEntityParser(_context);
+                        parser.Run();
+                        Result.Add(parser.Result);
+                    }
+                    break;
+
                 default:
                     throw new UnexpectedTokenException(_currToken);
             }

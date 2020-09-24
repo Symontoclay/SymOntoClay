@@ -15,6 +15,12 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public override bool IsEntityRef => true;
 
         /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public override void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             throw new NotImplementedException();

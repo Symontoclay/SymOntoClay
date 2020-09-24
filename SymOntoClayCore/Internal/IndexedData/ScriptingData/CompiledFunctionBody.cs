@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,21 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
     public class CompiledFunctionBody : IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
     {
         public Dictionary<int, ScriptCommand> Commands { get; set; } = new Dictionary<int, ScriptCommand>();
+
+        public ulong GetLongHashCode()
+        {
+            ulong result = 0;
+
+            if(Commands.IsNullOrEmpty())
+            {
+                foreach(var item in Commands)
+                {
+                    result ^= LongHashCodeWeights.BaseCommandWeight ^ item.Value.GetLongHashCode();
+                }
+            }
+
+            return result;
+        }
 
         /// <inheritdoc/>
         public override string ToString()

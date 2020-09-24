@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,21 @@ namespace SymOntoClay.Core.Internal.DataResolvers
     public class LogicalSearchResultItem : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public IList<ResultOfVarOfQueryToRelation> ResultOfVarOfQueryToRelationList { get; set; }
+
+        public ulong GetLongHashCode()
+        {
+            ulong result = 0;
+
+            if (!ResultOfVarOfQueryToRelationList.IsNullOrEmpty())
+            {
+                foreach (var item in ResultOfVarOfQueryToRelationList)
+                {
+                    result ^= item.GetLongHashCode();
+                }
+            }
+
+            return result;
+        }
 
         /// <inheritdoc/>
         public override string ToString()

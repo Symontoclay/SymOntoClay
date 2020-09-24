@@ -32,6 +32,24 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public IndexedValue RightOperand { get; set; }
 
         /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            var result = base.CalculateLongHashCode();
+
+            if(LeftOperand != null)
+            {
+                result ^= LongHashCodeWeights.BaseParamWeight ^ LeftOperand.GetLongHashCode();
+            }
+
+            if (RightOperand != null)
+            {
+                result ^= LongHashCodeWeights.BaseParamWeight ^ RightOperand.GetLongHashCode();
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

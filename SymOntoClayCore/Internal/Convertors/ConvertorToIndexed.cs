@@ -310,6 +310,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.OriginalTaskValue = source;
 
             result.TaskId = source.TaskId;
+            result.TaskIdKey = mainStorageContext.Dictionary.GetKey(source.TaskId);
             result.SystemTask = source.SystemTask;
 
             result.CalculateLongHashCodes();
@@ -1300,7 +1301,6 @@ namespace SymOntoClay.Core.Internal.Convertors
         public static IndexedOperator ConvertOperator(Operator source, IMainStorageContext mainStorageContext)
         {
             var convertingContext = new Dictionary<object, object>();
-
             return ConvertOperator(source, mainStorageContext, convertingContext);
         }
 

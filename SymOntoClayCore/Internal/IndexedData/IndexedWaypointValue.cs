@@ -33,6 +33,12 @@ namespace SymOntoClay.Core.Internal.IndexedData
         }
 
         /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            return base.CalculateLongHashCode() ^ LongHashCodeWeights.BaseFunctionWeight ^ (Name?.GetLongHashCode() ?? 0) ^ LongHashCodeWeights.BaseParamWeight ^ (ulong)Math.Abs(AbcoluteCoordinates.GetHashCode());
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

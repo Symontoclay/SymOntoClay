@@ -21,6 +21,19 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public IList<QueryExecutingCardAboutKnownInfo> KnownInfoList { get; set; }
 
         /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            var result = base.CalculateLongHashCode() ^ LongHashCodeWeights.BaseFunctionWeight ^ Key;
+
+            foreach(var param in Params)
+            {
+                result ^= LongHashCodeWeights.BaseParamWeight ^ param.GetLongHashCode();
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
@@ -171,6 +184,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 #if DEBUG
                     options.Logger.Log($"++++++queryExecutingCardForTargetFact = {queryExecutingCardForTargetFact}");
 #endif
+                    queryExecutingCard.IsSuccess = queryExecutingCardForTargetFact.IsSuccess;
 
                     foreach (var resultOfQueryToRelation in queryExecutingCardForTargetFact.ResultsOfQueryToRelationList)
                     {
@@ -214,6 +228,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
 #if DEBUG
                     options.Logger.Log($"!!!!!!!!!!!!!!!!!!queryExecutingCard = {queryExecutingCard}");
 #endif
+
+                    queryExecutingCard.IsSuccess = queryExecutingCardForTargetRule.IsSuccess;
 
                     foreach (var resultOfQueryToRelation in queryExecutingCardForTargetRule.ResultsOfQueryToRelationList)
                     {

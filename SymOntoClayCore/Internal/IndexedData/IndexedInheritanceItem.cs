@@ -29,6 +29,19 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
         public IList<ulong> KeysOfPrimaryRecords { get; set; } = new List<ulong>();
 
+        /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            var result = base.CalculateLongHashCode() ^ SubName.GetLongHashCode() ^ SuperName.GetLongHashCode();
+
+            if(Rank != null)
+            {
+                result ^= LongHashCodeWeights.BaseModalityWeight ^ Rank.GetLongHashCode();
+            }
+
+            return result;
+        }
+
         private void PrintHeader(StringBuilder sb, uint n, string spaces)
         {
             sb.PrintExisting(n, nameof(OriginalInheritanceItem), OriginalInheritanceItem);

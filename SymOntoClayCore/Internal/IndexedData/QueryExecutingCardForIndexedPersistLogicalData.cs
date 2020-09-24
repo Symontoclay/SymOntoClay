@@ -14,6 +14,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public IList<QueryExecutingCardAboutVar> VarsInfoList { get; set; }
         public IList<QueryExecutingCardAboutKnownInfo> KnownInfoList { get; set; }
         public IList<ResultOfQueryToRelation> ResultsOfQueryToRelationList { get; set; } = new List<ResultOfQueryToRelation>();
+        public bool IsSuccess { get; set; }
+
 #if DEBUG
         public IndexedRuleInstance SenderIndexedRuleInstance { get; set; }
         public IndexedBaseRulePart SenderIndexedRulePart { get; set; }
@@ -42,6 +44,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintObjListProp(n, nameof(VarsInfoList), VarsInfoList);
             sb.PrintObjListProp(n, nameof(KnownInfoList), KnownInfoList);
             sb.PrintObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
+            sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
+
 #if DEBUG
             sb.PrintExisting(n, nameof(SenderIndexedRuleInstance), SenderIndexedRuleInstance);
             sb.PrintExisting(n, nameof(SenderIndexedRulePart), SenderIndexedRulePart);
@@ -73,6 +77,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintShortObjListProp(n, nameof(VarsInfoList), VarsInfoList);
             sb.PrintShortObjListProp(n, nameof(KnownInfoList), KnownInfoList);
             sb.PrintShortObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
+
+            sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
+
 #if DEBUG
             sb.PrintExisting(n, nameof(SenderIndexedRuleInstance), SenderIndexedRuleInstance);
             sb.PrintExisting(n, nameof(SenderIndexedRulePart), SenderIndexedRulePart);
@@ -104,6 +111,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintBriefObjListProp(n, nameof(VarsInfoList), VarsInfoList);
             sb.PrintBriefObjListProp(n, nameof(KnownInfoList), KnownInfoList);
             sb.PrintBriefObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
+
+            sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
+
 #if DEBUG
             sb.PrintExisting(n, nameof(SenderIndexedRuleInstance), SenderIndexedRuleInstance);
             sb.PrintExisting(n, nameof(SenderIndexedRulePart), SenderIndexedRulePart);

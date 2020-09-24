@@ -3,8 +3,7 @@
     on Init => {
 	     "Begin" >> @>log;
 
-		 /*@r = @b = 1;
-		 @bx >> @>log;*/
+		 ? {: son(?x, ?y) :} >> @>log;
 
 		 "End" >> @>log;
 	}

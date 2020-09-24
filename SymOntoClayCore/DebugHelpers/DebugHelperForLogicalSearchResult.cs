@@ -14,12 +14,14 @@ namespace SymOntoClay.Core.DebugHelpers
 
         public static string ToString(LogicalSearchResult source, IEntityDictionary entityDictionary)
         {
-            if(source.Items.IsNullOrEmpty())
+            if (!source.IsSuccess)
             {
-                return "<nothing>";
+                return "<no>";
             }
 
             var sb = new StringBuilder();
+
+            sb.AppendLine("<yes>");
 
             foreach (var item in source.Items)
             {

@@ -25,6 +25,23 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public ISystemHandler SystemHandler { get; set; }
 
         /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            var result = base.CalculateLongHashCode() ^ LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(KindOfOperator.GetHashCode());
+
+            if(IsSystemDefined)
+            {
+                result ^= (ulong)Math.Abs(SystemHandler.GetHashCode());
+            }
+            else
+            {
+                result ^= CompiledFunctionBody.GetLongHashCode();
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

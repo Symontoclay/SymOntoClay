@@ -18,6 +18,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public override Value OriginalValue => OriginalTaskValue;
 
         public string TaskId { get; set; }
+        public ulong TaskIdKey { get; set; }
         public Task SystemTask { get; set; }
 
         /// <inheritdoc/>
@@ -33,11 +34,18 @@ namespace SymOntoClay.Core.Internal.IndexedData
         }
 
         /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            return base.CalculateLongHashCode() ^ TaskIdKey ^ (ulong)Math.Abs(SystemTask?.GetHashCode() ?? 0);
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(TaskId)} = {TaskId}");
+            sb.AppendLine($"{spaces}{nameof(TaskIdKey)} = {TaskIdKey}");
             sb.AppendLine($"{spaces}{SystemTask?.Status} = {SystemTask?.Status}");
 
             sb.Append(base.PropertiesToString(n));
@@ -50,6 +58,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(TaskId)} = {TaskId}");
+            sb.AppendLine($"{spaces}{nameof(TaskIdKey)} = {TaskIdKey}");
             sb.AppendLine($"{spaces}{SystemTask?.Status} = {SystemTask?.Status}");
 
             sb.Append(base.PropertiesToShortString(n));
@@ -62,6 +71,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(TaskId)} = {TaskId}");
+            sb.AppendLine($"{spaces}{nameof(TaskIdKey)} = {TaskIdKey}");
             sb.AppendLine($"{spaces}{SystemTask?.Status} = {SystemTask?.Status}");
 
             sb.Append(base.PropertiesToBriefString(n));

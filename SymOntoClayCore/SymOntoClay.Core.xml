@@ -1966,6 +1966,9 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.BaseKeyRefIndexedLogicalQueryNode.AsKeyRef">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.BaseKeyRefIndexedLogicalQueryNode.CalculateLongHashCode">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.BaseKeyRefIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -1973,6 +1976,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.BaseKeyRefIndexedLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.BinaryOperatorIndexedLogicalQueryNode.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.BinaryOperatorIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
@@ -1993,6 +1999,9 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.EntityConditionIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.EntityConditionIndexedLogicalQueryNode.CalculateLongHashCode">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.EntityConditionIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
@@ -2006,6 +2015,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.EntityRefIndexedLogicalQueryNode.IsEntityRef">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.EntityRefIndexedLogicalQueryNode.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.EntityRefIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
@@ -2072,6 +2084,9 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotationValue.GetSystemValue">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotationValue.CalculateLongHashCode">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotationValue.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -2084,6 +2099,9 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotationValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedBaseRulePart.CalculateLongHashCode">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedBaseRulePart.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -2091,6 +2109,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedBaseRulePart.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedChannel.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedChannel.PropertiesToString(System.UInt32)">
@@ -2117,6 +2138,9 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedHostValue.GetSystemValue">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedHostValue.CalculateLongHashCode">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedHostValue.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -2140,6 +2164,9 @@
             It must be resolved to LogicalValue.
             </summary>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInheritanceItem.CalculateLongHashCode">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInheritanceItem.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -2147,6 +2174,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInheritanceItem.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInlineTrigger.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInlineTrigger.PropertiesToString(System.UInt32)">
@@ -2171,6 +2201,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInstanceValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInstanceValue.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInstanceValue.PropertiesToString(System.UInt32)">
@@ -2227,6 +2260,9 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.GetSystemValue">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.CalculateLongHashCode">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -2252,6 +2288,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalValue.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalValue.PropertiesToString(System.UInt32)">
@@ -2281,6 +2320,9 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedNullValue.GetSystemValue">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedNullValue.CalculateLongHashCode">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedNullValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -2297,6 +2339,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedNumberValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedNumberValue.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedNumberValue.PropertiesToString(System.UInt32)">
@@ -2318,6 +2363,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedOperator.SystemHandler">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedOperator.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedOperator.PropertiesToString(System.UInt32)">
@@ -2342,6 +2390,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedPointRefValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedPointRefValue.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedPointRefValue.PropertiesToString(System.UInt32)">
@@ -2371,19 +2422,7 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedPrimaryRulePart.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedRelationLogicalQueryNode.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRelationLogicalQueryNode.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRelationLogicalQueryNode.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRelationLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRelationLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstance.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstance.PropertiesToString(System.UInt32)">
@@ -2431,6 +2470,9 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.CalculateLongConditionalHashCode">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.CalculateLongHashCode">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.GetSystemValue">
             <inheritdoc/>
         </member>
@@ -2476,6 +2518,9 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedStringValue.GetSystemValue">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedStringValue.CalculateLongHashCode">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedStringValue.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -2512,6 +2557,9 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue.GetHashCode">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue.CalculateLongHashCode">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -2537,6 +2585,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedTaskValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedTaskValue.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedTaskValue.PropertiesToString(System.UInt32)">
@@ -2570,6 +2621,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedWaypointValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedWaypointValue.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedWaypointValue.PropertiesToString(System.UInt32)">
@@ -2752,6 +2806,9 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.RelationIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.RelationIndexedLogicalQueryNode.CalculateLongHashCode">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.RelationIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -2918,7 +2975,13 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.StubParamIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.StubParamIndexedLogicalQueryNode.CalculateLongHashCode">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.StubParamIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.UnaryOperatorIndexedLogicalQueryNode.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.UnaryOperatorIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
@@ -2933,10 +2996,16 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.CalculateLongHashCode">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.VarIndexedLogicalQueryNode.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.VarIndexedLogicalQueryNode.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.VarIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">

@@ -66,7 +66,41 @@ namespace SymOntoClay.Core.Internal.IndexedData
             _longConditionalHashCode = result;
         }
 
-        protected abstract ulong CalculateLongHashCode();
+        protected virtual ulong CalculateLongHashCode()
+        {
+            ulong result = 0;
+
+            if(!QuantityQualityModalities.IsNullOrEmpty())
+            {
+                foreach(var item in QuantityQualityModalities)
+                {
+                    result ^= LongHashCodeWeights.BaseModalityWeight ^ item.GetLongHashCode();
+                }
+            }
+
+            if (!WhereSection.IsNullOrEmpty())
+            {
+                foreach (var item in WhereSection)
+                {
+                    result ^= LongHashCodeWeights.BaseModalityWeight ^ item.GetLongHashCode();
+                }
+            }
+
+            if(Holder != null)
+            {
+                result ^= LongHashCodeWeights.BaseModalityWeight ^ Holder.GetLongHashCode();
+            }
+
+            if (!Annotations.IsNullOrEmpty())
+            {
+                foreach (var item in Annotations)
+                {
+                    result ^= LongHashCodeWeights.BaseModalityWeight ^ item.GetLongHashCode();
+                }
+            }
+
+            return result;
+        }
 
         /// <inheritdoc/>
         public override string ToString()

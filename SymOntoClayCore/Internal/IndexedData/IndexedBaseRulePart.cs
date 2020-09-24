@@ -26,6 +26,12 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public abstract IList<IndexedBaseRulePart> GetNextPartsList();
 
         /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            return base.CalculateLongHashCode() ^ Expression.GetLongHashCode();
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
@@ -107,6 +113,10 @@ namespace SymOntoClay.Core.Internal.IndexedData
         {
 #if DEBUG
             options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            foreach(var item in )
+            {
+
+            }
 #endif
 
             var targetRelationsList = RelationsDict[queryExecutingCard.TargetRelation];
@@ -124,6 +134,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
 #if DEBUG
                 options.Logger.Log($"targetRelation = {targetRelation}");
+                options.Logger.Log($"targetRelation = {targetRelation.GetHumanizeDbgString()}");
 #endif
 
                 var paramsListOfTargetRelation = targetRelation.Params;
@@ -193,49 +204,62 @@ namespace SymOntoClay.Core.Internal.IndexedData
 //                        }
                     }
 
-                    foreach (var varItem in queryExecutingCard.VarsInfoList)
+#if DEBUG
+                    options.Logger.Log($"queryExecutingCard.VarsInfoList.Count = {queryExecutingCard.VarsInfoList.Count}");
+#endif
+
+                    if(queryExecutingCard.VarsInfoList.Any())
                     {
+                        foreach (var varItem in queryExecutingCard.VarsInfoList)
+                        {
 #if DEBUG
-                        options.Logger.Log($"varItem = {varItem}");
+                            options.Logger.Log($"varItem = {varItem}");
 #endif
 
-                        var paramOfTargetRelation = paramsListOfTargetRelation[varItem.Position];
+                            var paramOfTargetRelation = paramsListOfTargetRelation[varItem.Position];
 
 #if DEBUG
-                        options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
+                            options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
 #endif
 
-                        if (isEntityIdOnly && !paramOfTargetRelation.IsEntityRef)
+                            if (isEntityIdOnly && !paramOfTargetRelation.IsEntityRef)
+                            {
+                                continue;
+                            }
+
+#if DEBUG
+                            options.Logger.Log($"NEXT paramOfTargetRelation = {paramOfTargetRelation}");
+#endif
+
+                            var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
+                            resultOfVarOfQueryToRelation.KeyOfVar = varItem.KeyOfVar;
+                            resultOfVarOfQueryToRelation.FoundExpression = paramOfTargetRelation;
+                            resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
+
+                            var originInfo = new OriginOfVarOfQueryToRelation();
+                            originInfo.IndexedRuleInstance = Parent;
+                            originInfo.IndexedRulePart = this;
+
+                            var keyOfRuleInstance = Parent.Key;
+
+                            originInfo.KeyOfRuleInstance = keyOfRuleInstance;
+
+                            resultOfVarOfQueryToRelation.OriginDict[keyOfRuleInstance] = originInfo;
+                        }
+
+                        if (resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Count != queryExecutingCard.VarsInfoList.Count)
                         {
                             continue;
                         }
 
-#if DEBUG
-                        options.Logger.Log($"NEXT paramOfTargetRelation = {paramOfTargetRelation}");
-#endif
+                        queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
 
-                        var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
-                        resultOfVarOfQueryToRelation.KeyOfVar = varItem.KeyOfVar;
-                        resultOfVarOfQueryToRelation.FoundExpression = paramOfTargetRelation;
-                        resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
-
-                        var originInfo = new OriginOfVarOfQueryToRelation();
-                        originInfo.IndexedRuleInstance = Parent;
-                        originInfo.IndexedRulePart = this;
-
-                        var keyOfRuleInstance = Parent.Key;
-
-                        originInfo.KeyOfRuleInstance = keyOfRuleInstance;
-
-                        resultOfVarOfQueryToRelation.OriginDict[keyOfRuleInstance] = originInfo;
+                        queryExecutingCard.IsSuccess = true;
                     }
-
-                    if (resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Count == 0)
+                    else
                     {
-                        continue;
+                        queryExecutingCard.IsSuccess = true;
                     }
-
-                    queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
                 }
             }
         }
@@ -332,6 +356,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 options.Logger.Log($"queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
 #endif
 
+                queryExecutingCard.IsSuccess = queryExecutingCardForNextPart.IsSuccess;
+
                 var resultsOfQueryToRelationList = queryExecutingCardForNextPart.ResultsOfQueryToRelationList;
 
                 if (resultsOfQueryToRelationList.Count > 0)
@@ -397,7 +423,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
                         }
 
                         newResultOfQueryToRelation.ResultOfVarOfQueryToRelationList = newResultOfVarOfQueryToRelationList;
-                        queryExecutingCard.ResultsOfQueryToRelationList.Add(newResultOfQueryToRelation);
+                        queryExecutingCard.ResultsOfQueryToRelationList.Add(newResultOfQueryToRelation);                        
                     }
                 }
             }
@@ -427,6 +453,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 #endif
 
             queryExecutingCard.ResultsOfQueryToRelationList = queryExecutingCardForExpression.ResultsOfQueryToRelationList;
+            queryExecutingCard.IsSuccess = queryExecutingCardForExpression.IsSuccess;
 
 #if DEBUG
             options.Logger.Log("End");

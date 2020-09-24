@@ -44,6 +44,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
             Log($"@!@!@!@!@!@!@! queryExecutingCard = {queryExecutingCard}");
 #endif
+            result.IsSuccess = queryExecutingCard.IsSuccess;
 
             var resultItemsList = new List<LogicalSearchResultItem>();
 

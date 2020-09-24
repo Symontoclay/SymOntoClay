@@ -19,6 +19,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             _ruleInstancesList = new List<RuleInstance>();
             _ruleInstancesDict = new Dictionary<ulong, RuleInstance>();
+            _ruleInstancesDictByHashCode = new Dictionary<ulong, RuleInstance>();
             _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData(realStorageContext.MainStorageContext.Logger, realStorageContext.MainStorageContext.Dictionary);
         }
 
@@ -36,6 +37,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
         private List<RuleInstance> _ruleInstancesList;
         private Dictionary<ulong, RuleInstance> _ruleInstancesDict;
+        private Dictionary<ulong, RuleInstance> _ruleInstancesDictByHashCode;
         private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData;
 
         /// <inheritdoc/>
@@ -100,8 +102,20 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 return;
             }
 
+            var longHashCode = indexedRuleInstance.GetLongHashCode();
+
+#if DEBUG
+            //Log($"longHashCode = {longHashCode}");
+#endif
+
+            if(_ruleInstancesDictByHashCode.ContainsKey(longHashCode))
+            {
+                return;
+            }
+
             _ruleInstancesList.Add(ruleInstance);
             _ruleInstancesDict[ruleInstanceKey] = ruleInstance;
+            _ruleInstancesDictByHashCode[longHashCode] = ruleInstance;
 
             _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(indexedRuleInstance);
 

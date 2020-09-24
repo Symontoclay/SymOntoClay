@@ -127,6 +127,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             PrimaryPart.FillExecutingCard(queryExecutingCardForPart_1, dataSource, options);
 
+            queryExecutingCard.IsSuccess = queryExecutingCardForPart_1.IsSuccess;
+
             foreach (var resultOfQueryToRelation in queryExecutingCardForPart_1.ResultsOfQueryToRelationList)
             {
                 queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);

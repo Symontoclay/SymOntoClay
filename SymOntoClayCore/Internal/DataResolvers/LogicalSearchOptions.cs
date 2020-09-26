@@ -11,6 +11,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
     {
         public bool EntityIdOnly { get; set; }
         public bool IgnoreAccessPolicy { get; set; } = true;
+        public bool UseInheritance { get; set; } = true;
         public IndexedRuleInstance QueryExpression { get; set; }
         public LocalCodeExecutionContext LocalCodeExecutionContext { get; set; }
 
@@ -22,6 +23,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             sb.AppendLine($"{spaces}{nameof(EntityIdOnly)} = {EntityIdOnly}");
             sb.AppendLine($"{spaces}{nameof(IgnoreAccessPolicy)} = {IgnoreAccessPolicy}");
+            sb.AppendLine($"{spaces}{nameof(UseInheritance)} = {UseInheritance}");
 
             sb.PrintObjProp(n, nameof(QueryExpression), QueryExpression);
             sb.PrintObjProp(n, nameof(LocalCodeExecutionContext), LocalCodeExecutionContext);
@@ -40,6 +42,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             sb.AppendLine($"{spaces}{nameof(EntityIdOnly)} = {EntityIdOnly}");
             sb.AppendLine($"{spaces}{nameof(IgnoreAccessPolicy)} = {IgnoreAccessPolicy}");
+            sb.AppendLine($"{spaces}{nameof(UseInheritance)} = {UseInheritance}");
 
             sb.PrintShortObjProp(n, nameof(QueryExpression), QueryExpression);
             sb.PrintShortObjProp(n, nameof(LocalCodeExecutionContext), LocalCodeExecutionContext);
@@ -58,6 +61,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             sb.AppendLine($"{spaces}{nameof(EntityIdOnly)} = {EntityIdOnly}");
             sb.AppendLine($"{spaces}{nameof(IgnoreAccessPolicy)} = {IgnoreAccessPolicy}");
+            sb.AppendLine($"{spaces}{nameof(UseInheritance)} = {UseInheritance}");
 
             sb.PrintBriefObjProp(n, nameof(QueryExpression), QueryExpression);
             sb.PrintBriefObjProp(n, nameof(LocalCodeExecutionContext), LocalCodeExecutionContext);

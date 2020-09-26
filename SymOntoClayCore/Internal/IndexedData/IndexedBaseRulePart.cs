@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.CodeModel;
+﻿using Newtonsoft.Json;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -112,17 +113,20 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public void FillExecutingCardForCallingFromRelationForFact(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
-            foreach(var item in )
-            {
-
-            }
+            //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //foreach(var item in queryExecutingCard.KnownInfoList)
+            //{
+            //    options.Logger.Log($"options.EntityDictionary.GetName(item.Key) = {options.EntityDictionary.GetName(item.Key)}");
+            //}
 #endif
+
+            var useInheritance = options.UseInheritance;
+            var inheritanceResolver = options.InheritanceResolver;
 
             var targetRelationsList = RelationsDict[queryExecutingCard.TargetRelation];
 
 #if DEBUG
-            options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");
+            //options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");
 #endif
 
             foreach (var targetRelation in targetRelationsList)
@@ -133,8 +137,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 }
 
 #if DEBUG
-                options.Logger.Log($"targetRelation = {targetRelation}");
-                options.Logger.Log($"targetRelation = {targetRelation.GetHumanizeDbgString()}");
+                //options.Logger.Log($"targetRelation = {targetRelation}");
+                //options.Logger.Log($"targetRelation = {targetRelation.GetHumanizeDbgString()}");
 #endif
 
                 var paramsListOfTargetRelation = targetRelation.Params;
@@ -144,7 +148,22 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 foreach (var knownInfo in queryExecutingCard.KnownInfoList)
                 {
 #if DEBUG
-                    options.Logger.Log($"knownInfo = {knownInfo}");
+                    //options.Logger.Log($"knownInfo = {knownInfo}");
+#endif
+
+                    List<ulong> additionalKeys = null;
+
+                    if(useInheritance)
+                    {
+                        additionalKeys = inheritanceResolver.GetSuperClassesKeysList(knownInfo.Key, options.LocalCodeExecutionContext);
+                    }
+
+#if DEBUG
+                    //options.Logger.Log($"additionalKeys = {JsonConvert.SerializeObject(additionalKeys, Formatting.Indented)}");
+
+                    //var tmpNamesList = additionalKeys.Select(p => options.EntityDictionary.GetName(p)).ToList();
+
+                    //options.Logger.Log($"tmpNamesList = {JsonConvert.SerializeObject(tmpNamesList, Formatting.Indented)}");
 #endif
 
                     var position = knownInfo.Position;
@@ -154,13 +173,13 @@ namespace SymOntoClay.Core.Internal.IndexedData
                         var paramOfTargetRelation = paramsListOfTargetRelation[position.Value];
 
 #if DEBUG
-                        options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
+                        //options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
 #endif
 
-                        var resultOfComparison = CompareKnownInfoAndExpressionNode(knownInfo, paramOfTargetRelation, options.Logger);
+                        var resultOfComparison = CompareKnownInfoAndExpressionNode(knownInfo, paramOfTargetRelation, additionalKeys, options.Logger);
 
 #if DEBUG
-                        options.Logger.Log($"resultOfComparison = {resultOfComparison}");
+                        //options.Logger.Log($"resultOfComparison = {resultOfComparison}");
 #endif
 
                         if (!resultOfComparison)
@@ -177,7 +196,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 }
 
 #if DEBUG
-                options.Logger.Log($"isFit = {isFit}");
+                //options.Logger.Log($"isFit = {isFit}");
 #endif
 
                 if (isFit)
@@ -205,7 +224,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
                     }
 
 #if DEBUG
-                    options.Logger.Log($"queryExecutingCard.VarsInfoList.Count = {queryExecutingCard.VarsInfoList.Count}");
+                    //options.Logger.Log($"queryExecutingCard.VarsInfoList.Count = {queryExecutingCard.VarsInfoList.Count}");
 #endif
 
                     if(queryExecutingCard.VarsInfoList.Any())
@@ -213,13 +232,13 @@ namespace SymOntoClay.Core.Internal.IndexedData
                         foreach (var varItem in queryExecutingCard.VarsInfoList)
                         {
 #if DEBUG
-                            options.Logger.Log($"varItem = {varItem}");
+                            //options.Logger.Log($"varItem = {varItem}");
 #endif
 
                             var paramOfTargetRelation = paramsListOfTargetRelation[varItem.Position];
 
 #if DEBUG
-                            options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
+                            //options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
 #endif
 
                             if (isEntityIdOnly && !paramOfTargetRelation.IsEntityRef)
@@ -228,7 +247,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
                             }
 
 #if DEBUG
-                            options.Logger.Log($"NEXT paramOfTargetRelation = {paramOfTargetRelation}");
+                            //options.Logger.Log($"NEXT paramOfTargetRelation = {paramOfTargetRelation}");
 #endif
 
                             var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
@@ -264,17 +283,17 @@ namespace SymOntoClay.Core.Internal.IndexedData
             }
         }
 
-        private bool CompareKnownInfoAndExpressionNode(QueryExecutingCardAboutKnownInfo knownInfo, BaseIndexedLogicalQueryNode expressionNode, IEntityLogger logger)
+        private bool CompareKnownInfoAndExpressionNode(QueryExecutingCardAboutKnownInfo knownInfo, BaseIndexedLogicalQueryNode expressionNode, List<ulong> additionalKeys, IEntityLogger logger)
         {
             var knownInfoExpression = knownInfo.Expression;
 
-            return ExpressionNodeHelper.Compare(knownInfoExpression, expressionNode, logger);
+            return ExpressionNodeHelper.Compare(knownInfoExpression, expressionNode, additionalKeys, logger);
         }
 
         public void FillExecutingCardForCallingFromRelationForProduction(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
 #endif
 
             var senderIndexedRuleInstance = queryExecutingCard.SenderIndexedRuleInstance;
@@ -283,7 +302,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var targetRelationsList = RelationsDict[queryExecutingCard.TargetRelation];
 
 #if DEBUG
-            options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");
+            //options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");
 #endif
 
             if (targetRelationsList.Count != 1)
@@ -294,7 +313,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var targetRelation = targetRelationsList.First();
 
 #if DEBUG
-            options.Logger.Log($"targetRelation = {targetRelation}");
+            //options.Logger.Log($"targetRelation = {targetRelation}");
 #endif
 
             if (targetRelation.Params.Count != queryExecutingCard.CountParams)
@@ -305,11 +324,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var targetRelationVarsInfoList = targetRelation.VarsInfoList;
 
 #if DEBUG
-            options.Logger.Log($"targetRelationVarsInfoList.Count = {targetRelationVarsInfoList.Count}");
-            foreach (var varInfo in targetRelationVarsInfoList)
-            {
-                options.Logger.Log($"varInfo = {varInfo}");
-            }
+            //options.Logger.Log($"targetRelationVarsInfoList.Count = {targetRelationVarsInfoList.Count}");
+            //foreach (var varInfo in targetRelationVarsInfoList)
+            //{
+            //    options.Logger.Log($"varInfo = {varInfo}");
+            //}
 #endif
 
             var targetRelationVarsInfoDictByPosition = targetRelationVarsInfoList.ToDictionary(p => p.Position, p => p.KeyOfVar);
@@ -323,11 +342,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var targetKnownInfoList = mergingResult.KnownInfoList;
 
 #if DEBUG
-            options.Logger.Log($"########################targetKnownInfoList.Count = {targetKnownInfoList.Count}");
-            foreach (var tmpKnownInfo in targetKnownInfoList)
-            {
-                options.Logger.Log($"tmpKnownInfo = {tmpKnownInfo}");
-            }
+            //options.Logger.Log($"########################targetKnownInfoList.Count = {targetKnownInfoList.Count}");
+            //foreach (var tmpKnownInfo in targetKnownInfoList)
+            //{
+            //    options.Logger.Log($"tmpKnownInfo = {tmpKnownInfo}");
+            //}
 #endif
 
             var nextPartsList = GetNextPartsList();
@@ -346,14 +365,14 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 nextPart.FillExecutingCardForCallingFromOtherPart(queryExecutingCardForNextPart, dataSource, options);
 
 #if DEBUG
-                options.Logger.Log($"queryExecutingCardForNextPart = {queryExecutingCardForNextPart}");
-                options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
-                options.Logger.Log($"queryExecutingCardForNextPart.GetSenderExpressionNodeHumanizeDbgString() = {queryExecutingCardForNextPart.GetSenderExpressionNodeHumanizeDbgString()}");
-                options.Logger.Log($"queryExecutingCardForNextPart.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCardForNextPart.GetSenderIndexedRulePartHumanizeDbgString()}");
-                options.Logger.Log($"queryExecutingCardForNextPart.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCardForNextPart.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
-                options.Logger.Log($"queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString() = {queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString()}");
-                options.Logger.Log($"queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString()}");
-                options.Logger.Log($"queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
+                //options.Logger.Log($"queryExecutingCardForNextPart = {queryExecutingCardForNextPart}");
+                //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+                //options.Logger.Log($"queryExecutingCardForNextPart.GetSenderExpressionNodeHumanizeDbgString() = {queryExecutingCardForNextPart.GetSenderExpressionNodeHumanizeDbgString()}");
+                //options.Logger.Log($"queryExecutingCardForNextPart.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCardForNextPart.GetSenderIndexedRulePartHumanizeDbgString()}");
+                //options.Logger.Log($"queryExecutingCardForNextPart.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCardForNextPart.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
+                //options.Logger.Log($"queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString() = {queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString()}");
+                //options.Logger.Log($"queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString()}");
+                //options.Logger.Log($"queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
 #endif
 
                 queryExecutingCard.IsSuccess = queryExecutingCardForNextPart.IsSuccess;
@@ -369,13 +388,13 @@ namespace SymOntoClay.Core.Internal.IndexedData
                     foreach (var varInfo in varsInfoList)
                     {
 #if DEBUG
-                        options.Logger.Log($"varInfo = {varInfo}");
+                        //options.Logger.Log($"varInfo = {varInfo}");
 #endif
 
                         var targetInternalKeyOfVar = targetRelationVarsInfoDictByPosition[varInfo.Position];
 
 #if DEBUG
-                        options.Logger.Log($"targetInternalKeyOfVar = {targetInternalKeyOfVar}");
+                        //options.Logger.Log($"targetInternalKeyOfVar = {targetInternalKeyOfVar}");
 #endif
 
                         backKeysDict[targetInternalKeyOfVar] = varInfo.KeyOfVar;
@@ -389,13 +408,13 @@ namespace SymOntoClay.Core.Internal.IndexedData
                         foreach (var resultOfVarOfQueryToRelation in resultOfQueryToRelation.ResultOfVarOfQueryToRelationList)
                         {
 #if DEBUG
-                            options.Logger.Log($"resultOfQueryToRelation = {resultOfQueryToRelation}");
+                            //options.Logger.Log($"resultOfQueryToRelation = {resultOfQueryToRelation}");
 #endif
 
                             var internalKeyOfVar = resultOfVarOfQueryToRelation.KeyOfVar;
 
 #if DEBUG
-                            options.Logger.Log($"internalKeyOfVar = {internalKeyOfVar}/'{options.EntityDictionary.GetName(internalKeyOfVar)}'");
+                            //options.Logger.Log($"internalKeyOfVar = {internalKeyOfVar}/'{options.EntityDictionary.GetName(internalKeyOfVar)}'");
 #endif
 
                             if (backKeysDict.ContainsKey(internalKeyOfVar))
@@ -403,14 +422,14 @@ namespace SymOntoClay.Core.Internal.IndexedData
                                 var externalKeyOfVar = backKeysDict[internalKeyOfVar];
 
 #if DEBUG
-                                options.Logger.Log($"externalKeyOfVar = {externalKeyOfVar}/'{options.EntityDictionary.GetName(externalKeyOfVar)}'");
-                                options.Logger.Log($"resultOfVarOfQueryToRelation before = {resultOfVarOfQueryToRelation}");
+                                //options.Logger.Log($"externalKeyOfVar = {externalKeyOfVar}/'{options.EntityDictionary.GetName(externalKeyOfVar)}'");
+                                //options.Logger.Log($"resultOfVarOfQueryToRelation before = {resultOfVarOfQueryToRelation}");
 #endif
 
                                 resultOfVarOfQueryToRelation.KeyOfVar = externalKeyOfVar;
 
 #if DEBUG
-                                options.Logger.Log($"resultOfVarOfQueryToRelation after = {resultOfVarOfQueryToRelation}");
+                                //options.Logger.Log($"resultOfVarOfQueryToRelation after = {resultOfVarOfQueryToRelation}");
 #endif
 
                                 newResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
@@ -429,18 +448,18 @@ namespace SymOntoClay.Core.Internal.IndexedData
             }
 
 #if DEBUG
-            options.Logger.Log($"+++++++++queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log($"+++++++++queryExecutingCard = {queryExecutingCard}");
 #endif
 #if DEBUG
-            options.Logger.Log("End");
+            //options.Logger.Log("End");
 #endif
         }
 
         public void FillExecutingCardForCallingFromOtherPart(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log("Begin ^&*^&*");
-            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log("Begin ^&*^&*");
+            //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
 #endif
             var queryExecutingCardForExpression = new QueryExecutingCardForIndexedPersistLogicalData();
             queryExecutingCardForExpression.SenderIndexedRuleInstance = queryExecutingCard.SenderIndexedRuleInstance;
@@ -449,14 +468,14 @@ namespace SymOntoClay.Core.Internal.IndexedData
             Expression.FillExecutingCard(queryExecutingCardForExpression, dataSource, options);
 
 #if DEBUG
-            options.Logger.Log($"%%%%%%%% queryExecutingCardForExpression = {queryExecutingCardForExpression}");
+            //options.Logger.Log($"%%%%%%%% queryExecutingCardForExpression = {queryExecutingCardForExpression}");
 #endif
 
             queryExecutingCard.ResultsOfQueryToRelationList = queryExecutingCardForExpression.ResultsOfQueryToRelationList;
             queryExecutingCard.IsSuccess = queryExecutingCardForExpression.IsSuccess;
 
 #if DEBUG
-            options.Logger.Log("End");
+            //options.Logger.Log("End");
 #endif
         }
     }

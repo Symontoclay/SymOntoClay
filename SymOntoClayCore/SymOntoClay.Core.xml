@@ -3478,7 +3478,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStorage.ChannelsStorage.Append(SymOntoClay.Core.Internal.CodeModel.Channel)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStorage.ChannelsStorage.GetChannelsDirectly(SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStorage.ChannelsStorage.GetChannelsDirectly(System.UInt64,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.InheritanceStorage.InheritanceStorage.Kind">
@@ -3493,7 +3493,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStorage.InheritanceStorage.SetInheritance(SymOntoClay.Core.Internal.CodeModel.InheritanceItem,System.Boolean)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStorage.InheritanceStorage.GetItemsDirectly(SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStorage.InheritanceStorage.GetItemsDirectly(System.UInt64)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.Kind">

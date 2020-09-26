@@ -10,6 +10,6 @@ namespace SymOntoClay.Core
     {
         void SetInheritance(InheritanceItem inheritanceItem);
         void SetInheritance(InheritanceItem inheritanceItem, bool isPrimary);
-        IList<WeightedInheritanceResultItem<IndexedInheritanceItem>> GetItemsDirectly(IndexedStrongIdentifierValue subName);
+        IList<WeightedInheritanceResultItem<IndexedInheritanceItem>> GetItemsDirectly(ulong subNameKey);
     }
 }

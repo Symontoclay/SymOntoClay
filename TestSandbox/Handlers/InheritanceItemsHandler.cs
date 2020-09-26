@@ -53,7 +53,7 @@ namespace TestSandbox.Handlers
 
             inheritanceStorage.SetInheritance(inheritanceItem);
 
-            var list = inheritanceStorage.GetItemsDirectly(subName.GetIndexed(context));
+            var list = inheritanceStorage.GetItemsDirectly(subName.GetIndexed(context).NameKey);
 
             _logger.Log($"list.Count = {list.Count}");
             _logger.Log($"inheritanceItem = {list.WriteListToString()}");

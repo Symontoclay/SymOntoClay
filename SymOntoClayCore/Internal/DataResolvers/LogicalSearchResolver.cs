@@ -15,12 +15,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public LogicalSearchResult Run(LogicalSearchOptions options)
         {
 #if DEBUG
-            Log($"options = {options}");
+            //Log($"options = {options}");
 #endif
 
             var optionsOfFillExecutingCard = new OptionsOfFillExecutingCard();
             optionsOfFillExecutingCard.EntityIdOnly = options.EntityIdOnly;
             optionsOfFillExecutingCard.UseAccessPolicy = !options.IgnoreAccessPolicy;
+            optionsOfFillExecutingCard.UseInheritance = options.UseInheritance;
+            optionsOfFillExecutingCard.InheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
+            optionsOfFillExecutingCard.LocalCodeExecutionContext = options.LocalCodeExecutionContext;
+
 
 #if DEBUG
             optionsOfFillExecutingCard.Logger = Logger;
@@ -28,7 +32,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
 
 #if DEBUG
-            Log($"optionsOfFillExecutingCard = {optionsOfFillExecutingCard}");
+            //Log($"optionsOfFillExecutingCard = {optionsOfFillExecutingCard}");
 #endif
 
             var result = new LogicalSearchResult();
@@ -42,7 +46,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             queryExpression.FillExecutingCard(queryExecutingCard, dataSource, optionsOfFillExecutingCard);
 
 #if DEBUG
-            Log($"@!@!@!@!@!@!@! queryExecutingCard = {queryExecutingCard}");
+            //Log($"@!@!@!@!@!@!@! queryExecutingCard = {queryExecutingCard}");
 #endif
             result.IsSuccess = queryExecutingCard.IsSuccess;
 
@@ -58,7 +62,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             result.Items = resultItemsList;
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
 
             return result;

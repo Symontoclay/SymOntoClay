@@ -17,14 +17,14 @@ namespace SymOntoClay.Core.Internal.IndexedData
         {
             IsSelf = source.IsSelf;
             Distance = source.Distance;
-            SuperName = source.SuperName;
+            SuperNameKey = source.SuperNameKey;
             Rank = source.Rank;
             OriginalIndexedItem = source.OriginalIndexedItem;
         }
 
         public bool IsSelf { get; set; }
         public uint Distance { get; set; }
-        public IndexedStrongIdentifierValue SuperName { get; set; }
+        public ulong SuperNameKey { get; set; }
         public float Rank { get; set; }
         public IndexedInheritanceItem OriginalIndexedItem { get; set; }
 
@@ -53,7 +53,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             sb.AppendLine($"{spaces}{nameof(IsSelf)} = {IsSelf}");
             sb.AppendLine($"{spaces}{nameof(Distance)} = {Distance}");
-            sb.PrintObjProp(n, nameof(SuperName), SuperName);
+            sb.AppendLine($"{spaces}{nameof(SuperNameKey)} = {SuperNameKey}");
            
             sb.AppendLine($"{spaces}{nameof(Rank)} = {Rank}");
 
@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.AppendLine($"{spaces}{nameof(IsSelf)} = {IsSelf}");
             sb.AppendLine($"{spaces}{nameof(Distance)} = {Distance}");
 
-            sb.PrintShortObjProp(n, nameof(SuperName), SuperName);
+            sb.AppendLine($"{spaces}{nameof(SuperNameKey)} = {SuperNameKey}");
 
             sb.AppendLine($"{spaces}{nameof(Rank)} = {Rank}");
 
@@ -119,7 +119,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.AppendLine($"{spaces}{nameof(IsSelf)} = {IsSelf}");
             sb.AppendLine($"{spaces}{nameof(Distance)} = {Distance}");
 
-            sb.PrintBriefObjProp(n, nameof(SuperName), SuperName);
+            sb.AppendLine($"{spaces}{nameof(SuperNameKey)} = {SuperNameKey}");
 
             sb.AppendLine($"{spaces}{nameof(Rank)} = {Rank}");
 

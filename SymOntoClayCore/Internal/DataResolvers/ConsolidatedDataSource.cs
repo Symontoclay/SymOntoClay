@@ -46,35 +46,35 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
 
 #if DEBUG
-                    var tmpList = result.GroupBy(p => p.GetLongHashCode()).ToDictionary(p => p.Key, p => p.ToList());
+                    //var tmpList = result.GroupBy(p => p.GetLongHashCode()).ToDictionary(p => p.Key, p => p.ToList());
 
-                    DebugLogger.Instance.Info($"tmpList.Count = {tmpList.Count}");
+                    //DebugLogger.Instance.Info($"tmpList.Count = {tmpList.Count}");
 
-                    foreach (var tmpKVPItem in tmpList)
-                    {
-                        DebugLogger.Instance.Info($"tmpKVPItem.Key = {tmpKVPItem.Key}");
-                        DebugLogger.Instance.Info($"tmpKVPItem.Value.Count = {tmpKVPItem.Value.Count}");
+                    //foreach (var tmpKVPItem in tmpList)
+                    //{
+                    //    DebugLogger.Instance.Info($"tmpKVPItem.Key = {tmpKVPItem.Key}");
+                    //    DebugLogger.Instance.Info($"tmpKVPItem.Value.Count = {tmpKVPItem.Value.Count}");
 
-                        if(tmpKVPItem.Value.Count > 1)
-                        {
-                            throw new NotImplementedException();
-                        }
-                    }
+                    //    if(tmpKVPItem.Value.Count > 1)
+                    //    {
+                    //        throw new NotImplementedException();
+                    //    }
+                    //}
 
-                    var tmpList2 = result.GroupBy(p => p.Key).ToDictionary(p => p.Key, p => p.ToList());
+                    //var tmpList2 = result.GroupBy(p => p.Key).ToDictionary(p => p.Key, p => p.ToList());
 
-                    DebugLogger.Instance.Info($"tmpList2.Count = {tmpList2.Count}");
+                    //DebugLogger.Instance.Info($"tmpList2.Count = {tmpList2.Count}");
 
-                    foreach (var tmpKVPItem in tmpList2)
-                    {
-                        DebugLogger.Instance.Info($"tmpKVPItem.Key (2) = {tmpKVPItem.Key}");
-                        DebugLogger.Instance.Info($"tmpKVPItem.Value.Count (2) = {tmpKVPItem.Value.Count}");
+                    //foreach (var tmpKVPItem in tmpList2)
+                    //{
+                    //    DebugLogger.Instance.Info($"tmpKVPItem.Key (2) = {tmpKVPItem.Key}");
+                    //    DebugLogger.Instance.Info($"tmpKVPItem.Value.Count (2) = {tmpKVPItem.Value.Count}");
 
-                        if (tmpKVPItem.Value.Count > 1)
-                        {
-                            throw new NotImplementedException();
-                        }
-                    }
+                    //    if (tmpKVPItem.Value.Count > 1)
+                    //    {
+                    //        throw new NotImplementedException();
+                    //    }
+                    //}
 #endif
 
                     return result;
@@ -87,7 +87,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             lock (_lockObj)
             {
 #if DEBUG
-                DebugLogger.Instance.Info($"key = {key}");
+                //DebugLogger.Instance.Info($"key = {key}");
 #endif
 
                 var initialResult = new List<IndexedBaseRulePart>();
@@ -153,7 +153,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             lock (_lockObj)
             {
 #if DEBUG
-                DebugLogger.Instance.Info($"key = {key}");
+                //DebugLogger.Instance.Info($"key = {key}");
 #endif
 
                 var initialResult = new List<IndexedBaseRulePart>();

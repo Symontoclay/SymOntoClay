@@ -120,7 +120,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
                                 if (intersectOfVarsKeysList.Contains(keyOfVars))
                                 {
                                     var leftVarItem = leftVarsDict[keyOfVars];
-                                    var resultOfComparison = ExpressionNodeHelper.Compare(varItem.FoundExpression, leftVarItem.FoundExpression, options.Logger);
+                                    var resultOfComparison = ExpressionNodeHelper.Compare(varItem.FoundExpression, leftVarItem.FoundExpression, null, options.Logger);
 
                                     if (resultOfComparison)
                                     {

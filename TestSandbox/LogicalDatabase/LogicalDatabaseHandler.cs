@@ -99,6 +99,12 @@ namespace TestSandbox.LogicalDatabase
             queryStr = "{: can(#Alisa_12, ?x) :}";
             Search(queryStr);
 
+            //queryStr = "{: can(#Alisa_12, fly) :}";
+            //Search(queryStr);
+
+            //queryStr = "{: ?z(#Alisa_12, ?x) :}";
+            //Search(queryStr);
+
             _logger.Log("End");
         }
 

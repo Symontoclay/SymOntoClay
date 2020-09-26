@@ -32,7 +32,7 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStorage
         private readonly object _lockObj = new object();
 
         private readonly Dictionary<KindOfOperator, Dictionary<StrongIdentifierValue, List<Operator>>> _nonIndexedInfo = new Dictionary<KindOfOperator, Dictionary<StrongIdentifierValue, List<Operator>>>();
-        private readonly Dictionary<KindOfOperator, Dictionary<IndexedStrongIdentifierValue, List<IndexedOperator>>> _indexedInfo = new Dictionary<KindOfOperator, Dictionary<IndexedStrongIdentifierValue, List<IndexedOperator>>>();
+        private readonly Dictionary<KindOfOperator, Dictionary<ulong, List<IndexedOperator>>> _indexedInfo = new Dictionary<KindOfOperator, Dictionary<ulong, List<IndexedOperator>>>();
 
         /// <inheritdoc/>
         public void Append(Operator op)
@@ -52,8 +52,9 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStorage
 #endif
 
                 var kindOfOperator = indexedOp.KindOfOperator;
+                var indexedOpHolderKey = indexedOp.Holder.NameKey;
 
-                if(_nonIndexedInfo.ContainsKey(kindOfOperator))
+                if (_nonIndexedInfo.ContainsKey(kindOfOperator))
                 {
                     var dict = _nonIndexedInfo[kindOfOperator];
                     var indexedDict = _indexedInfo[kindOfOperator];
@@ -72,7 +73,7 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStorage
                         Log($"targetLongConditionalHashCode = {targetLongConditionalHashCode}");
 #endif
 
-                        var targetIndexedList = indexedDict[indexedOp.Holder];
+                        var targetIndexedList = indexedDict[indexedOpHolderKey];
 
                         var indexedItemsWithTheSameLongConditionalHashCodeList = targetIndexedList.Where(p => p.GetLongConditionalHashCode() == targetLongConditionalHashCode).ToList();
 
@@ -99,13 +100,13 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStorage
                     else
                     {
                         dict[op.Holder] = new List<Operator>() { op };
-                        indexedDict[indexedOp.Holder] = new List<IndexedOperator>() { indexedOp };
+                        indexedDict[indexedOpHolderKey] = new List<IndexedOperator>() { indexedOp };
                     }
                 }
                 else
                 {
                     _nonIndexedInfo[kindOfOperator] = new Dictionary<StrongIdentifierValue, List<Operator>>() { { op.Holder, new List<Operator>() { op } } };
-                    _indexedInfo[kindOfOperator] = new Dictionary<IndexedStrongIdentifierValue, List<IndexedOperator>>() { { indexedOp.Holder, new List<IndexedOperator>() { indexedOp } } };
+                    _indexedInfo[kindOfOperator] = new Dictionary<ulong, List<IndexedOperator>>() { { indexedOpHolderKey, new List<IndexedOperator>() { indexedOp } } };
                 }
             }
         }
@@ -127,7 +128,7 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStorage
 
                     foreach(var weightedInheritanceItem in weightedInheritanceItems)
                     {
-                        var targetHolder = weightedInheritanceItem.SuperName;
+                        var targetHolder = weightedInheritanceItem.SuperNameKey;
 
                         if (dict.ContainsKey(targetHolder))
                         {

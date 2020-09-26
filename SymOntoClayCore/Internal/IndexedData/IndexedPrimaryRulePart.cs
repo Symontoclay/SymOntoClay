@@ -67,7 +67,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log($"Begin~~~~~~ GetHumanizeDbgString() = {GetHumanizeDbgString()}");
+            //options.Logger.Log($"Begin~~~~~~ GetHumanizeDbgString() = {GetHumanizeDbgString()}");
 #endif
 
 #if DEBUG
@@ -82,7 +82,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             Expression.FillExecutingCard(queryExecutingCardForExpression, dataSource, options);
 
 #if DEBUG
-            options.Logger.Log($"#$%^$%^^ queryExecutingCardForExpression = {queryExecutingCardForExpression}");
+            //options.Logger.Log($"#$%^$%^^ queryExecutingCardForExpression = {queryExecutingCardForExpression}");
 #endif
 
             queryExecutingCard.IsSuccess = queryExecutingCardForExpression.IsSuccess;
@@ -93,7 +93,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             }
 
 #if DEBUG
-            options.Logger.Log("End");
+            //options.Logger.Log("End");
 #endif
         }
     }

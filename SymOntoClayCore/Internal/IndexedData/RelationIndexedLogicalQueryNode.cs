@@ -90,7 +90,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public override void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log($"IsQuestion = {IsQuestion}");
+            //options.Logger.Log($"IsQuestion = {IsQuestion}");
 #endif
 
             if (IsQuestion)
@@ -100,37 +100,37 @@ namespace SymOntoClay.Core.Internal.IndexedData
             }
 
 #if DEBUG
-            options.Logger.Log($"Key = {Key}");
-            options.Logger.Log($"IsQuestion = {IsQuestion}");
-            options.Logger.Log($"Params.Count = {Params.Count}");
-            foreach (var param in Params)
-            {
-                options.Logger.Log($"param = {param}");
-            }
-            options.Logger.Log($"VarsInfoList.Count = {VarsInfoList.Count}");
-            foreach (var varInfo in VarsInfoList)
-            {
-                options.Logger.Log($"varInfo = {varInfo}");
-            }
-            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
-            options.Logger.Log($"queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString() = {queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString()}");
-            options.Logger.Log($"queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString()}");
-            options.Logger.Log($"queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
-            options.Logger.Log($"GetHumanizeDbgString() = {GetHumanizeDbgString()}");
+            //options.Logger.Log($"Key = {Key}");
+            //options.Logger.Log($"IsQuestion = {IsQuestion}");
+            //options.Logger.Log($"Params.Count = {Params.Count}");
+            //foreach (var param in Params)
+            //{
+            //    options.Logger.Log($"param = {param}");
+            //}
+            //options.Logger.Log($"VarsInfoList.Count = {VarsInfoList.Count}");
+            //foreach (var varInfo in VarsInfoList)
+            //{
+            //    options.Logger.Log($"varInfo = {varInfo}");
+            //}
+            //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log($"queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString() = {queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString()}");
+            //options.Logger.Log($"queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString()}");
+            //options.Logger.Log($"queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
+            //options.Logger.Log($"GetHumanizeDbgString() = {GetHumanizeDbgString()}");
 #endif
 
             NFillExecutingCard(queryExecutingCard, dataSource, options);
 
 #if DEBUG
-            options.Logger.Log($"^^^^^^queryExecutingCard = {queryExecutingCard}");
-            options.Logger.Log($"queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString() = {queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString()}");
-            options.Logger.Log($"queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString()}");
-            options.Logger.Log($"queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
-            options.Logger.Log($"GetHumanizeDbgString() = {GetHumanizeDbgString()}");
+            //options.Logger.Log($"^^^^^^queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log($"queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString() = {queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString()}");
+            //options.Logger.Log($"queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString()}");
+            //options.Logger.Log($"queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
+            //options.Logger.Log($"GetHumanizeDbgString() = {GetHumanizeDbgString()}");
 
-            //throw new NotImplementedException();
+            ////throw new NotImplementedException();
 
-            options.Logger.Log("End");
+            //options.Logger.Log("End");
 #endif
         }
 
@@ -142,7 +142,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var indexedRulePartsOfFactsList = dataSource.GetIndexedRulePartOfFactsByKeyOfRelation(Key);
 
 #if DEBUG
-            options.Logger.Log($"indexedRulePartsOfFactsList?.Count = {indexedRulePartsOfFactsList?.Count}");
+            //options.Logger.Log($"indexedRulePartsOfFactsList?.Count = {indexedRulePartsOfFactsList?.Count}");
 #endif
 
             var mergingResult = QueryExecutingCardAboutKnownInfoHelper.Merge(KnownInfoList, VarsInfoList, queryExecutingCard.KnownInfoList, false);
@@ -155,11 +155,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var targetKnownInfoList = mergingResult.KnownInfoList;
 
 #if DEBUG
-            options.Logger.Log($"targetKnownInfoList.Count = {targetKnownInfoList.Count}");
-            foreach (var tmpKnownInfo in targetKnownInfoList)
-            {
-                options.Logger.Log($"tmpKnownInfo = {tmpKnownInfo}");
-            }
+            //options.Logger.Log($"targetKnownInfoList.Count = {targetKnownInfoList.Count}");
+            //foreach (var tmpKnownInfo in targetKnownInfoList)
+            //{
+            //    options.Logger.Log($"tmpKnownInfo = {tmpKnownInfo}");
+            //}
 #endif
 
             if (!indexedRulePartsOfFactsList.IsNullOrEmpty())
@@ -167,8 +167,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 foreach (var indexedRulePartsOfFacts in indexedRulePartsOfFactsList)
                 {
 #if DEBUG
-                    options.Logger.Log($"this = {this}");
-                    options.Logger.Log($"indexedRulePartsOfFacts = {indexedRulePartsOfFacts}");
+                    //options.Logger.Log($"this = {this}");
+                    //options.Logger.Log($"indexedRulePartsOfFacts = {indexedRulePartsOfFacts}");
 #endif
                     var queryExecutingCardForTargetFact = new QueryExecutingCardForIndexedPersistLogicalData();
                     queryExecutingCardForTargetFact.TargetRelation = Key;
@@ -182,7 +182,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
                     indexedRulePartsOfFacts.FillExecutingCardForCallingFromRelationForFact(queryExecutingCardForTargetFact, dataSource, options);
 
 #if DEBUG
-                    options.Logger.Log($"++++++queryExecutingCardForTargetFact = {queryExecutingCardForTargetFact}");
+                    //options.Logger.Log($"++++++queryExecutingCardForTargetFact = {queryExecutingCardForTargetFact}");
 #endif
                     queryExecutingCard.IsSuccess = queryExecutingCardForTargetFact.IsSuccess;
 
@@ -194,13 +194,13 @@ namespace SymOntoClay.Core.Internal.IndexedData
             }
 
 #if DEBUG
-            options.Logger.Log($"~~~~~~~~~~~~~~~~~queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log($"~~~~~~~~~~~~~~~~~queryExecutingCard = {queryExecutingCard}");
 #endif
 
             var indexedRulePartWithOneRelationsList = dataSource.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(Key);
 
 #if DEBUG
-            options.Logger.Log($"indexedRulePartWithOneRelationsList?.Count = {indexedRulePartWithOneRelationsList?.Count}");
+            //options.Logger.Log($"indexedRulePartWithOneRelationsList?.Count = {indexedRulePartWithOneRelationsList?.Count}");
 #endif
 
             if (!indexedRulePartWithOneRelationsList.IsNullOrEmpty())
@@ -208,8 +208,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 foreach (var indexedRulePartsOfRule in indexedRulePartWithOneRelationsList)
                 {
 #if DEBUG
-                    options.Logger.Log($"this = {this}");
-                    options.Logger.Log($"indexedRulePartsOfRule = {indexedRulePartsOfRule}");
+                    //options.Logger.Log($"this = {this}");
+                    //options.Logger.Log($"indexedRulePartsOfRule = {indexedRulePartsOfRule}");
 #endif
                     var queryExecutingCardForTargetRule = new QueryExecutingCardForIndexedPersistLogicalData();
                     queryExecutingCardForTargetRule.TargetRelation = Key;
@@ -223,10 +223,10 @@ namespace SymOntoClay.Core.Internal.IndexedData
                     indexedRulePartsOfRule.FillExecutingCardForCallingFromRelationForProduction(queryExecutingCardForTargetRule, dataSource, options);
 
 #if DEBUG
-                    options.Logger.Log($"&&&&&&&&&&&&&&&&&queryExecutingCardForTargetRule = {queryExecutingCardForTargetRule}");
+                    //options.Logger.Log($"&&&&&&&&&&&&&&&&&queryExecutingCardForTargetRule = {queryExecutingCardForTargetRule}");
 #endif
 #if DEBUG
-                    options.Logger.Log($"!!!!!!!!!!!!!!!!!!queryExecutingCard = {queryExecutingCard}");
+                    //options.Logger.Log($"!!!!!!!!!!!!!!!!!!queryExecutingCard = {queryExecutingCard}");
 #endif
 
                     queryExecutingCard.IsSuccess = queryExecutingCardForTargetRule.IsSuccess;
@@ -239,46 +239,46 @@ namespace SymOntoClay.Core.Internal.IndexedData
             }
 
 #if DEBUG
-            options.Logger.Log("End");
+            //options.Logger.Log("End");
 #endif
         }
 
         private void FillExecutingCardForQuestion(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log($"Key = {Key}");
-            options.Logger.Log($"IsQuestion = {IsQuestion}");
-            options.Logger.Log($"Params.Count = {Params.Count}");
-            foreach (var param in Params)
-            {
-                options.Logger.Log($"param = {param}");
-            }
-            options.Logger.Log($"VarsInfoList.Count = {VarsInfoList.Count}");
-            foreach (var varInfo in VarsInfoList)
-            {
-                options.Logger.Log($"varInfo = {varInfo}");
-            }
-            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
-            options.Logger.Log($"queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString() = {queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString()}");
-            options.Logger.Log($"queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString()}");
-            options.Logger.Log($"queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
-            options.Logger.Log($"GetHumanizeDbgString() = {GetHumanizeDbgString()}");
+            //options.Logger.Log($"Key = {Key}");
+            //options.Logger.Log($"IsQuestion = {IsQuestion}");
+            //options.Logger.Log($"Params.Count = {Params.Count}");
+            //foreach (var param in Params)
+            //{
+            //    options.Logger.Log($"param = {param}");
+            //}
+            //options.Logger.Log($"VarsInfoList.Count = {VarsInfoList.Count}");
+            //foreach (var varInfo in VarsInfoList)
+            //{
+            //    options.Logger.Log($"varInfo = {varInfo}");
+            //}
+            //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log($"queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString() = {queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString()}");
+            //options.Logger.Log($"queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString()}");
+            //options.Logger.Log($"queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
+            //options.Logger.Log($"GetHumanizeDbgString() = {GetHumanizeDbgString()}");
 #endif
 
             var hasAnnotations = !Annotations.IsNullOrEmpty();
 
 #if DEBUG
-            options.Logger.Log($"hasAnnotations = {hasAnnotations}");
+            //options.Logger.Log($"hasAnnotations = {hasAnnotations}");
 #endif
 
             var targetRelationsList = dataSource.AllRelationsForProductions;
 
 #if DEBUG
-            options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");
-            foreach (var targetRelation in targetRelationsList)
-            {
-                options.Logger.Log($"targetRelation.GetHumanizeDbgString() = {targetRelation.GetHumanizeDbgString()}");
-            }
+            //options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");
+            //foreach (var targetRelation in targetRelationsList)
+            //{
+            //    options.Logger.Log($"targetRelation.GetHumanizeDbgString() = {targetRelation.GetHumanizeDbgString()}");
+            //}
 #endif
 
             foreach (var targetRelation in targetRelationsList)
@@ -288,9 +288,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
                     continue;
                 }
 #if DEBUG
-                options.Logger.Log($"targetRelation.GetHumanizeDbgString() = {targetRelation.GetHumanizeDbgString()}");
+                //options.Logger.Log($"targetRelation.GetHumanizeDbgString() = {targetRelation.GetHumanizeDbgString()}");
                 //options.Logger.Log($"targetRelation = {targetRelation}");
-                options.Logger.Log($"hasAnnotations = {hasAnnotations}");
+                //options.Logger.Log($"hasAnnotations = {hasAnnotations}");
 #endif
 
                 var isCheckAnnotation = false;
@@ -311,12 +311,13 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 }
 
 #if DEBUG
-                options.Logger.Log($"NEXT targetRelation.GetHumanizeDbgString() = {targetRelation.GetHumanizeDbgString()}");
+                //options.Logger.Log($"NEXT targetRelation.GetHumanizeDbgString() = {targetRelation.GetHumanizeDbgString()}");
                 //options.Logger.Log($"NEXT targetRelation = {targetRelation}");
 #endif
 
                 var resultOfQueryToRelation = new ResultOfQueryToRelation();
                 queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
+                queryExecutingCard.IsSuccess = true;
 
                 {
                     var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
@@ -341,7 +342,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 foreach (var param in Params)
                 {
 #if DEBUG
-                    options.Logger.Log($"n = {n} param = {param}");
+                    //options.Logger.Log($"n = {n} param = {param}");
 #endif
 
                     n++;
@@ -372,13 +373,13 @@ namespace SymOntoClay.Core.Internal.IndexedData
                     resultOfVarOfQueryToRelation.OriginDict[keyOfRuleInstance] = originInfo;
 
 #if DEBUG
-                    options.Logger.Log($"resultOfVarOfQueryToRelation = {resultOfVarOfQueryToRelation}");
+                    //options.Logger.Log($"resultOfVarOfQueryToRelation = {resultOfVarOfQueryToRelation}");
                     //throw new NotImplementedException();
 #endif
                 }
 
 #if DEBUG
-                options.Logger.Log($"resultOfQueryToRelation = {resultOfQueryToRelation}");
+                //options.Logger.Log($"resultOfQueryToRelation = {resultOfQueryToRelation}");
                 //throw new NotImplementedException();
 #endif
             }
@@ -393,7 +394,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
 #if DEBUG
             //throw new NotImplementedException();
-            options.Logger.Log("End");
+            //options.Logger.Log("End");
 #endif
         }
     }

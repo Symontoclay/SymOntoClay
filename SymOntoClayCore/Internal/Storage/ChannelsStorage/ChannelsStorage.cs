@@ -31,7 +31,7 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
         public IStorage Storage => _realStorageContext.Storage;
 
         private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<Channel>>> _nonIndexedInfo = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<Channel>>>();
-        private readonly Dictionary<IndexedStrongIdentifierValue, Dictionary<IndexedStrongIdentifierValue, List<IndexedChannel>>> _indexedInfo = new Dictionary<IndexedStrongIdentifierValue, Dictionary<IndexedStrongIdentifierValue, List<IndexedChannel>>>();
+        private readonly Dictionary<ulong, Dictionary<ulong, List<IndexedChannel>>> _indexedInfo = new Dictionary<ulong, Dictionary<ulong, List<IndexedChannel>>>();
 
         /// <inheritdoc/>
         public void Append(Channel channel)
@@ -51,12 +51,12 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
 #endif
 
                 var name = channel.Name;
-                var indexedName = indexedChannel.Name;
+                var indexedNameKey = indexedChannel.Name.NameKey;
 
                 if (_nonIndexedInfo.ContainsKey(name))
                 {
                     var dict = _nonIndexedInfo[name];
-                    var indexedDict = _indexedInfo[indexedName];
+                    var indexedDict = _indexedInfo[indexedNameKey];
 
                     if (dict.ContainsKey(channel.Holder))
                     {
@@ -72,7 +72,7 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
                         Log($"targetLongConditionalHashCode = {targetLongConditionalHashCode}");
 #endif
 
-                        var targetIndexedList = indexedDict[indexedChannel.Holder];
+                        var targetIndexedList = indexedDict[indexedChannel.Holder.NameKey];
 
                         var indexedItemsWithTheSameLongConditionalHashCodeList = targetIndexedList.Where(p => p.GetLongConditionalHashCode() == targetLongConditionalHashCode).ToList();
 
@@ -99,19 +99,19 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
                     else
                     {
                         dict[channel.Holder] = new List<Channel>() { channel };
-                        indexedDict[indexedChannel.Holder] = new List<IndexedChannel>() { indexedChannel };
+                        indexedDict[indexedChannel.Holder.NameKey] = new List<IndexedChannel>() { indexedChannel };
                     }
                 }
                 else
                 {
                     _nonIndexedInfo[name] = new Dictionary<StrongIdentifierValue, List<Channel>>() { { channel.Holder, new List<Channel>() { channel} } };
-                    _indexedInfo[indexedName] = new Dictionary<IndexedStrongIdentifierValue, List<IndexedChannel>>() { { indexedChannel.Holder, new List<IndexedChannel>() { indexedChannel } } };
+                    _indexedInfo[indexedNameKey] = new Dictionary<ulong, List<IndexedChannel>>() { { indexedChannel.Holder.NameKey, new List<IndexedChannel>() { indexedChannel } } };
                 }              
             }
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<IndexedChannel>> GetChannelsDirectly(IndexedStrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<IndexedChannel>> GetChannelsDirectly(ulong nameKey, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             lock (_lockObj)
             {
@@ -119,15 +119,15 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
                 //Log($"name = {name}");
 #endif
 
-                if (_indexedInfo.ContainsKey(name))
+                if (_indexedInfo.ContainsKey(nameKey))
                 {
-                    var dict = _indexedInfo[name];
+                    var dict = _indexedInfo[nameKey];
 
                     var result = new List<WeightedInheritanceResultItem<IndexedChannel>>();
 
                     foreach (var weightedInheritanceItem in weightedInheritanceItems)
                     {
-                        var targetHolder = weightedInheritanceItem.SuperName;
+                        var targetHolder = weightedInheritanceItem.SuperNameKey;
 
                         if (dict.ContainsKey(targetHolder))
                         {

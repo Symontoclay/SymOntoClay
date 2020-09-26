@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(holder, localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(holder.NameKey, localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
             //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");

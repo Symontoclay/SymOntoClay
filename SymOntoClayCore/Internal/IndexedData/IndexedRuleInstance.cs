@@ -116,7 +116,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log("Begin");
+            //options.Logger.Log("Begin");
 #endif
 
             var queryExecutingCardForPart_1 = new QueryExecutingCardForIndexedPersistLogicalData();
@@ -134,7 +134,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
             }
 #if DEBUG
-            options.Logger.Log("End");
+            //options.Logger.Log("End");
 #endif
         }
     }

@@ -19,6 +19,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         HostValue,
         PointRefValue,
         RuleInstanceValue,
-        LogicalSearchResultValue
+        LogicalSearchResultValue,
+        LogicalQueryOperationValue
     }
 }

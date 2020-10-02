@@ -1059,6 +1059,11 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalQueryOperationValue.Target">
+            <summary>
+            Inserted or searched value.
+            </summary>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.KindOfValue">
             <inheritdoc/>
         </member>
@@ -3249,6 +3254,9 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalQueryAsCodeEntityParser.OnRun">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalQueryOperationParser.OnEnter">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalQueryParser.OnEnter">
             <inheritdoc/>
         </member>
@@ -3405,7 +3413,11 @@
             Represents symbol `&gt;`.
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.And" -->
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.And">
+            <summary>
+            Represents symbol `&amp;`.
+            </summary>
+        </member>
         <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.LeftRightStream">
             <summary>
             Represents symbol `&gt;&gt;`.

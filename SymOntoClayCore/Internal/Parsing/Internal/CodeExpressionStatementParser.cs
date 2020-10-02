@@ -256,6 +256,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessSelectOperator()
         {
+            throw new NotImplementedException();
+
             _lastIsOperator = null;
 
             var node = new UnaryOperatorAstExpression();

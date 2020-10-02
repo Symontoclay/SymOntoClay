@@ -49,6 +49,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsLogicalSearchResultValue => false;
         public virtual LogicalSearchResultValue AsLogicalSearchResultValue => null;
 
+        public virtual bool IsLogicalQueryOperationValue => false;
+        public virtual LogicalQueryOperationValue AsLogicalQueryOperationValue => null;
+
         public abstract object GetSystemValue();
 
         public abstract IndexedValue GetIndexedValue(IMainStorageContext mainStorageContext);

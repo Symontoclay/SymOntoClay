@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         More,
 
         /// <summary>
-        /// Represents symbol `&`.
+        /// Represents symbol `&amp;`.
         /// </summary>
         And,
 

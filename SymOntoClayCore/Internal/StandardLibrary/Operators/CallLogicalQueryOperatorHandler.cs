@@ -143,7 +143,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             var ruleInstance = target.AsRuleInstanceValue.RuleInstance;
 
 #if DEBUG
-            Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+            //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
 #endif
 
             _logicalStorage.Append(ruleInstance);

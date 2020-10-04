@@ -352,7 +352,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var nextPartsList = GetNextPartsList();
 
 #if DEBUG
-            options.Logger.Log($"nextPartsList.Count = {nextPartsList.Count}");
+            //options.Logger.Log($"nextPartsList.Count = {nextPartsList.Count}");
 #endif
 
             foreach(var nextPart in nextPartsList)

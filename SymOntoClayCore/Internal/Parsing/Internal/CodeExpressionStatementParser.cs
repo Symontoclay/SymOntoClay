@@ -88,6 +88,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.QuestionMark:
+                            _context.Recovery(_currToken);
                             ProcessSelectOperator();
                             break;
 
@@ -235,8 +236,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 case KeyWordTokenKind.Select:
                     {
-                        var nextToken = _context.GetToken();
-                        _context.Recovery(nextToken);
+                        var nextToken = _context.GetToken();                        
 
 #if DEBUG
                         //Log($"nextToken = {nextToken}");
@@ -245,6 +245,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         switch(nextToken.TokenKind)
                         {
                             case TokenKind.OpenFactBracket:
+                                _context.Recovery(_currToken);
+                                _context.Recovery(nextToken);
                                 ProcessSelectOperator();
                                 break;
 
@@ -263,7 +265,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _lastIsOperator = null;
 
-            _context.Recovery(_currToken);
+            //_context.Recovery(_currToken);
             var parser = new LogicalQueryOperationParser(_context);
             parser.Run();
 

@@ -3,7 +3,7 @@
     on Init => {
 	     "Begin" >> @>log;
 
-		 ? {: son(?x, ?y) :} >> @>log;
+		 select {: son(?x, ?y) :} >> @>log;
 
 		 "End" >> @>log;
 	}

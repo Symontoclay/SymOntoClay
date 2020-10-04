@@ -16,6 +16,9 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         {
             _engineContext = engineContext;
 
+            var globalStorage = engineContext.Storage.GlobalStorage;
+            _logicalStorage = globalStorage.LogicalStorage;
+
             var dataResolversFactory = engineContext.DataResolversFactory;
 
             _searcher = dataResolversFactory.GetLogicalSearchResolver();
@@ -23,6 +26,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
         private readonly IEngineContext _engineContext;
         private readonly LogicalSearchResolver _searcher;
+        private readonly ILogicalStorage _logicalStorage;
 
         /// <inheritdoc/>
         public IndexedValue Call(IndexedValue operand, IndexedValue annotation, LocalCodeExecutionContext localCodeExecutionContext)
@@ -44,6 +48,9 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             {
                 case KindOfLogicalQueryOperation.Select:
                     return ProcessSelect(val, annotation, localCodeExecutionContext);
+
+                case KindOfLogicalQueryOperation.Insert:
+                    return ProcessInsert(val, annotation, localCodeExecutionContext);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfLogicalQueryOperation), kindOfLogicalQueryOperation, null);
@@ -102,6 +109,46 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 #endif
 
             return new LogicalSearchResultValue(searchResult).GetIndexed(_engineContext);
+        }
+
+        private IndexedValue ProcessInsert(IndexedLogicalQueryOperationValue operand, IndexedValue annotation, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+#if DEBUG
+            //Log($"operand = {operand}");
+            //Log($"annotation = {annotation}");
+#endif
+
+            if (operand.Target == null)
+            {
+                throw new NotImplementedException();
+            }
+
+            if (operand.Source != null)
+            {
+                throw new NotImplementedException();
+            }
+
+            if (operand.Dest != null)
+            {
+                throw new NotImplementedException();
+            }
+
+            var target = operand.Target;
+
+            if (!target.IsRuleInstanceValue)
+            {
+                throw new NotImplementedException();
+            }
+
+            var ruleInstance = target.AsRuleInstanceValue.RuleInstance;
+
+#if DEBUG
+            Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+#endif
+
+            _logicalStorage.Append(ruleInstance);
+
+            return target;
         }
     }
 }

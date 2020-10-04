@@ -54,6 +54,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     _state = State.GotKindOfLogicalQueryOperation;
                                     break;
 
+                                case KeyWordTokenKind.Insert:
+                                    Result.KindOfLogicalQueryOperation = KindOfLogicalQueryOperation.Insert;
+                                    _state = State.GotKindOfLogicalQueryOperation;
+                                    break;
+
                                 default:
                                     throw new UnexpectedTokenException(_currToken);
                             }
@@ -97,6 +102,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.LeftRightStream:
+                        case TokenKind.Semicolon:
                             _context.Recovery(_currToken);
 
                             Exit();

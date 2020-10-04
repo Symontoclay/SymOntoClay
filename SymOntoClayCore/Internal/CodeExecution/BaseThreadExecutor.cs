@@ -148,7 +148,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -395,7 +395,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             catch (Exception e)
             {
 #if DEBUG
-                Error(e);       
+                Error(e);
 #endif
                 
                 throw;

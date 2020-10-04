@@ -89,7 +89,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.QuestionMark:
                             _context.Recovery(_currToken);
-                            ProcessSelectOperator();
+                            ProcessLogicalQueryOperator();
                             break;
 
                         default:
@@ -145,6 +145,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.LeftRightStream:
                             ProcessLeftRightStream();
                             _state = State.Init;
+                            break;
+
+                        case TokenKind.Semicolon:
+                            Exit();
                             break;
 
                         default:
@@ -235,6 +239,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case KeyWordTokenKind.Select:
+                case KeyWordTokenKind.Insert:
                     {
                         var nextToken = _context.GetToken();                        
 
@@ -247,7 +252,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             case TokenKind.OpenFactBracket:
                                 _context.Recovery(_currToken);
                                 _context.Recovery(nextToken);
-                                ProcessSelectOperator();
+                                ProcessLogicalQueryOperator();
                                 break;
 
                             default:
@@ -261,7 +266,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             }
         }
 
-        private void ProcessSelectOperator()
+        private void ProcessLogicalQueryOperator()
         {
             _lastIsOperator = null;
 

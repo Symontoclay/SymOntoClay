@@ -5,6 +5,8 @@
 
 		 select {: son(?x, ?y) :} >> @>log;
 
+		 insert {: >: { bird (#1234) } :};
+
 		 "End" >> @>log;
 	}
 }

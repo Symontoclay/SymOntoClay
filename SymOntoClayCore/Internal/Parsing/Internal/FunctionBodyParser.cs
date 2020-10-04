@@ -60,6 +60,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             {
                                 case KeyWordTokenKind.Unknown:
                                 case KeyWordTokenKind.Select:
+                                case KeyWordTokenKind.Insert:
                                     ProcessExpressionStatement();
                                     break;
 

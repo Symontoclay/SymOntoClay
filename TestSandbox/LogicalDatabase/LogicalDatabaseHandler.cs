@@ -99,11 +99,11 @@ namespace TestSandbox.LogicalDatabase
             queryStr = "{: can(#Alisa_12, ?x) :}";
             Search(queryStr);
 
-            //queryStr = "{: can(#Alisa_12, fly) :}";
-            //Search(queryStr);
+            queryStr = "{: can(#Alisa_12, fly) :}";
+            Search(queryStr);
 
-            //queryStr = "{: ?z(#Alisa_12, ?x) :}";
-            //Search(queryStr);
+            queryStr = "{: ?z(#Alisa_12, ?x) :}";
+            Search(queryStr);
 
             _logger.Log("End");
         }
@@ -267,7 +267,7 @@ namespace TestSandbox.LogicalDatabase
 
             var parsedQuery = parser.Result;
 
-            _logger.Log($"parsedQuery = {parsedQuery}");
+            //_logger.Log($"parsedQuery = {parsedQuery}");
 
             _logger.Log($"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
 
@@ -302,13 +302,13 @@ namespace TestSandbox.LogicalDatabase
 
             var parsedQuery = parser.Result;
 
-            _logger.Log($"parsedQuery = {parsedQuery}");
+            //_logger.Log($"parsedQuery = {parsedQuery}");
 
             _logger.Log($"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
 
             var indexedQuery = parsedQuery.GetIndexed(_context);
 
-            _logger.Log($"indexedQuery = {indexedQuery}");
+            //_logger.Log($"indexedQuery = {indexedQuery}");
 
             _logger.Log($"DebugHelperForIndexedRuleInstance.ToString(indexedQuery) = {DebugHelperForIndexedRuleInstance.ToString(indexedQuery, dictionary)}");
 

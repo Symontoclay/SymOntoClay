@@ -10,6 +10,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         Unknown,
         Select,
         Insert,
-        Update
+        Delete
     }
 }

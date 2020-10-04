@@ -69,6 +69,11 @@ namespace SymOntoClay.Core.Internal.Convertors
 
         public static IndexedValue ConvertValue(Value source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {
+            if(source == null)
+            {
+                return null;
+            }
+
             switch(source.KindOfValue)
             {
                 case KindOfValue.NullValue:
@@ -109,6 +114,9 @@ namespace SymOntoClay.Core.Internal.Convertors
 
                 case KindOfValue.LogicalSearchResultValue:
                     return ConvertLogicalSearchResultValue(source.AsLogicalSearchResultValue, mainStorageContext, convertingContext);
+
+                case KindOfValue.LogicalQueryOperationValue:
+                    return ConvertLogicalQueryOperationValue(source.AsLogicalQueryOperationValue, mainStorageContext, convertingContext);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(source.KindOfValue), source.KindOfValue, null);
@@ -404,11 +412,10 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             var result = new IndexedInstanceValue();
             convertingContext[source] = result;
+            result.OriginalInstanceValue = source;
             source.Indexed = result;
 
             FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
-
-            result.OriginalInstanceValue = source;
 
             result.InstanceInfo = source.InstanceInfo;
 
@@ -437,11 +444,10 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             var result = new IndexedHostValue();
             convertingContext[source] = result;
+            result.OriginalHostValue = source;
             source.Indexed = result;
 
             FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
-
-            result.OriginalHostValue = source;
 
             result.CalculateLongHashCodes();
 
@@ -468,11 +474,10 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             var result = new IndexedPointRefValue();
             convertingContext[source] = result;
+            result.OriginalPointRefValue = source;
             source.Indexed = result;
 
             FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
-
-            result.OriginalPointRefValue = source;
 
             result.LeftOperand = ConvertValue(source.LeftOperand, mainStorageContext, convertingContext);
             result.RightOperand = ConvertValue(source.RightOperand, mainStorageContext, convertingContext);
@@ -502,6 +507,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             var result = new IndexedRuleInstanceValue();
             convertingContext[source] = result;
+            result.OriginalRuleInstanceValue = source;
             source.Indexed = result;
 
             var ruleInstance = source.RuleInstance;
@@ -537,11 +543,48 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             var result = new IndexedLogicalSearchResultValue();
             convertingContext[source] = result;
+            result.OriginalLogicalSearchResultValue = source;
             source.Indexed = result;
 
             FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
 
             result.LogicalSearchResult = source.LogicalSearchResult;
+
+            result.CalculateLongHashCodes();
+
+            return result;
+        }
+
+        public static IndexedLogicalQueryOperationValue ConvertLogicalQueryOperationValue(LogicalQueryOperationValue source, IMainStorageContext mainStorageContext)
+        {
+            var convertingContext = new Dictionary<object, object>();
+            return ConvertLogicalQueryOperationValue(source, mainStorageContext, convertingContext);
+        }
+
+        public static IndexedLogicalQueryOperationValue ConvertLogicalQueryOperationValue(LogicalQueryOperationValue source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (IndexedLogicalQueryOperationValue)convertingContext[source];
+            }
+
+            var result = new IndexedLogicalQueryOperationValue();
+            convertingContext[source] = result;
+            result.OriginalLogicalQueryOperationValue = source;
+            source.Indexed = result;
+
+            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
+
+            result.KindOfLogicalQueryOperation = source.KindOfLogicalQueryOperation;
+
+            result.Target = ConvertValue(source.Target, mainStorageContext, convertingContext);
+            result.Source = ConvertValue(source.Source, mainStorageContext, convertingContext);
+            result.Dest = ConvertValue(source.Dest, mainStorageContext, convertingContext);
 
             result.CalculateLongHashCodes();
 
@@ -661,7 +704,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.KeysOfPrimaryRecords = source.KeysOfPrimaryRecords?.Select(p => dictionary.GetKey(p)).ToList();
 
 #if DEBUG
-            _gbcLogger.Info($"result (snapshot) = {result}");
+            //_gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
             result.CalculateLongHashCodes();
@@ -707,7 +750,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             }
 
 #if DEBUG
-            _gbcLogger.Info($"result (snapshot) = {result}");
+            //_gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
             result.CalculateLongHashCodes();
@@ -718,7 +761,7 @@ namespace SymOntoClay.Core.Internal.Convertors
         private static IndexedSecondaryRulePart ConvertSecondaryRulePart(SecondaryRulePart source, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {
 #if DEBUG
-            _gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"source = {source}");
 #endif
 
             if (source == null)
@@ -743,7 +786,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.PrimaryPart = ConvertPrimaryRulePart(source.PrimaryPart, ruleInstance, mainStorageContext, convertingContext);
 
 #if DEBUG
-            _gbcLogger.Info($"result (snapshot) = {result}");
+            //_gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
             result.CalculateLongHashCodes();
@@ -819,7 +862,7 @@ namespace SymOntoClay.Core.Internal.Convertors
         private static AndOperatorIndexedLogicalQueryNode ConvertAndOperatorIndexedLogicalQueryNode(LogicalQueryNode source, IndexedBaseRulePart rulePart, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext, ContextOfConvertingExpressionNode contextOfConvertingExpressionNode)
         {
 #if DEBUG
-            _gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"source = {source}");
 #endif
 
             if (source == null)
@@ -841,7 +884,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.Right = ConvertLogicalQueryNode(source.Right, rulePart, ruleInstance, mainStorageContext, convertingContext, contextOfConvertingExpressionNode);
 
 #if DEBUG
-            _gbcLogger.Info($"result = {result}");
+            //_gbcLogger.Info($"result = {result}");
 #endif
 
             result.CalculateLongHashCodes();
@@ -852,7 +895,7 @@ namespace SymOntoClay.Core.Internal.Convertors
         private static OrOperatorIndexedLogicalQueryNode ConvertOrOperatorIndexedLogicalQueryNode(LogicalQueryNode source, IndexedBaseRulePart rulePart, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext, ContextOfConvertingExpressionNode contextOfConvertingExpressionNode)
         {
 #if DEBUG
-            _gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"source = {source}");
 #endif
 
             if (source == null)
@@ -874,7 +917,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.Right = ConvertLogicalQueryNode(source.Right, rulePart, ruleInstance, mainStorageContext, convertingContext, contextOfConvertingExpressionNode);
 
 #if DEBUG
-            _gbcLogger.Info($"result = {result}");
+            //_gbcLogger.Info($"result = {result}");
 #endif
             result.CalculateLongHashCodes();
 
@@ -884,7 +927,7 @@ namespace SymOntoClay.Core.Internal.Convertors
         private static BaseIndexedLogicalQueryNode ConvertIsOperatorLogicalQueryNode(LogicalQueryNode source, IndexedBaseRulePart rulePart, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext, ContextOfConvertingExpressionNode contextOfConvertingExpressionNode)
         {
 #if DEBUG
-            _gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"source = {source}");
 #endif
 
             if (source == null)
@@ -901,8 +944,8 @@ namespace SymOntoClay.Core.Internal.Convertors
             var rightNode = source.Right;
 
 #if DEBUG
-            _gbcLogger.Info($"leftNode = {leftNode}");
-            _gbcLogger.Info($"rightNode = {rightNode}");
+            //_gbcLogger.Info($"leftNode = {leftNode}");
+            //_gbcLogger.Info($"rightNode = {rightNode}");
 #endif
 
             var result = new RelationIndexedLogicalQueryNode();
@@ -923,11 +966,8 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             FillRelationParams(result, sourceParamsList, rulePart, ruleInstance, mainStorageContext, convertingContext, contextOfConvertingExpressionNode);
 
-            //1;
-            //result.Params = new List<BaseIndexedLogicalQueryNode>() { ConvertLogicalQueryNode(leftNode, rulePart, ruleInstance, mainStorageContext, convertingContext, contextOfConvertingExpressionNode) };
-
 #if DEBUG
-            _gbcLogger.Info($"result = {result}");
+            //_gbcLogger.Info($"result = {result}");
 #endif
 
             result.CalculateLongHashCodes();
@@ -938,7 +978,7 @@ namespace SymOntoClay.Core.Internal.Convertors
         private static NotOperatorIndexedLogicalQueryNode ConvertNotOperatorIndexedLogicalQueryNode(LogicalQueryNode source, IndexedBaseRulePart rulePart, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext, ContextOfConvertingExpressionNode contextOfConvertingExpressionNode)
         {
 #if DEBUG
-            _gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"source = {source}");
 #endif
 
             if (source == null)
@@ -959,7 +999,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.Left = ConvertLogicalQueryNode(source.Left, rulePart, ruleInstance, mainStorageContext, convertingContext, contextOfConvertingExpressionNode);
 
 #if DEBUG
-            _gbcLogger.Info($"result = {result}");
+            //_gbcLogger.Info($"result = {result}");
 #endif
             result.CalculateLongHashCodes();
 
@@ -969,7 +1009,7 @@ namespace SymOntoClay.Core.Internal.Convertors
         private static RelationIndexedLogicalQueryNode ConvertRelationIndexedLogicalQueryNode(LogicalQueryNode source, IndexedBaseRulePart rulePart, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext, ContextOfConvertingExpressionNode contextOfConvertingExpressionNode)
         {
 #if DEBUG
-            _gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"source = {source}");
 #endif
 
             if (source == null)
@@ -999,7 +1039,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             FillRelationParams(result, source.ParamsList, rulePart, ruleInstance, mainStorageContext, convertingContext, contextOfConvertingExpressionNode);
 
 #if DEBUG
-            _gbcLogger.Info($"result = {result}");
+            //_gbcLogger.Info($"result = {result}");
 #endif
 
             result.CalculateLongHashCodes();
@@ -1021,13 +1061,13 @@ namespace SymOntoClay.Core.Internal.Convertors
             foreach (var param in sourceParamsList)
             {
 #if DEBUG
-                _gbcLogger.Info($"param = {param}");
+                //_gbcLogger.Info($"param = {param}");
 #endif
 
                 var resultParam = ConvertLogicalQueryNode(param, rulePart, ruleInstance, mainStorageContext, convertingContext, contextOfConvertingExpressionNode);
 
 #if DEBUG
-                _gbcLogger.Info($"resultParam = {resultParam}");
+                //_gbcLogger.Info($"resultParam = {resultParam}");
 #endif
 
                 parametersList.Add(resultParam);
@@ -1153,7 +1193,7 @@ namespace SymOntoClay.Core.Internal.Convertors
         private static LogicalVarIndexedLogicalQueryNode ConvertLogicalVarIndexedLogicalQueryNode(LogicalQueryNode source, IndexedBaseRulePart rulePart, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext, ContextOfConvertingExpressionNode contextOfConvertingExpressionNode)
         {
 #if DEBUG
-            _gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"source = {source}");
 #endif
 
             if (source == null)
@@ -1174,7 +1214,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.Key = mainStorageContext.Dictionary.GetKey(source.Name.NameValue);
 
 #if DEBUG
-            _gbcLogger.Info($"result (snapshot) = {result}");
+            //_gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
             contextOfConvertingExpressionNode.HasVars = true;
@@ -1187,7 +1227,7 @@ namespace SymOntoClay.Core.Internal.Convertors
         private static QuestionVarIndexedLogicalQueryNode ConvertQuestionVarIndexedLogicalQueryNode(LogicalQueryNode source, IndexedBaseRulePart rulePart, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext, ContextOfConvertingExpressionNode contextOfConvertingExpressionNode)
         {
 #if DEBUG
-            _gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"source = {source}");
 #endif
 
             if (source == null)
@@ -1209,7 +1249,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.Key = mainStorageContext.Dictionary.GetKey(source.Name.NameValue);
 
 #if DEBUG
-            _gbcLogger.Info($"result (snapshot) = {result}");
+            //_gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
             result.CalculateLongHashCodes();
@@ -1220,7 +1260,7 @@ namespace SymOntoClay.Core.Internal.Convertors
         private static ConceptIndexedLogicalQueryNode ConvertConceptLogicalQueryNode(LogicalQueryNode source, IndexedBaseRulePart rulePart, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {
 #if DEBUG
-            _gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"source = {source}");
 #endif
 
             if (source == null)
@@ -1234,7 +1274,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             }
 
 #if DEBUG
-            _gbcLogger.Info("NEXT");
+            //_gbcLogger.Info("NEXT");
 #endif
 
             var result = new ConceptIndexedLogicalQueryNode();
@@ -1245,7 +1285,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.Key = mainStorageContext.Dictionary.GetKey(source.Name.NameValue);
 
 #if DEBUG
-            _gbcLogger.Info($"result (snapshot) = {result}");
+            //_gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
             result.CalculateLongHashCodes();
@@ -1256,7 +1296,7 @@ namespace SymOntoClay.Core.Internal.Convertors
         private static EntityIndexedLogicalQueryNode ConvertEntityIndexedLogicalQueryNode(LogicalQueryNode source, IndexedBaseRulePart rulePart, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {
 #if DEBUG
-            _gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"source = {source}");
 #endif
 
             if (source == null)
@@ -1270,7 +1310,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             }
 
 #if DEBUG
-            _gbcLogger.Info("NEXT");
+            //_gbcLogger.Info("NEXT");
 #endif
 
             var result = new EntityIndexedLogicalQueryNode();
@@ -1281,7 +1321,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.Key = mainStorageContext.Dictionary.GetKey(source.Name.NameValue);
 
 #if DEBUG
-            _gbcLogger.Info($"result (snapshot) = {result}");
+            //_gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
             result.CalculateLongHashCodes();

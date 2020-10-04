@@ -9,9 +9,9 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
-    public class SelectLogicalQueryOperatorHandler : BaseLoggedComponent, IUnaryOperatorHandler
+    public class CallLogicalQueryOperatorHandler : BaseLoggedComponent, IUnaryOperatorHandler
     {
-        public SelectLogicalQueryOperatorHandler(IEngineContext engineContext)
+        public CallLogicalQueryOperatorHandler(IEngineContext engineContext)
             : base(engineContext.Logger)
         {
             _engineContext = engineContext;
@@ -27,17 +27,59 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         /// <inheritdoc/>
         public IndexedValue Call(IndexedValue operand, IndexedValue annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
+            if(!operand.IsLogicalQueryOperationValue)
+            {
+                throw new NotSupportedException();
+            }
+
+            var val = operand.AsLogicalQueryOperationValue;
+
+            var kindOfLogicalQueryOperation = val.KindOfLogicalQueryOperation;
+
+#if DEBUG
+            //Log($"kindOfLogicalQueryOperation = {kindOfLogicalQueryOperation}");
+#endif
+
+            switch(kindOfLogicalQueryOperation)
+            {
+                case KindOfLogicalQueryOperation.Select:
+                    return ProcessSelect(val, annotation, localCodeExecutionContext);
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfLogicalQueryOperation), kindOfLogicalQueryOperation, null);
+            }
+        }
+
+        private IndexedValue ProcessSelect(IndexedLogicalQueryOperationValue operand, IndexedValue annotation, LocalCodeExecutionContext localCodeExecutionContext)
+        {
 #if DEBUG
             //Log($"operand = {operand}");
             //Log($"annotation = {annotation}");
 #endif
 
-            if(!operand.IsRuleInstanceValue)
+            if(operand.Target == null)
             {
                 throw new NotImplementedException();
             }
 
-            var indexedQuery = operand.AsRuleInstanceValue.IndexedRuleInstance;
+            if(operand.Source != null)
+            {
+                throw new NotImplementedException();
+            }
+
+            if(operand.Dest != null)
+            {
+                throw new NotImplementedException();
+            }
+
+            var target = operand.Target;
+
+            if (!target.IsRuleInstanceValue)
+            {
+                throw new NotImplementedException();
+            }
+
+            var indexedQuery = target.AsRuleInstanceValue.IndexedRuleInstance;
 
 #if DEBUG
             //Log($"indexedQuery = {indexedQuery}");

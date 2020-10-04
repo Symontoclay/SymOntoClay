@@ -51,6 +51,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public virtual bool IsLogicalSearchResultValue => false;
         public virtual IndexedLogicalSearchResultValue AsLogicalSearchResultValue => null;
 
+        public virtual bool IsLogicalQueryOperationValue => false;
+        public virtual IndexedLogicalQueryOperationValue AsLogicalQueryOperationValue => null;
+
         public abstract object GetSystemValue();
 
         /// <inheritdoc/>

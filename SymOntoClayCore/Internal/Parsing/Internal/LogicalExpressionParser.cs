@@ -198,13 +198,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var value = NameHelper.CreateName(_currToken.Content, _context.Dictionary);
 
 #if DEBUG
-            Log($"value = {value}");
+            //Log($"value = {value}");
 #endif
 
             var nextToken = _context.GetToken();
 
 #if DEBUG
-            Log($"nextToken = {nextToken}");
+            //Log($"nextToken = {nextToken}");
 #endif
 
             switch (value.KindOfName)
@@ -252,7 +252,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 node.Name = value;
 
 #if DEBUG
-                                Log($"node = {node}");
+                                //Log($"node = {node}");
 #endif
 
                                 var intermediateNode = new IntermediateAstNode(node);

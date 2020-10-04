@@ -30,7 +30,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             Left.FillExecutingCard(leftQueryExecutingCard, dataSource, options);
 
 #if DEBUG
-            options.Logger.Log($"leftQueryExecutingCard = {leftQueryExecutingCard}");
+            //options.Logger.Log($"leftQueryExecutingCard = {leftQueryExecutingCard}");
 #endif
 
             if(!leftQueryExecutingCard.IsSuccess)
@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
                     queryExecutingCard.IsSuccess = leftQueryExecutingCard.IsSuccess && rightQueryExecutingCard.IsSuccess;
 
 #if DEBUG
-                    options.Logger.Log($"rightQueryExecutingCard = {rightQueryExecutingCard}");
+                    //options.Logger.Log($"rightQueryExecutingCard = {rightQueryExecutingCard}");
 #endif
 
                     var rightQueryExecutingCardResultsOfQueryToRelationList = rightQueryExecutingCard.ResultsOfQueryToRelationList;
@@ -76,7 +76,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
                         var intersectOfVarsKeysList = leftVarsKeysList.Intersect(rightVarsKeysList).ToList();
 
 #if DEBUG
-                        options.Logger.Log($"intersectOfVarsKeysList.Count = {intersectOfVarsKeysList.Count}");
+                        //options.Logger.Log($"intersectOfVarsKeysList.Count = {intersectOfVarsKeysList.Count}");
 #endif
 
                         var isFit = true;
@@ -172,7 +172,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 queryExecutingCard.IsSuccess = leftQueryExecutingCard.IsSuccess && rightQueryExecutingCard.IsSuccess;
 
 #if DEBUG
-                options.Logger.Log($"rightQueryExecutingCard = {rightQueryExecutingCard}");
+                //options.Logger.Log($"rightQueryExecutingCard = {rightQueryExecutingCard}");
 #endif
             }
         }

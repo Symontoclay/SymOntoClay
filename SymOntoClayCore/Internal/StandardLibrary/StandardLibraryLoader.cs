@@ -64,9 +64,9 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
 
             op = new Operator
             {
-                KindOfOperator = KindOfOperator.SelectLogicalQuery,
+                KindOfOperator = KindOfOperator.CallLogicalQuery,
                 IsSystemDefined = true,
-                SystemHandler = new UnaryOperatorSystemHandler(new SelectLogicalQueryOperatorHandler(_context), dictionary),
+                SystemHandler = new UnaryOperatorSystemHandler(new CallLogicalQueryOperatorHandler(_context), dictionary),
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 

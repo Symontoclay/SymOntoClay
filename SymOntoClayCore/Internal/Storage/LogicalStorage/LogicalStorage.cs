@@ -54,7 +54,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 var annotationsList = ruleInstance.GetAllAnnotations();
 
 #if DEBUG
-                Log($"annotationsList = {annotationsList.WriteListToString()}");
+                //Log($"annotationsList = {annotationsList.WriteListToString()}");
 #endif
 
                 foreach(var annotationRuleInstance in annotationsList)
@@ -151,7 +151,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             EmitOnChanged();
 
 #if IMAGINE_WORKING
-            Log("End");
+            //Log("End");
 #else
             throw new NotImplementedException();
 #endif

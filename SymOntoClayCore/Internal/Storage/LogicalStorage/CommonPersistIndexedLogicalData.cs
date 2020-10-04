@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         public void NSetIndexedRuleInstanceToIndexData(IndexedRuleInstance indexedRuleInstance)
         {
 #if DEBUG
-            Log($"indexedRuleInstance = {indexedRuleInstance}");
+            //Log($"indexedRuleInstance = {indexedRuleInstance}");
 #endif
 
             IndexedRuleInstancesDict[indexedRuleInstance.Key] = indexedRuleInstance;
@@ -99,7 +99,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             }
 
 #if IMAGINE_WORKING
-            Log("End");
+            //Log("End");
 #else
             throw new NotImplementedException();
 #endif

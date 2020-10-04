@@ -15,7 +15,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             Init,
             GotName,
-            GotSelectLogicalQueryOperator
+            GotCallLogicalQueryOperator
         }
 
         public CodeExpressionStatementParser(InternalParserContext context)
@@ -40,9 +40,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
+            //Log($"_currToken = {_currToken}");
             //Log($"_nodePoint = {_nodePoint}");
-            Log($"_state = {_state}");
+            //Log($"_state = {_state}");
 #endif
 
             switch(_state)
@@ -133,11 +133,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotSelectLogicalQueryOperator:
+                case State.GotCallLogicalQueryOperator:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.OpenFactBracket:
                             ProcessRuleOrFact();
+                            _state = State.Init;
+                            break;
+
+                        case TokenKind.LeftRightStream:
+                            ProcessLeftRightStream();
                             _state = State.Init;
                             break;
 
@@ -256,12 +261,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessSelectOperator()
         {
-            throw new NotImplementedException();
-
             _lastIsOperator = null;
 
+            _context.Recovery(_currToken);
+            var parser = new LogicalQueryOperationParser(_context);
+            parser.Run();
+
+            var resultItem = parser.Result;
+
+#if DEBUG
+            //Log($"resultItem = {resultItem}");
+#endif
+
             var node = new UnaryOperatorAstExpression();
-            node.KindOfOperator = KindOfOperator.SelectLogicalQuery;
+            node.KindOfOperator = KindOfOperator.CallLogicalQuery;
 
             var priority = OperatorsHelper.GetPriority(node.KindOfOperator);
 
@@ -273,7 +286,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
 
-            _state = State.GotSelectLogicalQueryOperator;
+            var valueNode = new ConstValueAstExpression();
+            valueNode.Value = resultItem;
+
+            var valueIntermediateNode = new IntermediateAstNode(valueNode);
+
+            AstNodesLinker.SetNode(valueIntermediateNode, _nodePoint);
+
+            _state = State.GotCallLogicalQueryOperator;
         }
 
         private void ProcessVar()
@@ -345,6 +365,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             node.KindOfOperator = kindOfOperator;
 
             var priority = OperatorsHelper.GetPriority(kindOfOperator);
+
+#if DEBUG
+            //Log($"priority = {priority}");
+#endif
 
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.BinaryOperator, priority);
 

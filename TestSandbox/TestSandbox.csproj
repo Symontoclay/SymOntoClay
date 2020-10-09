@@ -23,16 +23,28 @@
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Source\Apps\PeaceKeeper\ExampleClass.txt">
+    <None Update="Source\Apps\PeaceKeeper\ExampleClass.soc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Source\Apps\PeaceKeeper\PeaceKeeper.txt">
+    <None Update="Source\Apps\PeaceKeeper\PeaceKeeper.npc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Source\Hosts\PeaceKeeper\PeaceKeeper.txt">
+    <None Update="Source\Apps\PeaceKeeper\PeaceKeeper.soc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Source\World\World.txt">
+    <None Update="Source\HelloWorld.wspace">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Source\Hosts\PeaceKeeper\PeaceKeeper.host">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Source\Hosts\PeaceKeeper\PeaceKeeper.soc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Source\World\HelloWorld.world">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Source\World\World.soc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

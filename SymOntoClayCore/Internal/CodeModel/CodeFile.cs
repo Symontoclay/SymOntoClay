@@ -19,6 +19,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         public string FileName { get; set; }
         public bool IsMain { get; set; }
+        public bool IsLocator { get; set; }
         public List<CodeEntity> CodeEntities { get; set; } = new List<CodeEntity>();
 
         /// <inheritdoc/>
@@ -41,6 +42,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(FileName)} = {FileName}");
             sb.AppendLine($"{spaces}{nameof(IsMain)} = {IsMain}");
+            sb.AppendLine($"{spaces}{nameof(IsLocator)} = {IsLocator}");
             sb.PrintObjListProp(n, nameof(CodeEntities), CodeEntities);
             return sb.ToString();
         }
@@ -65,6 +67,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(FileName)} = {FileName}");
             sb.AppendLine($"{spaces}{nameof(IsMain)} = {IsMain}");
+            sb.AppendLine($"{spaces}{nameof(IsLocator)} = {IsLocator}");
             return sb.ToString();
         }
 
@@ -88,6 +91,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(FileName)} = {FileName}");
             sb.AppendLine($"{spaces}{nameof(IsMain)} = {IsMain}");
+            sb.AppendLine($"{spaces}{nameof(IsLocator)} = {IsLocator}");
             return sb.ToString();
         }
     }

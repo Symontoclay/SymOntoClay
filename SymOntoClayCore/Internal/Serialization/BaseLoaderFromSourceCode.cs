@@ -59,12 +59,20 @@ namespace SymOntoClay.Core.Internal.Serialization
             //Log($"parsedCodeEntitiesList = {parsedCodeEntitiesList.WriteListToString()}");
 #endif
 
-            AddSystemDefinedSettings(parsedCodeEntitiesList);
+            DetectMainCodeEntity(parsedCodeEntitiesList);
 
 #if DEBUG
             //Log($"parsedCodeEntitiesList.Count (2) = {parsedCodeEntitiesList.Count}");
 
             //Log($"parsedCodeEntitiesList (2) = {parsedCodeEntitiesList.WriteListToString()}");
+#endif
+
+            AddSystemDefinedSettings(parsedCodeEntitiesList);
+
+#if DEBUG
+            //Log($"parsedCodeEntitiesList.Count (3) = {parsedCodeEntitiesList.Count}");
+
+            //Log($"parsedCodeEntitiesList (3) = {parsedCodeEntitiesList.WriteListToString()}");
 #endif
 
             SaveItems(parsedCodeEntitiesList);
@@ -74,6 +82,27 @@ namespace SymOntoClay.Core.Internal.Serialization
 #else
             throw new NotImplementedException();
 #endif
+        }
+
+        private void DetectMainCodeEntity(List<CodeEntity> source)
+        {
+            var possibleMainCodeEntities = source.Where(p => p.Kind == KindOfCodeEntity.App || p.Kind == KindOfCodeEntity.Host || p.Kind == KindOfCodeEntity.World);
+
+#if DEBUG
+            //Log($"possibleMainCodeEntities (3) = {possibleMainCodeEntities.Count()}");
+
+            //Log($"possibleMainCodeEntities = {possibleMainCodeEntities.WriteListToString()}");
+#endif
+
+            if(possibleMainCodeEntities.Count() == 1)
+            {
+                var possibleMainCodeEntity = possibleMainCodeEntities.Single();
+                possibleMainCodeEntity.CodeFile.IsMain = true;
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
         private List<CodeEntity> LinearizeSubItems(List<CodeFile> source)

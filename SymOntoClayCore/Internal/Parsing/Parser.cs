@@ -14,6 +14,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing
@@ -41,7 +42,7 @@ namespace SymOntoClay.Core.Internal.Parsing
 #endif
 
             var result = new CodeFile();
-            result.IsMain = parsedFileInfo.IsMain;
+            result.IsLocator = parsedFileInfo.IsLocator;
             result.FileName = parsedFileInfo.FileName;
             
             var internalParserContext = new InternalParserContext(text, result, _context);
@@ -66,12 +67,12 @@ namespace SymOntoClay.Core.Internal.Parsing
         public List<CodeFile> Parse(List<ParsedFileInfo> parsedFileInfoList)
         {
 #if DEBUG
-            //Log($"parsedFileInfoList = {parsedFileInfoList.WriteListToString()}");
+            Log($"parsedFileInfoList = {parsedFileInfoList.WriteListToString()}");
 #endif
 
             var result = new List<CodeFile>();
 
-            foreach(var parsedFileInfo in parsedFileInfoList)
+            foreach(var parsedFileInfo in parsedFileInfoList.Where(p => !p.IsLocator))
             {
                 result.Add(Parse(parsedFileInfo));
             }

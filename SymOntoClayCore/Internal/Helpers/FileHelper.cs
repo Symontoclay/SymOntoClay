@@ -21,13 +21,14 @@ namespace SymOntoClay.Core.Internal.Helpers
 {
     public static class FileHelper
     {
-        private static List<string> Extesions = new List<string>() { ".txt" };
+        private static List<string> _rootExtesions = new List<string>() { ".npc", ".host", ".world" };
+        private static List<string> _sourceFileExtensions = new List<string>() { ".soc" };
 
         public static List<ParsedFileInfo> GetParsedFilesInfo(string appFileName, string id)
         {
             var fileInfo = new FileInfo(appFileName);
 
-            if(!Extesions.Contains(fileInfo.Extension))
+            if(!_rootExtesions.Contains(fileInfo.Extension))
             {
                 throw new Exception($"Root file `{appFileName}` of entity `{id}` has invalid extension `{fileInfo.Extension}`.");
             }
@@ -36,10 +37,10 @@ namespace SymOntoClay.Core.Internal.Helpers
             existingFilesList.Add(appFileName);
 
             var result = new List<ParsedFileInfo>();
-            result.Add(new ParsedFileInfo() 
+            result.Add(new ParsedFileInfo()
             {
                 FileName = appFileName,
-                IsMain = true
+                IsLocator = true
             });
 
             var directory = fileInfo.Directory;
@@ -51,7 +52,7 @@ namespace SymOntoClay.Core.Internal.Helpers
 
         private static void NGetParsedFilesInfoFromDirectory(DirectoryInfo directory, List<ParsedFileInfo> result, List<string> existingFilesList)
         {
-            var filesList = directory.EnumerateFiles().Where(p => Extesions.Contains(p.Extension) && !existingFilesList.Contains(p.FullName)).Select(p => p.FullName);
+            var filesList = directory.EnumerateFiles().Where(p => _sourceFileExtensions.Contains(p.Extension) && !existingFilesList.Contains(p.FullName)).Select(p => p.FullName);
 
             foreach(var fileName in filesList)
             {
@@ -59,7 +60,7 @@ namespace SymOntoClay.Core.Internal.Helpers
                 result.Add(new ParsedFileInfo()
                 {
                     FileName = fileName,
-                    IsMain = false
+                    IsLocator = false
                 });
             }
 

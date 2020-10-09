@@ -67,7 +67,7 @@ namespace SymOntoClay.Core.Internal.Parsing
         public List<CodeFile> Parse(List<ParsedFileInfo> parsedFileInfoList)
         {
 #if DEBUG
-            Log($"parsedFileInfoList = {parsedFileInfoList.WriteListToString()}");
+            //Log($"parsedFileInfoList = {parsedFileInfoList.WriteListToString()}");
 #endif
 
             var result = new List<CodeFile>();

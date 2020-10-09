@@ -70,7 +70,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var mainEntity = globalStorage.MetadataStorage.MainCodeEntity;
 
 #if DEBUG
-            Log($"mainEntity = {mainEntity}");
+            //Log($"mainEntity = {mainEntity}");
 #endif
 
             if (mainEntity.Name.KindOfName == KindOfName.Entity)

@@ -1,5 +1,7 @@
 ﻿using NLog;
+using SymOntoClay.CoreHelper;
 using System;
+using System.IO;
 
 namespace SymOntoClay.CLI
 {
@@ -9,7 +11,10 @@ namespace SymOntoClay.CLI
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
+
+            using var app = new CLIApp();
+            app.Run(args);
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

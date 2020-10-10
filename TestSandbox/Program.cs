@@ -10,6 +10,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 
 using Newtonsoft.Json;
 using NLog;
+using SymOntoClay.CLI;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
@@ -48,6 +49,9 @@ namespace TestSandbox
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
+            EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
+
+            TstCLICommandParser();
             //TstLogicalDatabase();
             //TstProcessInfoChildren();
             //TstWaitIProcessInfo();
@@ -71,10 +75,26 @@ namespace TestSandbox
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstCLICommandParser()
+        {
+            _logger.Log("Begin");
+
+            var args = new List<string>() {
+                 "run",
+                 "%USERPROFILE%/Documents/GitHub/SymOntoClay/TestSandbox/Source/Apps/PeaceKeeper/PeaceKeeper.npc"
+            }.ToArray();
+
+            var command = CLICommandParser.Parse(args);
+
+            _logger.Log($"command = {command}");
+
+            _logger.Log("End");
         }
 
         private static void TstLogicalDatabase()

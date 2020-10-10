@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SymOntoClayCLI": {
+      "commandName": "Project",
+      "commandLineArgs": "run %USERPROFILE%/Documents/GitHub/SymOntoClay/TestSandbox/Source/Apps/PeaceKeeper/PeaceKeeper.npc"
+    }
+  }
+}

@@ -5,6 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>soc</AssemblyName>
     <Version>0.2.2.0</Version>
+    <RootNamespace>SymOntoClay.CLI</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

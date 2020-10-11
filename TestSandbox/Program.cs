@@ -94,6 +94,10 @@ namespace TestSandbox
 
             _logger.Log($"command = {command}");
 
+            var targetFiles = RunCommandFilesSearcher.Run(command);
+
+            _logger.Log($"targetFiles = {targetFiles}");
+
             _logger.Log("End");
         }
 

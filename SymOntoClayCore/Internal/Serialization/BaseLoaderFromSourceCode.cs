@@ -35,6 +35,11 @@ namespace SymOntoClay.Core.Internal.Serialization
             //Log("Begin");
 #endif
 
+            if(string.IsNullOrEmpty(_context.AppFile))
+            {
+                return;
+            }
+
             var filesList = FileHelper.GetParsedFilesInfo(_context.AppFile, _context.Id);
 
 #if DEBUG

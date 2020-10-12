@@ -23,14 +23,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SharedDictionary
             var sharedDictionarySettings = new SharedDictionarySettings();
             sharedDictionarySettings.Logger = Logger;
 
-            Log($"sharedDictionarySettings = {sharedDictionarySettings}");
+            //Log($"sharedDictionarySettings = {sharedDictionarySettings}");
 
             _sharedDictionary = new SymOntoClay.Core.SharedDictionary(sharedDictionarySettings);
         }
 
         private readonly SymOntoClay.Core.SharedDictionary _sharedDictionary;
 
-        public SymOntoClay.Core.IEntityDictionary Dictionary => _sharedDictionary;
+        public IEntityDictionary Dictionary => _sharedDictionary;
 
         public void LoadFromSourceCode()
         {

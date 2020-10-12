@@ -29,6 +29,12 @@ namespace TestSandbox.PlatformImplementations
         }
 
         [MethodForLoggingSupport]
+        public void LogChannel(string message)
+        {
+            Log(message);
+        }
+
+        [MethodForLoggingSupport]
         public void Warning(string message)
         {
             var callInfo = DiagnosticsHelper.GetNotLoggingSupportCallInfo();

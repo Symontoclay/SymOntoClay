@@ -27,7 +27,7 @@ namespace SymOntoClay.Core.Internal.States
         public void LoadFromSourceCode()
         {
 #if IMAGINE_WORKING
-            Log("Do");
+            //Log("Do");
 #else
                 throw new NotImplementedException();
 #endif

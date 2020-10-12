@@ -26,8 +26,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
             try
             {
 #if DEBUG
-                Log($"settings = {settings}");
-                Log($"worldContext.TmpDir = {worldContext.TmpDir}");
+                //Log($"settings = {settings}");
+                //Log($"worldContext.TmpDir = {worldContext.TmpDir}");
 #endif
                 var tmpDir = Path.Combine(worldContext.TmpDir, settings.Id);
 
@@ -49,7 +49,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
                 coreEngineSettings.HostSupport = _hostSupport;
 
 #if DEBUG
-                Log($"coreEngineSettings = {coreEngineSettings}");
+                //Log($"coreEngineSettings = {coreEngineSettings}");
 #endif
                 _coreEngine = new Engine(coreEngineSettings);
             }

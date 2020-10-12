@@ -22,9 +22,9 @@ namespace SymOntoClay.UnityAsset.Core
     public class WorldSettings: IObjectToString
     {
         /// <summary>
-        /// Gets or sets list of file paths for describing places for searching required source files.
+        /// Gets or sets list of file paths for describing places for searching shared modules.
         /// </summary>
-        public IList<string> SourceFilesDirs { get; set; }
+        public IList<string> SharedModulesDirs { get; set; }
 
         /// <summary>
         /// Gets or sets root dir for saving and loading images of executed code.
@@ -66,7 +66,7 @@ namespace SymOntoClay.UnityAsset.Core
             var sb = new StringBuilder();
 
             sb.PrintObjProp(n, nameof(Logging), Logging);
-            sb.PrintPODList(n, nameof(SourceFilesDirs), SourceFilesDirs);
+            sb.PrintPODList(n, nameof(SharedModulesDirs), SharedModulesDirs);
             sb.AppendLine($"{spaces}{nameof(ImagesRootDir)} = {ImagesRootDir}");
             sb.PrintPODList(n, nameof(DictionariesDirs), DictionariesDirs);
             sb.AppendLine($"{spaces}{nameof(TmpDir)} = {TmpDir}");

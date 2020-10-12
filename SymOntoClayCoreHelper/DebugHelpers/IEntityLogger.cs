@@ -17,6 +17,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
     public interface IEntityLogger
     {
         void Log(string message);
+        void LogChannel(string message);
         void Error(string message);
         void Warning(string message);
     }

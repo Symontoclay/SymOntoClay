@@ -10,23 +10,27 @@ namespace SymOntoClay.CLI
     public static class RunCommandFilesSearcher
     {
 #if DEBUG
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static RunCommandFiles Run(CLICommand command)
         {
+            var result = new RunCommandFiles();
+
             var inputFile = command.InputFile;
 
 #if DEBUG
-            _logger.Info($"inputFile = {inputFile}");
+            //_logger.Info($"inputFile = {inputFile}");
 #endif
+
+            result.LogicFile = inputFile;
 
             var fileInfo = new FileInfo(inputFile);
 
             var wSpaceFile = FindWSpaceFile(fileInfo.Directory);
 
 #if DEBUG
-            _logger.Info($"wSpaceFile = {wSpaceFile}");
+            //_logger.Info($"wSpaceFile = {wSpaceFile}");
 #endif
 
             if(wSpaceFile == null)
@@ -37,13 +41,13 @@ namespace SymOntoClay.CLI
             var baseDir = wSpaceFile.Directory.FullName;
 
 #if DEBUG
-            _logger.Info($"baseDir = {baseDir}");
+            //_logger.Info($"baseDir = {baseDir}");
 #endif
 
             var worldDir = Path.Combine(baseDir, "World");
 
 #if DEBUG
-            _logger.Info($"worldDir = {worldDir}");
+            //_logger.Info($"worldDir = {worldDir}");
 #endif
 
             var worldDirInfo = new DirectoryInfo(worldDir);
@@ -51,28 +55,30 @@ namespace SymOntoClay.CLI
             var worldFile = worldDirInfo.EnumerateFiles().Single(p => p.Name.EndsWith(".world"));
 
 #if DEBUG
-            _logger.Info($"worldFile = {worldFile}");
+            //_logger.Info($"worldFile = {worldFile}");
 #endif
 
-            var sourceFilesDir = Path.Combine(baseDir, "Modules");
+            result.WorldFile = worldFile.FullName;
+
+            result.SharedModulesDir = Path.Combine(baseDir, "Modules");
 
 #if DEBUG
-            _logger.Info($"sourceFilesDir = {sourceFilesDir}");
+            //_logger.Info($"result.SharedModulesDir = {result.SharedModulesDir}");
 #endif
 
-            var imagesRootDir = Path.Combine(baseDir, "Images");
+            result.ImagesRootDir = Path.Combine(baseDir, "Images");
 
 #if DEBUG
-            _logger.Info($"imagesRootDir = {imagesRootDir}");
+            //_logger.Info($"result.ImagesRootDir = {result.ImagesRootDir}");
 #endif
 
-            var tmpDir = Path.Combine(baseDir, "Tmp");
+            result.TmpDir = Path.Combine(baseDir, "Tmp");
 
 #if DEBUG
-            _logger.Info($"tmpDir = {tmpDir}");
+            //_logger.Info($"result.TmpDir = {result.TmpDir}");
 #endif
 
-            throw new NotImplementedException();
+            return result;
         }
 
         private static FileInfo FindWSpaceFile(DirectoryInfo dir)

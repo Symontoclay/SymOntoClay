@@ -24,7 +24,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.ModulesStorage
             modulesStorageSettings.Logger = Logger;
             modulesStorageSettings.Dictionary = coreContext.SharedDictionary;
 
-            Log($"modulesStorageSettings = {modulesStorageSettings}");
+            //Log($"modulesStorageSettings = {modulesStorageSettings}");
 
             _modulesStorage = new SymOntoClay.Core.ModulesStorage(modulesStorageSettings);
         }

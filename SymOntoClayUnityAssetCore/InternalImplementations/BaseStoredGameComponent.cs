@@ -33,7 +33,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 standaloneStorageSettings.ParentStorage = worldContext.StandaloneStorage;
 
 #if DEBUG
-                Log($"standaloneStorageSettings = {standaloneStorageSettings}");
+                //Log($"standaloneStorageSettings = {standaloneStorageSettings}");
 #endif
                 HostStorage = new StandaloneStorage(standaloneStorageSettings);
             }

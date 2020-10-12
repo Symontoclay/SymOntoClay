@@ -87,7 +87,7 @@ namespace TestSandbox
 
             var args = new List<string>() {
                  "run",
-                 "%USERPROFILE%/Documents/GitHub/SymOntoClay/TestSandbox/Source/Apps/PeaceKeeper/PeaceKeeper.npc"
+                 "%USERPROFILE%/source/repos/SymOntoClay/TestSandbox/Source/Apps/PeaceKeeper/PeaceKeeper.npc"
             }.ToArray();
 
             var command = CLICommandParser.Parse(args);
@@ -97,6 +97,54 @@ namespace TestSandbox
             var targetFiles = RunCommandFilesSearcher.Run(command);
 
             _logger.Log($"targetFiles = {targetFiles}");
+
+            //var logDir = Path.Combine(Directory.GetCurrentDirectory(), "NpcLogs");
+
+            var invokingInMainThread = TstInvokerInMainThreadFactory.Create();
+
+            var instance = WorldFactory.WorldInstance;
+
+            var settings = new WorldSettings();
+
+            settings.SharedModulesDirs = new List<string>() { targetFiles.SharedModulesDir };
+
+            settings.ImagesRootDir = targetFiles.ImagesRootDir;
+
+            settings.TmpDir = targetFiles.TmpDir;
+
+            settings.HostFile = targetFiles.WorldFile;
+
+            settings.InvokerInMainThread = invokingInMainThread;
+
+            settings.Logging = new LoggingSettings()
+            {
+                //LogDir = logDir,
+                RootContractName = "Hi1",
+                PlatformLoggers = new List<IPlatformLogger>() { new CLIPlatformLogger() },
+                Enable = true,
+                EnableRemoteConnection = true
+            };
+
+            _logger.Log($"settings = {settings}");
+
+            instance.SetSettings(settings);
+
+            var platformListener = new TstPlatformHostListener();
+
+            var npcSettings = new BipedNPCSettings();
+            npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
+            //npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
+            npcSettings.LogicFile = targetFiles.LogicFile;
+            npcSettings.HostListener = platformListener;
+            npcSettings.PlatformSupport = new TstPlatformSupport();
+
+            _logger.Log($"npcSettings = {npcSettings}");
+
+            var npc = instance.GetBipedNPC(npcSettings);
+
+            instance.Start();
+
+            Thread.Sleep(50000);
 
             _logger.Log("End");
         }

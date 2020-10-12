@@ -33,5 +33,25 @@ namespace TestSandbox.PlatformImplementations
         {
             _logger.Info(message);
         }
+
+        public void WriteLnRawLogChannel(string message)
+        {
+            _logger.Info(message);
+        }
+
+        public void WriteLnRawLog(string message)
+        {
+            _logger.Info(message);
+        }
+
+        public void WriteLnRawWarning(string message)
+        {
+            _logger.Info(message);
+        }
+
+        public void WriteLnRawError(string message)
+        {
+            _logger.Info(message);
+        }
     }
 }

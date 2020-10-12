@@ -23,7 +23,7 @@ namespace SymOntoClay.Core
         public StandaloneStorage(StandaloneStorageSettings settings)
             : base(settings.Logger)
         {
-            Log($"settings = {settings}");
+            //Log($"settings = {settings}");
 
             _context = EngineContextHelper.CreateAndInitMainStorageContext(settings);
         }
@@ -62,7 +62,7 @@ namespace SymOntoClay.Core
                 _storage = _context.Storage.GlobalStorage;
 
 #if IMAGINE_WORKING
-                Log("Do");
+                //Log("Do");
 #else
                 throw new NotImplementedException();
 #endif
@@ -80,7 +80,7 @@ namespace SymOntoClay.Core
                 }
 
 #if IMAGINE_WORKING
-                Log("Do");
+                //Log("Do");
 #else
                 throw new NotImplementedException();
 #endif
@@ -98,7 +98,7 @@ namespace SymOntoClay.Core
                 }
 
 #if IMAGINE_WORKING
-                Log("Do");
+                //Log("Do");
 #else
                 throw new NotImplementedException();
 #endif

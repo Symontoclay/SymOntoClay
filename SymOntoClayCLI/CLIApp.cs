@@ -8,7 +8,9 @@ namespace SymOntoClay.CLI
 {
     public class CLIApp : IDisposable
     {
+#if DEBUG
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+#endif
 
         public void Run(string[] args)
         {
@@ -23,16 +25,25 @@ namespace SymOntoClay.CLI
                 return;
             }
 
-#if DEBUG
-            _logger.Info($"command = {command}");
-#endif
+            var kindOfComand = command.Kind;
 
-            Console.ReadLine();
+            switch(kindOfComand)
+            {
+                case KindOfCLICommand.Run:
+                    {
+                        using var handler = new CLIRunHandler();
+                        handler.Run(command);
+                        return;
+                    }
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfComand), kindOfComand, null);
+            }
         }
 
         private void PrintHeader()
         {
-            Console.WriteLine("Copyright © 2020 Sergiy Tolkachov aka metatypeman");
+            ConsoleWrapper.WriteText("Copyright © 2020 Sergiy Tolkachov aka metatypeman");
         }
 
         private void PrintHowToExitAndWait()

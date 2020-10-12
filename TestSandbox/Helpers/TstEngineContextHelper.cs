@@ -42,7 +42,7 @@ namespace TestSandbox.Helpers
 
             var worldSettings = new WorldSettings();
 
-            worldSettings.SourceFilesDirs = new List<string>() { Path.Combine(Directory.GetCurrentDirectory(), "Source", "Modules") };
+            worldSettings.SharedModulesDirs = new List<string>() { Path.Combine(Directory.GetCurrentDirectory(), "Source", "Modules") };
 
             worldSettings.ImagesRootDir = Path.Combine(Directory.GetCurrentDirectory(), "Images");
 

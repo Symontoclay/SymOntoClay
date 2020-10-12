@@ -17,5 +17,9 @@ namespace SymOntoClay.UnityAsset.Core
     public interface IPlatformLogger
     {
         void WriteLn(string message);
+        void WriteLnRawLogChannel(string message);
+        void WriteLnRawLog(string message);
+        void WriteLnRawWarning(string message);
+        void WriteLnRawError(string message);
     }
 }

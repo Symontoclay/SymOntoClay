@@ -38,7 +38,7 @@ namespace TestSandbox.Handlers
 
             var settings = new WorldSettings();
 
-            settings.SourceFilesDirs = new List<string>() { Path.Combine(Directory.GetCurrentDirectory(), "Source", "Modules") };
+            settings.SharedModulesDirs = new List<string>() { Path.Combine(Directory.GetCurrentDirectory(), "Source", "Modules") };
 
             settings.ImagesRootDir = Path.Combine(Directory.GetCurrentDirectory(), "Images");
 

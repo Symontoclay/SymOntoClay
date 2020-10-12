@@ -610,6 +610,9 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.Logging.InternalLogger.Log(System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.Logging.InternalLogger.LogChannel(System.String)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.Logging.InternalLogger.Warning(System.String)">
             <inheritdoc/>
         </member>
@@ -986,9 +989,9 @@
             General settings of a game world.
             </summary>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.WorldSettings.SourceFilesDirs">
+        <member name="P:SymOntoClay.UnityAsset.Core.WorldSettings.SharedModulesDirs">
             <summary>
-            Gets or sets list of file paths for describing places for searching required source files.
+            Gets or sets list of file paths for describing places for searching shared modules.
             </summary>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.WorldSettings.ImagesRootDir">

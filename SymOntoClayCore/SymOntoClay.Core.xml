@@ -148,6 +148,9 @@
         <member name="M:SymOntoClay.Core.Internal.BaseLoggedComponent.Log(System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.BaseLoggedComponent.LogChannel(System.String)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.BaseLoggedComponent.Warning(System.String)">
             <inheritdoc/>
         </member>

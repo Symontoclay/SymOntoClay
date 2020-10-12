@@ -24,11 +24,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Validators
                 throw new ValidationException("World settings can not be null.");
             }
 
-            var sourceFilesDirs = settings.SourceFilesDirs;
+            var sharedModulesDirs = settings.SharedModulesDirs;
 
-            if (sourceFilesDirs == null || !sourceFilesDirs.Any() || sourceFilesDirs.All(p => string.IsNullOrWhiteSpace(p)))
+            if (sharedModulesDirs == null || !sharedModulesDirs.Any() || sharedModulesDirs.All(p => string.IsNullOrWhiteSpace(p)))
             {
-                throw new ValidationException("'SourceFilesDirs' can not be null, empty or contain all null or empty strings.");
+                throw new ValidationException("'SharedModulesDirs' can not be null, empty or contain all null or empty strings.");
             }
 
             //throw new NotImplementedException();

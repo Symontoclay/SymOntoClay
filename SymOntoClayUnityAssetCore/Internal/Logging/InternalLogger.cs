@@ -17,7 +17,7 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.Logging
 {
-    public class InternalLogger: IEntityLogger
+    public class InternalLogger : IEntityLogger
     {
         private readonly object _lockObj = new object();
         private readonly IList<IPlatformLogger> _platformLoggers;
@@ -25,25 +25,31 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
         private NLog.ILogger _nLogLogger;
         private readonly ILoggerContext _context;
 
+#if DEBUG
         private NLog.ILogger _dbgNLogger = NLog.LogManager.GetCurrentClassLogger();
+#endif
 
         public InternalLogger(ILoggerContext context, string name, CoreLoggerSettings settings)
         {
-            _dbgNLogger.Info($"name = {name}");
-            _dbgNLogger.Info($"settings = {settings}");
-
+#if DEBUG
+            //_dbgNLogger.Info($"name = {name}");
+            //_dbgNLogger.Info($"settings = {settings}");
+#endif
             _context = context;
             _name = name;
             _platformLoggers = settings.PlatformLoggers?.ToList();
 
-            if(_platformLoggers == null)
+            if (_platformLoggers == null)
             {
                 _platformLoggers = new List<IPlatformLogger>();
             }
 
-            var logFile = Path.Combine(settings.LogDir, $"{name}.log");
+            if(!string.IsNullOrWhiteSpace(settings.LogDir))
+            {
+                var logFile = Path.Combine(settings.LogDir, $"{name}.log");
 
-            InitNLog(logFile);
+                InitNLog(logFile);
+            }
         }
 
         private void InitNLog(string logFile)
@@ -62,12 +68,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
         [MethodForLoggingSupport]
         public void Log(string message)
         {
-            lock(_lockObj)
+            lock (_lockObj)
             {
                 if (!_context.Enable)
                 {
                     return;
                 }
+
+                WriteRawLog(message);
 
                 var now = DateTime.Now;
                 var tmpCallInfo = DiagnosticsHelper.GetNotLoggingSupportCallInfo();
@@ -79,14 +87,31 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        public void LogChannel(string message)
+        {
+            lock (_lockObj)
+            {
+                if (!_context.Enable)
+                {
+                    return;
+                }
+
+                WriteRawLogChannel(message);
+            }
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void Warning(string message)
         {
             lock (_lockObj)
             {
-                if(!_context.Enable)
+                if (!_context.Enable)
                 {
                     return;
                 }
+
+                WriteRawWarning(message);
 
                 var now = DateTime.Now;
                 var tmpCallInfo = DiagnosticsHelper.GetNotLoggingSupportCallInfo();
@@ -107,6 +132,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
                     return;
                 }
 
+                WriteRawError(message);
+
                 var now = DateTime.Now;
                 var tmpCallInfo = DiagnosticsHelper.GetNotLoggingSupportCallInfo();
                 var result = LogHelper.BuildLogString(now, KindOfLogLevel.ERROR.ToString(), tmpCallInfo.FullClassName, tmpCallInfo.MethodName, message);
@@ -118,13 +145,51 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
         [MethodForLoggingSupport]
         private void WriteRaw(string message)
         {
-            _nLogLogger.Info(message);
+            _nLogLogger?.Info(message);
 
             message = $"{_name}>>{message}";
 
-            foreach(var platformLogger in _platformLoggers)
+            foreach (var platformLogger in _platformLoggers)
             {
                 platformLogger.WriteLn(message);
+            }
+        }
+
+        [MethodForLoggingSupport]
+        private void WriteRawLog(string message)
+        {
+            foreach (var platformLogger in _platformLoggers)
+            {
+                platformLogger.WriteLnRawLog(message);
+            }
+        }
+
+        [MethodForLoggingSupport]
+        private void WriteRawLogChannel(string message)
+        {
+            _nLogLogger?.Info(message);
+
+            foreach (var platformLogger in _platformLoggers)
+            {
+                platformLogger.WriteLnRawLogChannel(message);
+            }
+        }
+
+        [MethodForLoggingSupport]
+        private void WriteRawWarning(string message)
+        {
+            foreach (var platformLogger in _platformLoggers)
+            {
+                platformLogger.WriteLnRawWarning(message);
+            }
+        }
+
+        [MethodForLoggingSupport]
+        private void WriteRawError(string message)
+        {
+            foreach (var platformLogger in _platformLoggers)
+            {
+                platformLogger.WriteLnRawError(message);
             }
         }
     }

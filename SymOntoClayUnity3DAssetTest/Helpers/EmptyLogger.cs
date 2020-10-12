@@ -17,14 +17,22 @@ namespace SymOntoClay.Unity3DAsset.Test.Helpers
 {
     public class EmptyLogger : IEntityLogger
     {
+        /// <inheritdoc/>
         public void Error(string message)
         {
         }
 
+        /// <inheritdoc/>
+        public void LogChannel(string message)
+        {
+        }
+
+        /// <inheritdoc/>
         public void Log(string message)
         {
         }
 
+        /// <inheritdoc/>
         public void Warning(string message)
         {
         }

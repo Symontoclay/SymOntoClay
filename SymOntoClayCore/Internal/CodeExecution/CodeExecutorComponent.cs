@@ -54,7 +54,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            _context.InstancesStorage.PrintProcessesList();
+            //_context.InstancesStorage.PrintProcessesList();
 #endif
 
             var threadExecutor = new AsyncThreadExecutor(_context);

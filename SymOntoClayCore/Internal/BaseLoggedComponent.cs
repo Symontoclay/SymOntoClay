@@ -35,6 +35,13 @@ namespace SymOntoClay.Core.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        protected void LogChannel(string message)
+        {
+            _logger.LogChannel(message);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
         protected void Warning(string message)
         {
             _logger.Warning(message);

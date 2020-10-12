@@ -28,7 +28,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Storage
             standaloneStorageSettings.Dictionary = coreContext.SharedDictionary;
             standaloneStorageSettings.AppFile = settings.HostFile;
 
-            Log($"standaloneStorageSettings = {standaloneStorageSettings}");
+            //Log($"standaloneStorageSettings = {standaloneStorageSettings}");
 
             _standaloneStorage = new StandaloneStorage(standaloneStorageSettings);
         }

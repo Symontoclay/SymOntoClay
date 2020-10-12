@@ -47,15 +47,15 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
             switch(value.KindOfValue)
             {
                 case KindOfValue.LogicalSearchResultValue:
-                    Log(DebugHelperForLogicalSearchResult.ToString(value.AsLogicalSearchResultValue.LogicalSearchResult, _engineContext.Dictionary));
+                    LogChannel(DebugHelperForLogicalSearchResult.ToString(value.AsLogicalSearchResultValue.LogicalSearchResult, _engineContext.Dictionary));
                     break;
 
                 case KindOfValue.NullValue:
-                    Log("NULL");
+                    LogChannel("NULL");
                     break;
 
                 default:
-                    Log(value.GetSystemValue()?.ToString());
+                    LogChannel(value.GetSystemValue()?.ToString());
                     break;
             }
 

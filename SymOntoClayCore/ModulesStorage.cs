@@ -34,7 +34,7 @@ namespace SymOntoClay.Core
                 }
 
 #if IMAGINE_WORKING
-                Log("Do");
+                //Log("Do");
 #else
                 throw new NotImplementedException();
 #endif
@@ -52,7 +52,7 @@ namespace SymOntoClay.Core
                 }
 
 #if IMAGINE_WORKING
-                Log("Do");
+                //Log("Do");
 #else
                 throw new NotImplementedException();
 #endif
@@ -70,7 +70,7 @@ namespace SymOntoClay.Core
                 }
 
 #if IMAGINE_WORKING
-                Log("Do");
+                //Log("Do");
 #else
                 throw new NotImplementedException();
 #endif

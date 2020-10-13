@@ -51,7 +51,8 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-            TstCLICommandParser();
+            TstCLINewHandler();
+            //TstCLIRunHandler();
             //TstLogicalDatabase();
             //TstProcessInfoChildren();
             //TstWaitIProcessInfo();
@@ -81,7 +82,25 @@ namespace TestSandbox
             //Thread.Sleep(10000);
         }
 
-        private static void TstCLICommandParser()
+        private static void TstCLINewHandler()
+        {
+            _logger.Log("Begin");
+
+            var args = new List<string>() {
+                 "new",
+                 "Enemy"
+            }.ToArray();
+
+            var command = CLICommandParser.Parse(args);
+
+            _logger.Log($"command = {command}");
+
+
+
+            _logger.Log("End");
+        }
+
+        private static void TstCLIRunHandler()
         {
             _logger.Log("Begin");
 

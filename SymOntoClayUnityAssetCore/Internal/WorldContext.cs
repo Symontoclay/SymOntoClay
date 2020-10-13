@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
 {
@@ -240,6 +241,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 if(_state != ComponentState.Loaded)
                 {
                     NLoadFromSourceCode();
+                    Thread.Sleep(100);
                 }
 
                 NStart();
@@ -408,14 +410,20 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 _state = ComponentState.Disposed;
             }
 
-            foreach(var item in _gameComponentsList)
+            lock (_gameComponentsListLockObj)
             {
-                item.Dispose();
+                foreach (var item in _gameComponentsList.ToList())
+                {
+                    item.Dispose();
+                }
             }
 
-            foreach(var item in _worldComponentsList)
+            lock (_worldComponentsListLockObj)
             {
-                item.Dispose();
+                foreach (var item in _worldComponentsList)
+                {
+                    item.Dispose();
+                }
             }
 
             CoreLogger.Dispose();

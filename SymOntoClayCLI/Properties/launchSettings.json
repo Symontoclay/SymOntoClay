@@ -2,7 +2,7 @@
   "profiles": {
     "SymOntoClayCLI": {
       "commandName": "Project",
-      "commandLineArgs": "n Enemy"
+      "commandLineArgs": "h"
     }
   }
 }

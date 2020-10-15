@@ -33,6 +33,10 @@ namespace SymOntoClay.CLI
 
             switch(firstParam)
             {
+                case "h":
+                case "help":
+                    return new CLICommand() { Kind = KindOfCLICommand.Help, IsValid = true };
+
                 case "run":
                     return ParseRunCommand(args);
 

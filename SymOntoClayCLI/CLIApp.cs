@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -27,6 +28,13 @@ namespace SymOntoClay.CLI
         {
             PrintHeader();
 
+            if(!args.Any())
+            {
+                PrintHelp();
+                PrintHowToExitAndWait();
+                return;
+            }
+
             var command = CLICommandParser.Parse(args);
 
             if(!command.IsValid)
@@ -40,6 +48,11 @@ namespace SymOntoClay.CLI
 
             switch(kindOfComand)
             {
+                case KindOfCLICommand.Help:
+                    PrintHelp();
+                    PrintHowToExitAndWait();
+                    return;
+
                 case KindOfCLICommand.Run:
                     {
                         using var handler = new CLIRunHandler();
@@ -80,6 +93,21 @@ namespace SymOntoClay.CLI
         private void PrintAboutWrongCommandLine(CLICommand command)
         {
             ConsoleWrapper.WriteError("Unknown command!");
+        }
+
+        private void PrintHelp()
+        {
+            ConsoleWrapper.WriteText("Help - SymOntoClay CLI:");
+            ConsoleWrapper.WriteText("");
+            ConsoleWrapper.WriteText("Running CLI without arguments prints help.");
+            ConsoleWrapper.WriteText("");
+            ConsoleWrapper.WriteText("CLI arguments:");
+            ConsoleWrapper.WriteText("h - prints help.");
+            ConsoleWrapper.WriteText("help - prints help.");
+            ConsoleWrapper.WriteText("run <NPC file name> - runs NPC and waits when you write 'exit' for exit.");
+            ConsoleWrapper.WriteText("exit - ends running NPC.");
+            ConsoleWrapper.WriteText("new <NPC name> - creates new NPC in new or existing worldspace. For creating NPC in existing worldspace runs command 'new' in worldspace directory.");
+            ConsoleWrapper.WriteText("n - alias of 'new' command.");
         }
 
         public void Dispose()

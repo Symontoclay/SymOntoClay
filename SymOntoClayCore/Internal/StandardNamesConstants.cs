@@ -21,7 +21,7 @@ namespace SymOntoClay.Core.Internal
         public const string NullTypeName = "null";
         public const string WorldTypeName = "world";
         public const string HostTypeName = "host";
-        public const string ApplicationTypeName = "application";
+        public const string NpcTypeName = "npc";
         public const string ClassTypeName = "class";
         public const string SelfSystemVarName = "@@self";
         public const string HostSystemVarName = "@@host";

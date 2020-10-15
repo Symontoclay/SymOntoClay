@@ -49,7 +49,7 @@ namespace SymOntoClay.Unity3DAsset.Test
                 {
                     case 1:
                         Assert.AreEqual(token.TokenKind, TokenKind.Word);
-                        Assert.AreEqual(token.KeyWordTokenKind, KeyWordTokenKind.App);
+                        Assert.AreEqual(token.KeyWordTokenKind, KeyWordTokenKind.Npc);
                         Assert.AreEqual(token.Content, "app");
                         Assert.AreEqual(token.Pos, 1);
                         Assert.AreEqual(token.Line, 1);

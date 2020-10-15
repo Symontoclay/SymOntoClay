@@ -22,7 +22,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Unknown,
         World,
         Host,
-        App,
+        Npc,
         Class,
         Is,
         On,

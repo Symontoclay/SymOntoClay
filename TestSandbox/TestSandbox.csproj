@@ -25,13 +25,13 @@
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Source\Apps\PeaceKeeper\ExampleClass.soc">
+    <None Update="Source\Npcs\PeaceKeeper\ExampleClass.soc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Source\Apps\PeaceKeeper\PeaceKeeper.npc">
+    <None Update="Source\Npcs\PeaceKeeper\PeaceKeeper.npc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Source\Apps\PeaceKeeper\PeaceKeeper.soc">
+    <None Update="Source\Npcs\PeaceKeeper\PeaceKeeper.soc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Source\HelloWorld.wspace">

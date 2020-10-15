@@ -51,7 +51,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-            TstCLINewHandler();
+            //TstCLINewHandler();
             //TstCLIRunHandler();
             //TstLogicalDatabase();
             //TstProcessInfoChildren();
@@ -76,7 +76,7 @@ namespace TestSandbox
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -607,7 +607,7 @@ namespace TestSandbox
         {
             _logger.Log("Begin");
 
-            var fileName = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Apps\PixKeeper\PixKeeper.txt");
+            var fileName = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Npcs\PixKeeper\PixKeeper.txt");
 
             _logger.Log($"fileName = {fileName}");
 

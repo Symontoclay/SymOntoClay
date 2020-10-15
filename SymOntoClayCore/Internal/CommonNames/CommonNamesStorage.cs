@@ -40,10 +40,10 @@ namespace SymOntoClay.Core.Internal.CommonNames
         public IndexedStrongIdentifierValue IndexedHostName { get; private set; }
 
         /// <inheritdoc/>
-        public StrongIdentifierValue ApplicationName { get; private set; }
+        public StrongIdentifierValue NpcName { get; private set; }
 
         /// <inheritdoc/>
-        public IndexedStrongIdentifierValue IndexedApplicationName { get; private set; }
+        public IndexedStrongIdentifierValue IndexedNpcName { get; private set; }
 
         /// <inheritdoc/>
         public StrongIdentifierValue ClassName { get; private set; }
@@ -79,8 +79,8 @@ namespace SymOntoClay.Core.Internal.CommonNames
             HostName = NameHelper.CreateName(StandardNamesConstants.HostTypeName, dictionary);
             IndexedHostName = HostName.GetIndexed(_context);
 
-            ApplicationName = NameHelper.CreateName(StandardNamesConstants.ApplicationTypeName, dictionary);
-            IndexedApplicationName = ApplicationName.GetIndexed(_context);
+            NpcName = NameHelper.CreateName(StandardNamesConstants.NpcTypeName, dictionary);
+            IndexedNpcName = NpcName.GetIndexed(_context);
 
             ClassName = NameHelper.CreateName(StandardNamesConstants.ClassTypeName, dictionary);
             IndexedClassName = ClassName.GetIndexed(_context);

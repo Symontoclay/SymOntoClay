@@ -1724,10 +1724,10 @@
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.IndexedHostName">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.ApplicationName">
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.NpcName">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.IndexedApplicationName">
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.IndexedNpcName">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.ClassName">
@@ -3206,20 +3206,6 @@
             Gets or sets app file.
             </summary>
         </member>
-        <member name="T:SymOntoClay.Core.Internal.Parsing.Internal.AppPaser">
-            <summary>
-            It is parser for app.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.AppPaser.OnEnter">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.AppPaser.OnFinish">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.AppPaser.OnRun">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.BaseInternalParser.Log(System.String)">
             <inheritdoc/>
         </member>
@@ -3344,6 +3330,20 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalQueryParser.OnRun">
+            <inheritdoc/>
+        </member>
+        <member name="T:SymOntoClay.Core.Internal.Parsing.Internal.NpcPaser">
+            <summary>
+            It is parser for app.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.NpcPaser.OnEnter">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.NpcPaser.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.NpcPaser.OnRun">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.NumberParser.OnEnter">

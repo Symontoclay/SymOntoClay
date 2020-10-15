@@ -24,8 +24,8 @@ namespace SymOntoClay.Core.Internal
         StrongIdentifierValue HostName { get; }
         IndexedStrongIdentifierValue IndexedHostName { get; }
 
-        StrongIdentifierValue ApplicationName { get; }
-        IndexedStrongIdentifierValue IndexedApplicationName { get; }
+        StrongIdentifierValue NpcName { get; }
+        IndexedStrongIdentifierValue IndexedNpcName { get; }
 
         StrongIdentifierValue ClassName { get; }
         IndexedStrongIdentifierValue IndexedClassName { get; }

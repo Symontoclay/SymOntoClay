@@ -57,10 +57,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
-                        case KeyWordTokenKind.App:
+                        case KeyWordTokenKind.Npc:
                             {
                                 _context.Recovery(_currToken);
-                                var parser = new AppPaser(_context);
+                                var parser = new NpcPaser(_context);
                                 parser.Run();
                                 Result.Add(parser.Result);
                             }

@@ -61,7 +61,7 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStorage
                 }
                 else
                 {
-                    if (codeEntity.Kind == KindOfCodeEntity.App && codeEntity.CodeFile != null && codeEntity.CodeFile.IsMain)
+                    if (codeEntity.Kind == KindOfCodeEntity.Npc && codeEntity.CodeFile != null && codeEntity.CodeFile.IsMain)
                     {
                         _mainCodeEntity = codeEntity;
                     }

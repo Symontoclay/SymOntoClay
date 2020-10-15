@@ -19,7 +19,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         Unknown,
         World,
         Host,
-        App,
+        Npc,
         Class,
         Instance,
         InlineTrigger,

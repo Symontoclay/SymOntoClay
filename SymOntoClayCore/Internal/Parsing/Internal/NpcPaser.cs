@@ -19,17 +19,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
     /// <summary>
     /// It is parser for app.
     /// </summary>
-    public class AppPaser : BaseInternalParser
+    public class NpcPaser : BaseInternalParser
     {
         private enum State
         {
             Init,
-            GotApp,
+            GotNpc,
             GotName,
             ContentStarted
         }
 
-        public AppPaser(InternalParserContext context)
+        public NpcPaser(InternalParserContext context)
             : base(context)
         {
         }
@@ -45,7 +45,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #endif
             Result = CreateCodeEntity();
 
-            Result.Kind = KindOfCodeEntity.App;
+            Result.Kind = KindOfCodeEntity.Npc;
             Result.CodeFile = _context.CodeFile;            
 
             Result.ParentCodeEntity = CurrentCodeEntity;
@@ -84,8 +84,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.Init:
                     switch(_currToken.KeyWordTokenKind)
                     {
-                        case KeyWordTokenKind.App:
-                            _state = State.GotApp;
+                        case KeyWordTokenKind.Npc:
+                            _state = State.GotNpc;
                             break;
 
                         default:
@@ -93,7 +93,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotApp:
+                case State.GotNpc:
                     switch(_currToken.TokenKind)
                     {
                         case TokenKind.Word:

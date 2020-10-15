@@ -91,7 +91,7 @@ namespace SymOntoClay.Core.Internal.Serialization
 
         private void DetectMainCodeEntity(List<CodeEntity> source)
         {
-            var possibleMainCodeEntities = source.Where(p => p.Kind == KindOfCodeEntity.App || p.Kind == KindOfCodeEntity.Host || p.Kind == KindOfCodeEntity.World);
+            var possibleMainCodeEntities = source.Where(p => p.Kind == KindOfCodeEntity.Npc || p.Kind == KindOfCodeEntity.Host || p.Kind == KindOfCodeEntity.World);
 
 #if DEBUG
             //Log($"possibleMainCodeEntities (3) = {possibleMainCodeEntities.Count()}");
@@ -161,8 +161,8 @@ namespace SymOntoClay.Core.Internal.Serialization
                     AddSystemDefinedSettingsToHost(codeEntity);
                     break;
 
-                case KindOfCodeEntity.App:
-                    AddSystemDefinedSettingsToApp(codeEntity);
+                case KindOfCodeEntity.Npc:
+                    AddSystemDefinedSettingsToNpc(codeEntity);
                     break;
 
                 case KindOfCodeEntity.Class:
@@ -216,7 +216,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             codeEntity.InheritanceItems.Add(inheritanceItem);
         }
 
-        private void AddSystemDefinedSettingsToApp(CodeEntity codeEntity)
+        private void AddSystemDefinedSettingsToNpc(CodeEntity codeEntity)
         {
             var inheritanceItem = new InheritanceItem()
             {
@@ -224,7 +224,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             };
 
             inheritanceItem.SubName = codeEntity.Name;
-            inheritanceItem.SuperName = _context.CommonNamesStorage.ApplicationName;
+            inheritanceItem.SuperName = _context.CommonNamesStorage.NpcName;
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
 #if DEBUG
@@ -295,7 +295,7 @@ namespace SymOntoClay.Core.Internal.Serialization
                 case KindOfCodeEntity.Host:
                     break;
 
-                case KindOfCodeEntity.App:
+                case KindOfCodeEntity.Npc:
                     break;
 
                 case KindOfCodeEntity.Class:

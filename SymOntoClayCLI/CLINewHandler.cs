@@ -95,25 +95,25 @@ namespace SymOntoClay.CLI
                 Directory.CreateDirectory(modulesDirName);
             }
 
-            var appsDirName = Path.Combine(worldSpaceDirName, "Apps");
+            var npcsDirName = Path.Combine(worldSpaceDirName, "Npcs");
 
-            if (!Directory.Exists(appsDirName))
+            if (!Directory.Exists(npcsDirName))
             {
-                Directory.CreateDirectory(appsDirName);
+                Directory.CreateDirectory(npcsDirName);
             }
 
-            CreateNPC(command, appsDirName);
+            CreateNPC(command, npcsDirName);
         }
 
-        private void CreateNPC(CLICommand command, string appsDirName)
+        private void CreateNPC(CLICommand command, string npcsDirName)
         {
             var projectName = command.ProjectName;
 
-            var projectDirName = Path.Combine(appsDirName, projectName);
+            var projectDirName = Path.Combine(npcsDirName, projectName);
 
             if(Directory.Exists(projectDirName))
             {
-                ConsoleWrapper.WriteError($"The project '{projectName}' already exists!");
+                ConsoleWrapper.WriteError($"The NPC '{projectName}' already exists!");
                 return;
             }
             else
@@ -128,7 +128,7 @@ namespace SymOntoClay.CLI
             var appFileName = Path.Combine(projectDirName, $"{projectName}.soc");
 
             var sb = new StringBuilder();
-            sb.Append($"app {projectName}");
+            sb.Append($"npc {projectName}");
             sb.AppendLine(" {");
             sb.AppendLine();
             sb.AppendLine("}");

@@ -40,7 +40,7 @@ namespace TestSandbox.CodeExecution
             };
 
             applicationInheritanceItem.SubName = NameHelper.CreateName("PeaseKeeper", context.Dictionary);
-            applicationInheritanceItem.SuperName = context.CommonNamesStorage.ApplicationName;
+            applicationInheritanceItem.SuperName = context.CommonNamesStorage.NpcName;
             applicationInheritanceItem.Rank = new LogicalValue(1.0F);
 
             context.Storage.GlobalStorage.InheritanceStorage.SetInheritance(applicationInheritanceItem);

@@ -1,4 +1,4 @@
-﻿app PeaceKeeper is [0.5] exampleClass
+﻿npc PeaceKeeper is [0.5] exampleClass
 {
     on Init => {
 	     "Begin" >> @>log;

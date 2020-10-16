@@ -108,6 +108,8 @@ namespace SymOntoClay.CLI
             ConsoleWrapper.WriteText("exit - ends running NPC.");
             ConsoleWrapper.WriteText("new <NPC name> - creates new NPC in new or existing worldspace. For creating NPC in existing worldspace runs command 'new' in worldspace directory.");
             ConsoleWrapper.WriteText("n - alias of 'new' command.");
+            ConsoleWrapper.WriteText("version - prints current version of SymOntoClay.");
+            ConsoleWrapper.WriteText("v - alias of 'version' command.");
         }
 
         public void Dispose()

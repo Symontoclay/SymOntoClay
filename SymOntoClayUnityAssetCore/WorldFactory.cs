@@ -20,7 +20,7 @@ namespace SymOntoClay.UnityAsset.Core
         private static readonly IWorld __instance = new WorldCore();
 
         /// <summary>
-        /// Gets instance of the class.
+        /// Gets instance of game world.
         /// </summary>
         public static IWorld WorldInstance => __instance;
     }

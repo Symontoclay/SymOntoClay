@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>SymOntoClayCoreHelper</name>
+        <name>SymOntoClay.CoreHelper</name>
     </assembly>
     <members>
         <member name="M:SymOntoClay.CoreHelper.DebugHelpers.DiagnosticsCallInfo.ToString">

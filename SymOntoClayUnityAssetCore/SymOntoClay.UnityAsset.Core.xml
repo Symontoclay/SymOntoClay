@@ -981,7 +981,7 @@
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.WorldFactory.WorldInstance">
             <summary>
-            Gets instance of the class.
+            Gets instance of game world.
             </summary>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.WorldSettings">

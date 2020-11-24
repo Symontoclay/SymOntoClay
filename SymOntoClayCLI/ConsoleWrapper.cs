@@ -10,6 +10,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace SymOntoClay.CLI
@@ -24,6 +25,40 @@ namespace SymOntoClay.CLI
         private readonly static ConsoleColor _defaultForegroundColor;
         private readonly static object _lockObj = new object();
 
+#if DEBUG
+        public static bool WriteLogChannelToTextFileAsParallel 
+        { 
+            get
+            {
+                lock (_lockObj)
+                {
+                    return _writeLogChannelToTextFileAsParallel;
+                }
+            }
+
+            set
+            {
+                lock (_lockObj)
+                {
+                    if(_writeLogChannelToTextFileAsParallel == value)
+                    {
+                        return;
+                    }
+
+                    _writeLogChannelToTextFileAsParallel = value;
+
+                    if(_writeLogChannelToTextFileAsParallel)
+                    {
+                        var now = DateTime.Now;
+                        _parallelLogChannelTextFileName = Path.Combine(Directory.GetCurrentDirectory(), $"parallelLogChannelTextFile_{now:ddMMyyyy-HHmmss}.log");
+                    }
+                }
+            }
+        }
+
+        private static bool _writeLogChannelToTextFileAsParallel;
+        private static string _parallelLogChannelTextFileName;
+#endif
         public static void WriteText(string text)
         {
             lock(_lockObj)
@@ -39,6 +74,12 @@ namespace SymOntoClay.CLI
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine(text);
+
+                if(_writeLogChannelToTextFileAsParallel)
+                {
+                    File.AppendAllLines(_parallelLogChannelTextFileName, new List<string>() { text });
+                }
+
                 Console.ForegroundColor = _defaultForegroundColor;
             }
         }

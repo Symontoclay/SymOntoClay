@@ -13,6 +13,7 @@ using NLog;
 using SymOntoClay.CoreHelper;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace SymOntoClay.CLI
@@ -26,7 +27,7 @@ namespace SymOntoClay.CLI
         public static CLICommand Parse(string[] args)
         {
 #if DEBUG
-            //_logger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
+            _logger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 #endif
 
             var firstParam = args[0].ToLower();
@@ -59,6 +60,11 @@ namespace SymOntoClay.CLI
 
             switch(args.Length)
             {
+                case 1:
+                    command.InputDir = Directory.GetCurrentDirectory();
+                    command.IsValid = true;
+                    return command;
+
                 case 2:
                     {
                         var inputFile = args[1];

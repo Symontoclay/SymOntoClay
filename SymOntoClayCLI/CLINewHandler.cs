@@ -8,6 +8,7 @@ SymOntoClay is distributed in the hope that it will be useful, but WITHOUT ANY W
 
 You should have received a copy of the GNU Lesser General Public License along with this library; if not, see <https://www.gnu.org/licenses/>*/
 
+using Newtonsoft.Json;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -64,7 +65,9 @@ namespace SymOntoClay.CLI
 
             if(!File.Exists(wSpaceFileName))
             {
-                File.WriteAllText(wSpaceFileName, "{}");
+                var wSpaceJsonFile = new WorldJsonFile() { MainNpc = projectName };
+
+                File.WriteAllText(wSpaceFileName, JsonConvert.SerializeObject(wSpaceJsonFile, Formatting.Indented));
             }            
 
             var worldDirName = Path.Combine(worldSpaceDirName, "World");
@@ -79,7 +82,7 @@ namespace SymOntoClay.CLI
             if (!File.Exists(worldFileName))
             {
                 File.WriteAllText(worldFileName, "{}");
-            }            
+            }
 
             var hostsDirName = Path.Combine(worldSpaceDirName, "Hosts");
 
@@ -128,9 +131,11 @@ namespace SymOntoClay.CLI
             var appFileName = Path.Combine(projectDirName, $"{projectName}.soc");
 
             var sb = new StringBuilder();
-            sb.Append($"npc {projectName}");
-            sb.AppendLine(" {");
-            sb.AppendLine();
+            sb.AppendLine($"npc {projectName}");
+            sb.AppendLine("{");
+            sb.AppendLine("    on Init =>");
+            sb.AppendLine("    {");
+            sb.AppendLine("    }");
             sb.AppendLine("}");
             sb.AppendLine();
 

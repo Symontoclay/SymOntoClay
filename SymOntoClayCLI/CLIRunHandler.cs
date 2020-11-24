@@ -12,6 +12,7 @@ using NLog;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading;
 
@@ -55,6 +56,8 @@ namespace SymOntoClay.CLI
             settings.HostFile = targetFiles.WorldFile;
 
             //settings.InvokerInMainThread = invokingInMainThread;
+
+            //var logDir = Path.Combine(Directory.GetCurrentDirectory(), "NpcLogs");
 
             settings.Logging = new LoggingSettings()
             {

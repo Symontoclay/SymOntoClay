@@ -22,6 +22,7 @@ using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -51,6 +52,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            TstEnvironmentVariables();
             //TstCLINewHandler();
             //TstCLIRunHandler();
             //TstLogicalDatabase();
@@ -76,10 +78,22 @@ namespace TestSandbox
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstEnvironmentVariables()
+        {
+            _logger.Log("Begin");
+
+            foreach (DictionaryEntry kvpItem in Environment.GetEnvironmentVariables())
+            {
+                _logger.Log($"kvpItem.Key = '{kvpItem.Key}';kvpItem.Value = '{kvpItem.Value}'");
+            }
+
+            _logger.Log("End");
         }
 
         private static void TstCLINewHandler()
@@ -105,9 +119,16 @@ namespace TestSandbox
             _logger.Log("Begin");
 
             var args = new List<string>() {
-                 "run",
-                 "%USERPROFILE%/source/repos/SymOntoClay/TestSandbox/Source/Apps/PeaceKeeper/PeaceKeeper.npc"
+                 "run"//,
+                 //"%USERPROFILE%/source/repos/SymOntoClay/TestSandbox/Source/Npcs/PeaceKeeper/PeaceKeeper.npc"
+                 //"%USERPROFILE%/source/repos/SymOntoClay/TestSandbox/Source"
             }.ToArray();
+
+            var targetDirectory = EVPath.Normalize("%USERPROFILE%/source/repos/SymOntoClay/TestSandbox/Source");
+
+            _logger.Log($"targetDirectory = {targetDirectory}");
+
+            Directory.SetCurrentDirectory(targetDirectory);
 
             var command = CLICommandParser.Parse(args);
 

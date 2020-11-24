@@ -93,20 +93,25 @@ namespace SymOntoClay.Core.Internal.Serialization
         {
             var possibleMainCodeEntities = source.Where(p => p.Kind == KindOfCodeEntity.Npc || p.Kind == KindOfCodeEntity.Host || p.Kind == KindOfCodeEntity.World);
 
+            var count = possibleMainCodeEntities.Count();
+
 #if DEBUG
-            //Log($"possibleMainCodeEntities (3) = {possibleMainCodeEntities.Count()}");
+            //Log($"count = {count}");
 
             //Log($"possibleMainCodeEntities = {possibleMainCodeEntities.WriteListToString()}");
 #endif
 
-            if(possibleMainCodeEntities.Count() == 1)
+            if (count == 1)
             {
                 var possibleMainCodeEntity = possibleMainCodeEntities.Single();
                 possibleMainCodeEntity.CodeFile.IsMain = true;
             }
             else
             {
-                throw new NotImplementedException();
+                if(count > 1)
+                {
+                    throw new NotImplementedException();
+                }                
             }
         }
 

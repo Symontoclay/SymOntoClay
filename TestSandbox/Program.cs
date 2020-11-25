@@ -88,9 +88,30 @@ namespace TestSandbox
         {
             _logger.Log("Begin");
 
-            foreach (DictionaryEntry kvpItem in Environment.GetEnvironmentVariables())
+            //foreach (DictionaryEntry kvpItem in Environment.GetEnvironmentVariables())
+            //{
+            //    _logger.Log($"kvpItem.Key = '{kvpItem.Key}';kvpItem.Value = '{kvpItem.Value}'");
+            //}
+
+            var path = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.User);
+
+            _logger.Log($"path = '{path}'");
+
+            var pathsList = path.Split(';').Select(p => p.Trim()).Where(p => !string.IsNullOrWhiteSpace(p));
+
+            _logger.Log($"pathsList = {JsonConvert.SerializeObject(pathsList, Formatting.Indented)}");
+
+            var currDir = Directory.GetCurrentDirectory();
+
+            _logger.Log($"currDir = {currDir}");
+
+            if(!pathsList.Contains(currDir))
             {
-                _logger.Log($"kvpItem.Key = '{kvpItem.Key}';kvpItem.Value = '{kvpItem.Value}'");
+                path = $"{path};{currDir}";
+
+                _logger.Log($"path (after) = '{path}'");
+
+                Environment.SetEnvironmentVariable("Path", path, EnvironmentVariableTarget.User);
             }
 
             _logger.Log("End");

@@ -74,12 +74,12 @@ namespace SymOntoClay.CLI
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine(text);
-
+#if DEBUG
                 if(_writeLogChannelToTextFileAsParallel)
                 {
                     File.AppendAllLines(_parallelLogChannelTextFileName, new List<string>() { text });
                 }
-
+#endif
                 Console.ForegroundColor = _defaultForegroundColor;
             }
         }

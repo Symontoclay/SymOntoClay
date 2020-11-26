@@ -29,13 +29,16 @@ namespace SymOntoClay.Core.Internal.IndexedData
         /// <inheritdoc/>
         public override void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
+#if DEBUG
             var senderIndexedRuleInstance = queryExecutingCard.SenderIndexedRuleInstance;
             var senderIndexedRulePart = queryExecutingCard.SenderIndexedRulePart;
-
+#endif
             var leftQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
+#if DEBUG
             leftQueryExecutingCard.SenderIndexedRuleInstance = senderIndexedRuleInstance;
             leftQueryExecutingCard.SenderIndexedRulePart = senderIndexedRulePart;
             leftQueryExecutingCard.SenderExpressionNode = this;
+#endif
             leftQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
             Left.FillExecutingCard(leftQueryExecutingCard, dataSource, options);
 
@@ -57,9 +60,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 foreach (var leftResultOfQueryToRelation in leftQueryExecutingCardResultsOfQueryToRelationList)
                 {
                     var rightQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
+#if DEBUG
                     rightQueryExecutingCard.SenderIndexedRuleInstance = senderIndexedRuleInstance;
                     rightQueryExecutingCard.SenderIndexedRulePart = senderIndexedRulePart;
                     rightQueryExecutingCard.SenderExpressionNode = this;
+#endif
                     rightQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
                     Right.FillExecutingCard(rightQueryExecutingCard, dataSource, options);
 
@@ -130,7 +135,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
                                 if (intersectOfVarsKeysList.Contains(keyOfVars))
                                 {
                                     var leftVarItem = leftVarsDict[keyOfVars];
-                                    var resultOfComparison = ExpressionNodeHelper.Compare(varItem.FoundExpression, leftVarItem.FoundExpression, null, options.Logger);
+                                    var resultOfComparison = ExpressionNodeHelper.Compare(varItem.FoundExpression, leftVarItem.FoundExpression, null
+#if DEBUG
+                                        , options.Logger
+#endif
+                                        );
 
                                     if (resultOfComparison)
                                     {
@@ -173,9 +182,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
             else
             {
                 var rightQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
+#if DEBUG
                 rightQueryExecutingCard.SenderIndexedRuleInstance = senderIndexedRuleInstance;
                 rightQueryExecutingCard.SenderIndexedRulePart = senderIndexedRulePart;
                 rightQueryExecutingCard.SenderExpressionNode = this;
+#endif
                 rightQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
                 Right.FillExecutingCard(rightQueryExecutingCard, dataSource, options);
 

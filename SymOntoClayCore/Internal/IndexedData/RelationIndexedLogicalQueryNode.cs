@@ -146,8 +146,10 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
         private void NFillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
+#if DEBUG
             var senderIndexedRuleInstance = queryExecutingCard.SenderIndexedRuleInstance;
             var senderIndexedRulePart = queryExecutingCard.SenderIndexedRulePart;
+#endif
 
             var indexedRulePartsOfFactsList = dataSource.GetIndexedRulePartOfFactsByKeyOfRelation(Key);
 
@@ -185,9 +187,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
                     queryExecutingCardForTargetFact.CountParams = CountParams;
                     queryExecutingCardForTargetFact.VarsInfoList = VarsInfoList;
                     queryExecutingCardForTargetFact.KnownInfoList = targetKnownInfoList;
+#if DEBUG
                     queryExecutingCardForTargetFact.SenderIndexedRuleInstance = senderIndexedRuleInstance;
                     queryExecutingCardForTargetFact.SenderIndexedRulePart = senderIndexedRulePart;
                     queryExecutingCardForTargetFact.SenderExpressionNode = this;
+#endif
 
                     indexedRulePartsOfFacts.FillExecutingCardForCallingFromRelationForFact(queryExecutingCardForTargetFact, dataSource, options);
 
@@ -226,10 +230,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
                     queryExecutingCardForTargetRule.CountParams = CountParams;
                     queryExecutingCardForTargetRule.VarsInfoList = VarsInfoList;
                     queryExecutingCardForTargetRule.KnownInfoList = targetKnownInfoList;
+#if DEBUG
                     queryExecutingCardForTargetRule.SenderIndexedRuleInstance = senderIndexedRuleInstance;
                     queryExecutingCardForTargetRule.SenderIndexedRulePart = senderIndexedRulePart;
                     queryExecutingCardForTargetRule.SenderExpressionNode = this;
-
+#endif
                     indexedRulePartsOfRule.FillExecutingCardForCallingFromRelationForProduction(queryExecutingCardForTargetRule, dataSource, options);
 
 #if DEBUG

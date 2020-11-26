@@ -186,7 +186,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
                         //options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
 #endif
 
-                        var resultOfComparison = CompareKnownInfoAndExpressionNode(knownInfo, paramOfTargetRelation, additionalKeys, options.Logger);
+                        var resultOfComparison = CompareKnownInfoAndExpressionNode(knownInfo, paramOfTargetRelation, additionalKeys
+#if DEBUG
+                            , options.Logger
+#endif
+                            );
 
 #if DEBUG
                         //options.Logger.Log($"resultOfComparison = {resultOfComparison}");
@@ -293,11 +297,19 @@ namespace SymOntoClay.Core.Internal.IndexedData
             }
         }
 
-        private bool CompareKnownInfoAndExpressionNode(QueryExecutingCardAboutKnownInfo knownInfo, BaseIndexedLogicalQueryNode expressionNode, List<ulong> additionalKeys, IEntityLogger logger)
+        private bool CompareKnownInfoAndExpressionNode(QueryExecutingCardAboutKnownInfo knownInfo, BaseIndexedLogicalQueryNode expressionNode, List<ulong> additionalKeys
+#if DEBUG
+            , IEntityLogger logger
+#endif
+            )
         {
             var knownInfoExpression = knownInfo.Expression;
 
-            return ExpressionNodeHelper.Compare(knownInfoExpression, expressionNode, additionalKeys, logger);
+            return ExpressionNodeHelper.Compare(knownInfoExpression, expressionNode, additionalKeys
+#if DEBUG
+                , logger
+#endif
+                );
         }
 
         public void FillExecutingCardForCallingFromRelationForProduction(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
@@ -306,9 +318,10 @@ namespace SymOntoClay.Core.Internal.IndexedData
             //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
 #endif
 
+#if DEBUG
             var senderIndexedRuleInstance = queryExecutingCard.SenderIndexedRuleInstance;
             var senderIndexedRulePart = queryExecutingCard.SenderIndexedRulePart;
-
+#endif
             var targetRelationsList = RelationsDict[queryExecutingCard.TargetRelation];
 
 #if DEBUG
@@ -370,8 +383,10 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 var queryExecutingCardForNextPart = new QueryExecutingCardForIndexedPersistLogicalData();
                 queryExecutingCardForNextPart.VarsInfoList = targetRelation.VarsInfoList;
                 queryExecutingCardForNextPart.KnownInfoList = targetKnownInfoList;
+#if DEBUG
                 queryExecutingCardForNextPart.SenderIndexedRuleInstance = queryExecutingCard.SenderIndexedRuleInstance;
                 queryExecutingCardForNextPart.SenderIndexedRulePart = this;
+#endif
                 nextPart.FillExecutingCardForCallingFromOtherPart(queryExecutingCardForNextPart, dataSource, options);
 
 #if DEBUG
@@ -472,8 +487,10 @@ namespace SymOntoClay.Core.Internal.IndexedData
             //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
 #endif
             var queryExecutingCardForExpression = new QueryExecutingCardForIndexedPersistLogicalData();
+#if DEBUG
             queryExecutingCardForExpression.SenderIndexedRuleInstance = queryExecutingCard.SenderIndexedRuleInstance;
             queryExecutingCardForExpression.SenderIndexedRulePart = this;
+#endif
             queryExecutingCardForExpression.KnownInfoList = queryExecutingCard.KnownInfoList;
             Expression.FillExecutingCard(queryExecutingCardForExpression, dataSource, options);
 

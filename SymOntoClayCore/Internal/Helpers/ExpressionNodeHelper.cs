@@ -21,7 +21,11 @@ namespace SymOntoClay.Core.Internal.Helpers
 {
     public static class ExpressionNodeHelper
     {
-        public static bool Compare(BaseIndexedLogicalQueryNode expressionNode1, BaseIndexedLogicalQueryNode expressionNode2, List<ulong> additionalKeys, IEntityLogger logger)
+        public static bool Compare(BaseIndexedLogicalQueryNode expressionNode1, BaseIndexedLogicalQueryNode expressionNode2, List<ulong> additionalKeys
+#if DEBUG
+            , IEntityLogger logger
+#endif
+            )
         {
 #if DEBUG
             //logger.Log($"(expressionNode1 == null) = {expressionNode1 == null} (expressionNode2 == null) = {expressionNode2 == null}");

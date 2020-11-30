@@ -48,7 +48,7 @@ namespace TestSandbox.Helpers
 
             worldSettings.TmpDir = Path.Combine(Directory.GetCurrentDirectory(), "Tmp");
 
-            worldSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\World\World.txt");
+            worldSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\World\HelloWorld.world");
 
             worldSettings.Logging = new LoggingSettings()
             {

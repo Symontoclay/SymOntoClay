@@ -52,10 +52,10 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-            TstEnvironmentVariables();
+            //TstEnvironmentVariables();
             //TstCLINewHandler();
             //TstCLIRunHandler();
-            //TstLogicalDatabase();
+            TstLogicalDatabase();
             //TstProcessInfoChildren();
             //TstWaitIProcessInfo();
             //TstKindOfParametersSсaffolder();

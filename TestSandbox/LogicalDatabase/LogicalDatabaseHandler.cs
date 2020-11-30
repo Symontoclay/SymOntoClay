@@ -100,13 +100,13 @@ namespace TestSandbox.LogicalDatabase
 
             var queryStr = string.Empty;
 
-            queryStr = "{: can(bird, fly) :}";
+            queryStr = "{: >: { can(bird, fly) } :}";
             ParseQueryString(queryStr);
 
             queryStr = "{: bird(#Alisa_12) :}";
             ParseQueryString(queryStr);
 
-            queryStr = "{: can(#Alisa_12, ?x) :}";
+            queryStr = "{: >: { can(#Alisa_12, ?x) } :}";
             Search(queryStr);
 
             queryStr = "{: can(#Alisa_12, fly) :}";

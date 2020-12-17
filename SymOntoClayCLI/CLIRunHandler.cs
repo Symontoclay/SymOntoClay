@@ -13,6 +13,7 @@ using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
 using System.Text;
 using System.Threading;
 
@@ -80,7 +81,7 @@ namespace SymOntoClay.CLI
             //npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
             npcSettings.LogicFile = targetFiles.LogicFile;
             npcSettings.HostListener = platformListener;
-            //npcSettings.PlatformSupport = new TstPlatformSupport();
+            npcSettings.PlatformSupport = new PlatformSupportCLIStub();
 
 #if DEBUG
             //_logger.Info($"npcSettings = {npcSettings}");
@@ -118,6 +119,42 @@ namespace SymOntoClay.CLI
         public void Dispose()
         {
             world?.Dispose();
+        }
+
+        [BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
+        public void GoToImpl(CancellationToken cancellationToken,
+             [EndpointParam("To", KindOfEndpointParam.Position)] Vector3 point,
+             float speed = 12)
+        {
+            //var name = NameHelper.GetNewEntityNameString();
+            var name = string.Empty;
+
+            //_logger.Log($"Begin {name}");
+
+            //_logger.Log($"{name} point = {point}");
+            //_logger.Log($"{name} speed = {speed}");
+
+            var n = 0;
+
+            while (true)
+            {
+                n++;
+
+                if (n > 10)
+                {
+                    break;
+                }
+
+                Thread.Sleep(1000);
+
+                //_logger.Log($"{name} Hi! n = {n}");
+
+                cancellationToken.ThrowIfCancellationRequested();
+            }
+
+            //Thread.Sleep(5000);
+
+            //_logger.Log($"End {name}");
         }
     }
 }

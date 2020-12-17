@@ -21,13 +21,13 @@ namespace SymOntoClay.CLI
     public static class CLICommandParser
     {
 #if DEBUG
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static CLICommand Parse(string[] args)
         {
 #if DEBUG
-            _logger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
+            //_logger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 #endif
 
             var firstParam = args[0].ToLower();

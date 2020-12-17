@@ -20,7 +20,7 @@ namespace SymOntoClay.CLI
     public static class RunCommandFilesSearcher
     {
 #if DEBUG
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static RunCommandFiles Run(CLICommand command)
@@ -36,7 +36,7 @@ namespace SymOntoClay.CLI
                     var inputNpcFile = GetNpcFileNameInCurrentDir(command.InputDir);
 
 #if DEBUG
-                    _logger.Info($"inputNpcFile = {inputNpcFile}");
+                    //_logger.Info($"inputNpcFile = {inputNpcFile}");
 #endif
 
                     if(string.IsNullOrWhiteSpace(inputNpcFile))
@@ -65,19 +65,19 @@ namespace SymOntoClay.CLI
         private static RunCommandFiles GetRunCommandFilesByWorldFile(FileInfo wSpaceFile)
         {
 #if DEBUG
-            _logger.Info($"wSpaceFile = {wSpaceFile}");
+            //_logger.Info($"wSpaceFile = {wSpaceFile}");
 #endif
 
             var wSpaceJsonFile = WorldJsonFile.LoadFromFile(wSpaceFile.FullName);
 
 #if DEBUG
-            _logger.Info($"wSpaceJsonFile = {wSpaceJsonFile}");
+            //_logger.Info($"wSpaceJsonFile = {wSpaceJsonFile}");
 #endif
 
             var mainNpc = wSpaceJsonFile.MainNpc;
 
 #if DEBUG
-            _logger.Info($"mainNpc = {mainNpc}");
+            //_logger.Info($"mainNpc = {mainNpc}");
 #endif
 
             if (string.IsNullOrWhiteSpace(mainNpc))
@@ -88,13 +88,13 @@ namespace SymOntoClay.CLI
             var npcsBaseDir = Path.Combine(wSpaceFile.DirectoryName, "Npcs");
 
 #if DEBUG
-            _logger.Info($"npcsBaseDir = {npcsBaseDir}");
+            //_logger.Info($"npcsBaseDir = {npcsBaseDir}");
 #endif
 
             var inputFile = Path.Combine(npcsBaseDir, mainNpc, $"{mainNpc}.npc");
 
 #if DEBUG
-            _logger.Info($"inputFile = {inputFile}");
+            //_logger.Info($"inputFile = {inputFile}");
 #endif
 
             if(!File.Exists(inputFile))
@@ -108,7 +108,7 @@ namespace SymOntoClay.CLI
         private static string GetNpcFileNameInCurrentDir(string inputDir)
         {
 #if DEBUG
-            _logger.Info($"inputDir = {inputDir}");
+            //_logger.Info($"inputDir = {inputDir}");
 #endif
 
             var filesList = Directory.EnumerateFiles(inputDir).Where(p => p.EndsWith(".npc"));
@@ -131,7 +131,7 @@ namespace SymOntoClay.CLI
         private static RunCommandFiles GetRunCommandFilesByInputFile(string inputFile)
         {
 #if DEBUG
-            _logger.Info($"inputFile = {inputFile}");
+            //_logger.Info($"inputFile = {inputFile}");
 #endif
 
             var fileInfo = new FileInfo(inputFile);
@@ -139,7 +139,7 @@ namespace SymOntoClay.CLI
             var wSpaceFile = FindWSpaceFile(fileInfo.Directory);
 
 #if DEBUG
-            _logger.Info($"wSpaceFile = {wSpaceFile}");
+            //_logger.Info($"wSpaceFile = {wSpaceFile}");
 #endif
 
             if (wSpaceFile == null)
@@ -153,8 +153,8 @@ namespace SymOntoClay.CLI
         private static RunCommandFiles NGetRunCommandFiles(string inputFile, FileInfo wSpaceFile)
         {
 #if DEBUG
-            _logger.Info($"inputFile = {inputFile}");
-            _logger.Info($"wSpaceFile = {wSpaceFile}");
+            //_logger.Info($"inputFile = {inputFile}");
+            //_logger.Info($"wSpaceFile = {wSpaceFile}");
 #endif
 
             var result = new RunCommandFiles();
@@ -164,13 +164,13 @@ namespace SymOntoClay.CLI
             var baseDir = wSpaceFile.Directory.FullName;
 
 #if DEBUG
-            _logger.Info($"baseDir = {baseDir}");
+            //_logger.Info($"baseDir = {baseDir}");
 #endif
 
             var worldDir = Path.Combine(baseDir, "World");
 
 #if DEBUG
-            _logger.Info($"worldDir = {worldDir}");
+            //_logger.Info($"worldDir = {worldDir}");
 #endif
 
             var worldDirInfo = new DirectoryInfo(worldDir);
@@ -178,7 +178,7 @@ namespace SymOntoClay.CLI
             var worldFile = worldDirInfo.EnumerateFiles().Single(p => p.Name.EndsWith(".world"));
 
 #if DEBUG
-            _logger.Info($"worldFile = {worldFile}");
+            //_logger.Info($"worldFile = {worldFile}");
 #endif
 
             result.WorldFile = worldFile.FullName;
@@ -186,19 +186,19 @@ namespace SymOntoClay.CLI
             result.SharedModulesDir = Path.Combine(baseDir, "Modules");
 
 #if DEBUG
-            _logger.Info($"result.SharedModulesDir = {result.SharedModulesDir}");
+            //_logger.Info($"result.SharedModulesDir = {result.SharedModulesDir}");
 #endif
 
             result.ImagesRootDir = Path.Combine(baseDir, "Images");
 
 #if DEBUG
-            _logger.Info($"result.ImagesRootDir = {result.ImagesRootDir}");
+            //_logger.Info($"result.ImagesRootDir = {result.ImagesRootDir}");
 #endif
 
             result.TmpDir = Path.Combine(baseDir, "Tmp");
 
 #if DEBUG
-            _logger.Info($"result.TmpDir = {result.TmpDir}");
+            //_logger.Info($"result.TmpDir = {result.TmpDir}");
 #endif
 
             return result;

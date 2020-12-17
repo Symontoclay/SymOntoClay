@@ -7,6 +7,8 @@
 
 		 insert {: >: { bird (#1234) } :};
 
+		 exampleClass is not human >> @>log;
+
 		 "End" >> @>log;
 	}
 }

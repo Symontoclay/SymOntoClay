@@ -195,7 +195,7 @@ namespace SymOntoClay.CLI
             //_logger.Info($"result.ImagesRootDir = {result.ImagesRootDir}");
 #endif
 
-            result.TmpDir = Path.Combine(baseDir, "Tmp");
+            result.TmpDir = Path.Combine(Environment.GetEnvironmentVariable("TMP"), "SymOntoClay");
 
 #if DEBUG
             //_logger.Info($"result.TmpDir = {result.TmpDir}");

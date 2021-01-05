@@ -46,7 +46,7 @@ namespace TestSandbox.Helpers
 
             worldSettings.ImagesRootDir = Path.Combine(Directory.GetCurrentDirectory(), "Images");
 
-            worldSettings.TmpDir = Path.Combine(Directory.GetCurrentDirectory(), "Tmp");
+            worldSettings.TmpDir = Path.Combine(Environment.GetEnvironmentVariable("TMP"), "SymOntoClay");
 
             worldSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\World\HelloWorld.world");
 
@@ -66,7 +66,7 @@ namespace TestSandbox.Helpers
             var worldContext = new WorldContext();
             worldContext.SetSettings(worldSettings);
 
-            var npcSettings = new BipedNPCSettings();
+            var npcSettings = new HumanoidNPCSettings();
             npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
             npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
             npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Apps\PeaceKeeper\PeaceKeeper.npc");

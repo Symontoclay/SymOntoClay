@@ -43,6 +43,6 @@ namespace SymOntoClay.UnityAsset.Core
         /// Gets list of manual controlled game objects by the NPC or Player.
         /// </summary>
         /// <returns>List of manual controlled game objects.</returns>
-        IList<IBipedManualControlledObject> GetManualControlledObjects();
+        IList<IHumanoidManualControlledObject> GetManualControlledObjects();
     }
 }

@@ -11,7 +11,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal;
-using SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC;
+using SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.Place;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.Player;
@@ -46,9 +46,9 @@ namespace SymOntoClay.UnityAsset.Core.World
         public IEntityLogger Logger => _context.Logger;
 
         /// <inheritdoc/>
-        public IBipedNPC GetBipedNPC(BipedNPCSettings settings)
+        public IHumanoidNPC GetHumanoidNPC(HumanoidNPCSettings settings)
         {
-            return new BipedNPCImplementation(settings, _context);
+            return new HumanoidNPCImplementation(settings, _context);
         }
 
         /// <inheritdoc/>

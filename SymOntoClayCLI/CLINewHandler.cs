@@ -40,7 +40,7 @@ namespace SymOntoClay.CLI
 
         private void CreateWithWSpaceFile(CLICommand command, FileInfo wSpaceFile)
         {
-            var appDir = wSpaceFile.Directory.GetDirectories().SingleOrDefault(p => p.Name == "Apps");
+            var appDir = wSpaceFile.Directory.GetDirectories().SingleOrDefault(p => p.Name == "Npcs");
 
             if(appDir == null)
             {

@@ -16,11 +16,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
+namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 {
-    public class BipedNPCGameComponent: BaseManualControllingGameComponent
+    public class HumanoidNPCGameComponent: BaseManualControllingGameComponent
     {
-        public BipedNPCGameComponent(BipedNPCSettings settings, IWorldCoreGameComponentContext worldContext)
+        public HumanoidNPCGameComponent(HumanoidNPCSettings settings, IWorldCoreGameComponentContext worldContext)
             : base(settings, worldContext)
         {
             try

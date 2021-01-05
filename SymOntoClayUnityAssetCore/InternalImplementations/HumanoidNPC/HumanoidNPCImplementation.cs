@@ -16,16 +16,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
+namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 {
     /// <inheritdoc/>
-    public class BipedNPCImplementation: IBipedNPC
+    public class HumanoidNPCImplementation: IHumanoidNPC
     {
-        private readonly BipedNPCGameComponent _gameComponent;
+        private readonly HumanoidNPCGameComponent _gameComponent;
 
-        public BipedNPCImplementation(BipedNPCSettings settings, IWorldCoreGameComponentContext worldContext)
+        public HumanoidNPCImplementation(HumanoidNPCSettings settings, IWorldCoreGameComponentContext worldContext)
         {
-            _gameComponent = new BipedNPCGameComponent(settings, worldContext);
+            _gameComponent = new HumanoidNPCGameComponent(settings, worldContext);
         }
 
         /// <inheritdoc/>
@@ -53,20 +53,20 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC
         }
 
         /// <inheritdoc/>
-        public IList<IBipedManualControlledObject> GetManualControlledObjects()
+        public IList<IHumanoidManualControlledObject> GetManualControlledObjects()
         {
             var initialResultList = _gameComponent.GetManualControlledObjects();
 
             if(initialResultList.IsNullOrEmpty())
             {
-                return new List<IBipedManualControlledObject>();
+                return new List<IHumanoidManualControlledObject>();
             }
 
-            var result = new List<IBipedManualControlledObject>();
+            var result = new List<IHumanoidManualControlledObject>();
 
             foreach(var initialResultItem in initialResultList)
             {
-                result.Add(new BipedManualControlledObject(initialResultItem.GameObject, initialResultItem.Devices));
+                result.Add(new HumanoidManualControlledObject(initialResultItem.GameObject, initialResultItem.Devices));
             }
 
             return result;

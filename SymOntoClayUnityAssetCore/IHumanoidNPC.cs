@@ -8,28 +8,22 @@ SymOntoClay is distributed in the hope that it will be useful, but WITHOUT ANY W
 
 You should have received a copy of the GNU Lesser General Public License along with this library; if not, see <https://www.gnu.org/licenses/>*/
 
+using SymOntoClay.CoreHelper;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
-namespace SymOntoClay.UnityAsset.Core.InternalImplementations
+namespace SymOntoClay.UnityAsset.Core
 {
-    public class BipedManualControlledObject : IBipedManualControlledObject
+    /// <summary>
+    /// Represents biped NPC (Non-Player Character)
+    /// </summary>
+    public interface IHumanoidNPC: IManualControlling, IWorldComponent
     {
-        public BipedManualControlledObject(IGameObject gameObject, IList<int> devices)
-        {
-            _gameObject = gameObject;
-            _devices = devices?.Select(p => (DeviceOfBiped)p).ToList();
-        }
-
-        private readonly IGameObject _gameObject;
-        private readonly IList<DeviceOfBiped> _devices;
-
-        /// <inheritdoc/>
-        public IGameObject GameObject => _gameObject;
-
-        /// <inheritdoc/>
-        public IList<DeviceOfBiped> Devices => _devices;
+        /// <summary>
+        /// Gets or sets value of enable logging.
+        /// It alows enable or disable logging or remote connection for the NPC.
+        /// </summary>
+        bool EnableLogging { get; set; }
     }
 }

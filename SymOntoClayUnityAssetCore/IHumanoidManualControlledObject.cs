@@ -8,7 +8,6 @@ SymOntoClay is distributed in the hope that it will be useful, but WITHOUT ANY W
 
 You should have received a copy of the GNU Lesser General Public License along with this library; if not, see <https://www.gnu.org/licenses/>*/
 
-using SymOntoClay.CoreHelper;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,14 +15,18 @@ using System.Text;
 namespace SymOntoClay.UnityAsset.Core
 {
     /// <summary>
-    /// Represents biped NPC (Non-Player Character)
+    /// Repseresents manual controlled game object.
     /// </summary>
-    public interface IBipedNPC: IManualControlling, IWorldComponent
+    public interface IHumanoidManualControlledObject
     {
         /// <summary>
-        /// Gets or sets value of enable logging.
-        /// It alows enable or disable logging or remote connection for the NPC.
+        /// Gets  manual controlled game object.
         /// </summary>
-        bool EnableLogging { get; set; }
+        IGameObject GameObject { get; }
+
+        /// <summary>
+        /// Gets list of devices of the NPC or Player which are using the game object.
+        /// </summary>
+        IList<DeviceOfBiped> Devices { get; }
     }
 }

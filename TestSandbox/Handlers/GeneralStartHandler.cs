@@ -63,7 +63,7 @@ namespace TestSandbox.Handlers
 
             var platformListener = new TstPlatformHostListener();
 
-            var npcSettings = new BipedNPCSettings();
+            var npcSettings = new HumanoidNPCSettings();
             npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
             //npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
             npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Npcs\PeaceKeeper\PeaceKeeper.npc");
@@ -72,7 +72,7 @@ namespace TestSandbox.Handlers
 
             _logger.Log($"npcSettings = {npcSettings}");
 
-            var npc = instance.GetBipedNPC(npcSettings);
+            var npc = instance.GetHumanoidNPC(npcSettings);
 
             instance.Start();
 

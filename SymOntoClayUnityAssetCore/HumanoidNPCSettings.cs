@@ -8,6 +8,7 @@ SymOntoClay is distributed in the hope that it will be useful, but WITHOUT ANY W
 
 You should have received a copy of the GNU Lesser General Public License along with this library; if not, see <https://www.gnu.org/licenses/>*/
 
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,18 +16,30 @@ using System.Text;
 namespace SymOntoClay.UnityAsset.Core
 {
     /// <summary>
-    /// Repseresents manual controlled game object.
+    /// Biped NPC (Non-Player Character) setting.
     /// </summary>
-    public interface IBipedManualControlledObject
+    public class HumanoidNPCSettings: BaseManualControllingGameComponentSettings
     {
         /// <summary>
-        /// Gets  manual controlled game object.
+        /// Gets or sets file name of SymOntoClay logic file.
+        /// The file describes active logic which will be executed on the NPC.
         /// </summary>
-        IGameObject GameObject { get; }
+        public string LogicFile { get; set; }
 
-        /// <summary>
-        /// Gets list of devices of the NPC or Player which are using the game object.
-        /// </summary>
-        IList<DeviceOfBiped> Devices { get; }
+        public IPlatformSupport PlatformSupport { get; set; }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(LogicFile)} = {LogicFile}");
+
+            sb.PrintExisting(n, nameof(PlatformSupport), PlatformSupport);
+
+            sb.Append(base.PropertiesToString(n));
+            return sb.ToString();
+        }
     }
 }

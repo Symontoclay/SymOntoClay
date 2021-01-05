@@ -36,20 +36,6 @@
         <member name="M:SymOntoClay.UnityAsset.Core.BaseStoredGameComponentSettings.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="T:SymOntoClay.UnityAsset.Core.BipedNPCSettings">
-            <summary>
-            Biped NPC (Non-Player Character) setting.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.BipedNPCSettings.LogicFile">
-            <summary>
-            Gets or sets file name of SymOntoClay logic file.
-            The file describes active logic which will be executed on the NPC.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.BipedNPCSettings.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
         <member name="T:SymOntoClay.UnityAsset.Core.DeviceOfBiped">
             <summary>
             Represents part of body of the NPC or Player which are required for doing actions or using things (game objects). 
@@ -93,35 +79,49 @@
         <member name="M:SymOntoClay.UnityAsset.Core.GameObjectSettings.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="T:SymOntoClay.UnityAsset.Core.IBipedManualControlledObject">
+        <member name="T:SymOntoClay.UnityAsset.Core.HumanoidNPCSettings">
             <summary>
-            Repseresents manual controlled game object.
+            Biped NPC (Non-Player Character) setting.
             </summary>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.IBipedManualControlledObject.GameObject">
+        <member name="P:SymOntoClay.UnityAsset.Core.HumanoidNPCSettings.LogicFile">
             <summary>
-            Gets  manual controlled game object.
+            Gets or sets file name of SymOntoClay logic file.
+            The file describes active logic which will be executed on the NPC.
             </summary>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.IBipedManualControlledObject.Devices">
-            <summary>
-            Gets list of devices of the NPC or Player which are using the game object.
-            </summary>
-        </member>
-        <member name="T:SymOntoClay.UnityAsset.Core.IBipedNPC">
-            <summary>
-            Represents biped NPC (Non-Player Character)
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.IBipedNPC.EnableLogging">
-            <summary>
-            Gets or sets value of enable logging.
-            It alows enable or disable logging or remote connection for the NPC.
-            </summary>
+        <member name="M:SymOntoClay.UnityAsset.Core.HumanoidNPCSettings.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.IGameObject">
             <summary>
             Represents each game object which is not NPC, Player or Place.
+            </summary>
+        </member>
+        <member name="T:SymOntoClay.UnityAsset.Core.IHumanoidManualControlledObject">
+            <summary>
+            Repseresents manual controlled game object.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.IHumanoidManualControlledObject.GameObject">
+            <summary>
+            Gets  manual controlled game object.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.IHumanoidManualControlledObject.Devices">
+            <summary>
+            Gets list of devices of the NPC or Player which are using the game object.
+            </summary>
+        </member>
+        <member name="T:SymOntoClay.UnityAsset.Core.IHumanoidNPC">
+            <summary>
+            Represents biped NPC (Non-Player Character)
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.IHumanoidNPC.EnableLogging">
+            <summary>
+            Gets or sets value of enable logging.
+            It alows enable or disable logging or remote connection for the NPC.
             </summary>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.IManualControlling">
@@ -164,51 +164,6 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BaseStoredGameComponent.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedManualControlledObject.GameObject">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedManualControlledObject.Devices">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCGameComponent.LoadFromSourceCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCGameComponent.BeginStarting">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCGameComponent.IsWaited">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCGameComponent.OnDisposed">
-            <inheritdoc/>
-        </member>
-        <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCImplementation">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCImplementation.EnableLogging">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCImplementation.Logger">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCImplementation.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,SymOntoClay.UnityAsset.Core.DeviceOfBiped)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCImplementation.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,System.Collections.Generic.IList{SymOntoClay.UnityAsset.Core.DeviceOfBiped})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCImplementation.RemoveFromManualControl(SymOntoClay.UnityAsset.Core.IGameObject)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCImplementation.GetManualControlledObjects">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCImplementation.IsDisposed">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BipedNPC.BipedNPCImplementation.Dispose">
-            <inheritdoc/>
-        </member>
         <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation">
             <inheritdoc/>
         </member>
@@ -222,6 +177,51 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidManualControlledObject.GameObject">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidManualControlledObject.Devices">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.LoadFromSourceCode">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.BeginStarting">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.IsWaited">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.OnDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.EnableLogging">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.Logger">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,SymOntoClay.UnityAsset.Core.DeviceOfBiped)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,System.Collections.Generic.IList{SymOntoClay.UnityAsset.Core.DeviceOfBiped})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.RemoveFromManualControl(SymOntoClay.UnityAsset.Core.IGameObject)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.GetManualControlledObjects">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.IsDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.Dispose">
             <inheritdoc/>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.IInternalManualControlledObject">
@@ -293,7 +293,7 @@
         <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.Logger">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.GetBipedNPC(SymOntoClay.UnityAsset.Core.BipedNPCSettings)">
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.GetHumanoidNPC(SymOntoClay.UnityAsset.Core.HumanoidNPCSettings)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.GetPlayer(SymOntoClay.UnityAsset.Core.PlayerSettings)">
@@ -806,7 +806,7 @@
             It doesn't touch local logging.
             </summary>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.GetBipedNPC(SymOntoClay.UnityAsset.Core.BipedNPCSettings)">
+        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.GetHumanoidNPC(SymOntoClay.UnityAsset.Core.HumanoidNPCSettings)">
             <summary>
             Registers an instance of NPC by passed settings.
             Returned agent provides communication between game level in Unity3D and logical core.

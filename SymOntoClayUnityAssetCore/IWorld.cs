@@ -49,7 +49,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         /// <param name="settings">Instance of settings.</param>
         /// <returns>Instance of agent.</returns>
-        IBipedNPC GetBipedNPC(BipedNPCSettings settings);
+        IHumanoidNPC GetHumanoidNPC(HumanoidNPCSettings settings);
 
         /// <summary>
         /// Registers an instance of Player by passed settings.

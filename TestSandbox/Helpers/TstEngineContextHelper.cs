@@ -36,6 +36,14 @@ namespace TestSandbox.Helpers
         {
             var invokingInMainThread = TstInvokerInMainThreadFactory.Create();
 
+            var appName = AppDomain.CurrentDomain.FriendlyName;
+
+            _logger.Log($"appName = {appName}");
+
+            var supportBasePath = Path.Combine(Environment.GetEnvironmentVariable("APPDATA"), "SymOntoClay", appName);
+
+            _logger.Log($"supportBasePath = {supportBasePath}");
+
             var result = new TstComplexContext();
 
             var logDir = Path.Combine(Directory.GetCurrentDirectory(), "NpcLogs");
@@ -46,7 +54,7 @@ namespace TestSandbox.Helpers
 
             worldSettings.ImagesRootDir = Path.Combine(Directory.GetCurrentDirectory(), "Images");
 
-            worldSettings.TmpDir = Path.Combine(Environment.GetEnvironmentVariable("TMP"), "SymOntoClay");
+            worldSettings.TmpDir = Path.Combine(Environment.GetEnvironmentVariable("TMP"), "SymOntoClay", appName);
 
             worldSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\World\HelloWorld.world");
 

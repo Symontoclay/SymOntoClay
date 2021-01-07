@@ -30,7 +30,15 @@ namespace TestSandbox.Handlers
         {
             _logger.Log("Begin");
 
-            var logDir = Path.Combine(Directory.GetCurrentDirectory(), "NpcLogs");
+            var appName = AppDomain.CurrentDomain.FriendlyName;
+
+            _logger.Log($"appName = {appName}");
+
+            var supportBasePath = Path.Combine(Environment.GetEnvironmentVariable("APPDATA"), "SymOntoClay", appName);
+
+            _logger.Log($"supportBasePath = {supportBasePath}");
+
+            var logDir = Path.Combine(supportBasePath, "NpcLogs");
 
             var invokingInMainThread = TstInvokerInMainThreadFactory.Create();
 
@@ -40,9 +48,9 @@ namespace TestSandbox.Handlers
 
             settings.SharedModulesDirs = new List<string>() { Path.Combine(Directory.GetCurrentDirectory(), "Source", "Modules") };
 
-            settings.ImagesRootDir = Path.Combine(Directory.GetCurrentDirectory(), "Images");
+            settings.ImagesRootDir = Path.Combine(supportBasePath, "Images");
 
-            settings.TmpDir = Path.Combine(Directory.GetCurrentDirectory(), "Tmp");
+            settings.TmpDir = Path.Combine(Environment.GetEnvironmentVariable("TMP"), "SymOntoClay", appName);
 
             settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\World\World.world");
 

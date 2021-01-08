@@ -36,6 +36,7 @@ using TestSandbox.DateTimes;
 using TestSandbox.Handlers;
 using TestSandbox.Helpers;
 using TestSandbox.LogicalDatabase;
+using TestSandbox.MonoBehaviourTesting;
 using TestSandbox.Parsing;
 using TestSandbox.PlatformImplementations;
 using TestSandbox.Threads;
@@ -78,7 +79,8 @@ namespace TestSandbox
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
-            TstGeneralStartHandler();//<=
+            TstMonoBehaviourTestingHandler();
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -630,6 +632,17 @@ namespace TestSandbox
             _logger.Log("Begin");
 
             var handler = new ParsingHandler();
+            handler.Run();
+
+            _logger.Log("End");
+        }
+
+
+        private static void TstMonoBehaviourTestingHandler()
+        {
+            _logger.Log("Begin");
+
+            var handler = new MonoBehaviourTestingHandler();
             handler.Run();
 
             _logger.Log("End");

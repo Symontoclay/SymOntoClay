@@ -47,6 +47,7 @@ namespace SymOntoClay.CLI
             world = instance;
 
             var settings = new WorldSettings();
+            settings.AutoloadingConvertors = true;
 
             settings.SharedModulesDirs = new List<string>() { targetFiles.SharedModulesDir };
 

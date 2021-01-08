@@ -42,7 +42,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             ImplementGeneralSettings(settings);
             CreateLogging(settings);
             CreateComponents(settings);
-            LoadTypesPlatformTypesConvertors();
+
+            if(settings.AutoloadingConvertors)
+            {
+                LoadTypesPlatformTypesConvertors();
+            }            
 
             //throw new NotImplementedException();
 
@@ -79,7 +83,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         {
             var targetAttributeType = typeof(PlatformTypesConvertorAttribute);
 
-            var typesList = AppDomainTypesEnumerator.GetTypes().Where(p => p.GetCustomAttributesData().Any(x => x.AttributeType == targetAttributeType));
+            var typesList = AppDomainTypesEnumerator.GetTypes().Where(p => p.GetCustomAttributesData().Any(x => x.AttributeType == targetAttributeType)).ToList();
 
             foreach (var type in typesList)
             {

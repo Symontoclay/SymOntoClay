@@ -45,6 +45,7 @@ namespace TestSandbox.Handlers
             var instance = WorldFactory.WorldInstance;
 
             var settings = new WorldSettings();
+            settings.AutoloadingConvertors = true;
 
             settings.SharedModulesDirs = new List<string>() { Path.Combine(Directory.GetCurrentDirectory(), "Source", "Modules") };
 

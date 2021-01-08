@@ -19,6 +19,7 @@ using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
+using SymOntoClay.UnityAsset.Core.Helpers;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
 using System;
@@ -53,6 +54,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            TstGetRootWorldSpaceDir();
             //TstEnvironmentVariables();
             //TstCLINewHandler();
             //TstCLIRunHandler();
@@ -79,14 +81,27 @@ namespace TestSandbox
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
-            TstMonoBehaviourTestingHandler();
+            //TstMonoBehaviourTestingHandler();
             //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
         }
 
-        //C:/Users/Sergey/Documents/GitHub/Game1/Assets\HelloWorld_Example1/World/PeaceKeeper.world
+        private static void TstGetRootWorldSpaceDir()
+        {
+            _logger.Log("Begin");
+
+            var inputFile = @"C:/Users/Sergey/Documents/GitHub/Game1/Assets\HelloWorld_Example1/World/PeaceKeeper.world";
+
+            _logger.Log($"inputFile = '{inputFile}'");
+
+            var wspaceDir = WorldSpaceHelper.GetRootWorldSpaceDir(inputFile);
+
+            _logger.Log($"wspaceDir = '{wspaceDir}'");
+
+            _logger.Log("End");
+        }
 
         private static void TstEnvironmentVariables()
         {

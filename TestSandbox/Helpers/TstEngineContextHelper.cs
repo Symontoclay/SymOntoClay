@@ -49,6 +49,7 @@ namespace TestSandbox.Helpers
             var logDir = Path.Combine(Directory.GetCurrentDirectory(), "NpcLogs");
 
             var worldSettings = new WorldSettings();
+            worldSettings.AutoloadingConvertors = true;
 
             worldSettings.SharedModulesDirs = new List<string>() { Path.Combine(Directory.GetCurrentDirectory(), "Source", "Modules") };
 

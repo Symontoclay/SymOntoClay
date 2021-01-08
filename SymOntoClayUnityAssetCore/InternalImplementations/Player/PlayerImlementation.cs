@@ -17,9 +17,19 @@ using System.Text;
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
 {
     /// <inheritdoc/>
-    public class PlayerImlementation : IPlayer
+    public class PlayerImlementation : IPlayer, IDeferredInitialized
     {
         public PlayerImlementation(PlayerSettings settings, IWorldCoreGameComponentContext context)
+        {
+
+        }
+
+        public PlayerImlementation(PlayerSettings settings)
+        {
+
+        }
+
+        void IDeferredInitialized.Initialize(IWorldCoreGameComponentContext worldContext)
         {
 
         }

@@ -18,22 +18,33 @@ using SymOntoClay.UnityAsset.Core.InternalImplementations.Player;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using SymOntoClay.UnityAsset.Core.InternalImplementations;
 
 namespace SymOntoClay.UnityAsset.Core.World
 {
     public class WorldCore: IWorld
     {
+        #region constructors
         public WorldCore()
         {
             _context = new WorldContext();
         }
+        #endregion
 
-        private readonly WorldContext _context;
-
+        #region public members
         /// <inheritdoc/>
         public void SetSettings(WorldSettings settings)
         {
-            _context.SetSettings(settings);
+            lock(_lockObj)
+            {
+#if DEBUG
+                _logger.Info("SetSettings");
+#endif
+
+                _context.SetSettings(settings);
+
+                InitializeDeferred();
+            }
         }
 
         /// <inheritdoc/>
@@ -44,29 +55,68 @@ namespace SymOntoClay.UnityAsset.Core.World
 
         /// <inheritdoc/>
         public IEntityLogger Logger => _context.Logger;
-
+        
         /// <inheritdoc/>
         public IHumanoidNPC GetHumanoidNPC(HumanoidNPCSettings settings)
         {
-            return new HumanoidNPCImplementation(settings, _context);
+            lock (_lockObj)
+            {
+#if DEBUG
+                _logger.Info($"GetHumanoidNPC _context.IsInitialized = {_context.IsInitialized}");
+#endif
+
+                if (_context.IsInitialized)
+                {
+                    return new HumanoidNPCImplementation(settings, _context);
+                }
+
+                var result = new HumanoidNPCImplementation(settings);
+                AddToDeferredInitialization(result);
+
+                return result;
+            }
         }
 
         /// <inheritdoc/>
         public IPlayer GetPlayer(PlayerSettings settings)
         {
-            return new PlayerImlementation(settings, _context);
+            if (_context.IsInitialized)
+            {
+                return new PlayerImlementation(settings, _context);
+            }
+
+            var result = new PlayerImlementation(settings);
+            AddToDeferredInitialization(result);
+
+            return result;
         }
 
         /// <inheritdoc/>
         public IGameObject GetGameObject(GameObjectSettings settings)
         {
-            return new GameObjectImplementation(settings, _context);
+            if (_context.IsInitialized)
+            {
+                return new GameObjectImplementation(settings, _context);
+            }
+
+            var result = new GameObjectImplementation(settings);
+            AddToDeferredInitialization(result);
+
+            return result;
         }
 
         /// <inheritdoc/>
         public IPlace GetPlace(PlaceSettings settings)
         {
-            return new PlaceImplementation(settings, _context);
+            if (_context.IsInitialized)
+            {
+                return new PlaceImplementation(settings, _context);
+            }
+
+            var result = new PlaceImplementation(settings);
+            AddToDeferredInitialization(result);
+
+            return result;
         }
 
         /// <inheritdoc/>
@@ -143,5 +193,31 @@ namespace SymOntoClay.UnityAsset.Core.World
 
         /// <inheritdoc/>
         public bool IsDisposed { get => _context.IsDisposed; }
+        #endregion
+
+        #region private members
+#if DEBUG
+        private readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+#endif
+
+        private readonly object _lockObj = new object();
+
+        private readonly WorldContext _context;
+
+        private void AddToDeferredInitialization(IDeferredInitialized deferredInitialized)
+        {
+            _deferredInitializedList.Add(deferredInitialized);
+        }
+
+        private void InitializeDeferred()
+        {
+            foreach(var deferredInitialized in _deferredInitializedList)
+            {
+                deferredInitialized.Initialize(_context);
+            }
+        }
+
+        private List<IDeferredInitialized> _deferredInitializedList = new List<IDeferredInitialized>();
+        #endregion
     }
 }

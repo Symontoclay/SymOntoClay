@@ -17,9 +17,19 @@ using System.Text;
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
 {
     /// <inheritdoc/>
-    public class PlaceImplementation: IPlace
+    public class PlaceImplementation: IPlace, IDeferredInitialized
     {
         public PlaceImplementation(PlaceSettings settings, IWorldCoreGameComponentContext context)
+        {
+
+        }
+
+        public PlaceImplementation(PlaceSettings settings)
+        {
+
+        }
+
+        void IDeferredInitialized.Initialize(IWorldCoreGameComponentContext worldContext)
         {
 
         }

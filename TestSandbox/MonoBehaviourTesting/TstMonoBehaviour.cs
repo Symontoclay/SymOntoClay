@@ -13,5 +13,9 @@ namespace TestSandbox.MonoBehaviourTesting
         public virtual void Start()
         {
         }
+
+        public virtual void Stop()
+        {
+        }
     }
 }

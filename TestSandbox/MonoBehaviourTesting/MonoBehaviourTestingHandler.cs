@@ -37,6 +37,11 @@ namespace TestSandbox.MonoBehaviourTesting
 
             Thread.Sleep(50000);
 
+            foreach (var component in componentsList)
+            {
+                component.Stop();
+            }
+
             _logger.Log("End");
         }
     }

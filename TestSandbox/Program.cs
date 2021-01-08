@@ -86,6 +86,8 @@ namespace TestSandbox
             //Thread.Sleep(10000);
         }
 
+        //C:/Users/Sergey/Documents/GitHub/Game1/Assets\HelloWorld_Example1/World/PeaceKeeper.world
+
         private static void TstEnvironmentVariables()
         {
             _logger.Log("Begin");

@@ -45,6 +45,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             LoadTypesPlatformTypesConvertors();
 
             //throw new NotImplementedException();
+
+            _isInitialized = true;
         }
 
         private void ImplementGeneralSettings(WorldSettings settings)
@@ -86,6 +88,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 PlatformTypesConvertorsRegistry.AddConvertor(convertor);
             }
         }
+
+        private bool _isInitialized;
+
+        public bool IsInitialized => _isInitialized;
 
         private string _tmpDir;
         public string TmpDir => _tmpDir;

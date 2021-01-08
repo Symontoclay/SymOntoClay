@@ -17,14 +17,29 @@ using System.Text;
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
 {
     /// <inheritdoc/>
-    public class GameObjectImplementation: IGameObject
+    public class GameObjectImplementation: IGameObject, IDeferredInitialized
     {
         public GameObjectImplementation(GameObjectSettings settings, IWorldCoreGameComponentContext context)
         {
             _gameComponent = new GameObjectGameComponent(settings, context);
         }
 
-        private readonly GameObjectGameComponent _gameComponent;
+        public GameObjectImplementation(GameObjectSettings settings)
+        {
+            _settings = settings;
+        }
+
+        void IDeferredInitialized.Initialize(IWorldCoreGameComponentContext worldContext)
+        {
+            if(_gameComponent == null)
+            {
+                _gameComponent = new GameObjectGameComponent(_settings, worldContext);
+            }
+        }
+
+        private readonly GameObjectSettings _settings;
+
+        private GameObjectGameComponent _gameComponent;
 
         /// <inheritdoc/>
         public IEndpointsRegistry EndpointsRegistry => _gameComponent.EndpointsRegistry;

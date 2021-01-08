@@ -19,14 +19,29 @@ using System.Text;
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 {
     /// <inheritdoc/>
-    public class HumanoidNPCImplementation: IHumanoidNPC
+    public class HumanoidNPCImplementation: IHumanoidNPC, IDeferredInitialized
     {
-        private readonly HumanoidNPCGameComponent _gameComponent;
+        private HumanoidNPCGameComponent _gameComponent;
 
         public HumanoidNPCImplementation(HumanoidNPCSettings settings, IWorldCoreGameComponentContext worldContext)
         {
             _gameComponent = new HumanoidNPCGameComponent(settings, worldContext);
         }
+
+        public HumanoidNPCImplementation(HumanoidNPCSettings settings)
+        {
+            _settings = settings;
+        }
+
+        void IDeferredInitialized.Initialize(IWorldCoreGameComponentContext worldContext)
+        {
+            if(_gameComponent == null)
+            {
+                _gameComponent = new HumanoidNPCGameComponent(_settings, worldContext);
+            }
+        }
+
+        private readonly HumanoidNPCSettings _settings;
 
         /// <inheritdoc/>
         public bool EnableLogging { get => _gameComponent.EnableLogging; set => _gameComponent.EnableLogging = value; }

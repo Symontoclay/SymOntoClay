@@ -50,7 +50,7 @@ namespace SymOntoClay.UnityAsset.Core
         public string HostFile { get; set; }
 
         public IInvokerInMainThread InvokerInMainThread { get; set; }
-        public bool AutoloadingConvertors { get; set; }
+        public bool EnableAutoloadingConvertors { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -73,7 +73,7 @@ namespace SymOntoClay.UnityAsset.Core
             sb.AppendLine($"{spaces}{nameof(TmpDir)} = {TmpDir}");
             sb.AppendLine($"{spaces}{nameof(HostFile)} = {HostFile}");
             sb.PrintExisting(n, nameof(InvokerInMainThread), InvokerInMainThread);
-            sb.AppendLine($"{spaces}{nameof(AutoloadingConvertors)} = {AutoloadingConvertors}");
+            sb.AppendLine($"{spaces}{nameof(EnableAutoloadingConvertors)} = {EnableAutoloadingConvertors}");
 
             return sb.ToString();
         }

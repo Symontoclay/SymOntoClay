@@ -54,7 +54,8 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-            TstGetRootWorldSpaceDir();
+            TstCopyFilesOnBuilding();
+            //TstGetRootWorldSpaceDir();
             //TstEnvironmentVariables();
             //TstCLINewHandler();
             //TstCLIRunHandler();
@@ -86,6 +87,18 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstCopyFilesOnBuilding()
+        {
+            _logger.Log("Begin");
+
+            var sourceDir = @"C:/Users/Sergey/Documents/GitHub/Game1/Assets";
+            var outputPath = @"C:/Users/Sergey/Documents/ExampleBuild/CustomAssetExample.exe";
+
+            BuildPipeLine.CopyFiles(sourceDir, outputPath);
+
+            _logger.Log("End");
         }
 
         private static void TstGetRootWorldSpaceDir()

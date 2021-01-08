@@ -43,7 +43,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             CreateLogging(settings);
             CreateComponents(settings);
 
-            if(settings.AutoloadingConvertors)
+            if(settings.EnableAutoloadingConvertors)
             {
                 LoadTypesPlatformTypesConvertors();
             }            

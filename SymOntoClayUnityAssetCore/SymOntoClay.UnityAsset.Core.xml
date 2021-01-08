@@ -793,6 +793,13 @@
             </summary>
             <param name="settings">Instance of settings.</param>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.AddConvertor(SymOntoClay.UnityAsset.Core.IPlatformTypesConvertor)">
+            <summary>
+            Adds platform type convertor manually.
+            You should add platform type convertor manually using Unity3d, bacause automatic loading convertors provoces exception on Unity3d.
+            </summary>
+            <param name="convertor">An instance of platform type convertor.</param>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.IWorld.EnableLogging">
             <summary>
             Gets or sets value of enable logging.

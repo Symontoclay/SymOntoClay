@@ -47,6 +47,11 @@ namespace SymOntoClay.UnityAsset.Core.World
             }
         }
 
+        public void AddConvertor(IPlatformTypesConvertor convertor)
+        {
+            _context.AddConvertor(convertor);
+        }
+
         /// <inheritdoc/>
         public bool EnableLogging { get => _context.EnableLogging; set => _context.EnableLogging = value; }
 

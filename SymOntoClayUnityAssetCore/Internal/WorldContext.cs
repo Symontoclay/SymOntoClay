@@ -93,6 +93,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             }
         }
 
+        public void AddConvertor(IPlatformTypesConvertor convertor)
+        {
+            PlatformTypesConvertorsRegistry.AddConvertor(convertor);
+        }
+
         private bool _isInitialized;
 
         public bool IsInitialized => _isInitialized;

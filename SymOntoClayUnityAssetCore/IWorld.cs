@@ -31,6 +31,13 @@ namespace SymOntoClay.UnityAsset.Core
         void SetSettings(WorldSettings settings);
 
         /// <summary>
+        /// Adds platform type convertor manually.
+        /// You should add platform type convertor manually using Unity3d, bacause automatic loading convertors provoces exception on Unity3d.
+        /// </summary>
+        /// <param name="convertor">An instance of platform type convertor.</param>
+        void AddConvertor(IPlatformTypesConvertor convertor);
+
+        /// <summary>
         /// Gets or sets value of enable logging.
         /// It alows enable or disable logging or remote connection for whole components synchronously.
         /// </summary>

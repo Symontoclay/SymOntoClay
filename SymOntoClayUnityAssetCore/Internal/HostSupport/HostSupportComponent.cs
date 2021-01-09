@@ -11,6 +11,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -24,16 +25,23 @@ namespace SymOntoClay.UnityAsset.Core.Internal.HostSupport
             : base(logger)
         {
             _worldContext = worldContext;
+            _invokingInMainThread = worldContext.InvokerInMainThread;
             _platformSupport = platformSupport;
+
         }
 
         private readonly IWorldCoreGameComponentContext _worldContext;
+        private readonly IInvokerInMainThread _invokingInMainThread;
         private readonly IPlatformSupport _platformSupport;
 
         /// <inheritdoc/>
         public Vector3 ConvertFromRelativeToAbsolute(Vector2 relativeCoordinates)
         {
-            return _platformSupport.ConvertFromRelativeToAbsolute(relativeCoordinates);
+            var invocableInMainThreadObj = new InvocableInMainThreadObj<Vector3>(() => {
+                return _platformSupport.ConvertFromRelativeToAbsolute(relativeCoordinates);
+            }, _invokingInMainThread);
+
+            return invocableInMainThreadObj.Run();
         }
     }
 }

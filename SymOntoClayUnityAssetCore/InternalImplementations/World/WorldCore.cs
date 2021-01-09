@@ -49,7 +49,17 @@ namespace SymOntoClay.UnityAsset.Core.World
 
         public void AddConvertor(IPlatformTypesConvertor convertor)
         {
-            _context.AddConvertor(convertor);
+            lock (_lockObj)
+            {
+                if (_context.IsInitialized)
+                {
+                    _context.AddConvertor(convertor);
+                }
+                else
+                {
+                    _deferredPlatformTypesConvertor = convertor;
+                }
+            }                
         }
 
         /// <inheritdoc/>
@@ -216,6 +226,11 @@ namespace SymOntoClay.UnityAsset.Core.World
 
         private void InitializeDeferred()
         {
+            if(_deferredPlatformTypesConvertor != null)
+            {
+                _context.AddConvertor(_deferredPlatformTypesConvertor);
+            }
+
             foreach(var deferredInitialized in _deferredInitializedList)
             {
                 deferredInitialized.Initialize(_context);
@@ -223,6 +238,8 @@ namespace SymOntoClay.UnityAsset.Core.World
         }
 
         private List<IDeferredInitialized> _deferredInitializedList = new List<IDeferredInitialized>();
+
+        private IPlatformTypesConvertor _deferredPlatformTypesConvertor;
         #endregion
     }
 }

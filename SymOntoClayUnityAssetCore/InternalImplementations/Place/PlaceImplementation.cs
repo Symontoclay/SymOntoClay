@@ -41,6 +41,18 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
         public bool IsDisposed => throw new NotImplementedException();
 
         /// <inheritdoc/>
+        public void RunInMainThread(Action function)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public TResult RunInMainThread<TResult>(Func<TResult> function)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public void Dispose()
         {
             throw new NotImplementedException();

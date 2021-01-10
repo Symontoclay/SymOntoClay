@@ -50,6 +50,18 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         public IEntityLogger Logger => _gameComponent.Logger;
 
         /// <inheritdoc/>
+        public void RunInMainThread(Action function)
+        {
+            _gameComponent.RunInMainThread(function);
+        }
+
+        /// <inheritdoc/>
+        public TResult RunInMainThread<TResult>(Func<TResult> function)
+        {
+            return _gameComponent.RunInMainThread(function);
+        }
+
+        /// <inheritdoc/>
         public void AddToManualControl(IGameObject obj, DeviceOfBiped device)
         {
             _gameComponent.AddToManualControl(obj, (int)device);

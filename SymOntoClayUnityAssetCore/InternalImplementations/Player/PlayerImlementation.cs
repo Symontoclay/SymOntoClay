@@ -38,6 +38,18 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         public IEntityLogger Logger => throw new NotImplementedException();
 
         /// <inheritdoc/>
+        public void RunInMainThread(Action function)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public TResult RunInMainThread<TResult>(Func<TResult> function)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public void AddToManualControl(IGameObject obj, DeviceOfBiped device)
         {
             throw new NotImplementedException();

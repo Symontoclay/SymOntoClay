@@ -37,6 +37,18 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
             }
         }
 
+        /// <inheritdoc/>
+        public void RunInMainThread(Action function)
+        {
+            _gameComponent.RunInMainThread(function);
+        }
+
+        /// <inheritdoc/>
+        public TResult RunInMainThread<TResult>(Func<TResult> function)
+        {
+            return _gameComponent.RunInMainThread(function);
+        }
+
         private readonly GameObjectSettings _settings;
 
         private GameObjectGameComponent _gameComponent;

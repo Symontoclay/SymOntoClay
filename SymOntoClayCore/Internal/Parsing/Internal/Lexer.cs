@@ -193,9 +193,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                             return CreateToken(TokenKind.LeftRightArrow);
 
                                         default:
+                                            if(char.IsDigit(nextChar))
+                                            {
+                                                buffer = new StringBuilder();
+                                                buffer.Append(tmpChar);
+                                                _state = State.InWord;
+                                                break;
+                                            }
                                             throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
                                     }
                                 }
+                                break;
 
                             case '/':
                                 {
@@ -715,7 +723,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         contentLength = content.Length - 1;
 
-                        if (content.All(p => char.IsDigit(p)))
+                        if (content.All(p => char.IsDigit(p)) || (content.First() == '-' && content.Skip(1).All(p => char.IsDigit(p))))
                         {
                             kind = TokenKind.Number;
                             break;

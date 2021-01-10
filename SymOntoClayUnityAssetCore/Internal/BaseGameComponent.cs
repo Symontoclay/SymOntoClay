@@ -9,6 +9,7 @@ SymOntoClay is distributed in the hope that it will be useful, but WITHOUT ANY W
 You should have received a copy of the GNU Lesser General Public License along with this library; if not, see <https://www.gnu.org/licenses/>*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,11 +20,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
     {
         private readonly IWorldCoreGameComponentContext _worldContext;
         private readonly IEntityLogger _logger;
+        private readonly IInvokerInMainThread _invokerInMainThread;
 
         protected BaseGameComponent(BaseGameComponentSettings settings, IWorldCoreGameComponentContext worldContext)
         {
             worldContext.AddGameComponent(this);
             _worldContext = worldContext;
+            _invokerInMainThread = worldContext.InvokerInMainThread;
             _logger = _worldContext.CreateLogger(settings.Id);
         }
 
@@ -31,6 +34,20 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         /// <inheritdoc/>
         public bool EnableLogging { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        /// <inheritdoc/>
+        public void RunInMainThread(Action function)
+        {
+            var invocableInMainThreadObj = new InvocableInMainThread(function, _invokerInMainThread);
+            invocableInMainThreadObj.Run();
+        }
+
+        /// <inheritdoc/>
+        public TResult RunInMainThread<TResult>(Func<TResult> function)
+        {
+            var invocableInMainThreadObj = new InvocableInMainThreadObj<TResult>(function, _invokerInMainThread);
+            return invocableInMainThreadObj.Run();
+        }
 
         /// <inheritdoc/>
         public virtual void LoadFromSourceCode()

@@ -19,5 +19,7 @@ namespace SymOntoClay.UnityAsset.Core
     public interface IWorldComponent : ISymOntoClayDisposable
     {
         IEntityLogger Logger { get; }
+        void RunInMainThread(Action function);
+        TResult RunInMainThread<TResult>(Func<TResult> function);
     }
 }

@@ -25,13 +25,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.HostSupport
             : base(logger)
         {
             _worldContext = worldContext;
-            _invokingInMainThread = worldContext.InvokerInMainThread;
+            _invokerInMainThread = worldContext.InvokerInMainThread;
             _platformSupport = platformSupport;
 
         }
 
         private readonly IWorldCoreGameComponentContext _worldContext;
-        private readonly IInvokerInMainThread _invokingInMainThread;
+        private readonly IInvokerInMainThread _invokerInMainThread;
         private readonly IPlatformSupport _platformSupport;
 
         /// <inheritdoc/>
@@ -39,7 +39,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.HostSupport
         {
             var invocableInMainThreadObj = new InvocableInMainThreadObj<Vector3>(() => {
                 return _platformSupport.ConvertFromRelativeToAbsolute(relativeCoordinates);
-            }, _invokingInMainThread);
+            }, _invokerInMainThread);
 
             return invocableInMainThreadObj.Run();
         }

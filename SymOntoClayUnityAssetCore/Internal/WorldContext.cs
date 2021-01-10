@@ -93,6 +93,18 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             }
         }
 
+        public void RunInMainThread(Action function)
+        {
+            var invocableInMainThreadObj = new InvocableInMainThread(function, InvokerInMainThread);
+            invocableInMainThreadObj.Run();
+        }
+
+        public TResult RunInMainThread<TResult>(Func<TResult> function)
+        {
+            var invocableInMainThreadObj = new InvocableInMainThreadObj<TResult>(function, InvokerInMainThread);
+            return invocableInMainThreadObj.Run();
+        }
+
         public void AddConvertor(IPlatformTypesConvertor convertor)
         {
             PlatformTypesConvertorsRegistry.AddConvertor(convertor);

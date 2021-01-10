@@ -3,11 +3,13 @@
     on Init => {
 	     'Begin' >> @>log;
 
-		 select {: son(?x, ?y) :} >> @>log;
+		 //select {: son(?x, ?y) :} >> @>log;
 
-		 insert {: >: { bird (#1234) } :};
+		 //insert {: >: { bird (#1234) } :};
 
-		 exampleClass is not human >> @>log;
+		 //exampleClass is not human >> @>log;
+
+		 @@host.`go`(to: #@[-2, 10]);
 
 		 "End" >> @>log;
 	}

@@ -54,7 +54,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-            TstCopyFilesOnBuilding();
+            //TstCopyFilesOnBuilding();
             //TstGetRootWorldSpaceDir();
             //TstEnvironmentVariables();
             //TstCLINewHandler();
@@ -83,7 +83,7 @@ namespace TestSandbox
             //TstExprNodeHandler();
             //TstParsing();
             //TstMonoBehaviourTestingHandler();
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

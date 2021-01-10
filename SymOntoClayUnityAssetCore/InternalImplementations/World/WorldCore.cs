@@ -70,7 +70,19 @@ namespace SymOntoClay.UnityAsset.Core.World
 
         /// <inheritdoc/>
         public IEntityLogger Logger => _context.Logger;
-        
+
+        /// <inheritdoc/>
+        public void RunInMainThread(Action function)
+        {
+            _context.RunInMainThread(function);
+        }
+
+        /// <inheritdoc/>
+        public TResult RunInMainThread<TResult>(Func<TResult> function)
+        {
+            return _context.RunInMainThread(function);
+        }
+
         /// <inheritdoc/>
         public IHumanoidNPC GetHumanoidNPC(HumanoidNPCSettings settings)
         {

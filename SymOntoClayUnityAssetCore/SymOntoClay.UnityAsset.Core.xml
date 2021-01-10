@@ -167,6 +167,12 @@
         <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.RunInMainThread(System.Action)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.RunInMainThread``1(System.Func{``0})">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.EndpointsRegistry">
             <inheritdoc/>
         </member>
@@ -204,6 +210,12 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.Logger">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.RunInMainThread(System.Action)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.RunInMainThread``1(System.Func{``0})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,SymOntoClay.UnityAsset.Core.DeviceOfBiped)">
@@ -254,6 +266,12 @@
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.IsDisposed">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.RunInMainThread(System.Action)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.RunInMainThread``1(System.Func{``0})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.Dispose">
             <inheritdoc/>
         </member>
@@ -261,6 +279,12 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.Logger">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.RunInMainThread(System.Action)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.RunInMainThread``1(System.Func{``0})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,SymOntoClay.UnityAsset.Core.DeviceOfBiped)">
@@ -291,6 +315,12 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.Logger">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.RunInMainThread(System.Action)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.RunInMainThread``1(System.Func{``0})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.GetHumanoidNPC(SymOntoClay.UnityAsset.Core.HumanoidNPCSettings)">
@@ -348,6 +378,12 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.EnableLogging">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.RunInMainThread(System.Action)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.RunInMainThread``1(System.Func{``0})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.LoadFromSourceCode">

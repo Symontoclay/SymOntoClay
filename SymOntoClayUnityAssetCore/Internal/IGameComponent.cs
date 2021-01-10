@@ -20,5 +20,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         void LoadFromSourceCode();
         void BeginStarting();
         bool IsWaited { get; }
+        void RunInMainThread(Action function);
+        TResult RunInMainThread<TResult>(Func<TResult> function);
     }
 }

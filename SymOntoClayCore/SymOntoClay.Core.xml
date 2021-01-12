@@ -3831,6 +3831,15 @@
         <member name="M:SymOntoClay.Core.ModulesStorageSettings.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.RelativeCoordinate.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.RelativeCoordinate.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.RelativeCoordinate.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.SharedDictionary.GetKey(System.String)">
             <inheritdoc/>
         </member>

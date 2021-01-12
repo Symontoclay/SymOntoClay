@@ -17,6 +17,6 @@ namespace SymOntoClay.Core
 {
     public interface IHostSupport
     {
-        Vector3 ConvertFromRelativeToAbsolute(Vector2 relativeCoordinates);
+        Vector3 ConvertFromRelativeToAbsolute(RelativeCoordinate relativeCoordinate);
     }
 }

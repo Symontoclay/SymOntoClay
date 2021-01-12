@@ -60,7 +60,7 @@ namespace TestSandbox.CoreHostListener
             command.Name = methodName;
             command.ParamsDict = new Dictionary<StrongIdentifierValue, Value>();
 
-            var param1Value = new WaypointValue(new Vector2(25, 36), context);
+            var param1Value = new WaypointValue(25, 36, context);
             var param1Name = NameHelper.CreateName("to", dictionary);
 
             command.ParamsDict[param1Name] = param1Value;

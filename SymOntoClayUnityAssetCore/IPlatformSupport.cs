@@ -8,6 +8,7 @@ SymOntoClay is distributed in the hope that it will be useful, but WITHOUT ANY W
 
 You should have received a copy of the GNU Lesser General Public License along with this library; if not, see <https://www.gnu.org/licenses/>*/
 
+using SymOntoClay.Core;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -17,6 +18,6 @@ namespace SymOntoClay.UnityAsset.Core
 {
     public interface IPlatformSupport
     {
-        Vector3 ConvertFromRelativeToAbsolute(Vector2 relativeCoordinates);
+        Vector3 ConvertFromRelativeToAbsolute(RelativeCoordinate relativeCoordinate);
     }
 }

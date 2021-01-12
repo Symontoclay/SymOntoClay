@@ -1,4 +1,5 @@
-﻿using SymOntoClay.UnityAsset.Core;
+﻿using SymOntoClay.Core;
+using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -8,7 +9,7 @@ namespace SymOntoClay.CLI
 {
     public class PlatformSupportCLIStub : IPlatformSupport
     {
-        public Vector3 ConvertFromRelativeToAbsolute(Vector2 relativeCoordinates)
+        public Vector3 ConvertFromRelativeToAbsolute(RelativeCoordinate relativeCoordinate)
         {
             return new Vector3(666, 999, 0);
         }

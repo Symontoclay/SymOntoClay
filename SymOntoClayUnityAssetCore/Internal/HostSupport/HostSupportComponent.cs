@@ -35,10 +35,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal.HostSupport
         private readonly IPlatformSupport _platformSupport;
 
         /// <inheritdoc/>
-        public Vector3 ConvertFromRelativeToAbsolute(Vector2 relativeCoordinates)
+        public Vector3 ConvertFromRelativeToAbsolute(RelativeCoordinate relativeCoordinate)
         {
+#if DEBUG
+            Log($"relativeCoordinate = {relativeCoordinate}");
+#endif
+
             var invocableInMainThreadObj = new InvocableInMainThreadObj<Vector3>(() => {
-                return _platformSupport.ConvertFromRelativeToAbsolute(relativeCoordinates);
+                return _platformSupport.ConvertFromRelativeToAbsolute(relativeCoordinate);
             }, _invokerInMainThread);
 
             return invocableInMainThreadObj.Run();

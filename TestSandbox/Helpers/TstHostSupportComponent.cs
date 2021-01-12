@@ -27,9 +27,9 @@ namespace TestSandbox.Helpers
         private readonly IPlatformSupport _platformSupport;
 
         /// <inheritdoc/>
-        public Vector3 ConvertFromRelativeToAbsolute(Vector2 relativeCoordinates)
+        public Vector3 ConvertFromRelativeToAbsolute(RelativeCoordinate relativeCoordinate)
         {
-            return _platformSupport.ConvertFromRelativeToAbsolute(relativeCoordinates);
+            return _platformSupport.ConvertFromRelativeToAbsolute(relativeCoordinate);
         }
     }
 }

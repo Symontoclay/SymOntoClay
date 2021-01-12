@@ -347,15 +347,23 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                     {
                                         var firstParam = paramsList[0];
 
+#if DEBUG
+                                        //Log($"firstParam = {firstParam}");
+#endif
+
                                         var resolvedFirstParam = _numberValueLinearResolver.Resolve(firstParam, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
 
                                         var secondParam = paramsList[1];
+
+#if DEBUG
+                                        //Log($"secondParam = {secondParam}");
+#endif
 
                                         var resolvedSecondParam = _numberValueLinearResolver.Resolve(secondParam, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
 
                                         var annotationValue = paramsList[2].AsAnnotationValue;
 
-                                        var value = new WaypointValue(new Vector2((float)(double)resolvedFirstParam.GetSystemValue(), (float)(double)resolvedSecondParam.GetSystemValue()), _context).GetIndexedValue(_context);
+                                        var value = new WaypointValue((float)(double)resolvedFirstParam.GetSystemValue(), (float)(double)resolvedSecondParam.GetSystemValue(), _context).GetIndexedValue(_context);
 
                                         _currentCodeFrame.ValuesStack.Push(value);
 

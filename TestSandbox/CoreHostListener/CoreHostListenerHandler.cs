@@ -8,6 +8,7 @@ SymOntoClay is distributed in the hope that it will be useful, but WITHOUT ANY W
 
 You should have received a copy of the GNU Lesser General Public License along with this library; if not, see <https://www.gnu.org/licenses/>*/
 
+using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
@@ -92,7 +93,7 @@ namespace TestSandbox.CoreHostListener
             command.Name = methodName;
             command.ParamsDict = new Dictionary<StrongIdentifierValue, Value>();
 
-            var param1Value = new WaypointValue(new Vector2(25, 36), context);
+            var param1Value = new WaypointValue(25, 36, context);
             var param1Name = NameHelper.CreateName("to", dictionary);
 
             command.ParamsDict[param1Name] = param1Value;

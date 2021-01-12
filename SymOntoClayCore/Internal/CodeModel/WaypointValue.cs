@@ -20,11 +20,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class WaypointValue : Value
     {
-        public WaypointValue(Vector2 relativeCoordinates, IEngineContext context)
+        public WaypointValue(float distance, float horizontalAngle, IEngineContext context)
         {
             _context = context;
 
-            AbcoluteCoordinates = context.HostSupport.ConvertFromRelativeToAbsolute(relativeCoordinates);
+            AbcoluteCoordinates = context.HostSupport.ConvertFromRelativeToAbsolute(new RelativeCoordinate() { Distance = distance, HorizontalAngle = horizontalAngle});
             Name = new StrongIdentifierValue();
         }
 

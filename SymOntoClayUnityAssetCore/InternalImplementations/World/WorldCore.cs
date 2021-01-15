@@ -147,6 +147,18 @@ namespace SymOntoClay.UnityAsset.Core.World
         }
 
         /// <inheritdoc/>
+        public string InsertFact(string text)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void RemoveFact(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public void Load(IRunTimeImageInfo imageInfo)
         {
             _context.Load(imageInfo);

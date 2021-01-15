@@ -48,6 +48,25 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
+        public string InsertFact(string text)
+        {
+#if DEBUG
+            Log($"text = {text}");
+            //throw new NotImplementedException();
+            return Guid.NewGuid().ToString("D");
+#endif
+        }
+
+        /// <inheritdoc/>
+        public void RemoveFact(string id)
+        {
+#if DEBUG
+            Log($"id = {id}");
+            //throw new NotImplementedException();
+#endif
+        }
+
+        /// <inheritdoc/>
         public void LoadFromSourceCode()
         {
             lock (_stateLockObj)

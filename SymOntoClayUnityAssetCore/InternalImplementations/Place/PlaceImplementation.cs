@@ -53,6 +53,18 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
         }
 
         /// <inheritdoc/>
+        public string InsertFact(string text)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void RemoveFact(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public void Dispose()
         {
             throw new NotImplementedException();

@@ -21,5 +21,7 @@ namespace SymOntoClay.UnityAsset.Core
         IEntityLogger Logger { get; }
         void RunInMainThread(Action function);
         TResult RunInMainThread<TResult>(Func<TResult> function);
+        string InsertFact(string text);
+        void RemoveFact(string id);
     }
 }

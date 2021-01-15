@@ -64,6 +64,21 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             //}
         }
 
+        public string InsertFact(string text)
+        {
+            if(!text.StartsWith("{:"))
+            {
+                text = $"{{: {text} :}}";
+            }
+
+            return HostStorage.InsertFact(text);
+        }
+
+        public void RemoveFact(string id)
+        {
+            HostStorage.RemoveFact(id);
+        }
+
         /// <inheritdoc/>
         protected override void OnDisposed()
         {

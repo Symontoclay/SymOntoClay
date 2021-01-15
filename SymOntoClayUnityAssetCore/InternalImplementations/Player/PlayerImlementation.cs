@@ -74,6 +74,18 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
+        public string InsertFact(string text)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void RemoveFact(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public bool IsDisposed => throw new NotImplementedException();
 
         /// <inheritdoc/>

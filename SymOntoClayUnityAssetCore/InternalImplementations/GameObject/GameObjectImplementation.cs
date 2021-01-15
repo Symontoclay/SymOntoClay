@@ -49,6 +49,18 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
             return _gameComponent.RunInMainThread(function);
         }
 
+        /// <inheritdoc/>
+        public string InsertFact(string text)
+        {
+            return _gameComponent.InsertFact(text);
+        }
+
+        /// <inheritdoc/>
+        public void RemoveFact(string id)
+        {
+            _gameComponent.RemoveFact(id);
+        }
+
         private readonly GameObjectSettings _settings;
 
         private GameObjectGameComponent _gameComponent;

@@ -17,6 +17,7 @@ using SymOntoClay.UnityAsset.Core.Internal.DateAndTime;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.Images;
 using SymOntoClay.UnityAsset.Core.Internal.Logging;
+using SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache;
 using SymOntoClay.UnityAsset.Core.Internal.ModulesStorage;
 using SymOntoClay.UnityAsset.Core.Internal.SharedDictionary;
 using SymOntoClay.UnityAsset.Core.Internal.Storage;
@@ -46,7 +47,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             if(settings.EnableAutoloadingConvertors)
             {
                 LoadTypesPlatformTypesConvertors();
-            }            
+            }
 
             //throw new NotImplementedException();
 
@@ -77,6 +78,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             StandaloneStorage = new StandaloneStorageComponent(settings, this);
             PlatformTypesConvertorsRegistry = new PlatformTypesConvertorsRegistry(Logger);
             DateTimeProvider = new DateTimeProvider(Logger, ThreadsComponent);
+            LogicQueryParseAndCache = new LogicQueryParseAndCache(settings, this);
         }
 
         private void LoadTypesPlatformTypesConvertors()
@@ -153,6 +155,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         public DateTimeProvider DateTimeProvider { get; private set; }
         IDateTimeProvider IWorldCoreGameComponentContext.DateTimeProvider => DateTimeProvider;
+
+        public LogicQueryParseAndCache LogicQueryParseAndCache { get; private set; }
+        ILogicQueryParseAndCache IWorldCoreGameComponentContext.LogicQueryParseAndCache => LogicQueryParseAndCache;
 
         private readonly object _worldComponentsListLockObj = new object();
         private List<IWorldCoreComponent> _worldComponentsList = new List<IWorldCoreComponent>();

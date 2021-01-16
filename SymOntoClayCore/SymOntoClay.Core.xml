@@ -3831,6 +3831,21 @@
         <member name="M:SymOntoClay.Core.ModulesStorageSettings.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.QuickStorage.Storage">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.QuickStorage.LoadFromImage(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.QuickStorage.SaveToImage(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.QuickStorage.InsertFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.QuickStorage.RemoveFact(System.String)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.RelativeCoordinate.ToString">
             <inheritdoc/>
         </member>
@@ -3870,12 +3885,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.SharedDictionarySettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.StandaloneStorage.InsertFact(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.StandaloneStorage.RemoveFact(System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.StandaloneStorage.LoadFromSourceCode">

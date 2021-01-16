@@ -14,10 +14,8 @@ using System.Text;
 
 namespace SymOntoClay.Core
 {
-    public interface ISerializableEngine
+    public interface ISerializableEngine: ISerializableWithImageEngine
     {
         void LoadFromSourceCode();
-        void LoadFromImage(string path);
-        void SaveToImage(string path);
     }
 }

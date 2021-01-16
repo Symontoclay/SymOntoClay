@@ -33,5 +33,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         IPlatformTypesConvertorsRegistry PlatformTypesConvertors { get; }
         IInvokerInMainThread InvokerInMainThread { get; }
         IDateTimeProvider DateTimeProvider { get; }
+        ILogicQueryParseAndCache LogicQueryParseAndCache { get; }
     }
 }

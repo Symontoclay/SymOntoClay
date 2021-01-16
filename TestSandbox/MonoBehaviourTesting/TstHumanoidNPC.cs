@@ -15,6 +15,7 @@ namespace TestSandbox.MonoBehaviourTesting
         private readonly IEntityLogger _logger = new LoggerImpementation();
 
         private IHumanoidNPC _npc;
+        private string _id;
 
         public override void Awake()
         {
@@ -22,8 +23,10 @@ namespace TestSandbox.MonoBehaviourTesting
 
             var platformListener = new TstPlatformHostListener();
 
+            _id = "#020ED339-6313-459A-900D-92F809CEBDC5";
+
             var npcSettings = new HumanoidNPCSettings();
-            npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
+            npcSettings.Id = _id;
             //npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
             npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Npcs\PeaceKeeper\PeaceKeeper.npc");
             npcSettings.HostListener = platformListener;
@@ -42,7 +45,13 @@ namespace TestSandbox.MonoBehaviourTesting
         {
             _logger.Log("Begin");
 
+            var factStr = $"act({_id}, go)";
 
+            _logger.Log($"factStr = {factStr}");
+
+            var factId = _npc.InsertFact(factStr);
+
+            _logger.Log($"factId = {factId}");
 
             _logger.Log("End");
         }

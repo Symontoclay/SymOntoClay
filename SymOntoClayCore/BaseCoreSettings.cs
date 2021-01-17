@@ -15,7 +15,7 @@ using System.Text;
 
 namespace SymOntoClay.Core
 {
-    public abstract class BaseCoreSettings: IObjectToString
+    public class BaseCoreSettings: IObjectToString
     {
         /// <summary>
         /// Gets or sets reference to logger.

@@ -1,6 +1,8 @@
 ﻿using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Helpers;
+using SymOntoClay.Core.Internal.Parsing;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,8 +14,18 @@ namespace SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache
         public LogicQueryParseAndCache(WorldSettings settings, IWorldCoreContext coreContext)
             : base(coreContext)
         {
+            var settingsOfContext = new BaseCoreSettings();
+            settingsOfContext.Logger = coreContext.Logger;
+            settingsOfContext.Dictionary = settingsOfContext.Dictionary;
+            settingsOfContext.DateTimeProvider = settingsOfContext.DateTimeProvider;
+
+            _context = EngineContextHelper.CreateAndInitBaseCoreContext(settingsOfContext);
+
+            _parser = new Parser(_context);
         }
 
+        private readonly IBaseCoreContext _context;
+        private readonly IParser _parser;
         private readonly Dictionary<string, RuleInstance> _cache = new Dictionary<string, RuleInstance>();
 
         /// <inheritdoc/>
@@ -26,7 +38,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache
                 return _cache[textKey];
             }
 
-            throw new NotImplementedException();
+            var codeEntity = _parser.Parse(text);
+
+            if(codeEntity.Kind == KindOfCodeEntity.RuleOrFact)
+            {
+                return codeEntity.RuleInstance;
+            }
+
+            throw new NotSupportedException($"There can only be rule or fact here!");
         }
     }
 }

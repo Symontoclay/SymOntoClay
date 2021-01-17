@@ -21,15 +21,26 @@ namespace SymOntoClay.Core.Internal.Parsing
 {
     public class Parser : BaseComponent, IParser
     {
-        public Parser(IMainStorageContext context)
+        public Parser(IBaseCoreContext context)
             : base(context.Logger)
         {
             _context = context;
         }
 
-        private readonly IMainStorageContext _context;
+        private readonly IBaseCoreContext _context;
 
-        public CodeFile Parse(ParsedFileInfo parsedFileInfo)
+        /// <inheritdoc/>
+        public CodeEntity Parse(string text)
+        {
+#if DEBUG
+            Log($"text = {text}");
+#endif
+
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public CodeFile Parse(ParsedFileInfo parsedFileInfo, DefaultSettingsOfCodeEntity defaultSettings)
         {
 #if DEBUG
             //Log($"parsedFileInfo = {parsedFileInfo}");
@@ -46,9 +57,8 @@ namespace SymOntoClay.Core.Internal.Parsing
             result.FileName = parsedFileInfo.FileName;
             
             var internalParserContext = new InternalParserContext(text, result, _context);
-
-            var globalStorage = _context.Storage.GlobalStorage;
-            internalParserContext.SetCurrentDefaultSetings(globalStorage.DefaultSettingsOfCodeEntity);
+            
+            internalParserContext.SetCurrentDefaultSetings(defaultSettings);
 
             var parser = new SourceCodeParser(internalParserContext);
             parser.Run();
@@ -64,7 +74,8 @@ namespace SymOntoClay.Core.Internal.Parsing
             return result;
         }
 
-        public List<CodeFile> Parse(List<ParsedFileInfo> parsedFileInfoList)
+        /// <inheritdoc/>
+        public List<CodeFile> Parse(List<ParsedFileInfo> parsedFileInfoList, DefaultSettingsOfCodeEntity defaultSettings)
         {
 #if DEBUG
             //Log($"parsedFileInfoList = {parsedFileInfoList.WriteListToString()}");
@@ -74,7 +85,7 @@ namespace SymOntoClay.Core.Internal.Parsing
 
             foreach(var parsedFileInfo in parsedFileInfoList.Where(p => !p.IsLocator))
             {
-                result.Add(Parse(parsedFileInfo));
+                result.Add(Parse(parsedFileInfo, defaultSettings));
             }
 
             return result;

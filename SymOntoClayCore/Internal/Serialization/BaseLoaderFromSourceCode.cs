@@ -48,7 +48,9 @@ namespace SymOntoClay.Core.Internal.Serialization
             //Log($"filesList = {filesList.WriteListToString()}");
 #endif
 
-            var parsedFilesList = _context.Parser.Parse(filesList);
+            var globalStorage = _context.Storage.GlobalStorage;
+
+            var parsedFilesList = _context.Parser.Parse(filesList, globalStorage.DefaultSettingsOfCodeEntity);
 
 #if DEBUG
             //Log($"parsedFilesList.Count = {parsedFilesList.Count}");

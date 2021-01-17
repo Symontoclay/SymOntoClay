@@ -17,7 +17,8 @@ namespace SymOntoClay.Core.Internal.Parsing
 {
     public interface IParser
     {
-        CodeFile Parse(ParsedFileInfo parsedFileInfo);
-        List<CodeFile> Parse(List<ParsedFileInfo> parsedFileInfoList);
+        CodeEntity Parse(string text);
+        CodeFile Parse(ParsedFileInfo parsedFileInfo, DefaultSettingsOfCodeEntity defaultSettings);
+        List<CodeFile> Parse(List<ParsedFileInfo> parsedFileInfoList, DefaultSettingsOfCodeEntity defaultSettings);
     }
 }

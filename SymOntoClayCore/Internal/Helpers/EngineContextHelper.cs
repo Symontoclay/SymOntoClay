@@ -79,17 +79,32 @@ namespace SymOntoClay.Core.Internal.Helpers
             return context;
         }
 
+        public static BaseCoreContext CreateAndInitBaseCoreContext(BaseCoreSettings settings)
+        {
+            var context = new BaseCoreContext(settings.Logger);
+
+            BaseInitBaseCoreContext(context, settings);
+
+            return context;
+        }
+
         public static void BaseInitMainStorageContext(MainStorageContext context, BaseStorageSettings settings, KindOfStorage kindGlobalOfStorage)
         {
+            BaseInitBaseCoreContext(context, settings);
+
             context.Id = settings.Id;
             context.AppFile = settings.AppFile;
-            context.Dictionary = settings.Dictionary;
 
             context.Storage = new StorageComponent(context, settings.ParentStorage, kindGlobalOfStorage);
             context.Parser = new Parser(context);
             context.Compiler = new Compiler(context);
             context.CommonNamesStorage = new CommonNamesStorage(context);
             context.DataResolversFactory = new DataResolversFactory(context);
+        }
+
+        private static void BaseInitBaseCoreContext(BaseCoreContext context, BaseCoreSettings settings)
+        {
+            context.Dictionary = settings.Dictionary;
         }
     }
 }

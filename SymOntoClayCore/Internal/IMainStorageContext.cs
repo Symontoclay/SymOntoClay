@@ -21,13 +21,11 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 
 namespace SymOntoClay.Core.Internal
 {
-    public interface IMainStorageContext
+    public interface IMainStorageContext: IBaseCoreContext
     {
         string Id { get; }
-        string AppFile { get; }
-
-        IEntityLogger Logger { get; }
-        IEntityDictionary Dictionary { get; }
+        string AppFile { get; }        
+        
         IStorageComponent Storage { get; }
         IParser Parser { get; }
         ICompiler Compiler { get; }

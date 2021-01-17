@@ -44,7 +44,7 @@ namespace TestSandbox.CodeExecution
             _logger.Log($"filesList = {filesList.WriteListToString()}");
 #endif
 
-            var parsedFilesList = context.Parser.Parse(filesList);
+            var parsedFilesList = context.Parser.Parse(filesList, globalStorage.DefaultSettingsOfCodeEntity);
 
 #if DEBUG
             _logger.Log($"parsedFilesList.Count = {parsedFilesList.Count}");

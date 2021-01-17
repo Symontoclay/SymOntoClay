@@ -21,7 +21,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal
 {
-    public class MainStorageContext: BaseComponent, IMainStorageContext
+    public class MainStorageContext: BaseCoreContext, IMainStorageContext
     {
         public MainStorageContext(IEntityLogger logger)
             : base(logger)
@@ -38,8 +38,6 @@ namespace SymOntoClay.Core.Internal
         /// Gets or sets app file.
         /// </summary>
         public string AppFile { get; set; }
-
-        public IEntityDictionary Dictionary { get; set; }
 
         public StorageComponent Storage { get; set; }
         public Parser Parser { get; set; }

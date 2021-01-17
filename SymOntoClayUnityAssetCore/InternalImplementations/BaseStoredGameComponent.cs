@@ -31,6 +31,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 standaloneStorageSettings.Dictionary = worldContext.SharedDictionary;
                 standaloneStorageSettings.ModulesStorage = worldContext.ModulesStorage;
                 standaloneStorageSettings.ParentStorage = worldContext.StandaloneStorage;
+                standaloneStorageSettings.LogicQueryParseAndCache = worldContext.LogicQueryParseAndCache;
 
 #if DEBUG
                 //Log($"standaloneStorageSettings = {standaloneStorageSettings}");

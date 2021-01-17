@@ -142,6 +142,16 @@ namespace SymOntoClay.Core
             }
         }
 
+        public string InsertPublicFact(string text)
+        {
+            throw new NotImplementedException();d
+        }
+
+        public void RemovePublicFact(string id)
+        {
+            throw new NotImplementedException();d
+        }
+
         /// <inheritdoc/>
         protected override void OnDisposed()
         {

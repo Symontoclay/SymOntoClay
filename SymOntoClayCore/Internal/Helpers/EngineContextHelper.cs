@@ -100,6 +100,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.Compiler = new Compiler(context);
             context.CommonNamesStorage = new CommonNamesStorage(context);
             context.DataResolversFactory = new DataResolversFactory(context);
+            context.LogicQueryParseAndCache = settings.LogicQueryParseAndCache;
         }
 
         private static void BaseInitBaseCoreContext(BaseCoreContext context, BaseCoreSettings settings)

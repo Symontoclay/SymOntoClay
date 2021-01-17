@@ -32,5 +32,6 @@ namespace SymOntoClay.Core.Internal
         IDataResolversFactory DataResolversFactory { get; }
         ICommonNamesStorage CommonNamesStorage { get; }
         ILoaderFromSourceCode LoaderFromSourceCode { get; }
+        ILogicQueryParseAndCache LogicQueryParseAndCache { get; }
     }
 }

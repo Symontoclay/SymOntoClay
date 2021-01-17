@@ -23,6 +23,8 @@ namespace SymOntoClay.Core
         Local,
         Query,
         QueryResult,
-        Sentence
+        Sentence,
+        PublicFacts,
+        PerceptedFacts
     }
 }

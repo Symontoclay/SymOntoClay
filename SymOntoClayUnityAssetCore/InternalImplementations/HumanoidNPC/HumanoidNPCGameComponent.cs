@@ -30,22 +30,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 //Log($"worldContext.TmpDir = {worldContext.TmpDir}");
 #endif
 
-                var publicFactsStorageSettings = new QuickStorageSettings();
-                publicFactsStorageSettings.Logger = Logger;
-                publicFactsStorageSettings.Dictionary = worldContext.SharedDictionary;
-                publicFactsStorageSettings.DateTimeProvider = worldContext.DateTimeProvider;
-                publicFactsStorageSettings.LogicQueryParseAndCache = worldContext.LogicQueryParseAndCache;
-
-                _publicFactsStorage = new QuickStorage(publicFactsStorageSettings);
-
-                var perceptedFactsSettings = new QuickStorageSettings();
-                perceptedFactsSettings.Logger = Logger;
-                perceptedFactsSettings.Dictionary = worldContext.SharedDictionary;
-                perceptedFactsSettings.DateTimeProvider = worldContext.DateTimeProvider;
-                perceptedFactsSettings.LogicQueryParseAndCache = worldContext.LogicQueryParseAndCache;
-
-                _perceptedFactsStorage = new QuickStorage(perceptedFactsSettings);
-
                 var tmpDir = Path.Combine(worldContext.TmpDir, settings.Id);
 
                 Directory.CreateDirectory(worldContext.TmpDir);
@@ -80,8 +64,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         private readonly Engine _coreEngine;
         private readonly HostSupportComponent _hostSupport;
-        private readonly QuickStorage _publicFactsStorage;
-        private readonly QuickStorage _perceptedFactsStorage;
 
         /// <inheritdoc/>
         public override void LoadFromSourceCode()
@@ -125,15 +107,15 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public string InsertFact(string text)
+        public string InsertPublicFact(string text)
         {
-            return _publicFactsStorage.InsertFact(text);
+            return _coreEngine.InsertPublicFact(text);
         }
 
         /// <inheritdoc/>
-        public void RemoveFact(string id)
+        public void RemovePublicFact(string id)
         {
-            _publicFactsStorage.RemoveFact(id);
+            _coreEngine.RemovePublicFact(id);
         }
 
         /// <inheritdoc/>

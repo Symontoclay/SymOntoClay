@@ -17,5 +17,9 @@ namespace SymOntoClay.Core.Internal.Storage
     public interface IStorageComponent
     {
         IStorage GlobalStorage { get; }
+        IStorage PublicFactsStorage { get; }
+        IStorage PerceptedFactsStorage { get; }
+        string InsertPublicFact(string text);
+        void RemovePublicFact(string id);
     }
 }

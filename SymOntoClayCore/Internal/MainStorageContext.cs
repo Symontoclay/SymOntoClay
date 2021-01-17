@@ -46,6 +46,9 @@ namespace SymOntoClay.Core.Internal
         public CommonNamesStorage CommonNamesStorage { get; set; }
         public BaseLoaderFromSourceCode LoaderFromSourceCode { get; set; }
 
+        /// <inheritdoc/>
+        public ILogicQueryParseAndCache LogicQueryParseAndCache { get; set; }
+
         IStorageComponent IMainStorageContext.Storage => Storage;
         IParser IMainStorageContext.Parser => Parser;
         ICompiler IMainStorageContext.Compiler => Compiler;

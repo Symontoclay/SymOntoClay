@@ -27,6 +27,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Storage
             standaloneStorageSettings.ModulesStorage = coreContext.ModulesStorage;
             standaloneStorageSettings.Dictionary = coreContext.SharedDictionary;
             standaloneStorageSettings.AppFile = settings.HostFile;
+            standaloneStorageSettings.LogicQueryParseAndCache = coreContext.LogicQueryParseAndCache;
 
             //Log($"standaloneStorageSettings = {standaloneStorageSettings}");
 

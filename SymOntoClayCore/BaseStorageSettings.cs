@@ -38,6 +38,8 @@ namespace SymOntoClay.Core
         /// </summary>
         public IStandaloneStorage ParentStorage { get; set; }
 
+        public ILogicQueryParseAndCache LogicQueryParseAndCache { get; set; }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
@@ -49,6 +51,7 @@ namespace SymOntoClay.Core
 
             sb.PrintExisting(n, nameof(ModulesStorage), ModulesStorage);
             sb.PrintExisting(n, nameof(ParentStorage), ParentStorage);
+            sb.PrintExisting(n, nameof(LogicQueryParseAndCache), LogicQueryParseAndCache);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();

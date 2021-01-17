@@ -33,7 +33,7 @@ namespace SymOntoClay.Core.Internal.Parsing
         public List<CodeEntity> Parse(string text)
         {
 #if DEBUG
-            Log($"text = {text}");
+            //Log($"text = {text}");
 #endif
 
             var codeFile = new CodeFile();

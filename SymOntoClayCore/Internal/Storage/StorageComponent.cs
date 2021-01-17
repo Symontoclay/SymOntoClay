@@ -29,14 +29,37 @@ namespace SymOntoClay.Core.Internal.Storage
         private readonly KindOfStorage _kindGlobalOfStorage;
 
         private RealStorage _globalStorage;
+        private RealStorage _publicFactsStorage;
+        private RealStorage _perceptedFactsStorage;
 
+        /// <inheritdoc/>
         public IStorage GlobalStorage => _globalStorage;
+
+        /// <inheritdoc/>
+        public IStorage PublicFactsStorage => _publicFactsStorage;
+
+        /// <inheritdoc/>
+        public IStorage PerceptedFactsStorage => _perceptedFactsStorage;
 
         private List<RealStorage> _storagesList;
 
         public void LoadFromSourceCode()
         {
             _storagesList = new List<RealStorage>();
+
+            var publicFactsStorageSettings = new RealStorageSettings();
+            publicFactsStorageSettings.MainStorageContext = _context;
+
+            _publicFactsStorage = new RealStorage(KindOfStorage.PublicFacts, publicFactsStorageSettings);
+
+            _storagesList.Add(_publicFactsStorage);
+
+            var perceptedFactsStorageSettings = new RealStorageSettings();
+            perceptedFactsStorageSettings.MainStorageContext = _context;
+
+            _perceptedFactsStorage = new RealStorage(KindOfStorage.PerceptedFacts, perceptedFactsStorageSettings);
+
+            _storagesList.Add(_perceptedFactsStorage);
 
             var globalStorageSettings = new RealStorageSettings();
             globalStorageSettings.MainStorageContext = _context;
@@ -81,5 +104,11 @@ namespace SymOntoClay.Core.Internal.Storage
 
             return result;
         }
+
+        /// <inheritdoc/>
+        public string InsertPublicFact(string text);
+
+        /// <inheritdoc/>
+        public void RemovePublicFact(string id);
     }
 }

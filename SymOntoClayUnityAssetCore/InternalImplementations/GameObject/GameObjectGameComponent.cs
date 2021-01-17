@@ -27,32 +27,22 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
             var platformEndpointsList = EndpointDescriber.GetEndpointsInfoList(settings.HostListener);
 
             _hostEndpointsRegistry.AddEndpointsRange(platformEndpointsList);
-
-            var publicFactsStorageSettings = new QuickStorageSettings();
-            publicFactsStorageSettings.Logger = Logger;
-            publicFactsStorageSettings.Dictionary = worldContext.SharedDictionary;
-            publicFactsStorageSettings.DateTimeProvider = worldContext.DateTimeProvider;
-            publicFactsStorageSettings.LogicQueryParseAndCache = worldContext.LogicQueryParseAndCache;
-
-            _publicFactsStorage = new QuickStorage(publicFactsStorageSettings);
         }
-
-        private readonly QuickStorage _publicFactsStorage;
 
         private readonly EndpointsRegistry _hostEndpointsRegistry;
 
         public IEndpointsRegistry EndpointsRegistry => _hostEndpointsRegistry;
 
         /// <inheritdoc/>
-        public string InsertFact(string text)
+        public string InsertPublicFact(string text)
         {
-            return _publicFactsStorage.InsertFact(text);
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void RemoveFact(string id)
+        public void RemovePublicFact(string id)
         {
-            _publicFactsStorage.RemoveFact(id);
+            throw new NotImplementedException();
         }
     }
 }

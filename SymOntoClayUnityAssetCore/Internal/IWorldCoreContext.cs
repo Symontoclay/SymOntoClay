@@ -25,5 +25,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         IModulesStorage ModulesStorage { get; }
         IPlatformTypesConvertorsRegistry PlatformTypesConvertors { get; }
         IDateTimeProvider DateTimeProvider { get; }
+        ILogicQueryParseAndCache LogicQueryParseAndCache { get; }
     }
 }

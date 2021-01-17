@@ -3723,6 +3723,15 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.RealStorageSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.StorageComponent.GlobalStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.StorageComponent.PublicFactsStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.StorageComponent.PerceptedFactsStorage">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.SynonymsStorage.SynonymsStorage.Kind">
             <inheritdoc/>
         </member>
@@ -3838,21 +3847,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.ModulesStorageSettings.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.QuickStorage.Storage">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.QuickStorage.LoadFromImage(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.QuickStorage.SaveToImage(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.QuickStorage.InsertFact(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.QuickStorage.RemoveFact(System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.RelativeCoordinate.ToString">

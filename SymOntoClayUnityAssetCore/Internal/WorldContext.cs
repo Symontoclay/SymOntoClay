@@ -159,6 +159,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         public LogicQueryParseAndCache LogicQueryParseAndCache { get; private set; }
         ILogicQueryParseAndCache IWorldCoreGameComponentContext.LogicQueryParseAndCache => LogicQueryParseAndCache;
+        ILogicQueryParseAndCache IWorldCoreContext.LogicQueryParseAndCache => LogicQueryParseAndCache;
 
         private readonly object _worldComponentsListLockObj = new object();
         private List<IWorldCoreComponent> _worldComponentsList = new List<IWorldCoreComponent>();

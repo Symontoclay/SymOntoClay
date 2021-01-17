@@ -23,7 +23,7 @@ namespace TestSandbox.MonoBehaviourTesting
 
             var platformListener = new TstPlatformHostListener();
 
-            _id = "#020ED339-6313-459A-900D-92F809CEBDC5";
+            _id = "#020ED339";
 
             var npcSettings = new HumanoidNPCSettings();
             npcSettings.Id = _id;

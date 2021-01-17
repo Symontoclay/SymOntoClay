@@ -69,6 +69,11 @@ namespace SymOntoClay.Core.Internal.Helpers
 
         public static void SetUpAnnotatedItem(AnnotatedItem item, DefaultSettingsOfCodeEntity defaultSettings, Dictionary<object, object> context)
         {
+            if(defaultSettings == null)
+            {
+                return;
+            }
+
             if(item.QuantityQualityModalities.IsNullOrEmpty() && !defaultSettings.QuantityQualityModalities.IsNullOrEmpty())
             {
                 item.QuantityQualityModalities = defaultSettings.QuantityQualityModalities.Select(p => p.CloneValue(context)).ToList();

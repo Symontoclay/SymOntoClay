@@ -30,13 +30,20 @@ namespace SymOntoClay.Core.Internal.Parsing
         private readonly IBaseCoreContext _context;
 
         /// <inheritdoc/>
-        public CodeEntity Parse(string text)
+        public List<CodeEntity> Parse(string text)
         {
 #if DEBUG
             Log($"text = {text}");
 #endif
 
-            throw new NotImplementedException();
+            var codeFile = new CodeFile();
+
+            var internalParserContext = new InternalParserContext(text, codeFile, _context);
+
+            var parser = new SourceCodeParser(internalParserContext);
+            parser.Run();
+
+            return parser.Result;
         }
 
         /// <inheritdoc/>

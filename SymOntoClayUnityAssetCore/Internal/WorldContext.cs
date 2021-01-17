@@ -155,6 +155,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         public DateTimeProvider DateTimeProvider { get; private set; }
         IDateTimeProvider IWorldCoreGameComponentContext.DateTimeProvider => DateTimeProvider;
+        IDateTimeProvider IWorldCoreContext.DateTimeProvider => DateTimeProvider;
 
         public LogicQueryParseAndCache LogicQueryParseAndCache { get; private set; }
         ILogicQueryParseAndCache IWorldCoreGameComponentContext.LogicQueryParseAndCache => LogicQueryParseAndCache;

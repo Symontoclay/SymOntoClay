@@ -3540,6 +3540,15 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.ParsedFileInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Parser.Parse(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Parser.Parse(SymOntoClay.Core.Internal.Parsing.ParsedFileInfo,SymOntoClay.Core.Internal.DefaultSettingsOfCodeEntity)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Parser.Parse(System.Collections.Generic.List{SymOntoClay.Core.Internal.Parsing.ParsedFileInfo},SymOntoClay.Core.Internal.DefaultSettingsOfCodeEntity)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Serialization.ActiveLoaderFromSourceCode.LoadFromSourceFiles">
             <inheritdoc/>
         </member>

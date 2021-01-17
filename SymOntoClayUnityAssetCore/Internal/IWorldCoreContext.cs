@@ -24,5 +24,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         SymOntoClay.Core.IEntityDictionary SharedDictionary { get; }
         IModulesStorage ModulesStorage { get; }
         IPlatformTypesConvertorsRegistry PlatformTypesConvertors { get; }
+        IDateTimeProvider DateTimeProvider { get; }
     }
 }

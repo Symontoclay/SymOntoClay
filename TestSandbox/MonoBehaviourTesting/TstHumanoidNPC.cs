@@ -49,7 +49,7 @@ namespace TestSandbox.MonoBehaviourTesting
 
             _logger.Log($"factStr = {factStr}");
 
-            var factId = _npc.InsertFact(factStr);
+            var factId = _npc.InsertPublicFact(factStr);
 
             _logger.Log($"factId = {factId}");
 

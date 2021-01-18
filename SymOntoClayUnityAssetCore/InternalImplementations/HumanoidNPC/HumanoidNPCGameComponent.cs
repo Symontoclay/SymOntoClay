@@ -43,7 +43,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 coreEngineSettings.SyncContext = worldContext.SyncContext;
                 coreEngineSettings.Dictionary = worldContext.SharedDictionary;
                 coreEngineSettings.ModulesStorage = worldContext.ModulesStorage;
-                coreEngineSettings.ParentStorage = HostStorage;
                 coreEngineSettings.TmpDir = tmpDir;
                 coreEngineSettings.HostListener = this;
                 coreEngineSettings.DateTimeProvider = worldContext.DateTimeProvider;

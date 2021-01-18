@@ -50,15 +50,15 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
         }
 
         /// <inheritdoc/>
-        public string InsertFact(string text)
+        public string InsertPublicFact(string text)
         {
-            return _gameComponent.InsertFact(text);
+            return _gameComponent.InsertPublicFact(text);
         }
 
         /// <inheritdoc/>
-        public void RemoveFact(string id)
+        public void RemovePublicFact(string id)
         {
-            _gameComponent.RemoveFact(id);
+            _gameComponent.RemovePublicFact(id);
         }
 
         private readonly GameObjectSettings _settings;

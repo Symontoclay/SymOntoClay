@@ -3206,6 +3206,9 @@
             Gets or sets app file.
             </summary>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.MainStorageContext.LogicQueryParseAndCache">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.BaseInternalParser.Log(System.String)">
             <inheritdoc/>
         </member>
@@ -3730,6 +3733,12 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.StorageComponent.PerceptedFactsStorage">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertPublicFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.RemovePublicFact(System.String)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.SynonymsStorage.SynonymsStorage.Kind">

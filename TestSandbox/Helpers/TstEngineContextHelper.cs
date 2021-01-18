@@ -77,7 +77,7 @@ namespace TestSandbox.Helpers
 
             var npcSettings = new HumanoidNPCSettings();
             npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
-            npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
+            //npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
             npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Apps\PeaceKeeper\PeaceKeeper.npc");
             npcSettings.PlatformSupport = new TstPlatformSupport();
 
@@ -89,19 +89,19 @@ namespace TestSandbox.Helpers
 
             Directory.CreateDirectory(worldSettings.TmpDir);
 
-            var standaloneStorageSettings = new StandaloneStorageSettings();
-            standaloneStorageSettings.Id = npcSettings.Id;
-            standaloneStorageSettings.IsWorld = false;
-            standaloneStorageSettings.AppFile = npcSettings.HostFile;
-            standaloneStorageSettings.Logger = entityLogger;
-            standaloneStorageSettings.Dictionary = worldContext.SharedDictionary.Dictionary;
-            standaloneStorageSettings.ModulesStorage = worldContext.ModulesStorage.ModulesStorage;
-            standaloneStorageSettings.ParentStorage = worldContext.StandaloneStorage.StandaloneStorage;
+            //var standaloneStorageSettings = new StandaloneStorageSettings();
+            //standaloneStorageSettings.Id = npcSettings.Id;
+            //standaloneStorageSettings.IsWorld = false;
+            //standaloneStorageSettings.AppFile = npcSettings.HostFile;
+            //standaloneStorageSettings.Logger = entityLogger;
+            //standaloneStorageSettings.Dictionary = worldContext.SharedDictionary.Dictionary;
+            //standaloneStorageSettings.ModulesStorage = worldContext.ModulesStorage.ModulesStorage;
+            //standaloneStorageSettings.ParentStorage = worldContext.StandaloneStorage.StandaloneStorage;
 
 #if DEBUG
-            _logger.Log($"standaloneStorageSettings = {standaloneStorageSettings}");
+            //_logger.Log($"standaloneStorageSettings = {standaloneStorageSettings}");
 #endif
-            var _hostStorage = new StandaloneStorage(standaloneStorageSettings);
+            //var _hostStorage = new StandaloneStorage(standaloneStorageSettings);
 
             var coreEngineSettings = new EngineSettings();
             coreEngineSettings.Id = npcSettings.Id;
@@ -110,7 +110,7 @@ namespace TestSandbox.Helpers
             coreEngineSettings.SyncContext = worldContext.ThreadsComponent;
             coreEngineSettings.Dictionary = worldContext.SharedDictionary.Dictionary;
             coreEngineSettings.ModulesStorage = worldContext.ModulesStorage.ModulesStorage;
-            coreEngineSettings.ParentStorage = _hostStorage;
+            //coreEngineSettings.ParentStorage = _hostStorage;
             coreEngineSettings.TmpDir = tmpDir;
             coreEngineSettings.HostSupport = new TstHostSupportComponent(npcSettings.PlatformSupport);
 

@@ -106,9 +106,23 @@ namespace SymOntoClay.Core.Internal.Storage
         }
 
         /// <inheritdoc/>
-        public string InsertPublicFact(string text);
+        public string InsertPublicFact(string text)
+        {
+#if DEBUG
+            Log($"text = {text}");
+#endif
+
+            throw new NotImplementedException();
+        }
 
         /// <inheritdoc/>
-        public void RemovePublicFact(string id);
+        public void RemovePublicFact(string id)
+        {
+#if DEBUG
+            Log($"id = {id}");
+#endif
+
+            throw new NotImplementedException();
+        }
     }
 }

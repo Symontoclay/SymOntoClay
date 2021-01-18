@@ -20,7 +20,7 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 {
-    public abstract class BaseManualControllingGameComponent: BaseStoredGameComponent, IHostListener
+    public abstract class BaseManualControllingGameComponent: BaseGameComponent, IHostListener
     {
         protected BaseManualControllingGameComponent(BaseManualControllingGameComponentSettings settings, IWorldCoreGameComponentContext worldContext)
             : base(settings, worldContext)

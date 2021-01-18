@@ -15,7 +15,7 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core
 {
-    public abstract class BaseManualControllingGameComponentSettings: BaseStoredGameComponentSettings
+    public abstract class BaseManualControllingGameComponentSettings: BaseGameComponentSettings
     {
         /// <summary>
         /// Gets or sets host listener.

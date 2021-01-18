@@ -74,13 +74,13 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        public string InsertFact(string text)
+        public string InsertPublicFact(string text)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void RemoveFact(string id)
+        public void RemovePublicFact(string id)
         {
             throw new NotImplementedException();
         }

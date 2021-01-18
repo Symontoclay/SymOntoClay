@@ -147,13 +147,13 @@ namespace SymOntoClay.UnityAsset.Core.World
         }
 
         /// <inheritdoc/>
-        public string InsertFact(string text)
+        public string InsertPublicFact(string text)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void RemoveFact(string id)
+        public void RemovePublicFact(string id)
         {
             throw new NotImplementedException();
         }

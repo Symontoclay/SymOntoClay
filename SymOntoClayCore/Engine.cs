@@ -144,12 +144,12 @@ namespace SymOntoClay.Core
 
         public string InsertPublicFact(string text)
         {
-            throw new NotImplementedException();d
+            return _context.Storage.InsertPublicFact(text);
         }
 
         public void RemovePublicFact(string id)
         {
-            throw new NotImplementedException();d
+            _context.Storage.RemovePublicFact(id);
         }
 
         /// <inheritdoc/>

@@ -164,10 +164,10 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BaseStoredGameComponent.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectGameComponent.InsertFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectGameComponent.InsertPublicFact(System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectGameComponent.RemoveFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectGameComponent.RemovePublicFact(System.String)">
             <inheritdoc/>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation">
@@ -179,10 +179,10 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.RunInMainThread``1(System.Func{``0})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.InsertFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.InsertPublicFact(System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.RemoveFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.RemovePublicFact(System.String)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.EndpointsRegistry">
@@ -212,10 +212,10 @@
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.IsWaited">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.InsertFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.InsertPublicFact(System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.RemoveFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.RemovePublicFact(System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.OnDisposed">
@@ -248,10 +248,10 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.GetManualControlledObjects">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.InsertFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.InsertPublicFact(System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.RemoveFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.RemovePublicFact(System.String)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.IsDisposed">
@@ -296,10 +296,10 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.RunInMainThread``1(System.Func{``0})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.InsertFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.InsertPublicFact(System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.RemoveFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.RemovePublicFact(System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.Dispose">
@@ -329,10 +329,10 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.GetManualControlledObjects">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.InsertFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.InsertPublicFact(System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.RemoveFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.RemovePublicFact(System.String)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.IsDisposed">
@@ -371,10 +371,10 @@
         <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.GetPlace(SymOntoClay.UnityAsset.Core.PlaceSettings)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.InsertFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.InsertPublicFact(System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.RemoveFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.RemovePublicFact(System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.Load(SymOntoClay.UnityAsset.Core.IRunTimeImageInfo)">

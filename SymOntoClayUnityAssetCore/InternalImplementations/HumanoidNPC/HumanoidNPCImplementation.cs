@@ -112,6 +112,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
+        public void Die()
+        {
+            _gameComponent.Die();
+        }
+
+        /// <inheritdoc/>
         public bool IsDisposed => _gameComponent.IsDisposed;
 
         /// <inheritdoc/>

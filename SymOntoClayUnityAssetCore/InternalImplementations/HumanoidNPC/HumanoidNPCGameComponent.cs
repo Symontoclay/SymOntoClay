@@ -119,6 +119,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             _coreEngine.RemovePublicFact(id);
         }
 
+        public void Die()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <inheritdoc/>
         protected override void OnDisposed()
         {           

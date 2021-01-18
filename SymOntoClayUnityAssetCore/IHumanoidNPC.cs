@@ -25,5 +25,6 @@ namespace SymOntoClay.UnityAsset.Core
         /// It alows enable or disable logging or remote connection for the NPC.
         /// </summary>
         bool EnableLogging { get; set; }
+        void Die();
     }
 }

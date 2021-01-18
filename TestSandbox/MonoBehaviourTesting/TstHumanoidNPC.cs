@@ -45,6 +45,13 @@ namespace TestSandbox.MonoBehaviourTesting
         {
             _logger.Log("Begin");
 
+            _logger.Log("End");
+        }
+
+        public override void Update()
+        {
+            _logger.Log("Begin");
+
             var factStr = $"act({_id}, go)";
 
             _logger.Log($"factStr = {factStr}");
@@ -52,6 +59,8 @@ namespace TestSandbox.MonoBehaviourTesting
             var factId = _npc.InsertPublicFact(factStr);
 
             _logger.Log($"factId = {factId}");
+
+            _npc.RemovePublicFact(factId);
 
             _logger.Log("End");
         }

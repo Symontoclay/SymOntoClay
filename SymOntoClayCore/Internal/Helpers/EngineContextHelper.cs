@@ -95,12 +95,13 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.Id = settings.Id;
             context.AppFile = settings.AppFile;
 
+            context.LogicQueryParseAndCache = settings.LogicQueryParseAndCache;
+
             context.Storage = new StorageComponent(context, settings.ParentStorage, kindGlobalOfStorage);
             context.Parser = new Parser(context);
             context.Compiler = new Compiler(context);
             context.CommonNamesStorage = new CommonNamesStorage(context);
-            context.DataResolversFactory = new DataResolversFactory(context);
-            context.LogicQueryParseAndCache = settings.LogicQueryParseAndCache;
+            context.DataResolversFactory = new DataResolversFactory(context);            
         }
 
         private static void BaseInitBaseCoreContext(BaseCoreContext context, BaseCoreSettings settings)

@@ -14,6 +14,10 @@ namespace TestSandbox.MonoBehaviourTesting
         {
         }
 
+        public virtual void Update()
+        {
+        }
+
         public virtual void Stop()
         {
         }

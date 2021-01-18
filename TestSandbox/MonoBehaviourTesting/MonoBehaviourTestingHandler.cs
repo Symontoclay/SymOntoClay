@@ -35,6 +35,11 @@ namespace TestSandbox.MonoBehaviourTesting
                 component.Start();
             }
 
+            foreach (var component in componentsList)
+            {
+                component.Update();
+            }
+
             Thread.Sleep(50000);
 
             foreach (var component in componentsList)

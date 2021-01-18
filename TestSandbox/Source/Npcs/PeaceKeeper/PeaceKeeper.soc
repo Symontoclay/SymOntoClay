@@ -9,7 +9,7 @@
 
 		 //exampleClass is not human >> @>log;
 
-		 @@host.`go`(to: #@[10, -2]);
+		 //@@host.`go`(to: #@[10, -2]);
 
 		 "End" >> @>log;
 	}

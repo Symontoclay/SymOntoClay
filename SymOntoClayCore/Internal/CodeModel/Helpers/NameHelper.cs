@@ -20,7 +20,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
     {
         public static string GetNewEntityNameString()
         {
-            return $"#{Guid.NewGuid():D}";
+            return $"#`{Guid.NewGuid():D}`";
         }
 
         public static StrongIdentifierValue CreateRuleOrFactName(IEntityDictionary dictionary)

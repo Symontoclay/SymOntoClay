@@ -28,6 +28,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 #if DEBUG
                 //Log($"settings = {settings}");
                 //Log($"worldContext.TmpDir = {worldContext.TmpDir}");
+                //Log($"worldContext.LogicQueryParseAndCache == null = {worldContext.LogicQueryParseAndCache == null}");
 #endif
 
                 var tmpDir = Path.Combine(worldContext.TmpDir, settings.Id);
@@ -43,6 +44,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 coreEngineSettings.SyncContext = worldContext.SyncContext;
                 coreEngineSettings.Dictionary = worldContext.SharedDictionary;
                 coreEngineSettings.ModulesStorage = worldContext.ModulesStorage;
+                coreEngineSettings.LogicQueryParseAndCache = worldContext.LogicQueryParseAndCache;
                 coreEngineSettings.TmpDir = tmpDir;
                 coreEngineSettings.HostListener = this;
                 coreEngineSettings.DateTimeProvider = worldContext.DateTimeProvider;

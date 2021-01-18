@@ -20,6 +20,12 @@ namespace SymOntoClay.Core.Internal.Storage
             : base(context.Logger)
         {
             _context = context;
+            _logicQueryParseAndCache = context.LogicQueryParseAndCache;
+
+#if DEBUG
+            //Log($"_logicQueryParseAndCache == null = {_logicQueryParseAndCache == null}");
+#endif
+
             _parentStorage = parentStorage;
             _kindGlobalOfStorage = kindGlobalOfStorage;
         }
@@ -27,6 +33,7 @@ namespace SymOntoClay.Core.Internal.Storage
         private readonly IMainStorageContext _context;
         private readonly IStandaloneStorage _parentStorage;
         private readonly KindOfStorage _kindGlobalOfStorage;
+        private readonly ILogicQueryParseAndCache _logicQueryParseAndCache;
 
         private RealStorage _globalStorage;
         private RealStorage _publicFactsStorage;
@@ -112,7 +119,29 @@ namespace SymOntoClay.Core.Internal.Storage
             Log($"text = {text}");
 #endif
 
-            throw new NotImplementedException();
+            if(string.IsNullOrWhiteSpace(text))
+            {
+                return string.Empty;
+            }
+
+            if(!text.StartsWith("{:"))
+            {
+                text = $"{{: {text} :}}";
+            }
+
+#if DEBUG
+            Log($"text = {text}");
+#endif
+
+            var fact = _logicQueryParseAndCache.GetLogicRuleOrFact(text);
+
+#if DEBUG
+            Log($"fact = {fact}");
+#endif
+
+            _publicFactsStorage.LogicalStorage.Append(fact);
+
+            return fact.Name.NameValue;
         }
 
         /// <inheritdoc/>

@@ -593,6 +593,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 }
                                 break;
 
+                            case '`':
+                                _state = State.InIdentifier;
+                                break;
+                                
                             default:
                                 if (char.IsLetterOrDigit(tmpChar) || tmpChar == '_')
                                 {
@@ -715,7 +719,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #endif
 
             var kindOfKeyWord = KeyWordTokenKind.Unknown;
-            var contentLength = 0; 
+            var contentLength = 0;
 
             switch (kind)
             {
@@ -794,6 +798,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Insert;
                             break;
                         }
+                    }
+                    break;
+
+                case TokenKind.Identifier:
+                    if(content.StartsWith("##"))
+                    {
+                        throw new NotImplementedException();
+                    }
+                    else if (content.StartsWith("#@"))
+                    {
+                        kind = TokenKind.EntityCondition;
+                    }
+                    else if(content.StartsWith("#"))
+                    {
+                        kind = TokenKind.Entity;
                     }
                     break;
 

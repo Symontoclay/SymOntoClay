@@ -23,7 +23,7 @@ namespace TestSandbox.MonoBehaviourTesting
 
             var platformListener = new TstPlatformHostListener();
 
-            _id = "#020ED339";
+            _id = "#`Test 1`";
 
             var npcSettings = new HumanoidNPCSettings();
             npcSettings.Id = _id;
@@ -60,7 +60,7 @@ namespace TestSandbox.MonoBehaviourTesting
 
             _logger.Log($"factId = {factId}");
 
-            _npc.RemovePublicFact(factId);
+            //_npc.RemovePublicFact(factId);
 
             _logger.Log("End");
         }

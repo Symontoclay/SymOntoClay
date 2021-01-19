@@ -29,6 +29,7 @@ namespace SymOntoClay.Core
         }
 
         private readonly MainStorageContext _context;
+        private IStorageComponent _storageComponent;
         private IStorage _storage;
 
         IStorage IStandaloneStorage.Storage
@@ -59,7 +60,8 @@ namespace SymOntoClay.Core
 
                 EngineContextHelper.LoadFromSourceCode(_context);
 
-                _storage = _context.Storage.GlobalStorage;
+                _storageComponent = _context.Storage;
+                _storage = _storageComponent.GlobalStorage;
 
 #if IMAGINE_WORKING
                 //Log("Do");
@@ -103,6 +105,18 @@ namespace SymOntoClay.Core
                 throw new NotImplementedException();
 #endif
             }
+        }
+
+        /// <inheritdoc/>
+        public string InsertPublicFact(string text)
+        {
+            return _storageComponent.InsertPublicFact(text);
+        }
+
+        /// <inheritdoc/>
+        public void RemovePublicFact(string id)
+        {
+            _storageComponent.RemovePublicFact(id);
         }
     }
 }

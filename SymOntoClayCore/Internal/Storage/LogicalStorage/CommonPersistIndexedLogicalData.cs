@@ -108,11 +108,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
 
-#if IMAGINE_WORKING
             //Log("End");
-#else
-            throw new NotImplementedException();
-#endif
         }
 
         private void NAddIndexedRulePartToKeysOfRelationsIndex(IDictionary<ulong, IList<IndexedBaseRulePart>> indexData, IndexedBaseRulePart indexedRulePart)
@@ -161,6 +157,115 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 {
                     var tmpList = new List<IndexedBaseRulePart>() { indexedRulePart };
                     indexData[keyOfRelation] = tmpList;
+                }
+            }
+        }
+
+        public void NRemoveIndexedRuleInstanceFromIndexData(IndexedRuleInstance indexedRuleInstance)
+        {
+#if DEBUG
+            //Log($"indexedRuleInstance = {indexedRuleInstance}");
+#endif
+
+            IndexedRuleInstancesDict.Remove(indexedRuleInstance.Key);
+
+            var kind = indexedRuleInstance.Kind;
+
+            switch (kind)
+            {
+                case KindOfRuleInstance.Fact:
+                    //case KindOfRuleInstance.Annotation:
+                    //case KindOfRuleInstance.EntityCondition:
+                    NRemoveIndexedRulePartFromKeysOfRelationsIndex(IndexedRulePartsOfFactsDict, indexedRuleInstance.PrimaryPart);
+                    break;
+
+                case KindOfRuleInstance.Rule:
+                    {
+                        var part_1 = indexedRuleInstance.PrimaryPart;
+
+                        if (part_1.HasVars && part_1.IsActive && !part_1.HasQuestionVars && part_1.RelationsDict.Count == 1)
+                        {
+                            NRemoveIndexedRulePartFromKeysOfRelationsIndex(IndexedRulePartsWithOneRelationWithVarsDict, part_1);
+                        }
+
+                        foreach(var part_2 in indexedRuleInstance.SecondaryParts)
+                        {
+                            if (part_2.HasVars && part_2.IsActive && !part_2.HasQuestionVars && part_2.RelationsDict.Count == 1)
+                            {
+                                NRemoveIndexedRulePartFromKeysOfRelationsIndex(IndexedRulePartsWithOneRelationWithVarsDict, part_2);
+                            }
+                        }
+                    }
+                    break;
+
+                //case KindOfRuleInstance.EntityCondition:
+                //break;
+
+                case KindOfRuleInstance.Question:
+                    break;
+
+                default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+            }
+
+            switch (kind)
+            {
+                case KindOfRuleInstance.Fact:
+                case KindOfRuleInstance.Rule:
+                case KindOfRuleInstance.Question:
+                    break;
+
+                //case KindOfRuleInstance.Annotation:
+                //case KindOfRuleInstance.EntityCondition:
+                //AdditionalRuleInstancesDict[indexedRuleInstance.Key] = indexedRuleInstance;
+                //break;
+
+                default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+            }
+
+            //Log("End");
+        }
+
+        private void NRemoveIndexedRulePartFromKeysOfRelationsIndex(IDictionary<ulong, IList<IndexedBaseRulePart>> indexData, IndexedBaseRulePart indexedRulePart)
+        {
+#if DEBUG
+            //var dbgStr = DebugHelperForRuleInstance.BaseRulePartToString(indexedRulePart.OriginRulePart);
+            //Log($"dbgStr = {dbgStr}");
+#endif
+
+            var relationsList = indexedRulePart.RelationsDict.SelectMany(p => p.Value).Distinct().ToList();
+
+#if DEBUG
+            //Log($"relationsList = {relationsList.WriteListToString()}");
+#endif
+
+            foreach (var relation in relationsList)
+            {
+                if (RelationsList.Contains(relation))
+                {
+                    RelationsList.Remove(relation);
+                }
+            }
+
+            var keysOfRelationsList = indexedRulePart.RelationsDict.Keys.ToList();
+
+#if DEBUG
+            //Log($" = {relationsList.WriteListToString()}");
+#endif
+
+            foreach (var keyOfRelation in keysOfRelationsList)
+            {
+#if DEBUG
+                //Log($"keyOfRelation = {keyOfRelation}");
+                //Log($"_entityDictionary.GetName(keyOfRelation) = {_entityDictionary.GetName(keyOfRelation)}");
+#endif
+
+                if (indexData.ContainsKey(keyOfRelation))
+                {
+                    var tmpList = indexData[keyOfRelation];
+                    if (tmpList.Contains(indexedRulePart))
+                    {
+                        tmpList.Remove(indexedRulePart);
+                    }
                 }
             }
         }

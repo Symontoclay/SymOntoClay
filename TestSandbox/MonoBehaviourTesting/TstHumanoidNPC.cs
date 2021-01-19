@@ -60,7 +60,7 @@ namespace TestSandbox.MonoBehaviourTesting
 
             _logger.Log($"factId = {factId}");
 
-            //_npc.RemovePublicFact(factId);
+            _npc.RemovePublicFact(factId);
 
             _logger.Log("End");
         }

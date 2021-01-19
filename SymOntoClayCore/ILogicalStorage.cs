@@ -20,7 +20,8 @@ namespace SymOntoClay.Core
     {
         void Append(RuleInstance ruleInstance);
         void Append(RuleInstance ruleInstance, bool isPrimary);
-        //void RemoveFactById(string id);
+        void Remove(RuleInstance ruleInstance);
+        void RemoveById(string id);
 
         event Action OnChanged;
 

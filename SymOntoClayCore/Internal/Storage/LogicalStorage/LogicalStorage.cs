@@ -30,6 +30,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             _ruleInstancesList = new List<RuleInstance>();
             _ruleInstancesDict = new Dictionary<ulong, RuleInstance>();
             _ruleInstancesDictByHashCode = new Dictionary<ulong, RuleInstance>();
+            _ruleInstancesDictById = new Dictionary<string, RuleInstance>();
             _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData(realStorageContext.MainStorageContext.Logger, realStorageContext.MainStorageContext.Dictionary);
         }
 
@@ -48,6 +49,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         private List<RuleInstance> _ruleInstancesList;
         private Dictionary<ulong, RuleInstance> _ruleInstancesDict;
         private Dictionary<ulong, RuleInstance> _ruleInstancesDictByHashCode;
+        private Dictionary<string, RuleInstance> _ruleInstancesDictById;
         private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData;
 
         /// <inheritdoc/>
@@ -89,6 +91,13 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 return;
             }
 
+            var ruleInstanceId = ruleInstance.Name.NameValue;
+
+            if (_ruleInstancesDictById.ContainsKey(ruleInstanceId))
+            {
+                return;
+            }
+
             //ruleInstance = ruleInstance.Clone();
 
 #if DEBUG
@@ -126,6 +135,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             _ruleInstancesList.Add(ruleInstance);
             _ruleInstancesDict[ruleInstanceKey] = ruleInstance;
             _ruleInstancesDictByHashCode[longHashCode] = ruleInstance;
+            _ruleInstancesDictById[ruleInstanceId] = ruleInstance;
 
             _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(indexedRuleInstance);
 
@@ -165,6 +175,60 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 #else
             throw new NotImplementedException();
 #endif
+        }
+
+        /// <inheritdoc/>
+        public void Remove(RuleInstance ruleInstance)
+        {
+            lock (_lockObj)
+            {
+                NRemove(ruleInstance);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void RemoveById(string id)
+        {
+            lock (_lockObj)
+            {
+                if (string.IsNullOrWhiteSpace(id))
+                {
+                    return;
+                }
+
+                if (_ruleInstancesDictById.ContainsKey(id))
+                {
+                    NRemove(_ruleInstancesDictById[id]);
+                }
+            }
+        }
+
+        private void NRemove(RuleInstance ruleInstance)
+        {
+            if(!_ruleInstancesList.Contains(ruleInstance))
+            {
+                return;
+            }
+
+            _ruleInstancesList.Remove(ruleInstance);
+
+            var indexedRuleInstance = ruleInstance.GetIndexed(_realStorageContext.MainStorageContext);
+
+            var ruleInstanceKey = indexedRuleInstance.Key;
+
+            _ruleInstancesDict.Remove(ruleInstanceKey);
+
+            var longHashCode = indexedRuleInstance.GetLongHashCode();
+
+            _ruleInstancesDictByHashCode.Remove(longHashCode);
+
+            var ruleInstanceId = ruleInstance.Name.NameValue;
+
+            _ruleInstancesDictById.Remove(ruleInstanceId);
+
+            _commonPersistIndexedLogicalData.NRemoveIndexedRuleInstanceFromIndexData(indexedRuleInstance);
+
+            EmitOnChanged();
         }
 
         /// <inheritdoc/>

@@ -36,13 +36,13 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
         /// <inheritdoc/>
         public string InsertPublicFact(string text)
         {
-            throw new NotImplementedException();
+            return HostStorage.InsertPublicFact(text);
         }
 
         /// <inheritdoc/>
         public void RemovePublicFact(string id)
         {
-            throw new NotImplementedException();
+            HostStorage.RemovePublicFact(id);
         }
     }
 }

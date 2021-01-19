@@ -116,7 +116,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public string InsertPublicFact(string text)
         {
 #if DEBUG
-            Log($"text = {text}");
+            //Log($"text = {text}");
 #endif
 
             if(string.IsNullOrWhiteSpace(text))
@@ -130,13 +130,13 @@ namespace SymOntoClay.Core.Internal.Storage
             }
 
 #if DEBUG
-            Log($"text = {text}");
+            //Log($"text = {text}");
 #endif
 
             var fact = _logicQueryParseAndCache.GetLogicRuleOrFact(text);
 
 #if DEBUG
-            Log($"fact = {fact}");
+            //Log($"fact = {fact}");
 #endif
 
             _publicFactsStorage.LogicalStorage.Append(fact);
@@ -148,10 +148,10 @@ namespace SymOntoClay.Core.Internal.Storage
         public void RemovePublicFact(string id)
         {
 #if DEBUG
-            Log($"id = {id}");
+            //Log($"id = {id}");
 #endif
 
-            throw new NotImplementedException();
+            _publicFactsStorage.LogicalStorage.RemoveById(id);
         }
     }
 }

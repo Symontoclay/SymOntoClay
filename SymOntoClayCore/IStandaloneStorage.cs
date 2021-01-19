@@ -17,5 +17,7 @@ namespace SymOntoClay.Core
     public interface IStandaloneStorage
     {
         IStorage Storage { get; }
+        string InsertPublicFact(string text);
+        void RemovePublicFact(string id);
     }
 }

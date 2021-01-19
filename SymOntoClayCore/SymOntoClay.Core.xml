@@ -3612,6 +3612,12 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.Append(SymOntoClay.Core.Internal.CodeModel.RuleInstance,System.Boolean)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.Remove(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.RemoveById(System.String)">
+            <inheritdoc/>
+        </member>
         <member name="E:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.OnChanged">
             <inheritdoc/>
         </member>
@@ -3906,6 +3912,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.StandaloneStorage.SaveToImage(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.StandaloneStorage.InsertPublicFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.StandaloneStorage.RemovePublicFact(System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.StandaloneStorageSettings.PropertiesToString(System.UInt32)">

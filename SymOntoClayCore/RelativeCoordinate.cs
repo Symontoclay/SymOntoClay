@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SymOntoClay.Core
 {
-    public class RelativeCoordinate: IObjectToString
+    public struct RelativeCoordinate: IObjectToString
     {
         public float Distance { get; set; }
         public float HorizontalAngle { get; set; }

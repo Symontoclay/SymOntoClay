@@ -11,6 +11,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core
@@ -22,6 +23,8 @@ namespace SymOntoClay.UnityAsset.Core
         /// It allows us to identify each item of the game.
         /// </summary>
         public string Id { get; set; }
+        public int InstanceId { get; set; }
+        public Vector3? UseStaticPosition { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -48,6 +51,8 @@ namespace SymOntoClay.UnityAsset.Core
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Id)} = {Id}");
+            sb.AppendLine($"{spaces}{nameof(InstanceId)} = {InstanceId}");
+            sb.AppendLine($"{spaces}{nameof(UseStaticPosition)} = {UseStaticPosition}");
 
             return sb.ToString();
         }

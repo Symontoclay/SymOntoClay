@@ -8,6 +8,7 @@ SymOntoClay is distributed in the hope that it will be useful, but WITHOUT ANY W
 
 You should have received a copy of the GNU Lesser General Public License along with this library; if not, see <https://www.gnu.org/licenses/>*/
 
+using SymOntoClay.Core;
 using SymOntoClay.CoreHelper;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 {
     public interface IGameComponent: ISymOntoClayDisposable
     {
+        int InstanceId { get; }
+        string IdForFacts { get; }
         void LoadFromSourceCode();
         void BeginStarting();
         bool IsWaited { get; }
         void RunInMainThread(Action function);
         TResult RunInMainThread<TResult>(Func<TResult> function);
+        IStorage PublicFactsStorage { get; }
     }
 }

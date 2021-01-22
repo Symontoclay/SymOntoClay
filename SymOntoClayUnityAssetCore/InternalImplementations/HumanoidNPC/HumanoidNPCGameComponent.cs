@@ -11,6 +11,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 using SymOntoClay.Core;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.Internal.HostSupport;
+using SymOntoClay.UnityAsset.Core.Internal.Vision;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,11 +32,21 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 //Log($"worldContext.LogicQueryParseAndCache == null = {worldContext.LogicQueryParseAndCache == null}");
 #endif
 
+                var internalContext = new HumanoidNPCGameComponentContext();
+
+                _idForFacts = settings.IdForFacts;
+
+                internalContext.IdForFacts = _idForFacts;
+
                 var tmpDir = Path.Combine(worldContext.TmpDir, settings.Id);
 
                 Directory.CreateDirectory(worldContext.TmpDir);
 
-                _hostSupport = new HostSupportComponent(Logger, settings.PlatformSupport, worldContext);
+                _visionComponent = new VisionComponent(Logger, settings.VisionProvider, internalContext, worldContext);
+                internalContext.VisionComponent = _visionComponent;
+
+                _hostSupport = new HostSupportComponent(Logger, settings.PlatformSupport, internalContext, worldContext);
+                internalContext.HostSupportComponent = _hostSupport;
 
                 var coreEngineSettings = new EngineSettings();
                 coreEngineSettings.Id = settings.Id;
@@ -54,6 +65,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 //Log($"coreEngineSettings = {coreEngineSettings}");
 #endif
                 _coreEngine = new Engine(coreEngineSettings);
+                internalContext.CoreEngine = _coreEngine;
             }
             catch (Exception e)
             {
@@ -63,8 +75,16 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             }   
         }
 
+        private readonly string _idForFacts;
         private readonly Engine _coreEngine;
+        private readonly VisionComponent _visionComponent;
         private readonly HostSupportComponent _hostSupport;
+
+        /// <inheritdoc/>
+        public override IStorage PublicFactsStorage => _coreEngine.PublicFactsStorage;
+
+        /// <inheritdoc/>
+        public override string IdForFacts => _idForFacts;
 
         /// <inheritdoc/>
         public override void LoadFromSourceCode()
@@ -73,6 +93,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
             //try
             //{
+            _visionComponent.LoadFromSourceCode();
                 _coreEngine.LoadFromSourceCode();
             //}
             //catch(Exception e)
@@ -89,6 +110,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             try
             {
                 _coreEngine.BeginStarting();
+                _visionComponent.BeginStarting();
             }
             catch (Exception e)
             {
@@ -103,7 +125,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         {
             get
             {
-                return _coreEngine.IsWaited;
+                return _coreEngine.IsWaited && _visionComponent.IsWaited;
             }
         }
 
@@ -121,13 +143,16 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         public void Die()
         {
-            throw new NotImplementedException();
+            _coreEngine.Die();
+            _visionComponent.Die();
         }
 
         /// <inheritdoc/>
         protected override void OnDisposed()
         {           
             _coreEngine.Dispose();
+            _visionComponent.Dispose();
+            _hostSupport.Dispose();
 
             base.OnDisposed();
         }

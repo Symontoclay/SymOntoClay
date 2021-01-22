@@ -162,7 +162,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         ILogicQueryParseAndCache IWorldCoreContext.LogicQueryParseAndCache => LogicQueryParseAndCache;
 
         private readonly object _worldComponentsListLockObj = new object();
-        private List<IWorldCoreComponent> _worldComponentsList = new List<IWorldCoreComponent>();
+        private readonly List<IWorldCoreComponent> _worldComponentsList = new List<IWorldCoreComponent>();
 
         void IWorldCoreContext.AddWorldComponent(IWorldCoreComponent component)
         {
@@ -178,7 +178,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         }
 
         private readonly object _gameComponentsListLockObj = new object();
-        private List<IGameComponent> _gameComponentsList = new List<IGameComponent>();
+        private readonly List<IGameComponent> _gameComponentsList = new List<IGameComponent>();
+        private readonly List<int> _availableInstanceIdList = new List<int>();
+        private readonly Dictionary<int, IGameComponent> _gameComponentsDictByInstanceId = new Dictionary<int, IGameComponent>();
 
         void IWorldCoreGameComponentContext.AddGameComponent(IGameComponent component)
         {
@@ -189,7 +191,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     return;
                 }
 
+                var instanceId = component.InstanceId;
+
+                _availableInstanceIdList.Add(instanceId);
                 _gameComponentsList.Add(component);
+                _gameComponentsDictByInstanceId[instanceId] = component;
             }
         }
 
@@ -199,8 +205,39 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             {
                 if (_gameComponentsList.Contains(component))
                 {
+                    var instanceId = component.InstanceId;
+
+                    _availableInstanceIdList.Remove(component.InstanceId);
                     _gameComponentsList.Remove(component);
+                    _gameComponentsDictByInstanceId.Remove(instanceId);
                 }
+            }
+        }
+
+        IList<int> IWorldCoreGameComponentContext.AvailableInstanceIdList
+        {
+            get
+            {
+                lock (_gameComponentsListLockObj)
+                {
+                    return _availableInstanceIdList;
+                }
+            }
+        }
+
+        IStorage IWorldCoreGameComponentContext.GetPublicFactsStorageByInstanceId(int instanceId)
+        {
+            lock (_gameComponentsListLockObj)
+            {
+                return _gameComponentsDictByInstanceId[instanceId].PublicFactsStorage;
+            }
+        }
+
+        string IWorldCoreGameComponentContext.GetIdForFactsByInstanceId(int instanceId)
+        {
+            lock (_gameComponentsListLockObj)
+            {
+                return _gameComponentsDictByInstanceId[instanceId].IdForFacts;
             }
         }
 
@@ -286,6 +323,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         {
             ThreadsComponent.Lock();
 
+            Thread.Sleep(20);
+
             DateTimeProvider.Start();
 
             lock (_gameComponentsListLockObj)
@@ -295,6 +334,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     item.BeginStarting();
                 }
             }
+
+            Thread.Sleep(10);
 
             WaitForAllGameComponentsWaiting();
 
@@ -309,6 +350,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             {
                 while(!_gameComponentsList.All(p => p.IsWaited))
                 {
+                    Thread.Sleep(10);
                 }
             }
         }

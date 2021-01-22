@@ -37,6 +37,7 @@ namespace SymOntoClay.Core.Internal.Storage
 
         private RealStorage _globalStorage;
         private RealStorage _publicFactsStorage;
+        private RealStorage _selfFactsStorage;
         private RealStorage _perceptedFactsStorage;
 
         /// <inheritdoc/>
@@ -48,32 +49,34 @@ namespace SymOntoClay.Core.Internal.Storage
         /// <inheritdoc/>
         public IStorage PerceptedFactsStorage => _perceptedFactsStorage;
 
-        private List<RealStorage> _storagesList;
+        //private List<RealStorage> _storagesList;
 
         public void LoadFromSourceCode()
         {
-            _storagesList = new List<RealStorage>();
+            //_storagesList = new List<RealStorage>();
 
             var publicFactsStorageSettings = new RealStorageSettings();
             publicFactsStorageSettings.MainStorageContext = _context;
 
             _publicFactsStorage = new RealStorage(KindOfStorage.PublicFacts, publicFactsStorageSettings);
 
-            _storagesList.Add(_publicFactsStorage);
+            //_storagesList.Add(_publicFactsStorage);
+
+            _selfFactsStorage = new RealStorage(KindOfStorage.PublicFacts, publicFactsStorageSettings);
 
             var perceptedFactsStorageSettings = new RealStorageSettings();
             perceptedFactsStorageSettings.MainStorageContext = _context;
 
             _perceptedFactsStorage = new RealStorage(KindOfStorage.PerceptedFacts, perceptedFactsStorageSettings);
 
-            _storagesList.Add(_perceptedFactsStorage);
+            //_storagesList.Add(_perceptedFactsStorage);
 
             var globalStorageSettings = new RealStorageSettings();
             globalStorageSettings.MainStorageContext = _context;
 
             if (_parentStorage != null && _parentStorage.Storage != null)
             {
-                globalStorageSettings.ParentsStorages = new List<IStorage>() { _parentStorage.Storage };
+                globalStorageSettings.ParentsStorages = new List<IStorage>() { _parentStorage.Storage, _perceptedFactsStorage, _selfFactsStorage };
             }
 
             switch(_kindGlobalOfStorage)
@@ -94,7 +97,7 @@ namespace SymOntoClay.Core.Internal.Storage
                     throw new ArgumentOutOfRangeException(nameof(_kindGlobalOfStorage), _kindGlobalOfStorage, null);
             }
             
-            _storagesList.Add(_globalStorage);
+            //_storagesList.Add(_globalStorage);
 
             _globalStorage.DefaultSettingsOfCodeEntity = CreateDefaultSettingsOfCodeEntity();
 
@@ -140,6 +143,7 @@ namespace SymOntoClay.Core.Internal.Storage
 #endif
 
             _publicFactsStorage.LogicalStorage.Append(fact);
+            _selfFactsStorage.LogicalStorage.Append(fact);
 
             return fact.Name.NameValue;
         }
@@ -152,6 +156,55 @@ namespace SymOntoClay.Core.Internal.Storage
 #endif
 
             _publicFactsStorage.LogicalStorage.RemoveById(id);
+            _selfFactsStorage.LogicalStorage.RemoveById(id);
+        }
+
+        public void AddVisibleStorage(IStorage storage)
+        {
+            _globalStorage.AddParentStorage(storage);
+        }
+
+        public void RemoveVisibleStorage(IStorage storage)
+        {
+            _globalStorage.RemoveParentStorage(storage);
+        }
+
+        /// <inheritdoc/>
+        public string InsertPerceptedFact(string text)
+        {
+#if DEBUG
+            Log($"text = {text}");
+#endif
+
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return string.Empty;
+            }
+
+            if (!text.StartsWith("{:"))
+            {
+                text = $"{{: {text} :}}";
+            }
+
+#if DEBUG
+            Log($"text = {text}");
+#endif
+
+            var fact = _logicQueryParseAndCache.GetLogicRuleOrFact(text);
+
+#if DEBUG
+            Log($"fact = {fact}");
+#endif
+
+            _perceptedFactsStorage.LogicalStorage.Append(fact);
+
+            return fact.Name.NameValue;
+        }
+
+        /// <inheritdoc/>
+        public void RemovePerceptedFact(string id)
+        {
+            _perceptedFactsStorage.LogicalStorage.RemoveById(id);
         }
     }
 }

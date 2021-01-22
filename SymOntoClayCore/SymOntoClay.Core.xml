@@ -3690,6 +3690,12 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.VarStorage">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.AddParentStorage(SymOntoClay.Core.IStorage)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.RemoveParentStorage(SymOntoClay.Core.IStorage)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.SymOntoClay#Core#IStorage#CollectChainOfStorages(System.Collections.Generic.IList{SymOntoClay.Core.StorageUsingOptions},System.Int32)">
             <inheritdoc/>
         </member>
@@ -3745,6 +3751,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.RemovePublicFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertPerceptedFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.RemovePerceptedFact(System.String)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.SynonymsStorage.SynonymsStorage.Kind">
@@ -3903,6 +3915,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.SharedDictionarySettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.StandaloneStorage.Storage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.StandaloneStorage.PublicFactsStorage">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.StandaloneStorage.LoadFromSourceCode">

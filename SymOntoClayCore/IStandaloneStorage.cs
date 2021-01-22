@@ -19,5 +19,6 @@ namespace SymOntoClay.Core
         IStorage Storage { get; }
         string InsertPublicFact(string text);
         void RemovePublicFact(string id);
+        IStorage PublicFactsStorage { get; }
     }
 }

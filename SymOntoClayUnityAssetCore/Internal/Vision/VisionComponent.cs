@@ -1,0 +1,340 @@
+﻿using SymOntoClay.Core;
+using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.Threads;
+using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
+using System.Text;
+using System.Threading;
+
+namespace SymOntoClay.UnityAsset.Core.Internal.Vision
+{
+    public class VisionComponent : BaseComponent
+    {
+        public VisionComponent(IEntityLogger logger, IVisionProvider visionProvider, HumanoidNPCGameComponentContext internalContext, IWorldCoreGameComponentContext worldContext)
+            : base(logger)
+        {
+            _internalContext = internalContext;
+            _worldContext = worldContext;
+            _visionProvider = visionProvider;
+
+            _activePeriodicObjectContext = new ActivePeriodicObjectContext(worldContext.SyncContext);
+            _activeObject = new AsyncActivePeriodicObject(_activePeriodicObjectContext);
+            _activeObject.PeriodicMethod = CommandLoop;
+        }
+
+        private readonly HumanoidNPCGameComponentContext _internalContext;
+        private readonly IWorldCoreGameComponentContext _worldContext;
+        private readonly IVisionProvider _visionProvider;
+        private readonly IActivePeriodicObjectContext _activePeriodicObjectContext;
+        private readonly IActivePeriodicObject _activeObject;
+        private readonly object _lockObj = new object();
+        private string _idForFacts;
+        private Engine _coreEngine;
+
+        private Dictionary<int, VisibleItem> _visibleObjectsRegistry;
+        private Dictionary<int, Vector3> _visibleObjectsPositionRegistry;
+        private Dictionary<int, string> _visibleObjectsSeeFactsIdRegistry;
+        private Dictionary<int, string> _visibleObjectsFocusFactsIdRegistry;
+        private Dictionary<int, string> _visibleObjectsDistanceFactsIdRegistry;
+        private Dictionary<int, IStorage> _visibleObjectsStoragesRegistry;
+        private Dictionary<int, string> _visibleObjectsIdForFactsRegistry;
+
+        public void LoadFromSourceCode()
+        {
+            lock (_lockObj)
+            {
+                _visibleObjectsPositionRegistry = new Dictionary<int, Vector3>();
+            }
+
+            _visibleObjectsRegistry = new Dictionary<int, VisibleItem>();
+            _visibleObjectsSeeFactsIdRegistry = new Dictionary<int, string>();
+            _visibleObjectsFocusFactsIdRegistry = new Dictionary<int, string>();
+            _visibleObjectsDistanceFactsIdRegistry = new Dictionary<int, string>();
+            _visibleObjectsStoragesRegistry = new Dictionary<int, IStorage>();
+            _visibleObjectsIdForFactsRegistry = new Dictionary<int, string>();
+
+            _idForFacts = _internalContext.IdForFacts;
+            _coreEngine = _internalContext.CoreEngine;
+        }
+
+        private bool CommandLoop()
+        {
+            Thread.Sleep(100);
+            
+#if DEBUG
+            Log("Do");
+#endif
+
+            var visibleItemsList = _visionProvider.GetCurrentVisibleItems();
+
+#if DEBUG
+            //Log($"visibleItemsList = {visibleItemsList.WriteListToString()}");
+#endif
+
+            var availableInstanceIdList = _worldContext.AvailableInstanceIdList;
+
+            visibleItemsList = visibleItemsList.Where(p => availableInstanceIdList.Contains(p.InstanceId)).ToList();
+            var removedInstancesIdList = visibleItemsList.Select(p => p.InstanceId).ToList();
+
+#if DEBUG
+            Log($"visibleItemsList (after) = {visibleItemsList.WriteListToString()}");
+#endif
+
+            var newVisibleItemsList = new List<VisibleItem>();
+            var changedAddFocusVisibleItemsList = new List<VisibleItem>();
+            var changedRemoveFocusVisibleItemsList = new List<VisibleItem>();
+            var changedDistanceVisibleItemsList = new List<VisibleItem>();
+
+            if (visibleItemsList.Any())
+            {
+                foreach (var visibleItem in visibleItemsList)
+                {
+                    var instanceId = visibleItem.InstanceId;
+
+                    removedInstancesIdList.Remove(instanceId);
+
+                    if (_visibleObjectsRegistry.ContainsKey(instanceId))
+                    {
+                        var currentItem = _visibleObjectsRegistry[instanceId];
+
+                        if (currentItem.IsInFocus != visibleItem.IsInFocus)
+                        {
+#if DEBUG
+                            Log("currentItem.IsInFocus != visibleItem.IsInFocus");
+#endif
+
+                            if(visibleItem.IsInFocus)
+                            {
+                                changedAddFocusVisibleItemsList.Add(visibleItem);
+                            }
+                            else
+                            {
+                                changedRemoveFocusVisibleItemsList.Add(visibleItem);
+                            }                            
+                        }
+                        else
+                        {
+                            if(currentItem.MinDistance != visibleItem.MinDistance)
+                            {
+#if DEBUG
+                                Log("currentItem.MinDistance != visibleItem.MinDistance");
+#endif
+                                changedDistanceVisibleItemsList.Add(visibleItem);
+                            }
+                            else
+                            {
+                                if (currentItem.Position != visibleItem.Position)
+                                {
+#if DEBUG
+                                    Log($"currentItem.Position = {currentItem.Position}");
+                                    Log($"visibleItem.Position = {visibleItem.Position}");
+                                    Log("currentItem.Position != visibleItem.Position");
+#endif
+                                    lock (_lockObj)
+                                    {
+                                        _visibleObjectsPositionRegistry[instanceId] = visibleItem.Position;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        newVisibleItemsList.Add(visibleItem);                        
+
+                        lock (_lockObj)
+                        {
+                            _visibleObjectsPositionRegistry[instanceId] = visibleItem.Position;
+                        }
+                    }
+
+                    _visibleObjectsRegistry[instanceId] = visibleItem;
+                }
+
+                foreach(var instanceId in removedInstancesIdList)
+                {
+                    _visibleObjectsRegistry.Remove(instanceId);
+
+                    lock (_lockObj)
+                    {
+                        _visibleObjectsPositionRegistry.Remove(instanceId);
+                    }
+                }
+            }
+            else
+            {
+                if (_visibleObjectsRegistry.Count > 0)
+                {
+                    removedInstancesIdList = _visibleObjectsRegistry.Keys.ToList();
+
+                    _visibleObjectsRegistry.Clear();
+
+                    lock (_lockObj)
+                    {
+                        _visibleObjectsPositionRegistry.Clear();
+                    }
+                }
+            }
+
+#if DEBUG
+            Log($"removedInstancesIdList.Count = {removedInstancesIdList.Count}");
+            Log($"newVisibleItemsList.Count = {newVisibleItemsList.Count}");
+            Log($"changedAddFocusVisibleItemsList.Count = {changedAddFocusVisibleItemsList.Count}");
+            Log($"changedRemoveFocusVisibleItemsList.Count = {changedRemoveFocusVisibleItemsList.Count}");
+            Log($"changedDistanceVisibleItemsList.Count = {changedDistanceVisibleItemsList.Count}");
+#endif
+
+            if (removedInstancesIdList.Any())
+            {
+                foreach (var removedInstancesId in removedInstancesIdList)
+                {
+                    var storage = _visibleObjectsStoragesRegistry[removedInstancesId];
+
+                    _visibleObjectsStoragesRegistry.Remove(removedInstancesId);
+
+                    _coreEngine.RemoveVisibleStorage(storage);
+
+                    _visibleObjectsIdForFactsRegistry.Remove(removedInstancesId);
+
+                    if(_visibleObjectsSeeFactsIdRegistry.ContainsKey(removedInstancesId))
+                    {
+                        var factId = _visibleObjectsSeeFactsIdRegistry[removedInstancesId];
+                        _visibleObjectsSeeFactsIdRegistry.Remove(removedInstancesId);
+
+                        _coreEngine.RemovePerceptedFact(factId);
+                    }
+
+                    if(_visibleObjectsFocusFactsIdRegistry.ContainsKey(removedInstancesId))
+                    {
+                        var factId = _visibleObjectsFocusFactsIdRegistry[removedInstancesId];
+                        _visibleObjectsFocusFactsIdRegistry.Remove(removedInstancesId);
+
+                        _coreEngine.RemovePerceptedFact(factId);
+                    }
+
+                    if(_visibleObjectsDistanceFactsIdRegistry.ContainsKey(removedInstancesId))
+                    {
+                        var factId = _visibleObjectsDistanceFactsIdRegistry[removedInstancesId];
+                        _visibleObjectsDistanceFactsIdRegistry.Remove(removedInstancesId);
+
+                        _coreEngine.RemovePerceptedFact(factId);
+                    }
+                }
+            }
+
+            if (newVisibleItemsList.Any())
+            {
+                foreach(var newVisibleItem in newVisibleItemsList)
+                {
+                    var instanceId = newVisibleItem.InstanceId;
+
+                    var storage = _worldContext.GetPublicFactsStorageByInstanceId(instanceId);
+
+                    _visibleObjectsStoragesRegistry[instanceId] = storage;
+
+                    _coreEngine.AddVisibleStorage(storage);
+
+                    var idForFacts = _worldContext.GetIdForFactsByInstanceId(instanceId);
+
+                    _visibleObjectsIdForFactsRegistry[instanceId] = idForFacts;
+
+                    var seeFactStr = $"see(I, {idForFacts})";
+
+#if DEBUG
+                    Log($"seeFactStr = {seeFactStr}");
+#endif
+
+                    _visibleObjectsSeeFactsIdRegistry[instanceId] = _coreEngine.InsertPerceptedFact(seeFactStr);
+
+                    if (newVisibleItem.IsInFocus)
+                    {
+                        var focusFactStr = $"focus(I, {idForFacts})";
+
+#if DEBUG
+                        Log($"focusFactStr = {focusFactStr}");
+#endif
+
+                        _visibleObjectsFocusFactsIdRegistry[instanceId] = _coreEngine.InsertPerceptedFact(focusFactStr);
+                    }
+
+                    //var distanceFactStr = $"distance({idForFacts}, {newVisibleItem.MinDistance})";
+
+#if DEBUG
+                    //Log($"distanceFactStr = {distanceFactStr}");
+#endif
+
+                    //_visibleObjectsDistanceFactsIdRegistry[instanceId] = _coreEngine.InsertPerceptedFact(distanceFactStr);
+                }
+                //throw new NotImplementedException();
+            }
+
+            if(changedAddFocusVisibleItemsList.Any())
+            {
+                foreach(var changedAddFocusVisibleItem in changedAddFocusVisibleItemsList)
+                {
+                    var instanceId = changedAddFocusVisibleItem.InstanceId;
+
+                    var idForFacts = _visibleObjectsIdForFactsRegistry[instanceId];
+
+                    var focusFactStr = $"focus(I, {idForFacts})";
+
+#if DEBUG
+                    Log($"focusFactStr = {focusFactStr}");
+#endif
+
+                    _visibleObjectsFocusFactsIdRegistry[instanceId] = _coreEngine.InsertPerceptedFact(focusFactStr);
+                }
+            }
+
+            if (changedRemoveFocusVisibleItemsList.Any())
+            {
+                foreach (var changedRemoveFocusVisibleItem in changedRemoveFocusVisibleItemsList)
+                {
+                    var instanceId = changedRemoveFocusVisibleItem.InstanceId;
+
+                    var factId = _visibleObjectsFocusFactsIdRegistry[instanceId];
+                    _visibleObjectsFocusFactsIdRegistry.Remove(instanceId);
+
+                    _coreEngine.RemovePerceptedFact(factId);
+                }
+            }
+
+            if (changedDistanceVisibleItemsList.Any())
+            {
+                //throw new NotImplementedException();
+            }
+
+            return true;
+        }
+
+        public void BeginStarting()
+        {
+            _activeObject.Start();
+        }
+
+        public bool IsWaited
+        {
+            get
+            {
+                return _activeObject.IsWaited;
+            }
+        }
+
+        public void Die()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _activeObject.Dispose();
+
+            base.OnDisposed();
+        }
+    }
+}

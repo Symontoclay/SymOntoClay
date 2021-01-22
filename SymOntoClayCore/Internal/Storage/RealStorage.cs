@@ -61,6 +61,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public KindOfStorage Kind => _kind;
 
         private readonly RealStorageContext _realStorageContext;
+        private readonly object _lockObj = new object();
 
         /// <inheritdoc/>
         public ILogicalStorage LogicalStorage => _realStorageContext.LogicalStorage;
@@ -90,6 +91,36 @@ namespace SymOntoClay.Core.Internal.Storage
         public IVarStorage VarStorage => _realStorageContext.VarStorage;
 
         /// <inheritdoc/>
+        public void AddParentStorage(IStorage storage)
+        {
+            lock (_lockObj)
+            {
+                var parentsList = _realStorageContext.Parents;
+
+                if(parentsList.Contains(storage))
+                {
+                    return;
+                }
+
+                parentsList.Add(storage);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void RemoveParentStorage(IStorage storage)
+        {
+            lock (_lockObj)
+            {
+                var parentsList = _realStorageContext.Parents;
+
+                if (parentsList.Contains(storage))
+                {
+                    parentsList.Remove(storage);
+                }
+            }
+        }
+
+        /// <inheritdoc/>
         void IStorage.CollectChainOfStorages(IList<StorageUsingOptions> result, int level)
         {
 #if DEBUG
@@ -110,13 +141,16 @@ namespace SymOntoClay.Core.Internal.Storage
 
             result.Add(item);
 
-            var parentsList = _realStorageContext.Parents;
-
-            if (parentsList.Any())
+            lock(_lockObj)
             {
-                foreach(var parent in parentsList)
+                var parentsList = _realStorageContext.Parents;
+
+                if (parentsList.Any())
                 {
-                    parent.CollectChainOfStorages(result, level);
+                    foreach (var parent in parentsList)
+                    {
+                        parent.CollectChainOfStorages(result, level);
+                    }
                 }
             }
         }

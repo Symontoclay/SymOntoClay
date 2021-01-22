@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using Newtonsoft.Json;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,13 @@ namespace TestSandbox.MonoBehaviourTesting
 
         private IHumanoidNPC _npc;
         private string _id;
+        private TstRayScaner _tstRayScaner;
 
         public override void Awake()
         {
             _logger.Log("Begin");
+
+            _tstRayScaner = new TstRayScaner();
 
             var platformListener = new TstPlatformHostListener();
 
@@ -27,9 +31,11 @@ namespace TestSandbox.MonoBehaviourTesting
 
             var npcSettings = new HumanoidNPCSettings();
             npcSettings.Id = _id;
+            npcSettings.InstanceId = 1;
             //npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
             npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Npcs\PeaceKeeper\PeaceKeeper.npc");
             npcSettings.HostListener = platformListener;
+            npcSettings.VisionProvider = _tstRayScaner;
             npcSettings.PlatformSupport = new TstPlatformSupport();
 
             _logger.Log($"npcSettings = {npcSettings}");
@@ -37,6 +43,8 @@ namespace TestSandbox.MonoBehaviourTesting
             _npc = WorldFactory.WorldInstance.GetHumanoidNPC(npcSettings);
 
             _logger.Log($"_npc == null = {_npc == null}");
+
+            _tstRayScaner.SetNPC(_npc);
 
             _logger.Log("End");
         }
@@ -48,19 +56,32 @@ namespace TestSandbox.MonoBehaviourTesting
             _logger.Log("End");
         }
 
+        private bool _isFactUpated;
+
         public override void Update()
         {
             _logger.Log("Begin");
 
-            var factStr = $"act({_id}, go)";
+            if(!_isFactUpated)
+            {
+                _isFactUpated = true;
 
-            _logger.Log($"factStr = {factStr}");
+                var factStr = $"act({_id}, go)";
 
-            var factId = _npc.InsertPublicFact(factStr);
+                _logger.Log($"factStr = {factStr}");
 
-            _logger.Log($"factId = {factId}");
+                var factId = _npc.InsertPublicFact(factStr);
 
-            _npc.RemovePublicFact(factId);
+                _logger.Log($"factId = {factId}");
+
+                _npc.RemovePublicFact(factId);
+            }
+
+            _tstRayScaner.Scan();
+
+            //var tmpVisibleItems = _tstRayScaner.GetCurrentVisibleItems();
+
+            //_logger.Log($"tmpVisibleItems = {JsonConvert.SerializeObject(tmpVisibleItems, Formatting.Indented)}");
 
             _logger.Log("End");
         }

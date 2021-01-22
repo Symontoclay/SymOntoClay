@@ -23,6 +23,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         {
             try
             {
+                _idForFacts = settings.IdForFacts;
+
                 var standaloneStorageSettings = new StandaloneStorageSettings();
                 standaloneStorageSettings.Id = settings.Id;
                 standaloneStorageSettings.IsWorld = false;
@@ -46,7 +48,15 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             }
         }
 
+        private readonly string _idForFacts;
+
         protected StandaloneStorage HostStorage { get; private set; }
+
+        /// <inheritdoc/>
+        public override IStorage PublicFactsStorage => HostStorage.PublicFactsStorage;
+
+        /// <inheritdoc/>
+        public override string IdForFacts => _idForFacts;
 
         /// <inheritdoc/>
         public override void LoadFromSourceCode()

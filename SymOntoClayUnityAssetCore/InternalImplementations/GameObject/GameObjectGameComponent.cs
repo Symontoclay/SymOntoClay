@@ -44,5 +44,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
         {
             HostStorage.RemovePublicFact(id);
         }
+
+        /// <inheritdoc/>
+        public override bool IsWaited => true;
     }
 }

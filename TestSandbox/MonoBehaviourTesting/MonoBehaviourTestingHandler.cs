@@ -15,7 +15,7 @@ namespace TestSandbox.MonoBehaviourTesting
         {
             _logger.Log("Begin");
 
-            var componentsList = new List<TstMonoBehaviour>() { new TstHumanoidNPC(), new TstWord() };
+            var componentsList = new List<TstMonoBehaviour>() { new TstHumanoidNPC(), new TstWord(), new TstGameObject() };
             ExecuteList(componentsList);
 
             _logger.Log("End");
@@ -35,9 +35,16 @@ namespace TestSandbox.MonoBehaviourTesting
                 component.Start();
             }
 
-            foreach (var component in componentsList)
+            Thread.Sleep(5000);
+
+            for (var i = 1; i <= 100; i++)
             {
-                component.Update();
+                foreach (var component in componentsList)
+                {
+                    component.Update();
+                }
+
+                Thread.Sleep(100);
             }
 
             Thread.Sleep(50000);

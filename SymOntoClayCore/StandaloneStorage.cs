@@ -31,8 +31,10 @@ namespace SymOntoClay.Core
         private readonly MainStorageContext _context;
         private IStorageComponent _storageComponent;
         private IStorage _storage;
+        private IStorage _publicFactsStorage;
 
-        IStorage IStandaloneStorage.Storage
+        /// <inheritdoc/>
+        public IStorage Storage
         {
             get
             {
@@ -44,6 +46,23 @@ namespace SymOntoClay.Core
                     }
 
                     return _storage;
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public IStorage PublicFactsStorage
+        {
+            get
+            {
+                lock (_stateLockObj)
+                {
+                    if (_state == ComponentState.Disposed)
+                    {
+                        throw new ObjectDisposedException(null);
+                    }
+
+                    return _publicFactsStorage;
                 }
             }
         }
@@ -62,6 +81,7 @@ namespace SymOntoClay.Core
 
                 _storageComponent = _context.Storage;
                 _storage = _storageComponent.GlobalStorage;
+                _publicFactsStorage = _storageComponent.PublicFactsStorage;
 
 #if IMAGINE_WORKING
                 //Log("Do");

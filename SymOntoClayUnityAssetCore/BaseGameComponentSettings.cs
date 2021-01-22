@@ -22,9 +22,45 @@ namespace SymOntoClay.UnityAsset.Core
         /// Gets or sets unique Id.
         /// It allows us to identify each item of the game.
         /// </summary>
-        public string Id { get; set; }
+        public string Id 
+        { 
+            get
+            {
+                return _id;
+            }
+
+            set
+            {
+                if(value == _id)
+                {
+                    return;
+                }
+
+                _id = value;
+
+                CalculateIdForFacts();
+            }
+        }
+
+        public string IdForFacts => _idForFacts;
         public int InstanceId { get; set; }
         public Vector3? UseStaticPosition { get; set; }
+
+        #region private members
+        private string _id;
+        private string _idForFacts;
+        private void CalculateIdForFacts()
+        {
+            if (_id.StartsWith("#`"))
+            {
+                _idForFacts = _id;
+            }
+            else
+            {
+                _idForFacts = $"{_id.Insert(1, "`")}`";
+            }
+        }
+        #endregion
 
         /// <inheritdoc/>
         public override string ToString()

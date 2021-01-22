@@ -152,6 +152,33 @@ namespace SymOntoClay.Core
             _context.Storage.RemovePublicFact(id);
         }
 
+        public IStorage PublicFactsStorage => _context.Storage.PublicFactsStorage;
+
+        public void AddVisibleStorage(IStorage storage)
+        {
+            _context.Storage.AddVisibleStorage(storage);
+        }
+
+        public void RemoveVisibleStorage(IStorage storage)
+        {
+            _context.Storage.RemoveVisibleStorage(storage);
+        }
+
+        public string InsertPerceptedFact(string text)
+        {
+            return _context.Storage.InsertPerceptedFact(text);
+        }
+
+        public void RemovePerceptedFact(string id)
+        {
+            _context.Storage.RemovePerceptedFact(id);
+        }
+
+        public void Die()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <inheritdoc/>
         protected override void OnDisposed()
         {

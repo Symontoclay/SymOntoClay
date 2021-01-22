@@ -8,6 +8,7 @@ SymOntoClay is distributed in the hope that it will be useful, but WITHOUT ANY W
 
 You should have received a copy of the GNU Lesser General Public License along with this library; if not, see <https://www.gnu.org/licenses/>*/
 
+using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using System;
@@ -21,14 +22,19 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private readonly IWorldCoreGameComponentContext _worldContext;
         private readonly IEntityLogger _logger;
         private readonly IInvokerInMainThread _invokerInMainThread;
+        private readonly int _instanceId;
 
         protected BaseGameComponent(BaseGameComponentSettings settings, IWorldCoreGameComponentContext worldContext)
         {
+            _instanceId = settings.InstanceId;
             worldContext.AddGameComponent(this);
             _worldContext = worldContext;
             _invokerInMainThread = worldContext.InvokerInMainThread;
             _logger = _worldContext.CreateLogger(settings.Id);
         }
+
+        /// <inheritdoc/>
+        public int InstanceId => _instanceId;
 
         public IEntityLogger Logger => _logger;
 
@@ -48,6 +54,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             var invocableInMainThreadObj = new InvocableInMainThreadObj<TResult>(function, _invokerInMainThread);
             return invocableInMainThreadObj.Run();
         }
+
+        /// <inheritdoc/>
+        public abstract IStorage PublicFactsStorage { get; }
+
+        /// <inheritdoc/>
+        public abstract string IdForFacts { get; }
 
         /// <inheritdoc/>
         public virtual void LoadFromSourceCode()

@@ -54,6 +54,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            TstCalculateTargetAnglesForRayScanner();
             //TstCopyFilesOnBuilding();
             //TstGetRootWorldSpaceDir();
             //TstEnvironmentVariables();
@@ -82,11 +83,80 @@ namespace TestSandbox
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
-            TstMonoBehaviourTestingHandler();
+            //TstMonoBehaviourTestingHandler();
             //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        //private static float Deg2Rad = 1f;
+        private static float Deg2Rad = 0.0174532924F;
+
+        private static void TstCalculateTargetAnglesForRayScanner()
+        {
+            _logger.Log("Begin");
+
+            var TotalRaysAngle = 125;
+            var TotalRaysInterval = 10;
+            var FocusRaysAngle = 35;
+            var FocusRaysInterval = 2;
+
+            var anglesList = new List<(float, bool)>();
+
+            var halfOfTotalRaysAngle = TotalRaysAngle / 2;
+            var halfOfFocusRaysAngle = FocusRaysAngle / 2;
+
+            _logger.Log($"halfOfTotalRaysAngle = {halfOfTotalRaysAngle}");
+            _logger.Log($"halfOfFocusRaysAngle = {halfOfFocusRaysAngle}");
+
+            var currAngle = 0f;
+            var inFocus = true;
+
+            do
+            {
+                _logger.Log($"currAngle = {currAngle}; inFocus = {inFocus}");
+
+                var radAngle = currAngle * Deg2Rad;
+
+                _logger.Log($"radAngle = {radAngle}");
+
+                anglesList.Add((radAngle, inFocus));
+
+                if(currAngle != 0)
+                {
+                    anglesList.Add((-1 * radAngle, inFocus));
+                }                
+
+                if (currAngle >= halfOfTotalRaysAngle)
+                {
+                    break;
+                }
+
+                if (currAngle < halfOfFocusRaysAngle)
+                {
+                    currAngle += FocusRaysInterval;
+                    
+                    if(currAngle > halfOfFocusRaysAngle)
+                    {
+                        currAngle = halfOfFocusRaysAngle;
+                    }
+                }
+                else
+                {
+                    currAngle += TotalRaysInterval;
+                    inFocus = false;
+                }
+
+                if(currAngle > halfOfTotalRaysAngle)
+                {
+                    currAngle = halfOfTotalRaysAngle;
+                }
+            } while (true);
+
+            _logger.Log($"anglesList = {JsonConvert.SerializeObject(anglesList, Formatting.Indented)}");
+
+            _logger.Log("Begin");
         }
 
         private static void TstCopyFilesOnBuilding()
@@ -98,7 +168,7 @@ namespace TestSandbox
 
             BuildPipeLine.CopyFiles(sourceDir, outputPath);
 
-            _logger.Log("End");
+            _logger.Log("Begin");
         }
 
         private static void TstGetRootWorldSpaceDir()

@@ -8,6 +8,7 @@ SymOntoClay is distributed in the hope that it will be useful, but WITHOUT ANY W
 
 You should have received a copy of the GNU Lesser General Public License along with this library; if not, see <https://www.gnu.org/licenses/>*/
 
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,14 +18,14 @@ namespace SymOntoClay.Core.Internal.Threads
 {
     public class ActivePeriodicObjectCommonContext : IActivePeriodicObjectCommonContext
     {
-        private readonly AutoResetEvent _autoResetEvent = new AutoResetEvent(true);
+        private readonly ManualResetEvent _autoResetEvent = new ManualResetEvent(true);
         private volatile bool _isNeedWating;
 
         /// <inheritdoc/>
         public bool IsNeedWating => _isNeedWating;
 
         /// <inheritdoc/>
-        public AutoResetEvent AutoResetEvent => _autoResetEvent;
+        public EventWaitHandle WaitEvent => _autoResetEvent;
 
         public void Lock()
         {
@@ -34,8 +35,10 @@ namespace SymOntoClay.Core.Internal.Threads
 
         public void UnLock()
         {
+            QuickLogger.Log($"_autoResetEvent.GetHashCode() = {_autoResetEvent.GetHashCode()}");
+
             _isNeedWating = false;
-            _autoResetEvent.Set();
+            QuickLogger.Log($"_autoResetEvent.Set() = {_autoResetEvent.Set()}");
         }
     }
 }

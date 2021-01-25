@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core;
+﻿using Newtonsoft.Json;
+using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -18,6 +19,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             : base(logger)
         {
             _internalContext = internalContext;
+            _selfInstanceId = internalContext.SelfInstanceId;
             _worldContext = worldContext;
             _visionProvider = visionProvider;
 
@@ -28,9 +30,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
         private readonly HumanoidNPCGameComponentContext _internalContext;
         private readonly IWorldCoreGameComponentContext _worldContext;
+        private readonly int _selfInstanceId;
         private readonly IVisionProvider _visionProvider;
         private readonly IActivePeriodicObjectContext _activePeriodicObjectContext;
-        private readonly IActivePeriodicObject _activeObject;
+        private readonly AsyncActivePeriodicObject _activeObject;
         private readonly object _lockObj = new object();
         private string _idForFacts;
         private Engine _coreEngine;
@@ -63,7 +66,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
         private bool CommandLoop()
         {
-            Thread.Sleep(100);
+            Thread.Sleep(200);
             
 #if DEBUG
             Log("Do");
@@ -75,7 +78,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             //Log($"visibleItemsList = {visibleItemsList.WriteListToString()}");
 #endif
 
-            var availableInstanceIdList = _worldContext.AvailableInstanceIdList;
+            var availableInstanceIdList = _worldContext.AvailableInstanceIdList.Where(p => p != _selfInstanceId).ToList();
+
+#if DEBUG
+            Log($"availableInstanceIdList = [{string.Join(",",availableInstanceIdList)}]");
+#endif
 
             visibleItemsList = visibleItemsList.Where(p => availableInstanceIdList.Contains(p.InstanceId)).ToList();
             var removedInstancesIdList = visibleItemsList.Select(p => p.InstanceId).ToList();

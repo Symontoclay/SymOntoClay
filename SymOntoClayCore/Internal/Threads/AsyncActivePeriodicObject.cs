@@ -10,9 +10,11 @@ You should have received a copy of the GNU Lesser General Public License along w
 
 using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Threads
@@ -80,12 +82,14 @@ namespace SymOntoClay.Core.Internal.Threads
                 _isWaited = false;
 
                 var task = new Task(() => {
+                    var autoResetEvent = _context.WaitEvent;
+
                     while (true)
                     {
                         if (_context.IsNeedWating)
                         {
                             _isWaited = true;
-                            _context.AutoResetEvent.WaitOne();
+                            autoResetEvent.WaitOne();
                             _isWaited = false;
                         }
 

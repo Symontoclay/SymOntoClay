@@ -54,7 +54,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-            TstCalculateTargetAnglesForRayScanner();
+            //TstCalculateTargetAnglesForRayScanner();
             //TstCopyFilesOnBuilding();
             //TstGetRootWorldSpaceDir();
             //TstEnvironmentVariables();
@@ -83,7 +83,7 @@ namespace TestSandbox
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
-            //TstMonoBehaviourTestingHandler();
+            TstMonoBehaviourTestingHandler();
             //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 

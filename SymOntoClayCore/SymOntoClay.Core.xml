@@ -3798,13 +3798,13 @@
         <member name="P:SymOntoClay.Core.Internal.Threads.ActivePeriodicObjectCommonContext.IsNeedWating">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Threads.ActivePeriodicObjectCommonContext.AutoResetEvent">
+        <member name="P:SymOntoClay.Core.Internal.Threads.ActivePeriodicObjectCommonContext.WaitEvent">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Threads.ActivePeriodicObjectContext.IsNeedWating">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Threads.ActivePeriodicObjectContext.AutoResetEvent">
+        <member name="P:SymOntoClay.Core.Internal.Threads.ActivePeriodicObjectContext.WaitEvent">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Threads.ActivePeriodicObjectContext.SymOntoClay#Core#Internal#Threads#IActivePeriodicObjectContext#AddChildActiveObject(SymOntoClay.Core.Internal.Threads.IActivePeriodicObject)">

@@ -18,6 +18,6 @@ namespace SymOntoClay.Core.Internal.Threads
     public interface IActivePeriodicObjectCommonContext
     {
         bool IsNeedWating { get; }
-        AutoResetEvent AutoResetEvent { get; }
+        EventWaitHandle WaitEvent { get; }
     }
 }

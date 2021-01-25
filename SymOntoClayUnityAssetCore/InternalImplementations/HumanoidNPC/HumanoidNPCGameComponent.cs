@@ -37,6 +37,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 _idForFacts = settings.IdForFacts;
 
                 internalContext.IdForFacts = _idForFacts;
+                internalContext.SelfInstanceId = settings.InstanceId;
 
                 var tmpDir = Path.Combine(worldContext.TmpDir, settings.Id);
 

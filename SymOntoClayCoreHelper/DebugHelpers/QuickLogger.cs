@@ -8,6 +8,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
     public static class QuickLogger
     {
         private static string _fileName;
+        private readonly static object _lockObj = new object();
 
         static QuickLogger()
         {
@@ -16,7 +17,10 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
 
         public static void Log(string txt)
         {
-            File.AppendAllText(_fileName, txt);
+            lock (_lockObj)
+            {
+                File.AppendAllText(_fileName, txt);
+            }            
         }
     }
 }

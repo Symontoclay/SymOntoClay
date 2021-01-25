@@ -323,8 +323,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         {
             ThreadsComponent.Lock();
 
-            Thread.Sleep(20);
-
             DateTimeProvider.Start();
 
             lock (_gameComponentsListLockObj)
@@ -334,8 +332,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     item.BeginStarting();
                 }
             }
-
-            Thread.Sleep(10);
 
             WaitForAllGameComponentsWaiting();
 

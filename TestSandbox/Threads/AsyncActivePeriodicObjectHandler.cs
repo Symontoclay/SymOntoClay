@@ -36,12 +36,19 @@ namespace TestSandbox.Threads
                 PeriodicMethod = NRun
             };
 
+            var activeObject2 = new AsyncActivePeriodicObject(activeContext)
+            {
+                PeriodicMethod = NRun_2
+            };
+
             _logger.Log($"activeObject.IsWaited (0) = {activeObject.IsWaited}");
             _logger.Log($"activeObject.IsActive (0) = {activeObject.IsActive}");
 
             var taskValue = activeObject.Start();
 
             _logger.Log($"taskValue = {taskValue}");
+
+            activeObject2.Start();
 
             Thread.Sleep(10000);
 
@@ -66,34 +73,34 @@ namespace TestSandbox.Threads
             _logger.Log($"activeObject.IsWaited (3) = {activeObject.IsWaited}");
             _logger.Log($"activeObject.IsActive (3) = {activeObject.IsActive}");
 
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
 
-            activeObject.Stop();
+            //activeObject.Stop();
 
-            _logger.Log($"activeObject.IsWaited (4) = {activeObject.IsWaited}");
-            _logger.Log($"activeObject.IsActive (4) = {activeObject.IsActive}");
+            //_logger.Log($"activeObject.IsWaited (4) = {activeObject.IsWaited}");
+            //_logger.Log($"activeObject.IsActive (4) = {activeObject.IsActive}");
 
-            Thread.Sleep(10000);
+            //Thread.Sleep(10000);
 
-            taskValue = activeObject.Start();
+            //taskValue = activeObject.Start();
 
-            _logger.Log($"taskValue = {taskValue}");
+            //_logger.Log($"taskValue = {taskValue}");
 
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
 
-            activeObject.Stop();
+            //activeObject.Stop();
 
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
 
-            _logger.Log($"activeObject.TaskValue = {activeObject.TaskValue}");
+            //_logger.Log($"activeObject.TaskValue = {activeObject.TaskValue}");
 
-            activeObject.Dispose();
+            //activeObject.Dispose();
 
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
 
-            taskValue = activeObject.Start();
+            //taskValue = activeObject.Start();
 
-            _logger.Log($"taskValue = {taskValue}");
+            //_logger.Log($"taskValue = {taskValue}");
 
             Thread.Sleep(1000);
 
@@ -101,12 +108,27 @@ namespace TestSandbox.Threads
         }
 
         private int _n = 0;
+        private int _m = 0;
 
         private bool NRun()
         {
             _n++;
 
             _logger.Log($"_n = {_n}");
+
+            //if (_n > 10)
+            //{
+            //    return false;
+            //}
+
+            return true;
+        }
+
+        private bool NRun_2()
+        {
+            _m++;
+
+            _logger.Log($"_m = {_m}");
 
             //if (_n > 10)
             //{

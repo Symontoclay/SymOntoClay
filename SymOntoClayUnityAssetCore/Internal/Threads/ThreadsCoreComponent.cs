@@ -30,7 +30,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Threads
         bool IActivePeriodicObjectCommonContext.IsNeedWating => _commonActiveContext.IsNeedWating;
 
         /// <inheritdoc/>
-        AutoResetEvent IActivePeriodicObjectCommonContext.AutoResetEvent => _commonActiveContext.AutoResetEvent;
+        EventWaitHandle IActivePeriodicObjectCommonContext.WaitEvent => _commonActiveContext.WaitEvent;
 
         public void Lock()
         {

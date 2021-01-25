@@ -29,7 +29,7 @@ namespace SymOntoClay.Core.Internal.Threads
         public bool IsNeedWating => _commonContext.IsNeedWating;
 
         /// <inheritdoc/>
-        public AutoResetEvent AutoResetEvent => _commonContext.AutoResetEvent;
+        public EventWaitHandle WaitEvent => _commonContext.WaitEvent;
 
         private object _lockObj = new object();
 

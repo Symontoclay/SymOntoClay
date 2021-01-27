@@ -246,10 +246,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                 kindOfOperator = KindOfOperator.Is;
                             }
 
+#if DEBUG
+                            //Log($"kindOfOperator = {kindOfOperator}");
+#endif
+
                             var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
-                            //Log($"operatorInfo = {operatorInfo}");
+                            //Log($"operatorInfo (1) = {operatorInfo}");
 #endif
 
                             CallExecutable(operatorInfo, paramsList);
@@ -297,7 +301,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
-                            //Log($"operatorInfo = {operatorInfo}");
+                            //Log($"operatorInfo (2)= {operatorInfo}");
 #endif
                             
                             CallExecutable(operatorInfo, paramsList);

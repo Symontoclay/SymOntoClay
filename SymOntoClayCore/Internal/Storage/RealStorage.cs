@@ -30,6 +30,7 @@ namespace SymOntoClay.Core.Internal.Storage
             _realStorageContext = new RealStorageContext();
             _realStorageContext.Storage = this;
             _realStorageContext.MainStorageContext = settings.MainStorageContext;
+            _realStorageContext.InheritancePublicFactsReplicator = settings.InheritancePublicFactsReplicator;
 
             DefaultSettingsOfCodeEntity = settings.DefaultSettingsOfCodeEntity;
 

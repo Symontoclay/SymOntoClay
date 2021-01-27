@@ -35,7 +35,7 @@ namespace TestSandbox.MonoBehaviourTesting
             //npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
             npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Npcs\PeaceKeeper\PeaceKeeper.npc");
             npcSettings.HostListener = platformListener;
-            npcSettings.VisionProvider = _tstRayScaner;
+            //npcSettings.VisionProvider = _tstRayScaner;
             npcSettings.PlatformSupport = new TstPlatformSupport();
 
             _logger.Log($"npcSettings = {npcSettings}");
@@ -60,30 +60,30 @@ namespace TestSandbox.MonoBehaviourTesting
 
         public override void Update()
         {
-            _logger.Log("Begin");
+            //_logger.Log("Begin");
 
-            if(!_isFactUpated)
-            {
-                _isFactUpated = true;
+            //if(!_isFactUpated)
+            //{
+            //    _isFactUpated = true;
 
-                var factStr = $"act({_id}, go)";
+            //    var factStr = $"act({_id}, go)";
 
-                _logger.Log($"factStr = {factStr}");
+            //    _logger.Log($"factStr = {factStr}");
 
-                var factId = _npc.InsertPublicFact(factStr);
+            //    var factId = _npc.InsertPublicFact(factStr);
 
-                _logger.Log($"factId = {factId}");
+            //    _logger.Log($"factId = {factId}");
 
-                _npc.RemovePublicFact(factId);
-            }
+            //    _npc.RemovePublicFact(factId);
+            //}
 
-            _tstRayScaner.Scan();
+            //_tstRayScaner.Scan();
 
             //var tmpVisibleItems = _tstRayScaner.GetCurrentVisibleItems();
 
             //_logger.Log($"tmpVisibleItems = {JsonConvert.SerializeObject(tmpVisibleItems, Formatting.Indented)}");
 
-            _logger.Log("End");
+            //_logger.Log("End");
         }
 
         public override void Stop()

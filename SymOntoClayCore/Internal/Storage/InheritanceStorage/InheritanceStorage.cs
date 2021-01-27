@@ -29,6 +29,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
         {
             _kind = kind;
             _realStorageContext = realStorageContext;
+            _inheritancePublicFactsReplicator = realStorageContext.InheritancePublicFactsReplicator;
         }
 
         private readonly object _lockObj = new object();
@@ -39,6 +40,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
         public KindOfStorage Kind => _kind;
 
         private readonly RealStorageContext _realStorageContext;
+        private IInheritancePublicFactsReplicator _inheritancePublicFactsReplicator;
 
         /// <inheritdoc/>
         public IStorage Storage => _realStorageContext.Storage;
@@ -60,7 +62,8 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
             lock (_lockObj)
             {
 #if DEBUG
-                //Log($"subItem = {subItem}");
+                //Log($"kind = {_kind}");
+                //Log($"subItem = {subItem}; superName = {inheritanceItem.SuperName}");
                 //Log($"inheritanceItem = {inheritanceItem}");
                 //Log($"isPrimary = {isPrimary}");
 #endif
@@ -80,6 +83,11 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 
                 var subNameKey = indexedInheritanceItem.SubName.NameKey;
                 var superNameKey = indexedInheritanceItem.SuperName.NameKey;
+
+#if DEBUG
+                //Log($"subNameKey = {subNameKey}");
+                //Log($"superNameKey = {superNameKey}");
+#endif
 
                 if (_nonIndexedInfo.ContainsKey(subName))
                 {
@@ -144,7 +152,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 
             if(isPrimary)
             {
-                var inheritanceFact = CreateInheritanceFact(subItem, inheritanceItem);
+                var inheritanceFact = CreateInheritanceFact(inheritanceItem);
 
 #if DEBUG
                 //Log($"inheritanceFact = {inheritanceFact}");
@@ -152,6 +160,11 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 #endif
 
                 _realStorageContext.LogicalStorage.Append(inheritanceFact, false);
+
+                if(_kind == KindOfStorage.Global)
+                {
+                    _inheritancePublicFactsReplicator.ProcessChangeInheritance(inheritanceItem.SubName, inheritanceItem.SuperName);
+                }
             }
 
 #if DEBUG
@@ -159,7 +172,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 #endif
         }
 
-        private RuleInstance CreateInheritanceFact(StrongIdentifierValue subItem, InheritanceItem inheritanceItem)
+        private RuleInstance CreateInheritanceFact(InheritanceItem inheritanceItem)
         {
             var dictionary = _realStorageContext.MainStorageContext.Dictionary;
 
@@ -193,7 +206,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
             var subItemNode = new LogicalQueryNode();
             isExpr.Left = subItemNode;
             subItemNode.Kind = KindOfLogicalQueryNode.Concept;
-            subItemNode.Name = subItem;
+            subItemNode.Name = inheritanceItem.SubName;
 
             var superItemNode = new LogicalQueryNode();
             isExpr.Right = superItemNode;

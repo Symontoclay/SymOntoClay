@@ -69,7 +69,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             Thread.Sleep(200);
             
 #if DEBUG
-            Log("Do");
+            //Log("Do");
 #endif
 
             var visibleItemsList = _visionProvider.GetCurrentVisibleItems();
@@ -81,14 +81,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             var availableInstanceIdList = _worldContext.AvailableInstanceIdList.Where(p => p != _selfInstanceId).ToList();
 
 #if DEBUG
-            Log($"availableInstanceIdList = [{string.Join(",",availableInstanceIdList)}]");
+            //Log($"availableInstanceIdList = [{string.Join(",",availableInstanceIdList)}]");
 #endif
 
             visibleItemsList = visibleItemsList.Where(p => availableInstanceIdList.Contains(p.InstanceId)).ToList();
             var removedInstancesIdList = visibleItemsList.Select(p => p.InstanceId).ToList();
 
 #if DEBUG
-            Log($"visibleItemsList (after) = {visibleItemsList.WriteListToString()}");
+            //Log($"visibleItemsList (after) = {visibleItemsList.WriteListToString()}");
 #endif
 
             var newVisibleItemsList = new List<VisibleItem>();
@@ -188,11 +188,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             }
 
 #if DEBUG
-            Log($"removedInstancesIdList.Count = {removedInstancesIdList.Count}");
-            Log($"newVisibleItemsList.Count = {newVisibleItemsList.Count}");
-            Log($"changedAddFocusVisibleItemsList.Count = {changedAddFocusVisibleItemsList.Count}");
-            Log($"changedRemoveFocusVisibleItemsList.Count = {changedRemoveFocusVisibleItemsList.Count}");
-            Log($"changedDistanceVisibleItemsList.Count = {changedDistanceVisibleItemsList.Count}");
+            //Log($"removedInstancesIdList.Count = {removedInstancesIdList.Count}");
+            //Log($"newVisibleItemsList.Count = {newVisibleItemsList.Count}");
+            //Log($"changedAddFocusVisibleItemsList.Count = {changedAddFocusVisibleItemsList.Count}");
+            //Log($"changedRemoveFocusVisibleItemsList.Count = {changedRemoveFocusVisibleItemsList.Count}");
+            //Log($"changedDistanceVisibleItemsList.Count = {changedDistanceVisibleItemsList.Count}");
 #endif
 
             if (removedInstancesIdList.Any())
@@ -252,7 +252,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                     var seeFactStr = $"see(I, {idForFacts})";
 
 #if DEBUG
-                    Log($"seeFactStr = {seeFactStr}");
+                    //Log($"seeFactStr = {seeFactStr}");
 #endif
 
                     _visibleObjectsSeeFactsIdRegistry[instanceId] = _coreEngine.InsertPerceptedFact(seeFactStr);
@@ -262,7 +262,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                         var focusFactStr = $"focus(I, {idForFacts})";
 
 #if DEBUG
-                        Log($"focusFactStr = {focusFactStr}");
+                        //Log($"focusFactStr = {focusFactStr}");
 #endif
 
                         _visibleObjectsFocusFactsIdRegistry[instanceId] = _coreEngine.InsertPerceptedFact(focusFactStr);
@@ -290,7 +290,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                     var focusFactStr = $"focus(I, {idForFacts})";
 
 #if DEBUG
-                    Log($"focusFactStr = {focusFactStr}");
+                    //Log($"focusFactStr = {focusFactStr}");
 #endif
 
                     _visibleObjectsFocusFactsIdRegistry[instanceId] = _coreEngine.InsertPerceptedFact(focusFactStr);

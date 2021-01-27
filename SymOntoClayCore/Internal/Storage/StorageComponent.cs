@@ -10,6 +10,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage
@@ -39,6 +40,7 @@ namespace SymOntoClay.Core.Internal.Storage
         private RealStorage _publicFactsStorage;
         private RealStorage _selfFactsStorage;
         private RealStorage _perceptedFactsStorage;
+        private InheritancePublicFactsReplicator _inheritancePublicFactsReplicator;
 
         /// <inheritdoc/>
         public IStorage GlobalStorage => _globalStorage;
@@ -55,28 +57,51 @@ namespace SymOntoClay.Core.Internal.Storage
         {
             //_storagesList = new List<RealStorage>();
 
-            var publicFactsStorageSettings = new RealStorageSettings();
-            publicFactsStorageSettings.MainStorageContext = _context;
-
-            _publicFactsStorage = new RealStorage(KindOfStorage.PublicFacts, publicFactsStorageSettings);
-
-            //_storagesList.Add(_publicFactsStorage);
-
-            _selfFactsStorage = new RealStorage(KindOfStorage.PublicFacts, publicFactsStorageSettings);
-
-            var perceptedFactsStorageSettings = new RealStorageSettings();
-            perceptedFactsStorageSettings.MainStorageContext = _context;
-
-            _perceptedFactsStorage = new RealStorage(KindOfStorage.PerceptedFacts, perceptedFactsStorageSettings);
-
-            //_storagesList.Add(_perceptedFactsStorage);
-
             var globalStorageSettings = new RealStorageSettings();
+
+            var parentStoragesList = new List<IStorage>();
+
+            switch (_kindGlobalOfStorage)
+            {
+                case KindOfStorage.Global:
+                case KindOfStorage.Host:
+                    {
+                        var publicFactsStorageSettings = new RealStorageSettings();
+                        publicFactsStorageSettings.MainStorageContext = _context;
+
+                        _publicFactsStorage = new RealStorage(KindOfStorage.PublicFacts, publicFactsStorageSettings);
+
+                        _inheritancePublicFactsReplicator = new InheritancePublicFactsReplicator(_context, _publicFactsStorage);
+                        globalStorageSettings.InheritancePublicFactsReplicator = _inheritancePublicFactsReplicator;
+
+                        //_storagesList.Add(_publicFactsStorage);
+
+                        _selfFactsStorage = new RealStorage(KindOfStorage.PublicFacts, publicFactsStorageSettings);
+
+                        parentStoragesList.Add(_selfFactsStorage);
+
+                        var perceptedFactsStorageSettings = new RealStorageSettings();
+                        perceptedFactsStorageSettings.MainStorageContext = _context;
+
+                        _perceptedFactsStorage = new RealStorage(KindOfStorage.PerceptedFacts, perceptedFactsStorageSettings);
+
+                        //_storagesList.Add(_perceptedFactsStorage);
+
+                        parentStoragesList.Add(_perceptedFactsStorage);
+                    }
+                    break;
+            }
+         
             globalStorageSettings.MainStorageContext = _context;
 
             if (_parentStorage != null && _parentStorage.Storage != null)
             {
-                globalStorageSettings.ParentsStorages = new List<IStorage>() { _parentStorage.Storage, _perceptedFactsStorage, _selfFactsStorage };
+                parentStoragesList.Add(_parentStorage.Storage);
+            }
+
+            if(parentStoragesList.Any())
+            {
+                globalStorageSettings.ParentsStorages = parentStoragesList;
             }
 
             switch(_kindGlobalOfStorage)

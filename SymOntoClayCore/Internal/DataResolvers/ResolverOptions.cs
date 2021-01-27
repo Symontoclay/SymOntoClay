@@ -18,6 +18,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
     public class ResolverOptions : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public bool AddSelf { get; set; }
+        public bool AddTopType { get; set; }
         public bool JustDistinct { get; set; }
 
         public ResolverOptions Clone()
@@ -25,6 +26,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var result = new ResolverOptions();
             result.AddSelf = AddSelf;
             result.JustDistinct = JustDistinct;
+            result.AddTopType = AddTopType;
 
             return result;
         }
@@ -118,7 +120,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public static ResolverOptions GetDefaultOptions()
         {
-            return new ResolverOptions();
+            return new ResolverOptions() { AddTopType = true };
         }
     }
 }

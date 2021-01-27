@@ -69,6 +69,12 @@ namespace SymOntoClay.Core.Internal.CommonNames
         /// <inheritdoc/>
         public IndexedStrongIdentifierValue IndexedHostSystemVarName { get; private set; }
 
+        /// <inheritdoc/>
+        public StrongIdentifierValue SelfName { get; private set; }
+
+        /// <inheritdoc/>
+        public IndexedStrongIdentifierValue IndexedSelfName { get; private set; }
+
         public void LoadFromSourceCode()
         {
             var dictionary = _context.Dictionary;
@@ -94,11 +100,8 @@ namespace SymOntoClay.Core.Internal.CommonNames
             HostSystemVarName = NameHelper.CreateName(StandardNamesConstants.HostSystemVarName, dictionary);
             IndexedHostSystemVarName = HostSystemVarName.GetIndexed(_context);
 
-#if IMAGINE_WORKING
-            //Log("Do");
-#else
-                throw new NotImplementedException();
-#endif
+            SelfName = NameHelper.CreateName(_context.Id, dictionary);
+            IndexedSelfName = SelfName.GetIndexed(_context);
         }
     }
 }

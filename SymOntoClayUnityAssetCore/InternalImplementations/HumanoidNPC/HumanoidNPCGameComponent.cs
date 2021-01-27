@@ -43,8 +43,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
                 Directory.CreateDirectory(worldContext.TmpDir);
 
-                _visionComponent = new VisionComponent(Logger, settings.VisionProvider, internalContext, worldContext);
-                internalContext.VisionComponent = _visionComponent;
+                if(settings.VisionProvider != null)
+                {
+                    _visionComponent = new VisionComponent(Logger, settings.VisionProvider, internalContext, worldContext);
+                    internalContext.VisionComponent = _visionComponent;
+                }
 
                 _hostSupport = new HostSupportComponent(Logger, settings.PlatformSupport, internalContext, worldContext);
                 internalContext.HostSupportComponent = _hostSupport;
@@ -94,7 +97,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
             //try
             //{
-            _visionComponent.LoadFromSourceCode();
+            _visionComponent?.LoadFromSourceCode();
                 _coreEngine.LoadFromSourceCode();
             //}
             //catch(Exception e)
@@ -111,7 +114,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             try
             {
                 _coreEngine.BeginStarting();
-                _visionComponent.BeginStarting();
+                _visionComponent?.BeginStarting();
             }
             catch (Exception e)
             {
@@ -126,6 +129,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         {
             get
             {
+                if(_visionComponent == null)
+                {
+                    return _coreEngine.IsWaited;
+                }
+
                 return _coreEngine.IsWaited && _visionComponent.IsWaited;
             }
         }

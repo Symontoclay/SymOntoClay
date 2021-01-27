@@ -139,8 +139,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(indexedRuleInstance);
 
-            if(isPrimary)
+            if(isPrimary && _kind != KindOfStorage.PublicFacts && _kind != KindOfStorage.PerceptedFacts)
             {
+#if DEBUG
+                //Log($"_kind = {_kind}");
+#endif
+
                 var inheritanceRelationsList = ruleInstance.GetInheritanceRelations();
                 var ruleInstanceName = ruleInstance.Name.NameValue;
 

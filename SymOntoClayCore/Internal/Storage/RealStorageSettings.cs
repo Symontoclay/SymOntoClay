@@ -21,6 +21,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public IMainStorageContext MainStorageContext { get; set; }
         public IList<IStorage> ParentsStorages { get; set; }
         public DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get; set; }
+        public IInheritancePublicFactsReplicator InheritancePublicFactsReplicator { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

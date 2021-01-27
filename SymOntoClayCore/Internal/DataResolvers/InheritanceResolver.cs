@@ -133,7 +133,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var result = rawResult.Select(p => p.Value).ToList();
 
-            result.Add(GetTopTypeWeightedInheritanceItem(subNameKey));
+            if(options.AddTopType)
+            {
+                result.Add(GetTopTypeWeightedInheritanceItem(subNameKey));
+            }            
 
             if(options.AddSelf)
             {

@@ -35,10 +35,8 @@ namespace SymOntoClay.Core.Internal.Threads
 
         public void UnLock()
         {
-            QuickLogger.Log($"_autoResetEvent.GetHashCode() = {_autoResetEvent.GetHashCode()}");
-
             _isNeedWating = false;
-            QuickLogger.Log($"_autoResetEvent.Set() = {_autoResetEvent.Set()}");
+            _autoResetEvent.Set();
         }
     }
 }

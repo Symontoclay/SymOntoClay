@@ -30,5 +30,6 @@ namespace SymOntoClay.Core.Internal.Storage
         public VarStorage.VarStorage VarStorage { get; set; }
         public RealStorage Storage { get; set; }
         public IList<IStorage> Parents { get; set; }
+        public IInheritancePublicFactsReplicator InheritancePublicFactsReplicator { get; set; }
     }
 }

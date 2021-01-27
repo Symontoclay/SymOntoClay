@@ -3,6 +3,8 @@
     on Init => {
 	     'Begin' >> @>log;
 
+		 use @@self is linux;
+
 		 //select {: son(?x, ?y) :} >> @>log;
 
 		 //insert {: >: { bird (#1234) } :};

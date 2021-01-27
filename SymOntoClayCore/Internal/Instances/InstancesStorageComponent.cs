@@ -123,8 +123,12 @@ namespace SymOntoClay.Core.Internal.Instances
             var result = new CodeEntity();
             result.Kind = KindOfCodeEntity.Instance;
 
-            var newName = NameHelper.CreateName(_context.Id, _context.Dictionary);
+            var newName = _context.CommonNamesStorage.SelfName;
             result.Name = newName;
+
+#if DEBUG
+            //Log($"newName = {newName}");
+#endif
 
             result.Holder = _context.CommonNamesStorage.DefaultHolder;
 

@@ -339,14 +339,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             }
 
 #if DEBUG
-                            Log($"currentCommand.CountParams = {currentCommand.CountParams}");
+                            //Log($"currentCommand.CountParams = {currentCommand.CountParams}");
 #endif
 
                             var paramsList = TakePositionedParameters(currentCommand.CountParams);
 
 #if DEBUG
-                            Log($"paramsList = {paramsList.WriteListToString()}");
-                            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                            //Log($"paramsList = {paramsList.WriteListToString()}");
+                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                             switch(currentCommand.CountParams)
@@ -356,7 +356,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                         var firstParam = paramsList[0];
 
 #if DEBUG
-                                        Log($"firstParam = {firstParam}");
+                                        //Log($"firstParam = {firstParam}");
 #endif
 
                                         var resolvedFirstParam = _numberValueLinearResolver.Resolve(firstParam, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());

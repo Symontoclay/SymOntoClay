@@ -338,15 +338,39 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                 //break;
                             }
 
+#if DEBUG
+                            Log($"currentCommand.CountParams = {currentCommand.CountParams}");
+#endif
+
                             var paramsList = TakePositionedParameters(currentCommand.CountParams);
 
 #if DEBUG
-                            //Log($"paramsList = {paramsList.WriteListToString()}");
-                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                            Log($"paramsList = {paramsList.WriteListToString()}");
+                            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                             switch(currentCommand.CountParams)
                             {
+                                case 2:
+                                    {
+                                        var firstParam = paramsList[0];
+
+#if DEBUG
+                                        Log($"firstParam = {firstParam}");
+#endif
+
+                                        var resolvedFirstParam = _numberValueLinearResolver.Resolve(firstParam, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+
+                                        var annotationValue = paramsList[1].AsAnnotationValue;
+
+                                        var value = new WaypointValue((float)(double)resolvedFirstParam.GetSystemValue(), _context).GetIndexedValue(_context);
+
+                                        _currentCodeFrame.ValuesStack.Push(value);
+
+                                        _currentCodeFrame.CurrentPosition++;
+                                    }
+                                    break;
+
                                 case 3:
                                     {
                                         var firstParam = paramsList[0];

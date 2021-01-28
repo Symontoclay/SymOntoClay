@@ -20,6 +20,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class WaypointValue : Value
     {
+        public WaypointValue(float distance, IEngineContext context)
+            : this(distance, 0f, context)
+        {
+        }
+
         public WaypointValue(float distance, float horizontalAngle, IEngineContext context)
         {
             _context = context;

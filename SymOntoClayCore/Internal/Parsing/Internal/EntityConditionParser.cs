@@ -118,6 +118,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _state = State.WaitForSecondCoordinate;
                             break;
 
+                        case TokenKind.CloseSquareBracket:
+                            if (Result.KindOfEntityConditionAstExpression == KindOfEntityConditionAstExpression.Waypoint)
+                            {
+                                Exit();
+                                break;
+                            }
+                            throw new UnexpectedTokenException(_currToken);
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

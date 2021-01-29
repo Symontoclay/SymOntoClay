@@ -68,9 +68,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");
-            //Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
+            Log($"Result = {Result}");
+            Log($"_state = {_state}");
 #endif
 
             switch (_state)
@@ -109,6 +109,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                 default:
                                     throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        case TokenKind.OpenFactBracket:
+                            {
+                                _inlineTrigger.Kind = KindOfInlineTrigger.LogicConditional;
+
+                                _context.Recovery(_currToken);
+
+                                var parser = new LogicalQueryParser(_context);
+                                parser.Run();
+
+                                _inlineTrigger.Condition = parser.Result;
+
+                                _state = State.GotCondition;
                             }
                             break;
 
@@ -153,6 +168,19 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.CloseFigureBracket:
                             _context.Recovery(_currToken);
                             Exit();
+                            break;
+
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.On:
+                                    _context.Recovery(_currToken);
+                                    Exit();
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
                             break;
 
                         default:

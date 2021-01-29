@@ -25,6 +25,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         public KindOfInlineTrigger Kind { get; set; } = KindOfInlineTrigger.Unknown;
         public KindOfSystemEventOfInlineTrigger KindOfSystemEvent { get; set; } = KindOfSystemEventOfInlineTrigger.Unknown;
+        public RuleInstance Condition { get; set; }
         public List<AstStatement> Statements { get; set; } = new List<AstStatement>();
 
         public CodeEntity CodeEntity { get; set; }
@@ -94,6 +95,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             result.Kind = Kind;
             result.KindOfSystemEvent = KindOfSystemEvent;
+            result.Condition = Condition.Clone(context);
             result.Statements = Statements.Select(p => p.CloneAstStatement(context)).ToList();
             result.CodeEntity = CodeEntity.Clone(context);
 
@@ -123,6 +125,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
+            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
             sb.PrintObjListProp(n, nameof(Statements), Statements);
 
             sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
@@ -138,7 +141,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
-
+            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
             sb.PrintShortObjListProp(n, nameof(Statements), Statements);
 
             sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
@@ -154,7 +157,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
-
+            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
             sb.PrintBriefObjListProp(n, nameof(Statements), Statements);
 
             sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);

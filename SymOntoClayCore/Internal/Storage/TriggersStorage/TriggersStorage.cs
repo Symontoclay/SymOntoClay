@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
         public void Append(InlineTrigger inlineTrigger)
         {
 #if DEBUG
-            //Log($"inlineTrigger = {inlineTrigger}");
+            Log($"inlineTrigger = {inlineTrigger}");
 #endif
 
             AnnotatedItemHelper.CheckAndFillHolder(inlineTrigger, _realStorageContext.MainStorageContext.CommonNamesStorage);

@@ -61,6 +61,8 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log($"targetTriggersList = {targetTriggersList.WriteListToString()}");
 #endif
 
+            targetTriggersList.Reverse();
+
             var processInitialInfoList = new List<ProcessInitialInfo>();
 
             foreach(var targetTrigger in targetTriggersList)

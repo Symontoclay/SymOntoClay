@@ -143,6 +143,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
             {
                 queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
             }
+
+            queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForPart_1.UsedKeysList);
 #if DEBUG
             //options.Logger.Log("End");
 #endif

@@ -130,6 +130,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
             //}
 #endif
 
+            var usedKeysList = queryExecutingCard.UsedKeysList;
+
             var useInheritance = options.UseInheritance;
             var inheritanceResolver = options.InheritanceResolver;
 
@@ -149,7 +151,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
 #if DEBUG
                 //options.Logger.Log($"targetRelation = {targetRelation}");
                 //options.Logger.Log($"targetRelation = {targetRelation.GetHumanizeDbgString()}");
+                //options.Logger.Log($"targetRelation.Key = {targetRelation.Key}");
+                //options.Logger.Log($"options.EntityDictionary.GetName(targetRelation.Key) = {options.EntityDictionary.GetName(targetRelation.Key)}");
 #endif
+
+                usedKeysList.Add(targetRelation.Key);
 
                 var paramsListOfTargetRelation = targetRelation.Params;
 
@@ -158,7 +164,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 foreach (var knownInfo in queryExecutingCard.KnownInfoList)
                 {
 #if DEBUG
-                    //options.Logger.Log($"knownInfo = {knownInfo}");
+                    options.Logger.Log($"knownInfo = {knownInfo}");
 #endif
 
                     List<ulong> additionalKeys = null;
@@ -262,7 +268,17 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
 #if DEBUG
                             //options.Logger.Log($"NEXT paramOfTargetRelation = {paramOfTargetRelation}");
+                            //options.Logger.Log($"NEXT options.EntityDictionary.GetName(paramOfTargetRelation.AsKeyRef.Key) = {options.EntityDictionary.GetName(paramOfTargetRelation.AsKeyRef.Key)}");
 #endif
+                            
+                            if(paramOfTargetRelation.IsKeyRef)
+                            {
+                                usedKeysList.Add(paramOfTargetRelation.AsKeyRef.Key);
+                            }
+                            else
+                            {
+                                throw new NotImplementedException();
+                            }                            
 
                             var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
                             resultOfVarOfQueryToRelation.KeyOfVar = varItem.KeyOfVar;
@@ -370,6 +386,10 @@ namespace SymOntoClay.Core.Internal.IndexedData
             //{
             //    options.Logger.Log($"tmpKnownInfo = {tmpKnownInfo}");
             //}
+            if(targetKnownInfoList.Any())
+            {
+                throw new NotImplementedException();
+            }
 #endif
 
             var nextPartsList = GetNextPartsList();
@@ -389,8 +409,16 @@ namespace SymOntoClay.Core.Internal.IndexedData
 #endif
                 nextPart.FillExecutingCardForCallingFromOtherPart(queryExecutingCardForNextPart, dataSource, options);
 
+                queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForNextPart.UsedKeysList);
+
 #if DEBUG
                 //options.Logger.Log($"queryExecutingCardForNextPart = {queryExecutingCardForNextPart}");
+
+                //if (queryExecutingCardForNextPart.UsedKeysList.Any())
+                //{
+                //    throw new NotImplementedException();
+                //}
+
                 //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
                 //options.Logger.Log($"queryExecutingCardForNextPart.GetSenderExpressionNodeHumanizeDbgString() = {queryExecutingCardForNextPart.GetSenderExpressionNodeHumanizeDbgString()}");
                 //options.Logger.Log($"queryExecutingCardForNextPart.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCardForNextPart.GetSenderIndexedRulePartHumanizeDbgString()}");
@@ -494,8 +522,14 @@ namespace SymOntoClay.Core.Internal.IndexedData
             queryExecutingCardForExpression.KnownInfoList = queryExecutingCard.KnownInfoList;
             Expression.FillExecutingCard(queryExecutingCardForExpression, dataSource, options);
 
+            queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForExpression.UsedKeysList);
+
 #if DEBUG
             //options.Logger.Log($"%%%%%%%% queryExecutingCardForExpression = {queryExecutingCardForExpression}");
+            //if (queryExecutingCardForExpression.UsedKeysList.Any())
+            //{
+            //    throw new NotImplementedException();
+            //}
 #endif
 
             queryExecutingCard.ResultsOfQueryToRelationList = queryExecutingCardForExpression.ResultsOfQueryToRelationList;

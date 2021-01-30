@@ -102,7 +102,13 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
             }
 
+            queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForExpression.UsedKeysList);
+
 #if DEBUG
+            //if (queryExecutingCardForExpression.UsedKeysList.Any())
+            //{
+            //    throw new NotImplementedException();
+            //}
             //options.Logger.Log("End");
 #endif
         }

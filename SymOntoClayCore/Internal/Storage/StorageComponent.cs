@@ -64,7 +64,6 @@ namespace SymOntoClay.Core.Internal.Storage
             switch (_kindGlobalOfStorage)
             {
                 case KindOfStorage.Global:
-                case KindOfStorage.Host:
                     {
                         var publicFactsStorageSettings = new RealStorageSettings();
                         publicFactsStorageSettings.MainStorageContext = _context;
@@ -88,6 +87,24 @@ namespace SymOntoClay.Core.Internal.Storage
                         //_storagesList.Add(_perceptedFactsStorage);
 
                         parentStoragesList.Add(_perceptedFactsStorage);
+                    }
+                    break;
+
+                case KindOfStorage.Host:
+                    {
+                        var publicFactsStorageSettings = new RealStorageSettings();
+                        publicFactsStorageSettings.MainStorageContext = _context;
+
+                        _publicFactsStorage = new RealStorage(KindOfStorage.PublicFacts, publicFactsStorageSettings);
+
+                        _inheritancePublicFactsReplicator = new InheritancePublicFactsReplicator(_context, _publicFactsStorage);
+                        globalStorageSettings.InheritancePublicFactsReplicator = _inheritancePublicFactsReplicator;
+
+                        //_storagesList.Add(_publicFactsStorage);
+
+                        _selfFactsStorage = new RealStorage(KindOfStorage.PublicFacts, publicFactsStorageSettings);
+
+                        parentStoragesList.Add(_selfFactsStorage);
                     }
                     break;
             }

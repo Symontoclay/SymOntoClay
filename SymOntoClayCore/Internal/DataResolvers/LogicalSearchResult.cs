@@ -20,6 +20,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
     {
         public bool IsSuccess { get; set; }
         public IList<LogicalSearchResultItem> Items { get; set; }
+        public List<ulong> UsedKeysList { get; set; } = new List<ulong>();
 
         public ulong GetLongHashCode()
         {
@@ -56,6 +57,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.PrintObjListProp(n, nameof(Items), Items);
+            sb.PrintPODList(n, nameof(UsedKeysList), UsedKeysList);
 
             return sb.ToString();
         }
@@ -80,6 +82,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.PrintShortObjListProp(n, nameof(Items), Items);
+            sb.PrintPODList(n, nameof(UsedKeysList), UsedKeysList);
 
             return sb.ToString();
         }
@@ -104,6 +107,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.PrintBriefObjListProp(n, nameof(Items), Items);
+            sb.PrintPODList(n, nameof(UsedKeysList), UsedKeysList);
 
             return sb.ToString();
         }

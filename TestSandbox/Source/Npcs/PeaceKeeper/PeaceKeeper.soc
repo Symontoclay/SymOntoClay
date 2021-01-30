@@ -3,9 +3,9 @@
     on Init => {
 	     'Begin' >> @>log;
 
-		 use @@self is linux;
+		 //use @@self is linux;
 
-		 //select {: son(?x, ?y) :} >> @>log;
+		 select {: son(?x, ?y) :} >> @>log;
 
 		 //insert {: >: { bird (#1234) } :};
 
@@ -16,7 +16,7 @@
 		 "End" >> @>log;
 	}
 
-	on {: see(I, #Tom) :} => {
-	     "L" >> @>log;
-	}
+	//on {: see(I, #Tom) :} => {
+	//     "L" >> @>log;
+	//}
 }

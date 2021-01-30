@@ -11,6 +11,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
@@ -58,6 +59,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
             //Log($"@!@!@!@!@!@!@! queryExecutingCard = {queryExecutingCard}");
 #endif
+
+            var usedKeysList = queryExecutingCard.UsedKeysList.Distinct().ToList();
+
+#if DEBUG
+            //Log($"usedKeysList.Count = {usedKeysList.Count}");
+            //foreach(var usedKey in usedKeysList)
+            //{
+            //    Log($"usedKey = {usedKey}");
+            //    Log($"_context.Dictionary.GetName(usedKey) = {_context.Dictionary.GetName(usedKey)}");
+            //}
+#endif
+
+            result.UsedKeysList = usedKeysList;
+
             result.IsSuccess = queryExecutingCard.IsSuccess;
 
             var resultItemsList = new List<LogicalSearchResultItem>();

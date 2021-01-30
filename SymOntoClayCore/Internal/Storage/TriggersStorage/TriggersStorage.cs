@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
         public void Append(InlineTrigger inlineTrigger)
         {
 #if DEBUG
-            Log($"inlineTrigger = {inlineTrigger}");
+            //Log($"inlineTrigger = {inlineTrigger}");
 #endif
 
             AnnotatedItemHelper.CheckAndFillHolder(inlineTrigger, _realStorageContext.MainStorageContext.CommonNamesStorage);
@@ -60,9 +60,27 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                     AppendSystemEvent(inlineTrigger);
                     break;
 
+                case KindOfInlineTrigger.LogicConditional:
+                    AppendLogicConditional(inlineTrigger);
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
+        }
+
+        private void AppendLogicConditional(InlineTrigger inlineTrigger)
+        {
+            lock (_lockObj)
+            {
+                var indexedItem = inlineTrigger.GetIndexed(_realStorageContext.MainStorageContext);
+
+#if DEBUG
+                //Log($"indexedItem = {indexedItem}");
+#endif
+
+                throw new NotImplementedException();
+            }            
         }
 
         private void AppendSystemEvent(InlineTrigger inlineTrigger)

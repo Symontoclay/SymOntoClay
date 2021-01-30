@@ -42,11 +42,18 @@ namespace SymOntoClay.Core.Internal.IndexedData
             leftQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
             Left.FillExecutingCard(leftQueryExecutingCard, dataSource, options);
 
+            queryExecutingCard.UsedKeysList.AddRange(leftQueryExecutingCard.UsedKeysList);
+
 #if DEBUG
+            //if (leftQueryExecutingCard.UsedKeysList.Any())
+            //{
+            //    throw new NotImplementedException();
+            //}
+
             //options.Logger.Log($"leftQueryExecutingCard = {leftQueryExecutingCard}");
 #endif
 
-            if(!leftQueryExecutingCard.IsSuccess)
+            if (!leftQueryExecutingCard.IsSuccess)
             {
                 return;
             }
@@ -70,7 +77,14 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
                     queryExecutingCard.IsSuccess = leftQueryExecutingCard.IsSuccess && rightQueryExecutingCard.IsSuccess;
 
+                    queryExecutingCard.UsedKeysList.AddRange(rightQueryExecutingCard.UsedKeysList);
+
 #if DEBUG
+
+                    //if (rightQueryExecutingCard.UsedKeysList.Any())
+                    //{
+                    //    throw new NotImplementedException();
+                    //}
                     //options.Logger.Log($"rightQueryExecutingCard = {rightQueryExecutingCard}");
 #endif
 
@@ -192,8 +206,14 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
                 queryExecutingCard.IsSuccess = leftQueryExecutingCard.IsSuccess && rightQueryExecutingCard.IsSuccess;
 
+                queryExecutingCard.UsedKeysList.AddRange(rightQueryExecutingCard.UsedKeysList);
+
 #if DEBUG
                 //options.Logger.Log($"rightQueryExecutingCard = {rightQueryExecutingCard}");
+                //if (rightQueryExecutingCard.UsedKeysList.Any())
+                //{
+                //    throw new NotImplementedException();
+                //}
 #endif
             }
         }

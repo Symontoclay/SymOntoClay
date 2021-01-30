@@ -14,6 +14,7 @@ using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
@@ -166,11 +167,18 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             var targetKnownInfoList = mergingResult.KnownInfoList;
 
+            queryExecutingCard.UsedKeysList.Add(Key);
+
 #if DEBUG
             //options.Logger.Log($"targetKnownInfoList.Count = {targetKnownInfoList.Count}");
             //foreach (var tmpKnownInfo in targetKnownInfoList)
             //{
             //    options.Logger.Log($"tmpKnownInfo = {tmpKnownInfo}");
+            //    options.Logger.Log($"options.EntityDictionary.GetName(tmpKnownInfo.Key) = {options.EntityDictionary.GetName(tmpKnownInfo.Key)}");
+            //}
+            //if(targetKnownInfoList.Any())
+            //{
+            //    throw new NotImplementedException();
             //}
 #endif
 
@@ -197,6 +205,10 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
 #if DEBUG
                     //options.Logger.Log($"++++++queryExecutingCardForTargetFact = {queryExecutingCardForTargetFact}");
+                    //if (queryExecutingCardForTargetFact.UsedKeysList.Any())
+                    //{
+                    //    throw new NotImplementedException();
+                    //}                    
 #endif
                     queryExecutingCard.IsSuccess = queryExecutingCardForTargetFact.IsSuccess;
 
@@ -204,6 +216,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
                     {
                         queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
                     }
+
+                    queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForTargetFact.UsedKeysList);
                 }
             }
 
@@ -227,6 +241,12 @@ namespace SymOntoClay.Core.Internal.IndexedData
 #endif
                     var queryExecutingCardForTargetRule = new QueryExecutingCardForIndexedPersistLogicalData();
                     queryExecutingCardForTargetRule.TargetRelation = Key;
+
+#if DEBUG
+                    //options.Logger.Log($"Key = {Key}");
+                    //options.Logger.Log($"options.EntityDictionary.GetName(Key) = {options.EntityDictionary.GetName(Key)}");
+#endif
+
                     queryExecutingCardForTargetRule.CountParams = CountParams;
                     queryExecutingCardForTargetRule.VarsInfoList = VarsInfoList;
                     queryExecutingCardForTargetRule.KnownInfoList = targetKnownInfoList;
@@ -237,11 +257,17 @@ namespace SymOntoClay.Core.Internal.IndexedData
 #endif
                     indexedRulePartsOfRule.FillExecutingCardForCallingFromRelationForProduction(queryExecutingCardForTargetRule, dataSource, options);
 
+                    queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForTargetRule.UsedKeysList);
+
 #if DEBUG
                     //options.Logger.Log($"&&&&&&&&&&&&&&&&&queryExecutingCardForTargetRule = {queryExecutingCardForTargetRule}");
 #endif
 #if DEBUG
                     //options.Logger.Log($"!!!!!!!!!!!!!!!!!!queryExecutingCard = {queryExecutingCard}");
+                    //if (queryExecutingCardForTargetRule.UsedKeysList.Any())
+                    //{
+                    //    throw new NotImplementedException();
+                    //}
 #endif
 
                     queryExecutingCard.IsSuccess = queryExecutingCardForTargetRule.IsSuccess;

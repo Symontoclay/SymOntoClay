@@ -4,4 +4,10 @@
 	{: parent(#Piter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 	{: { love($x, $y) } -> { help($x, $y) } :}
+
+	//on Init => {
+	//    'Begin example' >> @>log;
+
+	//	"End example" >> @>log;
+	//}
 }

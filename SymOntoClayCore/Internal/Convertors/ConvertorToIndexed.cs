@@ -715,6 +715,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             //_gbcLogger.Info($"result (snapshot) = {result}");
 #endif
 
+            result.CalculateUsedKeys();
             result.CalculateLongHashCodes();
 
             return result;

@@ -26,6 +26,12 @@ namespace SymOntoClay.Core.Internal.IndexedData
         }
 
         /// <inheritdoc/>
+        public override void CalculateUsedKeys(List<ulong> usedKeysList)
+        {
+            Left.CalculateUsedKeys(usedKeysList);
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

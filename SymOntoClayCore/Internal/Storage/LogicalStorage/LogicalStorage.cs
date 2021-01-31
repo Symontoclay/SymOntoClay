@@ -75,6 +75,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 }
 
                 NAppend(ruleInstance, isPrimary);
+
+                EmitOnChanged();
             }
         }
 
@@ -170,10 +172,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                         inheritanceStorage.SetInheritance(inheritanceItem, false);
                     }
                 }
-            }
+            }         
             
-            EmitOnChanged();
-
 #if IMAGINE_WORKING
             //Log("End");
 #else

@@ -32,5 +32,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
         {
             throw new NotImplementedException();
         }
+
+        /// <inheritdoc/>
+        public override void CalculateUsedKeys(List<ulong> usedKeysList)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

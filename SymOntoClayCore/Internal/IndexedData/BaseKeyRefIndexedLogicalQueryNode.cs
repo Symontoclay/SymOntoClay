@@ -65,5 +65,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }
+
+        /// <inheritdoc/>
+        public override void CalculateUsedKeys(List<ulong> usedKeysList)
+        {
+            usedKeysList.Add(Key);
+        }
     }
 }

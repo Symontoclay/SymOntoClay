@@ -79,5 +79,6 @@ namespace SymOntoClay.Core.Internal.IndexedData
         }
 
         public abstract void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options);
+        public abstract void CalculateUsedKeys(List<ulong> usedKeysList);
     }
 }

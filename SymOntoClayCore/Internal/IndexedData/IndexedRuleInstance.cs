@@ -15,6 +15,7 @@ using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
@@ -31,6 +32,24 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public bool IsRule { get; set; }
         public IndexedPrimaryRulePart PrimaryPart { get; set; }
         public List<IndexedSecondaryRulePart> SecondaryParts { get; set; } = new List<IndexedSecondaryRulePart>();
+        public List<ulong> UsedKeysList { get; set; }
+
+        public void CalculateUsedKeys()
+        {
+            var usedKeysList = new List<ulong>();
+
+            PrimaryPart.CalculateUsedKeys(usedKeysList);
+
+            if (!SecondaryParts.IsNullOrEmpty())
+            {
+                foreach (var secondaryPart in SecondaryParts)
+                {
+                    secondaryPart.CalculateUsedKeys(usedKeysList);
+                }
+            }
+
+            UsedKeysList = usedKeysList.Distinct().ToList();
+        }
 
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode()
@@ -65,6 +84,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintObjProp(n, nameof(PrimaryPart), PrimaryPart);
             sb.PrintObjListProp(n, nameof(SecondaryParts), SecondaryParts);
 
+            sb.PrintPODList(n, nameof(UsedKeysList), UsedKeysList);
+
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -86,6 +107,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintShortObjProp(n, nameof(PrimaryPart), PrimaryPart);
             sb.PrintShortObjListProp(n, nameof(SecondaryParts), SecondaryParts);
 
+            sb.PrintPODList(n, nameof(UsedKeysList), UsedKeysList);
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -106,6 +129,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             sb.PrintExisting(n, nameof(PrimaryPart), PrimaryPart);
             sb.PrintExistingList(n, nameof(SecondaryParts), SecondaryParts);
+
+            sb.PrintPODList(n, nameof(UsedKeysList), UsedKeysList);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

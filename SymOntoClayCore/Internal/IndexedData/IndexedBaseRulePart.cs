@@ -539,5 +539,10 @@ namespace SymOntoClay.Core.Internal.IndexedData
             //options.Logger.Log("End");
 #endif
         }
+
+        public void CalculateUsedKeys(List<ulong> usedKeysList)
+        {
+            Expression.CalculateUsedKeys(usedKeysList);
+        }
     }
 }

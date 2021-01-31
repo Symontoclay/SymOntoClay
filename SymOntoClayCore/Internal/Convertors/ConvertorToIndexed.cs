@@ -711,8 +711,6 @@ namespace SymOntoClay.Core.Internal.Convertors
                 }
             }
 
-            result.KeysOfPrimaryRecords = source.KeysOfPrimaryRecords?.Select(p => dictionary.GetKey(p)).ToList();
-
 #if DEBUG
             //_gbcLogger.Info($"result (snapshot) = {result}");
 #endif

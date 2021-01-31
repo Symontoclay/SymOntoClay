@@ -187,7 +187,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
             fact.AppendAnnotations(inheritanceItem);
             fact.DictionaryName = dictionary.Name;
             fact.Name = factName;
-            fact.KeysOfPrimaryRecords.Add(inheritanceItem.Id);
+            //fact.KeysOfPrimaryRecords.Add(inheritanceItem.Id);
 
             var primaryPart = new PrimaryRulePart();
             fact.PrimaryPart = primaryPart;

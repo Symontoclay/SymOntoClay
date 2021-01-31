@@ -81,9 +81,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         private void NAppend(RuleInstance ruleInstance, bool isPrimary)
         {
 #if DEBUG
-            //Log($"ruleInstance = {ruleInstance}");
-            //Log($"isPrimary = {isPrimary}");
-            //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+            Log($"ruleInstance = {ruleInstance}");
+            Log($"isPrimary = {isPrimary}");
+            Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
 #endif
 
             if (_ruleInstancesList.Contains(ruleInstance))
@@ -107,7 +107,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             var indexedRuleInstance = ruleInstance.GetIndexed(_realStorageContext.MainStorageContext);
 
 #if DEBUG
-            //Log($"indexedRuleInstance = {indexedRuleInstance}");
+            Log($"indexedRuleInstance = {indexedRuleInstance}");
 #endif
 
             var ruleInstanceKey = indexedRuleInstance.Key;

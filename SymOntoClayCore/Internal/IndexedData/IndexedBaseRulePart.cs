@@ -164,7 +164,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 foreach (var knownInfo in queryExecutingCard.KnownInfoList)
                 {
 #if DEBUG
-                    options.Logger.Log($"knownInfo = {knownInfo}");
+                    //options.Logger.Log($"knownInfo = {knownInfo}");
 #endif
 
                     List<ulong> additionalKeys = null;

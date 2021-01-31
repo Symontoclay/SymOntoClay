@@ -1444,6 +1444,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             convertingContext[source] = result;
             result.OriginalInlineTrigger = source;
             source.Indexed = result;
+            result.Condition = ConvertRuleInstance(source.Condition, mainStorageContext, convertingContext);
 
             FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
 

@@ -111,7 +111,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                         if (currentItem.IsInFocus != visibleItem.IsInFocus)
                         {
 #if DEBUG
-                            Log("currentItem.IsInFocus != visibleItem.IsInFocus");
+                            //Log("currentItem.IsInFocus != visibleItem.IsInFocus");
 #endif
 
                             if(visibleItem.IsInFocus)
@@ -128,7 +128,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                             if(currentItem.MinDistance != visibleItem.MinDistance)
                             {
 #if DEBUG
-                                Log("currentItem.MinDistance != visibleItem.MinDistance");
+                                //Log("currentItem.MinDistance != visibleItem.MinDistance");
 #endif
                                 changedDistanceVisibleItemsList.Add(visibleItem);
                             }
@@ -137,9 +137,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                                 if (currentItem.Position != visibleItem.Position)
                                 {
 #if DEBUG
-                                    Log($"currentItem.Position = {currentItem.Position}");
-                                    Log($"visibleItem.Position = {visibleItem.Position}");
-                                    Log("currentItem.Position != visibleItem.Position");
+                                    //Log($"currentItem.Position = {currentItem.Position}");
+                                    //Log($"visibleItem.Position = {visibleItem.Position}");
+                                    //Log("currentItem.Position != visibleItem.Position");
 #endif
                                     lock (_lockObj)
                                     {

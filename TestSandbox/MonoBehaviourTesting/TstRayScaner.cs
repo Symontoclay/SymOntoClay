@@ -16,7 +16,7 @@ namespace TestSandbox.MonoBehaviourTesting
 
         public TstRayScaner()
         {
-            for (var i = 2; i <= 4; i++)
+            for (var i = 2; i <= 3; i++)
             {
                 _fakeIdsList.Add(i);
             }

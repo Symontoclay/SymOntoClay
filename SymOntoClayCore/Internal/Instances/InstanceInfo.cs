@@ -16,6 +16,7 @@ using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances
@@ -49,48 +50,71 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly LocalCodeExecutionContext _localCodeExecutionContext;
         private readonly TriggersResolver _triggersResolver;
         private InstanceState _instanceState = InstanceState.Created;
+        private List<LogicConditionalTriggerInstanceInfo> _logicConditionalTriggersList = new List<LogicConditionalTriggerInstanceInfo>();
 
-        /// <inheritdoc/>
+
         public void Init()
         {
             _instanceState = InstanceState.Initializing;
 
-            var targetTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger.Init, IndexedName, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var targetSystemEventsTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger.Init, IndexedName, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
-            //Log($"targetTriggersList = {targetTriggersList.WriteListToString()}");
+            //Log($"targetSystemEventsTriggersList = {targetSystemEventsTriggersList.WriteListToString()}");
 #endif
 
-            targetTriggersList.Reverse();
-
-            var processInitialInfoList = new List<ProcessInitialInfo>();
-
-            foreach(var targetTrigger in targetTriggersList)
+            if(targetSystemEventsTriggersList.Any())
             {
-                var localCodeExecutionContext = new LocalCodeExecutionContext();
+                targetSystemEventsTriggersList.Reverse();
 
-                var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
-                localCodeExecutionContext.Storage = new LocalStorage(localStorageSettings);
+                var processInitialInfoList = new List<ProcessInitialInfo>();
 
-                localCodeExecutionContext.Holder = IndexedName;
+                foreach (var targetTrigger in targetSystemEventsTriggersList)
+                {
+                    var localCodeExecutionContext = new LocalCodeExecutionContext();
 
-                var processInitialInfo = new ProcessInitialInfo();
-                processInitialInfo.CompiledFunctionBody = targetTrigger.ResultItem.CompiledFunctionBody;
-                processInitialInfo.LocalContext = localCodeExecutionContext;
-                processInitialInfo.Metadata = targetTrigger.ResultItem.OriginalInlineTrigger.CodeEntity;
+                    var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
+                    localCodeExecutionContext.Storage = new LocalStorage(localStorageSettings);
 
-                processInitialInfoList.Add(processInitialInfo);
+                    localCodeExecutionContext.Holder = IndexedName;
+
+                    var processInitialInfo = new ProcessInitialInfo();
+                    processInitialInfo.CompiledFunctionBody = targetTrigger.ResultItem.CompiledFunctionBody;
+                    processInitialInfo.LocalContext = localCodeExecutionContext;
+                    processInitialInfo.Metadata = targetTrigger.ResultItem.OriginalInlineTrigger.CodeEntity;
+
+                    processInitialInfoList.Add(processInitialInfo);
+                }
+
+#if DEBUG
+                //Log($"processInitialInfoList = {processInitialInfoList.WriteListToString()}");
+#endif
+
+                var taskValue = _context.CodeExecutor.ExecuteBatchAsync(processInitialInfoList);
+
+#if DEBUG
+                //Log($"taskValue = {taskValue}");
+#endif
             }
 
-#if DEBUG
-            //Log($"processInitialInfoList = {processInitialInfoList.WriteListToString()}");
-#endif
-
-            var taskValue = _context.CodeExecutor.ExecuteBatchAsync(processInitialInfoList);
+            var targetLogicConditionalTriggersList = _triggersResolver.ResolveLogicConditionalTriggersList(IndexedName, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
-            //Log($"taskValue = {taskValue}");
+            //Log($"targetLogicConditionalTriggersList = {targetLogicConditionalTriggersList.WriteListToString()}");
 #endif
+
+            if(targetLogicConditionalTriggersList.Any())
+            {
+                foreach(var targetTrigger in targetLogicConditionalTriggersList)
+                {
+#if DEBUG
+                    //Log($"targetTrigger = {targetTrigger}");
+#endif
+
+                    var triggerInstanceInfo = new LogicConditionalTriggerInstanceInfo(targetTrigger.ResultItem, this, _context, _storage);
+                    _logicConditionalTriggersList.Add(triggerInstanceInfo);
+                }
+            }
 
             _instanceState = InstanceState.Initialized;
         }

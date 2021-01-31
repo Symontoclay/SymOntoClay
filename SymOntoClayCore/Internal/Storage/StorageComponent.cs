@@ -215,7 +215,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public string InsertPerceptedFact(string text)
         {
 #if DEBUG
-            Log($"text = {text}");
+            //Log($"text = {text}");
 #endif
 
             if (string.IsNullOrWhiteSpace(text))
@@ -229,13 +229,13 @@ namespace SymOntoClay.Core.Internal.Storage
             }
 
 #if DEBUG
-            Log($"text = {text}");
+            //Log($"text = {text}");
 #endif
 
             var fact = _logicQueryParseAndCache.GetLogicRuleOrFact(text);
 
 #if DEBUG
-            Log($"fact = {fact}");
+            //Log($"fact = {fact}");
 #endif
 
             _perceptedFactsStorage.LogicalStorage.Append(fact);

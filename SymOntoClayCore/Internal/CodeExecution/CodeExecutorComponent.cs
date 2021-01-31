@@ -62,5 +62,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             return threadExecutor.Start();
         }
+
+        /// <inheritdoc/>
+        public Value ExecuteAsync(ProcessInitialInfo processInitialInfo)
+        {
+            return ExecuteBatchAsync(new List<ProcessInitialInfo>() { processInitialInfo });
+        }
     }
 }

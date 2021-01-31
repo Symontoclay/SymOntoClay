@@ -102,8 +102,10 @@ namespace SymOntoClay.Core.Internal.Storage
                 {
                     return;
                 }
-
+                
                 parentsList.Add(storage);
+
+                _realStorageContext.EmitOnAddParentStorage(storage);
             }
         }
 
@@ -117,6 +119,8 @@ namespace SymOntoClay.Core.Internal.Storage
                 if (parentsList.Contains(storage))
                 {
                     parentsList.Remove(storage);
+
+                    _realStorageContext.EmitOnRemoveParentStorage(storage);
                 }
             }
         }

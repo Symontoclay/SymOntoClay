@@ -26,6 +26,40 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
         }
 
+        public List<WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>> ResolveLogicConditionalTriggersList(IndexedStrongIdentifierValue holder, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var storage = localCodeExecutionContext.Storage;
+
+            var storagesList = GetStoragesList(storage);
+
+#if DEBUG
+            //Log($"storagesList.Count = {storagesList.Count}");
+            //foreach (var tmpStorage in storagesList)
+            //{
+            //    Log($"tmpStorage.Key = {tmpStorage.Key}; tmpStorage.Value.Kind = '{tmpStorage.Value.Kind}'");
+            //}
+#endif
+
+            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
+
+            var optionsForInheritanceResolver = options.Clone();
+            optionsForInheritanceResolver.AddSelf = true;
+
+            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(holder.NameKey, localCodeExecutionContext, optionsForInheritanceResolver);
+
+#if DEBUG
+            //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
+#endif
+
+            var rawList = GetLogicConditionalRawList(holder, storagesList, weightedInheritanceItems);
+
+#if DEBUG
+            //Log($"rawList = {rawList.WriteListToString()}");
+#endif
+
+            return OrderAndDistinct(rawList, localCodeExecutionContext, options);
+        }
+
         public List<WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>> ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IndexedStrongIdentifierValue holder, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
@@ -72,6 +106,36 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var result = OrderAndDistinctByInheritance(source, inheritanceOrderOptions);
 
             result = result.OrderBy(p => p.Distance).ToList();
+
+            return result;
+        }
+
+        private List<WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>> GetLogicConditionalRawList(IndexedStrongIdentifierValue holder, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+            if (!storagesList.Any())
+            {
+                return new List<WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>>();
+            }
+
+            var result = new List<WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>>();
+
+            foreach (var storageItem in storagesList)
+            {
+                var itemsList = storageItem.Storage.TriggersStorage.GetLogicConditionalTriggersDirectly(weightedInheritanceItems);
+
+                if (!itemsList.Any())
+                {
+                    continue;
+                }
+
+                var distance = storageItem.Priority;
+                var storage = storageItem.Storage;
+
+                foreach (var item in itemsList)
+                {
+                    result.Add(new WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>(item, distance, storage));
+                }
+            }
 
             return result;
         }

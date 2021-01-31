@@ -15,7 +15,7 @@ namespace TestSandbox.MonoBehaviourTesting
         {
             _logger.Log("Begin");
 
-            var componentsList = new List<TstMonoBehaviour>() { new TstHumanoidNPC(), new TstWord(), /*new TstGameObject()*/ };
+            var componentsList = new List<TstMonoBehaviour>() { new TstHumanoidNPC(), new TstWord(), new TstGameObject() };
             ExecuteList(componentsList);
 
             _logger.Log("End");

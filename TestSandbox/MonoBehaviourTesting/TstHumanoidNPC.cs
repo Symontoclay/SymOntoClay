@@ -35,7 +35,7 @@ namespace TestSandbox.MonoBehaviourTesting
             //npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
             npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Npcs\PeaceKeeper\PeaceKeeper.npc");
             npcSettings.HostListener = platformListener;
-            //npcSettings.VisionProvider = _tstRayScaner;
+            npcSettings.VisionProvider = _tstRayScaner;
             npcSettings.PlatformSupport = new TstPlatformSupport();
 
             _logger.Log($"npcSettings = {npcSettings}");
@@ -77,7 +77,7 @@ namespace TestSandbox.MonoBehaviourTesting
             //    _npc.RemovePublicFact(factId);
             //}
 
-            //_tstRayScaner.Scan();
+            _tstRayScaner.Scan();
 
             //var tmpVisibleItems = _tstRayScaner.GetCurrentVisibleItems();
 

@@ -43,6 +43,9 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
         private readonly Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<StrongIdentifierValue, List<InlineTrigger>>> _nonIndexedSystemEventsInfo = new Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<StrongIdentifierValue, List<InlineTrigger>>>();
         private readonly Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<ulong, List<IndexedInlineTrigger>>> _indexedSystemEventsInfo = new Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<ulong, List<IndexedInlineTrigger>>>();
 
+        private readonly Dictionary<StrongIdentifierValue, List<InlineTrigger>> _nonIndexedLogicConditionalsInfo = new Dictionary<StrongIdentifierValue, List<InlineTrigger>>();
+        private readonly Dictionary<ulong, List<IndexedInlineTrigger>> _indexedLogicConditionalsInfo = new Dictionary<ulong, List<IndexedInlineTrigger>>();
+
         /// <inheritdoc/>
         public void Append(InlineTrigger inlineTrigger)
         {
@@ -76,10 +79,53 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                 var indexedItem = inlineTrigger.GetIndexed(_realStorageContext.MainStorageContext);
 
 #if DEBUG
-                //Log($"indexedItem = {indexedItem}");
+                Log($"indexedItem = {indexedItem}");
 #endif
 
-                throw new NotImplementedException();
+                var indexedItemHolderKey = indexedItem.Holder.NameKey;
+
+                if (_nonIndexedLogicConditionalsInfo.ContainsKey(inlineTrigger.Holder))
+                {
+                    var targetList = _nonIndexedLogicConditionalsInfo[inlineTrigger.Holder];
+
+#if DEBUG
+                    Log($"_nonIndexedLogicConditionalsInfo[superName].Count = {_nonIndexedLogicConditionalsInfo[inlineTrigger.Holder].Count}");
+                    Log($"targetList = {targetList.WriteListToString()}");
+#endif
+                    var targetLongConditionalHashCode = indexedItem.GetLongConditionalHashCode();
+
+#if DEBUG
+                    Log($"targetLongConditionalHashCode = {targetLongConditionalHashCode}");
+#endif
+
+                    var targetIndexedList = _indexedLogicConditionalsInfo[indexedItemHolderKey];
+
+                    var indexedItemsWithTheSameLongConditionalHashCodeList = targetIndexedList.Where(p => p.GetLongConditionalHashCode() == targetLongConditionalHashCode).ToList();
+
+                    foreach (var indexedItemWithTheSameLongConditionalHashCode in indexedItemsWithTheSameLongConditionalHashCodeList)
+                    {
+                        targetIndexedList.Remove(indexedItemWithTheSameLongConditionalHashCode);
+                    }
+
+                    var itemsWithTheSameLongConditionalHashCodeList = indexedItemsWithTheSameLongConditionalHashCodeList.Select(p => p.OriginalInlineTrigger).ToList();
+
+#if DEBUG
+                    Log($"itemsWithTheSameLongConditionalHashCodeList = {itemsWithTheSameLongConditionalHashCodeList.WriteListToString()}");
+#endif
+
+                    foreach (var itemWithTheSameLongConditionalHashCode in itemsWithTheSameLongConditionalHashCodeList)
+                    {
+                        targetList.Remove(itemWithTheSameLongConditionalHashCode);
+                    }
+
+                    targetList.Add(inlineTrigger);
+                    targetIndexedList.Add(indexedItem);
+                }
+                else
+                {
+                    _nonIndexedLogicConditionalsInfo[inlineTrigger.Holder] = new List<InlineTrigger>() { inlineTrigger };
+                    _indexedLogicConditionalsInfo[indexedItemHolderKey] = new List<IndexedInlineTrigger>() { indexedItem };
+                }
             }            
         }
 
@@ -188,6 +234,29 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
 
                 return new List<WeightedInheritanceResultItem<IndexedInlineTrigger>>();
             }
+        }
+
+        /// <inheritdoc/>
+        public IList<WeightedInheritanceResultItem<IndexedInlineTrigger>> GetLogicConditionalTriggersDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+            var result = new List<WeightedInheritanceResultItem<IndexedInlineTrigger>>();
+
+            foreach (var weightedInheritanceItem in weightedInheritanceItems)
+            {
+                var targetHolder = weightedInheritanceItem.SuperNameKey;
+
+                if (_indexedLogicConditionalsInfo.ContainsKey(targetHolder))
+                {
+                    var targetList = _indexedLogicConditionalsInfo[targetHolder];
+
+                    foreach (var targetVal in targetList)
+                    {
+                        result.Add(new WeightedInheritanceResultItem<IndexedInlineTrigger>(targetVal, weightedInheritanceItem));
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }

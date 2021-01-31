@@ -20,5 +20,6 @@ namespace SymOntoClay.Core
     {
         void Append(InlineTrigger op);
         IList<WeightedInheritanceResultItem<IndexedInlineTrigger>> GetSystemEventsTriggersDirectly(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IList<WeightedInheritanceItem> weightedInheritanceItems);
+        IList<WeightedInheritanceResultItem<IndexedInlineTrigger>> GetLogicConditionalTriggersDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems);
     }
 }

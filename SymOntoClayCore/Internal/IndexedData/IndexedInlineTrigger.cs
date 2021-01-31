@@ -22,6 +22,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public InlineTrigger OriginalInlineTrigger { get; set; }
         public KindOfInlineTrigger Kind { get; set; } = KindOfInlineTrigger.Unknown;
         public KindOfSystemEventOfInlineTrigger KindOfSystemEvent { get; set; } = KindOfSystemEventOfInlineTrigger.Unknown;
+        public IndexedRuleInstance Condition { get; set; }
         public CompiledFunctionBody CompiledFunctionBody { get; set; }
 
         /// <inheritdoc/>
@@ -37,6 +38,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
+            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
             sb.PrintObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -49,6 +51,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
+            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
             sb.PrintShortObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -61,6 +64,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
+            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
             sb.PrintBriefObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

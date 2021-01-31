@@ -29,12 +29,21 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             _kind = kind;
             _realStorageContext = realStorageContext;
             _mainStorageContext = realStorageContext.MainStorageContext;
+            _parentLogicalStoragesList = realStorageContext.Parents.Select(p => p.LogicalStorage).ToList();
 
             _ruleInstancesList = new List<RuleInstance>();
             _ruleInstancesDict = new Dictionary<ulong, RuleInstance>();
             _ruleInstancesDictByHashCode = new Dictionary<ulong, RuleInstance>();
             _ruleInstancesDictById = new Dictionary<string, RuleInstance>();
             _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData(realStorageContext.MainStorageContext.Logger, realStorageContext.MainStorageContext.Dictionary);
+
+            foreach(var parentStorage in _parentLogicalStoragesList)
+            {
+                parentStorage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys;
+            }
+
+            realStorageContext.OnAddParentStorage += RealStorageContext_OnAddParentStorage;
+            realStorageContext.OnRemoveParentStorage += RealStorageContext_OnRemoveParentStorage;
         }
 
         private readonly KindOfStorage _kind;
@@ -55,6 +64,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         private Dictionary<ulong, RuleInstance> _ruleInstancesDictByHashCode;
         private Dictionary<string, RuleInstance> _ruleInstancesDictById;
         private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData;
+        private List<ILogicalStorage> _parentLogicalStoragesList = new List<ILogicalStorage>();
 
         /// <inheritdoc/>
         public void Append(RuleInstance ruleInstance)
@@ -249,10 +259,10 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         /// <inheritdoc/>
         public event Action<IList<ulong>> OnChangedWithKeys;
 
-        protected void EmitOnChanged(List<ulong> usedKeysList)
+        protected void EmitOnChanged(IList<ulong> usedKeysList)
         {
 #if DEBUG
-            Log($"usedKeysList = {JsonConvert.SerializeObject(usedKeysList)}");
+            //Log($"usedKeysList = {JsonConvert.SerializeObject(usedKeysList)}");
 #endif
 
             Task.Run(() => {
@@ -262,6 +272,31 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             Task.Run(() => {
                 OnChangedWithKeys?.Invoke(usedKeysList);
             });
+        }
+
+        private void LogicalStorage_OnChangedWithKeys(IList<ulong> changedKeysList)
+        {
+#if DEBUG
+            //Log($"changedKeysList = {JsonConvert.SerializeObject(changedKeysList)}");
+#endif
+
+            EmitOnChanged(changedKeysList);
+        }
+
+        private void RealStorageContext_OnRemoveParentStorage(IStorage storage)
+        {
+            var logicalStroage = storage.LogicalStorage;
+            logicalStroage.OnChangedWithKeys -= LogicalStorage_OnChangedWithKeys;
+
+            _parentLogicalStoragesList.Remove(logicalStroage);
+        }
+
+        private void RealStorageContext_OnAddParentStorage(IStorage storage)
+        {
+            var logicalStroage = storage.LogicalStorage;
+            logicalStroage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys;
+
+            _parentLogicalStoragesList.Add(logicalStroage);
         }
 
         /// <inheritdoc/>

@@ -31,5 +31,18 @@ namespace SymOntoClay.Core.Internal.Storage
         public RealStorage Storage { get; set; }
         public IList<IStorage> Parents { get; set; }
         public IInheritancePublicFactsReplicator InheritancePublicFactsReplicator { get; set; }
+
+        public void EmitOnAddParentStorage(IStorage storage)
+        {
+            OnAddParentStorage?.Invoke(storage);
+        }
+
+        public void EmitOnRemoveParentStorage(IStorage storage)
+        {
+            OnRemoveParentStorage?.Invoke(storage);
+        }
+
+        public event Action<IStorage> OnAddParentStorage;
+        public event Action<IStorage> OnRemoveParentStorage;
     }
 }

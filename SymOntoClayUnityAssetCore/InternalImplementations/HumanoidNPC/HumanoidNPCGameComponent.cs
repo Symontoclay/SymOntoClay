@@ -153,14 +153,14 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         public void Die()
         {
             _coreEngine.Die();
-            _visionComponent.Die();
+            _visionComponent?.Die();
         }
 
         /// <inheritdoc/>
         protected override void OnDisposed()
         {           
             _coreEngine.Dispose();
-            _visionComponent.Dispose();
+            _visionComponent?.Dispose();
             _hostSupport.Dispose();
 
             base.OnDisposed();

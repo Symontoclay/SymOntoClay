@@ -3657,6 +3657,9 @@
         <member name="E:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.OnChanged">
             <inheritdoc/>
         </member>
+        <member name="E:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.OnChangedWithKeys">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.GetAllRelations">
             <inheritdoc/>
         </member>

@@ -24,6 +24,7 @@ namespace SymOntoClay.Core
         void RemoveById(string id);
 
         event Action OnChanged;
+        event Action<IList<ulong>> OnChangedWithKeys;
 
         IList<RelationIndexedLogicalQueryNode> GetAllRelations();
         IList<IndexedBaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(ulong key);

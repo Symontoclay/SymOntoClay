@@ -8,6 +8,7 @@ SymOntoClay is distributed in the hope that it will be useful, but WITHOUT ANY W
 
 You should have received a copy of the GNU Lesser General Public License along with this library; if not, see <https://www.gnu.org/licenses/>*/
 
+using Newtonsoft.Json;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
@@ -16,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 {
@@ -26,6 +28,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         {
             _kind = kind;
             _realStorageContext = realStorageContext;
+            _mainStorageContext = realStorageContext.MainStorageContext;
 
             _ruleInstancesList = new List<RuleInstance>();
             _ruleInstancesDict = new Dictionary<ulong, RuleInstance>();
@@ -40,6 +43,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         public KindOfStorage Kind => _kind;
 
         private readonly RealStorageContext _realStorageContext;
+        private readonly IMainStorageContext _mainStorageContext;
 
         /// <inheritdoc/>
         public IStorage Storage => _realStorageContext.Storage;
@@ -76,16 +80,20 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 NAppend(ruleInstance, isPrimary);
 
-                EmitOnChanged();
+                var indexedRuleInstance = ruleInstance.GetIndexed(_mainStorageContext);
+
+                var usedKeysList = indexedRuleInstance.UsedKeysList.Concat(annotationsList.Select(p => p.GetIndexed(_mainStorageContext)).SelectMany(p => p.UsedKeysList)).Distinct().ToList();
+
+                EmitOnChanged(usedKeysList);
             }
         }
 
         private void NAppend(RuleInstance ruleInstance, bool isPrimary)
         {
 #if DEBUG
-            Log($"ruleInstance = {ruleInstance}");
-            Log($"isPrimary = {isPrimary}");
-            Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+            //Log($"ruleInstance = {ruleInstance}");
+            //Log($"isPrimary = {isPrimary}");
+            //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
 #endif
 
             if (_ruleInstancesList.Contains(ruleInstance))
@@ -109,7 +117,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             var indexedRuleInstance = ruleInstance.GetIndexed(_realStorageContext.MainStorageContext);
 
 #if DEBUG
-            Log($"indexedRuleInstance = {indexedRuleInstance}");
+            //Log($"indexedRuleInstance = {indexedRuleInstance}");
 #endif
 
             var ruleInstanceKey = indexedRuleInstance.Key;
@@ -232,15 +240,28 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             _commonPersistIndexedLogicalData.NRemoveIndexedRuleInstanceFromIndexData(indexedRuleInstance);
 
-            EmitOnChanged();
+            EmitOnChanged(indexedRuleInstance.UsedKeysList);
         }
 
         /// <inheritdoc/>
         public event Action OnChanged;
 
-        protected void EmitOnChanged()
+        /// <inheritdoc/>
+        public event Action<IList<ulong>> OnChangedWithKeys;
+
+        protected void EmitOnChanged(List<ulong> usedKeysList)
         {
-            OnChanged?.Invoke();
+#if DEBUG
+            Log($"usedKeysList = {JsonConvert.SerializeObject(usedKeysList)}");
+#endif
+
+            Task.Run(() => {
+                OnChanged?.Invoke();
+            });
+
+            Task.Run(() => {
+                OnChangedWithKeys?.Invoke(usedKeysList);
+            });
         }
 
         /// <inheritdoc/>

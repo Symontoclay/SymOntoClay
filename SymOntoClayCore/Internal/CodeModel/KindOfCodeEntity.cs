@@ -18,8 +18,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         Unknown,
         World,
-        Host,
-        Npc,
+        App,
         Class,
         Instance,
         InlineTrigger,

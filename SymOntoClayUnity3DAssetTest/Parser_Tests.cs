@@ -57,7 +57,7 @@ namespace SymOntoClay.Unity3DAsset.Test
 
             Assert.AreNotEqual(nameKey, 0);
 
-            Assert.AreEqual(firstItem.Kind, KindOfCodeEntity.Npc);
+            Assert.AreEqual(firstItem.Kind, KindOfCodeEntity.App);
             //Assert.AreEqual(firstItem.Name.NameKey, nameKey);
             Assert.AreEqual(firstItem.Name.NameValue, "Enemy");
             Assert.AreEqual(firstItem.Name.DictionaryName, _mainStorageContext.Dictionary.Name);
@@ -93,7 +93,7 @@ namespace SymOntoClay.Unity3DAsset.Test
 
             Assert.AreNotEqual(nameKey, 0);
 
-            Assert.AreEqual(firstItem.Kind, KindOfCodeEntity.Npc);
+            Assert.AreEqual(firstItem.Kind, KindOfCodeEntity.App);
             //Assert.AreEqual(firstItem.Name.NameKey, nameKey);
             Assert.AreEqual(firstItem.Name.NameValue, "PixKeeper");
             Assert.AreEqual(firstItem.Name.DictionaryName, _mainStorageContext.Dictionary.Name);

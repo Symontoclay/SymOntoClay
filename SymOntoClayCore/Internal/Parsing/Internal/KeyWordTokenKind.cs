@@ -21,8 +21,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// </summary>
         Unknown,
         World,
-        Host,
-        Npc,
+        App,
         Class,
         Is,
         On,

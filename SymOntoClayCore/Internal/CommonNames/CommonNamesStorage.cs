@@ -34,16 +34,10 @@ namespace SymOntoClay.Core.Internal.CommonNames
         public IndexedStrongIdentifierValue IndexedWorldName { get; private set; }
 
         /// <inheritdoc/>
-        public StrongIdentifierValue HostName { get; private set; }
+        public StrongIdentifierValue AppName { get; private set; }
 
         /// <inheritdoc/>
-        public IndexedStrongIdentifierValue IndexedHostName { get; private set; }
-
-        /// <inheritdoc/>
-        public StrongIdentifierValue NpcName { get; private set; }
-
-        /// <inheritdoc/>
-        public IndexedStrongIdentifierValue IndexedNpcName { get; private set; }
+        public IndexedStrongIdentifierValue IndexedAppName { get; private set; }
 
         /// <inheritdoc/>
         public StrongIdentifierValue ClassName { get; private set; }
@@ -82,11 +76,8 @@ namespace SymOntoClay.Core.Internal.CommonNames
             WorldName = NameHelper.CreateName(StandardNamesConstants.WorldTypeName, dictionary);
             IndexedWorldName = WorldName.GetIndexed(_context);
 
-            HostName = NameHelper.CreateName(StandardNamesConstants.HostTypeName, dictionary);
-            IndexedHostName = HostName.GetIndexed(_context);
-
-            NpcName = NameHelper.CreateName(StandardNamesConstants.NpcTypeName, dictionary);
-            IndexedNpcName = NpcName.GetIndexed(_context);
+            AppName = NameHelper.CreateName(StandardNamesConstants.AppTypeName, dictionary);
+            IndexedAppName = AppName.GetIndexed(_context);
 
             ClassName = NameHelper.CreateName(StandardNamesConstants.ClassTypeName, dictionary);
             IndexedClassName = ClassName.GetIndexed(_context);

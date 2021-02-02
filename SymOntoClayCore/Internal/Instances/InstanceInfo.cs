@@ -13,6 +13,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Storage;
+using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class InstanceInfo : BaseLoggedComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class InstanceInfo : BaseLoggedComponent, ISymOntoClayDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public InstanceInfo(StrongIdentifierValue name, IEngineContext context, IStorage parentStorage)
             : base(context.Logger)

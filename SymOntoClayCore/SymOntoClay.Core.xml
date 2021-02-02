@@ -1721,16 +1721,10 @@
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.IndexedWorldName">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.HostName">
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.AppName">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.IndexedHostName">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.NpcName">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.IndexedNpcName">
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.IndexedAppName">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.ClassName">
@@ -3269,6 +3263,20 @@
         <member name="P:SymOntoClay.Core.Internal.MainStorageContext.LogicQueryParseAndCache">
             <inheritdoc/>
         </member>
+        <member name="T:SymOntoClay.Core.Internal.Parsing.Internal.AppPaser">
+            <summary>
+            It is parser for app.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.AppPaser.OnEnter">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.AppPaser.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.AppPaser.OnRun">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.BaseInternalParser.Log(System.String)">
             <inheritdoc/>
         </member>
@@ -3329,15 +3337,6 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.FunctionBodyParser.OnRun">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.HostPaser.OnEnter">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.HostPaser.OnFinish">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.HostPaser.OnRun">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.InheritanceParser.OnEnter">
             <inheritdoc/>
         </member>
@@ -3393,20 +3392,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalQueryParser.OnRun">
-            <inheritdoc/>
-        </member>
-        <member name="T:SymOntoClay.Core.Internal.Parsing.Internal.NpcPaser">
-            <summary>
-            It is parser for app.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.NpcPaser.OnEnter">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.NpcPaser.OnFinish">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.NpcPaser.OnRun">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.NumberParser.OnEnter">

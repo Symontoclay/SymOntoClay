@@ -9,23 +9,27 @@ SymOntoClay is distributed in the hope that it will be useful, but WITHOUT ANY W
 You should have received a copy of the GNU Lesser General Public License along with this library; if not, see <https://www.gnu.org/licenses/>*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public class HostPaser : BaseInternalParser
+    /// <summary>
+    /// It is parser for app.
+    /// </summary>
+    public class AppPaser : BaseInternalParser
     {
         private enum State
         {
             Init,
-            GotHost,
+            GotApp,
             GotName,
             ContentStarted
         }
 
-        public HostPaser(InternalParserContext context)
+        public AppPaser(InternalParserContext context)
             : base(context)
         {
         }
@@ -41,8 +45,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #endif
             Result = CreateCodeEntity();
 
-            Result.Kind = KindOfCodeEntity.Host;
-            Result.CodeFile = _context.CodeFile;
+            Result.Kind = KindOfCodeEntity.App;
+            Result.CodeFile = _context.CodeFile;            
 
             Result.ParentCodeEntity = CurrentCodeEntity;
             SetCurrentCodeEntity(Result);
@@ -78,10 +82,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             switch (_state)
             {
                 case State.Init:
-                    switch (_currToken.KeyWordTokenKind)
+                    switch(_currToken.KeyWordTokenKind)
                     {
-                        case KeyWordTokenKind.Host:
-                            _state = State.GotHost;
+                        case KeyWordTokenKind.App:
+                            _state = State.GotApp;
                             break;
 
                         default:
@@ -89,8 +93,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotHost:
-                    switch (_currToken.TokenKind)
+                case State.GotApp:
+                    switch(_currToken.TokenKind)
                     {
                         case TokenKind.Word:
                         case TokenKind.Identifier:
@@ -111,7 +115,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.Word:
-                            switch (_currToken.KeyWordTokenKind)
+                            switch(_currToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.Is:
                                     {
@@ -137,6 +141,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.CloseFigureBracket:
                             Exit();
+                            break;
+
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.On:
+                                    {
+                                        _context.Recovery(_currToken);
+                                        var parser = new InlineTriggerParser(_context);
+                                        parser.Run();
+                                        Result.SubItems.Add(parser.Result);
+                                    }
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
                             break;
 
                         case TokenKind.OpenFactBracket:

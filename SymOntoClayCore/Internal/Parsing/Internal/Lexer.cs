@@ -739,15 +739,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
                         }
 
-                        if (string.Compare(content, "host", true) == 0)
+                        if (string.Compare(content, "app", true) == 0)
                         {
-                            kindOfKeyWord = KeyWordTokenKind.Host;
-                            break;
-                        }
-
-                        if (string.Compare(content, "npc", true) == 0)
-                        {
-                            kindOfKeyWord = KeyWordTokenKind.Npc;
+                            kindOfKeyWord = KeyWordTokenKind.App;
                             break;
                         }
 

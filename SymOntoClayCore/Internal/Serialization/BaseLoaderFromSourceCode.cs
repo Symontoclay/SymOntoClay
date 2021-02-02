@@ -93,7 +93,7 @@ namespace SymOntoClay.Core.Internal.Serialization
 
         private void DetectMainCodeEntity(List<CodeEntity> source)
         {
-            var possibleMainCodeEntities = source.Where(p => p.Kind == KindOfCodeEntity.Npc || p.Kind == KindOfCodeEntity.Host || p.Kind == KindOfCodeEntity.World);
+            var possibleMainCodeEntities = source.Where(p => p.Kind == KindOfCodeEntity.App || p.Kind == KindOfCodeEntity.World);
 
             var count = possibleMainCodeEntities.Count();
 
@@ -164,12 +164,8 @@ namespace SymOntoClay.Core.Internal.Serialization
                     AddSystemDefinedSettingsToWorld(codeEntity);
                     break;
 
-                case KindOfCodeEntity.Host:
-                    AddSystemDefinedSettingsToHost(codeEntity);
-                    break;
-
-                case KindOfCodeEntity.Npc:
-                    AddSystemDefinedSettingsToNpc(codeEntity);
+                case KindOfCodeEntity.App:
+                    AddSystemDefinedSettingsToApp(codeEntity);
                     break;
 
                 case KindOfCodeEntity.Class:
@@ -205,7 +201,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             codeEntity.InheritanceItems.Add(inheritanceItem);
         }
 
-        private void AddSystemDefinedSettingsToHost(CodeEntity codeEntity)
+        private void AddSystemDefinedSettingsToApp(CodeEntity codeEntity)
         {
             var inheritanceItem = new InheritanceItem()
             {
@@ -213,25 +209,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             };
 
             inheritanceItem.SubName = codeEntity.Name;
-            inheritanceItem.SuperName = _context.CommonNamesStorage.HostName;
-            inheritanceItem.Rank = new LogicalValue(1.0F);
-
-#if DEBUG
-            //Log($"inheritanceItem = {inheritanceItem}");
-#endif
-
-            codeEntity.InheritanceItems.Add(inheritanceItem);
-        }
-
-        private void AddSystemDefinedSettingsToNpc(CodeEntity codeEntity)
-        {
-            var inheritanceItem = new InheritanceItem()
-            {
-                IsSystemDefined = true
-            };
-
-            inheritanceItem.SubName = codeEntity.Name;
-            inheritanceItem.SuperName = _context.CommonNamesStorage.NpcName;
+            inheritanceItem.SuperName = _context.CommonNamesStorage.AppName;
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
 #if DEBUG
@@ -299,10 +277,7 @@ namespace SymOntoClay.Core.Internal.Serialization
                 case KindOfCodeEntity.World:
                     break;
 
-                case KindOfCodeEntity.Host:
-                    break;
-
-                case KindOfCodeEntity.Npc:
+                case KindOfCodeEntity.App:
                     break;
 
                 case KindOfCodeEntity.Class:

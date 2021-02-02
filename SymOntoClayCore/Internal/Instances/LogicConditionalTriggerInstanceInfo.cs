@@ -5,6 +5,7 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Threads;
+using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class LogicConditionalTriggerInstanceInfo : BaseLoggedComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class LogicConditionalTriggerInstanceInfo : BaseLoggedComponent, ISymOntoClayDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public LogicConditionalTriggerInstanceInfo(IndexedInlineTrigger trigger, InstanceInfo parent, IEngineContext context, IStorage parentStorage)
             : base(context.Logger)

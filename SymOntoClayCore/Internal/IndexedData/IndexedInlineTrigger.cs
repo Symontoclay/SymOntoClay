@@ -20,6 +20,10 @@ namespace SymOntoClay.Core.Internal.IndexedData
     public class IndexedInlineTrigger: IndexedAnnotatedItem
     {
         public InlineTrigger OriginalInlineTrigger { get; set; }
+
+        /// <inheritdoc/>
+        public override AnnotatedItem OriginalAnnotatedItem => OriginalInlineTrigger;
+
         public KindOfInlineTrigger Kind { get; set; } = KindOfInlineTrigger.Unknown;
         public KindOfSystemEventOfInlineTrigger KindOfSystemEvent { get; set; } = KindOfSystemEventOfInlineTrigger.Unknown;
         public IndexedRuleInstance Condition { get; set; }

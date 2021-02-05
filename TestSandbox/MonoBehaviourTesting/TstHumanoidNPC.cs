@@ -33,7 +33,7 @@ namespace TestSandbox.MonoBehaviourTesting
             npcSettings.Id = _id;
             npcSettings.InstanceId = 1;
             //npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
-            npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Npcs\PeaceKeeper\PeaceKeeper.npc");
+            npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Npcs\PeaceKeeper\PeaceKeeper.sobj");
             npcSettings.HostListener = platformListener;
             npcSettings.VisionProvider = _tstRayScaner;
             npcSettings.PlatformSupport = new TstPlatformSupport();

@@ -84,11 +84,18 @@ namespace SymOntoClay.CLI
                 File.WriteAllText(worldFileName, "{}");
             }
 
-            var hostsDirName = Path.Combine(worldSpaceDirName, "Hosts");
+            var hostsDirName = Path.Combine(worldSpaceDirName, "Things");
 
             if (!Directory.Exists(hostsDirName))
             {
                 Directory.CreateDirectory(hostsDirName);
+            }
+
+            var playerDirName = Path.Combine(worldSpaceDirName, "Players");
+
+            if(!Directory.Exists(playerDirName))
+            {
+                Directory.CreateDirectory(playerDirName);
             }
 
             var modulesDirName = Path.Combine(worldSpaceDirName, "Modules");
@@ -124,20 +131,19 @@ namespace SymOntoClay.CLI
                 Directory.CreateDirectory(projectDirName);
             }
 
-            var npcFileName = Path.Combine(projectDirName, $"{projectName}.npc");
+            var npcFileName = Path.Combine(projectDirName, $"{projectName}.sobj");
 
             File.WriteAllText(npcFileName, "{}");
 
             var appFileName = Path.Combine(projectDirName, $"{projectName}.soc");
 
             var sb = new StringBuilder();
-            sb.AppendLine($"npc {projectName}");
+            sb.AppendLine($"app {projectName}");
             sb.AppendLine("{");
             sb.AppendLine("    on Init =>");
             sb.AppendLine("    {");
             sb.AppendLine("    }");
             sb.AppendLine("}");
-            sb.AppendLine();
 
             File.WriteAllText(appFileName, sb.ToString());
         }

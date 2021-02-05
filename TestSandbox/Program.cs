@@ -243,7 +243,7 @@ namespace TestSandbox
 
             var args = new List<string>() {
                  "run"//,
-                 //"%USERPROFILE%/source/repos/SymOntoClay/TestSandbox/Source/Npcs/PeaceKeeper/PeaceKeeper.npc"
+                 //"%USERPROFILE%/source/repos/SymOntoClay/TestSandbox/Source/Npcs/PeaceKeeper/PeaceKeeper.sobj"
                  //"%USERPROFILE%/source/repos/SymOntoClay/TestSandbox/Source"
             }.ToArray();
 

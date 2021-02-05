@@ -24,6 +24,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Threads
         {
         }
 
+        private readonly object _lockObj = new object();
+        private bool _isLocked;
+
         private readonly ActivePeriodicObjectCommonContext _commonActiveContext = new ActivePeriodicObjectCommonContext();
 
         /// <inheritdoc/>
@@ -34,12 +37,32 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Threads
 
         public void Lock()
         {
-            _commonActiveContext.Lock();
+            lock (_lockObj)
+            {
+                if(_isLocked)
+                {
+                    return;
+                }
+
+                _isLocked = true;
+
+                _commonActiveContext.Lock();
+            }            
         }
 
         public void UnLock()
         {
-            _commonActiveContext.UnLock();
+            lock (_lockObj)
+            {
+                if(!_isLocked)
+                {
+                    return;
+                }
+
+                _isLocked = false;
+
+                _commonActiveContext.UnLock();
+            }            
         }
 
         ///// <inheritdoc/>

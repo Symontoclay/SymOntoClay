@@ -23,6 +23,10 @@ namespace SymOntoClay.Core.Internal.IndexedData
     public class IndexedRuleInstance: IndexedAnnotatedItem
     {
         public RuleInstance Origin { get; set; }
+
+        /// <inheritdoc/>
+        public override AnnotatedItem OriginalAnnotatedItem => Origin;
+
         public IndexedStrongIdentifierValue Name { get; set; }
 
         public KindOfRuleInstance Kind { get; set; } = KindOfRuleInstance.Undefined;

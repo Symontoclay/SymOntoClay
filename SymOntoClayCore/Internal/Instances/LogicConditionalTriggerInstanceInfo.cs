@@ -14,7 +14,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class LogicConditionalTriggerInstanceInfo : BaseLoggedComponent, ISymOntoClayDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class LogicConditionalTriggerInstanceInfo : BaseComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public LogicConditionalTriggerInstanceInfo(IndexedInlineTrigger trigger, InstanceInfo parent, IEngineContext context, IStorage parentStorage)
             : base(context.Logger)
@@ -36,7 +36,6 @@ namespace SymOntoClay.Core.Internal.Instances
             _localCodeExecutionContext.Holder = parent.IndexedName;
 
             _storage.LogicalStorage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys;
-            //context.Storage.PerceptedFactsStorage.LogicalStorage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys_2;
         }
 
         private readonly LogicalSearchResolver _searcher;
@@ -117,13 +116,21 @@ namespace SymOntoClay.Core.Internal.Instances
                     processInitialInfo.LocalContext = _localCodeExecutionContext;
                     processInitialInfo.Metadata = _trigger.OriginalInlineTrigger.CodeEntity;
 
-                    _context.CodeExecutor.ExecuteAsync(processInitialInfo);
+                    var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo);
                 }
             }
 
 #if DEBUG
             Log($"_isOn (after) = {_isOn}");
 #endif
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _storage.LogicalStorage.OnChangedWithKeys -= LogicalStorage_OnChangedWithKeys;
+
+            base.OnDisposed();
         }
 
         /// <inheritdoc/>

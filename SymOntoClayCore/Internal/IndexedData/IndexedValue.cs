@@ -20,6 +20,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
     {
         public abstract Value OriginalValue { get; }
 
+        /// <inheritdoc/>
+        public override AnnotatedItem OriginalAnnotatedItem => OriginalValue;
+
         public abstract KindOfValue KindOfValue { get; }
 
         public virtual bool IsNullValue => false;

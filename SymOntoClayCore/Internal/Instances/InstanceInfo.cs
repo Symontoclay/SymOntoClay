@@ -22,7 +22,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class InstanceInfo : BaseLoggedComponent, ISymOntoClayDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class InstanceInfo : BaseComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public InstanceInfo(StrongIdentifierValue name, IEngineContext context, IStorage parentStorage)
             : base(context.Logger)
@@ -52,7 +52,6 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly TriggersResolver _triggersResolver;
         private InstanceState _instanceState = InstanceState.Created;
         private List<LogicConditionalTriggerInstanceInfo> _logicConditionalTriggersList = new List<LogicConditionalTriggerInstanceInfo>();
-
 
         public void Init()
         {
@@ -118,6 +117,17 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
             _instanceState = InstanceState.Initialized;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            foreach(var triggerInstanceInfo in _logicConditionalTriggersList)
+            {
+                triggerInstanceInfo.Dispose();
+            }
+
+            base.OnDisposed();
         }
 
         /// <inheritdoc/>

@@ -21,6 +21,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
     {
         public Channel OriginalChannel { get; set; }
 
+        /// <inheritdoc/>
+        public override AnnotatedItem OriginalAnnotatedItem => OriginalChannel;
+
         public IndexedStrongIdentifierValue Name { get; set; }
         public IChannelHandler Handler { get; set; }
 

@@ -336,6 +336,12 @@
             <param name="context">Special context for providing references continuity.</param>
             <returns>Cloned instance.</returns>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.IsDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.Dispose">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.ToString">
             <inheritdoc/>
         </member>
@@ -2001,6 +2007,9 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.AndOperatorIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.IndexedData.BaseIndexedLogicalQueryNode.OriginalAnnotatedItem">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.BaseIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -2095,6 +2104,12 @@
             Returns <c>true</c> if the instance has modalities or additional sections, otherwise returns <c>false</c>.
             </summary>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotatedItem.IsDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotatedItem.Dispose">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotatedItem.ToString">
             <inheritdoc/>
         </member>
@@ -2161,6 +2176,9 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotationValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedBaseRulePart.OriginalAnnotatedItem">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedBaseRulePart.CalculateLongHashCode">
             <inheritdoc/>
         </member>
@@ -2171,6 +2189,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedBaseRulePart.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedChannel.OriginalAnnotatedItem">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedChannel.CalculateLongHashCode">
@@ -2215,6 +2236,9 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedHostValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedInheritanceItem.OriginalAnnotatedItem">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedInheritanceItem.SuperName">
             <summary>
             Represents ancestor.
@@ -2236,6 +2260,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInheritanceItem.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedInlineTrigger.OriginalAnnotatedItem">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInlineTrigger.CalculateLongHashCode">
@@ -2453,6 +2480,9 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedNumberValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedOperator.OriginalAnnotatedItem">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedOperator.IsSystemDefined">
             <inheritdoc/>
         </member>
@@ -2517,6 +2547,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedPrimaryRulePart.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstance.OriginalAnnotatedItem">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstance.CalculateLongHashCode">
@@ -2694,6 +2727,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedTaskValue.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedValue.OriginalAnnotatedItem">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedValue.PropertiesToString(System.UInt32)">
@@ -3159,6 +3195,9 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceResultItem`1.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstanceInfo.OnDisposed">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.InstanceInfo.ToString">
             <inheritdoc/>
         </member>
@@ -3196,6 +3235,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.PrintProcessesList">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstanceInfo.OnDisposed">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstanceInfo.ToString">

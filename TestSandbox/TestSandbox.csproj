@@ -28,19 +28,13 @@
     <None Update="Source\Npcs\PeaceKeeper\ExampleClass.soc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Source\Npcs\PeaceKeeper\PeaceKeeper.npc">
+    <None Update="Source\Npcs\PeaceKeeper\PeaceKeeper.sobj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Source\Npcs\PeaceKeeper\PeaceKeeper.soc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Source\HelloWorld.wspace">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Source\Hosts\PeaceKeeper\PeaceKeeper.host">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Source\Hosts\PeaceKeeper\PeaceKeeper.soc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Source\World\HelloWorld.world">

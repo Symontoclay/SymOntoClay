@@ -21,7 +21,7 @@ namespace SymOntoClay.Core.Internal.Helpers
 {
     public static class FileHelper
     {
-        private static List<string> _rootExtesions = new List<string>() { ".npc", ".host", ".world" };
+        private static List<string> _rootExtesions = new List<string>() { ".sobj", ".world" };
         private static List<string> _sourceFileExtensions = new List<string>() { ".soc" };
 
         public static List<ParsedFileInfo> GetParsedFilesInfo(string appFileName, string id)

@@ -20,7 +20,7 @@ namespace SymOntoClay.CLI
     public static class RunCommandFilesSearcher
     {
 #if DEBUG
-        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static RunCommandFiles Run(CLICommand command)
@@ -85,24 +85,65 @@ namespace SymOntoClay.CLI
                 throw new NotImplementedException();
             }
 
-            var npcsBaseDir = Path.Combine(wSpaceFile.DirectoryName, "Npcs");
+            var mainNPCFileName = $"{mainNpc}.sobj";
 
-#if DEBUG
-            //_logger.Info($"npcsBaseDir = {npcsBaseDir}");
-#endif
-
-            var inputFile = Path.Combine(npcsBaseDir, mainNpc, $"{mainNpc}.npc");
+            var inputFile = DetectMainFileFllPathForMainNPCOfWorld(wSpaceFile.DirectoryName, mainNPCFileName);
 
 #if DEBUG
             //_logger.Info($"inputFile = {inputFile}");
 #endif
 
-            if(!File.Exists(inputFile))
+            if (!File.Exists(inputFile))
             {
                 throw new NotImplementedException();
             }
 
             return NGetRunCommandFiles(inputFile, wSpaceFile);
+        }
+
+        private static string DetectMainFileFllPathForMainNPCOfWorld(string currDirName, string mainNPCFileName)
+        {
+#if DEBUG
+            //_logger.Info($"currDirName = {currDirName}");
+            //_logger.Info($"mainNPCFileName = {mainNPCFileName}");
+#endif
+
+            if(currDirName.EndsWith("World"))
+            {
+                return string.Empty;
+            }
+
+            if (currDirName.EndsWith("Modules"))
+            {
+                return string.Empty;
+            }
+
+            var targetFileName = Directory.EnumerateFiles(currDirName).SingleOrDefault(p => p.EndsWith(mainNPCFileName));
+
+#if DEBUG
+            //_logger.Info($"targetFileName = {targetFileName}");
+#endif
+
+            if(!string.IsNullOrWhiteSpace(targetFileName))
+            {
+                return targetFileName;
+            }
+
+            foreach(var subDir in Directory.EnumerateDirectories(currDirName))
+            {
+                targetFileName = DetectMainFileFllPathForMainNPCOfWorld(subDir, mainNPCFileName);
+
+#if DEBUG
+                //_logger.Info($"targetFileName (2) = {targetFileName}");
+#endif
+
+                if (!string.IsNullOrWhiteSpace(targetFileName))
+                {
+                    return targetFileName;
+                }
+            }
+
+            throw new NotImplementedException();
         }
 
         private static string GetNpcFileNameInCurrentDir(string inputDir)
@@ -111,7 +152,7 @@ namespace SymOntoClay.CLI
             //_logger.Info($"inputDir = {inputDir}");
 #endif
 
-            var filesList = Directory.EnumerateFiles(inputDir).Where(p => p.EndsWith(".npc"));
+            var filesList = Directory.EnumerateFiles(inputDir).Where(p => p.EndsWith(".sobj"));
 
             var count = filesList.Count();
 

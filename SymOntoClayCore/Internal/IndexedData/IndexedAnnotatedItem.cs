@@ -11,6 +11,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -19,8 +20,10 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
-    public abstract class IndexedAnnotatedItem: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
+    public abstract class IndexedAnnotatedItem: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, ISymOntoClayDisposable
     {
+        public abstract AnnotatedItem OriginalAnnotatedItem { get; }
+
         [ResolveToType(typeof(IndexedLogicalValue))]
         public virtual IList<IndexedValue> QuantityQualityModalities { get; set; } = new List<IndexedValue>();
 
@@ -110,6 +113,43 @@ namespace SymOntoClay.Core.Internal.IndexedData
             }
 
             return result;
+        }
+
+        private readonly object _disposingLockObj = new object();
+        private bool _isDisposed;
+
+        /// <inheritdoc/>
+        public bool IsDisposed
+        {
+            get
+            {
+                lock(_disposingLockObj)
+                {
+                    return _isDisposed;
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            lock (_disposingLockObj)
+            {
+                if(_isDisposed)
+                {
+                    return;
+                }
+
+                _isDisposed = true;
+
+                OnDisposed();
+
+                OriginalAnnotatedItem.Dispose();
+            }
+        }
+
+        protected virtual void OnDisposed()
+        {
         }
 
         /// <inheritdoc/>

@@ -2,7 +2,8 @@
   "profiles": {
     "SymOntoClayCLI": {
       "commandName": "Project",
-      "commandLineArgs": "run c:\\Users\\sergiy.tolkachov\\source\\repos\\SymOntoClay\\SymOntoClayCLI\\bin\\Debug\\netcoreapp3.1\\PeaseKeeper\\Npcs\\PeaseKeeper\\PeaseKeeper.npc"
+      "commandLineArgs": "run",
+      "workingDirectory": "C:\\Users\\sergiy.tolkachov\\source\\repos\\SymOntoClay\\TestSandbox\\Source"
     }
   }
 }

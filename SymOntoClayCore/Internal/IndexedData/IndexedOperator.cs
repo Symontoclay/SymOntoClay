@@ -23,6 +23,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
     {
         public Operator OriginalOperator { get; set; }
 
+        /// <inheritdoc/>
+        public override AnnotatedItem OriginalAnnotatedItem => OriginalOperator;
+
         public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
 
         /// <inheritdoc/>

@@ -59,11 +59,11 @@ namespace SymOntoClay.CLI
 
             //settings.InvokerInMainThread = invokingInMainThread;
 
-            //var logDir = Path.Combine(Directory.GetCurrentDirectory(), "NpcLogs");
+            var logDir = Path.Combine(Environment.GetEnvironmentVariable("TMP"), "SymOntoClay", "CLI");
 
             settings.Logging = new LoggingSettings()
             {
-                //LogDir = logDir,
+                LogDir = logDir,
                 RootContractName = "Hi1",
                 PlatformLoggers = new List<IPlatformLogger>() { new CLIPlatformLogger() },
                 Enable = true,
@@ -78,7 +78,7 @@ namespace SymOntoClay.CLI
             var platformListener = this;
 
             var npcSettings = new HumanoidNPCSettings();
-            npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
+            npcSettings.Id = "#`020ED339-6313-459A-900D-92F809CEBDC5`";
             //npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
             npcSettings.LogicFile = targetFiles.LogicFile;
             npcSettings.HostListener = platformListener;

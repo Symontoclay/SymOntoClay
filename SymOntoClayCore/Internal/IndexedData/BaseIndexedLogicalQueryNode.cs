@@ -25,6 +25,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public virtual KindOfOperatorOfLogicalQueryNode KindOfOperator => KindOfOperatorOfLogicalQueryNode.Unknown;
 
         public LogicalQueryNode Origin { get; set; }
+        /// <inheritdoc/>
+        public override AnnotatedItem OriginalAnnotatedItem => Origin;
+
         public IndexedRuleInstance RuleInstance { get; set; }
         public IndexedBaseRulePart RulePart { get; set; }
 

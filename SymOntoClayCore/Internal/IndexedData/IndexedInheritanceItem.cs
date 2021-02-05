@@ -20,6 +20,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
     {
         public InheritanceItem OriginalInheritanceItem { get; set; }
 
+        /// <inheritdoc/>
+        public override AnnotatedItem OriginalAnnotatedItem => OriginalInheritanceItem;
+
         public ulong Key { get; set; }
 
         public IndexedStrongIdentifierValue SubName { get; set; } = new IndexedStrongIdentifierValue();

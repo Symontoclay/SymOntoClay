@@ -24,6 +24,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
     {
         public abstract BaseRulePart OriginRulePart { get; }
 
+        /// <inheritdoc/>
+        public override AnnotatedItem OriginalAnnotatedItem => OriginRulePart;
+
         public IndexedRuleInstance Parent { get; set; }
 
         public bool IsActive { get; set; }

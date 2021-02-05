@@ -309,7 +309,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     throw new ObjectDisposedException(null);
                 }
 
-                if(_state != ComponentState.Loaded)
+                ThreadsComponent.Lock();
+
+                if (_state != ComponentState.Loaded)
                 {
                     NLoadFromSourceCode();
                     Thread.Sleep(100);

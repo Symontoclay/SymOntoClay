@@ -63,8 +63,8 @@ namespace SymOntoClay.Core.Internal.Storage
             lock(_lockObj)
             {
 #if DEBUG
-                //Log($"subName = {subName}");
-                //Log($"superName = {superName}");
+                Log($"subName = {subName}");
+                Log($"superName = {superName}");
 #endif
 
                 if (_foundInheritanceKeysList.Any())

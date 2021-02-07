@@ -8,7 +8,7 @@
 
 		 //use @@self is linux;
 
-		 select {: see(I, barrel) :} >> @>log;
+		 //select {: see(I, barrel) :} >> @>log;
 		 //select {: son(?x, ?y) :} >> @>log;
 
 		 //insert {: >: { bird (#1234) } :};
@@ -20,7 +20,7 @@
 		 "End" >> @>log;
 	}
 
-	//on {: see(I, barrel) :} => {
-	//     "L" >> @>log;
-	//}
+	on {: see(I, barrel) :} => {
+	     "L" >> @>log;
+	}
 }

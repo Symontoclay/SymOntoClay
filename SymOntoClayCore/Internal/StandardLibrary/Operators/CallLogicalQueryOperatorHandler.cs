@@ -126,8 +126,8 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             var searchResult = _searcher.Run(searchOptions);
 
 #if DEBUG
-            Log($"searchResult = {searchResult}");
-            Log($"result = {DebugHelperForLogicalSearchResult.ToString(searchResult, _engineContext.Dictionary)}");
+            //Log($"searchResult = {searchResult}");
+            //Log($"result = {DebugHelperForLogicalSearchResult.ToString(searchResult, _engineContext.Dictionary)}");
 #endif
 
             return new LogicalSearchResultValue(searchResult).GetIndexed(_engineContext);

@@ -91,7 +91,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                 var indexedItem = inlineTrigger.GetIndexed(_realStorageContext.MainStorageContext);
 
 #if DEBUG
-                Log($"indexedItem = {indexedItem}");
+                //Log($"indexedItem = {indexedItem}");
 #endif
 
                 var indexedItemHolderKey = indexedItem.Holder.NameKey;
@@ -101,13 +101,13 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                     var targetList = _nonIndexedLogicConditionalsInfo[inlineTrigger.Holder];
 
 #if DEBUG
-                    Log($"_nonIndexedLogicConditionalsInfo[superName].Count = {_nonIndexedLogicConditionalsInfo[inlineTrigger.Holder].Count}");
-                    Log($"targetList = {targetList.WriteListToString()}");
+                    //Log($"_nonIndexedLogicConditionalsInfo[superName].Count = {_nonIndexedLogicConditionalsInfo[inlineTrigger.Holder].Count}");
+                    //Log($"targetList = {targetList.WriteListToString()}");
 #endif
                     var targetLongConditionalHashCode = indexedItem.GetLongConditionalHashCode();
 
 #if DEBUG
-                    Log($"targetLongConditionalHashCode = {targetLongConditionalHashCode}");
+                    //Log($"targetLongConditionalHashCode = {targetLongConditionalHashCode}");
 #endif
 
                     var targetIndexedList = _indexedLogicConditionalsInfo[indexedItemHolderKey];
@@ -122,7 +122,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                     var itemsWithTheSameLongConditionalHashCodeList = indexedItemsWithTheSameLongConditionalHashCodeList.Select(p => p.OriginalInlineTrigger).ToList();
 
 #if DEBUG
-                    Log($"itemsWithTheSameLongConditionalHashCodeList = {itemsWithTheSameLongConditionalHashCodeList.WriteListToString()}");
+                    //Log($"itemsWithTheSameLongConditionalHashCodeList = {itemsWithTheSameLongConditionalHashCodeList.WriteListToString()}");
 #endif
 
                     foreach (var itemWithTheSameLongConditionalHashCode in itemsWithTheSameLongConditionalHashCodeList)
@@ -165,13 +165,13 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                         var targetList = dict[inlineTrigger.Holder];
 
 #if DEBUG
-                        Log($"dict[superName].Count = {dict[inlineTrigger.Holder].Count}");
-                        Log($"targetList = {targetList.WriteListToString()}");
+                        //Log($"dict[superName].Count = {dict[inlineTrigger.Holder].Count}");
+                        //Log($"targetList = {targetList.WriteListToString()}");
 #endif
                         var targetLongConditionalHashCode = indexedItem.GetLongConditionalHashCode();
 
 #if DEBUG
-                        Log($"targetLongConditionalHashCode = {targetLongConditionalHashCode}");
+                        //Log($"targetLongConditionalHashCode = {targetLongConditionalHashCode}");
 #endif
 
                         var targetIndexedList = indexedDict[indexedItemHolderKey];
@@ -186,7 +186,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                         var itemsWithTheSameLongConditionalHashCodeList = indexedItemsWithTheSameLongConditionalHashCodeList.Select(p => p.OriginalInlineTrigger).ToList();
 
 #if DEBUG
-                        Log($"itemsWithTheSameLongConditionalHashCodeList = {itemsWithTheSameLongConditionalHashCodeList.WriteListToString()}");
+                        //Log($"itemsWithTheSameLongConditionalHashCodeList = {itemsWithTheSameLongConditionalHashCodeList.WriteListToString()}");
 #endif
 
                         foreach (var itemWithTheSameLongConditionalHashCode in itemsWithTheSameLongConditionalHashCodeList)

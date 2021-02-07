@@ -105,7 +105,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var searchResult = _searcher.Run(searchOptions);
 
 #if DEBUG
-            Log($"searchResult = {searchResult}");
+            //Log($"searchResult = {searchResult}");
             //Log($"result = {DebugHelperForLogicalSearchResult.ToString(searchResult, _context.Dictionary)}");
             //foreach(var usedKey in searchResult.UsedKeysList)
             //{

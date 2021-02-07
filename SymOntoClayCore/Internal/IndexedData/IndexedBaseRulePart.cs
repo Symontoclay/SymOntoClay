@@ -182,11 +182,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
                     //options.Logger.Log($"knownInfo = {knownInfo}");
 #endif
 
-                    List<ulong> additionalKeys = null;
+                    List<ulong> additionalKeys_1 = null;
 
                     if(useInheritance)
                     {
-                        additionalKeys = inheritanceResolver.GetSuperClassesKeysList(knownInfo.Key, options.LocalCodeExecutionContext);
+                        additionalKeys_1 = inheritanceResolver.GetSuperClassesKeysList(knownInfo.Key, options.LocalCodeExecutionContext);
                     }
 
 #if DEBUG
@@ -207,7 +207,22 @@ namespace SymOntoClay.Core.Internal.IndexedData
                         //options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
 #endif
 
-                        var resultOfComparison = CompareKnownInfoAndExpressionNode(knownInfo, paramOfTargetRelation, additionalKeys
+                        List<ulong> additionalKeys_2 = null;
+
+                        if(useInheritance && paramOfTargetRelation.IsKeyRef)
+                        {
+                            additionalKeys_2 = inheritanceResolver.GetSuperClassesKeysList(paramOfTargetRelation.AsKeyRef.Key, options.LocalCodeExecutionContext);
+                        }
+
+#if DEBUG
+                        //options.Logger.Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2, Formatting.Indented)}");
+
+                        //var tmpNamesList = additionalKeys_2.Select(p => options.EntityDictionary.GetName(p)).ToList();
+
+                        //options.Logger.Log($"tmpNamesList = {JsonConvert.SerializeObject(tmpNamesList, Formatting.Indented)}");
+#endif
+
+                        var resultOfComparison = CompareKnownInfoAndExpressionNode(knownInfo, paramOfTargetRelation, additionalKeys_1, additionalKeys_2
 #if DEBUG
                             , options.Logger
 #endif
@@ -328,7 +343,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             }
         }
 
-        private bool CompareKnownInfoAndExpressionNode(QueryExecutingCardAboutKnownInfo knownInfo, BaseIndexedLogicalQueryNode expressionNode, List<ulong> additionalKeys
+        private bool CompareKnownInfoAndExpressionNode(QueryExecutingCardAboutKnownInfo knownInfo, BaseIndexedLogicalQueryNode expressionNode, List<ulong> additionalKeys_1, List<ulong> additionalKeys_2
 #if DEBUG
             , IEntityLogger logger
 #endif
@@ -336,7 +351,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         {
             var knownInfoExpression = knownInfo.Expression;
 
-            return ExpressionNodeHelper.Compare(knownInfoExpression, expressionNode, additionalKeys
+            return ExpressionNodeHelper.Compare(knownInfoExpression, expressionNode, additionalKeys_1, additionalKeys_2
 #if DEBUG
                 , logger
 #endif

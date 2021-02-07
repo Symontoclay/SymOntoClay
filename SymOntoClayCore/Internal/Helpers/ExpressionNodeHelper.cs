@@ -33,7 +33,7 @@ namespace SymOntoClay.Core.Internal.Helpers
 {
     public static class ExpressionNodeHelper
     {
-        public static bool Compare(BaseIndexedLogicalQueryNode expressionNode1, BaseIndexedLogicalQueryNode expressionNode2, List<ulong> additionalKeys
+        public static bool Compare(BaseIndexedLogicalQueryNode expressionNode1, BaseIndexedLogicalQueryNode expressionNode2, List<ulong> additionalKeys_1, List<ulong> additionalKeys_2
 #if DEBUG
             , IEntityLogger logger
 #endif
@@ -43,19 +43,31 @@ namespace SymOntoClay.Core.Internal.Helpers
             //logger.Log($"(expressionNode1 == null) = {expressionNode1 == null} (expressionNode2 == null) = {expressionNode2 == null}");
             //logger.Log($"expressionNode1 = {expressionNode1}");
             //logger.Log($"expressionNode2 = {expressionNode2}");
-            //logger.Log($"additionalKeys = {JsonConvert.SerializeObject(additionalKeys, Formatting.Indented)}");
+            //logger.Log($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1, Formatting.Indented)}");
+            //logger.Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2, Formatting.Indented)}");
 #endif
 
             if (expressionNode1.IsKeyRef && expressionNode2.IsKeyRef)
             {
-                var key = expressionNode2.AsKeyRef.Key;
+                var key_1 = expressionNode1.AsKeyRef.Key;
+                var key_2 = expressionNode2.AsKeyRef.Key;
 
-                if (expressionNode1.AsKeyRef.Key == key)
+                if (key_1 == key_2)
                 {
                     return true;
                 }
 
-                if(additionalKeys != null && additionalKeys.Any(p => p == key))
+                if(additionalKeys_1 != null && additionalKeys_1.Any(p => p == key_2))
+                {
+                    return true;
+                }
+
+                if(additionalKeys_2 != null && additionalKeys_2.Any(p => p == key_1))
+                {
+                    return true;
+                }
+
+                if(additionalKeys_1 != null && additionalKeys_2 != null && additionalKeys_1.Intersect(additionalKeys_2).Any())
                 {
                     return true;
                 }

@@ -1,11 +1,15 @@
 ﻿app PeaceKeeper is [0.5] exampleClass
 {
+    {: barrel(#a) :}
+	{: see(I, #a) :}
+
     on Init => {
 	     'Begin' >> @>log;
 
 		 //use @@self is linux;
 
-		 select {: son(?x, ?y) :} >> @>log;
+		 select {: see(I, barrel) :} >> @>log;
+		 //select {: son(?x, ?y) :} >> @>log;
 
 		 //insert {: >: { bird (#1234) } :};
 
@@ -16,7 +20,7 @@
 		 "End" >> @>log;
 	}
 
-	on {: see(I, #`Gun 1`) :} => {
-	     "L" >> @>log;
-	}
+	//on {: see(I, barrel) :} => {
+	//     "L" >> @>log;
+	//}
 }

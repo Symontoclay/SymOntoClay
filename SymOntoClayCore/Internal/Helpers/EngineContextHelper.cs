@@ -76,7 +76,7 @@ namespace SymOntoClay.Core.Internal.Helpers
         public static void LoadFromSourceCode(MainStorageContext context)
         {
             context.CommonNamesStorage.LoadFromSourceCode();
-            context.Storage.LoadFromSourceCode();            
+            context.Storage.LoadFromSourceCode();
             context.LoaderFromSourceCode.LoadFromSourceFiles();
         }
 

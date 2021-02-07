@@ -615,6 +615,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     buffer.Append(tmpChar);
 
                                     _kindOfPrefix = KindOfPrefix.Entity;
+                                    _state = State.InIdentifier;
 
                                     var nextChar = _items.Peek();
 
@@ -630,7 +631,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         }
                                         else
                                         {
-                                            throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                            _state = State.Init;
+                                            return CreateToken(TokenKind.Entity, buffer.ToString());
                                         }
                                     }
                                     break;

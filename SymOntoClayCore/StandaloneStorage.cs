@@ -96,7 +96,7 @@ namespace SymOntoClay.Core
                 _publicFactsStorage = _storageComponent.PublicFactsStorage;
 
 #if IMAGINE_WORKING
-                //Log("Do");
+                //Log("End");
 #else
                 throw new NotImplementedException();
 #endif

@@ -25,6 +25,12 @@
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Source\Npcs\Barrel\Barrel.sobj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Source\Npcs\Barrel\Barrel.soc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Source\Npcs\PeaceKeeper\ExampleClass.soc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

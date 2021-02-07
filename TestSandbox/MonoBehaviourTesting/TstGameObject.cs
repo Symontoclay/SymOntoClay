@@ -24,6 +24,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using TestSandbox.CoreHostListener;
 using TestSandbox.PlatformImplementations;
@@ -48,6 +49,7 @@ namespace TestSandbox.MonoBehaviourTesting
             _id = "#`Gun 1`";
             settings.Id = _id;
             settings.InstanceId = 2;
+            settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Npcs\Barrel\Barrel.sobj");
             settings.HostListener = platformListener;
 
             _gameObject = WorldFactory.WorldInstance.GetGameObject(settings);

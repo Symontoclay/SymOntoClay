@@ -173,7 +173,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 
                 _realStorageContext.LogicalStorage.Append(inheritanceFact, false);
 
-                if(_kind == KindOfStorage.Global)
+                if(_kind == KindOfStorage.Global || _kind ==  KindOfStorage.Host)
                 {
                     _inheritancePublicFactsReplicator.ProcessChangeInheritance(inheritanceItem.SubName, inheritanceItem.SuperName);
                 }

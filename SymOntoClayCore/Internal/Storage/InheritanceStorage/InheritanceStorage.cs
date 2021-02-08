@@ -45,6 +45,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
         }
 
         private readonly object _lockObj = new object();
+        private readonly object _factsIdRegistryLockObj = new object();
 
         private readonly KindOfStorage _kind;
 
@@ -59,6 +60,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 
         private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<InheritanceItem>>> _nonIndexedInfo = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<InheritanceItem>>>();
         private readonly Dictionary<ulong, Dictionary<ulong, List<IndexedInheritanceItem>>> _indexedInfo = new Dictionary<ulong, Dictionary<ulong, List<IndexedInheritanceItem>>>();
+        private readonly Dictionary<InheritanceItem, string> _factsIdRegistry = new Dictionary<InheritanceItem, string>();
 
         /// <inheritdoc/>
         public void SetInheritance(InheritanceItem inheritanceItem)
@@ -138,6 +140,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                         foreach(var itemWithTheSameLongConditionalHashCode in itemsWithTheSameLongConditionalHashCodeList)
                         {
                             targetList.Remove(itemWithTheSameLongConditionalHashCode);
+                            NRemoveIngeritanceFact(itemWithTheSameLongConditionalHashCode);
                         }
 
                         targetList.Add(inheritanceItem);
@@ -162,7 +165,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                 }
             }
 
-            if(isPrimary)
+            if(isPrimary && _kind != KindOfStorage.PublicFacts && _kind != KindOfStorage.PerceptedFacts)
             {
                 var inheritanceFact = CreateInheritanceFact(inheritanceItem);
 
@@ -170,6 +173,10 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                 //Log($"inheritanceFact = {inheritanceFact}");
                 //Log($"inheritanceFact = {DebugHelperForRuleInstance.ToString(inheritanceFact)}");
 #endif
+                lock(_factsIdRegistryLockObj)
+                {
+                    _factsIdRegistry[inheritanceItem] = inheritanceFact.Name.NameValue;
+                }
 
                 _realStorageContext.LogicalStorage.Append(inheritanceFact, false);
 
@@ -182,6 +189,77 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 #if DEBUG
             //Log("End");
 #endif
+        }
+
+        /// <inheritdoc/>
+        public void RemoveInheritance(InheritanceItem inheritanceItem)
+        {
+            lock (_lockObj)
+            {
+#if DEBUG
+                //Log($"kind = {_kind}");
+                //Log($"subItem = {subItem}; superName = {inheritanceItem.SuperName}");
+                //Log($"inheritanceItem = {inheritanceItem}");
+                //Log($"isPrimary = {isPrimary}");
+#endif
+                var indexedInheritanceItem = inheritanceItem.GetIndexed(_realStorageContext.MainStorageContext);
+
+#if DEBUG
+                //Log($"indexedInheritanceItem = {indexedInheritanceItem}");
+#endif
+
+                var subName = inheritanceItem.SubName;
+                var superName = inheritanceItem.SuperName;
+
+                if (subName.IsEmpty || superName.IsEmpty)
+                {
+                    return;
+                }
+
+                var subNameKey = indexedInheritanceItem.SubName.NameKey;
+                var superNameKey = indexedInheritanceItem.SuperName.NameKey;
+
+#if DEBUG
+                //Log($"subNameKey = {subNameKey}");
+                //Log($"superNameKey = {superNameKey}");
+#endif
+
+                if (_nonIndexedInfo.ContainsKey(subName))
+                {
+                    var dict = _nonIndexedInfo[subName];
+                    
+
+                    if(dict.ContainsKey(superName))
+                    {
+                        var indexedDict = _indexedInfo[subNameKey];
+
+                        var targetList = dict[superName];
+
+                        targetList.Remove(inheritanceItem);
+
+                        var targetIndexedList = indexedDict[superNameKey];
+
+                        targetIndexedList.Remove(indexedInheritanceItem);
+
+                        NRemoveIngeritanceFact(inheritanceItem);
+                    }
+                }
+            }
+        }
+
+        private void NRemoveIngeritanceFact(InheritanceItem inheritanceItem)
+        {
+            lock (_factsIdRegistryLockObj)
+            {
+                if (_factsIdRegistry.ContainsKey(inheritanceItem))
+                {
+                    var factId = _factsIdRegistry[inheritanceItem];
+
+                    _realStorageContext.LogicalStorage.RemoveById(factId);
+
+                    _factsIdRegistry.Remove(inheritanceItem);
+                }
+            }
         }
 
         private RuleInstance CreateInheritanceFact(InheritanceItem inheritanceItem)

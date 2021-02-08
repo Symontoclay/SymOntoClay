@@ -72,7 +72,7 @@ namespace TestSandbox
             //TstEnvironmentVariables();
             //TstCLINewHandler();
             //TstCLIRunHandler();
-            TstLogicalDatabase();
+            //TstLogicalDatabase();
             //TstProcessInfoChildren();
             //TstWaitIProcessInfo();
             //TstKindOfParametersSсaffolder();

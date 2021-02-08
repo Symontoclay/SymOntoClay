@@ -44,5 +44,8 @@ namespace SymOntoClay.Core
         void RemoveParentStorage(IStorage storage);
         void CollectChainOfStorages(IList<StorageUsingOptions> result, int level);
         DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get; set; }
+#if DEBUG
+        void DbgPrintFactsAndRules();
+#endif
     }
 }

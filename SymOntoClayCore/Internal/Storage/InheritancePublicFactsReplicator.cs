@@ -40,6 +40,7 @@ namespace SymOntoClay.Core.Internal.Storage
         {
             _context = context;
             _publicFactsStorage = publicFactsStorage.LogicalStorage;
+            _publicInheritanceStorage = publicFactsStorage.InheritanceStorage;
             _inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
             _resolverOptions = new ResolverOptions() { AddTopType = false };
         }
@@ -47,15 +48,18 @@ namespace SymOntoClay.Core.Internal.Storage
         private readonly object _lockObj = new object();
         private readonly IMainStorageContext _context;
         private readonly ILogicalStorage _publicFactsStorage;
+        private readonly IInheritanceStorage _publicInheritanceStorage;
         private readonly InheritanceResolver _inheritanceResolver;
         private readonly ResolverOptions _resolverOptions;
         private List<ulong> _foundInheritanceKeysList = new List<ulong>();
         private LocalCodeExecutionContext _localCodeExecutionContext;
         private IEntityDictionary _dictionary;
         private ILogicQueryParseAndCache _logicQueryParseAndCache;
-        private ulong _sefNameKey;
+        private ulong _selfNameKey;
+        private StrongIdentifierValue _selfName;
         private string _selfNameForFacts;
         private Dictionary<ulong, string> _factsIdDict = new Dictionary<ulong, string>();
+        private Dictionary<ulong, InheritanceItem> _inheritanceItemsDict = new Dictionary<ulong, InheritanceItem>();
 
         /// <inheritdoc/>
         public void ProcessChangeInheritance(StrongIdentifierValue subName, StrongIdentifierValue superName)
@@ -63,8 +67,8 @@ namespace SymOntoClay.Core.Internal.Storage
             lock(_lockObj)
             {
 #if DEBUG
-                Log($"subName = {subName}");
-                Log($"superName = {superName}");
+                //Log($"subName = {subName}");
+                //Log($"superName = {superName}");
 #endif
 
                 if (_foundInheritanceKeysList.Any())
@@ -77,13 +81,13 @@ namespace SymOntoClay.Core.Internal.Storage
                     //Log($"superNameKey = {superNameKey}");
 #endif
 
-                    if(subNameKey != _sefNameKey && !_foundInheritanceKeysList.Contains(subNameKey))
+                    if(subNameKey != _selfNameKey && !_foundInheritanceKeysList.Contains(subNameKey))
                     {
                         Recalculate();
                         return;
                     }
 
-                    if (superNameKey != _sefNameKey && !_foundInheritanceKeysList.Contains(superNameKey))
+                    if (superNameKey != _selfNameKey && !_foundInheritanceKeysList.Contains(superNameKey))
                     {
                         Recalculate();
                         return;
@@ -105,7 +109,8 @@ namespace SymOntoClay.Core.Internal.Storage
 
             if(_localCodeExecutionContext == null)
             {
-                _sefNameKey = _context.CommonNamesStorage.IndexedSelfName.NameKey;
+                _selfNameKey = _context.CommonNamesStorage.IndexedSelfName.NameKey;
+                _selfName = _context.CommonNamesStorage.SelfName;
                 _selfNameForFacts = _context.CommonNamesStorage.SelfName.NameValue;
                 _dictionary = _context.Dictionary;
                 _logicQueryParseAndCache = _context.LogicQueryParseAndCache;
@@ -117,14 +122,14 @@ namespace SymOntoClay.Core.Internal.Storage
             }
 
 #if DEBUG
-            //Log($"_sefNameKey = {_sefNameKey}");
+            //Log($"_selfNameKey = {_selfNameKey}");
             //Log($"_selfNameForFacts = {_selfNameForFacts}");
 #endif
 
-            var weightedInheritanceItemsList = _inheritanceResolver.GetWeightedInheritanceItems(_sefNameKey, _localCodeExecutionContext, _resolverOptions);
+            var weightedInheritanceItemsList = _inheritanceResolver.GetWeightedInheritanceItems(_selfNameKey, _localCodeExecutionContext, _resolverOptions);
 
 #if DEBUG
-            //Log($"weightedInheritanceItemsList = {weightedInheritanceItemsList.WriteListToString()}");
+            //Log($"weightedInheritanceItemsList = {weightedInheritanceItemsList.WriteListToString()}; _context.Id = {_context.Id}");
 #endif
 
             if(!weightedInheritanceItemsList.Any())
@@ -132,6 +137,8 @@ namespace SymOntoClay.Core.Internal.Storage
                 _foundInheritanceKeysList.Clear();
                 return;
             }
+
+            var inheritanceItemsDict = weightedInheritanceItemsList.ToDictionary(p => p.SuperNameKey, p => p.OriginalIndexedItem.OriginalInheritanceItem);
 
             var idsList = weightedInheritanceItemsList.Select(p => p.SuperNameKey).Distinct().ToList();
 
@@ -162,7 +169,7 @@ namespace SymOntoClay.Core.Internal.Storage
                     var factStr = $"{{: >:{{ {name}({_selfNameForFacts}) }} :}}";
 
 #if DEBUG
-                    Log($"factStr = {factStr}");
+                    //Log($"factStr = {factStr}");
 #endif
 
                     var fact = _logicQueryParseAndCache.GetLogicRuleOrFact(factStr);
@@ -174,6 +181,26 @@ namespace SymOntoClay.Core.Internal.Storage
                     _publicFactsStorage.Append(fact);
 
                     _factsIdDict[id] = fact.Name.NameValue;
+
+                    var initialAddedInheritanceItem = inheritanceItemsDict[id];
+
+#if DEBUG
+                    //Log($"initialAddedInheritanceItem = {initialAddedInheritanceItem}");
+#endif
+
+                    var addedInheritanceItem = new InheritanceItem();
+
+                    addedInheritanceItem.SuperName = initialAddedInheritanceItem.SuperName;
+                    addedInheritanceItem.SubName = _selfName;
+                    addedInheritanceItem.Rank = new LogicalValue(1);
+
+#if DEBUG
+                    //Log($"addedInheritanceItem = {addedInheritanceItem}");
+#endif
+
+                    _inheritanceItemsDict[id] = addedInheritanceItem;
+
+                    _publicInheritanceStorage.SetInheritance(addedInheritanceItem);
                 }
             }
 
@@ -189,6 +216,9 @@ namespace SymOntoClay.Core.Internal.Storage
                 {
                     _publicFactsStorage.RemoveById(_factsIdDict[id]);
                     _factsIdDict.Remove(id);
+
+                    _publicInheritanceStorage.RemoveInheritance(_inheritanceItemsDict[id]);
+                    _inheritanceItemsDict.Remove(id);
                 }
             }
 

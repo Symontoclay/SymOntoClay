@@ -190,11 +190,14 @@ namespace SymOntoClay.Core.Internal.IndexedData
                     }
 
 #if DEBUG
-                    //options.Logger.Log($"additionalKeys = {JsonConvert.SerializeObject(additionalKeys, Formatting.Indented)}");
+                    //options.Logger.Log($"knownInfo.Key = {knownInfo.Key}");
+                    //options.Logger.Log($"options.EntityDictionary.GetName(knownInfo.Key) = {options.EntityDictionary.GetName(knownInfo.Key)}");
 
-                    //var tmpNamesList = additionalKeys.Select(p => options.EntityDictionary.GetName(p)).ToList();
+                    //options.Logger.Log($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1, Formatting.Indented)}");
 
-                    //options.Logger.Log($"tmpNamesList = {JsonConvert.SerializeObject(tmpNamesList, Formatting.Indented)}");
+                    //var tmpNamesList_1 = additionalKeys_1.Select(p => options.EntityDictionary.GetName(p)).ToList();
+
+                    //options.Logger.Log($"tmpNamesList_1 = {JsonConvert.SerializeObject(tmpNamesList_1, Formatting.Indented)}");
 #endif
 
                     var position = knownInfo.Position;
@@ -205,6 +208,8 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
 #if DEBUG
                         //options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
+                        //options.Logger.Log($"paramOfTargetRelation.AsKeyRef.Key = {paramOfTargetRelation.AsKeyRef.Key}");
+                        //options.Logger.Log($"options.EntityDictionary.GetName(paramOfTargetRelation.AsKeyRef.Key) = {options.EntityDictionary.GetName(paramOfTargetRelation.AsKeyRef.Key)}");
 #endif
 
                         List<ulong> additionalKeys_2 = null;
@@ -217,9 +222,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
 #if DEBUG
                         //options.Logger.Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2, Formatting.Indented)}");
 
-                        //var tmpNamesList = additionalKeys_2.Select(p => options.EntityDictionary.GetName(p)).ToList();
+                        //var tmpNamesList_2 = additionalKeys_2.Select(p => options.EntityDictionary.GetName(p)).ToList();
 
-                        //options.Logger.Log($"tmpNamesList = {JsonConvert.SerializeObject(tmpNamesList, Formatting.Indented)}");
+                        //options.Logger.Log($"tmpNamesList_2 = {JsonConvert.SerializeObject(tmpNamesList_2, Formatting.Indented)}");
 #endif
 
                         var resultOfComparison = CompareKnownInfoAndExpressionNode(knownInfo, paramOfTargetRelation, additionalKeys_1, additionalKeys_2

@@ -77,6 +77,7 @@ namespace SymOntoClay.Core.Internal.Helpers
         {
             context.CommonNamesStorage.LoadFromSourceCode();
             context.Storage.LoadFromSourceCode();
+            context.InstancesStorage.LoadFromSourceFiles();
             context.LoaderFromSourceCode.LoadFromSourceFiles();
         }
 
@@ -86,6 +87,7 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             BaseInitMainStorageContext(context, settings, settings.IsWorld ? KindOfStorage.World : KindOfStorage.Host );
 
+            context.InstancesStorage = new BaseInstancesStorageComponent(context);
             context.LoaderFromSourceCode = new BaseLoaderFromSourceCode(context);
 
             return context;

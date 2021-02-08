@@ -60,6 +60,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var result = new LogicalSearchResult();
 
+#if DEBUG
+            //var tmpStoragesList = GetStoragesList(options.LocalCodeExecutionContext.Storage);
+
+            //Log($"tmpStoragesList.Count = {tmpStoragesList.Count}");
+            //foreach(var tmpStorage in tmpStoragesList)
+            //{
+            //    Log($"tmpStorage.Storage = {tmpStorage.Storage}");
+            //    tmpStorage.Storage.DbgPrintFactsAndRules();
+            //}
+#endif
+
             var dataSource = new ConsolidatedDataSource(GetStoragesList(options.LocalCodeExecutionContext.Storage));
 
             var queryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();

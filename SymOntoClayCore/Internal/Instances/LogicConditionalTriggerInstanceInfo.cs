@@ -117,7 +117,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _usedKeysList = searchResult.UsedKeysList;
 
 #if DEBUG
-            Log($"_isOn = {_isOn}");
+            //Log($"_isOn = {_isOn}");
 #endif
 
             if (_isOn)
@@ -143,7 +143,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Log($"_isOn (after) = {_isOn}");
+            //Log($"_isOn (after) = {_isOn}");
 #endif
         }
 

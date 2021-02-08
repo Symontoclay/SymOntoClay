@@ -50,8 +50,7 @@ namespace SymOntoClay.Core.Internal
         }
 
         public CodeExecutorComponent CodeExecutor { get; set; }
-        public TriggerExecutorComponent TriggerExecutor { get; set; }      
-        public InstancesStorageComponent InstancesStorage { get; set; }
+        public TriggerExecutorComponent TriggerExecutor { get; set; }
         public StatesStorageComponent StatesStorage { get; set; }       
         public LogicalEngineComponent LogicalEngine { get; set; }
         public InheritanceEngineComponent InheritanceEngine { get; set; }
@@ -63,8 +62,7 @@ namespace SymOntoClay.Core.Internal
         ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;
         ITriggerExecutorComponent IEngineContext.TriggerExecutor => TriggerExecutor;     
         ILogicalEngine IEngineContext.LogicalEngine => LogicalEngine;
-        IInheritanceEngine IEngineContext.InheritanceEngine => InheritanceEngine;     
-        IInstancesStorageComponent IEngineContext.InstancesStorage => InstancesStorage;
+        IInheritanceEngine IEngineContext.InheritanceEngine => InheritanceEngine;        
         IActivePeriodicObjectContext IEngineContext.ActivePeriodicObjectContext => ActivePeriodicObjectContext;
     }
 }

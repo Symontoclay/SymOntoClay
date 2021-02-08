@@ -30,13 +30,14 @@ using System.Text;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Core.Internal.Instances;
 
 namespace SymOntoClay.Core.Internal
 {
     public interface IMainStorageContext: IBaseCoreContext
     {
         string Id { get; }
-        string AppFile { get; }        
+        string AppFile { get; }
         
         IStorageComponent Storage { get; }
         IParser Parser { get; }
@@ -45,5 +46,6 @@ namespace SymOntoClay.Core.Internal
         ICommonNamesStorage CommonNamesStorage { get; }
         ILoaderFromSourceCode LoaderFromSourceCode { get; }
         ILogicQueryParseAndCache LogicQueryParseAndCache { get; }
+        IInstancesStorageComponent InstancesStorage { get; }
     }
 }

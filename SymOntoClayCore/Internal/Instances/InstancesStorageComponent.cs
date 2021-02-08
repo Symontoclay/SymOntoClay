@@ -33,10 +33,10 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class InstancesStorageComponent : BaseComponent, IInstancesStorageComponent
+    public class InstancesStorageComponent: BaseInstancesStorageComponent
     {
         public InstancesStorageComponent(IEngineContext context)
-            : base(context.Logger)
+            : base(context)
         {
             _context = context;
         }
@@ -51,7 +51,8 @@ namespace SymOntoClay.Core.Internal.Instances
         private List<IProcessInfo> _processesInfoList;
         private Dictionary<int, IProcessInfo> _processesInfoByDevicesDict = new Dictionary<int, IProcessInfo>();
 
-        public void LoadFromSourceFiles()
+        /// <inheritdoc/>
+        public override void LoadFromSourceFiles()
         {
 #if DEBUG
             //Log("Begin");
@@ -75,27 +76,11 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public void ActivateMainEntity()
+        public override void ActivateMainEntity()
         {
             var globalStorage = _context.Storage.GlobalStorage;
 
-            var mainEntity = globalStorage.MetadataStorage.MainCodeEntity;
-
-#if DEBUG
-            //Log($"mainEntity = {mainEntity}");
-#endif
-
-            if (mainEntity.Name.KindOfName == KindOfName.Entity)
-            {
-                if(mainEntity.Name.NameValue != _context.Id)
-                {
-                    throw new Exception("Id of main entity is invalid");
-                }
-            }
-            else
-            {
-                mainEntity = CreateAndSaveEntity(mainEntity);
-            }
+            var mainEntity = GetOrCreateMainEntity();
 
 #if DEBUG
             //Log($"NEXT mainEntity = {mainEntity}");
@@ -130,45 +115,8 @@ namespace SymOntoClay.Core.Internal.Instances
             instanceInfo.Init();
         }
 
-        private CodeEntity CreateAndSaveEntity(CodeEntity superCodeEntity)
-        {
-            var result = new CodeEntity();
-            result.Kind = KindOfCodeEntity.Instance;
-
-            var newName = _context.CommonNamesStorage.SelfName;
-            result.Name = newName;
-
-#if DEBUG
-            //Log($"newName = {newName}");
-#endif
-
-            result.Holder = _context.CommonNamesStorage.DefaultHolder;
-
-            var inheritanceItem = new InheritanceItem()
-            {
-                IsSystemDefined = true
-            };
-
-            inheritanceItem.SubName = newName;
-            inheritanceItem.SuperName = superCodeEntity.Name;
-            inheritanceItem.Rank = new LogicalValue(1.0F);
-
-            result.InheritanceItems.Add(inheritanceItem);
-
-#if DEBUG
-            //Log($"result = {result}");
-#endif
-
-            var globalStorage = _context.Storage.GlobalStorage;
-
-            globalStorage.MetadataStorage.Append(result);
-            globalStorage.InheritanceStorage.SetInheritance(inheritanceItem);
-
-            return result;
-        }
-
         /// <inheritdoc/>
-        public void AppendProcessInfo(IProcessInfo processInfo)
+        public override void AppendProcessInfo(IProcessInfo processInfo)
         {
             lock(_processLockObj)
             {
@@ -181,7 +129,7 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public void AppendAndTryStartProcessInfo(IProcessInfo processInfo)
+        public override void AppendAndTryStartProcessInfo(IProcessInfo processInfo)
         {
             if(processInfo.Devices.IsNullOrEmpty())
             {
@@ -332,7 +280,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
 #if DEBUG
         /// <inheritdoc/>
-        public void PrintProcessesList()
+        public override void PrintProcessesList()
         {
             List<IProcessInfo> tmpPprocessesInfoList;
 

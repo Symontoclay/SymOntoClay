@@ -3195,6 +3195,18 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceResultItem`1.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.ActivateMainEntity">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.AppendProcessInfo(SymOntoClay.Core.IProcessInfo)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.AppendAndTryStartProcessInfo(SymOntoClay.Core.IProcessInfo)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.PrintProcessesList">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.InstanceInfo.OnDisposed">
             <inheritdoc/>
         </member>
@@ -3223,6 +3235,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.InstanceInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.LoadFromSourceFiles">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.ActivateMainEntity">
@@ -3639,9 +3654,6 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Parser.Parse(System.Collections.Generic.List{SymOntoClay.Core.Internal.Parsing.ParsedFileInfo},SymOntoClay.Core.Internal.DefaultSettingsOfCodeEntity)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Serialization.ActiveLoaderFromSourceCode.LoadFromSourceFiles">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.Read">
             <inheritdoc/>
         </member>
@@ -3687,6 +3699,9 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStorage.InheritanceStorage.SetInheritance(SymOntoClay.Core.Internal.CodeModel.InheritanceItem,System.Boolean)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStorage.InheritanceStorage.RemoveInheritance(SymOntoClay.Core.Internal.CodeModel.InheritanceItem)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStorage.InheritanceStorage.GetItemsDirectly(System.UInt64)">
             <inheritdoc/>
         </member>
@@ -3721,6 +3736,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(System.UInt64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.DbgPrintFactsAndRules">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.MetadataStorage.MetadataStorage.Kind">
@@ -3793,6 +3811,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.DefaultSettingsOfCodeEntity">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.DbgPrintFactsAndRules">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.ToString">

@@ -145,6 +145,11 @@ namespace SymOntoClay.Core.Internal.Storage
             //Log($"level = {level}");
 #endif
 
+            //if(result.Any(p => p.Storage == this))
+            //{
+            //    return;
+            //}
+
             level++;
 
             var item = new StorageUsingOptions()
@@ -175,6 +180,14 @@ namespace SymOntoClay.Core.Internal.Storage
         /// <inheritdoc/>
         public DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get; set; }
 
+#if DEBUG
+        /// <inheritdoc/>
+        public void DbgPrintFactsAndRules()
+        {
+            LogicalStorage.DbgPrintFactsAndRules();
+        }
+#endif
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -193,7 +206,9 @@ namespace SymOntoClay.Core.Internal.Storage
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;
             var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {_kind}");
+            sb.AppendLine($"{spaces}Owner = {_realStorageContext.MainStorageContext.Id}");
             return sb.ToString();
         }
 
@@ -215,7 +230,9 @@ namespace SymOntoClay.Core.Internal.Storage
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;
             var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {_kind}");
+            sb.AppendLine($"{spaces}Owner = {_realStorageContext.MainStorageContext.Id}");
             return sb.ToString();
         }
 
@@ -237,7 +254,9 @@ namespace SymOntoClay.Core.Internal.Storage
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + 4;
             var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {_kind}");
+            sb.AppendLine($"{spaces}Owner = {_realStorageContext.MainStorageContext.Id}");
             return sb.ToString();
         }
     }

@@ -341,5 +341,26 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 return _commonPersistIndexedLogicalData.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(key);
             }
         }
+
+#if DEBUG
+        /// <inheritdoc/>
+        public void DbgPrintFactsAndRules()
+        {
+            lock (_lockObj)
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine($"Begin {_kind} of {_mainStorageContext.Id}");
+
+                foreach (var ruleInstance in _ruleInstancesList)
+                {
+                    sb.AppendLine(DebugHelperForRuleInstance.ToString(ruleInstance));
+                }
+
+                sb.AppendLine($"End {_kind} of {_mainStorageContext.Id}");
+
+                Log(sb.ToString());
+            }
+        }
+#endif
     }
 }

@@ -49,7 +49,7 @@ namespace SymOntoClay.Core.Internal.Dict
                 return 0ul;
             }
 
-            name = name.ToLower().Trim();
+            name = name.ToLower().Replace("`", string.Empty).Trim();
 
             lock (_lockObj)
             {

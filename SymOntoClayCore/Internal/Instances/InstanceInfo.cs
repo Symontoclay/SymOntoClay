@@ -163,9 +163,6 @@ namespace SymOntoClay.Core.Internal.Instances
             sb.PrintObjProp(n, nameof(Name), Name);
             sb.AppendLine($"{spaces}{nameof(_instanceState)} = {_instanceState}");
 
-            //sb.AppendLine($"{spaces}{nameof(AddSelf)} = {AddSelf}");
-            //sb.AppendLine($"{spaces}{nameof(JustDistinct)} = {JustDistinct}");
-
             return sb.ToString();
         }
 
@@ -190,10 +187,6 @@ namespace SymOntoClay.Core.Internal.Instances
             sb.PrintShortObjProp(n, nameof(Name), Name);
             sb.AppendLine($"{spaces}{nameof(_instanceState)} = {_instanceState}");
 
-            //sb.AppendLine($"{spaces}{nameof(IsDeepMode)} = {IsDeepMode}");
-            //sb.AppendLine($"{spaces}{nameof(AddSelf)} = {AddSelf}");
-            //sb.AppendLine($"{spaces}{nameof(JustDistinct)} = {JustDistinct}");
-
             return sb.ToString();
         }
 
@@ -217,10 +210,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
             sb.PrintBriefObjProp(n, nameof(Name), Name);
             sb.AppendLine($"{spaces}{nameof(_instanceState)} = {_instanceState}");
-
-            //sb.AppendLine($"{spaces}{nameof(IsDeepMode)} = {IsDeepMode}");
-            //sb.AppendLine($"{spaces}{nameof(AddSelf)} = {AddSelf}");
-            //sb.AppendLine($"{spaces}{nameof(JustDistinct)} = {JustDistinct}");
 
             return sb.ToString();
         }

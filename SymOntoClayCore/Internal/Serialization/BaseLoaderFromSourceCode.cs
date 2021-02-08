@@ -96,6 +96,10 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             SaveItems(parsedCodeEntitiesList);
 
+            var instancesStorage = _context.InstancesStorage;
+
+            instancesStorage.ActivateMainEntity();
+
 #if IMAGINE_WORKING
             //Log("End");
 #else

@@ -41,8 +41,7 @@ namespace SymOntoClay.Core.Internal
         ICodeExecutorComponent CodeExecutor { get; }
         ITriggerExecutorComponent TriggerExecutor { get; }
         ILogicalEngine LogicalEngine { get; }
-        IInheritanceEngine InheritanceEngine { get; }
-        IInstancesStorageComponent InstancesStorage { get; }
+        IInheritanceEngine InheritanceEngine { get; }        
         IActivePeriodicObjectContext ActivePeriodicObjectContext { get; }
         IHostSupport HostSupport { get; }
         IHostListener HostListener { get; }

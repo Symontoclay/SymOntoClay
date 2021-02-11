@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -63,14 +64,7 @@ namespace SymOntoClay.UnityAsset.Core
         private string _idForFacts;
         private void CalculateIdForFacts()
         {
-            if (_id.StartsWith("#`"))
-            {
-                _idForFacts = _id;
-            }
-            else
-            {
-                _idForFacts = $"{_id.Insert(1, "`")}`";
-            }
+            _idForFacts = NameHelper.NormalizeNameStr(_id);
         }
         #endregion
 

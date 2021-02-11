@@ -23,6 +23,7 @@ SOFTWARE.*/
 using Newtonsoft.Json;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -111,7 +112,7 @@ namespace SymOntoClay.Core.Internal.Storage
             {
                 _selfNameKey = _context.CommonNamesStorage.IndexedSelfName.NameKey;
                 _selfName = _context.CommonNamesStorage.SelfName;
-                _selfNameForFacts = _context.CommonNamesStorage.SelfName.NameValue;
+                _selfNameForFacts = NameHelper.NormalizeNameStr(_context.CommonNamesStorage.SelfName.NameValue);
                 _dictionary = _context.Dictionary;
                 _logicQueryParseAndCache = _context.LogicQueryParseAndCache;
 

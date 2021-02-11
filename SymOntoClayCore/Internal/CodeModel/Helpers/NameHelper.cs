@@ -35,6 +35,26 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             return $"#{Guid.NewGuid():D}";
         }
 
+        public static string NormalizeNameStr(string source)
+        {
+            if(string.IsNullOrWhiteSpace(source))
+            {
+                return string.Empty;
+            }
+
+            if(source.StartsWith("#"))
+            {
+                if (source.StartsWith("#`"))
+                {
+                    return source;
+                }
+
+                return $"{source.Insert(1, "`")}`";
+            }
+
+            return source;
+        }
+
         public static StrongIdentifierValue CreateRuleOrFactName(IEntityDictionary dictionary)
         {
             return CreateEntityName(dictionary);

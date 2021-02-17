@@ -13,6 +13,9 @@
     <DocumentationFile>SymOntoClay.Core.xml</DocumentationFile>
     <DefineConstants>TRACE;IMAGINE_WORKING</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE;IMAGINE_WORKING</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
   </ItemGroup>

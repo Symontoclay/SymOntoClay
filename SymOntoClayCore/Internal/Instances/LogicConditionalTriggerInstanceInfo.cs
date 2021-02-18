@@ -58,6 +58,11 @@ namespace SymOntoClay.Core.Internal.Instances
             _localCodeExecutionContext.Holder = parent.IndexedName;
 
             _storage.LogicalStorage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys;
+
+            lock (_lockObj)
+            {
+                DoSearch();
+            }                
         }
 
         private readonly LogicalSearchResolver _searcher;

@@ -53,7 +53,7 @@ namespace SymOntoClay.CLI
             //_logger.Info($"targetFiles = {targetFiles}");
 #endif
 
-            //var invokingInMainThread = TstInvokerInMainThreadFactory.Create();
+            var invokingInMainThread = CLIInvokerInMainThreadFactory.Create();
 
             var instance = WorldFactory.WorldInstance;
             world = instance;
@@ -69,9 +69,9 @@ namespace SymOntoClay.CLI
 
             settings.HostFile = targetFiles.WorldFile;
 
-            //settings.InvokerInMainThread = invokingInMainThread;
+            settings.InvokerInMainThread = invokingInMainThread;
 
-            var logDir = Path.Combine(Environment.GetEnvironmentVariable("TMP"), "SymOntoClay", "CLI");
+            var logDir = Path.Combine(Environment.GetEnvironmentVariable("APPDATA"), "SymOntoClay", "CLI", "NpcLogs");
 
             settings.Logging = new LoggingSettings()
             {
@@ -90,7 +90,7 @@ namespace SymOntoClay.CLI
             var platformListener = this;
 
             var npcSettings = new HumanoidNPCSettings();
-            npcSettings.Id = "#`020ED339-6313-459A-900D-92F809CEBDC5`";
+            npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
             //npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
             npcSettings.LogicFile = targetFiles.LogicFile;
             npcSettings.HostListener = platformListener;

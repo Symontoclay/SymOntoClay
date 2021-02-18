@@ -32,7 +32,7 @@ namespace SymOntoClay.CLI
     public static class RunCommandFilesSearcher
     {
 #if DEBUG
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static RunCommandFiles Run(CLICommand command)
@@ -242,7 +242,7 @@ namespace SymOntoClay.CLI
             //_logger.Info($"result.SharedModulesDir = {result.SharedModulesDir}");
 #endif
 
-            result.ImagesRootDir = Path.Combine(baseDir, "Images");
+            result.ImagesRootDir = Path.Combine(Environment.GetEnvironmentVariable("APPDATA"), "SymOntoClay", "CLI", "Images");
 
 #if DEBUG
             //_logger.Info($"result.ImagesRootDir = {result.ImagesRootDir}");

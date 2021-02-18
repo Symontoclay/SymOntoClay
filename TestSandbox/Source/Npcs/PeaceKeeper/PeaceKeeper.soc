@@ -1,6 +1,6 @@
 ﻿app PeaceKeeper is [0.5] exampleClass
 {
-    //{: barrel(#a) :}
+    {: barrel(#a) :}
 	//{: see(I, #a) :}
 
     on Init => {
@@ -12,6 +12,7 @@
 		 //select {: son(?x, ?y) :} >> @>log;
 
 		 //insert {: >: { bird (#1234) } :};
+		 insert {: see(I, #a) :};
 
 		 //exampleClass is not human >> @>log;
 

@@ -75,9 +75,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");
-            //Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
+            Log($"Result = {Result}");
+            Log($"_state = {_state}");
 #endif
 
             if(_terminatingTokenKindList.Contains(_currToken.TokenKind))
@@ -145,8 +145,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.WaitForPredicateParameter:
                     switch (_currToken.TokenKind)
                     {
-                        case TokenKind.Entity:
-                        case TokenKind.Word:
+                        case TokenKind.Entity:                        
                         case TokenKind.LogicalVar:
                         case TokenKind.QuestionVar:
                         {
@@ -156,10 +155,76 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 parser.Run();
 
 #if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
+                                Log($"parser.Result = {parser.Result}");
 #endif
 
                                 _lastLogicalQueryNode.ParamsList.Add(parser.Result);
+
+                                _state = State.GotPredicateParameter;
+                            }
+                            break;
+
+                        case TokenKind.Word:
+                            {
+                                switch(_currToken.KeyWordTokenKind)
+                                {
+                                    case KeyWordTokenKind.Null:
+                                        {
+                                            _context.Recovery(_currToken);
+
+                                            var parser = new NullParser(_context);
+                                            parser.Run();
+
+#if DEBUG
+                                            Log($"parser.Result = {parser.Result}");
+#endif
+
+                                            var node = new LogicalQueryNode();
+                                            node.Kind = KindOfLogicalQueryNode.Value;
+                                            node.Value = parser.Result;
+
+                                            _lastLogicalQueryNode.ParamsList.Add(node);
+
+                                            _state = State.GotPredicateParameter;
+                                        }
+                                        break;
+
+                                    default:
+                                        {
+                                            _context.Recovery(_currToken);
+
+                                            var parser = new LogicalExpressionParser(_context, new List<TokenKind> { TokenKind.Comma, TokenKind.CloseRoundBracket });
+                                            parser.Run();
+
+#if DEBUG
+                                            Log($"parser.Result = {parser.Result}");
+#endif
+
+                                            _lastLogicalQueryNode.ParamsList.Add(parser.Result);
+
+                                            _state = State.GotPredicateParameter;
+                                        }
+                                        break;
+                                }
+                            }
+                            break;
+
+
+                        case TokenKind.Number:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var parser = new NumberParser(_context);
+                                parser.Run();
+
+#if DEBUG
+                                Log($"parser.Result = {parser.Result}");
+#endif
+                                var node = new LogicalQueryNode();
+                                node.Kind = KindOfLogicalQueryNode.Value;
+                                node.Value = parser.Result;
+
+                                _lastLogicalQueryNode.ParamsList.Add(node);
 
                                 _state = State.GotPredicateParameter;
                             }
@@ -220,13 +285,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var value = NameHelper.CreateName(_currToken.Content, _context.Dictionary);
 
 #if DEBUG
-            //Log($"value = {value}");
+            Log($"value = {value}");
+
+            if(_currToken.Content == "NULL")
+            {
+                throw new NotImplementedException();
+            }
 #endif
 
             var nextToken = _context.GetToken();
 
 #if DEBUG
-            //Log($"nextToken = {nextToken}");
+            Log($"nextToken = {nextToken}");
 #endif
 
             switch (value.KindOfName)

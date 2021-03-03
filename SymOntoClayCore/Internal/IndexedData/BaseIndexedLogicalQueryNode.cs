@@ -50,6 +50,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
         public virtual QuestionVarIndexedLogicalQueryNode AsQuestionVar => null;
 
+        public virtual bool IsValue => false;
+        public virtual ValueIndexedLogicalQueryNode AsValue => null;
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {

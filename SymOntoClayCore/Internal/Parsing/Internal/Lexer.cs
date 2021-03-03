@@ -806,6 +806,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Insert;
                             break;
                         }
+
+                        if (string.Compare(content, "null", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Null;
+                            break;
+                        }
                     }
                     break;
 

@@ -1,10 +1,11 @@
 ﻿app PeaceKeeper is [0.5] exampleClass
 {
-    {: barrel(#a) :}
+    //{: barrel(#a) :}
 	//{: see(I, #a) :}
 
     on Init => {
 	     'Begin' >> @>log;
+		 NULL >> @>log;
 
 		 //use @@self is linux;
 
@@ -12,7 +13,7 @@
 		 //select {: son(?x, ?y) :} >> @>log;
 
 		 //insert {: >: { bird (#1234) } :};
-		 insert {: see(I, #a) :};
+		 //insert {: see(I, #a) :};
 
 		 //exampleClass is not human >> @>log;
 
@@ -21,9 +22,9 @@
 		 "End" >> @>log;
 	}
 
-	on {: see(I, barrel) :} => {
-	     "L" >> @>log;
-	}
+	//on {: see(I, barrel) :} => {
+	//     "L" >> @>log;
+	//}
 
 	//on {: see(I, #`gun 1`) :} => {
 	//     "D" >> @>log;

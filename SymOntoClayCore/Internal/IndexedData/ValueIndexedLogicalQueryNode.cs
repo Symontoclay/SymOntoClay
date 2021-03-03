@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,10 +34,18 @@ namespace SymOntoClay.Core.Internal.IndexedData
         /// <inheritdoc/>
         public override KindOfLogicalQueryNode Kind => KindOfLogicalQueryNode.Value;
 
+        public IndexedValue Value { get; set; }
+
+        /// <inheritdoc/>
+        public override bool IsValue => true;
+
+        /// <inheritdoc/>
+        public override ValueIndexedLogicalQueryNode AsValue => this;
+
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode()
         {
-            throw new NotImplementedException();
+            return base.CalculateLongHashCode() ^ Value.GetLongConditionalHashCode();
         }
 
         /// <inheritdoc/>
@@ -46,9 +55,44 @@ namespace SymOntoClay.Core.Internal.IndexedData
         }
 
         /// <inheritdoc/>
+        protected override string PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.PrintObjProp(n, nameof(Value), Value);
+
+            sb.Append(base.PropertiesToString(n));
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToShortString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.PrintShortObjProp(n, nameof(Value), Value);
+
+            sb.Append(base.PropertiesToShortString(n));
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToBriefString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.PrintBriefObjProp(n, nameof(Value), Value);
+
+            sb.Append(base.PropertiesToBriefString(n));
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
         public override void CalculateUsedKeys(List<ulong> usedKeysList)
         {
-            throw new NotImplementedException();
         }
     }
 }

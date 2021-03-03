@@ -52,13 +52,55 @@ namespace TestSandbox.LogicalDatabase
         {
             _logger.Log("Begin");
 
+            RunCase5();
+            //RunCase4();
+            //RunCase3();
             //RunGettingLongHashCode();
             //RunGettingInheritanceInformation();
-            RunCase2();
+            //RunCase2();
             //RunCase1();
             //ParseFacts();
 
             _logger.Log("End");
+        }
+
+        //Binding
+        private void RunCase5()
+        {
+            var queryStr = string.Empty;
+
+            queryStr = "{: enemy(#q) :}";
+            ParseQueryString(queryStr);
+
+            queryStr = "{: see(I, #q) :}";
+            ParseQueryString(queryStr);
+
+            queryStr = "{: see(I, ?x) & enemy(?x) :}";
+            Search(queryStr);
+        }
+
+        //Named Groups
+        private void RunCase4()
+        {
+            var queryStr = string.Empty;
+
+            queryStr = "{: >: { $x = distance(I, enemy) & value($x, 30) } :}";
+            ParseQueryString(queryStr);
+        }
+
+        //Values
+        private void RunCase3()
+        {
+            var queryStr = string.Empty;
+
+            //queryStr = "{: weight(#Tom, 70.2) :}";
+            //ParseQueryString(queryStr);
+
+            queryStr = "{: weight(#Tom, NULL) :}";
+            ParseQueryString(queryStr);
+
+            queryStr = "{: >: { weight(#Tom, ?x) } :}";
+            Search(queryStr);
         }
 
         private void RunGettingLongHashCode()

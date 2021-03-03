@@ -875,6 +875,9 @@ namespace SymOntoClay.Core.Internal.Convertors
                 case KindOfLogicalQueryNode.QuestionVar:
                     return ConvertQuestionVarIndexedLogicalQueryNode(source, rulePart, ruleInstance, mainStorageContext, convertingContext, contextOfConvertingExpressionNode);
 
+                case KindOfLogicalQueryNode.Value:
+                    return ConvertValueIndexedLogicalQueryNode(source, rulePart, ruleInstance, mainStorageContext, convertingContext, contextOfConvertingExpressionNode);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, null);
             }
@@ -1163,17 +1166,21 @@ namespace SymOntoClay.Core.Internal.Convertors
                         }
                         break;
 
-                    //case KindOfLogicalQueryNode.Value:
-                    //    {
-                    //        var originParam = param.AsValue;
-                    //        var knownInfo = new QueryExecutingCardAboutKnownInfo();
-                    //        knownInfo.Kind = kindOfParam;
-                    //        knownInfo.Expression = param;
-                    //        knownInfo.Position = i;
-                    //        knownInfo.Value = originParam.Value;
-                    //        knownInfoList.Add(knownInfo);
-                    //    }
-                    //    break;
+                    case KindOfLogicalQueryNode.Value:
+                        {
+                            var originParam = param;
+                            var knownInfo = new QueryExecutingCardAboutKnownInfo();
+                            knownInfo.Kind = kindOfParam;
+                            knownInfo.Expression = resultParam;
+                            knownInfo.Position = i;
+                            knownInfo.Value = originParam.Value;
+                            knownInfoList.Add(knownInfo);
+
+#if DEBUG
+                            _gbcLogger.Info($"knownInfo = {knownInfo}");
+#endif
+                        }
+                        break;
 
                     //case KindOfLogicalQueryNode.FuzzyLogicValue:
                     //    {
@@ -1278,6 +1285,39 @@ namespace SymOntoClay.Core.Internal.Convertors
             return result;
         }
 
+        private static ValueIndexedLogicalQueryNode ConvertValueIndexedLogicalQueryNode(LogicalQueryNode source, IndexedBaseRulePart rulePart, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext, ContextOfConvertingExpressionNode contextOfConvertingExpressionNode)
+        {
+#if DEBUG
+            _gbcLogger.Info($"source = {source}");
+#endif
+
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (ValueIndexedLogicalQueryNode)convertingContext[source];
+            }
+
+            var result = new ValueIndexedLogicalQueryNode();
+
+            convertingContext[source] = result;
+
+            FillBaseIndexedLogicalQueryNode(result, source, rulePart, ruleInstance, mainStorageContext, convertingContext);
+
+            result.Value = ConvertValue(source.Value, mainStorageContext, convertingContext);
+
+#if DEBUG
+            _gbcLogger.Info($"result (snapshot) = {result}");
+#endif
+
+            result.CalculateLongHashCodes();
+
+            return result;
+        }
+
         private static ConceptIndexedLogicalQueryNode ConvertConceptLogicalQueryNode(LogicalQueryNode source, IndexedBaseRulePart rulePart, IndexedRuleInstance ruleInstance, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {
 #if DEBUG
@@ -1355,6 +1395,11 @@ namespace SymOntoClay.Core.Internal.Convertors
             dest.Origin = source;
             dest.RuleInstance = ruleInstance;
             dest.RulePart = rulePart;
+
+            if(!source.VarsList.IsNullOrEmpty())
+            {
+                throw new NotImplementedException();
+            }
 
             FillAnnotationsModalitiesAndSections(source, dest, mainStorageContext, convertingContext);
         }

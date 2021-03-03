@@ -310,10 +310,10 @@ namespace SymOntoClay.Core.Internal.IndexedData
                             {
                                 usedKeysList.Add(paramOfTargetRelation.AsKeyRef.Key);
                             }
-                            else
-                            {
-                                throw new NotImplementedException();
-                            }                            
+                            //else
+                            //{
+                            //    throw new NotImplementedException();
+                            //}                            
 
                             var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
                             resultOfVarOfQueryToRelation.KeyOfVar = varItem.KeyOfVar;

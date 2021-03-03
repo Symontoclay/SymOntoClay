@@ -111,6 +111,9 @@ namespace SymOntoClay.Core.DebugHelpers
                 case KindOfLogicalQueryNode.LogicalVar:
                     return BaseKeyRefToString(expr as BaseKeyRefIndexedLogicalQueryNode, entityDictionary);
 
+                case KindOfLogicalQueryNode.Value:
+                    return ValueToString(expr.AsValue, entityDictionary);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(expr.Kind), expr.Kind, null);
             }
@@ -173,6 +176,17 @@ namespace SymOntoClay.Core.DebugHelpers
             var sb = new StringBuilder();
             sb.Append(entityDictionary.GetName(expr.Key));
             sb.Append(AnnotatedItemToString(expr));
+            return sb.ToString();
+        }
+
+        private static string ValueToString(ValueIndexedLogicalQueryNode expr, IEntityDictionary entityDictionary)
+        {
+            var sb = new StringBuilder();
+            var value = expr.Value;
+
+            sb.Append(ToString(value));
+            sb.Append(AnnotatedItemToString(expr));
+
             return sb.ToString();
         }
 

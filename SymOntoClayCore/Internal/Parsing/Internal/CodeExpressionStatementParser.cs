@@ -219,6 +219,25 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
         }
 
+        private void ProcessNullToken()
+        {
+            _context.Recovery(_currToken);
+
+            var parser = new NullParser(_context);
+            parser.Run();
+
+#if DEBUG
+            //Log($"parser.Result = {parser.Result}");
+#endif
+
+            var node = new ConstValueAstExpression();
+            node.Value = parser.Result;
+
+            var intermediateNode = new IntermediateAstNode(node);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+        }
+
         private void ProcessStringToken()
         {
             _lastIsOperator = null;
@@ -281,6 +300,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 throw new UnexpectedTokenException(_currToken);
                         }
                     }
+                    break;
+
+                case KeyWordTokenKind.Null:
+                    ProcessNullToken();
                     break;
 
                 default:

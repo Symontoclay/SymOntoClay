@@ -3138,10 +3138,25 @@
         <member name="P:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.Kind">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.IsValue">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.AsValue">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.FillExecutingCard(SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData,SymOntoClay.Core.Internal.DataResolvers.ConsolidatedDataSource,SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.CalculateUsedKeys(System.Collections.Generic.List{System.UInt64})">
@@ -3449,6 +3464,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalQueryParser.OnRun">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.NullParser.OnRun">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.NumberParser.OnEnter">

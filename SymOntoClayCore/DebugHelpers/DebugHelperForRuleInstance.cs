@@ -130,6 +130,9 @@ namespace SymOntoClay.Core.DebugHelpers
                 case KindOfLogicalQueryNode.LogicalVar:
                     return ConceptToString(expr);
 
+                case KindOfLogicalQueryNode.Value:
+                    return ValueToString(expr);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(expr.Kind), expr.Kind, null);
             }
@@ -192,6 +195,17 @@ namespace SymOntoClay.Core.DebugHelpers
             var sb = new StringBuilder();
             sb.Append(expr.Name.NameValue);
             sb.Append(AnnotatedItemToString(expr));
+            return sb.ToString();
+        }
+
+        private static string ValueToString(LogicalQueryNode expr)
+        {
+            var sb = new StringBuilder();
+            var value = expr.Value;
+
+            sb.Append(ToString(value));
+            sb.Append(AnnotatedItemToString(expr));
+
             return sb.ToString();
         }
 

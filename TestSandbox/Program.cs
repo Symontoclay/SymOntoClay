@@ -72,7 +72,7 @@ namespace TestSandbox
             //TstEnvironmentVariables();
             //TstCLINewHandler();
             //TstCLIRunHandler();
-            //TstLogicalDatabase();
+            TstLogicalDatabase();//!
             //TstProcessInfoChildren();
             //TstWaitIProcessInfo();
             //TstKindOfParametersSсaffolder();
@@ -95,7 +95,7 @@ namespace TestSandbox
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
-            TstMonoBehaviourTestingHandler();
+            //TstMonoBehaviourTestingHandler();
             //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 

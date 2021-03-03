@@ -53,7 +53,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
-
+        
         /// <inheritdoc/>
         protected override string PropertiesToShortString(uint n)
         {

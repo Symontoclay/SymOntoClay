@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
 
         private State _state = State.Init;
-        public List<AstStatement> Result { get; set; } = new List<AstStatement>();
+        public List<AstStatement> Result { get; private set; } = new List<AstStatement>();
 
         /// <inheritdoc/>
         protected override void OnRun()
@@ -83,6 +83,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 case KeyWordTokenKind.Unknown:
                                 case KeyWordTokenKind.Select:
                                 case KeyWordTokenKind.Insert:
+                                case KeyWordTokenKind.Null:
                                     ProcessExpressionStatement();
                                     break;
 

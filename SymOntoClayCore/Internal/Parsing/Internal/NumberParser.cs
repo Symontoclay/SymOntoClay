@@ -128,6 +128,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             Exit();
                             break;
 
+                        case TokenKind.CloseRoundBracket:
+                            _context.Recovery(_currToken);
+                            Exit();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -155,6 +160,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.CloseSquareBracket:
                             ProcessCloseSquareBracket();
+                            break;
+
+                        case TokenKind.CloseRoundBracket:
+                            _context.Recovery(_currToken);
+                            Exit();
                             break;
 
                         default:

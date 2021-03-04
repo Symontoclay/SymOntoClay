@@ -30,7 +30,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface ISystemHandler
     {
-        IndexedValue Call(IList<IndexedValue> paramsList, LocalCodeExecutionContext localCodeExecutionContext);
-        IndexedValue Call(IDictionary<ulong, IndexedValue> paramsDict, IndexedValue anotation, LocalCodeExecutionContext localCodeExecutionContext);
+        Value Call(IList<Value> paramsList, LocalCodeExecutionContext localCodeExecutionContext);
+        Value Call(IDictionary<ulong, Value> paramsDict, Value anotation, LocalCodeExecutionContext localCodeExecutionContext);
     }
 }

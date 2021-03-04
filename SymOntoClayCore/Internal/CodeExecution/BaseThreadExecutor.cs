@@ -460,9 +460,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private List<IndexedValue> TakePositionedParameters(int count)
+        private List<Value> TakePositionedParameters(int count)
         {
-            var result = new List<IndexedValue>();
+            var result = new List<Value>();
 
             var valueStack = _currentCodeFrame.ValuesStack;
 

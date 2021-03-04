@@ -115,6 +115,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 
             name.NameValue = text;
 
+            name.NormalizedNameValue = text.ToLower().Replace("`", string.Empty).Trim();
+
             return name;
         }
     }

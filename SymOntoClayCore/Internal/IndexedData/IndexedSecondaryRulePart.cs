@@ -28,6 +28,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
+    [Obsolete("IndexedData must be removed!", true)]
     public class IndexedSecondaryRulePart : IndexedBaseRulePart
     {
         public SecondaryRulePart OriginalSecondaryRulePart { get; set; }

@@ -53,11 +53,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public virtual IList<RuleInstance> Annotations { get; set; }
 
-        public abstract IndexedAnnotatedItem IndexedAnnotatedItem { get; }
-
-        public abstract IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext);
-        public abstract IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext);
-
         /// <summary>
         /// Clones the instance and returns cloned instance.
         /// </summary>

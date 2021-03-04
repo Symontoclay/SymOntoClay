@@ -27,6 +27,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
+    [Obsolete("IndexedData must be removed!", true)]
     public class OriginOfVarOfQueryToRelation : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public ulong KeyOfRuleInstance { get; set; }

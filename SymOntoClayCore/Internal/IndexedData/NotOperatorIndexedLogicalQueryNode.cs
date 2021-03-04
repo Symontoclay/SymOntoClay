@@ -28,6 +28,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
+    [Obsolete("IndexedData must be removed!", true)]
     public class NotOperatorIndexedLogicalQueryNode: UnaryOperatorIndexedLogicalQueryNode
     {
         /// <inheritdoc/>
@@ -35,11 +36,5 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
         /// <inheritdoc/>
         public override KindOfOperatorOfLogicalQueryNode KindOfOperator => KindOfOperatorOfLogicalQueryNode.Not;
-
-        /// <inheritdoc/>
-        public override void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

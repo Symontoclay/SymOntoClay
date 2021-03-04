@@ -42,49 +42,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public KindOfName KindOfName { get; set; } = KindOfName.Unknown;
         public string NameValue { get; set; } = string.Empty;
 
+        public string NormalizedNameValue { get; set; } = string.Empty;
+
         /// <inheritdoc/>
         public override bool IsStrongIdentifierValue => true;
 
         /// <inheritdoc/>
         public override StrongIdentifierValue AsStrongIdentifierValue => this;
-
-        public IndexedStrongIdentifierValue Indexed { get; set; }
-
-        public IndexedStrongIdentifierValue GetIndexed(IMainStorageContext mainStorageContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertStrongIdentifierValue(this, mainStorageContext);
-            }
-
-            return Indexed;
-        }
-
-        /// <inheritdoc/>
-        public override IndexedValue GetIndexedValue(IMainStorageContext mainStorageContext)
-        {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
-        {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertStrongIdentifierValue(this, mainStorageContext, convertingContext);
-            }
-
-            return Indexed;
-        }
 
         /// <inheritdoc/>
         public override object GetSystemValue()
@@ -100,7 +64,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return false;
             }
 
-            return NameValue == other.NameValue;
+            return NormalizedNameValue == other.NormalizedNameValue;
         }
 
         /// <inheritdoc/>
@@ -123,7 +87,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return NameValue.GetHashCode();
+            return NormalizedNameValue.GetHashCode();
         }
 
         /// <inheritdoc/>
@@ -163,6 +127,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             result.KindOfName = KindOfName;
             result.NameValue = NameValue;
+            result.NormalizedNameValue = NormalizedNameValue;
 
             result.AppendAnnotations(this, context);
 
@@ -187,6 +152,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(KindOfName)} = {KindOfName}");
 
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
+            sb.AppendLine($"{spaces}{nameof(NormalizedNameValue)} = {NormalizedNameValue}");
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -204,6 +170,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(KindOfName)} = {KindOfName}");
 
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
+            sb.AppendLine($"{spaces}{nameof(NormalizedNameValue)} = {NormalizedNameValue}");
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -221,6 +188,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(KindOfName)} = {KindOfName}");
 
             sb.AppendLine($"{spaces}{nameof(NameValue)} = {NameValue}");
+            sb.AppendLine($"{spaces}{nameof(NormalizedNameValue)} = {NormalizedNameValue}");
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

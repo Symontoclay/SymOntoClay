@@ -29,6 +29,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
+    [Obsolete("IndexedData must be removed!", true)]
     public abstract class BinaryOperatorIndexedLogicalQueryNode: BaseIndexedLogicalQueryNode
     {
         public BaseIndexedLogicalQueryNode Left { get; set; }

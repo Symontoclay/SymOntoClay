@@ -29,6 +29,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
+    [Obsolete("IndexedData must be removed!", true)]
     public class ValueIndexedLogicalQueryNode: BaseIndexedLogicalQueryNode
     {
         /// <inheritdoc/>
@@ -46,12 +47,6 @@ namespace SymOntoClay.Core.Internal.IndexedData
         protected override ulong CalculateLongHashCode()
         {
             return base.CalculateLongHashCode() ^ Value.GetLongConditionalHashCode();
-        }
-
-        /// <inheritdoc/>
-        public override void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
-        {
-            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>

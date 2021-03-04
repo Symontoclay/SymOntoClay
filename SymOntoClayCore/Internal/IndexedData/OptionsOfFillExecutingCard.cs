@@ -29,6 +29,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
+    [Obsolete("IndexedData must be removed!", true)]
     public class OptionsOfFillExecutingCard : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public bool EntityIdOnly { get; set; }

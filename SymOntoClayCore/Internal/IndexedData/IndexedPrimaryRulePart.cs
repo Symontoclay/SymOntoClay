@@ -31,6 +31,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
+    [Obsolete("IndexedData must be removed!", true)]
     public class IndexedPrimaryRulePart: IndexedBaseRulePart
     {
         public PrimaryRulePart OriginPrimaryRulePart { get; set; }
@@ -84,45 +85,6 @@ namespace SymOntoClay.Core.Internal.IndexedData
             }
 
             return DebugHelperForRuleInstance.ToString(OriginPrimaryRulePart);
-        }
-
-        public void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
-        {
-#if DEBUG
-            //options.Logger.Log($"Begin~~~~~~ GetHumanizeDbgString() = {GetHumanizeDbgString()}");
-#endif
-
-#if DEBUG
-            var senderIndexedRuleInstance = queryExecutingCard.SenderIndexedRuleInstance;
-#endif
-            var queryExecutingCardForExpression = new QueryExecutingCardForIndexedPersistLogicalData();
-
-#if DEBUG
-            queryExecutingCardForExpression.SenderIndexedRuleInstance = senderIndexedRuleInstance;
-            queryExecutingCardForExpression.SenderIndexedRulePart = this;
-#endif
-            Expression.FillExecutingCard(queryExecutingCardForExpression, dataSource, options);
-
-#if DEBUG
-            //options.Logger.Log($"#$%^$%^^ queryExecutingCardForExpression = {queryExecutingCardForExpression}");
-#endif
-
-            queryExecutingCard.IsSuccess = queryExecutingCardForExpression.IsSuccess;
-
-            foreach (var resultOfQueryToRelation in queryExecutingCardForExpression.ResultsOfQueryToRelationList)
-            {
-                queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
-            }
-
-            queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForExpression.UsedKeysList);
-
-#if DEBUG
-            //if (queryExecutingCardForExpression.UsedKeysList.Any())
-            //{
-            //    throw new NotImplementedException();
-            //}
-            //options.Logger.Log("End");
-#endif
         }
     }
 }

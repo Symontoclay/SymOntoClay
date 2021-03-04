@@ -40,7 +40,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public LogicalQueryNode Left { get; set; }
         public LogicalQueryNode Right { get; set; }
         public IList<LogicalQueryNode> ParamsList { get; set; }
-        public IList<StrongIdentifierValue> VarsList { get; set; }
         public bool IsGroup { get; set; }
         public Value Value { get; set; }
         public bool IsQuestion { get; set; }
@@ -128,7 +127,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.Left = Left?.Clone(context);
             result.Right = Right?.Clone(context);
             result.ParamsList = ParamsList?.Select(p => p.Clone(context)).ToList();
-            result.VarsList = VarsList?.Select(p => p.Clone(context)).ToList();
             result.IsGroup = IsGroup;
             result.Value = Value?.CloneValue(context);
             result.IsQuestion = IsQuestion;
@@ -150,14 +148,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             if(!ParamsList.IsNullOrEmpty())
             {
                 foreach(var item in ParamsList)
-                {
-                    item.DiscoverAllAnnotations(result);
-                }
-            }
-
-            if (!VarsList.IsNullOrEmpty())
-            {
-                foreach (var item in VarsList)
                 {
                     item.DiscoverAllAnnotations(result);
                 }
@@ -209,8 +199,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjProp(n, nameof(Left), Left);
             sb.PrintObjProp(n, nameof(Right), Right);
             sb.PrintObjListProp(n, nameof(ParamsList), ParamsList);
-            sb.PrintObjListProp(n, nameof(VarsList), VarsList);
-
+            
             sb.AppendLine($"{spaces}{nameof(IsGroup)} = {IsGroup}");
 
             sb.PrintObjProp(n, nameof(Value), Value);
@@ -235,8 +224,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjProp(n, nameof(Right), Right);
             sb.PrintShortObjListProp(n, nameof(ParamsList), ParamsList);
 
-            sb.PrintShortObjListProp(n, nameof(VarsList), VarsList);
-
             sb.AppendLine($"{spaces}{nameof(IsGroup)} = {IsGroup}");
 
             sb.PrintShortObjProp(n, nameof(Value), Value);
@@ -260,8 +247,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintExisting(n, nameof(Left), Left);
             sb.PrintExisting(n, nameof(Right), Right);
             sb.PrintExistingList(n, nameof(ParamsList), ParamsList);
-
-            sb.PrintExistingList(n, nameof(VarsList), VarsList);
 
             sb.AppendLine($"{spaces}{nameof(IsGroup)} = {IsGroup}");
 

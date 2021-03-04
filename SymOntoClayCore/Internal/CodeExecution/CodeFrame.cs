@@ -36,7 +36,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     {
         public CompiledFunctionBody CompiledFunctionBody { get; set; }
         public int CurrentPosition { get; set; }
-        public Stack<IndexedValue> ValuesStack { get; private set; } = new Stack<IndexedValue>();
+        public Stack<Value> ValuesStack { get; private set; } = new Stack<Value>();
         public LocalCodeExecutionContext LocalContext { get; set; }
         public ProcessInfo ProcessInfo { get; set; }
         public CodeEntity Metadata { get; set; }

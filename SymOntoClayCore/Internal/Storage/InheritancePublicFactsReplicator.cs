@@ -139,9 +139,9 @@ namespace SymOntoClay.Core.Internal.Storage
                 return;
             }
 
-            var inheritanceItemsDict = weightedInheritanceItemsList.ToDictionary(p => p.SuperNameKey, p => p.OriginalIndexedItem.OriginalInheritanceItem);
+            var inheritanceItemsDict = weightedInheritanceItemsList.ToDictionary(p => p.SuperName, p => p.OriginalItem.OriginalInheritanceItem);
 
-            var idsList = weightedInheritanceItemsList.Select(p => p.SuperNameKey).Distinct().ToList();
+            var idsList = weightedInheritanceItemsList.Select(p => p.SuperName).Distinct().ToList();
 
 #if DEBUG
             //Log($"idsList = {JsonConvert.SerializeObject(idsList)}");

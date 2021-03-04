@@ -150,7 +150,7 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStorage
 
                     foreach(var weightedInheritanceItem in weightedInheritanceItems)
                     {
-                        var targetHolder = weightedInheritanceItem.SuperNameKey;
+                        var targetHolder = weightedInheritanceItem.SuperName;
 
                         if (dict.ContainsKey(targetHolder))
                         {

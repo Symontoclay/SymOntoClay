@@ -29,6 +29,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
+    [Obsolete("IndexedData must be removed!", true)]
     public class QuestionVarIndexedLogicalQueryNode: BaseKeyRefIndexedLogicalQueryNode
     {
         /// <inheritdoc/>
@@ -36,11 +37,5 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
         /// <inheritdoc/>
         public override QuestionVarIndexedLogicalQueryNode AsQuestionVar => this;
-
-        /// <inheritdoc/>
-        public override void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

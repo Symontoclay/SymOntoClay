@@ -32,6 +32,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
+    [Obsolete("IndexedData must be removed!", true)]
     public class IndexedRuleInstance: IndexedAnnotatedItem
     {
         public RuleInstance Origin { get; set; }
@@ -158,33 +159,6 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
 
             return $"{spaces}{DebugHelperForRuleInstance.ToString(Origin)}";
-        }
-
-        public void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
-        {
-#if DEBUG
-            //options.Logger.Log("Begin");
-#endif
-
-            var queryExecutingCardForPart_1 = new QueryExecutingCardForIndexedPersistLogicalData();
-
-#if DEBUG
-            queryExecutingCardForPart_1.SenderIndexedRuleInstance = this;
-#endif
-
-            PrimaryPart.FillExecutingCard(queryExecutingCardForPart_1, dataSource, options);
-
-            queryExecutingCard.IsSuccess = queryExecutingCardForPart_1.IsSuccess;
-
-            foreach (var resultOfQueryToRelation in queryExecutingCardForPart_1.ResultsOfQueryToRelationList)
-            {
-                queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
-            }
-
-            queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForPart_1.UsedKeysList);
-#if DEBUG
-            //options.Logger.Log("End");
-#endif
         }
     }
 }

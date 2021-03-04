@@ -27,6 +27,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Convertors
 {
+    [Obsolete("IndexedData must be removed!", true)]
     public static class IndexedValueConvertor
     {
         public static IndexedLogicalValue ConvertNullValueToLogicalValue(IndexedNullValue source, IMainStorageContext mainStorageContext)

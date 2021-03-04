@@ -31,6 +31,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
+    [Obsolete("IndexedData must be removed!", true)]
     public class IndexedOperator : IndexedAnnotatedItem, IExecutable
     {
         public Operator OriginalOperator { get; set; }

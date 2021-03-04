@@ -34,6 +34,7 @@ using System.Linq;
 
 namespace SymOntoClay.Core.Internal.Convertors
 {
+    [Obsolete("IndexedData must be removed!", true)]
     public static class ConvertorToIndexed
     {
 #if DEBUG
@@ -1395,11 +1396,6 @@ namespace SymOntoClay.Core.Internal.Convertors
             dest.Origin = source;
             dest.RuleInstance = ruleInstance;
             dest.RulePart = rulePart;
-
-            if(!source.VarsList.IsNullOrEmpty())
-            {
-                throw new NotImplementedException();
-            }
 
             FillAnnotationsModalitiesAndSections(source, dest, mainStorageContext, convertingContext);
         }

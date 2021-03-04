@@ -29,6 +29,7 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
+    [Obsolete("IndexedData must be removed!", true)]
     public class IndexedTaskValue : IndexedValue
     {
         public TaskValue OriginalTaskValue { get; set; }

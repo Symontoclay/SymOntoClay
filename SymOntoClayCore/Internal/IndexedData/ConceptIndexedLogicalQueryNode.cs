@@ -29,15 +29,10 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
+    [Obsolete("IndexedData must be removed!", true)]
     public class ConceptIndexedLogicalQueryNode : BaseKeyRefIndexedLogicalQueryNode
     {
         /// <inheritdoc/>
         public override KindOfLogicalQueryNode Kind => KindOfLogicalQueryNode.Concept;
-
-        /// <inheritdoc/>
-        public override void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

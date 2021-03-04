@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ using System.Text;
 namespace SymOntoClay.Core.Internal.IndexedData
 {
     public class WeightedInheritanceResultItem<T>: WeightedInheritanceItem
-        where T: IndexedAnnotatedItem
+        where T: AnnotatedItem
     {
         public WeightedInheritanceResultItem(T resultItem)
         {

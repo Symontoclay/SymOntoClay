@@ -31,6 +31,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
+    [Obsolete("IndexedData must be removed!", true)]
     public abstract class BaseIndexedLogicalQueryNode : IndexedAnnotatedItem
     {
         public abstract KindOfLogicalQueryNode Kind { get; }
@@ -96,7 +97,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             return DebugHelperForRuleInstance.ToString(Origin);
         }
 
-        public abstract void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options);
+        //public abstract void FillExecutingCard(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options);
         public abstract void CalculateUsedKeys(List<ulong> usedKeysList);
     }
 }

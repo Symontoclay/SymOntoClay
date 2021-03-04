@@ -39,16 +39,16 @@ namespace SymOntoClay.Core.Internal.IndexedData
         {
             IsSelf = source.IsSelf;
             Distance = source.Distance;
-            SuperNameKey = source.SuperNameKey;
+            SuperName = source.SuperName;
             Rank = source.Rank;
-            OriginalIndexedItem = source.OriginalIndexedItem;
+            OriginalItem = source.OriginalItem;
         }
 
         public bool IsSelf { get; set; }
         public uint Distance { get; set; }
-        public ulong SuperNameKey { get; set; }
+        public string SuperName { get; set; }
         public float Rank { get; set; }
-        public IndexedInheritanceItem OriginalIndexedItem { get; set; }
+        public InheritanceItem OriginalItem { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -75,7 +75,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             sb.AppendLine($"{spaces}{nameof(IsSelf)} = {IsSelf}");
             sb.AppendLine($"{spaces}{nameof(Distance)} = {Distance}");
-            sb.AppendLine($"{spaces}{nameof(SuperNameKey)} = {SuperNameKey}");
+            sb.AppendLine($"{spaces}{nameof(SuperName)} = {SuperName}");
            
             sb.AppendLine($"{spaces}{nameof(Rank)} = {Rank}");
 
@@ -108,7 +108,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.AppendLine($"{spaces}{nameof(IsSelf)} = {IsSelf}");
             sb.AppendLine($"{spaces}{nameof(Distance)} = {Distance}");
 
-            sb.AppendLine($"{spaces}{nameof(SuperNameKey)} = {SuperNameKey}");
+            sb.AppendLine($"{spaces}{nameof(SuperName)} = {SuperName}");
 
             sb.AppendLine($"{spaces}{nameof(Rank)} = {Rank}");
 
@@ -141,7 +141,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.AppendLine($"{spaces}{nameof(IsSelf)} = {IsSelf}");
             sb.AppendLine($"{spaces}{nameof(Distance)} = {Distance}");
 
-            sb.AppendLine($"{spaces}{nameof(SuperNameKey)} = {SuperNameKey}");
+            sb.AppendLine($"{spaces}{nameof(SuperName)} = {SuperName}");
 
             sb.AppendLine($"{spaces}{nameof(Rank)} = {Rank}");
 

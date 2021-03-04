@@ -28,6 +28,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
+    [Obsolete("IndexedData must be removed!", true)]
     public abstract class IndexedValue: IndexedAnnotatedItem
     {
         public abstract Value OriginalValue { get; }

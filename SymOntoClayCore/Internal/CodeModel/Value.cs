@@ -76,8 +76,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public abstract object GetSystemValue();
 
-        public abstract IndexedValue GetIndexedValue(IMainStorageContext mainStorageContext);
-
         /// <summary>
         /// Clones the instance and returns cloned instance.
         /// </summary>

@@ -39,8 +39,8 @@ namespace SymOntoClay.Core
         event Action<IList<ulong>> OnChangedWithKeys;
 
         IList<RelationIndexedLogicalQueryNode> GetAllRelations();
-        IList<IndexedBaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(ulong key);
-        IList<IndexedBaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(ulong key);
+        IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(ulong key);
+        IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(ulong key);
 
 #if DEBUG
         void DbgPrintFactsAndRules();

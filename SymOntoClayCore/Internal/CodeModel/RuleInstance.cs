@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
@@ -38,26 +39,55 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public PrimaryRulePart PrimaryPart { get; set; }
         public IList<SecondaryRulePart> SecondaryParts { get; set; } = new List<SecondaryRulePart>();
 
-        public IndexedRuleInstance Indexed { get; set; }
+        public List<StrongIdentifierValue> UsedKeysList { get; set; }
 
-        public IndexedRuleInstance GetIndexed(IMainStorageContext mainStorageContext)
+        private void PrepareDirty()
         {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertRuleInstance(this, mainStorageContext);
-            }
+            CalculateUsedKeys();
+            PrimaryPart?.PrepareDirty();
 
-            return Indexed;
+            if (!SecondaryParts.IsNullOrEmpty())
+            {
+                foreach (var item in SecondaryParts)
+                {
+                    item.PrepareDirty();
+                }
+            }
         }
 
-        public IndexedRuleInstance GetIndexed(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
+        public void CalculateUsedKeys()
         {
-            if (Indexed == null)
+            var usedKeysList = new List<StrongIdentifierValue>();
+
+            PrimaryPart.CalculateUsedKeys(usedKeysList);
+
+            if (!SecondaryParts.IsNullOrEmpty())
             {
-                return ConvertorToIndexed.ConvertRuleInstance(this, mainStorageContext, convertingContext);
+                foreach (var secondaryPart in SecondaryParts)
+                {
+                    secondaryPart.CalculateUsedKeys(usedKeysList);
+                }
             }
 
-            return Indexed;
+            UsedKeysList = usedKeysList.Distinct().ToList();
+        }
+
+        /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            PrepareDirty();
+
+            var result = base.CalculateLongHashCode() ^ PrimaryPart.GetLongHashCode();
+
+            if (!SecondaryParts.IsNullOrEmpty())
+            {
+                foreach (var secondaryPart in SecondaryParts)
+                {
+                    result ^= secondaryPart.GetLongHashCode();
+                }
+            }
+
+            return result;
         }
 
         /// <inheritdoc/>
@@ -94,7 +124,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.Name = Name.Clone(context);
             result.Kind = Kind;
             result.PrimaryPart = PrimaryPart.Clone(context);
-            result.SecondaryParts = SecondaryParts.Select(p => p.Clone(context)).ToList();
+            result.SecondaryParts = SecondaryParts?.Select(p => p.Clone(context)).ToList();
+            UsedKeysList = UsedKeysList.ToList();
 
             result.AppendAnnotations(this, context);
 
@@ -140,6 +171,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjProp(n, nameof(PrimaryPart), PrimaryPart);
             sb.PrintObjListProp(n, nameof(SecondaryParts), SecondaryParts);
 
+            sb.PrintPODList(n, nameof(UsedKeysList), UsedKeysList);
+
             sb.PrintExisting(n, nameof(Indexed), Indexed);
 
             sb.Append(base.PropertiesToString(n));
@@ -158,6 +191,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintShortObjProp(n, nameof(PrimaryPart), PrimaryPart);
             sb.PrintShortObjListProp(n, nameof(SecondaryParts), SecondaryParts);
+
+            sb.PrintPODList(n, nameof(UsedKeysList), UsedKeysList);
 
             sb.PrintExisting(n, nameof(Indexed), Indexed);
 
@@ -178,10 +213,20 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintExisting(n, nameof(PrimaryPart), PrimaryPart);
             sb.PrintExistingList(n, nameof(SecondaryParts), SecondaryParts);
 
+            sb.PrintPODList(n, nameof(UsedKeysList), UsedKeysList);
+
             sb.PrintExisting(n, nameof(Indexed), Indexed);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToDbgString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+
+            return $"{spaces}{DebugHelperForRuleInstance.ToString(this)}";
         }
     }
 }

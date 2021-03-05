@@ -44,51 +44,36 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public Value Value { get; set; }
         public bool IsQuestion { get; set; }
 
-        public bool HasQuestionVars
-        {
-            get
-            {
-                if(IsQuestion)
-                {
-                    return true;
-                }
+        //public bool HasQuestionVars
+        //{
+        //    get
+        //    {
+        //        if(IsQuestion)
+        //        {
+        //            return true;
+        //        }
 
-                if(Left != null && Left.HasQuestionVars)
-                {
-                    return true;
-                }
+        //        if(Left != null && Left.HasQuestionVars)
+        //        {
+        //            return true;
+        //        }
 
-                if(Right != null && Right.HasQuestionVars)
-                {
-                    return true;
-                }
+        //        if(Right != null && Right.HasQuestionVars)
+        //        {
+        //            return true;
+        //        }
 
-                if (ParamsList != null && ParamsList.Any(p => p.HasQuestionVars))
-                {
-                    return true;
-                }
+        //        if (ParamsList != null && ParamsList.Any(p => p.HasQuestionVars))
+        //        {
+        //            return true;
+        //        }
 
-                return false;
-            }
-        }
+        //        return false;
+        //    }
+        //}
 
         IAstNode IAstNode.Left { get => Left; set => Left = (LogicalQueryNode)value; }
         IAstNode IAstNode.Right { get => Right; set => Right = (LogicalQueryNode)value; }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem IndexedAnnotatedItem => null;
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
-        {
-            return null;
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
-        {
-            return null;
-        }
 
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)

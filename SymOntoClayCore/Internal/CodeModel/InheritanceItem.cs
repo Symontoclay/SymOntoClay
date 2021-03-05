@@ -54,7 +54,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public Value Rank { get; set; }
         public bool IsSystemDefined { get; set; }
 
-        public IList<string> KeysOfPrimaryRecords { get; set; } = new List<string>();
+        public IList<StrongIdentifierValue> KeysOfPrimaryRecords { get; set; } = new List<StrongIdentifierValue>();
 
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode()

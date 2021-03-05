@@ -31,18 +31,18 @@ namespace SymOntoClay.Core.Internal.IndexedData
 {
     public class QueryExecutingCardForIndexedPersistLogicalData : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public ulong TargetRelation { get; set; }
+        public StrongIdentifierValue TargetRelation { get; set; }
         public int CountParams { get; set; }
         public IList<QueryExecutingCardAboutVar> VarsInfoList { get; set; }
         public IList<QueryExecutingCardAboutKnownInfo> KnownInfoList { get; set; }
         public IList<ResultOfQueryToRelation> ResultsOfQueryToRelationList { get; set; } = new List<ResultOfQueryToRelation>();
         public bool IsSuccess { get; set; }
-        public List<ulong> UsedKeysList { get; set; } = new List<ulong>();
+        public List<StrongIdentifierValue> UsedKeysList { get; set; } = new List<StrongIdentifierValue>();
 
 #if DEBUG
-        public IndexedRuleInstance SenderIndexedRuleInstance { get; set; }
-        public IndexedBaseRulePart SenderIndexedRulePart { get; set; }
-        public BaseIndexedLogicalQueryNode SenderExpressionNode { get; set; }
+        public RuleInstance SenderIndexedRuleInstance { get; set; }
+        public BaseRulePart SenderIndexedRulePart { get; set; }
+        public LogicalQueryNode SenderExpressionNode { get; set; }
 #endif
         /// <inheritdoc/>
         public override string ToString()
@@ -62,7 +62,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(TargetRelation)} = {TargetRelation}");
+            sb.PrintObjProp(n, nameof(TargetRelation), TargetRelation);
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
             sb.PrintObjListProp(n, nameof(VarsInfoList), VarsInfoList);
             sb.PrintObjListProp(n, nameof(KnownInfoList), KnownInfoList);
@@ -96,7 +96,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(TargetRelation)} = {TargetRelation}");
+            sb.PrintShortObjProp(n, nameof(TargetRelation), TargetRelation);
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
             sb.PrintShortObjListProp(n, nameof(VarsInfoList), VarsInfoList);
             sb.PrintShortObjListProp(n, nameof(KnownInfoList), KnownInfoList);
@@ -131,7 +131,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(TargetRelation)} = {TargetRelation}");
+            sb.PrintBriefObjProp(n, nameof(TargetRelation), TargetRelation);
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
             sb.PrintBriefObjListProp(n, nameof(VarsInfoList), VarsInfoList);
             sb.PrintBriefObjListProp(n, nameof(KnownInfoList), KnownInfoList);
@@ -156,7 +156,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 return string.Empty;
             }
 
-            var origin = SenderIndexedRuleInstance.Origin;
+            var origin = SenderIndexedRuleInstance;
 
             if (origin == null)
             {
@@ -173,7 +173,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 return string.Empty;
             }
 
-            var origin = SenderIndexedRulePart.OriginRulePart;
+            var origin = SenderIndexedRulePart;
 
             if (origin == null)
             {
@@ -195,7 +195,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
                 return string.Empty;
             }
 
-            var origin = SenderExpressionNode.Origin;
+            var origin = SenderExpressionNode;
 
             if (origin == null)
             {

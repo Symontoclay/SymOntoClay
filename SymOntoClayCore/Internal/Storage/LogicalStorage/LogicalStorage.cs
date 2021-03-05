@@ -44,10 +44,10 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             _parentLogicalStoragesList = realStorageContext.Parents.Select(p => p.LogicalStorage).ToList();
 
             _ruleInstancesList = new List<RuleInstance>();
-            _ruleInstancesDict = new Dictionary<ulong, RuleInstance>();
+            _ruleInstancesDict = new Dictionary<StrongIdentifierValue, RuleInstance>();
             _ruleInstancesDictByHashCode = new Dictionary<ulong, RuleInstance>();
             _ruleInstancesDictById = new Dictionary<string, RuleInstance>();
-            _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData(realStorageContext.MainStorageContext.Logger, realStorageContext.MainStorageContext.Dictionary);
+            _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData(realStorageContext.MainStorageContext.Logger);
 
             foreach(var parentStorage in _parentLogicalStoragesList)
             {
@@ -72,7 +72,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         private readonly object _lockObj = new object();
 
         private List<RuleInstance> _ruleInstancesList;
-        private Dictionary<ulong, RuleInstance> _ruleInstancesDict;
+        private Dictionary<StrongIdentifierValue, RuleInstance> _ruleInstancesDict;
         private Dictionary<ulong, RuleInstance> _ruleInstancesDictByHashCode;
         private Dictionary<string, RuleInstance> _ruleInstancesDictById;
         private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData;
@@ -89,6 +89,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         {
             lock (_lockObj)
             {
+                ruleInstance.CheckDirty();
+
                 var annotationsList = ruleInstance.GetAllAnnotations();
 
 #if DEBUG
@@ -102,9 +104,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 NAppend(ruleInstance, isPrimary);
 
-                var indexedRuleInstance = ruleInstance.GetIndexed(_mainStorageContext);
+                //var indexedRuleInstance = ruleInstance.GetIndexed(_mainStorageContext);
 
-                var usedKeysList = indexedRuleInstance.UsedKeysList.Concat(annotationsList.Select(p => p.GetIndexed(_mainStorageContext)).SelectMany(p => p.UsedKeysList)).Distinct().ToList();
+                var usedKeysList = ruleInstance.UsedKeysList.Concat(annotationsList.Select(p => p.GetIndexed(_mainStorageContext)).SelectMany(p => p.UsedKeysList)).Distinct().ToList();
 
                 EmitOnChanged(usedKeysList);
             }
@@ -136,24 +138,24 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             //Log($"ruleInstance (after) = {ruleInstance}");
 #endif
 
-            var indexedRuleInstance = ruleInstance.GetIndexed(_realStorageContext.MainStorageContext);
+            //var indexedRuleInstance = ruleInstance.GetIndexed(_realStorageContext.MainStorageContext);
 
 #if DEBUG
             //Log($"indexedRuleInstance = {indexedRuleInstance}");
 #endif
 
-            var ruleInstanceKey = indexedRuleInstance.Key;
+            var ruleInstanceName = ruleInstance.Name;
 
 #if DEBUG
-            //Log($"ruleInstanceKey = {ruleInstanceKey}");
+            //Log($"ruleInstanceName = {ruleInstanceName}");
 #endif
 
-            if (_ruleInstancesDict.ContainsKey(ruleInstanceKey))
+            if (_ruleInstancesDict.ContainsKey(ruleInstanceName))
             {
                 return;
             }
 
-            var longHashCode = indexedRuleInstance.GetLongHashCode();
+            var longHashCode = ruleInstance.GetLongHashCode();
 
 #if DEBUG
             //Log($"longHashCode = {longHashCode}");
@@ -165,11 +167,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             }
 
             _ruleInstancesList.Add(ruleInstance);
-            _ruleInstancesDict[ruleInstanceKey] = ruleInstance;
+            _ruleInstancesDict[ruleInstanceName] = ruleInstance;
             _ruleInstancesDictByHashCode[longHashCode] = ruleInstance;
             _ruleInstancesDictById[ruleInstanceId] = ruleInstance;
 
-            _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(indexedRuleInstance);
+            _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(ruleInstance);
 
             if(isPrimary && _kind != KindOfStorage.PublicFacts && _kind != KindOfStorage.PerceptedFacts)
             {
@@ -178,7 +180,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 #endif
 
                 var inheritanceRelationsList = ruleInstance.GetInheritanceRelations();
-                var ruleInstanceName = ruleInstance.Name.NameValue;
+                //var ruleInstanceName = ruleInstance.Name.NameValue;
 
                 if (inheritanceRelationsList.Any())
                 {
@@ -246,13 +248,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             _ruleInstancesList.Remove(ruleInstance);
 
-            var indexedRuleInstance = ruleInstance.GetIndexed(_realStorageContext.MainStorageContext);
+            var ruleInstanceName = ruleInstance.Name;
 
-            var ruleInstanceKey = indexedRuleInstance.Key;
+            _ruleInstancesDict.Remove(ruleInstanceName);
 
-            _ruleInstancesDict.Remove(ruleInstanceKey);
-
-            var longHashCode = indexedRuleInstance.GetLongHashCode();
+            var longHashCode = ruleInstance.GetLongHashCode();
 
             _ruleInstancesDictByHashCode.Remove(longHashCode);
 
@@ -260,18 +260,18 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             _ruleInstancesDictById.Remove(ruleInstanceId);
 
-            _commonPersistIndexedLogicalData.NRemoveIndexedRuleInstanceFromIndexData(indexedRuleInstance);
+            _commonPersistIndexedLogicalData.NRemoveIndexedRuleInstanceFromIndexData(ruleInstance);
 
-            EmitOnChanged(indexedRuleInstance.UsedKeysList);
+            EmitOnChanged(ruleInstance.UsedKeysList);
         }
 
         /// <inheritdoc/>
         public event Action OnChanged;
 
         /// <inheritdoc/>
-        public event Action<IList<ulong>> OnChangedWithKeys;
+        public event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
 
-        protected void EmitOnChanged(IList<ulong> usedKeysList)
+        protected void EmitOnChanged(IList<StrongIdentifierValue> usedKeysList)
         {
 #if DEBUG
             //Log($"usedKeysList = {JsonConvert.SerializeObject(usedKeysList)}");
@@ -286,7 +286,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             });
         }
 
-        private void LogicalStorage_OnChangedWithKeys(IList<ulong> changedKeysList)
+        private void LogicalStorage_OnChangedWithKeys(IList<StrongIdentifierValue> changedKeysList)
         {
 #if DEBUG
             //Log($"changedKeysList = {JsonConvert.SerializeObject(changedKeysList)}");
@@ -312,7 +312,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         }
 
         /// <inheritdoc/>
-        public IList<RelationIndexedLogicalQueryNode> GetAllRelations()
+        public IList<LogicalQueryNode> GetAllRelations()
         {
             lock (_lockObj)
             {
@@ -321,7 +321,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         }
 
         /// <inheritdoc/>
-        public IList<IndexedBaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(ulong key)
+        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue key)
         {
             lock (_lockObj)
             {
@@ -334,7 +334,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         }
 
         /// <inheritdoc/>
-        public IList<IndexedBaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(ulong key)
+        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue key)
         {
             lock (_lockObj)
             {

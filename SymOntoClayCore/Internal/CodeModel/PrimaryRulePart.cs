@@ -34,36 +34,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         public List<SecondaryRulePart> SecondaryParts { get; set; } = new List<SecondaryRulePart>();
 
-        public IndexedPrimaryRulePart Indexed { get; set; }
-
-        public IndexedPrimaryRulePart GetIndexed(IMainStorageContext mainStorageContext)
-        {
-            if (Indexed == null)
-            {
-                ConvertorToIndexed.ConvertRuleInstance(Parent, mainStorageContext);
-            }
-
-            return Indexed;
-        }
-
         /// <inheritdoc/>
-        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
+        public override IList<BaseRulePart> GetNextPartsList()
         {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
-        {
-            if (Indexed == null)
-            {
-                ConvertorToIndexed.ConvertRuleInstance(Parent, mainStorageContext, convertingContext);
-            }
-
-            return Indexed;
+            return SecondaryParts.Select(p => (BaseRulePart)p).ToList();
         }
 
         /// <inheritdoc/>

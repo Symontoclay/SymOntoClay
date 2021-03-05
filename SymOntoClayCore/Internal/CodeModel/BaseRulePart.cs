@@ -20,9 +20,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
@@ -33,24 +35,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public bool IsActive { get; set; }
         public LogicalQueryNode Expression { get; set; }
 
-        public bool HasQuestionVars
-        {
-            get
-            {
-                if(Expression == null)
-                {
-                    return false;
-                }
+        public bool HasQuestionVars { get; set; }
+        public bool HasVars { get; set; }
 
-                return Expression.HasQuestionVars;
-            }
-        }
+        public IDictionary<StrongIdentifierValue, IList<LogicalQueryNode>> RelationsDict { get; set; }
 
         protected void AppendBaseRulePart(BaseRulePart source, Dictionary<object, object> context)
         {
             IsActive = source.IsActive;
             Parent = source.Parent.Clone(context);
             Expression = source.Expression.Clone(context);
+            HasQuestionVars = source.HasQuestionVars;
+            HasVars = source.HasVars;
+            RelationsDict = source.RelationsDict.ToDictionary(p => p.Key, p => (IList<LogicalQueryNode>)(p.Value.Select(p => p.Clone(context)).ToList()));
 
             AppendAnnotations(source, context);
         }
@@ -70,17 +67,66 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return result;
         }
 
+        public abstract IList<BaseRulePart> GetNextPartsList();
+
+        public void PrepareDirty()
+        {
+            var contextOfConvertingExpressionNode = new ContextOfConvertingExpressionNode();
+
+            Expression.PrepareDirty(contextOfConvertingExpressionNode);
+
+            HasQuestionVars = contextOfConvertingExpressionNode.HasQuestionVars;
+            HasVars = contextOfConvertingExpressionNode.HasVars;
+            RelationsDict = contextOfConvertingExpressionNode.RelationsList.GroupBy(p => p.Name).ToDictionary(p => p.Key, p => (IList<LogicalQueryNode>)p.ToList());
+        }
+
+        public void CalculateUsedKeys(List<StrongIdentifierValue> usedKeysList)
+        {
+            Expression.CalculateUsedKeys(usedKeysList);
+        }
+
+        /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            return base.CalculateLongHashCode() ^ Expression.GetLongHashCode();
+        }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+            var nextN = n + 4;
+            var nextNSpace = DisplayHelper.Spaces(nextN);
 
             sb.PrintBriefObjProp(n, nameof(Parent), Parent);
 
             sb.AppendLine($"{spaces}{nameof(IsActive)} = {IsActive}");
+            sb.AppendLine($"{spaces}{nameof(HasVars)} = {HasVars}");
+            sb.AppendLine($"{spaces}{nameof(HasQuestionVars)} = {HasQuestionVars}");
 
             sb.PrintObjProp(n, nameof(Expression), Expression);
+
+            if (RelationsDict == null)
+            {
+                sb.AppendLine($"{spaces}{nameof(RelationsDict)} = null");
+            }
+            else
+            {
+                sb.AppendLine($"{spaces}Begin {nameof(RelationsDict)}");
+                var nextNextN = nextN + 4;
+                foreach (var relationsKVPItem in RelationsDict)
+                {
+                    sb.AppendLine($"{nextNSpace}key of relation = {relationsKVPItem.Key}");
+                    var tmpRelationsList = relationsKVPItem.Value;
+                    sb.AppendLine($"{nextNSpace}count of relations = {tmpRelationsList.Count}");
+                    foreach (var relation in tmpRelationsList)
+                    {
+                        sb.Append(relation.ToShortString(nextNextN));
+                    }
+                }
+                sb.AppendLine($"{spaces}End {nameof(RelationsDict)}");
+            }
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -95,6 +141,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjProp(n, nameof(Parent), Parent);
 
             sb.AppendLine($"{spaces}{nameof(IsActive)} = {IsActive}");
+            sb.AppendLine($"{spaces}{nameof(HasVars)} = {HasVars}");
+            sb.AppendLine($"{spaces}{nameof(HasQuestionVars)} = {HasQuestionVars}");
 
             sb.PrintShortObjProp(n, nameof(Expression), Expression);
 
@@ -111,6 +159,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjProp(n, nameof(Parent), Parent);
 
             sb.AppendLine($"{spaces}{nameof(IsActive)} = {IsActive}");
+            sb.AppendLine($"{spaces}{nameof(HasVars)} = {HasVars}");
+            sb.AppendLine($"{spaces}{nameof(HasQuestionVars)} = {HasQuestionVars}");
 
             sb.PrintBriefObjProp(n, nameof(Expression), Expression);
 

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
@@ -48,11 +49,11 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
         /// <inheritdoc/>
         public IStorage Storage => _realStorageContext.Storage;
 
-        private Dictionary<IndexedStrongIdentifierValue, IndexedValue> _indexedSystemVariables = new Dictionary<IndexedStrongIdentifierValue, IndexedValue>();
-        private Dictionary<IndexedStrongIdentifierValue, IndexedValue> _indexedVariables = new Dictionary<IndexedStrongIdentifierValue, IndexedValue>();
+        private Dictionary<StrongIdentifierValue, Value> _systemVariables = new Dictionary<StrongIdentifierValue, Value>();
+        private Dictionary<StrongIdentifierValue, Value> _variables = new Dictionary<StrongIdentifierValue, Value>();
 
         /// <inheritdoc/>
-        public void SetSystemValue(IndexedStrongIdentifierValue varName, IndexedValue value)
+        public void SetSystemValue(StrongIdentifierValue varName, Value value)
         {
             lock(_lockObj)
             {
@@ -61,12 +62,12 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
                 //Log($"value = {value}");
 #endif
 
-                _indexedSystemVariables[varName] = value;
+                _systemVariables[varName] = value;
             }
         }
 
         /// <inheritdoc/>
-        public IndexedValue GetSystemValueDirectly(IndexedStrongIdentifierValue varName)
+        public Value GetSystemValueDirectly(StrongIdentifierValue varName)
         {
             lock (_lockObj)
             {
@@ -74,9 +75,9 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
                 //Log($"varName = {varName}");
 #endif
 
-                if(_indexedSystemVariables.ContainsKey(varName))
+                if(_systemVariables.ContainsKey(varName))
                 {
-                    return _indexedSystemVariables[varName];
+                    return _systemVariables[varName];
                 }
 
                 return null;
@@ -84,7 +85,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
         }
 
         /// <inheritdoc/>
-        public void SetValue(IndexedStrongIdentifierValue varName, IndexedValue value)
+        public void SetValue(StrongIdentifierValue varName, Value value)
         {
             lock (_lockObj)
             {
@@ -93,12 +94,12 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
                 //Log($"value = {value}");
 #endif
 
-                _indexedVariables[varName] = value;
+                _variables[varName] = value;
             }
         }
 
         /// <inheritdoc/>
-        public IndexedValue GetValueDirectly(IndexedStrongIdentifierValue varName)
+        public Value GetValueDirectly(StrongIdentifierValue varName)
         {
             lock (_lockObj)
             {
@@ -106,9 +107,9 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
                 //Log($"varName = {varName}");
 #endif
 
-                if (_indexedVariables.ContainsKey(varName))
+                if (_variables.ContainsKey(varName))
                 {
-                    return _indexedVariables[varName];
+                    return _variables[varName];
                 }
 
                 return null;

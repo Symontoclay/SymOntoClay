@@ -52,10 +52,26 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public bool HasConditionalSections => !WhereSection.IsNullOrEmpty();
 
+        private bool _isDirty = true;
+
+        public void CheckDirty()
+        {
+            if (_isDirty)
+            {
+                CalculateLongHashCodes();
+                _isDirty = false;
+            }
+        }
+
         private ulong? _longConditionalHashCode;
 
         public virtual ulong GetLongConditionalHashCode()
         {
+            if(!_longConditionalHashCode.HasValue)
+            {
+                CalculateLongHashCodes();
+            }
+
             return _longConditionalHashCode.Value;
         }
 
@@ -63,6 +79,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public virtual ulong GetLongHashCode()
         {
+            if(!_longHashCode.HasValue)
+            {
+                CalculateLongHashCodes();
+            }
+
             return _longHashCode.Value;
         }
 
@@ -70,6 +91,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             _longHashCode = CalculateLongHashCode();
             CalculateLongConditionalHashCode();
+            _isDirty = false;
         }
 
         protected virtual void CalculateLongConditionalHashCode()

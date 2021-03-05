@@ -52,8 +52,7 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
         /// <inheritdoc/>
         public IStorage Storage => _realStorageContext.Storage;
 
-        private readonly Dictionary<string, Dictionary<string, List<Channel>>> _nonIndexedInfo = new Dictionary<string, Dictionary<string, List<Channel>>>();
-        //private readonly Dictionary<ulong, Dictionary<ulong, List<IndexedChannel>>> _indexedInfo = new Dictionary<ulong, Dictionary<ulong, List<IndexedChannel>>>();
+        private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<Channel>>> _nonIndexedInfo = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<Channel>>>();
 
         /// <inheritdoc/>
         public void Append(Channel channel)
@@ -66,19 +65,11 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
                 //Log($"channel = {channel}");
 #endif
 
-                //var indexedChannel = channel.GetIndexed(_realStorageContext.MainStorageContext);
-
-#if DEBUG
-                //Log($"indexedChannel = {indexedChannel}");
-#endif
-
                 var name = channel.Name;
-                var indexedNameKey = indexedChannel.Name.NameKey;
-
+               
                 if (_nonIndexedInfo.ContainsKey(name))
                 {
                     var dict = _nonIndexedInfo[name];
-                    var indexedDict = _indexedInfo[indexedNameKey];
 
                     if (dict.ContainsKey(channel.Holder))
                     {
@@ -88,22 +79,13 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
                         Log($"dict[superName].Count = {dict[channel.Holder].Count}");
                         Log($"targetList = {targetList.WriteListToString()}");
 #endif
-                        var targetLongConditionalHashCode = indexedChannel.GetLongConditionalHashCode();
+                        var targetLongConditionalHashCode = channel.GetLongConditionalHashCode();
 
 #if DEBUG
                         Log($"targetLongConditionalHashCode = {targetLongConditionalHashCode}");
 #endif
 
-                        var targetIndexedList = indexedDict[indexedChannel.Holder.NameKey];
-
-                        var indexedItemsWithTheSameLongConditionalHashCodeList = targetIndexedList.Where(p => p.GetLongConditionalHashCode() == targetLongConditionalHashCode).ToList();
-
-                        foreach (var indexedItemWithTheSameLongConditionalHashCode in indexedItemsWithTheSameLongConditionalHashCodeList)
-                        {
-                            targetIndexedList.Remove(indexedItemWithTheSameLongConditionalHashCode);
-                        }
-
-                        var itemsWithTheSameLongConditionalHashCodeList = indexedItemsWithTheSameLongConditionalHashCodeList.Select(p => p.OriginalChannel).ToList();
+                        var itemsWithTheSameLongConditionalHashCodeList = targetList.Where(p => p.GetLongConditionalHashCode() == targetLongConditionalHashCode).ToList();
 
 #if DEBUG
                         Log($"itemsWithTheSameLongConditionalHashCodeList = {itemsWithTheSameLongConditionalHashCodeList.WriteListToString()}");
@@ -115,25 +97,21 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
                         }
 
                         targetList.Add(channel);
-
-                        targetIndexedList.Add(indexedChannel);
                     }
                     else
                     {
                         dict[channel.Holder] = new List<Channel>() { channel };
-                        indexedDict[indexedChannel.Holder.NameKey] = new List<IndexedChannel>() { indexedChannel };
                     }
                 }
                 else
                 {
                     _nonIndexedInfo[name] = new Dictionary<StrongIdentifierValue, List<Channel>>() { { channel.Holder, new List<Channel>() { channel} } };
-                    _indexedInfo[indexedNameKey] = new Dictionary<ulong, List<IndexedChannel>>() { { indexedChannel.Holder.NameKey, new List<IndexedChannel>() { indexedChannel } } };
                 }              
             }
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<Channel>> GetChannelsDirectly(string name, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<Channel>> GetChannelsDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             lock (_lockObj)
             {

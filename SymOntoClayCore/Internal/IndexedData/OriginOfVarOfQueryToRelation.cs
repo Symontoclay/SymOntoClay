@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -27,12 +28,11 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
-    [Obsolete("IndexedData must be removed!", true)]
     public class OriginOfVarOfQueryToRelation : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public ulong KeyOfRuleInstance { get; set; }
-        public IndexedRuleInstance IndexedRuleInstance { get; set; }
-        public IndexedBaseRulePart IndexedRulePart { get; set; }
+        public StrongIdentifierValue NameOfRuleInstance { get; set; }
+        public RuleInstance RuleInstance { get; set; }
+        public BaseRulePart RulePart { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -52,9 +52,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(KeyOfRuleInstance)} = {KeyOfRuleInstance}");
-            sb.PrintObjProp(n, nameof(IndexedRuleInstance), IndexedRuleInstance);
-            sb.PrintObjProp(n, nameof(IndexedRulePart), IndexedRulePart);
+            sb.PrintObjProp(n, nameof(NameOfRuleInstance), NameOfRuleInstance);
+            sb.PrintObjProp(n, nameof(RuleInstance), RuleInstance);
+            sb.PrintObjProp(n, nameof(RulePart), RulePart);
 
             return sb.ToString();
         }
@@ -77,9 +77,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(KeyOfRuleInstance)} = {KeyOfRuleInstance}");
-            sb.PrintShortObjProp(n, nameof(IndexedRuleInstance), IndexedRuleInstance);
-            sb.PrintShortObjProp(n, nameof(IndexedRulePart), IndexedRulePart);
+            sb.PrintShortObjProp(n, nameof(NameOfRuleInstance), NameOfRuleInstance);
+            sb.PrintShortObjProp(n, nameof(RuleInstance), RuleInstance);
+            sb.PrintShortObjProp(n, nameof(RulePart), RulePart);
 
             return sb.ToString();
         }
@@ -102,9 +102,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(KeyOfRuleInstance)} = {KeyOfRuleInstance}");
-            sb.PrintBriefObjProp(n, nameof(IndexedRuleInstance), IndexedRuleInstance);
-            sb.PrintBriefObjProp(n, nameof(IndexedRulePart), IndexedRulePart);
+            sb.PrintBriefObjProp(n, nameof(NameOfRuleInstance), NameOfRuleInstance);
+            sb.PrintBriefObjProp(n, nameof(RuleInstance), RuleInstance);
+            sb.PrintBriefObjProp(n, nameof(RulePart), RulePart);
 
             return sb.ToString();
         }

@@ -33,7 +33,7 @@ namespace SymOntoClay.Core.Internal.Helpers
 {
     public static class ExpressionNodeHelper
     {
-        public static bool Compare(BaseIndexedLogicalQueryNode expressionNode1, BaseIndexedLogicalQueryNode expressionNode2, List<ulong> additionalKeys_1, List<ulong> additionalKeys_2
+        public static bool Compare(LogicalQueryNode expressionNode1, LogicalQueryNode expressionNode2, List<ulong> additionalKeys_1, List<ulong> additionalKeys_2
 #if DEBUG
             , IEntityLogger logger
 #endif

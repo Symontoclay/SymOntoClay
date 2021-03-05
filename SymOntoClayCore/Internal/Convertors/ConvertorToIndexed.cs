@@ -41,110 +41,6 @@ namespace SymOntoClay.Core.Internal.Convertors
         private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
     
-        public static IndexedRuleInstanceValue ConvertRuleInstanceValue(RuleInstanceValue source, IMainStorageContext mainStorageContext)
-        {
-            var convertingContext = new Dictionary<object, object>();
-            return ConvertRuleInstanceValue(source, mainStorageContext, convertingContext);
-        }
-
-        public static IndexedRuleInstanceValue ConvertRuleInstanceValue(RuleInstanceValue source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
-        {
-            if (source == null)
-            {
-                return null;
-            }
-
-            if (convertingContext.ContainsKey(source))
-            {
-                return (IndexedRuleInstanceValue)convertingContext[source];
-            }
-
-            var result = new IndexedRuleInstanceValue();
-            convertingContext[source] = result;
-            result.OriginalRuleInstanceValue = source;
-            source.Indexed = result;
-
-            var ruleInstance = source.RuleInstance;
-
-            result.RuleInstance = ruleInstance;
-
-            var indexedRuleInstance = ruleInstance.GetIndexed(mainStorageContext, convertingContext);
-
-            result.IndexedRuleInstance = indexedRuleInstance;
-
-            //result.CalculateLongHashCodes();
-
-            return result;
-        }
-
-        public static IndexedLogicalSearchResultValue ConvertLogicalSearchResultValue(LogicalSearchResultValue source, IMainStorageContext mainStorageContext)
-        {
-            var convertingContext = new Dictionary<object, object>();
-            return ConvertLogicalSearchResultValue(source, mainStorageContext, convertingContext);
-        }
-
-        public static IndexedLogicalSearchResultValue ConvertLogicalSearchResultValue(LogicalSearchResultValue source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
-        {
-            if (source == null)
-            {
-                return null;
-            }
-
-            if (convertingContext.ContainsKey(source))
-            {
-                return (IndexedLogicalSearchResultValue)convertingContext[source];
-            }
-
-            var result = new IndexedLogicalSearchResultValue();
-            convertingContext[source] = result;
-            result.OriginalLogicalSearchResultValue = source;
-            source.Indexed = result;
-
-            //FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
-
-            result.LogicalSearchResult = source.LogicalSearchResult;
-
-            //result.CalculateLongHashCodes();
-
-            return result;
-        }
-
-        public static IndexedLogicalQueryOperationValue ConvertLogicalQueryOperationValue(LogicalQueryOperationValue source, IMainStorageContext mainStorageContext)
-        {
-            var convertingContext = new Dictionary<object, object>();
-            return ConvertLogicalQueryOperationValue(source, mainStorageContext, convertingContext);
-        }
-
-        public static IndexedLogicalQueryOperationValue ConvertLogicalQueryOperationValue(LogicalQueryOperationValue source, IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
-        {
-            if (source == null)
-            {
-                return null;
-            }
-
-            if (convertingContext.ContainsKey(source))
-            {
-                return (IndexedLogicalQueryOperationValue)convertingContext[source];
-            }
-
-            var result = new IndexedLogicalQueryOperationValue();
-            convertingContext[source] = result;
-            result.OriginalLogicalQueryOperationValue = source;
-            source.Indexed = result;
-
-            //FillAnnotationsModalitiesAndSections(source, result, mainStorageContext, convertingContext);
-
-            result.KindOfLogicalQueryOperation = source.KindOfLogicalQueryOperation;
-
-            //result.Target = ConvertValue(source.Target, mainStorageContext, convertingContext);
-            //result.Source = ConvertValue(source.Source, mainStorageContext, convertingContext);
-            //result.Dest = ConvertValue(source.Dest, mainStorageContext, convertingContext);
-
-            //result.CalculateLongHashCodes();
-
-            return result;
-        }
-
         public static IndexedRuleInstance ConvertRuleInstance(RuleInstance source, IMainStorageContext mainStorageContext)
         {
             var convertingContext = new Dictionary<object, object>();
@@ -630,7 +526,7 @@ namespace SymOntoClay.Core.Internal.Convertors
                         {
                             var originParam = param;
                             var varInfo = new QueryExecutingCardAboutVar();
-                            varInfo.KeyOfVar = dictionary.GetKey(originParam.Name.NameValue);
+                            varInfo.NameOfVar = dictionary.GetKey(originParam.Name.NameValue);
                             varInfo.Position = i;
                             varsInfoList.Add(varInfo);
                         }
@@ -640,7 +536,7 @@ namespace SymOntoClay.Core.Internal.Convertors
                         {
                             var originParam = param;
                             var varInfo = new QueryExecutingCardAboutVar();
-                            varInfo.KeyOfVar = dictionary.GetKey(originParam.Name.NameValue);
+                            varInfo.NameOfVar = dictionary.GetKey(originParam.Name.NameValue);
                             varInfo.Position = i;
                             varsInfoList.Add(varInfo);
                         }

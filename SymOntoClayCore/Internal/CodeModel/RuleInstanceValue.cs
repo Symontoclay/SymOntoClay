@@ -73,48 +73,33 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return RuleInstance.GetAnnotationValue();
         }
 
-        public IndexedRuleInstanceValue Indexed { get; set; }
-
-        public IndexedRuleInstanceValue GetIndexed(IMainStorageContext mainStorageContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertRuleInstanceValue(this, mainStorageContext);
-            }
-
-            return Indexed;
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
-
-        /// <inheritdoc/>
-        public override IndexedValue GetIndexedValue(IMainStorageContext mainStorageContext)
-        {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
-        {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertRuleInstanceValue(this, mainStorageContext, convertingContext);
-            }
-
-            return Indexed;
-        }
-
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
             return RuleInstance;
+        }
+
+        /// <inheritdoc/>
+        public override ulong GetLongConditionalHashCode()
+        {
+            return RuleInstance.GetLongConditionalHashCode();
+        }
+
+        /// <inheritdoc/>
+        public override ulong GetLongHashCode()
+        {
+            return RuleInstance.GetLongHashCode();
+        }
+
+        /// <inheritdoc/>
+        protected override void CalculateLongConditionalHashCode()
+        {
+        }
+
+        /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            return RuleInstance.GetLongHashCode();
         }
 
         /// <inheritdoc/>
@@ -145,8 +130,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintObjProp(n, nameof(RuleInstance), RuleInstance);
 
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
-
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -158,8 +141,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintShortObjProp(n, nameof(RuleInstance), RuleInstance);
-
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -173,10 +154,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintBriefObjProp(n, nameof(RuleInstance), RuleInstance);
 
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
-
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToDbgString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            return $"{spaces}ref: {RuleInstance.GetDefaultToDbgStringInformation(0u)}";
         }
     }
 }

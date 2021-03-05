@@ -51,7 +51,7 @@ namespace SymOntoClay.Core.DebugHelpers
 
                 foreach (var resultOfVarOfQueryToRelation in item.ResultOfVarOfQueryToRelationList)
                 {
-                    var varName = entityDictionary.GetName(resultOfVarOfQueryToRelation.KeyOfVar);
+                    var varName = entityDictionary.GetName(resultOfVarOfQueryToRelation.NameOfVar);
                     var foundNode = resultOfVarOfQueryToRelation.FoundExpression;
 
                     varItemsStrList.Add($" {varName} = {DebugHelperForIndexedRuleInstance.ToString(foundNode, entityDictionary)}");

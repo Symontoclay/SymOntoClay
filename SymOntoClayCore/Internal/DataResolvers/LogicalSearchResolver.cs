@@ -55,7 +55,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
 #if DEBUG
             optionsOfFillExecutingCard.Logger = Logger;
-            optionsOfFillExecutingCard.EntityDictionary = _context.Dictionary;
 #endif
 
 #if DEBUG
@@ -120,7 +119,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private void FillExecutingCard(IndexedRuleInstance processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCard(RuleInstance processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
             //options.Logger.Log("Begin");
@@ -147,7 +146,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
         }
 
-        private void FillExecutingCard(IndexedPrimaryRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCard(PrimaryRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
             //options.Logger.Log($"Begin~~~~~~ GetHumanizeDbgString() = {GetHumanizeDbgString()}");
@@ -186,21 +185,21 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
         }
 
-        private void FillExecutingCard(BaseIndexedLogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCard(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             var kind = processedExpr.Kind;
 
             switch(kind)
             {
                 case KindOfLogicalQueryNode.Relation:
-                    FillExecutingCardForRelationIndexedLogicalQueryNode(processedExpr as RelationIndexedLogicalQueryNode, queryExecutingCard, dataSource, options);
+                    FillExecutingCardForRelationIndexedLogicalQueryNode(processedExpr, queryExecutingCard, dataSource, options);
                     break;
 
                 case KindOfLogicalQueryNode.BinaryOperator:
                     switch(processedExpr.KindOfOperator)
                     {
                         case KindOfOperatorOfLogicalQueryNode.And:
-                            FillExecutingCardForAndOperatorIndexedLogicalQueryNode(processedExpr as AndOperatorIndexedLogicalQueryNode, queryExecutingCard, dataSource, options);
+                            FillExecutingCardForAndOperatorIndexedLogicalQueryNode(processedExpr, queryExecutingCard, dataSource, options);
                             break;
 
                         default:
@@ -213,7 +212,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private void FillExecutingCardForRelationIndexedLogicalQueryNode(RelationIndexedLogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        //RelationIndexedLogicalQueryNode processedExpr
+        private void FillExecutingCardForRelationIndexedLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
             //options.Logger.Log($"IsQuestion = {IsQuestion}");
@@ -260,8 +260,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
         }
 
-        private void NFillExecutingCard(RelationIndexedLogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
-        {
+        //RelationIndexedLogicalQueryNode processedExpr
+        private void NFillExecutingCard(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        {            
 #if DEBUG
             var senderIndexedRuleInstance = queryExecutingCard.SenderIndexedRuleInstance;
             var senderIndexedRulePart = queryExecutingCard.SenderIndexedRulePart;
@@ -399,7 +400,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
         }
 
-        private void FillExecutingCardForQuestion(RelationIndexedLogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        //RelationIndexedLogicalQueryNode processedExpr
+        private void FillExecutingCardForQuestion(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
             //options.Logger.Log($"Key = {Key}");
@@ -477,18 +479,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 {
                     var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
-                    resultOfVarOfQueryToRelation.KeyOfVar = processedExpr.Key;
+                    resultOfVarOfQueryToRelation.NameOfVar = processedExpr.Name;
                     resultOfVarOfQueryToRelation.FoundExpression = targetRelation;
                     resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
 
                     var originInfo = new OriginOfVarOfQueryToRelation();
                     var targetRulePart = targetRelation.RulePart;
-                    originInfo.IndexedRuleInstance = targetRelation.RuleInstance;
-                    originInfo.IndexedRulePart = targetRulePart;
+                    originInfo.RuleInstance = targetRelation.RuleInstance;
+                    originInfo.RulePart = targetRulePart;
 
                     var keyOfRuleInstance = targetRelation.RuleInstance.Key;
 
-                    originInfo.KeyOfRuleInstance = keyOfRuleInstance;
+                    originInfo.NameOfRuleInstance = keyOfRuleInstance;
 
                     resultOfVarOfQueryToRelation.OriginDict[keyOfRuleInstance] = originInfo;
                 }
@@ -513,18 +515,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     var questionVarParam = param.AsQuestionVar;
 
                     var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
-                    resultOfVarOfQueryToRelation.KeyOfVar = questionVarParam.Key;
+                    resultOfVarOfQueryToRelation.NameOfVar = questionVarParam.Key;
                     resultOfVarOfQueryToRelation.FoundExpression = foundExpression;
                     resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
 
                     var originInfo = new OriginOfVarOfQueryToRelation();
                     var targetRulePart = targetRelation.RulePart;
-                    originInfo.IndexedRuleInstance = targetRelation.RuleInstance;
-                    originInfo.IndexedRulePart = targetRulePart;
+                    originInfo.RuleInstance = targetRelation.RuleInstance;
+                    originInfo.RulePart = targetRulePart;
 
                     var keyOfRuleInstance = targetRelation.RuleInstance.Key;
 
-                    originInfo.KeyOfRuleInstance = keyOfRuleInstance;
+                    originInfo.NameOfRuleInstance = keyOfRuleInstance;
 
                     resultOfVarOfQueryToRelation.OriginDict[keyOfRuleInstance] = originInfo;
 
@@ -554,8 +556,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
         }
 
-        private void FillExecutingCardForAndOperatorIndexedLogicalQueryNode(AndOperatorIndexedLogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
-        {
+        //AndOperatorIndexedLogicalQueryNode processedExpr
+        private void FillExecutingCardForAndOperatorIndexedLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        {            
 #if DEBUG
             var senderIndexedRuleInstance = queryExecutingCard.SenderIndexedRuleInstance;
             var senderIndexedRulePart = queryExecutingCard.SenderIndexedRulePart;
@@ -623,12 +626,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
 
                     var leftVarsList = leftResultOfQueryToRelation.ResultOfVarOfQueryToRelationList;
-                    var leftVarsKeysList = leftVarsList.Select(p => p.KeyOfVar).Distinct().ToList();
+                    var leftVarsKeysList = leftVarsList.Select(p => p.NameOfVar).Distinct().ToList();
 
                     foreach (var rightResultOfQueryToRelation in rightQueryExecutingCardResultsOfQueryToRelationList)
                     {
                         var rightVarsList = rightResultOfQueryToRelation.ResultOfVarOfQueryToRelationList;
-                        var rightVarsKeysList = rightVarsList.Select(p => p.KeyOfVar).Distinct().ToList();
+                        var rightVarsKeysList = rightVarsList.Select(p => p.NameOfVar).Distinct().ToList();
                         var intersectOfVarsKeysList = leftVarsKeysList.Intersect(rightVarsKeysList).ToList();
 
 #if DEBUG
@@ -654,11 +657,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         }
                         else
                         {
-                            var leftVarsDict = new Dictionary<ulong, ResultOfVarOfQueryToRelation>();
+                            var leftVarsDict = new Dictionary<StrongIdentifierValue, ResultOfVarOfQueryToRelation>();
                             var resultItem = new ResultOfQueryToRelation();
                             foreach (var varItem in leftVarsList)
                             {
-                                var keyOfVars = varItem.KeyOfVar;
+                                var keyOfVars = varItem.NameOfVar;
                                 if (intersectOfVarsKeysList.Contains(keyOfVars))
                                 {
                                     leftVarsDict[keyOfVars] = varItem;
@@ -672,7 +675,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                             foreach (var varItem in rightVarsList)
                             {
-                                var keyOfVars = varItem.KeyOfVar;
+                                var keyOfVars = varItem.NameOfVar;
                                 if (intersectOfVarsKeysList.Contains(keyOfVars))
                                 {
                                     var leftVarItem = leftVarsDict[keyOfVars];
@@ -745,7 +748,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private void FillExecutingCardForCallingFromRelationForFact(IndexedBaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardForCallingFromRelationForFact(BaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
             //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
@@ -926,17 +929,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             //}                            
 
                             var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
-                            resultOfVarOfQueryToRelation.KeyOfVar = varItem.KeyOfVar;
+                            resultOfVarOfQueryToRelation.NameOfVar = varItem.NameOfVar;
                             resultOfVarOfQueryToRelation.FoundExpression = paramOfTargetRelation;
                             resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
 
                             var originInfo = new OriginOfVarOfQueryToRelation();
-                            originInfo.IndexedRuleInstance = processedExpr.Parent;
-                            originInfo.IndexedRulePart = processedExpr;
+                            originInfo.RuleInstance = processedExpr.Parent;
+                            originInfo.RulePart = processedExpr;
 
-                            var keyOfRuleInstance = processedExpr.Parent.Key;
+                            var keyOfRuleInstance = processedExpr.Parent.Name;
 
-                            originInfo.KeyOfRuleInstance = keyOfRuleInstance;
+                            originInfo.NameOfRuleInstance = keyOfRuleInstance;
 
                             resultOfVarOfQueryToRelation.OriginDict[keyOfRuleInstance] = originInfo;
                         }
@@ -958,7 +961,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private bool CompareKnownInfoAndExpressionNode(QueryExecutingCardAboutKnownInfo knownInfo, BaseIndexedLogicalQueryNode expressionNode, List<ulong> additionalKeys_1, List<ulong> additionalKeys_2
+        private bool CompareKnownInfoAndExpressionNode(QueryExecutingCardAboutKnownInfo knownInfo, LogicalQueryNode expressionNode, List<ulong> additionalKeys_1, List<ulong> additionalKeys_2
 #if DEBUG
             , IEntityLogger logger
 #endif
@@ -973,7 +976,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 );
         }
 
-        private void FillExecutingCardForCallingFromRelationForProduction(IndexedBaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardForCallingFromRelationForProduction(BaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
             //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
@@ -1081,7 +1084,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 {
                     var varsInfoList = queryExecutingCard.VarsInfoList;
 
-                    var backKeysDict = new Dictionary<ulong, ulong>();
+                    var backKeysDict = new Dictionary<StrongIdentifierValue, StrongIdentifierValue>();
 
                     foreach (var varInfo in varsInfoList)
                     {
@@ -1095,7 +1098,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         //options.Logger.Log($"targetInternalKeyOfVar = {targetInternalKeyOfVar}");
 #endif
 
-                        backKeysDict[targetInternalKeyOfVar] = varInfo.KeyOfVar;
+                        backKeysDict[targetInternalKeyOfVar] = varInfo.NameOfVar;
                     }
 
                     foreach (var resultOfQueryToRelation in resultsOfQueryToRelationList)
@@ -1109,7 +1112,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             //options.Logger.Log($"resultOfQueryToRelation = {resultOfQueryToRelation}");
 #endif
 
-                            var internalKeyOfVar = resultOfVarOfQueryToRelation.KeyOfVar;
+                            var internalKeyOfVar = resultOfVarOfQueryToRelation.NameOfVar;
 
 #if DEBUG
                             //options.Logger.Log($"internalKeyOfVar = {internalKeyOfVar}/'{options.EntityDictionary.GetName(internalKeyOfVar)}'");
@@ -1124,7 +1127,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 //options.Logger.Log($"resultOfVarOfQueryToRelation before = {resultOfVarOfQueryToRelation}");
 #endif
 
-                                resultOfVarOfQueryToRelation.KeyOfVar = externalKeyOfVar;
+                                resultOfVarOfQueryToRelation.NameOfVar = externalKeyOfVar;
 
 #if DEBUG
                                 //options.Logger.Log($"resultOfVarOfQueryToRelation after = {resultOfVarOfQueryToRelation}");
@@ -1153,7 +1156,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
         }
 
-        private void FillExecutingCardForCallingFromOtherPart(IndexedBaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardForCallingFromOtherPart(BaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
             //options.Logger.Log("Begin ^&*^&*");

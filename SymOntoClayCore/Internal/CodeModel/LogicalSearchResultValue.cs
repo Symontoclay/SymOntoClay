@@ -48,48 +48,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public LogicalSearchResult LogicalSearchResult { get; private set; }
 
-        public IndexedLogicalSearchResultValue Indexed { get; set; }
-
-        public IndexedLogicalSearchResultValue GetIndexed(IMainStorageContext mainStorageContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertLogicalSearchResultValue(this, mainStorageContext);
-            }
-
-            return Indexed;
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
-
-        /// <inheritdoc/>
-        public override IndexedValue GetIndexedValue(IMainStorageContext mainStorageContext)
-        {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
-        {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertLogicalSearchResultValue(this, mainStorageContext, convertingContext);
-            }
-
-            return Indexed;
-        }
-
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
             return LogicalSearchResult;
+        }
+
+        /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            return base.CalculateLongHashCode() ^ LogicalSearchResult.GetLongHashCode();
         }
 
         /// <inheritdoc/>
@@ -120,8 +88,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintObjProp(n, nameof(LogicalSearchResult), LogicalSearchResult);
 
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
-
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -133,8 +99,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintShortObjProp(n, nameof(LogicalSearchResult), LogicalSearchResult);
-
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -148,10 +112,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintBriefObjProp(n, nameof(LogicalSearchResult), LogicalSearchResult);
 
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
-
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToDbgString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            return $"{spaces} < Logical Search result >";
         }
     }
 }

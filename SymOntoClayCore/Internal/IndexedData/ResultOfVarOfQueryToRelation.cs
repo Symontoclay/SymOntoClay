@@ -28,16 +28,15 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
-    [Obsolete("IndexedData must be removed!", true)]
     public class ResultOfVarOfQueryToRelation : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public ulong KeyOfVar { get; set; }
-        public BaseIndexedLogicalQueryNode FoundExpression { get; set; }
-        public IDictionary<ulong, OriginOfVarOfQueryToRelation> OriginDict { get; set; } = new Dictionary<ulong, OriginOfVarOfQueryToRelation>();
+        public StrongIdentifierValue NameOfVar { get; set; }
+        public LogicalQueryNode FoundExpression { get; set; }
+        public IDictionary<StrongIdentifierValue, OriginOfVarOfQueryToRelation> OriginDict { get; set; } = new Dictionary<StrongIdentifierValue, OriginOfVarOfQueryToRelation>();
 
         public ulong GetLongHashCode()
         {
-            return (ulong)Math.Abs(KeyOfVar.GetHashCode()) ^ FoundExpression.GetLongHashCode();
+            return (ulong)Math.Abs(NameOfVar.GetHashCode()) ^ FoundExpression.GetLongHashCode();
         }
 
         /// <inheritdoc/>
@@ -58,9 +57,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(KeyOfVar)} = {KeyOfVar}");
+            //sb.AppendLine($"{spaces}{nameof(KeyOfVar)} = {KeyOfVar}");
             sb.PrintObjProp(n, nameof(FoundExpression), FoundExpression);
-            sb.PrintObjDict_2_Prop(n, nameof(OriginDict), OriginDict);
+            //sb.PrintObjDict_2_Prop(n, nameof(OriginDict), OriginDict);
 
             return sb.ToString();
         }
@@ -83,9 +82,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(KeyOfVar)} = {KeyOfVar}");
+            //sb.AppendLine($"{spaces}{nameof(KeyOfVar)} = {KeyOfVar}");
             sb.PrintShortObjProp(n, nameof(FoundExpression), FoundExpression);
-            sb.PrintShortObjDict_2_Prop(n, nameof(OriginDict), OriginDict);
+            //sb.PrintShortObjDict_2_Prop(n, nameof(OriginDict), OriginDict);
 
             return sb.ToString();
         }
@@ -108,9 +107,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(KeyOfVar)} = {KeyOfVar}");
+            //sb.AppendLine($"{spaces}{nameof(KeyOfVar)} = {KeyOfVar}");
             sb.PrintBriefObjProp(n, nameof(FoundExpression), FoundExpression);
-            sb.PrintBriefObjDict_2_Prop(n, nameof(OriginDict), OriginDict);
+            //sb.PrintBriefObjDict_2_Prop(n, nameof(OriginDict), OriginDict);
 
             return sb.ToString();
         }

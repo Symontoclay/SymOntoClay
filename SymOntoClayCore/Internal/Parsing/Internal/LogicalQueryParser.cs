@@ -59,11 +59,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnFinish()
         {
-            Result.DictionaryName = _context.Dictionary.Name;
-
             if (Result.Name == null || Result.Name.IsEmpty)
             {
-                Result.Name = NameHelper.CreateRuleOrFactName(_context.Dictionary);
+                Result.Name = NameHelper.CreateRuleOrFactName();
             }
 
             var secondaryPartsList = Result.SecondaryParts;
@@ -94,6 +92,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     secondaryPart.PrimaryPart = primaryPart;
                 }
             }
+
+            Result.CheckDirty();
         }
 
         /// <inheritdoc/>

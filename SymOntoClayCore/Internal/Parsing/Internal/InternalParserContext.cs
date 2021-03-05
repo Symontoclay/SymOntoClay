@@ -44,7 +44,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
 
         public IEntityLogger Logger => _context.Logger;
-        public IEntityDictionary Dictionary => _context.Dictionary;
 
         public CodeFile CodeFile { get; private set; }
 

@@ -403,7 +403,7 @@ namespace TestSandbox.LogicalDatabase
 
                 foreach (var resultOfVarOfQueryToRelation in item.ResultOfVarOfQueryToRelationList)
                 {
-                    var varName = dictionary.GetName(resultOfVarOfQueryToRelation.KeyOfVar);
+                    var varName = dictionary.GetName(resultOfVarOfQueryToRelation.NameOfVar);
 
                     _logger.Log($"varName = {varName}");
 

@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
@@ -45,13 +46,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private IList<StorageUsingOptions> _dataSourcesSettingsOrderedByPriorityAndUseProductionsList;
         private IList<StorageUsingOptions> _dataSourcesSettingsOrderedByPriorityAndUseAdditionalInstances;
 
-        public IList<RelationIndexedLogicalQueryNode> AllRelationsForProductions
+        public IList<LogicalQueryNode> AllRelationsForProductions
         {
             get
             {
                 lock (_lockObj)
                 {
-                    var result = new List<RelationIndexedLogicalQueryNode>();
+                    var result = new List<LogicalQueryNode>();
 
                     var dataSourcesSettingsOrderedByPriorityAndUseProductionsList = _dataSourcesSettingsOrderedByPriorityAndUseProductionsList;
 
@@ -104,7 +105,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        public IList<IndexedBaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(ulong key)
+        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue key)
         {
             lock (_lockObj)
             {
@@ -112,7 +113,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //DebugLogger.Instance.Info($"key = {key}");
 #endif
 
-                var initialResult = new List<IndexedBaseRulePart>();
+                var initialResult = new List<BaseRulePart>();
 
                 var dataSourcesSettingsOrderedByPriorityList = _dataSourcesSettingsOrderedByPriorityAndUseFactsList;
 
@@ -133,7 +134,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return initialResult;
                 }
 
-                var result = new List<IndexedBaseRulePart>();
+                var result = new List<BaseRulePart>();
 
                 var groupedDict = initialResult.GroupBy(p => p.GetLongHashCode()).ToDictionary(p => p.Key, p => p.ToList());
 
@@ -170,7 +171,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        public IList<IndexedBaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(ulong key)
+        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue key)
         {
             lock (_lockObj)
             {
@@ -178,7 +179,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //DebugLogger.Instance.Info($"key = {key}");
 #endif
 
-                var initialResult = new List<IndexedBaseRulePart>();
+                var initialResult = new List<BaseRulePart>();
 
                 var dataSourcesSettingsOrderedByPriorityAndUseProductionsList = _dataSourcesSettingsOrderedByPriorityAndUseProductionsList;
 
@@ -199,7 +200,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return initialResult;
                 }
 
-                var result = new List<IndexedBaseRulePart>();
+                var result = new List<BaseRulePart>();
 
                 var groupedDict = initialResult.GroupBy(p => p.GetLongHashCode()).ToDictionary(p => p.Key, p => p.ToList());
 

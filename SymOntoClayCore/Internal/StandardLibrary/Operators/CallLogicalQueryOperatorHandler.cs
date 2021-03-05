@@ -51,7 +51,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly ILogicalStorage _logicalStorage;
 
         /// <inheritdoc/>
-        public IndexedValue Call(IndexedValue operand, IndexedValue annotation, LocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(Value operand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
             if(!operand.IsLogicalQueryOperationValue)
             {
@@ -79,7 +79,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             }
         }
 
-        private IndexedValue ProcessSelect(IndexedLogicalQueryOperationValue operand, IndexedValue annotation, LocalCodeExecutionContext localCodeExecutionContext)
+        private Value ProcessSelect(LogicalQueryOperationValue operand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"operand = {operand}");
@@ -108,15 +108,15 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 throw new NotImplementedException();
             }
 
-            var indexedQuery = target.AsRuleInstanceValue.IndexedRuleInstance;
+            var query = target.AsRuleInstanceValue.RuleInstance;
 
 #if DEBUG
-            //Log($"indexedQuery = {indexedQuery}");
-            //Log($"query = {DebugHelperForIndexedRuleInstance.ToString(indexedQuery, _engineContext.Dictionary)}");
+            //Log($"query = {query}");
+            //Log($"query = {DebugHelperForRuleInstance.ToString(query)}");
 #endif
 
             var searchOptions = new LogicalSearchOptions();
-            searchOptions.QueryExpression = indexedQuery;
+            searchOptions.QueryExpression = query;
             searchOptions.LocalCodeExecutionContext = localCodeExecutionContext;
 
 #if DEBUG
@@ -130,10 +130,10 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             //Log($"result = {DebugHelperForLogicalSearchResult.ToString(searchResult, _engineContext.Dictionary)}");
 #endif
 
-            return new LogicalSearchResultValue(searchResult).GetIndexed(_engineContext);
+            return new LogicalSearchResultValue(searchResult);
         }
 
-        private IndexedValue ProcessInsert(IndexedLogicalQueryOperationValue operand, IndexedValue annotation, LocalCodeExecutionContext localCodeExecutionContext)
+        private Value ProcessInsert(LogicalQueryOperationValue operand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"operand = {operand}");

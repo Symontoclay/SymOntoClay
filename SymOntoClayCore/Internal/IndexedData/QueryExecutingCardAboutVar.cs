@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 {
     public class QueryExecutingCardAboutVar : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public ulong KeyOfVar { get; set; }
+        public StrongIdentifierValue NameOfVar { get; set; }
         public int Position { get; set; }
 
         /// <inheritdoc/>
@@ -50,7 +51,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(KeyOfVar)} = {KeyOfVar}");
+            sb.PrintObjProp(n, nameof(NameOfVar), NameOfVar);
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
 
             return sb.ToString();
@@ -74,7 +75,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(KeyOfVar)} = {KeyOfVar}");
+            sb.PrintShortObjProp(n, nameof(NameOfVar), NameOfVar);
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
 
             return sb.ToString();
@@ -98,7 +99,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(KeyOfVar)} = {KeyOfVar}");
+            sb.PrintBriefObjProp(n, nameof(NameOfVar), NameOfVar);
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
 
             return sb.ToString();

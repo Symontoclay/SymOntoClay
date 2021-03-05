@@ -36,12 +36,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _context = context;
             _logger = context.Logger;
-            _dictionary = context.Dictionary;
         }
 
         protected readonly InternalParserContext _context;
         private IEntityLogger _logger;
-        private IEntityDictionary _dictionary;
 
         public void Run()
         {
@@ -86,18 +84,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _isExited = true;
         }
 
-        protected ulong GetKey(string name)
-        {
-            return _dictionary.GetKey(name);
-        }
-
         protected StrongIdentifierValue ParseName(string text)
         {
 #if DEBUG
             //Log($"text = {text}");
 #endif
 
-            var name = NameHelper.CreateName(text, _context.Dictionary);
+            var name = NameHelper.CreateName(text);
             return name;
         }
 

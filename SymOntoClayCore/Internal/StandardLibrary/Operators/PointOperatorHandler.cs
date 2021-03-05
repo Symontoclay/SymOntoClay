@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly IEngineContext _engineContext;
 
         /// <inheritdoc/>
-        public IndexedValue Call(IndexedValue leftOperand, IndexedValue rightOperand, IndexedValue annotation, LocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(Value leftOperand, Value rightOperand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"leftOperand = {leftOperand}");
@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
             if(leftOperand.IsHostValue && rightOperand.IsStrongIdentifierValue)
             {
-                return new PointRefValue(leftOperand.OriginalValue, rightOperand.OriginalValue).GetIndexed(_engineContext);
+                return new PointRefValue(leftOperand, rightOperand);
             }
 
             throw new NotImplementedException();

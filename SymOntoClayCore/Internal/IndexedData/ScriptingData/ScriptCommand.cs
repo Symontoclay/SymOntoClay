@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         public OperationCode OperationCode { get; set; } = OperationCode.Nop;
 
         public int Position { get; set; }
-        public IndexedValue Value { get; set; }
+        public Value Value { get; set; }
         public ScriptCommand JumpToMe { get; set; }
         public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
         public int CountParams { get; set; }

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -32,7 +33,7 @@ namespace SymOntoClay.Core.Internal.Convertors
     {
         public bool HasVars { get; set; }
         public bool HasQuestionVars { get; set; }
-        public List<RelationIndexedLogicalQueryNode> RelationsList { get; set; } = new List<RelationIndexedLogicalQueryNode>();
+        public List<LogicalQueryNode> RelationsList { get; set; } = new List<LogicalQueryNode>();
 
         /// <inheritdoc/>
         public override string ToString()

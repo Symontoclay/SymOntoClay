@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 var currentKnownInfoDict = internalKnownInfoList.ToDictionary(p => p.Position, p => p);
                 var targetRelationVarsInfoDictByPosition = internalVarsInfoList.ToDictionary(p => p.Position, p => p);
-                var targetRelationVarsInfoDictByKeyOfVar = internalVarsInfoList.ToDictionary(p => p.KeyOfVar, p => p);
+                var targetRelationVarsInfoDictByKeyOfVar = internalVarsInfoList.ToDictionary(p => p.NameOfVar, p => p);
 
                 foreach (var initialKnownInfo in externalKnownInfoList)
                 {
@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         {
                             var existingVar = targetRelationVarsInfoDictByPosition[position.Value];
                             var resultKnownInfo = initialKnownInfo.Clone();
-                            resultKnownInfo.KeyOfVar = existingVar.KeyOfVar;
+                            resultKnownInfo.KeyOfVar = existingVar.NameOfVar;
                             targetKnownInfoList.Add(resultKnownInfo);
                         }
                         else

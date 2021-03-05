@@ -35,37 +35,33 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 {
     public class CommonPersistIndexedLogicalData: BaseLoggedComponent
     {
-        public CommonPersistIndexedLogicalData(IEntityLogger logger, IEntityDictionary entityDictionary)
+        public CommonPersistIndexedLogicalData(IEntityLogger logger)
             : base(logger)
         {
-            _entityDictionary = entityDictionary;
-
-            IndexedRuleInstancesDict = new Dictionary<ulong, IndexedRuleInstance>();
-            AdditionalRuleInstancesDict = new Dictionary<ulong, IndexedRuleInstance>();
-            IndexedRulePartsOfFactsDict = new Dictionary<ulong, IList<IndexedBaseRulePart>>();
-            IndexedRulePartsWithOneRelationWithVarsDict = new Dictionary<ulong, IList<IndexedBaseRulePart>>();
-            RelationsList = new List<RelationIndexedLogicalQueryNode>();
+            IndexedRuleInstancesDict = new Dictionary<StrongIdentifierValue, RuleInstance>();
+            AdditionalRuleInstancesDict = new Dictionary<StrongIdentifierValue, RuleInstance>();
+            IndexedRulePartsOfFactsDict = new Dictionary<StrongIdentifierValue, IList<BaseRulePart>>();
+            IndexedRulePartsWithOneRelationWithVarsDict = new Dictionary<StrongIdentifierValue, IList<BaseRulePart>>();
+            RelationsList = new List<LogicalQueryNode>();
         }
 
-        private IEntityDictionary _entityDictionary;
+        //It is temporary public for construction time. It will be private after complete construction.
+        public IDictionary<StrongIdentifierValue, RuleInstance> IndexedRuleInstancesDict { get; set; }
+        public IDictionary<StrongIdentifierValue, RuleInstance> AdditionalRuleInstancesDict { get; set; }
 
         //It is temporary public for construction time. It will be private after complete construction.
-        public IDictionary<ulong, IndexedRuleInstance> IndexedRuleInstancesDict { get; set; }
-        public IDictionary<ulong, IndexedRuleInstance> AdditionalRuleInstancesDict { get; set; }
-
+        public IDictionary<StrongIdentifierValue, IList<BaseRulePart>> IndexedRulePartsOfFactsDict { get; set; }
         //It is temporary public for construction time. It will be private after complete construction.
-        public IDictionary<ulong, IList<IndexedBaseRulePart>> IndexedRulePartsOfFactsDict { get; set; }
-        //It is temporary public for construction time. It will be private after complete construction.
-        public IDictionary<ulong, IList<IndexedBaseRulePart>> IndexedRulePartsWithOneRelationWithVarsDict { get; set; }
-        public IList<RelationIndexedLogicalQueryNode> RelationsList { get; set; }
+        public IDictionary<StrongIdentifierValue, IList<BaseRulePart>> IndexedRulePartsWithOneRelationWithVarsDict { get; set; }
+        public IList<LogicalQueryNode> RelationsList { get; set; }
 
-        public void NSetIndexedRuleInstanceToIndexData(IndexedRuleInstance indexedRuleInstance)
+        public void NSetIndexedRuleInstanceToIndexData(RuleInstance indexedRuleInstance)
         {
 #if DEBUG
             //Log($"indexedRuleInstance = {indexedRuleInstance}");
 #endif
 
-            IndexedRuleInstancesDict[indexedRuleInstance.Key] = indexedRuleInstance;
+            IndexedRuleInstancesDict[indexedRuleInstance.Name] = indexedRuleInstance;
 
             var kind = indexedRuleInstance.Kind;
 
@@ -123,7 +119,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             //Log("End");
         }
 
-        private void NAddIndexedRulePartToKeysOfRelationsIndex(IDictionary<ulong, IList<IndexedBaseRulePart>> indexData, IndexedBaseRulePart indexedRulePart)
+        private void NAddIndexedRulePartToKeysOfRelationsIndex(IDictionary<StrongIdentifierValue, IList<BaseRulePart>> indexData, BaseRulePart indexedRulePart)
         {
 #if DEBUG
             //var dbgStr = DebugHelperForRuleInstance.BaseRulePartToString(indexedRulePart.OriginRulePart);
@@ -167,19 +163,19 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 }
                 else
                 {
-                    var tmpList = new List<IndexedBaseRulePart>() { indexedRulePart };
+                    var tmpList = new List<BaseRulePart>() { indexedRulePart };
                     indexData[keyOfRelation] = tmpList;
                 }
             }
         }
 
-        public void NRemoveIndexedRuleInstanceFromIndexData(IndexedRuleInstance indexedRuleInstance)
+        public void NRemoveIndexedRuleInstanceFromIndexData(RuleInstance indexedRuleInstance)
         {
 #if DEBUG
             //Log($"indexedRuleInstance = {indexedRuleInstance}");
 #endif
 
-            IndexedRuleInstancesDict.Remove(indexedRuleInstance.Key);
+            IndexedRuleInstancesDict.Remove(indexedRuleInstance.Name);
 
             var kind = indexedRuleInstance.Kind;
 
@@ -237,7 +233,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             //Log("End");
         }
 
-        private void NRemoveIndexedRulePartFromKeysOfRelationsIndex(IDictionary<ulong, IList<IndexedBaseRulePart>> indexData, IndexedBaseRulePart indexedRulePart)
+        private void NRemoveIndexedRulePartFromKeysOfRelationsIndex(IDictionary<StrongIdentifierValue, IList<BaseRulePart>> indexData, BaseRulePart indexedRulePart)
         {
 #if DEBUG
             //var dbgStr = DebugHelperForRuleInstance.BaseRulePartToString(indexedRulePart.OriginRulePart);
@@ -282,12 +278,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             }
         }
 
-        public IList<RelationIndexedLogicalQueryNode> GetAllRelations()
+        public IList<LogicalQueryNode> GetAllRelations()
         {
             return RelationsList.ToList();
         }
 
-        public IList<IndexedBaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(ulong key)
+        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue key)
         {
 #if DEBUG
             //Log($"key = {key}");
@@ -313,7 +309,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             return null;
         }
 
-        public IList<IndexedBaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(ulong key)
+        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue key)
         {
             if (IndexedRulePartsWithOneRelationWithVarsDict.ContainsKey(key))
             {

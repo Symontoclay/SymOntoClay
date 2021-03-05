@@ -52,8 +52,8 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
         /// <inheritdoc/>
         public IStorage Storage => _realStorageContext.Storage;
 
-        private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<Channel>>> _nonIndexedInfo = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<Channel>>>();
-        private readonly Dictionary<ulong, Dictionary<ulong, List<IndexedChannel>>> _indexedInfo = new Dictionary<ulong, Dictionary<ulong, List<IndexedChannel>>>();
+        private readonly Dictionary<string, Dictionary<string, List<Channel>>> _nonIndexedInfo = new Dictionary<string, Dictionary<string, List<Channel>>>();
+        //private readonly Dictionary<ulong, Dictionary<ulong, List<IndexedChannel>>> _indexedInfo = new Dictionary<ulong, Dictionary<ulong, List<IndexedChannel>>>();
 
         /// <inheritdoc/>
         public void Append(Channel channel)
@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
                 //Log($"channel = {channel}");
 #endif
 
-                var indexedChannel = channel.GetIndexed(_realStorageContext.MainStorageContext);
+                //var indexedChannel = channel.GetIndexed(_realStorageContext.MainStorageContext);
 
 #if DEBUG
                 //Log($"indexedChannel = {indexedChannel}");
@@ -133,7 +133,7 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<IndexedChannel>> GetChannelsDirectly(ulong nameKey, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<Channel>> GetChannelsDirectly(string name, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             lock (_lockObj)
             {
@@ -141,11 +141,11 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
                 //Log($"name = {name}");
 #endif
 
-                if (_indexedInfo.ContainsKey(nameKey))
+                if (_nonIndexedInfo.ContainsKey(name))
                 {
-                    var dict = _indexedInfo[nameKey];
+                    var dict = _nonIndexedInfo[name];
 
-                    var result = new List<WeightedInheritanceResultItem<IndexedChannel>>();
+                    var result = new List<WeightedInheritanceResultItem<Channel>>();
 
                     foreach (var weightedInheritanceItem in weightedInheritanceItems)
                     {
@@ -157,7 +157,7 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
 
                             foreach (var targetVal in targetList)
                             {
-                                result.Add(new WeightedInheritanceResultItem<IndexedChannel>(targetVal, weightedInheritanceItem));
+                                result.Add(new WeightedInheritanceResultItem<Channel>(targetVal, weightedInheritanceItem));
                             }
                         }
                     }
@@ -165,7 +165,7 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
                     return result;
                 }
 
-                return new List<WeightedInheritanceResultItem<IndexedChannel>>();
+                return new List<WeightedInheritanceResultItem<Channel>>();
             }
         }
     }

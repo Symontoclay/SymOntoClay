@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
         }
 
-        public IndexedNumberValue Resolve(IndexedValue source, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public NumberValue Resolve(Value source, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"source = {source}");
@@ -48,10 +48,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             switch (sourceKind)
             {
                 case KindOfValue.NullValue:
-                    return IndexedValueConvertor.ConvertNullValueToNumberValue(source.AsNullValue, _context);
+                    return ValueConvertor.ConvertNullValueToNumberValue(source.AsNullValue, _context);
 
                 case KindOfValue.LogicalValue:
-                    return IndexedValueConvertor.ConvertLogicalValueToNumberValue(source.AsLogicalValue, _context);
+                    return ValueConvertor.ConvertLogicalValueToNumberValue(source.AsLogicalValue, _context);
 
                 case KindOfValue.NumberValue:
                     return source.AsNumberValue;

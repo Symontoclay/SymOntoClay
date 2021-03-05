@@ -30,15 +30,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public class BinaryOperatorSystemHandler: ISystemHandler
     {
-        public BinaryOperatorSystemHandler(IBinaryOperatorHandler operatorHandler, IEntityDictionary entityDictionary)
+        public BinaryOperatorSystemHandler(IBinaryOperatorHandler operatorHandler)
         {
-            _leftOperandKey = entityDictionary.GetKey("leftOperand");
-            _rightOperandKey = entityDictionary.GetKey("rightOperand");
+            _leftOperandKey = "leftOperand";
+            _rightOperandKey = "rightOperand";
             _operatorHandler = operatorHandler;
         }
 
-        private readonly ulong _leftOperandKey;
-        private readonly ulong _rightOperandKey;
+        private readonly string _leftOperandKey;
+        private readonly string _rightOperandKey;
         private readonly IBinaryOperatorHandler _operatorHandler;
 
         /// <inheritdoc/>
@@ -52,7 +52,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
         
         /// <inheritdoc/>
-        public Value Call(IDictionary<ulong, Value> paramsDict, Value anotation, LocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(IDictionary<string, Value> paramsDict, Value anotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
             var leftOperand = paramsDict[_leftOperandKey];
             var rightOperand = paramsDict[_rightOperandKey];

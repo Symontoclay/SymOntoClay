@@ -31,7 +31,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public class LocalCodeExecutionContext: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public IndexedStrongIdentifierValue Holder { get; set; }
+        public StrongIdentifierValue Holder { get; set; }
         public IStorage Storage { get; set; }
 
         /// <inheritdoc/>

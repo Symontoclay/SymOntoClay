@@ -51,7 +51,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         protected List<WeightedInheritanceResultItemWithStorageInfo<T>> Filter<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source)
-            where T: IndexedAnnotatedItem
+            where T: AnnotatedItem
         {
             if(!source.Any())
             {
@@ -75,7 +75,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         protected List<WeightedInheritanceResultItemWithStorageInfo<T>> OrderAndDistinctByInheritance<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, ResolverOptions options)
-            where T : IndexedAnnotatedItem
+            where T : AnnotatedItem
         {
             if(options.JustDistinct)
             {
@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         protected virtual T ChooseTargetItem<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source) 
-            where T : IndexedAnnotatedItem
+            where T : AnnotatedItem
         {
             if(!source.Any())
             {

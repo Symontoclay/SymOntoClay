@@ -40,48 +40,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override NullValue AsNullValue => this;
 
-        public IndexedNullValue Indexed { get; set; }
-
-        public IndexedNullValue GetIndexed(IMainStorageContext mainStorageContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertNullValue(this, mainStorageContext);
-            }
-
-            return Indexed;
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
-
-        /// <inheritdoc/>
-        public override IndexedValue GetIndexedValue(IMainStorageContext mainStorageContext)
-        {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
-        {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertNullValue(this, mainStorageContext, convertingContext);
-            }
-
-            return Indexed;
-        }
-
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
             return null;
+        }
+
+        /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            return LongHashCodeWeights.NullWeight ^ base.CalculateLongHashCode();
         }
 
         /// <inheritdoc/>

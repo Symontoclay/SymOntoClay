@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
         }
 
-        public List<WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>> ResolveLogicConditionalTriggersList(IndexedStrongIdentifierValue holder, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> ResolveLogicConditionalTriggersList(StrongIdentifierValue holder, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
@@ -57,7 +57,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(holder.NameKey, localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(holder.NormalizedNameValue, localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
             //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
@@ -72,7 +72,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return OrderAndDistinct(rawList, localCodeExecutionContext, options);
         }
 
-        public List<WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>> ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IndexedStrongIdentifierValue holder, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, StrongIdentifierValue holder, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"kindOfSystemEvent = {kindOfSystemEvent}");
@@ -96,7 +96,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(holder.NameKey, localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(holder.NormalizedNameValue, localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
             //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
@@ -111,7 +111,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return OrderAndDistinct(rawList, localCodeExecutionContext, options);
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>> OrderAndDistinct(List<WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>> source, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> OrderAndDistinct(List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> source, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var inheritanceOrderOptions = options.Clone();
 
@@ -122,14 +122,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>> GetLogicConditionalRawList(IndexedStrongIdentifierValue holder, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> GetLogicConditionalRawList(StrongIdentifierValue holder, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             if (!storagesList.Any())
             {
-                return new List<WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>>();
+                return new List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>>();
             }
 
-            var result = new List<WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>>();
+            var result = new List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>>();
 
             foreach (var storageItem in storagesList)
             {
@@ -145,14 +145,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 foreach (var item in itemsList)
                 {
-                    result.Add(new WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>(item, distance, storage));
+                    result.Add(new WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>(item, distance, storage));
                 }
             }
 
             return result;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>> GetSystemEventsRawList(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IndexedStrongIdentifierValue holder, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> GetSystemEventsRawList(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, StrongIdentifierValue holder, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
             //Log($"kindOfSystemEvent = {kindOfSystemEvent}");
@@ -161,10 +161,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!storagesList.Any())
             {
-                return new List<WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>>();
+                return new List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>>();
             }
 
-            var result = new List<WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>>();
+            var result = new List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>>();
 
             foreach (var storageItem in storagesList)
             {
@@ -180,7 +180,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 foreach (var item in itemsList)
                 {
-                    result.Add(new WeightedInheritanceResultItemWithStorageInfo<IndexedInlineTrigger>(item, distance, storage));
+                    result.Add(new WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>(item, distance, storage));
                 }
             }
 

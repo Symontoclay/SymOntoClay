@@ -63,51 +63,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public Vector3 AbcoluteCoordinates { get; private set; }
         public StrongIdentifierValue Name { get; private set; }
 
-
         private IEngineContext _context;
-
-        public IndexedWaypointValue Indexed { get; set; }
-
-        public IndexedWaypointValue GetIndexed(IMainStorageContext mainStorageContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertWaypointValue(this, mainStorageContext);
-            }
-
-            return Indexed;
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
-
-        /// <inheritdoc/>
-        public override IndexedValue GetIndexedValue(IMainStorageContext mainStorageContext)
-        {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
-        {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertWaypointValue(this, mainStorageContext, convertingContext);
-            }
-
-            return Indexed;
-        }
 
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
             return AbcoluteCoordinates;
+        }
+
+        /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            return base.CalculateLongHashCode() ^ LongHashCodeWeights.BaseFunctionWeight ^ (Name?.GetLongHashCode() ?? 0) ^ LongHashCodeWeights.BaseParamWeight ^ (ulong)Math.Abs(AbcoluteCoordinates.GetHashCode());
         }
 
         /// <inheritdoc/>
@@ -152,8 +119,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(AbcoluteCoordinates)} = {AbcoluteCoordinates}");
             sb.PrintObjProp(n, nameof(Name), Name);
 
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
-
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -166,8 +131,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(AbcoluteCoordinates)} = {AbcoluteCoordinates}");
             sb.PrintShortObjProp(n, nameof(Name), Name);
-
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -182,10 +145,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(AbcoluteCoordinates)} = {AbcoluteCoordinates}");
             sb.PrintBriefObjProp(n, nameof(Name), Name);
 
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
-
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToDbgString(uint n)
+        {
+            if (Name != null && !Name.IsEmpty)
+            {
+                return $"{Name.NameValue}[{AbcoluteCoordinates}]";
+            }
+
+            return $"#@[{AbcoluteCoordinates}]";
         }
     }
 }

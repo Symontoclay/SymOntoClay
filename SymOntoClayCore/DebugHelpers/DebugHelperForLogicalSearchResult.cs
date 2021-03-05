@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.DebugHelpers
     {
         private static readonly CultureInfo _cultureInfo = new CultureInfo("en-GB");
 
-        public static string ToString(LogicalSearchResult source, IEntityDictionary entityDictionary)
+        public static string ToString(LogicalSearchResult source)
         {
             if (!source.IsSuccess)
             {

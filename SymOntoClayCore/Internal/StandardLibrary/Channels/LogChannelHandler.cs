@@ -42,15 +42,15 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
         private readonly IEngineContext _engineContext;
 
         /// <inheritdoc/>
-        public IndexedValue Read()
+        public Value Read()
         {
             var result = new NullValue();
             
-            return result.GetIndexed(_engineContext);
+            return result;
         }
 
         /// <inheritdoc/>
-        public IndexedValue Write(IndexedValue value)
+        public Value Write(Value value)
         {
 #if DEBUG
             //Log($"value = {value}");
@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
             switch(value.KindOfValue)
             {
                 case KindOfValue.LogicalSearchResultValue:
-                    LogChannel(DebugHelperForLogicalSearchResult.ToString(value.AsLogicalSearchResultValue.LogicalSearchResult, _engineContext.Dictionary));
+                    LogChannel(DebugHelperForLogicalSearchResult.ToString(value.AsLogicalSearchResultValue.LogicalSearchResult));
                     break;
 
                 case KindOfValue.NullValue:

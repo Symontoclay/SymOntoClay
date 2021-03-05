@@ -40,48 +40,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override HostValue AsHostValue => this;
 
-        public IndexedHostValue Indexed { get; set; }
-
-        public IndexedHostValue GetIndexed(IMainStorageContext mainStorageContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertHostValue(this, mainStorageContext);
-            }
-
-            return Indexed;
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
-
-        /// <inheritdoc/>
-        public override IndexedValue GetIndexedValue(IMainStorageContext mainStorageContext)
-        {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
-        {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertHostValue(this, mainStorageContext, convertingContext);
-            }
-
-            return Indexed;
-        }
-
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
             return this;
+        }
+
+        /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            return base.CalculateLongHashCode() ^ LongHashCodeWeights.HostWeight;
         }
 
         /// <inheritdoc/>
@@ -143,6 +111,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToDbgString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            return $"{spaces}ref: @@Host";
         }
     }
 }

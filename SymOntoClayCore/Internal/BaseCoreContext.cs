@@ -33,7 +33,5 @@ namespace SymOntoClay.Core.Internal
             : base(logger)
         {
         }
-
-        public IEntityDictionary Dictionary { get; set; }
     }
 }

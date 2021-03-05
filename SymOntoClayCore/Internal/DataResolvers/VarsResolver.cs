@@ -36,7 +36,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
         }
 
-        public IndexedValue GetVarValue(IndexedStrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Value GetVarValue(StrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"varName = {varName}");
@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return GetUsualVarValue(varName, localCodeExecutionContext, options);
         }
 
-        private IndexedValue GetSystemVarValue(IndexedStrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private Value GetSystemVarValue(StrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"varName = {varName}");
@@ -85,7 +85,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        private IndexedValue GetUsualVarValue(IndexedStrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private Value GetUsualVarValue(StrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"varName = {varName}");
@@ -117,7 +117,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
             }
 
-            return new NullValue().GetIndexedValue(_context);
+            return new NullValue();
         }
     }
 }

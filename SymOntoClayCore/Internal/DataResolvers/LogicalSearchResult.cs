@@ -32,7 +32,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
     {
         public bool IsSuccess { get; set; }
         public IList<LogicalSearchResultItem> Items { get; set; }
-        public List<ulong> UsedKeysList { get; set; } = new List<ulong>();
+        public List<string> UsedKeysList { get; set; } = new List<string>();
 
         public ulong GetLongHashCode()
         {

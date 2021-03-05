@@ -20,7 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.CodeModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,9 +29,9 @@ namespace SymOntoClay.Core
 {
     public interface IVarStorage: ISpecificStorage
     {
-        void SetSystemValue(IndexedStrongIdentifierValue varName, IndexedValue value);
-        IndexedValue GetSystemValueDirectly(IndexedStrongIdentifierValue varName);
-        void SetValue(IndexedStrongIdentifierValue varName, IndexedValue value);
-        IndexedValue GetValueDirectly(IndexedStrongIdentifierValue varName);
+        void SetSystemValue(StrongIdentifierValue varName, Value value);
+        Value GetSystemValueDirectly(StrongIdentifierValue varName);
+        void SetValue(StrongIdentifierValue varName, Value value);
+        Value GetValueDirectly(StrongIdentifierValue varName);
     }
 }

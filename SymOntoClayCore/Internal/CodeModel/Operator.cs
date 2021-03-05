@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -39,38 +40,26 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
         public bool IsSystemDefined { get; set; }
         public List<AstStatement> Statements { get; set; } = new List<AstStatement>();
+
+        public CompiledFunctionBody CompiledFunctionBody { get; set; }
+
         public ISystemHandler SystemHandler { get; set; }
 
-        public IndexedOperator Indexed { get; set; }
-
-        public IndexedOperator GetIndexed(IMainStorageContext mainStorageContext)
+        /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
         {
-            if(Indexed == null)
+            var result = base.CalculateLongHashCode() ^ LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(KindOfOperator.GetHashCode());
+
+            if (IsSystemDefined)
             {
-                return ConvertorToIndexed.ConvertOperator(this, mainStorageContext);
+                result ^= (ulong)Math.Abs(SystemHandler.GetHashCode());
+            }
+            else
+            {
+                result ^= CompiledFunctionBody.GetLongHashCode();
             }
 
-            return Indexed;
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
-        {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertOperator(this, mainStorageContext, convertingContext);
-            }
-
-            return Indexed;
+            return result;
         }
 
         /// <inheritdoc/>
@@ -107,6 +96,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.KindOfOperator = KindOfOperator;
             result.IsSystemDefined = IsSystemDefined;
             result.Statements = Statements.Select(p => p.CloneAstStatement(context)).ToList();
+            CompiledFunctionBody = CompiledFunctionBody.Clone(context);
             result.SystemHandler = SystemHandler;
 
             result.AppendAnnotations(this, context);
@@ -137,10 +127,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
 
             sb.PrintObjListProp(n, nameof(Statements), Statements);
+            sb.PrintObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
             sb.PrintExisting(n, nameof(SystemHandler), SystemHandler);
-
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -156,10 +145,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
 
             sb.PrintShortObjListProp(n, nameof(Statements), Statements);
+            sb.PrintShortObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
             sb.PrintExisting(n, nameof(SystemHandler), SystemHandler);
-
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -175,10 +163,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
 
             sb.PrintBriefObjListProp(n, nameof(Statements), Statements);
+            sb.PrintBriefObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
             sb.PrintExisting(n, nameof(SystemHandler), SystemHandler);
-
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

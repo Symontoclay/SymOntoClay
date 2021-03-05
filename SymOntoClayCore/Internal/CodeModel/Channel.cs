@@ -35,36 +35,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public StrongIdentifierValue Name { get; set; }
         public IChannelHandler Handler { get; set; }
 
-        public IndexedChannel Indexed { get; set; }
-
-        public IndexedChannel GetIndexed(IMainStorageContext mainStorageContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertChannel(this, mainStorageContext);
-            }
-
-            return Indexed;
-        }
-
         /// <inheritdoc/>
-        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
+        protected override ulong CalculateLongHashCode()
         {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertChannel(this, mainStorageContext, convertingContext);
-            }
-
-            return Indexed;
+            return base.CalculateLongHashCode() ^ Name.GetLongHashCode() ^ (ulong)Math.Abs(Handler.GetHashCode());
         }
 
         /// <inheritdoc/>

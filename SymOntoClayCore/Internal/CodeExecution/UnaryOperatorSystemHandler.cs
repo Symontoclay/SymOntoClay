@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
@@ -29,17 +30,17 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public class UnaryOperatorSystemHandler : ISystemHandler
     {
-        public UnaryOperatorSystemHandler(IUnaryOperatorHandler operatorHandler, IEntityDictionary entityDictionary)
+        public UnaryOperatorSystemHandler(IUnaryOperatorHandler operatorHandler)
         {
-            _operandKey = entityDictionary.GetKey("operand");
+            _operandKey = "operand";
             _operatorHandler = operatorHandler;
         }
 
-        private readonly ulong _operandKey;
+        private readonly string _operandKey;
         private readonly IUnaryOperatorHandler _operatorHandler;
 
         /// <inheritdoc/>
-        public IndexedValue Call(IList<IndexedValue> paramsList, LocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(IList<Value> paramsList, LocalCodeExecutionContext localCodeExecutionContext)
         {
             var operand = paramsList[0];
             var anotation = paramsList[1];
@@ -48,7 +49,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         /// <inheritdoc/>
-        public IndexedValue Call(IDictionary<ulong, IndexedValue> paramsDict, IndexedValue anotation, LocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(IDictionary<string, Value> paramsDict, Value anotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
             var operand = paramsDict[_operandKey];
 

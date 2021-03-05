@@ -30,6 +30,5 @@ namespace SymOntoClay.Core.Internal
     public interface IBaseCoreContext
     {
         IEntityLogger Logger { get; }
-        IEntityDictionary Dictionary { get; }
     }
 }

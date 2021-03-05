@@ -33,6 +33,6 @@ namespace SymOntoClay.Core
         void SetInheritance(InheritanceItem inheritanceItem);
         void SetInheritance(InheritanceItem inheritanceItem, bool isPrimary);
         void RemoveInheritance(InheritanceItem inheritanceItem);
-        IList<WeightedInheritanceResultItem<IndexedInheritanceItem>> GetItemsDirectly(ulong subNameKey);
+        IList<WeightedInheritanceResultItem<InheritanceItem>> GetItemsDirectly(StrongIdentifierValue subName);
     }
 }

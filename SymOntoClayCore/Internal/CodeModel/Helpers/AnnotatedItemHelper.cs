@@ -36,13 +36,5 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 item.Holder = commonNamesStorage.DefaultHolder;
             }
         }
-
-        public static void CheckAndFillHolder(IndexedAnnotatedItem item, ICommonNamesStorage commonNamesStorage)
-        {
-            if (item.Holder == null)
-            {
-                item.Holder = commonNamesStorage.IndexedDefaultHolder;
-            }
-        }
     }
 }

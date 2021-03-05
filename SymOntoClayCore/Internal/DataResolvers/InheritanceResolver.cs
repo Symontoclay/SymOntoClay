@@ -42,22 +42,22 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public Value GetInheritanceRank(StrongIdentifierValue subName, StrongIdentifierValue superName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            return GetInheritanceRank(subName.NormalizedNameValue, superName.NormalizedNameValue, localCodeExecutionContext, options);
+            return GetInheritanceRank(subName, superName, localCodeExecutionContext, options);
         }
 
-        public Value GetInheritanceRank(string subName, string superName, LocalCodeExecutionContext localCodeExecutionContext)
+        public Value GetInheritanceRank(StrongIdentifierValue subName, StrongIdentifierValue superName, LocalCodeExecutionContext localCodeExecutionContext)
         {
             return GetInheritanceRank(subName, superName, localCodeExecutionContext, _defaultOptions);
         }
 
-        public Value GetInheritanceRank(ulong subNameKey, ulong superNameKey, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Value GetInheritanceRank(StrongIdentifierValue subName, StrongIdentifierValue superName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"subName = {subName}");
             //Log($"superName = {superName}");
 #endif
 
-            var weightedInheritanceItemsList = GetWeightedInheritanceItems(subNameKey, localCodeExecutionContext, options);
+            var weightedInheritanceItemsList = GetWeightedInheritanceItems(subName, localCodeExecutionContext, options);
 
 #if DEBUG
             //Log($"weightedInheritanceItemsList = {weightedInheritanceItemsList.WriteListToString()}");
@@ -66,10 +66,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if(!weightedInheritanceItemsList.Any())
             {
                 var result = new LogicalValue(0);
-                return result.GetIndexedValue(_context);
+                return result;
             }
 
-            var targetWeightedInheritanceItemsList = weightedInheritanceItemsList.Where(p => p.SuperName.Equals(superNameKey)).ToList();
+            var targetWeightedInheritanceItemsList = weightedInheritanceItemsList.Where(p => p.SuperName.Equals(superName)).ToList();
 
 #if DEBUG
             //Log($"targetWeightedInheritanceItemsList = {targetWeightedInheritanceItemsList.WriteListToString()}");
@@ -78,40 +78,40 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if (!targetWeightedInheritanceItemsList.Any())
             {
                 var result = new LogicalValue(0);
-                return result.GetIndexedValue(_context);
+                return result;
             }
 
             if (targetWeightedInheritanceItemsList.Count == 1)
             {
                 var result = new LogicalValue(targetWeightedInheritanceItemsList.First().Rank);
                 
-                return result.GetIndexedValue(_context);
+                return result;
             }
 
             throw new NotImplementedException();
         }
 
-        public List<ulong> GetSuperClassesKeysList(ulong subNameKey, LocalCodeExecutionContext localCodeExecutionContext)
+        public List<string> GetSuperClassesKeysList(StrongIdentifierValue subName, LocalCodeExecutionContext localCodeExecutionContext)
         {
-            return GetWeightedInheritanceItems(subNameKey, localCodeExecutionContext).Select(p => p.SuperName).Where(p => p != 0).Distinct().ToList();
+            return GetWeightedInheritanceItems(subName, localCodeExecutionContext).Select(p => p.SuperName).Where(p => !string.IsNullOrEmpty(p)).Distinct().ToList();
         }
 
         public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            return GetWeightedInheritanceItems(localCodeExecutionContext.Holder.NameKey, localCodeExecutionContext, options);
+            return GetWeightedInheritanceItems(localCodeExecutionContext.Holder.NormalizedNameValue, localCodeExecutionContext, options);
+        }
+
+        //public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(StrongIdentifierValue subName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        //{
+        //    return GetWeightedInheritanceItems(subName.NormalizedNameValue, localCodeExecutionContext, options);
+        //}
+
+        public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(StrongIdentifierValue subName, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return GetWeightedInheritanceItems(subName, localCodeExecutionContext, _defaultOptions);
         }
 
         public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(StrongIdentifierValue subName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
-        {
-            return GetWeightedInheritanceItems(subName.NameKey, localCodeExecutionContext, options);
-        }
-
-        public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(ulong subNameKey, LocalCodeExecutionContext localCodeExecutionContext)
-        {
-            return GetWeightedInheritanceItems(subNameKey, localCodeExecutionContext, _defaultOptions);
-        }
-
-        public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(ulong subNameKey, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
@@ -129,9 +129,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //}
 #endif
 
-            var rawResult = new Dictionary<ulong, WeightedInheritanceItem>();
+            var rawResult = new Dictionary<StrongIdentifierValue, WeightedInheritanceItem>();
 
-            GetWeightedInheritanceItemsBySubName(subNameKey, localCodeExecutionContext, rawResult, 1, 0, storagesList);
+            GetWeightedInheritanceItemsBySubName(subName, localCodeExecutionContext, rawResult, 1, 0, storagesList);
 
 #if DEBUG
             //Log($"rawResult.Count = {rawResult.Count}");
@@ -147,33 +147,33 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if(options.AddTopType)
             {
-                result.Add(GetTopTypeWeightedInheritanceItem(subNameKey));
+                result.Add(GetTopTypeWeightedInheritanceItem(subName));
             }            
 
             if(options.AddSelf)
             {
-                result.Add(GetSelfWeightedInheritanceItem(subNameKey));
+                result.Add(GetSelfWeightedInheritanceItem(subName));
             }
 
             return OrderAndDistinct(result, localCodeExecutionContext, options);
         }
 
-        private WeightedInheritanceItem GetTopTypeWeightedInheritanceItem(ulong subNameKey)
+        private WeightedInheritanceItem GetTopTypeWeightedInheritanceItem(StrongIdentifierValue subName)
         {
-            var topTypeName = _context.CommonNamesStorage.IndexedDefaultHolder;
+            var topTypeName = _context.CommonNamesStorage.DefaultHolder;
 
             var item = new WeightedInheritanceItem();
-            item.SuperName = topTypeName.NameKey;
+            item.SuperName = topTypeName;
             item.Rank = 0.1F;
             item.Distance = uint.MaxValue;
 
             return item;
         }
 
-        private WeightedInheritanceItem GetSelfWeightedInheritanceItem(ulong subNameKey)
+        private WeightedInheritanceItem GetSelfWeightedInheritanceItem(StrongIdentifierValue subName)
         {
             var item = new WeightedInheritanceItem();
-            item.SuperName = subNameKey;
+            item.SuperName = subName;
             item.Rank = 1F;
             item.Distance = 0u;
             item.IsSelf = true;
@@ -186,7 +186,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return source.OrderByDescending(p => p.IsSelf).ToList();
         }
 
-        private void GetWeightedInheritanceItemsBySubName(ulong subNameKey, LocalCodeExecutionContext localCodeExecutionContext, Dictionary<ulong, WeightedInheritanceItem> result, float currentRank, uint currentDistance, List<StorageUsingOptions> storagesList)
+        private void GetWeightedInheritanceItemsBySubName(StrongIdentifierValue subName, LocalCodeExecutionContext localCodeExecutionContext, Dictionary<StrongIdentifierValue, WeightedInheritanceItem> result, float currentRank, uint currentDistance, List<StorageUsingOptions> storagesList)
         {
 #if DEBUG
             //Log($"subName = {subNameKey}");
@@ -206,7 +206,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"currentDistance (after) = {currentDistance}");
 #endif
 
-            var rawList = GetRawList(subNameKey, storagesList);
+            var rawList = GetRawList(subName, storagesList);
 
 #if DEBUG
             //Log($"rawList = {rawList.WriteListToString()}");
@@ -248,15 +248,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     continue;
                 }
 
-                var superNameKey = targetItem.SuperName.NameKey;
+                var superName = targetItem.SuperName;
 
 #if DEBUG
                 //Log($"superName = {superName}");
 #endif
 
-                if (result.ContainsKey(superNameKey))
+                if (result.ContainsKey(superName))
                 {
-                    var item = result[superNameKey];
+                    var item = result[superName];
 
                     if(item.Rank < calculatedRank)
                     {
@@ -272,7 +272,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 else
                 {
                     var item = new WeightedInheritanceItem();
-                    item.SuperName = superNameKey;
+                    item.SuperName = superName;
                     item.Distance = currentDistance;
                     item.Rank = calculatedRank;
                     item.OriginalItem = targetItem;
@@ -281,14 +281,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     //Log($"item (w 2) = {item}");
 #endif
 
-                    result[superNameKey] = item;
+                    result[superName] = item;
                 }
 
-                GetWeightedInheritanceItemsBySubName(targetItem.SuperName.NameKey, localCodeExecutionContext, result, calculatedRank, currentDistance, storagesList);
+                GetWeightedInheritanceItemsBySubName(targetItem.SuperName.NormalizedNameValue, localCodeExecutionContext, result, calculatedRank, currentDistance, storagesList);
             }
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<InheritanceItem>> GetRawList(ulong subNameKey, List<StorageUsingOptions> storagesList)
+        private List<WeightedInheritanceResultItemWithStorageInfo<InheritanceItem>> GetRawList(StrongIdentifierValue subName, List<StorageUsingOptions> storagesList)
         {
 #if DEBUG
             //Log($"subNameKey = {subNameKey}");
@@ -303,7 +303,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-                var itemsList = storageItem.Storage.InheritanceStorage.GetItemsDirectly(subNameKey);
+                var itemsList = storageItem.Storage.InheritanceStorage.GetItemsDirectly(subName);
 
                 if (!itemsList.Any())
                 {

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
@@ -50,6 +51,77 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public bool HasModalitiesOrSections => !QuantityQualityModalities.IsNullOrEmpty() || !WhereSection.IsNullOrEmpty();
 
         public bool HasConditionalSections => !WhereSection.IsNullOrEmpty();
+
+        private ulong? _longConditionalHashCode;
+
+        public virtual ulong GetLongConditionalHashCode()
+        {
+            return _longConditionalHashCode.Value;
+        }
+
+        private ulong? _longHashCode;
+
+        public virtual ulong GetLongHashCode()
+        {
+            return _longHashCode.Value;
+        }
+
+        public void CalculateLongHashCodes()
+        {
+            _longHashCode = CalculateLongHashCode();
+            CalculateLongConditionalHashCode();
+        }
+
+        protected virtual void CalculateLongConditionalHashCode()
+        {
+            ulong result = 0;
+
+            if (!WhereSection.IsNullOrEmpty())
+            {
+                foreach (var whereItem in WhereSection)
+                {
+                    result ^= whereItem.GetLongHashCode();
+                }
+            }
+
+            _longConditionalHashCode = result;
+        }
+
+        protected virtual ulong CalculateLongHashCode()
+        {
+            ulong result = 0;
+
+            if (!QuantityQualityModalities.IsNullOrEmpty())
+            {
+                foreach (var item in QuantityQualityModalities)
+                {
+                    result ^= LongHashCodeWeights.BaseModalityWeight ^ item.GetLongHashCode();
+                }
+            }
+
+            if (!WhereSection.IsNullOrEmpty())
+            {
+                foreach (var item in WhereSection)
+                {
+                    result ^= LongHashCodeWeights.BaseModalityWeight ^ item.GetLongHashCode();
+                }
+            }
+
+            if (Holder != null)
+            {
+                result ^= LongHashCodeWeights.BaseModalityWeight ^ Holder.GetLongHashCode();
+            }
+
+            if (!Annotations.IsNullOrEmpty())
+            {
+                foreach (var item in Annotations)
+                {
+                    result ^= LongHashCodeWeights.BaseModalityWeight ^ item.GetLongHashCode();
+                }
+            }
+
+            return result;
+        }
 
         public virtual IList<RuleInstance> Annotations { get; set; }
 
@@ -215,8 +287,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 _isDisposed = true;
 
                 OnDisposed();
-
-                IndexedAnnotatedItem.Dispose();
             }
         }
 
@@ -249,6 +319,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
             sb.AppendLine($"{spaces}{nameof(HasConditionalSections)} = {HasConditionalSections}");
+
+            sb.AppendLine($"{spaces}{nameof(_longConditionalHashCode)} = {_longConditionalHashCode}");
+            sb.AppendLine($"{spaces}{nameof(_longHashCode)} = {_longHashCode}");
 
             sb.PrintObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintObjListProp(n, nameof(WhereSection), WhereSection);
@@ -284,6 +357,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
             sb.AppendLine($"{spaces}{nameof(HasConditionalSections)} = {HasConditionalSections}");
 
+            sb.AppendLine($"{spaces}{nameof(_longConditionalHashCode)} = {_longConditionalHashCode}");
+            sb.AppendLine($"{spaces}{nameof(_longHashCode)} = {_longHashCode}");
+
             sb.PrintShortObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintShortObjListProp(n, nameof(WhereSection), WhereSection);
             sb.PrintShortObjProp(n, nameof(Holder), Holder);
@@ -318,6 +394,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(HasModalitiesOrSections)} = {HasModalitiesOrSections}");
             sb.AppendLine($"{spaces}{nameof(HasConditionalSections)} = {HasConditionalSections}");
 
+            sb.AppendLine($"{spaces}{nameof(_longConditionalHashCode)} = {_longConditionalHashCode}");
+            sb.AppendLine($"{spaces}{nameof(_longHashCode)} = {_longHashCode}");
+
             sb.PrintExistingList(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintExistingList(n, nameof(WhereSection), WhereSection);
 
@@ -348,6 +427,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         protected virtual string PropertiesToDbgString(uint n)
         {
+#if DEBUG
+            DebugLogger.Instance.Info(this);
+#endif
+
             throw new NotImplementedException();
         }
     }

@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly ChannelsResolver _channelsResolver;
 
         /// <inheritdoc/>
-        public IndexedValue Call(IndexedValue leftOperand, IndexedValue rightOperand, IndexedValue annotation, LocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(Value leftOperand, Value rightOperand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"leftOperand = {leftOperand}");
@@ -52,7 +52,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             //Log($"annotation = {annotation}");
 #endif
 
-            IndexedValue valueFromSource = null;
+            Value valueFromSource = null;
 
             if(leftOperand.KindOfValue == KindOfValue.StrongIdentifierValue)
             {

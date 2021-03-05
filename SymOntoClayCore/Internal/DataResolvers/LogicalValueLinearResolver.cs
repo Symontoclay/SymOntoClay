@@ -42,30 +42,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public LogicalValue Resolve(Value source, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"source = {source}");
-#endif
-
-            var sourceKind = source.KindOfValue;
-
-            switch (sourceKind)
-            {
-                case KindOfValue.NullValue:
-                    return new LogicalValue(null);
-
-                case KindOfValue.LogicalValue:
-                    return source.AsLogicalValue;
-
-                case KindOfValue.NumberValue:
-                    return new LogicalValue((float?)source.AsNumberValue.SystemValue);
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(sourceKind), sourceKind, null);
-            }
-        }
-
-        public IndexedLogicalValue Resolve(IndexedValue source, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
-        {
-#if DEBUG
             //Log($"source = {source}");
 #endif
 
@@ -74,13 +50,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             switch(sourceKind)
             {
                 case KindOfValue.NullValue:
-                    return IndexedValueConvertor.ConvertNullValueToLogicalValue(source.AsNullValue, _context);
+                    return ValueConvertor.ConvertNullValueToLogicalValue(source.AsNullValue, _context);
 
                 case KindOfValue.LogicalValue:
                     return source.AsLogicalValue;
 
                 case KindOfValue.NumberValue:
-                    return IndexedValueConvertor.ConvertNumberValueToLogicalValue(source.AsNumberValue, _context);
+                    return ValueConvertor.ConvertNumberValueToLogicalValue(source.AsNumberValue, _context);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(sourceKind), sourceKind, null);

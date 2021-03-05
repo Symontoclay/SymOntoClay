@@ -48,7 +48,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly StrongIdentifierLinearResolver _strongIdentifierLinearResolver;
 
         /// <inheritdoc/>
-        public IndexedValue Call(IndexedValue leftOperand, IndexedValue rightOperand, IndexedValue annotation, LocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(Value leftOperand, Value rightOperand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"leftOperand = {leftOperand}");
@@ -64,7 +64,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             throw new NotImplementedException();
         }
 
-        private IndexedValue GetInheritanceRank(IndexedValue leftOperand, IndexedValue rightOperand, LocalCodeExecutionContext localCodeExecutionContext)
+        private Value GetInheritanceRank(Value leftOperand, Value rightOperand, LocalCodeExecutionContext localCodeExecutionContext)
         {
             var subName = _strongIdentifierLinearResolver.Resolve(leftOperand, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 

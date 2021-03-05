@@ -31,6 +31,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     public interface ISystemHandler
     {
         Value Call(IList<Value> paramsList, LocalCodeExecutionContext localCodeExecutionContext);
-        Value Call(IDictionary<ulong, Value> paramsDict, Value anotation, LocalCodeExecutionContext localCodeExecutionContext);
+        Value Call(IDictionary<string, Value> paramsDict, Value anotation, LocalCodeExecutionContext localCodeExecutionContext);
     }
 }

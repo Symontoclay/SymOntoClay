@@ -36,7 +36,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
         }
 
-        public IndexedStrongIdentifierValue Resolve(IndexedValue source, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public StrongIdentifierValue Resolve(Value source, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"source = {source}");
@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return source.AsStrongIdentifierValue;
 
                 case KindOfValue.InstanceValue:
-                    return source.AsInstanceValue.InstanceInfo.IndexedName;
+                    return source.AsInstanceValue.InstanceInfo.Name;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(sourceKind), sourceKind, null);

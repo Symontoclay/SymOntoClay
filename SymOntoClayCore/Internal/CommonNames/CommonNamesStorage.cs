@@ -43,68 +43,40 @@ namespace SymOntoClay.Core.Internal.CommonNames
         public StrongIdentifierValue WorldName { get; private set; }
 
         /// <inheritdoc/>
-        public IndexedStrongIdentifierValue IndexedWorldName { get; private set; }
-
-        /// <inheritdoc/>
         public StrongIdentifierValue AppName { get; private set; }
-
-        /// <inheritdoc/>
-        public IndexedStrongIdentifierValue IndexedAppName { get; private set; }
 
         /// <inheritdoc/>
         public StrongIdentifierValue ClassName { get; private set; }
 
         /// <inheritdoc/>
-        public IndexedStrongIdentifierValue IndexedClassName { get; private set; }
-
-        /// <inheritdoc/>
         public StrongIdentifierValue DefaultHolder { get; private set; }
-
-        /// <inheritdoc/>
-        public IndexedStrongIdentifierValue IndexedDefaultHolder { get; private set; }
 
         /// <inheritdoc/>
         public StrongIdentifierValue SelfSystemVarName { get; private set; }
 
         /// <inheritdoc/>
-        public IndexedStrongIdentifierValue IndexedSelfSystemVarName { get; private set; }
-
-        /// <inheritdoc/>
         public StrongIdentifierValue HostSystemVarName { get; private set; }
 
         /// <inheritdoc/>
-        public IndexedStrongIdentifierValue IndexedHostSystemVarName { get; private set; }
-
-        /// <inheritdoc/>
         public StrongIdentifierValue SelfName { get; private set; }
-
-        /// <inheritdoc/>
-        public IndexedStrongIdentifierValue IndexedSelfName { get; private set; }
 
         public void LoadFromSourceCode()
         {
             var dictionary = _context.Dictionary;
 
             WorldName = NameHelper.CreateName(StandardNamesConstants.WorldTypeName, dictionary);
-            IndexedWorldName = WorldName.GetIndexed(_context);
 
             AppName = NameHelper.CreateName(StandardNamesConstants.AppTypeName, dictionary);
-            IndexedAppName = AppName.GetIndexed(_context);
 
             ClassName = NameHelper.CreateName(StandardNamesConstants.ClassTypeName, dictionary);
-            IndexedClassName = ClassName.GetIndexed(_context);
 
             DefaultHolder = new StrongIdentifierValue();
-            IndexedDefaultHolder = DefaultHolder.GetIndexed(_context);
 
             SelfSystemVarName = NameHelper.CreateName(StandardNamesConstants.SelfSystemVarName, dictionary);
-            IndexedSelfSystemVarName = SelfSystemVarName.GetIndexed(_context);
 
             HostSystemVarName = NameHelper.CreateName(StandardNamesConstants.HostSystemVarName, dictionary);
-            IndexedHostSystemVarName = HostSystemVarName.GetIndexed(_context);
 
             SelfName = NameHelper.CreateName(_context.Id, dictionary);
-            IndexedSelfName = SelfName.GetIndexed(_context);
         }
     }
 }

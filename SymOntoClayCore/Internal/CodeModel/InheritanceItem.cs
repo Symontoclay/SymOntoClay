@@ -56,36 +56,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public IList<string> KeysOfPrimaryRecords { get; set; } = new List<string>();
 
-        public IndexedInheritanceItem Indexed { get; set; }
-
-        public IndexedInheritanceItem GetIndexed(IMainStorageContext mainStorageContext)
+        /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
         {
-            if(Indexed == null)
+            var result = base.CalculateLongHashCode() ^ SubName.GetLongHashCode() ^ SuperName.GetLongHashCode();
+
+            if (Rank != null)
             {
-                return ConvertorToIndexed.ConvertInheritanceItem(this, mainStorageContext);
+                result ^= LongHashCodeWeights.BaseModalityWeight ^ Rank.GetLongHashCode();
             }
 
-            return Indexed;
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
-        {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertInheritanceItem(this, mainStorageContext, convertingContext);
-            }
-
-            return Indexed;
+            return result;
         }
 
         /// <inheritdoc/>
@@ -147,7 +128,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjProp(n, nameof(Rank), Rank);
             sb.AppendLine($"{spaces}{nameof(IsSystemDefined)} = {IsSystemDefined}");
             sb.PrintPODList(n, nameof(KeysOfPrimaryRecords), KeysOfPrimaryRecords);
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
         }
 
         /// <inheritdoc/>

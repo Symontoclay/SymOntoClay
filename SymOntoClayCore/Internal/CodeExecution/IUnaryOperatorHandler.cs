@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface IUnaryOperatorHandler
     {
-        IndexedValue Call(IndexedValue operand, IndexedValue annotation, LocalCodeExecutionContext localCodeExecutionContext);
+        Value Call(Value operand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext);
     }
 }

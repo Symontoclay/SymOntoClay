@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
         public IStorage Storage => _realStorageContext.Storage;
 
         private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<InheritanceItem>>> _nonIndexedInfo = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<InheritanceItem>>>();
-        private readonly Dictionary<ulong, Dictionary<ulong, List<IndexedInheritanceItem>>> _indexedInfo = new Dictionary<ulong, Dictionary<ulong, List<IndexedInheritanceItem>>>();
+        //private readonly Dictionary<ulong, Dictionary<ulong, List<IndexedInheritanceItem>>> _indexedInfo = new Dictionary<ulong, Dictionary<ulong, List<IndexedInheritanceItem>>>();
         private readonly Dictionary<InheritanceItem, string> _factsIdRegistry = new Dictionary<InheritanceItem, string>();
 
         /// <inheritdoc/>
@@ -81,7 +81,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                 //Log($"inheritanceItem = {inheritanceItem}");
                 //Log($"isPrimary = {isPrimary}");
 #endif
-                var indexedInheritanceItem = inheritanceItem.GetIndexed(_realStorageContext.MainStorageContext);
+                //var indexedInheritanceItem = inheritanceItem.GetIndexed(_realStorageContext.MainStorageContext);
 
 #if DEBUG
                 //Log($"indexedInheritanceItem = {indexedInheritanceItem}");
@@ -95,18 +95,18 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                     return;
                 }
 
-                var subNameKey = indexedInheritanceItem.SubName.NameKey;
-                var superNameKey = indexedInheritanceItem.SuperName.NameKey;
+                //var subNameNormalizedNameValue = subName.NormalizedNameValue;
+                //var superNameNormalizedNameValue = superName.NormalizedNameValue;
 
 #if DEBUG
-                //Log($"subNameKey = {subNameKey}");
-                //Log($"superNameKey = {superNameKey}");
+                //Log($"subNameNormalizedNameValue = {subNameNormalizedNameValue}");
+                //Log($"superNameNormalizedNameValue = {superNameNormalizedNameValue}");
 #endif
 
                 if (_nonIndexedInfo.ContainsKey(subName))
                 {
                     var dict = _nonIndexedInfo[subName];
-                    var indexedDict = _indexedInfo[subNameKey];
+                    //var indexedDict = _indexedInfo[subNameKey];
 
                     if (dict.ContainsKey(superName))
                     {
@@ -116,41 +116,42 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                         //Log($"dict[superName].Count = {dict[superName].Count}");
                         //Log($"targetList = {targetList.WriteListToString()}");
 #endif
-                        var targetLongConditionalHashCode = indexedInheritanceItem.GetLongConditionalHashCode();
+                        var targetLongConditionalHashCode = inheritanceItem.GetLongConditionalHashCode();
 
 #if DEBUG
                         //Log($"targetLongConditionalHashCode = {targetLongConditionalHashCode}");
 #endif
 
-                        var targetIndexedList = indexedDict[superNameKey];
+                        //var targetIndexedList = indexedDict[superNameKey];
 
-                        var indexedItemsWithTheSameLongConditionalHashCodeList = targetIndexedList.Where(p => p.GetLongConditionalHashCode() == targetLongConditionalHashCode).ToList();
+                        var itemsWithTheSameLongConditionalHashCodeList = targetList.Where(p => p.GetLongConditionalHashCode() == targetLongConditionalHashCode).ToList();
 
-                        foreach (var indexedItemWithTheSameLongConditionalHashCode in indexedItemsWithTheSameLongConditionalHashCodeList)
-                        {
-                            targetIndexedList.Remove(indexedItemWithTheSameLongConditionalHashCode);
-                        }
-
-                        var itemsWithTheSameLongConditionalHashCodeList = indexedItemsWithTheSameLongConditionalHashCodeList.Select(p => p.OriginalInheritanceItem).ToList();
-
-#if DEBUG
-                        //Log($"itemsWithTheSameLongConditionalHashCodeList = {itemsWithTheSameLongConditionalHashCodeList.WriteListToString()}");
-#endif
-
-                        foreach(var itemWithTheSameLongConditionalHashCode in itemsWithTheSameLongConditionalHashCodeList)
+                        foreach (var itemWithTheSameLongConditionalHashCode in itemsWithTheSameLongConditionalHashCodeList)
                         {
                             targetList.Remove(itemWithTheSameLongConditionalHashCode);
                             NRemoveIngeritanceFact(itemWithTheSameLongConditionalHashCode);
                         }
 
+                        //var itemsWithTheSameLongConditionalHashCodeList = indexedItemsWithTheSameLongConditionalHashCodeList.Select(p => p.OriginalInheritanceItem).ToList();
+
+#if DEBUG
+                        //Log($"itemsWithTheSameLongConditionalHashCodeList = {itemsWithTheSameLongConditionalHashCodeList.WriteListToString()}");
+#endif
+
+                        //foreach(var itemWithTheSameLongConditionalHashCode in itemsWithTheSameLongConditionalHashCodeList)
+                        //{
+                        //    targetList.Remove(itemWithTheSameLongConditionalHashCode);
+                        //    NRemoveIngeritanceFact(itemWithTheSameLongConditionalHashCode);
+                        //}
+
                         targetList.Add(inheritanceItem);
 
-                        targetIndexedList.Add(indexedInheritanceItem);
+                        //targetIndexedList.Add(indexedInheritanceItem);
                     }
                     else
                     {
                         dict[superName] = new List<InheritanceItem>() { inheritanceItem };
-                        indexedDict[superNameKey] = new List<IndexedInheritanceItem>() { indexedInheritanceItem };
+                        //indexedDict[superNameKey] = new List<IndexedInheritanceItem>() { indexedInheritanceItem };
                     }
                 }
                 else
@@ -159,9 +160,9 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                     _nonIndexedInfo[subName] = dict;
                     dict[superName] = new List<InheritanceItem>() { inheritanceItem };
 
-                    var indexedDict = new Dictionary<ulong, List<IndexedInheritanceItem>>();
-                    _indexedInfo[subNameKey] = indexedDict;
-                    indexedDict[superNameKey] = new List<IndexedInheritanceItem>() { indexedInheritanceItem };
+                    //var indexedDict = new Dictionary<ulong, List<IndexedInheritanceItem>>();
+                    //_indexedInfo[subNameKey] = indexedDict;
+                    //indexedDict[superNameKey] = new List<IndexedInheritanceItem>() { indexedInheritanceItem };
                 }
             }
 
@@ -202,7 +203,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                 //Log($"inheritanceItem = {inheritanceItem}");
                 //Log($"isPrimary = {isPrimary}");
 #endif
-                var indexedInheritanceItem = inheritanceItem.GetIndexed(_realStorageContext.MainStorageContext);
+                //var indexedInheritanceItem = inheritanceItem.GetIndexed(_realStorageContext.MainStorageContext);
 
 #if DEBUG
                 //Log($"indexedInheritanceItem = {indexedInheritanceItem}");
@@ -216,12 +217,12 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                     return;
                 }
 
-                var subNameKey = indexedInheritanceItem.SubName.NameKey;
-                var superNameKey = indexedInheritanceItem.SuperName.NameKey;
+                //var subNameNormalizedNameValue = subName.NormalizedNameValue;
+                //var superNameNormalizedNameValue = superName.NormalizedNameValue;
 
 #if DEBUG
-                //Log($"subNameKey = {subNameKey}");
-                //Log($"superNameKey = {superNameKey}");
+                //Log($"subNameNormalizedNameValue = {subNameNormalizedNameValue}");
+                //Log($"superNameNormalizedNameValue = {superNameNormalizedNameValue}");
 #endif
 
                 if (_nonIndexedInfo.ContainsKey(subName))
@@ -231,15 +232,15 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 
                     if(dict.ContainsKey(superName))
                     {
-                        var indexedDict = _indexedInfo[subNameKey];
+                        //var indexedDict = _indexedInfo[subNameKey];
 
                         var targetList = dict[superName];
 
                         targetList.Remove(inheritanceItem);
 
-                        var targetIndexedList = indexedDict[superNameKey];
+                        //var targetIndexedList = indexedDict[superNameKey];
 
-                        targetIndexedList.Remove(indexedInheritanceItem);
+                        //targetIndexedList.Remove(indexedInheritanceItem);
 
                         NRemoveIngeritanceFact(inheritanceItem);
                     }
@@ -264,9 +265,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 
         private RuleInstance CreateInheritanceFact(InheritanceItem inheritanceItem)
         {
-            var dictionary = _realStorageContext.MainStorageContext.Dictionary;
-
-            var factName = NameHelper.CreateRuleOrFactName(dictionary);
+            var factName = NameHelper.CreateRuleOrFactName();
 
 #if DEBUG
             //Log($"factName = {factName}");
@@ -275,7 +274,6 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
             var fact = new RuleInstance();
             fact.Kind = KindOfRuleInstance.Fact;
             fact.AppendAnnotations(inheritanceItem);
-            fact.DictionaryName = dictionary.Name;
             fact.Name = factName;
             //fact.KeysOfPrimaryRecords.Add(inheritanceItem.Id);
 
@@ -307,7 +305,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<IndexedInheritanceItem>> GetItemsDirectly(ulong subNameKey)
+        public IList<WeightedInheritanceResultItem<InheritanceItem>> GetItemsDirectly(StrongIdentifierValue subName)
         {
             lock (_lockObj)
             {
@@ -315,30 +313,30 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                 //Log($"superName = {subNameKey}");
 #endif
 
-                if(subNameKey == 0)
+                if(subName.IsEmpty)
                 {
-                    return new List<WeightedInheritanceResultItem<IndexedInheritanceItem>>();
+                    return new List<WeightedInheritanceResultItem<InheritanceItem>>();
                 }
 
 #if DEBUG
                 //Log("Next");
 #endif
 
-                if(_indexedInfo.ContainsKey(subNameKey))
+                if(_nonIndexedInfo.ContainsKey(subName))
                 {
-                    var rawResult = _indexedInfo[subNameKey].SelectMany(p => p.Value).ToList();
+                    var rawResult = _nonIndexedInfo[subName].SelectMany(p => p.Value).ToList();
 
-                    var result = new List<WeightedInheritanceResultItem<IndexedInheritanceItem>>();
+                    var result = new List<WeightedInheritanceResultItem<InheritanceItem>>();
 
                     foreach(var rawResultItem in rawResult)
                     {
-                        result.Add(new WeightedInheritanceResultItem<IndexedInheritanceItem>(rawResultItem));
+                        result.Add(new WeightedInheritanceResultItem<InheritanceItem>(rawResultItem));
                     }
 
                     return result;
                 }
 
-                return new List<WeightedInheritanceResultItem<IndexedInheritanceItem>>();
+                return new List<WeightedInheritanceResultItem<InheritanceItem>>();
             }
         }
     }

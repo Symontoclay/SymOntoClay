@@ -23,6 +23,7 @@ SOFTWARE.*/
 using Newtonsoft.Json;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Storage;
@@ -38,7 +39,7 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class LogicConditionalTriggerInstanceInfo : BaseComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public LogicConditionalTriggerInstanceInfo(IndexedInlineTrigger trigger, InstanceInfo parent, IEngineContext context, IStorage parentStorage)
+        public LogicConditionalTriggerInstanceInfo(InlineTrigger trigger, InstanceInfo parent, IEngineContext context, IStorage parentStorage)
             : base(context.Logger)
         {
             _context = context;
@@ -55,7 +56,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _storage = new LocalStorage(localStorageSettings);
             _localCodeExecutionContext.Storage = _storage;
 
-            _localCodeExecutionContext.Holder = parent.IndexedName;
+            _localCodeExecutionContext.Holder = parent.Name;
 
             _storage.LogicalStorage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys;
 
@@ -69,14 +70,14 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly object _lockObj = new object();
         private readonly IEngineContext _context;
         private readonly IStorage _storage;
-        private IndexedInlineTrigger _trigger;
+        private InlineTrigger _trigger;
         private readonly LocalCodeExecutionContext _localCodeExecutionContext;
         private InstanceInfo _parent;
-        private IndexedRuleInstance _condition;
+        private RuleInstance _condition;
         private bool _isOn;
-        private List<ulong> _usedKeysList = new List<ulong>();
+        private List<string> _usedKeysList = new List<string>();
 
-        private void LogicalStorage_OnChangedWithKeys(IList<ulong> changedKeysList)
+        private void LogicalStorage_OnChangedWithKeys(IList<string> changedKeysList)
         {
             lock(_lockObj)
             {
@@ -141,7 +142,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     var processInitialInfo = new ProcessInitialInfo();
                     processInitialInfo.CompiledFunctionBody = _trigger.CompiledFunctionBody;
                     processInitialInfo.LocalContext = _localCodeExecutionContext;
-                    processInitialInfo.Metadata = _trigger.OriginalInlineTrigger.CodeEntity;
+                    processInitialInfo.Metadata = _trigger.CodeEntity;
 
                     var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo);
                 }

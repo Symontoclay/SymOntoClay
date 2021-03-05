@@ -46,21 +46,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         public bool IsAsync { get; set; }
 
         /// <inheritdoc/>
-        public override IndexedAnnotatedItem IndexedAnnotatedItem => null;
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
-        {
-            return null;
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
-        {
-            return null;
-        }
-
-        /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
         {
             return CloneAstExpression(context);

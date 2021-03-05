@@ -44,44 +44,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public string TaskId { get; set; }
         public Task SystemTask { get; set; }
 
-        public IndexedTaskValue Indexed { get; set; }
-
-        public IndexedTaskValue GetIndexed(IMainStorageContext mainStorageContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertTaskValue(this, mainStorageContext);
-            }
-
-            return Indexed;
-        }
-
-        /// <inheritdoc/>
-        public override IndexedValue GetIndexedValue(IMainStorageContext mainStorageContext)
-        {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
-        {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertTaskValue(this, mainStorageContext, convertingContext);
-            }
-
-            return Indexed;
-        }
-
         /// <inheritdoc/>
         public override bool IsTaskValue => true;
 
@@ -92,6 +54,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override object GetSystemValue()
         {
             return SystemTask;
+        }
+
+        /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            return base.CalculateLongHashCode() ^ TaskIdKey ^ (ulong)Math.Abs(SystemTask?.GetHashCode() ?? 0);
         }
 
         /// <inheritdoc/>
@@ -125,8 +93,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(TaskId)} = {TaskId}");
             sb.AppendLine($"{spaces}SystemTask?.Status = {SystemTask?.Status}");
 
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
-
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -139,8 +105,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(TaskId)} = {TaskId}");
             sb.AppendLine($"{spaces}SystemTask?.Status = {SystemTask?.Status}");
 
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
-
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -152,8 +116,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(TaskId)} = {TaskId}");
             sb.AppendLine($"{spaces}SystemTask?.Status = {SystemTask?.Status}");
-
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

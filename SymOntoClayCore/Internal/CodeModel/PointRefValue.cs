@@ -49,48 +49,28 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public Value LeftOperand { get; private set; }
         public Value RightOperand { get; private set; }
 
-        public IndexedPointRefValue Indexed { get; set; }
-
-        public IndexedPointRefValue GetIndexed(IMainStorageContext mainStorageContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertPointRefValue(this, mainStorageContext);
-            }
-
-            return Indexed;
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
-
-        /// <inheritdoc/>
-        public override IndexedValue GetIndexedValue(IMainStorageContext mainStorageContext)
-        {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
-        {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertPointRefValue(this, mainStorageContext, convertingContext);
-            }
-
-            return Indexed;
-        }
-
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
             return this;
+        }
+
+        /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            var result = base.CalculateLongHashCode();
+
+            if (LeftOperand != null)
+            {
+                result ^= LongHashCodeWeights.BaseParamWeight ^ LeftOperand.GetLongHashCode();
+            }
+
+            if (RightOperand != null)
+            {
+                result ^= LongHashCodeWeights.BaseParamWeight ^ RightOperand.GetLongHashCode();
+            }
+
+            return result;
         }
 
         /// <inheritdoc/>
@@ -133,8 +113,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjProp(n, nameof(LeftOperand), LeftOperand);
             sb.PrintObjProp(n, nameof(RightOperand), RightOperand);
 
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
-
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -147,8 +125,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             
             sb.PrintShortObjProp(n, nameof(LeftOperand), LeftOperand);
             sb.PrintShortObjProp(n, nameof(RightOperand), RightOperand);
-
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -163,10 +139,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjProp(n, nameof(LeftOperand), LeftOperand);
             sb.PrintBriefObjProp(n, nameof(RightOperand), RightOperand);
 
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
-
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToDbgString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            return $"{spaces}{LeftOperand.ToDbgString()}.{RightOperand.ToDbgString()}";
         }
     }
 }

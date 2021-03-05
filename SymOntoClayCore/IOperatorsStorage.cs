@@ -32,6 +32,6 @@ namespace SymOntoClay.Core
     public interface IOperatorsStorage : ISpecificStorage
     {
         void Append(Operator op);
-        IList<WeightedInheritanceResultItem<IndexedOperator>> GetOperatorsDirectly(KindOfOperator kindOfOperator, IList<WeightedInheritanceItem> weightedInheritanceItems);
+        IList<WeightedInheritanceResultItem<Operator>> GetOperatorsDirectly(KindOfOperator kindOfOperator, IList<WeightedInheritanceItem> weightedInheritanceItems);
     }
 }

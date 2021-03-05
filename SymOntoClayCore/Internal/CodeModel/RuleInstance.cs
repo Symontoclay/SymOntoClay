@@ -33,7 +33,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class RuleInstance: AnnotatedItem
     {
-        public string DictionaryName { get; set; }
         public StrongIdentifierValue Name { get; set; }
         public KindOfRuleInstance Kind { get; set; } = KindOfRuleInstance.Undefined;
         public PrimaryRulePart PrimaryPart { get; set; }
@@ -52,26 +51,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         public IndexedRuleInstance GetIndexed(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertRuleInstance(this, mainStorageContext, convertingContext);
-            }
-
-            return Indexed;
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
-        {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
         {
             if (Indexed == null)
             {
@@ -112,7 +91,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new RuleInstance();
             context[this] = result;
 
-            result.DictionaryName = DictionaryName;
             result.Name = Name.Clone(context);
             result.Kind = Kind;
             result.PrimaryPart = PrimaryPart.Clone(context);
@@ -155,7 +133,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
             sb.PrintObjProp(n, nameof(Name), Name);
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
@@ -175,7 +152,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
             sb.PrintShortObjProp(n, nameof(Name), Name);
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
@@ -195,7 +171,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
             sb.PrintBriefObjProp(n, nameof(Name), Name);
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");

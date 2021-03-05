@@ -36,11 +36,11 @@ namespace SymOntoClay.Core
         void RemoveById(string id);
 
         event Action OnChanged;
-        event Action<IList<ulong>> OnChangedWithKeys;
+        event Action<IList<string>> OnChangedWithKeys;
 
         IList<RelationIndexedLogicalQueryNode> GetAllRelations();
-        IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(ulong key);
-        IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(ulong key);
+        IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(string key);
+        IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(string key);
 
 #if DEBUG
         void DbgPrintFactsAndRules();

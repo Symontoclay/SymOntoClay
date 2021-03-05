@@ -30,7 +30,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface IChannelHandler
     {
-        IndexedValue Read();
-        IndexedValue Write(IndexedValue value);
+        Value Read();
+        Value Write(Value value);
     }
 }

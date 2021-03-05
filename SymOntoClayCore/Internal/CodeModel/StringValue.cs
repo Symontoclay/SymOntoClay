@@ -47,48 +47,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public string SystemValue { get; private set; }
 
-        public IndexedStringValue Indexed { get; set; }
-
-        public IndexedStringValue GetIndexed(IMainStorageContext mainStorageContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertStringValue(this, mainStorageContext);
-            }
-
-            return Indexed;
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
-
-        /// <inheritdoc/>
-        public override IndexedValue GetIndexedValue(IMainStorageContext mainStorageContext)
-        {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
-        {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertStringValue(this, mainStorageContext, convertingContext);
-            }
-
-            return Indexed;
-        }
-
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
             return SystemValue;
+        }
+
+        /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            return base.CalculateLongHashCode() ^ (ulong)Math.Abs(SystemValue?.GetHashCode() ?? 0);
         }
 
         /// <inheritdoc/>
@@ -119,8 +87,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(SystemValue)} = {SystemValue}");
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
-
+            
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -131,8 +98,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(SystemValue)} = {SystemValue}");
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
-
+            
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -143,8 +109,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(SystemValue)} = {SystemValue}");
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
-
+            
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }

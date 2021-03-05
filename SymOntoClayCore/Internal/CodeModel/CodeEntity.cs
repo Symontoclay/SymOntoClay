@@ -45,21 +45,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public List<CodeEntity> SubItems { get; set; } = new List<CodeEntity>();
 
         /// <inheritdoc/>
-        public override IndexedAnnotatedItem IndexedAnnotatedItem => null;
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
-        {
-            return null;
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
-        {
-            return null;
-        }
-
-        /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
         {
             return Clone(context);

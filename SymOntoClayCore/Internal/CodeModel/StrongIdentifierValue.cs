@@ -35,8 +35,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.StrongIdentifierValue;
 
-        public string DictionaryName { get; set; }
-
         public bool IsEmpty { get; set; } = true;
 
         public KindOfName KindOfName { get; set; } = KindOfName.Unknown;
@@ -91,6 +89,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            return base.CalculateLongHashCode() ^ NameKey;
+        }
+
+        /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
         {
             return Clone(context);
@@ -121,8 +125,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new StrongIdentifierValue();
             context[this] = result;
 
-            result.DictionaryName = DictionaryName;
-
             result.IsEmpty = IsEmpty;
 
             result.KindOfName = KindOfName;
@@ -146,8 +148,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
-
             sb.AppendLine($"{spaces}{nameof(IsEmpty)} = {IsEmpty}");
             sb.AppendLine($"{spaces}{nameof(KindOfName)} = {KindOfName}");
 
@@ -164,8 +164,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
-
             sb.AppendLine($"{spaces}{nameof(IsEmpty)} = {IsEmpty}");
             sb.AppendLine($"{spaces}{nameof(KindOfName)} = {KindOfName}");
 
@@ -181,8 +179,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-
-            sb.AppendLine($"{spaces}{nameof(DictionaryName)} = {DictionaryName}");
 
             sb.AppendLine($"{spaces}{nameof(IsEmpty)} = {IsEmpty}");
             sb.AppendLine($"{spaces}{nameof(KindOfName)} = {KindOfName}");

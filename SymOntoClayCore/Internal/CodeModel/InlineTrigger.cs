@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
@@ -40,38 +41,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public RuleInstance Condition { get; set; }
         public List<AstStatement> Statements { get; set; } = new List<AstStatement>();
 
+        public CompiledFunctionBody CompiledFunctionBody { get; set; }
+
         public CodeEntity CodeEntity { get; set; }
 
-        public IndexedInlineTrigger Indexed { get; set; }
-
-        public IndexedInlineTrigger GetIndexed(IMainStorageContext mainStorageContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertInlineTrigger(this, mainStorageContext);
-            }
-
-            return Indexed;
-        }
-
         /// <inheritdoc/>
-        public override IndexedAnnotatedItem IndexedAnnotatedItem => Indexed;
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext)
+        protected override ulong CalculateLongHashCode()
         {
-            return GetIndexed(mainStorageContext);
-        }
-
-        /// <inheritdoc/>
-        public override IndexedAnnotatedItem GetIndexedAnnotatedItem(IMainStorageContext mainStorageContext, Dictionary<object, object> convertingContext)
-        {
-            if (Indexed == null)
-            {
-                return ConvertorToIndexed.ConvertInlineTrigger(this, mainStorageContext, convertingContext);
-            }
-
-            return Indexed;
+            return base.CalculateLongHashCode() ^ (ulong)Math.Abs(Kind.GetHashCode()) ^ (ulong)Math.Abs(KindOfSystemEvent.GetHashCode()) ^ CompiledFunctionBody.GetLongHashCode();
         }
 
         /// <inheritdoc/>
@@ -109,8 +86,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.KindOfSystemEvent = KindOfSystemEvent;
             result.Condition = Condition.Clone(context);
             result.Statements = Statements.Select(p => p.CloneAstStatement(context)).ToList();
-            result.CodeEntity = CodeEntity.Clone(context);
 
+            result.CodeEntity = CodeEntity.Clone(context);
+            result.CompiledFunctionBody = CompiledFunctionBody.Clone(context);
             result.AppendAnnotations(this, context);
 
             return result;
@@ -139,6 +117,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
             sb.PrintBriefObjProp(n, nameof(Condition), Condition);
             sb.PrintObjListProp(n, nameof(Statements), Statements);
+            sb.PrintObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
             sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
 
@@ -155,6 +134,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
             sb.PrintBriefObjProp(n, nameof(Condition), Condition);
             sb.PrintShortObjListProp(n, nameof(Statements), Statements);
+            sb.PrintShortObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
             sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
 
@@ -171,6 +151,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
             sb.PrintBriefObjProp(n, nameof(Condition), Condition);
             sb.PrintBriefObjListProp(n, nameof(Statements), Statements);
+            sb.PrintBriefObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
             sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
 

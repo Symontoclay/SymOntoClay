@@ -53,10 +53,10 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
         public IStorage Storage => _realStorageContext.Storage;
 
         private readonly Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<StrongIdentifierValue, List<InlineTrigger>>> _nonIndexedSystemEventsInfo = new Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<StrongIdentifierValue, List<InlineTrigger>>>();
-        private readonly Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<ulong, List<IndexedInlineTrigger>>> _indexedSystemEventsInfo = new Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<ulong, List<IndexedInlineTrigger>>>();
+        //private readonly Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<ulong, List<IndexedInlineTrigger>>> _indexedSystemEventsInfo = new Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<ulong, List<IndexedInlineTrigger>>>();
 
         private readonly Dictionary<StrongIdentifierValue, List<InlineTrigger>> _nonIndexedLogicConditionalsInfo = new Dictionary<StrongIdentifierValue, List<InlineTrigger>>();
-        private readonly Dictionary<ulong, List<IndexedInlineTrigger>> _indexedLogicConditionalsInfo = new Dictionary<ulong, List<IndexedInlineTrigger>>();
+        //private readonly Dictionary<ulong, List<IndexedInlineTrigger>> _indexedLogicConditionalsInfo = new Dictionary<ulong, List<IndexedInlineTrigger>>();
 
         /// <inheritdoc/>
         public void Append(InlineTrigger inlineTrigger)
@@ -88,13 +88,13 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
         {
             lock (_lockObj)
             {
-                var indexedItem = inlineTrigger.GetIndexed(_realStorageContext.MainStorageContext);
+                //var indexedItem = inlineTrigger.GetIndexed(_realStorageContext.MainStorageContext);
 
 #if DEBUG
                 //Log($"indexedItem = {indexedItem}");
 #endif
 
-                var indexedItemHolderKey = indexedItem.Holder.NameKey;
+                //var indexedItemHolderKey = indexedItem.Holder.NameKey;
 
                 if (_nonIndexedLogicConditionalsInfo.ContainsKey(inlineTrigger.Holder))
                 {
@@ -104,7 +104,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                     //Log($"_nonIndexedLogicConditionalsInfo[superName].Count = {_nonIndexedLogicConditionalsInfo[inlineTrigger.Holder].Count}");
                     //Log($"targetList = {targetList.WriteListToString()}");
 #endif
-                    var targetLongConditionalHashCode = indexedItem.GetLongConditionalHashCode();
+                    var targetLongConditionalHashCode = inlineTrigger.GetLongConditionalHashCode();
 
 #if DEBUG
                     //Log($"targetLongConditionalHashCode = {targetLongConditionalHashCode}");
@@ -131,12 +131,12 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                     }
 
                     targetList.Add(inlineTrigger);
-                    targetIndexedList.Add(indexedItem);
+                    //targetIndexedList.Add(indexedItem);
                 }
                 else
                 {
                     _nonIndexedLogicConditionalsInfo[inlineTrigger.Holder] = new List<InlineTrigger>() { inlineTrigger };
-                    _indexedLogicConditionalsInfo[indexedItemHolderKey] = new List<IndexedInlineTrigger>() { indexedItem };
+                    //_indexedLogicConditionalsInfo[indexedItemHolderKey] = new List<IndexedInlineTrigger>() { indexedItem };
                 }
             }            
         }
@@ -145,20 +145,20 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
         {
             lock (_lockObj)
             {
-                var indexedItem = inlineTrigger.GetIndexed(_realStorageContext.MainStorageContext);
+                //var indexedItem = inlineTrigger.GetIndexed(_realStorageContext.MainStorageContext);
 
 #if DEBUG
                 //Log($"indexedItem = {indexedItem}");
 #endif
 
-                var indexedItemHolderKey = indexedItem.Holder.NameKey;
+                //var indexedItemHolderKey = indexedItem.Holder.NameKey;
 
                 var kindOfSystemEvent = inlineTrigger.KindOfSystemEvent;
 
                 if (_nonIndexedSystemEventsInfo.ContainsKey(kindOfSystemEvent))
                 {
                     var dict = _nonIndexedSystemEventsInfo[kindOfSystemEvent];
-                    var indexedDict = _indexedSystemEventsInfo[kindOfSystemEvent];
+                    //var indexedDict = _indexedSystemEventsInfo[kindOfSystemEvent];
 
                     if (dict.ContainsKey(inlineTrigger.Holder))
                     {
@@ -168,7 +168,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                         //Log($"dict[superName].Count = {dict[inlineTrigger.Holder].Count}");
                         //Log($"targetList = {targetList.WriteListToString()}");
 #endif
-                        var targetLongConditionalHashCode = indexedItem.GetLongConditionalHashCode();
+                        var targetLongConditionalHashCode = inlineTrigger.GetLongConditionalHashCode();
 
 #if DEBUG
                         //Log($"targetLongConditionalHashCode = {targetLongConditionalHashCode}");
@@ -195,24 +195,24 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                         }
 
                         targetList.Add(inlineTrigger);
-                        targetIndexedList.Add(indexedItem);
+                        //targetIndexedList.Add(indexedItem);
                     }
                     else
                     {
                         dict[inlineTrigger.Holder] = new List<InlineTrigger>() { inlineTrigger };
-                        indexedDict[indexedItemHolderKey] = new List<IndexedInlineTrigger>() { indexedItem };
+                        //indexedDict[indexedItemHolderKey] = new List<IndexedInlineTrigger>() { indexedItem };
                     }
                 }
                 else
                 {
                     _nonIndexedSystemEventsInfo[kindOfSystemEvent] = new Dictionary<StrongIdentifierValue, List<InlineTrigger>>() { { inlineTrigger.Holder, new List<InlineTrigger>() { inlineTrigger } } };
-                    _indexedSystemEventsInfo[kindOfSystemEvent] = new Dictionary<ulong, List<IndexedInlineTrigger>>() { { indexedItemHolderKey, new List<IndexedInlineTrigger>() { indexedItem } } };
+                    //_indexedSystemEventsInfo[kindOfSystemEvent] = new Dictionary<ulong, List<IndexedInlineTrigger>>() { { indexedItemHolderKey, new List<IndexedInlineTrigger>() { indexedItem } } };
                 }
             }
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<IndexedInlineTrigger>> GetSystemEventsTriggersDirectly(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<InlineTrigger>> GetSystemEventsTriggersDirectly(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
             //Log($"kindOfSystemEvent = {kindOfSystemEvent}");
@@ -220,11 +220,11 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
 
             lock (_lockObj)
             {
-                if (_indexedSystemEventsInfo.ContainsKey(kindOfSystemEvent))
+                if (_nonIndexedSystemEventsInfo.ContainsKey(kindOfSystemEvent))
                 {
-                    var dict = _indexedSystemEventsInfo[kindOfSystemEvent];
+                    var dict = _nonIndexedSystemEventsInfo[kindOfSystemEvent];
 
-                    var result = new List<WeightedInheritanceResultItem<IndexedInlineTrigger>>();
+                    var result = new List<WeightedInheritanceResultItem<InlineTrigger>>();
 
                     foreach (var weightedInheritanceItem in weightedInheritanceItems)
                     {
@@ -236,7 +236,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
 
                             foreach (var targetVal in targetList)
                             {
-                                result.Add(new WeightedInheritanceResultItem<IndexedInlineTrigger>(targetVal, weightedInheritanceItem));
+                                result.Add(new WeightedInheritanceResultItem<InlineTrigger>(targetVal, weightedInheritanceItem));
                             }
                         }
                     }
@@ -244,26 +244,26 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                     return result;
                 }
 
-                return new List<WeightedInheritanceResultItem<IndexedInlineTrigger>>();
+                return new List<WeightedInheritanceResultItem<InlineTrigger>>();
             }
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<IndexedInlineTrigger>> GetLogicConditionalTriggersDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<InlineTrigger>> GetLogicConditionalTriggersDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-            var result = new List<WeightedInheritanceResultItem<IndexedInlineTrigger>>();
+            var result = new List<WeightedInheritanceResultItem<InlineTrigger>>();
 
             foreach (var weightedInheritanceItem in weightedInheritanceItems)
             {
                 var targetHolder = weightedInheritanceItem.SuperName;
 
-                if (_indexedLogicConditionalsInfo.ContainsKey(targetHolder))
+                if (_nonIndexedLogicConditionalsInfo.ContainsKey(targetHolder))
                 {
-                    var targetList = _indexedLogicConditionalsInfo[targetHolder];
+                    var targetList = _nonIndexedLogicConditionalsInfo[targetHolder];
 
                     foreach (var targetVal in targetList)
                     {
-                        result.Add(new WeightedInheritanceResultItem<IndexedInlineTrigger>(targetVal, weightedInheritanceItem));
+                        result.Add(new WeightedInheritanceResultItem<InlineTrigger>(targetVal, weightedInheritanceItem));
                     }
                 }
             }

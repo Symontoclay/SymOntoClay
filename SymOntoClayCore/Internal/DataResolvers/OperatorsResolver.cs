@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -38,7 +39,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
         }
 
-        public IndexedOperator GetOperator(KindOfOperator kindOfOperator, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Operator GetOperator(KindOfOperator kindOfOperator, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"kindOfOperator = {kindOfOperator}");
@@ -84,7 +85,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return targetOp;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<IndexedOperator>> GetRawList(KindOfOperator kindOfOperator, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<Operator>> GetRawList(KindOfOperator kindOfOperator, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
             //Log($"kindOfOperator = {kindOfOperator}");
@@ -92,10 +93,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if(!storagesList.Any())
             {
-                return new List<WeightedInheritanceResultItemWithStorageInfo<IndexedOperator>>();
+                return new List<WeightedInheritanceResultItemWithStorageInfo<Operator>>();
             }
 
-            var result = new List<WeightedInheritanceResultItemWithStorageInfo<IndexedOperator>>();
+            var result = new List<WeightedInheritanceResultItemWithStorageInfo<Operator>>();
 
             foreach(var storageItem in storagesList)
             {
@@ -111,7 +112,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 foreach(var op in operatorsList)
                 {
-                    result.Add(new WeightedInheritanceResultItemWithStorageInfo<IndexedOperator>(op, distance, storage));
+                    result.Add(new WeightedInheritanceResultItemWithStorageInfo<Operator>(op, distance, storage));
                 }
             }
 

@@ -164,7 +164,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _context.Recovery(_currToken);
                                 var parser = new FunctionBodyParser(_context);
                                 parser.Run();
-                                _inlineTrigger.Statements = parser.Result;
+                                var statementsList = parser.Result;
+                                _inlineTrigger.Statements = statementsList;
+                                _inlineTrigger.CompiledFunctionBody = _context.Compiler.Compile(statementsList);
                                 _state = State.GotAction;
                             }
                             break;

@@ -41,13 +41,12 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             Name = name;
             _context = context;
-            IndexedName = Name.GetIndexed(context);
 
             _localCodeExecutionContext = new LocalCodeExecutionContext();
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
             _storage = new LocalStorage(localStorageSettings);
             _localCodeExecutionContext.Storage = _storage;
-            _localCodeExecutionContext.Holder = IndexedName;
+            _localCodeExecutionContext.Holder = Name;
 
 #if DEBUG
             //Log($"_localCodeExecutionContext = {_localCodeExecutionContext}");
@@ -57,7 +56,7 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         public StrongIdentifierValue Name { get; private set; }
-        public IndexedStrongIdentifierValue IndexedName { get; private set; }
+        
         private readonly IEngineContext _context;
         private readonly IStorage _storage;
         private readonly LocalCodeExecutionContext _localCodeExecutionContext;
@@ -69,7 +68,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             _instanceState = InstanceState.Initializing;
 
-            var targetSystemEventsTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger.Init, IndexedName, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var targetSystemEventsTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger.Init, Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
             //Log($"targetSystemEventsTriggersList = {targetSystemEventsTriggersList.WriteListToString()}");
@@ -88,12 +87,12 @@ namespace SymOntoClay.Core.Internal.Instances
                     var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
                     localCodeExecutionContext.Storage = new LocalStorage(localStorageSettings);
 
-                    localCodeExecutionContext.Holder = IndexedName;
+                    localCodeExecutionContext.Holder = Name;
 
                     var processInitialInfo = new ProcessInitialInfo();
                     processInitialInfo.CompiledFunctionBody = targetTrigger.ResultItem.CompiledFunctionBody;
                     processInitialInfo.LocalContext = localCodeExecutionContext;
-                    processInitialInfo.Metadata = targetTrigger.ResultItem.OriginalInlineTrigger.CodeEntity;
+                    processInitialInfo.Metadata = targetTrigger.ResultItem.CodeEntity;
 
                     processInitialInfoList.Add(processInitialInfo);
                 }
@@ -109,7 +108,7 @@ namespace SymOntoClay.Core.Internal.Instances
 #endif
             }
 
-            var targetLogicConditionalTriggersList = _triggersResolver.ResolveLogicConditionalTriggersList(IndexedName, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var targetLogicConditionalTriggersList = _triggersResolver.ResolveLogicConditionalTriggersList(Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
             //Log($"targetLogicConditionalTriggersList = {targetLogicConditionalTriggersList.WriteListToString()}");

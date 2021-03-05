@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -34,7 +35,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public bool EntityIdOnly { get; set; }
         public bool IgnoreAccessPolicy { get; set; } = true;
         public bool UseInheritance { get; set; } = true;
-        public IndexedRuleInstance QueryExpression { get; set; }
+        public RuleInstance QueryExpression { get; set; }
         public LocalCodeExecutionContext LocalCodeExecutionContext { get; set; }
 
         /// <inheritdoc/>

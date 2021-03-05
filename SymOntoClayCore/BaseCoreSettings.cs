@@ -34,11 +34,6 @@ namespace SymOntoClay.Core
         /// </summary>
         public IEntityLogger Logger { get; set; }
 
-        /// <summary>
-        /// Gets or ses reference to shared dictionary.
-        /// </summary>
-        public IEntityDictionary Dictionary { get; set; }
-
         public IDateTimeProvider DateTimeProvider { get; set; }
 
         /// <inheritdoc/>
@@ -66,7 +61,6 @@ namespace SymOntoClay.Core
             var sb = new StringBuilder();
 
             sb.PrintExisting(n, nameof(Logger), Logger);
-            sb.PrintExisting(n, nameof(Dictionary), Dictionary);
             sb.PrintExisting(n, nameof(DateTimeProvider), DateTimeProvider);
 
             return sb.ToString();

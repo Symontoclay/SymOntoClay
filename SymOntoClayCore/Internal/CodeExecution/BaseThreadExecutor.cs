@@ -282,7 +282,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                 //Log($"result = {result}");
 #endif
 
-                                result = result.AsLogicalValue.Inverse(_context);
+                                result = result.AsLogicalValue.Inverse();
 
 #if DEBUG
                                 //Log($"result (2) = {result}");
@@ -375,7 +375,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                                         var annotationValue = paramsList[1].AsAnnotationValue;
 
-                                        var value = new WaypointValue((float)(double)resolvedFirstParam.GetSystemValue(), _context).GetIndexedValue(_context);
+                                        var value = new WaypointValue((float)(double)resolvedFirstParam.GetSystemValue(), _context);
 
                                         _currentCodeFrame.ValuesStack.Push(value);
 
@@ -403,7 +403,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                                         var annotationValue = paramsList[2].AsAnnotationValue;
 
-                                        var value = new WaypointValue((float)(double)resolvedFirstParam.GetSystemValue(), (float)(double)resolvedSecondParam.GetSystemValue(), _context).GetIndexedValue(_context);
+                                        var value = new WaypointValue((float)(double)resolvedFirstParam.GetSystemValue(), (float)(double)resolvedSecondParam.GetSystemValue(), _context);
 
                                         _currentCodeFrame.ValuesStack.Push(value);
 
@@ -476,11 +476,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return result;
         }
 
-        private Dictionary<IndexedStrongIdentifierValue, IndexedValue> TakeNamedParameters(int count)
+        private Dictionary<StrongIdentifierValue, Value> TakeNamedParameters(int count)
         {
             var rawParamsList = TakePositionedParameters(count * 2);
 
-            var result = new Dictionary<IndexedStrongIdentifierValue, IndexedValue>();
+            var result = new Dictionary<StrongIdentifierValue, Value>();
 
             var enumerator = rawParamsList.GetEnumerator();
 
@@ -522,8 +522,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
-            Dictionary<IndexedStrongIdentifierValue, IndexedValue> namedParameters = null;
-            List<IndexedValue> positionedParameters = null;
+            Dictionary<StrongIdentifierValue, Value> namedParameters = null;
+            List<Value> positionedParameters = null;
 
             switch (kindOfparameters)
             {
@@ -556,8 +556,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             throw new NotImplementedException();
         }
 
-        private void CallPointRefValue(IndexedPointRefValue caller, 
-            KindOfFunctionParameters kindOfParameters, Dictionary<IndexedStrongIdentifierValue, IndexedValue> namedParameters, List<IndexedValue> positionedParameters, 
+        private void CallPointRefValue(PointRefValue caller, 
+            KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, 
             bool isSync)
         {
 #if DEBUG
@@ -573,8 +573,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             throw new NotImplementedException();
         }
 
-        private void CallHost(IndexedStrongIdentifierValue methodName, 
-            KindOfFunctionParameters kindOfParameters, Dictionary<IndexedStrongIdentifierValue, IndexedValue> namedParameters, List<IndexedValue> positionedParameters,
+        private void CallHost(StrongIdentifierValue methodName, 
+            KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             bool isSync)
         {
 #if DEBUG
@@ -586,7 +586,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #endif
 
             var command = new Command();
-            command.Name = methodName.OriginalStrongIdentifierValue;
+            command.Name = methodName;
 
             switch(kindOfParameters)
             {
@@ -594,11 +594,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    command.ParamsDict = namedParameters.ToDictionary(p => p.Key.OriginalStrongIdentifierValue, p => p.Value.OriginalValue);
+                    command.ParamsDict = namedParameters.ToDictionary(p => p.Key, p => p.Value);
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    command.ParamsList = positionedParameters.Select(p => p.OriginalValue).ToList();
+                    command.ParamsList = positionedParameters.ToList();
                     break;
 
                 default:
@@ -634,7 +634,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             throw new NotImplementedException();
         }
 
-        private void CallExecutable(IExecutable executable, IList<IndexedValue> paramsList)
+        private void CallExecutable(IExecutable executable, IList<Value> paramsList)
         {
             if(executable.IsSystemDefined)
             {
@@ -684,9 +684,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"rank = {rank}");
 #endif
 
-            inheritenceItem.SubName = subName.OriginalStrongIdentifierValue;
-            inheritenceItem.SuperName = superName.OriginalStrongIdentifierValue;
-            inheritenceItem.Rank = rank.OriginalLogicalValue;
+            inheritenceItem.SubName = subName;
+            inheritenceItem.SuperName = superName;
+            inheritenceItem.Rank = rank;
 
 #if DEBUG
             //Log($"inheritenceItem = {inheritenceItem}");
@@ -717,7 +717,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"paramsList[2] = {paramsList[2]}");
 #endif
 
-            var rank = _logicalValueLinearResolver.Resolve(paramsList[2], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions()).Inverse(_context);
+            var rank = _logicalValueLinearResolver.Resolve(paramsList[2], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions()).Inverse();
 
 #if DEBUG
             //Log($"subName = {subName}");
@@ -725,9 +725,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"rank = {rank}");
 #endif
 
-            inheritenceItem.SubName = subName.OriginalStrongIdentifierValue;
-            inheritenceItem.SuperName = superName.OriginalStrongIdentifierValue;
-            inheritenceItem.Rank = rank.OriginalLogicalValue;
+            inheritenceItem.SubName = subName;
+            inheritenceItem.SuperName = superName;
+            inheritenceItem.Rank = rank;
 
 #if DEBUG
             //Log($"inheritenceItem = {inheritenceItem}");

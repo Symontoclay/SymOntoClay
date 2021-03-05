@@ -55,18 +55,18 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             return source;
         }
 
-        public static StrongIdentifierValue CreateRuleOrFactName(IEntityDictionary dictionary)
+        public static StrongIdentifierValue CreateRuleOrFactName()
         {
-            return CreateEntityName(dictionary);
+            return CreateEntityName();
         }
 
-        public static StrongIdentifierValue CreateEntityName(IEntityDictionary dictionary)
+        public static StrongIdentifierValue CreateEntityName()
         {
             var text = GetNewEntityNameString();
-            return CreateName(text, dictionary);
+            return CreateName(text);
         }
 
-        public static StrongIdentifierValue CreateName(string text, IEntityDictionary dictionary)
+        public static StrongIdentifierValue CreateName(string text)
         {
             var name = new StrongIdentifierValue() { IsEmpty = false };
 
@@ -77,7 +77,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 throw new NotSupportedException("Symbols `::`, `(` and `)` are not supported yet!");
             }
 
-            name.DictionaryName = dictionary.Name;
             name.KindOfName = KindOfName.Concept;
 
             if(text.StartsWith("@>"))

@@ -699,7 +699,7 @@ namespace TestSandbox
 
             //_logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
-            var name = NameHelper.CreateName(nameVal1, parserContext.Dictionary);
+            var name = NameHelper.CreateName(nameVal1);
 
             _logger.Log($"name = {name}");
 

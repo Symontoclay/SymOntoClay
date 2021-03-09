@@ -69,7 +69,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 coreEngineSettings.AppFile = settings.LogicFile;
                 coreEngineSettings.Logger = Logger;
                 coreEngineSettings.SyncContext = worldContext.SyncContext;
-                coreEngineSettings.Dictionary = worldContext.SharedDictionary;
+                
                 coreEngineSettings.ModulesStorage = worldContext.ModulesStorage;
                 coreEngineSettings.LogicQueryParseAndCache = worldContext.LogicQueryParseAndCache;
                 coreEngineSettings.TmpDir = tmpDir;

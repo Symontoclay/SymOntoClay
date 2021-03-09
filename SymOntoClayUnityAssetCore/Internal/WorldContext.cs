@@ -31,7 +31,6 @@ using SymOntoClay.UnityAsset.Core.Internal.Images;
 using SymOntoClay.UnityAsset.Core.Internal.Logging;
 using SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache;
 using SymOntoClay.UnityAsset.Core.Internal.ModulesStorage;
-using SymOntoClay.UnityAsset.Core.Internal.SharedDictionary;
 using SymOntoClay.UnityAsset.Core.Internal.Storage;
 using SymOntoClay.UnityAsset.Core.Internal.Threads;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
@@ -85,7 +84,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         {
             ImagesRegistry = new ImagesRegistry(this);
             ThreadsComponent = new ThreadsCoreComponent(this);
-            SharedDictionary = new SharedDictionaryComponent(this);
+            
             ModulesStorage = new ModulesStorageComponent(this);
             StandaloneStorage = new StandaloneStorageComponent(settings, this);
             PlatformTypesConvertorsRegistry = new PlatformTypesConvertorsRegistry(Logger);
@@ -143,11 +142,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public ThreadsCoreComponent ThreadsComponent { get; private set; }
 
         IActivePeriodicObjectCommonContext IWorldCoreGameComponentContext.SyncContext => ThreadsComponent;
-
-        public SharedDictionaryComponent SharedDictionary { get; private set; }
-
-        SymOntoClay.Core.IEntityDictionary IWorldCoreGameComponentContext.SharedDictionary => SharedDictionary.Dictionary;
-        SymOntoClay.Core.IEntityDictionary IWorldCoreContext.SharedDictionary => SharedDictionary.Dictionary;
 
         public ModulesStorageComponent ModulesStorage { get; private set; }
 
@@ -298,7 +292,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         private void NLoadFromSourceCode()
         {
-            SharedDictionary.LoadFromSourceCode();
             ModulesStorage.LoadFromSourceCode();
             StandaloneStorage.LoadFromSourceCode();
             DateTimeProvider.LoadFromSourceCode();

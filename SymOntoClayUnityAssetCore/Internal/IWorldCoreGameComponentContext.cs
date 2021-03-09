@@ -38,7 +38,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         string GetIdForFactsByInstanceId(int instanceId);
         IEntityLogger CreateLogger(string name);
         IActivePeriodicObjectCommonContext SyncContext { get; }
-        IEntityDictionary SharedDictionary { get; }
+        
         IModulesStorage ModulesStorage { get; }
         IStandaloneStorage StandaloneStorage { get; }
         string TmpDir { get; }

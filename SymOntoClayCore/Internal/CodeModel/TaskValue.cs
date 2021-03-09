@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode()
         {
-            return base.CalculateLongHashCode() ^ TaskIdKey ^ (ulong)Math.Abs(SystemTask?.GetHashCode() ?? 0);
+            return base.CalculateLongHashCode() ^ (ulong)TaskId.GetHashCode() ^ (ulong)Math.Abs(SystemTask?.GetHashCode() ?? 0);
         }
 
         /// <inheritdoc/>

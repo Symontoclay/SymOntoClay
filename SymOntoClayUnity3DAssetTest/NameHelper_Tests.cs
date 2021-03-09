@@ -58,7 +58,7 @@ namespace SymOntoClay.Unity3DAsset.Test
         {
             var text = "dog";
 
-            var name = NameHelper.CreateName(text, _mainStorageContext.Dictionary);
+            var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(name.IsEmpty, false);
             Assert.AreEqual(name.NameValue, text);
@@ -75,7 +75,7 @@ namespace SymOntoClay.Unity3DAsset.Test
         {
             var text = "@>log";
 
-            var name = NameHelper.CreateName(text, _mainStorageContext.Dictionary);
+            var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(name.IsEmpty, false);
             Assert.AreEqual(name.NameValue, text);
@@ -90,7 +90,7 @@ namespace SymOntoClay.Unity3DAsset.Test
         [Test]
         public void NameHelper_Tests_Case_CreateRuleOrFactName()
         {
-            var name = NameHelper.CreateRuleOrFactName(_mainStorageContext.Dictionary);
+            var name = NameHelper.CreateRuleOrFactName();
 
             Assert.AreEqual(name.IsEmpty, false);
             Assert.AreNotEqual(name.NameValue, string.Empty);
@@ -103,7 +103,7 @@ namespace SymOntoClay.Unity3DAsset.Test
         {
             var text = "#dog1";
 
-            var name = NameHelper.CreateName(text, _mainStorageContext.Dictionary);
+            var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(name.IsEmpty, false);
             Assert.AreEqual(name.NameValue, text);

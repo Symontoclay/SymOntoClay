@@ -75,9 +75,9 @@ namespace SymOntoClay.Core.Internal.Instances
         private InstanceInfo _parent;
         private RuleInstance _condition;
         private bool _isOn;
-        private List<string> _usedKeysList = new List<string>();
+        private List<StrongIdentifierValue> _usedKeysList = new List<StrongIdentifierValue>();
 
-        private void LogicalStorage_OnChangedWithKeys(IList<string> changedKeysList)
+        private void LogicalStorage_OnChangedWithKeys(IList<StrongIdentifierValue> changedKeysList)
         {
             lock(_lockObj)
             {

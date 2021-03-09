@@ -352,7 +352,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _lastIsOperator = null;
 
-            var value = NameHelper.CreateName(_currToken.Content, _context.Dictionary);
+            var value = NameHelper.CreateName(_currToken.Content);
 
             var node = new VarAstExpression();
             node.Name = value;
@@ -368,7 +368,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _lastIsOperator = null;
 
-            var value = NameHelper.CreateName(_currToken.Content, _context.Dictionary);
+            var value = NameHelper.CreateName(_currToken.Content);
 
             var kindOfName = value.KindOfName;
 
@@ -471,7 +471,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _lastIsOperator = null;
 
-            var name = NameHelper.CreateName(_currToken.Content, _context.Dictionary);
+            var name = NameHelper.CreateName(_currToken.Content);
 
 #if DEBUG
             //Log($"name = {name}");

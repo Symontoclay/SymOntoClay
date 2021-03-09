@@ -41,12 +41,12 @@ namespace TestSandbox.Handlers
 
             var context = TstEngineContextHelper.CreateAndInitContext().EngineContext;
 
-            var dictionary = context.Dictionary;
+            //var dictionary = context.Dictionary;
 
             var inheritanceStorage = context.Storage.GlobalStorage.InheritanceStorage;
 
-            var subName = NameHelper.CreateName("SubClass", dictionary);
-            var superName = NameHelper.CreateName("SuperClass", dictionary);
+            var subName = NameHelper.CreateName("SubClass");
+            var superName = NameHelper.CreateName("SuperClass");
 
             var inheritanceItem = new InheritanceItem();
             inheritanceItem.SubName = subName;
@@ -75,7 +75,7 @@ namespace TestSandbox.Handlers
 
             inheritanceStorage.SetInheritance(inheritanceItem);
 
-            var list = inheritanceStorage.GetItemsDirectly(subName.GetIndexed(context).NameKey);
+            var list = inheritanceStorage.GetItemsDirectly(subName);
 
             _logger.Log($"list.Count = {list.Count}");
             _logger.Log($"inheritanceItem = {list.WriteListToString()}");

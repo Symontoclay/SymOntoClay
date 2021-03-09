@@ -78,7 +78,7 @@ namespace SymOntoClay.Core.Internal.Compiling
             {
                 var command = new ScriptCommand();
                 command.OperationCode = OperationCode.PushValToVar;
-                command.Value = (rightBranch as VarAstExpression).Name.GetIndexedValue(_context);
+                command.Value = (rightBranch as VarAstExpression).Name;
 
                 AddCommand(command);
             }
@@ -93,7 +93,7 @@ namespace SymOntoClay.Core.Internal.Compiling
             {
                 var command = new ScriptCommand();
                 command.OperationCode = OperationCode.PushValToVar;
-                command.Value = (leftBranch as VarAstExpression).Name.GetIndexedValue(_context);
+                command.Value = (leftBranch as VarAstExpression).Name;
 
                 AddCommand(command);
             }

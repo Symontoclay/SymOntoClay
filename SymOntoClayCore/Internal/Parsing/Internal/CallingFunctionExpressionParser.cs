@@ -89,7 +89,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _currentParameter = new CallingParameter();
                                 Result.Parameters.Add(_currentParameter);
 
-                                var value = NameHelper.CreateName(_currToken.Content, _context.Dictionary);
+                                var value = NameHelper.CreateName(_currToken.Content);
 
                                 var node = new ConstValueAstExpression();
                                 node.Value = value;

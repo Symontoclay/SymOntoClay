@@ -59,6 +59,41 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
             return result;
         }
 
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public ScriptCommand Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public ScriptCommand Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (ScriptCommand)context[this];
+            }
+
+            var result = new ScriptCommand();
+            context[this] = result;
+
+            result.OperationCode = OperationCode;
+            result.Position = Position;
+            result.Value = Value?.CloneValue(context);
+            result.JumpToMe = JumpToMe?.Clone(context);
+            result.KindOfOperator = KindOfOperator;
+            result.CountParams = CountParams;
+
+            return result;
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {

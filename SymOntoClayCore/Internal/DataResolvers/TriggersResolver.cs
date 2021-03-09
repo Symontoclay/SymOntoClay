@@ -57,7 +57,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(holder.NormalizedNameValue, localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(holder, localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
             //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
@@ -96,7 +96,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(holder.NormalizedNameValue, localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(holder, localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
             //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");

@@ -43,7 +43,7 @@ namespace TestSandbox.Handlers
             var context = TstEngineContextHelper.CreateAndInitContext().EngineContext;
 
             var defaultSettings = new DefaultSettingsOfCodeEntity();
-            defaultSettings.Holder = NameHelper.CreateName("Tor", context.Dictionary);
+            defaultSettings.Holder = NameHelper.CreateName("Tor");
 
             _logger.Info($"defaultSettings = {defaultSettings}");
 
@@ -52,7 +52,7 @@ namespace TestSandbox.Handlers
                 IsSystemDefined = true
             };
 
-            applicationInheritanceItem.SubName = NameHelper.CreateName("PeaseKeeper", context.Dictionary);
+            applicationInheritanceItem.SubName = NameHelper.CreateName("PeaseKeeper");
             applicationInheritanceItem.SuperName = context.CommonNamesStorage.AppName;
             applicationInheritanceItem.Rank = new LogicalValue(1.0F);
 

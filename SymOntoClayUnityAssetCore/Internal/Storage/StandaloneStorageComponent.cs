@@ -37,7 +37,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Storage
             standaloneStorageSettings.IsWorld = true;
             standaloneStorageSettings.Logger = coreContext.Logger;
             standaloneStorageSettings.ModulesStorage = coreContext.ModulesStorage;
-            standaloneStorageSettings.Dictionary = coreContext.SharedDictionary;
+            
             standaloneStorageSettings.AppFile = settings.HostFile;
             standaloneStorageSettings.LogicQueryParseAndCache = coreContext.LogicQueryParseAndCache;
 

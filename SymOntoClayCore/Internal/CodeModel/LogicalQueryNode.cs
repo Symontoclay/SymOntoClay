@@ -54,6 +54,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public IList<QueryExecutingCardAboutVar> VarsInfoList { get; set; }
         public IList<QueryExecutingCardAboutKnownInfo> KnownInfoList { get; set; }
 
+        public bool IsKeyRef => Kind == KindOfLogicalQueryNode.Concept || Kind == KindOfLogicalQueryNode.Entity || Kind == KindOfLogicalQueryNode.LogicalVar || Kind == KindOfLogicalQueryNode.QuestionVar;
+        public bool IsEntityRef => Kind == KindOfLogicalQueryNode.EntityRef;
+
         public RuleInstance RuleInstance { get; set; }
         public BaseRulePart RulePart { get; set; }
 
@@ -121,10 +124,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 case KindOfLogicalQueryNode.Concept:
                 case KindOfLogicalQueryNode.Entity:
                 case KindOfLogicalQueryNode.QuestionVar:
+                    Name.CheckDirty();
                     break;
 
                 case KindOfLogicalQueryNode.LogicalVar:
                     contextOfConvertingExpressionNode.HasVars = true;
+                    Name.CheckDirty();
                     break;
 
                 case KindOfLogicalQueryNode.Value:
@@ -134,6 +139,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     break;
 
                 case KindOfLogicalQueryNode.Relation:
+                    Name.CheckDirty();
                     if (Name.KindOfName == KindOfName.QuestionVar)
                     {
                         IsQuestion = true;
@@ -158,6 +164,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             foreach (var param in sourceParamsList)
             {
+                param.CheckDirty();
+
 #if DEBUG
                 //_gbcLogger.Info($"param = {param}");
 #endif
@@ -370,7 +378,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 case KindOfLogicalQueryNode.Entity:
                 case KindOfLogicalQueryNode.QuestionVar:
                 case KindOfLogicalQueryNode.LogicalVar:
-                    return base.CalculateLongHashCode() ^ Name.CalculateLongHashCode();
+                    return base.CalculateLongHashCode() ^ Name.GetLongHashCode();
 
                 case KindOfLogicalQueryNode.Value:
                     return base.CalculateLongHashCode() ^ Value.GetLongConditionalHashCode();
@@ -384,7 +392,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 case KindOfLogicalQueryNode.Relation:
                     {
-                        var result = base.CalculateLongHashCode() ^ LongHashCodeWeights.BaseFunctionWeight ^ Name.CalculateLongHashCode();
+                        var result = base.CalculateLongHashCode() ^ LongHashCodeWeights.BaseFunctionWeight ^ Name.GetLongHashCode();
 
                         foreach (var param in ParamsList)
                         {

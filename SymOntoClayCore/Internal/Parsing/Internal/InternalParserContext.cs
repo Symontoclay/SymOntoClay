@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -44,6 +45,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
 
         public IEntityLogger Logger => _context.Logger;
+        public ICompiler Compiler => _context.Compiler;
 
         public CodeFile CodeFile { get; private set; }
 

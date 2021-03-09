@@ -47,10 +47,10 @@ namespace SymOntoClay.Core.Internal.Helpers
             //logger.Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2, Formatting.Indented)}");
 #endif
 
-            if (expressionNode1.Kind == KindOfLogicalQueryNode.Concept && expressionNode2.IsKeyRef)
+            if (expressionNode1.IsKeyRef && expressionNode2.IsKeyRef)
             {
-                var key_1 = expressionNode1.AsKeyRef.Key;
-                var key_2 = expressionNode2.AsKeyRef.Key;
+                var key_1 = expressionNode1.Name;
+                var key_2 = expressionNode2.Name;
 
                 if (key_1 == key_2)
                 {

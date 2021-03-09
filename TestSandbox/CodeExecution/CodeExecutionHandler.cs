@@ -51,7 +51,7 @@ namespace TestSandbox.CodeExecution
                 IsSystemDefined = true
             };
 
-            applicationInheritanceItem.SubName = NameHelper.CreateName("PeaseKeeper", context.Dictionary);
+            applicationInheritanceItem.SubName = NameHelper.CreateName("PeaseKeeper");
             applicationInheritanceItem.SuperName = context.CommonNamesStorage.AppName;
             applicationInheritanceItem.Rank = new LogicalValue(1.0F);
 
@@ -63,17 +63,17 @@ namespace TestSandbox.CodeExecution
 
             var command = new ScriptCommand();
             command.OperationCode = OperationCode.PushVal;
-            command.Value = strVal.GetIndexed(context);
+            command.Value = strVal;
 
             _logger.Log($"command = {command}");
 
             compiledFunctionBody.Commands[0] = command;
 
-            var identifier = NameHelper.CreateName("@>log", context.Dictionary);
+            var identifier = NameHelper.CreateName("@>log");
 
             command = new ScriptCommand();
             command.OperationCode = OperationCode.PushVal;
-            command.Value = identifier.GetIndexed(context);
+            command.Value = identifier;
             command.Position = 1;
 
             _logger.Log($"command = {command}");
@@ -105,7 +105,7 @@ namespace TestSandbox.CodeExecution
             codeFrame.CompiledFunctionBody = compiledFunctionBody;
             codeFrame.LocalContext = new LocalCodeExecutionContext();
             codeFrame.LocalContext.Storage = context.Storage.GlobalStorage;
-            codeFrame.LocalContext.Holder = NameHelper.CreateName("PixKeeper", context.Dictionary).GetIndexed(context);
+            codeFrame.LocalContext.Holder = NameHelper.CreateName("PixKeeper");
             //codeFrame.LocalContext.Holder = new Name();
 
             _logger.Log($"codeFrame = {codeFrame}");

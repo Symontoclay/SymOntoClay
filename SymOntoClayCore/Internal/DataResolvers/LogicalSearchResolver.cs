@@ -268,7 +268,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var senderIndexedRulePart = queryExecutingCard.SenderIndexedRulePart;
 #endif
 
-            var indexedRulePartsOfFactsList = dataSource.GetIndexedRulePartOfFactsByKeyOfRelation(processedExpr.Key);
+            var indexedRulePartsOfFactsList = dataSource.GetIndexedRulePartOfFactsByKeyOfRelation(processedExpr.Name);
 
 #if DEBUG
             //options.Logger.Log($"indexedRulePartsOfFactsList?.Count = {indexedRulePartsOfFactsList?.Count}");
@@ -283,7 +283,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var targetKnownInfoList = mergingResult.KnownInfoList;
 
-            queryExecutingCard.UsedKeysList.Add(processedExpr.Key);
+            queryExecutingCard.UsedKeysList.Add(processedExpr.Name);
 
 #if DEBUG
             //options.Logger.Log($"targetKnownInfoList.Count = {targetKnownInfoList.Count}");
@@ -307,7 +307,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     //options.Logger.Log($"indexedRulePartsOfFacts = {indexedRulePartsOfFacts}");
 #endif
                     var queryExecutingCardForTargetFact = new QueryExecutingCardForIndexedPersistLogicalData();
-                    queryExecutingCardForTargetFact.TargetRelation = processedExpr.Key;
+                    queryExecutingCardForTargetFact.TargetRelation = processedExpr.Name;
                     queryExecutingCardForTargetFact.CountParams = processedExpr.CountParams;
                     queryExecutingCardForTargetFact.VarsInfoList = processedExpr.VarsInfoList;
                     queryExecutingCardForTargetFact.KnownInfoList = targetKnownInfoList;
@@ -341,7 +341,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"~~~~~~~~~~~~~~~~~queryExecutingCard = {queryExecutingCard}");
 #endif
 
-            var indexedRulePartWithOneRelationsList = dataSource.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(processedExpr.Key);
+            var indexedRulePartWithOneRelationsList = dataSource.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(processedExpr.Name);
 
 #if DEBUG
             //options.Logger.Log($"indexedRulePartWithOneRelationsList?.Count = {indexedRulePartWithOneRelationsList?.Count}");
@@ -356,7 +356,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     //options.Logger.Log($"indexedRulePartsOfRule = {indexedRulePartsOfRule}");
 #endif
                     var queryExecutingCardForTargetRule = new QueryExecutingCardForIndexedPersistLogicalData();
-                    queryExecutingCardForTargetRule.TargetRelation = processedExpr.Key;
+                    queryExecutingCardForTargetRule.TargetRelation = processedExpr.Name;
 
 #if DEBUG
                     //options.Logger.Log($"Key = {Key}");
@@ -488,7 +488,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     originInfo.RuleInstance = targetRelation.RuleInstance;
                     originInfo.RulePart = targetRulePart;
 
-                    var keyOfRuleInstance = targetRelation.RuleInstance.Key;
+                    var keyOfRuleInstance = targetRelation.RuleInstance.Name;
 
                     originInfo.NameOfRuleInstance = keyOfRuleInstance;
 
@@ -497,7 +497,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 var n = 0;
 
-                foreach (var param in processedExpr.Params)
+                foreach (var param in processedExpr.ParamsList)
                 {
 #if DEBUG
                     //options.Logger.Log($"n = {n} param = {param}");
@@ -510,12 +510,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         continue;
                     }
 
-                    var foundExpression = targetRelation.Params[n - 1];
+                    var foundExpression = targetRelation.ParamsList[n - 1];
 
-                    var questionVarParam = param.AsQuestionVar;
+                    var questionVarParam = param;
 
                     var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
-                    resultOfVarOfQueryToRelation.NameOfVar = questionVarParam.Key;
+                    resultOfVarOfQueryToRelation.NameOfVar = questionVarParam.Name;
                     resultOfVarOfQueryToRelation.FoundExpression = foundExpression;
                     resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
 
@@ -524,7 +524,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     originInfo.RuleInstance = targetRelation.RuleInstance;
                     originInfo.RulePart = targetRulePart;
 
-                    var keyOfRuleInstance = targetRelation.RuleInstance.Key;
+                    var keyOfRuleInstance = targetRelation.RuleInstance.Name;
 
                     originInfo.NameOfRuleInstance = keyOfRuleInstance;
 
@@ -829,7 +829,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                         if (useInheritance && paramOfTargetRelation.IsKeyRef)
                         {
-                            additionalKeys_2 = inheritanceResolver.GetSuperClassesKeysList(paramOfTargetRelation.AsKeyRef.Key, options.LocalCodeExecutionContext);
+                            additionalKeys_2 = inheritanceResolver.GetSuperClassesKeysList(paramOfTargetRelation.Name, options.LocalCodeExecutionContext);
                         }
 
 #if DEBUG
@@ -921,7 +921,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                             if (paramOfTargetRelation.IsKeyRef)
                             {
-                                usedKeysList.Add(paramOfTargetRelation.AsKeyRef.Key);
+                                usedKeysList.Add(paramOfTargetRelation.Name);
                             }
                             //else
                             //{
@@ -1003,7 +1003,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"targetRelation = {targetRelation}");
 #endif
 
-            if (targetRelation.Params.Count != queryExecutingCard.CountParams)
+            if (targetRelation.ParamsList.Count != queryExecutingCard.CountParams)
             {
                 return;
             }
@@ -1018,7 +1018,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //}
 #endif
 
-            var targetRelationVarsInfoDictByPosition = targetRelationVarsInfoList.ToDictionary(p => p.Position, p => p.KeyOfVar);
+            var targetRelationVarsInfoDictByPosition = targetRelationVarsInfoList.ToDictionary(p => p.Position, p => p.NameOfVar);
 
             var mergingResult = QueryExecutingCardAboutKnownInfoHelper.Merge(targetRelation.KnownInfoList, targetRelationVarsInfoList, queryExecutingCard.KnownInfoList, true);
             if (!mergingResult.IsSuccess)

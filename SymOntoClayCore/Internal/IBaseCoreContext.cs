@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -30,5 +31,6 @@ namespace SymOntoClay.Core.Internal
     public interface IBaseCoreContext
     {
         IEntityLogger Logger { get; }
+        ICompiler Compiler { get; }
     }
 }

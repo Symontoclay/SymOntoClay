@@ -51,7 +51,7 @@ namespace TestSandbox.CoreHostListener
             var context = complexContext.EngineContext;
             var worldContext = complexContext.WorldContext;
 
-            var dictionary = context.Dictionary;
+            //var dictionary = context.Dictionary;
 
             var platformListener = new TstPlatformHostListener();
 
@@ -66,19 +66,19 @@ namespace TestSandbox.CoreHostListener
 
             var tstBaseManualControllingGameComponent = new TstBaseManualControllingGameComponent(npcSettings, worldContext);
 
-            var methodName = NameHelper.CreateName("go", dictionary);
+            var methodName = NameHelper.CreateName("go");
 
             var command = new Command();
             command.Name = methodName;
             command.ParamsDict = new Dictionary<StrongIdentifierValue, Value>();
 
             var param1Value = new WaypointValue(25, 36, context);
-            var param1Name = NameHelper.CreateName("to", dictionary);
+            var param1Name = NameHelper.CreateName("to");
 
             command.ParamsDict[param1Name] = param1Value;
 
             var param2Value = new NumberValue(12.4);
-            var param2Name = NameHelper.CreateName("speed", dictionary);
+            var param2Name = NameHelper.CreateName("speed");
 
             command.ParamsDict[param2Name] = param2Value;
 
@@ -86,7 +86,7 @@ namespace TestSandbox.CoreHostListener
 
             //ExecuteCommand(tstBaseManualControllingGameComponent, command);
 
-            methodName = NameHelper.CreateName("shoot", dictionary);
+            methodName = NameHelper.CreateName("shoot");
 
             command = new Command();
             command.Name = methodName;
@@ -106,7 +106,7 @@ namespace TestSandbox.CoreHostListener
 
             tstBaseManualControllingGameComponent.AddToManualControl(gameObject, 12);
 
-            methodName = NameHelper.CreateName("shoot", dictionary);
+            methodName = NameHelper.CreateName("shoot");
 
             command = new Command();
             command.Name = methodName;

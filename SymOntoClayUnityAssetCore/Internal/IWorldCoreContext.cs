@@ -33,7 +33,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
     {
         void AddWorldComponent(IWorldCoreComponent component);
         IEntityLogger Logger { get; }
-        SymOntoClay.Core.IEntityDictionary SharedDictionary { get; }
+        
         IModulesStorage ModulesStorage { get; }
         IPlatformTypesConvertorsRegistry PlatformTypesConvertors { get; }
         IDateTimeProvider DateTimeProvider { get; }

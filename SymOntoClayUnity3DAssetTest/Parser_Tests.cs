@@ -65,15 +65,9 @@ namespace SymOntoClay.Unity3DAsset.Test
 
             var firstItem = result.Single();
 
-            var nameKey = _mainStorageContext.Dictionary.GetKey("Enemy");
-
-            Assert.AreNotEqual(nameKey, 0);
-
             Assert.AreEqual(firstItem.Kind, KindOfCodeEntity.App);
             //Assert.AreEqual(firstItem.Name.NameKey, nameKey);
             Assert.AreEqual(firstItem.Name.NameValue, "Enemy");
-            Assert.AreEqual(firstItem.Name.DictionaryName, _mainStorageContext.Dictionary.Name);
-            Assert.AreNotEqual(firstItem.Name.DictionaryName, string.Empty);
             Assert.AreEqual(firstItem.Name.KindOfName, KindOfName.Concept);
 
             Assert.AreEqual(firstItem.SubItems.Count, 0);
@@ -101,15 +95,13 @@ namespace SymOntoClay.Unity3DAsset.Test
 
             var firstItem = result.Single();
 
-            var nameKey = _mainStorageContext.Dictionary.GetKey("PixKeeper");
+            //var nameKey = _mainStorageContext.Dictionary.GetKey("PixKeeper");
 
-            Assert.AreNotEqual(nameKey, 0);
+            //Assert.AreNotEqual(nameKey, 0);
 
             Assert.AreEqual(firstItem.Kind, KindOfCodeEntity.App);
             //Assert.AreEqual(firstItem.Name.NameKey, nameKey);
             Assert.AreEqual(firstItem.Name.NameValue, "PixKeeper");
-            Assert.AreEqual(firstItem.Name.DictionaryName, _mainStorageContext.Dictionary.Name);
-            Assert.AreNotEqual(firstItem.Name.DictionaryName, string.Empty);
             Assert.AreEqual(firstItem.Name.KindOfName, KindOfName.Concept);
 
             Assert.AreEqual(firstItem.SubItems.Count, 1);

@@ -120,7 +120,7 @@ namespace TestSandbox.Helpers
             coreEngineSettings.AppFile = npcSettings.LogicFile;
             coreEngineSettings.Logger = entityLogger;
             coreEngineSettings.SyncContext = worldContext.ThreadsComponent;
-            coreEngineSettings.Dictionary = worldContext.SharedDictionary.Dictionary;
+            
             coreEngineSettings.ModulesStorage = worldContext.ModulesStorage.ModulesStorage;
             //coreEngineSettings.ParentStorage = _hostStorage;
             coreEngineSettings.TmpDir = tmpDir;

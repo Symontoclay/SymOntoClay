@@ -70,7 +70,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.EntityCondition:
                             {
-                                var name = NameHelper.CreateName(_currToken.Content, _context.Dictionary);
+                                var name = NameHelper.CreateName(_currToken.Content);
 
 #if DEBUG
                                 //Log($"name = {name}");

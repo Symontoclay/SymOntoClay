@@ -58,7 +58,7 @@ namespace TestSandbox.CodeExecution
             var op = new Operator();
             op.KindOfOperator = KindOfOperator.LeftRightStream;
             op.IsSystemDefined = true;
-            op.SystemHandler = new  BinaryOperatorSystemHandler(this, _context.Dictionary);
+            op.SystemHandler = new  BinaryOperatorSystemHandler(this);
 
             _logger.Info($"op = {op}");
 
@@ -76,14 +76,14 @@ namespace TestSandbox.CodeExecution
             _logger.Info("End");
         }
 
-        public IndexedValue Call(IndexedValue leftOperand, IndexedValue rightOperand, IndexedValue annotation, LocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(Value leftOperand, Value rightOperand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
             _logger.Info($"leftOperand = {leftOperand}");
             _logger.Info($"rightOperand = {rightOperand}");
 
             var result = new NumberValue(5);
 
-            return result.GetIndexed(_context);
+            return result;
         }
     }
 }

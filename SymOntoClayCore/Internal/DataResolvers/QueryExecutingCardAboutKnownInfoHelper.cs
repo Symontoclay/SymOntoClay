@@ -67,9 +67,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     else
                     {
                         var keyOfVar = initialKnownInfo.NameOfVar;
-                        if (keyOfVar.HasValue)
+                        if (keyOfVar != null && !keyOfVar.IsEmpty)
                         {
-                            var keyOfVarValue = keyOfVar.Value;
+                            var keyOfVarValue = keyOfVar;
 
                             if (targetRelationVarsInfoDictByKeyOfVar.ContainsKey(keyOfVarValue))
                             {

@@ -52,14 +52,14 @@ namespace SymOntoClay.Core.Internal.Storage
         private readonly IInheritanceStorage _publicInheritanceStorage;
         private readonly InheritanceResolver _inheritanceResolver;
         private readonly ResolverOptions _resolverOptions;
-        private List<ulong> _foundInheritanceKeysList = new List<ulong>();
+        private List<StrongIdentifierValue> _foundInheritanceKeysList = new List<StrongIdentifierValue>();
         private LocalCodeExecutionContext _localCodeExecutionContext;
         private ILogicQueryParseAndCache _logicQueryParseAndCache;
-        private ulong _selfNameKey;
+        //private ulong _selfNameKey;
         private StrongIdentifierValue _selfName;
         private string _selfNameForFacts;
-        private Dictionary<ulong, string> _factsIdDict = new Dictionary<ulong, string>();
-        private Dictionary<ulong, InheritanceItem> _inheritanceItemsDict = new Dictionary<ulong, InheritanceItem>();
+        private Dictionary<string, string> _factsIdDict = new Dictionary<string, string>();
+        private Dictionary<string, InheritanceItem> _inheritanceItemsDict = new Dictionary<string, InheritanceItem>();
 
         /// <inheritdoc/>
         public void ProcessChangeInheritance(StrongIdentifierValue subName, StrongIdentifierValue superName)
@@ -73,21 +73,21 @@ namespace SymOntoClay.Core.Internal.Storage
 
                 if (_foundInheritanceKeysList.Any())
                 {
-                    var subNameKey = subName.GetIndexed(_context).NameKey;
-                    var superNameKey = superName.GetIndexed(_context).NameKey;
+                    //var subNameKey = subName.GetIndexed(_context).NameKey;
+                    //var superNameKey = superName.GetIndexed(_context).NameKey;
 
 #if DEBUG
                     //Log($"subNameKey = {subNameKey}");
                     //Log($"superNameKey = {superNameKey}");
 #endif
 
-                    if(subNameKey != _selfNameKey && !_foundInheritanceKeysList.Contains(subNameKey))
+                    if(subName != _selfName && !_foundInheritanceKeysList.Contains(subName))
                     {
                         Recalculate();
                         return;
                     }
 
-                    if (superNameKey != _selfNameKey && !_foundInheritanceKeysList.Contains(superNameKey))
+                    if (superName != _selfName && !_foundInheritanceKeysList.Contains(superName))
                     {
                         Recalculate();
                         return;
@@ -109,7 +109,6 @@ namespace SymOntoClay.Core.Internal.Storage
 
             if(_localCodeExecutionContext == null)
             {
-                _selfNameKey = _context.CommonNamesStorage.IndexedSelfName.NameKey;
                 _selfName = _context.CommonNamesStorage.SelfName;
                 _selfNameForFacts = NameHelper.NormalizeNameStr(_context.CommonNamesStorage.SelfName.NameValue);
 
@@ -126,7 +125,7 @@ namespace SymOntoClay.Core.Internal.Storage
             //Log($"_selfNameForFacts = {_selfNameForFacts}");
 #endif
 
-            var weightedInheritanceItemsList = _inheritanceResolver.GetWeightedInheritanceItems(_selfNameKey, _localCodeExecutionContext, _resolverOptions);
+            var weightedInheritanceItemsList = _inheritanceResolver.GetWeightedInheritanceItems(_selfName, _localCodeExecutionContext, _resolverOptions);
 
 #if DEBUG
             //Log($"weightedInheritanceItemsList = {weightedInheritanceItemsList.WriteListToString()}; _context.Id = {_context.Id}");
@@ -138,7 +137,7 @@ namespace SymOntoClay.Core.Internal.Storage
                 return;
             }
 
-            var inheritanceItemsDict = weightedInheritanceItemsList.ToDictionary(p => p.SuperName, p => p.OriginalItem.OriginalInheritanceItem);
+            var inheritanceItemsDict = weightedInheritanceItemsList.ToDictionary(p => p.SuperName, p => p.OriginalItem);
 
             var idsList = weightedInheritanceItemsList.Select(p => p.SuperName).Distinct().ToList();
 
@@ -160,7 +159,7 @@ namespace SymOntoClay.Core.Internal.Storage
                     //Log($"id = {id}");
 #endif
 
-                    var name = _dictionary.GetName(id);
+                    var name = id.NameValue;
 
 #if DEBUG
                     //Log($"name = {name}");
@@ -180,7 +179,7 @@ namespace SymOntoClay.Core.Internal.Storage
 
                     _publicFactsStorage.Append(fact);
 
-                    _factsIdDict[id] = fact.Name.NameValue;
+                    _factsIdDict[name] = fact.Name.NameValue;
 
                     var initialAddedInheritanceItem = inheritanceItemsDict[id];
 
@@ -198,7 +197,7 @@ namespace SymOntoClay.Core.Internal.Storage
                     //Log($"addedInheritanceItem = {addedInheritanceItem}");
 #endif
 
-                    _inheritanceItemsDict[id] = addedInheritanceItem;
+                    _inheritanceItemsDict[name] = addedInheritanceItem;
 
                     _publicInheritanceStorage.SetInheritance(addedInheritanceItem);
                 }
@@ -214,11 +213,13 @@ namespace SymOntoClay.Core.Internal.Storage
             {
                 foreach(var id in oldIdList)
                 {
-                    _publicFactsStorage.RemoveById(_factsIdDict[id]);
-                    _factsIdDict.Remove(id);
+                    var name = id.NameValue;
 
-                    _publicInheritanceStorage.RemoveInheritance(_inheritanceItemsDict[id]);
-                    _inheritanceItemsDict.Remove(id);
+                    _publicFactsStorage.RemoveById(_factsIdDict[name]);
+                    _factsIdDict.Remove(name);
+
+                    _publicInheritanceStorage.RemoveInheritance(_inheritanceItemsDict[name]);
+                    _inheritanceItemsDict.Remove(name);
                 }
             }
 

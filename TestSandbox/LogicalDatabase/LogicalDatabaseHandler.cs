@@ -254,13 +254,15 @@ namespace TestSandbox.LogicalDatabase
 
             _logger.Log($"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
 
-            var indexedQuery = parsedQuery.GetIndexed(_context);
+            //var indexedQuery = parsedQuery.GetIndexed(_context);
 
-            var longConditionalHashCode = indexedQuery.GetLongConditionalHashCode();
+            parsedQuery.CheckDirty();
+
+            var longConditionalHashCode = parsedQuery.GetLongConditionalHashCode();
 
             _logger.Log($"longConditionalHashCode = {longConditionalHashCode}");
 
-            var longHashCode = indexedQuery.GetLongHashCode();
+            var longHashCode = parsedQuery.GetLongHashCode();
 
             _logger.Log($"longHashCode = {longHashCode}");
 
@@ -293,7 +295,7 @@ namespace TestSandbox.LogicalDatabase
 
             var inheritanceItemsList = new List<InheritanceItem>();
 
-            var ruleInstanceName = parsedQuery.Name.NameValue;
+            var ruleInstanceName = parsedQuery.Name;
 
             foreach (var inheritanceRelation in inheritanceRelationsList)
             {
@@ -362,29 +364,27 @@ namespace TestSandbox.LogicalDatabase
             var parser = new LogicalQueryParser(internalParserContext);
             parser.Run();
 
-            var dictionary = _context.Dictionary;
-
             var parsedQuery = parser.Result;
 
             //_logger.Log($"parsedQuery = {parsedQuery}");
 
             _logger.Log($"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
 
-            var indexedQuery = parsedQuery.GetIndexed(_context);
+            //var indexedQuery = parsedQuery.GetIndexed(_context);
 
             //_logger.Log($"indexedQuery = {indexedQuery}");
 
-            _logger.Log($"DebugHelperForIndexedRuleInstance.ToString(indexedQuery) = {DebugHelperForIndexedRuleInstance.ToString(indexedQuery, dictionary)}");
+            //_logger.Log($"DebugHelperForIndexedRuleInstance.ToString(indexedQuery) = {DebugHelperForIndexedRuleInstance.ToString(indexedQuery, dictionary)}");
 
             var searcher = _context.DataResolversFactory.GetLogicalSearchResolver();
 
             var searchOptions = new LogicalSearchOptions();
-            searchOptions.QueryExpression = indexedQuery;
+            searchOptions.QueryExpression = parsedQuery;
 
             var localCodeExecutionContext = new LocalCodeExecutionContext();
             searchOptions.LocalCodeExecutionContext = localCodeExecutionContext;
             localCodeExecutionContext.Storage = _context.Storage.GlobalStorage;
-            localCodeExecutionContext.Holder = _context.CommonNamesStorage.IndexedDefaultHolder;
+            localCodeExecutionContext.Holder = _context.CommonNamesStorage.DefaultHolder;
 
             //_logger.Log($"searchOptions = {searchOptions}");
 
@@ -395,7 +395,7 @@ namespace TestSandbox.LogicalDatabase
             _logger.Log($"searchResult.IsSuccess = {searchResult.IsSuccess}");
             _logger.Log($"searchResult.Items.Count = {searchResult.Items.Count}");
 
-            _logger.Log(DebugHelperForLogicalSearchResult.ToString(searchResult, dictionary));
+            _logger.Log(DebugHelperForLogicalSearchResult.ToString(searchResult));
 
             foreach (var item in searchResult.Items)
             {
@@ -403,13 +403,13 @@ namespace TestSandbox.LogicalDatabase
 
                 foreach (var resultOfVarOfQueryToRelation in item.ResultOfVarOfQueryToRelationList)
                 {
-                    var varName = dictionary.GetName(resultOfVarOfQueryToRelation.NameOfVar);
+                    var varName = resultOfVarOfQueryToRelation.NameOfVar;
 
                     _logger.Log($"varName = {varName}");
 
                     var foundNode = resultOfVarOfQueryToRelation.FoundExpression;
 
-                    _logger.Log($"DebugHelperForRuleInstance.ToString(foundNode) = {DebugHelperForIndexedRuleInstance.ToString(foundNode, dictionary)}");
+                    _logger.Log($"DebugHelperForRuleInstance.ToString(foundNode) = {DebugHelperForRuleInstance.ToString(foundNode)}");
                 }
 
                 //_logger.Log($" = {}");

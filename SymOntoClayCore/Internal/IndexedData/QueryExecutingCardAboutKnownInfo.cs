@@ -104,7 +104,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             sb.PrintShortObjProp(n, nameof(Value), Value);
 
-            sb.PrintShortObjProps(n, nameof(NameOfVar), NameOfVar);
+            sb.PrintShortObjProp(n, nameof(NameOfVar), NameOfVar);
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
 
             sb.PrintShortObjProp(n, nameof(Expression), Expression);

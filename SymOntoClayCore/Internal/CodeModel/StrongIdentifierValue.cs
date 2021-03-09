@@ -91,7 +91,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode()
         {
-            return base.CalculateLongHashCode() ^ NameKey;
+            return base.CalculateLongHashCode() ^ (ulong)NormalizedNameValue.GetHashCode();
         }
 
         /// <inheritdoc/>

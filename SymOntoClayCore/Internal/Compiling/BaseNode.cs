@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.Compiling
 
             var command = new ScriptCommand();
             command.OperationCode = OperationCode.PushVal;
-            command.Value = value.GetIndexedValue(_context);
+            command.Value = value;
 
             AddCommand(command);
         }
@@ -95,7 +95,7 @@ namespace SymOntoClay.Core.Internal.Compiling
         {
             var command = new ScriptCommand();
             command.OperationCode = OperationCode.PushVal;
-            command.Value = value.GetIndexedValue(_context);
+            command.Value = value;
 
             AddCommand(command);
         }
@@ -104,7 +104,7 @@ namespace SymOntoClay.Core.Internal.Compiling
         {
             var command = new ScriptCommand();
             command.OperationCode = OperationCode.PushValFromVar;
-            command.Value = value.GetIndexedValue(_context);
+            command.Value = value;
 
             AddCommand(command);
         }
@@ -113,7 +113,7 @@ namespace SymOntoClay.Core.Internal.Compiling
         {
             var command = new ScriptCommand();
             command.OperationCode = OperationCode.PushVal;
-            command.Value = annotatedItem.GetAnnotationValue().GetIndexedValue(_context);
+            command.Value = annotatedItem.GetAnnotationValue();
 
             AddCommand(command);
         }

@@ -41,7 +41,6 @@ namespace SymOntoClay.Core.Internal
         
         IStorageComponent Storage { get; }
         IParser Parser { get; }
-        ICompiler Compiler { get; }
         IDataResolversFactory DataResolversFactory { get; }
         ICommonNamesStorage CommonNamesStorage { get; }
         ILoaderFromSourceCode LoaderFromSourceCode { get; }

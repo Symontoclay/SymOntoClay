@@ -9,11 +9,6 @@
             Gets or sets reference to logger.
             </summary>
         </member>
-        <member name="P:SymOntoClay.Core.BaseCoreSettings.Dictionary">
-            <summary>
-            Gets or ses reference to shared dictionary.
-            </summary>
-        </member>
         <member name="M:SymOntoClay.Core.BaseCoreSettings.ToString">
             <inheritdoc/>
         </member>
@@ -163,10 +158,10 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.Dispose">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BinaryOperatorSystemHandler.Call(System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.IndexedValue},SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BinaryOperatorSystemHandler.Call(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BinaryOperatorSystemHandler.Call(System.Collections.Generic.IDictionary{System.UInt64,SymOntoClay.Core.Internal.IndexedData.IndexedValue},SymOntoClay.Core.Internal.IndexedData.IndexedValue,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BinaryOperatorSystemHandler.Call(System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.ExecuteBatchAsync(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo})">
@@ -307,10 +302,10 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler.Call(System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.IndexedValue},SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler.Call(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler.Call(System.Collections.Generic.IDictionary{System.UInt64,SymOntoClay.Core.Internal.IndexedData.IndexedValue},SymOntoClay.Core.Internal.IndexedData.IndexedValue,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler.Call(System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.WhereSection">
@@ -387,19 +382,10 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.AsAnnotationValue">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.GetIndexedValue(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -457,15 +443,6 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.BinaryOperatorAstExpression.NRight">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.BinaryOperatorAstExpression.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.BinaryOperatorAstExpression.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.BinaryOperatorAstExpression.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.BinaryOperatorAstExpression.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
@@ -490,15 +467,6 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.CallingFunctionAstExpression.NLeft">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.CallingFunctionAstExpression.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.CallingFunctionAstExpression.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.CallingFunctionAstExpression.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.CallingFunctionAstExpression.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
@@ -515,15 +483,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.CallingFunctionAstExpression.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.CallingParameter.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.CallingParameter.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.CallingParameter.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.CallingParameter.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -557,15 +516,6 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.ConstValueAstExpression.Kind">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.ConstValueAstExpression.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.ConstValueAstExpression.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.ConstValueAstExpression.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.ConstValueAstExpression.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
@@ -585,15 +535,6 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.EntityConditionAstExpression.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.EntityConditionAstExpression.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.EntityConditionAstExpression.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.EntityConditionAstExpression.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.EntityConditionAstExpression.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -620,15 +561,6 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.UnaryOperatorAstExpression.NLeft">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.UnaryOperatorAstExpression.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.UnaryOperatorAstExpression.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.UnaryOperatorAstExpression.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.UnaryOperatorAstExpression.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
@@ -650,15 +582,6 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.VarAstExpression.Kind">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.VarAstExpression.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.VarAstExpression.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.VarAstExpression.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.VarAstExpression.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
@@ -675,15 +598,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.VarAstExpression.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstExpressionStatement.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstExpressionStatement.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstExpressionStatement.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstExpressionStatement.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -726,15 +640,6 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstStatement.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstUseInheritanceStatement.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstUseInheritanceStatement.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstUseInheritanceStatement.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstUseInheritanceStatement.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
@@ -756,6 +661,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseRulePart.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseRulePart.CalculateLongHashCode">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseRulePart.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -765,13 +673,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseRulePart.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.Channel.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Channel.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Channel.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Channel.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Channel.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -800,15 +702,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Channel.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.CodeEntity.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeEntity.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeEntity.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeEntity.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -875,19 +768,10 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.HostValue.AsHostValue">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.HostValue.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.HostValue.GetIndexedValue(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.HostValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.HostValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.HostValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.HostValue.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.HostValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -905,6 +789,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.HostValue.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.HostValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.InheritanceItem.SuperName">
             <summary>
             Represents ancestor.
@@ -916,13 +803,7 @@
             It must be resolved to LogicalValue.
             </summary>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.InheritanceItem.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.InheritanceItem.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.InheritanceItem.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.InheritanceItem.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InheritanceItem.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -953,13 +834,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InheritanceItem.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.InlineTrigger.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.InlineTrigger.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.InlineTrigger.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.InlineTrigger.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InlineTrigger.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -999,19 +874,10 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.InstanceValue.AsInstanceValue">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.InstanceValue.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.GetIndexedValue(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -1029,18 +895,15 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="F:SymOntoClay.Core.Internal.CodeModel.KindOfLogicalQueryNode.Entity">
             <summary>
             Represents entity identifier. Entity identifier always atarts from symbol '#'. For example, '#123', '#Piter', '#_123W12_1', '#`Tom Jones`'.
             </summary>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -1085,19 +948,10 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalQueryOperationValue.AsLogicalQueryOperationValue">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalQueryOperationValue.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryOperationValue.GetIndexedValue(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryOperationValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryOperationValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryOperationValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryOperationValue.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryOperationValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -1115,6 +969,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryOperationValue.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryOperationValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.KindOfValue">
             <inheritdoc/>
         </member>
@@ -1124,19 +981,10 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.AsLogicalSearchResultValue">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.GetIndexedValue(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -1154,6 +1002,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalValue.KindOfValue">
             <inheritdoc/>
         </member>
@@ -1163,18 +1014,6 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalValue.AsLogicalValue">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalValue.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.GetIndexedValue(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.GetSystemValue">
             <inheritdoc/>
         </member>
@@ -1182,6 +1021,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.CloneValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.PropertiesToString(System.UInt32)">
@@ -1205,19 +1047,10 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NullValue.AsNullValue">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.NullValue.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.NullValue.GetIndexedValue(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.NullValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.NullValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NullValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.NullValue.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NullValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -1238,19 +1071,10 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NumberValue.AsNumberValue">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.NumberValue.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.GetIndexedValue(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -1271,13 +1095,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.Operator.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -1317,19 +1135,10 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.PointRefValue.AsPointRefValue">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.PointRefValue.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.GetIndexedValue(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -1350,13 +1159,10 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart.IndexedAnnotatedItem">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart.GetNextPartsList">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -1384,13 +1190,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -1421,6 +1221,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.KindOfValue">
             <inheritdoc/>
         </member>
@@ -1448,19 +1251,19 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.GetAnnotationValue">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.GetIndexedValue(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.GetLongConditionalHashCode">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.GetLongHashCode">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.CalculateLongConditionalHashCode">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -1478,13 +1281,10 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.SecondaryRulePart.IndexedAnnotatedItem">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.SecondaryRulePart.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.SecondaryRulePart.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.SecondaryRulePart.GetNextPartsList">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.SecondaryRulePart.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -1521,19 +1321,10 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.StringValue.AsStringValue">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.StringValue.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.StringValue.GetIndexedValue(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.StringValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.StringValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StringValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StringValue.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StringValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -1563,18 +1354,6 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.AsStrongIdentifierValue">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.GetIndexedValue(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.GetSystemValue">
             <inheritdoc/>
         </member>
@@ -1585,6 +1364,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.GetHashCode">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -1621,18 +1403,6 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.TaskValue.KindOfValue">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.GetIndexedValue(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.TaskValue.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.TaskValue.IsTaskValue">
             <inheritdoc/>
         </member>
@@ -1640,6 +1410,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -1688,19 +1461,10 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.WaypointValue.AsWaypointValue">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.WaypointValue.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointValue.GetIndexedValue(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointValue.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointValue.CalculateLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -1721,46 +1485,28 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointValue.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.WorldName">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.IndexedWorldName">
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.WorldName">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.AppName">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.IndexedAppName">
-            <inheritdoc/>
-        </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.ClassName">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.IndexedClassName">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.DefaultHolder">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.IndexedDefaultHolder">
-            <inheritdoc/>
-        </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.SelfSystemVarName">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.IndexedSelfSystemVarName">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.HostSystemVarName">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.IndexedHostSystemVarName">
-            <inheritdoc/>
-        </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.SelfName">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.IndexedSelfName">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstStatement})">
@@ -1986,312 +1732,6 @@
         <member name="M:SymOntoClay.Core.Internal.DefaultSettingsOfCodeEntity.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Dict.EntityDictionary.Name">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Dict.EntityDictionary.GetKey(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Dict.EntityDictionary.GetName(System.UInt64)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Dict.EntityDictionary.GetDbgStr">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.AndOperatorIndexedLogicalQueryNode.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.AndOperatorIndexedLogicalQueryNode.KindOfOperator">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.BaseIndexedLogicalQueryNode.OriginalAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.BaseIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.BaseIndexedLogicalQueryNode.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.BaseIndexedLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.BaseKeyRefIndexedLogicalQueryNode.IsKeyRef">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.BaseKeyRefIndexedLogicalQueryNode.AsKeyRef">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.BaseKeyRefIndexedLogicalQueryNode.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.BaseKeyRefIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.BaseKeyRefIndexedLogicalQueryNode.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.BaseKeyRefIndexedLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.BaseKeyRefIndexedLogicalQueryNode.CalculateUsedKeys(System.Collections.Generic.List{System.UInt64})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.BinaryOperatorIndexedLogicalQueryNode.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.BinaryOperatorIndexedLogicalQueryNode.CalculateUsedKeys(System.Collections.Generic.List{System.UInt64})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.BinaryOperatorIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.BinaryOperatorIndexedLogicalQueryNode.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.BinaryOperatorIndexedLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.ConceptIndexedLogicalQueryNode.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.EntityConditionIndexedLogicalQueryNode.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.EntityConditionIndexedLogicalQueryNode.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.EntityConditionIndexedLogicalQueryNode.CalculateUsedKeys(System.Collections.Generic.List{System.UInt64})">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.EntityIndexedLogicalQueryNode.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.EntityRefIndexedLogicalQueryNode.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.EntityRefIndexedLogicalQueryNode.IsEntityRef">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.EntityRefIndexedLogicalQueryNode.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.EntityRefIndexedLogicalQueryNode.CalculateUsedKeys(System.Collections.Generic.List{System.UInt64})">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotatedItem.WhereSection">
-            <summary>
-            It is 'Clauses section' in the documentation.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotatedItem.HasModalitiesOrSections">
-            <summary>
-            Returns <c>true</c> if the instance has modalities or additional sections, otherwise returns <c>false</c>.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotatedItem.IsDisposed">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotatedItem.Dispose">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotatedItem.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotatedItem.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotatedItem.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotatedItem.ToShortString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotatedItem.ToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotatedItem.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotatedItem.ToBriefString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotatedItem.ToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotatedItem.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotatedItem.ToDbgString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotatedItem.ToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotatedItem.SymOntoClay#CoreHelper#DebugHelpers#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotationValue.OriginalValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotationValue.KindOfValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotationValue.IsAnnotationValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotationValue.AsAnnotationValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotationValue.GetSystemValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotationValue.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotationValue.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotationValue.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotationValue.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedAnnotationValue.PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedBaseRulePart.OriginalAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedBaseRulePart.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedBaseRulePart.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedBaseRulePart.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedBaseRulePart.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedChannel.OriginalAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedChannel.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedChannel.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedChannel.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedChannel.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedHostValue.OriginalValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedHostValue.KindOfValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedHostValue.IsHostValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedHostValue.AsHostValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedHostValue.GetSystemValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedHostValue.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedHostValue.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedHostValue.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedHostValue.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedHostValue.PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedInheritanceItem.OriginalAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedInheritanceItem.SuperName">
-            <summary>
-            Represents ancestor.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedInheritanceItem.Rank">
-            <summary>
-            Represents rank of inheritance between two objects.
-            It must be resolved to LogicalValue.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInheritanceItem.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInheritanceItem.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInheritanceItem.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInheritanceItem.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedInlineTrigger.OriginalAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInlineTrigger.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInlineTrigger.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInlineTrigger.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInlineTrigger.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedInstanceValue.OriginalValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedInstanceValue.KindOfValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedInstanceValue.IsInstanceValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedInstanceValue.AsInstanceValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInstanceValue.GetSystemValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInstanceValue.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInstanceValue.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInstanceValue.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInstanceValue.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedInstanceValue.PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalAnnotation.ToString">
             <inheritdoc/>
         </member>
@@ -2317,449 +1757,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalAnnotation.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalQueryOperationValue.Target">
-            <summary>
-            Inserted or searched value.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalQueryOperationValue.KindOfValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalQueryOperationValue.IsLogicalQueryOperationValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalQueryOperationValue.AsLogicalQueryOperationValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalQueryOperationValue.OriginalValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalQueryOperationValue.GetSystemValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalQueryOperationValue.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalQueryOperationValue.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalQueryOperationValue.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalQueryOperationValue.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalQueryOperationValue.PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.KindOfValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.IsLogicalSearchResultValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.AsLogicalSearchResultValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.OriginalValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.GetSystemValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalSearchResultValue.PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalValue.OriginalValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalValue.KindOfValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalValue.IsLogicalValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalValue.AsLogicalValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalValue.GetSystemValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalValue.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalValue.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalValue.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalValue.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalValue.PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedNullValue.OriginalValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedNullValue.KindOfValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedNullValue.IsNullValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedNullValue.AsNullValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedNullValue.GetSystemValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedNullValue.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedNullValue.PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedNumberValue.OriginalValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedNumberValue.KindOfValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedNumberValue.IsNumberValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedNumberValue.AsNumberValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedNumberValue.GetSystemValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedNumberValue.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedNumberValue.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedNumberValue.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedNumberValue.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedNumberValue.PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedOperator.OriginalAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedOperator.IsSystemDefined">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedOperator.CompiledFunctionBody">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedOperator.SystemHandler">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedOperator.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedOperator.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedOperator.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedOperator.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedPointRefValue.OriginalValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedPointRefValue.KindOfValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedPointRefValue.IsPointRefValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedPointRefValue.AsPointRefValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedPointRefValue.GetSystemValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedPointRefValue.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedPointRefValue.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedPointRefValue.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedPointRefValue.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedPointRefValue.PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedPrimaryRulePart.OriginRulePart">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedPrimaryRulePart.GetNextPartsList">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedPrimaryRulePart.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedPrimaryRulePart.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedPrimaryRulePart.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstance.OriginalAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstance.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstance.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstance.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstance.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstance.PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.KindOfValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.IsRuleInstanceValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.AsRuleInstanceValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.OriginalValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.QuantityQualityModalities">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.WhereSection">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.Holder">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.Annotations">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.GetLongConditionalHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.GetLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.CalculateLongConditionalHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.GetSystemValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedRuleInstanceValue.PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedSecondaryRulePart.OriginRulePart">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedSecondaryRulePart.GetNextPartsList">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedSecondaryRulePart.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedSecondaryRulePart.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedSecondaryRulePart.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedStringValue.OriginalValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedStringValue.KindOfValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedStringValue.IsStringValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedStringValue.AsStringValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedStringValue.GetSystemValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedStringValue.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedStringValue.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedStringValue.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedStringValue.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedStringValue.PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue.OriginalValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue.KindOfValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue.IsStrongIdentifierValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue.AsStrongIdentifierValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue.GetSystemValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue.Equals(SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue.Equals(System.Object)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue.GetHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue.PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedTaskValue.KindOfValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedTaskValue.OriginalValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedTaskValue.IsTaskValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedTaskValue.AsTaskValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedTaskValue.GetSystemValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedTaskValue.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedTaskValue.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedTaskValue.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedTaskValue.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedValue.OriginalAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedValue.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedValue.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedValue.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedWaypointValue.OriginalValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedWaypointValue.IsWaypointValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedWaypointValue.AsWaypointValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.IndexedWaypointValue.KindOfValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedWaypointValue.GetSystemValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedWaypointValue.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedWaypointValue.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedWaypointValue.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedWaypointValue.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.LogicalVarIndexedLogicalQueryNode.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.NotOperatorIndexedLogicalQueryNode.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.NotOperatorIndexedLogicalQueryNode.KindOfOperator">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard.ToString">
@@ -2814,12 +1811,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.OriginOfVarOfQueryToRelation.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.OrOperatorIndexedLogicalQueryNode.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.OrOperatorIndexedLogicalQueryNode.KindOfOperator">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardAboutKnownInfo.ToString">
@@ -2903,30 +1894,6 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.QuestionVarIndexedLogicalQueryNode.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.QuestionVarIndexedLogicalQueryNode.AsQuestionVar">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.RelationIndexedLogicalQueryNode.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.RelationIndexedLogicalQueryNode.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.RelationIndexedLogicalQueryNode.CalculateUsedKeys(System.Collections.Generic.List{System.UInt64})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.RelationIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.RelationIndexedLogicalQueryNode.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.RelationIndexedLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfQueryToRelation.ToString">
             <inheritdoc/>
         </member>
@@ -2980,6 +1947,19 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfVarOfQueryToRelation.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody.Clone">
+            <summary>
+            Clones the instance and returns cloned instance.
+            </summary>
+            <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            Clones the instance using special context and returns cloned instance.
+            </summary>
+            <param name="context">Special context for providing references continuity.</param>
+            <returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody.ToString">
             <inheritdoc/>
@@ -3042,6 +2022,19 @@
             Calls a binary operator
             </summary>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.ScriptCommand.Clone">
+            <summary>
+            Clones the instance and returns cloned instance.
+            </summary>
+            <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.ScriptCommand.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            Clones the instance using special context and returns cloned instance.
+            </summary>
+            <param name="context">Special context for providing references continuity.</param>
+            <returns>Cloned instance.</returns>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.ScriptCommand.ToString">
             <inheritdoc/>
         </member>
@@ -3076,63 +2069,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.ScriptCommand.SymOntoClay#CoreHelper#DebugHelpers#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.StubParamIndexedLogicalQueryNode.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.StubParamIndexedLogicalQueryNode.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.StubParamIndexedLogicalQueryNode.CalculateUsedKeys(System.Collections.Generic.List{System.UInt64})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.UnaryOperatorIndexedLogicalQueryNode.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.UnaryOperatorIndexedLogicalQueryNode.CalculateUsedKeys(System.Collections.Generic.List{System.UInt64})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.UnaryOperatorIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.UnaryOperatorIndexedLogicalQueryNode.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.UnaryOperatorIndexedLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.IsValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.AsValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.ValueIndexedLogicalQueryNode.CalculateUsedKeys(System.Collections.Generic.List{System.UInt64})">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.IndexedData.VarIndexedLogicalQueryNode.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.VarIndexedLogicalQueryNode.CalculateLongHashCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.VarIndexedLogicalQueryNode.CalculateUsedKeys(System.Collections.Generic.List{System.UInt64})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem.ToString">
@@ -3442,15 +2378,6 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.PrimaryRulePartParser.OnEnter">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.UseRawStatement.IndexedAnnotatedItem">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.UseRawStatement.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.UseRawStatement.GetIndexedAnnotatedItem(SymOntoClay.Core.Internal.IMainStorageContext,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.UseRawStatement.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
@@ -3636,19 +2563,19 @@
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.Read">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.Write(SymOntoClay.Core.Internal.IndexedData.IndexedValue)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.Write(SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.CallLogicalQueryOperatorHandler.Call(SymOntoClay.Core.Internal.IndexedData.IndexedValue,SymOntoClay.Core.Internal.IndexedData.IndexedValue,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.CallLogicalQueryOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.IsOperatorHandler.Call(SymOntoClay.Core.Internal.IndexedData.IndexedValue,SymOntoClay.Core.Internal.IndexedData.IndexedValue,SymOntoClay.Core.Internal.IndexedData.IndexedValue,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.IsOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.LeftRightStreamOperatorHandler.Call(SymOntoClay.Core.Internal.IndexedData.IndexedValue,SymOntoClay.Core.Internal.IndexedData.IndexedValue,SymOntoClay.Core.Internal.IndexedData.IndexedValue,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.LeftRightStreamOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.PointOperatorHandler.Call(SymOntoClay.Core.Internal.IndexedData.IndexedValue,SymOntoClay.Core.Internal.IndexedData.IndexedValue,SymOntoClay.Core.Internal.IndexedData.IndexedValue,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.PointOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.ChannelsStorage.ChannelsStorage.Kind">
@@ -3660,7 +2587,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStorage.ChannelsStorage.Append(SymOntoClay.Core.Internal.CodeModel.Channel)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStorage.ChannelsStorage.GetChannelsDirectly(System.UInt64,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStorage.ChannelsStorage.GetChannelsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritancePublicFactsReplicator.ProcessChangeInheritance(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
@@ -3681,7 +2608,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStorage.InheritanceStorage.RemoveInheritance(SymOntoClay.Core.Internal.CodeModel.InheritanceItem)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStorage.InheritanceStorage.GetItemsDirectly(System.UInt64)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStorage.InheritanceStorage.GetItemsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.Kind">
@@ -3711,10 +2638,10 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.GetAllRelations">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(System.UInt64)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(System.UInt64)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.DbgPrintFactsAndRules">
@@ -3879,16 +2806,16 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.Storage">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.SetSystemValue(SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue,SymOntoClay.Core.Internal.IndexedData.IndexedValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.SetSystemValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.GetSystemValueDirectly(SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.GetSystemValueDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.SetValue(SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue,SymOntoClay.Core.Internal.IndexedData.IndexedValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.SetValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.GetValueDirectly(SymOntoClay.Core.Internal.IndexedData.IndexedStrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.GetValueDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Threads.ActivePeriodicObjectCommonContext.IsNeedWating">
@@ -3979,38 +2906,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.RelativeCoordinate.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.SharedDictionary.GetKey(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.SharedDictionary.GetName(System.UInt64)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.SharedDictionary.GetDbgStr">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.SharedDictionary.LoadFromSourceCode">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.SharedDictionary.LoadFromImage(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.SharedDictionary.SaveToImage(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.SharedDictionarySettings.Logger">
-            <summary>
-            Gets or sets reference to logger.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.Core.SharedDictionarySettings.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.SharedDictionarySettings.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.SharedDictionarySettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.StandaloneStorage.Storage">

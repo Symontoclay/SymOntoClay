@@ -54,7 +54,6 @@ namespace SymOntoClay.Core.Internal
 
         public StorageComponent Storage { get; set; }
         public Parser Parser { get; set; }
-        public Compiler Compiler { get; set; }
         public DataResolversFactory DataResolversFactory { get; set; }
         public CommonNamesStorage CommonNamesStorage { get; set; }
         public BaseInstancesStorageComponent InstancesStorage { get; set; }
@@ -65,7 +64,7 @@ namespace SymOntoClay.Core.Internal
 
         IStorageComponent IMainStorageContext.Storage => Storage;
         IParser IMainStorageContext.Parser => Parser;
-        ICompiler IMainStorageContext.Compiler => Compiler;
+        
         IDataResolversFactory IMainStorageContext.DataResolversFactory => DataResolversFactory;
         ICommonNamesStorage IMainStorageContext.CommonNamesStorage => CommonNamesStorage;
         ILoaderFromSourceCode IMainStorageContext.LoaderFromSourceCode => LoaderFromSourceCode;

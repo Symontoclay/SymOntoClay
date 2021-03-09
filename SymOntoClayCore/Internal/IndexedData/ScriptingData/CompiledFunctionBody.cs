@@ -24,6 +24,7 @@ using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
@@ -43,6 +44,36 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                     result ^= LongHashCodeWeights.BaseCommandWeight ^ item.Value.GetLongHashCode();
                 }
             }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public CompiledFunctionBody Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public CompiledFunctionBody Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (CompiledFunctionBody)context[this];
+            }
+
+            var result = new CompiledFunctionBody();
+            context[this] = result;
+
+            result.Commands = Commands?.ToDictionary(p => p.Key, p => p.Value.Clone(context));
 
             return result;
         }

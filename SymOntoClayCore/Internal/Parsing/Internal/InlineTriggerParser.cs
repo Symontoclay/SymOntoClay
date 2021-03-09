@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Result = CreateCodeEntity();
 
             Result.Kind = KindOfCodeEntity.InlineTrigger;
-            Result.Name = NameHelper.CreateRuleOrFactName(_context.Dictionary);
+            Result.Name = NameHelper.CreateRuleOrFactName();
             _inlineTrigger = CreateInlineTrigger();
             _inlineTrigger.CodeEntity = Result;
             Result.InlineTrigger = _inlineTrigger;

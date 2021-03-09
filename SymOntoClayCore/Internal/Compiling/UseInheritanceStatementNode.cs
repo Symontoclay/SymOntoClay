@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.Compiling
 
             var command = new ScriptCommand();
             command.OperationCode = OperationCode.PushVal;
-            command.Value = statement.GetAnnotationValue().GetIndexedValue(_context);
+            command.Value = statement.GetAnnotationValue();
 
             AddCommand(command);
 

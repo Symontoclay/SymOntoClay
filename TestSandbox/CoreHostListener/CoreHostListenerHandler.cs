@@ -52,7 +52,7 @@ namespace TestSandbox.CoreHostListener
             var context = complexContext.EngineContext;
             var worldContext = complexContext.WorldContext;
 
-            var dictionary = context.Dictionary;
+            //var dictionary = context.Dictionary;
 
             var platformTypesConvertorsRegistry = worldContext.PlatformTypesConvertorsRegistry;
 
@@ -97,7 +97,7 @@ namespace TestSandbox.CoreHostListener
 
             //----------------------------------
 
-            var methodName = NameHelper.CreateName("go", dictionary);
+            var methodName = NameHelper.CreateName("go");
 
             //var listener = new TstCoreHostListener();
 
@@ -106,7 +106,7 @@ namespace TestSandbox.CoreHostListener
             command.ParamsDict = new Dictionary<StrongIdentifierValue, Value>();
 
             var param1Value = new WaypointValue(25, 36, context);
-            var param1Name = NameHelper.CreateName("to", dictionary);
+            var param1Name = NameHelper.CreateName("to");
 
             command.ParamsDict[param1Name] = param1Value;
 
@@ -140,7 +140,7 @@ namespace TestSandbox.CoreHostListener
                 Thread.Sleep(10000);
             }
 
-            methodName = NameHelper.CreateName("shoot", dictionary);
+            methodName = NameHelper.CreateName("shoot");
 
             command = new Command();
             command.Name = methodName;

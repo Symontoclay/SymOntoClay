@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.Helpers
     public static class ExpressionNodeHelper
     {
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static bool Compare(LogicalQueryNode expressionNode1, LogicalQueryNode expressionNode2, List<StrongIdentifierValue> additionalKeys_1, List<StrongIdentifierValue> additionalKeys_2
@@ -46,10 +46,10 @@ namespace SymOntoClay.Core.Internal.Helpers
         {
 #if DEBUG
             //logger.Log($"(expressionNode1 == null) = {expressionNode1 == null} (expressionNode2 == null) = {expressionNode2 == null}");
-            _gbcLogger.Info($"expressionNode1 = {expressionNode1}");
-            _gbcLogger.Info($"expressionNode2 = {expressionNode2}");
-            _gbcLogger.Info($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1?.Select(p => p.NameValue), Formatting.Indented)}");
-            _gbcLogger.Info($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");
+            //_gbcLogger.Info($"expressionNode1 = {expressionNode1}");
+            //_gbcLogger.Info($"expressionNode2 = {expressionNode2}");
+            //_gbcLogger.Info($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1?.Select(p => p.NameValue), Formatting.Indented)}");
+            //_gbcLogger.Info($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");
 #endif
 
             if (expressionNode1.IsKeyRef && expressionNode2.IsKeyRef)
@@ -60,7 +60,7 @@ namespace SymOntoClay.Core.Internal.Helpers
                 if (key_1 == key_2)
                 {
 #if DEBUG
-                    _gbcLogger.Info($"key_1 == key_2 = {key_1 == key_2}");
+                    //_gbcLogger.Info($"key_1 == key_2 = {key_1 == key_2}");
 #endif
                     return true;
                 }

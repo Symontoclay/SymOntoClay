@@ -82,6 +82,46 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return Equals(personObj);
         }
 
+        public static bool operator == (StrongIdentifierValue a, StrongIdentifierValue b)
+        {
+            if(object.ReferenceEquals(a, b))
+            {
+                return true;
+            }
+
+            if(object.ReferenceEquals(a, null))
+            {
+                return false;
+            }
+
+            if (object.ReferenceEquals(b, null))
+            {
+                return false;
+            }
+
+            return a.NormalizedNameValue == b.NormalizedNameValue;
+        }
+
+        public static bool operator != (StrongIdentifierValue a, StrongIdentifierValue b)
+        {
+            if (object.ReferenceEquals(a, b))
+            {
+                return false;
+            }
+
+            if (object.ReferenceEquals(a, null))
+            {
+                return true;
+            }
+
+            if (object.ReferenceEquals(b, null))
+            {
+                return true;
+            }
+
+            return a.NormalizedNameValue != b.NormalizedNameValue;
+        }
+
         /// <inheritdoc/>
         public override int GetHashCode()
         {

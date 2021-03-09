@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
     public class LogicalStorage: BaseLoggedComponent, ILogicalStorage
     {
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public LogicalStorage(KindOfStorage kind, RealStorageContext realStorageContext)

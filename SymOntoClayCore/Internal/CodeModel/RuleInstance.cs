@@ -77,7 +77,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 Normalized.PrepareDirty();
 
 #if DEBUG
-                _gbcLogger.Info($"Normalized = {DebugHelperForRuleInstance.ToString(Normalized)}");
+                //_gbcLogger.Info($"Normalized = {DebugHelperForRuleInstance.ToString(Normalized)}");
 #endif
             }
             else

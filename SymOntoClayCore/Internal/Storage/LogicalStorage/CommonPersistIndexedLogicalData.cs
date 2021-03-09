@@ -35,6 +35,10 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 {
     public class CommonPersistIndexedLogicalData: BaseLoggedComponent
     {
+#if DEBUG
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         public CommonPersistIndexedLogicalData(IEntityLogger logger)
             : base(logger)
         {
@@ -58,7 +62,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         public void NSetIndexedRuleInstanceToIndexData(RuleInstance indexedRuleInstance)
         {
 #if DEBUG
-            //Log($"indexedRuleInstance = {indexedRuleInstance}");
+            _gbcLogger.Info($"indexedRuleInstance = {indexedRuleInstance}");
+            _gbcLogger.Info($"indexedRuleInstance = {DebugHelperForRuleInstance.ToString(indexedRuleInstance)}");
 #endif
 
             IndexedRuleInstancesDict[indexedRuleInstance.Name] = indexedRuleInstance;

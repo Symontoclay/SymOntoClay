@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using Newtonsoft.Json;
+using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
@@ -35,6 +36,10 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 {
     public class LogicalStorage: BaseLoggedComponent, ILogicalStorage
     {
+#if DEBUG
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         public LogicalStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(realStorageContext.MainStorageContext.Logger)
         {
@@ -94,10 +99,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 var annotationsList = ruleInstance.GetAllAnnotations();
 
 #if DEBUG
+                //_gbcLogger.Info($"ruleInstance = {ruleInstance}");
+                ////_gbcLogger.Info($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
                 //Log($"annotationsList = {annotationsList.WriteListToString()}");
 #endif
 
-                foreach(var annotationRuleInstance in annotationsList)
+                foreach (var annotationRuleInstance in annotationsList)
                 {
                     NAppend(annotationRuleInstance, false);
                 }
@@ -106,7 +113,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 //var indexedRuleInstance = ruleInstance.GetIndexed(_mainStorageContext);
 
-                var usedKeysList = ruleInstance.UsedKeysList.Concat(annotationsList.SelectMany(p => p.UsedKeysList)).Distinct().ToList();
+                var usedKeysList = ruleInstance.Normalized.UsedKeysList.Concat(annotationsList.SelectMany(p => p.UsedKeysList)).Distinct().ToList();
 
                 EmitOnChanged(usedKeysList);
             }
@@ -171,7 +178,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             _ruleInstancesDictByHashCode[longHashCode] = ruleInstance;
             _ruleInstancesDictById[ruleInstanceId] = ruleInstance;
 
-            _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(ruleInstance);
+            _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(ruleInstance.Normalized);
 
             if(isPrimary && _kind != KindOfStorage.PublicFacts && _kind != KindOfStorage.PerceptedFacts)
             {

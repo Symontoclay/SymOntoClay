@@ -20,7 +20,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
@@ -34,23 +36,61 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class RuleInstance: AnnotatedItem
     {
+#if DEBUG
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
+        public bool IsSource { get; set; } = true;
+
         public StrongIdentifierValue Name { get; set; }
         public KindOfRuleInstance Kind { get; set; } = KindOfRuleInstance.Undefined;
         public PrimaryRulePart PrimaryPart { get; set; }
         public IList<SecondaryRulePart> SecondaryParts { get; set; } = new List<SecondaryRulePart>();
-
+        
         public List<StrongIdentifierValue> UsedKeysList { get; set; }
+
+        public RuleInstance Original { get; set; }
+        public RuleInstance Normalized { get; set; }
 
         private void PrepareDirty()
         {
-            CalculateUsedKeys();
-            PrimaryPart?.PrepareDirty(this);
-
-            if (!SecondaryParts.IsNullOrEmpty())
+            if(Name == null || Name.IsEmpty)
             {
-                foreach (var item in SecondaryParts)
+                Name = NameHelper.CreateRuleOrFactName();
+            }
+
+            if(Kind == KindOfRuleInstance.Undefined)
+            {
+                if(SecondaryParts.IsNullOrEmpty())
                 {
-                    item.PrepareDirty(this);
+                    Kind = KindOfRuleInstance.Fact;
+                }
+                else
+                {
+                    Kind = KindOfRuleInstance.Rule;
+                }
+            }
+
+            if (IsSource)
+            {
+                Normalized = ConvertorToNormalized.Convert(this);
+                Normalized.PrepareDirty();
+
+#if DEBUG
+                _gbcLogger.Info($"Normalized = {DebugHelperForRuleInstance.ToString(Normalized)}");
+#endif
+            }
+            else
+            {
+                CalculateUsedKeys();
+                PrimaryPart?.PrepareDirty(this);
+
+                if (!SecondaryParts.IsNullOrEmpty())
+                {
+                    foreach (var item in SecondaryParts)
+                    {
+                        item.PrepareDirty(this);
+                    }
                 }
             }
         }
@@ -121,6 +161,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new RuleInstance();
             context[this] = result;
 
+            result.IsSource = IsSource;
             result.Name = Name.Clone(context);
             result.Kind = Kind;
             result.PrimaryPart = PrimaryPart.Clone(context);
@@ -164,6 +205,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(IsSource)} = {IsSource}");
+
             sb.PrintObjProp(n, nameof(Name), Name);
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
@@ -172,6 +215,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjListProp(n, nameof(SecondaryParts), SecondaryParts);
 
             sb.PrintObjListProp(n, nameof(UsedKeysList), UsedKeysList);
+
+            sb.PrintExisting(n, nameof(Original), Original);
+            sb.PrintExisting(n, nameof(Normalized), Normalized);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -183,6 +229,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(IsSource)} = {IsSource}");
+
             sb.PrintShortObjProp(n, nameof(Name), Name);
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
@@ -191,6 +239,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjListProp(n, nameof(SecondaryParts), SecondaryParts);
 
             sb.PrintShortObjListProp(n, nameof(UsedKeysList), UsedKeysList);
+
+            sb.PrintExisting(n, nameof(Original), Original);
+            sb.PrintExisting(n, nameof(Normalized), Normalized);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -202,6 +253,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(IsSource)} = {IsSource}");
+
             sb.PrintBriefObjProp(n, nameof(Name), Name);
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
@@ -210,6 +263,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintExistingList(n, nameof(SecondaryParts), SecondaryParts);
 
             sb.PrintBriefObjListProp(n, nameof(UsedKeysList), UsedKeysList);
+
+            sb.PrintExisting(n, nameof(Original), Original);
+            sb.PrintExisting(n, nameof(Normalized), Normalized);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

@@ -167,7 +167,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 param.CheckDirty();
 
 #if DEBUG
-                //_gbcLogger.Info($"param = {param}");
+                _gbcLogger.Info($"param = {param}");
 #endif
 
                 var kindOfParam = param.Kind;
@@ -351,6 +351,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode()
         {
+#if DEBUG
+            _gbcLogger.Info($"this = {DebugHelperForRuleInstance.ToString(this)}");
+#endif
+
             switch (Kind)
             {
                 case KindOfLogicalQueryNode.BinaryOperator:
@@ -358,6 +362,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     {
                         case KindOfOperatorOfLogicalQueryNode.And:
                         case KindOfOperatorOfLogicalQueryNode.Or:
+                        case KindOfOperatorOfLogicalQueryNode.Is:
                             return base.CalculateLongHashCode() ^ LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(KindOfOperator.GetHashCode()) ^ Left.GetLongHashCode() ^ Right.GetLongHashCode();
 
                         default:

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
@@ -79,6 +80,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var queryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
 
             var queryExpression = options.QueryExpression;
+
+            queryExpression.CheckDirty();
+
+            queryExpression = queryExpression.Normalized;
 
             FillExecutingCard(queryExpression, queryExecutingCard, dataSource, optionsOfFillExecutingCard);
 
@@ -149,7 +154,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private void FillExecutingCard(PrimaryRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            //options.Logger.Log($"Begin~~~~~~ GetHumanizeDbgString() = {GetHumanizeDbgString()}");
+            options.Logger.Log($"Begin~~~~~~ GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
 #endif
 
 #if DEBUG
@@ -216,7 +221,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private void FillExecutingCardForRelationIndexedLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            //options.Logger.Log($"IsQuestion = {IsQuestion}");
+            options.Logger.Log($"processedExpr.sIsQuestion = {processedExpr.IsQuestion}");
 #endif
 
             if (processedExpr.IsQuestion)
@@ -248,7 +253,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             NFillExecutingCard(processedExpr, queryExecutingCard, dataSource, options);
 
 #if DEBUG
-            //options.Logger.Log($"^^^^^^queryExecutingCard = {queryExecutingCard}");
+            options.Logger.Log($"^^^^^^queryExecutingCard = {queryExecutingCard}");
             //options.Logger.Log($"queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString() = {queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString()}");
             //options.Logger.Log($"queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString()}");
             //options.Logger.Log($"queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
@@ -271,7 +276,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var indexedRulePartsOfFactsList = dataSource.GetIndexedRulePartOfFactsByKeyOfRelation(processedExpr.Name);
 
 #if DEBUG
-            //options.Logger.Log($"indexedRulePartsOfFactsList?.Count = {indexedRulePartsOfFactsList?.Count}");
+            options.Logger.Log($"indexedRulePartsOfFactsList?.Count = {indexedRulePartsOfFactsList?.Count}");
 #endif
 
             var mergingResult = QueryExecutingCardAboutKnownInfoHelper.Merge(processedExpr.KnownInfoList, processedExpr.VarsInfoList, queryExecutingCard.KnownInfoList, false);
@@ -286,7 +291,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             queryExecutingCard.UsedKeysList.Add(processedExpr.Name);
 
 #if DEBUG
-            //options.Logger.Log($"targetKnownInfoList.Count = {targetKnownInfoList.Count}");
+            options.Logger.Log($"targetKnownInfoList.Count = {targetKnownInfoList.Count}");
             //foreach (var tmpKnownInfo in targetKnownInfoList)
             //{
             //    options.Logger.Log($"tmpKnownInfo = {tmpKnownInfo}");
@@ -303,8 +308,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 foreach (var indexedRulePartsOfFacts in indexedRulePartsOfFactsList)
                 {
 #if DEBUG
-                    //options.Logger.Log($"this = {this}");
-                    //options.Logger.Log($"indexedRulePartsOfFacts = {indexedRulePartsOfFacts}");
+                    options.Logger.Log($"processedExpr = {DebugHelperForRuleInstance.ToString(processedExpr)}");
+                    options.Logger.Log($"indexedRulePartsOfFacts = {DebugHelperForRuleInstance.BaseRulePartToString(indexedRulePartsOfFacts)}");
 #endif
                     var queryExecutingCardForTargetFact = new QueryExecutingCardForIndexedPersistLogicalData();
                     queryExecutingCardForTargetFact.TargetRelation = processedExpr.Name;
@@ -320,7 +325,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     FillExecutingCardForCallingFromRelationForFact(indexedRulePartsOfFacts, queryExecutingCardForTargetFact, dataSource, options);
 
 #if DEBUG
-                    //options.Logger.Log($"++++++queryExecutingCardForTargetFact = {queryExecutingCardForTargetFact}");
+                    options.Logger.Log($"++++++queryExecutingCardForTargetFact = {queryExecutingCardForTargetFact}");
                     //if (queryExecutingCardForTargetFact.UsedKeysList.Any())
                     //{
                     //    throw new NotImplementedException();
@@ -580,7 +585,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //    throw new NotImplementedException();
             //}
 
-            //options.Logger.Log($"leftQueryExecutingCard = {leftQueryExecutingCard}");
+            options.Logger.Log($"leftQueryExecutingCard = {leftQueryExecutingCard}");
 #endif
 
             if (!leftQueryExecutingCard.IsSuccess)
@@ -778,8 +783,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
 #if DEBUG
                 //options.Logger.Log($"targetRelation = {targetRelation}");
-                //options.Logger.Log($"targetRelation = {targetRelation.GetHumanizeDbgString()}");
-                //options.Logger.Log($"targetRelation.Key = {targetRelation.Key}");
+                options.Logger.Log($"targetRelation = {targetRelation.GetHumanizeDbgString()}");
+                options.Logger.Log($"targetRelation.Name = {targetRelation.Name}");
                 //options.Logger.Log($"options.EntityDictionary.GetName(targetRelation.Key) = {options.EntityDictionary.GetName(targetRelation.Key)}");
 #endif
 
@@ -792,7 +797,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 foreach (var knownInfo in queryExecutingCard.KnownInfoList)
                 {
 #if DEBUG
-                    //options.Logger.Log($"knownInfo = {knownInfo}");
+                    options.Logger.Log($"knownInfo = {knownInfo}");
 #endif
 
                     List<StrongIdentifierValue> additionalKeys_1 = null;
@@ -820,7 +825,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         var paramOfTargetRelation = paramsListOfTargetRelation[position.Value];
 
 #if DEBUG
-                        //options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
+                        options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
                         //options.Logger.Log($"paramOfTargetRelation.AsKeyRef.Key = {paramOfTargetRelation.AsKeyRef.Key}");
                         //options.Logger.Log($"options.EntityDictionary.GetName(paramOfTargetRelation.AsKeyRef.Key) = {options.EntityDictionary.GetName(paramOfTargetRelation.AsKeyRef.Key)}");
 #endif
@@ -847,7 +852,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             );
 
 #if DEBUG
-                        //options.Logger.Log($"resultOfComparison = {resultOfComparison}");
+                        options.Logger.Log($"resultOfComparison = {resultOfComparison}");
 #endif
 
                         if (!resultOfComparison)

@@ -54,7 +54,6 @@ namespace SymOntoClay.Core.Internal.Storage
         private readonly ResolverOptions _resolverOptions;
         private List<ulong> _foundInheritanceKeysList = new List<ulong>();
         private LocalCodeExecutionContext _localCodeExecutionContext;
-        private IEntityDictionary _dictionary;
         private ILogicQueryParseAndCache _logicQueryParseAndCache;
         private ulong _selfNameKey;
         private StrongIdentifierValue _selfName;
@@ -113,7 +112,7 @@ namespace SymOntoClay.Core.Internal.Storage
                 _selfNameKey = _context.CommonNamesStorage.IndexedSelfName.NameKey;
                 _selfName = _context.CommonNamesStorage.SelfName;
                 _selfNameForFacts = NameHelper.NormalizeNameStr(_context.CommonNamesStorage.SelfName.NameValue);
-                _dictionary = _context.Dictionary;
+
                 _logicQueryParseAndCache = _context.LogicQueryParseAndCache;
 
                 _localCodeExecutionContext = new LocalCodeExecutionContext()

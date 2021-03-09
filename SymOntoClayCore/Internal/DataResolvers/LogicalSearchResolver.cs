@@ -783,9 +783,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //options.Logger.Log($"options.EntityDictionary.GetName(targetRelation.Key) = {options.EntityDictionary.GetName(targetRelation.Key)}");
 #endif
 
-                usedKeysList.Add(targetRelation.Key);
+                usedKeysList.Add(targetRelation.Name);
 
-                var paramsListOfTargetRelation = targetRelation.Params;
+                var paramsListOfTargetRelation = targetRelation.ParamsList;
 
                 var isFit = true;
 
@@ -795,11 +795,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     //options.Logger.Log($"knownInfo = {knownInfo}");
 #endif
 
-                    List<ulong> additionalKeys_1 = null;
+                    List<StrongIdentifierValue> additionalKeys_1 = null;
 
                     if (useInheritance)
                     {
-                        additionalKeys_1 = inheritanceResolver.GetSuperClassesKeysList(knownInfo.Key, options.LocalCodeExecutionContext);
+                        additionalKeys_1 = inheritanceResolver.GetSuperClassesKeysList(knownInfo.Name, options.LocalCodeExecutionContext);
                     }
 
 #if DEBUG
@@ -825,7 +825,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         //options.Logger.Log($"options.EntityDictionary.GetName(paramOfTargetRelation.AsKeyRef.Key) = {options.EntityDictionary.GetName(paramOfTargetRelation.AsKeyRef.Key)}");
 #endif
 
-                        List<ulong> additionalKeys_2 = null;
+                        List<StrongIdentifierValue> additionalKeys_2 = null;
 
                         if (useInheritance && paramOfTargetRelation.IsKeyRef)
                         {
@@ -961,7 +961,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private bool CompareKnownInfoAndExpressionNode(QueryExecutingCardAboutKnownInfo knownInfo, LogicalQueryNode expressionNode, List<ulong> additionalKeys_1, List<ulong> additionalKeys_2
+        private bool CompareKnownInfoAndExpressionNode(QueryExecutingCardAboutKnownInfo knownInfo, LogicalQueryNode expressionNode, List<StrongIdentifierValue> additionalKeys_1, List<StrongIdentifierValue> additionalKeys_2
 #if DEBUG
             , IEntityLogger logger
 #endif

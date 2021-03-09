@@ -51,10 +51,10 @@ namespace SymOntoClay.Core.DebugHelpers
 
                 foreach (var resultOfVarOfQueryToRelation in item.ResultOfVarOfQueryToRelationList)
                 {
-                    var varName = entityDictionary.GetName(resultOfVarOfQueryToRelation.NameOfVar);
+                    var varName = resultOfVarOfQueryToRelation.NameOfVar;
                     var foundNode = resultOfVarOfQueryToRelation.FoundExpression;
 
-                    varItemsStrList.Add($" {varName} = {DebugHelperForIndexedRuleInstance.ToString(foundNode, entityDictionary)}");
+                    varItemsStrList.Add($" {varName} = {DebugHelperForRuleInstance.ToString(foundNode)}");
                 }
 
                 sb.AppendLine(string.Join(";", varItemsStrList).Trim());

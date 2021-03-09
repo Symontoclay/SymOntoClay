@@ -62,21 +62,19 @@ namespace SymOntoClay.Core.Internal.CommonNames
 
         public void LoadFromSourceCode()
         {
-            var dictionary = _context.Dictionary;
+            WorldName = NameHelper.CreateName(StandardNamesConstants.WorldTypeName);
 
-            WorldName = NameHelper.CreateName(StandardNamesConstants.WorldTypeName, dictionary);
+            AppName = NameHelper.CreateName(StandardNamesConstants.AppTypeName);
 
-            AppName = NameHelper.CreateName(StandardNamesConstants.AppTypeName, dictionary);
-
-            ClassName = NameHelper.CreateName(StandardNamesConstants.ClassTypeName, dictionary);
+            ClassName = NameHelper.CreateName(StandardNamesConstants.ClassTypeName);
 
             DefaultHolder = new StrongIdentifierValue();
 
-            SelfSystemVarName = NameHelper.CreateName(StandardNamesConstants.SelfSystemVarName, dictionary);
+            SelfSystemVarName = NameHelper.CreateName(StandardNamesConstants.SelfSystemVarName);
 
-            HostSystemVarName = NameHelper.CreateName(StandardNamesConstants.HostSystemVarName, dictionary);
+            HostSystemVarName = NameHelper.CreateName(StandardNamesConstants.HostSystemVarName);
 
-            SelfName = NameHelper.CreateName(_context.Id, dictionary);
+            SelfName = NameHelper.CreateName(_context.Id);
         }
     }
 }

@@ -21,6 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
@@ -34,6 +36,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class LogicalQueryNode: AnnotatedItem, IAstNode
     {
+#if DEBUG
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         public KindOfLogicalQueryNode Kind { get; set; } = KindOfLogicalQueryNode.Unknown;
         public KindOfOperatorOfLogicalQueryNode KindOfOperator { get; set; } = KindOfOperatorOfLogicalQueryNode.Unknown;
         public StrongIdentifierValue Name { get; set; }
@@ -43,6 +49,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public bool IsGroup { get; set; }
         public Value Value { get; set; }
         public bool IsQuestion { get; set; }
+
+        public int CountParams { get; set; }
+        public IList<QueryExecutingCardAboutVar> VarsInfoList { get; set; }
+        public IList<QueryExecutingCardAboutKnownInfo> KnownInfoList { get; set; }
+
+        public RuleInstance RuleInstance { get; set; }
+        public BaseRulePart RulePart { get; set; }
 
         //public bool HasQuestionVars
         //{
@@ -71,6 +84,322 @@ namespace SymOntoClay.Core.Internal.CodeModel
         //        return false;
         //    }
         //}
+
+        public void PrepareDirty(ContextOfConvertingExpressionNode contextOfConvertingExpressionNode, RuleInstance ruleInstance, BaseRulePart rulePart)
+        {
+            RuleInstance = ruleInstance;
+            RulePart = rulePart;
+
+            switch (Kind)
+            {
+                case KindOfLogicalQueryNode.BinaryOperator:
+                    switch(KindOfOperator)
+                    {
+                        case KindOfOperatorOfLogicalQueryNode.And:
+                        case KindOfOperatorOfLogicalQueryNode.Or:
+                            Left.PrepareDirty(contextOfConvertingExpressionNode, ruleInstance, rulePart);
+                            Right.PrepareDirty(contextOfConvertingExpressionNode, ruleInstance, rulePart);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(KindOfOperator), KindOfOperator, null);
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.UnaryOperator:
+                    switch (KindOfOperator)
+                    {
+                        case KindOfOperatorOfLogicalQueryNode.Not:
+                            Left.PrepareDirty(contextOfConvertingExpressionNode, ruleInstance, rulePart);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(KindOfOperator), KindOfOperator, null);
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.Concept:
+                case KindOfLogicalQueryNode.Entity:
+                case KindOfLogicalQueryNode.QuestionVar:
+                    break;
+
+                case KindOfLogicalQueryNode.LogicalVar:
+                    contextOfConvertingExpressionNode.HasVars = true;
+                    break;
+
+                case KindOfLogicalQueryNode.Value:
+                case KindOfLogicalQueryNode.StubParam:
+                case KindOfLogicalQueryNode.EntityCondition:
+                case KindOfLogicalQueryNode.EntityRef:
+                    break;
+
+                case KindOfLogicalQueryNode.Relation:
+                    if (Name.KindOfName == KindOfName.QuestionVar)
+                    {
+                        IsQuestion = true;
+                    }
+                    FillRelationParams(ParamsList, contextOfConvertingExpressionNode);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
+            }
+        }
+
+        private void FillRelationParams(IList<LogicalQueryNode> sourceParamsList, ContextOfConvertingExpressionNode contextOfConvertingExpressionNode)
+        {
+            CountParams = sourceParamsList.Count;
+
+            var varsInfoList = new List<QueryExecutingCardAboutVar>();
+            var knownInfoList = new List<QueryExecutingCardAboutKnownInfo>();
+            var i = 0;
+
+            //var dictionary = mainStorageContext.Dictionary;
+
+            foreach (var param in sourceParamsList)
+            {
+#if DEBUG
+                //_gbcLogger.Info($"param = {param}");
+#endif
+
+                var kindOfParam = param.Kind;
+                switch (kindOfParam)
+                {
+                    case KindOfLogicalQueryNode.Concept:
+                        {
+                            var knownInfo = new QueryExecutingCardAboutKnownInfo();
+                            knownInfo.Kind = kindOfParam;
+                            knownInfo.Expression = param;
+                            knownInfo.Position = i;
+                            knownInfo.Name = param.Name;
+                            knownInfoList.Add(knownInfo);
+                        }
+                        break;
+
+                    case KindOfLogicalQueryNode.Entity:
+                        {
+                            var knownInfo = new QueryExecutingCardAboutKnownInfo();
+                            knownInfo.Kind = kindOfParam;
+                            knownInfo.Expression = param;
+                            knownInfo.Position = i;
+                            knownInfo.Name = param.Name;
+                            knownInfoList.Add(knownInfo);
+                        }
+                        break;
+
+                    //case KindOfLogicalQueryNode.EntityRef:
+                    //    {
+                    //        var originParam = param.AsEntityRef;
+                    //        var knownInfo = new QueryExecutingCardAboutKnownInfo();
+                    //        knownInfo.Kind = kindOfParam;
+                    //        knownInfo.Expression = param;
+                    //        knownInfo.Position = i;
+                    //        knownInfo.Key = originParam.Key;
+                    //        knownInfoList.Add(knownInfo);
+                    //    }
+                    //    break;
+
+                    //case KindOfLogicalQueryNode.EntityCondition:
+                    //    {
+                    //        var originParam = param.AsEntityCondition;
+                    //        var knownInfo = new QueryExecutingCardAboutKnownInfo();
+                    //        knownInfo.Kind = kindOfParam;
+                    //        knownInfo.Expression = param;
+                    //        knownInfo.Position = i;
+                    //        knownInfo.Key = originParam.Key;
+                    //        knownInfoList.Add(knownInfo);
+                    //    }
+                    //    break;
+
+                    case KindOfLogicalQueryNode.LogicalVar:
+                        {
+                            var originParam = param;
+                            var varInfo = new QueryExecutingCardAboutVar();
+                            varInfo.NameOfVar = originParam.Name;
+                            varInfo.Position = i;
+                            varsInfoList.Add(varInfo);
+                        }
+                        break;
+
+                    case KindOfLogicalQueryNode.QuestionVar:
+                        {
+                            var originParam = param;
+                            var varInfo = new QueryExecutingCardAboutVar();
+                            varInfo.NameOfVar = originParam.Name;
+                            varInfo.Position = i;
+                            varsInfoList.Add(varInfo);
+                        }
+                        break;
+
+                    case KindOfLogicalQueryNode.Value:
+                        {
+                            var originParam = param;
+                            var knownInfo = new QueryExecutingCardAboutKnownInfo();
+                            knownInfo.Kind = kindOfParam;
+                            knownInfo.Expression = param;
+                            knownInfo.Position = i;
+                            knownInfo.Value = originParam.Value;
+                            knownInfoList.Add(knownInfo);
+
+#if DEBUG
+                            _gbcLogger.Info($"knownInfo = {knownInfo}");
+#endif
+                        }
+                        break;
+
+                    //case KindOfLogicalQueryNode.FuzzyLogicValue:
+                    //    {
+                    //        var originParam = param.AsFuzzyLogicValue;
+                    //        var knownInfo = new QueryExecutingCardAboutKnownInfo();
+                    //        knownInfo.Kind = kindOfParam;
+                    //        knownInfo.Expression = param;
+                    //        knownInfo.Position = i;
+                    //        knownInfo.Value = originParam.Value;
+                    //        knownInfoList.Add(knownInfo);
+                    //    }
+                    //    break;
+
+                    //case KindOfLogicalQueryNode.Fact:
+                    //    {
+                    //        var originParam = param.AsFact;
+                    //        var knownInfo = new QueryExecutingCardAboutKnownInfo();
+                    //        knownInfo.Kind = kindOfParam;
+                    //        knownInfo.Expression = param;
+                    //        knownInfo.Position = i;
+                    //        knownInfo.Key = originParam.Key;
+                    //        knownInfoList.Add(knownInfo);
+                    //    }
+                    //    break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParam), kindOfParam, null);
+                }
+                i++;
+            }
+
+            VarsInfoList = varsInfoList;
+            KnownInfoList = knownInfoList;
+
+            contextOfConvertingExpressionNode.RelationsList.Add(this);
+        }
+
+        public void CalculateUsedKeys(List<StrongIdentifierValue> usedKeysList)
+        {
+            switch (Kind)
+            {
+                case KindOfLogicalQueryNode.BinaryOperator:
+                    switch(KindOfOperator)
+                    {
+                        case KindOfOperatorOfLogicalQueryNode.And:
+                        case KindOfOperatorOfLogicalQueryNode.Or:
+                            Left.CalculateUsedKeys(usedKeysList);
+                            Right.CalculateUsedKeys(usedKeysList);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(KindOfOperator), KindOfOperator, null);
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.UnaryOperator:
+                    switch (KindOfOperator)
+                    {
+                        case KindOfOperatorOfLogicalQueryNode.Not:
+                            Left.CalculateUsedKeys(usedKeysList);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(KindOfOperator), KindOfOperator, null);
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.Concept:
+                case KindOfLogicalQueryNode.Entity:
+                case KindOfLogicalQueryNode.QuestionVar:
+                case KindOfLogicalQueryNode.LogicalVar:
+                    usedKeysList.Add(Name);
+                    break;
+
+                case KindOfLogicalQueryNode.Value:
+                case KindOfLogicalQueryNode.StubParam:
+                case KindOfLogicalQueryNode.EntityCondition:
+                case KindOfLogicalQueryNode.EntityRef:
+                    break;
+
+                case KindOfLogicalQueryNode.Relation:
+                    usedKeysList.Add(Name);
+
+                    foreach (var param in ParamsList)
+                    {
+                        param.CalculateUsedKeys(usedKeysList);
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode()
+        {
+            switch (Kind)
+            {
+                case KindOfLogicalQueryNode.BinaryOperator:
+                    switch (KindOfOperator)
+                    {
+                        case KindOfOperatorOfLogicalQueryNode.And:
+                        case KindOfOperatorOfLogicalQueryNode.Or:
+                            return base.CalculateLongHashCode() ^ LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(KindOfOperator.GetHashCode()) ^ Left.GetLongHashCode() ^ Right.GetLongHashCode();
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(KindOfOperator), KindOfOperator, null);
+                    }
+
+                case KindOfLogicalQueryNode.UnaryOperator:
+                    switch (KindOfOperator)
+                    {
+                        case KindOfOperatorOfLogicalQueryNode.Not:
+                            return base.CalculateLongHashCode() ^ LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(KindOfOperator.GetHashCode()) ^ Left.GetLongHashCode();
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(KindOfOperator), KindOfOperator, null);
+                    }
+
+                case KindOfLogicalQueryNode.Concept:
+                case KindOfLogicalQueryNode.Entity:
+                case KindOfLogicalQueryNode.QuestionVar:
+                case KindOfLogicalQueryNode.LogicalVar:
+                    return base.CalculateLongHashCode() ^ Name.CalculateLongHashCode();
+
+                case KindOfLogicalQueryNode.Value:
+                    return base.CalculateLongHashCode() ^ Value.GetLongConditionalHashCode();
+
+                case KindOfLogicalQueryNode.StubParam:
+                    return LongHashCodeWeights.StubWeight ^ base.CalculateLongHashCode();
+
+                case KindOfLogicalQueryNode.EntityCondition:
+                case KindOfLogicalQueryNode.EntityRef:
+                    break;
+
+                case KindOfLogicalQueryNode.Relation:
+                    {
+                        var result = base.CalculateLongHashCode() ^ LongHashCodeWeights.BaseFunctionWeight ^ Name.CalculateLongHashCode();
+
+                        foreach (var param in ParamsList)
+                        {
+                            result ^= LongHashCodeWeights.BaseParamWeight ^ param.GetLongHashCode();
+                        }
+
+                        return result;
+                    }
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
+            }
+
+            throw new NotImplementedException();
+        }
 
         IAstNode IAstNode.Left { get => Left; set => Left = (LogicalQueryNode)value; }
         IAstNode IAstNode.Right { get => Right; set => Right = (LogicalQueryNode)value; }
@@ -190,6 +519,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjProp(n, nameof(Value), Value);
 
             sb.AppendLine($"{spaces}{nameof(IsQuestion)} = {IsQuestion}");
+            sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
+
+            sb.PrintObjListProp(n, nameof(VarsInfoList), VarsInfoList);
+            sb.PrintObjListProp(n, nameof(KnownInfoList), KnownInfoList);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -214,6 +547,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjProp(n, nameof(Value), Value);
 
             sb.AppendLine($"{spaces}{nameof(IsQuestion)} = {IsQuestion}");
+            sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
+
+            sb.PrintShortObjListProp(n, nameof(VarsInfoList), VarsInfoList);
+            sb.PrintShortObjListProp(n, nameof(KnownInfoList), KnownInfoList);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -238,9 +575,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjProp(n, nameof(Value), Value);
 
             sb.AppendLine($"{spaces}{nameof(IsQuestion)} = {IsQuestion}");
+            sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
+
+            sb.PrintBriefObjListProp(n, nameof(VarsInfoList), VarsInfoList);
+            sb.PrintBriefObjListProp(n, nameof(KnownInfoList), KnownInfoList);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
+        }
+
+        public string GetHumanizeDbgString()
+        {
+            return DebugHelperForRuleInstance.ToString(this);
         }
     }
 }

@@ -35,7 +35,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class Operator : AnnotatedItem
+    public class Operator : AnnotatedItem, IExecutable
     {
         public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
         public bool IsSystemDefined { get; set; }

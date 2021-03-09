@@ -52,13 +52,12 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
         {
             var globalStorage = _context.Storage.GlobalStorage;
             var globalOperatorsStorage = globalStorage.OperatorsStorage;
-            var dictionary = _context.Dictionary;
-
+         
             var op = new Operator
             {
                 KindOfOperator = KindOfOperator.LeftRightStream,
                 IsSystemDefined = true,
-                SystemHandler = new BinaryOperatorSystemHandler(new LeftRightStreamOperatorHandler(_context), dictionary),
+                SystemHandler = new BinaryOperatorSystemHandler(new LeftRightStreamOperatorHandler(_context)),
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
@@ -68,7 +67,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
             {
                 KindOfOperator = KindOfOperator.Is,
                 IsSystemDefined = true,
-                SystemHandler = new BinaryOperatorSystemHandler(new IsOperatorHandler(_context), dictionary),
+                SystemHandler = new BinaryOperatorSystemHandler(new IsOperatorHandler(_context)),
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
@@ -78,7 +77,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
             {
                 KindOfOperator = KindOfOperator.Point,
                 IsSystemDefined = true,
-                SystemHandler = new BinaryOperatorSystemHandler(new PointOperatorHandler(_context), dictionary),
+                SystemHandler = new BinaryOperatorSystemHandler(new PointOperatorHandler(_context)),
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
@@ -88,7 +87,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
             {
                 KindOfOperator = KindOfOperator.CallLogicalQuery,
                 IsSystemDefined = true,
-                SystemHandler = new UnaryOperatorSystemHandler(new CallLogicalQueryOperatorHandler(_context), dictionary),
+                SystemHandler = new UnaryOperatorSystemHandler(new CallLogicalQueryOperatorHandler(_context)),
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
@@ -100,7 +99,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
             var globalStorage = _context.Storage.GlobalStorage;
             var globalChannelsStorage = globalStorage.ChannelsStorage;
 
-            var name = NameHelper.CreateName("@>log", _context.Dictionary);
+            var name = NameHelper.CreateName("@>log");
 
             var channel = new Channel
             {

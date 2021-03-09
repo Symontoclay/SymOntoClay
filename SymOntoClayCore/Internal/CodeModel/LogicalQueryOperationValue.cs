@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.LogicalQueryOperationValue;
-
+        
         /// <inheritdoc/>
         public override bool IsLogicalQueryOperationValue => true;
 

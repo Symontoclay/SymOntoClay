@@ -106,7 +106,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 //var indexedRuleInstance = ruleInstance.GetIndexed(_mainStorageContext);
 
-                var usedKeysList = ruleInstance.UsedKeysList.Concat(annotationsList.Select(p => p.GetIndexed(_mainStorageContext)).SelectMany(p => p.UsedKeysList)).Distinct().ToList();
+                var usedKeysList = ruleInstance.UsedKeysList.Concat(annotationsList.SelectMany(p => p.UsedKeysList)).Distinct().ToList();
 
                 EmitOnChanged(usedKeysList);
             }

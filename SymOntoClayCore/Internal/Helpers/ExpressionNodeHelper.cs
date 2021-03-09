@@ -33,7 +33,7 @@ namespace SymOntoClay.Core.Internal.Helpers
 {
     public static class ExpressionNodeHelper
     {
-        public static bool Compare(LogicalQueryNode expressionNode1, LogicalQueryNode expressionNode2, List<ulong> additionalKeys_1, List<ulong> additionalKeys_2
+        public static bool Compare(LogicalQueryNode expressionNode1, LogicalQueryNode expressionNode2, List<StrongIdentifierValue> additionalKeys_1, List<StrongIdentifierValue> additionalKeys_2
 #if DEBUG
             , IEntityLogger logger
 #endif
@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             //logger.Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2, Formatting.Indented)}");
 #endif
 
-            if (expressionNode1.IsKeyRef && expressionNode2.IsKeyRef)
+            if (expressionNode1.Kind == KindOfLogicalQueryNode.Concept && expressionNode2.IsKeyRef)
             {
                 var key_1 = expressionNode1.AsKeyRef.Key;
                 var key_2 = expressionNode2.AsKeyRef.Key;

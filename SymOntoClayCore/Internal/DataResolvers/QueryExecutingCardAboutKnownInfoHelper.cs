@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         {
                             var existingVar = targetRelationVarsInfoDictByPosition[position.Value];
                             var resultKnownInfo = initialKnownInfo.Clone();
-                            resultKnownInfo.KeyOfVar = existingVar.NameOfVar;
+                            resultKnownInfo.NameOfVar = existingVar.NameOfVar;
                             targetKnownInfoList.Add(resultKnownInfo);
                         }
                         else
@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
                     else
                     {
-                        var keyOfVar = initialKnownInfo.KeyOfVar;
+                        var keyOfVar = initialKnownInfo.NameOfVar;
                         if (keyOfVar.HasValue)
                         {
                             var keyOfVarValue = keyOfVar.Value;
@@ -75,7 +75,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             {
                                 var existingVar = targetRelationVarsInfoDictByKeyOfVar[keyOfVarValue];
                                 var resultKnownInfo = initialKnownInfo.Clone();
-                                resultKnownInfo.KeyOfVar = keyOfVar;
+                                resultKnownInfo.NameOfVar = keyOfVar;
                                 resultKnownInfo.Position = existingVar.Position;
                                 targetKnownInfoList.Add(resultKnownInfo);
                             }

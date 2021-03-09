@@ -81,8 +81,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
             //sb.AppendLine($"{spaces}{nameof(SystemValue)} = {SystemValue}");
 
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
-
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -94,8 +92,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
             //sb.AppendLine($"{spaces}{nameof(SystemValue)} = {SystemValue}");
 
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
-
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -106,8 +102,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             //sb.AppendLine($"{spaces}{nameof(SystemValue)} = {SystemValue}");
-
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

@@ -31,18 +31,20 @@ namespace SymOntoClay.Core.Internal.IndexedData
     public class QueryExecutingCardAboutKnownInfo : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public KindOfLogicalQueryNode Kind { get; set; }
-        public ulong Key { get; set; }
+        public StrongIdentifierValue Name { get; set; }
         public Value Value { get; set; }
-        public ulong? KeyOfVar { get; set; }
+        public StrongIdentifierValue NameOfVar { get; set; }
         public int? Position { get; set; }
-        public BaseIndexedLogicalQueryNode Expression { get; set; }
+        public LogicalQueryNode Expression { get; set; }
 
         public QueryExecutingCardAboutKnownInfo Clone()
         {
             var result = new QueryExecutingCardAboutKnownInfo();
             result.Kind = Kind;
-            result.Key = Key;
+            result.Name = Name;
             result.Value = Value;
+            result.NameOfVar = NameOfVar;
+            result.Position = Position;
             result.Expression = Expression;
             return result;
         }
@@ -66,11 +68,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
-            sb.AppendLine($"{spaces}{nameof(Key)} = {Key}");
+            sb.PrintObjProp(n, nameof(Name), Name);
 
             sb.PrintObjProp(n, nameof(Value), Value);
 
-            sb.AppendLine($"{spaces}{nameof(KeyOfVar)} = {KeyOfVar}");
+            sb.PrintObjProp(n, nameof(NameOfVar), NameOfVar);
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
 
             sb.PrintObjProp(n, nameof(Expression), Expression);
@@ -97,11 +99,12 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
-            sb.AppendLine($"{spaces}{nameof(Key)} = {Key}");
+           
+            sb.PrintShortObjProp(n, nameof(Name), Name);
 
             sb.PrintShortObjProp(n, nameof(Value), Value);
 
-            sb.AppendLine($"{spaces}{nameof(KeyOfVar)} = {KeyOfVar}");
+            sb.PrintShortObjProps(n, nameof(NameOfVar), NameOfVar);
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
 
             sb.PrintShortObjProp(n, nameof(Expression), Expression);
@@ -128,11 +131,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
-            sb.AppendLine($"{spaces}{nameof(Key)} = {Key}");
+            sb.PrintBriefObjProp(n, nameof(Name), Name);
 
             sb.PrintBriefObjProp(n, nameof(Value), Value);
 
-            sb.AppendLine($"{spaces}{nameof(KeyOfVar)} = {KeyOfVar}");
+            sb.PrintBriefObjProp(n, nameof(NameOfVar), NameOfVar);
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
 
             sb.PrintBriefObjProp(n, nameof(Expression), Expression);

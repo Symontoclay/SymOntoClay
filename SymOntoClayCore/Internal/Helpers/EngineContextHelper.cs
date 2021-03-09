@@ -120,7 +120,6 @@ namespace SymOntoClay.Core.Internal.Helpers
 
         private static void BaseInitBaseCoreContext(BaseCoreContext context, BaseCoreSettings settings)
         {
-            context.Dictionary = settings.Dictionary;
         }
     }
 }

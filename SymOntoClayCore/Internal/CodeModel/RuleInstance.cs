@@ -44,13 +44,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         private void PrepareDirty()
         {
             CalculateUsedKeys();
-            PrimaryPart?.PrepareDirty();
+            PrimaryPart?.PrepareDirty(this);
 
             if (!SecondaryParts.IsNullOrEmpty())
             {
                 foreach (var item in SecondaryParts)
                 {
-                    item.PrepareDirty();
+                    item.PrepareDirty(this);
                 }
             }
         }
@@ -171,9 +171,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjProp(n, nameof(PrimaryPart), PrimaryPart);
             sb.PrintObjListProp(n, nameof(SecondaryParts), SecondaryParts);
 
-            sb.PrintPODList(n, nameof(UsedKeysList), UsedKeysList);
-
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
+            sb.PrintObjListProp(n, nameof(UsedKeysList), UsedKeysList);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -192,9 +190,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjProp(n, nameof(PrimaryPart), PrimaryPart);
             sb.PrintShortObjListProp(n, nameof(SecondaryParts), SecondaryParts);
 
-            sb.PrintPODList(n, nameof(UsedKeysList), UsedKeysList);
-
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
+            sb.PrintShortObjListProp(n, nameof(UsedKeysList), UsedKeysList);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -213,9 +209,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintExisting(n, nameof(PrimaryPart), PrimaryPart);
             sb.PrintExistingList(n, nameof(SecondaryParts), SecondaryParts);
 
-            sb.PrintPODList(n, nameof(UsedKeysList), UsedKeysList);
-
-            sb.PrintExisting(n, nameof(Indexed), Indexed);
+            sb.PrintBriefObjListProp(n, nameof(UsedKeysList), UsedKeysList);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

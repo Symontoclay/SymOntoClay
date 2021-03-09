@@ -99,7 +99,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.Entity:
                             {
-                                var name = NameHelper.CreateName(_currToken.Content, _context.Dictionary);
+                                var name = NameHelper.CreateName(_currToken.Content);
 
 #if DEBUG
                                 //Log($"name = {name}");
@@ -119,7 +119,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.LogicalVar:
                             {
-                                var name = NameHelper.CreateName(_currToken.Content, _context.Dictionary);
+                                var name = NameHelper.CreateName(_currToken.Content);
 
 #if DEBUG
                                 //Log($"name = {name}");
@@ -282,7 +282,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessWord()
         {
-            var value = NameHelper.CreateName(_currToken.Content, _context.Dictionary);
+            var value = NameHelper.CreateName(_currToken.Content);
 
 #if DEBUG
             Log($"value = {value}");

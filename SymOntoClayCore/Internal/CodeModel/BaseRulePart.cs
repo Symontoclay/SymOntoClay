@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             Expression = source.Expression.Clone(context);
             HasQuestionVars = source.HasQuestionVars;
             HasVars = source.HasVars;
-            RelationsDict = source.RelationsDict.ToDictionary(p => p.Key, p => (IList<LogicalQueryNode>)(p.Value.Select(p => p.Clone(context)).ToList()));
+            RelationsDict = source.RelationsDict.ToDictionary(p => p.Key, p => (IList<LogicalQueryNode>)(p.Value.Select(x => x.Clone(context)).ToList()));
 
             AppendAnnotations(source, context);
         }
@@ -69,11 +69,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public abstract IList<BaseRulePart> GetNextPartsList();
 
-        public void PrepareDirty()
+        public void PrepareDirty(RuleInstance ruleInstance)
         {
             var contextOfConvertingExpressionNode = new ContextOfConvertingExpressionNode();
 
-            Expression.PrepareDirty(contextOfConvertingExpressionNode);
+            Expression.PrepareDirty(contextOfConvertingExpressionNode, ruleInstance, this);
 
             HasQuestionVars = contextOfConvertingExpressionNode.HasQuestionVars;
             HasVars = contextOfConvertingExpressionNode.HasVars;

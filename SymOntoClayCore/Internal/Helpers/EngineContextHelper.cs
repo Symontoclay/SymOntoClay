@@ -22,20 +22,14 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CommonNames;
+using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.Core.Internal.DataResolvers;
-using SymOntoClay.Core.Internal.InheritanceEngine;
 using SymOntoClay.Core.Internal.Instances;
-using SymOntoClay.Core.Internal.LogicalEngine;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.Core.Internal.StandardLibrary;
 using SymOntoClay.Core.Internal.States;
 using SymOntoClay.Core.Internal.Storage;
-using SymOntoClay.Core.Internal.TriggerExecution;
-using SymOntoClay.Core.Internal.Compiling;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using SymOntoClay.Core.Internal.Threads;
 
 namespace SymOntoClay.Core.Internal.Helpers
@@ -52,12 +46,11 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.HostListener = settings.HostListener;
             context.StandardLibraryLoader = new StandardLibraryLoader(context);
             context.CodeExecutor = new CodeExecutorComponent(context);
-            context.TriggerExecutor = new TriggerExecutorComponent(context);
+            
             context.LoaderFromSourceCode = new ActiveLoaderFromSourceCode(context);
             context.InstancesStorage = new InstancesStorageComponent(context);
             context.StatesStorage = new StatesStorageComponent(context);
-            context.LogicalEngine = new LogicalEngineComponent(context);
-            context.InheritanceEngine = new InheritanceEngineComponent(context);
+
             context.ActivePeriodicObjectContext = new ActivePeriodicObjectContext(settings.SyncContext);
 
             return context;

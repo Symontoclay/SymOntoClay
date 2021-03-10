@@ -75,9 +75,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
-            Log($"Result = {Result}");
-            Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
+            //Log($"Result = {Result}");
+            //Log($"_state = {_state}");
 #endif
 
             if(_terminatingTokenKindList.Contains(_currToken.TokenKind))
@@ -155,7 +155,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 parser.Run();
 
 #if DEBUG
-                                Log($"parser.Result = {parser.Result}");
+                                //Log($"parser.Result = {parser.Result}");
 #endif
 
                                 _lastLogicalQueryNode.ParamsList.Add(parser.Result);
@@ -176,7 +176,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                             parser.Run();
 
 #if DEBUG
-                                            Log($"parser.Result = {parser.Result}");
+                                            //Log($"parser.Result = {parser.Result}");
 #endif
 
                                             var node = new LogicalQueryNode();
@@ -197,7 +197,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                             parser.Run();
 
 #if DEBUG
-                                            Log($"parser.Result = {parser.Result}");
+                                            //Log($"parser.Result = {parser.Result}");
 #endif
 
                                             _lastLogicalQueryNode.ParamsList.Add(parser.Result);
@@ -218,7 +218,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 parser.Run();
 
 #if DEBUG
-                                Log($"parser.Result = {parser.Result}");
+                                //Log($"parser.Result = {parser.Result}");
 #endif
                                 var node = new LogicalQueryNode();
                                 node.Kind = KindOfLogicalQueryNode.Value;
@@ -285,18 +285,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var value = NameHelper.CreateName(_currToken.Content);
 
 #if DEBUG
-            Log($"value = {value}");
+            //Log($"value = {value}");
 
-            if(_currToken.Content == "NULL")
-            {
-                throw new NotImplementedException();
-            }
+            //if(_currToken.Content == "NULL")
+            //{
+            //    throw new NotImplementedException();
+            //}
 #endif
 
             var nextToken = _context.GetToken();
 
 #if DEBUG
-            Log($"nextToken = {nextToken}");
+            //Log($"nextToken = {nextToken}");
 #endif
 
             switch (value.KindOfName)

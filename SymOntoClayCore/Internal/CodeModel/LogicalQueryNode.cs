@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class LogicalQueryNode: AnnotatedItem, IAstNode
     {
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public KindOfLogicalQueryNode Kind { get; set; } = KindOfLogicalQueryNode.Unknown;
@@ -167,7 +167,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 param.CheckDirty();
 
 #if DEBUG
-                _gbcLogger.Info($"param = {param}");
+                //_gbcLogger.Info($"param = {param}");
 #endif
 
                 var kindOfParam = param.Kind;
@@ -221,9 +221,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                     case KindOfLogicalQueryNode.LogicalVar:
                         {
-                            var originParam = param;
+                            //var originParam = param;
                             var varInfo = new QueryExecutingCardAboutVar();
-                            varInfo.NameOfVar = originParam.Name;
+                            varInfo.NameOfVar = param.Name;
                             varInfo.Position = i;
                             varsInfoList.Add(varInfo);
                         }
@@ -231,9 +231,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                     case KindOfLogicalQueryNode.QuestionVar:
                         {
-                            var originParam = param;
+                            //var originParam = param;
                             var varInfo = new QueryExecutingCardAboutVar();
-                            varInfo.NameOfVar = originParam.Name;
+                            varInfo.NameOfVar = param.Name;
                             varInfo.Position = i;
                             varsInfoList.Add(varInfo);
                         }
@@ -241,16 +241,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                     case KindOfLogicalQueryNode.Value:
                         {
-                            var originParam = param;
+                            //var originParam = param;
                             var knownInfo = new QueryExecutingCardAboutKnownInfo();
                             knownInfo.Kind = kindOfParam;
                             knownInfo.Expression = param;
                             knownInfo.Position = i;
-                            knownInfo.Value = originParam.Value;
+                            knownInfo.Value = param.Value;
                             knownInfoList.Add(knownInfo);
 
 #if DEBUG
-                            _gbcLogger.Info($"knownInfo = {knownInfo}");
+                            //_gbcLogger.Info($"knownInfo = {knownInfo}");
 #endif
                         }
                         break;
@@ -352,7 +352,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         protected override ulong CalculateLongHashCode()
         {
 #if DEBUG
-            _gbcLogger.Info($"this = {DebugHelperForRuleInstance.ToString(this)}");
+            //_gbcLogger.Info($"this = {DebugHelperForRuleInstance.ToString(this)}");
 #endif
 
             switch (Kind)

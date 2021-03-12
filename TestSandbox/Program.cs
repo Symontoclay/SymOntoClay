@@ -72,7 +72,7 @@ namespace TestSandbox
             //TstEnvironmentVariables();
             //TstCLINewHandler();
             //TstCLIRunHandler();
-            TstLogicalDatabase();//!
+            //TstLogicalDatabase();//!
             //TstProcessInfoChildren();
             //TstWaitIProcessInfo();
             //TstKindOfParametersSсaffolder();
@@ -96,7 +96,7 @@ namespace TestSandbox
             //TstExprNodeHandler();
             //TstParsing();
             //TstMonoBehaviourTestingHandler();
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

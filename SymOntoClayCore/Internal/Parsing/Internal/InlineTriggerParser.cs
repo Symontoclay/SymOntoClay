@@ -24,6 +24,7 @@ using NLog.LayoutRenderers.Wrappers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -80,9 +81,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");
-            //Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
+            Log($"Result = {Result}");
+            Log($"_state = {_state}");
 #endif
 
             switch (_state)
@@ -150,6 +151,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Lambda:
                             _state = State.WaitForAction;
                             break;
+
+                        case TokenKind.OpenRoundBracket:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var parser = new InlineTriggerBindingVariablesParser(_context);
+                                parser.Run();
+
+#if DEBUG
+                                Log($"parser.Result = {parser.Result.WriteListToString()}");
+#endif
+                            }
+
+                            throw new NotImplementedException();
 
                         default:
                             throw new UnexpectedTokenException(_currToken);

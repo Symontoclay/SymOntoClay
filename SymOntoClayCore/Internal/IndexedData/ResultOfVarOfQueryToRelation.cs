@@ -56,8 +56,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-
-            //sb.AppendLine($"{spaces}{nameof(KeyOfVar)} = {KeyOfVar}");
+            sb.PrintObjProp(n, nameof(NameOfVar), NameOfVar);
             sb.PrintObjProp(n, nameof(FoundExpression), FoundExpression);
             //sb.PrintObjDict_2_Prop(n, nameof(OriginDict), OriginDict);
 
@@ -82,7 +81,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.AppendLine($"{spaces}{nameof(KeyOfVar)} = {KeyOfVar}");
+            sb.PrintShortObjProp(n, nameof(NameOfVar), NameOfVar);
             sb.PrintShortObjProp(n, nameof(FoundExpression), FoundExpression);
             //sb.PrintShortObjDict_2_Prop(n, nameof(OriginDict), OriginDict);
 
@@ -107,7 +106,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.AppendLine($"{spaces}{nameof(KeyOfVar)} = {KeyOfVar}");
+            sb.PrintBriefObjProp(n, nameof(NameOfVar), NameOfVar);
             sb.PrintBriefObjProp(n, nameof(FoundExpression), FoundExpression);
             //sb.PrintBriefObjDict_2_Prop(n, nameof(OriginDict), OriginDict);
 

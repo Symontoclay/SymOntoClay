@@ -146,6 +146,32 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     if(_trigger.BindingVariables.Any())
                     {
+                        var foundResultItem = searchResult.Items.FirstOrDefault();
+
+                        if(foundResultItem == null)
+                        {
+                            throw new NotImplementedException();
+                        }
+
+                        var resultVarsList = foundResultItem.ResultOfVarOfQueryToRelationList;
+
+#if DEBUG
+                        Log($"resultVarsList.Count = {resultVarsList.Count}");
+#endif
+                        
+
+                        if(_trigger.BindingVariables.Count != resultVarsList.Count)
+                        {
+                            throw new NotImplementedException();
+                        }
+
+                        foreach(var resultVar in resultVarsList)
+                        {
+#if DEBUG
+                            Log($"resultVar = {resultVar}");
+#endif
+                        }
+
                         throw new NotImplementedException();
                     }
 

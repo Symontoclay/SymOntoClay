@@ -140,11 +140,21 @@ namespace SymOntoClay.Core.Internal.Instances
                     _isOn = true;
 
 #if DEBUG
-                    Log($"searchResult = {searchResult}");
-                    Log($"result = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
+                    //Log($"searchResult = {searchResult}");
+                    //Log($"result = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
 #endif
 
-                    if(_trigger.BindingVariables.Any())
+                    var localCodeExecutionContext = new LocalCodeExecutionContext();
+                    var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
+                    var storage = new LocalStorage(localStorageSettings);
+                    localCodeExecutionContext.Storage = storage;
+                    localCodeExecutionContext.Holder = _parent.Name;
+
+                    var varStorage = storage.VarStorage;
+
+                    var bindingVariables = _trigger.BindingVariables;
+
+                    if (bindingVariables.Any())
                     {
                         var foundResultItem = searchResult.Items.FirstOrDefault();
 
@@ -156,11 +166,10 @@ namespace SymOntoClay.Core.Internal.Instances
                         var resultVarsList = foundResultItem.ResultOfVarOfQueryToRelationList;
 
 #if DEBUG
-                        Log($"resultVarsList.Count = {resultVarsList.Count}");
+                        //Log($"resultVarsList.Count = {resultVarsList.Count}");
 #endif
                         
-
-                        if(_trigger.BindingVariables.Count != resultVarsList.Count)
+                        if(bindingVariables.Count != resultVarsList.Count)
                         {
                             throw new NotImplementedException();
                         }
@@ -168,16 +177,46 @@ namespace SymOntoClay.Core.Internal.Instances
                         foreach(var resultVar in resultVarsList)
                         {
 #if DEBUG
-                            Log($"resultVar = {resultVar}");
+                            //Log($"resultVar = {resultVar}");
 #endif
-                        }
 
-                        throw new NotImplementedException();
+                            Value value = null;
+
+                            var foundExpression = resultVar.FoundExpression;
+
+                            var kindOfFoundExpression = foundExpression.Kind;
+
+                            switch(kindOfFoundExpression)
+                            {
+                                case KindOfLogicalQueryNode.Entity:
+                                    value = foundExpression.Name;
+                                    break;
+
+                                case KindOfLogicalQueryNode.Value:
+                                    value = foundExpression.Value;
+                                    break;
+
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(kindOfFoundExpression), kindOfFoundExpression, null);
+                            }
+
+#if DEBUG
+                            //Log($"value = {value}");
+#endif
+
+                            var destVar = bindingVariables.GetDest(resultVar.NameOfVar);
+
+#if DEBUG
+                            //Log($"destVar = {destVar}");
+#endif
+
+                            varStorage.SetValue(destVar, value);
+                        }
                     }
 
                     var processInitialInfo = new ProcessInitialInfo();
                     processInitialInfo.CompiledFunctionBody = _trigger.CompiledFunctionBody;
-                    processInitialInfo.LocalContext = _localCodeExecutionContext;
+                    processInitialInfo.LocalContext = localCodeExecutionContext;
                     processInitialInfo.Metadata = _trigger.CodeEntity;
 
                     var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo);

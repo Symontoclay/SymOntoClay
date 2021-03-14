@@ -39,7 +39,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public KindOfInlineTrigger Kind { get; set; } = KindOfInlineTrigger.Unknown;
         public KindOfSystemEventOfInlineTrigger KindOfSystemEvent { get; set; } = KindOfSystemEventOfInlineTrigger.Unknown;
         public RuleInstance Condition { get; set; }
-        public List<BindingVariableItem> BindingVariables { get; set; } = new List<BindingVariableItem>();
+        public BindingVariables BindingVariables { get; set; } = new BindingVariables();
         public List<AstStatement> Statements { get; set; } = new List<AstStatement>();
 
         public CompiledFunctionBody CompiledFunctionBody { get; set; }
@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.Kind = Kind;
             result.KindOfSystemEvent = KindOfSystemEvent;
             result.Condition = Condition.Clone(context);
-            result.BindingVariables = BindingVariables.Select(p => p.Clone(context)).ToList();
+            result.BindingVariables = BindingVariables.Clone(context);
             result.Statements = Statements.Select(p => p.CloneAstStatement(context)).ToList();
 
             result.CodeEntity = CodeEntity.Clone(context);
@@ -118,7 +118,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
             sb.PrintBriefObjProp(n, nameof(Condition), Condition);
-            sb.PrintObjListProp(n, nameof(BindingVariables), BindingVariables);
+            sb.PrintObjProp(n, nameof(BindingVariables), BindingVariables);
             sb.PrintObjListProp(n, nameof(Statements), Statements);
             sb.PrintObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
@@ -136,7 +136,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
             sb.PrintBriefObjProp(n, nameof(Condition), Condition);
-            sb.PrintShortObjListProp(n, nameof(BindingVariables), BindingVariables);
+            sb.PrintShortObjProp(n, nameof(BindingVariables), BindingVariables);
             sb.PrintShortObjListProp(n, nameof(Statements), Statements);
             sb.PrintShortObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
@@ -154,7 +154,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
             sb.PrintBriefObjProp(n, nameof(Condition), Condition);
-            sb.PrintBriefObjListProp(n, nameof(BindingVariables), BindingVariables);
+            sb.PrintBriefObjProp(n, nameof(BindingVariables), BindingVariables);
             sb.PrintBriefObjListProp(n, nameof(Statements), Statements);
             sb.PrintBriefObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 

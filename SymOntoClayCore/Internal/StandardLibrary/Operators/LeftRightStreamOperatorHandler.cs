@@ -56,7 +56,19 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
             if(leftOperand.KindOfValue == KindOfValue.StrongIdentifierValue)
             {
-                throw new NotImplementedException();
+                var strongIdentifier = leftOperand.AsStrongIdentifierValue;
+
+                var kindOfName = strongIdentifier.KindOfName;
+
+                switch(kindOfName)
+                {
+                    case KindOfName.Entity:
+                        valueFromSource = leftOperand;
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
+                }
             }
             else
             {

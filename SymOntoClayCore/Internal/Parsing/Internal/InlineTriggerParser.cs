@@ -164,7 +164,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 //Log($"parser.Result = {parser.Result.WriteListToString()}");
 #endif
 
-                                _inlineTrigger.BindingVariables = parser.Result;
+                                _inlineTrigger.BindingVariables = new BindingVariables(parser.Result);
 
                                 _state = State.GotBindingVariables;
                             }

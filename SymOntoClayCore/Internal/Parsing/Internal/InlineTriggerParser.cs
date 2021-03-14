@@ -38,6 +38,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Init,
             WaitForCondition,
             GotCondition,
+            GotBindingVariables,
             WaitForAction,
             GotAction
         }
@@ -81,9 +82,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
-            Log($"Result = {Result}");
-            Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
+            //Log($"Result = {Result}");
+            //Log($"_state = {_state}");
 #endif
 
             switch (_state)
@@ -160,11 +161,26 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 parser.Run();
 
 #if DEBUG
-                                Log($"parser.Result = {parser.Result.WriteListToString()}");
+                                //Log($"parser.Result = {parser.Result.WriteListToString()}");
 #endif
-                            }
 
-                            throw new NotImplementedException();
+                                _inlineTrigger.BindingVariables = parser.Result;
+
+                                _state = State.GotBindingVariables;
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotBindingVariables:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Lambda:
+                            _state = State.WaitForAction;
+                            break;
 
                         default:
                             throw new UnexpectedTokenException(_currToken);

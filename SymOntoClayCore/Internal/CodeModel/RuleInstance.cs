@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class RuleInstance: AnnotatedItem
     {
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public bool IsSource { get; set; } = true;

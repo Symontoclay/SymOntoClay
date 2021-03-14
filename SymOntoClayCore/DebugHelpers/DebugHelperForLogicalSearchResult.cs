@@ -54,7 +54,7 @@ namespace SymOntoClay.Core.DebugHelpers
                     var varName = resultOfVarOfQueryToRelation.NameOfVar;
                     var foundNode = resultOfVarOfQueryToRelation.FoundExpression;
 
-                    varItemsStrList.Add($" {varName} = {DebugHelperForRuleInstance.ToString(foundNode)}");
+                    varItemsStrList.Add($" {varName.NameValue} = {DebugHelperForRuleInstance.ToString(foundNode)}");
                 }
 
                 sb.AppendLine(string.Join(";", varItemsStrList).Trim());

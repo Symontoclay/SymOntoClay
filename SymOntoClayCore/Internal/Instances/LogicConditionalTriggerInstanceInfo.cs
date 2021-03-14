@@ -112,7 +112,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
 #if DEBUG
             //Log($"searchResult = {searchResult}");
-            //Log($"result = {DebugHelperForLogicalSearchResult.ToString(searchResult, _context.Dictionary)}");
+            //Log($"result = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
             //foreach(var usedKey in searchResult.UsedKeysList)
             //{
             //    Log($"usedKey = {usedKey}");
@@ -138,6 +138,16 @@ namespace SymOntoClay.Core.Internal.Instances
                 if(searchResult.IsSuccess)
                 {
                     _isOn = true;
+
+#if DEBUG
+                    Log($"searchResult = {searchResult}");
+                    Log($"result = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
+#endif
+
+                    if(_trigger.BindingVariables.Any())
+                    {
+                        throw new NotImplementedException();
+                    }
 
                     var processInitialInfo = new ProcessInitialInfo();
                     processInitialInfo.CompiledFunctionBody = _trigger.CompiledFunctionBody;

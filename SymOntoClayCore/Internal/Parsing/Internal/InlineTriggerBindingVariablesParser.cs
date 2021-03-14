@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Init,
             WaitForLeftVariable,
             WaitForKindOfBinding,
-            WaitForRightVariable
+            WaitForRightVariable,
+            GotRightVariable
         }
 
         public InlineTriggerBindingVariablesParser(InternalParserContext context)
@@ -29,10 +31,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
-            Log($"Result = {Result.WriteListToString()}");
-            Log($"_currentItem = {_currentItem}");
-            Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
+            //Log($"Result = {Result.WriteListToString()}");
+            //Log($"_currentItem = {_currentItem}");
+            //Log($"_state = {_state}");
 #endif
 
             switch (_state)
@@ -40,8 +42,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.Init:
                     switch (_currToken.TokenKind)
                     {
-                        case TokenKind.OpenRoundBracket:
-                            InitItem();
+                        case TokenKind.OpenRoundBracket:                            
                             _state = State.WaitForLeftVariable;
                             break;
 
@@ -52,10 +53,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
 
                 case State.WaitForLeftVariable:
+                    InitItem();
+
                     switch (_currToken.TokenKind)
                     {
-                        case TokenKind.LogicalVar:
-                            throw new NotImplementedException();
+                        case TokenKind.LogicalVar:                            
+                            _currentItem.LeftVariable = NameHelper.CreateName(_currToken.Content);
+                            _state = State.WaitForKindOfBinding;
+                            break;
 
                         default:
                             throw new UnexpectedTokenException(_currToken);
@@ -65,6 +70,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.WaitForKindOfBinding:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.LeftRightStream:
+                            _currentItem.Kind = KindOfBindingVariable.LeftToRignt;
+                            _state = State.WaitForRightVariable;
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -73,6 +83,27 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.WaitForRightVariable:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.Var:
+                            _currentItem.RightVariable = NameHelper.CreateName(_currToken.Content);
+                            _state = State.GotRightVariable;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotRightVariable:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.CloseRoundBracket:
+                            Exit();
+                            break;
+
+                        case TokenKind.Comma:
+                            _state = State.WaitForLeftVariable;
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

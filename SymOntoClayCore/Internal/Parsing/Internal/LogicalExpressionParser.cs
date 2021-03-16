@@ -75,9 +75,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");
-            //Log($"_state = {_state}");
+            Log($"_state = {_state}");
 #endif
 
             if(_terminatingTokenKindList.Contains(_currToken.TokenKind))
@@ -255,7 +255,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.And:
-                            ProcessBinaryOperator();
+                            ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.And);
+                            break;
+
+                        case TokenKind.Or:
+                            ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.Or);
                             break;
 
                         default:
@@ -400,12 +404,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _state = State.WaitForPredicateParameter;
         }
 
-        private void ProcessBinaryOperator()
+        private void ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode kindOfOperator)
         {
             var node = new LogicalQueryNode();
             _lastLogicalQueryNode = node;
             node.Kind = KindOfLogicalQueryNode.BinaryOperator;
-            node.KindOfOperator = KindOfOperatorOfLogicalQueryNode.And;
+            node.KindOfOperator = kindOfOperator;
 
             var priority = OperatorsHelper.GetPriority(KindOfOperator.And);
 

@@ -2595,6 +2595,11 @@
             Represents symbol `&amp;`.
             </summary>
         </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.Or">
+            <summary>
+            Represents symbol `|`.
+            </summary>
+        </member>
         <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.LeftRightStream">
             <summary>
             Represents symbol `&gt;&gt;`.

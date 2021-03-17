@@ -22,7 +22,7 @@
 		 "End" >> @>log;
 	}
 
-	on {: see(I, $x) & barrel($x) | dog($x) :} ($x >> @x) => {
+	on {: see(I, $x) & barrel($x) :} ($x >> @x) => {
 	     @x >> @>log;
 	}
 
@@ -30,3 +30,4 @@
 	//     "D" >> @>log;
 	//}
 }
+// | dog($x)

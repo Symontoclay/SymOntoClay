@@ -32,7 +32,6 @@ namespace SymOntoClay.Core.Internal.IndexedData
     {
         public StrongIdentifierValue NameOfVar { get; set; }
         public LogicalQueryNode FoundExpression { get; set; }
-        public IDictionary<StrongIdentifierValue, OriginOfVarOfQueryToRelation> OriginDict { get; set; } = new Dictionary<StrongIdentifierValue, OriginOfVarOfQueryToRelation>();
 
         public ulong GetLongHashCode()
         {
@@ -58,7 +57,6 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var sb = new StringBuilder();
             sb.PrintObjProp(n, nameof(NameOfVar), NameOfVar);
             sb.PrintObjProp(n, nameof(FoundExpression), FoundExpression);
-            //sb.PrintObjDict_2_Prop(n, nameof(OriginDict), OriginDict);
 
             return sb.ToString();
         }
@@ -83,7 +81,6 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             sb.PrintShortObjProp(n, nameof(NameOfVar), NameOfVar);
             sb.PrintShortObjProp(n, nameof(FoundExpression), FoundExpression);
-            //sb.PrintShortObjDict_2_Prop(n, nameof(OriginDict), OriginDict);
 
             return sb.ToString();
         }
@@ -108,8 +105,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             sb.PrintBriefObjProp(n, nameof(NameOfVar), NameOfVar);
             sb.PrintBriefObjProp(n, nameof(FoundExpression), FoundExpression);
-            //sb.PrintBriefObjDict_2_Prop(n, nameof(OriginDict), OriginDict);
-
+            
             return sb.ToString();
         }
     }

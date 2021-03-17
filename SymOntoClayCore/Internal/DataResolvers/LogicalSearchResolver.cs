@@ -487,17 +487,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     resultOfVarOfQueryToRelation.NameOfVar = processedExpr.Name;
                     resultOfVarOfQueryToRelation.FoundExpression = targetRelation;
                     resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
-
-                    var originInfo = new OriginOfVarOfQueryToRelation();
-                    var targetRulePart = targetRelation.RulePart;
-                    originInfo.RuleInstance = targetRelation.RuleInstance;
-                    originInfo.RulePart = targetRulePart;
-
-                    var keyOfRuleInstance = targetRelation.RuleInstance.Name;
-
-                    originInfo.NameOfRuleInstance = keyOfRuleInstance;
-
-                    resultOfVarOfQueryToRelation.OriginDict[keyOfRuleInstance] = originInfo;
                 }
 
                 var n = 0;
@@ -523,17 +512,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     resultOfVarOfQueryToRelation.NameOfVar = questionVarParam.Name;
                     resultOfVarOfQueryToRelation.FoundExpression = foundExpression;
                     resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
-
-                    var originInfo = new OriginOfVarOfQueryToRelation();
-                    var targetRulePart = targetRelation.RulePart;
-                    originInfo.RuleInstance = targetRelation.RuleInstance;
-                    originInfo.RulePart = targetRulePart;
-
-                    var keyOfRuleInstance = targetRelation.RuleInstance.Name;
-
-                    originInfo.NameOfRuleInstance = keyOfRuleInstance;
-
-                    resultOfVarOfQueryToRelation.OriginDict[keyOfRuleInstance] = originInfo;
 
 #if DEBUG
                     //options.Logger.Log($"resultOfVarOfQueryToRelation = {resultOfVarOfQueryToRelation}");
@@ -691,19 +669,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                                     if (resultOfComparison)
                                     {
-                                        var originItemsDict = varItem.OriginDict;
-                                        var leftVarOriginItemsDict = leftVarItem.OriginDict;
-
-                                        foreach (var originItems in originItemsDict)
-                                        {
-                                            var tmpKeyOfOrigin = originItems.Key;
-
-                                            if (!leftVarOriginItemsDict.ContainsKey(tmpKeyOfOrigin))
-                                            {
-                                                leftVarOriginItemsDict[tmpKeyOfOrigin] = originItems.Value;
-                                            }
-                                        }
-
                                         resultItem.ResultOfVarOfQueryToRelationList.Add(leftVarItem);
                                     }
                                     else
@@ -936,16 +901,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             resultOfVarOfQueryToRelation.NameOfVar = varItem.NameOfVar;
                             resultOfVarOfQueryToRelation.FoundExpression = paramOfTargetRelation;
                             resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
-
-                            var originInfo = new OriginOfVarOfQueryToRelation();
-                            originInfo.RuleInstance = processedExpr.Parent;
-                            originInfo.RulePart = processedExpr;
-
-                            var keyOfRuleInstance = processedExpr.Parent.Name;
-
-                            originInfo.NameOfRuleInstance = keyOfRuleInstance;
-
-                            resultOfVarOfQueryToRelation.OriginDict[keyOfRuleInstance] = originInfo;
                         }
 
                         if (resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Count != queryExecutingCard.VarsInfoList.Count)

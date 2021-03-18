@@ -1,7 +1,9 @@
 ﻿app PeaceKeeper is [0.5] exampleClass
 {
     {: barrel(#a) :}
-	{: see(I, #a) :}
+	{: see(I, #b) :}
+	{: dog(#b) :}
+	{: cat(#с) :}
 
     on Init => {
 	     'Begin' >> @>log;
@@ -22,7 +24,7 @@
 		 "End" >> @>log;
 	}
 
-	on {: see(I, $x) & barrel($x) :} ($x >> @x) => {
+	on {: see(I, $x) & (barrel($x) | dog($x)) :} ($x >> @x) => {
 	     @x >> @>log;
 	}
 
@@ -30,4 +32,3 @@
 	//     "D" >> @>log;
 	//}
 }
-// | dog($x)

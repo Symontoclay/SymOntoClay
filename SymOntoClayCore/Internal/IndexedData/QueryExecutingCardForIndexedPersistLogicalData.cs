@@ -68,7 +68,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintObjListProp(n, nameof(KnownInfoList), KnownInfoList);
             sb.PrintObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
-            sb.PrintPODList(n, nameof(UsedKeysList), UsedKeysList);
+            sb.PrintObjListProp(n, nameof(UsedKeysList), UsedKeysList);
 
 #if DEBUG
             sb.PrintExisting(n, nameof(SenderIndexedRuleInstance), SenderIndexedRuleInstance);
@@ -103,7 +103,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintShortObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
 
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
-            sb.PrintPODList(n, nameof(UsedKeysList), UsedKeysList);
+            sb.PrintShortObjListProp(n, nameof(UsedKeysList), UsedKeysList);
 
 #if DEBUG
             sb.PrintExisting(n, nameof(SenderIndexedRuleInstance), SenderIndexedRuleInstance);
@@ -138,7 +138,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintBriefObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
 
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
-            sb.PrintPODList(n, nameof(UsedKeysList), UsedKeysList);
+            sb.PrintBriefObjListProp(n, nameof(UsedKeysList), UsedKeysList);
 
 #if DEBUG
             sb.PrintExisting(n, nameof(SenderIndexedRuleInstance), SenderIndexedRuleInstance);

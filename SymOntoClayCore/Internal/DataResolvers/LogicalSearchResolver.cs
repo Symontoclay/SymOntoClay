@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
@@ -197,28 +198,35 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             switch(kind)
             {
                 case KindOfLogicalQueryNode.Relation:
-                    FillExecutingCardForRelationIndexedLogicalQueryNode(processedExpr, queryExecutingCard, dataSource, options);
+                    FillExecutingCardForRelationLogicalQueryNode(processedExpr, queryExecutingCard, dataSource, options);
                     break;
 
                 case KindOfLogicalQueryNode.BinaryOperator:
                     switch(processedExpr.KindOfOperator)
                     {
                         case KindOfOperatorOfLogicalQueryNode.And:
-                            FillExecutingCardForAndOperatorIndexedLogicalQueryNode(processedExpr, queryExecutingCard, dataSource, options);
+                            FillExecutingCardForAndOperatorLogicalQueryNode(processedExpr, queryExecutingCard, dataSource, options);
+                            break;
+
+                        case KindOfOperatorOfLogicalQueryNode.Or:
+                            FillExecutingCardForOrOperatorLogicalQueryNode(processedExpr, queryExecutingCard, dataSource, options);
                             break;
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(processedExpr.KindOfOperator), processedExpr.KindOfOperator, null);
                     }
                     break;
-                    
+
+                case KindOfLogicalQueryNode.Group:
+                    FillExecutingCardForGroupLogicalQueryNode(processedExpr, queryExecutingCard, dataSource, options);
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
         }
 
-        //RelationIndexedLogicalQueryNode processedExpr
-        private void FillExecutingCardForRelationIndexedLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardForRelationLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
             //options.Logger.Log($"processedExpr.sIsQuestion = {processedExpr.IsQuestion}");
@@ -265,7 +273,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
         }
 
-        //RelationIndexedLogicalQueryNode processedExpr
         private void NFillExecutingCard(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {            
 #if DEBUG
@@ -405,7 +412,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
         }
 
-        //RelationIndexedLogicalQueryNode processedExpr
         private void FillExecutingCardForQuestion(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
@@ -539,8 +545,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
         }
 
-        //AndOperatorIndexedLogicalQueryNode processedExpr
-        private void FillExecutingCardForAndOperatorIndexedLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardForAndOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {            
 #if DEBUG
             var senderIndexedRuleInstance = queryExecutingCard.SenderIndexedRuleInstance;
@@ -554,8 +559,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
             leftQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
             FillExecutingCard(processedExpr.Left, leftQueryExecutingCard, dataSource, options);
-
-            queryExecutingCard.UsedKeysList.AddRange(leftQueryExecutingCard.UsedKeysList);
 
 #if DEBUG
             //if (leftQueryExecutingCard.UsedKeysList.Any())
@@ -571,42 +574,49 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return;
             }
 
+            queryExecutingCard.UsedKeysList.AddRange(leftQueryExecutingCard.UsedKeysList);
+
             var leftQueryExecutingCardResultsOfQueryToRelationList = leftQueryExecutingCard.ResultsOfQueryToRelationList;
 
             if (leftQueryExecutingCardResultsOfQueryToRelationList.Any())
             {
                 var resultsOfQueryToRelationList = queryExecutingCard.ResultsOfQueryToRelationList;
 
+                var rightQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
+#if DEBUG
+                rightQueryExecutingCard.SenderIndexedRuleInstance = senderIndexedRuleInstance;
+                rightQueryExecutingCard.SenderIndexedRulePart = senderIndexedRulePart;
+                rightQueryExecutingCard.SenderExpressionNode = processedExpr;
+#endif
+                rightQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
+                FillExecutingCard(processedExpr.Right, rightQueryExecutingCard, dataSource, options);
+
+                if (!(leftQueryExecutingCard.IsSuccess && rightQueryExecutingCard.IsSuccess))
+                {
+                    return;
+                }
+
+                var rightQueryExecutingCardResultsOfQueryToRelationList = rightQueryExecutingCard.ResultsOfQueryToRelationList;
+
+                if (rightQueryExecutingCardResultsOfQueryToRelationList.Count == 0)
+                {
+                    return;
+                }
+
+                queryExecutingCard.IsSuccess = true;
+
+                queryExecutingCard.UsedKeysList.AddRange(rightQueryExecutingCard.UsedKeysList);
+
+#if DEBUG
+                //if (rightQueryExecutingCard.UsedKeysList.Any())
+                //{
+                //    throw new NotImplementedException();
+                //}
+                //options.Logger.Log($"rightQueryExecutingCard = {rightQueryExecutingCard}");
+#endif
+
                 foreach (var leftResultOfQueryToRelation in leftQueryExecutingCardResultsOfQueryToRelationList)
                 {
-                    var rightQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
-#if DEBUG
-                    rightQueryExecutingCard.SenderIndexedRuleInstance = senderIndexedRuleInstance;
-                    rightQueryExecutingCard.SenderIndexedRulePart = senderIndexedRulePart;
-                    rightQueryExecutingCard.SenderExpressionNode = processedExpr;
-#endif
-                    rightQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
-                    FillExecutingCard(processedExpr.Right, rightQueryExecutingCard, dataSource, options);
-
-                    queryExecutingCard.IsSuccess = leftQueryExecutingCard.IsSuccess && rightQueryExecutingCard.IsSuccess;
-
-                    queryExecutingCard.UsedKeysList.AddRange(rightQueryExecutingCard.UsedKeysList);
-
-#if DEBUG
-                    //if (rightQueryExecutingCard.UsedKeysList.Any())
-                    //{
-                    //    throw new NotImplementedException();
-                    //}
-                    //options.Logger.Log($"rightQueryExecutingCard = {rightQueryExecutingCard}");
-#endif
-
-                    var rightQueryExecutingCardResultsOfQueryToRelationList = rightQueryExecutingCard.ResultsOfQueryToRelationList;
-
-                    if (rightQueryExecutingCardResultsOfQueryToRelationList.Count == 0)
-                    {
-                        continue;
-                    }
-
                     var leftVarsList = leftResultOfQueryToRelation.ResultOfVarOfQueryToRelationList;
                     var leftVarsKeysList = leftVarsList.Select(p => p.NameOfVar).Distinct().ToList();
 
@@ -715,6 +725,186 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //}
 #endif
             }
+        }
+
+        private void FillExecutingCardForOrOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        {
+#if DEBUG
+            var senderIndexedRuleInstance = queryExecutingCard.SenderIndexedRuleInstance;
+            var senderIndexedRulePart = queryExecutingCard.SenderIndexedRulePart;
+#endif
+            var leftQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
+#if DEBUG
+            leftQueryExecutingCard.SenderIndexedRuleInstance = senderIndexedRuleInstance;
+            leftQueryExecutingCard.SenderIndexedRulePart = senderIndexedRulePart;
+            leftQueryExecutingCard.SenderExpressionNode = processedExpr;
+#endif
+            leftQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
+            FillExecutingCard(processedExpr.Left, leftQueryExecutingCard, dataSource, options);
+
+            queryExecutingCard.UsedKeysList.AddRange(leftQueryExecutingCard.UsedKeysList);
+
+#if DEBUG
+            options.Logger.Log($"leftQueryExecutingCard = {leftQueryExecutingCard}");
+#endif
+
+            var rightQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
+#if DEBUG
+            rightQueryExecutingCard.SenderIndexedRuleInstance = senderIndexedRuleInstance;
+            rightQueryExecutingCard.SenderIndexedRulePart = senderIndexedRulePart;
+            rightQueryExecutingCard.SenderExpressionNode = processedExpr;
+#endif
+            rightQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
+            FillExecutingCard(processedExpr.Right, rightQueryExecutingCard, dataSource, options);
+
+#if DEBUG
+            options.Logger.Log($"rightQueryExecutingCard = {rightQueryExecutingCard}");
+#endif
+
+            if(!(leftQueryExecutingCard.IsSuccess && rightQueryExecutingCard.IsSuccess))
+            {
+                return;
+            }
+
+            var resultsOfQueryToRelationList = queryExecutingCard.ResultsOfQueryToRelationList;
+
+            if (leftQueryExecutingCard.IsSuccess && !rightQueryExecutingCard.IsSuccess)
+            {
+                queryExecutingCard.UsedKeysList.AddRange(leftQueryExecutingCard.UsedKeysList);
+
+                queryExecutingCard.IsSuccess = leftQueryExecutingCard.IsSuccess;
+
+                foreach (var resultOfQueryToRelation in leftQueryExecutingCard.ResultsOfQueryToRelationList)
+                {
+                    resultsOfQueryToRelationList.Add(resultOfQueryToRelation);
+                }
+
+                return;
+            }
+
+            if(!leftQueryExecutingCard.IsSuccess && rightQueryExecutingCard.IsSuccess)
+            {
+                queryExecutingCard.UsedKeysList.AddRange(rightQueryExecutingCard.UsedKeysList);
+
+                queryExecutingCard.IsSuccess = rightQueryExecutingCard.IsSuccess;
+
+                foreach (var resultOfQueryToRelation in rightQueryExecutingCard.ResultsOfQueryToRelationList)
+                {
+                    resultsOfQueryToRelationList.Add(resultOfQueryToRelation);
+                }
+
+                return;
+            }
+
+            queryExecutingCard.IsSuccess = true;
+
+            queryExecutingCard.UsedKeysList.AddRange(leftQueryExecutingCard.UsedKeysList.Concat(rightQueryExecutingCard.UsedKeysList));
+
+            queryExecutingCard.UsedKeysList = queryExecutingCard.UsedKeysList.Distinct().ToList();
+
+            var leftQueryExecutingCardResultsOfQueryToRelationList = leftQueryExecutingCard.ResultsOfQueryToRelationList;
+            var rightQueryExecutingCardResultsOfQueryToRelationList = rightQueryExecutingCard.ResultsOfQueryToRelationList;
+
+            if(leftQueryExecutingCardResultsOfQueryToRelationList.Any() && !rightQueryExecutingCardResultsOfQueryToRelationList.Any())
+            {
+                foreach (var resultOfQueryToRelation in leftQueryExecutingCardResultsOfQueryToRelationList)
+                {
+                    resultsOfQueryToRelationList.Add(resultOfQueryToRelation);
+                }
+
+                return;
+            }
+
+            if(!leftQueryExecutingCardResultsOfQueryToRelationList.Any() && rightQueryExecutingCardResultsOfQueryToRelationList.Any())
+            {
+                foreach (var resultOfQueryToRelation in rightQueryExecutingCardResultsOfQueryToRelationList)
+                {
+                    resultsOfQueryToRelationList.Add(resultOfQueryToRelation);
+                }
+
+                return;
+            }
+
+            foreach (var leftResultOfQueryToRelation in leftQueryExecutingCardResultsOfQueryToRelationList)
+            {
+#if DEBUG
+                options.Logger.Log($"leftResultOfQueryToRelation = {leftResultOfQueryToRelation}");
+#endif
+
+                var leftVarsList = leftResultOfQueryToRelation.ResultOfVarOfQueryToRelationList;
+                var leftVarsDict = leftVarsList.ToDictionary(p => p.NameOfVar, p => p.FoundExpression);
+                var leftVarNamesList = leftVarsList.Select(p => p.NameOfVar);
+
+                foreach (var rightResultOfQueryToRelation in rightQueryExecutingCardResultsOfQueryToRelationList)
+                {
+#if DEBUG
+                    options.Logger.Log($"rightResultOfQueryToRelation = {rightResultOfQueryToRelation}");
+#endif
+
+                    var rightVarsList = rightResultOfQueryToRelation.ResultOfVarOfQueryToRelationList;
+                    var rightVarsDict = rightVarsList.ToDictionary(p => p.NameOfVar, p => p.FoundExpression);
+
+                    var varNamesList = rightVarsList.Select(p => p.NameOfVar).Concat(leftVarNamesList).Distinct();
+
+                    var varValuesList = new List<(StrongIdentifierValue, LogicalQueryNode)>();
+
+                    foreach(var varName in varNamesList)
+                    {
+#if DEBUG
+                        options.Logger.Log($"varName = {varName}");
+#endif
+
+                        var resultOfVarOfQueryToRelationItem = new ResultOfVarOfQueryToRelation();
+                        resultOfVarOfQueryToRelationItem.NameOfVar = varName;
+
+                        var leftVarsDictContainsKey = leftVarsDict.ContainsKey(varName);
+                        var rightVarsDictContainsKey = rightVarsDict.ContainsKey(varName);
+
+                        if (leftVarsDictContainsKey && rightVarsDictContainsKey)
+                        {
+                            var leftVal = leftVarsDict[varName];
+                            var rightVal = rightVarsDict[varName];
+
+                            var resultOfComparison = ExpressionNodeHelper.Compare(leftVal, rightVal, null, null
+#if DEBUG
+                                        , options.Logger
+#endif
+                                        );
+
+                            if(resultOfComparison)
+                            {
+                                varValuesList.Add((varName, leftVal));
+                            }
+                            else
+                            {
+                                varValuesList.Add((varName, leftVal));
+                                varValuesList.Add((varName, rightVal));
+                            }
+                        }
+                        else
+                        {
+                            if(leftVarsDictContainsKey)
+                            {
+                                varValuesList.Add((varName, leftVarsDict[varName]));
+                            }
+                            else
+                            {
+                                varValuesList.Add((varName, rightVarsDict[varName]));
+                            }
+                        }
+                    }
+
+#if DEBUG
+                    options.Logger.Log($"varValuesList.Count = {varValuesList.Count}");
+#endif
+                }
+            }
+
+#if DEBUG
+            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+#endif
+
+            throw new NotImplementedException();
         }
 
         private void FillExecutingCardForCallingFromRelationForFact(BaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
@@ -918,6 +1108,42 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
                 }
             }
+        }
+
+        private void FillExecutingCardForGroupLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        {
+#if DEBUG
+            var senderIndexedRuleInstance = queryExecutingCard.SenderIndexedRuleInstance;
+            var senderIndexedRulePart = queryExecutingCard.SenderIndexedRulePart;
+#endif
+            var leftQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
+#if DEBUG
+            leftQueryExecutingCard.SenderIndexedRuleInstance = senderIndexedRuleInstance;
+            leftQueryExecutingCard.SenderIndexedRulePart = senderIndexedRulePart;
+            leftQueryExecutingCard.SenderExpressionNode = processedExpr;
+#endif
+            leftQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
+            FillExecutingCard(processedExpr.Left, leftQueryExecutingCard, dataSource, options);
+
+            queryExecutingCard.UsedKeysList.AddRange(leftQueryExecutingCard.UsedKeysList);
+
+            queryExecutingCard.IsSuccess = leftQueryExecutingCard.IsSuccess;
+
+            foreach (var resultOfQueryToRelation in leftQueryExecutingCard.ResultsOfQueryToRelationList)
+            {
+                queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
+            }
+
+#if DEBUG
+            //if (leftQueryExecutingCard.UsedKeysList.Any())
+            //{
+            //    throw new NotImplementedException();
+            //}
+
+            options.Logger.Log($"leftQueryExecutingCard = {leftQueryExecutingCard}");
+#endif
+
+            //throw new NotImplementedException();
         }
 
         private bool CompareKnownInfoAndExpressionNode(QueryExecutingCardAboutKnownInfo knownInfo, LogicalQueryNode expressionNode, List<StrongIdentifierValue> additionalKeys_1, List<StrongIdentifierValue> additionalKeys_2

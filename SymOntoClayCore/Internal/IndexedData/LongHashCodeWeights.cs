@@ -33,6 +33,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public const ulong HostWeight = 18446744073709551613;
 
         public const ulong BaseOperatorWeight = 184467440737090;
+        public const ulong GroupWeight = 18446744073709;
 
         public const ulong BaseFunctionWeight = 18446744070;
         public const ulong BaseParamWeight = 1844670;

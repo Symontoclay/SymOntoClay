@@ -45,6 +45,26 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotBinaryOperator
         }
 
+        public LogicalExpressionParser(InternalParserContext context, bool isGroup)
+            : base(context)
+        {
+            if(isGroup)
+            {
+                _terminatingTokenKindList = new List<TokenKind> { TokenKind.CloseFactBracket };
+            }
+            else
+            {
+                _terminatingTokenKindList = new List<TokenKind> { TokenKind.Comma, TokenKind.CloseRoundBracket };
+            }
+
+            _isGroup = isGroup;
+        }
+
+        public LogicalExpressionParser(InternalParserContext context)
+            : this(context, new List<TokenKind> { TokenKind.Comma, TokenKind.CloseRoundBracket })
+        {
+        }
+
         public LogicalExpressionParser(InternalParserContext context, TokenKind terminatingTokenKind)
             : this(context, new List<TokenKind>() { terminatingTokenKind })
         {
@@ -53,9 +73,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         public LogicalExpressionParser(InternalParserContext context, List<TokenKind> terminatingTokenKindList)
             : base(context)
         {
-            _terminatingTokenKindList = terminatingTokenKindList;
+            _terminatingTokenKindList = terminatingTokenKindList; 
         }
 
+        private bool _isGroup;
         private List<TokenKind> _terminatingTokenKindList = new List<TokenKind>();
         private State _state = State.Init;
 
@@ -75,9 +96,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
+            //Log($"_isGroup = {_isGroup}");
+            //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");
-            Log($"_state = {_state}");
+            //Log($"_state = {_state}");
 #endif
 
             if(_terminatingTokenKindList.Contains(_currToken.TokenKind))
@@ -151,7 +173,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         {
                                 _context.Recovery(_currToken);
 
-                                var parser = new LogicalExpressionParser(_context, new List<TokenKind> { TokenKind.Comma, TokenKind.CloseRoundBracket });
+                                var parser = new LogicalExpressionParser(_context);
                                 parser.Run();
 
 #if DEBUG
@@ -193,7 +215,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         {
                                             _context.Recovery(_currToken);
 
-                                            var parser = new LogicalExpressionParser(_context, new List<TokenKind> { TokenKind.Comma, TokenKind.CloseRoundBracket });
+                                            var parser = new LogicalExpressionParser(_context);
                                             parser.Run();
 
 #if DEBUG
@@ -262,6 +284,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.Or);
                             break;
 
+                        case TokenKind.CloseRoundBracket:
+                            if(_isGroup)
+                            {
+                                Exit();
+                                break;
+                            }
+                            throw new UnexpectedTokenException(_currToken);
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -274,6 +304,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessWord();
                             break;
 
+                        case TokenKind.OpenRoundBracket:
+                            ProcessGroup();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -282,6 +316,28 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
+        }
+
+        private void ProcessGroup()
+        {
+            var node = new LogicalQueryNode();
+            _lastLogicalQueryNode = node;
+            node.Kind = KindOfLogicalQueryNode.Group;
+
+            var parser = new LogicalExpressionParser(_context, true);
+            parser.Run();
+
+#if DEBUG
+            //Log($"parser.Result = {parser.Result}");
+#endif
+
+            node.Left = parser.Result;
+
+            var intermediateNode = new IntermediateAstNode(node);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+            _state = State.GotPredicate;
         }
 
         private void ProcessWord()

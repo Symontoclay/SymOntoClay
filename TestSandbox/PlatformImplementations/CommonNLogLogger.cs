@@ -53,17 +53,17 @@ namespace TestSandbox.PlatformImplementations
 
         public void WriteLnRawLog(string message)
         {
-            _logger.Info(message);
+            //_logger.Info(message);
         }
 
         public void WriteLnRawWarning(string message)
         {
-            _logger.Info(message);
+            //_logger.Info(message);
         }
 
         public void WriteLnRawError(string message)
         {
-            _logger.Info(message);
+            //_logger.Info(message);
         }
     }
 }

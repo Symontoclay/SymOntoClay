@@ -232,7 +232,6 @@ namespace SymOntoClay.Core.Internal.Convertors
                 result.ParamsList = destParametersList;
             }
 
-            result.IsGroup = source.IsGroup;
             result.Value = source.Value;
             result.IsQuestion = source.IsQuestion;
 

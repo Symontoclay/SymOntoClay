@@ -46,7 +46,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public LogicalQueryNode Left { get; set; }
         public LogicalQueryNode Right { get; set; }
         public IList<LogicalQueryNode> ParamsList { get; set; }
-        public bool IsGroup { get; set; }
         public Value Value { get; set; }
         public bool IsQuestion { get; set; }
 
@@ -145,6 +144,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         IsQuestion = true;
                     }
                     FillRelationParams(ParamsList, contextOfConvertingExpressionNode);
+                    break;
+
+                case KindOfLogicalQueryNode.Group:
+                    Left.PrepareDirty(contextOfConvertingExpressionNode, ruleInstance, rulePart);
                     break;
 
                 default:
@@ -343,6 +346,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     }
                     break;
 
+                case KindOfLogicalQueryNode.Group:
+                    Left.CalculateUsedKeys(usedKeysList);
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
             }
@@ -407,6 +414,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         return result;
                     }
 
+                case KindOfLogicalQueryNode.Group:
+                    return base.CalculateLongHashCode() ^ LongHashCodeWeights.GroupWeight ^ Left.GetLongHashCode();
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
             }
@@ -454,7 +464,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.Left = Left?.Clone(context);
             result.Right = Right?.Clone(context);
             result.ParamsList = ParamsList?.Select(p => p.Clone(context)).ToList();
-            result.IsGroup = IsGroup;
             result.Value = Value?.CloneValue(context);
             result.IsQuestion = IsQuestion;
 
@@ -527,8 +536,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjProp(n, nameof(Right), Right);
             sb.PrintObjListProp(n, nameof(ParamsList), ParamsList);
             
-            sb.AppendLine($"{spaces}{nameof(IsGroup)} = {IsGroup}");
-
             sb.PrintObjProp(n, nameof(Value), Value);
 
             sb.AppendLine($"{spaces}{nameof(IsQuestion)} = {IsQuestion}");
@@ -555,8 +562,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjProp(n, nameof(Right), Right);
             sb.PrintShortObjListProp(n, nameof(ParamsList), ParamsList);
 
-            sb.AppendLine($"{spaces}{nameof(IsGroup)} = {IsGroup}");
-
             sb.PrintShortObjProp(n, nameof(Value), Value);
 
             sb.AppendLine($"{spaces}{nameof(IsQuestion)} = {IsQuestion}");
@@ -582,8 +587,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintExisting(n, nameof(Left), Left);
             sb.PrintExisting(n, nameof(Right), Right);
             sb.PrintExistingList(n, nameof(ParamsList), ParamsList);
-
-            sb.AppendLine($"{spaces}{nameof(IsGroup)} = {IsGroup}");
 
             sb.PrintBriefObjProp(n, nameof(Value), Value);
 

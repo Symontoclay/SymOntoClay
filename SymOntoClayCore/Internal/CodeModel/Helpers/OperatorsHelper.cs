@@ -40,8 +40,14 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 case KindOfOperator.LeftRightStream:
                     return 15;
 
-                case KindOfOperator.And:
+                case KindOfOperator.And:                
                     return 14;
+
+                case KindOfOperator.Or:
+                    return 15;
+
+                case KindOfOperator.Not:
+                    return 3;
 
                 case KindOfOperator.Is:
                     return 10;

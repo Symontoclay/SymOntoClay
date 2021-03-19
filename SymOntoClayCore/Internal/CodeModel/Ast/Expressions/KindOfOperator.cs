@@ -36,6 +36,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         CallFunction,
         Predicate,
         And,
+        Or,
+        Not,
         CallLogicalQuery,
         Assign
     }

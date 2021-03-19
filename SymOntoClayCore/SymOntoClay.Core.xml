@@ -2600,6 +2600,11 @@
             Represents symbol `|`.
             </summary>
         </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.Not">
+            <summary>
+            Represents symbol `!`.
+            </summary>
+        </member>
         <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.LeftRightStream">
             <summary>
             Represents symbol `&gt;&gt;`.

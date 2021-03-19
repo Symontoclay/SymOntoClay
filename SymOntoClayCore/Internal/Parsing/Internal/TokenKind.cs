@@ -118,6 +118,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Or,
 
         /// <summary>
+        /// Represents symbol `!`.
+        /// </summary>
+        Not,
+
+        /// <summary>
         /// Represents symbol `&gt;&gt;`.
         /// </summary>
         LeftRightStream,

@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotLogicalVar,
             GotQuestionVar,
             GotConcept,
-            GotBinaryOperator
+            GotOperator
         }
 
         public LogicalExpressionParser(InternalParserContext context, bool isGroup)
@@ -297,7 +297,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotBinaryOperator:
+                case State.GotOperator:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
@@ -306,6 +306,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.OpenRoundBracket:
                             ProcessGroup();
+                            break;
+
+                        case TokenKind.Not:
+                            ProcessUnaryOperator(KindOfOperatorOfLogicalQueryNode.Not);
                             break;
 
                         default:
@@ -467,7 +471,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             node.Kind = KindOfLogicalQueryNode.BinaryOperator;
             node.KindOfOperator = kindOfOperator;
 
-            var priority = OperatorsHelper.GetPriority(KindOfOperator.And);
+            var kind = KindOfOperator.Unknown;
+
+            switch(kindOfOperator)
+            {
+                case KindOfOperatorOfLogicalQueryNode.And:
+                    kind = KindOfOperator.And;
+                    break;
+
+                case KindOfOperatorOfLogicalQueryNode.Or:
+                    kind = KindOfOperator.Or;
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, null);
+            }
+
+            var priority = OperatorsHelper.GetPriority(kind);
 
 #if DEBUG
             //Log($"priority = {priority}");
@@ -477,7 +497,40 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
 
-            _state = State.GotBinaryOperator;
+            _state = State.GotOperator;
+        }
+
+        private void ProcessUnaryOperator(KindOfOperatorOfLogicalQueryNode kindOfOperator)
+        {
+            var node = new LogicalQueryNode();
+            _lastLogicalQueryNode = node;
+            node.Kind = KindOfLogicalQueryNode.UnaryOperator;
+
+            node.KindOfOperator = kindOfOperator;
+
+            var kind = KindOfOperator.Unknown;
+
+            switch (kindOfOperator)
+            {
+                case KindOfOperatorOfLogicalQueryNode.Not:
+                    kind = KindOfOperator.Not;
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, null);
+            }
+
+            var priority = OperatorsHelper.GetPriority(kind);
+
+#if DEBUG
+            //Log($"priority = {priority}");
+#endif
+
+            var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.UnaryOperator, priority);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+            _state = State.GotOperator;
         }
     }
 }

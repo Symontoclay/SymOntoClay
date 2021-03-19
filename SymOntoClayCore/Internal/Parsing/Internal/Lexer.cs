@@ -256,6 +256,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             case '|':
                                 return CreateToken(TokenKind.Or);
 
+                            case '!':
+                                return CreateToken(TokenKind.Not);
+
                             case '\'':
                                 _closeBracket = '\'';
                                 _state = State.InString;

@@ -73,7 +73,7 @@ namespace TestSandbox.Handlers
             {
                 LogDir = logDir,
                 RootContractName = "Hi1",
-                PlatformLoggers = new List<IPlatformLogger>() { ConsoleLogger.Instance, CommonNLogLogger.Instance },
+                PlatformLoggers = new List<IPlatformLogger>() { /*ConsoleLogger.Instance,*/ CommonNLogLogger.Instance },
                 Enable = true,
                 EnableRemoteConnection = true
             };

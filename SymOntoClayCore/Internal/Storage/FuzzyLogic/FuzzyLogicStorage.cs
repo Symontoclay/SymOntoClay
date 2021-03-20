@@ -11,6 +11,14 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
         {
             _kind = kind;
             _realStorageContext = realStorageContext;
+
+#if DEBUG
+            Log($"kind = {kind}");
+            if (kind == KindOfStorage.Global)
+            {
+                CreateTstItems();
+            }
+#endif
         }
 
         private readonly object _lockObj = new object();
@@ -24,5 +32,13 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
 
         /// <inheritdoc/>
         public IStorage Storage => _realStorageContext.Storage;
+
+
+#if DEBUG
+        private void CreateTstItems()
+        {
+            Log("Do");
+        }
+#endif
     }
 }

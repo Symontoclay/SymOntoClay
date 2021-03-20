@@ -116,6 +116,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.Word:
                         case TokenKind.QuestionVar:
+                        case TokenKind.Identifier:
                             ProcessWord();
                             break;
 
@@ -187,6 +188,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.Word:
+                        case TokenKind.Identifier:
                             {
                                 switch(_currToken.KeyWordTokenKind)
                                 {

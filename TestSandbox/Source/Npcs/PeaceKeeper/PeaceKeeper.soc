@@ -15,7 +15,7 @@
 
 		 //select {: see(I, barrel) :} >> @>log;
 		 //select {: son(?x, ?y) :} >> @>log;
-		 select {: age(#Tom, 15) :} >> @>log;
+		 select {: age(#Tom, `teenager`) :} >> @>log;
 
 		 //insert {: >: { bird (#1234) } :};
 		 //insert {: see(I, #a) :};

@@ -184,7 +184,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private void GetWeightedInheritanceItemsBySubName(StrongIdentifierValue subName, LocalCodeExecutionContext localCodeExecutionContext, Dictionary<StrongIdentifierValue, WeightedInheritanceItem> result, float currentRank, uint currentDistance, List<StorageUsingOptions> storagesList)
         {
 #if DEBUG
-            //Log($"subName = {subNameKey}");
+            //Log($"subName = {subName}");
             //Log($"currentRank = {currentRank}");
             //Log($"currentDistance = {currentDistance}");
             //Log($"result.Count = {result.Count}");
@@ -286,7 +286,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private List<WeightedInheritanceResultItemWithStorageInfo<InheritanceItem>> GetRawList(StrongIdentifierValue subName, List<StorageUsingOptions> storagesList)
         {
 #if DEBUG
-            //Log($"subNameKey = {subNameKey}");
+            //Log($"subName = {subName}");
 #endif
 
             if (!storagesList.Any())

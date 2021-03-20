@@ -1100,14 +1100,28 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 foreach (var knownInfo in queryExecutingCard.KnownInfoList)
                 {
 #if DEBUG
-                    //options.Logger.Log($"knownInfo = {knownInfo}");
+                    options.Logger.Log($"knownInfo = {knownInfo}");
 #endif
 
                     List<StrongIdentifierValue> additionalKeys_1 = null;
 
                     if (useInheritance)
                     {
-                        additionalKeys_1 = inheritanceResolver.GetSuperClassesKeysList(knownInfo.Name, options.LocalCodeExecutionContext);
+                        var knownInfoKind = knownInfo.Kind;
+
+                        switch(knownInfoKind)
+                        {
+                            case KindOfLogicalQueryNode.Concept:
+                            case KindOfLogicalQueryNode.Entity:
+                                additionalKeys_1 = inheritanceResolver.GetSuperClassesKeysList(knownInfo.Name, options.LocalCodeExecutionContext);
+                                break;
+
+                            case KindOfLogicalQueryNode.Value:
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(knownInfoKind), knownInfoKind, null);
+                        }                     
                     }
 
 #if DEBUG
@@ -1155,7 +1169,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             );
 
 #if DEBUG
-                        //options.Logger.Log($"resultOfComparison = {resultOfComparison}");
+                        options.Logger.Log($"resultOfComparison = {resultOfComparison}");
 #endif
 
                         if (!resultOfComparison)

@@ -310,7 +310,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
             lock (_lockObj)
             {
 #if DEBUG
-                //Log($"superName = {subNameKey}");
+                //Log($"subName = {subName}");
 #endif
 
                 if(subName.IsEmpty)

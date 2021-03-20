@@ -63,7 +63,7 @@ namespace TestSandbox.PlatformImplementations
 
         public void WriteLnRawError(string message)
         {
-            //_logger.Info(message);
+            _logger.Info(message);
         }
     }
 }

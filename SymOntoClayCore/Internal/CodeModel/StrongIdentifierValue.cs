@@ -51,7 +51,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
-            return NameValue;
+            return NormalizedNameValue;
         }
 
         /// <inheritdoc/>

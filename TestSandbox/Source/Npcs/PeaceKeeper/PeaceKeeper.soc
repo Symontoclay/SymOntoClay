@@ -5,6 +5,7 @@
 	{: dog(#b) :}
 	{: cat(#с) :}
 	//{: focus(I, friend) :}
+	{: age(#Tom, 15) :}
 
     on Init => {
 	     'Begin' >> @>log;
@@ -14,6 +15,7 @@
 
 		 //select {: see(I, barrel) :} >> @>log;
 		 //select {: son(?x, ?y) :} >> @>log;
+		 select {: age(#Tom, 15) :} >> @>log;
 
 		 //insert {: >: { bird (#1234) } :};
 		 //insert {: see(I, #a) :};

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.Storage.FuzzyLogic;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -66,6 +67,7 @@ namespace SymOntoClay.Core.Internal.Storage
             _realStorageContext.ChannelsStorage = new ChannelsStorage.ChannelsStorage(_kind, _realStorageContext);
             _realStorageContext.MetadataStorage = new MetadataStorage.MetadataStorage(_kind, _realStorageContext);
             _realStorageContext.VarStorage = new VarStorage.VarStorage(_kind, _realStorageContext);
+            _realStorageContext.FuzzyLogicStorage = new FuzzyLogicStorage(_kind, _realStorageContext);
         }
 
         private readonly KindOfStorage _kind;
@@ -102,6 +104,9 @@ namespace SymOntoClay.Core.Internal.Storage
 
         /// <inheritdoc/>
         public IVarStorage VarStorage => _realStorageContext.VarStorage;
+
+        /// <inheritdoc/>
+        public IFuzzyLogicStorage FuzzyLogicStorage => _realStorageContext.FuzzyLogicStorage;
 
         /// <inheritdoc/>
         public void AddParentStorage(IStorage storage)

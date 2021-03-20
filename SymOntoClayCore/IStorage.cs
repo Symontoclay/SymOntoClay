@@ -40,6 +40,7 @@ namespace SymOntoClay.Core
         IChannelsStorage ChannelsStorage { get; }
         IMetadataStorage MetadataStorage { get; }
         IVarStorage VarStorage { get; }
+        IFuzzyLogicStorage FuzzyLogicStorage { get; }
         void AddParentStorage(IStorage storage);
         void RemoveParentStorage(IStorage storage);
         void CollectChainOfStorages(IList<StorageUsingOptions> result, int level);

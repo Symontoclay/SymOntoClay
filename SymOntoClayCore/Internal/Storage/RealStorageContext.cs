@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.Compiling;
+using SymOntoClay.Core.Internal.Storage.FuzzyLogic;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public ChannelsStorage.ChannelsStorage ChannelsStorage { get; set; }
         public MetadataStorage.MetadataStorage MetadataStorage { get; set; }
         public VarStorage.VarStorage VarStorage { get; set; }
+        public FuzzyLogicStorage FuzzyLogicStorage { get; set; }
         public RealStorage Storage { get; set; }
         public IList<IStorage> Parents { get; set; }
         public IInheritancePublicFactsReplicator InheritancePublicFactsReplicator { get; set; }

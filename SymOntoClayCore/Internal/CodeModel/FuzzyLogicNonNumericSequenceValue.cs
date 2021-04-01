@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using NLog;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,6 +8,22 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class FuzzyLogicNonNumericSequenceValue : Value
     {
+#if DEBUG
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
+        public void AddIdentifier(StrongIdentifierValue identifier)
+        {
+#if DEBUG
+            _gbcLogger.Info($"identifier = {identifier}");
+#endif
+
+            throw new NotImplementedException();
+        }
+
+        public StrongIdentifierValue NonNumericValue { get; private set; }
+        public IEnumerable<StrongIdentifierValue> Operators { get; private set; } = new List<StrongIdentifierValue>();
+
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.FuzzyLogicNonNumericSequenceValue;
 
@@ -87,6 +104,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintObjProp(n, nameof(NonNumericValue), NonNumericValue);
+            sb.PrintObjListProp(n, nameof(Operators), Operators);
+
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -96,6 +116,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintShortObjProp(n, nameof(NonNumericValue), NonNumericValue);
+            sb.PrintShortObjListProp(n, nameof(Operators), Operators);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -107,6 +130,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintBriefObjProp(n, nameof(NonNumericValue), NonNumericValue);
+            sb.PrintBriefObjListProp(n, nameof(Operators), Operators);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

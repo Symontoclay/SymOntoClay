@@ -30,7 +30,7 @@ namespace SymOntoClay.Core
 {
     public interface ITriggersStorage : ISpecificStorage
     {
-        void Append(InlineTrigger op);
+        void Append(InlineTrigger inlineTrigger);
         IList<WeightedInheritanceResultItem<InlineTrigger>> GetSystemEventsTriggersDirectly(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IList<WeightedInheritanceItem> weightedInheritanceItems);
         IList<WeightedInheritanceResultItem<InlineTrigger>> GetLogicConditionalTriggersDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems);
     }

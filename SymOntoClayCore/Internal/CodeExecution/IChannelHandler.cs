@@ -32,5 +32,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     {
         Value Read();
         Value Write(Value value);
+        ulong GetLongHashCode();
     }
 }

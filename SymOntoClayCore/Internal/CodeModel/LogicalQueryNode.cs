@@ -544,6 +544,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjListProp(n, nameof(VarsInfoList), VarsInfoList);
             sb.PrintObjListProp(n, nameof(KnownInfoList), KnownInfoList);
 
+            sb.AppendLine($"{spaces}{nameof(IsKeyRef)} = {IsKeyRef}");
+            sb.AppendLine($"{spaces}{nameof(IsEntityRef)} = {IsEntityRef}");
+
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -570,6 +573,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjListProp(n, nameof(VarsInfoList), VarsInfoList);
             sb.PrintShortObjListProp(n, nameof(KnownInfoList), KnownInfoList);
 
+            sb.AppendLine($"{spaces}{nameof(IsKeyRef)} = {IsKeyRef}");
+            sb.AppendLine($"{spaces}{nameof(IsEntityRef)} = {IsEntityRef}");
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -595,6 +601,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintBriefObjListProp(n, nameof(VarsInfoList), VarsInfoList);
             sb.PrintBriefObjListProp(n, nameof(KnownInfoList), KnownInfoList);
+
+            sb.AppendLine($"{spaces}{nameof(IsKeyRef)} = {IsKeyRef}");
+            sb.AppendLine($"{spaces}{nameof(IsEntityRef)} = {IsEntityRef}");
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

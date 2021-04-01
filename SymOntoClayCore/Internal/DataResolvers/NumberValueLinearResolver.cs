@@ -37,6 +37,27 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
         }
 
+        private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
+
+        public bool CanBeResolved(Value source)
+        {
+            switch (source.KindOfValue)
+            {
+                case KindOfValue.NullValue:
+                case KindOfValue.LogicalValue:
+                case KindOfValue.NumberValue:
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        public NumberValue Resolve(Value source, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Resolve(source, localCodeExecutionContext, _defaultOptions);
+        }
+
         public NumberValue Resolve(Value source, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG

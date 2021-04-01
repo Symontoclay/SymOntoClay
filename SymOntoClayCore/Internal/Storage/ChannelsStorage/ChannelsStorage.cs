@@ -57,7 +57,7 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
         /// <inheritdoc/>
         public void Append(Channel channel)
         {
-            AnnotatedItemHelper.CheckAndFillHolder(channel, _realStorageContext.MainStorageContext.CommonNamesStorage);
+            AnnotatedItemHelper.CheckAndFillUpHolder(channel, _realStorageContext.MainStorageContext.CommonNamesStorage);
 
             lock(_lockObj)
             {
@@ -65,18 +65,22 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
                 //Log($"channel = {channel}");
 #endif
 
+                channel.CheckDirty();
+
                 var name = channel.Name;
-               
+
+                var holder = channel.Holder;
+
                 if (_nonIndexedInfo.ContainsKey(name))
                 {
                     var dict = _nonIndexedInfo[name];
 
-                    if (dict.ContainsKey(channel.Holder))
+                    if (dict.ContainsKey(holder))
                     {
-                        var targetList = dict[channel.Holder];
+                        var targetList = dict[holder];
 
 #if DEBUG
-                        Log($"dict[superName].Count = {dict[channel.Holder].Count}");
+                        Log($"dict[holder].Count = {dict[holder].Count}");
                         Log($"targetList = {targetList.WriteListToString()}");
 #endif
                         var targetLongConditionalHashCode = channel.GetLongConditionalHashCode();
@@ -100,12 +104,12 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
                     }
                     else
                     {
-                        dict[channel.Holder] = new List<Channel>() { channel };
+                        dict[holder] = new List<Channel>() { channel };
                     }
                 }
                 else
                 {
-                    _nonIndexedInfo[name] = new Dictionary<StrongIdentifierValue, List<Channel>>() { { channel.Holder, new List<Channel>() { channel} } };
+                    _nonIndexedInfo[name] = new Dictionary<StrongIdentifierValue, List<Channel>>() { { holder, new List<Channel>() { channel} } };
                 }              
             }
         }

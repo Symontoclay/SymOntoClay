@@ -39,6 +39,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public InlineTrigger InlineTrigger { get; set; }
         public Operator Operator { get; set; }
         public Channel Channel { get; set; }
+        public LinguisticVariable LinguisticVariable { get; set; }
 
         public CodeFile CodeFile { get; set; }
         public CodeEntity ParentCodeEntity { get; set; }
@@ -82,6 +83,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.InlineTrigger = InlineTrigger?.Clone(context);
             result.Operator = Operator?.Clone(context);
             result.Channel = Channel?.Clone(context);
+            result.LinguisticVariable = LinguisticVariable?.Clone(context);
 
             result.CodeFile = CodeFile;
             result.ParentCodeEntity = ParentCodeEntity;
@@ -135,6 +137,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjProp(n, nameof(InlineTrigger), InlineTrigger);
             sb.PrintObjProp(n, nameof(Operator), Operator);
             sb.PrintObjProp(n, nameof(Channel), Channel);
+            sb.PrintObjProp(n, nameof(LinguisticVariable), LinguisticVariable);
 
             sb.PrintBriefObjProp(n, nameof(CodeFile), CodeFile);
             sb.PrintBriefObjProp(n, nameof(ParentCodeEntity), ParentCodeEntity);
@@ -158,6 +161,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjProp(n, nameof(InlineTrigger), InlineTrigger);
             sb.PrintShortObjProp(n, nameof(Operator), Operator);
             sb.PrintShortObjProp(n, nameof(Channel), Channel);
+            sb.PrintShortObjProp(n, nameof(LinguisticVariable), LinguisticVariable);
 
             sb.PrintBriefObjProp(n, nameof(CodeFile), CodeFile);
             sb.PrintBriefObjProp(n, nameof(ParentCodeEntity), ParentCodeEntity);

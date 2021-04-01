@@ -36,6 +36,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         InlineTrigger,
         Operator,
         Channel,
-        RuleOrFact
+        RuleOrFact,
+        LinguisticVariable
     }
 }

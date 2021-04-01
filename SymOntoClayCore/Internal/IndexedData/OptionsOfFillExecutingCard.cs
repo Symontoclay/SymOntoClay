@@ -34,7 +34,6 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public bool EntityIdOnly { get; set; }
         public bool UseAccessPolicy { get; set; }
         public bool UseInheritance { get; set; }
-        public InheritanceResolver InheritanceResolver { get; set; }
         public LocalCodeExecutionContext LocalCodeExecutionContext { get; set; }
 
 #if DEBUG

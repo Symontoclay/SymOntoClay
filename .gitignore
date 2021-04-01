@@ -14,3 +14,5 @@ TestSandbox/bin/
 TestSandbox/obj/
 SymOntoClayCLI/bin/
 SymOntoClayCLI/obj/
+/LinguisticVariableViewer/obj
+/LinguisticVariableViewer/bin

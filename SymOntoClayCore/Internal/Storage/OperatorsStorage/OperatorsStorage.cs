@@ -62,7 +62,7 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStorage
             //Log($"op = {op}");
 #endif
 
-            AnnotatedItemHelper.CheckAndFillHolder(op, _realStorageContext.MainStorageContext.CommonNamesStorage);
+            AnnotatedItemHelper.CheckAndFillUpHolder(op, _realStorageContext.MainStorageContext.CommonNamesStorage);
 
             lock(_lockObj)
             {

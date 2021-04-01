@@ -42,6 +42,12 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
         private readonly IEngineContext _engineContext;
 
         /// <inheritdoc/>
+        public ulong GetLongHashCode()
+        {
+            return (ulong)Math.Abs(GetHashCode());
+        }
+
+        /// <inheritdoc/>
         public Value Read()
         {
             var result = new NullValue();

@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestSandbox", "TestSandbox\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClayUnity3DAssetTest", "SymOntoClayUnity3DAssetTest\SymOntoClayUnity3DAssetTest.csproj", "{B06FFD0A-28C4-4620-A356-B1ABFBC9C1FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymOntoClayCLI", "SymOntoClayCLI\SymOntoClayCLI.csproj", "{DA2C3C6E-36FC-4A97-A160-5BFBB95255B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClayCLI", "SymOntoClayCLI\SymOntoClayCLI.csproj", "{DA2C3C6E-36FC-4A97-A160-5BFBB95255B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinguisticVariableViewer", "LinguisticVariableViewer\LinguisticVariableViewer.csproj", "{F8076591-39A3-4EFF-953D-33935506EE01}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{DA2C3C6E-36FC-4A97-A160-5BFBB95255B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA2C3C6E-36FC-4A97-A160-5BFBB95255B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA2C3C6E-36FC-4A97-A160-5BFBB95255B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8076591-39A3-4EFF-953D-33935506EE01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8076591-39A3-4EFF-953D-33935506EE01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8076591-39A3-4EFF-953D-33935506EE01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8076591-39A3-4EFF-953D-33935506EE01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

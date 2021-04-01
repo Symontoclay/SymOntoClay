@@ -1,5 +1,11 @@
-﻿using System;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic;
+using SymOntoClay.CoreHelper.DebugHelpers;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
@@ -33,12 +39,141 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
         /// <inheritdoc/>
         public IStorage Storage => _realStorageContext.Storage;
 
+        private Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<FuzzyLogicNonNumericValue>>> _valuesDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<FuzzyLogicNonNumericValue>>>();
 
 #if DEBUG
         private void CreateTstItems()
         {
-            Log("Do");
+            Log("Begin");
+
+            var linguisticVariable = new LinguisticVariable();
+
+            linguisticVariable.Name = NameHelper.CreateName("age");
+
+            var teenagerFuzzyValue = new FuzzyLogicNonNumericValue();
+            teenagerFuzzyValue.Name = NameHelper.CreateName("teenager");
+            teenagerFuzzyValue.Handler = new TrapezoidFuzzyLogicMemberFunctionHandler(10, 12, 17, 20);
+            teenagerFuzzyValue.Parent = linguisticVariable;
+
+            linguisticVariable.Values.Add(teenagerFuzzyValue);
+
+            Log($"linguisticVaiable = {linguisticVariable}");
+
+            Append(linguisticVariable);
+
+            Log("End");
         }
 #endif
+
+        /// <inheritdoc/>
+        public void Append(LinguisticVariable linguisticVariable)
+        {
+            AnnotatedItemHelper.CheckAndFillUpHolder(linguisticVariable, _realStorageContext.MainStorageContext.CommonNamesStorage);
+
+            lock (_lockObj)
+            {
+#if DEBUG
+                Log($"linguisticVariable = {linguisticVariable}");
+#endif
+
+                linguisticVariable.CheckDirty();
+
+                var holder = linguisticVariable.Holder;
+
+                foreach (var fuzzyValue in linguisticVariable.Values)
+                {
+                    NAppendValue(fuzzyValue, holder);
+                }
+            }
+        }
+
+        private void NAppendValue(FuzzyLogicNonNumericValue value, StrongIdentifierValue holder)
+        {
+#if DEBUG
+            Log($"value = {value}");
+#endif
+
+            var name = value.Name;
+
+            if (_valuesDict.ContainsKey(name))
+            {
+                var dict = _valuesDict[name];
+
+                if (dict.ContainsKey(holder))
+                {
+                    var targetList = dict[holder];
+
+#if DEBUG
+                    Log($"dict[holder].Count = {dict[holder].Count}");
+                    Log($"targetList = {targetList.WriteListToString()}");
+#endif
+                    var targetLongConditionalHashCode = value.GetLongConditionalHashCode();
+
+#if DEBUG
+                    Log($"targetLongConditionalHashCode = {targetLongConditionalHashCode}");
+#endif
+
+                    var itemsWithTheSameLongConditionalHashCodeList = targetList.Where(p => p.GetLongConditionalHashCode() == targetLongConditionalHashCode).ToList();
+
+#if DEBUG
+                    Log($"itemsWithTheSameLongConditionalHashCodeList = {itemsWithTheSameLongConditionalHashCodeList.WriteListToString()}");
+#endif
+
+                    foreach (var itemWithTheSameLongConditionalHashCode in itemsWithTheSameLongConditionalHashCodeList)
+                    {
+                        targetList.Remove(itemWithTheSameLongConditionalHashCode);
+                    }
+
+                    targetList.Add(value);
+                }
+                else
+                {
+                    dict[holder] = new List<FuzzyLogicNonNumericValue>() { value };
+                }                    
+            }
+            else
+            {
+                var dict = new Dictionary<StrongIdentifierValue, List<FuzzyLogicNonNumericValue>>();
+                dict[holder] = new List<FuzzyLogicNonNumericValue>() { value };
+                _valuesDict[name] = dict;
+            }
+        }
+
+        /// <inheritdoc/>
+        public IList<WeightedInheritanceResultItem<FuzzyLogicNonNumericValue>> GetNonNumericValuesDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+            lock (_lockObj)
+            {
+#if DEBUG
+                Log($"name = {name}");
+#endif
+
+                if(_valuesDict.ContainsKey(name))
+                {
+                    var dict = _valuesDict[name];
+
+                    var result = new List<WeightedInheritanceResultItem<FuzzyLogicNonNumericValue>>();
+
+                    foreach (var weightedInheritanceItem in weightedInheritanceItems)
+                    {
+                        var targetHolder = weightedInheritanceItem.SuperName;
+
+                        if (dict.ContainsKey(targetHolder))
+                        {
+                            var targetList = dict[targetHolder];
+
+                            foreach (var targetVal in targetList)
+                            {
+                                result.Add(new WeightedInheritanceResultItem<FuzzyLogicNonNumericValue>(targetVal, weightedInheritanceItem));
+                            }
+                        }
+                    }
+
+                    return result;
+                }
+
+                return new List<WeightedInheritanceResultItem<FuzzyLogicNonNumericValue>>();
+            }            
+        }
     }
 }

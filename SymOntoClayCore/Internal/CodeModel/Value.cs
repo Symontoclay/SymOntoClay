@@ -74,6 +74,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsLogicalQueryOperationValue => false;
         public virtual LogicalQueryOperationValue AsLogicalQueryOperationValue => null;
 
+        public virtual bool IsFuzzyLogicNonNumericSequenceValue => false;
+        public virtual FuzzyLogicNonNumericSequenceValue AsFuzzyLogicNonNumericSequenceValue => null;
+
         public abstract object GetSystemValue();
 
         /// <summary>

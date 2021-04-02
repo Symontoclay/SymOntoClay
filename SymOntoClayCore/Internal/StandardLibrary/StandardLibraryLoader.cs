@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.StandardLibrary.Channels;
+using SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic;
 using SymOntoClay.Core.Internal.StandardLibrary.Operators;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
         {
             RegOperators();
             RegChannels();
+            RegFuzzyLogicOperators();
         }
 
         private void RegOperators()
@@ -109,6 +111,18 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
             };
 
             globalChannelsStorage.Append(channel);
+        }
+
+        private void RegFuzzyLogicOperators()
+        {
+            var globalStorage = _context.Storage.GlobalStorage;
+            var globalFuzzyLogicStorage = globalStorage.FuzzyLogicStorage;
+
+            var very = new FuzzyLogicOperator();
+            very.Name = NameHelper.CreateName("very");
+            very.Handler = new VeryFuzzyLogicOperatorHandler();
+
+            globalFuzzyLogicStorage.AppendDefaultOperator(very);
         }
     }
 }

@@ -47,6 +47,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public LogicalQueryNode Right { get; set; }
         public IList<LogicalQueryNode> ParamsList { get; set; }
         public Value Value { get; set; }
+        public FuzzyLogicNonNumericSequenceValue FuzzyLogicNonNumericSequenceValue { get; set; }
         public bool IsQuestion { get; set; }
 
         public int CountParams { get; set; }
@@ -137,6 +138,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 case KindOfLogicalQueryNode.EntityRef:
                     break;
 
+                case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
+                    FuzzyLogicNonNumericSequenceValue.CheckDirty();
+                    break;
+
                 case KindOfLogicalQueryNode.Relation:
                     Name.CheckDirty();
                     if (Name.KindOfName == KindOfName.QuestionVar)
@@ -171,7 +176,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
 #if DEBUG
                 //_gbcLogger.Info($"param = {param}");
-#endif
+#endif               
 
                 var kindOfParam = param.Kind;
                 switch (kindOfParam)
@@ -250,6 +255,22 @@ namespace SymOntoClay.Core.Internal.CodeModel
                             knownInfo.Expression = param;
                             knownInfo.Position = i;
                             knownInfo.Value = param.Value;
+                            knownInfoList.Add(knownInfo);
+
+#if DEBUG
+                            //_gbcLogger.Info($"knownInfo = {knownInfo}");
+#endif
+                        }
+                        break;
+
+                    case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
+                        {
+                            //var originParam = param;
+                            var knownInfo = new QueryExecutingCardAboutKnownInfo();
+                            knownInfo.Kind = kindOfParam;
+                            knownInfo.Expression = param;
+                            knownInfo.Position = i;
+                            knownInfo.Value = param.FuzzyLogicNonNumericSequenceValue;
                             knownInfoList.Add(knownInfo);
 
 #if DEBUG
@@ -337,6 +358,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 case KindOfLogicalQueryNode.EntityRef:
                     break;
 
+                case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
+                    usedKeysList.Add(FuzzyLogicNonNumericSequenceValue.NonNumericValue);
+                    break;
+
                 case KindOfLogicalQueryNode.Relation:
                     usedKeysList.Add(Name);
 
@@ -393,7 +418,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     return base.CalculateLongHashCode() ^ Name.GetLongHashCode();
 
                 case KindOfLogicalQueryNode.Value:
-                    return base.CalculateLongHashCode() ^ Value.GetLongConditionalHashCode();
+                    return base.CalculateLongHashCode() ^ Value.GetLongHashCode();
+
+                case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
+                    return base.CalculateLongHashCode() ^ FuzzyLogicNonNumericSequenceValue.GetLongHashCode();
 
                 case KindOfLogicalQueryNode.StubParam:
                     return LongHashCodeWeights.StubWeight ^ base.CalculateLongHashCode();
@@ -465,6 +493,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.Right = Right?.Clone(context);
             result.ParamsList = ParamsList?.Select(p => p.Clone(context)).ToList();
             result.Value = Value?.CloneValue(context);
+            result.FuzzyLogicNonNumericSequenceValue = FuzzyLogicNonNumericSequenceValue?.Clone(context);
             result.IsQuestion = IsQuestion;
 
             result.AppendAnnotations(this, context);
@@ -490,6 +519,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
 
             Value?.DiscoverAllAnnotations(result);
+            FuzzyLogicNonNumericSequenceValue?.DiscoverAllAnnotations(result);
         }
 
         public void DiscoverAllInheritanceRelations(IList<LogicalQueryNode> result)
@@ -537,6 +567,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjListProp(n, nameof(ParamsList), ParamsList);
             
             sb.PrintObjProp(n, nameof(Value), Value);
+            sb.PrintObjProp(n, nameof(FuzzyLogicNonNumericSequenceValue), FuzzyLogicNonNumericSequenceValue);
 
             sb.AppendLine($"{spaces}{nameof(IsQuestion)} = {IsQuestion}");
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
@@ -566,6 +597,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjListProp(n, nameof(ParamsList), ParamsList);
 
             sb.PrintShortObjProp(n, nameof(Value), Value);
+            sb.PrintShortObjProp(n, nameof(FuzzyLogicNonNumericSequenceValue), FuzzyLogicNonNumericSequenceValue);
 
             sb.AppendLine($"{spaces}{nameof(IsQuestion)} = {IsQuestion}");
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
@@ -595,6 +627,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintExistingList(n, nameof(ParamsList), ParamsList);
 
             sb.PrintBriefObjProp(n, nameof(Value), Value);
+            sb.PrintBriefObjProp(n, nameof(FuzzyLogicNonNumericSequenceValue), FuzzyLogicNonNumericSequenceValue);
 
             sb.AppendLine($"{spaces}{nameof(IsQuestion)} = {IsQuestion}");
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");

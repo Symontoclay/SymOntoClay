@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -57,9 +58,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public LogicalValue Inverse()
         {
-            var newValue = 1 - SystemValue;
+            if(SystemValue.HasValue)
+            {
+                var newValue = SystemFuzzyLogicOperators.Not(SystemValue.Value);
 
-            return new LogicalValue(newValue);
+                return new LogicalValue((float)newValue);
+            }
+
+            return new LogicalValue(null);
         }
 
         /// <inheritdoc/>

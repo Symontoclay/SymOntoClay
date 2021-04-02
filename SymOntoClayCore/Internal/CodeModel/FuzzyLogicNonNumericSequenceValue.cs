@@ -1,7 +1,9 @@
 ﻿using NLog;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
@@ -18,11 +20,26 @@ namespace SymOntoClay.Core.Internal.CodeModel
             _gbcLogger.Info($"identifier = {identifier}");
 #endif
 
-            throw new NotImplementedException();
+            if(NonNumericValue == null)
+            {
+                NonNumericValue = identifier;
+            }
+            else
+            {
+                _operators.Add(NonNumericValue);
+                NonNumericValue = identifier;
+            }
         }
 
         public StrongIdentifierValue NonNumericValue { get; private set; }
-        public IEnumerable<StrongIdentifierValue> Operators { get; private set; } = new List<StrongIdentifierValue>();
+        public IEnumerable<StrongIdentifierValue> Operators => _operators;
+
+        private List<StrongIdentifierValue> _operators = new List<StrongIdentifierValue>();
+        private string _debugView = string.Empty;
+
+        public string DebugView => _debugView;
+
+        private string _systemValue = string.Empty;
 
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.FuzzyLogicNonNumericSequenceValue;
@@ -36,22 +53,44 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
-            throw new NotImplementedException();
-            //return NormalizedNameValue;
+            return _systemValue;
         }
 
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            throw new NotImplementedException();
-            //return NormalizedNameValue.GetHashCode();
+            return _systemValue.GetHashCode();
         }
 
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode()
         {
-            throw new NotImplementedException();
-            //return base.CalculateLongHashCode() ^ (ulong)NormalizedNameValue.GetHashCode();
+            var result = base.CalculateLongHashCode();
+
+            var systemValuesList = new List<string>();
+            var debugViewsList = new List<string>();
+
+            if (!_operators.IsNullOrEmpty())
+            {
+                foreach(var op in _operators)
+                {
+                    result ^= op.GetLongHashCode();
+                    systemValuesList.Add(op.NormalizedNameValue);
+                    debugViewsList.Add(op.NameValue);
+                }
+            }
+
+            if(NonNumericValue != null)
+            {
+                result ^= NonNumericValue.GetLongHashCode();
+                systemValuesList.Add(NonNumericValue.NormalizedNameValue);
+                debugViewsList.Add(NonNumericValue.NameValue);
+            }
+
+            _systemValue = string.Join(" ", systemValuesList);
+            _debugView = string.Join(" ", debugViewsList);
+
+            return result;
         }
 
         /// <inheritdoc/>
@@ -64,7 +103,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// Clones the instance and returns cloned instance.
         /// </summary>
         /// <returns>Cloned instance.</returns>
-        public StrongIdentifierValue Clone()
+        public FuzzyLogicNonNumericSequenceValue Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
@@ -75,17 +114,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// </summary>
         /// <param name="context">Special context for providing references continuity.</param>
         /// <returns>Cloned instance.</returns>
-        public StrongIdentifierValue Clone(Dictionary<object, object> context)
+        public FuzzyLogicNonNumericSequenceValue Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {
-                return (StrongIdentifierValue)context[this];
+                return (FuzzyLogicNonNumericSequenceValue)context[this];
             }
 
-            var result = new StrongIdentifierValue();
+            var result = new FuzzyLogicNonNumericSequenceValue();
             context[this] = result;
 
-            throw new NotImplementedException();
+            result.NonNumericValue = NonNumericValue?.Clone(context);
+            result._operators = _operators?.Select(p => p.Clone(context)).ToList();
 
             result.AppendAnnotations(this, context);
 
@@ -141,9 +181,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         protected override string PropertiesToDbgString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            //return $"{spaces}`{NameValue}`";
-
-            throw new NotImplementedException();
+            return $"{spaces}`{_debugView}`";
         }
     }
 }

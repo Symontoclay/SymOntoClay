@@ -1,28 +1,16 @@
-﻿//using System;
-using SymOntoClay.CoreHelper.CollectionsHelpers;
+﻿using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class LinguisticVariable : AnnotatedItem
+    public class FuzzyLogicOperator : AnnotatedItem
     {
         public StrongIdentifierValue Name { get; set; }
-
-        public List<FuzzyLogicNonNumericValue> Values { get; set; } = new List<FuzzyLogicNonNumericValue>();
-        public List<FuzzyLogicOperator> Operators { get; set; } = new List<FuzzyLogicOperator>();
-
-        public FuzzyLogicOperator GetOperator(StrongIdentifierValue name)
-        {
-            if(!Operators.Any())
-            {
-                return null;
-            }
-
-            return Operators.SingleOrDefault(p => p.Name == name);
-        }
+        public IFuzzyLogicOperatorHandler Handler { get; set; }
+        public LinguisticVariable Parent { get; set; }
 
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
@@ -34,7 +22,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// Clones the instance and returns cloned instance.
         /// </summary>
         /// <returns>Cloned instance.</returns>
-        public LinguisticVariable Clone()
+        public FuzzyLogicOperator Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
@@ -45,19 +33,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// </summary>
         /// <param name="context">Special context for providing references continuity.</param>
         /// <returns>Cloned instance.</returns>
-        public LinguisticVariable Clone(Dictionary<object, object> context)
+        public FuzzyLogicOperator Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {
-                return (LinguisticVariable)context[this];
+                return (FuzzyLogicOperator)context[this];
             }
 
-            var result = new LinguisticVariable();
+            var result = new FuzzyLogicOperator();
             context[this] = result;
 
             result.Name = Name.Clone(context);
-            result.Values = Values?.Select(p => p.Clone(context)).ToList();
-            result.Operators = Operators?.Select(p => p.Clone(context)).ToList();
+            result.Handler = Handler;
 
             result.AppendAnnotations(this, context);
 
@@ -70,22 +57,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             base.DiscoverAllAnnotations(result);
 
             Name?.DiscoverAllAnnotations(result);
-
-            if(!Values.IsNullOrEmpty())
-            {
-                foreach (var value in Values)
-                {
-                    value.DiscoverAllAnnotations(result);
-                }
-            }
-
-            if(!Operators.IsNullOrEmpty())
-            {
-                foreach(var op in Operators)
-                {
-                    op.DiscoverAllAnnotations(result);
-                }
-            }
         }
 
         /// <inheritdoc/>
@@ -95,8 +66,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintObjProp(n, nameof(Name), Name);
-            sb.PrintObjListProp(n, nameof(Values), Values);
-            sb.PrintObjListProp(n, nameof(Operators), Operators);
+            sb.PrintObjProp(n, nameof(Handler), Handler);
+            sb.PrintBriefObjProp(n, nameof(Parent), Parent);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -109,7 +80,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintShortObjProp(n, nameof(Name), Name);
-            sb.PrintShortObjListProp(n, nameof(Values), Values);
+            sb.PrintShortObjProp(n, nameof(Handler), Handler);
+            sb.PrintBriefObjProp(n, nameof(Parent), Parent);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -122,7 +94,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(Name), Name);
-            sb.PrintExistingList(n, nameof(Values), Values);
+            sb.PrintBriefObjProp(n, nameof(Handler), Handler);
+            sb.PrintExisting(n, nameof(Parent), Parent);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

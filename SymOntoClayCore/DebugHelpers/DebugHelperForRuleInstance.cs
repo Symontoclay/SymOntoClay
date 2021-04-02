@@ -116,7 +116,7 @@ namespace SymOntoClay.Core.DebugHelpers
 
         public static string ToString(LogicalQueryNode expr)
         {
-            switch(expr.Kind)
+            switch (expr.Kind)
             {
                 case KindOfLogicalQueryNode.BinaryOperator:
                     return BinaryOperatorToString(expr);
@@ -132,6 +132,9 @@ namespace SymOntoClay.Core.DebugHelpers
 
                 case KindOfLogicalQueryNode.Value:
                     return ValueToString(expr);
+
+                case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
+                    return FuzzyLogicNonNumericSequenceValueToString(expr.FuzzyLogicNonNumericSequenceValue);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(expr.Kind), expr.Kind, null);
@@ -285,6 +288,9 @@ namespace SymOntoClay.Core.DebugHelpers
                 case KindOfValue.NumberValue:
                     return NumberValueToString(value.AsNumberValue);
 
+                case KindOfValue.FuzzyLogicNonNumericSequenceValue:
+                    return FuzzyLogicNonNumericSequenceValueToString(value.AsFuzzyLogicNonNumericSequenceValue);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(value.KindOfValue), value.KindOfValue, null);
             }
@@ -331,6 +337,13 @@ namespace SymOntoClay.Core.DebugHelpers
                 sb.Append("NULL");
             }
 
+            sb.Append(AnnotatedItemToString(value));
+            return sb.ToString();
+        }
+
+        private static string FuzzyLogicNonNumericSequenceValueToString(FuzzyLogicNonNumericSequenceValue value)
+        {
+            var sb = new StringBuilder(value.DebugView);
             sb.Append(AnnotatedItemToString(value));
             return sb.ToString();
         }

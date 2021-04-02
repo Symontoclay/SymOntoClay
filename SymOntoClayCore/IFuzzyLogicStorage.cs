@@ -10,5 +10,7 @@ namespace SymOntoClay.Core
     {
         void Append(LinguisticVariable linguisticVariable);
         IList<WeightedInheritanceResultItem<FuzzyLogicNonNumericValue>> GetNonNumericValuesDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems);
+        void AppendDefaultOperator(FuzzyLogicOperator fuzzyLogicOperator);
+        FuzzyLogicOperator GetDefaultOperator(StrongIdentifierValue name);
     }
 }

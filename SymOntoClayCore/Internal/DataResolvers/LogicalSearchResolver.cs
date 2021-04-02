@@ -1126,6 +1126,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 break;
 
                             case KindOfLogicalQueryNode.Value:
+                            case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
                                 break;
 
                             default:
@@ -1624,6 +1625,42 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 return _fuzzyLogicResolver.Equals(conceptNode.Name, _numberValueLinearResolver.Resolve(value, localCodeExecutionContext), localCodeExecutionContext);
+            }
+
+            if ((expressionNode1.Kind == KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence && expressionNode2.Kind == KindOfLogicalQueryNode.Value) || (expressionNode2.Kind == KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence && expressionNode1.Kind == KindOfLogicalQueryNode.Value))
+            {
+#if DEBUG
+                _gbcLogger.Info("Try to check fuzzy logic!");
+#endif
+
+                LogicalQueryNode sequenceNode = null;
+                LogicalQueryNode valueNode = null;
+
+                if (expressionNode1.Kind == KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence)
+                {
+                    sequenceNode = expressionNode1;
+                    valueNode = expressionNode2;
+                }
+                else
+                {
+                    sequenceNode = expressionNode2;
+                    valueNode = expressionNode1;
+                }
+
+#if DEBUG
+                _gbcLogger.Info($"sequenceNode = {sequenceNode}");
+                _gbcLogger.Info($"valueNode = {valueNode}");
+#endif
+
+                var value = valueNode.Value;
+                var localCodeExecutionContext = options.LocalCodeExecutionContext;
+
+                if (value.GetSystemValue() == null || !_numberValueLinearResolver.CanBeResolved(value))
+                {
+                    return false;
+                }
+
+                return _fuzzyLogicResolver.Equals(sequenceNode.FuzzyLogicNonNumericSequenceValue, _numberValueLinearResolver.Resolve(value, localCodeExecutionContext), localCodeExecutionContext);
             }
 
             throw new NotImplementedException();

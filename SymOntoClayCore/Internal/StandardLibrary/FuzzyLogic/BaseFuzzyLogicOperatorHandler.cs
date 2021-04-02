@@ -8,10 +8,10 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
 {
-    public abstract class BaseFuzzyLogicMemberFunctionHandler: IFuzzyLogicMemberFunctionHandler
+    public abstract class BaseFuzzyLogicOperatorHandler : IFuzzyLogicOperatorHandler
     {
         /// <inheritdoc/>
-        public abstract KindOfFuzzyLogicMemberFunction Kind { get; }
+        public abstract KindOfFuzzyLogicOperatorFunction Kind { get; }
 
         /// <inheritdoc/>
         public double SystemCall(NumberValue x)

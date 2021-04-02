@@ -66,7 +66,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-            TstFuzzyLogicNonNumericSequenceValue();
+            //TstFuzzyLogicNonNumericSequenceValue();
             //TstCalculateTargetAnglesForRayScanner();
             //TstCopyFilesOnBuilding();
             //TstGetRootWorldSpaceDir();
@@ -109,9 +109,24 @@ namespace TestSandbox
 
             var sequence = new FuzzyLogicNonNumericSequenceValue();
 
-            //sequence.CheckDirty();
+            _logger.Log($"sequence = {sequence}");
+            _logger.Log($"sequence = {sequence.ToDbgString()}");
+
+            var very = NameHelper.CreateName("very");
+
+            sequence.AddIdentifier(very);
 
             _logger.Log($"sequence = {sequence}");
+            _logger.Log($"sequence = {sequence.ToDbgString()}");
+
+            var teenager = NameHelper.CreateName("teenager");
+
+            sequence.AddIdentifier(teenager);
+
+            sequence.CheckDirty();
+
+            _logger.Log($"sequence = {sequence}");
+            _logger.Log($"sequence = {sequence.ToDbgString()}");
 
             _logger.Log("Begin");
         }

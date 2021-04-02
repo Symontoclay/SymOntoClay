@@ -42,6 +42,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotLogicalVar,
             GotQuestionVar,
             GotConcept,
+            GotFuzzyLogicNonNumericSequenceItem,
             GotOperator
         }
 
@@ -85,6 +86,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private IntermediateAstNodePoint _nodePoint = new IntermediateAstNodePoint();
 
         private LogicalQueryNode _lastLogicalQueryNode;
+        private FuzzyLogicNonNumericSequenceValue _fuzzyLogicNonNumericSequenceValue;
 
         /// <inheritdoc/>
         protected override void OnFinish()
@@ -319,6 +321,31 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
+                case State.GotFuzzyLogicNonNumericSequenceItem:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                        case TokenKind.Identifier:
+                            {
+                                var value = NameHelper.CreateName(_currToken.Content);
+
+#if DEBUG
+                                //Log($"value = {value}");
+#endif
+
+                                _fuzzyLogicNonNumericSequenceValue.AddIdentifier(value);
+
+#if DEBUG
+                                //Log($"_fuzzyLogicNonNumericSequenceValue = {_fuzzyLogicNonNumericSequenceValue}");
+#endif
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
@@ -351,7 +378,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var value = NameHelper.CreateName(_currToken.Content);
 
 #if DEBUG
-            //Log($"value = {value}");
+            Log($"value = {value}");
 
             //if(_currToken.Content == "NULL")
             //{
@@ -362,12 +389,59 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var nextToken = _context.GetToken();
 
 #if DEBUG
-            //Log($"nextToken = {nextToken}");
+            Log($"nextToken = {nextToken}");
 #endif
 
             switch (value.KindOfName)
             {
                 case KindOfName.Concept:
+                    switch (nextToken.TokenKind)
+                    {
+                        case TokenKind.OpenRoundBracket:
+                            ProcessPredicate(value);
+                            break;
+
+                        case TokenKind.Comma:
+                        case TokenKind.CloseRoundBracket:
+                            _context.Recovery(nextToken);
+                            ProcessConceptOrQuestionVar(value);
+                            break;
+
+                        case TokenKind.Word:
+                        case TokenKind.Identifier:
+                            switch(_state)
+                            {
+                                case State.Init:
+                                    {
+                                        _context.Recovery(nextToken);
+
+                                        _fuzzyLogicNonNumericSequenceValue = new FuzzyLogicNonNumericSequenceValue();
+
+                                        var node = new LogicalQueryNode();
+                                        node.Kind = KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence;
+
+                                        node.FuzzyLogicNonNumericSequenceValue = _fuzzyLogicNonNumericSequenceValue;
+
+                                        _fuzzyLogicNonNumericSequenceValue.AddIdentifier(value);
+
+                                        var intermediateNode = new IntermediateAstNode(node);
+
+                                        AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+                                        _state = State.GotFuzzyLogicNonNumericSequenceItem;
+                                    }
+                                    break;
+
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
                 case KindOfName.QuestionVar:
                     switch(nextToken.TokenKind)
                     {
@@ -377,55 +451,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.Comma:
                         case TokenKind.CloseRoundBracket:
-                        {
-                                _context.Recovery(nextToken);
-
-                                var node = new LogicalQueryNode();
-
-                                var kindOfName = value.KindOfName;
-
-                                switch (kindOfName)
-                                {
-                                    case KindOfName.QuestionVar:
-                                        node.Kind = KindOfLogicalQueryNode.QuestionVar;
-                                        node.IsQuestion = true;
-                                        break;
-
-                                    case KindOfName.Concept:
-                                        node.Kind = KindOfLogicalQueryNode.Concept;
-                                        break;
-
-                                    case KindOfName.Entity:
-                                        node.Kind = KindOfLogicalQueryNode.Entity;
-                                        break;
-
-                                    case KindOfName.LogicalVar:
-                                        node.Kind = KindOfLogicalQueryNode.LogicalVar;
-                                        break;
-
-                                    default:
-                                        throw new UnexpectedTokenException(_currToken);
-                                }
-
-                                node.Name = value;
-
-#if DEBUG
-                                //Log($"node = {node}");
-#endif
-
-                                var intermediateNode = new IntermediateAstNode(node);
-
-                                AstNodesLinker.SetNode(intermediateNode, _nodePoint);
-
-                                if (value.KindOfName == KindOfName.QuestionVar)
-                                {
-                                    _state = State.GotQuestionVar;
-                                }
-                                else
-                                {
-                                    _state = State.GotConcept;
-                                }                                  
-                            }
+                            _context.Recovery(nextToken);
+                            ProcessConceptOrQuestionVar(value);
                             break;
 
                         default:
@@ -436,6 +463,62 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new UnexpectedTokenException(_currToken);
             }
+        }
+
+        private void ProcessConceptOrQuestionVar(StrongIdentifierValue value)
+        {
+            var node = CreateLogicalQueryNodeByStrongIdentifierValue(value);
+
+#if DEBUG
+            //Log($"node = {node}");
+#endif
+
+            var intermediateNode = new IntermediateAstNode(node);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+            if (value.KindOfName == KindOfName.QuestionVar)
+            {
+                _state = State.GotQuestionVar;
+            }
+            else
+            {
+                _state = State.GotConcept;
+            }
+        }
+
+        private LogicalQueryNode CreateLogicalQueryNodeByStrongIdentifierValue(StrongIdentifierValue value)
+        {
+            var node = new LogicalQueryNode();
+
+            var kindOfName = value.KindOfName;
+
+            switch (kindOfName)
+            {
+                case KindOfName.QuestionVar:
+                    node.Kind = KindOfLogicalQueryNode.QuestionVar;
+                    node.IsQuestion = true;
+                    break;
+
+                case KindOfName.Concept:
+                    node.Kind = KindOfLogicalQueryNode.Concept;
+                    break;
+
+                case KindOfName.Entity:
+                    node.Kind = KindOfLogicalQueryNode.Entity;
+                    break;
+
+                case KindOfName.LogicalVar:
+                    node.Kind = KindOfLogicalQueryNode.LogicalVar;
+                    break;
+
+                default:
+                    throw new UnexpectedTokenException(_currToken);
+            }
+
+            node.Name = value;
+
+            return node;
         }
 
         private void ProcessPredicate(StrongIdentifierValue name)

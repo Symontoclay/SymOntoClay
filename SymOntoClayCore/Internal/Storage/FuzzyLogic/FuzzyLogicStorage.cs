@@ -17,6 +17,7 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
         {
             _kind = kind;
             _realStorageContext = realStorageContext;
+            _commonNamesStorage = realStorageContext.MainStorageContext.CommonNamesStorage;
 
 #if DEBUG
             Log($"kind = {kind}");
@@ -35,11 +36,13 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
         public KindOfStorage Kind => _kind;
 
         private readonly RealStorageContext _realStorageContext;
+        private readonly ICommonNamesStorage _commonNamesStorage;
 
         /// <inheritdoc/>
         public IStorage Storage => _realStorageContext.Storage;
 
         private Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<FuzzyLogicNonNumericValue>>> _valuesDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<FuzzyLogicNonNumericValue>>>();
+        private Dictionary<StrongIdentifierValue, FuzzyLogicOperator> _defaultOperatorsDict = new Dictionary<StrongIdentifierValue, FuzzyLogicOperator>();
 
 #if DEBUG
         private void CreateTstItems()
@@ -68,7 +71,7 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
         /// <inheritdoc/>
         public void Append(LinguisticVariable linguisticVariable)
         {
-            AnnotatedItemHelper.CheckAndFillUpHolder(linguisticVariable, _realStorageContext.MainStorageContext.CommonNamesStorage);
+            AnnotatedItemHelper.CheckAndFillUpHolder(linguisticVariable, _commonNamesStorage);
 
             lock (_lockObj)
             {
@@ -82,6 +85,8 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
 
                 foreach (var fuzzyValue in linguisticVariable.Values)
                 {
+                    AnnotatedItemHelper.CheckAndFillUpHolder(fuzzyValue, _commonNamesStorage);
+
                     NAppendValue(fuzzyValue, holder);
                 }
             }
@@ -174,6 +179,31 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
 
                 return new List<WeightedInheritanceResultItem<FuzzyLogicNonNumericValue>>();
             }            
+        }
+
+        /// <inheritdoc/>
+        public void AppendDefaultOperator(FuzzyLogicOperator fuzzyLogicOperator)
+        {
+            AnnotatedItemHelper.CheckAndFillUpHolder(fuzzyLogicOperator, _commonNamesStorage);
+
+            lock (_lockObj)
+            {
+                _defaultOperatorsDict[fuzzyLogicOperator.Name] = fuzzyLogicOperator;
+            }
+        }
+
+        /// <inheritdoc/>
+        public FuzzyLogicOperator GetDefaultOperator(StrongIdentifierValue name)
+        {
+            lock (_lockObj)
+            {
+                if(_defaultOperatorsDict.ContainsKey(name))
+                {
+                    return _defaultOperatorsDict[name];
+                }
+
+                return null;
+            }
         }
     }
 }

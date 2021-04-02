@@ -43,6 +43,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         UnaryOperator,
         StubParam,
         Value,
-        Group
+        Group,
+        FuzzyLogicNonNumericSequence
     }
 }

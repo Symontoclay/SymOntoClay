@@ -182,6 +182,9 @@ namespace SymOntoClay.Core.Internal.Convertors
                 case KindOfLogicalQueryNode.Value:
                     return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext);
 
+                case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
+                    return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, null);
             }
@@ -233,6 +236,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             }
 
             result.Value = source.Value;
+            result.FuzzyLogicNonNumericSequenceValue = source.FuzzyLogicNonNumericSequenceValue;
             result.IsQuestion = source.IsQuestion;
 
             FillAnnotationsModalitiesAndSections(source, result, convertingContext);

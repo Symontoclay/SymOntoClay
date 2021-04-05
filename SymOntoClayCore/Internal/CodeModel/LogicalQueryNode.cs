@@ -182,126 +182,27 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 switch (kindOfParam)
                 {
                     case KindOfLogicalQueryNode.Concept:
-                        {
-                            var knownInfo = new QueryExecutingCardAboutKnownInfo();
-                            knownInfo.Kind = kindOfParam;
-                            knownInfo.Expression = param;
-                            knownInfo.Position = i;
-                            knownInfo.Name = param.Name;
-                            knownInfoList.Add(knownInfo);
-                        }
-                        break;
-
                     case KindOfLogicalQueryNode.Entity:
-                        {
-                            var knownInfo = new QueryExecutingCardAboutKnownInfo();
-                            knownInfo.Kind = kindOfParam;
-                            knownInfo.Expression = param;
-                            knownInfo.Position = i;
-                            knownInfo.Name = param.Name;
-                            knownInfoList.Add(knownInfo);
-                        }
-                        break;
-
-                    //case KindOfLogicalQueryNode.EntityRef:
-                    //    {
-                    //        var originParam = param.AsEntityRef;
-                    //        var knownInfo = new QueryExecutingCardAboutKnownInfo();
-                    //        knownInfo.Kind = kindOfParam;
-                    //        knownInfo.Expression = param;
-                    //        knownInfo.Position = i;
-                    //        knownInfo.Key = originParam.Key;
-                    //        knownInfoList.Add(knownInfo);
-                    //    }
-                    //    break;
-
-                    //case KindOfLogicalQueryNode.EntityCondition:
-                    //    {
-                    //        var originParam = param.AsEntityCondition;
-                    //        var knownInfo = new QueryExecutingCardAboutKnownInfo();
-                    //        knownInfo.Kind = kindOfParam;
-                    //        knownInfo.Expression = param;
-                    //        knownInfo.Position = i;
-                    //        knownInfo.Key = originParam.Key;
-                    //        knownInfoList.Add(knownInfo);
-                    //    }
-                    //    break;
-
-                    case KindOfLogicalQueryNode.LogicalVar:
-                        {
-                            //var originParam = param;
-                            var varInfo = new QueryExecutingCardAboutVar();
-                            varInfo.NameOfVar = param.Name;
-                            varInfo.Position = i;
-                            varsInfoList.Add(varInfo);
-                        }
-                        break;
-
-                    case KindOfLogicalQueryNode.QuestionVar:
-                        {
-                            //var originParam = param;
-                            var varInfo = new QueryExecutingCardAboutVar();
-                            varInfo.NameOfVar = param.Name;
-                            varInfo.Position = i;
-                            varsInfoList.Add(varInfo);
-                        }
-                        break;
-
                     case KindOfLogicalQueryNode.Value:
-                        {
-                            //var originParam = param;
-                            var knownInfo = new QueryExecutingCardAboutKnownInfo();
-                            knownInfo.Kind = kindOfParam;
-                            knownInfo.Expression = param;
-                            knownInfo.Position = i;
-                            knownInfo.Value = param.Value;
-                            knownInfoList.Add(knownInfo);
-
-#if DEBUG
-                            //_gbcLogger.Info($"knownInfo = {knownInfo}");
-#endif
-                        }
-                        break;
-
                     case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
                         {
-                            //var originParam = param;
                             var knownInfo = new QueryExecutingCardAboutKnownInfo();
                             knownInfo.Kind = kindOfParam;
                             knownInfo.Expression = param;
                             knownInfo.Position = i;
-                            knownInfo.Value = param.FuzzyLogicNonNumericSequenceValue;
                             knownInfoList.Add(knownInfo);
-
-#if DEBUG
-                            //_gbcLogger.Info($"knownInfo = {knownInfo}");
-#endif
                         }
                         break;
 
-                    //case KindOfLogicalQueryNode.FuzzyLogicValue:
-                    //    {
-                    //        var originParam = param.AsFuzzyLogicValue;
-                    //        var knownInfo = new QueryExecutingCardAboutKnownInfo();
-                    //        knownInfo.Kind = kindOfParam;
-                    //        knownInfo.Expression = param;
-                    //        knownInfo.Position = i;
-                    //        knownInfo.Value = originParam.Value;
-                    //        knownInfoList.Add(knownInfo);
-                    //    }
-                    //    break;
-
-                    //case KindOfLogicalQueryNode.Fact:
-                    //    {
-                    //        var originParam = param.AsFact;
-                    //        var knownInfo = new QueryExecutingCardAboutKnownInfo();
-                    //        knownInfo.Kind = kindOfParam;
-                    //        knownInfo.Expression = param;
-                    //        knownInfo.Position = i;
-                    //        knownInfo.Key = originParam.Key;
-                    //        knownInfoList.Add(knownInfo);
-                    //    }
-                    //    break;
+                    case KindOfLogicalQueryNode.LogicalVar:
+                    case KindOfLogicalQueryNode.QuestionVar:
+                        {
+                            var varInfo = new QueryExecutingCardAboutVar();
+                            varInfo.NameOfVar = param.Name;
+                            varInfo.Position = i;
+                            varsInfoList.Add(varInfo);
+                        }
+                        break;
 
                     default:
                         throw new ArgumentOutOfRangeException(nameof(kindOfParam), kindOfParam, null);

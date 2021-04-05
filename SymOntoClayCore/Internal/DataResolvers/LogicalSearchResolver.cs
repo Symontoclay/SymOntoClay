@@ -1122,7 +1122,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         {
                             case KindOfLogicalQueryNode.Concept:
                             case KindOfLogicalQueryNode.Entity:
-                                additionalKeys_1 = inheritanceResolver.GetSuperClassesKeysList(knownInfo.Name, options.LocalCodeExecutionContext);
+                                additionalKeys_1 = inheritanceResolver.GetSuperClassesKeysList(knownInfo.Expression.Name, options.LocalCodeExecutionContext);
                                 break;
 
                             case KindOfLogicalQueryNode.Value:

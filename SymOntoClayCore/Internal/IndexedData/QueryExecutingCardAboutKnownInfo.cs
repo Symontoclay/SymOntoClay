@@ -31,8 +31,6 @@ namespace SymOntoClay.Core.Internal.IndexedData
     public class QueryExecutingCardAboutKnownInfo : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public KindOfLogicalQueryNode Kind { get; set; }
-        public StrongIdentifierValue Name { get; set; }
-        public Value Value { get; set; }
         public StrongIdentifierValue NameOfVar { get; set; }
         public int? Position { get; set; }
         public LogicalQueryNode Expression { get; set; }
@@ -41,8 +39,6 @@ namespace SymOntoClay.Core.Internal.IndexedData
         {
             var result = new QueryExecutingCardAboutKnownInfo();
             result.Kind = Kind;
-            result.Name = Name;
-            result.Value = Value;
             result.NameOfVar = NameOfVar;
             result.Position = Position;
             result.Expression = Expression;
@@ -68,9 +64,6 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
-            sb.PrintObjProp(n, nameof(Name), Name);
-
-            sb.PrintObjProp(n, nameof(Value), Value);
 
             sb.PrintObjProp(n, nameof(NameOfVar), NameOfVar);
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
@@ -100,10 +93,6 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
            
-            sb.PrintShortObjProp(n, nameof(Name), Name);
-
-            sb.PrintShortObjProp(n, nameof(Value), Value);
-
             sb.PrintShortObjProp(n, nameof(NameOfVar), NameOfVar);
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
 
@@ -131,9 +120,6 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
-            sb.PrintBriefObjProp(n, nameof(Name), Name);
-
-            sb.PrintBriefObjProp(n, nameof(Value), Value);
 
             sb.PrintBriefObjProp(n, nameof(NameOfVar), NameOfVar);
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");

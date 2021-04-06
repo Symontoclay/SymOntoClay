@@ -268,23 +268,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            options.Logger.Log($"processedExpr.Name = {processedExpr.Name}");
-            options.Logger.Log($"processedExpr.IsQuestion = {processedExpr.IsQuestion}");
-            options.Logger.Log($"processedExpr.Params.Count = {processedExpr.ParamsList.Count}");
-            foreach (var param in processedExpr.ParamsList)
-            {
-                options.Logger.Log($"param = {param}");
-            }
-            options.Logger.Log($"processedExpr.KnownInfoList.Count = {processedExpr.KnownInfoList.Count}");
-            foreach (var knownInfo in processedExpr.KnownInfoList)
-            {
-                options.Logger.Log($"knownInfo = {knownInfo}");
-            }
-            options.Logger.Log($"VarsInfoList.Count = {processedExpr.VarsInfoList.Count}");
-            foreach (var varInfo in processedExpr.VarsInfoList)
-            {
-                options.Logger.Log($"varInfo = {varInfo}");
-            }
+            //options.Logger.Log($"processedExpr.Name = {processedExpr.Name}");
+            //options.Logger.Log($"processedExpr.IsQuestion = {processedExpr.IsQuestion}");
+            //options.Logger.Log($"processedExpr.Params.Count = {processedExpr.ParamsList.Count}");
+            //foreach (var param in processedExpr.ParamsList)
+            //{
+            //    options.Logger.Log($"param = {param}");
+            //}
+            //options.Logger.Log($"processedExpr.KnownInfoList.Count = {processedExpr.KnownInfoList.Count}");
+            //foreach (var knownInfo in processedExpr.KnownInfoList)
+            //{
+            //    options.Logger.Log($"knownInfo = {knownInfo}");
+            //}
+            //options.Logger.Log($"VarsInfoList.Count = {processedExpr.VarsInfoList.Count}");
+            //foreach (var varInfo in processedExpr.VarsInfoList)
+            //{
+            //    options.Logger.Log($"varInfo = {varInfo}");
+            //}
             //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
             //options.Logger.Log($"queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString() = {queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString()}");
             //options.Logger.Log($"queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString()}");
@@ -1070,33 +1070,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
         }
 
-        /*
-                    var queryExecutingCardForExpression = new QueryExecutingCardForIndexedPersistLogicalData();
-
-            FillExecutingCard(processedExpr.Expression, queryExecutingCardForExpression, dataSource, options);
-
-            queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForExpression.UsedKeysList);
-
-#if DEBUG
-            //options.Logger.Log($"%%%%%%%% queryExecutingCardForExpression = {queryExecutingCardForExpression}");
-            //if (queryExecutingCardForExpression.UsedKeysList.Any())
-            //{
-            //    throw new NotImplementedException();
-            //}
-#endif
-
-            queryExecutingCard.ResultsOfQueryToRelationList = queryExecutingCardForExpression.ResultsOfQueryToRelationList;
-            queryExecutingCard.IsSuccess = queryExecutingCardForExpression.IsSuccess; 
-        */
-
         private void FillExecutingCardForCallingFromRelationForFact(BaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
-            foreach(var item in queryExecutingCard.KnownInfoList)
-            {
-                options.Logger.Log($"item = {item}");
-            }
+            //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //foreach(var item in queryExecutingCard.KnownInfoList)
+            //{
+            //    options.Logger.Log($"item = {item}");
+            //}
 #endif
 
             var usedKeysList = queryExecutingCard.UsedKeysList;
@@ -1107,7 +1088,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var targetRelationsList = processedExpr.RelationsDict[queryExecutingCard.TargetRelation];
 
 #if DEBUG
-            options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");
+            //options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");
 #endif
 
             foreach (var targetRelation in targetRelationsList)
@@ -1118,9 +1099,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
 #if DEBUG
-                options.Logger.Log($"targetRelation = {targetRelation}");
-                options.Logger.Log($"targetRelation = {targetRelation.GetHumanizeDbgString()}");
-                options.Logger.Log($"targetRelation.Name = {targetRelation.Name}");
+                //options.Logger.Log($"targetRelation = {targetRelation}");
+                //options.Logger.Log($"targetRelation = {targetRelation.GetHumanizeDbgString()}");
+                //options.Logger.Log($"targetRelation.Name = {targetRelation.Name}");
 #endif
 
                 usedKeysList.Add(targetRelation.Name);
@@ -1140,7 +1121,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 foreach (var knownInfo in queryExecutingCard.KnownInfoList)
                 {
 #if DEBUG
-                    options.Logger.Log($"knownInfo = {knownInfo}");
+                    //options.Logger.Log($"knownInfo = {knownInfo}");
 #endif
 
                     List<StrongIdentifierValue> additionalKeys_1 = null;
@@ -1207,7 +1188,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         var resultOfComparison = CompareKnownInfoAndExpressionNode(knownInfo, paramOfTargetRelation, additionalKeys_1, additionalKeys_2, options, comparisonQueryExecutingCard);
 
 #if DEBUG
-                        options.Logger.Log($"resultOfComparison = {resultOfComparison}");
+                        //options.Logger.Log($"resultOfComparison = {resultOfComparison}");
 #endif
 
                         if (!resultOfComparison)
@@ -1224,8 +1205,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
 #if DEBUG
-                options.Logger.Log($"isFit = {isFit}");
-                options.Logger.Log($"comparisonQueryExecutingCard = {comparisonQueryExecutingCard}");
+                //options.Logger.Log($"isFit = {isFit}");
+                //options.Logger.Log($"comparisonQueryExecutingCard = {comparisonQueryExecutingCard}");
 #endif
 
                 if (isFit)
@@ -1313,7 +1294,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     queryExecutingCard.ResultsOfQueryToRelationList.AddRange(comparisonQueryExecutingCard.ResultsOfQueryToRelationList);
 
 #if DEBUG
-                    options.Logger.Log($"^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& queryExecutingCard = {queryExecutingCard}");
+                    //options.Logger.Log($"^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& queryExecutingCard = {queryExecutingCard}");
 #endif
                 }
             }
@@ -1349,7 +1330,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //    throw new NotImplementedException();
             //}
 
-            options.Logger.Log($"leftQueryExecutingCard = {leftQueryExecutingCard}");
+            //options.Logger.Log($"leftQueryExecutingCard = {leftQueryExecutingCard}");
 #endif
 
             //throw new NotImplementedException();
@@ -1578,8 +1559,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
 #if DEBUG
             //logger.Log($"(expressionNode1 == null) = {expressionNode1 == null} (expressionNode2 == null) = {expressionNode2 == null}");
-            _gbcLogger.Info($"expressionNode1 = {expressionNode1}");
-            _gbcLogger.Info($"expressionNode2 = {expressionNode2}");
+            //_gbcLogger.Info($"expressionNode1 = {expressionNode1}");
+            //_gbcLogger.Info($"expressionNode2 = {expressionNode2}");
             //_gbcLogger.Info($"queryExecutingCard = {queryExecutingCard}");
             //_gbcLogger.Info($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1?.Select(p => p.NameValue), Formatting.Indented)}");
             //_gbcLogger.Info($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");
@@ -1588,7 +1569,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if (expressionNode1.Kind == KindOfLogicalQueryNode.LogicalVar && expressionNode2.IsKeyRef)
             {
 #if DEBUG
-                _gbcLogger.Info($"%%%%%% expressionNode1.Kind == KindOfLogicalQueryNode.LogicalVar && expressionNode2.IsKeyRef");
+                //_gbcLogger.Info($"%%%%%% expressionNode1.Kind == KindOfLogicalQueryNode.LogicalVar && expressionNode2.IsKeyRef");
 #endif
 
                 var resultOfQueryToRelation = new ResultOfQueryToRelation();
@@ -1664,8 +1645,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
 #if DEBUG
                 //_gbcLogger.Info($"(expressionNode1.AsValue == null) = {expressionNode1.AsValue == null} (expressionNode2.AsValue == null) = {expressionNode2.AsValue == null}");
-                _gbcLogger.Info($"expressionNode1.Value.GetSystemValue() = {expressionNode1.Value.GetSystemValue()}");
-                _gbcLogger.Info($"expressionNode2.Value.GetSystemValue() = {expressionNode2.Value.GetSystemValue()}");
+                //_gbcLogger.Info($"expressionNode1.Value.GetSystemValue() = {expressionNode1.Value.GetSystemValue()}");
+                //_gbcLogger.Info($"expressionNode2.Value.GetSystemValue() = {expressionNode2.Value.GetSystemValue()}");
 #endif
 
                 if (expressionNode1.Value.GetSystemValue().Equals(expressionNode2.Value.GetSystemValue()))
@@ -1679,7 +1660,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if ((expressionNode1.IsKeyRef && expressionNode2.Kind == KindOfLogicalQueryNode.Value) || (expressionNode2.IsKeyRef && expressionNode1.Kind == KindOfLogicalQueryNode.Value))
             {
 #if DEBUG
-                _gbcLogger.Info("Try to check fuzzy logic!");
+                //_gbcLogger.Info("Try to check fuzzy logic!");
 #endif
 
                 LogicalQueryNode conceptNode = null;
@@ -1697,8 +1678,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
 #if DEBUG
-                _gbcLogger.Info($"conceptNode = {conceptNode}");
-                _gbcLogger.Info($"valueNode = {valueNode}");
+                //_gbcLogger.Info($"conceptNode = {conceptNode}");
+                //_gbcLogger.Info($"valueNode = {valueNode}");
 #endif
 
                 var value = valueNode.Value;
@@ -1715,7 +1696,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if ((expressionNode1.Kind == KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence && expressionNode2.Kind == KindOfLogicalQueryNode.Value) || (expressionNode2.Kind == KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence && expressionNode1.Kind == KindOfLogicalQueryNode.Value))
             {
 #if DEBUG
-                _gbcLogger.Info("Try to check fuzzy logic!");
+                //_gbcLogger.Info("Try to check fuzzy logic!");
 #endif
 
                 LogicalQueryNode sequenceNode = null;
@@ -1733,8 +1714,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
 #if DEBUG
-                _gbcLogger.Info($"sequenceNode = {sequenceNode}");
-                _gbcLogger.Info($"valueNode = {valueNode}");
+                //_gbcLogger.Info($"sequenceNode = {sequenceNode}");
+                //_gbcLogger.Info($"valueNode = {valueNode}");
 #endif
 
                 var value = valueNode.Value;
@@ -1751,7 +1732,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if (expressionNode1.Kind == KindOfLogicalQueryNode.Relation && expressionNode2.Kind == KindOfLogicalQueryNode.Relation)
             {
 #if DEBUG
-                _gbcLogger.Info("Try to compare relations!");
+                //_gbcLogger.Info("Try to compare relations!");
 #endif
 
                 if (expressionNode1.Name != expressionNode2.Name)
@@ -1779,8 +1760,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     var param2 = paramsList2Enumerator.Current;
 
 #if DEBUG
-                    _gbcLogger.Info($"param1 = {param1}");
-                    _gbcLogger.Info($"param2 = {param2}");
+                    //_gbcLogger.Info($"param1 = {param1}");
+                    //_gbcLogger.Info($"param2 = {param2}");
                     //_gbcLogger.Info($"Compare(param1, param2, null, null, options) = {Compare(param1, param2, null, null, options, queryExecutingCard)}");
                     //_gbcLogger.Info($"?????????????????>>>>>>>>>>queryExecutingCard (after) = {queryExecutingCard}");
 #endif

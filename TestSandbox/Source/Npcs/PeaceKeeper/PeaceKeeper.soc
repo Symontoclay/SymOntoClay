@@ -6,8 +6,8 @@
 	{: cat(#с) :}
 	//{: focus(I, friend) :}
 	{: age(#Tom, 15) :}
-	//{: value(distance(I, #Tom), 1) :}
-	{: distance(I, #Tom, 1) :}
+	{: value(distance(I, #Tom), 1) :}
+	//{: distance(I, #Tom, 1) :}
 
     on Init => {
 	     'Begin' >> @>log;
@@ -18,8 +18,8 @@
 		 //select {: see(I, barrel) :} >> @>log;
 		 //select {: son(?x, ?y) :} >> @>log;
 		 //select {: age(#Tom, very `teenager`) :} >> @>log;
-		 //select {: value(distance(I, $x), $y) :} >> @>log;
-		 select {: distance(I, #Tom, $x) :} >> @>log;
+		 select {: value(distance(I, $x), $y) :} >> @>log;
+		 //select {: distance(I, #Tom, $x) :} >> @>log;
 
 		 //insert {: >: { bird (#1234) } :};
 		 //insert {: see(I, #a) :};

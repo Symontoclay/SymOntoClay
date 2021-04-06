@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class LogicalQueryNode: AnnotatedItem, IAstNode
     {
 #if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public KindOfLogicalQueryNode Kind { get; set; } = KindOfLogicalQueryNode.Unknown;
@@ -175,7 +175,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 param.CheckDirty();
 
 #if DEBUG
-                //_gbcLogger.Info($"param = {param}");
+                _gbcLogger.Info($"param = {param}");
 #endif               
 
                 var kindOfParam = param.Kind;
@@ -185,12 +185,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     case KindOfLogicalQueryNode.Entity:
                     case KindOfLogicalQueryNode.Value:
                     case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
+                    case KindOfLogicalQueryNode.Relation:
                         {
                             var knownInfo = new QueryExecutingCardAboutKnownInfo();
                             knownInfo.Kind = kindOfParam;
                             knownInfo.Expression = param;
                             knownInfo.Position = i;
                             knownInfoList.Add(knownInfo);
+
+#if DEBUG
+                            _gbcLogger.Info($"knownInfo = {knownInfo}");
+#endif
                         }
                         break;
 

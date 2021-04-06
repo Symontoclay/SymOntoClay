@@ -98,10 +98,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_isGroup = {_isGroup}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_isGroup = {_isGroup}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");
-            //Log($"_state = {_state}");
+            Log($"_nodePoint = {_nodePoint}");            
+            Log($"_state = {_state}");
 #endif
 
             if(_terminatingTokenKindList.Contains(_currToken.TokenKind))
@@ -180,7 +181,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 parser.Run();
 
 #if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
+                                Log($"parser.Result = {parser.Result}");
 #endif
 
                                 _lastLogicalQueryNode.ParamsList.Add(parser.Result);
@@ -202,7 +203,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                             parser.Run();
 
 #if DEBUG
-                                            //Log($"parser.Result = {parser.Result}");
+                                            Log($"parser.Result = {parser.Result}");
 #endif
 
                                             var node = new LogicalQueryNode();
@@ -217,13 +218,39 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                     default:
                                         {
-                                            _context.Recovery(_currToken);
+                                            var nextToken = _context.GetToken();
 
-                                            var parser = new LogicalExpressionParser(_context);
+                                            var terminatingTokenKindList = new List<TokenKind>() { TokenKind.CloseRoundBracket };
+
+                                            if(nextToken.TokenKind != TokenKind.OpenRoundBracket)
+                                            {
+                                                terminatingTokenKindList.Add(TokenKind.Comma);
+                                            }
+
+#if DEBUG
+                                            if (_currToken.Content == "distance")
+                                            {
+                                                //throw new NotImplementedException();
+                                            }
+#endif
+
+#if DEBUG
+                                            Log($"nextToken = {nextToken}");
+#endif
+
+                                            _context.Recovery(_currToken);
+                                            _context.Recovery(nextToken);
+                                            
+
+                                            var parser = new LogicalExpressionParser(_context, terminatingTokenKindList);
                                             parser.Run();
 
 #if DEBUG
-                                            //Log($"parser.Result = {parser.Result}");
+                                            Log($"parser.Result = {parser.Result}");
+                                            if (_currToken.Content == "distance")
+                                            {
+                                                //throw new NotImplementedException();
+                                            }
 #endif
 
                                             _lastLogicalQueryNode.ParamsList.Add(parser.Result);
@@ -286,6 +313,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.Or:
                             ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.Or);
+                            break;
+
+                        case TokenKind.Comma:
+                            _state = State.WaitForPredicateParameter;
                             break;
 
                         case TokenKind.CloseRoundBracket:

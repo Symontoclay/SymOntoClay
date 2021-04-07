@@ -66,6 +66,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            TstRangeValue();
             //TstFuzzyLogicNonNumericSequenceValue();
             //TstCalculateTargetAnglesForRayScanner();
             //TstCopyFilesOnBuilding();
@@ -97,10 +98,43 @@ namespace TestSandbox
             //TstExprNodeHandler();
             //TstParsing();
             //TstMonoBehaviourTestingHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstRangeValue()
+        {
+            _logger.Log("Begin");
+
+            var leftValue = new NumberValue(0);
+
+            var leftBoundary = new RangeBoundary();
+            leftBoundary.Value = leftValue;
+            leftBoundary.Includes = true;
+
+            var rightValue = new NumberValue(12);
+
+            var rightBoundary = new RangeBoundary();
+            rightBoundary.Value = rightValue;
+            
+
+            var range = new RangeValue();
+            range.LeftBoundary = leftBoundary;
+            range.RightBoundary = rightBoundary;
+
+            range.CheckDirty();
+
+            _logger.Log($"range = {range}");
+
+            _logger.Log($"range.ToDbgString() = {range.ToDbgString()}");
+
+            _logger.Log($"range.IsFit(-1) = {range.IsFit(-1)}");
+            _logger.Log($"range.IsFit(0) = {range.IsFit(0)}");
+            _logger.Log($"range.IsFit(1) = {range.IsFit(1)}");
+
+            _logger.Log("Begin");
         }
 
         private static void TstFuzzyLogicNonNumericSequenceValue()

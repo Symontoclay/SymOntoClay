@@ -77,6 +77,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsFuzzyLogicNonNumericSequenceValue => false;
         public virtual FuzzyLogicNonNumericSequenceValue AsFuzzyLogicNonNumericSequenceValue => null;
 
+        public virtual bool IsRangeValue => false;
+        public virtual RangeValue AsRangeValue => null;
+
         public abstract object GetSystemValue();
 
         /// <summary>

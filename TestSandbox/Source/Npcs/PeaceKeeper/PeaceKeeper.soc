@@ -1,4 +1,12 @@
-﻿app PeaceKeeper is [0.5] exampleClass
+﻿linvar age for range (0, 150]
+{
+    `teenager` = Trapezoid(10, 12, 17, 20);
+	//`teenager` = L(5, 10);
+	//`teenager` = S(12, 22);
+	//`teenager` = S(12, 17, 22);
+}
+
+app PeaceKeeper is [0.5] exampleClass
 {
     {: barrel(#a) :}
 	{: see(I, #a) :}
@@ -6,7 +14,7 @@
 	{: cat(#с) :}
 	//{: focus(I, friend) :}
 	{: age(#Tom, 15) :}
-	{: value(distance(I, #Tom), 1) :}
+	//{: value(distance(I, #Tom), 1) :}
 	//{: distance(I, #Tom, 1) :}
 
     on Init => {
@@ -17,8 +25,8 @@
 
 		 //select {: see(I, barrel) :} >> @>log;
 		 //select {: son(?x, ?y) :} >> @>log;
-		 //select {: age(#Tom, very `teenager`) :} >> @>log;
-		 select {: value(distance(I, $x), $y) :} >> @>log;
+		 select {: age(#Tom, very `teenager`) :} >> @>log;
+		 //select {: value(distance(I, $x), $y) :} >> @>log;
 		 //select {: distance(I, #Tom, $x) :} >> @>log;
 
 		 //insert {: >: { bird (#1234) } :};

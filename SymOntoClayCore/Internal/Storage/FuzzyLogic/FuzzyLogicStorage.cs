@@ -18,14 +18,6 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
             _kind = kind;
             _realStorageContext = realStorageContext;
             _commonNamesStorage = realStorageContext.MainStorageContext.CommonNamesStorage;
-
-#if DEBUG
-            Log($"kind = {kind}");
-            if (kind == KindOfStorage.Global)
-            {
-                CreateTstItems();
-            }
-#endif
         }
 
         private readonly object _lockObj = new object();
@@ -43,30 +35,6 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
 
         private Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<FuzzyLogicNonNumericValue>>> _valuesDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<FuzzyLogicNonNumericValue>>>();
         private Dictionary<StrongIdentifierValue, FuzzyLogicOperator> _defaultOperatorsDict = new Dictionary<StrongIdentifierValue, FuzzyLogicOperator>();
-
-#if DEBUG
-        private void CreateTstItems()
-        {
-            Log("Begin");
-
-            var linguisticVariable = new LinguisticVariable();
-
-            linguisticVariable.Name = NameHelper.CreateName("age");
-
-            var teenagerFuzzyValue = new FuzzyLogicNonNumericValue();
-            teenagerFuzzyValue.Name = NameHelper.CreateName("teenager");
-            teenagerFuzzyValue.Handler = new TrapezoidFuzzyLogicMemberFunctionHandler(10, 12, 17, 20);
-            teenagerFuzzyValue.Parent = linguisticVariable;
-
-            linguisticVariable.Values.Add(teenagerFuzzyValue);
-
-            Log($"linguisticVaiable = {linguisticVariable}");
-
-            Append(linguisticVariable);
-
-            Log("End");
-        }
-#endif
 
         /// <inheritdoc/>
         public void Append(LinguisticVariable linguisticVariable)

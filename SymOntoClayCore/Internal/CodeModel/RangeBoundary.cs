@@ -10,6 +10,37 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public NumberValue Value { get; set; }
         public bool Includes { get; set; }
 
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public RangeBoundary Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public RangeBoundary Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (RangeBoundary)context[this];
+            }
+
+            var result = new RangeBoundary();
+            context[this] = result;
+
+            result.Value = Value?.Clone(context);
+            result.Includes = Includes;
+
+            return result;
+        }
+
         private bool _isDirty = true;
 
         public void CheckDirty()

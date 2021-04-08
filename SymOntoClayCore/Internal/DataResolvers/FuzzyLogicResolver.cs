@@ -32,7 +32,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             Log($"value = {value}");
 #endif
 
-            var targetItem = GetTargetFuzzyLogicNonNumericValue(name, localCodeExecutionContext, options);
+            var targetItem = GetTargetFuzzyLogicNonNumericValue(name, value, localCodeExecutionContext, options);
 
 #if DEBUG
             Log($"targetItem = {targetItem}");
@@ -64,7 +64,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             Log($"value = {value}");
 #endif
 
-            var targetItem = GetTargetFuzzyLogicNonNumericValue(fuzzyLogicNonNumericSequence.NonNumericValue, localCodeExecutionContext, options);
+            var targetItem = GetTargetFuzzyLogicNonNumericValue(fuzzyLogicNonNumericSequence.NonNumericValue, value, localCodeExecutionContext, options);
 
 #if DEBUG
             Log($"targetItem = {targetItem}");
@@ -151,7 +151,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private FuzzyLogicNonNumericValue GetTargetFuzzyLogicNonNumericValue(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private FuzzyLogicNonNumericValue GetTargetFuzzyLogicNonNumericValue(StrongIdentifierValue name, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
@@ -190,7 +190,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var filteredList = Filter(rawList);
 
 #if DEBUG
-            //Log($"filteredList = {filteredList.WriteListToString()}");
+            Log($"filteredList = {filteredList.WriteListToString()}");
 #endif
 
             if (!filteredList.Any())
@@ -198,7 +198,29 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return null;
             }
 
-            var targetItem = ChooseTargetItem(filteredList);
+            filteredList = filteredList.Where(p => p.ResultItem.Parent.IsFitByRange(value)).ToList();
+
+#if DEBUG
+            Log($"filteredList (2) = {filteredList.WriteListToString()}");
+#endif
+
+            if (!filteredList.Any())
+            {
+                return null;
+            }
+
+            if(filteredList.Count == 1)
+            {
+                return filteredList.FirstOrDefault()?.ResultItem;
+            }
+
+            var minLengthOfRange = filteredList.Min(p => p.ResultItem.Parent.Range.Length);
+
+#if DEBUG
+            Log($"minLengthOfRange = {minLengthOfRange}");
+#endif
+
+            var targetItem = filteredList.FirstOrDefault(p => p.ResultItem.Parent.Range.Length == minLengthOfRange)?.ResultItem;
 
             return targetItem;
         }

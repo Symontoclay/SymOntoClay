@@ -131,6 +131,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             return result;
         }
 
+        protected LinguisticVariable CreateLinguisticVariable()
+        {
+            var result = new LinguisticVariable();
+            DefaultSettingsOfCodeEntityHelper.SetUpLinguisticVariable(result, CurrentDefaultSetings);
+            return result;
+        }
+
         protected InheritanceItem CreateInheritanceItem()
         {
             var result = new InheritanceItem();

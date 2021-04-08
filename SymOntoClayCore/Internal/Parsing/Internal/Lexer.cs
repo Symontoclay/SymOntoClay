@@ -1,4 +1,4 @@
-/*MIT License
+﻿/*MIT License
 
 Copyright (c) 2020 - 2021 Sergiy Tolkachov
 
@@ -190,6 +190,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             case '~':
                                 return CreateToken(TokenKind.AsyncMarker);
 
+                            case '+':
+                                {
+                                    var nextChar = _items.Peek();
+
+#if DEBUG
+                                    //_logger.Log($"nextChar = {nextChar}");
+#endif
+                                    switch(nextChar)
+                                    {
+                                        case '∞':
+                                            _items.Dequeue();
+                                            return CreateToken(TokenKind.PositiveInfinity);
+                                    }
+                                    return CreateToken(TokenKind.Plus);
+                                }
+
                             case '-':
                                 {
                                     var nextChar = _items.Peek();
@@ -204,6 +220,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                             _items.Dequeue();
                                             return CreateToken(TokenKind.LeftRightArrow);
 
+                                        case '∞':
+                                            _items.Dequeue();
+                                            return CreateToken(TokenKind.NegativeInfinity);
+
                                         default:
                                             if(char.IsDigit(nextChar))
                                             {
@@ -212,10 +232,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                                 _state = State.InWord;
                                                 break;
                                             }
-                                            throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                            return CreateToken(TokenKind.Minus);
                                     }
                                 }
                                 break;
+
+                            case '*':
+                                return CreateToken(TokenKind.Multiplication);
 
                             case '/':
                                 {
@@ -239,7 +262,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                             break;
 
                                         default:
-                                            throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                            return CreateToken(TokenKind.Division);
                                     }
                                 }
                                 break;
@@ -816,6 +839,30 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         if (string.Compare(content, "null", true) == 0)
                         {
                             kindOfKeyWord = KeyWordTokenKind.Null;
+                            break;
+                        }
+
+                        if (string.Compare(content, "linvar", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.LinguisticVariable;
+                            break;
+                        }
+
+                        if (string.Compare(content, "for", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.For;
+                            break;
+                        }
+
+                        if (string.Compare(content, "range", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Range;
+                            break;
+                        }
+
+                        if (string.Compare(content, "terms", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Terms;
                             break;
                         }
                     }

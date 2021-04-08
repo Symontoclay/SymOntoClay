@@ -42,6 +42,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Use,
         Not,
         Select,
-        Insert
+        Insert,
+        LinguisticVariable,
+        For,
+        Range,
+        Terms
     }
 }

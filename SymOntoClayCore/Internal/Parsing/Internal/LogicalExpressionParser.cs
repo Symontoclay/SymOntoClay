@@ -98,11 +98,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_isGroup = {_isGroup}");
-            Log($"_currToken = {_currToken}");
+            //Log($"_isGroup = {_isGroup}");
+            //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");
-            Log($"_nodePoint = {_nodePoint}");            
-            Log($"_state = {_state}");
+            //Log($"_nodePoint = {_nodePoint}");            
+            //Log($"_state = {_state}");
 #endif
 
             if(_terminatingTokenKindList.Contains(_currToken.TokenKind))
@@ -181,7 +181,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 parser.Run();
 
 #if DEBUG
-                                Log($"parser.Result = {parser.Result}");
+                                //Log($"parser.Result = {parser.Result}");
 #endif
 
                                 _lastLogicalQueryNode.ParamsList.Add(parser.Result);
@@ -203,7 +203,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                             parser.Run();
 
 #if DEBUG
-                                            Log($"parser.Result = {parser.Result}");
+                                            //Log($"parser.Result = {parser.Result}");
 #endif
 
                                             var node = new LogicalQueryNode();
@@ -228,14 +228,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                             }
 
 #if DEBUG
-                                            if (_currToken.Content == "distance")
-                                            {
+                                            //if (_currToken.Content == "distance")
+                                            //{
                                                 //throw new NotImplementedException();
-                                            }
+                                            //}
 #endif
 
 #if DEBUG
-                                            Log($"nextToken = {nextToken}");
+                                            //Log($"nextToken = {nextToken}");
 #endif
 
                                             _context.Recovery(_currToken);
@@ -246,11 +246,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                             parser.Run();
 
 #if DEBUG
-                                            Log($"parser.Result = {parser.Result}");
-                                            if (_currToken.Content == "distance")
-                                            {
-                                                //throw new NotImplementedException();
-                                            }
+                                            //Log($"parser.Result = {parser.Result}");
+                                            //if (_currToken.Content == "distance")
+                                            //{
+                                            //    //throw new NotImplementedException();
+                                            //}
 #endif
 
                                             _lastLogicalQueryNode.ParamsList.Add(parser.Result);
@@ -409,7 +409,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var value = NameHelper.CreateName(_currToken.Content);
 
 #if DEBUG
-            Log($"value = {value}");
+            //Log($"value = {value}");
 
             //if(_currToken.Content == "NULL")
             //{
@@ -420,7 +420,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var nextToken = _context.GetToken();
 
 #if DEBUG
-            Log($"nextToken = {nextToken}");
+            //Log($"nextToken = {nextToken}");
 #endif
 
             switch (value.KindOfName)

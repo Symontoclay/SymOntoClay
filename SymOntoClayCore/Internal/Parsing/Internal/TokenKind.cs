@@ -1,4 +1,4 @@
-/*MIT License
+﻿/*MIT License
 
 Copyright (c) 2020 - 2021 Sergiy Tolkachov
 
@@ -45,6 +45,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Entity,
         Point,
         Comma,
+        Plus,
+        Minus,
+        /// <summary>
+        /// Represents symbol `*`.
+        /// </summary>
+        Multiplication,
+        Division,
         QuestionMark,
         /// <summary>
         /// Represents symbol `~`.
@@ -135,6 +142,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <summary>
         /// Represents symbol `-&gt;`.
         /// </summary>
-        LeftRightArrow
+        LeftRightArrow,
+
+        /// <summary>
+        /// Represents symbol `+∞`.
+        /// </summary>
+        PositiveInfinity,
+
+        /// <summary>
+        /// Represents symbol `-∞`.
+        /// </summary>
+        NegativeInfinity
     }
 }

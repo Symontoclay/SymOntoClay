@@ -66,7 +66,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-            TstRangeValue();
+            //TstRangeValue();
             //TstFuzzyLogicNonNumericSequenceValue();
             //TstCalculateTargetAnglesForRayScanner();
             //TstCopyFilesOnBuilding();
@@ -98,7 +98,7 @@ namespace TestSandbox
             //TstExprNodeHandler();
             //TstParsing();
             //TstMonoBehaviourTestingHandler();
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -118,7 +118,7 @@ namespace TestSandbox
 
             var rightBoundary = new RangeBoundary();
             rightBoundary.Value = rightValue;
-            
+            rightBoundary.Includes = true;
 
             var range = new RangeValue();
             range.LeftBoundary = leftBoundary;
@@ -130,9 +130,15 @@ namespace TestSandbox
 
             _logger.Log($"range.ToDbgString() = {range.ToDbgString()}");
 
+            _logger.Log($"range.Length = {range.Length}");
+
             _logger.Log($"range.IsFit(-1) = {range.IsFit(-1)}");
             _logger.Log($"range.IsFit(0) = {range.IsFit(0)}");
             _logger.Log($"range.IsFit(1) = {range.IsFit(1)}");
+            _logger.Log($"range.IsFit(12) = {range.IsFit(12)}");
+            _logger.Log($"range.IsFit(14) = {range.IsFit(14)}");
+
+
 
             _logger.Log("Begin");
         }

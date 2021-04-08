@@ -1296,6 +1296,19 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.CloneValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.Clone">
+            <summary>
+            Clones the instance and returns cloned instance.
+            </summary>
+            <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            Clones the instance using special context and returns cloned instance.
+            </summary>
+            <param name="context">Special context for providing references continuity.</param>
+            <returns>Cloned instance.</returns>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -1403,6 +1416,19 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeBoundary.Clone">
+            <summary>
+            Clones the instance and returns cloned instance.
+            </summary>
+            <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeBoundary.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            Clones the instance using special context and returns cloned instance.
+            </summary>
+            <param name="context">Special context for providing references continuity.</param>
+            <returns>Cloned instance.</returns>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeBoundary.ToString">
             <inheritdoc/>
         </member>
@@ -1450,6 +1476,19 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeValue.CloneValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeValue.Clone">
+            <summary>
+            Clones the instance and returns cloned instance.
+            </summary>
+            <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeValue.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            Clones the instance using special context and returns cloned instance.
+            </summary>
+            <param name="context">Special context for providing references continuity.</param>
+            <returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeValue.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -2588,6 +2627,15 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.InheritanceParser.OnRun">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.InlineRangeParser.OnEnter">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.InlineRangeParser.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.InlineRangeParser.OnRun">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.InlineTriggerBindingVariablesParser.OnRun">
             <inheritdoc/>
         </member>
@@ -2617,6 +2665,15 @@
             <summary>
             Number of remaining characters.
             </summary>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LinguisticVariableParser.OnEnter">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LinguisticVariableParser.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LinguisticVariableParser.OnRun">
+            <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalExpressionParser.OnFinish">
             <inheritdoc/>
@@ -2714,6 +2771,11 @@
         <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.Unknown">
             <summary>
             Default value. Represents nothing.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.Multiplication">
+            <summary>
+            Represents symbol `*`.
             </summary>
         </member>
         <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.AsyncMarker">
@@ -2814,6 +2876,16 @@
         <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.LeftRightArrow">
             <summary>
             Represents symbol `-&gt;`.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.PositiveInfinity">
+            <summary>
+            Represents symbol `+∞`.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.NegativeInfinity">
+            <summary>
+            Represents symbol `-∞`.
             </summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.UseStatementParser.OnEnter">

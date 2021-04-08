@@ -10,9 +10,31 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class LinguisticVariable : AnnotatedItem
     {
         public StrongIdentifierValue Name { get; set; }
-
+        public RangeValue Range { get; set; } = new RangeValue();
         public List<FuzzyLogicNonNumericValue> Values { get; set; } = new List<FuzzyLogicNonNumericValue>();
         public List<FuzzyLogicOperator> Operators { get; set; } = new List<FuzzyLogicOperator>();
+
+        public CodeEntity CodeEntity { get; set; }
+
+        public bool IsFitByRange(NumberValue x)
+        {
+            if(Range == null)
+            {
+                return true;
+            }
+
+            return Range.IsFit(x);
+        }
+
+        public bool IsFitByRange(double? x)
+        {
+            if (Range == null)
+            {
+                return true;
+            }
+
+            return Range.IsFit(x);
+        }
 
         public FuzzyLogicOperator GetOperator(StrongIdentifierValue name)
         {
@@ -56,6 +78,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             context[this] = result;
 
             result.Name = Name.Clone(context);
+            result.Range = Range?.Clone(context);
             result.Values = Values?.Select(p => p.Clone(context)).ToList();
             result.Operators = Operators?.Select(p => p.Clone(context)).ToList();
 
@@ -88,6 +111,42 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
         }
 
+        protected override ulong CalculateLongHashCode()
+        {
+            Name.CheckDirty();
+
+            var result = base.CalculateLongHashCode() ^ Name.GetLongHashCode();
+
+            if(Range != null)
+            {
+                Range.CheckDirty();
+
+                result ^= Range.GetLongHashCode();
+            }
+
+            if (!Values.IsNullOrEmpty())
+            {
+                foreach (var value in Values)
+                {
+                    value.CheckDirty();
+
+                    result ^= value.GetLongHashCode();
+                }
+            }
+
+            if (!Operators.IsNullOrEmpty())
+            {
+                foreach (var op in Operators)
+                {
+                    op.CheckDirty();
+
+                    result ^= op.GetLongHashCode();
+                }
+            }
+
+            return result;
+        }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
@@ -95,6 +154,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintObjProp(n, nameof(Name), Name);
+            sb.PrintObjProp(n, nameof(Range), Range);
             sb.PrintObjListProp(n, nameof(Values), Values);
             sb.PrintObjListProp(n, nameof(Operators), Operators);
 
@@ -109,6 +169,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintShortObjProp(n, nameof(Name), Name);
+            sb.PrintShortObjProp(n, nameof(Range), Range);
             sb.PrintShortObjListProp(n, nameof(Values), Values);
 
             sb.Append(base.PropertiesToShortString(n));
@@ -122,6 +183,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(Name), Name);
+            sb.PrintBriefObjProp(n, nameof(Range), Range);
             sb.PrintExistingList(n, nameof(Values), Values);
 
             sb.Append(base.PropertiesToBriefString(n));

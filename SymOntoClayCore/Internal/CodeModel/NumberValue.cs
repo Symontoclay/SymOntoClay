@@ -62,21 +62,41 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
         {
-            return CloneValue(context);
+            return Clone(context);
         }
 
         /// <inheritdoc/>
         public override Value CloneValue(Dictionary<object, object> cloneContext)
         {
-            if (cloneContext.ContainsKey(this))
+            return Clone(cloneContext);
+        }
+
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public NumberValue Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public NumberValue Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
             {
-                return (Value)cloneContext[this];
+                return (NumberValue)context[this];
             }
 
             var result = new NumberValue(SystemValue);
-            cloneContext[this] = result;
+            context[this] = result;
 
-            result.AppendAnnotations(this, cloneContext);
+            result.AppendAnnotations(this, context);
 
             return result;
         }

@@ -10,6 +10,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public RangeBoundary LeftBoundary { get; set; }
         public RangeBoundary RightBoundary { get; set; }
 
+        public double Length
+        {
+            get
+            {
+                if(LeftBoundary == null || RightBoundary == null)
+                {
+                    return double.PositiveInfinity;
+                }
+
+                return RightBoundary.Value.SystemValue.Value - LeftBoundary.Value.SystemValue.Value;
+            }
+        }
+
         public bool IsFit(NumberValue x)
         {
             if(x == null)
@@ -49,7 +62,25 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 }
             }
 
-            //throw new NotImplementedException();
+            if(RightBoundary != null)
+            {
+                var rightValue = RightBoundary.Value.SystemValue.Value;
+
+                if(RightBoundary.Includes)
+                {
+                    if (value > rightValue)
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    if(value >= rightValue)
+                    {
+                        return false;
+                    }
+                }
+            }
 
             return true;
         }
@@ -92,21 +123,44 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
         {
-            return CloneValue(context);
+            return Clone(context);
         }
 
         /// <inheritdoc/>
         public override Value CloneValue(Dictionary<object, object> cloneContext)
         {
-            if (cloneContext.ContainsKey(this))
+            return Clone(cloneContext);
+        }
+
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public RangeValue Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public RangeValue Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
             {
-                return (Value)cloneContext[this];
+                return (RangeValue)context[this];
             }
 
             var result = new RangeValue();
-            cloneContext[this] = result;
+            context[this] = result;
 
-            result.AppendAnnotations(this, cloneContext);
+            result.LeftBoundary = LeftBoundary?.Clone(context);
+            result.RightBoundary = RightBoundary?.Clone(context);
+
+            result.AppendAnnotations(this, context);
 
             return result;
         }
@@ -159,7 +213,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             if (LeftBoundary == null)
             {
-                sb.Append("(−∞");
+                sb.Append("(-∞");
             }
             else
             {

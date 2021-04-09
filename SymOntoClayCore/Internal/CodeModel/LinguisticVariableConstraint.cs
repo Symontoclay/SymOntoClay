@@ -1,20 +1,44 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class RangeBoundary: IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class LinguisticVariableConstraint : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public NumberValue Value { get; set; }
-        public bool Includes { get; set; }
-        
+        public List<LinguisticVariableConstraintItem> Items { get; set; } = new List<LinguisticVariableConstraintItem>();
+
+        public bool isFit(ReasonOfFuzzyLogicResolving reason)
+        {
+            if((reason == null || reason.Kind == KindOfReasonOfFuzzyLogicResolving.Unknown) && (Items.IsNullOrEmpty() || Items.All(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Unknown)))
+            {
+                return true;
+            }
+
+            var kindOfReson = reason.Kind;
+
+            switch(kindOfReson)
+            {
+                case KindOfReasonOfFuzzyLogicResolving.Inheritance:
+                    return Items.Any(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Inheritance);
+
+                case KindOfReasonOfFuzzyLogicResolving.Relation:
+                    return Items.Any(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Relation && p.RelationName == reason.RelationName);
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfReson), kindOfReson, null);
+            }
+        }
+
         /// <summary>
         /// Clones the instance and returns cloned instance.
         /// </summary>
         /// <returns>Cloned instance.</returns>
-        public RangeBoundary Clone()
+        public LinguisticVariableConstraint Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
@@ -25,52 +49,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// </summary>
         /// <param name="context">Special context for providing references continuity.</param>
         /// <returns>Cloned instance.</returns>
-        public RangeBoundary Clone(Dictionary<object, object> context)
+        public LinguisticVariableConstraint Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {
-                return (RangeBoundary)context[this];
+                return (LinguisticVariableConstraint)context[this];
             }
 
-            var result = new RangeBoundary();
+            var result = new LinguisticVariableConstraint();
             context[this] = result;
 
-            result.Value = Value?.Clone(context);
-            result.Includes = Includes;
+            result.Items = Items?.Select(p => p.Clone(context)).ToList();
 
             return result;
-        }
-
-        private bool _isDirty = true;
-
-        public void CheckDirty()
-        {
-            if (_isDirty)
-            {
-                CalculateLongHashCodes();
-                _isDirty = false;
-            }
-        }
-
-        private ulong? _longHashCode;
-
-        public ulong GetLongHashCode()
-        {
-            if (!_longHashCode.HasValue)
-            {
-                CalculateLongHashCodes();
-            }
-
-            return _longHashCode.Value;
-        }
-
-        public void CalculateLongHashCodes()
-        {
-            Value.CheckDirty();
-
-            _longHashCode = Value.GetLongHashCode() ^ (ulong)Includes.GetHashCode();
-
-            _isDirty = false;
         }
 
         /// <inheritdoc/>
@@ -91,8 +82,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(Value), Value);
-            sb.AppendLine($"{spaces}{nameof(Includes)} = {Includes}");
+            sb.PrintObjListProp(n, nameof(Items), Items);
 
             return sb.ToString();
         }
@@ -115,8 +105,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjProp(n, nameof(Value), Value);
-            sb.AppendLine($"{spaces}{nameof(Includes)} = {Includes}");
+            sb.PrintShortObjListProp(n, nameof(Items), Items);
 
             return sb.ToString();
         }
@@ -139,8 +128,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjProp(n, nameof(Value), Value);
-            sb.AppendLine($"{spaces}{nameof(Includes)} = {Includes}");
+            sb.PrintBriefObjListProp(n, nameof(Items), Items);
 
             return sb.ToString();
         }

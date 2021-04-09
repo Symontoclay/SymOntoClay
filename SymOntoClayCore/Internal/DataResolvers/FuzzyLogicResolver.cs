@@ -20,19 +20,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly double _truthThreshold = 0.75;
         private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
 
-        public bool Equals(StrongIdentifierValue name, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool Equals(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
         {
-            return Equals(name, value, localCodeExecutionContext, _defaultOptions);
+            return Equals(name, value, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool Equals(StrongIdentifierValue name, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool Equals(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             Log($"name = {name}");
             Log($"value = {value}");
 #endif
 
-            var targetItem = GetTargetFuzzyLogicNonNumericValue(name, value, localCodeExecutionContext, options);
+            var targetItem = GetTargetFuzzyLogicNonNumericValue(name, value, reason, localCodeExecutionContext, options);
 
 #if DEBUG
             Log($"targetItem = {targetItem}");
@@ -52,19 +52,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return FuzzyNumericValueToSystemBool(fuzzyValue);
         }
 
-        public bool Equals(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool Equals(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
         {
-            return Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext, _defaultOptions);
+            return Equals(fuzzyLogicNonNumericSequence, value, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool Equals(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool Equals(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             Log($"fuzzyLogicNonNumericSequence = {fuzzyLogicNonNumericSequence}");
             Log($"value = {value}");
 #endif
 
-            var targetItem = GetTargetFuzzyLogicNonNumericValue(fuzzyLogicNonNumericSequence.NonNumericValue, value, localCodeExecutionContext, options);
+            var targetItem = GetTargetFuzzyLogicNonNumericValue(fuzzyLogicNonNumericSequence.NonNumericValue, value, reason, localCodeExecutionContext, options);
 
 #if DEBUG
             Log($"targetItem = {targetItem}");
@@ -151,13 +151,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private FuzzyLogicNonNumericValue GetTargetFuzzyLogicNonNumericValue(StrongIdentifierValue name, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private FuzzyLogicNonNumericValue GetTargetFuzzyLogicNonNumericValue(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
             var storagesList = GetStoragesList(storage);
 
 #if DEBUG
+            Log($"reason = {reason}");
             //Log($"storagesList.Count = {storagesList.Count}");
             //foreach (var tmpStorage in storagesList)
             //{
@@ -209,7 +210,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return null;
             }
 
-            if(filteredList.Count == 1)
+            filteredList = filteredList.Where(p => p.ResultItem.Parent.IsFitByСonstraint(reason)).ToList();
+
+#if DEBUG
+            Log($"filteredList (3) = {filteredList.WriteListToString()}");
+#endif
+
+            if (!filteredList.Any())
+            {
+                return null;
+            }
+
+            if (filteredList.Count == 1)
             {
                 return filteredList.FirstOrDefault()?.ResultItem;
             }

@@ -1,20 +1,21 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class RangeBoundary: IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class LinguisticVariableConstraintItem : IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
     {
-        public NumberValue Value { get; set; }
-        public bool Includes { get; set; }
-        
+        public KindOfLinguisticVariableСonstraintItem Kind { get; set; } = KindOfLinguisticVariableСonstraintItem.Unknown;
+        public StrongIdentifierValue RelationName { get; set; }
+
         /// <summary>
         /// Clones the instance and returns cloned instance.
         /// </summary>
         /// <returns>Cloned instance.</returns>
-        public RangeBoundary Clone()
+        public LinguisticVariableConstraintItem Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
@@ -25,52 +26,20 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// </summary>
         /// <param name="context">Special context for providing references continuity.</param>
         /// <returns>Cloned instance.</returns>
-        public RangeBoundary Clone(Dictionary<object, object> context)
+        public LinguisticVariableConstraintItem Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {
-                return (RangeBoundary)context[this];
+                return (LinguisticVariableConstraintItem)context[this];
             }
 
-            var result = new RangeBoundary();
+            var result = new LinguisticVariableConstraintItem();
             context[this] = result;
 
-            result.Value = Value?.Clone(context);
-            result.Includes = Includes;
+            result.Kind = Kind;
+            result.RelationName = RelationName.Clone(context);
 
             return result;
-        }
-
-        private bool _isDirty = true;
-
-        public void CheckDirty()
-        {
-            if (_isDirty)
-            {
-                CalculateLongHashCodes();
-                _isDirty = false;
-            }
-        }
-
-        private ulong? _longHashCode;
-
-        public ulong GetLongHashCode()
-        {
-            if (!_longHashCode.HasValue)
-            {
-                CalculateLongHashCodes();
-            }
-
-            return _longHashCode.Value;
-        }
-
-        public void CalculateLongHashCodes()
-        {
-            Value.CheckDirty();
-
-            _longHashCode = Value.GetLongHashCode() ^ (ulong)Includes.GetHashCode();
-
-            _isDirty = false;
         }
 
         /// <inheritdoc/>
@@ -91,8 +60,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(Value), Value);
-            sb.AppendLine($"{spaces}{nameof(Includes)} = {Includes}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.PrintObjProp(n, nameof(RelationName), RelationName);
 
             return sb.ToString();
         }
@@ -115,8 +84,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjProp(n, nameof(Value), Value);
-            sb.AppendLine($"{spaces}{nameof(Includes)} = {Includes}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.PrintShortObjProp(n, nameof(RelationName), RelationName);
 
             return sb.ToString();
         }
@@ -139,9 +108,46 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjProp(n, nameof(Value), Value);
-            sb.AppendLine($"{spaces}{nameof(Includes)} = {Includes}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.PrintBriefObjProp(n, nameof(RelationName), RelationName);
 
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToDbgString()
+        {
+            return ToDbgString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToDbgString(uint n)
+        {
+            return this.GetDefaultToDbgStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToDbgString.PropertiesToDbgString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder(spaces);
+            switch(Kind)
+            {
+                case KindOfLinguisticVariableСonstraintItem.Unknown:
+                    sb.Append("unknown");
+                    break;
+
+                case KindOfLinguisticVariableСonstraintItem.Inheritance:
+                    sb.Append("for inheritance");
+                    break;
+
+                case KindOfLinguisticVariableСonstraintItem.Relation:
+                    sb.Append($"for relation `{RelationName.NameValue}`");
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
+            }
             return sb.ToString();
         }
     }

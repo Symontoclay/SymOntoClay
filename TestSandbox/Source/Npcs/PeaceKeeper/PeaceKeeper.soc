@@ -25,7 +25,7 @@ app PeaceKeeper is [0.5] exampleClass
 
 		 //select {: see(I, barrel) :} >> @>log;
 		 //select {: son(?x, ?y) :} >> @>log;
-		 select {: age(#Tom, very `teenager`) :} >> @>log;
+		 select {: age(#Tom, `teenager`) :} >> @>log;
 		 //select {: value(distance(I, $x), $y) :} >> @>log;
 		 //select {: distance(I, #Tom, $x) :} >> @>log;
 

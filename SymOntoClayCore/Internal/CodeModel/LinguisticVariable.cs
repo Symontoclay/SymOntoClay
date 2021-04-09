@@ -1,9 +1,10 @@
-﻿//using System;
+﻿using System;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SymOntoClay.Core.Internal.DataResolvers;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
@@ -11,10 +12,31 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         public StrongIdentifierValue Name { get; set; }
         public RangeValue Range { get; set; } = new RangeValue();
+        public LinguisticVariableConstraint Constraint { get; set; } = new LinguisticVariableConstraint();
         public List<FuzzyLogicNonNumericValue> Values { get; set; } = new List<FuzzyLogicNonNumericValue>();
         public List<FuzzyLogicOperator> Operators { get; set; } = new List<FuzzyLogicOperator>();
 
         public CodeEntity CodeEntity { get; set; }
+
+        public bool IsFitByСonstraint(ReasonOfFuzzyLogicResolving reason)
+        {
+            if(Constraint == null)
+            {
+                if(reason == null)
+                {
+                    return true;
+                }
+
+                if(reason.Kind == KindOfReasonOfFuzzyLogicResolving.Unknown)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            return Constraint.isFit(reason);
+        }
 
         public bool IsFitByRange(NumberValue x)
         {
@@ -79,6 +101,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             result.Name = Name.Clone(context);
             result.Range = Range?.Clone(context);
+            result.Constraint = Constraint?.Clone(context);
             result.Values = Values?.Select(p => p.Clone(context)).ToList();
             result.Operators = Operators?.Select(p => p.Clone(context)).ToList();
 
@@ -153,8 +176,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(Name), Name);
+            sb.PrintObjProp(n, nameof(Name), Name);            
             sb.PrintObjProp(n, nameof(Range), Range);
+            sb.PrintObjProp(n, nameof(Constraint), Constraint);
             sb.PrintObjListProp(n, nameof(Values), Values);
             sb.PrintObjListProp(n, nameof(Operators), Operators);
 
@@ -170,6 +194,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintShortObjProp(n, nameof(Name), Name);
             sb.PrintShortObjProp(n, nameof(Range), Range);
+            sb.PrintShortObjProp(n, nameof(Constraint), Constraint);
             sb.PrintShortObjListProp(n, nameof(Values), Values);
 
             sb.Append(base.PropertiesToShortString(n));
@@ -184,6 +209,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintBriefObjProp(n, nameof(Name), Name);
             sb.PrintBriefObjProp(n, nameof(Range), Range);
+            sb.PrintBriefObjProp(n, nameof(Constraint), Constraint);
             sb.PrintExistingList(n, nameof(Values), Values);
 
             sb.Append(base.PropertiesToBriefString(n));

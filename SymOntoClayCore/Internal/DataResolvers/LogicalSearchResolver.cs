@@ -713,7 +713,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             //options.Logger.Log($"rightVal = {rightVal}");
 #endif
 
-                            var resultOfComparison = Compare(leftVal, rightVal, null, null, options, null);
+                            var resultOfComparison = Compare(leftVal, rightVal, null, null, null, options, null);
 
                             if (resultOfComparison)
                             {
@@ -925,7 +925,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             var leftVal = leftVarsDict[varName];
                             var rightVal = rightVarsDict[varName];
 
-                            var resultOfComparison = Compare(leftVal, rightVal, null, null, options, null);
+                            var resultOfComparison = Compare(leftVal, rightVal, null, null, null, options, null);
 
                             if(resultOfComparison)
                             {
@@ -1080,16 +1080,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //}
 #endif
 
+            var targetRelationName = queryExecutingCard.TargetRelation;
+
             var usedKeysList = queryExecutingCard.UsedKeysList;
 
             var useInheritance = options.UseInheritance;
             var inheritanceResolver = _inheritanceResolver;
 
-            var targetRelationsList = processedExpr.RelationsDict[queryExecutingCard.TargetRelation];
+            var targetRelationsList = processedExpr.RelationsDict[targetRelationName];
 
 #if DEBUG
+            options.Logger.Log($"targetRelationName = {targetRelationName}");
             //options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");
 #endif
+
+            var reasonOfFuzzyLogicResolving = new ReasonOfFuzzyLogicResolving();
+            reasonOfFuzzyLogicResolving.Kind = KindOfReasonOfFuzzyLogicResolving.Relation;
+            reasonOfFuzzyLogicResolving.RelationName = targetRelationName;
 
             foreach (var targetRelation in targetRelationsList)
             {
@@ -1099,9 +1106,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
 #if DEBUG
-                //options.Logger.Log($"targetRelation = {targetRelation}");
-                //options.Logger.Log($"targetRelation = {targetRelation.GetHumanizeDbgString()}");
-                //options.Logger.Log($"targetRelation.Name = {targetRelation.Name}");
+                options.Logger.Log($"targetRelation = {targetRelation}");
+                options.Logger.Log($"targetRelation = {targetRelation.GetHumanizeDbgString()}");
+                options.Logger.Log($"targetRelation.Name = {targetRelation.Name}");
 #endif
 
                 usedKeysList.Add(targetRelation.Name);
@@ -1185,7 +1192,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         //options.Logger.Log($"tmpNamesList_2 = {JsonConvert.SerializeObject(tmpNamesList_2, Formatting.Indented)}");
 #endif
 
-                        var resultOfComparison = CompareKnownInfoAndExpressionNode(knownInfo, paramOfTargetRelation, additionalKeys_1, additionalKeys_2, options, comparisonQueryExecutingCard);
+                        var resultOfComparison = CompareKnownInfoAndExpressionNode(knownInfo, paramOfTargetRelation, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, comparisonQueryExecutingCard);
 
 #if DEBUG
                         //options.Logger.Log($"resultOfComparison = {resultOfComparison}");
@@ -1336,11 +1343,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //throw new NotImplementedException();
         }
 
-        private bool CompareKnownInfoAndExpressionNode(QueryExecutingCardAboutKnownInfo knownInfo, LogicalQueryNode expressionNode, List<StrongIdentifierValue> additionalKeys_1, List<StrongIdentifierValue> additionalKeys_2, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard)
+        private bool CompareKnownInfoAndExpressionNode(QueryExecutingCardAboutKnownInfo knownInfo, LogicalQueryNode expressionNode, List<StrongIdentifierValue> additionalKeys_1, List<StrongIdentifierValue> additionalKeys_2, ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard)
         {
             var knownInfoExpression = knownInfo.Expression;
 
-            return Compare(knownInfoExpression, expressionNode, additionalKeys_1, additionalKeys_2, options, queryExecutingCard);
+            return Compare(knownInfoExpression, expressionNode, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, queryExecutingCard);
         }
 
         private void FillExecutingCardForCallingFromRelationForProduction(BaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
@@ -1555,7 +1562,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
         }
 
-        private bool Compare(LogicalQueryNode expressionNode1, LogicalQueryNode expressionNode2, List<StrongIdentifierValue> additionalKeys_1, List<StrongIdentifierValue> additionalKeys_2, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard)
+        private bool Compare(LogicalQueryNode expressionNode1, LogicalQueryNode expressionNode2, List<StrongIdentifierValue> additionalKeys_1, List<StrongIdentifierValue> additionalKeys_2, ReasonOfFuzzyLogicResolving reason, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard)
         {
 #if DEBUG
             //logger.Log($"(expressionNode1 == null) = {expressionNode1 == null} (expressionNode2 == null) = {expressionNode2 == null}");
@@ -1690,7 +1697,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return false;
                 }
 
-                return _fuzzyLogicResolver.Equals(conceptNode.Name, _numberValueLinearResolver.Resolve(value, localCodeExecutionContext), localCodeExecutionContext);
+                return _fuzzyLogicResolver.Equals(conceptNode.Name, _numberValueLinearResolver.Resolve(value, localCodeExecutionContext), reason, localCodeExecutionContext);
             }
 
             if ((expressionNode1.Kind == KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence && expressionNode2.Kind == KindOfLogicalQueryNode.Value) || (expressionNode2.Kind == KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence && expressionNode1.Kind == KindOfLogicalQueryNode.Value))
@@ -1726,7 +1733,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return false;
                 }
 
-                return _fuzzyLogicResolver.Equals(sequenceNode.FuzzyLogicNonNumericSequenceValue, _numberValueLinearResolver.Resolve(value, localCodeExecutionContext), localCodeExecutionContext);
+                return _fuzzyLogicResolver.Equals(sequenceNode.FuzzyLogicNonNumericSequenceValue, _numberValueLinearResolver.Resolve(value, localCodeExecutionContext), reason, localCodeExecutionContext);
             }
 
             if (expressionNode1.Kind == KindOfLogicalQueryNode.Relation && expressionNode2.Kind == KindOfLogicalQueryNode.Relation)
@@ -1766,7 +1773,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     //_gbcLogger.Info($"?????????????????>>>>>>>>>>queryExecutingCard (after) = {queryExecutingCard}");
 #endif
 
-                    if (!Compare(param1, param2, null, null, options, queryExecutingCard))
+                    if (!Compare(param1, param2, null, null, reason, options, queryExecutingCard))
                     {
                         return false;
                     }

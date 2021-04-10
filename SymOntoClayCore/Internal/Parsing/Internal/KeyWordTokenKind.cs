@@ -46,6 +46,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         LinguisticVariable,
         For,
         Range,
-        Terms
+        Terms,
+        Constraints,
+        Relation,
+        Inheritance
     }
 }

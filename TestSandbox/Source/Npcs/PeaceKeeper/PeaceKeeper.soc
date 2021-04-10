@@ -1,9 +1,13 @@
 ﻿linvar age for range (0, 150]
 {
-    `teenager` = Trapezoid(10, 12, 17, 20);
-	//`teenager` = L(5, 10);
-	//`teenager` = S(12, 22);
-	//`teenager` = S(12, 17, 22);
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+	    //`teenager` = L(5, 10);
+	    //`teenager` = S(12, 22);
+	    //`teenager` = S(12, 17, 22);
 }
 
 app PeaceKeeper is [0.5] exampleClass

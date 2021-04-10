@@ -147,6 +147,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 result ^= Range.GetLongHashCode();
             }
 
+            if (Constraint != null)
+            {
+                Constraint.CheckDirty();
+            }
+
             if (!Values.IsNullOrEmpty())
             {
                 foreach (var value in Values)
@@ -208,8 +213,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(Name), Name);
-            sb.PrintBriefObjProp(n, nameof(Range), Range);
-            sb.PrintBriefObjProp(n, nameof(Constraint), Constraint);
+            sb.PrintExisting(n, nameof(Range), Range);
+            sb.PrintExisting(n, nameof(Constraint), Constraint);
             sb.PrintExistingList(n, nameof(Values), Values);
 
             sb.Append(base.PropertiesToBriefString(n));

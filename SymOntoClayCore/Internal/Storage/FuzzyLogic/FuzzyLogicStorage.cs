@@ -46,30 +46,37 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
 #if DEBUG
                 Log($"linguisticVariable = {linguisticVariable}");
 
-                if(linguisticVariable.Name.NameValue == "age")
-                {
-                    var constraintItem = new LinguisticVariableConstraintItem();
-                    constraintItem.Kind = KindOfLinguisticVariableСonstraintItem.Inheritance;
+                //if(linguisticVariable.Name.NameValue == "age")
+                //{
+                    //var constraintItem = new LinguisticVariableConstraintItem();
+                    //constraintItem.Kind = KindOfLinguisticVariableСonstraintItem.Inheritance;
 
-                    Log($"constraintItem.ToDbgString() = {constraintItem.ToDbgString()}");
+                    //Log($"constraintItem.ToDbgString() = {constraintItem.ToDbgString()}");
 
-                    linguisticVariable.Constraint.Items.Add(constraintItem);
+                    //linguisticVariable.Constraint.Items.Add(constraintItem);
 
-                    constraintItem = new LinguisticVariableConstraintItem();
-                    constraintItem.Kind = KindOfLinguisticVariableСonstraintItem.Relation;
-                    constraintItem.RelationName = NameHelper.CreateName("age");
+                    //constraintItem = new LinguisticVariableConstraintItem();
+                    //constraintItem.Kind = KindOfLinguisticVariableСonstraintItem.Relation;
+                    //constraintItem.RelationName = NameHelper.CreateName("age");
 
-                    Log($"constraintItem.ToDbgString() = {constraintItem.ToDbgString()}");
+                    //Log($"constraintItem.ToDbgString() = {constraintItem.ToDbgString()}");
 
-                    linguisticVariable.Constraint.Items.Add(constraintItem);
+                    //linguisticVariable.Constraint.Items.Add(constraintItem);
 
-                    Log($"linguisticVariable (after) = {linguisticVariable}");
-
-                    //throw new NotImplementedException();
-                }
+                    //Log($"linguisticVariable (2) = {linguisticVariable}");
+                //}
 #endif
 
                 linguisticVariable.CheckDirty();
+
+#if DEBUG
+                //if (linguisticVariable.Name.NameValue == "age")
+                //{
+                //    Log($"linguisticVariable (3) = {linguisticVariable}");
+
+                //    //throw new NotImplementedException();
+                //}
+#endif
 
                 var holder = linguisticVariable.Holder;
 

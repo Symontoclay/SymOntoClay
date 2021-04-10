@@ -865,6 +865,36 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Terms;
                             break;
                         }
+
+                        if (string.Compare(content, "constraints", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Constraints;
+                            break;
+                        }
+
+                        if (string.Compare(content, "relation", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Relation;
+                            break;
+                        }
+
+                        if (string.Compare(content, "rel", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Relation;
+                            break;
+                        }
+
+                        if (string.Compare(content, "inheritance", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Inheritance;
+                            break;
+                        }
+
+                        if (string.Compare(content, "inh", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Inheritance;
+                            break;
+                        }
                     }
                     break;
 

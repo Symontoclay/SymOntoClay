@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.DataResolvers;
+﻿using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -10,11 +11,36 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class LinguisticVariableConstraint : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public List<LinguisticVariableConstraintItem> Items { get; set; } = new List<LinguisticVariableConstraintItem>();
+        public void AddItem(LinguisticVariableConstraintItem item)
+        {
+            if(item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            if(_items.Contains(item))
+            {
+                return;
+            }
+
+            _items.Add(item);
+
+            //var kindOfItem = item.Kind;
+
+            //switch(kindOfItem)
+            //{
+            //    default:
+            //        throw new ArgumentOutOfRangeException(nameof(kindOfItem), kindOfItem, null);
+            //}
+        }
+
+        public IEnumerable<LinguisticVariableConstraintItem> Items => _items;
+
+        private List<LinguisticVariableConstraintItem> _items { get; set; } = new List<LinguisticVariableConstraintItem>();
 
         public bool isFit(ReasonOfFuzzyLogicResolving reason)
         {
-            if((reason == null || reason.Kind == KindOfReasonOfFuzzyLogicResolving.Unknown) && (Items.IsNullOrEmpty() || Items.All(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Unknown)))
+            if((reason == null || reason.Kind == KindOfReasonOfFuzzyLogicResolving.Unknown) && _items.IsNullOrEmpty())
             {
                 return true;
             }
@@ -24,13 +50,70 @@ namespace SymOntoClay.Core.Internal.CodeModel
             switch(kindOfReson)
             {
                 case KindOfReasonOfFuzzyLogicResolving.Inheritance:
-                    return Items.Any(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Inheritance);
+                    return _items.Any(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Inheritance);
 
                 case KindOfReasonOfFuzzyLogicResolving.Relation:
-                    return Items.Any(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Relation && p.RelationName == reason.RelationName);
+                    return _items.Any(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Relation && p.RelationName == reason.RelationName);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfReson), kindOfReson, null);
+            }
+        }
+
+        private bool _isDirty = true;
+
+        public void CheckDirty()
+        {
+            if (_isDirty)
+            {
+                Check();
+                _isDirty = false;
+            }
+        }
+
+        public void Check()
+        {
+            if (_items.Any(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Unknown))
+            {
+                throw new Exception("Linguistic variable constraints can not be Unknown!");
+            }
+
+            if(_items.Any(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Inheritance))
+            {
+                if (_items.Count(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Inheritance) > 1)
+                {
+                    throw new Exception("Linguistic variable's constraints for inheritance is duplicated!");
+                }
+
+                if(!_items.Any(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Relation && p.RelationName.NameValue == "is"))
+                {
+                    var relationItem = new LinguisticVariableConstraintItem() { Kind = KindOfLinguisticVariableСonstraintItem.Relation };
+                    relationItem.RelationName = NameHelper.CreateName("is");
+                    _items.Add(relationItem);
+                }
+            }
+
+            if(_items.Any(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Relation))
+            {
+                var groppedItems = _items.Where(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Relation).GroupBy(p => p.RelationName).Where(p => p.Count() > 1).Select(p => $"`{p.Key.NameValue}`");
+            
+                if(groppedItems.Any())
+                {
+                    if(groppedItems.Count() == 1)
+                    {
+                        throw new Exception($"Linguistic variable's constraint for relation {groppedItems.First()} is duplicated!");
+                    }
+                    else
+                    {
+                        throw new Exception($"Linguistic variable's constraints for relation {string.Join(", ", groppedItems)} are duplicated!");
+                    }
+                }
+
+                if(_items.Any(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Relation && p.RelationName.NameValue == "is") && !_items.Any(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Inheritance))
+                {
+                    var inheritanceItem = new LinguisticVariableConstraintItem() { Kind = KindOfLinguisticVariableСonstraintItem.Inheritance };
+                    _items.Add(inheritanceItem);
+                }
             }
         }
 
@@ -59,7 +142,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new LinguisticVariableConstraint();
             context[this] = result;
 
-            result.Items = Items?.Select(p => p.Clone(context)).ToList();
+            result._items = _items?.Select(p => p.Clone(context)).ToList();
 
             return result;
         }

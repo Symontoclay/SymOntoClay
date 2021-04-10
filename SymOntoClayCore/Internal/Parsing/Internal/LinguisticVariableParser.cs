@@ -24,7 +24,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotNameOfPredefinedMembershipFunction,
             WaitForParameterOfMembershipFunction,
             GotParameterOfMembershipFunction,
-            GotPredefinedMembershipFunction
+            GotPredefinedMembershipFunction,
+            WaitConstraint,
+            GotConstraintFor,
+            GotConstraintRelationMark,
+            GotConstraintRelationName,
+            GotConstraintInheritanceMark
         }
 
         public LinguisticVariableParser(InternalParserContext context)
@@ -38,6 +43,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private FuzzyLogicNonNumericValue _currentFuzzyLogicNonNumericValue;
         private string _nameOfPredefinedMembershipFunction = string.Empty;
         private List<NumberValue> _parametersOfPredefinedMembershipFunction;
+        private LinguisticVariableConstraintItem _currentConstraintItem;
 
         /// <inheritdoc/>
         protected override void OnEnter()
@@ -75,9 +81,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");
-            //Log($"_state = {_state}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
+            //Log($"Result = {Result}");           
 #endif
 
             switch (_state)
@@ -205,9 +211,30 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                         _context.Recovery(_currToken);
                                         _context.Recovery(nextToken);
-                                        _state = State.WaitTerm;                                        
+                                        _state = State.WaitTerm;
                                     }
                                     break;
+
+                                case KeyWordTokenKind.Constraints:
+                                    {
+                                        var nextToken = _context.GetToken();
+
+#if DEBUG
+                                        //Log($"nextToken = {nextToken}");
+#endif
+
+                                        if (nextToken.TokenKind == TokenKind.Colon)
+                                        {
+                                            _state = State.WaitConstraint;
+                                            break;
+                                        }
+
+                                        _context.Recovery(_currToken);
+                                        _context.Recovery(nextToken);
+                                        _state = State.WaitTerm;
+                                    }
+                                    break;
+                                    
 
                                 default:
                                     _context.Recovery(_currToken);
@@ -225,14 +252,36 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Constraints:
+                                    {
+                                        var nextToken = _context.GetToken();
+
+#if DEBUG
+                                        Log($"nextToken = {nextToken}");
+#endif
+
+                                        if (nextToken.TokenKind == TokenKind.Colon)
+                                        {
+                                            _state = State.WaitConstraint;
+                                            break;
+                                        }
+
+                                        _context.Recovery(_currToken);
+                                        _context.Recovery(nextToken);
+                                        _state = State.WaitTerm;
+                                    }
+                                    break;
+
+                                default:
+                                    GetTermName();
+                                    break;
+                            }
+                            break;
+
                         case TokenKind.Identifier:
-                            _nameOfPredefinedMembershipFunction = string.Empty;
-                            _parametersOfPredefinedMembershipFunction = null;
-                            _currentFuzzyLogicNonNumericValue = new FuzzyLogicNonNumericValue();
-                            _linguisticVariable.Values.Add(_currentFuzzyLogicNonNumericValue);
-                            _currentFuzzyLogicNonNumericValue.Parent = _linguisticVariable;
-                            _currentFuzzyLogicNonNumericValue.Name = ParseName(_currToken.Content);
-                            _state = State.GotTermName;
+                            GetTermName();
                             break;
 
                         case TokenKind.CloseFigureBracket:
@@ -344,6 +393,112 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
+                case State.WaitConstraint:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.For:
+                                    _currentConstraintItem = new LinguisticVariableConstraintItem();
+                                    _linguisticVariable.Constraint.AddItem(_currentConstraintItem);
+                                    _state = State.GotConstraintFor;
+                                    break;
+
+                                case KeyWordTokenKind.Terms:
+                                    {
+                                        var nextToken = _context.GetToken();
+
+#if DEBUG
+                                        //Log($"nextToken = {nextToken}");
+#endif
+
+                                        if (nextToken.TokenKind == TokenKind.Colon)
+                                        {
+                                            _state = State.WaitTerm;
+                                            break;
+                                        }
+
+                                        throw new UnexpectedTokenException(_currToken);
+                                    }
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        case TokenKind.CloseFigureBracket:
+                            Exit();
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotConstraintFor:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Relation:
+                                    _currentConstraintItem.Kind = KindOfLinguisticVariableСonstraintItem.Relation;
+                                    _state = State.GotConstraintRelationMark;
+                                    break;
+
+                                case KeyWordTokenKind.Inheritance:
+                                    _currentConstraintItem.Kind = KindOfLinguisticVariableСonstraintItem.Inheritance;
+                                    _state = State.GotConstraintInheritanceMark;
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotConstraintRelationMark:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                            _currentConstraintItem.RelationName = ParseName(_currToken.Content);
+                            _state = State.GotConstraintRelationName;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotConstraintRelationName:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Semicolon:
+                            _state = State.WaitConstraint;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotConstraintInheritanceMark:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Semicolon:
+                            _state = State.WaitConstraint;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
@@ -370,6 +525,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new Exception($"Unknown membership function `{_nameOfPredefinedMembershipFunction}`!");
             }
+        }
+
+        private void GetTermName()
+        {
+            _nameOfPredefinedMembershipFunction = string.Empty;
+            _parametersOfPredefinedMembershipFunction = null;
+            _currentFuzzyLogicNonNumericValue = new FuzzyLogicNonNumericValue();
+            _linguisticVariable.Values.Add(_currentFuzzyLogicNonNumericValue);
+            _currentFuzzyLogicNonNumericValue.Parent = _linguisticVariable;
+            _currentFuzzyLogicNonNumericValue.Name = ParseName(_currToken.Content);
+            _state = State.GotTermName;
         }
 
         private IFuzzyLogicMemberFunctionHandler CreateTrapezoidMembershipPredefinedHandler()

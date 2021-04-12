@@ -98,9 +98,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_isGroup = {_isGroup}");
-            Log($"_currToken = {_currToken}");
+            //Log($"_state = {_state}");
+            //Log($"_isGroup = {_isGroup}");
+            //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");
             //Log($"_nodePoint = {_nodePoint}");
 #endif
@@ -429,7 +429,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var value = NameHelper.CreateName(_currToken.Content);
 
 #if DEBUG
-            Log($"value = {value}");
+            //Log($"value = {value}");
 
             //if(_currToken.Content == "NULL")
             //{
@@ -440,7 +440,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var nextToken = _context.GetToken();
 
 #if DEBUG
-            Log($"nextToken = {nextToken}");
+            //Log($"nextToken = {nextToken}");
 
             //if(nextToken.Content == "is")
             //{

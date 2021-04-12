@@ -98,11 +98,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_isGroup = {_isGroup}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_isGroup = {_isGroup}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");
-            //Log($"_nodePoint = {_nodePoint}");            
-            //Log($"_state = {_state}");
+            //Log($"_nodePoint = {_nodePoint}");
 #endif
 
             if(_terminatingTokenKindList.Contains(_currToken.TokenKind))
@@ -332,6 +332,26 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
+                case State.GotConcept:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                            switch (_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Is:
+                                    ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.Is);
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
                 case State.GotOperator:
                     switch (_currToken.TokenKind)
                     {
@@ -409,7 +429,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var value = NameHelper.CreateName(_currToken.Content);
 
 #if DEBUG
-            //Log($"value = {value}");
+            Log($"value = {value}");
 
             //if(_currToken.Content == "NULL")
             //{
@@ -420,7 +440,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var nextToken = _context.GetToken();
 
 #if DEBUG
-            //Log($"nextToken = {nextToken}");
+            Log($"nextToken = {nextToken}");
+
+            //if(nextToken.Content == "is")
+            //{
+                //throw new NotImplementedException();
+            //}
 #endif
 
             switch (value.KindOfName)
@@ -434,33 +459,32 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.Comma:
                         case TokenKind.CloseRoundBracket:
+                        case TokenKind.CloseFigureBracket:
                             _context.Recovery(nextToken);
                             ProcessConceptOrQuestionVar(value);
                             break;
 
                         case TokenKind.Word:
+                            switch (nextToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Is:
+                                    _context.Recovery(nextToken);
+                                    ProcessConceptOrQuestionVar(value);
+                                    break;
+
+                                default:
+                                    _context.Recovery(nextToken);
+                                    StartProcessingFuzzyLogicNonNumericSequenceValue(value);
+                                    break;
+                            }
+                            break;
+
                         case TokenKind.Identifier:
                             switch(_state)
                             {
                                 case State.Init:
-                                    {
-                                        _context.Recovery(nextToken);
-
-                                        _fuzzyLogicNonNumericSequenceValue = new FuzzyLogicNonNumericSequenceValue();
-
-                                        var node = new LogicalQueryNode();
-                                        node.Kind = KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence;
-
-                                        node.FuzzyLogicNonNumericSequenceValue = _fuzzyLogicNonNumericSequenceValue;
-
-                                        _fuzzyLogicNonNumericSequenceValue.AddIdentifier(value);
-
-                                        var intermediateNode = new IntermediateAstNode(node);
-
-                                        AstNodesLinker.SetNode(intermediateNode, _nodePoint);
-
-                                        _state = State.GotFuzzyLogicNonNumericSequenceItem;
-                                    }
+                                    _context.Recovery(nextToken);
+                                    StartProcessingFuzzyLogicNonNumericSequenceValue(value);
                                     break;
 
                                 default:
@@ -494,6 +518,24 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new UnexpectedTokenException(_currToken);
             }
+        }
+
+        private void StartProcessingFuzzyLogicNonNumericSequenceValue(StrongIdentifierValue value)
+        {
+            _fuzzyLogicNonNumericSequenceValue = new FuzzyLogicNonNumericSequenceValue();
+
+            var node = new LogicalQueryNode();
+            node.Kind = KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence;
+
+            node.FuzzyLogicNonNumericSequenceValue = _fuzzyLogicNonNumericSequenceValue;
+
+            _fuzzyLogicNonNumericSequenceValue.AddIdentifier(value);
+
+            var intermediateNode = new IntermediateAstNode(node);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+            _state = State.GotFuzzyLogicNonNumericSequenceItem;
         }
 
         private void ProcessConceptOrQuestionVar(StrongIdentifierValue value)
@@ -597,6 +639,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 case KindOfOperatorOfLogicalQueryNode.Or:
                     kind = KindOfOperator.Or;
+                    break;
+
+                case KindOfOperatorOfLogicalQueryNode.Is:
+                    kind = KindOfOperator.Is;
                     break;
 
                 default:

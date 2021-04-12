@@ -1,5 +1,6 @@
 ﻿using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace SymOntoClay.Core.Internal.Convertors
     public static class ConvertorToNormalized
     {
 #if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static RuleInstance Convert(RuleInstance source)
@@ -142,8 +143,8 @@ namespace SymOntoClay.Core.Internal.Convertors
                     switch (source.KindOfOperator)
                     {
                         case KindOfOperatorOfLogicalQueryNode.Is:
-                            return ConvertIsOperatorLogicalQueryNode(source, convertingContext);
-
+                            return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext);
+                        
                         case KindOfOperatorOfLogicalQueryNode.And:
                             return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext);
 
@@ -171,6 +172,23 @@ namespace SymOntoClay.Core.Internal.Convertors
                     return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext);
 
                 case KindOfLogicalQueryNode.Relation:
+                    if(source.ParamsList.Count == 1)
+                    {
+#if DEBUG
+                        _gbcLogger.Info($"source = {source}");
+#endif
+
+                        var param = source.ParamsList[0];
+
+#if DEBUG
+                        _gbcLogger.Info($"param = {param}");
+#endif
+
+                        if(param.Kind == KindOfLogicalQueryNode.Concept || param.Kind == KindOfLogicalQueryNode.Entity)
+                        {
+                            return ConvertUnaryPredicateToFullIsPredicate(source, convertingContext);
+                        }
+                    }
                     return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext);
 
                 case KindOfLogicalQueryNode.LogicalVar:
@@ -188,6 +206,51 @@ namespace SymOntoClay.Core.Internal.Convertors
                 default:
                     throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, null);
             }
+        }
+
+        private static LogicalQueryNode ConvertUnaryPredicateToFullIsPredicate(LogicalQueryNode source, Dictionary<object, object> convertingContext)
+        {
+#if DEBUG
+            _gbcLogger.Info($"source = {source}");
+            _gbcLogger.Info($"source.GetHumanizeDbgString() = {source.GetHumanizeDbgString()}");
+#endif
+
+            if (source == null)
+            {
+                return null;
+            }
+
+            if (convertingContext.ContainsKey(source))
+            {
+                return (LogicalQueryNode)convertingContext[source];
+            }
+
+            var result = new LogicalQueryNode();
+            convertingContext[source] = result;
+
+            result.Kind = KindOfLogicalQueryNode.Relation;
+            result.Name = NameHelper.CreateName("is");
+            result.ParamsList = new List<LogicalQueryNode>();
+
+            result.ParamsList.Add(source.ParamsList[0]);
+
+            var superNameNode = new LogicalQueryNode();
+            superNameNode.Kind = KindOfLogicalQueryNode.Concept;
+            superNameNode.Name = source.Name;
+
+            result.ParamsList.Add(superNameNode);
+
+            var rankNode = new LogicalQueryNode();
+            result.ParamsList.Add(rankNode);
+            rankNode.Kind = KindOfLogicalQueryNode.Value;
+            rankNode.Value = new LogicalValue(1);
+
+#if DEBUG
+            _gbcLogger.Info($"result = {result}");
+            _gbcLogger.Info($"result.GetHumanizeDbgString() = {result.GetHumanizeDbgString()}");
+#endif
+
+            return result;
         }
 
         private static LogicalQueryNode ConvertLogicalQueryNodeInDefaultWay(LogicalQueryNode source, Dictionary<object, object> convertingContext)
@@ -248,68 +311,8 @@ namespace SymOntoClay.Core.Internal.Convertors
             return result;
         }
 
-        private static LogicalQueryNode ConvertIsOperatorLogicalQueryNode(LogicalQueryNode source, Dictionary<object, object> convertingContext)
-        {
-#if DEBUG
-            //_gbcLogger.Info($"source = {source}");
-#endif
-
-            if (source == null)
-            {
-                return null;
-            }
-
-            if (convertingContext.ContainsKey(source))
-            {
-                return (LogicalQueryNode)convertingContext[source];
-            }
-
-            var leftNode = source.Left;
-            var rightNode = source.Right;
-
-#if DEBUG
-            //_gbcLogger.Info($"leftNode = {leftNode}");
-            //_gbcLogger.Info($"rightNode = {rightNode}");
-#endif
-
-            var result = new LogicalQueryNode() { Kind = KindOfLogicalQueryNode.Relation };
-            convertingContext[source] = result;
-
-            var name = rightNode.Name;
-
-            result.Name = name;
-
-            if (name.KindOfName == KindOfName.QuestionVar)
-            {
-                result.IsQuestion = true;
-            }
-
-            result.ParamsList = new List<LogicalQueryNode>() { leftNode };
-
-            FillAnnotationsModalitiesAndSections(source, result, convertingContext);
-
-#if DEBUG
-            //_gbcLogger.Info($"result = {result}");
-#endif
-
-            return result;
-        }
-
         private static void FillAnnotationsModalitiesAndSections(AnnotatedItem source, AnnotatedItem dest, Dictionary<object, object> convertingContext)
         {
-            if (dest.QuantityQualityModalities == null)
-            {
-                dest.QuantityQualityModalities = new List<Value>();
-            }
-
-            if (!source.QuantityQualityModalities.IsNullOrEmpty())
-            {
-                foreach (var item in source.QuantityQualityModalities)
-                {
-                    dest.QuantityQualityModalities.Add(item);
-                }
-            }
-
             if (dest.WhereSection == null)
             {
                 dest.WhereSection = new List<Value>();

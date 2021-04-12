@@ -31,8 +31,6 @@ namespace SymOntoClay.Core.Internal
 {
     public class DefaultSettingsOfCodeEntity: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public IList<Value> QuantityQualityModalities { get; set; }
-
         public IList<Value> WhereSection { get; set; }
 
         public StrongIdentifierValue Holder { get; set; }
@@ -62,7 +60,6 @@ namespace SymOntoClay.Core.Internal
             var result = new DefaultSettingsOfCodeEntity();
             context[this] = result;
 
-            result.QuantityQualityModalities = QuantityQualityModalities?.Select(p => p.CloneValue(context)).ToList();
             result.WhereSection = WhereSection?.Select(p => p.CloneValue(context)).ToList();
             result.Holder = Holder?.Clone(context);
 
@@ -87,7 +84,6 @@ namespace SymOntoClay.Core.Internal
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintObjListProp(n, nameof(WhereSection), WhereSection);
             sb.PrintObjProp(n, nameof(Holder), Holder);
 
@@ -112,7 +108,6 @@ namespace SymOntoClay.Core.Internal
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintShortObjListProp(n, nameof(WhereSection), WhereSection);
             sb.PrintShortObjProp(n, nameof(Holder), Holder);
 
@@ -137,7 +132,6 @@ namespace SymOntoClay.Core.Internal
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintExistingList(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintExistingList(n, nameof(WhereSection), WhereSection);
 
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);

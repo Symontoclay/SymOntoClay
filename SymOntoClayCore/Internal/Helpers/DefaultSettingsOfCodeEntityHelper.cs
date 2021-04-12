@@ -35,11 +35,6 @@ namespace SymOntoClay.Core.Internal.Helpers
         {
             var context = new Dictionary<object, object>();
 
-            if (dest.QuantityQualityModalities.IsNullOrEmpty() && !source.QuantityQualityModalities.IsNullOrEmpty()) 
-            {
-                dest.QuantityQualityModalities = source.QuantityQualityModalities.Select(p => p.CloneValue(context)).ToList();
-            }
-
             if (dest.WhereSection.IsNullOrEmpty() && !source.WhereSection.IsNullOrEmpty())
             {
                 dest.WhereSection = source.WhereSection.Select(p => p.CloneValue(context)).ToList();
@@ -91,11 +86,6 @@ namespace SymOntoClay.Core.Internal.Helpers
             if(defaultSettings == null)
             {
                 return;
-            }
-
-            if(item.QuantityQualityModalities.IsNullOrEmpty() && !defaultSettings.QuantityQualityModalities.IsNullOrEmpty())
-            {
-                item.QuantityQualityModalities = defaultSettings.QuantityQualityModalities.Select(p => p.CloneValue(context)).ToList();
             }
 
             if(item.WhereSection.IsNullOrEmpty() && !defaultSettings.WhereSection.IsNullOrEmpty())

@@ -16,6 +16,7 @@ app PeaceKeeper is [0.5] exampleClass
 	{: see(I, #a) :}
 	{: dog(#b) :}
 	{: cat(#с) :}
+	{: animal(cat) :}
 	//{: focus(I, friend) :}
 	{: age(#Tom, 15) :}
 	//{: value(distance(I, #Tom), 1) :}
@@ -27,9 +28,10 @@ app PeaceKeeper is [0.5] exampleClass
 
 		 //use @@self is linux;
 
+		 select {: { cat is animal } :} >> @>log;
 		 //select {: see(I, barrel) :} >> @>log;
 		 //select {: son(?x, ?y) :} >> @>log;
-		 select {: age(#Tom, `teenager`) :} >> @>log;
+		 //select {: age(#Tom, `teenager`) :} >> @>log;
 		 //select {: value(distance(I, $x), $y) :} >> @>log;
 		 //select {: distance(I, #Tom, $x) :} >> @>log;
 
@@ -43,9 +45,9 @@ app PeaceKeeper is [0.5] exampleClass
 		 "End" >> @>log;
 	}
 
-	on {: see(I, $x) & barrel($x) & !focus(I, friend) :} ($x >> @x) => {
-	     @x >> @>log;
-	}
+	//on {: see(I, $x) & barrel($x) & !focus(I, friend) :} ($x >> @x) => {
+	//     @x >> @>log;
+	//}
 
 	//on {: see(I, #`gun 1`) :} => {
 	//     "D" >> @>log;

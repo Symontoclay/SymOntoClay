@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
@@ -100,6 +101,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     {
                         case KindOfOperatorOfLogicalQueryNode.And:
                         case KindOfOperatorOfLogicalQueryNode.Or:
+                        case KindOfOperatorOfLogicalQueryNode.Is:
                             Left.PrepareDirty(contextOfConvertingExpressionNode, ruleInstance, rulePart);
                             Right.PrepareDirty(contextOfConvertingExpressionNode, ruleInstance, rulePart);
                             break;
@@ -230,6 +232,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     {
                         case KindOfOperatorOfLogicalQueryNode.And:
                         case KindOfOperatorOfLogicalQueryNode.Or:
+                        case KindOfOperatorOfLogicalQueryNode.Is:
                             Left.CalculateUsedKeys(usedKeysList);
                             Right.CalculateUsedKeys(usedKeysList);
                             break;
@@ -437,10 +440,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     {
                         var param = ParamsList.Single();
 
-                        if(param.Kind == KindOfLogicalQueryNode.Entity)
+                        if(param.Kind == KindOfLogicalQueryNode.Entity || param.Kind == KindOfLogicalQueryNode.Concept)
                         {
                             result.Add(this);
-                        }                        
+                        }
+                        break;
+                    }
+
+                    if(Name == NameHelper.CreateName("is"))
+                    {
+                        result.Add(this);
                     }
                     break;
 

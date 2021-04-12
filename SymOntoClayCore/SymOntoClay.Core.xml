@@ -1634,9 +1634,6 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.AsRuleInstanceValue">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.QuantityQualityModalities">
-            <inheritdoc/>
-        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.WhereSection">
             <inheritdoc/>
         </member>

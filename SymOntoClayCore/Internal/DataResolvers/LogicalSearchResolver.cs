@@ -172,7 +172,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private void FillExecutingCard(PrimaryRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            //options.Logger.Log($"Begin~~~~~~ GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
+            options.Logger.Log($"Begin~~~~~~ processedExpr = {processedExpr}");
+            options.Logger.Log($"Begin~~~~~~ processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
 #endif
 
 #if DEBUG
@@ -227,6 +228,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                         case KindOfOperatorOfLogicalQueryNode.Or:
                             FillExecutingCardForOrOperatorLogicalQueryNode(processedExpr, queryExecutingCard, dataSource, options);
+                            break;
+
+                        case KindOfOperatorOfLogicalQueryNode.Is:
+                            FillExecutingCardForIsOperatorLogicalQueryNode(processedExpr, queryExecutingCard, dataSource, options);
                             break;
 
                         default:
@@ -986,6 +991,53 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
         }
 
+        private void FillExecutingCardForIsOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        {
+#if DEBUG
+            var senderIndexedRuleInstance = queryExecutingCard.SenderIndexedRuleInstance;
+            var senderIndexedRulePart = queryExecutingCard.SenderIndexedRulePart;
+#endif
+
+#if DEBUG
+            options.Logger.Log($"processedExpr = {processedExpr}");
+            options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
+#endif
+
+            var leftExpr = processedExpr.Left;
+            var rightExpr = processedExpr.Right;
+
+#if DEBUG
+            options.Logger.Log($"leftExpr = {leftExpr}");
+            options.Logger.Log($"rightExpr = {rightExpr}");
+#endif
+
+            if ((leftExpr.Kind == KindOfLogicalQueryNode.Concept || leftExpr.Kind == KindOfLogicalQueryNode.Entity) && (rightExpr.Kind == KindOfLogicalQueryNode.Concept || rightExpr.Kind == KindOfLogicalQueryNode.Entity))
+            {
+                var additionalKeys_1 = _inheritanceResolver.GetSuperClassesKeysList(leftExpr.Name, options.LocalCodeExecutionContext);
+                var additionalKeys_2 = _inheritanceResolver.GetSuperClassesKeysList(rightExpr.Name, options.LocalCodeExecutionContext);
+
+                var reasonOfFuzzyLogicResolving = new ReasonOfFuzzyLogicResolving();
+                reasonOfFuzzyLogicResolving.Kind = KindOfReasonOfFuzzyLogicResolving.Inheritance;
+
+                var resultOfComparison = Compare(leftExpr, rightExpr, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, null);
+
+#if DEBUG
+                options.Logger.Log($"resultOfComparison = {resultOfComparison}");
+#endif
+
+                if(resultOfComparison == true)
+                {
+                    queryExecutingCard.IsSuccess = true;
+                    queryExecutingCard.UsedKeysList.Add(leftExpr.Name);
+                    queryExecutingCard.UsedKeysList.Add(rightExpr.Name);
+                }
+
+                return;
+            }
+
+            throw new NotImplementedException();
+        }
+
         private void BuildResultsOfQueryToRelationListForBinaryOperatorLogicalQueryNode(IEnumerator<StrongIdentifierValue> varNamesListEnumerator, Dictionary<StrongIdentifierValue, List<(StrongIdentifierValue, LogicalQueryNode)>> varValuesDict, List<(StrongIdentifierValue, LogicalQueryNode)> resultVarValuesList, IList<ResultOfQueryToRelation> resultsOfQueryToRelationList, OptionsOfFillExecutingCard options)
         {
             var varName = varNamesListEnumerator.Current;
@@ -1060,6 +1112,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
             //options.Logger.Log($"leftQueryExecutingCard = {leftQueryExecutingCard}");
 #endif
+
+            if(leftQueryExecutingCard.ResultsOfQueryToRelationList.Any())
+            {
+                throw new NotImplementedException();
+            }
 
             queryExecutingCard.IsSuccess = !leftQueryExecutingCard.IsSuccess;
             queryExecutingCard.UsedKeysList.AddRange(leftQueryExecutingCard.UsedKeysList);
@@ -1573,7 +1630,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //_gbcLogger.Info($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");
 #endif
 
-            if (expressionNode1.Kind == KindOfLogicalQueryNode.LogicalVar && expressionNode2.IsKeyRef)
+            if (expressionNode1.Kind == KindOfLogicalQueryNode.LogicalVar && (expressionNode2.Kind == KindOfLogicalQueryNode.Concept || expressionNode2.Kind == KindOfLogicalQueryNode.Entity))
             {
 #if DEBUG
                 //_gbcLogger.Info($"%%%%%% expressionNode1.Kind == KindOfLogicalQueryNode.LogicalVar && expressionNode2.IsKeyRef");
@@ -1593,7 +1650,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return true;
             }
 
-            if (expressionNode1.IsKeyRef && expressionNode2.IsKeyRef)
+            if ((expressionNode1.Kind == KindOfLogicalQueryNode.Concept || expressionNode1.Kind == KindOfLogicalQueryNode.Entity) && (expressionNode2.Kind == KindOfLogicalQueryNode.Concept || expressionNode2.Kind == KindOfLogicalQueryNode.Entity))
             {
                 var key_1 = expressionNode1.Name;
                 var key_2 = expressionNode2.Name;

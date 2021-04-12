@@ -118,6 +118,9 @@ namespace SymOntoClay.Core.DebugHelpers
         {
             switch (expr.Kind)
             {
+                case KindOfLogicalQueryNode.UnaryOperator:
+                    return UnaryOperatorToString(expr);
+
                 case KindOfLogicalQueryNode.BinaryOperator:
                     return BinaryOperatorToString(expr);
 
@@ -139,6 +142,28 @@ namespace SymOntoClay.Core.DebugHelpers
                 default:
                     throw new ArgumentOutOfRangeException(nameof(expr.Kind), expr.Kind, null);
             }
+        }
+
+        private static string UnaryOperatorToString(LogicalQueryNode expr)
+        {
+            var mark = string.Empty;
+
+            switch (expr.KindOfOperator)
+            {
+                case KindOfOperatorOfLogicalQueryNode.Not:
+                    mark = "not";
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(expr.KindOfOperator), expr.KindOfOperator, null);
+            }
+
+            var sb = new StringBuilder();            
+            sb.Append($" {mark} ");
+            sb.Append(AnnotatedItemToString(expr));
+            sb.Append(ToString(expr.Left));
+
+            return sb.ToString();
         }
 
         private static string BinaryOperatorToString(LogicalQueryNode expr)
@@ -220,12 +245,6 @@ namespace SymOntoClay.Core.DebugHelpers
             {
                 sb.Append(" |:");
 
-                if(!source.QuantityQualityModalities.IsNullOrEmpty())
-                {
-                    sb.Append(" ");
-                    sb.Append(QuantityQualityModalitiesToString(source.QuantityQualityModalities));
-                }
-
                 if(!source.WhereSection.IsNullOrEmpty())
                 {
                     sb.Append(" ");
@@ -236,11 +255,6 @@ namespace SymOntoClay.Core.DebugHelpers
             }
 
             return sb.ToString();
-        }
-
-        private static string QuantityQualityModalitiesToString(IList<Value> source)
-        {
-            return PrintModalityOrSection("=:", source);
         }
 
         private static string WhereSectionToString(IList<Value> source)

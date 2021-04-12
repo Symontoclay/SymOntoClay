@@ -34,9 +34,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class AnnotatedItem : IAnnotatedItem, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, ISymOntoClayDisposable
     {
-        [ResolveToType(typeof(LogicalValue))]
-        public virtual IList<Value> QuantityQualityModalities { get; set; } = new List<Value>();
-
         /// <summary>
         /// It is 'Clauses section' in the documentation.
         /// </summary>
@@ -48,7 +45,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <summary>
         /// Returns <c>true</c> if the instance has modalities or additional sections, otherwise returns <c>false</c>.
         /// </summary>
-        public bool HasModalitiesOrSections => !QuantityQualityModalities.IsNullOrEmpty() || !WhereSection.IsNullOrEmpty();
+        public bool HasModalitiesOrSections => !WhereSection.IsNullOrEmpty();
 
         public bool HasConditionalSections => !WhereSection.IsNullOrEmpty();
 
@@ -113,14 +110,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             ulong result = 0;
 
-            if (!QuantityQualityModalities.IsNullOrEmpty())
-            {
-                foreach (var item in QuantityQualityModalities)
-                {
-                    result ^= LongHashCodeWeights.BaseModalityWeight ^ item.GetLongHashCode();
-                }
-            }
-
             if (!WhereSection.IsNullOrEmpty())
             {
                 foreach (var item in WhereSection)
@@ -172,20 +161,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public void AppendAnnotations(AnnotatedItem source, Dictionary<object, object> cloneContext)
         {
-            if (source.QuantityQualityModalities == null)
-            {
-                QuantityQualityModalities = null;
-            }
-            else
-            {
-                QuantityQualityModalities = new List<Value>();
-
-                foreach(var item in source.QuantityQualityModalities)
-                {
-                    QuantityQualityModalities.Add(item.CloneValue(cloneContext));
-                }
-            }
-
             if(source.WhereSection == null)
             {
                 WhereSection = null;
@@ -240,14 +215,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     result.Add(annotation);
 
                     annotation.DiscoverAllAnnotations(result);
-                }
-            }
-
-            if (!QuantityQualityModalities.IsNullOrEmpty())
-            {
-                foreach (var item in QuantityQualityModalities)
-                {
-                    item.DiscoverAllAnnotations(result);
                 }
             }
 
@@ -345,7 +312,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(_longConditionalHashCode)} = {_longConditionalHashCode}");
             sb.AppendLine($"{spaces}{nameof(_longHashCode)} = {_longHashCode}");
 
-            sb.PrintObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintObjListProp(n, nameof(WhereSection), WhereSection);
             sb.PrintObjProp(n, nameof(Holder), Holder);
             sb.PrintObjListProp(n, nameof(Annotations), Annotations);
@@ -382,7 +348,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(_longConditionalHashCode)} = {_longConditionalHashCode}");
             sb.AppendLine($"{spaces}{nameof(_longHashCode)} = {_longHashCode}");
 
-            sb.PrintShortObjListProp(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintShortObjListProp(n, nameof(WhereSection), WhereSection);
             sb.PrintShortObjProp(n, nameof(Holder), Holder);
             sb.PrintShortObjListProp(n, nameof(Annotations), Annotations);
@@ -419,7 +384,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(_longConditionalHashCode)} = {_longConditionalHashCode}");
             sb.AppendLine($"{spaces}{nameof(_longHashCode)} = {_longHashCode}");
 
-            sb.PrintExistingList(n, nameof(QuantityQualityModalities), QuantityQualityModalities);
             sb.PrintExistingList(n, nameof(WhereSection), WhereSection);
 
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);

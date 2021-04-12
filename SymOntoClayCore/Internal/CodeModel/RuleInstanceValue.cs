@@ -49,10 +49,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         [ResolveToType(typeof(LogicalValue))]
-        public override IList<Value> QuantityQualityModalities { get => RuleInstance.QuantityQualityModalities; set => RuleInstance.QuantityQualityModalities = value; }
-
-        /// <inheritdoc/>
-        [ResolveToType(typeof(LogicalValue))]
         public override IList<Value> WhereSection { get => RuleInstance.WhereSection; set => RuleInstance.WhereSection = value; }
 
         /// <inheritdoc/>

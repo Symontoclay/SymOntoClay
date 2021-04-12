@@ -171,8 +171,8 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                 var inheritanceFact = CreateInheritanceFact(inheritanceItem);
 
 #if DEBUG
-                //Log($"inheritanceFact = {inheritanceFact}");
-                //Log($"inheritanceFact = {DebugHelperForRuleInstance.ToString(inheritanceFact)}");
+                Log($"inheritanceFact = {inheritanceFact}");
+                Log($"inheritanceFact = {DebugHelperForRuleInstance.ToString(inheritanceFact)}");
 #endif
                 lock(_factsIdRegistryLockObj)
                 {
@@ -281,25 +281,27 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
             fact.PrimaryPart = primaryPart;
             primaryPart.Parent = fact;
 
-            primaryPart.QuantityQualityModalities.Add(inheritanceItem.Rank);
+            var isRelation = new LogicalQueryNode();
+            isRelation.Name = NameHelper.CreateName("is");
+            isRelation.Kind = KindOfLogicalQueryNode.Relation;
+            isRelation.ParamsList = new List<LogicalQueryNode>();
 
-            var isExpr = new LogicalQueryNode
-            {
-                Kind = KindOfLogicalQueryNode.BinaryOperator,
-                KindOfOperator = KindOfOperatorOfLogicalQueryNode.Is
-            };
-
-            primaryPart.Expression = isExpr;
+            primaryPart.Expression = isRelation;
 
             var subItemNode = new LogicalQueryNode();
-            isExpr.Left = subItemNode;
+            isRelation.ParamsList.Add(subItemNode);
             subItemNode.Kind = KindOfLogicalQueryNode.Concept;
             subItemNode.Name = inheritanceItem.SubName;
 
             var superItemNode = new LogicalQueryNode();
-            isExpr.Right = superItemNode;
+            isRelation.ParamsList.Add(superItemNode);
             superItemNode.Kind = KindOfLogicalQueryNode.Concept;
             superItemNode.Name = inheritanceItem.SuperName;
+
+            var rankNode = new LogicalQueryNode();
+            isRelation.ParamsList.Add(rankNode);
+            rankNode.Kind = KindOfLogicalQueryNode.Value;
+            rankNode.Value = inheritanceItem.Rank;
 
             return fact;
         }

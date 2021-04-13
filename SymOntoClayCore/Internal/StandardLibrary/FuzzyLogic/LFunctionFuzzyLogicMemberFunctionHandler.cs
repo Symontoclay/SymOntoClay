@@ -14,6 +14,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
         }
 
         public LFunctionFuzzyLogicMemberFunctionHandler(double a, double b)
+            : base(a, b)
         {
             _a = a;
             _b = b;

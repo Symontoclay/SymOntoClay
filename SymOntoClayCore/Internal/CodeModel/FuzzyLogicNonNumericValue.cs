@@ -59,6 +59,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
             Name?.DiscoverAllAnnotations(result);
         }
 
+        public override void CalculateLongHashCodes()
+        {
+            Handler.Check();
+
+            base.CalculateLongHashCodes();
+        }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {

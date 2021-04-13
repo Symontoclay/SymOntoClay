@@ -10,6 +10,23 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
 {
     public abstract class BaseFuzzyLogicMemberFunctionHandler: IFuzzyLogicMemberFunctionHandler
     {
+        protected BaseFuzzyLogicMemberFunctionHandler(double a, double b)
+            : this(KindOfDefuzzification.CoG, a, b)
+        {
+        }
+
+        protected BaseFuzzyLogicMemberFunctionHandler(KindOfDefuzzification kindOfDefuzzification, double a, double b)
+        {
+            _kindOfDefuzzification = kindOfDefuzzification;
+            _a = a;
+            _b = b;
+        }
+
+        private KindOfDefuzzification _kindOfDefuzzification;
+        private readonly double _a;
+        private readonly double _b;
+        private NumberValue _deffuzificatedValue;
+
         /// <inheritdoc/>
         public abstract KindOfFuzzyLogicMemberFunction Kind { get; }
 
@@ -22,10 +39,45 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
         /// <inheritdoc/>
         public abstract double SystemCall(double x);
 
+        private ulong? _longHashCode;
+
         /// <inheritdoc/>
         public ulong GetLongHashCode()
         {
-            return LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(Kind.GetHashCode());
+            if (!_longHashCode.HasValue)
+            {
+                Check();
+                _isDirty = false;
+            }
+
+            return _longHashCode.Value;
+        }
+
+        /// <inheritdoc/>
+        public NumberValue Defuzzificate()
+        {
+            return _deffuzificatedValue;
+        }
+
+        private bool _isDirty = true;
+
+        public void CheckDirty()
+        {
+            if (_isDirty)
+            {
+                Check();
+                _isDirty = false;
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual void Check()
+        {
+            _longHashCode = LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(Kind.GetHashCode());
+
+            var sysDeffuzificatedValue = Defuzzificator.Defuzzificate(_kindOfDefuzzification, _a, _b, (double x) => SystemCall(x));
+
+            _deffuzificatedValue = new NumberValue(sysDeffuzificatedValue);
         }
 
         /// <inheritdoc/>

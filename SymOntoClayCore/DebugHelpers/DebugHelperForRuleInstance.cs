@@ -305,6 +305,9 @@ namespace SymOntoClay.Core.DebugHelpers
                 case KindOfValue.FuzzyLogicNonNumericSequenceValue:
                     return FuzzyLogicNonNumericSequenceValueToString(value.AsFuzzyLogicNonNumericSequenceValue);
 
+                case KindOfValue.StrongIdentifierValue:
+                    return StrongIdentifierValueToString(value.AsStrongIdentifierValue);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(value.KindOfValue), value.KindOfValue, null);
             }
@@ -358,6 +361,13 @@ namespace SymOntoClay.Core.DebugHelpers
         private static string FuzzyLogicNonNumericSequenceValueToString(FuzzyLogicNonNumericSequenceValue value)
         {
             var sb = new StringBuilder(value.DebugView);
+            sb.Append(AnnotatedItemToString(value));
+            return sb.ToString();
+        }
+
+        private static string StrongIdentifierValueToString(StrongIdentifierValue value)
+        {
+            var sb = new StringBuilder(value.NameValue);
             sb.Append(AnnotatedItemToString(value));
             return sb.ToString();
         }

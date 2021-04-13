@@ -69,6 +69,12 @@ namespace SymOntoClay.Core.Internal.Storage
 #if DEBUG
                 //Log($"subName = {subName}");
                 //Log($"superName = {superName}");
+
+                if (subName.NameValue == "app")
+                {
+                    throw new NotImplementedException();
+                }
+                //Log("Next");
 #endif
 
                 if (_foundInheritanceKeysList.Any())
@@ -104,24 +110,27 @@ namespace SymOntoClay.Core.Internal.Storage
         {
 #if DEBUG
             //Log($"_context.Id = {_context.Id}");
-            //Log($"_context.CommonNamesStorage.SelfName = {_context.CommonNamesStorage.SelfName}");
+            //Log($"_selfName.NameValue = {_selfName.NameValue}");
 #endif
 
             if(_localCodeExecutionContext == null)
             {
-                _selfName = _context.CommonNamesStorage.SelfName;
-                _selfNameForFacts = NameHelper.NormalizeNameStr(_context.CommonNamesStorage.SelfName.NameValue);
+                var commonNamesStorage = _context.CommonNamesStorage;
+
+                _selfName = commonNamesStorage.SelfName;
+                _selfNameForFacts = NameHelper.NormalizeNameStr(_selfName.NameValue);
 
                 _logicQueryParseAndCache = _context.LogicQueryParseAndCache;
 
                 _localCodeExecutionContext = new LocalCodeExecutionContext()
                 {
-                    Storage = _context.Storage.GlobalStorage
+                    Storage = _context.Storage.GlobalStorage,
+                    Holder = commonNamesStorage.DefaultHolder
                 };
             }
 
 #if DEBUG
-            //Log($"_selfNameKey = {_selfNameKey}");
+            //Log($"_selfName = {_selfName}");
             //Log($"_selfNameForFacts = {_selfNameForFacts}");
 #endif
 

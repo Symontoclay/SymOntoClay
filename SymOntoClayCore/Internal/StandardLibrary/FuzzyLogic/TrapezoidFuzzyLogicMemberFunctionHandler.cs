@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.CodeModel;
+﻿using NLog;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
         }
 
         public TrapezoidFuzzyLogicMemberFunctionHandler(double a, double b, double c, double d)
+            : base(a, d)
         {
             _a = a;
             _b = b;

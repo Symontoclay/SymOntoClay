@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
 using System;
 using System.Collections.Generic;
@@ -67,7 +68,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 
         private static void FillAnnotationsModalitiesAndSections(AnnotatedItem source, AnnotatedItem dest, IMainStorageContext mainStorageContext)
         {
-            throw new NotImplementedException();
+            dest.AppendAnnotations(source);
         }
     }
 }

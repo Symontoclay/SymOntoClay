@@ -62,9 +62,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"buffer = {_buffer}");
-            //Log($"_state = {_state}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
+            Log($"buffer = {_buffer}");            
 #endif
 
             switch (_state)
@@ -94,7 +94,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var nextToken = _context.GetToken();
 
 #if DEBUG
-                                //Log($"nextToken = {nextToken}");
+                                Log($"nextToken = {nextToken}");
 #endif
 
                                 if(nextToken.TokenKind == TokenKind.Number)
@@ -163,6 +163,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.CloseRoundBracket:
+                        case TokenKind.Comma:
                             _context.Recovery(_currToken);
                             Exit();
                             break;

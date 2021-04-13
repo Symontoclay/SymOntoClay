@@ -84,7 +84,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return _longHashCode.Value;
         }
 
-        public void CalculateLongHashCodes()
+        public virtual void CalculateLongHashCodes()
         {
             _longHashCode = CalculateLongHashCode();
             CalculateLongConditionalHashCode();

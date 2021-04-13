@@ -511,19 +511,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             //Log($"_parametersOfPredefinedMembershipFunction.Result = {_parametersOfPredefinedMembershipFunction.WriteListToString()}");
 #endif
 
-            switch(_nameOfPredefinedMembershipFunction)
+            var linguisticVariableName = _linguisticVariable.Name.NameValue;
+            var termName = _currentFuzzyLogicNonNumericValue.Name.NameValue;
+
+            switch (_nameOfPredefinedMembershipFunction)
             {
                 case "Trapezoid":
-                    return CreateTrapezoidMembershipPredefinedHandler();
+                    return CreateTrapezoidMembershipPredefinedHandler(linguisticVariableName, termName);
 
                 case "L":
-                    return CreateLMembershipPredefinedHandler();
+                    return CreateLMembershipPredefinedHandler(linguisticVariableName, termName);
 
                 case "S":
-                    return CreateSMembershipPredefinedHandler();
+                    return CreateSMembershipPredefinedHandler(linguisticVariableName, termName);
 
                 default:
-                    throw new Exception($"Unknown membership function `{_nameOfPredefinedMembershipFunction}`!");
+                    throw new Exception($"Unknown membership function `{_nameOfPredefinedMembershipFunction}` of term `{termName}` of linguistic variable `{linguisticVariableName}`!");
             }
         }
 
@@ -538,31 +541,31 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _state = State.GotTermName;
         }
 
-        private IFuzzyLogicMemberFunctionHandler CreateTrapezoidMembershipPredefinedHandler()
+        private IFuzzyLogicMemberFunctionHandler CreateTrapezoidMembershipPredefinedHandler(string linguisticVariableName, string termName)
         {
             if(_parametersOfPredefinedMembershipFunction.Count != 4)
             {
-                throw new Exception($"Wrong params count in membership function `{_nameOfPredefinedMembershipFunction}`! It must be 4, but got {_parametersOfPredefinedMembershipFunction.Count}!");
+                throw new Exception($"Wrong params count in membership function `{_nameOfPredefinedMembershipFunction}` of term `{termName}` of linguistic variable `{linguisticVariableName}`! It must be 4, but got {_parametersOfPredefinedMembershipFunction.Count}!");
             }
 
             return new TrapezoidFuzzyLogicMemberFunctionHandler(_parametersOfPredefinedMembershipFunction[0], _parametersOfPredefinedMembershipFunction[1], _parametersOfPredefinedMembershipFunction[2], _parametersOfPredefinedMembershipFunction[3]);
         }
 
-        private IFuzzyLogicMemberFunctionHandler CreateLMembershipPredefinedHandler()
+        private IFuzzyLogicMemberFunctionHandler CreateLMembershipPredefinedHandler(string linguisticVariableName, string termName)
         {
             if (_parametersOfPredefinedMembershipFunction.Count != 2)
             {
-                throw new Exception($"Wrong params count in membership function `{_nameOfPredefinedMembershipFunction}`! It must be 2, but got {_parametersOfPredefinedMembershipFunction.Count}!");
+                throw new Exception($"Wrong params count in membership function `{_nameOfPredefinedMembershipFunction}` of term `{termName}` of linguistic variable `{linguisticVariableName}`! It must be 2, but got {_parametersOfPredefinedMembershipFunction.Count}!");
             }
 
             return new LFunctionFuzzyLogicMemberFunctionHandler(_parametersOfPredefinedMembershipFunction[0], _parametersOfPredefinedMembershipFunction[1]);
         }
 
-        private IFuzzyLogicMemberFunctionHandler CreateSMembershipPredefinedHandler()
+        private IFuzzyLogicMemberFunctionHandler CreateSMembershipPredefinedHandler(string linguisticVariableName, string termName)
         {
             if (_parametersOfPredefinedMembershipFunction.Count != 2 && _parametersOfPredefinedMembershipFunction.Count != 3)
             {
-                throw new Exception($"Wrong params count in membership function `{_nameOfPredefinedMembershipFunction}`! It must be 2 or 3, but got {_parametersOfPredefinedMembershipFunction.Count}!");
+                throw new Exception($"Wrong params count in membership function `{_nameOfPredefinedMembershipFunction}` of term `{termName}` of linguistic variable `{linguisticVariableName}`! It must be 2 or 3, but got {_parametersOfPredefinedMembershipFunction.Count}!");
             }
 
             if(_parametersOfPredefinedMembershipFunction.Count == 2)

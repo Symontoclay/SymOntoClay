@@ -33,6 +33,32 @@ namespace LinguisticVariableViewer
 
             //MyModel.Series.Add(customSeries);
 
+            CreateLogicValueCase();
+            //CreateCase1();
+        }
+
+        private void CreateLogicValueCase()
+        {
+            var xList = Range(0, 1.01, 0.05);
+
+            var minimalSeries = DefineLFunction(0, 0.1, xList);
+            MyModel.Series.Add(minimalSeries);
+
+            var lowSeries = DefineTrapezoid(0, 0.05, 0.3, 0.45, xList);
+            MyModel.Series.Add(lowSeries);
+
+            var middleSeries = DefineTrapezoid(0.3, 0.4, 0.6, 0.7, xList);
+            MyModel.Series.Add(middleSeries);
+
+            var highSeries = DefineTrapezoid(0.55, 0.7, 0.95, 1, xList);
+            MyModel.Series.Add(highSeries);
+
+            var maximalSeries = DefineSFunction(0.9, 1, xList);
+            MyModel.Series.Add(maximalSeries);
+        }
+
+        private void CreateCase1()
+        {
             var xList = Range(0, 30, 0.1);
 
             var customSeries = DefineLFunction(5, 10, xList);

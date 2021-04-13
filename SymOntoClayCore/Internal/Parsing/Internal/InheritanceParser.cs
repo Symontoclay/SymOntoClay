@@ -61,9 +61,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");
-            //Log($"_state = {_state}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
+            //Log($"Result = {Result}");            
             //Log($"_currentItem = {_currentItem}");
 #endif
 
@@ -139,6 +139,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new NumberParser(_context, true);
                                 parser.Run();
                                 _currentItem.Rank = parser.Result;
+                                _state = State.GotRankValue;
+                            }
+                            break;
+
+                        case TokenKind.Word:
+                            {
+                                TryCreateCurrentItem();
+
+                                _currentItem.Rank = ParseName(_currToken.Content);
+
                                 _state = State.GotRankValue;
                             }
                             break;

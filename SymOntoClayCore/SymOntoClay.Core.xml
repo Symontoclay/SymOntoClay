@@ -3058,6 +3058,12 @@
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.GetLongHashCode">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.Defuzzificate">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.Check">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.ToString">
             <inheritdoc/>
         </member>
@@ -3141,6 +3147,11 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicOperatorHandler.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.KindOfDefuzzification.CoG">
+            <summary>
+            Centre of Gravity
+            </summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.LFunctionFuzzyLogicMemberFunctionHandler.Kind">
             <inheritdoc/>

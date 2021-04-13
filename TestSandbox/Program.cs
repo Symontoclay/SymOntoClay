@@ -28,6 +28,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Instances;
+using SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
@@ -66,6 +67,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            //TstDeffuzzification();
             //TstRangeValue();
             //TstFuzzyLogicNonNumericSequenceValue();
             //TstCalculateTargetAnglesForRayScanner();
@@ -104,6 +106,27 @@ namespace TestSandbox
             //Thread.Sleep(10000);
         }
 
+        private static void TstDeffuzzification()
+        {
+            _logger.Log("Begin");
+
+            var lHandler = new LFunctionFuzzyLogicMemberFunctionHandler(0, 0.1);
+            lHandler.CheckDirty();
+
+            var defuzzificatedValue = lHandler.Defuzzificate();
+
+            _logger.Log($"defuzzificatedValue = {defuzzificatedValue}");
+
+            var trapezoid = new TrapezoidFuzzyLogicMemberFunctionHandler(0.3, 0.4, 0.6, 0.7);
+            trapezoid.CheckDirty();
+
+            defuzzificatedValue = trapezoid.Defuzzificate();
+
+            _logger.Log($"defuzzificatedValue = {defuzzificatedValue}");
+
+            _logger.Log("End");
+        }
+
         private static void TstRangeValue()
         {
             _logger.Log("Begin");
@@ -138,9 +161,7 @@ namespace TestSandbox
             _logger.Log($"range.IsFit(12) = {range.IsFit(12)}");
             _logger.Log($"range.IsFit(14) = {range.IsFit(14)}");
 
-
-
-            _logger.Log("Begin");
+            _logger.Log("End");
         }
 
         private static void TstFuzzyLogicNonNumericSequenceValue()
@@ -168,7 +189,7 @@ namespace TestSandbox
             _logger.Log($"sequence = {sequence}");
             _logger.Log($"sequence = {sequence.ToDbgString()}");
 
-            _logger.Log("Begin");
+            _logger.Log("End");
         }
 
         //private static float Deg2Rad = 1f;
@@ -237,7 +258,7 @@ namespace TestSandbox
 
             _logger.Log($"anglesList = {JsonConvert.SerializeObject(anglesList, Formatting.Indented)}");
 
-            _logger.Log("Begin");
+            _logger.Log("End");
         }
 
         private static void TstCopyFilesOnBuilding()
@@ -249,7 +270,7 @@ namespace TestSandbox
 
             BuildPipeLine.CopyFiles(sourceDir, outputPath);
 
-            _logger.Log("Begin");
+            _logger.Log("End");
         }
 
         private static void TstGetRootWorldSpaceDir()

@@ -20,6 +20,33 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly double _truthThreshold = 0.75;
         private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
 
+        public NumberValue Resolve(StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+#if DEBUG
+            //Log($"name = {name}");
+            //Log($"reason = {reason}");
+#endif
+
+            var targetItem = GetTargetFuzzyLogicNonNumericValue(name, null, reason, localCodeExecutionContext, options);
+
+#if DEBUG
+            //Log($"targetItem = {targetItem}");
+#endif
+
+            if (targetItem == null)
+            {
+                return new NumberValue(null);
+            }
+
+            var fuzzyValue = targetItem.Handler.Defuzzificate();
+
+#if DEBUG
+            //Log($"fuzzyValue = {fuzzyValue}");
+#endif
+
+            return fuzzyValue;
+        }
+
         public bool Equals(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
         {
             return Equals(name, value, reason, localCodeExecutionContext, _defaultOptions);
@@ -28,14 +55,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public bool Equals(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"name = {name}");
-            Log($"value = {value}");
+            //Log($"name = {name}");
+            //Log($"value = {value}");
 #endif
 
             var targetItem = GetTargetFuzzyLogicNonNumericValue(name, value, reason, localCodeExecutionContext, options);
 
 #if DEBUG
-            Log($"targetItem = {targetItem}");
+            //Log($"targetItem = {targetItem}");
 #endif
 
             if(targetItem == null)
@@ -46,7 +73,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var fuzzyValue = targetItem.Handler.SystemCall(value);
 
 #if DEBUG
-            Log($"fuzzyValue = {fuzzyValue}");
+            //Log($"fuzzyValue = {fuzzyValue}");
 #endif
 
             return FuzzyNumericValueToSystemBool(fuzzyValue);
@@ -60,14 +87,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public bool Equals(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"fuzzyLogicNonNumericSequence = {fuzzyLogicNonNumericSequence}");
-            Log($"value = {value}");
+            //Log($"fuzzyLogicNonNumericSequence = {fuzzyLogicNonNumericSequence}");
+            //Log($"value = {value}");
 #endif
 
             var targetItem = GetTargetFuzzyLogicNonNumericValue(fuzzyLogicNonNumericSequence.NonNumericValue, value, reason, localCodeExecutionContext, options);
 
 #if DEBUG
-            Log($"targetItem = {targetItem}");
+            //Log($"targetItem = {targetItem}");
 #endif
 
             if (targetItem == null)
@@ -78,26 +105,26 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var fuzzyValue = targetItem.Handler.SystemCall(value);
 
 #if DEBUG
-            Log($"fuzzyValue = {fuzzyValue}");
+            //Log($"fuzzyValue = {fuzzyValue}");
 #endif
 
             var operatorsList = GetFuzzyLogicOperators(targetItem.Parent, fuzzyLogicNonNumericSequence.Operators);
 
 #if DEBUG
-            Log($"operatorsList.Count = {operatorsList.Count}");
+            //Log($"operatorsList.Count = {operatorsList.Count}");
 #endif
 
             foreach (var op in operatorsList)
             {
 #if DEBUG
-                Log($"op = {op}");
+                //Log($"op = {op}");
 #endif
 
                 fuzzyValue = op.Handler.SystemCall(fuzzyValue);
             }
 
 #if DEBUG
-            Log($"fuzzyValue (after) = {fuzzyValue}");
+            //Log($"fuzzyValue (after) = {fuzzyValue}");
 #endif
 
             return FuzzyNumericValueToSystemBool(fuzzyValue);
@@ -122,13 +149,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             foreach (var op in operatorsIdentifiers)
             {
 #if DEBUG
-                Log($"op = {op}");
+                //Log($"op = {op}");
 #endif
 
                 var item = linguisticVariable.GetOperator(op);
 
 #if DEBUG
-                Log($"item = {item}");
+                //Log($"item = {item}");
 #endif
 
                 if(item == null)
@@ -136,7 +163,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     item = globalFuzzyLogicStorage.GetDefaultOperator(op);
 
 #if DEBUG
-                    Log($"item (2) = {item}");
+                    //Log($"item (2) = {item}");
 #endif
 
                     if(item == null)
@@ -158,7 +185,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var storagesList = GetStoragesList(storage);
 
 #if DEBUG
-            Log($"reason = {reason}");
+            //Log($"name = {name}");
+            //Log($"reason = {reason}");
+            //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
             //Log($"storagesList.Count = {storagesList.Count}");
             //foreach (var tmpStorage in storagesList)
             //{
@@ -171,16 +200,26 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
+            if(reason != null && reason.Kind == KindOfReasonOfFuzzyLogicResolving.Inheritance)
+            {
+#if DEBUG
+                //Log("^%^%^%^%^%^% reason != null && reason.Kind == KindOfReasonOfFuzzyLogicResolving.Inheritance");
+#endif
+
+                optionsForInheritanceResolver.SkipRealSearching = true;
+                optionsForInheritanceResolver.AddSelf = false;
+            }
+
             var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
-            Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
+            //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
 #endif
 
             var rawList = GetRawList(name, storagesList, weightedInheritanceItems);
 
 #if DEBUG
-            Log($"rawList = {rawList.WriteListToString()}");
+            //Log($"rawList = {rawList.WriteListToString()}");
 #endif
 
             if (!rawList.Any())
@@ -191,7 +230,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var filteredList = Filter(rawList);
 
 #if DEBUG
-            Log($"filteredList = {filteredList.WriteListToString()}");
+            //Log($"filteredList = {filteredList.WriteListToString()}");
 #endif
 
             if (!filteredList.Any())
@@ -199,21 +238,24 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return null;
             }
 
-            filteredList = filteredList.Where(p => p.ResultItem.Parent.IsFitByRange(value)).ToList();
+            if(reason.Kind != KindOfReasonOfFuzzyLogicResolving.Inheritance)
+            {
+                filteredList = filteredList.Where(p => p.ResultItem.Parent.IsFitByRange(value)).ToList();
 
 #if DEBUG
-            Log($"filteredList (2) = {filteredList.WriteListToString()}");
+                //Log($"filteredList (2) = {filteredList.WriteListToString()}");
 #endif
 
-            if (!filteredList.Any())
-            {
-                return null;
+                if (!filteredList.Any())
+                {
+                    return null;
+                }
             }
 
             filteredList = filteredList.Where(p => p.ResultItem.Parent.IsFitByСonstraint(reason)).ToList();
 
 #if DEBUG
-            Log($"filteredList (3) = {filteredList.WriteListToString()}");
+            //Log($"filteredList (3) = {filteredList.WriteListToString()}");
 #endif
 
             if (!filteredList.Any())
@@ -229,7 +271,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var minLengthOfRange = filteredList.Min(p => p.ResultItem.Parent.Range.Length);
 
 #if DEBUG
-            Log($"minLengthOfRange = {minLengthOfRange}");
+            //Log($"minLengthOfRange = {minLengthOfRange}");
 #endif
 
             var targetItem = filteredList.FirstOrDefault(p => p.ResultItem.Parent.Range.Length == minLengthOfRange)?.ResultItem;

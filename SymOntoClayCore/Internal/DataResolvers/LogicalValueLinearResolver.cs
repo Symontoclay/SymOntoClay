@@ -41,6 +41,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public LogicalValue Resolve(Value source, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
+            return Resolve(source, localCodeExecutionContext, options, false);
+        }
+
+        public LogicalValue Resolve(Value source, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options, bool forInheritance)
+        {
 #if DEBUG
             //Log($"source = {source}");
 #endif
@@ -57,6 +62,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 case KindOfValue.NumberValue:
                     return ValueConvertor.ConvertNumberValueToLogicalValue(source.AsNumberValue, _context);
+
+                case KindOfValue.StrongIdentifierValue:
+                    ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving = null;
+                    
+                    if(forInheritance)
+                    {
+                        reasonOfFuzzyLogicResolving = new ReasonOfFuzzyLogicResolving() { Kind = KindOfReasonOfFuzzyLogicResolving.Inheritance };
+                    }
+                    
+                    return ValueConvertor.ConvertNumberValueToLogicalValue(_context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(source.AsStrongIdentifierValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext, options), _context);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(sourceKind), sourceKind, null);

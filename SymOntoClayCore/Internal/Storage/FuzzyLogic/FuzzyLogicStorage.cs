@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"linguisticVariable = {linguisticVariable}");
+                //Log($"linguisticVariable = {linguisticVariable}");
 
                 //if(linguisticVariable.Name.NameValue == "age")
                 //{
@@ -92,7 +92,7 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
         private void NAppendValue(FuzzyLogicNonNumericValue value, StrongIdentifierValue holder)
         {
 #if DEBUG
-            Log($"value = {value}");
+            //Log($"value = {value}");
 #endif
 
             var name = value.Name;
@@ -106,19 +106,19 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
                     var targetList = dict[holder];
 
 #if DEBUG
-                    Log($"dict[holder].Count = {dict[holder].Count}");
-                    Log($"targetList = {targetList.WriteListToString()}");
+                    //Log($"dict[holder].Count = {dict[holder].Count}");
+                    //Log($"targetList = {targetList.WriteListToString()}");
 #endif
                     var targetLongConditionalHashCode = value.GetLongConditionalHashCode();
 
 #if DEBUG
-                    Log($"targetLongConditionalHashCode = {targetLongConditionalHashCode}");
+                    //Log($"targetLongConditionalHashCode = {targetLongConditionalHashCode}");
 #endif
 
                     var itemsWithTheSameLongConditionalHashCodeList = targetList.Where(p => p.GetLongConditionalHashCode() == targetLongConditionalHashCode).ToList();
 
 #if DEBUG
-                    Log($"itemsWithTheSameLongConditionalHashCodeList = {itemsWithTheSameLongConditionalHashCodeList.WriteListToString()}");
+                    //Log($"itemsWithTheSameLongConditionalHashCodeList = {itemsWithTheSameLongConditionalHashCodeList.WriteListToString()}");
 #endif
 
                     foreach (var itemWithTheSameLongConditionalHashCode in itemsWithTheSameLongConditionalHashCodeList)
@@ -147,7 +147,7 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"name = {name}");
+                //Log($"name = {name}");
 #endif
 
                 if(_valuesDict.ContainsKey(name))

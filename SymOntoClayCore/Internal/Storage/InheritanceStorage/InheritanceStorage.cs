@@ -315,7 +315,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                 //Log($"subName = {subName}");
 #endif
 
-                if(subName.IsEmpty)
+                if(subName == null || subName.IsEmpty)
                 {
                     return new List<WeightedInheritanceResultItem<InheritanceItem>>();
                 }

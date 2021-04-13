@@ -126,7 +126,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var rawResult = new Dictionary<StrongIdentifierValue, WeightedInheritanceItem>();
 
-            GetWeightedInheritanceItemsBySubName(subName, localCodeExecutionContext, rawResult, 1, 0, storagesList);
+            if(options == null || options.SkipRealSearching == false)
+            {
+                GetWeightedInheritanceItemsBySubName(subName, localCodeExecutionContext, rawResult, 1, 0, storagesList);
+            }
 
 #if DEBUG
             //Log($"rawResult.Count = {rawResult.Count}");
@@ -185,6 +188,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
 #if DEBUG
             //Log($"subName = {subName}");
+            //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
             //Log($"currentRank = {currentRank}");
             //Log($"currentDistance = {currentDistance}");
             //Log($"result.Count = {result.Count}");
@@ -207,11 +211,21 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"rawList = {rawList.WriteListToString()}");
 #endif
 
+            if(!rawList.Any())
+            {
+                return;
+            }
+
             var filteredList = Filter(rawList);
 
 #if DEBUG
             //Log($"filteredList = {filteredList.WriteListToString()}");
 #endif
+
+            if(!filteredList.Any())
+            {
+                return;
+            }
 
             var logicalValueLinearResolver = _context.DataResolversFactory.GetLogicalValueLinearResolver();
 
@@ -223,7 +237,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //Log($"targetItem = {targetItem}");
 #endif
 
-                var resolvedRankValue = logicalValueLinearResolver.Resolve(targetItem.Rank, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+                var resolvedRankValue = logicalValueLinearResolver.Resolve(targetItem.Rank, localCodeExecutionContext, ResolverOptions.GetDefaultOptions(), true);
+
+#if DEBUG
+                //Log($"resolvedRankValue = {resolvedRankValue}");
+#endif
 
                 var systemValue = resolvedRankValue.SystemValue;
 

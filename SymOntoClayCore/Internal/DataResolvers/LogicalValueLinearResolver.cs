@@ -64,14 +64,29 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return ValueConvertor.ConvertNumberValueToLogicalValue(source.AsNumberValue, _context);
 
                 case KindOfValue.StrongIdentifierValue:
-                    ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving = null;
-                    
-                    if(forInheritance)
                     {
-                        reasonOfFuzzyLogicResolving = new ReasonOfFuzzyLogicResolving() { Kind = KindOfReasonOfFuzzyLogicResolving.Inheritance };
+                        ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving = null;
+
+                        if (forInheritance)
+                        {
+                            reasonOfFuzzyLogicResolving = new ReasonOfFuzzyLogicResolving() { Kind = KindOfReasonOfFuzzyLogicResolving.Inheritance };
+                        }
+
+                        return ValueConvertor.ConvertNumberValueToLogicalValue(_context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(source.AsStrongIdentifierValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext, options), _context);
                     }
-                    
-                    return ValueConvertor.ConvertNumberValueToLogicalValue(_context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(source.AsStrongIdentifierValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext, options), _context);
+
+
+                case KindOfValue.FuzzyLogicNonNumericSequenceValue:
+                    {
+                        ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving = null;
+
+                        if (forInheritance)
+                        {
+                            reasonOfFuzzyLogicResolving = new ReasonOfFuzzyLogicResolving() { Kind = KindOfReasonOfFuzzyLogicResolving.Inheritance };
+                        }
+
+                        return ValueConvertor.ConvertNumberValueToLogicalValue(_context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(source.AsFuzzyLogicNonNumericSequenceValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext, options), _context);
+                    }
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(sourceKind), sourceKind, null);

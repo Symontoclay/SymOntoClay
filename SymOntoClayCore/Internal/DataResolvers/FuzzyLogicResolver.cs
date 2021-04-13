@@ -47,6 +47,51 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return fuzzyValue;
         }
 
+        public NumberValue Resolve(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+#if DEBUG
+            //Log($"fuzzyLogicNonNumericSequence = {fuzzyLogicNonNumericSequence}");
+#endif
+
+            var targetItem = GetTargetFuzzyLogicNonNumericValue(fuzzyLogicNonNumericSequence.NonNumericValue, null, reason, localCodeExecutionContext, options);
+
+#if DEBUG
+            //Log($"targetItem = {targetItem}");
+#endif
+
+            if (targetItem == null)
+            {
+                return new NumberValue(null);
+            }
+
+            var fuzzyValue = targetItem.Handler.Defuzzificate().SystemValue.Value;
+
+#if DEBUG
+            //Log($"fuzzyValue = {fuzzyValue}");
+#endif
+
+            var operatorsList = GetFuzzyLogicOperators(targetItem.Parent, fuzzyLogicNonNumericSequence.Operators);
+
+#if DEBUG
+            //Log($"operatorsList.Count = {operatorsList.Count}");
+#endif
+
+            foreach (var op in operatorsList)
+            {
+#if DEBUG
+                //Log($"op = {op}");
+#endif
+
+                fuzzyValue = op.Handler.SystemCall(fuzzyValue);
+            }
+
+#if DEBUG
+            //Log($"fuzzyValue (after) = {fuzzyValue}");
+#endif
+
+            return new NumberValue(fuzzyValue);
+        }
+
         public bool Equals(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
         {
             return Equals(name, value, reason, localCodeExecutionContext, _defaultOptions);

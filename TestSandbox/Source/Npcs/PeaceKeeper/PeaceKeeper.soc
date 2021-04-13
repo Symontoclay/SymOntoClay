@@ -23,7 +23,7 @@ linvar age for range (0, 150]
 	    //`teenager` = S(12, 17, 22);
 }
 
-app PeaceKeeper is [middle] exampleClass
+app PeaceKeeper is [very middle] exampleClass
 {
     {: barrel(#a) :}
 	{: see(I, #a) :}

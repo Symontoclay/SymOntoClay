@@ -42,7 +42,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotSecondName,
             WaitForInheritanceRank,
             GotInheritanceRankValue,
-            GotInheritanceRank
+            GotInheritanceRank,
+            GotFuzzyLogicNonNumericSequenceItem
         }
 
         public UseStatementParser(InternalParserContext context)
@@ -54,6 +55,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         public AstStatement Result { get; private set; }
         private UseRawStatement _rawStatement;
+        private FuzzyLogicNonNumericSequenceValue _fuzzyLogicNonNumericSequenceValue;
 
         /// <inheritdoc/>
         protected override void OnEnter()
@@ -109,10 +111,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
+            //Log($"_state = {_state}");
             //Log($"_currToken = {_currToken}");
             //Log($"_rawStatement = {_rawStatement}");
-            //Log($"Result = {Result}");
-            //Log($"_state = {_state}");
+            //Log($"Result = {Result}");            
 #endif
 
             switch (_state)
@@ -237,6 +239,58 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _rawStatement.Rank = parser.Result;
                                 _state = State.GotInheritanceRankValue;
                             }
+                            break;
+
+                        case TokenKind.Identifier:
+                        case TokenKind.Word:
+                            {
+                                var nextToken = _context.GetToken();
+
+#if DEBUG
+                                //Log($"nextToken = {nextToken}");
+
+#endif
+                                switch (nextToken.TokenKind)
+                                {
+                                    case TokenKind.Word:
+                                    case TokenKind.Identifier:
+                                        _context.Recovery(nextToken);
+
+                                        _fuzzyLogicNonNumericSequenceValue = new FuzzyLogicNonNumericSequenceValue();
+                                        _fuzzyLogicNonNumericSequenceValue.AddIdentifier(ParseName(_currToken.Content));
+
+                                        _state = State.GotFuzzyLogicNonNumericSequenceItem;
+                                        break;
+
+                                    default:
+                                        _context.Recovery(nextToken);
+
+                                        _rawStatement.Rank = ParseName(_currToken.Content);
+
+                                        _state = State.GotInheritanceRankValue;
+                                        break;
+                                }
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotFuzzyLogicNonNumericSequenceItem:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                        case TokenKind.Identifier:
+                            _fuzzyLogicNonNumericSequenceValue.AddIdentifier(ParseName(_currToken.Content));
+
+                            _state = State.GotFuzzyLogicNonNumericSequenceItem;
+                            break;
+
+                        case TokenKind.CloseSquareBracket:
+                            _rawStatement.Rank = _fuzzyLogicNonNumericSequenceValue;
+                            _state = State.GotInheritanceRank;
                             break;
 
                         default:

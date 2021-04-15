@@ -443,12 +443,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             switch(_currToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.Relation:
-                                    _currentConstraintItem.Kind = KindOfLinguisticVariableСonstraintItem.Relation;
+                                    _currentConstraintItem.Kind = KindOfLinguisticVariableConstraintItem.Relation;
                                     _state = State.GotConstraintRelationMark;
                                     break;
 
                                 case KeyWordTokenKind.Inheritance:
-                                    _currentConstraintItem.Kind = KindOfLinguisticVariableСonstraintItem.Inheritance;
+                                    _currentConstraintItem.Kind = KindOfLinguisticVariableConstraintItem.Inheritance;
                                     _state = State.GotConstraintInheritanceMark;
                                     break;
 

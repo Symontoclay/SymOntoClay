@@ -55,6 +55,12 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 case KindOfOperator.IsNot:
                     return 10;
 
+                case KindOfOperator.More:
+                case KindOfOperator.MoreOrEqual:
+                case KindOfOperator.Less:
+                case KindOfOperator.LessOrEqual:
+                    return 9;
+
                 case KindOfOperator.Point:
                     return 2;
 
@@ -95,6 +101,18 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 
                 case KindOfOperator.CallLogicalQuery:
                     return "CALL";
+
+                case KindOfOperator.More:
+                    return ">";
+
+                case KindOfOperator.MoreOrEqual:
+                    return ">=";
+
+                case KindOfOperator.Less:
+                    return "<";
+
+                case KindOfOperator.LessOrEqual:
+                    return "<=";
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);

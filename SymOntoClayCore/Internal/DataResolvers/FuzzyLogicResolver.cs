@@ -20,6 +20,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly double _truthThreshold = 0.75;
         private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
 
+        public NumberValue Resolve(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Resolve(name, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public NumberValue Resolve(StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Resolve(name, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
         public NumberValue Resolve(StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
@@ -45,6 +55,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
 
             return fuzzyValue;
+        }
+
+        public NumberValue Resolve(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Resolve(fuzzyLogicNonNumericSequence, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public NumberValue Resolve(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Resolve(fuzzyLogicNonNumericSequence, reason, localCodeExecutionContext, _defaultOptions);
         }
 
         public NumberValue Resolve(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
@@ -92,6 +112,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return new NumberValue(fuzzyValue);
         }
 
+        public bool Equals(StrongIdentifierValue name, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Equals(name, value, null, localCodeExecutionContext, _defaultOptions);
+        }
+
         public bool Equals(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
         {
             return Equals(name, value, reason, localCodeExecutionContext, _defaultOptions);
@@ -122,6 +147,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
 
             return FuzzyNumericValueToSystemBool(fuzzyValue);
+        }
+
+        public bool Equals(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Equals(fuzzyLogicNonNumericSequence, value, null, localCodeExecutionContext, _defaultOptions);
         }
 
         public bool Equals(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
@@ -231,6 +261,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
 #if DEBUG
             //Log($"name = {name}");
+            //Log($"value = {value}");
             //Log($"reason = {reason}");
             //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
             //Log($"storagesList.Count = {storagesList.Count}");
@@ -283,7 +314,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return null;
             }
 
-            if(reason.Kind != KindOfReasonOfFuzzyLogicResolving.Inheritance)
+            if((reason == null || reason.Kind != KindOfReasonOfFuzzyLogicResolving.Inheritance) && value != null)
             {
                 filteredList = filteredList.Where(p => p.ResultItem.Parent.IsFitByRange(value)).ToList();
 
@@ -297,15 +328,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
             }
 
-            filteredList = filteredList.Where(p => p.ResultItem.Parent.IsFitByСonstraint(reason)).ToList();
+            if(reason != null)
+            {
+                filteredList = filteredList.Where(p => p.ResultItem.Parent.IsFitByСonstraint(reason)).ToList();
 
 #if DEBUG
-            //Log($"filteredList (3) = {filteredList.WriteListToString()}");
+                //Log($"filteredList (3) = {filteredList.WriteListToString()}");
 #endif
 
-            if (!filteredList.Any())
-            {
-                return null;
+                if (!filteredList.Any())
+                {
+                    return null;
+                }
             }
 
             if (filteredList.Count == 1)

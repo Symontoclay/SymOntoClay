@@ -81,7 +81,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 case KindOfRuleInstance.Rule:
                     {
                         var part_1 = indexedRuleInstance.PrimaryPart;
-
+                        
                         if (part_1.HasVars && part_1.IsActive && !part_1.HasQuestionVars && part_1.RelationsDict.Count == 1)
                         {
                             NAddIndexedRulePartToKeysOfRelationsIndex(IndexedRulePartsWithOneRelationWithVarsDict, part_1);
@@ -127,7 +127,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         private void NAddIndexedRulePartToKeysOfRelationsIndex(IDictionary<StrongIdentifierValue, IList<BaseRulePart>> indexData, BaseRulePart indexedRulePart)
         {
 #if DEBUG
-            //var dbgStr = DebugHelperForRuleInstance.BaseRulePartToString(indexedRulePart.OriginRulePart);
+            //var dbgStr = DebugHelperForRuleInstance.BaseRulePartToString(indexedRulePart);
             //Log($"dbgStr = {dbgStr}");
 #endif
 
@@ -148,14 +148,13 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             var keysOfRelationsList = indexedRulePart.RelationsDict.Keys.ToList();
 
 #if DEBUG
-            //Log($" = {relationsList.WriteListToString()}");
+            //Log($"keysOfRelationsList = {keysOfRelationsList.WriteListToString()}");
 #endif
 
             foreach (var keyOfRelation in keysOfRelationsList)
             {
 #if DEBUG
                 //Log($"keyOfRelation = {keyOfRelation}");
-                //Log($"_entityDictionary.GetName(keyOfRelation) = {_entityDictionary.GetName(keyOfRelation)}");
 #endif
 
                 if (indexData.ContainsKey(keyOfRelation))
@@ -288,7 +287,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             return RelationsList.ToList();
         }
 
-        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue key)
+        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name)
         {
 #if DEBUG
             //Log($"key = {key}");
@@ -306,19 +305,24 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             //}
 #endif
 
-            if (IndexedRulePartsOfFactsDict.ContainsKey(key))
+            if (IndexedRulePartsOfFactsDict.ContainsKey(name))
             {
-                return IndexedRulePartsOfFactsDict[key];
+                return IndexedRulePartsOfFactsDict[name];
             }
 
             return null;
         }
 
-        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue key)
+        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name)
         {
-            if (IndexedRulePartsWithOneRelationWithVarsDict.ContainsKey(key))
+#if DEBUG
+            //Log($"name = {name}");
+            //Log($"IndexedRulePartsWithOneRelationWithVarsDict.Count = {IndexedRulePartsWithOneRelationWithVarsDict.Count}");
+#endif
+
+            if (IndexedRulePartsWithOneRelationWithVarsDict.ContainsKey(name))
             {
-                return IndexedRulePartsWithOneRelationWithVarsDict[key];
+                return IndexedRulePartsWithOneRelationWithVarsDict[name];
             }
 
             return null;

@@ -28,6 +28,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -290,13 +291,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                         _visibleObjectsFocusFactsIdRegistry[instanceId] = _coreEngine.InsertPerceptedFact(focusFactStr);
                     }
 
-                    //var distanceFactStr = $"distance({idForFacts}, {newVisibleItem.MinDistance})";
+                    var distanceFactStr = $"distance(I, {idForFacts}, {newVisibleItem.MinDistance.ToString("G", CultureInfo.InvariantCulture)})";
 
 #if DEBUG
-                    //Log($"distanceFactStr = {distanceFactStr}");
+                    Log($"distanceFactStr = {distanceFactStr}");
 #endif
 
-                    //_visibleObjectsDistanceFactsIdRegistry[instanceId] = _coreEngine.InsertPerceptedFact(distanceFactStr);
+                    _visibleObjectsDistanceFactsIdRegistry[instanceId] = _coreEngine.InsertPerceptedFact(distanceFactStr);
                 }
                 //throw new NotImplementedException();
             }

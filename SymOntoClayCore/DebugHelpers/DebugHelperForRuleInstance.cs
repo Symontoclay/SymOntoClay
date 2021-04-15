@@ -60,7 +60,7 @@ namespace SymOntoClay.Core.DebugHelpers
                 else
                 {
                     throw new NotImplementedException();
-                }          
+                }
             }
 
             sb.Append(" :}");
@@ -182,6 +182,25 @@ namespace SymOntoClay.Core.DebugHelpers
 
                 case KindOfOperatorOfLogicalQueryNode.Is:
                     mark = "is";
+                    break;
+
+                case KindOfOperatorOfLogicalQueryNode.IsNot:
+                    mark = "is not";
+                    break;
+
+                case KindOfOperatorOfLogicalQueryNode.More:
+                    mark = ">";
+                    break;
+                case KindOfOperatorOfLogicalQueryNode.MoreOrEqual:
+                    mark = ">=";
+                    break;
+
+                case KindOfOperatorOfLogicalQueryNode.Less:
+                    mark = "<";
+                    break;
+
+                case KindOfOperatorOfLogicalQueryNode.LessOrEqual:
+                    mark = "<=";
                     break;
 
                 default:

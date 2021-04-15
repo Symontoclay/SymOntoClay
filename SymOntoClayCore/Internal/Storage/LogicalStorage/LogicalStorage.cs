@@ -328,7 +328,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         }
 
         /// <inheritdoc/>
-        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue key)
+        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name)
         {
             lock (_lockObj)
             {
@@ -336,16 +336,16 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 //LogInstance.Log($"key = {key}");
 #endif
 
-                return _commonPersistIndexedLogicalData.GetIndexedRulePartOfFactsByKeyOfRelation(key);
+                return _commonPersistIndexedLogicalData.GetIndexedRulePartOfFactsByKeyOfRelation(name);
             }
         }
 
         /// <inheritdoc/>
-        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue key)
+        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name)
         {
             lock (_lockObj)
             {
-                return _commonPersistIndexedLogicalData.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(key);
+                return _commonPersistIndexedLogicalData.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name);
             }
         }
 

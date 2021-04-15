@@ -129,6 +129,7 @@ namespace SymOntoClay.Core.Internal.Convertors
         private static void FillBaseRulePart(BaseRulePart source, BaseRulePart dest, RuleInstance ruleInstance, Dictionary<object, object> convertingContext)
         {
             dest.Parent = ruleInstance;
+            dest.IsActive = source.IsActive;
 
             dest.Expression = ConvertLogicalQueryNode(source.Expression, convertingContext);
 
@@ -175,13 +176,13 @@ namespace SymOntoClay.Core.Internal.Convertors
                     if(source.ParamsList.Count == 1)
                     {
 #if DEBUG
-                        _gbcLogger.Info($"source = {source}");
+                        //_gbcLogger.Info($"source = {source}");
 #endif
 
                         var param = source.ParamsList[0];
 
 #if DEBUG
-                        _gbcLogger.Info($"param = {param}");
+                        //_gbcLogger.Info($"param = {param}");
 #endif
 
                         if(param.Kind == KindOfLogicalQueryNode.Concept || param.Kind == KindOfLogicalQueryNode.Entity)
@@ -211,8 +212,8 @@ namespace SymOntoClay.Core.Internal.Convertors
         private static LogicalQueryNode ConvertUnaryPredicateToFullIsPredicate(LogicalQueryNode source, Dictionary<object, object> convertingContext)
         {
 #if DEBUG
-            _gbcLogger.Info($"source = {source}");
-            _gbcLogger.Info($"source.GetHumanizeDbgString() = {source.GetHumanizeDbgString()}");
+            //_gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"source.GetHumanizeDbgString() = {source.GetHumanizeDbgString()}");
 #endif
 
             if (source == null)
@@ -246,8 +247,8 @@ namespace SymOntoClay.Core.Internal.Convertors
             rankNode.Value = new LogicalValue(1);
 
 #if DEBUG
-            _gbcLogger.Info($"result = {result}");
-            _gbcLogger.Info($"result.GetHumanizeDbgString() = {result.GetHumanizeDbgString()}");
+            //_gbcLogger.Info($"result = {result}");
+            //_gbcLogger.Info($"result.GetHumanizeDbgString() = {result.GetHumanizeDbgString()}");
 #endif
 
             return result;

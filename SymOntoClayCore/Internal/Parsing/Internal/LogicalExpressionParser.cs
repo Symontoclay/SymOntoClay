@@ -347,6 +347,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case TokenKind.More:
+                            ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.More);
+                            break;
+
+                        case TokenKind.MoreOrEqual:
+                            ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.MoreOrEqual);
+                            break;
+
+                        case TokenKind.Less:
+                            ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.Less);
+                            break;
+
+                        case TokenKind.LessOrEqual:
+                            ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.LessOrEqual);
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -356,6 +372,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
+                        case TokenKind.Identifier:
                             ProcessWord();
                             break;
 
@@ -365,6 +382,36 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.Not:
                             ProcessUnaryOperator(KindOfOperatorOfLogicalQueryNode.Not);
+                            break;
+
+                        case TokenKind.LogicalVar:
+                            {
+                                var value = NameHelper.CreateName(_currToken.Content);
+
+                                ProcessConceptOrQuestionVar(value);
+                            }
+                            break;
+
+                        case TokenKind.Number:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var parser = new NumberParser(_context);
+                                parser.Run();
+
+#if DEBUG
+                                //Log($"parser.Result = {parser.Result}");
+#endif
+                                var node = new LogicalQueryNode();
+                                node.Kind = KindOfLogicalQueryNode.Value;
+                                node.Value = parser.Result;
+
+                                var intermediateNode = new IntermediateAstNode(node);
+
+                                AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+                                _state = State.GotConcept;
+                            }
                             break;
 
                         default:
@@ -390,6 +437,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 //Log($"_fuzzyLogicNonNumericSequenceValue = {_fuzzyLogicNonNumericSequenceValue}");
 #endif
                             }
+                            break;
+
+                        case TokenKind.More:
+                        case TokenKind.MoreOrEqual:
+                        case TokenKind.Less:
+                        case TokenKind.LessOrEqual:
+                            _context.Recovery(_currToken);
+                            _state = State.GotConcept;
                             break;
 
                         default:
@@ -451,6 +506,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             switch (value.KindOfName)
             {
                 case KindOfName.Concept:
+                    if(_lastLogicalQueryNode != null && _lastLogicalQueryNode.KindOfOperator == KindOfOperatorOfLogicalQueryNode.Is)
+                    {
+                        _context.Recovery(nextToken);
+                        _lastLogicalQueryNode.KindOfOperator = KindOfOperatorOfLogicalQueryNode.IsNot;
+                        break;
+                    }
+
                     switch (nextToken.TokenKind)
                     {
                         case TokenKind.OpenRoundBracket:
@@ -460,6 +522,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Comma:
                         case TokenKind.CloseRoundBracket:
                         case TokenKind.CloseFigureBracket:
+                        case TokenKind.CloseFactBracket:
+                        case TokenKind.More:
+                        case TokenKind.MoreOrEqual:
+                        case TokenKind.Less:
+                        case TokenKind.LessOrEqual:
                             _context.Recovery(nextToken);
                             ProcessConceptOrQuestionVar(value);
                             break;
@@ -483,6 +550,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             switch(_state)
                             {
                                 case State.Init:
+                                case State.GotOperator:
                                     _context.Recovery(nextToken);
                                     StartProcessingFuzzyLogicNonNumericSequenceValue(value);
                                     break;
@@ -643,6 +711,26 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 case KindOfOperatorOfLogicalQueryNode.Is:
                     kind = KindOfOperator.Is;
+                    break;
+
+                case KindOfOperatorOfLogicalQueryNode.IsNot:
+                    kind = KindOfOperator.IsNot;
+                    break;
+
+                case KindOfOperatorOfLogicalQueryNode.More:
+                    kind = KindOfOperator.More;
+                    break;
+
+                case KindOfOperatorOfLogicalQueryNode.MoreOrEqual:
+                    kind = KindOfOperator.MoreOrEqual;
+                    break;
+
+                case KindOfOperatorOfLogicalQueryNode.Less:
+                    kind = KindOfOperator.Less;
+                    break;
+
+                case KindOfOperatorOfLogicalQueryNode.LessOrEqual:
+                    kind = KindOfOperator.LessOrEqual;
                     break;
 
                 default:

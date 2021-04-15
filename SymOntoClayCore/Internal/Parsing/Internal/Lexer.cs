@@ -271,7 +271,42 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 return CreateToken(TokenKind.Assign);
 
                             case '>':
-                                return CreateToken(TokenKind.More);
+                                {
+                                    var nextChar = _items.Peek();
+
+#if DEBUG
+                                    //_logger.Log($"nextChar = {nextChar}");
+#endif
+
+                                    switch (nextChar)
+                                    {
+                                        case '=':
+                                            _items.Dequeue();
+                                            return CreateToken(TokenKind.MoreOrEqual);
+
+                                        default:
+                                            return CreateToken(TokenKind.More);
+                                    }
+                                }
+
+                            case '<':
+                                {
+                                    var nextChar = _items.Peek();
+
+#if DEBUG
+                                    //_logger.Log($"nextChar = {nextChar}");
+#endif
+
+                                    switch (nextChar)
+                                    {
+                                        case '=':
+                                            _items.Dequeue();
+                                            return CreateToken(TokenKind.LessOrEqual);
+
+                                        default:
+                                            return CreateToken(TokenKind.Less);
+                                    }
+                                }
 
                             case '&':
                                 return CreateToken(TokenKind.And);

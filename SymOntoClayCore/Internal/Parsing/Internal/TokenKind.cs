@@ -113,7 +113,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// Represents symbol `&gt;`.
         /// </summary>
         More,
-
+        MoreOrEqual,
+        Less,
+        LessOrEqual,
         /// <summary>
         /// Represents symbol `&amp;`.
         /// </summary>

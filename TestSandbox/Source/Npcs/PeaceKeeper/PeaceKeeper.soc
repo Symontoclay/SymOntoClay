@@ -25,33 +25,38 @@ linvar age for range (0, 150]
 
 app PeaceKeeper is [very middle] exampleClass
 {
+    {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
     {: barrel(#a) :}
 	{: see(I, #a) :}
 	{: dog(#b) :}
 	{: cat(#с) :}
 	{: animal(cat) :}
 	//{: focus(I, friend) :}
-	{: age(#Tom, 15) :}
+	{: age(#Tom, 50) :}
 	//{: value(distance(I, #Tom), 1) :}
-	//{: distance(I, #Tom, 1) :}
+	{: distance(I, #Tom, 12) :}
 
     on Init => {
 	     'Begin' >> @>log;
 		 //NULL >> @>log;
 
-		 //use @@self is linux;
+		 //use @@self is [very middle] linux;
 
-		 select {: { cat is animal } :} >> @>log;
+		 //select {: { cat is animal } :} >> @>log;
 		 //select {: see(I, barrel) :} >> @>log;
 		 //select {: son(?x, ?y) :} >> @>log;
 		 //select {: age(#Tom, `teenager`) :} >> @>log;
+		 select {: age(#Tom, $x) & distance(#Tom, $y) & $x is not $y :} >> @>log;
 		 //select {: value(distance(I, $x), $y) :} >> @>log;
 		 //select {: distance(I, #Tom, $x) :} >> @>log;
+		 //select {: distance(#Tom, $x) & $x is 12 :} >> @>log;
+		 //select {: distance(#Tom, $x) & $x > 5 :} >> @>log;
 
 		 //insert {: >: { bird (#1234) } :};
 		 //insert {: see(I, #a) :};
 
 		 //exampleClass is not human >> @>log;
+		 //exampleClass is human >> @>log;
 
 		 //@@host.`go`(to: #@[10]);
 

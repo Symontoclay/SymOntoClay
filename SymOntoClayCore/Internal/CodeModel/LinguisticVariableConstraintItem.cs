@@ -8,7 +8,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class LinguisticVariableConstraintItem : IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
     {
-        public KindOfLinguisticVariableСonstraintItem Kind { get; set; } = KindOfLinguisticVariableСonstraintItem.Unknown;
+        public KindOfLinguisticVariableConstraintItem Kind { get; set; } = KindOfLinguisticVariableConstraintItem.Unknown;
         public StrongIdentifierValue RelationName { get; set; }
 
         /// <summary>
@@ -133,15 +133,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder(spaces);
             switch(Kind)
             {
-                case KindOfLinguisticVariableСonstraintItem.Unknown:
+                case KindOfLinguisticVariableConstraintItem.Unknown:
                     sb.Append("unknown");
                     break;
 
-                case KindOfLinguisticVariableСonstraintItem.Inheritance:
+                case KindOfLinguisticVariableConstraintItem.Inheritance:
                     sb.Append("for inheritance");
                     break;
 
-                case KindOfLinguisticVariableСonstraintItem.Relation:
+                case KindOfLinguisticVariableConstraintItem.Relation:
                     sb.Append($"for relation `{RelationName.NameValue}`");
                     break;
 

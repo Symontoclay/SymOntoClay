@@ -11,13 +11,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class FuzzyLogicNonNumericSequenceValue : Value
     {
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public void AddIdentifier(StrongIdentifierValue identifier)
         {
 #if DEBUG
-            _gbcLogger.Info($"identifier = {identifier}");
+            //_gbcLogger.Info($"identifier = {identifier}");
 #endif
 
             if(NonNumericValue == null)

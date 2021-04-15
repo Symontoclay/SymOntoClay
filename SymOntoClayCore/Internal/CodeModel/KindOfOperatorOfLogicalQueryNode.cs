@@ -32,6 +32,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         And,
         Or,
         Not,
-        Is
+        Is,
+        IsNot,
+        More,
+        MoreOrEqual,
+        Less,
+        LessOrEqual
     }
 }

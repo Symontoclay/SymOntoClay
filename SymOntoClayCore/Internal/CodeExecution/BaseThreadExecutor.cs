@@ -676,7 +676,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"paramsList[2] = {paramsList[2]}");
 #endif
 
-            var rank = _logicalValueLinearResolver.Resolve(paramsList[2], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+            var rank = paramsList[2];//_logicalValueLinearResolver.Resolve(paramsList[2], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions(), true);
 
 #if DEBUG
             //Log($"subName = {subName}");
@@ -717,7 +717,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"paramsList[2] = {paramsList[2]}");
 #endif
 
-            var rank = _logicalValueLinearResolver.Resolve(paramsList[2], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions()).Inverse();
+            var rank = _logicalValueLinearResolver.Resolve(paramsList[2], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions(), true).Inverse();
 
 #if DEBUG
             //Log($"subName = {subName}");

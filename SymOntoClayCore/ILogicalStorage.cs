@@ -39,8 +39,8 @@ namespace SymOntoClay.Core
         event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
 
         IList<LogicalQueryNode> GetAllRelations();
-        IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue key);
-        IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue key);
+        IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name);
+        IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name);
 
 #if DEBUG
         void DbgPrintFactsAndRules();

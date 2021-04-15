@@ -137,10 +137,11 @@ namespace SymOntoClay.Core.Internal.Storage
             var weightedInheritanceItemsList = _inheritanceResolver.GetWeightedInheritanceItems(_selfName, _localCodeExecutionContext, _resolverOptions);
 
 #if DEBUG
-            //Log($"weightedInheritanceItemsList = {weightedInheritanceItemsList.WriteListToString()}; _context.Id = {_context.Id}");
+            //Log($"weightedInheritanceItemsList = {weightedInheritanceItemsList.WriteListToString()}");
+            //Log($"_context.Id = {_context.Id}");
 #endif
 
-            if(!weightedInheritanceItemsList.Any())
+            if (!weightedInheritanceItemsList.Any())
             {
                 _foundInheritanceKeysList.Clear();
                 return;
@@ -151,13 +152,13 @@ namespace SymOntoClay.Core.Internal.Storage
             var idsList = weightedInheritanceItemsList.Select(p => p.SuperName).Distinct().ToList();
 
 #if DEBUG
-            //Log($"idsList = {JsonConvert.SerializeObject(idsList)}");
+            //Log($"idsList = {JsonConvert.SerializeObject(idsList.Select(p => p.NameValue))}");
 #endif
 
             var newIdsList = idsList.Except(_foundInheritanceKeysList);
 
 #if DEBUG
-            //Log($"newIdsList = {JsonConvert.SerializeObject(newIdsList)}");
+            //Log($"newIdsList = {JsonConvert.SerializeObject(newIdsList.Select(p => p.NameValue))}");
 #endif
 
             if(newIdsList.Any())
@@ -174,7 +175,13 @@ namespace SymOntoClay.Core.Internal.Storage
                     //Log($"name = {name}");
 #endif
 
-                    var factStr = $"{{: >:{{ {name}({_selfNameForFacts}) }} :}}";
+                    var initialAddedInheritanceItem = inheritanceItemsDict[id];
+
+#if DEBUG
+                    //Log($"initialAddedInheritanceItem = {initialAddedInheritanceItem}");
+#endif
+
+                    var factStr = $"{{: >:{{ is({_selfNameForFacts}, {name}, 1) }} :}}";
 
 #if DEBUG
                     //Log($"factStr = {factStr}");
@@ -189,12 +196,6 @@ namespace SymOntoClay.Core.Internal.Storage
                     _publicFactsStorage.Append(fact);
 
                     _factsIdDict[name] = fact.Name.NameValue;
-
-                    var initialAddedInheritanceItem = inheritanceItemsDict[id];
-
-#if DEBUG
-                    //Log($"initialAddedInheritanceItem = {initialAddedInheritanceItem}");
-#endif
 
                     var addedInheritanceItem = new InheritanceItem();
 

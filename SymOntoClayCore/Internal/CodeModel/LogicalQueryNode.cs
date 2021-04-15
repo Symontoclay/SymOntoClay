@@ -91,6 +91,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public void PrepareDirty(ContextOfConvertingExpressionNode contextOfConvertingExpressionNode, RuleInstance ruleInstance, BaseRulePart rulePart)
         {
+#if DEBUG
+            //_gbcLogger.Info($"this = {this}");
+            //_gbcLogger.Info($"contextOfConvertingExpressionNode = {contextOfConvertingExpressionNode}");
+#endif
+
             RuleInstance = ruleInstance;
             RulePart = rulePart;
 
@@ -102,6 +107,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         case KindOfOperatorOfLogicalQueryNode.And:
                         case KindOfOperatorOfLogicalQueryNode.Or:
                         case KindOfOperatorOfLogicalQueryNode.Is:
+                        case KindOfOperatorOfLogicalQueryNode.IsNot:
+                        case KindOfOperatorOfLogicalQueryNode.More:
+                        case KindOfOperatorOfLogicalQueryNode.MoreOrEqual:
+                        case KindOfOperatorOfLogicalQueryNode.Less:
+                        case KindOfOperatorOfLogicalQueryNode.LessOrEqual:
                             Left.PrepareDirty(contextOfConvertingExpressionNode, ruleInstance, rulePart);
                             Right.PrepareDirty(contextOfConvertingExpressionNode, ruleInstance, rulePart);
                             break;
@@ -160,6 +170,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
             }
+
+#if DEBUG
+            //_gbcLogger.Info($"contextOfConvertingExpressionNode (after) = {contextOfConvertingExpressionNode}");
+#endif
         }
 
         private void FillRelationParams(IList<LogicalQueryNode> sourceParamsList, ContextOfConvertingExpressionNode contextOfConvertingExpressionNode)
@@ -170,14 +184,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var knownInfoList = new List<QueryExecutingCardAboutKnownInfo>();
             var i = 0;
 
-            //var dictionary = mainStorageContext.Dictionary;
-
             foreach (var param in sourceParamsList)
             {
                 param.CheckDirty();
 
 #if DEBUG
-                _gbcLogger.Info($"param = {param}");
+                //_gbcLogger.Info($"param = {param}");
 #endif               
 
                 var kindOfParam = param.Kind;
@@ -196,18 +208,30 @@ namespace SymOntoClay.Core.Internal.CodeModel
                             knownInfoList.Add(knownInfo);
 
 #if DEBUG
-                            _gbcLogger.Info($"knownInfo = {knownInfo}");
+                            //_gbcLogger.Info($"knownInfo = {knownInfo}");
 #endif
                         }
                         break;
 
                     case KindOfLogicalQueryNode.LogicalVar:
+                        {
+                            var varInfo = new QueryExecutingCardAboutVar();
+                            varInfo.NameOfVar = param.Name;
+                            varInfo.Position = i;
+                            varsInfoList.Add(varInfo);
+
+                            contextOfConvertingExpressionNode.HasVars = true;
+                        }
+                        break;
+
                     case KindOfLogicalQueryNode.QuestionVar:
                         {
                             var varInfo = new QueryExecutingCardAboutVar();
                             varInfo.NameOfVar = param.Name;
                             varInfo.Position = i;
                             varsInfoList.Add(varInfo);
+
+                            contextOfConvertingExpressionNode.HasQuestionVars = true;
                         }
                         break;
 
@@ -233,6 +257,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         case KindOfOperatorOfLogicalQueryNode.And:
                         case KindOfOperatorOfLogicalQueryNode.Or:
                         case KindOfOperatorOfLogicalQueryNode.Is:
+                        case KindOfOperatorOfLogicalQueryNode.IsNot:
+                        case KindOfOperatorOfLogicalQueryNode.More:
+                        case KindOfOperatorOfLogicalQueryNode.MoreOrEqual:
+                        case KindOfOperatorOfLogicalQueryNode.Less:
+                        case KindOfOperatorOfLogicalQueryNode.LessOrEqual:
                             Left.CalculateUsedKeys(usedKeysList);
                             Right.CalculateUsedKeys(usedKeysList);
                             break;
@@ -304,6 +333,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         case KindOfOperatorOfLogicalQueryNode.And:
                         case KindOfOperatorOfLogicalQueryNode.Or:
                         case KindOfOperatorOfLogicalQueryNode.Is:
+                        case KindOfOperatorOfLogicalQueryNode.IsNot:
+                        case KindOfOperatorOfLogicalQueryNode.More:
+                        case KindOfOperatorOfLogicalQueryNode.MoreOrEqual:
+                        case KindOfOperatorOfLogicalQueryNode.Less:
+                        case KindOfOperatorOfLogicalQueryNode.LessOrEqual:
                             return base.CalculateLongHashCode() ^ LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(KindOfOperator.GetHashCode()) ^ Left.GetLongHashCode() ^ Right.GetLongHashCode();
 
                         default:

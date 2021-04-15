@@ -39,6 +39,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         Or,
         Not,
         CallLogicalQuery,
-        Assign
+        Assign,
+        More,
+        MoreOrEqual,
+        Less,
+        LessOrEqual
     }
 }

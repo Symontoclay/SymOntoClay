@@ -171,8 +171,9 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
                 var inheritanceFact = CreateInheritanceFact(inheritanceItem);
 
 #if DEBUG
-                Log($"inheritanceFact = {inheritanceFact}");
-                Log($"inheritanceFact = {DebugHelperForRuleInstance.ToString(inheritanceFact)}");
+                //Log($"inheritanceFact = {inheritanceFact}");
+                //inheritanceFact.CheckDirty();
+                //Log($"inheritanceFact = {DebugHelperForRuleInstance.ToString(inheritanceFact)}");
 #endif
                 lock(_factsIdRegistryLockObj)
                 {

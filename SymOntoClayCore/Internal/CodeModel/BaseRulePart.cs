@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -31,6 +32,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class BaseRulePart: AnnotatedItem
     {
+#if DEBUG
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         public RuleInstance Parent { get; set; }
         public bool IsActive { get; set; }
         public LogicalQueryNode Expression { get; set; }
@@ -77,6 +82,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             HasQuestionVars = contextOfConvertingExpressionNode.HasQuestionVars;
             HasVars = contextOfConvertingExpressionNode.HasVars;
+
+#if DEBUG
+            //_gbcLogger.Info($"HasVars = {HasVars}");
+#endif
+
             RelationsDict = contextOfConvertingExpressionNode.RelationsList.GroupBy(p => p.Name).ToDictionary(p => p.Key, p => (IList<LogicalQueryNode>)p.ToList());
         }
 
@@ -117,7 +127,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 var nextNextN = nextN + 4;
                 foreach (var relationsKVPItem in RelationsDict)
                 {
-                    sb.AppendLine($"{nextNSpace}key of relation = {relationsKVPItem.Key}");
+                    sb.AppendLine($"{nextNSpace}key of relation = {relationsKVPItem.Key.NameValue}");
                     var tmpRelationsList = relationsKVPItem.Value;
                     sb.AppendLine($"{nextNSpace}count of relations = {tmpRelationsList.Count}");
                     foreach (var relation in tmpRelationsList)

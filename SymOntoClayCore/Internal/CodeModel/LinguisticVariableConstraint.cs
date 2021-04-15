@@ -50,10 +50,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
             switch(kindOfReson)
             {
                 case KindOfReasonOfFuzzyLogicResolving.Inheritance:
-                    return _items.Any(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Inheritance);
+                    return _items.Any(p => p.Kind == KindOfLinguisticVariableConstraintItem.Inheritance);
 
                 case KindOfReasonOfFuzzyLogicResolving.Relation:
-                    return _items.Any(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Relation && p.RelationName == reason.RelationName);
+                    return _items.Any(p => p.Kind == KindOfLinguisticVariableConstraintItem.Relation && p.RelationName == reason.RelationName);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfReson), kindOfReson, null);
@@ -73,29 +73,29 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public void Check()
         {
-            if (_items.Any(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Unknown))
+            if (_items.Any(p => p.Kind == KindOfLinguisticVariableConstraintItem.Unknown))
             {
                 throw new Exception("Linguistic variable constraints can not be Unknown!");
             }
 
-            if(_items.Any(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Inheritance))
+            if(_items.Any(p => p.Kind == KindOfLinguisticVariableConstraintItem.Inheritance))
             {
-                if (_items.Count(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Inheritance) > 1)
+                if (_items.Count(p => p.Kind == KindOfLinguisticVariableConstraintItem.Inheritance) > 1)
                 {
                     throw new Exception("Linguistic variable's constraints for inheritance is duplicated!");
                 }
 
-                if(!_items.Any(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Relation && p.RelationName.NameValue == "is"))
+                if(!_items.Any(p => p.Kind == KindOfLinguisticVariableConstraintItem.Relation && p.RelationName.NameValue == "is"))
                 {
-                    var relationItem = new LinguisticVariableConstraintItem() { Kind = KindOfLinguisticVariableСonstraintItem.Relation };
+                    var relationItem = new LinguisticVariableConstraintItem() { Kind = KindOfLinguisticVariableConstraintItem.Relation };
                     relationItem.RelationName = NameHelper.CreateName("is");
                     _items.Add(relationItem);
                 }
             }
 
-            if(_items.Any(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Relation))
+            if(_items.Any(p => p.Kind == KindOfLinguisticVariableConstraintItem.Relation))
             {
-                var groppedItems = _items.Where(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Relation).GroupBy(p => p.RelationName).Where(p => p.Count() > 1).Select(p => $"`{p.Key.NameValue}`");
+                var groppedItems = _items.Where(p => p.Kind == KindOfLinguisticVariableConstraintItem.Relation).GroupBy(p => p.RelationName).Where(p => p.Count() > 1).Select(p => $"`{p.Key.NameValue}`");
             
                 if(groppedItems.Any())
                 {
@@ -109,9 +109,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     }
                 }
 
-                if(_items.Any(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Relation && p.RelationName.NameValue == "is") && !_items.Any(p => p.Kind == KindOfLinguisticVariableСonstraintItem.Inheritance))
+                if(_items.Any(p => p.Kind == KindOfLinguisticVariableConstraintItem.Relation && p.RelationName.NameValue == "is") && !_items.Any(p => p.Kind == KindOfLinguisticVariableConstraintItem.Inheritance))
                 {
-                    var inheritanceItem = new LinguisticVariableConstraintItem() { Kind = KindOfLinguisticVariableСonstraintItem.Inheritance };
+                    var inheritanceItem = new LinguisticVariableConstraintItem() { Kind = KindOfLinguisticVariableConstraintItem.Inheritance };
                     _items.Add(inheritanceItem);
                 }
             }

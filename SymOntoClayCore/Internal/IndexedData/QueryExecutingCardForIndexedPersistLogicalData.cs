@@ -28,7 +28,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
-{
+{    
     public class QueryExecutingCardForIndexedPersistLogicalData : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public StrongIdentifierValue TargetRelation { get; set; }
@@ -36,14 +36,11 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public IList<QueryExecutingCardAboutVar> VarsInfoList { get; set; }
         public IList<QueryExecutingCardAboutKnownInfo> KnownInfoList { get; set; }
         public List<ResultOfQueryToRelation> ResultsOfQueryToRelationList { get; set; } = new List<ResultOfQueryToRelation>();
+        public List<PostFilterOfQueryExecutingCardForPersistLogicalData> PostFiltersList { get; set; } = new List<PostFilterOfQueryExecutingCardForPersistLogicalData>();
         public bool IsSuccess { get; set; }
+        public bool IsPostFiltersListOnly { get; set; }
         public List<StrongIdentifierValue> UsedKeysList { get; set; } = new List<StrongIdentifierValue>();
 
-#if DEBUG
-        public RuleInstance SenderIndexedRuleInstance { get; set; }
-        public BaseRulePart SenderIndexedRulePart { get; set; }
-        public LogicalQueryNode SenderExpressionNode { get; set; }
-#endif
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -67,14 +64,12 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintObjListProp(n, nameof(VarsInfoList), VarsInfoList);
             sb.PrintObjListProp(n, nameof(KnownInfoList), KnownInfoList);
             sb.PrintObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
+            sb.PrintObjListProp(n, nameof(PostFiltersList), PostFiltersList);
+
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
+            sb.AppendLine($"{spaces}{nameof(IsPostFiltersListOnly)} = {IsPostFiltersListOnly}");
             sb.PrintObjListProp(n, nameof(UsedKeysList), UsedKeysList);
 
-#if DEBUG
-            sb.PrintExisting(n, nameof(SenderIndexedRuleInstance), SenderIndexedRuleInstance);
-            sb.PrintExisting(n, nameof(SenderIndexedRulePart), SenderIndexedRulePart);
-            sb.PrintExisting(n, nameof(SenderExpressionNode), SenderExpressionNode);
-#endif
             return sb.ToString();
         }
 
@@ -101,15 +96,12 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintShortObjListProp(n, nameof(VarsInfoList), VarsInfoList);
             sb.PrintShortObjListProp(n, nameof(KnownInfoList), KnownInfoList);
             sb.PrintShortObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
+            sb.PrintShortObjListProp(n, nameof(PostFiltersList), PostFiltersList);
 
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
+            sb.AppendLine($"{spaces}{nameof(IsPostFiltersListOnly)} = {IsPostFiltersListOnly}");
             sb.PrintShortObjListProp(n, nameof(UsedKeysList), UsedKeysList);
 
-#if DEBUG
-            sb.PrintExisting(n, nameof(SenderIndexedRuleInstance), SenderIndexedRuleInstance);
-            sb.PrintExisting(n, nameof(SenderIndexedRulePart), SenderIndexedRulePart);
-            sb.PrintExisting(n, nameof(SenderExpressionNode), SenderExpressionNode);
-#endif
             return sb.ToString();
         }
 
@@ -136,74 +128,13 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintBriefObjListProp(n, nameof(VarsInfoList), VarsInfoList);
             sb.PrintBriefObjListProp(n, nameof(KnownInfoList), KnownInfoList);
             sb.PrintBriefObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
+            sb.PrintBriefObjListProp(n, nameof(PostFiltersList), PostFiltersList);
 
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
+            sb.AppendLine($"{spaces}{nameof(IsPostFiltersListOnly)} = {IsPostFiltersListOnly}");
             sb.PrintBriefObjListProp(n, nameof(UsedKeysList), UsedKeysList);
 
-#if DEBUG
-            sb.PrintExisting(n, nameof(SenderIndexedRuleInstance), SenderIndexedRuleInstance);
-            sb.PrintExisting(n, nameof(SenderIndexedRulePart), SenderIndexedRulePart);
-            sb.PrintExisting(n, nameof(SenderExpressionNode), SenderExpressionNode);
-#endif
             return sb.ToString();
         }
-
-#if DEBUG
-        public string GetSenderIndexedRuleInstanceHumanizeDbgString()
-        {
-            if (SenderIndexedRuleInstance == null)
-            {
-                return string.Empty;
-            }
-
-            var origin = SenderIndexedRuleInstance;
-
-            if (origin == null)
-            {
-                return string.Empty;
-            }
-
-            return DebugHelperForRuleInstance.ToString(origin);
-        }
-
-        public string GetSenderIndexedRulePartHumanizeDbgString()
-        {
-            if (SenderIndexedRulePart == null)
-            {
-                return string.Empty;
-            }
-
-            var origin = SenderIndexedRulePart;
-
-            if (origin == null)
-            {
-                return string.Empty;
-            }
-
-            if(origin is PrimaryRulePart)
-            {
-                return DebugHelperForRuleInstance.ToString(origin as PrimaryRulePart);
-            }
-
-            return DebugHelperForRuleInstance.ToString(origin as SecondaryRulePart);
-        }
-
-        public string GetSenderExpressionNodeHumanizeDbgString()
-        {
-            if (SenderExpressionNode == null)
-            {
-                return string.Empty;
-            }
-
-            var origin = SenderExpressionNode;
-
-            if (origin == null)
-            {
-                return string.Empty;
-            }
-
-            return DebugHelperForRuleInstance.ToString(origin);
-        }
-#endif
     }
 }

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
@@ -32,6 +33,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class ConsolidatedDataSource
     {
+#if DEBUG
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         public ConsolidatedDataSource(List<StorageUsingOptions> storagesList)
         {
             _dataSourcesSettingsOrderedByPriorityList = storagesList.OrderByDescending(p => p.Priority).ToList();
@@ -171,12 +176,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue key)
+        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name)
         {
             lock (_lockObj)
             {
 #if DEBUG
-                //DebugLogger.Instance.Info($"key = {key}");
+                //_gbcLogger.Info($"name = {name}");
 #endif
 
                 var initialResult = new List<BaseRulePart>();
@@ -185,7 +190,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 foreach (var dataSourcesSettings in dataSourcesSettingsOrderedByPriorityAndUseProductionsList)
                 {
-                    var indexedRulePartWithOneRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(key);
+                    var indexedRulePartWithOneRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name);
 
                     if (indexedRulePartWithOneRelationsList == null)
                     {

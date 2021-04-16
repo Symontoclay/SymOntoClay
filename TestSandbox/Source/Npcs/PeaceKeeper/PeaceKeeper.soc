@@ -28,7 +28,7 @@ app PeaceKeeper is [very middle] exampleClass
     {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
     {: barrel(#a) :}
 	{: see(I, #a) :}
-	{: dog(#b) :}
+	{: dog(#b) & bird(#f) :}
 	{: cat(#с) :}
 	{: animal(cat) :}
 	//{: focus(I, friend) :}

@@ -84,29 +84,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return new NumberValue(null);
             }
 
-            var fuzzyValue = targetItem.Handler.Defuzzificate().SystemValue.Value;
-
-#if DEBUG
-            //Log($"fuzzyValue = {fuzzyValue}");
-#endif
-
-            var operatorsList = GetFuzzyLogicOperators(targetItem.Parent, fuzzyLogicNonNumericSequence.Operators);
+            var operatorsList = GetFuzzyLogicOperators(targetItem.Parent, fuzzyLogicNonNumericSequence.Operators).Select(p => p.Handler);
 
 #if DEBUG
             //Log($"operatorsList.Count = {operatorsList.Count}");
 #endif
 
-            foreach (var op in operatorsList)
-            {
-#if DEBUG
-                //Log($"op = {op}");
-#endif
-
-                fuzzyValue = op.Handler.SystemCall(fuzzyValue);
-            }
+            var fuzzyValue = targetItem.Handler.Defuzzificate(operatorsList).SystemValue.Value;
 
 #if DEBUG
-            //Log($"fuzzyValue (after) = {fuzzyValue}");
+            //Log($"fuzzyValue = {fuzzyValue}");
 #endif
 
             return new NumberValue(fuzzyValue);

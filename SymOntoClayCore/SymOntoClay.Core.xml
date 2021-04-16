@@ -3088,6 +3088,9 @@
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.Defuzzificate">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.Defuzzificate(System.Collections.Generic.IEnumerable{SymOntoClay.Core.Internal.CodeExecution.IFuzzyLogicOperatorHandler})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.Check">
             <inheritdoc/>
         </member>

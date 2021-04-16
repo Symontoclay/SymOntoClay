@@ -59,6 +59,23 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
             return _deffuzificatedValue;
         }
 
+        /// <inheritdoc/>
+        public NumberValue Defuzzificate(IEnumerable<IFuzzyLogicOperatorHandler> operatorHandlers)
+        {
+            var sysDeffuzificatedValue = Defuzzificator.Defuzzificate(_kindOfDefuzzification, _a, _b, (double x) => {
+                var result = SystemCall(x);
+
+                foreach(var op in operatorHandlers)
+                {
+                    result = op.SystemCall(result);
+                }
+
+                return result;
+            });
+
+            return new NumberValue(sysDeffuzificatedValue);
+        }
+
         private bool _isDirty = true;
 
         public void CheckDirty()

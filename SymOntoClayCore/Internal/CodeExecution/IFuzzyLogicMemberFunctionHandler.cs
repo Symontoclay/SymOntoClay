@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using System.Collections.Generic;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
 {
@@ -6,6 +7,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     {
         KindOfFuzzyLogicMemberFunction Kind { get; }
         NumberValue Defuzzificate();
+        NumberValue Defuzzificate(IEnumerable<IFuzzyLogicOperatorHandler> operatorHandlers);
         void Check();
     }
 }

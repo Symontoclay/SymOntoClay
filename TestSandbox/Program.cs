@@ -24,6 +24,7 @@ using Newtonsoft.Json;
 using NLog;
 using SymOntoClay.CLI;
 using SymOntoClay.Core;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
@@ -110,17 +111,28 @@ namespace TestSandbox
         {
             _logger.Log("Begin");
 
-            var lHandler = new LFunctionFuzzyLogicMemberFunctionHandler(0, 0.1);
-            lHandler.CheckDirty();
+            var veryHandler = new VeryFuzzyLogicOperatorHandler();
 
-            var defuzzificatedValue = lHandler.Defuzzificate();
+            //var lHandler = new LFunctionFuzzyLogicMemberFunctionHandler(0, 0.1);
+            //lHandler.CheckDirty();
+
+            //var defuzzificatedValue = lHandler.Defuzzificate();
+
+            //_logger.Log($"defuzzificatedValue = {defuzzificatedValue}");
+
+            var trapezoid = new TrapezoidFuzzyLogicMemberFunctionHandler(0.3, 0.4, 0.6, 0.7);
+            //trapezoid = new TrapezoidFuzzyLogicMemberFunctionHandler(10, 12, 17, 20);
+            trapezoid.CheckDirty();
+
+            var defuzzificatedValue = trapezoid.Defuzzificate();
 
             _logger.Log($"defuzzificatedValue = {defuzzificatedValue}");
 
-            var trapezoid = new TrapezoidFuzzyLogicMemberFunctionHandler(0.3, 0.4, 0.6, 0.7);
-            trapezoid.CheckDirty();
+            var naiveVeryDefuzzificatedValue = veryHandler.SystemCall(defuzzificatedValue);
 
-            defuzzificatedValue = trapezoid.Defuzzificate();
+            _logger.Log($"naiveVeryDefuzzificatedValue = {naiveVeryDefuzzificatedValue}");
+
+            defuzzificatedValue = trapezoid.Defuzzificate(new List<IFuzzyLogicOperatorHandler>() { veryHandler });
 
             _logger.Log($"defuzzificatedValue = {defuzzificatedValue}");
 

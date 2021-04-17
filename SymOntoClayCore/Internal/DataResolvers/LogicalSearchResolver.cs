@@ -153,6 +153,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
+        private void AppendResults(QueryExecutingCardForIndexedPersistLogicalData sourceQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData destQueryExecutingCard)
+        {
+            destQueryExecutingCard.IsSuccess = sourceQueryExecutingCard.IsSuccess;
+
+            CopyResultsOfQueryToRelationList(sourceQueryExecutingCard, destQueryExecutingCard);
+
+            destQueryExecutingCard.UsedKeysList.AddRange(sourceQueryExecutingCard.UsedKeysList);
+        }
+
         private void CopyResultsOfQueryToRelationList(QueryExecutingCardForIndexedPersistLogicalData sourceQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData destQueryExecutingCard)
         {
             var destList = destQueryExecutingCard.ResultsOfQueryToRelationList;
@@ -226,19 +235,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 FillExecutingCardUsingPostFiltersList(queryExecutingCardForExpression, queryExecutingCardForFillExecutingCardUsingPostFiltersList, options);
 
-                queryExecutingCard.IsSuccess = queryExecutingCardForFillExecutingCardUsingPostFiltersList.IsSuccess;
-
-                CopyResultsOfQueryToRelationList(queryExecutingCardForFillExecutingCardUsingPostFiltersList, queryExecutingCard);
-
-                queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForFillExecutingCardUsingPostFiltersList.UsedKeysList);
+                AppendResults(queryExecutingCardForFillExecutingCardUsingPostFiltersList, queryExecutingCard);
             }
             else
             {
-                queryExecutingCard.IsSuccess = queryExecutingCardForExpression.IsSuccess;
-
-                CopyResultsOfQueryToRelationList(queryExecutingCardForExpression, queryExecutingCard);
-
-                queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForExpression.UsedKeysList);
+                AppendResults(queryExecutingCardForExpression, queryExecutingCard);
             }
 
 #if DEBUG
@@ -2747,23 +2748,24 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             leftQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
             FillExecutingCard(processedExpr.Left, leftQueryExecutingCard, dataSource, options);
 
-            if (leftQueryExecutingCard.IsPostFiltersListOnly)
+            if (!leftQueryExecutingCard.IsSuccess)
             {
-                throw new NotImplementedException();
+                queryExecutingCard.UsedKeysList.AddRange(leftQueryExecutingCard.UsedKeysList);
+
+                return;
             }
 
             if (leftQueryExecutingCard.PostFiltersList.Any())
             {
-                throw new NotImplementedException();
+                var queryExecutingCardForFillExecutingCardUsingPostFiltersList = new QueryExecutingCardForIndexedPersistLogicalData();
+
+                FillExecutingCardUsingPostFiltersList(leftQueryExecutingCard, queryExecutingCardForFillExecutingCardUsingPostFiltersList, options);
+
+                AppendResults(queryExecutingCardForFillExecutingCardUsingPostFiltersList, queryExecutingCard);
             }
-
-            queryExecutingCard.UsedKeysList.AddRange(leftQueryExecutingCard.UsedKeysList);
-
-            queryExecutingCard.IsSuccess = leftQueryExecutingCard.IsSuccess;
-
-            foreach (var resultOfQueryToRelation in leftQueryExecutingCard.ResultsOfQueryToRelationList)
+            else
             {
-                queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
+                AppendResults(leftQueryExecutingCard, queryExecutingCard);
             }
 
 #if DEBUG

@@ -35,10 +35,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             switch(kind)
             {
                 case KindOfOperator.Assign:
-                    return 16;
+                    return 17;
 
                 case KindOfOperator.LeftRightStream:
-                    return 15;
+                    return 16;
 
                 case KindOfOperator.And:                
                     return 14;

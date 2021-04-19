@@ -100,9 +100,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");
             //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
+            //Log($"Result = {Result}");            
 #endif
 
             switch(_state)
@@ -127,7 +127,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.Word:
-                        case TokenKind.QuestionVar:
+                        case TokenKind.LogicalVar:
                         {
                                 _context.Recovery(_currToken);
 

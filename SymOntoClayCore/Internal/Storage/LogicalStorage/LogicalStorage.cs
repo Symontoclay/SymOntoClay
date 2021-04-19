@@ -178,6 +178,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             _ruleInstancesDictByHashCode[longHashCode] = ruleInstance;
             _ruleInstancesDictById[ruleInstanceId] = ruleInstance;
 
+#if DEBUG
+            //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+            //Log($"ruleInstance.Normalized = {DebugHelperForRuleInstance.ToString(ruleInstance.Normalized)}");
+#endif            
+
             _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(ruleInstance.Normalized);
 
             if(isPrimary && _kind != KindOfStorage.PublicFacts && _kind != KindOfStorage.PerceptedFacts)

@@ -37,7 +37,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         Channel,
         Var,
         SystemVar,
-        LogicalVar,
-        QuestionVar
+        LogicalVar
     }
 }

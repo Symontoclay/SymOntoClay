@@ -175,20 +175,7 @@ namespace SymOntoClay.Core.Internal.Convertors
                 case KindOfLogicalQueryNode.Relation:
                     if(source.ParamsList.Count == 1)
                     {
-#if DEBUG
-                        //_gbcLogger.Info($"source = {source}");
-#endif
-
-                        var param = source.ParamsList[0];
-
-#if DEBUG
-                        //_gbcLogger.Info($"param = {param}");
-#endif
-
-                        if(param.Kind == KindOfLogicalQueryNode.Concept || param.Kind == KindOfLogicalQueryNode.Entity)
-                        {
-                            return ConvertUnaryPredicateToFullIsPredicate(source, convertingContext);
-                        }
+                        return ConvertUnaryPredicateToFullIsPredicate(source, convertingContext);
                     }
                     return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext);
 

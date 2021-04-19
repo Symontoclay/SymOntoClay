@@ -41,8 +41,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             InMultiLineComment,
             At,
             Sharp,
-            DollarSign,
-            InQuestionVar
+            DollarSign
         }
 
         private enum KindOfPrefix
@@ -51,7 +50,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Var,
             SystemVar,
             LogicalVar,
-            QuestionVar,
             Channel,
             Entity,
             EntityCondition,
@@ -164,25 +162,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 return CreateToken(TokenKind.Point);
 
                             case '?':
-                                {
-                                    var nextChar = _items.Peek();
-
-#if DEBUG
-                                    //_logger.Log($"nextChar = {nextChar}");
-#endif
-
-                                    if(char.IsLetterOrDigit(nextChar) || nextChar == '_')
-                                    {
-                                        _state = State.InQuestionVar;
-
-                                        buffer = new StringBuilder();
-                                        buffer.Append(tmpChar);
-
-                                        break;
-                                    }
-
-                                    return CreateToken(TokenKind.QuestionMark);
-                                }                                
+                                return CreateToken(TokenKind.QuestionMark);
 
                             case ',':
                                 return CreateToken(TokenKind.Comma);
@@ -737,44 +717,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     _state = State.Init;
 
                                     return CreateToken(TokenKind.LogicalVar, buffer.ToString());
-                                }
-                            }
-                            break;
-                        }
-                        throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
-
-                    case State.InQuestionVar:
-                        if (char.IsLetterOrDigit(tmpChar) || tmpChar == '_')
-                        {
-                            buffer.Append(tmpChar);
-
-#if DEBUG
-                            //_logger.Log($"case State.DollarSign: buffer?.ToString() = {buffer?.ToString()}");
-#endif
-
-                            _kindOfPrefix = KindOfPrefix.QuestionVar;
-
-                            var nextChar = _items.Peek();
-
-#if DEBUG
-                            //_logger.Log($"nextChar = {nextChar}");
-#endif
-
-                            if (nextChar == '`')
-                            {
-                                _state = State.InIdentifier;
-                            }
-                            else
-                            {
-                                if (char.IsLetterOrDigit(nextChar) || nextChar == '_')
-                                {
-                                    _state = State.InWord;
-                                }
-                                else
-                                {
-                                    _state = State.Init;
-
-                                    return CreateToken(TokenKind.QuestionVar, buffer.ToString());
                                 }
                             }
                             break;

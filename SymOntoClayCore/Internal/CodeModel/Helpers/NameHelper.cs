@@ -107,10 +107,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             {
                 name.KindOfName = KindOfName.Entity;
             }
-            else if (text.StartsWith("?"))
-            {
-                name.KindOfName = KindOfName.QuestionVar;
-            }
             else if (text.StartsWith("$"))
             {
                 name.KindOfName = KindOfName.LogicalVar;

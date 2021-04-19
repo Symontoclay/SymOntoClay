@@ -1373,7 +1373,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private void FillExecutingCardForRelationLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            //options.Logger.Log($"processedExpr.sIsQuestion = {processedExpr.IsQuestion}");
+            //options.Logger.Log($"processedExpr.Name = {processedExpr.Name}");
+            //options.Logger.Log($"processedExpr.IsQuestion = {processedExpr.IsQuestion}");
+            //options.Logger.Log($"processedExpr = {processedExpr}");
 #endif
 
             if (processedExpr.IsQuestion)
@@ -1424,6 +1426,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
 #if DEBUG
             //options.Logger.Log($"processedExpr.Name = {processedExpr.Name}");
+            //options.Logger.Log($"DebugHelperForRuleInstance.ToString(processedExpr) = {DebugHelperForRuleInstance.ToString(processedExpr)}");
 #endif
 
             var indexedRulePartsOfFactsList = dataSource.GetIndexedRulePartOfFactsByKeyOfRelation(processedExpr.Name);

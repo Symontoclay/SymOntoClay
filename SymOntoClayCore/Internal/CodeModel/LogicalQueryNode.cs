@@ -156,7 +156,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 case KindOfLogicalQueryNode.Relation:
                     Name.CheckDirty();
-                    if (Name.KindOfName == KindOfName.QuestionVar)
+                    if (Name.KindOfName == KindOfName.LogicalVar)
                     {
                         IsQuestion = true;
                     }

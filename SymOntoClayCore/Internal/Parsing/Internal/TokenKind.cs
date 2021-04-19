@@ -40,7 +40,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Var,
         SystemVar,
         LogicalVar,
-        QuestionVar,
         EntityCondition,
         Entity,
         Point,

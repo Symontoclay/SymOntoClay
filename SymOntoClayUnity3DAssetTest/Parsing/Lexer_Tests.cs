@@ -28,7 +28,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Unity3DAsset.Test
+namespace SymOntoClay.Unity3DAsset.Test.Parsing
 {
     public class Lexer_Tests
     {

@@ -68,6 +68,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            TstNameHelper();
             //TstDeffuzzification();
             //TstRangeValue();
             //TstFuzzyLogicNonNumericSequenceValue();
@@ -101,10 +102,23 @@ namespace TestSandbox
             //TstExprNodeHandler();
             //TstParsing();
             //TstMonoBehaviourTestingHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstNameHelper()
+        {
+            _logger.Log("Begin");
+
+            var text = "$x";
+
+            var name = NameHelper.CreateName(text);
+
+            _logger.Log($"name = {name}");
+
+            _logger.Log("End");
         }
 
         private static void TstDeffuzzification()

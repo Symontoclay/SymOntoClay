@@ -33,7 +33,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SymOntoClay.Unity3DAsset.Test
+namespace SymOntoClay.Unity3DAsset.Test.Parsing
 {
     public class Parser_Tests
     {
@@ -67,7 +67,7 @@ namespace SymOntoClay.Unity3DAsset.Test
 
             Assert.AreEqual(firstItem.Kind, KindOfCodeEntity.App);
             //Assert.AreEqual(firstItem.Name.NameKey, nameKey);
-            Assert.AreEqual(firstItem.Name.NameValue, "Enemy");
+            Assert.AreEqual(firstItem.Name.NameValue, "enemy");
             Assert.AreEqual(firstItem.Name.KindOfName, KindOfName.Concept);
 
             Assert.AreEqual(firstItem.SubItems.Count, 0);
@@ -101,7 +101,7 @@ namespace SymOntoClay.Unity3DAsset.Test
 
             Assert.AreEqual(firstItem.Kind, KindOfCodeEntity.App);
             //Assert.AreEqual(firstItem.Name.NameKey, nameKey);
-            Assert.AreEqual(firstItem.Name.NameValue, "PixKeeper");
+            Assert.AreEqual(firstItem.Name.NameValue, "pixkeeper");
             Assert.AreEqual(firstItem.Name.KindOfName, KindOfName.Concept);
 
             Assert.AreEqual(firstItem.SubItems.Count, 1);

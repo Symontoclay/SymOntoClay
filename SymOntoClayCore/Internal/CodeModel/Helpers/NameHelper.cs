@@ -68,6 +68,11 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 
         public static StrongIdentifierValue CreateName(string text)
         {
+            if(string.IsNullOrWhiteSpace(text))
+            {
+                return new StrongIdentifierValue() { IsEmpty = true };
+            }
+
             var name = new StrongIdentifierValue() { IsEmpty = false };
 
             text = text.ToLower().Trim();

@@ -30,7 +30,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Unity3DAsset.Test
+namespace SymOntoClay.Unity3DAsset.Test.Parsing
 {
     public class NameHelper_Tests
     {
@@ -49,8 +49,27 @@ namespace SymOntoClay.Unity3DAsset.Test
 
             Assert.AreEqual(name.IsEmpty, true);
             Assert.AreEqual(name.NameValue, string.Empty);
+            Assert.AreEqual(name.NormalizedNameValue, string.Empty);
             Assert.AreEqual(name.KindOfName, KindOfName.Unknown);
-            //Assert.AreEqual(name.NameKey, 0);
+
+            Assert.AreEqual(name.KindOfValue, KindOfValue.StrongIdentifierValue);
+            Assert.AreEqual(name.IsStrongIdentifierValue, true);
+            Assert.AreEqual(name.AsStrongIdentifierValue, name);
+        }
+
+        [Test]
+        public void NameHelper_Tests_Case_2_Empty()
+        {
+            var name = NameHelper.CreateName(string.Empty);
+
+            Assert.AreEqual(name.IsEmpty, true);
+            Assert.AreEqual(name.NameValue, string.Empty);
+            Assert.AreEqual(name.NormalizedNameValue, string.Empty);
+            Assert.AreEqual(name.KindOfName, KindOfName.Unknown);
+
+            Assert.AreEqual(name.KindOfValue, KindOfValue.StrongIdentifierValue);
+            Assert.AreEqual(name.IsStrongIdentifierValue, true);
+            Assert.AreEqual(name.AsStrongIdentifierValue, name);
         }
 
         [Test]
@@ -62,12 +81,32 @@ namespace SymOntoClay.Unity3DAsset.Test
 
             Assert.AreEqual(name.IsEmpty, false);
             Assert.AreEqual(name.NameValue, text);
+            Assert.AreEqual(name.NormalizedNameValue, text);
             Assert.AreEqual(name.KindOfName, KindOfName.Concept);
-            //Assert.AreNotEqual(name.NameKey, 0);
+        }
 
-            //var key = _parserContext.Dictionary.GetKey(text);
+        [Test]
+        public void NameHelper_Tests_Case_2_Concept()
+        {
+            var name = NameHelper.CreateName("Dog");
 
-            //Assert.AreEqual(name.NameKey, key);
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "dog");
+            Assert.AreEqual(name.NormalizedNameValue, "dog");
+            Assert.AreEqual(name.KindOfName, KindOfName.Concept);
+        }
+
+        [Test]
+        public void NameHelper_Tests_Case_3_Concept()
+        {
+            var text = "small dog";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, text);
+            Assert.AreEqual(name.NormalizedNameValue, text);
+            Assert.AreEqual(name.KindOfName, KindOfName.Concept);
         }
 
         [Test]
@@ -79,12 +118,8 @@ namespace SymOntoClay.Unity3DAsset.Test
 
             Assert.AreEqual(name.IsEmpty, false);
             Assert.AreEqual(name.NameValue, text);
+            Assert.AreEqual(name.NormalizedNameValue, text);
             Assert.AreEqual(name.KindOfName, KindOfName.Channel);
-            //Assert.AreNotEqual(name.NameKey, 0);
-
-            //var key = _parserContext.Dictionary.GetKey(text);
-
-            //Assert.AreEqual(name.NameKey, key);
         }
 
         [Test]
@@ -94,8 +129,8 @@ namespace SymOntoClay.Unity3DAsset.Test
 
             Assert.AreEqual(name.IsEmpty, false);
             Assert.AreNotEqual(name.NameValue, string.Empty);
+            Assert.AreNotEqual(name.NormalizedNameValue, string.Empty);
             Assert.AreEqual(name.KindOfName, KindOfName.Entity);
-            //Assert.AreNotEqual(name.NameKey, 0);
         }
 
         [Test]
@@ -107,12 +142,73 @@ namespace SymOntoClay.Unity3DAsset.Test
 
             Assert.AreEqual(name.IsEmpty, false);
             Assert.AreEqual(name.NameValue, text);
+            Assert.AreEqual(name.NormalizedNameValue, text);
             Assert.AreEqual(name.KindOfName, KindOfName.Entity);
-            //Assert.AreNotEqual(name.NameKey, 0);
-
-            //var key = _parserContext.Dictionary.GetKey(text);
-
-            //Assert.AreEqual(name.NameKey, key);
         }
+
+        [Test]
+        public void NameHelper_Tests_Case_2_Entity()
+        {
+            var text = "#Tom";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "#tom");
+            Assert.AreEqual(name.NormalizedNameValue, "#tom");
+            Assert.AreEqual(name.KindOfName, KindOfName.Entity);
+        }
+
+        [Test]
+        public void NameHelper_Tests_Case_3_Entity()
+        {
+            var text = "#`Barrel 1`";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "#`barrel 1`");
+            Assert.AreEqual(name.NormalizedNameValue, "#barrel 1");
+            Assert.AreEqual(name.KindOfName, KindOfName.Entity);
+        }
+
+        [Test]
+        public void NameHelper_Tests_Case_Var()
+        {
+            var text = "@a";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "@a");
+            Assert.AreEqual(name.NormalizedNameValue, "@a");
+            Assert.AreEqual(name.KindOfName, KindOfName.Var);
+        }
+
+        [Test]
+        public void NameHelper_Tests_Case_SystemVar()
+        {
+            var text = "@@host";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "@@host");
+            Assert.AreEqual(name.NormalizedNameValue, "@@host");
+            Assert.AreEqual(name.KindOfName, KindOfName.SystemVar);
+        }
+
+        [Test]
+        public void NameHelper_Tests_Case_LogicVar()
+        {
+            var text = "$x";
+
+            var name = NameHelper.CreateName(text);
+
+            Assert.AreEqual(name.IsEmpty, false);
+            Assert.AreEqual(name.NameValue, "$x");
+            Assert.AreEqual(name.NormalizedNameValue, "$x");
+            Assert.AreEqual(name.KindOfName, KindOfName.LogicalVar);
+        }   
     }
 }

@@ -68,7 +68,8 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-            TstNameHelper();
+            TstTestRunner();
+            //TstNameHelper();
             //TstDeffuzzification();
             //TstRangeValue();
             //TstFuzzyLogicNonNumericSequenceValue();
@@ -106,6 +107,92 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstTestRunner()
+        {
+            _logger.Log("Begin");
+
+            TestRunner.Run(@"linvar logic for range [0, 1]
+{
+    constraints:
+	    for inheritance;
+
+	terms:
+		minimal = L(0, 0.1);
+		low = Trapezoid(0, 0.05, 0.3, 0.45);
+		middle = Trapezoid(0.3, 0.4, 0.6, 0.7);
+		high = Trapezoid(0.55, 0.7, 0.95, 1);
+		maximal = S(0.9, 1);
+}
+
+linvar age for range (0, 150]
+{
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+	    //`teenager` = L(5, 10);
+	    //`teenager` = S(12, 22);
+	    //`teenager` = S(12, 17, 22);
+}
+
+app PeaceKeeper is [very middle] exampleClass
+{
+    {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
+    {: barrel(#a) :}
+	{: see(I, #a) :}
+	{: dog(#b) & bird(#f) :}
+	{: cat(#с) :}
+	{: animal(cat) :}
+	//{: focus(I, friend) :}
+	{: age(#Tom, 50) :}
+	//{: value(distance(I, #Tom), 1) :}
+	{: distance(I, #Tom, 12) :}
+
+    on Init => {
+	     'Begin' >> @>log;
+		 //NULL >> @>log;
+
+		 //use @@self is [very middle] linux;
+
+		 //select {: { cat is animal } :} >> @>log;
+		 //select {: see(I, barrel) :} >> @>log;
+		 select {: son($x, $y) :} >> @>log;
+		 //select {: $z($x, $y) :} >> @>log;
+		 //select {: age(#Tom, `teenager`) :} >> @>log;
+		 select {: age(#Tom, $x) & distance(#Tom, $y) & $x is not $y :} >> @>log;
+		 //select {: value(distance(I, $x), $y) :} >> @>log;
+		 //select {: distance(I, #Tom, $x) :} >> @>log;
+		 //select {: distance(#Tom, $x) & $x is 12 :} >> @>log;
+		 //select {: distance(#Tom, $x) & $x > 5 :} >> @>log;
+
+		 //insert {: >: { bird (#1234) } :};
+		 //insert {: see(I, #a) :};
+
+		 //exampleClass is not human >> @>log;
+		 //exampleClass is human >> @>log;
+
+		 //@@host.`go`(to: #@[10]);
+
+		 'End' >> @>log;
+
+    }
+
+        //on {: see(I, $x) & barrel($x) & !focus(I, friend) :} ($x >> @x) => {
+        //     @x >> @>log;
+        //}
+
+        //on {: see(I, #`gun 1`) :} => {
+        //     'D' >> @>log;
+        //}
+    }
+", msg => {
+                _logger.Log($"msg = {msg}");
+            });
+
+            _logger.Log("End");
         }
 
         private static void TstNameHelper()

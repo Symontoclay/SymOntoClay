@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>soc</AssemblyName>
     <Version>0.2.6.0</Version>
     <RootNamespace>SymOntoClay.CLI</RootNamespace>

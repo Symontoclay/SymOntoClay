@@ -322,10 +322,11 @@ app PeaceKeeper is [very middle] exampleClass
     on Init =>
     {
         'Begin' >> @>log;
+        @r = @b = 1;
+        @bx >> @>log;
         'End' >> @>log;
-        }
     }
-";
+}";
 
             BehaviorTestEngineInstance.Run(text,
                 (n, message) => {

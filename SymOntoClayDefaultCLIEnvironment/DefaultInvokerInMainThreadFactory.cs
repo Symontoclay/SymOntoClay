@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SymOntoClay.CLI
+namespace SymOntoClayDefaultCLIEnvironment
 {
-    public static class CLIInvokerInMainThreadFactory
+    public static class DefaultInvokerInMainThreadFactory
     {
         public static InvokerInMainThread Create()
         {

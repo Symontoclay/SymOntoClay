@@ -40,7 +40,7 @@ namespace SymOntoClay.Unity3DAsset.Test.Parsing
         [SetUp]
         public void Setup()
         {
-            _mainStorageContext = new TstMainStorageContext();
+            _mainStorageContext = new UnityTestMainStorageContext();
         }
 
         private IMainStorageContext _mainStorageContext;

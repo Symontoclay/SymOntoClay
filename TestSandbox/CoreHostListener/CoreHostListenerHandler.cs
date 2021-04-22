@@ -30,6 +30,7 @@ using SymOntoClay.UnityAsset.Core.Internal.EndPoints;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors.DefaultConvertors;
+using SymOntoClayDefaultCLIEnvironment;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Threading;
@@ -79,7 +80,7 @@ namespace TestSandbox.CoreHostListener
 
             var endPointsResolver = new EndPointsResolver(context.Logger, platformTypesConvertorsRegistry);
 
-            var invokingInMainThread = TstInvokerInMainThreadFactory.Create();
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
 
             var endPointActivator = new EndPointActivator(context.Logger, platformTypesConvertorsRegistry, invokingInMainThread);
 

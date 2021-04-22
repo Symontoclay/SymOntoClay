@@ -32,10 +32,13 @@ using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Unity3DAsset.Test.Helpers;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Helpers;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
+using SymOntoClayDefaultCLIEnvironment;
+using SymOntoClayProjectFiles;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -68,6 +71,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            //TstManageTempProject();
             TstTestRunner();
             //TstNameHelper();
             //TstDeffuzzification();
@@ -109,11 +113,64 @@ namespace TestSandbox
             //Thread.Sleep(10000);
         }
 
-        private static void TstTestRunner()
+        private static void TstManageTempProject()
         {
             _logger.Log("Begin");
 
-            TestRunner.Run(@"linvar logic for range [0, 1]
+            var initialDir = Directory.GetCurrentDirectory();
+
+            _logger.Log($"initialDir = {initialDir}");
+
+            initialDir = Path.Combine(initialDir, "TempProjects");
+
+            _logger.Log($"initialDir (2) = {initialDir}");
+
+            if(!Directory.Exists(initialDir))
+            {
+                Directory.CreateDirectory(initialDir);
+            }
+
+            var testDir = Path.Combine(initialDir, $"TstDir{Guid.NewGuid().ToString("D").Replace("-", string.Empty)}");
+
+            _logger.Log($"testDir = {testDir}");
+
+            if (!Directory.Exists(testDir))
+            {
+                Directory.CreateDirectory(testDir);
+            }
+
+            var projectName = "Example";
+
+            var worldSpaceCreationSettings = new WorldSpaceCreationSettings() { ProjectName = projectName };
+
+            _logger.Log($"worldSpaceCreationSettings = {worldSpaceCreationSettings}");
+
+            var wSpaceFile = WorldSpaceCreator.CreateWithOutWSpaceFile(worldSpaceCreationSettings, testDir
+                    , errorMsg => _logger.Error(errorMsg)
+                    );
+
+            _logger.Log($"wSpaceFile = {wSpaceFile}");
+
+            var wSpaceDir = wSpaceFile.DirectoryName;
+
+            _logger.Log($"wSpaceDir = {wSpaceDir}");
+
+            var targetRelativeFileName = @"/Npcs/Example/Example.soc";
+
+            _logger.Log($"targetRelativeFileName = {targetRelativeFileName}");
+
+            if(targetRelativeFileName.StartsWith("/") || targetRelativeFileName.StartsWith("\\"))
+            {
+                targetRelativeFileName = targetRelativeFileName.Substring(1);
+            }
+
+            _logger.Log($"targetRelativeFileName (after) = {targetRelativeFileName}");
+
+            var targetFileName = Path.Combine(wSpaceDir, targetRelativeFileName);
+
+            _logger.Log($"targetFileName = {targetFileName}");
+
+            var text = @"linvar logic for range [0, 1]
 {
     constraints:
 	    for inheritance;
@@ -152,7 +209,7 @@ app PeaceKeeper is [very middle] exampleClass
 	{: distance(I, #Tom, 12) :}
 
     on Init => {
-	     'Begin' >> @>log;
+	     'Begin from test!!!' >> @>log;
 		 //NULL >> @>log;
 
 		 //use @@self is [very middle] linux;
@@ -188,9 +245,97 @@ app PeaceKeeper is [very middle] exampleClass
         //     'D' >> @>log;
         //}
     }
-", msg => {
-                _logger.Log($"msg = {msg}");
-            });
+";
+
+            File.WriteAllText(targetFileName, text);
+
+            var supportBasePath = Path.Combine(testDir, "SysDirs");
+
+            _logger.Log($"supportBasePath = {supportBasePath}");
+
+            var logDir = Path.Combine(supportBasePath, "NpcLogs");
+
+            _logger.Log($"logDir = {logDir}");
+
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
+
+            var instance = WorldFactory.WorldInstance;
+
+            var settings = new WorldSettings();
+            settings.EnableAutoloadingConvertors = true;
+
+            settings.SharedModulesDirs = new List<string>() { Path.Combine(wSpaceDir, "Modules") };
+
+            settings.ImagesRootDir = Path.Combine(supportBasePath, "Images");
+
+            settings.TmpDir = Path.Combine(supportBasePath, "TMP");
+
+            settings.HostFile = Path.Combine(wSpaceDir, "World/World.world");
+
+            settings.InvokerInMainThread = invokingInMainThread;
+
+            var callBackLogger = new SymOntoClay.Unity3DAsset.Test.Helpers.CallBackLogger(
+                message => { _logger.Log($"message = {message}"); },
+                error => { _logger.Log($"error = {error}"); }
+                );
+
+            settings.Logging = new LoggingSettings()
+            {
+                LogDir = logDir,
+                RootContractName = "Hi1",
+                PlatformLoggers = new List<IPlatformLogger>() { callBackLogger },
+                Enable = true,
+                EnableRemoteConnection = true
+            };
+
+            _logger.Log($"settings = {settings}");
+
+            instance.SetSettings(settings);
+
+            var platformListener = new object();
+
+            var npcSettings = new HumanoidNPCSettings();
+            npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
+            npcSettings.LogicFile = Path.Combine(wSpaceDir, $"Npcs/{projectName}/{projectName}.sobj");
+            npcSettings.HostListener = platformListener;
+            npcSettings.PlatformSupport = new PlatformSupportCLIStub();
+
+            _logger.Log($"npcSettings = {npcSettings}");
+
+            var npc = instance.GetHumanoidNPC(npcSettings);
+
+            instance.Start();
+
+            Thread.Sleep(5000);
+
+            Directory.Delete(testDir, true);
+
+            _logger.Log("End");
+        }
+
+        private static void TstTestRunner()
+        {
+            _logger.Log("Begin");
+
+            var text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        'Begin' >> @>log;
+        'End' >> @>log;
+        }
+    }
+";
+
+            BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    _logger.Log($"n = {n}; message = {message}");
+                    //switch (n)
+                    //{
+                    //    default:
+                    //        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    //}
+                });
 
             _logger.Log("End");
         }
@@ -478,7 +623,7 @@ app PeaceKeeper is [very middle] exampleClass
 
             //var logDir = Path.Combine(Directory.GetCurrentDirectory(), "NpcLogs");
 
-            var invokingInMainThread = TstInvokerInMainThreadFactory.Create();
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
 
             var instance = WorldFactory.WorldInstance;
 
@@ -514,7 +659,7 @@ app PeaceKeeper is [very middle] exampleClass
             //npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
             npcSettings.LogicFile = targetFiles.LogicFile;
             npcSettings.HostListener = platformListener;
-            npcSettings.PlatformSupport = new TstPlatformSupport();
+            npcSettings.PlatformSupport = new PlatformSupportCLIStub();
 
             _logger.Log($"npcSettings = {npcSettings}");
 

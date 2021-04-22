@@ -21,19 +21,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core;
-using SymOntoClay.UnityAsset.Core;
+using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Numerics;
 using System.Text;
 
-namespace TestSandbox.Helpers
+namespace SymOntoClay.Unity3DAsset.Test.Helpers
 {
-    public class TstPlatformSupport: IPlatformSupport
+    public class UnityTestMainStorageContext: MainStorageContext
     {
-        public Vector3 ConvertFromRelativeToAbsolute(RelativeCoordinate relativeCoordinate)
+        public UnityTestMainStorageContext()
+            : base(new EmptyLogger())
         {
-            return new Vector3(666, 999, 0);
+            EngineContextHelper.BaseInitMainStorageContext(this, new StandaloneStorageSettings(), KindOfStorage.Host);
         }
     }
 }

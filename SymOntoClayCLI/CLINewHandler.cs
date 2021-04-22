@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using Newtonsoft.Json;
 using NLog;
+using SymOntoClayProjectFiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,124 +41,20 @@ namespace SymOntoClay.CLI
         {
             var wSpaceFile = RunCommandFilesSearcher.FindWSpaceFile(Directory.GetCurrentDirectory());
 
-            if(wSpaceFile == null)
+            var worldSpaceCreationSettings = new WorldSpaceCreationSettings() { ProjectName = command.ProjectName };
+
+            if (wSpaceFile == null)
             {
-                CreateWithOutWSpaceFile(command);
+                WorldSpaceCreator.CreateWithOutWSpaceFile(worldSpaceCreationSettings, Directory.GetCurrentDirectory()
+                    , errorMsg => ConsoleWrapper.WriteError(errorMsg)
+                    );
             }
             else
             {
-                CreateWithWSpaceFile(command, wSpaceFile);
+                WorldSpaceCreator.CreateWithWSpaceFile(worldSpaceCreationSettings, wSpaceFile
+                    , errorMsg => ConsoleWrapper.WriteError(errorMsg)
+                    );
             }
-        }
-
-        private void CreateWithWSpaceFile(CLICommand command, FileInfo wSpaceFile)
-        {
-            var appDir = wSpaceFile.Directory.GetDirectories().SingleOrDefault(p => p.Name == "Npcs");
-
-            if(appDir == null)
-            {
-                throw new NotImplementedException();
-            }
-
-            CreateNPC(command, appDir.FullName);
-        }
-
-        private void CreateWithOutWSpaceFile(CLICommand command)
-        {
-            var projectName = command.ProjectName;
-
-            var worldSpaceDirName = Path.Combine(Directory.GetCurrentDirectory(), projectName);
-
-            if(!Directory.Exists(worldSpaceDirName))
-            {
-                Directory.CreateDirectory(worldSpaceDirName);
-            }
-
-            var wSpaceFileName = Path.Combine(worldSpaceDirName, $"{projectName}.wspace");
-
-            if(!File.Exists(wSpaceFileName))
-            {
-                var wSpaceJsonFile = new WorldJsonFile() { MainNpc = projectName };
-
-                File.WriteAllText(wSpaceFileName, JsonConvert.SerializeObject(wSpaceJsonFile, Formatting.Indented));
-            }            
-
-            var worldDirName = Path.Combine(worldSpaceDirName, "World");
-
-            if (!Directory.Exists(worldDirName))
-            {
-                Directory.CreateDirectory(worldDirName);
-            }
-
-            var worldFileName = Path.Combine(worldDirName, $"{projectName}.world");
-
-            if (!File.Exists(worldFileName))
-            {
-                File.WriteAllText(worldFileName, "{}");
-            }
-
-            var hostsDirName = Path.Combine(worldSpaceDirName, "Things");
-
-            if (!Directory.Exists(hostsDirName))
-            {
-                Directory.CreateDirectory(hostsDirName);
-            }
-
-            var playerDirName = Path.Combine(worldSpaceDirName, "Players");
-
-            if(!Directory.Exists(playerDirName))
-            {
-                Directory.CreateDirectory(playerDirName);
-            }
-
-            var modulesDirName = Path.Combine(worldSpaceDirName, "Modules");
-
-            if (!Directory.Exists(modulesDirName))
-            {
-                Directory.CreateDirectory(modulesDirName);
-            }
-
-            var npcsDirName = Path.Combine(worldSpaceDirName, "Npcs");
-
-            if (!Directory.Exists(npcsDirName))
-            {
-                Directory.CreateDirectory(npcsDirName);
-            }
-
-            CreateNPC(command, npcsDirName);
-        }
-
-        private void CreateNPC(CLICommand command, string npcsDirName)
-        {
-            var projectName = command.ProjectName;
-
-            var projectDirName = Path.Combine(npcsDirName, projectName);
-
-            if(Directory.Exists(projectDirName))
-            {
-                ConsoleWrapper.WriteError($"The NPC '{projectName}' already exists!");
-                return;
-            }
-            else
-            {
-                Directory.CreateDirectory(projectDirName);
-            }
-
-            var npcFileName = Path.Combine(projectDirName, $"{projectName}.sobj");
-
-            File.WriteAllText(npcFileName, "{}");
-
-            var appFileName = Path.Combine(projectDirName, $"{projectName}.soc");
-
-            var sb = new StringBuilder();
-            sb.AppendLine($"app {projectName}");
-            sb.AppendLine("{");
-            sb.AppendLine("    on Init =>");
-            sb.AppendLine("    {");
-            sb.AppendLine("    }");
-            sb.AppendLine("}");
-
-            File.WriteAllText(appFileName, sb.ToString());
         }
     }
 }

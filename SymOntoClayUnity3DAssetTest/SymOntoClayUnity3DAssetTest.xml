@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SymOntoClayUnity3DAssetTest</name>
+    </assembly>
+    <members>
+        <member name="M:SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy.TstBaseAstExpression.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy.TstBaseAstExpression.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy.TstBaseAstExpression.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy.TstBinaryAstExpression.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy.TstBinaryAstExpression.NLeft">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy.TstBinaryAstExpression.NRight">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy.TstNumberAstExpressionNode.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy.TstNumberAstExpressionNode.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy.TstNumberAstExpressionNode.GetDbgString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy.TstNumberAstExpressionNode.Calc">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy.TstUnaryAstExpression.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy.TstVarAstExpression.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Unity3DAsset.Test.Helpers.BehaviorTestEngineInstance.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Unity3DAsset.Test.Helpers.CallBackLogger.WriteLn(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Unity3DAsset.Test.Helpers.CallBackLogger.WriteLnRawLogChannel(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Unity3DAsset.Test.Helpers.CallBackLogger.WriteLnRawLog(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Unity3DAsset.Test.Helpers.CallBackLogger.WriteLnRawWarning(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Unity3DAsset.Test.Helpers.CallBackLogger.WriteLnRawError(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Unity3DAsset.Test.Helpers.EmptyLogger.Error(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Unity3DAsset.Test.Helpers.EmptyLogger.LogChannel(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Unity3DAsset.Test.Helpers.EmptyLogger.Log(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Unity3DAsset.Test.Helpers.EmptyLogger.Warning(System.String)">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>

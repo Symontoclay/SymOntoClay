@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject;
+using SymOntoClayDefaultCLIEnvironment;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -60,7 +61,7 @@ namespace TestSandbox.CoreHostListener
             //npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
             npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Apps\PeaceKeeper\PeaceKeeper.sobj");
             npcSettings.HostListener = platformListener;
-            npcSettings.PlatformSupport = new TstPlatformSupport();
+            npcSettings.PlatformSupport = new PlatformSupportCLIStub();
 
             _logger.Log($"npcSettings = {npcSettings}");
 

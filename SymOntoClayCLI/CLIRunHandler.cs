@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.UnityAsset.Core;
+using SymOntoClayDefaultCLIEnvironment;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -53,7 +54,7 @@ namespace SymOntoClay.CLI
             //_logger.Info($"targetFiles = {targetFiles}");
 #endif
 
-            var invokingInMainThread = CLIInvokerInMainThreadFactory.Create();
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
 
             var instance = WorldFactory.WorldInstance;
             world = instance;

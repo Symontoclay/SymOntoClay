@@ -23,6 +23,7 @@ SOFTWARE.*/
 using NLog;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
+using SymOntoClayDefaultCLIEnvironment;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -52,7 +53,7 @@ namespace TestSandbox.Handlers
 
             var logDir = Path.Combine(supportBasePath, "NpcLogs");
 
-            var invokingInMainThread = TstInvokerInMainThreadFactory.Create();
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
 
             var instance = WorldFactory.WorldInstance;
 
@@ -89,7 +90,7 @@ namespace TestSandbox.Handlers
             //npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
             npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Npcs\PeaceKeeper\PeaceKeeper.sobj");
             npcSettings.HostListener = platformListener;
-            npcSettings.PlatformSupport = new TstPlatformSupport();
+            npcSettings.PlatformSupport = new PlatformSupportCLIStub();
 
             _logger.Log($"npcSettings = {npcSettings}");
 

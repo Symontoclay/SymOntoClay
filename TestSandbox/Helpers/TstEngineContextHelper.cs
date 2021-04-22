@@ -29,6 +29,7 @@ using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.Logging;
+using SymOntoClayDefaultCLIEnvironment;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -46,7 +47,7 @@ namespace TestSandbox.Helpers
 
         public static TstComplexContext CreateAndInitContext()
         {
-            var invokingInMainThread = TstInvokerInMainThreadFactory.Create();
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
 
             var appName = AppDomain.CurrentDomain.FriendlyName;
 
@@ -91,7 +92,7 @@ namespace TestSandbox.Helpers
             npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
             //npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
             npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Apps\PeaceKeeper\PeaceKeeper.sobj");
-            npcSettings.PlatformSupport = new TstPlatformSupport();
+            npcSettings.PlatformSupport = new PlatformSupportCLIStub();
 
             _logger.Log($"npcSettings = {npcSettings}");
 

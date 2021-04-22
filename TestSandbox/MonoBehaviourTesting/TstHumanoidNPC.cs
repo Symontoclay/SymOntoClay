@@ -23,6 +23,7 @@ SOFTWARE.*/
 using Newtonsoft.Json;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
+using SymOntoClayDefaultCLIEnvironment;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -58,7 +59,7 @@ namespace TestSandbox.MonoBehaviourTesting
             npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Npcs\PeaceKeeper\PeaceKeeper.sobj");
             npcSettings.HostListener = platformListener;
             npcSettings.VisionProvider = _tstRayScaner;
-            npcSettings.PlatformSupport = new TstPlatformSupport();
+            npcSettings.PlatformSupport = new PlatformSupportCLIStub();
 
             _logger.Log($"npcSettings = {npcSettings}");
 

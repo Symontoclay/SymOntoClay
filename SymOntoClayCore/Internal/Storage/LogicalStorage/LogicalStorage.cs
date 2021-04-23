@@ -253,7 +253,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
         private void NRemove(RuleInstance ruleInstance)
         {
-            if(!_ruleInstancesList.Contains(ruleInstance))
+#if DEBUG
+            //Log($"ruleInstance = {ruleInstance}");
+#endif
+
+            if (!_ruleInstancesList.Contains(ruleInstance))
             {
                 return;
             }
@@ -272,7 +276,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             _ruleInstancesDictById.Remove(ruleInstanceId);
 
-            _commonPersistIndexedLogicalData.NRemoveIndexedRuleInstanceFromIndexData(ruleInstance);
+            _commonPersistIndexedLogicalData.NRemoveIndexedRuleInstanceFromIndexData(ruleInstance.Normalized);
 
             EmitOnChanged(ruleInstance.UsedKeysList);
         }

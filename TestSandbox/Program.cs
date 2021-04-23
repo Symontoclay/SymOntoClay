@@ -319,13 +319,13 @@ app PeaceKeeper is [very middle] exampleClass
 
             var text = @"app PeaceKeeper
 {
-    on Init =>
-    {
-        'Begin' >> @>log;
-        @r = @b = 1;
-        @bx >> @>log;
-        'End' >> @>log;
-    }
+	{: male(#Tom) :}
+	{: parent(#Piter, #Tom) :}
+	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+
+	on Init => {
+	    ? {: son(#Tom, $y) :} >> @>log;
+	}
 }";
 
             BehaviorTestEngineInstance.Run(text,

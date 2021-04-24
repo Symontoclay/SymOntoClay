@@ -24,6 +24,7 @@ using Newtonsoft.Json;
 using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -205,9 +206,53 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 #endif
                         var inheritanceItem = new InheritanceItem();
 
-                        inheritanceItem.SuperName = inheritanceRelation.Name;
-                        inheritanceItem.SubName = inheritanceRelation.ParamsList.Single().Name;
-                        inheritanceItem.Rank = new LogicalValue(1);
+                        if(inheritanceRelation.Name == NameHelper.CreateName("is"))
+                        {
+                            var paramsCount = inheritanceRelation.ParamsList.Count;
+
+                            switch(paramsCount)
+                            {
+                                case 2:
+                                    inheritanceItem.SuperName = inheritanceRelation.ParamsList[1].Name;
+                                    inheritanceItem.SubName = inheritanceRelation.ParamsList[0].Name;
+                                    inheritanceItem.Rank = new LogicalValue(1);
+                                    break;
+
+                                case 3:
+                                    inheritanceItem.SuperName = inheritanceRelation.ParamsList[1].Name;
+                                    inheritanceItem.SubName = inheritanceRelation.ParamsList[0].Name;
+                                    var thirdParameter = inheritanceRelation.ParamsList[2];
+                                    var kindOfthirdParameter = thirdParameter.Kind;
+                                    switch (kindOfthirdParameter)
+                                    {
+                                        case KindOfLogicalQueryNode.Concept:
+                                            inheritanceItem.Rank = thirdParameter.Name;
+                                            break;
+
+                                        case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
+                                            inheritanceItem.Rank = thirdParameter.FuzzyLogicNonNumericSequenceValue;
+                                            break;
+
+                                        case KindOfLogicalQueryNode.Value:
+                                            inheritanceItem.Rank = thirdParameter.Value;
+                                            break;
+
+                                        default:
+                                            throw new ArgumentOutOfRangeException(nameof(kindOfthirdParameter), kindOfthirdParameter, null);
+                                    }
+                                    break;
+
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(paramsCount), paramsCount, null);
+                            }                            
+                        }
+                        else
+                        {
+                            inheritanceItem.SuperName = inheritanceRelation.Name;
+                            inheritanceItem.SubName = inheritanceRelation.ParamsList.Single().Name;
+                            inheritanceItem.Rank = new LogicalValue(1);
+                        }
+                        
                         inheritanceItem.KeysOfPrimaryRecords.Add(ruleInstanceName);
 #if DEBUG
                         //Log($"inheritanceItem = {inheritanceItem}");

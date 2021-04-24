@@ -485,7 +485,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             switch (value.KindOfName)
             {
                 case KindOfName.Concept:
-                    if(_lastLogicalQueryNode != null && _lastLogicalQueryNode.KindOfOperator == KindOfOperatorOfLogicalQueryNode.Is)
+                    if(_lastLogicalQueryNode != null && _lastLogicalQueryNode.KindOfOperator == KindOfOperatorOfLogicalQueryNode.Is && _currToken.KeyWordTokenKind == KeyWordTokenKind.Not)
                     {
                         _context.Recovery(nextToken);
                         _lastLogicalQueryNode.KindOfOperator = KindOfOperatorOfLogicalQueryNode.IsNot;
@@ -587,6 +587,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessConceptOrQuestionVar(StrongIdentifierValue value)
         {
+#if DEBUG
+            //Log($"value = {value}");
+#endif
+
             var node = CreateLogicalQueryNodeByStrongIdentifierValue(value);
 
 #if DEBUG

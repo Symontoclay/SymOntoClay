@@ -72,7 +72,7 @@ namespace TestSandbox
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
             //TstManageTempProject();
-            TstTestRunner();
+            //TstTestRunner();
             //TstNameHelper();
             //TstDeffuzzification();
             //TstRangeValue();
@@ -107,7 +107,7 @@ namespace TestSandbox
             //TstExprNodeHandler();
             //TstParsing();
             //TstMonoBehaviourTestingHandler();
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -319,13 +319,12 @@ app PeaceKeeper is [very middle] exampleClass
 
             var text = @"app PeaceKeeper
 {
-	{: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
-	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+    {: animal(cat) :}
 
-	on Init => {
-	    ? {: son(#Tom, $y) :} >> @>log;
-	}
+    on Init =>
+    {
+        select {: { cat is animal } :} >> @>log;
+    }
 }";
 
             BehaviorTestEngineInstance.Run(text,

@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
@@ -73,7 +74,43 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
                     break;
 
                 default:
-                    LogChannel(value.GetSystemValue()?.ToString());
+                    {
+                        var sysValue = value.GetSystemValue();
+
+                        if(sysValue == null)
+                        {
+                            LogChannel("NULL");
+                            break;
+                        }
+
+                        var sysValueType = sysValue.GetType();
+
+#if DEBUG
+                        //Log($"sysValue = {sysValue}");
+                        //Log($"sysValue.GetType().FullName = {sysValue.GetType().FullName}");
+#endif
+
+                        if(sysValueType == typeof(double))
+                        {
+                            LogChannel(((double)sysValue).ToString(CultureInfo.InvariantCulture));
+                            break;
+                        }
+
+                        if(sysValueType == typeof(float))
+                        {
+                            LogChannel(((float)sysValue).ToString(CultureInfo.InvariantCulture));
+                            break;
+                        }
+
+                        if (sysValueType == typeof(decimal))
+                        {
+                            LogChannel(((decimal)sysValue).ToString(CultureInfo.InvariantCulture));
+                            break;
+                        }
+
+                        LogChannel(sysValue.ToString());
+                    }
+
                     break;
             }
 

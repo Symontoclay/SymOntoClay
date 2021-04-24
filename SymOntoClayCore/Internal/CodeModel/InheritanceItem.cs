@@ -127,7 +127,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjProp(n, nameof(SuperName), SuperName);
             sb.PrintObjProp(n, nameof(Rank), Rank);
             sb.AppendLine($"{spaces}{nameof(IsSystemDefined)} = {IsSystemDefined}");
-            sb.PrintPODList(n, nameof(KeysOfPrimaryRecords), KeysOfPrimaryRecords);
+            sb.PrintObjListProp(n, nameof(KeysOfPrimaryRecords), KeysOfPrimaryRecords);
         }
 
         /// <inheritdoc/>

@@ -215,7 +215,14 @@ namespace SymOntoClay.Unity3DAsset.Test
         //[Test]
         //public void Case8()
         //{
-        //    var text = @"";
+        //    var text = @"app PeaceKeeper
+//{
+//    on Init =>
+//    {
+//    }
+//}";
+
+        //    throw new NotImplementedException();
 
         //    Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
         //        (n, message) => {
@@ -226,5 +233,14 @@ namespace SymOntoClay.Unity3DAsset.Test
         //            }
         //        }), true);
         //}
+
+        /*
+app PeaceKeeper
+{
+    on Init =>
+    {
+    }
+}
+         */
     }
 }

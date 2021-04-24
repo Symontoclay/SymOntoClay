@@ -320,10 +320,12 @@ app PeaceKeeper is [very middle] exampleClass
             var text = @"app PeaceKeeper
 {
     {: animal(cat) :}
+    {: is (#a, barrel) :}
+    {: see(I, #a) :}
 
     on Init =>
     {
-        select {: { cat is animal } :} >> @>log;
+        select {: $z($x) :} >> @>log;
     }
 }";
 

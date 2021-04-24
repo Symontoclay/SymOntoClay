@@ -425,8 +425,45 @@ namespace SymOntoClay.Unity3DAsset.Test
         {
             var text = @"app PeaceKeeper
 {
+    {: animal(cat) :}
+    {: is (#a, barrel) :}
+    {: see(I, #a) :}
+
     on Init =>
     {
+        select {: $z($x, $y) :} >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$z = is(#a,barrel)"), true);
+                            Assert.AreEqual(message.Contains("$z = see(i,#a)"), true);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        public void Case11_a()
+        {
+            var text = @"app PeaceKeeper
+{
+    {: animal(cat) :}
+    {: is (#a, barrel) :}
+    {: see(I, #a) :}
+
+    on Init =>
+    {
+        select {: $z($x) :} >> @>log;
     }
 }";
 
@@ -442,10 +479,6 @@ namespace SymOntoClay.Unity3DAsset.Test
                     }
                 }), true);
         }
-
-        /*
-        select {: $z($x, $y) :} >> @>log;
-*/
 
         [Test]
         public void Case12()

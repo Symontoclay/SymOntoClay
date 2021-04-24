@@ -1,12 +1,12 @@
 ﻿app PeaceKeeper
 {
-    {: animal(cat) :}
-    {: is (#a, barrel) :}
-    {: see(I, #a) :}
+    {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
+    {: age(#Tom, 50) :}
+    {: distance(I, #Tom, 12) :}
 
     on Init =>
     {
-        select {: $z($x) :} >> @>log;
+        select {: age(#Tom, $x) & distance(#Tom, $y) & $x is not $y :} >> @>log;
     }
 }
 

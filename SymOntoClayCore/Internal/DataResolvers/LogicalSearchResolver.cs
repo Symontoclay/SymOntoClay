@@ -1579,15 +1579,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private void FillExecutingCardForQuestion(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            //options.Logger.Log($"Key = {Key}");
-            //options.Logger.Log($"IsQuestion = {IsQuestion}");
-            //options.Logger.Log($"Params.Count = {Params.Count}");
-            //foreach (var param in Params)
+            //options.Logger.Log($"processedExpr.Name = {processedExpr.Name}");
+            //options.Logger.Log($"processedExpr.IsQuestion = {processedExpr.IsQuestion}");
+            //options.Logger.Log($"processedExpr.Params.Count = {processedExpr.ParamsList.Count}");
+            //foreach (var param in processedExpr.ParamsList)
             //{
             //    options.Logger.Log($"param = {param}");
             //}
-            //options.Logger.Log($"VarsInfoList.Count = {VarsInfoList.Count}");
-            //foreach (var varInfo in VarsInfoList)
+            //options.Logger.Log($"processedExpr.VarsInfoList.Count = {processedExpr.VarsInfoList.Count}");
+            //foreach (var varInfo in processedExpr.VarsInfoList)
             //{
             //    options.Logger.Log($"varInfo = {varInfo}");
             //}

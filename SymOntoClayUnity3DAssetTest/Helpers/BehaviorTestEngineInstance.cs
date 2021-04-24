@@ -88,6 +88,11 @@ namespace SymOntoClay.Unity3DAsset.Test.Helpers
 
         public static bool Run(string fileContent, Action<string> logChannel, Action<string> error, int timeoutToEnd = DefaultTimeoutToEnd)
         {
+            if(string.IsNullOrWhiteSpace(fileContent))
+            {
+                throw new Exception("Argument 'fileContent' can not be null or empty!");
+            }
+
             using (var behaviorTestEngineInstance = new BehaviorTestEngineInstance())
             {
                 behaviorTestEngineInstance.WriteFile(fileContent);

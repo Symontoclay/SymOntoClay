@@ -72,7 +72,7 @@ namespace TestSandbox
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
             //TstManageTempProject();
-            //TstTestRunner();
+            TstTestRunner();
             //TstNameHelper();
             //TstDeffuzzification();
             //TstRangeValue();
@@ -107,7 +107,7 @@ namespace TestSandbox
             //TstExprNodeHandler();
             //TstParsing();
             //TstMonoBehaviourTestingHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -319,13 +319,13 @@ app PeaceKeeper is [very middle] exampleClass
 
             var text = @"app PeaceKeeper
 {
-    {: animal(cat) :}
-    {: is (#a, barrel) :}
-    {: see(I, #a) :}
+    {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
+    {: age(#Tom, 50) :}
+    {: distance(I, #Tom, 12) :}
 
     on Init =>
     {
-        select {: $z($x) :} >> @>log;
+        select {: age(#Tom, $x) & distance(#Tom, $y) & $x is not $y :} >> @>log;
     }
 }";
 

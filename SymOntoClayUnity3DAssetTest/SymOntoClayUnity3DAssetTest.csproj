@@ -9,7 +9,7 @@
     <Copyright>Copyright © 2020 - 2021 Sergiy Tolkachov aka metatypeman</Copyright>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>SymOntoClayUnity3DAssetTest.xml</DocumentationFile>
+    <DocumentationFile></DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="nunit" Version="3.10.1" />

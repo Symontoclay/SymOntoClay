@@ -100,9 +100,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var queryExpression = options.QueryExpression;
 
+#if DEBUG
+            //Log($"queryExpression = {queryExpression}");
+            //Log($"DebugHelperForRuleInstance.ToString(queryExpression) = {DebugHelperForRuleInstance.ToString(queryExpression)}");
+#endif
+
             queryExpression.CheckDirty();
 
             queryExpression = queryExpression.Normalized;
+
+#if DEBUG
+            //Log($"queryExpression (after) = {queryExpression}");
+            //Log($"DebugHelperForRuleInstance.ToString(queryExpression) (after) = {DebugHelperForRuleInstance.ToString(queryExpression)}");
+#endif
 
             FillExecutingCard(queryExpression, queryExecutingCard, dataSource, optionsOfFillExecutingCard);
 

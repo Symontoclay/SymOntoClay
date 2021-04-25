@@ -1342,13 +1342,16 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = 50"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -1369,7 +1372,7 @@ app PeaceKeeper
 
 app PeaceKeeper
 {
-    {: age(#Tom, ) :}
+    {: age(#Tom, 15) :}
 
     on Init =>
     {
@@ -1377,13 +1380,15 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<no>"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -1404,7 +1409,7 @@ app PeaceKeeper
 
 app PeaceKeeper
 {
-    {: age(#Tom, ) :}
+    {: age(#Tom, 4) :}
 
     on Init =>
     {
@@ -1412,13 +1417,15 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<no>"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -1447,13 +1454,16 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = 50"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -1474,7 +1484,7 @@ app PeaceKeeper
 
 app PeaceKeeper
 {
-    {: age(#Tom, ) :}
+    {: age(#Tom, 15) :}
 
     on Init =>
     {
@@ -1482,13 +1492,16 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = 15"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -1509,7 +1522,7 @@ app PeaceKeeper
 
 app PeaceKeeper
 {
-    {: age(#Tom, ) :}
+    {: age(#Tom, 4) :}
 
     on Init =>
     {
@@ -1517,13 +1530,15 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<no>"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -1552,13 +1567,15 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<no>"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -1579,19 +1596,23 @@ app PeaceKeeper
 
 app PeaceKeeper
 {
+    {: age(#Tom, 15) :}
+
     on Init =>
     {
         select {: age(#Tom, $x) & $x < `teenager` :} >> @>log;
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<no>"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -1612,19 +1633,24 @@ app PeaceKeeper
 
 app PeaceKeeper
 {
+    {: age(#Tom, 4) :}
+
     on Init =>
     {
         select {: age(#Tom, $x) & $x < `teenager` :} >> @>log;
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = 4"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -1653,13 +1679,15 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<no>"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -1680,7 +1708,7 @@ app PeaceKeeper
 
 app PeaceKeeper
 {
-    {: age(#Tom, ) :}
+    {: age(#Tom, 15) :}
 
     on Init =>
     {
@@ -1688,13 +1716,16 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = 15"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -1715,7 +1746,7 @@ app PeaceKeeper
 
 app PeaceKeeper
 {
-    {: age(#Tom, ) :}
+    {: age(#Tom, 4) :}
 
     on Init =>
     {
@@ -1723,13 +1754,16 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = 4"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -1758,13 +1792,16 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = 50"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -1785,7 +1822,7 @@ app PeaceKeeper
 
 app PeaceKeeper
 {
-    {: age(#Tom, ) :}
+    {: age(#Tom, 15) :}
 
     on Init =>
     {
@@ -1793,13 +1830,15 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<no>"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -1820,7 +1859,7 @@ app PeaceKeeper
 
 app PeaceKeeper
 {
-    {: age(#Tom, ) :}
+    {: age(#Tom, 4) :}
 
     on Init =>
     {
@@ -1828,13 +1867,15 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<no>"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -1863,13 +1904,16 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = 50"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -1890,7 +1934,7 @@ app PeaceKeeper
 
 app PeaceKeeper
 {
-    {: age(#Tom, ) :}
+    {: age(#Tom, 15) :}
 
     on Init =>
     {
@@ -1898,13 +1942,16 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = 15"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -1925,7 +1972,7 @@ app PeaceKeeper
 
 app PeaceKeeper
 {
-    {: age(#Tom, ) :}
+    {: age(#Tom, 4) :}
 
     on Init =>
     {
@@ -1933,13 +1980,15 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<no>"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -1968,13 +2017,15 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<no>"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -1995,7 +2046,7 @@ app PeaceKeeper
 
 app PeaceKeeper
 {
-    {: age(#Tom, ) :}
+    {: age(#Tom, 15) :}
 
     on Init =>
     {
@@ -2003,13 +2054,15 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<no>"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -2030,7 +2083,7 @@ app PeaceKeeper
 
 app PeaceKeeper
 {
-    {: age(#Tom, ) :}
+    {: age(#Tom, 4) :}
 
     on Init =>
     {
@@ -2038,13 +2091,16 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = 4"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -2073,13 +2129,15 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<no>"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -2100,7 +2158,7 @@ app PeaceKeeper
 
 app PeaceKeeper
 {
-    {: age(#Tom, ) :}
+    {: age(#Tom, 15) :}
 
     on Init =>
     {
@@ -2108,13 +2166,16 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = 15"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -2135,7 +2196,7 @@ app PeaceKeeper
 
 app PeaceKeeper
 {
-    {: age(#Tom, ) :}
+    {: age(#Tom, 4) :}
 
     on Init =>
     {
@@ -2143,13 +2204,16 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = 4"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
@@ -2163,24 +2227,30 @@ app PeaceKeeper
 {
     on Init =>
     {
+        ? {: bird ($x) :} >> @>log;
+        insert {: >: { bird (#1234) } :};
+        ? {: bird ($x) :} >> @>log;
     }
 }";
-
-            throw new NotImplementedException();
 
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<no>"), true);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = #1234"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
         }
-
-        /*
-        insert {: >: { bird (#1234) } :};
-*/
     }
 }

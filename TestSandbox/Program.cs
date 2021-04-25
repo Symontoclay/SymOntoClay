@@ -319,12 +319,12 @@ app PeaceKeeper is [very middle] exampleClass
 
             var text = @"app PeaceKeeper
 {
-    {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
-    {: distance(I, #Tom, 4) :}
+    {: barrel(#a) :}
+    {: see(I, #a) :}
 
-    on Init =>
+    on {: see(I, $x) & barrel($x) & !focus(I, friend) :} => 
     {
-        select {: distance(#Tom, $x) & $x < 5 :} >> @>log;
+         @x >> @>log;
     }
 }";
 

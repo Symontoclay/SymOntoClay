@@ -1,12 +1,16 @@
 ﻿app PeaceKeeper
 {
-    {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
-    {: age(#Tom, 50) :}
-    {: distance(I, #Tom, 12) :}
+    {: barrel(#a) :}
+    {: see(I, #a) :}
 
     on Init =>
     {
-        select {: age(#Tom, $x) & distance(#Tom, $y) & $x is not $y :} >> @>log;
+        //insert {: see(I, #a) :};
+    }
+
+    on {: see(I, $x) & barrel($x) :} ($x >> @x) => 
+    {
+	    @x >> @>log;
     }
 }
 

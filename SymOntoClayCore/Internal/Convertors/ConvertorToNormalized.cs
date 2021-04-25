@@ -11,7 +11,7 @@ namespace SymOntoClay.Core.Internal.Convertors
     public static class ConvertorToNormalized
     {
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static RuleInstance Convert(RuleInstance source)
@@ -248,6 +248,7 @@ namespace SymOntoClay.Core.Internal.Convertors
         private static LogicalQueryNode ConvertLogicalQueryNodeInDefaultWay(LogicalQueryNode source, Dictionary<object, object> convertingContext)
         {
 #if DEBUG
+            //_gbcLogger.Info("ConvertLogicalQueryNodeInDefaultWay!!!!!");
             //_gbcLogger.Info($"source = {source}");
 #endif
 
@@ -275,7 +276,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             
             if(source.Right != null)
             {
-                result.Right = source.Right;
+                result.Right = ConvertLogicalQueryNode(source.Right, convertingContext);
             }
             
             if(!source.ParamsList.IsNullOrEmpty())

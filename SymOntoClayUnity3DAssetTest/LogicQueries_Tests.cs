@@ -980,57 +980,354 @@ app PeaceKeeper
     }
 }";
 
-            throw new NotImplementedException();
-
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = 50"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
         }
 
-        /*
-        
-*/
+        [Test]
+        public void Case16_a()
+        {
+            var text = @"app PeaceKeeper
+{
+    {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
+    {: distance(I, #Tom, 5) :}
+
+    on Init =>
+    {
+        select {: distance(#Tom, $x) & $x > 5 :} >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<no>"), true);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        public void Case16_b()
+        {
+            var text = @"app PeaceKeeper
+{
+    {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
+    {: distance(I, #Tom, 4) :}
+
+    on Init =>
+    {
+        select {: distance(#Tom, $x) & $x > 5 :} >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<no>"), true);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
 
         [Test]
         public void Case17()
         {
             var text = @"app PeaceKeeper
 {
+    {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
+    {: distance(I, #Tom, 50) :}
+
     on Init =>
     {
+        select {: distance(#Tom, $x) & $x >= 5 :} >> @>log;
     }
 }";
-
-            throw new NotImplementedException();
 
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
                     {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = 50"), true);
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
                 }), true);
         }
 
-        /*
-         select {: age(#Tom, $x) & $x > `teenager` :} >> @>log;
-        */
+        [Test]
+        public void Case17_a()
+        {
+            var text = @"app PeaceKeeper
+{
+    {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
+    {: distance(I, #Tom, 5) :}
+
+    on Init =>
+    {
+        select {: distance(#Tom, $x) & $x >= 5 :} >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = 5"), true);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        public void Case17_b()
+        {
+            var text = @"app PeaceKeeper
+{
+    {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
+    {: distance(I, #Tom, 4) :}
+
+    on Init =>
+    {
+        select {: distance(#Tom, $x) & $x >= 5 :} >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<no>"), true);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
 
         [Test]
         public void Case18()
         {
             var text = @"app PeaceKeeper
 {
+    {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
+    {: distance(I, #Tom, 50) :}
+
     on Init =>
     {
+        select {: distance(#Tom, $x) & $x < 5 :} >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<no>"), true);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        public void Case18_a()
+        {
+            var text = @"app PeaceKeeper
+{
+    {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
+    {: distance(I, #Tom, 5) :}
+
+    on Init =>
+    {
+        select {: distance(#Tom, $x) & $x < 5 :} >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<no>"), true);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        public void Case18_b()
+        {
+            var text = @"app PeaceKeeper
+{
+    {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
+    {: distance(I, #Tom, 4) :}
+
+    on Init =>
+    {
+        select {: distance(#Tom, $x) & $x < 5 :} >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = 4"), true);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        public void Case19()
+        {
+            var text = @"app PeaceKeeper
+{
+    {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
+    {: distance(I, #Tom, 50) :}
+
+    on Init =>
+    {
+        select {: distance(#Tom, $x) & $x <= 5 :} >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<no>"), true);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        public void Case19_a()
+        {
+            var text = @"app PeaceKeeper
+{
+    {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
+    {: distance(I, #Tom, 5) :}
+
+    on Init =>
+    {
+        select {: distance(#Tom, $x) & $x <= 5 :} >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = 5"), true);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        public void Case19_b()
+        {
+            var text = @"app PeaceKeeper
+{
+    {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
+    {: distance(I, #Tom, 4) :}
+
+    on Init =>
+    {
+        select {: distance(#Tom, $x) & $x <= 5 :} >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = 4"), true);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        public void Case20()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x > `teenager` :} >> @>log;
     }
 }";
 
@@ -1048,11 +1345,198 @@ app PeaceKeeper
         }
 
         /*
- select {: age(#Tom, $x) & $x > very `teenager` :} >> @>log;
+         
+        */
+
+        [Test]
+        public void Case21()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x >= `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        /*
+ 
 */
 
         [Test]
-        public void Case19()
+        public void Case22()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x < `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+
+
+        [Test]
+        public void Case23()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x <= `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+
+
+        [Test]
+        public void Case24()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x > very `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+
+
+        [Test]
+        public void Case25()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x >= very `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+
+
+        [Test]
+        public void Case26()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x < very `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+
+
+        [Test]
+        public void Case27()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x <= very `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        /*
+
+*/
+
+
+        [Test]
+        public void Case28()
         {
             var text = @"app PeaceKeeper
 {

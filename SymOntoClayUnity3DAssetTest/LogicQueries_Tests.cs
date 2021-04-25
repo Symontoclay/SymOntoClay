@@ -971,6 +971,9 @@ app PeaceKeeper
         {
             var text = @"app PeaceKeeper
 {
+    {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
+    {: distance(I, #Tom, 50) :}
+
     on Init =>
     {
         select {: distance(#Tom, $x) & $x > 5 :} >> @>log;

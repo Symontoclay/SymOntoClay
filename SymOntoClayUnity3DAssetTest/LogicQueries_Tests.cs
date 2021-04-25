@@ -1323,8 +1323,19 @@ app PeaceKeeper
         [Test]
         public void Case20()
         {
-            var text = @"app PeaceKeeper
+            var text = @"linvar age for range (0, 150]
 {
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, 50) :}
+
     on Init =>
     {
         select {: age(#Tom, $x) & $x > `teenager` :} >> @>log;
@@ -1344,15 +1355,92 @@ app PeaceKeeper
                 }), true);
         }
 
-        /*
-         
-        */
+        [Test]
+        public void Case20_a()
+        {
+            var text = @"linvar age for range (0, 150]
+{
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, ) :}
+
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x > `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        public void Case20_b()
+        {
+            var text = @"linvar age for range (0, 150]
+{
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, ) :}
+
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x > `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
 
         [Test]
         public void Case21()
         {
-            var text = @"app PeaceKeeper
+            var text = @"linvar age for range (0, 150]
 {
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, 50) :}
+
     on Init =>
     {
         select {: age(#Tom, $x) & $x >= `teenager` :} >> @>log;
@@ -1372,14 +1460,124 @@ app PeaceKeeper
                 }), true);
         }
 
-        /*
- 
-*/
+        [Test]
+        public void Case21_a()
+        {
+            var text = @"linvar age for range (0, 150]
+{
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, ) :}
+
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x >= `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        public void Case21_b()
+        {
+            var text = @"linvar age for range (0, 150]
+{
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, ) :}
+
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x >= `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
 
         [Test]
         public void Case22()
         {
-            var text = @"app PeaceKeeper
+            var text = @"linvar age for range (0, 150]
+{
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, 50) :}
+
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x < `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        public void Case22_a()
+        {
+            var text = @"linvar age for range (0, 150]
+{
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
 {
     on Init =>
     {
@@ -1400,13 +1598,55 @@ app PeaceKeeper
                 }), true);
         }
 
+        [Test]
+        public void Case22_b()
+        {
+            var text = @"linvar age for range (0, 150]
+{
+	constraints:
+		for relation age;
 
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x < `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
 
         [Test]
         public void Case23()
         {
-            var text = @"app PeaceKeeper
+            var text = @"linvar age for range (0, 150]
 {
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, 50) :}
+
     on Init =>
     {
         select {: age(#Tom, $x) & $x <= `teenager` :} >> @>log;
@@ -1426,13 +1666,92 @@ app PeaceKeeper
                 }), true);
         }
 
+        [Test]
+        public void Case23_a()
+        {
+            var text = @"linvar age for range (0, 150]
+{
+	constraints:
+		for relation age;
 
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, ) :}
+
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x <= `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        public void Case23_b()
+        {
+            var text = @"linvar age for range (0, 150]
+{
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, ) :}
+
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x <= `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
 
         [Test]
         public void Case24()
         {
-            var text = @"app PeaceKeeper
+            var text = @"linvar age for range (0, 150]
 {
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, 50) :}
+
     on Init =>
     {
         select {: age(#Tom, $x) & $x > very `teenager` :} >> @>log;
@@ -1452,13 +1771,92 @@ app PeaceKeeper
                 }), true);
         }
 
+        [Test]
+        public void Case24_a()
+        {
+            var text = @"linvar age for range (0, 150]
+{
+	constraints:
+		for relation age;
 
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, ) :}
+
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x > very `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        public void Case24_b()
+        {
+            var text = @"linvar age for range (0, 150]
+{
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, ) :}
+
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x > very `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
 
         [Test]
         public void Case25()
         {
-            var text = @"app PeaceKeeper
+            var text = @"linvar age for range (0, 150]
 {
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, 50) :}
+
     on Init =>
     {
         select {: age(#Tom, $x) & $x >= very `teenager` :} >> @>log;
@@ -1478,13 +1876,92 @@ app PeaceKeeper
                 }), true);
         }
 
+        [Test]
+        public void Case25_a()
+        {
+            var text = @"linvar age for range (0, 150]
+{
+	constraints:
+		for relation age;
 
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, ) :}
+
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x >= very `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        public void Case25_b()
+        {
+            var text = @"linvar age for range (0, 150]
+{
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, ) :}
+
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x >= very `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
 
         [Test]
         public void Case26()
         {
-            var text = @"app PeaceKeeper
+            var text = @"linvar age for range (0, 150]
 {
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, 50) :}
+
     on Init =>
     {
         select {: age(#Tom, $x) & $x < very `teenager` :} >> @>log;
@@ -1504,13 +1981,92 @@ app PeaceKeeper
                 }), true);
         }
 
+        [Test]
+        public void Case26_a()
+        {
+            var text = @"linvar age for range (0, 150]
+{
+	constraints:
+		for relation age;
 
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, ) :}
+
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x < very `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        public void Case26_b()
+        {
+            var text = @"linvar age for range (0, 150]
+{
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, ) :}
+
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x < very `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
 
         [Test]
         public void Case27()
         {
-            var text = @"app PeaceKeeper
+            var text = @"linvar age for range (0, 150]
 {
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, 50) :}
+
     on Init =>
     {
         select {: age(#Tom, $x) & $x <= very `teenager` :} >> @>log;
@@ -1530,10 +2086,75 @@ app PeaceKeeper
                 }), true);
         }
 
-        /*
+        [Test]
+        public void Case27_a()
+        {
+            var text = @"linvar age for range (0, 150]
+{
+	constraints:
+		for relation age;
 
-*/
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
 
+app PeaceKeeper
+{
+    {: age(#Tom, ) :}
+
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x <= very `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        public void Case27_b()
+        {
+            var text = @"linvar age for range (0, 150]
+{
+	constraints:
+		for relation age;
+
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, ) :}
+
+    on Init =>
+    {
+        select {: age(#Tom, $x) & $x <= very `teenager` :} >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
 
         [Test]
         public void Case28()

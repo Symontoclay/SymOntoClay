@@ -320,12 +320,11 @@ app PeaceKeeper is [very middle] exampleClass
             var text = @"app PeaceKeeper
 {
     {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
-    {: age(#Tom, 50) :}
     {: distance(I, #Tom, 12) :}
 
     on Init =>
     {
-        select {: age(#Tom, $x) & distance(#Tom, $y) & $x is not $y :} >> @>log;
+        select {: distance(#Tom, $x) :} >> @>log;
     }
 }";
 

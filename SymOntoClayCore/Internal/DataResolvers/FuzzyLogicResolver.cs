@@ -317,7 +317,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if(reason != null)
             {
-                filteredList = filteredList.Where(p => p.ResultItem.Parent.IsFitByСonstraint(reason)).ToList();
+                filteredList = filteredList.Where(p => p.ResultItem.Parent.IsFitByСonstraintOrDontHasСonstraint(reason)).ToList();
 
 #if DEBUG
                 //Log($"filteredList (3) = {filteredList.WriteListToString()}");
@@ -329,18 +329,43 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
             }
 
-            if (filteredList.Count == 1)
+            return GetTargetFuzzyLogicNonNumericValueFromList(filteredList, reason);
+        }
+
+        private FuzzyLogicNonNumericValue GetTargetFuzzyLogicNonNumericValueFromList(List<WeightedInheritanceResultItemWithStorageInfo<FuzzyLogicNonNumericValue>> list, ReasonOfFuzzyLogicResolving reason)
+        {
+            if (!list.Any())
             {
-                return filteredList.FirstOrDefault()?.ResultItem;
+                return null;
             }
 
-            var minLengthOfRange = filteredList.Min(p => p.ResultItem.Parent.Range.Length);
+            if (list.Count == 1)
+            {
+                return list.FirstOrDefault()?.ResultItem;
+            }
+
+            if(list.Any(p => p.ResultItem.Parent.IsFitByСonstraint(reason)) && list.Any(p => p.ResultItem.Parent.IsConstraintNullOrEmpty))
+            {
+                list = list.Where(p => p.ResultItem.Parent.IsFitByСonstraint(reason)).ToList();
+
+                if (!list.Any())
+                {
+                    return null;
+                }
+
+                if (list.Count == 1)
+                {
+                    return list.FirstOrDefault()?.ResultItem;
+                }
+            }
+
+            var minLengthOfRange = list.Min(p => p.ResultItem.Parent.Range.Length);
 
 #if DEBUG
             //Log($"minLengthOfRange = {minLengthOfRange}");
 #endif
 
-            var targetItem = filteredList.FirstOrDefault(p => p.ResultItem.Parent.Range.Length == minLengthOfRange)?.ResultItem;
+            var targetItem = list.FirstOrDefault(p => p.ResultItem.Parent.Range.Length == minLengthOfRange)?.ResultItem;
 
             return targetItem;
         }

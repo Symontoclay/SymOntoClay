@@ -27,24 +27,16 @@ using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Parsing.Internal;
-using SymOntoClay.Unity3DAsset.Test.Helpers;
+using SymOntoClay.UnityAsset.Core.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SymOntoClay.Unity3DAsset.Test.Parsing
+namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
 {
     public class Parser_Tests
     {
-        [SetUp]
-        public void Setup()
-        {
-            _mainStorageContext = new UnityTestMainStorageContext();
-        }
-
-        private IMainStorageContext _mainStorageContext;
-
         [Test]
         public void Parser_Tests_Case1()
         {
@@ -52,21 +44,9 @@ namespace SymOntoClay.Unity3DAsset.Test.Parsing
 {
 }";
 
-            var codeFile = new CodeFile();
-
-            var internalParserContext = new InternalParserContext(text, codeFile, _mainStorageContext);
-
-            var parser = new SourceCodeParser(internalParserContext);
-            parser.Run();
-
-            var result = parser.Result;
-
-            Assert.AreEqual(result.Count, 1);
-
-            var firstItem = result.Single();
+            var firstItem = Parse(text);
 
             Assert.AreEqual(firstItem.Kind, KindOfCodeEntity.App);
-            //Assert.AreEqual(firstItem.Name.NameKey, nameKey);
             Assert.AreEqual(firstItem.Name.NameValue, "enemy");
             Assert.AreEqual(firstItem.Name.KindOfName, KindOfName.Concept);
 
@@ -82,25 +62,10 @@ namespace SymOntoClay.Unity3DAsset.Test.Parsing
 	     'Hello world!' >> @>log;
     }
 }";
-            var codeFile = new CodeFile();
 
-            var internalParserContext = new InternalParserContext(text, codeFile, _mainStorageContext);
-
-            var parser = new SourceCodeParser(internalParserContext);
-            parser.Run();
-
-            var result = parser.Result;
-
-            Assert.AreEqual(result.Count, 1);
-
-            var firstItem = result.Single();
-
-            //var nameKey = _mainStorageContext.Dictionary.GetKey("PixKeeper");
-
-            //Assert.AreNotEqual(nameKey, 0);
+            var firstItem = Parse(text);
 
             Assert.AreEqual(firstItem.Kind, KindOfCodeEntity.App);
-            //Assert.AreEqual(firstItem.Name.NameKey, nameKey);
             Assert.AreEqual(firstItem.Name.NameValue, "pixkeeper");
             Assert.AreEqual(firstItem.Name.KindOfName, KindOfName.Concept);
 
@@ -136,6 +101,32 @@ namespace SymOntoClay.Unity3DAsset.Test.Parsing
 
             Assert.AreEqual(rightNode.Value.AsStrongIdentifierValue.NameValue, "@>log");
             Assert.AreEqual(rightNode.Value.AsStrongIdentifierValue.KindOfName, KindOfName.Channel);
+        }
+
+        [SetUp]
+        public void Setup()
+        {
+            _mainStorageContext = new UnityTestMainStorageContext();
+        }
+
+        private IMainStorageContext _mainStorageContext;
+
+        private CodeEntity Parse(string text)
+        {
+            var codeFile = new CodeFile();
+
+            var internalParserContext = new InternalParserContext(text, codeFile, _mainStorageContext);
+
+            var parser = new SourceCodeParser(internalParserContext);
+            parser.Run();
+
+            var result = parser.Result;
+
+            Assert.AreEqual(result.Count, 1);
+
+            var firstItem = result.Single();
+
+            return firstItem;
         }
     }
 }

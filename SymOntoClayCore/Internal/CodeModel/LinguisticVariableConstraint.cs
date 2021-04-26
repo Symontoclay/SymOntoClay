@@ -24,17 +24,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
 
             _items.Add(item);
-
-            //var kindOfItem = item.Kind;
-
-            //switch(kindOfItem)
-            //{
-            //    default:
-            //        throw new ArgumentOutOfRangeException(nameof(kindOfItem), kindOfItem, null);
-            //}
         }
 
         public IEnumerable<LinguisticVariableConstraintItem> Items => _items;
+
+        public bool IsEmpty => !_items.Any();
 
         private List<LinguisticVariableConstraintItem> _items { get; set; } = new List<LinguisticVariableConstraintItem>();
 

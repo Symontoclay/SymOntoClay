@@ -148,12 +148,13 @@ namespace SymOntoClay.Core.Internal.Convertors
                     switch (source.KindOfOperator)
                     {
                         case KindOfOperatorOfLogicalQueryNode.Is:
-                            return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext);
-                        
+                        case KindOfOperatorOfLogicalQueryNode.IsNot:
                         case KindOfOperatorOfLogicalQueryNode.And:
-                            return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext);
-
                         case KindOfOperatorOfLogicalQueryNode.Or:
+                        case KindOfOperatorOfLogicalQueryNode.More:
+                        case KindOfOperatorOfLogicalQueryNode.MoreOrEqual:
+                        case KindOfOperatorOfLogicalQueryNode.Less:
+                        case KindOfOperatorOfLogicalQueryNode.LessOrEqual:
                             return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext);
 
                         default:

@@ -8,7 +8,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 
-namespace SymOntoClay.Unity3DAsset.Test.Helpers
+namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 {
     public class BehaviorTestEngineInstance: IDisposable
     {

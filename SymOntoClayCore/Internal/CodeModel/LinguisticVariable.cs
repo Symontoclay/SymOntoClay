@@ -18,6 +18,23 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public CodeEntity CodeEntity { get; set; }
 
+        public bool IsFitByСonstraintOrDontHasСonstraint(ReasonOfFuzzyLogicResolving reason)
+        {
+            if (Constraint == null)
+            {
+                return true;
+            }
+
+            if (Constraint.IsEmpty)
+            {
+                return true;
+            }
+
+            return Constraint.isFit(reason);
+        }
+
+        public bool IsConstraintNullOrEmpty => Constraint == null || Constraint.IsEmpty;
+
         public bool IsFitByСonstraint(ReasonOfFuzzyLogicResolving reason)
         {
             if(Constraint == null)

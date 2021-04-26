@@ -1,16 +1,16 @@
-﻿app PeaceKeeper
+﻿linvar age for range (0, 150]
 {
-    {: barrel(#a) :}
-    {: see(I, #a) :}
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, 15) :}
 
     on Init =>
     {
-        //insert {: see(I, #a) :};
-    }
-
-    on {: see(I, $x) & barrel($x) :} ($x >> @x) => 
-    {
-	    @x >> @>log;
+        select {: age(#Tom, `teenager`) :} >> @>log;
     }
 }
 

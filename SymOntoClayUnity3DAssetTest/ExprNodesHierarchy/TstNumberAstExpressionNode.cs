@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy
+namespace SymOntoClay.UnityAsset.Core.Tests.ExprNodesHierarchy
 {
     public class TstNumberAstExpressionNode : TstBaseAstExpression
     {

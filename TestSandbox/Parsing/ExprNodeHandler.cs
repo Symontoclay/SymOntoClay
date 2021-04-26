@@ -22,7 +22,7 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
-using SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy;
+using SymOntoClay.UnityAsset.Core.Tests.ExprNodesHierarchy;
 using System;
 using System.Collections.Generic;
 using System.Text;

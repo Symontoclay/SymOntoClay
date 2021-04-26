@@ -32,7 +32,7 @@ using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.Unity3DAsset.Test.Helpers;
+using SymOntoClay.UnityAsset.Core.Tests.Helpers;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Helpers;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
@@ -58,6 +58,7 @@ using TestSandbox.MonoBehaviourTesting;
 using TestSandbox.Parsing;
 using TestSandbox.PlatformImplementations;
 using TestSandbox.Threads;
+using SymOntoClay.Core.Internal.Parsing.Internal;
 
 namespace TestSandbox
 {
@@ -71,8 +72,9 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            TstLinguisticVariable_Tests();
             //TstManageTempProject();
-            TstTestRunner();
+            //TstTestRunner();
             //TstNameHelper();
             //TstDeffuzzification();
             //TstRangeValue();
@@ -111,6 +113,38 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstLinguisticVariable_Tests()
+        {
+            _logger.Log("Begin");
+
+            var text = @"linvar age for range (0, 150]
+{
+    terms:
+	    `teenager` = Trapezoid(10, 12, 17, 20);
+}";
+
+            var mainStorageContext = new UnityTestMainStorageContext();
+
+            var codeFile = new CodeFile();
+
+            var internalParserContext = new InternalParserContext(text, codeFile, mainStorageContext);
+
+            var parser = new SourceCodeParser(internalParserContext);
+            parser.Run();
+
+            var result = parser.Result;
+
+            var firstItem = result.SingleOrDefault();
+
+            _logger.Log($"firstItem = {firstItem}");
+
+            var handler = firstItem.LinguisticVariable.Values.Single().Handler;
+
+            _logger.Log($"handler = {handler}");
+
+            _logger.Log("End");
         }
 
         private static void TstManageTempProject()
@@ -274,7 +308,7 @@ app PeaceKeeper is [very middle] exampleClass
 
             settings.InvokerInMainThread = invokingInMainThread;
 
-            var callBackLogger = new SymOntoClay.Unity3DAsset.Test.Helpers.CallBackLogger(
+            var callBackLogger = new CallBackLogger(
                 message => { _logger.Log($"message = {message}"); },
                 error => { _logger.Log($"error = {error}"); }
                 );

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Unity3DAsset.Test.Helpers
+namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 {
     public class CallBackLogger : IPlatformLogger
     {

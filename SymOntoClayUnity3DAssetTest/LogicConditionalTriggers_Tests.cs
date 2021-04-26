@@ -1,10 +1,10 @@
 ﻿using NUnit.Framework;
-using SymOntoClay.Unity3DAsset.Test.Helpers;
+using SymOntoClay.UnityAsset.Core.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Unity3DAsset.Test
+namespace SymOntoClay.UnityAsset.Core.Tests
 {
     public class LogicConditionalTriggers_Tests
     {

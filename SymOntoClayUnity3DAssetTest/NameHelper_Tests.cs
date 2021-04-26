@@ -25,12 +25,12 @@ using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Parsing;
-using SymOntoClay.Unity3DAsset.Test.Helpers;
+using SymOntoClay.UnityAsset.Core.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Unity3DAsset.Test.Parsing
+namespace SymOntoClay.UnityAsset.Core.Tests
 {
     public class NameHelper_Tests
     {

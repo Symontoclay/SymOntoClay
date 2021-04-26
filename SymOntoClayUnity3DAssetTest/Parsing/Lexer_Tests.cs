@@ -23,12 +23,12 @@ SOFTWARE.*/
 using NUnit.Framework;
 using SymOntoClay.Core.Internal.Parsing.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.Unity3DAsset.Test.Helpers;
+using SymOntoClay.UnityAsset.Core.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Unity3DAsset.Test.Parsing
+namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
 {
     public class Lexer_Tests
     {

@@ -22,12 +22,12 @@ SOFTWARE.*/
 
 using NUnit.Framework;
 using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
-using SymOntoClay.Unity3DAsset.Test.ExprNodesHierarchy;
+using SymOntoClay.UnityAsset.Core.Tests.ExprNodesHierarchy;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Unity3DAsset.Test
+namespace SymOntoClay.UnityAsset.Core.Tests.Test
 {
     public class AstNodesLinker_Tests
     {

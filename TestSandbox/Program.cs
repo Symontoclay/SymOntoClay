@@ -119,10 +119,17 @@ namespace TestSandbox
         {
             _logger.Log("Begin");
 
-            var text = @"linvar age for range (0, 150]
+            var text = @"linvar logic for range [0, 1]
 {
-    terms:
-	    `teenager` = Trapezoid(10, 12, 17, 20);
+    constraints:
+	    for inheritance;
+
+	terms:
+		minimal = L(0, 0.1);
+		low = Trapezoid(0, 0.05, 0.3, 0.45);
+		middle = Trapezoid(0.3, 0.4, 0.6, 0.7);
+		high = Trapezoid(0.55, 0.7, 0.95, 1);
+		maximal = S(0.9, 1);
 }";
 
             var mainStorageContext = new UnityTestMainStorageContext();
@@ -138,9 +145,15 @@ namespace TestSandbox
 
             var firstItem = result.SingleOrDefault();
 
+            firstItem.LinguisticVariable.CheckDirty();
+
             _logger.Log($"firstItem = {firstItem}");
 
-            var handler = firstItem.LinguisticVariable.Values.Single().Handler;
+            var term = firstItem.LinguisticVariable.Values[4];
+
+            _logger.Log($"term = {term}");
+
+            var handler = term.Handler;
 
             _logger.Log($"handler = {handler}");
 

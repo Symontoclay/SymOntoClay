@@ -3,6 +3,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
@@ -43,10 +44,10 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(_a)} = {_a}");
-            sb.AppendLine($"{spaces}{nameof(_b)} = {_b}");
-            sb.AppendLine($"{spaces}{nameof(_c)} = {_c}");
-            sb.AppendLine($"{spaces}{nameof(_d)} = {_d}");
+            sb.AppendLine($"{spaces}{nameof(_a)} = {_a.ToString(CultureInfo.InvariantCulture)}");
+            sb.AppendLine($"{spaces}{nameof(_b)} = {_b.ToString(CultureInfo.InvariantCulture)}");
+            sb.AppendLine($"{spaces}{nameof(_c)} = {_c.ToString(CultureInfo.InvariantCulture)}");
+            sb.AppendLine($"{spaces}{nameof(_d)} = {_d.ToString(CultureInfo.InvariantCulture)}");
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -58,10 +59,10 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(_a)} = {_a}");
-            sb.AppendLine($"{spaces}{nameof(_b)} = {_b}");
-            sb.AppendLine($"{spaces}{nameof(_c)} = {_c}");
-            sb.AppendLine($"{spaces}{nameof(_d)} = {_d}");
+            sb.AppendLine($"{spaces}{nameof(_a)} = {_a.ToString(CultureInfo.InvariantCulture)}");
+            sb.AppendLine($"{spaces}{nameof(_b)} = {_b.ToString(CultureInfo.InvariantCulture)}");
+            sb.AppendLine($"{spaces}{nameof(_c)} = {_c.ToString(CultureInfo.InvariantCulture)}");
+            sb.AppendLine($"{spaces}{nameof(_d)} = {_d.ToString(CultureInfo.InvariantCulture)}");
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -73,10 +74,10 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(_a)} = {_a}");
-            sb.AppendLine($"{spaces}{nameof(_b)} = {_b}");
-            sb.AppendLine($"{spaces}{nameof(_c)} = {_c}");
-            sb.AppendLine($"{spaces}{nameof(_d)} = {_d}");
+            sb.AppendLine($"{spaces}{nameof(_a)} = {_a.ToString(CultureInfo.InvariantCulture)}");
+            sb.AppendLine($"{spaces}{nameof(_b)} = {_b.ToString(CultureInfo.InvariantCulture)}");
+            sb.AppendLine($"{spaces}{nameof(_c)} = {_c.ToString(CultureInfo.InvariantCulture)}");
+            sb.AppendLine($"{spaces}{nameof(_d)} = {_d.ToString(CultureInfo.InvariantCulture)}");
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

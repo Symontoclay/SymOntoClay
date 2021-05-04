@@ -4,6 +4,7 @@ using OxyPlot.Series;
 using SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,8 @@ namespace LinguisticVariableViewer
         {
             _logger.Info("MainViewModel()");
 
-            MyModel = new PlotModel { Title = "Example 1" };
+            //MyModel = new PlotModel { Title = "Example 1" };
+            MyModel = new PlotModel();
 
             //var seriesItem = new FunctionSeries(Math.Cos, 0, 10, 0.1, "cos(x)");
             //seriesItem.Color = OxyColors.Black;
@@ -33,27 +35,35 @@ namespace LinguisticVariableViewer
 
             //MyModel.Series.Add(customSeries);
 
-            CreateLogicValueCase();
-            //CreateCase1();
+            //CreateLogicValueCase();
+            CreateCase1();
+
+            var fileName = @"c:\Users\Acer\Documents\GitHub\SymOntoClay\TestSandbox\bin\Debug\net5.0\SFunction.svg";
+
+            using (var stream = File.Create(fileName))
+            {
+                var exporter = new SvgExporter { Width = 600, Height = 400 };
+                exporter.Export(MyModel, stream);
+            }
         }
 
         private void CreateLogicValueCase()
         {
             var xList = Range(0, 1.01, 0.05);
 
-            var minimalSeries = DefineLFunction(0, 0.1, xList);
-            MyModel.Series.Add(minimalSeries);
+            //var minimalSeries = DefineLFunction(0, 0.1, xList);
+            //MyModel.Series.Add(minimalSeries);
 
-            var lowSeries = DefineTrapezoid(0, 0.05, 0.3, 0.45, xList);
-            MyModel.Series.Add(lowSeries);
+            //var lowSeries = DefineTrapezoid(0, 0.05, 0.3, 0.45, xList);
+            //MyModel.Series.Add(lowSeries);
 
-            var middleSeries = DefineTrapezoid(0.3, 0.4, 0.6, 0.7, xList);
-            MyModel.Series.Add(middleSeries);
+            //var middleSeries = DefineTrapezoid(0.3, 0.4, 0.6, 0.7, xList);
+            //MyModel.Series.Add(middleSeries);
 
-            var highSeries = DefineTrapezoid(0.55, 0.7, 0.95, 1, xList);
-            MyModel.Series.Add(highSeries);
+            //var highSeries = DefineTrapezoid(0.55, 0.7, 0.95, 1, xList);
+            //MyModel.Series.Add(highSeries);
 
-            var maximalSeries = DefineSFunction(0.9, 1, xList);
+            var maximalSeries = DefineSFunction(0.8, 0.9, 1, xList);
             MyModel.Series.Add(maximalSeries);
         }
 
@@ -61,13 +71,13 @@ namespace LinguisticVariableViewer
         {
             var xList = Range(0, 30, 0.1);
 
-            var customSeries = DefineLFunction(5, 10, xList);
-            MyModel.Series.Add(customSeries);
+            //var customSeries = DefineLFunction(5, 10, xList);
+            //MyModel.Series.Add(customSeries);
 
-            customSeries = DefineTrapezoid(5, 10, 15, 20, xList);
-            MyModel.Series.Add(customSeries);
+            //var customSeries = DefineTrapezoid(5, 10, 15, 20, xList);
+            //MyModel.Series.Add(customSeries);
 
-            customSeries = DefineSFunction(12, 22, xList);
+            var customSeries = DefineSFunction(12, 22, xList);
             MyModel.Series.Add(customSeries);
         }
 

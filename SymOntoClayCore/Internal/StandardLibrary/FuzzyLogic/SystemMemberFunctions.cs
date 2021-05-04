@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
                 return 2 * (Math.Pow((x - a) / (b - a), 2));
             }
 
-            if (x > m && x < b)
+            if (x > m && x <= b)
             {
                 return 1 - (2 * (Math.Pow((x - b) / (b - a), 2)));
             }

@@ -59,13 +59,13 @@ namespace SymOntoClay.Core.Internal.Compiling
         private void RunAssignBinaryOperator(BinaryOperatorAstExpression expression)
         {
 #if DEBUG
-            Log($"expression = {expression}");
+            //Log($"expression = {expression}");
 #endif
 
             var rightBranch = expression.Right;
 
 #if DEBUG
-            Log($"rightBranch = {rightBranch}");
+            //Log($"rightBranch = {rightBranch}");
 #endif
 
             if(rightBranch.Kind == KindOfAstExpression.ConstValue)
@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.Compiling
             var leftBranch = expression.Left;
 
 #if DEBUG
-            Log($"leftBranch = {leftBranch}");
+            //Log($"leftBranch = {leftBranch}");
 #endif
 
             if (leftBranch.Kind == KindOfAstExpression.Var)

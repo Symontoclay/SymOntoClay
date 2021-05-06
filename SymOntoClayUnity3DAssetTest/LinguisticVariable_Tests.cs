@@ -434,7 +434,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var text = @"linvar age for range (0, 150]
 {
     `teenager` = S(12, 22);
-
 }";
 
             var codeEntity = Parse(text);

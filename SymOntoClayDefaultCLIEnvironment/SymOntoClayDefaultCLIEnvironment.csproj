@@ -1,22 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyVersion>0.2.7.0</AssemblyVersion>
+    <FileVersion>0.2.7.0</FileVersion>
+    <Version>0.2.7.0</Version>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>SymOntoClayDefaultCLIEnvironment.xml</DocumentationFile>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="NLog" Version="4.7.0" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
     <ProjectReference Include="..\SymOntoClayCore\SymOntoClayCore.csproj" />
     <ProjectReference Include="..\SymOntoClayUnityAssetCore\SymOntoClayUnityAssetCore.csproj" />
   </ItemGroup>
-
 </Project>

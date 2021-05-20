@@ -1,16 +1,17 @@
-﻿linvar age for range (0, 150]
+﻿app PeaceKeeper
 {
-	terms:
-        `teenager` = Trapezoid(10, 12, 17, 20);
-}
-
-app PeaceKeeper
-{
-    {: age(#Tom, 15) :}
+    fun a() => 
+    {
+        'a' >> @>log;
+    }
 
     on Init =>
     {
-        select {: age(#Tom, `teenager`) :} >> @>log;
+        'Begin' >> @>log;
+
+        //a();
+
+        "End" >> @>log;
     }
 }
 

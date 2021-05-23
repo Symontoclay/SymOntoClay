@@ -144,6 +144,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.Values = Values?.Select(p => p.Clone(context)).ToList();
             result.Operators = Operators?.Select(p => p.Clone(context)).ToList();
 
+            result.CodeEntity = CodeEntity.Clone(context);
+
             result.AppendAnnotations(this, context);
 
             return result;
@@ -220,11 +222,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(Name), Name);            
+            sb.PrintObjProp(n, nameof(Name), Name);
             sb.PrintObjProp(n, nameof(Range), Range);
             sb.PrintObjProp(n, nameof(Constraint), Constraint);
             sb.PrintObjListProp(n, nameof(Values), Values);
             sb.PrintObjListProp(n, nameof(Operators), Operators);
+
+            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -241,6 +245,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjProp(n, nameof(Constraint), Constraint);
             sb.PrintShortObjListProp(n, nameof(Values), Values);
 
+            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -255,6 +261,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintExisting(n, nameof(Range), Range);
             sb.PrintExisting(n, nameof(Constraint), Constraint);
             sb.PrintExistingList(n, nameof(Values), Values);
+
+            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

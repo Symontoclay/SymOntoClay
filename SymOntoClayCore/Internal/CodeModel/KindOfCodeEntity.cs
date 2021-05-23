@@ -34,6 +34,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         Class,
         Instance,
         InlineTrigger,
+        Function,
         Operator,
         Channel,
         RuleOrFact,

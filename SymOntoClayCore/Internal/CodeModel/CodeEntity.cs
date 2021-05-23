@@ -40,6 +40,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public Operator Operator { get; set; }
         public Channel Channel { get; set; }
         public LinguisticVariable LinguisticVariable { get; set; }
+        public FunctionValue Function  { get; set; }
 
         public CodeFile CodeFile { get; set; }
         public CodeEntity ParentCodeEntity { get; set; }
@@ -84,6 +85,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.Operator = Operator?.Clone(context);
             result.Channel = Channel?.Clone(context);
             result.LinguisticVariable = LinguisticVariable?.Clone(context);
+            result.Function = Function?.CloneFunctionValue(context);
 
             result.CodeFile = CodeFile;
             result.ParentCodeEntity = ParentCodeEntity;
@@ -113,6 +115,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             InlineTrigger?.DiscoverAllAnnotations(result);
             Operator?.DiscoverAllAnnotations(result);
             Channel?.DiscoverAllAnnotations(result);
+            Function?.DiscoverAllAnnotations(result);
 
             if (!SubItems.IsNullOrEmpty())
             {
@@ -138,6 +141,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjProp(n, nameof(Operator), Operator);
             sb.PrintObjProp(n, nameof(Channel), Channel);
             sb.PrintObjProp(n, nameof(LinguisticVariable), LinguisticVariable);
+            sb.PrintObjProp(n, nameof(Function), Function);
 
             sb.PrintBriefObjProp(n, nameof(CodeFile), CodeFile);
             sb.PrintBriefObjProp(n, nameof(ParentCodeEntity), ParentCodeEntity);
@@ -162,6 +166,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjProp(n, nameof(Operator), Operator);
             sb.PrintShortObjProp(n, nameof(Channel), Channel);
             sb.PrintShortObjProp(n, nameof(LinguisticVariable), LinguisticVariable);
+            sb.PrintShortObjProp(n, nameof(Function), Function);
 
             sb.PrintBriefObjProp(n, nameof(CodeFile), CodeFile);
             sb.PrintBriefObjProp(n, nameof(ParentCodeEntity), ParentCodeEntity);

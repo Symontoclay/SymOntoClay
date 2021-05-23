@@ -55,16 +55,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            Result = CreateCodeEntity();
+            Result = CreateCodeEntityAndSetAsCurrent(KindOfCodeEntity.InlineTrigger);
 
-            Result.Kind = KindOfCodeEntity.InlineTrigger;
             Result.Name = NameHelper.CreateRuleOrFactName();
             _inlineTrigger = CreateInlineTrigger();
             _inlineTrigger.CodeEntity = Result;
             Result.InlineTrigger = _inlineTrigger;
-            Result.CodeFile = _context.CodeFile;
-            Result.ParentCodeEntity = CurrentCodeEntity;
-            SetCurrentCodeEntity(Result);
 
             if(Result.ParentCodeEntity != null)
             {

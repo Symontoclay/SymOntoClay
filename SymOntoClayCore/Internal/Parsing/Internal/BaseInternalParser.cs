@@ -124,6 +124,26 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             return result;
         }
 
+        protected CodeEntity CreateCodeEntity(KindOfCodeEntity kind)
+        {
+            var result = CreateCodeEntity();
+            result.Kind = kind;
+
+            result.CodeFile = _context.CodeFile;
+
+            result.ParentCodeEntity = CurrentCodeEntity;
+
+            return result;
+        }
+
+        protected CodeEntity CreateCodeEntityAndSetAsCurrent(KindOfCodeEntity kind)
+        {
+            var result = CreateCodeEntity(kind);
+            SetCurrentCodeEntity(result);
+
+            return result;
+        }
+
         protected InlineTrigger CreateInlineTrigger()
         {
             var result = new InlineTrigger();
@@ -135,6 +155,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             var result = new LinguisticVariable();
             DefaultSettingsOfCodeEntityHelper.SetUpLinguisticVariable(result, CurrentDefaultSetings);
+            return result;
+        }
+
+        protected NamedFunction CreateNamedFunction()
+        {
+            var result = new NamedFunction();
+            DefaultSettingsOfCodeEntityHelper.SetUpNamedFunction(result, CurrentDefaultSetings);
             return result;
         }
 

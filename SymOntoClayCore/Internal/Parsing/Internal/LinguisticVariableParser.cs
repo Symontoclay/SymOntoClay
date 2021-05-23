@@ -70,19 +70,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            Result = CreateCodeEntity();
-
-            Result.Kind = KindOfCodeEntity.LinguisticVariable;
+            Result = CreateCodeEntityAndSetAsCurrent(KindOfCodeEntity.LinguisticVariable);
 
             _linguisticVariable = CreateLinguisticVariable();
             _linguisticVariable.CodeEntity = Result;
 
             Result.LinguisticVariable = _linguisticVariable;
-
-            Result.CodeFile = _context.CodeFile;
-
-            Result.ParentCodeEntity = CurrentCodeEntity;
-            SetCurrentCodeEntity(Result);
         }
 
         /// <inheritdoc/>

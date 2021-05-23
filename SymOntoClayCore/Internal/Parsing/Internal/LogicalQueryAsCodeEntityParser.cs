@@ -39,11 +39,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            Result = CreateCodeEntity();
-            Result.Kind = KindOfCodeEntity.RuleOrFact;
-
-            Result.CodeFile = _context.CodeFile;
-            Result.ParentCodeEntity = CurrentCodeEntity;
+            Result = CreateCodeEntity(KindOfCodeEntity.RuleOrFact);
         }
 
         /// <inheritdoc/>

@@ -44,6 +44,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         LogicalSearchResultValue,
         LogicalQueryOperationValue,
         FuzzyLogicNonNumericSequenceValue,
-        RangeValue
+        RangeValue,
+        FunctionValue
     }
 }

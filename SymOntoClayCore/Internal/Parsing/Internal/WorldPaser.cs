@@ -51,13 +51,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #if DEBUG
             //Log("Begin");
 #endif
-            Result = CreateCodeEntity();
-
-            Result.Kind = KindOfCodeEntity.World;
-            Result.CodeFile = _context.CodeFile;
-
-            Result.ParentCodeEntity = CurrentCodeEntity;
-            SetCurrentCodeEntity(Result);
+            Result = CreateCodeEntityAndSetAsCurrent(KindOfCodeEntity.World);
 
 #if DEBUG
             //Log("End");

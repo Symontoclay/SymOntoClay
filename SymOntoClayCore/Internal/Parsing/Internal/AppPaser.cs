@@ -55,13 +55,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #if DEBUG
             //Log("Begin");
 #endif
-            Result = CreateCodeEntity();
-
-            Result.Kind = KindOfCodeEntity.App;
-            Result.CodeFile = _context.CodeFile;            
-
-            Result.ParentCodeEntity = CurrentCodeEntity;
-            SetCurrentCodeEntity(Result);
+            Result = CreateCodeEntityAndSetAsCurrent(KindOfCodeEntity.App);
 
 #if DEBUG
             //Log("End");
@@ -164,6 +158,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         var parser = new InlineTriggerParser(_context);
                                         parser.Run();
                                         Result.SubItems.Add(parser.Result);
+                                    }
+                                    break;
+
+                                case KeyWordTokenKind.Fun:
+                                    {
+                                        _context.Recovery(_currToken);
+                                        var parser = new NamedFunctionParser(_context);
+                                        parser.Run();
+
+                                        throw new NotImplementedException();
                                     }
                                     break;
 

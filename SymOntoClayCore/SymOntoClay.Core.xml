@@ -1858,6 +1858,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.StringValue.AsStringValue">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.StringValue.BuiltInSuperTypes">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StringValue.GetSystemValue">
             <inheritdoc/>
         </member>
@@ -1889,6 +1892,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.AsStrongIdentifierValue">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.BuiltInSuperTypes">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.GetSystemValue">

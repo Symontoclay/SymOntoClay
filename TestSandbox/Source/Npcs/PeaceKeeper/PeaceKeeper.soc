@@ -2,6 +2,18 @@
 {
     fun a(@param_1) => 
     {
+        '`a` (any) has been called!' >> @>log;
+        @param_1 >> @>log;
+    }
+
+    fun a(@param_1: string) => 
+    {
+        '`a` (string) has been called!' >> @>log;
+        @param_1 >> @>log;
+    }
+
+    fun a(@param_1: number) => 
+    {
         '`a` has been called!' >> @>log;
         @param_1 >> @>log;
     }
@@ -9,7 +21,7 @@
     on Init =>
     {
         'Begin' >> @>log;
-        a(1);
+        a(param_1: dog);
         'End' >> @>log;
     }
 }

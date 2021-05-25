@@ -48,6 +48,22 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override StrongIdentifierValue AsStrongIdentifierValue => this;
 
+        private List<StrongIdentifierValue> _builtInSuperTypes;
+
+        /// <inheritdoc/>
+        public override IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes
+        {
+            get
+            {
+                if(_builtInSuperTypes == null)
+                {
+                    _builtInSuperTypes = new List<StrongIdentifierValue>() { this };
+                }
+
+                return _builtInSuperTypes;
+            }
+        }
+
         /// <inheritdoc/>
         public override object GetSystemValue()
         {

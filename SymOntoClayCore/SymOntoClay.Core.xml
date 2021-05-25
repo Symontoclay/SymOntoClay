@@ -1509,6 +1509,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NumberValue.AsNumberValue">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.NumberValue.BuiltInSuperTypes">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.GetSystemValue">
             <inheritdoc/>
         </member>

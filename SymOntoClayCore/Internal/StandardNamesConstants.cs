@@ -34,6 +34,7 @@ namespace SymOntoClay.Core.Internal
         public const string WorldTypeName = "world";
         public const string AppTypeName = "app";
         public const string ClassTypeName = "class";
+        public const string NumberTypeName = "number";
         public const string SelfSystemVarName = "@@self";
         public const string HostSystemVarName = "@@host";
         #endregion

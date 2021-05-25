@@ -35,6 +35,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return _argumentsDict.ContainsKey(name);
         }
 
+        public FunctionArgumentInfo GetArgument(StrongIdentifierValue name)
+        {
+            if(_argumentsDict.ContainsKey(name))
+            {
+                return _argumentsDict[name];
+            }
+
+            return null;
+        }
+
         /// <inheritdoc/>
         public override object GetSystemValue()
         {

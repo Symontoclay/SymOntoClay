@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             : base(context)
         {
         }
+
+        public const uint SelfDistance = 0u;
+        public const uint TopTypeDistance = uint.MaxValue;
 
         public Value GetInheritanceRank(StrongIdentifierValue subName, StrongIdentifierValue superName, LocalCodeExecutionContext localCodeExecutionContext)
         {
@@ -163,7 +167,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var item = new WeightedInheritanceItem();
             item.SuperName = topTypeName;
             item.Rank = 0.1F;
-            item.Distance = uint.MaxValue;
+            item.Distance = TopTypeDistance;
 
             return item;
         }
@@ -173,7 +177,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var item = new WeightedInheritanceItem();
             item.SuperName = subName;
             item.Rank = 1F;
-            item.Distance = 0u;
+            item.Distance = SelfDistance;
             item.IsSelf = true;
 
             return item;
@@ -333,6 +337,101 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             return result;
+        }
+
+        public uint? GetDistance(List<StrongIdentifierValue> typeNamesList, Value value, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+#if DEBUG
+            //Log($"typeNamesList = {typeNamesList.WriteListToString()}");
+            //Log($"value = {value}");
+#endif
+
+            if(typeNamesList.IsNullOrEmpty())
+            {
+                return TopTypeDistance;
+            }
+
+            var distancesList = new List<uint>();
+
+            foreach(var typeName in typeNamesList)
+            {
+                var typeDistance = GetDistance(typeName, value, localCodeExecutionContext, options);
+
+                if(typeDistance.HasValue)
+                {
+                    distancesList.Add(typeDistance.Value);
+                }
+            }
+
+            if(!distancesList.Any())
+            {
+                return null;
+            }
+
+            return distancesList.Min();
+        }
+
+        public uint? GetDistance(StrongIdentifierValue typeName, Value value, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+#if DEBUG
+            //Log($"typeName = {typeName}");
+            //Log($"value = {value}");
+#endif
+
+            var biltInSuperTypesList = value.BuiltInSuperTypes;
+
+#if DEBUG
+            //Log($"biltInSuperTypesList = {biltInSuperTypesList.WriteListToString()}");
+#endif
+
+            if(biltInSuperTypesList.Contains(typeName))
+            {
+                return 0u;
+            }
+
+            var distancesList = new List<uint>();
+
+            var newOptions = options.Clone();
+            newOptions.AddTopType = false;
+            newOptions.AddSelf = false;
+
+            foreach (var buildInSuperType in biltInSuperTypesList)
+            {
+#if DEBUG
+                //Log($"typeName = {typeName}");
+                //Log($"buildInSuperType = {buildInSuperType}");
+#endif
+
+#if DEBUG
+                //Log($"options = {options}");
+#endif
+
+                var weightedInheritanceItemsList = GetWeightedInheritanceItems(buildInSuperType, localCodeExecutionContext, newOptions);
+
+#if DEBUG
+                //Log($"weightedInheritanceItemsList = {weightedInheritanceItemsList.WriteListToString()}");
+#endif
+
+                if(!weightedInheritanceItemsList.Any())
+                {
+                    return null;
+                }
+
+                var targetWeightedInheritanceItemsList = weightedInheritanceItemsList.Where(p => p.SuperName.Equals(typeName)).ToList();
+
+#if DEBUG
+                //Log($"targetWeightedInheritanceItemsList = {targetWeightedInheritanceItemsList.WriteListToString()}");
+#endif
+
+                if (!targetWeightedInheritanceItemsList.Any())
+                {
+                    return null;
+                }
+
+                throw new NotImplementedException();
+            }
+
+            throw new NotImplementedException();
         }
     }
 }

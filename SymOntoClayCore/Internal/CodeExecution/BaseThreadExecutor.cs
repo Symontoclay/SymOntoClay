@@ -824,7 +824,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var parameterName = namedParameter.Key;
 
 #if DEBUG
-                Log($"parameterName = {parameterName}");
+                //Log($"parameterName = {parameterName}");
 #endif
 
                 var kindOfParameterName = parameterName.KindOfName;
@@ -843,7 +843,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
 
 #if DEBUG
-                Log($"parameterName (after) = {parameterName}");
+                //Log($"parameterName (after) = {parameterName}");
 #endif
 
                 if (function.ContainsArgument(parameterName))
@@ -859,7 +859,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Log($"usedParameters = {usedParameters.WriteListToString()}");
+            //Log($"usedParameters = {usedParameters.WriteListToString()}");
 #endif
 
             var argumentsList = function.Arguments;
@@ -874,7 +874,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     }
 
 #if DEBUG
-                    Log($"argument = {argument}");
+                    //Log($"argument = {argument}");
 #endif
 
                     if (argument.HasDefaultValue)

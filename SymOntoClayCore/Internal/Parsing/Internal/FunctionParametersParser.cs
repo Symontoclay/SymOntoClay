@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +12,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             Init,
             WaitForParameter,
-            GotParameterName
+            GotParameterName,
+            WaitForParameterType,
+            GotOneParameterType,
+            WaitForDefaultValue,
+            GotDefaultValue,
+            GotComma
         }
 
         public FunctionParametersParser(InternalParserContext context)
@@ -28,9 +34,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");            
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
+            Log($"Result = {Result.WriteListToString()}");            
 #endif
 
             switch (_state)
@@ -75,6 +81,131 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.CloseRoundBracket:
                             Exit();
+                            break;
+
+                        case TokenKind.Comma:
+                            _state = State.GotComma;
+                            break;
+
+                        case TokenKind.Assign:
+                            _state = State.WaitForDefaultValue;
+                            break;
+
+                        case TokenKind.Colon:
+                            _state = State.WaitForParameterType;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForParameterType:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Identifier:
+                        case TokenKind.Word:
+                            {
+                                _curentFunctionArgumentInfo.TypesList.Add(ParseName(_currToken.Content));
+
+                                _state = State.GotOneParameterType;
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotOneParameterType:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.CloseRoundBracket:
+                            Exit();
+                            break;
+
+                        case TokenKind.Assign:
+                            _state = State.WaitForDefaultValue;
+                            break;
+
+                        case TokenKind.Comma:
+                            _state = State.GotComma;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForDefaultValue:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.String:
+                            {
+                                _curentFunctionArgumentInfo.DefaultValue = new StringValue(_currToken.Content);
+                                _curentFunctionArgumentInfo.HasDefaultValue = true;
+                                _state = State.GotDefaultValue;
+                            }
+                            break;
+
+                        case TokenKind.Number:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var parser = new NumberParser(_context);
+                                parser.Run();
+
+                                _curentFunctionArgumentInfo.DefaultValue = parser.Result;
+
+                                _curentFunctionArgumentInfo.HasDefaultValue = true;
+                                _state = State.GotDefaultValue;
+                            }
+                            break;
+
+                        case TokenKind.Identifier:
+                        case TokenKind.Word:
+                            {
+                                _curentFunctionArgumentInfo.DefaultValue = ParseName(_currToken.Content);
+
+                                _curentFunctionArgumentInfo.HasDefaultValue = true;
+                                _state = State.GotDefaultValue;
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotDefaultValue:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.CloseRoundBracket:
+                            Exit();
+                            break;
+
+                        case TokenKind.Comma:
+                            _state = State.GotComma;
+                            break;
+
+                        case TokenKind.Identifier:
+                        case TokenKind.Word:
+                            {
+                                throw new NotImplementedException();
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotComma:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Var:
+                            _context.Recovery(_currToken);
+                            _state = State.WaitForParameter;
                             break;
 
                         default:

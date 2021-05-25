@@ -28,6 +28,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override FunctionValue AsFunctionValue => this;
 
+        private Dictionary<StrongIdentifierValue, FunctionArgumentInfo> _argumentsDict;
+
+        public bool ContainsArgument(StrongIdentifierValue name)
+        {
+            return _argumentsDict.ContainsKey(name);
+        }
+
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
@@ -39,9 +46,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var result = base.CalculateLongHashCode();
 
-            if(!Arguments.IsNullOrEmpty())
+            if (Arguments.IsNullOrEmpty())
             {
-                foreach(var argument in Arguments)
+                _argumentsDict = new Dictionary<StrongIdentifierValue, FunctionArgumentInfo>();
+            }
+            else
+            {
+                _argumentsDict = Arguments.ToDictionary(p => p.Name, p => p);
+
+                foreach (var argument in Arguments)
                 {
                     result ^= argument.GetLongConditionalHashCode();
                 }

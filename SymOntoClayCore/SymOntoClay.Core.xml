@@ -582,6 +582,12 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.VarAstExpression.Kind">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.VarAstExpression.IsVarAstExpression">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.VarAstExpression.AsVarAstExpression">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.VarAstExpression.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
@@ -2844,6 +2850,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.CallingFunctionExpressionParser.OnEnter">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.CallingFunctionExpressionParser.OnFinish">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.CallingFunctionExpressionParser.OnRun">

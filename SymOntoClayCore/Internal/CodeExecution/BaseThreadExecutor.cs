@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
@@ -752,6 +753,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     FillUpPositionedParameters(localCodeExecutionContext, function, positionedParameters);
                     break;
 
+                case KindOfFunctionParameters.NamedParameters:
+                    FillUpNamedParameters(localCodeExecutionContext, function, namedParameters);
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
             }
@@ -789,6 +794,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if(!positionedParametersEnumerator.MoveNext())
                 {
+                    if(argument.HasDefaultValue)
+                    {
+                        varsStorage.SetValue(argument.Name, argument.DefaultValue);
+                        break;
+                    }
+
                     throw new NotImplementedException();
                 }
 
@@ -800,6 +811,83 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 varsStorage.SetValue(argument.Name, parameterItem);
             }
+        }
+
+        private void FillUpNamedParameters(LocalCodeExecutionContext localCodeExecutionContext, FunctionValue function, Dictionary<StrongIdentifierValue, Value> namedParameters)
+        {
+            var varsStorage = localCodeExecutionContext.Storage.VarStorage;
+
+            var usedParameters = new List<StrongIdentifierValue>();
+
+            foreach(var namedParameter in namedParameters)
+            {
+                var parameterName = namedParameter.Key;
+
+#if DEBUG
+                Log($"parameterName = {parameterName}");
+#endif
+
+                var kindOfParameterName = parameterName.KindOfName;
+
+                switch (kindOfParameterName)
+                {
+                    case KindOfName.Var:
+                        break;
+
+                    case KindOfName.Concept:
+                        parameterName = NameHelper.CreateName($"@{parameterName.NameValue}");
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParameterName), kindOfParameterName, null);
+                }
+
+#if DEBUG
+                Log($"parameterName (after) = {parameterName}");
+#endif
+
+                if (function.ContainsArgument(parameterName))
+                {
+                    usedParameters.Add(parameterName);
+
+                    varsStorage.SetValue(parameterName, namedParameter.Value);
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+#if DEBUG
+            Log($"usedParameters = {usedParameters.WriteListToString()}");
+#endif
+
+            var argumentsList = function.Arguments;
+
+            if(usedParameters.Count < argumentsList.Count)
+            {
+                foreach(var argument in argumentsList)
+                {
+                    if(usedParameters.Contains(argument.Name))
+                    {
+                        continue;
+                    }
+
+#if DEBUG
+                    Log($"argument = {argument}");
+#endif
+
+                    if (argument.HasDefaultValue)
+                    {
+                        varsStorage.SetValue(argument.Name, argument.DefaultValue);
+                        continue;
+                    }
+                    else
+                    {
+                        throw new NotImplementedException();
+                    }
+                }                
+            }            
         }
 
         private void CallExecutable(IExecutable executable, IList<Value> paramsList)

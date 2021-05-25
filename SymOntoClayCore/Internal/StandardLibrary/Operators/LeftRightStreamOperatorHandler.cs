@@ -62,6 +62,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                 switch(kindOfName)
                 {
+                    case KindOfName.Concept:
                     case KindOfName.Entity:
                         valueFromSource = leftOperand;
                         break;

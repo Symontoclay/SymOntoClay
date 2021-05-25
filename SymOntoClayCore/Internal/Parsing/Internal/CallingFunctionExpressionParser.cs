@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using System;
@@ -36,7 +37,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             WaitForMainParameter,
             GotPositionedMainParameter,
             WaitForValueOfNamedMainParameter,
-            GotValueOfNamedMainParameter
+            GotValueOfNamedMainParameter,
+            GotComma
         }
 
         public CallingFunctionExpressionParser(InternalParserContext context)
@@ -55,13 +57,28 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
 
         /// <inheritdoc/>
+        protected override void OnFinish()
+        {
+#if DEBUG
+            //Log($"_currentParameter = {_currentParameter}");
+#endif
+
+            if(_currentParameter != null)
+            {
+                if(_currentParameter.IsNamed && _currentParameter.Name != null && _currentParameter.Value == null)
+                {
+                    throw new NotImplementedException();
+                }
+            }
+        }
+
+        /// <inheritdoc/>
         protected override void OnRun()
         {
 #if DEBUG
+            //Log($"Result = {Result}");
             //Log($"_state = {_state}");
             //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");
-            
 #endif
 
             switch (_state)
@@ -74,6 +91,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.AsyncMarker:
+                            if(Result.IsAsync)
+                            {
+                                throw new UnexpectedTokenException(_currToken);
+                            }
                             Result.IsAsync = true;
                             break;
 
@@ -85,6 +106,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.WaitForMainParameter:
                     switch(_currToken.TokenKind)
                     {
+                        case TokenKind.Identifier:
                         case TokenKind.Word:
                             {
                                 _currentParameter = new CallingParameter();
@@ -118,6 +140,35 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case TokenKind.String:
+                            {
+                                _currentParameter = new CallingParameter();
+                                Result.Parameters.Add(_currentParameter);
+
+                                var node = new ConstValueAstExpression();
+                                node.Value = new StringValue(_currToken.Content);
+
+                                _currentParameter.Value = node;
+                                _state = State.GotPositionedMainParameter;
+                            }
+                            break;
+
+                        case TokenKind.Var:
+                            {
+                                _currentParameter = new CallingParameter();
+                                Result.Parameters.Add(_currentParameter);
+
+                                var value = NameHelper.CreateName(_currToken.Content);
+
+                                var node = new VarAstExpression();
+                                node.Name = value;
+
+                                _currentParameter.Value = node;
+
+                                _state = State.GotPositionedMainParameter;
+                            }
+                            break;
+
                         case TokenKind.CloseRoundBracket:
                             Exit();
                             break;
@@ -131,14 +182,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch(_currToken.TokenKind)
                     {
                         case TokenKind.Colon:
-                            _currentParameter.Name = _currentParameter.Value;
-                            _currentParameter.Value = null;
+                            if(_currentParameter.Value != null)
+                            {
+                                _currentParameter.Name = ConvertValueExprToNameExpr(_currentParameter.Value);
+                                _currentParameter.Value = null;
+                            }
 
                             _state = State.WaitForValueOfNamedMainParameter;
                             break;
 
                         case TokenKind.CloseRoundBracket:
                             Exit();
+                            break;
+
+                        case TokenKind.Comma:
+                            _state = State.GotComma;
                             break;
 
                         default:
@@ -162,6 +220,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case TokenKind.Number:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var parser = new NumberParser(_context);
+                                parser.Run();
+
+                                var node = new ConstValueAstExpression();
+                                node.Value = parser.Result;
+
+                                _currentParameter.Value = node;
+
+                                _state = State.GotValueOfNamedMainParameter;
+                            }
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -179,8 +253,50 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
+                case State.GotComma:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Number:
+                        case TokenKind.Word:
+                        case TokenKind.EntityCondition:
+                        case TokenKind.Var:
+                        case TokenKind.String:
+                            _context.Recovery(_currToken);
+                            _state = State.WaitForMainParameter;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
+            }
+        }
+
+        private AstExpression ConvertValueExprToNameExpr(AstExpression expression)
+        {
+#if DEBUG
+            //Log($"expression = {expression}");
+#endif
+
+            var kind = expression.Kind;
+
+            switch(kind)
+            {
+                case KindOfAstExpression.ConstValue:
+                    return expression;
+
+                case KindOfAstExpression.Var:
+                    {
+                        var node = new ConstValueAstExpression();
+                        node.Value = expression.AsVarAstExpression.Name;
+                        return node;
+                    }
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
         }
     }

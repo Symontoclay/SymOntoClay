@@ -1,6 +1,8 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
@@ -8,7 +10,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class FunctionArgumentInfo : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public StrongIdentifierValue Name { get; set; }
+        public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
         public bool HasDefaultValue { get; set; }
+        public Value DefaultValue { get; set; }
 
         /// <summary>
         /// Clones the instance and returns cloned instance.
@@ -36,7 +40,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             context[this] = result;
 
             result.Name = Name.Clone(context);
+            result.TypesList = TypesList?.Select(p => p.Clone(context)).ToList();
             result.HasDefaultValue = HasDefaultValue;
+            result.DefaultValue = DefaultValue.CloneValue(context);
 
             return result;
         }
@@ -45,12 +51,40 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             Name.CheckDirty();
 
-            return Name.GetLongConditionalHashCode();
+            if (!TypesList.IsNullOrEmpty())
+            {
+                foreach(var item in TypesList)
+                {
+                    item.CheckDirty();
+                }
+            }                
+
+            DefaultValue?.CheckDirty();
+
+            var result = Name.GetLongConditionalHashCode();
+
+            if (!TypesList.IsNullOrEmpty())
+            {
+                foreach (var item in TypesList)
+                {
+                    result ^= item.GetLongConditionalHashCode();
+                }
+            }
+
+            return result;
         }
 
         public void DiscoverAllAnnotations(IList<RuleInstance> result)
         {
             Name?.DiscoverAllAnnotations(result);
+
+            if (!TypesList.IsNullOrEmpty())
+            {
+                foreach (var item in TypesList)
+                {
+                    item.DiscoverAllAnnotations(result);
+                }
+            }
         }
 
         /// <inheritdoc/>
@@ -72,7 +106,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintObjProp(n, nameof(Name), Name);
+
+            sb.PrintObjListProp(n, nameof(TypesList), TypesList);
+
             sb.AppendLine($"{spaces}{nameof(HasDefaultValue)} = {HasDefaultValue}");
+            sb.PrintObjProp(n, nameof(DefaultValue), DefaultValue);
 
             return sb.ToString();
         }
@@ -96,7 +134,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintShortObjProp(n, nameof(Name), Name);
+            sb.PrintShortObjListProp(n, nameof(TypesList), TypesList);
             sb.AppendLine($"{spaces}{nameof(HasDefaultValue)} = {HasDefaultValue}");
+            sb.PrintShortObjProp(n, nameof(DefaultValue), DefaultValue);
 
             return sb.ToString();
         }
@@ -120,7 +160,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(Name), Name);
+            sb.PrintBriefObjListProp(n, nameof(TypesList), TypesList);
             sb.AppendLine($"{spaces}{nameof(HasDefaultValue)} = {HasDefaultValue}");
+            sb.PrintBriefObjProp(n, nameof(DefaultValue), DefaultValue);
 
             return sb.ToString();
         }

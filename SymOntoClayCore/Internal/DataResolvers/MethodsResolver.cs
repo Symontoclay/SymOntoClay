@@ -84,8 +84,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public NamedFunction Resolve(StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"name = {name}");
-            Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
+            //Log($"name = {name}");
+            //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
 #endif
 
             var storage = localCodeExecutionContext.Storage;
@@ -112,13 +112,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
-            Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
+            //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
 #endif
 
             var rawList = GetRawList(name, namedParameters.Count, storagesList, weightedInheritanceItems);
 
 #if DEBUG
-            Log($"rawList = {rawList.WriteListToString()}");
+            //Log($"rawList = {rawList.WriteListToString()}");
 #endif
 
             if (!rawList.Any())
@@ -129,7 +129,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var filteredList = Filter(rawList);
 
 #if DEBUG
-            Log($"filteredList = {filteredList.WriteListToString()}");
+            //Log($"filteredList = {filteredList.WriteListToString()}");
 #endif
 
             return OrderAndDistinctByInheritance(filteredList, options).FirstOrDefault().ResultItem;

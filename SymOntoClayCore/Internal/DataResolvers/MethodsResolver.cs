@@ -412,28 +412,72 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var function in source)
             {
-                var rank = IsFit(function.ResultItem, positionedParameters, localCodeExecutionContext, options);
+                var rankMatrix = IsFit(function.ResultItem, positionedParameters, localCodeExecutionContext, options);
 
 #if DEBUG
-                Log($"rank = {rank}");
+                //Log($"rankMatrix = {rankMatrix.WritePODListToString()}");
 #endif
 
-                if (rank == 0)
+                if (rankMatrix == null)
                 {
                     continue;
                 }
 
-                throw new NotImplementedException();
+                function.ParametersRankMatrix = rankMatrix;
+
+                result.Add(function);
             }
 
-            throw new NotImplementedException();
+            return result;
         }
 
-        private int IsFit(NamedFunction function, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private List<uint> IsFit(NamedFunction function, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
 
-            throw new NotImplementedException();
+            var positionedParametersEnumerator = positionedParameters.GetEnumerator();
+
+            var result = new List<uint>();
+
+            foreach (var argument in function.Arguments)
+            {
+#if DEBUG
+                Log($"argument = {argument}");
+#endif
+
+                if (!positionedParametersEnumerator.MoveNext())
+                {
+                    if (argument.HasDefaultValue)
+                    {
+                        result.Add(0u);
+
+                        continue;
+                    }
+
+                    throw new NotImplementedException();
+                }
+
+                var parameterItem = positionedParametersEnumerator.Current;
+
+#if DEBUG
+                Log($"parameterItem = {parameterItem}");
+#endif
+
+                var distance = inheritanceResolver.GetDistance(argument.TypesList, parameterItem, localCodeExecutionContext, options);
+
+#if DEBUG
+                Log($"distance = {distance}");
+#endif
+
+                if (!distance.HasValue)
+                {
+                    return null;
+                }
+
+                result.Add(distance.Value);
+            }
+
+            return result;
         }
 
         private NamedFunction GetTargetValueFromList(List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>> source, int paramsCount, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)

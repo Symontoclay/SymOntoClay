@@ -53,7 +53,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"storagesList.Count = {storagesList.Count}");
             //foreach(var tmpStorage in storagesList)
             //{
-            //    Log($"tmpStorage.Key = {tmpStorage.Key}; tmpStorage.Value.Kind = '{tmpStorage.Value.Kind}'");
+            //    Log($"tmpStorage = {tmpStorage}");
             //}
 #endif
 

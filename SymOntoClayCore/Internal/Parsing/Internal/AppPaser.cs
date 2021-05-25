@@ -80,8 +80,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_currToken = {_currToken}");
+            //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -166,8 +166,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         _context.Recovery(_currToken);
                                         var parser = new NamedFunctionParser(_context);
                                         parser.Run();
-
-                                        throw new NotImplementedException();
+                                        Result.SubItems.Add(parser.Result);
                                     }
                                     break;
 

@@ -475,6 +475,26 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             sb.AppendLine($"{spaces}{propName} = {mark}");
         }
 
+        public static string WritePODListToString<T>(this IEnumerable<T> items)
+        {
+            if (items == null)
+            {
+                return "NULL";
+            }
+
+            var sb = new StringBuilder();
+            sb.AppendLine("Begin List");
+            if (!items.IsNullOrEmpty())
+            {
+                foreach (var item in items)
+                {
+                    sb.AppendLine(item.ToString());
+                }
+            }
+            sb.AppendLine("End List");
+            return sb.ToString();
+        }
+
         public static string WriteListToString<T>(this IEnumerable<T> items) 
             where T: IObjectToString
         {

@@ -1,17 +1,16 @@
 ﻿app PeaceKeeper
 {
-    fun a() => 
+    fun a(@param_1) => 
     {
-        'a' >> @>log;
+        '`a` has been called!' >> @>log;
+        @param_1 >> @>log;
     }
 
     on Init =>
     {
         'Begin' >> @>log;
-
-        //a();
-
-        "End" >> @>log;
+        a(1);
+        'End' >> @>log;
     }
 }
 

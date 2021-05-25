@@ -145,6 +145,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             Exit();
                             break;
 
+                        case TokenKind.Word:
+                            switch (_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Fun:
+                                    {
+                                        _context.Recovery(_currToken);
+                                        var parser = new NamedFunctionParser(_context);
+                                        parser.Run();
+                                        Result.SubItems.Add(parser.Result);
+                                    }
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
                         case TokenKind.OpenFactBracket:
                             {
                                 _context.Recovery(_currToken);

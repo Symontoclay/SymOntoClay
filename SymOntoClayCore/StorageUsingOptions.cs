@@ -54,7 +54,7 @@ namespace SymOntoClay.Core
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintExisting(n, nameof(Storage), Storage);
+            sb.PrintObjProp(n, nameof(Storage), Storage);
             sb.AppendLine($"{spaces}{nameof(UseFacts)} = {UseFacts}");
             sb.AppendLine($"{spaces}{nameof(UseAdditionalInstances)} = {UseAdditionalInstances}");
             sb.AppendLine($"{spaces}{nameof(UseProductions)} = {UseProductions}");
@@ -82,7 +82,7 @@ namespace SymOntoClay.Core
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintExisting(n, nameof(Storage), Storage);
+            sb.PrintShortObjProp(n, nameof(Storage), Storage);
             sb.AppendLine($"{spaces}{nameof(UseFacts)} = {UseFacts}");
             sb.AppendLine($"{spaces}{nameof(UseAdditionalInstances)} = {UseAdditionalInstances}");
             sb.AppendLine($"{spaces}{nameof(UseProductions)} = {UseProductions}");
@@ -110,7 +110,7 @@ namespace SymOntoClay.Core
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintExisting(n, nameof(Storage), Storage);
+            sb.PrintBriefObjProp(n, nameof(Storage), Storage);
             sb.AppendLine($"{spaces}{nameof(UseFacts)} = {UseFacts}");
             sb.AppendLine($"{spaces}{nameof(UseAdditionalInstances)} = {UseAdditionalInstances}");
             sb.AppendLine($"{spaces}{nameof(UseProductions)} = {UseProductions}");

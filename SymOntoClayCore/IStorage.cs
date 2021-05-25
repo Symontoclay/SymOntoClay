@@ -43,7 +43,9 @@ namespace SymOntoClay.Core
         IFuzzyLogicStorage FuzzyLogicStorage { get; }
         void AddParentStorage(IStorage storage);
         void RemoveParentStorage(IStorage storage);
-        void CollectChainOfStorages(IList<StorageUsingOptions> result, int level);
+        void CollectChainOfStorages(IList<StorageUsingOptions> result, IList<IStorage> usedStorages, int level);
+        void CollectChainOfStorages(IList<IStorage> result);
+        IList<IStorage> GetStorages();
         DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get; set; }
 #if DEBUG
         void DbgPrintFactsAndRules();

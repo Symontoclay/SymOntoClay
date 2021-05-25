@@ -44,9 +44,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         public void AddEndpointsRange(IList<IEndpointInfo> platformEndpointsList)
         {
-            foreach (var endpointInfo in platformEndpointsList)
+            lock (_lockObj)
             {
-                AddEndpoint(endpointInfo);
+                foreach (var endpointInfo in platformEndpointsList)
+                {
+                    AddEndpoint(endpointInfo);
+                }
             }
         }
 

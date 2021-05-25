@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Instances;
+using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -67,6 +68,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _numberValueLinearResolver = dataResolversFactory.GetNumberValueLinearResolver();
             _strongIdentifierLinearResolver = dataResolversFactory.GetStrongIdentifierLinearResolver();
             _varsResolver = dataResolversFactory.GetVarsResolver();
+            _methodsResolver = dataResolversFactory.GetMethodsResolver();
         }
 
         private readonly IEngineContext _context;
@@ -79,6 +81,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly NumberValueLinearResolver _numberValueLinearResolver;
         private readonly StrongIdentifierLinearResolver _strongIdentifierLinearResolver;
         private readonly VarsResolver _varsResolver;
+        private readonly MethodsResolver _methodsResolver;
 
         private Stack<CodeFrame> _codeFrames = new Stack<CodeFrame>();
         private CodeFrame _currentCodeFrame;
@@ -326,6 +329,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         }
                         break;
 
+                    case OperationCode.Call:
+                        CallFunction(KindOfFunctionParameters.NoParameters, currentCommand.CountParams, true);
+                        break;
+
+                    case OperationCode.Call_P:
+                        CallFunction(KindOfFunctionParameters.PositionedParameters, currentCommand.CountParams, true);
+                        break;
+
                     case OperationCode.Call_N:
                         CallFunction(KindOfFunctionParameters.NamedParameters, currentCommand.CountParams, true);
                         break;
@@ -545,11 +556,18 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
             //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
+            //Log($"caller.IsPointRefValue = {caller.IsPointRefValue}");
 #endif
 
-            if(caller.IsPointRefValue)
+            if (caller.IsPointRefValue)
             {
                 CallPointRefValue(caller.AsPointRefValue, kindOfparameters, namedParameters, positionedParameters, isSync);
+                return;
+            }
+
+            if(caller.IsStrongIdentifierValue)
+            {
+                CallStrongIdentifierValue(caller.AsStrongIdentifierValue, kindOfparameters, namedParameters, positionedParameters, isSync);
                 return;
             }
 
@@ -632,6 +650,156 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
             throw new NotImplementedException();
+        }
+
+        private void CallStrongIdentifierValue(StrongIdentifierValue methodName,
+            KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
+            bool isSync)
+        {
+#if DEBUG
+            //Log($"methodName = {methodName}");
+            //Log($"kindOfParameters = {kindOfParameters}");
+            //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
+            //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+            //Log($"isSync = {isSync}");
+#endif
+            NamedFunction method = null;
+
+            switch(kindOfParameters)
+            {
+                case KindOfFunctionParameters.NoParameters:
+                    method = _methodsResolver.Resolve(methodName, _currentCodeFrame.LocalContext);
+                    break;
+
+                case KindOfFunctionParameters.NamedParameters:
+                    method = _methodsResolver.Resolve(methodName, namedParameters, _currentCodeFrame.LocalContext);
+                    break;
+
+                case KindOfFunctionParameters.PositionedParameters:
+                    method = _methodsResolver.Resolve(methodName, positionedParameters, _currentCodeFrame.LocalContext);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+            }
+
+#if DEBUG
+            //Log($"method = {method}");
+#endif
+
+            var newCodeFrame = ConvertNamedFunctionToCodeFrame(method, kindOfParameters, namedParameters, positionedParameters);
+
+#if DEBUG
+            //Log($"newCodeFrame = {newCodeFrame}");
+#endif
+
+            _context.InstancesStorage.AppendProcessInfo(newCodeFrame.ProcessInfo);
+
+#if DEBUG
+            //Log($"isSync = {isSync}");
+#endif
+
+            if (isSync)
+            {
+                _currentCodeFrame.CurrentPosition++;
+
+                SetCodeFrame(newCodeFrame);                
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        private CodeFrame ConvertNamedFunctionToCodeFrame(FunctionValue function,
+            KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters)
+        {
+#if DEBUG
+            //Log($"kindOfParameters = {kindOfParameters}");
+            //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
+            //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+#endif
+
+            var currentLocalContext = _currentCodeFrame.LocalContext;
+
+            var storagesList = currentLocalContext.Storage.GetStorages();
+
+#if DEBUG
+            //Log($"storagesList.Count = {storagesList.Count}");
+            //foreach(var tmpStorage in storagesList)
+            //{
+            //    Log($"tmpStorage = {tmpStorage}");
+            //}
+#endif
+
+            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            var localStorageSettings = RealStorageSettingsHelper.Create(_context, storagesList.ToList());
+
+            var newStorage = new LocalStorage(localStorageSettings);
+
+            localCodeExecutionContext.Storage = newStorage;
+
+            switch(kindOfParameters)
+            {
+                case KindOfFunctionParameters.NoParameters:
+                    if(function.Arguments.Any())
+                    {
+                        throw new NotImplementedException();
+                    }
+                    break;
+
+                case KindOfFunctionParameters.PositionedParameters:
+                    FillUpPositionedParameters(localCodeExecutionContext, function, positionedParameters);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+            }
+
+            localCodeExecutionContext.Holder = currentLocalContext.Holder;
+
+            var codeFrame = new CodeFrame();
+            codeFrame.CompiledFunctionBody = function.CompiledFunctionBody;
+            codeFrame.LocalContext = localCodeExecutionContext;
+
+            var processInfo = new ProcessInfo();
+
+            codeFrame.ProcessInfo = processInfo;
+            processInfo.CodeFrame = codeFrame;
+            codeFrame.Metadata = function.CodeEntity;
+
+#if DEBUG
+            //Log($"codeFrame = {codeFrame}");
+#endif
+
+            return codeFrame;
+        }
+
+        private void FillUpPositionedParameters(LocalCodeExecutionContext localCodeExecutionContext, FunctionValue function, List<Value> positionedParameters)
+        {
+            var varsStorage = localCodeExecutionContext.Storage.VarStorage;
+
+            var positionedParametersEnumerator = positionedParameters.GetEnumerator();
+
+            foreach (var argument in function.Arguments)
+            {
+#if DEBUG
+                //Log($"argument = {argument}");
+#endif
+
+                if(!positionedParametersEnumerator.MoveNext())
+                {
+                    throw new NotImplementedException();
+                }
+
+                var parameterItem = positionedParametersEnumerator.Current;
+
+#if DEBUG
+                //Log($"parameterItem = {parameterItem}");
+#endif
+
+                varsStorage.SetValue(argument.Name, parameterItem);
+            }
         }
 
         private void CallExecutable(IExecutable executable, IList<Value> paramsList)

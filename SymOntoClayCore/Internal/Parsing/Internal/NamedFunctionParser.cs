@@ -11,7 +11,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             Init,
             GotNamedFunctionMark,
-            GotName
+            GotName,
+            GotParameters,
+            WaitForAction,
+            GotAction
         }
         
         public NamedFunctionParser(InternalParserContext context)
@@ -32,7 +35,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             _namedFunction = CreateNamedFunction();
             _namedFunction.CodeEntity = Result;
-            Result.Function = _namedFunction;
+            Result.NamedFunction = _namedFunction;
             Result.CodeFile = _context.CodeFile;
             Result.ParentCodeEntity = CurrentCodeEntity;
             SetCurrentCodeEntity(Result);
@@ -53,8 +56,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_currToken = {_currToken}");
+            //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -106,8 +109,56 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new FunctionParametersParser(_context);
                                 parser.Run();
 
-                                throw new NotImplementedException();
+                                _namedFunction.Arguments = parser.Result;
+
+                                _state = State.GotParameters;
                             }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotParameters:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Lambda:
+                            _state = State.WaitForAction;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForAction:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenFigureBracket:
+                            {
+                                _context.Recovery(_currToken);
+                                var parser = new FunctionBodyParser(_context);
+                                parser.Run();
+                                var statementsList = parser.Result;
+
+                                _namedFunction.Statements = statementsList;
+                                _namedFunction.CompiledFunctionBody = _context.Compiler.Compile(statementsList);
+                                _state = State.GotAction;
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotAction:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                            _context.Recovery(_currToken);
+                            Exit();
                             break;
 
                         default:

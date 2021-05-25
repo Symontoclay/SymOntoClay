@@ -9,8 +9,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         public StrongIdentifierValue Name { get; set; }
 
-        public CodeEntity CodeEntity { get; set; }
-
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
         {
@@ -69,9 +67,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             result.Name = Name.Clone(context);
 
-            result.CodeEntity = CodeEntity.Clone(context);
-
-            result.AppendAnnotations(this, context);
+            result.AppendFuction(this, context);            
 
             return result;
         }
@@ -101,8 +97,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
             sb.PrintObjProp(n, nameof(Name), Name);
 
-            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
-
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -112,9 +106,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.PrintShortObjProp(n, nameof(Name), Name);
-
-            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
+            sb.PrintShortObjProp(n, nameof(Name), Name);           
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -126,8 +118,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.PrintBriefObjProp(n, nameof(Name), Name);
-
-            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

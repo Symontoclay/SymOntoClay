@@ -143,12 +143,19 @@ namespace SymOntoClay.Core.Internal.Storage
         }
 
         /// <inheritdoc/>
-        void IStorage.CollectChainOfStorages(IList<StorageUsingOptions> result, int level)
+        void IStorage.CollectChainOfStorages(IList<StorageUsingOptions> result, IList<IStorage> usedStorages, int level)
         {
 #if DEBUG
             //Log($"result?.Count = {result?.Count}");
             //Log($"level = {level}");
 #endif
+
+            if (usedStorages.Contains(this))
+            {
+                return;
+            }
+
+            usedStorages.Add(this);
 
             //if(result.Any(p => p.Storage == this))
             //{
@@ -176,10 +183,49 @@ namespace SymOntoClay.Core.Internal.Storage
                 {
                     foreach (var parent in parentsList)
                     {
-                        parent.CollectChainOfStorages(result, level);
+                        parent.CollectChainOfStorages(result, usedStorages, level);
                     }
                 }
             }
+        }
+
+        /// <inheritdoc/>
+        void IStorage.CollectChainOfStorages(IList<IStorage> result)
+        {
+            CollectChainOfStorages(result);
+        }
+
+        private void CollectChainOfStorages(IList<IStorage> result)
+        {
+            if(result.Contains(this))
+            {
+                return;
+            }
+
+            result.Add(this);
+
+            lock (_lockObj)
+            {
+                var parentsList = _realStorageContext.Parents;
+
+                if (parentsList.Any())
+                {
+                    foreach (var parent in parentsList)
+                    {
+                        parent.CollectChainOfStorages(result);
+                    }
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public IList<IStorage> GetStorages()
+        {
+            var result = new List<IStorage>();
+
+            CollectChainOfStorages(result);
+
+            return result;
         }
 
         /// <inheritdoc/>

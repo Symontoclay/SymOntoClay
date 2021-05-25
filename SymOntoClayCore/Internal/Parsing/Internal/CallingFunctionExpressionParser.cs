@@ -58,9 +58,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
+            //Log($"_state = {_state}");
             //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");
-            //Log($"_state = {_state}");
+            
 #endif
 
             switch (_state)
@@ -99,6 +100,28 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case TokenKind.Number:
+                            {
+                                _currentParameter = new CallingParameter();
+                                Result.Parameters.Add(_currentParameter);
+
+                                _context.Recovery(_currToken);
+
+                                var parser = new NumberParser(_context);
+                                parser.Run();
+
+                                var node = new ConstValueAstExpression();
+                                node.Value = parser.Result;
+
+                                _currentParameter.Value = node;
+                                _state = State.GotPositionedMainParameter;
+                            }
+                            break;
+
+                        case TokenKind.CloseRoundBracket:
+                            Exit();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -112,6 +135,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _currentParameter.Value = null;
 
                             _state = State.WaitForValueOfNamedMainParameter;
+                            break;
+
+                        case TokenKind.CloseRoundBracket:
+                            Exit();
                             break;
 
                         default:

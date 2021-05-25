@@ -45,7 +45,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var n = 0;
 
-            storage.CollectChainOfStorages(result, n);
+            var usedStorages = new List<IStorage>();
+
+            storage.CollectChainOfStorages(result, usedStorages, n);
 
             return result;
         }

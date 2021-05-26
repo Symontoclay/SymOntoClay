@@ -1973,6 +1973,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.CloneValue">
             <summary>
             Clones the instance and returns cloned instance.

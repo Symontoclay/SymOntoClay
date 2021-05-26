@@ -32,13 +32,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class NumberValue : Value
     {
-        private static List<StrongIdentifierValue> _builtInSuperTypes;
+        //private static List<StrongIdentifierValue> _builtInSuperTypes;
 
-        static NumberValue()
-        {
-            _builtInSuperTypes = new List<StrongIdentifierValue>();
-            _builtInSuperTypes.Add(NameHelper.CreateName(StandardNamesConstants.NumberTypeName));
-        }
+        //static NumberValue()
+        //{
+        //    _builtInSuperTypes = new List<StrongIdentifierValue>();
+        //    _builtInSuperTypes.Add();
+        //}
 
         public NumberValue(double? systemValue)
         {
@@ -54,8 +54,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override NumberValue AsNumberValue => this;
 
+        private List<StrongIdentifierValue> _builtInSuperTypes;
+
         /// <inheritdoc/>
         public override IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => _builtInSuperTypes;
+
+        private bool _isFuzzy;
+
+        public bool IsFuzzy => _isFuzzy;
 
         public double? SystemValue { get; private set; }
 
@@ -68,6 +74,25 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode()
         {
+            if(SystemValue.HasValue)
+            {
+                if(SystemValue >= 0 && SystemValue <= 1)
+                {
+                    _isFuzzy = true;
+                }
+            }
+            else
+            {
+                _isFuzzy = true;
+            }
+
+            _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.NumberTypeName) };
+
+            if(_isFuzzy)
+            {
+                _builtInSuperTypes.Add(NameHelper.CreateName(StandardNamesConstants.FuzzyTypeName));
+            }
+
             return base.CalculateLongHashCode() ^ (ulong)Math.Abs(SystemValue?.GetHashCode() ?? 0);
         }
 

@@ -351,6 +351,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return TopTypeDistance;
             }
 
+            value.CheckDirty();
+
             var distancesList = new List<uint>();
 
             foreach(var typeName in typeNamesList)
@@ -376,6 +378,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
             //Log($"typeName = {typeName}");
             //Log($"value = {value}");
+            //if(value.KindOfValue == KindOfValue.StrongIdentifierValue)
+            //{
+            //    throw new NotImplementedException();
+            //}
 #endif
 
             var biltInSuperTypesList = value.BuiltInSuperTypes;

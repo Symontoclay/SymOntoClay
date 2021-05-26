@@ -2,6 +2,7 @@
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -148,6 +149,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return null;
             }
 
+            namedParameters = NormalizeNamedParameters(namedParameters);
+
             filteredList = FilterByTypeOfParameters(filteredList, namedParameters, localCodeExecutionContext, options);
 
 #if DEBUG
@@ -231,7 +234,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             filteredList = FilterByTypeOfParameters(filteredList, positionedParameters, localCodeExecutionContext, options);
 
 #if DEBUG
-            Log($"filteredList (2) = {filteredList.WriteListToString()}");
+            //Log($"filteredList (2) = {filteredList.WriteListToString()}");
 #endif
 
             if (!filteredList.Any())
@@ -245,6 +248,43 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             return GetTargetValueFromList(filteredList, positionedParameters.Count, localCodeExecutionContext, options);
+        }
+
+        private Dictionary<StrongIdentifierValue, Value> NormalizeNamedParameters(Dictionary<StrongIdentifierValue, Value> source)
+        {
+            var result = new Dictionary<StrongIdentifierValue, Value>();
+
+            foreach(var namedParameter in source)
+            {
+                var parameterName = namedParameter.Key;
+
+#if DEBUG
+                //Log($"parameterName = {parameterName}");
+#endif
+
+                var kindOfParameterName = parameterName.KindOfName;
+
+                switch (kindOfParameterName)
+                {
+                    case KindOfName.Var:
+                        break;
+
+                    case KindOfName.Concept:
+                        parameterName = NameHelper.CreateName($"@{parameterName.NameValue}");
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParameterName), kindOfParameterName, null);
+                }
+
+#if DEBUG
+                //Log($"parameterName (after) = {parameterName}");
+#endif
+
+                result[parameterName] = namedParameter.Value;
+            }
+
+            return result;
         }
 
         private List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>> GetRawList(StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
@@ -309,87 +349,49 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<uint> IsFit(NamedFunction function, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
+#if DEBUG
+            //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
+#endif
+
             var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
 
             var result = new List<uint>();
 
-            var usedParameters = new List<StrongIdentifierValue>();
+            var countOfUsedParameters = 0;
 
-            foreach (var namedParameter in namedParameters)
+            foreach (var argument in function.Arguments)
             {
-                var parameterName = namedParameter.Key;
-
-#if DEBUG
-                //Log($"parameterName = {parameterName}");
-#endif
-
-                var kindOfParameterName = parameterName.KindOfName;
-
-                switch (kindOfParameterName)
-                {
-                    case KindOfName.Var:
-                        break;
-
-                    case KindOfName.Concept:
-                        parameterName = NameHelper.CreateName($"@{parameterName.NameValue}");
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfParameterName), kindOfParameterName, null);
-                }
-
-#if DEBUG
-                //Log($"parameterName (after) = {parameterName}");
-#endif
-
-                var parameterValue = namedParameter.Value;
-
-#if DEBUG
-                //Log($"parameterValue = {parameterValue}");
-#endif
-
-                var argument = function.GetArgument(parameterName);
-
 #if DEBUG
                 //Log($"argument = {argument}");
 #endif
 
-                if(argument == null)
+                var argumentName = argument.Name;
+
+                if (namedParameters.ContainsKey(argumentName))
                 {
-                    return null;
-                }
+                    countOfUsedParameters++;
 
-                usedParameters.Add(parameterName);
-
-                var distance = inheritanceResolver.GetDistance(argument.TypesList, parameterValue, localCodeExecutionContext, options);
+                    var parameterValue = namedParameters[argumentName];
 
 #if DEBUG
-                //Log($"distance = {distance}");
+                    //Log($"parameterValue = {parameterValue}");
 #endif
 
-                if(!distance.HasValue)
-                {
-                    return null;
-                }
+                    var distance = inheritanceResolver.GetDistance(argument.TypesList, parameterValue, localCodeExecutionContext, options);
 
-                result.Add(distance.Value);
-            }
+#if DEBUG
+                    //Log($"distance = {distance}");
+#endif
 
-            var argumentsList = function.Arguments;
-
-            if (usedParameters.Count < argumentsList.Count)
-            {
-                foreach (var argument in argumentsList)
-                {
-                    if (usedParameters.Contains(argument.Name))
+                    if (!distance.HasValue)
                     {
-                        continue;
+                        return null;
                     }
 
-#if DEBUG
-                    //Log($"argument = {argument}");
-#endif
-
+                    result.Add(distance.Value);
+                }
+                else
+                {
                     if (argument.HasDefaultValue)
                     {
                         result.Add(0u);
@@ -398,10 +400,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return null;
                     }
                 }
-            }                
+            }
+
+#if DEBUG
+            //Log($"countOfUsedParameters = {countOfUsedParameters}");
+            //Log($"namedParameters.Count = {namedParameters.Count}");
+#endif
+
+            if(countOfUsedParameters < namedParameters.Count)
+            {
+                return null;
+            }
 
             return result;
         }
@@ -442,7 +454,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             foreach (var argument in function.Arguments)
             {
 #if DEBUG
-                Log($"argument = {argument}");
+                //Log($"argument = {argument}");
 #endif
 
                 if (!positionedParametersEnumerator.MoveNext())
@@ -460,13 +472,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var parameterItem = positionedParametersEnumerator.Current;
 
 #if DEBUG
-                Log($"parameterItem = {parameterItem}");
+                //Log($"parameterItem = {parameterItem}");
 #endif
 
                 var distance = inheritanceResolver.GetDistance(argument.TypesList, parameterItem, localCodeExecutionContext, options);
 
 #if DEBUG
-                Log($"distance = {distance}");
+                //Log($"distance = {distance}");
 #endif
 
                 if (!distance.HasValue)
@@ -485,6 +497,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
             //Log($"paramsCount = {paramsCount}");
 #endif
+
+            CorrectParametersRankMatrixForSpecialCases(source);
 
             IOrderedEnumerable<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>> orderedList = null;
 
@@ -622,6 +636,142 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             orderedList = orderedList.ThenBy(p => p.Distance).ThenBy(p => p.StorageDistance);
 
             return orderedList.FirstOrDefault()?.ResultItem;
+        }
+
+        private void CorrectParametersRankMatrixForSpecialCases(List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>> source)
+        {
+            var advicesDict = CheckSpecialCasesInParameters(source);
+
+            if(advicesDict.Count == 0)
+            {
+                return;
+            }
+
+            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
+
+            foreach (var function in source)
+            {
+                var parametersRankMatrix = function.ParametersRankMatrix;
+                var argumentsList = function.ResultItem.Arguments;
+
+#if DEBUG
+                //Log($"parametersRankMatrix = {parametersRankMatrix.WritePODListToString()}");
+                //Log($"argumentsList = {argumentsList.WriteListToString()}");
+#endif
+
+                var argumentsDict = ConvertArgumentsListToDictByPosition(argumentsList);
+
+                foreach(var advice in advicesDict)
+                {
+                    var position = advice.Key;
+                    var checkedTypeName = advice.Value;
+
+                    var argument = argumentsDict[position];
+
+#if DEBUG
+                    //Log($"position = {position}");
+                    //Log($"checkedTypeName = {checkedTypeName}");
+                    //Log($"argument = {argument}");
+#endif
+
+                    var typesList = argument.TypesList;
+
+                    if(typesList.IsNullOrEmpty())
+                    {
+                        continue;
+                    }
+
+                    if(typesList.Contains(checkedTypeName))
+                    {
+                        continue;
+                    }
+
+                    if(checkedTypeName == _fuzzyTypeIdentifier)
+                    {
+                        if (typesList.Contains(_numberTypeIdentifier))
+                        {
+#if DEBUG
+                            //Log($"parametersRankMatrix (before) = {parametersRankMatrix.WritePODListToString()}");
+#endif
+
+                            parametersRankMatrix[position]++;
+
+#if DEBUG
+                            //Log($"parametersRankMatrix (after) = {parametersRankMatrix.WritePODListToString()}");
+#endif
+
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        throw new NotImplementedException();
+                    }                    
+                }
+            }            
+        }
+
+        private Dictionary<int, FunctionArgumentInfo> ConvertArgumentsListToDictByPosition(List<FunctionArgumentInfo> argumentsList)
+        {
+            var result = new Dictionary<int, FunctionArgumentInfo>();
+
+            var i = 0;
+
+            foreach(var argument in argumentsList)
+            {
+                result[i] = argument;
+
+                i++;
+            }
+
+            return result;
+        }
+
+        private static readonly StrongIdentifierValue _fuzzyTypeIdentifier = NameHelper.CreateName(StandardNamesConstants.FuzzyTypeName);
+        private static readonly StrongIdentifierValue _numberTypeIdentifier = NameHelper.CreateName(StandardNamesConstants.NumberTypeName);
+
+        private Dictionary<int, StrongIdentifierValue> CheckSpecialCasesInParameters(List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>> source)
+        {
+            var result = new Dictionary<int, StrongIdentifierValue>();
+
+            foreach (var function in source)
+            {
+                var argumentsList = function.ResultItem.Arguments;
+
+#if DEBUG
+                //Log($"argumentsList = {argumentsList.WriteListToString()}");
+#endif
+
+                if(argumentsList.IsNullOrEmpty())
+                {
+                    continue;
+                }
+
+                var i = -1;
+
+                foreach(var argument in argumentsList)
+                {
+                    i++;
+#if DEBUG
+                    //Log($"i = {i}");
+                    //Log($"argument = {argument}");
+#endif
+
+                    var typesList = argument.TypesList;
+
+                    if(typesList.IsNullOrEmpty())
+                    {
+                        continue;
+                    }
+
+                    if(typesList.Contains(_fuzzyTypeIdentifier))
+                    {
+                        result[i] = _fuzzyTypeIdentifier;
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }

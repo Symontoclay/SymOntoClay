@@ -708,7 +708,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
             else
             {
-                throw new NotImplementedException();
+                _currentCodeFrame.CurrentPosition++;
+
+                var threadExecutor = new AsyncThreadExecutor(_context);
+                threadExecutor.SetCodeFrame(newCodeFrame);
+
+                var task = threadExecutor.Start();
+
+                _currentCodeFrame.ValuesStack.Push(task);
             }
         }
 

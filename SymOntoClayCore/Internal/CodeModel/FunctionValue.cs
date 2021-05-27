@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
+﻿using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -9,14 +10,19 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class FunctionValue : Value
+    public abstract class FunctionValue : Value, IExecutable
     {
         public List<FunctionArgumentInfo> Arguments { get; set; } = new List<FunctionArgumentInfo>();
 
+        /// <inheritdoc/>
+        IList<IFunctionArgument> IExecutable.Arguments => _iArgumentsList;
+
         public List<AstStatement> Statements { get; set; } = new List<AstStatement>();
 
+        /// <inheritdoc/>
         public CompiledFunctionBody CompiledFunctionBody { get; set; }
 
+        /// <inheritdoc/>
         public CodeEntity CodeEntity { get; set; }
 
         /// <inheritdoc/>
@@ -26,10 +32,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override bool IsFunctionValue => true;
 
         /// <inheritdoc/>
+        public bool IsSystemDefined => false;
+
+        /// <inheritdoc/>
+        public ISystemHandler SystemHandler => null;
+
+        /// <inheritdoc/>
         public override FunctionValue AsFunctionValue => this;
 
         private Dictionary<StrongIdentifierValue, FunctionArgumentInfo> _argumentsDict;
 
+        private IList<IFunctionArgument> _iArgumentsList;
+
+        /// <inheritdoc/>
         public bool ContainsArgument(StrongIdentifierValue name)
         {
             return _argumentsDict.ContainsKey(name);
@@ -59,9 +74,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
             if (Arguments.IsNullOrEmpty())
             {
                 _argumentsDict = new Dictionary<StrongIdentifierValue, FunctionArgumentInfo>();
+                _iArgumentsList = new List<IFunctionArgument>();
             }
             else
             {
+                _iArgumentsList = Arguments.Cast<IFunctionArgument>().ToList();
+
                 _argumentsDict = Arguments.ToDictionary(p => p.Name, p => p);
 
                 foreach (var argument in Arguments)
@@ -96,7 +114,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             CompiledFunctionBody = source.CompiledFunctionBody.Clone(context);
 
-            CodeEntity = source.CodeEntity.Clone(context);
+            CodeEntity = source.CodeEntity?.Clone(context);
 
             AppendAnnotations(this, context);
         }

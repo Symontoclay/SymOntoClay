@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.CollectionsHelpers;
+﻿using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -7,12 +8,15 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class FunctionArgumentInfo : IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class FunctionArgumentInfo : IFunctionArgument
     {
         public StrongIdentifierValue Name { get; set; }
         public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
         public bool HasDefaultValue { get; set; }
         public Value DefaultValue { get; set; }
+
+        /// <inheritdoc/>
+        IList<StrongIdentifierValue> IFunctionArgument.TypesList => TypesList;
 
         /// <summary>
         /// Clones the instance and returns cloned instance.

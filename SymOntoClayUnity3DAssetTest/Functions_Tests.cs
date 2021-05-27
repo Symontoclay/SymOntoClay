@@ -1346,5 +1346,191 @@ app PeaceKeeper
                     }
                 }), true);
         }
+
+        [Test]
+        public void Case12_a()
+        {
+            var text = @"app PeaceKeeper
+{
+    fun a(@param_1) => 
+    {
+        '`a` (any) has been called!' >> @>log;
+        @param_1 >> @>log;
+    }
+
+    fun a(@param_1: (number | string)) => 
+    {
+        '`a` (number | string) has been called!' >> @>log;
+        @param_1 >> @>log;
+    }
+
+    on Init =>
+    {
+        'Begin' >> @>log;
+        a(param_1: 1);
+        a(param_1: 'Hi');
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "`a` (number | string) has been called!");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "1");
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(message, "`a` (number | string) has been called!");
+                            break;
+
+                        case 5:
+                            Assert.AreEqual(message, "Hi");
+                            break;
+
+                        case 6:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        public void Case12_b()
+        {
+            var text = @"app PeaceKeeper
+{
+    fun a(@param_1) => 
+    {
+        '`a` (any) has been called!' >> @>log;
+        @param_1 >> @>log;
+    }
+
+    fun a(@param_1: number | string) => 
+    {
+        '`a` (number | string) has been called!' >> @>log;
+        @param_1 >> @>log;
+    }
+
+    on Init =>
+    {
+        'Begin' >> @>log;
+        a(param_1: 1);
+        a(param_1: 'Hi');
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "`a` (number | string) has been called!");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "1");
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(message, "`a` (number | string) has been called!");
+                            break;
+
+                        case 5:
+                            Assert.AreEqual(message, "Hi");
+                            break;
+
+                        case 6:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        public void Case12_c()
+        {
+            var text = @"app PeaceKeeper
+{
+    fun a(@param_1) => 
+    {
+        '`a` (any) has been called!' >> @>log;
+        @param_1 >> @>log;
+    }
+
+    fun a(@param_1: number | string) => 
+    {
+        '`a` (number | string) has been called!' >> @>log;
+        @param_1 >> @>log;
+    }
+
+    fun a(@param_1: fuzzy) =>
+    {
+        '`a` (fuzzy) has been called!' >> @>log;
+        @param_1 >> @>log;
+    }
+
+    on Init =>
+    {
+        'Begin' >> @>log;
+        a(param_1: 1);
+        a(param_1: 'Hi');
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "`a` (fuzzy) has been called!");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "1");
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(message, "`a` (number | string) has been called!");
+                            break;
+
+                        case 5:
+                            Assert.AreEqual(message, "Hi");
+                            break;
+
+                        case 6:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

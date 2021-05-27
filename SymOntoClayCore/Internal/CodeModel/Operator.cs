@@ -38,12 +38,29 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class Operator : AnnotatedItem, IExecutable
     {
         public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
+        
+        /// <inheritdoc/>
         public bool IsSystemDefined { get; set; }
+
         public List<AstStatement> Statements { get; set; } = new List<AstStatement>();
 
+        /// <inheritdoc/>
         public CompiledFunctionBody CompiledFunctionBody { get; set; }
 
+        /// <inheritdoc/>
         public ISystemHandler SystemHandler { get; set; }
+
+        /// <inheritdoc/>
+        IList<IFunctionArgument> IExecutable.Arguments => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        public CodeEntity CodeEntity { get; set; }
+
+        /// <inheritdoc/>
+        public bool ContainsArgument(StrongIdentifierValue name)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode()
@@ -96,8 +113,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.KindOfOperator = KindOfOperator;
             result.IsSystemDefined = IsSystemDefined;
             result.Statements = Statements.Select(p => p.CloneAstStatement(context)).ToList();
-            CompiledFunctionBody = CompiledFunctionBody.Clone(context);
+            result.CompiledFunctionBody = CompiledFunctionBody?.Clone(context);
             result.SystemHandler = SystemHandler;
+
+            result.CodeEntity = CodeEntity?.Clone(context);
 
             result.AppendAnnotations(this, context);
 
@@ -131,6 +150,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintExisting(n, nameof(SystemHandler), SystemHandler);
 
+            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
+
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -149,6 +170,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintExisting(n, nameof(SystemHandler), SystemHandler);
 
+            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -166,6 +189,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
             sb.PrintExisting(n, nameof(SystemHandler), SystemHandler);
+
+            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

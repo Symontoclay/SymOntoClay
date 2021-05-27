@@ -272,7 +272,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             //Log($"operatorInfo (1) = {operatorInfo}");
 #endif
 
-                            CallExecutable(operatorInfo, paramsList);
+                            CallOperator(operatorInfo, paramsList);
 
 #if DEBUG
                             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
@@ -320,7 +320,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             //Log($"operatorInfo (2)= {operatorInfo}");
 #endif
                             
-                            CallExecutable(operatorInfo, paramsList);
+                            CallOperator(operatorInfo, paramsList);
 
 #if DEBUG
                             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
@@ -688,38 +688,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"method = {method}");
 #endif
 
-            var newCodeFrame = ConvertNamedFunctionToCodeFrame(method, kindOfParameters, namedParameters, positionedParameters);
-
-#if DEBUG
-            //Log($"newCodeFrame = {newCodeFrame}");
-#endif
-
-            _context.InstancesStorage.AppendProcessInfo(newCodeFrame.ProcessInfo);
-
-#if DEBUG
-            //Log($"isSync = {isSync}");
-#endif
-
-            if (isSync)
-            {
-                _currentCodeFrame.CurrentPosition++;
-
-                SetCodeFrame(newCodeFrame);                
-            }
-            else
-            {
-                _currentCodeFrame.CurrentPosition++;
-
-                var threadExecutor = new AsyncThreadExecutor(_context);
-                threadExecutor.SetCodeFrame(newCodeFrame);
-
-                var task = threadExecutor.Start();
-
-                _currentCodeFrame.ValuesStack.Push(task);
-            }
+            CallExecutable(method, kindOfParameters, namedParameters, positionedParameters, isSync);
         }
 
-        private CodeFrame ConvertNamedFunctionToCodeFrame(FunctionValue function,
+        private CodeFrame ConvertExecutableToCodeFrame(IExecutable function,
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters)
         {
 #if DEBUG
@@ -787,7 +759,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return codeFrame;
         }
 
-        private void FillUpPositionedParameters(LocalCodeExecutionContext localCodeExecutionContext, FunctionValue function, List<Value> positionedParameters)
+        private void FillUpPositionedParameters(LocalCodeExecutionContext localCodeExecutionContext, IExecutable function, List<Value> positionedParameters)
         {
             var varsStorage = localCodeExecutionContext.Storage.VarStorage;
 
@@ -820,7 +792,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private void FillUpNamedParameters(LocalCodeExecutionContext localCodeExecutionContext, FunctionValue function, Dictionary<StrongIdentifierValue, Value> namedParameters)
+        private void FillUpNamedParameters(LocalCodeExecutionContext localCodeExecutionContext, IExecutable function, Dictionary<StrongIdentifierValue, Value> namedParameters)
         {
             var varsStorage = localCodeExecutionContext.Storage.VarStorage;
 
@@ -897,12 +869,32 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }            
         }
 
-        private void CallExecutable(IExecutable executable, IList<Value> paramsList)
+        private void CallOperator(Operator op, List<Value> positionedParameters)
         {
-            if(executable.IsSystemDefined)
-            {
-                var result = executable.SystemHandler.Call(paramsList, _currentCodeFrame.LocalContext);
+            CallExecutable(op, positionedParameters);
+        }
 
+        private void CallExecutable(IExecutable executable, List<Value> positionedParameters)
+        {
+            CallExecutable(executable, KindOfFunctionParameters.PositionedParameters, null, positionedParameters, true);
+        }
+
+        private void CallExecutable(IExecutable executable, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, bool isSync)
+        {
+            if (executable.IsSystemDefined)
+            {
+                Value result = null;
+
+                switch(kindOfParameters)
+                {
+                    case KindOfFunctionParameters.PositionedParameters:
+                        result = executable.SystemHandler.Call(positionedParameters, _currentCodeFrame.LocalContext);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                }
+               
 #if DEBUG
                 //Log($"result = {result}");
 #endif
@@ -915,8 +907,38 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 return;
             }
+            else
+            {
+                var newCodeFrame = ConvertExecutableToCodeFrame(executable, kindOfParameters, namedParameters, positionedParameters);
 
-            throw new NotImplementedException();
+#if DEBUG
+                //Log($"newCodeFrame = {newCodeFrame}");
+#endif
+
+                _context.InstancesStorage.AppendProcessInfo(newCodeFrame.ProcessInfo);
+
+#if DEBUG
+                //Log($"isSync = {isSync}");
+#endif
+
+                if (isSync)
+                {
+                    _currentCodeFrame.CurrentPosition++;
+
+                    SetCodeFrame(newCodeFrame);
+                }
+                else
+                {
+                    _currentCodeFrame.CurrentPosition++;
+
+                    var threadExecutor = new AsyncThreadExecutor(_context);
+                    threadExecutor.SetCodeFrame(newCodeFrame);
+
+                    var task = threadExecutor.Start();
+
+                    _currentCodeFrame.ValuesStack.Push(task);
+                }
+            }
         }
 
         private void ProcessUseInheritance()

@@ -14,7 +14,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             WaitForParameter,
             GotParameterName,
             WaitForParameterType,
-            GotOneParameterType,
+            GotParameterType,
             WaitForDefaultValue,
             GotDefaultValue,
             GotComma
@@ -106,9 +106,43 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Identifier:
                         case TokenKind.Word:
                             {
-                                _curentFunctionArgumentInfo.TypesList.Add(ParseName(_currToken.Content));
+                                var nextToken = _context.GetToken();
 
-                                _state = State.GotOneParameterType;
+#if DEBUG
+                                //Log($"nextToken = {nextToken}");
+#endif
+
+                                if(nextToken.TokenKind == TokenKind.Or)
+                                {
+                                    _context.Recovery(_currToken);
+                                    _context.Recovery(nextToken);
+
+                                    var paser = new TupleOfTypesParser(_context, false);
+                                    paser.Run();
+
+                                    _curentFunctionArgumentInfo.TypesList = paser.Result;
+                                }
+                                else
+                                {
+                                    _context.Recovery(nextToken);
+
+                                    _curentFunctionArgumentInfo.TypesList.Add(ParseName(_currToken.Content));                                    
+                                }
+
+                                _state = State.GotParameterType;
+                            }
+                            break;
+
+                        case TokenKind.OpenRoundBracket:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var paser = new TupleOfTypesParser(_context, true);
+                                paser.Run();
+
+                                _curentFunctionArgumentInfo.TypesList = paser.Result;
+
+                                _state = State.GotParameterType;
                             }
                             break;
 
@@ -117,7 +151,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotOneParameterType:
+                case State.GotParameterType:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.CloseRoundBracket:
@@ -190,10 +224,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.Identifier:
                         case TokenKind.Word:
-                            {
-                                throw new NotImplementedException();
-                            }
-                            break;
+                            throw new NotImplementedException();
 
                         default:
                             throw new UnexpectedTokenException(_currToken);

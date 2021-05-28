@@ -6,7 +6,7 @@
         @param_1 >> @>log;
     }
 
-    fun a(@param_1: number | string) => 
+    fun a(@param_1: number | string)
     {
         '`a` (number | string) has been called!' >> @>log;
         @param_1 >> @>log;

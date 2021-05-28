@@ -157,6 +157,7 @@ namespace TestSandbox.CreatingExamples
             var callBackLogger = new CallBackLogger(
                 message => 
                 {
+                    WriteLineToReport(NormalizeTextForConsole(message));
                     _logger.Log(message);
                 },
                 errorMsg => {
@@ -187,17 +188,18 @@ namespace TestSandbox.CreatingExamples
 
             WriteLineToReport("<console>");
 
-            WriteLineToReport(NormalizeTextForConsole("Hi"));
-            WriteLineToReport(NormalizeTextForConsole(">"));
-            WriteLineToReport(NormalizeTextForConsole("<"));
+            instance.Start();
 
-            //instance.Start();
+            Thread.Sleep(_timeoutToEnd);
 
-            //Thread.Sleep(_timeoutToEnd);
+            WriteLineToReport("</console>");
 
             Directory.Move(wSpaceDir, fullDestDirName);
 
             ZipFile.CreateFromDirectory(fullDestDirName, fullFileName);
+
+            Directory.Delete(testDir, true);
+            Directory.Delete(fullDestDirName, true);
         }
 
         private string NormalizeTextForConsole(string source)

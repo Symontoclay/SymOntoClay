@@ -49,11 +49,51 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        public void Case1_a()
+        {
+            var text = @"app PeaceKeeper
+{
+    fun a()
+    {
+        '`a` has been called!' >> @>log;
+    }
+
+    on Init =>
+    {
+        'Begin' >> @>log;
+        a();
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "`a` has been called!");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
         public void Case2_a()
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1) => 
+    fun a(@param_1)
     {
         '`a` has been called!' >> @>log;
         @param_1 >> @>log;
@@ -98,7 +138,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1) => 
+    fun a(@param_1)
     {
         '`a` has been called!' >> @>log;
         @param_1 >> @>log;
@@ -143,7 +183,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1) => 
+    fun a(@param_1) 
     {
         '`a` has been called!' >> @>log;
         @param_1 >> @>log;
@@ -184,11 +224,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
-        public void Case2_c_1()//concept identifier
+        public void Case2_c_1()
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1) => 
+    fun a(@param_1)
     {
         '`a` has been called!' >> @>log;
         @param_1 >> @>log;
@@ -233,7 +273,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1) => 
+    fun a(@param_1)
     {
         '`a` has been called!' >> @>log;
         @param_1 >> @>log;
@@ -278,7 +318,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1) => 
+    fun a(@param_1)
     {
         '`a` has been called!' >> @>log;
         @param_1 >> @>log;
@@ -323,7 +363,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1) => 
+    fun a(@param_1)
     {
         '`a` has been called!' >> @>log;
         @param_1 >> @>log;
@@ -370,13 +410,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1) => 
+    fun a(@param_1)
     {
         '`a` (1) has been called!' >> @>log;
         @param_1 >> @>log;
     }
 
-    fun a(@param_1, @param_2) => 
+    fun a(@param_1, @param_2)
     {
         '`a` (2) has been called!' >> @>log;
         @param_1 >> @>log;
@@ -424,13 +464,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1) => 
+    fun a(@param_1)
     {
         '`a` (1) has been called!' >> @>log;
         @param_1 >> @>log;
     }
 
-    fun a(@param_1, @param_2) => 
+    fun a(@param_1, @param_2)
     {
         '`a` (2) has been called!' >> @>log;
         @param_1 >> @>log;
@@ -491,7 +531,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1, @param_2 = 'Hi') => 
+    fun a(@param_1, @param_2 = 'Hi')
     {
         '`a` (2) has been called!' >> @>log;
         @param_1 >> @>log;
@@ -543,7 +583,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1, @param_2 = 15) => 
+    fun a(@param_1, @param_2 = 15)
     {
         '`a` (2) has been called!' >> @>log;
         @param_1 >> @>log;
@@ -595,7 +635,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1, @param_2 = dog) => 
+    fun a(@param_1, @param_2 = dog)
     {
         '`a` (2) has been called!' >> @>log;
         @param_1 >> @>log;
@@ -647,7 +687,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1, @param_2 = `dog`) => 
+    fun a(@param_1, @param_2 = `dog`)
     {
         '`a` (2) has been called!' >> @>log;
         @param_1 >> @>log;
@@ -699,7 +739,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1 = 2) => 
+    fun a(@param_1 = 2)
     {
         '`a` has been called!' >> @>log;
         @param_1 >> @>log;
@@ -744,7 +784,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1, @param_2 = 42) => 
+    fun a(@param_1, @param_2 = 42)
     {
         '`a` has been called!' >> @>log;
         @param_1 >> @>log;
@@ -794,17 +834,17 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1) => 
+    fun a(@param_1)
     {
         '`a` (any) has been called!' >> @>log;
     }
 
-    fun a(@param_1: string) => 
+    fun a(@param_1: string)
     {
         '`a` (string) has been called!' >> @>log;
     }
 
-    fun a(@param_1: number) => 
+    fun a(@param_1: number)
     {
         '`a` has been called!' >> @>log;
         @param_1 >> @>log;
@@ -849,18 +889,18 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1) => 
+    fun a(@param_1)
     {
         '`a` (any) has been called!' >> @>log;
     }
 
-    fun a(@param_1: string) => 
+    fun a(@param_1: string)
     {
         '`a` (string) has been called!' >> @>log;
         @param_1 >> @>log;
     }
 
-    fun a(@param_1: number) => 
+    fun a(@param_1: number)
     {
         '`a` has been called!' >> @>log;
         @param_1 >> @>log;
@@ -905,19 +945,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1) => 
+    fun a(@param_1)
     {
         '`a` (any) has been called!' >> @>log;
         @param_1 >> @>log;
     }
 
-    fun a(@param_1: string) => 
+    fun a(@param_1: string)
     {
         '`a` (string) has been called!' >> @>log;
         @param_1 >> @>log;
     }
 
-    fun a(@param_1: number) => 
+    fun a(@param_1: number)
     {
         '`a` has been called!' >> @>log;
         @param_1 >> @>log;
@@ -962,19 +1002,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1) => 
+    fun a(@param_1)
     {
         '`a` (any) has been called!' >> @>log;
         @param_1 >> @>log;
     }
 
-    fun a(@param_1: string) => 
+    fun a(@param_1: string)
     {
         '`a` (string) has been called!' >> @>log;
         @param_1 >> @>log;
     }
 
-    fun a(@param_1: number) => 
+    fun a(@param_1: number)
     {
         '`a` has been called!' >> @>log;
         @param_1 >> @>log;
@@ -1019,17 +1059,17 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1) => 
+    fun a(@param_1)
     {
         '`a` (any) has been called!' >> @>log;
     }
 
-    fun a(@param_1: string) => 
+    fun a(@param_1: string)
     {
         '`a` (string) has been called!' >> @>log;
     }
 
-    fun a(@param_1: number) => 
+    fun a(@param_1: number)
     {
         '`a` has been called!' >> @>log;
         @param_1 >> @>log;
@@ -1074,18 +1114,18 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1) => 
+    fun a(@param_1)
     {
         '`a` (any) has been called!' >> @>log;
     }
 
-    fun a(@param_1: string) => 
+    fun a(@param_1: string)
     {
         '`a` (string) has been called!' >> @>log;
         @param_1 >> @>log;
     }
 
-    fun a(@param_1: number) => 
+    fun a(@param_1: number)
     {
         '`a` has been called!' >> @>log;
         @param_1 >> @>log;
@@ -1130,19 +1170,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1) => 
+    fun a(@param_1)
     {
         '`a` (any) has been called!' >> @>log;
         @param_1 >> @>log;
     }
 
-    fun a(@param_1: string) => 
+    fun a(@param_1: string)
     {
         '`a` (string) has been called!' >> @>log;
         @param_1 >> @>log;
     }
 
-    fun a(@param_1: number) => 
+    fun a(@param_1: number)
     {
         '`a` has been called!' >> @>log;
         @param_1 >> @>log;
@@ -1187,19 +1227,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1) => 
+    fun a(@param_1)
     {
         '`a` (any) has been called!' >> @>log;
         @param_1 >> @>log;
     }
 
-    fun a(@param_1: string) => 
+    fun a(@param_1: string)
     {
         '`a` (string) has been called!' >> @>log;
         @param_1 >> @>log;
     }
 
-    fun a(@param_1: number) => 
+    fun a(@param_1: number)
     {
         '`a` has been called!' >> @>log;
         @param_1 >> @>log;
@@ -1244,25 +1284,25 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1) => 
+    fun a(@param_1)
     {
         '`a` (any) has been called!' >> @>log;
         @param_1 >> @>log;
     }
 
-    fun a(@param_1: string) => 
+    fun a(@param_1: string)
     {
         '`a` (string) has been called!' >> @>log;
         @param_1 >> @>log;
     }
 
-    fun a(@param_1: number) => 
+    fun a(@param_1: number)
     {
         '`a` has been called!' >> @>log;
         @param_1 >> @>log;
     }
 
-    fun a(@param_1: fuzzy) =>
+    fun a(@param_1: fuzzy)
     {
         '`a` (fuzzy) has been called!' >> @>log;
         @param_1 >> @>log;
@@ -1305,7 +1345,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Test]
         public void Case11()
         {
-            var text = @"fun a(@param_1) => 
+            var text = @"fun a(@param_1)
 {
     '`a` (any) has been called!' >> @>log;
     @param_1 >> @>log;
@@ -1352,13 +1392,13 @@ app PeaceKeeper
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1) => 
+    fun a(@param_1)
     {
         '`a` (any) has been called!' >> @>log;
         @param_1 >> @>log;
     }
 
-    fun a(@param_1: (number | string)) => 
+    fun a(@param_1: (number | string))
     {
         '`a` (number | string) has been called!' >> @>log;
         @param_1 >> @>log;
@@ -1412,13 +1452,13 @@ app PeaceKeeper
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1) => 
+    fun a(@param_1)
     {
         '`a` (any) has been called!' >> @>log;
         @param_1 >> @>log;
     }
 
-    fun a(@param_1: number | string) => 
+    fun a(@param_1: number | string)
     {
         '`a` (number | string) has been called!' >> @>log;
         @param_1 >> @>log;
@@ -1472,19 +1512,19 @@ app PeaceKeeper
         {
             var text = @"app PeaceKeeper
 {
-    fun a(@param_1) => 
+    fun a(@param_1)
     {
         '`a` (any) has been called!' >> @>log;
         @param_1 >> @>log;
     }
 
-    fun a(@param_1: number | string) => 
+    fun a(@param_1: number | string)
     {
         '`a` (number | string) has been called!' >> @>log;
         @param_1 >> @>log;
     }
 
-    fun a(@param_1: fuzzy) =>
+    fun a(@param_1: fuzzy)
     {
         '`a` (fuzzy) has been called!' >> @>log;
         @param_1 >> @>log;

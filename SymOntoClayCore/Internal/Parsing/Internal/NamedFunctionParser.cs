@@ -127,6 +127,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _state = State.WaitForAction;
                             break;
 
+                        case TokenKind.OpenFigureBracket:
+                            _context.Recovery(_currToken);
+                            _state = State.WaitForAction;
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

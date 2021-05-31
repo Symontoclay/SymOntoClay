@@ -20,17 +20,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
 {
-    public interface IExecutable
+    public interface IExecutable: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         bool IsSystemDefined { get; }
+        IList<IFunctionArgument> Arguments { get; }
         CompiledFunctionBody CompiledFunctionBody { get; }
+        CodeEntity CodeEntity { get; }
         ISystemHandler SystemHandler { get; }
+        bool ContainsArgument(StrongIdentifierValue name);
     }
 }

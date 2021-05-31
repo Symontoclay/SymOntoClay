@@ -65,6 +65,8 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
 
             AnnotatedItemHelper.CheckAndFillUpHolder(inlineTrigger, _realStorageContext.MainStorageContext.CommonNamesStorage);
 
+            inlineTrigger.CheckDirty();
+
             var kind = inlineTrigger.Kind;
 
             switch (kind)

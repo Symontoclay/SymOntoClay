@@ -51,13 +51,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #if DEBUG
             //Log("Begin");
 #endif
-            Result = CreateCodeEntity();
-
-            Result.Kind = KindOfCodeEntity.World;
-            Result.CodeFile = _context.CodeFile;
-
-            Result.ParentCodeEntity = CurrentCodeEntity;
-            SetCurrentCodeEntity(Result);
+            Result = CreateCodeEntityAndSetAsCurrent(KindOfCodeEntity.World);
 
 #if DEBUG
             //Log("End");
@@ -149,6 +143,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.CloseFigureBracket:
                             Exit();
+                            break;
+
+                        case TokenKind.Word:
+                            switch (_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Fun:
+                                    {
+                                        _context.Recovery(_currToken);
+                                        var parser = new NamedFunctionParser(_context);
+                                        parser.Run();
+                                        Result.SubItems.Add(parser.Result);
+                                    }
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
                             break;
 
                         case TokenKind.OpenFactBracket:

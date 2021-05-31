@@ -32,6 +32,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
     {
         public abstract KindOfAstExpression Kind { get; }
 
+        public virtual bool IsVarAstExpression => false;
+        public virtual VarAstExpression AsVarAstExpression => null;
+
         protected virtual IAstNode NLeft { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         protected virtual IAstNode NRight { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         IAstNode IAstNode.Left { get => NLeft; set => NLeft = value; }

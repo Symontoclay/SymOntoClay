@@ -36,6 +36,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         World,
         App,
         Class,
+        Fun,
         Is,
         On,
         Init,

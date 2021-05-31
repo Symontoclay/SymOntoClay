@@ -33,6 +33,12 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         /// <inheritdoc/>
         public override KindOfAstExpression Kind => KindOfAstExpression.Var;
 
+        /// <inheritdoc/>
+        public override bool IsVarAstExpression => true;
+
+        /// <inheritdoc/>
+        public override VarAstExpression AsVarAstExpression => this;
+
         public StrongIdentifierValue Name { get; set; }
 
         /// <inheritdoc/>

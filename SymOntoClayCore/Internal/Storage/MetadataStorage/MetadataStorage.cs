@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStorage
 
         private CodeEntity _mainCodeEntity;
 
-        private Dictionary<StrongIdentifierValue, CodeEntity> _codeEntitiesDict = new Dictionary<StrongIdentifierValue, CodeEntity>();
+        private Dictionary<StrongIdentifierValue, List<CodeEntity>> _codeEntitiesDict = new Dictionary<StrongIdentifierValue, List<CodeEntity>>();
 
         /// <inheritdoc/>
         public void Append(CodeEntity codeEntity)
@@ -69,17 +69,27 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStorage
 
                 if (_codeEntitiesDict.ContainsKey(name))
                 {
-                    throw new NotImplementedException();
+                    var targetList = _codeEntitiesDict[name];
+
+                    if(!targetList.Contains(codeEntity))
+                    {
+                        targetList.Add(codeEntity);
+                    }
                 }
                 else
                 {
-                    if (codeEntity.Kind == KindOfCodeEntity.App && codeEntity.CodeFile != null && codeEntity.CodeFile.IsMain)
-                    {
-                        _mainCodeEntity = codeEntity;
-                    }
+                    _codeEntitiesDict[name] = new List<CodeEntity>() { codeEntity };
+                }
 
-                    _codeEntitiesDict[name] = codeEntity;
-                }              
+                SetAsMainCodeEntity(codeEntity);
+            }
+        }
+
+        private void SetAsMainCodeEntity(CodeEntity codeEntity)
+        {
+            if (codeEntity.Kind == KindOfCodeEntity.App && codeEntity.CodeFile != null && codeEntity.CodeFile.IsMain)
+            {
+                _mainCodeEntity = codeEntity;
             }
         }
 

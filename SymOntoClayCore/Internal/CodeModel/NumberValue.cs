@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -29,8 +30,16 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class NumberValue: Value
+    public class NumberValue : Value
     {
+        //private static List<StrongIdentifierValue> _builtInSuperTypes;
+
+        //static NumberValue()
+        //{
+        //    _builtInSuperTypes = new List<StrongIdentifierValue>();
+        //    _builtInSuperTypes.Add();
+        //}
+
         public NumberValue(double? systemValue)
         {
             SystemValue = systemValue;
@@ -45,6 +54,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override NumberValue AsNumberValue => this;
 
+        private List<StrongIdentifierValue> _builtInSuperTypes;
+
+        /// <inheritdoc/>
+        public override IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => _builtInSuperTypes;
+
+        private bool _isFuzzy;
+
+        public bool IsFuzzy => _isFuzzy;
+
         public double? SystemValue { get; private set; }
 
         /// <inheritdoc/>
@@ -56,6 +74,25 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode()
         {
+            if(SystemValue.HasValue)
+            {
+                if(SystemValue >= 0 && SystemValue <= 1)
+                {
+                    _isFuzzy = true;
+                }
+            }
+            else
+            {
+                _isFuzzy = true;
+            }
+
+            _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.NumberTypeName) };
+
+            if(_isFuzzy)
+            {
+                _builtInSuperTypes.Add(NameHelper.CreateName(StandardNamesConstants.FuzzyTypeName));
+            }
+
             return base.CalculateLongHashCode() ^ (ulong)Math.Abs(SystemValue?.GetHashCode() ?? 0);
         }
 

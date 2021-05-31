@@ -80,6 +80,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsRangeValue => false;
         public virtual RangeValue AsRangeValue => null;
 
+        public virtual bool IsFunctionValue => false;
+        public virtual FunctionValue AsFunctionValue => null;
+
+        public virtual IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => throw new NotImplementedException();
+
         public abstract object GetSystemValue();
 
         /// <summary>

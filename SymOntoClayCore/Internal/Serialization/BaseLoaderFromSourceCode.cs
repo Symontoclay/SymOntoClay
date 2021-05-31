@@ -197,6 +197,9 @@ namespace SymOntoClay.Core.Internal.Serialization
                 case KindOfCodeEntity.LinguisticVariable:
                     break;
 
+                case KindOfCodeEntity.Function:
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(codeEntity.Kind), codeEntity.Kind, null);
             }
@@ -312,6 +315,10 @@ namespace SymOntoClay.Core.Internal.Serialization
 
                 case KindOfCodeEntity.LinguisticVariable:
                     globalStorage.FuzzyLogicStorage.Append(codeEntity.LinguisticVariable);
+                    break;
+
+                case KindOfCodeEntity.Function:
+                    globalStorage.MethodsStorage.Append(codeEntity.NamedFunction);
                     break;
 
                 default:

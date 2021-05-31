@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
@@ -47,6 +48,22 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         public override StrongIdentifierValue AsStrongIdentifierValue => this;
+
+        private List<StrongIdentifierValue> _builtInSuperTypes;
+
+        /// <inheritdoc/>
+        public override IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes
+        {
+            get
+            {
+                if(_builtInSuperTypes == null)
+                {
+                    _builtInSuperTypes = new List<StrongIdentifierValue>() { this };
+                }
+
+                return _builtInSuperTypes;
+            }
+        }
 
         /// <inheritdoc/>
         public override object GetSystemValue()

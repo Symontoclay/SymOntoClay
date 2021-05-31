@@ -47,6 +47,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private VarsResolver _varsResolver;
         private LogicalSearchResolver _logicalSearchResolver;
         private FuzzyLogicResolver _fuzzyLogicResolver;
+        private MethodsResolver _methodsResolver;
 
         /// <inheritdoc/>
         public ChannelsResolver GetChannelsResolver()
@@ -185,6 +186,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 return _fuzzyLogicResolver;
+            }
+        }
+
+        /// <inheritdoc/>
+        public MethodsResolver GetMethodsResolver()
+        {
+            lock (_lockObj)
+            {
+                if (_methodsResolver == null)
+                {
+                    _methodsResolver = new MethodsResolver(_context);
+                }
+
+                return _methodsResolver;
             }
         }
     }

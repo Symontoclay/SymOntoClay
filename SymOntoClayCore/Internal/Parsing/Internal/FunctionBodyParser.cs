@@ -140,7 +140,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessErrorStatement()
         {
-            throw new NotImplementedException();
+            _context.Recovery(_currToken);
+            var parser = new ErrorStatementParser(_context);
+            parser.Run();
+            AddStatement(parser.Result);
         }
     }
 }

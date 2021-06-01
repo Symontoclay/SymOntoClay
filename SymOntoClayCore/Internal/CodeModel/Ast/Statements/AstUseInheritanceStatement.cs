@@ -30,6 +30,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
 {
     public class AstUseInheritanceStatement : AstStatement
     {
+        /// <inheritdoc/>
         public override KindOfAstStatement Kind => KindOfAstStatement.UseInheritance;
 
         public StrongIdentifierValue SubName { get; set; }

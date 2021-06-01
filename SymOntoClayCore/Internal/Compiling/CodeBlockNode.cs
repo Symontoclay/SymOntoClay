@@ -46,7 +46,7 @@ namespace SymOntoClay.Core.Internal.Compiling
             foreach (var statement in statements)
             {
 #if DEBUG
-                //Log($"statement = {statement}");
+                Log($"statement = {statement}");
 #endif
 
                 var kind = statement.Kind;
@@ -65,6 +65,14 @@ namespace SymOntoClay.Core.Internal.Compiling
                         {
                             var node = new UseInheritanceStatementNode(_context);
                             node.Run(statement as AstUseInheritanceStatement);
+                            AddCommands(node.Result);
+                        }
+                        break;
+
+                    case KindOfAstStatement.ErrorStatement:
+                        {
+                            var node = new AstErrorStatementNode(_context);
+                            node.Run(statement as AstErrorStatement);
                             AddCommands(node.Result);
                         }
                         break;

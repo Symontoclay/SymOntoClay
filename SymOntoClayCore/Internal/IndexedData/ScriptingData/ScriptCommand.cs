@@ -234,6 +234,9 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.AsyncCall_P:
                     return $"{spaces}{OperationCode} {CountParams}";
 
+                case OperationCode.Error:
+                    return "Error";
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(OperationCode), OperationCode, null);
             }

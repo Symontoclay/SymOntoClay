@@ -32,7 +32,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode()
         {
-            throw new NotImplementedException();
+            var result = base.CalculateLongHashCode();
+
+            RuleInstance.CheckDirty();
+
+            result ^= RuleInstance.GetLongHashCode();
+
+            return result;
         }
 
         /// <inheritdoc/>

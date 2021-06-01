@@ -65,7 +65,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Log($"_state = {_state}");
             Log($"_currToken = {_currToken}");
             Log($"_nodePoint = {_nodePoint}");
-
 #endif
 
             switch (_state)

@@ -43,7 +43,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         More,
         MoreOrEqual,
         Less,
-        LessOrEqual,
-        Error
+        LessOrEqual
     }
 }

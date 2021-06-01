@@ -429,6 +429,30 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         }
                         break;
 
+                    case OperationCode.Error:
+                        {
+#if DEBUG
+                            Log($"currentCommand = {currentCommand}");
+                            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+                            var currentValue = _currentCodeFrame.ValuesStack.Peek();
+
+#if DEBUG
+                            Log($"currentValue = {currentValue}");
+#endif
+
+                            var errorValue = new ErrorValue(currentValue.AsRuleInstanceValue.RuleInstance);
+                            errorValue.CheckDirty();
+
+#if DEBUG
+                            Log($"errorValue = {errorValue}");
+#endif
+
+                            throw new NotImplementedException();
+                        }
+                        break;
+
                     case OperationCode.Return:
                         {
 #if DEBUG

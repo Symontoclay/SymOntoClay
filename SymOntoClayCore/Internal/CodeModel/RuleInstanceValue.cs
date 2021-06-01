@@ -90,6 +90,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override void CalculateLongConditionalHashCode()
         {
+            RuleInstance.CheckDirty();
         }
 
         /// <inheritdoc/>
@@ -101,19 +102,39 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
         {
-            return CloneValue(context);
+            return Clone(context);
         }
 
         /// <inheritdoc/>
-        public override Value CloneValue(Dictionary<object, object> cloneContext)
+        public override Value CloneValue(Dictionary<object, object> context)
         {
-            if (cloneContext.ContainsKey(this))
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public RuleInstanceValue Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public RuleInstanceValue Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
             {
-                return (Value)cloneContext[this];
+                return (RuleInstanceValue)context[this];
             }
 
-            var result = new RuleInstanceValue(RuleInstance.Clone(cloneContext));
-            cloneContext[this] = result;
+            var result = new RuleInstanceValue(RuleInstance.Clone(context));
+            context[this] = result;
 
             return result;
         }

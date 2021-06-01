@@ -878,6 +878,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Inheritance;
                             break;
                         }
+
+                        if (string.Compare(content, "error", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Error;
+                            break;
+                        }                        
                     }
                     break;
 

@@ -66,6 +66,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         UseInheritance,
         UseNotInheritance,
         AllocateNamedWaypoint,
-        AllocateAnonymousWaypoint
+        AllocateAnonymousWaypoint,
+        Error
     }
 }

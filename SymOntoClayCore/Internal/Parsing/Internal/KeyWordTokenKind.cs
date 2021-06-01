@@ -50,6 +50,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Terms,
         Constraints,
         Relation,
-        Inheritance
+        Inheritance,
+        Error
     }
 }

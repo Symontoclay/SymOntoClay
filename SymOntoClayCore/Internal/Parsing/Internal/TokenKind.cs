@@ -153,6 +153,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <summary>
         /// Represents symbol `-∞`.
         /// </summary>
-        NegativeInfinity
+        NegativeInfinity        
     }
 }

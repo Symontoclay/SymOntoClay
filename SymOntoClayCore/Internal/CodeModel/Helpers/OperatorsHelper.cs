@@ -35,6 +35,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             switch(kind)
             {
                 case KindOfOperator.Assign:
+                case KindOfOperator.Error:
                     return 17;
 
                 case KindOfOperator.LeftRightStream:
@@ -113,6 +114,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 
                 case KindOfOperator.LessOrEqual:
                     return "<=";
+
+                case KindOfOperator.Error:
+                    return "ERROR";
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);

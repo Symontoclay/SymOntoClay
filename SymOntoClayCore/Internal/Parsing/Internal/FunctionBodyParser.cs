@@ -48,9 +48,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result.WriteListToString()}");
-            //Log($"_state = {_state}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
+            //Log($"Result = {Result.WriteListToString()}");            
 #endif
 
             switch (_state)
@@ -89,6 +89,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                 case KeyWordTokenKind.Use:
                                     ProcessUseStatement();
+                                    break;
+
+                                case KeyWordTokenKind.Error:
+                                    ProcessErrorStatement();
                                     break;
                                     
                                 default:
@@ -132,6 +136,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             {
                 Result.Add(statement);
             }
+        }
+
+        private void ProcessErrorStatement()
+        {
+            throw new NotImplementedException();
         }
     }
 }

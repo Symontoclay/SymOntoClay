@@ -16,6 +16,8 @@
     {
         '`a` (fuzzy) has been called!' >> @>log;
         @param_1 >> @>log;
+
+        error {: see(I, #a) :};
     }
 
     on Init =>

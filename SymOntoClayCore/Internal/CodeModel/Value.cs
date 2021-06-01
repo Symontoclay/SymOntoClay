@@ -83,6 +83,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsFunctionValue => false;
         public virtual FunctionValue AsFunctionValue => null;
 
+        public virtual bool IsErrorValue => false;
+        public virtual ErrorValue AsErrorValue => null;
+
         public virtual IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => throw new NotImplementedException();
 
         public abstract object GetSystemValue();

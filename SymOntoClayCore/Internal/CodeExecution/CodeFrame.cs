@@ -34,10 +34,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public class CodeFrame : IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
     {
-        public CompiledFunctionBody CompiledFunctionBody { get; set; }
-        public int CurrentPosition { get; set; }
-        public Stack<Value> ValuesStack { get; private set; } = new Stack<Value>();
-        public LocalCodeExecutionContext LocalContext { get; set; }
+        public CodeScope MainCodeScope { get; set; }
+        public CodeScope CurrentCodeScope { get; set; }
+        public Stack<CodeScope> CodeScopesStack { get; private set; } = new Stack<CodeScope>();
+        public Stack<SEHGroup> SEHStack { get; private set; } = new Stack<SEHGroup>();        
         public ProcessInfo ProcessInfo { get; set; }
         public CodeEntity Metadata { get; set; }
 
@@ -56,17 +56,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         /// <inheritdoc/>
         string IObjectToString.PropertiesToString(uint n)
         {
-            var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
+            sb.PrintObjProp(n, nameof(MainCodeScope), MainCodeScope);
+            sb.PrintObjProp(n, nameof(CurrentCodeScope), CurrentCodeScope);
 
-            sb.AppendLine($"{spaces}{nameof(CurrentPosition)} = {CurrentPosition}");
-
-            sb.PrintObjListProp(n, nameof(ValuesStack), ValuesStack.ToList());
-
-            sb.PrintObjProp(n, nameof(LocalContext), LocalContext);
+            sb.PrintObjListProp(n, nameof(CodeScopesStack), CodeScopesStack.ToList());
+            sb.PrintObjListProp(n, nameof(SEHStack), SEHStack.ToList());
 
             sb.PrintBriefObjProp(n, nameof(ProcessInfo), ProcessInfo);
 
@@ -90,17 +86,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         /// <inheritdoc/>
         string IObjectToShortString.PropertiesToShortString(uint n)
         {
-            var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
             var sb = new StringBuilder();
 
-            sb.PrintShortObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
+            sb.PrintShortObjProp(n, nameof(MainCodeScope), MainCodeScope);
+            sb.PrintShortObjProp(n, nameof(CurrentCodeScope), CurrentCodeScope);
 
-            sb.AppendLine($"{spaces}{nameof(CurrentPosition)} = {CurrentPosition}");
-
-            sb.PrintShortObjListProp(n, nameof(ValuesStack), ValuesStack.ToList());
-
-            sb.PrintShortObjProp(n, nameof(LocalContext), LocalContext);
+            sb.PrintShortObjListProp(n, nameof(CodeScopesStack), CodeScopesStack.ToList());
+            sb.PrintShortObjListProp(n, nameof(SEHStack), SEHStack.ToList());
 
             sb.PrintBriefObjProp(n, nameof(ProcessInfo), ProcessInfo);
 
@@ -124,17 +116,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         /// <inheritdoc/>
         string IObjectToBriefString.PropertiesToBriefString(uint n)
         {
-            var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
+            sb.PrintBriefObjProp(n, nameof(MainCodeScope), MainCodeScope);
+            sb.PrintBriefObjProp(n, nameof(CurrentCodeScope), CurrentCodeScope);
 
-            sb.AppendLine($"{spaces}{nameof(CurrentPosition)} = {CurrentPosition}");
-
-            sb.PrintBriefObjListProp(n, nameof(ValuesStack), ValuesStack.ToList());
-
-            sb.PrintBriefObjProp(n, nameof(LocalContext), LocalContext);
+            sb.PrintBriefObjListProp(n, nameof(CodeScopesStack), CodeScopesStack.ToList());
+            sb.PrintBriefObjListProp(n, nameof(SEHStack), SEHStack.ToList());
 
             sb.PrintExisting(n, nameof(ProcessInfo), ProcessInfo);
 
@@ -158,31 +146,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         /// <inheritdoc/>
         string IObjectToDbgString.PropertiesToDbgString(uint n)
         {
-            var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
-            var nextNSpaces = DisplayHelper.Spaces(nextN);
-            var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}Begin Code");
-
-            foreach (var commandItem in CompiledFunctionBody.Commands)
-            {
-                var currentMark = string.Empty;
-
-                if(commandItem.Key == CurrentPosition)
-                {
-                    currentMark = "-> ";
-                }
-
-                sb.AppendLine($"{nextNSpaces}{currentMark}{commandItem.Key}: {commandItem.Value.ToDbgString()}");
-            }
-            sb.AppendLine($"{spaces}End Code");
-            sb.AppendLine($"{spaces}Begin Values Stack");
-            foreach(var stackItem in ValuesStack)
-            {
-                sb.AppendLine($"{nextNSpaces}{stackItem.ToDbgString()}");
-            }
-            sb.AppendLine($"{spaces}End Values Stack");
-            return sb.ToString();
+            return CurrentCodeScope.ToDbgString(n);
         }
     }
 }

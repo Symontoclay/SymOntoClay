@@ -883,7 +883,37 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         {
                             kindOfKeyWord = KeyWordTokenKind.Error;
                             break;
-                        }                        
+                        }
+
+                        if (string.Compare(content, "try", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Try;
+                            break;
+                        }
+
+                        if (string.Compare(content, "catch", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Catch;
+                            break;
+                        }
+
+                        if (string.Compare(content, "else", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Else;
+                            break;
+                        }
+
+                        if (string.Compare(content, "ensure", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Ensure;
+                            break;
+                        }
+
+                        if (string.Compare(content, "where", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Where;
+                            break;
+                        }
                     }
                     break;
 

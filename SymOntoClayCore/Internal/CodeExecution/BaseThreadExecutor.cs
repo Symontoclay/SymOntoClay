@@ -86,7 +86,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private Stack<CodeFrame> _codeFrames = new Stack<CodeFrame>();
         private CodeFrame _currentCodeFrame;
+        private CodeScope _currentCodeScope;
+        private SEHGroup _currentSEHGroup;
+
         private IVarStorage _currentVarStorage;
+
+        private ErrorValue _currentError;
 
         protected IActivePeriodicObject _activeObject { get; private set; }
 
@@ -98,7 +103,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             _codeFrames.Push(codeFrame);
             _currentCodeFrame = codeFrame;
-            _currentVarStorage = codeFrame.LocalContext.Storage.VarStorage;
+
+            var mainCodeScope = codeFrame.MainCodeScope;
+
+            codeFrame.CurrentCodeScope = mainCodeScope;
+            codeFrame.CodeScopesStack.Push(mainCodeScope);
+
+            SetUpCurrentCodeFrame();            
 
             if (setAsRunning)
             {
@@ -143,19 +154,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 if(_currentCodeFrame == null)
                 {
 #if DEBUG
-                    //Log("_currentCodeFrame == null return false;");
+                    Log("_currentCodeFrame == null return false;");
 #endif
 
                     return false;
                 }
 
-                var currentPosition = _currentCodeFrame.CurrentPosition;
+                var currentPosition = _currentCodeScope.CurrentPosition;
 
 #if DEBUG
                 //Log($"currentPosition = {currentPosition}");
 #endif
 
-                var compiledFunctionBodyCommands = _currentCodeFrame.CompiledFunctionBody.Commands;
+                var compiledFunctionBodyCommands = _currentCodeScope.CompiledFunctionBody.Commands;
 
 #if DEBUG
                 //Log($"compiledFunctionBodyCommands.Count = {compiledFunctionBodyCommands.Count}");
@@ -164,33 +175,45 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 if (currentPosition >= compiledFunctionBodyCommands.Count)
                 {
 #if DEBUG
-                    //Log("currentPosition >= compiledFunctionBodyCommands.Count return false;");
+                    Log("currentPosition >= compiledFunctionBodyCommands.Count return false;");
 #endif
-
-                    return false;
+                    if(!GoBackToPrevCodeScope())
+                    {
+                        return false;
+                    }                    
                 }
 
                 var currentCommand = compiledFunctionBodyCommands[currentPosition];
 
 #if DEBUG
+                //Log($"_currentError = {_currentError}");
                 //Log($"currentCommand = {currentCommand}");
-                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
+
+                if(!CheckReturnedInfo())
+                {
+#if DEBUG
+                    Log("!CheckReturnedInfo()");
+#endif
+
+                    return false;
+                }
 
                 switch (currentCommand.OperationCode)
                 {
                     case OperationCode.Nop:
-                        _currentCodeFrame.CurrentPosition++;
+                        _currentCodeScope.CurrentPosition++;
                         break;
 
                     case OperationCode.ClearStack:
-                        _currentCodeFrame.ValuesStack.Clear();
-                        _currentCodeFrame.CurrentPosition++;
+                        _currentCodeScope.ValuesStack.Clear();
+                        _currentCodeScope.CurrentPosition++;
                         break;
 
                     case OperationCode.PushVal:
-                        _currentCodeFrame.ValuesStack.Push(currentCommand.Value);
-                        _currentCodeFrame.CurrentPosition++;
+                        _currentCodeScope.ValuesStack.Push(currentCommand.Value);
+                        _currentCodeScope.CurrentPosition++;
                         break;
 
                     case OperationCode.PushValFromVar:
@@ -201,19 +224,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             //Log($"varName = {varName}");
 #endif
 
-                            var targetValue = _varsResolver.GetVarValue(varName, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                            var targetValue = _varsResolver.GetVarValue(varName, _currentCodeScope.LocalContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
                             //Log($"targetValue = {targetValue}");
 #endif
 
-                            _currentCodeFrame.ValuesStack.Push(targetValue);
+                            _currentCodeScope.ValuesStack.Push(targetValue);
 
 #if DEBUG
                             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
-                            _currentCodeFrame.CurrentPosition++;
+                            _currentCodeScope.CurrentPosition++;
                         }
                         break;
 
@@ -230,7 +253,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                 throw new NotImplementedException();
                             }
 
-                            var currentValue = _currentCodeFrame.ValuesStack.Peek();
+                            var currentValue = _currentCodeScope.ValuesStack.Peek();
 
 #if DEBUG
                             //Log($"currentValue = {currentValue}");
@@ -242,7 +265,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
-                            _currentCodeFrame.CurrentPosition++;
+                            _currentCodeScope.CurrentPosition++;
                         }
                         break;
 
@@ -266,7 +289,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             //Log($"kindOfOperator = {kindOfOperator}");
 #endif
 
-                            var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                            var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, _currentCodeScope.LocalContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
                             //Log($"operatorInfo (1) = {operatorInfo}");
@@ -280,7 +303,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             if(currentCommand.KindOfOperator == KindOfOperator.IsNot)
                             {
-                                var result = _currentCodeFrame.ValuesStack.Pop();
+                                var result = _currentCodeScope.ValuesStack.Pop();
 
 #if DEBUG
                                 //Log($"result = {result}");
@@ -292,14 +315,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                 //Log($"result (2) = {result}");
 #endif
 
-                                _currentCodeFrame.ValuesStack.Push(result);
+                                _currentCodeScope.ValuesStack.Push(result);
 
 #if DEBUG
                                 //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
                             }
 
-                            _currentCodeFrame.CurrentPosition++;
+                            _currentCodeScope.CurrentPosition++;
                         }
                         break;
 
@@ -314,7 +337,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             var kindOfOperator = currentCommand.KindOfOperator;
 
-                            var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                            var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, _currentCodeScope.LocalContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
                             //Log($"operatorInfo (2)= {operatorInfo}");
@@ -326,7 +349,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
-                            _currentCodeFrame.CurrentPosition++;
+                            _currentCodeScope.CurrentPosition++;
                         }
                         break;
 
@@ -383,15 +406,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                         //Log($"firstParam = {firstParam}");
 #endif
 
-                                        var resolvedFirstParam = _numberValueLinearResolver.Resolve(firstParam, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                                        var resolvedFirstParam = _numberValueLinearResolver.Resolve(firstParam, _currentCodeScope.LocalContext, ResolverOptions.GetDefaultOptions());
 
                                         var annotationValue = paramsList[1].AsAnnotationValue;
 
                                         var value = new WaypointValue((float)(double)resolvedFirstParam.GetSystemValue(), _context);
 
-                                        _currentCodeFrame.ValuesStack.Push(value);
+                                        _currentCodeScope.ValuesStack.Push(value);
 
-                                        _currentCodeFrame.CurrentPosition++;
+                                        _currentCodeScope.CurrentPosition++;
                                     }
                                     break;
 
@@ -403,7 +426,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                         //Log($"firstParam = {firstParam}");
 #endif
 
-                                        var resolvedFirstParam = _numberValueLinearResolver.Resolve(firstParam, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                                        var resolvedFirstParam = _numberValueLinearResolver.Resolve(firstParam, _currentCodeScope.LocalContext, ResolverOptions.GetDefaultOptions());
 
                                         var secondParam = paramsList[1];
 
@@ -411,15 +434,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                         //Log($"secondParam = {secondParam}");
 #endif
 
-                                        var resolvedSecondParam = _numberValueLinearResolver.Resolve(secondParam, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                                        var resolvedSecondParam = _numberValueLinearResolver.Resolve(secondParam, _currentCodeScope.LocalContext, ResolverOptions.GetDefaultOptions());
 
                                         var annotationValue = paramsList[2].AsAnnotationValue;
 
                                         var value = new WaypointValue((float)(double)resolvedFirstParam.GetSystemValue(), (float)(double)resolvedSecondParam.GetSystemValue(), _context);
 
-                                        _currentCodeFrame.ValuesStack.Push(value);
+                                        _currentCodeScope.ValuesStack.Push(value);
 
-                                        _currentCodeFrame.CurrentPosition++;
+                                        _currentCodeScope.CurrentPosition++;
                                     }
                                     break;
 
@@ -432,24 +455,47 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     case OperationCode.Error:
                         {
 #if DEBUG
-                            Log($"currentCommand = {currentCommand}");
-                            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                            Log("Begin case OperationCode.Error");
 #endif
 
-                            var currentValue = _currentCodeFrame.ValuesStack.Peek();
+#if DEBUG
+                            //Log($"currentCommand = {currentCommand}");
+                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+                            var currentValue = _currentCodeScope.ValuesStack.Peek();
 
 #if DEBUG
-                            Log($"currentValue = {currentValue}");
+                            //Log($"currentValue = {currentValue}");
 #endif
 
                             var errorValue = new ErrorValue(currentValue.AsRuleInstanceValue.RuleInstance);
                             errorValue.CheckDirty();
 
 #if DEBUG
-                            Log($"errorValue = {errorValue}");
+                            //Log($"errorValue = {errorValue}");
 #endif
 
-                            throw new NotImplementedException();
+                            _currentError = errorValue;
+
+                            if(_currentSEHGroup == null)
+                            {
+                                _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Faulted;
+
+                                GoBackToPrevCodeFrame();
+                            }
+                            else
+                            {
+#if DEBUG
+                                Log("_currentSEHGroup != null");
+#endif
+
+                                throw new NotImplementedException();
+                            }
+
+#if DEBUG
+                            Log("End case OperationCode.Error");
+#endif
                         }
                         break;
 
@@ -461,16 +507,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Completed;
 
-                            _codeFrames.Pop();
-
-                            if(_codeFrames.Count == 0)
-                            {
-                                _currentCodeFrame = null;
-                            }
-                            else
-                            {
-                                _currentCodeFrame = _codeFrames.Peek();
-                            }
+                            GoBackToPrevCodeFrame();
 
 #if DEBUG
                             //_instancesStorage.PrintProcessesList();
@@ -496,11 +533,80 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
+        private bool CheckReturnedInfo()
+        {
+            if(_currentError != null)
+            {
+                return CheckCurrentError();
+            }
+
+            return true;
+        }
+
+        private bool CheckCurrentError()
+        {
+#if DEBUG
+            //Log($"_currentError = {_currentError}");
+#endif
+
+            if (_currentSEHGroup == null)
+            {
+                return false;
+            }
+
+#if DEBUG
+            Log("_currentSEHGroup != null");
+#endif
+
+            throw new NotImplementedException();
+        }
+
+        private void SetUpCurrentCodeFrame()
+        {
+            _currentCodeScope = _currentCodeFrame.CurrentCodeScope;
+
+            SetUpCurrentCodeScope();
+        }
+
+        private void GoBackToPrevCodeFrame()
+        {
+            _codeFrames.Pop();
+
+            if (_codeFrames.Count == 0)
+            {
+                _currentCodeFrame = null;
+            }
+            else
+            {
+                _currentCodeFrame = _codeFrames.Peek();
+                SetUpCurrentCodeFrame();
+            }
+        }
+
+        private bool GoBackToPrevCodeScope()
+        {
+            _currentCodeFrame.CodeScopesStack.Pop();
+
+            if (_currentCodeFrame.CodeScopesStack.Any())
+            {
+                _currentCodeScope = _currentCodeFrame.CodeScopesStack.Peek();
+                return true;
+            }
+
+            _currentCodeScope = null;
+            return false;
+        }
+
+        private void SetUpCurrentCodeScope()
+        {
+            _currentVarStorage = _currentCodeScope.LocalContext.Storage.VarStorage;
+        }
+
         private List<Value> TakePositionedParameters(int count)
         {
             var result = new List<Value>();
 
-            var valueStack = _currentCodeFrame.ValuesStack;
+            var valueStack = _currentCodeScope.ValuesStack;
 
             for (var i = 0; i < count; i++)
             {
@@ -542,7 +648,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"isSync = {isSync}");
 #endif
 
-            var valueStack = _currentCodeFrame.ValuesStack;
+            var valueStack = _currentCodeScope.ValuesStack;
 
             var annotation = valueStack.Pop();
 
@@ -669,7 +775,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     ProcessInfoHelper.Wait(processInfo);
                 }
 
-                _currentCodeFrame.CurrentPosition++;
+                _currentCodeScope.CurrentPosition++;
 
                 return;
             }
@@ -693,15 +799,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             switch(kindOfParameters)
             {
                 case KindOfFunctionParameters.NoParameters:
-                    method = _methodsResolver.Resolve(methodName, _currentCodeFrame.LocalContext);
+                    method = _methodsResolver.Resolve(methodName, _currentCodeScope.LocalContext);
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    method = _methodsResolver.Resolve(methodName, namedParameters, _currentCodeFrame.LocalContext);
+                    method = _methodsResolver.Resolve(methodName, namedParameters, _currentCodeScope.LocalContext);
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    method = _methodsResolver.Resolve(methodName, positionedParameters, _currentCodeFrame.LocalContext);
+                    method = _methodsResolver.Resolve(methodName, positionedParameters, _currentCodeScope.LocalContext);
                     break;
 
                 default:
@@ -724,7 +830,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
 #endif
 
-            var currentLocalContext = _currentCodeFrame.LocalContext;
+            var currentLocalContext = _currentCodeScope.LocalContext;
 
             var storagesList = currentLocalContext.Storage.GetStorages();
 
@@ -766,9 +872,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             localCodeExecutionContext.Holder = currentLocalContext.Holder;
 
+            var mainCodeScope = new CodeScope();
+            mainCodeScope.CompiledFunctionBody = function.CompiledFunctionBody;
+            mainCodeScope.LocalContext = localCodeExecutionContext;
+
             var codeFrame = new CodeFrame();
-            codeFrame.CompiledFunctionBody = function.CompiledFunctionBody;
-            codeFrame.LocalContext = localCodeExecutionContext;
+            codeFrame.MainCodeScope = mainCodeScope;
 
             var processInfo = new ProcessInfo();
 
@@ -912,18 +1021,18 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 switch(kindOfParameters)
                 {
                     case KindOfFunctionParameters.PositionedParameters:
-                        result = executable.SystemHandler.Call(positionedParameters, _currentCodeFrame.LocalContext);
+                        result = executable.SystemHandler.Call(positionedParameters, _currentCodeScope.LocalContext);
                         break;
 
                     default:
                         throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
                 }
-               
+
 #if DEBUG
                 //Log($"result = {result}");
 #endif
 
-                _currentCodeFrame.ValuesStack.Push(result);
+                _currentCodeScope.ValuesStack.Push(result);
 
 #if DEBUG
                 //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
@@ -947,20 +1056,20 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (isSync)
                 {
-                    _currentCodeFrame.CurrentPosition++;
+                    _currentCodeScope.CurrentPosition++;
 
                     SetCodeFrame(newCodeFrame);
                 }
                 else
                 {
-                    _currentCodeFrame.CurrentPosition++;
+                    _currentCodeScope.CurrentPosition++;
 
                     var threadExecutor = new AsyncThreadExecutor(_context);
                     threadExecutor.SetCodeFrame(newCodeFrame);
 
                     var task = threadExecutor.Start();
 
-                    _currentCodeFrame.ValuesStack.Push(task);
+                    _currentCodeScope.ValuesStack.Push(task);
                 }
             }
         }
@@ -975,11 +1084,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #endif
 
             var inheritenceItem = new InheritanceItem();
-            DefaultSettingsOfCodeEntityHelper.SetUpInheritanceItem(inheritenceItem, _currentCodeFrame.LocalContext.Storage.DefaultSettingsOfCodeEntity);
+            DefaultSettingsOfCodeEntityHelper.SetUpInheritanceItem(inheritenceItem, _currentCodeScope.LocalContext.Storage.DefaultSettingsOfCodeEntity);
 
-            var subName = _strongIdentifierLinearResolver.Resolve(paramsList[0], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+            var subName = _strongIdentifierLinearResolver.Resolve(paramsList[0], _currentCodeScope.LocalContext, ResolverOptions.GetDefaultOptions());
 
-            var superName = _strongIdentifierLinearResolver.Resolve(paramsList[1], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+            var superName = _strongIdentifierLinearResolver.Resolve(paramsList[1], _currentCodeScope.LocalContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
             //Log($"paramsList[2] = {paramsList[2]}");
@@ -1003,7 +1112,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             _globalStorage.InheritanceStorage.SetInheritance(inheritenceItem);
 
-            _currentCodeFrame.CurrentPosition++;
+            _currentCodeScope.CurrentPosition++;
         }
 
         private void ProcessUseNotInheritance()
@@ -1016,7 +1125,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #endif
 
             var inheritenceItem = new InheritanceItem();
-            DefaultSettingsOfCodeEntityHelper.SetUpInheritanceItem(inheritenceItem, _currentCodeFrame.LocalContext.Storage.DefaultSettingsOfCodeEntity);
+            DefaultSettingsOfCodeEntityHelper.SetUpInheritanceItem(inheritenceItem, _currentCodeScope.LocalContext.Storage.DefaultSettingsOfCodeEntity);
 
             var subName = paramsList[0].AsStrongIdentifierValue;
 
@@ -1026,7 +1135,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"paramsList[2] = {paramsList[2]}");
 #endif
 
-            var rank = _logicalValueLinearResolver.Resolve(paramsList[2], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions(), true).Inverse();
+            var rank = _logicalValueLinearResolver.Resolve(paramsList[2], _currentCodeScope.LocalContext, ResolverOptions.GetDefaultOptions(), true).Inverse();
 
 #if DEBUG
             //Log($"subName = {subName}");
@@ -1044,7 +1153,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             _globalStorage.InheritanceStorage.SetInheritance(inheritenceItem);
 
-            _currentCodeFrame.CurrentPosition++;
+            _currentCodeScope.CurrentPosition++;
         }
     }
 }

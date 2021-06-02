@@ -7,9 +7,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public class SEHGroup : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public CodeScope ElseCodeScope { get; set; }
-        public CodeScope EnsureCodeScope { get; set; }
-
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -27,9 +24,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-
-            sb.PrintObjProp(n, nameof(ElseCodeScope), ElseCodeScope);
-            sb.PrintObjProp(n, nameof(EnsureCodeScope), EnsureCodeScope);
 
             return sb.ToString();
         }
@@ -52,9 +46,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjProp(n, nameof(ElseCodeScope), ElseCodeScope);
-            sb.PrintShortObjProp(n, nameof(EnsureCodeScope), EnsureCodeScope);
-
             return sb.ToString();
         }
 
@@ -75,9 +66,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-
-            sb.PrintBriefObjProp(n, nameof(ElseCodeScope), ElseCodeScope);
-            sb.PrintBriefObjProp(n, nameof(EnsureCodeScope), EnsureCodeScope);
 
             return sb.ToString();
         }

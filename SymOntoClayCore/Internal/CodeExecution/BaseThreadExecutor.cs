@@ -86,7 +86,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private Stack<CodeFrame> _codeFrames = new Stack<CodeFrame>();
         private CodeFrame _currentCodeFrame;
+
+        private SEHGroup _currentSEHGroup;
+
         private IVarStorage _currentVarStorage;
+
+        private ErrorValue _currentError;
 
         protected IActivePeriodicObject _activeObject { get; private set; }
 
@@ -98,7 +103,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             _codeFrames.Push(codeFrame);
             _currentCodeFrame = codeFrame;
-            _currentVarStorage = codeFrame.LocalContext.Storage.VarStorage;
+
+            SetUpCurrentCodeFrame();
 
             if (setAsRunning)
             {
@@ -166,8 +172,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
                     //Log("currentPosition >= compiledFunctionBodyCommands.Count return false;");
 #endif
-
-                    return false;
+                    GoBackToPrevCodeFrame();
+                    return true;
                 }
 
                 var currentCommand = compiledFunctionBodyCommands[currentPosition];
@@ -176,6 +182,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 //Log($"currentCommand = {currentCommand}");
                 //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
+
+                if (!CheckReturnedInfo())
+                {
+#if DEBUG
+                    Log("!CheckReturnedInfo()");
+#endif
+
+                    return false;
+                }
 
                 switch (currentCommand.OperationCode)
                 {
@@ -432,6 +447,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     case OperationCode.Error:
                         {
 #if DEBUG
+                            Log("Begin case OperationCode.Error");
+#endif
+
+#if DEBUG
                             Log($"currentCommand = {currentCommand}");
                             Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
@@ -449,7 +468,26 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             Log($"errorValue = {errorValue}");
 #endif
 
-                            throw new NotImplementedException();
+                            _currentError = errorValue;
+
+                            if (_currentSEHGroup == null)
+                            {
+                                _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Faulted;
+
+                                GoBackToPrevCodeFrame();
+                            }
+                            else
+                            {
+#if DEBUG
+                                Log("_currentSEHGroup != null");
+#endif
+
+                                throw new NotImplementedException();
+                            }
+
+#if DEBUG
+                            Log("End case OperationCode.Error");
+#endif
                         }
                         break;
 
@@ -461,16 +499,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Completed;
 
-                            _codeFrames.Pop();
-
-                            if(_codeFrames.Count == 0)
-                            {
-                                _currentCodeFrame = null;
-                            }
-                            else
-                            {
-                                _currentCodeFrame = _codeFrames.Peek();
-                            }
+                            GoBackToPrevCodeFrame();
 
 #if DEBUG
                             //_instancesStorage.PrintProcessesList();
@@ -493,6 +522,54 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #endif
                 
                 throw;
+            }
+        }
+
+        private bool CheckReturnedInfo()
+        {
+            if (_currentError != null)
+            {
+                return CheckCurrentError();
+            }
+
+            return true;
+        }
+
+        private bool CheckCurrentError()
+        {
+#if DEBUG
+            //Log($"_currentError = {_currentError}");
+#endif
+
+            if (_currentSEHGroup == null)
+            {
+                return false;
+            }
+
+#if DEBUG
+            Log("_currentSEHGroup != null");
+#endif
+
+            throw new NotImplementedException();
+        }
+
+        private void SetUpCurrentCodeFrame()
+        {
+            _currentVarStorage = _currentCodeFrame.LocalContext.Storage.VarStorage;
+        }
+
+        private void GoBackToPrevCodeFrame()
+        {
+            _codeFrames.Pop();
+
+            if (_codeFrames.Count == 0)
+            {
+                _currentCodeFrame = null;
+            }
+            else
+            {
+                _currentCodeFrame = _codeFrames.Peek();
+                SetUpCurrentCodeFrame();
             }
         }
 

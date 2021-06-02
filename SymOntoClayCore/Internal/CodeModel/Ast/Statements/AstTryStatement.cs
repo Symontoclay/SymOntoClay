@@ -9,7 +9,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
     public class AstTryStatement : AstStatement
     {
         public List<AstStatement> TryStatements { get; set; } = new List<AstStatement>();
-        public CompiledFunctionBody TryCompiledFunctionBody { get; set; }
 
         /// <inheritdoc/>
         public override KindOfAstStatement Kind => KindOfAstStatement.TryStatement;

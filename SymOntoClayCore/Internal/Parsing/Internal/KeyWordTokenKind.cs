@@ -51,6 +51,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Constraints,
         Relation,
         Inheritance,
-        Error
+        Error,
+        Try,
+        Catch,
+        Else,
+        Ensure,
+        Where
     }
 }

@@ -10,20 +10,9 @@
 
     on Init =>
     {
-        try
-        {
-            'Begin' >> @>log;
-            a(param_1: 1);
-            'End' >> @>log;
-        }
-        else
-        {
-            'else' >> @>log;
-        }
-        ensure
-        {
-            'ensure' >> @>log;
-        }
+        'Begin' >> @>log;
+        a(param_1: 1);
+        'End' >> @>log;
     }
 }
 

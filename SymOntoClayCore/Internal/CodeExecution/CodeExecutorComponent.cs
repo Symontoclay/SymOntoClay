@@ -50,12 +50,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             foreach(var processInitialInfo in processInitialInfoList)
             {
-                var mainCodeScope = new CodeScope();
-                mainCodeScope.CompiledFunctionBody = processInitialInfo.CompiledFunctionBody;
-                mainCodeScope.LocalContext = processInitialInfo.LocalContext;
-
                 var codeFrame = new CodeFrame();
-                codeFrame.MainCodeScope = mainCodeScope;
+                codeFrame.CompiledFunctionBody = processInitialInfo.CompiledFunctionBody;
+                codeFrame.LocalContext = processInitialInfo.LocalContext;
 
                 var processInfo = new ProcessInfo();
 

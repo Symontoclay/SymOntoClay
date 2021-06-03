@@ -27,7 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.Compiling
+namespace SymOntoClay.Core.Internal.Compiling.Internal
 {
     public class BinaryOperatorNode : BaseNode
     {
@@ -76,7 +76,7 @@ namespace SymOntoClay.Core.Internal.Compiling
             }
             else
             {
-                var command = new ScriptCommand();
+                var command = new IntermediateScriptCommand();
                 command.OperationCode = OperationCode.PushValToVar;
                 command.Value = (rightBranch as VarAstExpression).Name;
 
@@ -91,7 +91,7 @@ namespace SymOntoClay.Core.Internal.Compiling
 
             if (leftBranch.Kind == KindOfAstExpression.Var)
             {
-                var command = new ScriptCommand();
+                var command = new IntermediateScriptCommand();
                 command.OperationCode = OperationCode.PushValToVar;
                 command.Value = (leftBranch as VarAstExpression).Name;
 
@@ -117,7 +117,7 @@ namespace SymOntoClay.Core.Internal.Compiling
 
             CompilePushAnnotation(expression);
 
-            var command = new ScriptCommand();
+            var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.CallBinOp;
             command.KindOfOperator = expression.KindOfOperator;
 

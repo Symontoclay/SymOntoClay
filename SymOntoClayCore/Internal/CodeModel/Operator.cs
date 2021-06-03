@@ -67,15 +67,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var result = base.CalculateLongHashCode() ^ LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(KindOfOperator.GetHashCode());
 
-            if (IsSystemDefined)
-            {
-                result ^= (ulong)Math.Abs(SystemHandler.GetHashCode());
-            }
-            else
-            {
-                result ^= CompiledFunctionBody.GetLongHashCode();
-            }
-
             return result;
         }
 

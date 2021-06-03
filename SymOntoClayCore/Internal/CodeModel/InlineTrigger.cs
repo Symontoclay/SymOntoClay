@@ -49,7 +49,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode()
         {
-            return base.CalculateLongHashCode() ^ (ulong)Math.Abs(Kind.GetHashCode()) ^ (ulong)Math.Abs(KindOfSystemEvent.GetHashCode()) ^ CompiledFunctionBody.GetLongHashCode();
+           
+
+            var result =  base.CalculateLongHashCode() ^ (ulong)Math.Abs(Kind.GetHashCode()) ^ (ulong)Math.Abs(KindOfSystemEvent.GetHashCode());
+
+            if(Condition != null)
+            {
+                Condition.CheckDirty();
+
+                result ^= Condition.GetLongHashCode();
+            }
+
+            return result;
         }
 
         /// <inheritdoc/>
@@ -85,7 +96,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             result.Kind = Kind;
             result.KindOfSystemEvent = KindOfSystemEvent;
-            result.Condition = Condition.Clone(context);
+            result.Condition = Condition?.Clone(context);
             result.BindingVariables = BindingVariables.Clone(context);
             result.Statements = Statements.Select(p => p.CloneAstStatement(context)).ToList();
 

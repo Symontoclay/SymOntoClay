@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.Compiling
+namespace SymOntoClay.Core.Internal.Compiling.Internal
 {
     public class AstErrorStatementNode : BaseNode
     {
@@ -16,12 +16,12 @@ namespace SymOntoClay.Core.Internal.Compiling
         public void Run(AstErrorStatement statement)
         {
 #if DEBUG
-            Log($"statement = {statement}");
+            //Log($"statement = {statement}");
 #endif
 
             CompileValue(statement.RuleInstanceValue);
 
-            var command = new ScriptCommand();
+            var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.Error;
             AddCommand(command);
 

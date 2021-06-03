@@ -26,7 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.Compiling
+namespace SymOntoClay.Core.Internal.Compiling.Internal
 {
     public class ExpressionNode : BaseNode
     {

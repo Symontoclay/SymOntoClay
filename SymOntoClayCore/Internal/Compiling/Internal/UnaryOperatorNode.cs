@@ -26,7 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.Compiling
+namespace SymOntoClay.Core.Internal.Compiling.Internal
 {
     public class UnaryOperatorNode : BaseNode
     {
@@ -48,7 +48,7 @@ namespace SymOntoClay.Core.Internal.Compiling
             CompilePushAnnotation(expression);
 
 
-            var command = new ScriptCommand();
+            var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.CallUnOp;
             command.KindOfOperator = expression.KindOfOperator;
 

@@ -62,9 +62,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_currToken = {_currToken}");
-            Log($"_nodePoint = {_nodePoint}");
+            //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
+            //Log($"_nodePoint = {_nodePoint}");
 #endif
 
             switch (_state)

@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.Helpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,8 +12,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private enum State
         {
             Init,
-            GotTry,
-            GotTryBody
+            GotTryMark,
+            GotTryBody,
+            GotCatch,
+            GotElseMark,
+            GotElseBody,
+            GotEnsureMark,
+            GotEnsureBody
         }
 
         public TryStatementParser(InternalParserContext context)
@@ -45,8 +51,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_currToken = {_currToken}");
+            //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
 #endif
 
             switch (_state)
@@ -58,7 +64,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             switch (_currToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.Try:
-                                    _state = State.GotTry;
+                                    _state = State.GotTryMark;
                                     break;
 
                                 default:
@@ -71,7 +77,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotTry:
+                case State.GotTryMark:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.OpenFigureBracket:
@@ -81,7 +87,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 parser.Run();
                                 var statementsList = parser.Result;
 
-                                throw new NotImplementedException();
+#if DEBUG
+                                //Log($"statementsList = {statementsList.WriteListToString()}");
+#endif
+
+                                _rawStatement.TryStatements = statementsList;
 
                                 _state = State.GotTryBody;
                             }                            
@@ -95,6 +105,137 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotTryBody:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.Word:
+                            switch (_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Else:
+                                    _state = State.GotElseMark;
+                                    break;
+
+                                case KeyWordTokenKind.Ensure:
+                                    _state = State.GotEnsureMark;
+                                    break;
+
+                                case KeyWordTokenKind.Catch:
+                                    ProcessCatch();
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotCatch:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                            switch (_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Else:
+                                    _state = State.GotElseMark;
+                                    break;
+
+                                case KeyWordTokenKind.Ensure:
+                                    _state = State.GotEnsureMark;
+                                    break;
+
+                                case KeyWordTokenKind.Catch:
+                                    ProcessCatch();
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotElseMark:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenFigureBracket:
+                            {
+                                _context.Recovery(_currToken);
+                                var parser = new FunctionBodyParser(_context);
+                                parser.Run();
+                                var statementsList = parser.Result;
+
+#if DEBUG
+                                //Log($"statementsList = {statementsList.WriteListToString()}");
+#endif
+
+                                _rawStatement.ElseStatements = statementsList;
+
+                                _state = State.GotElseBody;
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotElseBody:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                            switch (_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Ensure:
+                                    _state = State.GotEnsureMark;
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotEnsureMark:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenFigureBracket:
+                            {
+                                _context.Recovery(_currToken);
+                                var parser = new FunctionBodyParser(_context);
+                                parser.Run();
+                                var statementsList = parser.Result;
+
+#if DEBUG
+                                //Log($"statementsList = {statementsList.WriteListToString()}");
+#endif
+
+                                _rawStatement.EnsureStatements = statementsList;
+
+                                _state = State.GotEnsureBody;
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotEnsureBody:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.CloseFigureBracket:
+                            _context.Recovery(_currToken);
+                            Exit();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -103,6 +244,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
+        }
+
+        private void ProcessCatch()
+        {
+            _context.Recovery(_currToken);
+
+            var parser = new CatchStatementParser(_context);
+            parser.Run();
+
+#if DEBUG
+            //Log($"parser.Result = {parser.Result}");
+#endif
+
+            _rawStatement.CatchStatements.Add(parser.Result);
+
+            _state = State.GotCatch;
         }
     }
 }

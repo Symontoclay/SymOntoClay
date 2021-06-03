@@ -67,6 +67,9 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         UseNotInheritance,
         AllocateNamedWaypoint,
         AllocateAnonymousWaypoint,
-        Error
+        Error,
+        SetSEHGroup,
+        RemoveSEHGroup,
+        JumpTo
     }
 }

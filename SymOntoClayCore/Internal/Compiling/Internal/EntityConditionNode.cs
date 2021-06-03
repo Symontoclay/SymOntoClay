@@ -26,7 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.Compiling
+namespace SymOntoClay.Core.Internal.Compiling.Internal
 {
     public class EntityConditionNode : BaseNode
     {
@@ -85,7 +85,7 @@ namespace SymOntoClay.Core.Internal.Compiling
             {
                 case KindOfEntityConditionAstExpression.Waypoint:
                     {
-                        var command = new ScriptCommand();
+                        var command = new IntermediateScriptCommand();
 
                         if (isNamed)
                         {                        

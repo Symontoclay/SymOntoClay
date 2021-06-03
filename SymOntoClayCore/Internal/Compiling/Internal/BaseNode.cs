@@ -26,7 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.Compiling
+namespace SymOntoClay.Core.Internal.Compiling.Internal
 {
     public abstract class BaseNode: BaseLoggedComponent
     {
@@ -38,16 +38,16 @@ namespace SymOntoClay.Core.Internal.Compiling
 
         protected readonly IMainStorageContext _context;
 
-        public List<ScriptCommand> Result => _result;
+        public List<IntermediateScriptCommand> Result => _result;
 
-        private readonly List<ScriptCommand> _result = new List<ScriptCommand>();
+        private readonly List<IntermediateScriptCommand> _result = new List<IntermediateScriptCommand>();
 
-        protected void AddCommand(ScriptCommand command)
+        protected void AddCommand(IntermediateScriptCommand command)
         {
             _result.Add(command);
         }
 
-        protected void AddCommands(List<ScriptCommand> commands)
+        protected void AddCommands(List<IntermediateScriptCommand> commands)
         {
             _result.AddRange(commands);
         }
@@ -84,7 +84,7 @@ namespace SymOntoClay.Core.Internal.Compiling
                 return;
             }
 
-            var command = new ScriptCommand();
+            var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.PushVal;
             command.Value = value;
 
@@ -93,7 +93,7 @@ namespace SymOntoClay.Core.Internal.Compiling
 
         protected void CompilePushVal(Value value)
         {
-            var command = new ScriptCommand();
+            var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.PushVal;
             command.Value = value;
 
@@ -102,7 +102,7 @@ namespace SymOntoClay.Core.Internal.Compiling
 
         protected void CompilePushValFromVar(Value value)
         {
-            var command = new ScriptCommand();
+            var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.PushValFromVar;
             command.Value = value;
 
@@ -111,7 +111,7 @@ namespace SymOntoClay.Core.Internal.Compiling
 
         protected void CompilePushAnnotation(AnnotatedItem annotatedItem)
         {
-            var command = new ScriptCommand();
+            var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.PushVal;
             command.Value = annotatedItem.GetAnnotationValue();
 

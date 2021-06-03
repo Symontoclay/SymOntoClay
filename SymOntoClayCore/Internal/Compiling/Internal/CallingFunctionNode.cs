@@ -28,7 +28,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.Compiling
+namespace SymOntoClay.Core.Internal.Compiling.Internal
 {
     public class CallingFunctionNode : BaseNode
     {
@@ -52,7 +52,7 @@ namespace SymOntoClay.Core.Internal.Compiling
 
             var kindOfParameters = KindOfParameters.NoParameters;
 
-            var command = new ScriptCommand();
+            var command = new IntermediateScriptCommand();
 
             if (!expression.Parameters.IsNullOrEmpty())
             {

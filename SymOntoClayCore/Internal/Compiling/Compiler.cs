@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
+using SymOntoClay.Core.Internal.Compiling.Internal;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -48,18 +49,65 @@ namespace SymOntoClay.Core.Internal.Compiling
             var resultCommandsList = node.Result;
 
 #if DEBUG
-            //Log($"resultCommandsList = {resultCommandsList.WriteListToString()}");
+            Log($"resultCommandsList = {resultCommandsList.WriteListToString()}");
 #endif
 
-            var n = 0;
+            NumerateSequence(resultCommandsList);
+
+#if DEBUG
+            Log($"resultCommandsList (2) = {resultCommandsList.WriteListToString()}");
+#endif
+
             var result = new CompiledFunctionBody();
 
             foreach (var command in resultCommandsList)
             {
-                command.Position = n;             
-                result.Commands.Add(n, command);
+                result.Commands.Add(command.Position, ConvertIntermediateScriptCommandToScriptCommand(command));
+
+#if DEBUG
+                if (command.SEHGroup != null)
+                {
+                    throw new NotImplementedException();
+                }
+#endif
+            }
+
+            return result;
+        }
+
+        private void NumerateSequence(List<IntermediateScriptCommand> commandsList)
+        {
+            var n = 0;
+
+            foreach (var command in commandsList)
+            {
+                command.Position = n;
                 n++;
             }
+        }
+
+        private ScriptCommand ConvertIntermediateScriptCommandToScriptCommand(IntermediateScriptCommand initialCommand)
+        {
+#if DEBUG
+            Log($"initialCommand = {initialCommand}");
+#endif
+
+            var result = new ScriptCommand();
+
+            result.OperationCode = initialCommand.OperationCode;
+            result.Position = initialCommand.Position;
+            result.Value = initialCommand.Value;
+
+            if(initialCommand.JumpToMe != null)
+            {
+                result.TargetPosition = initialCommand.JumpToMe.Position;
+            }
+            result.KindOfOperator = initialCommand.KindOfOperator;
+            result.CountParams = initialCommand.CountParams;
+
+#if DEBUG
+            Log($"result = {result}");
+#endif
 
             return result;
         }

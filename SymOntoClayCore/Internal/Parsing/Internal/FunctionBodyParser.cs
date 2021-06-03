@@ -48,8 +48,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_currToken = {_currToken}");
+            //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result.WriteListToString()}");            
 #endif
 
@@ -94,7 +94,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 case KeyWordTokenKind.Error:
                                     ProcessErrorStatement();
                                     break;
-                                    
+
+                                case KeyWordTokenKind.Try:
+                                    ProcessTryStatement();
+                                    break;
+
                                 default:
                                     throw new UnexpectedTokenException(_currToken);
                             }
@@ -130,20 +134,28 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             AddStatement(parser.Result);
         }
 
-        private void AddStatement(AstStatement statement)
-        {
-            if (statement != null)
-            {
-                Result.Add(statement);
-            }
-        }
-
         private void ProcessErrorStatement()
         {
             _context.Recovery(_currToken);
             var parser = new ErrorStatementParser(_context);
             parser.Run();
             AddStatement(parser.Result);
+        }
+
+        private void ProcessTryStatement()
+        {
+            _context.Recovery(_currToken);
+            var parser = new TryStatementParser(_context);
+            parser.Run();
+            AddStatement(parser.Result);
+        }
+
+        private void AddStatement(AstStatement statement)
+        {
+            if (statement != null)
+            {
+                Result.Add(statement);
+            }
         }
     }
 }

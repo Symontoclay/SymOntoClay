@@ -33,21 +33,6 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
     {
         public Dictionary<int, ScriptCommand> Commands { get; set; } = new Dictionary<int, ScriptCommand>();
 
-        public ulong GetLongHashCode()
-        {
-            ulong result = 0;
-
-            if(Commands.IsNullOrEmpty())
-            {
-                foreach(var item in Commands)
-                {
-                    result ^= LongHashCodeWeights.BaseCommandWeight ^ item.Value.GetLongHashCode();
-                }
-            }
-
-            return result;
-        }
-
         /// <summary>
         /// Clones the instance and returns cloned instance.
         /// </summary>

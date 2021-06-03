@@ -149,7 +149,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 if(_currentCodeFrame == null)
                 {
 #if DEBUG
-                    //Log("_currentCodeFrame == null return false;");
+                    Log("_currentCodeFrame == null return false;");
 #endif
 
                     return false;
@@ -170,7 +170,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 if (currentPosition >= compiledFunctionBodyCommands.Count)
                 {
 #if DEBUG
-                    //Log("currentPosition >= compiledFunctionBodyCommands.Count return false;");
+                    Log("currentPosition >= compiledFunctionBodyCommands.Count return true;");
 #endif
                     GoBackToPrevCodeFrame();
                     return true;
@@ -180,7 +180,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 if (!CheckReturnedInfo())

@@ -32,6 +32,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         Expression,
         UseInheritance,
         ErrorStatement,
-        TryStatement
+        TryStatement,
+        CatchStatement
     }
 }

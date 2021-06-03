@@ -28,7 +28,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.Compiling
+namespace SymOntoClay.Core.Internal.Compiling.Internal
 {
     public class CodeBlockNode: BaseNode
     {
@@ -46,7 +46,7 @@ namespace SymOntoClay.Core.Internal.Compiling
             foreach (var statement in statements)
             {
 #if DEBUG
-                Log($"statement = {statement}");
+                //Log($"statement = {statement}");
 #endif
 
                 var kind = statement.Kind;
@@ -77,19 +77,17 @@ namespace SymOntoClay.Core.Internal.Compiling
                         }
                         break;
 
+                    case KindOfAstStatement.TryStatement:
+                        {
+                            var node = new AstTryStatementNode(_context);
+                            node.Run(statement as AstTryStatement);
+                            AddCommands(node.Result);
+                        }
+                        break;
+
                     default: 
                         throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
                 }
-            }
-
-            var lastCommand = Result.LastOrDefault();
-
-            if (lastCommand == null || lastCommand.OperationCode != OperationCode.Return || lastCommand.OperationCode != OperationCode.ReturnVal)
-            {
-                var returnCmd = new ScriptCommand();
-                returnCmd.OperationCode = OperationCode.Return;
-
-                AddCommand(returnCmd);
             }
         }
     }

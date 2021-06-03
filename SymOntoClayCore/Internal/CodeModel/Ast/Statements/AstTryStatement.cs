@@ -2,6 +2,7 @@
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
@@ -9,6 +10,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
     public class AstTryStatement : AstStatement
     {
         public List<AstStatement> TryStatements { get; set; } = new List<AstStatement>();
+        public List<AstCatchStatement> CatchStatements { get; set; } = new List<AstCatchStatement>();
+        public List<AstStatement> ElseStatements { get; set; } = new List<AstStatement>();
+        public List<AstStatement> EnsureStatements { get; set; } = new List<AstStatement>();
 
         /// <inheritdoc/>
         public override KindOfAstStatement Kind => KindOfAstStatement.TryStatement;
@@ -30,7 +34,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var result = new AstTryStatement();
             context[this] = result;
 
-            //result.RuleInstanceValue = RuleInstanceValue?.Clone(context);
+            result.TryStatements = TryStatements?.Select(p => p.CloneAstStatement(context)).ToList();
+            result.CatchStatements = CatchStatements?.Select(p => p.Clone(context)).ToList();
+            result.ElseStatements = ElseStatements?.Select(p => p.CloneAstStatement(context)).ToList();
+            result.EnsureStatements = EnsureStatements?.Select(p => p.CloneAstStatement(context)).ToList();
 
             result.AppendAnnotations(this, context);
 
@@ -59,12 +66,11 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.PrintObjProp(n, nameof(RuleInstanceValue), RuleInstanceValue);
-            //sb.PrintObjProp(n, nameof(SuperName), SuperName);
-            //sb.PrintObjProp(n, nameof(Rank), Rank);
-
-            //sb.AppendLine($"{spaces}{nameof(HasNot)} = {HasNot}");
-
+            sb.PrintObjListProp(n, nameof(TryStatements), TryStatements);
+            sb.PrintObjListProp(n, nameof(CatchStatements), CatchStatements);
+            sb.PrintObjListProp(n, nameof(ElseStatements), ElseStatements);
+            sb.PrintObjListProp(n, nameof(EnsureStatements), EnsureStatements);
+            
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -75,11 +81,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.PrintShortObjProp(n, nameof(RuleInstanceValue), RuleInstanceValue);
-            //sb.PrintShortObjProp(n, nameof(SuperName), SuperName);
-            //sb.PrintShortObjProp(n, nameof(Rank), Rank);
-
-            //sb.AppendLine($"{spaces}{nameof(HasNot)} = {HasNot}");
+            sb.PrintShortObjListProp(n, nameof(TryStatements), TryStatements);
+            sb.PrintShortObjListProp(n, nameof(CatchStatements), CatchStatements);
+            sb.PrintShortObjListProp(n, nameof(ElseStatements), ElseStatements);
+            sb.PrintShortObjListProp(n, nameof(EnsureStatements), EnsureStatements);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -91,11 +96,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.PrintBriefObjProp(n, nameof(RuleInstanceValue), RuleInstanceValue);
-            //sb.PrintBriefObjProp(n, nameof(SuperName), SuperName);
-            //sb.PrintBriefObjProp(n, nameof(Rank), Rank);
-
-            //sb.AppendLine($"{spaces}{nameof(HasNot)} = {HasNot}");
+            sb.PrintBriefObjListProp(n, nameof(TryStatements), TryStatements);
+            sb.PrintBriefObjListProp(n, nameof(CatchStatements), CatchStatements);
+            sb.PrintBriefObjListProp(n, nameof(ElseStatements), ElseStatements);
+            sb.PrintBriefObjListProp(n, nameof(EnsureStatements), EnsureStatements);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

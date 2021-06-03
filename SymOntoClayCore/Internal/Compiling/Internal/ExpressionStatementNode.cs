@@ -26,45 +26,27 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.Compiling
+namespace SymOntoClay.Core.Internal.Compiling.Internal
 {
-    public class UseInheritanceStatementNode : BaseNode
+    public class ExpressionStatementNode : BaseNode
     {
-        public UseInheritanceStatementNode(IMainStorageContext context)
+        public ExpressionStatementNode(IMainStorageContext context)
             : base(context)
         {
         }
 
-        public void Run(AstUseInheritanceStatement statement)
+        public void Run(AstExpressionStatement statement)
         {
 #if DEBUG
             //Log($"statement = {statement}");
 #endif
 
-            CompileValue(statement.SubName);
-            CompileValue(statement.SuperName);
-            CompileValue(statement.Rank);
+            var node = new ExpressionNode(_context);
+            node.Run(statement.Expression);
 
-            var command = new ScriptCommand();
-            command.OperationCode = OperationCode.PushVal;
-            command.Value = statement.GetAnnotationValue();
+            AddCommands(node.Result);
 
-            AddCommand(command);
-
-            command = new ScriptCommand();
-
-            if (statement.HasNot)
-            {
-                command.OperationCode = OperationCode.UseNotInheritance;
-            }
-            else
-            {
-                command.OperationCode = OperationCode.UseInheritance;
-            }
-            
-            AddCommand(command);
-
-            AddCommand(new ScriptCommand()
+            AddCommand(new IntermediateScriptCommand()
             {
                 OperationCode = OperationCode.ClearStack
             });

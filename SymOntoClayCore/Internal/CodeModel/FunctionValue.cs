@@ -110,8 +110,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 }
             }
 
-            result ^= CompiledFunctionBody.GetLongHashCode();
-
             return result;
         }
 

@@ -36,28 +36,9 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
         public int Position { get; set; }
         public Value Value { get; set; }
-        public ScriptCommand JumpToMe { get; set; }
+        public int TargetPosition { get; set; }
         public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
         public int CountParams { get; set; }
-
-        public ulong GetLongHashCode()
-        {
-            ulong result = (ulong)Math.Abs(OperationCode.GetHashCode()) ^ (ulong)Math.Abs(Position.GetHashCode());
-
-            if(Value != null)
-            {
-                result ^= Value.GetLongHashCode();
-            }
-
-            if (JumpToMe != null)
-            {
-                result ^= JumpToMe.GetLongHashCode();
-            }
-
-            result ^= (ulong)Math.Abs(KindOfOperator.GetHashCode()) ^ (ulong)Math.Abs(CountParams.GetHashCode());
-
-            return result;
-        }
 
         /// <summary>
         /// Clones the instance and returns cloned instance.
@@ -87,7 +68,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
             result.OperationCode = OperationCode;
             result.Position = Position;
             result.Value = Value?.CloneValue(context);
-            result.JumpToMe = JumpToMe?.Clone(context);
+            result.TargetPosition = TargetPosition;
             result.KindOfOperator = KindOfOperator;
             result.CountParams = CountParams;
 
@@ -118,7 +99,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
             sb.PrintObjProp(n, nameof(Value), Value);
 
-            sb.PrintBriefObjProp(n, nameof(JumpToMe), JumpToMe);
+            sb.AppendLine($"{spaces}{nameof(TargetPosition)} = {TargetPosition}");
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
 
@@ -149,7 +130,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
             sb.PrintShortObjProp(n, nameof(Value), Value);
 
-            sb.PrintBriefObjProp(n, nameof(JumpToMe), JumpToMe);
+            sb.AppendLine($"{spaces}{nameof(TargetPosition)} = {TargetPosition}");
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
 
@@ -180,7 +161,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
             sb.PrintBriefObjProp(n, nameof(Value), Value);
 
-            sb.PrintBriefObjProp(n, nameof(JumpToMe), JumpToMe);
+            sb.AppendLine($"{spaces}{nameof(TargetPosition)} = {TargetPosition}");
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
 

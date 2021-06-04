@@ -71,6 +71,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _strongIdentifierLinearResolver = dataResolversFactory.GetStrongIdentifierLinearResolver();
             _varsResolver = dataResolversFactory.GetVarsResolver();
             _methodsResolver = dataResolversFactory.GetMethodsResolver();
+            _logicalSearchResolver = dataResolversFactory.GetLogicalSearchResolver();
         }
 
         private readonly IEngineContext _context;
@@ -85,6 +86,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly StrongIdentifierLinearResolver _strongIdentifierLinearResolver;
         private readonly VarsResolver _varsResolver;
         private readonly MethodsResolver _methodsResolver;
+        private readonly LogicalSearchResolver _logicalSearchResolver;
 
         private Stack<CodeFrame> _codeFrames = new Stack<CodeFrame>();
         private CodeFrame _currentCodeFrame;
@@ -581,7 +583,17 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private bool CheckSEH()
         {
-            foreach(var sehItem in _currentCodeFrame.CurrentSEHGroup.Items)
+            var ruleInstance = _currentError.RuleInstance;
+
+#if DEBUG
+            Log($"ruleInstance = {ruleInstance}");
+#endif
+
+            var searchOptions = new LogicalSearchOptions();
+            searchOptions.TargetStorage = ruleInstance;
+            searchOptions.LocalCodeExecutionContext = _currentCodeFrame.LocalContext;
+
+            foreach (var sehItem in _currentCodeFrame.CurrentSEHGroup.Items)
             {
 #if DEBUG
                 Log($"sehItem = {sehItem}");
@@ -589,7 +601,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if(sehItem.Condition != null)
                 {
-                    throw new NotImplementedException();
+                    searchOptions.QueryExpression = sehItem.Condition;
+
+                    if (!_logicalSearchResolver.IsTruth(searchOptions))
+                    {
+                        continue;
+                    }
                 }
 
 #if DEBUG

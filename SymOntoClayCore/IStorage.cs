@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,7 @@ namespace SymOntoClay.Core
         IFuzzyLogicStorage FuzzyLogicStorage { get; }
         void AddParentStorage(IStorage storage);
         void RemoveParentStorage(IStorage storage);
-        void CollectChainOfStorages(IList<StorageUsingOptions> result, IList<IStorage> usedStorages, int level);
+        void CollectChainOfStorages(IList<StorageUsingOptions> result, IList<IStorage> usedStorages, int level, CollectChainOfStoragesOptions options);
         void CollectChainOfStorages(IList<IStorage> result);
         IList<IStorage> GetStorages();
         DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get; set; }

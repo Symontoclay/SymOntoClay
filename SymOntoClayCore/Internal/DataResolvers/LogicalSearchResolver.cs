@@ -51,10 +51,21 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
         }
 
+        public bool IsTruth(LogicalSearchOptions options)
+        {
+            var result = Run(options);
+
+#if DEBUG
+            Log($"result = {result}");
+#endif
+
+            return result.IsSuccess;
+        }
+
         public LogicalSearchResult Run(LogicalSearchOptions options)
         {
 #if DEBUG
-            //Log($"options = {options}");
+            Log($"options = {options}");
 #endif
 
             if(_inheritanceResolver == null)
@@ -94,7 +105,44 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //}
 #endif
 
-            var dataSource = new ConsolidatedDataSource(GetStoragesList(options.LocalCodeExecutionContext.Storage));
+            ConsolidatedDataSource dataSource = null;
+
+            if(options.TargetStorage == null)
+            {
+                dataSource = new ConsolidatedDataSource(GetStoragesList(options.LocalCodeExecutionContext.Storage));
+            }
+            else
+            {
+                var targetStorageList = GetStoragesList(options.TargetStorage);
+
+#if DEBUG
+                Log($"targetStorageList = {targetStorageList.WriteListToString()}");
+#endif
+
+                var maxPriority = targetStorageList.Max(p => p.Priority);
+
+#if DEBUG
+                Log($"maxPriority = {maxPriority}");
+#endif
+
+                var collectChainOfStoragesOptions = new CollectChainOfStoragesOptions();
+                collectChainOfStoragesOptions.InitialPriority = maxPriority;
+                collectChainOfStoragesOptions.UseFacts = false;
+
+#if DEBUG
+                Log($"collectChainOfStoragesOptions = {collectChainOfStoragesOptions}");
+#endif
+
+                var additinalStoragesList = GetStoragesList(options.LocalCodeExecutionContext.Storage, collectChainOfStoragesOptions);
+
+#if DEBUG
+                Log($"additinalStoragesList = {additinalStoragesList.WriteListToString()}");
+#endif
+
+                targetStorageList.AddRange(additinalStoragesList);
+
+                dataSource = new ConsolidatedDataSource(targetStorageList);
+            }
 
             var queryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
 

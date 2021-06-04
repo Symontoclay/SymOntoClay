@@ -70,7 +70,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.PrintObjListProp(n, nameof(Items), Items);
-            sb.PrintPODList(n, nameof(UsedKeysList), UsedKeysList);
+            sb.PrintObjListProp(n, nameof(UsedKeysList), UsedKeysList);
 
             return sb.ToString();
         }
@@ -95,7 +95,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.PrintShortObjListProp(n, nameof(Items), Items);
-            sb.PrintPODList(n, nameof(UsedKeysList), UsedKeysList);
+            sb.PrintShortObjListProp(n, nameof(UsedKeysList), UsedKeysList);
 
             return sb.ToString();
         }
@@ -120,7 +120,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.PrintBriefObjListProp(n, nameof(Items), Items);
-            sb.PrintPODList(n, nameof(UsedKeysList), UsedKeysList);
+            sb.PrintBriefObjListProp(n, nameof(UsedKeysList), UsedKeysList);
 
             return sb.ToString();
         }

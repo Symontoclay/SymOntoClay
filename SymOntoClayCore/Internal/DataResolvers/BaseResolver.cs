@@ -41,13 +41,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         protected List<StorageUsingOptions> GetStoragesList(IStorage storage)
         {
+            return GetStoragesList(storage, null);
+        }
+
+        protected List<StorageUsingOptions> GetStoragesList(IStorage storage, CollectChainOfStoragesOptions options)
+        {
             var result = new List<StorageUsingOptions>();
 
             var n = 0;
 
+            if(options != null && options.InitialPriority.HasValue)
+            {
+                n = options.InitialPriority.Value;
+            }
+
             var usedStorages = new List<IStorage>();
 
-            storage.CollectChainOfStorages(result, usedStorages, n);
+            storage.CollectChainOfStorages(result, usedStorages, n, options);
 
             return result;
         }

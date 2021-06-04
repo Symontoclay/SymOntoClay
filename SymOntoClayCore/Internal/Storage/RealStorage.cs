@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage.FuzzyLogic;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -143,7 +144,7 @@ namespace SymOntoClay.Core.Internal.Storage
         }
 
         /// <inheritdoc/>
-        void IStorage.CollectChainOfStorages(IList<StorageUsingOptions> result, IList<IStorage> usedStorages, int level)
+        void IStorage.CollectChainOfStorages(IList<StorageUsingOptions> result, IList<IStorage> usedStorages, int level, CollectChainOfStoragesOptions options)
         {
 #if DEBUG
             //Log($"result?.Count = {result?.Count}");
@@ -173,6 +174,14 @@ namespace SymOntoClay.Core.Internal.Storage
                 UseAdditionalInstances = true
             };
 
+            if (options != null)
+            {
+                if (options.UseFacts.HasValue)
+                {
+                    item.UseFacts = options.UseFacts.Value;
+                }
+            }
+
             result.Add(item);
 
             lock(_lockObj)
@@ -183,7 +192,7 @@ namespace SymOntoClay.Core.Internal.Storage
                 {
                     foreach (var parent in parentsList)
                     {
-                        parent.CollectChainOfStorages(result, usedStorages, level);
+                        parent.CollectChainOfStorages(result, usedStorages, level, options);
                     }
                 }
             }

@@ -24,7 +24,9 @@ using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Convertors;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Storage.LogicalStorage;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -34,7 +36,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class RuleInstance: AnnotatedItem
+    public class RuleInstance: AnnotatedItem, IStorage, ILogicalStorage
     {
 #if DEBUG
         private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
@@ -51,6 +53,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public RuleInstance Original { get; set; }
         public RuleInstance Normalized { get; set; }
+
+        private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData();
 
         private void PrepareDirty()
         {
@@ -78,7 +82,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
 #if DEBUG
                 //_gbcLogger.Info($"Normalized = {DebugHelperForRuleInstance.ToString(Normalized)}");
-#endif
+#endif               
             }
             else
             {
@@ -92,7 +96,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         item.PrepareDirty(this);
                     }
                 }
+
+                Normalized = this;
             }
+
+            _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(Normalized);
         }
 
         public void CalculateUsedKeys()
@@ -278,5 +286,136 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             return $"{spaces}{DebugHelperForRuleInstance.ToString(this)}";
         }
+
+        #region IStorage
+        /// <inheritdoc/>
+        KindOfStorage IStorage.Kind => KindOfStorage.Sentence;
+
+        /// <inheritdoc/>
+        ILogicalStorage IStorage.LogicalStorage => this;
+
+        /// <inheritdoc/>
+        IMethodsStorage IStorage.MethodsStorage => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        ITriggersStorage IStorage.TriggersStorage => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        IInheritanceStorage IStorage.InheritanceStorage => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        ISynonymsStorage IStorage.SynonymsStorage => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        IOperatorsStorage IStorage.OperatorsStorage => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        IChannelsStorage IStorage.ChannelsStorage => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        IMetadataStorage IStorage.MetadataStorage => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        IVarStorage IStorage.VarStorage => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        IFuzzyLogicStorage IStorage.FuzzyLogicStorage => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        void IStorage.AddParentStorage(IStorage storage) => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        void IStorage.RemoveParentStorage(IStorage storage) => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        void IStorage.CollectChainOfStorages(IList<StorageUsingOptions> result, IList<IStorage> usedStorages, int level, CollectChainOfStoragesOptions options)
+        {
+            level++;
+
+            var item = new StorageUsingOptions()
+            {
+                Priority = level,
+                Storage = this,
+                UseFacts = true,
+                UseProductions = true,
+                UseAdditionalInstances = true
+            };
+
+            if(options != null)
+            {
+                if(options.UseFacts.HasValue)
+                {
+                    item.UseFacts = options.UseFacts.Value;
+                }
+            }
+
+            result.Add(item);
+        }
+
+        /// <inheritdoc/>
+        void IStorage.CollectChainOfStorages(IList<IStorage> result) => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        IList<IStorage> IStorage.GetStorages() => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        DefaultSettingsOfCodeEntity IStorage.DefaultSettingsOfCodeEntity { get; set; }
+#if DEBUG
+        /// <inheritdoc/>
+        void IStorage.DbgPrintFactsAndRules() => throw new NotImplementedException();
+#endif
+        #endregion
+
+        #region ILogicalStorage
+        /// <inheritdoc/>
+        KindOfStorage ISpecificStorage.Kind => KindOfStorage.Sentence;
+
+        /// <inheritdoc/>
+        IStorage ISpecificStorage.Storage => this;
+
+        /// <inheritdoc/>
+        void ILogicalStorage.Append(RuleInstance ruleInstance) => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        void ILogicalStorage.Append(RuleInstance ruleInstance, bool isPrimary) => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        void ILogicalStorage.Remove(RuleInstance ruleInstance) => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        void ILogicalStorage.RemoveById(string id) => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        public event Action OnChanged;
+
+        /// <inheritdoc/>
+        public event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
+
+        /// <inheritdoc/>
+        IList<LogicalQueryNode> ILogicalStorage.GetAllRelations()
+        {
+            return _commonPersistIndexedLogicalData.GetAllRelations();
+        }
+
+        /// <inheritdoc/>
+        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name)
+        {
+#if DEBUG
+            //LogInstance.Log($"key = {key}");
+#endif
+
+            return _commonPersistIndexedLogicalData.GetIndexedRulePartOfFactsByKeyOfRelation(name);
+        }
+
+        /// <inheritdoc/>
+        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name)
+        {
+            return _commonPersistIndexedLogicalData.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name);
+        }
+
+        /// <inheritdoc/>
+        void ILogicalStorage.DbgPrintFactsAndRules() => throw new NotImplementedException();
+
+        #endregion
     }
 }

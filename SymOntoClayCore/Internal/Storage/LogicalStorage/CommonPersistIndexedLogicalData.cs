@@ -39,6 +39,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
+        public CommonPersistIndexedLogicalData()
+            : this(null)
+        {
+        }
+
         public CommonPersistIndexedLogicalData(IEntityLogger logger)
             : base(logger)
         {

@@ -2020,6 +2020,96 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#LogicalStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#MethodsStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#TriggersStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#InheritanceStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#SynonymsStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#OperatorsStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#ChannelsStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#MetadataStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#VarStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#FuzzyLogicStorage">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#AddParentStorage(SymOntoClay.Core.IStorage)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#RemoveParentStorage(SymOntoClay.Core.IStorage)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#CollectChainOfStorages(System.Collections.Generic.IList{SymOntoClay.Core.StorageUsingOptions},System.Collections.Generic.IList{SymOntoClay.Core.IStorage},System.Int32,SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#CollectChainOfStorages(System.Collections.Generic.IList{SymOntoClay.Core.IStorage})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#GetStorages">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#DefaultSettingsOfCodeEntity">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#DbgPrintFactsAndRules">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ISpecificStorage#Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ISpecificStorage#Storage">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#Append(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#Append(SymOntoClay.Core.Internal.CodeModel.RuleInstance,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#Remove(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#RemoveById(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="E:SymOntoClay.Core.Internal.CodeModel.RuleInstance.OnChanged">
+            <inheritdoc/>
+        </member>
+        <member name="E:SymOntoClay.Core.Internal.CodeModel.RuleInstance.OnChangedWithKeys">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#GetAllRelations">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#GetIndexedRulePartOfFactsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#DbgPrintFactsAndRules">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.KindOfValue">
             <inheritdoc/>
         </member>
@@ -2433,6 +2523,33 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Convertors.ContextOfConvertingExpressionNode.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory.GetChannelsResolver">
@@ -3954,7 +4071,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.RemoveParentStorage(SymOntoClay.Core.IStorage)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.SymOntoClay#Core#IStorage#CollectChainOfStorages(System.Collections.Generic.IList{SymOntoClay.Core.StorageUsingOptions},System.Collections.Generic.IList{SymOntoClay.Core.IStorage},System.Int32)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.SymOntoClay#Core#IStorage#CollectChainOfStorages(System.Collections.Generic.IList{SymOntoClay.Core.StorageUsingOptions},System.Collections.Generic.IList{SymOntoClay.Core.IStorage},System.Int32,SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.SymOntoClay#Core#IStorage#CollectChainOfStorages(System.Collections.Generic.IList{SymOntoClay.Core.IStorage})">

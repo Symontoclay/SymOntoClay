@@ -25,10 +25,14 @@
             'catch(@e)' >> @>log;
             @e >> @>log;
         }
-        //catch(@e) where {: hit(enemy, I) :}
-        //{
-        //    'catch(@e) where {: hit(enemy, I) :}' >> @>log;
-        //}
+        catch(@e) where {: hit(enemy, I) :}
+        {
+            'catch(@e) where {: hit(enemy, I) :}' >> @>log;
+        }
+        catch(@e) where {: see(I, $x) :}
+        {
+            'catch(@e) where {: see(I, $x) :}' >> @>log;
+        }
         else
         {
             'else' >> @>log;

@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var result = Run(options);
 
 #if DEBUG
-            Log($"result = {result}");
+            //Log($"result = {result}");
 #endif
 
             return result.IsSuccess;
@@ -65,7 +65,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public LogicalSearchResult Run(LogicalSearchOptions options)
         {
 #if DEBUG
-            Log($"options = {options}");
+            //Log($"options = {options}");
 #endif
 
             if(_inheritanceResolver == null)
@@ -116,13 +116,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var targetStorageList = GetStoragesList(options.TargetStorage);
 
 #if DEBUG
-                Log($"targetStorageList = {targetStorageList.WriteListToString()}");
+                //Log($"targetStorageList = {targetStorageList.WriteListToString()}");
 #endif
 
                 var maxPriority = targetStorageList.Max(p => p.Priority);
 
 #if DEBUG
-                Log($"maxPriority = {maxPriority}");
+                //Log($"maxPriority = {maxPriority}");
 #endif
 
                 var collectChainOfStoragesOptions = new CollectChainOfStoragesOptions();
@@ -130,13 +130,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 collectChainOfStoragesOptions.UseFacts = false;
 
 #if DEBUG
-                Log($"collectChainOfStoragesOptions = {collectChainOfStoragesOptions}");
+                //Log($"collectChainOfStoragesOptions = {collectChainOfStoragesOptions}");
 #endif
 
                 var additinalStoragesList = GetStoragesList(options.LocalCodeExecutionContext.Storage, collectChainOfStoragesOptions);
 
 #if DEBUG
-                Log($"additinalStoragesList = {additinalStoragesList.WriteListToString()}");
+                //Log($"additinalStoragesList = {additinalStoragesList.WriteListToString()}");
 #endif
 
                 targetStorageList.AddRange(additinalStoragesList);

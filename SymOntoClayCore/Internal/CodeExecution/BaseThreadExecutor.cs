@@ -151,7 +151,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 if(_currentCodeFrame == null)
                 {
 #if DEBUG
-                    Log("_currentCodeFrame == null return false;");
+                    //Log("_currentCodeFrame == null return false;");
 #endif
 
                     return false;
@@ -172,7 +172,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 if (currentPosition >= compiledFunctionBodyCommands.Count)
                 {
 #if DEBUG
-                    Log("currentPosition >= compiledFunctionBodyCommands.Count return true;");
+                    //Log("currentPosition >= compiledFunctionBodyCommands.Count return true;");
 #endif
                     GoBackToPrevCodeFrame();
                     return true;
@@ -188,7 +188,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 if (!CheckReturnedInfo())
                 {
 #if DEBUG
-                    Log("!CheckReturnedInfo()");
+                    //Log("!CheckReturnedInfo()");
 #endif
 
                     return false;
@@ -499,18 +499,18 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     case OperationCode.Error:
                         {
 #if DEBUG
-                            Log("Begin case OperationCode.Error");
+                            //Log("Begin case OperationCode.Error");
 #endif
 
 #if DEBUG
-                            Log($"currentCommand = {currentCommand}");
-                            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                            //Log($"currentCommand = {currentCommand}");
+                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                             var currentValue = _currentCodeFrame.ValuesStack.Peek();
 
 #if DEBUG
-                            Log($"currentValue = {currentValue}");
+                            //Log($"currentValue = {currentValue}");
 #endif
 
                             var ruleInstance = currentValue.AsRuleInstanceValue.RuleInstance;
@@ -519,7 +519,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             errorValue.CheckDirty();
 
 #if DEBUG
-                            Log($"errorValue = {errorValue}");
+                            //Log($"errorValue = {errorValue}");
 #endif
 
                             _currentError = errorValue;
@@ -533,7 +533,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             else
                             {
 #if DEBUG
-                                Log("_currentSEHGroup != null");
+                                //Log("_currentSEHGroup != null");
 #endif
 
                                 CheckSEH();
@@ -542,7 +542,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             _globalLogicalStorage.Append(ruleInstance);
 
 #if DEBUG
-                            Log("End case OperationCode.Error");
+                            //Log("End case OperationCode.Error");
 #endif
                         }
                         break;
@@ -586,7 +586,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var ruleInstance = _currentError.RuleInstance;
 
 #if DEBUG
-            Log($"ruleInstance = {ruleInstance}");
+            //Log($"ruleInstance = {ruleInstance}");
 #endif
 
             var searchOptions = new LogicalSearchOptions();
@@ -596,7 +596,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             foreach (var sehItem in _currentCodeFrame.CurrentSEHGroup.Items)
             {
 #if DEBUG
-                Log($"sehItem = {sehItem}");
+                //Log($"sehItem = {sehItem}");
 #endif
 
                 if(sehItem.Condition != null)
@@ -610,7 +610,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
 
 #if DEBUG
-                Log("NEXT");
+                //Log("NEXT");
 #endif
 
                 if(sehItem.VariableName != null && !sehItem.VariableName.IsEmpty)
@@ -650,7 +650,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Log("_currentSEHGroup != null");
+            //Log("_currentSEHGroup != null");
 #endif
 
             return CheckSEH();

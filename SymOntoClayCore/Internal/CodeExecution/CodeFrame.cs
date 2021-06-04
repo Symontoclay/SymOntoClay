@@ -36,7 +36,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     {
         public CompiledFunctionBody CompiledFunctionBody { get; set; }
         public int CurrentPosition { get; set; }
+        public SEHGroup CurrentSEHGroup { get; set; }
         public Stack<Value> ValuesStack { get; private set; } = new Stack<Value>();
+        public Stack<SEHGroup> SEHStack { get; private set; } = new Stack<SEHGroup>();        
         public LocalCodeExecutionContext LocalContext { get; set; }
         public ProcessInfo ProcessInfo { get; set; }
         public CodeEntity Metadata { get; set; }
@@ -64,7 +66,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             sb.AppendLine($"{spaces}{nameof(CurrentPosition)} = {CurrentPosition}");
 
+            sb.PrintObjProp(n, nameof(CurrentSEHGroup), CurrentSEHGroup);
+
             sb.PrintObjListProp(n, nameof(ValuesStack), ValuesStack.ToList());
+
+            sb.PrintObjListProp(n, nameof(SEHStack), SEHStack.ToList());
 
             sb.PrintObjProp(n, nameof(LocalContext), LocalContext);
 
@@ -98,7 +104,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             sb.AppendLine($"{spaces}{nameof(CurrentPosition)} = {CurrentPosition}");
 
+            sb.PrintShortObjProp(n, nameof(CurrentSEHGroup), CurrentSEHGroup);
+
             sb.PrintShortObjListProp(n, nameof(ValuesStack), ValuesStack.ToList());
+
+            sb.PrintShortObjListProp(n, nameof(SEHStack), SEHStack.ToList());
 
             sb.PrintShortObjProp(n, nameof(LocalContext), LocalContext);
 
@@ -132,7 +142,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             sb.AppendLine($"{spaces}{nameof(CurrentPosition)} = {CurrentPosition}");
 
+            sb.PrintBriefObjProp(n, nameof(CurrentSEHGroup), CurrentSEHGroup);
+
             sb.PrintBriefObjListProp(n, nameof(ValuesStack), ValuesStack.ToList());
+
+            sb.PrintBriefObjListProp(n, nameof(SEHStack), SEHStack.ToList());
 
             sb.PrintBriefObjProp(n, nameof(LocalContext), LocalContext);
 

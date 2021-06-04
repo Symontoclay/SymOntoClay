@@ -5,7 +5,7 @@
         '`a` (fuzzy) has been called!' >> @>log;
         @param_1 >> @>log;
 
-        //error {: see(I, #a) :};
+        error {: see(I, #a) :};
     }
 
     on Init =>
@@ -23,11 +23,12 @@
         catch(@e)
         {
             'catch(@e)' >> @>log;
+            @e >> @>log;
         }
-        catch(@e) where {: hit(enemy, I) :}
-        {
-            'catch(@e) where {: hit(enemy, I) :}' >> @>log;
-        }
+        //catch(@e) where {: hit(enemy, I) :}
+        //{
+        //    'catch(@e) where {: hit(enemy, I) :}' >> @>log;
+        //}
         else
         {
             'else' >> @>log;
@@ -36,6 +37,12 @@
         {
             'ensure' >> @>log;
         }
+    }
+
+    on {: see(I, $x) :} ($x >> @x) => 
+    {
+        'on Fired' >> @>log;
+        @x >> @>log;
     }
 }
 

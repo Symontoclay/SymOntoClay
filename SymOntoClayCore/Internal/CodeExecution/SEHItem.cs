@@ -1,20 +1,22 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
 {
-    public class SEHGroup : IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class SEHItem : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public List<SEHItem> Items { get; set; }
+        public StrongIdentifierValue VariableName { get; set; }
+        public RuleInstance Condition { get; set; }
+        public int TargetPosition { get; set; }
 
         /// <summary>
         /// Clones the instance and returns cloned instance.
         /// </summary>
         /// <returns>Cloned instance.</returns>
-        public SEHGroup Clone()
+        public SEHItem Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
@@ -25,17 +27,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         /// </summary>
         /// <param name="context">Special context for providing references continuity.</param>
         /// <returns>Cloned instance.</returns>
-        public SEHGroup Clone(Dictionary<object, object> context)
+        public SEHItem Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {
-                return (SEHGroup)context[this];
+                return (SEHItem)context[this];
             }
 
-            var result = new SEHGroup();
+            var result = new SEHItem();
             context[this] = result;
 
-            result.Items = Items?.Select(p => p.Clone(context)).ToList();
+            result.VariableName = VariableName?.Clone(context);
+            result.Condition = Condition?.Clone(context);
+            result.TargetPosition = TargetPosition;
 
             return result;
         }
@@ -58,7 +62,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjListProp(n, nameof(Items), Items);
+            sb.PrintObjProp(n, nameof(VariableName), VariableName);
+            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
+            sb.AppendLine($"{spaces}{nameof(TargetPosition)} = {TargetPosition}");
 
             return sb.ToString();
         }
@@ -81,7 +87,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjListProp(n, nameof(Items), Items);
+            sb.PrintShortObjProp(n, nameof(VariableName), VariableName);
+            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
+            sb.AppendLine($"{spaces}{nameof(TargetPosition)} = {TargetPosition}");
 
             return sb.ToString();
         }
@@ -104,7 +112,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjListProp(n, nameof(Items), Items);
+            sb.PrintBriefObjProp(n, nameof(VariableName), VariableName);
+            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
+            sb.AppendLine($"{spaces}{nameof(TargetPosition)} = {TargetPosition}");
 
             return sb.ToString();
         }

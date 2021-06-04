@@ -134,10 +134,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override string PropertiesToDbgString(uint n)
         {
-            //var spaces = DisplayHelper.Spaces(n);
-            //return $"{spaces}{SystemValue}";
-
-            throw new NotImplementedException();
+            var spaces = DisplayHelper.Spaces(n);
+            return $"{spaces}ERROR {RuleInstance.ToDbgString()}";
         }
     }
 }

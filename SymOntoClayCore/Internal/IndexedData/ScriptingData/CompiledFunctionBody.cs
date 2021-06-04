@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -32,6 +33,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
     public class CompiledFunctionBody : IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
     {
         public Dictionary<int, ScriptCommand> Commands { get; set; } = new Dictionary<int, ScriptCommand>();
+        public Dictionary<int, SEHGroup> SEH { get; set; } = new Dictionary<int, SEHGroup>();
 
         /// <summary>
         /// Clones the instance and returns cloned instance.
@@ -59,6 +61,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
             context[this] = result;
 
             result.Commands = Commands?.ToDictionary(p => p.Key, p => p.Value.Clone(context));
+            result.SEH = SEH?.ToDictionary(p => p.Key, p => p.Value.Clone(context));
 
             return result;
         }
@@ -81,6 +84,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
             var sb = new StringBuilder();
 
             sb.PrintObjDict_2_Prop(n, nameof(Commands), Commands);
+            sb.PrintObjDict_2_Prop(n, nameof(SEH), SEH);
 
             return sb.ToString();
         }
@@ -103,6 +107,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
             var sb = new StringBuilder();
 
             sb.PrintShortObjDict_2_Prop(n, nameof(Commands), Commands);
+            sb.PrintShortObjDict_2_Prop(n, nameof(SEH), SEH);
 
             return sb.ToString();
         }
@@ -125,6 +130,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
             var sb = new StringBuilder();
 
             sb.PrintBriefObjDict_2_Prop(n, nameof(Commands), Commands);
+            sb.PrintBriefObjDict_2_Prop(n, nameof(SEH), SEH);
 
             return sb.ToString();
         }

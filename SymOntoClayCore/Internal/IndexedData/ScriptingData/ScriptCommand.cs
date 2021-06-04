@@ -190,8 +190,11 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.Nop:
                 case OperationCode.ClearStack:
                 case OperationCode.Return:
+                case OperationCode.ReturnVal:
                 case OperationCode.UseInheritance:
-                case OperationCode.UseNotInheritance:          
+                case OperationCode.UseNotInheritance:
+                case OperationCode.Error:
+                case OperationCode.RemoveSEHGroup:
                     return $"{spaces}{OperationCode}";
 
                 case OperationCode.PushVal:
@@ -215,8 +218,9 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.AsyncCall_P:
                     return $"{spaces}{OperationCode} {CountParams}";
 
-                case OperationCode.Error:
-                    return "Error";
+                case OperationCode.SetSEHGroup:
+                case OperationCode.JumpTo:
+                    return $"{spaces}{OperationCode} {TargetPosition}";
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(OperationCode), OperationCode, null);

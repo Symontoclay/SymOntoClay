@@ -20,12 +20,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.Compiling.Internal;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Compiling
@@ -49,28 +51,28 @@ namespace SymOntoClay.Core.Internal.Compiling
             var resultCommandsList = node.Result;
 
 #if DEBUG
-            Log($"resultCommandsList = {resultCommandsList.WriteListToString()}");
+            //Log($"resultCommandsList = {resultCommandsList.WriteListToString()}");
 #endif
 
             NumerateSequence(resultCommandsList);
 
 #if DEBUG
-            Log($"resultCommandsList (2) = {resultCommandsList.WriteListToString()}");
+            //Log($"resultCommandsList (2) = {resultCommandsList.WriteListToString()}");
 #endif
+
+            var sehIndex = 0;
 
             var result = new CompiledFunctionBody();
 
             foreach (var command in resultCommandsList)
             {
-                result.Commands.Add(command.Position, ConvertIntermediateScriptCommandToScriptCommand(command));
+                result.Commands.Add(command.Position, ConvertIntermediateScriptCommandToScriptCommand(command, result.SEH, ref sehIndex));
+            }
 
 #if DEBUG
-                if (command.SEHGroup != null)
-                {
-                    throw new NotImplementedException();
-                }
+            //Log($"result = {result}");
+            //Log($"result = {result.ToDbgString()}");
 #endif
-            }
 
             return result;
         }
@@ -86,10 +88,10 @@ namespace SymOntoClay.Core.Internal.Compiling
             }
         }
 
-        private ScriptCommand ConvertIntermediateScriptCommandToScriptCommand(IntermediateScriptCommand initialCommand)
+        private ScriptCommand ConvertIntermediateScriptCommandToScriptCommand(IntermediateScriptCommand initialCommand, Dictionary<int, SEHGroup> sehDict, ref int sehIndex)
         {
 #if DEBUG
-            Log($"initialCommand = {initialCommand}");
+            //Log($"initialCommand = {initialCommand}");
 #endif
 
             var result = new ScriptCommand();
@@ -105,8 +107,42 @@ namespace SymOntoClay.Core.Internal.Compiling
             result.KindOfOperator = initialCommand.KindOfOperator;
             result.CountParams = initialCommand.CountParams;
 
+            if (initialCommand.SEHGroup != null)
+            {
+                var resultSEHGroup = new SEHGroup();
+                sehDict[sehIndex] = resultSEHGroup;
+                result.TargetPosition = sehIndex;
+                sehIndex++;
+
+                var sehItemsList = new List<SEHItem>();
+
+                foreach (var initialSEHItem in initialCommand.SEHGroup.Items)
+                {
 #if DEBUG
-            Log($"result = {result}");
+                    //Log($"initialSEHItem = {initialSEHItem}");
+#endif
+
+                    var sehItem = new SEHItem();
+                    sehItemsList.Add(sehItem);
+
+                    sehItem.VariableName = initialSEHItem.VariableName;
+                    sehItem.Condition = initialSEHItem.Condition;
+                    sehItem.TargetPosition = initialSEHItem.JumpToMe.Position;
+                }
+
+#if DEBUG
+                //Log($"sehItemsList = {sehItemsList.WriteListToString()}");
+#endif
+
+                resultSEHGroup.Items = sehItemsList.OrderByDescending(p => p.Condition != null).ThenByDescending(p => p.VariableName != null && !p.VariableName.IsEmpty).ToList();
+
+#if DEBUG
+                //Log($"resultSEHGroup.Items = {resultSEHGroup.Items.WriteListToString()}");
+#endif
+            }
+
+#if DEBUG
+            //Log($"result = {result}");
 #endif
 
             return result;

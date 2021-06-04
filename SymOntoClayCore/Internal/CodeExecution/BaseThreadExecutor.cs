@@ -55,6 +55,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _context = context;
 
             _globalStorage = context.Storage.GlobalStorage;
+            _globalLogicalStorage = _globalStorage.LogicalStorage;
             _hostListener = context.HostListener;
 
             _instancesStorage = _context.InstancesStorage;
@@ -74,6 +75,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private readonly IEngineContext _context;
         private readonly IStorage _globalStorage;
+        private readonly ILogicalStorage _globalLogicalStorage;
         private readonly IHostListener _hostListener;
         private readonly IInstancesStorageComponent _instancesStorage;
 
@@ -86,8 +88,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private Stack<CodeFrame> _codeFrames = new Stack<CodeFrame>();
         private CodeFrame _currentCodeFrame;
-
-        private SEHGroup _currentSEHGroup;
 
         private IVarStorage _currentVarStorage;
 
@@ -180,7 +180,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 if (!CheckReturnedInfo())
@@ -444,6 +444,56 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         }
                         break;
 
+                    case OperationCode.SetSEHGroup:
+                        {
+#if DEBUG
+                            //Log($"currentCommand = {currentCommand}");
+#endif
+
+                            var targetSEHGroup = _currentCodeFrame.CompiledFunctionBody.SEH[currentCommand.TargetPosition];
+
+#if DEBUG
+                            //Log($"targetSEHGroup = {targetSEHGroup}");
+#endif
+
+                            _currentCodeFrame.CurrentSEHGroup = targetSEHGroup;
+                            _currentCodeFrame.SEHStack.Push(targetSEHGroup);
+
+                            _currentCodeFrame.CurrentPosition++;
+                        }
+                        break;
+
+                    case OperationCode.RemoveSEHGroup:
+                        {
+#if DEBUG
+                            //Log($"currentCommand = {currentCommand}");
+#endif
+
+                            _currentCodeFrame.SEHStack.Pop();
+
+                            if (_currentCodeFrame.SEHStack.Count == 0)
+                            {
+                                _currentCodeFrame.CurrentSEHGroup = null;
+                            }
+                            else
+                            {
+                                _currentCodeFrame.CurrentSEHGroup = _currentCodeFrame.SEHStack.Peek();
+                            }
+
+                            _currentCodeFrame.CurrentPosition++;
+                        }
+                        break;
+
+                    case OperationCode.JumpTo:
+                        {
+#if DEBUG
+                            //Log($"currentCommand = {currentCommand}");
+#endif
+
+                            _currentCodeFrame.CurrentPosition = currentCommand.TargetPosition;
+                        }
+                        break;
+
                     case OperationCode.Error:
                         {
 #if DEBUG
@@ -461,7 +511,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             Log($"currentValue = {currentValue}");
 #endif
 
-                            var errorValue = new ErrorValue(currentValue.AsRuleInstanceValue.RuleInstance);
+                            var ruleInstance = currentValue.AsRuleInstanceValue.RuleInstance;
+
+                            var errorValue = new ErrorValue(ruleInstance);
                             errorValue.CheckDirty();
 
 #if DEBUG
@@ -470,7 +522,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             _currentError = errorValue;
 
-                            if (_currentSEHGroup == null)
+                            if (_currentCodeFrame.CurrentSEHGroup == null)
                             {
                                 _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Faulted;
 
@@ -482,8 +534,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                 Log("_currentSEHGroup != null");
 #endif
 
-                                throw new NotImplementedException();
+                                CheckSEH();
                             }
+
+                            _globalLogicalStorage.Append(ruleInstance);
 
 #if DEBUG
                             Log("End case OperationCode.Error");
@@ -525,6 +579,38 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
+        private bool CheckSEH()
+        {
+            foreach(var sehItem in _currentCodeFrame.CurrentSEHGroup.Items)
+            {
+#if DEBUG
+                Log($"sehItem = {sehItem}");
+#endif
+
+                if(sehItem.Condition != null)
+                {
+                    throw new NotImplementedException();
+                }
+
+#if DEBUG
+                Log("NEXT");
+#endif
+
+                if(sehItem.VariableName != null && !sehItem.VariableName.IsEmpty)
+                {
+                    _currentVarStorage.SetValue(sehItem.VariableName, _currentError);
+                }
+
+                _currentError = null;
+
+                _currentCodeFrame.CurrentPosition = sehItem.TargetPosition;
+
+                return true;
+            }
+
+            return false;
+        }
+
         private bool CheckReturnedInfo()
         {
             if (_currentError != null)
@@ -541,7 +627,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"_currentError = {_currentError}");
 #endif
 
-            if (_currentSEHGroup == null)
+            if (_currentCodeFrame.CurrentSEHGroup == null)
             {
                 return false;
             }
@@ -550,7 +636,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             Log("_currentSEHGroup != null");
 #endif
 
-            throw new NotImplementedException();
+            return CheckSEH();
         }
 
         private void SetUpCurrentCodeFrame()

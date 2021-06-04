@@ -69,6 +69,10 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
                     LogChannel(DebugHelperForLogicalSearchResult.ToString(value.AsLogicalSearchResultValue.LogicalSearchResult));
                     break;
 
+                case KindOfValue.ErrorValue:
+                    LogChannel($"ERROR: {DebugHelperForRuleInstance.ToString(value.AsErrorValue.RuleInstance)}");
+                    break;
+
                 case KindOfValue.NullValue:
                     LogChannel("NULL");
                     break;

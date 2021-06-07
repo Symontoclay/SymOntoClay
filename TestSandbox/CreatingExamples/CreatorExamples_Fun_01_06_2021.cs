@@ -30,14 +30,9 @@ using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.CreatingExamples
 {
-    public class CreatorExamples: BaseCreatorExamples
+    public class CreatorExamples_Fun_01_06_2021: BaseCreatorExamples
     {
         private static readonly IEntityLogger _logger = new LoggerImpementation();
-
-        public CreatorExamples()
-            : base(new BaseCreatorExamplesOptions())
-        {
-        }
 
         public void Run()
         {

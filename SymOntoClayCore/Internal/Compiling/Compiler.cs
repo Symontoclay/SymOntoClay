@@ -111,6 +111,7 @@ namespace SymOntoClay.Core.Internal.Compiling
             {
                 var resultSEHGroup = new SEHGroup();
                 sehDict[sehIndex] = resultSEHGroup;
+                resultSEHGroup.AfterPosition = initialCommand.SEHGroup.AfterPosition.Position;
                 result.TargetPosition = sehIndex;
                 sehIndex++;
 

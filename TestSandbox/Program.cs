@@ -73,10 +73,10 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-            //TstCreatorExamples();
+            TstCreatorExamples();
             //TstLinguisticVariable_Tests();
             //TstManageTempProject();
-            //TstTestRunner();
+            //TstTestRunner();//<=
             //TstNameHelper();
             //TstDeffuzzification();
             //TstRangeValue();
@@ -111,7 +111,7 @@ namespace TestSandbox
             //TstExprNodeHandler();
             //TstParsing();
             //TstMonoBehaviourTestingHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -121,7 +121,8 @@ namespace TestSandbox
         {
             _logger.Log("Begin");
 
-            using var handler = new CreatorExamples();
+            //using var handler = new CreatorExamples_Fun_01_06_2021();
+            using var handler = new CreatorExamples_Error_Processing_07_06_2021();
             handler.Run();
 
             _logger.Log("End");
@@ -378,23 +379,29 @@ app PeaceKeeper is [very middle] exampleClass
 
             var text = @"app PeaceKeeper
 {
-    {: barrel(#a) :}
-    {: see(I, #a) :}
-
-    on {: see(I, $x) & barrel($x) & !focus(I, friend) :} => 
+    on Init =>
     {
-         @x >> @>log;
+        try
+        {
+            'Begin' >> @>log;
+            'End' >> @>log;        
+        }
+        else
+        {
+            'else' >> @>log;
+        }
+        ensure
+        {
+            'ensure' >> @>log;
+        }
+
+        'End of `Init`' >> @>log;
     }
 }";
 
             BehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     _logger.Log($"n = {n}; message = {message}");
-                    //switch (n)
-                    //{
-                    //    default:
-                    //        throw new ArgumentOutOfRangeException(nameof(n), n, null);
-                    //}
                 });
 
             _logger.Log("End");

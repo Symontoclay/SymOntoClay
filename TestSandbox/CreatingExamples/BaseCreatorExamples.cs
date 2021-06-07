@@ -42,6 +42,11 @@ namespace TestSandbox.CreatingExamples
     {
         private static readonly IEntityLogger _logger = new LoggerImpementation();
 
+        protected BaseCreatorExamples()
+            : this(new BaseCreatorExamplesOptions())
+        {
+        }
+
         protected BaseCreatorExamples(BaseCreatorExamplesOptions options)
         {
             _logger.Log($"options = {options}");
@@ -89,6 +94,11 @@ namespace TestSandbox.CreatingExamples
 
         protected void Example(string fileName, string fileContent)
         {
+            if(string.IsNullOrWhiteSpace(fileContent))
+            {
+                throw new ArgumentNullException(nameof(fileContent));
+            }
+
             _logger.Log($"fileContent = {fileContent}");
             _logger.Log($"fileName = {fileName}");
 

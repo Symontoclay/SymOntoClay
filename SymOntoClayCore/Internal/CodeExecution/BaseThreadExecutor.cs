@@ -524,6 +524,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             _currentError = errorValue;
 
+                            
+
                             if (_currentCodeFrame.CurrentSEHGroup == null)
                             {
                                 _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Faulted;
@@ -536,7 +538,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                 //Log("_currentSEHGroup != null");
 #endif
 
-                                CheckSEH();
+                                if(!CheckSEH())
+                                {
+                                    _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Faulted;
+
+                                    GoBackToPrevCodeFrame();
+                                }
                             }
 
                             _globalLogicalStorage.Append(ruleInstance);
@@ -625,7 +632,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return true;
             }
 
-            return false;
+            _currentError = null;
+
+            _currentCodeFrame.CurrentPosition = _currentCodeFrame.CurrentSEHGroup.AfterPosition;
+
+            return true;
         }
 
         private bool CheckReturnedInfo()

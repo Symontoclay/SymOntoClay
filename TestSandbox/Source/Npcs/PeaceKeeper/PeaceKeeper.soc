@@ -1,37 +1,12 @@
 ﻿app PeaceKeeper
 {
-    fun a(@param_1: fuzzy) =>
-    {
-        '`a` (fuzzy) has been called!' >> @>log;
-        @param_1 >> @>log;
-
-        error {: see(I, #a) :};
-    }
-
     on Init =>
     {
         try
         {
             'Begin' >> @>log;
-            a(param_1: 1);
-            'End' >> @>log;
-        }
-        catch
-        {
-            'catch' >> @>log;
-        }
-        catch(@e)
-        {
-            'catch(@e)' >> @>log;
-            @e >> @>log;
-        }
-        catch(@e) where {: hit(enemy, I) :}
-        {
-            'catch(@e) where {: hit(enemy, I) :}' >> @>log;
-        }
-        catch(@e) where {: see(I, $x) :}
-        {
-            'catch(@e) where {: see(I, $x) :}' >> @>log;
+            error {: see(I, #a) :};
+            'End' >> @>log;        
         }
         else
         {
@@ -41,14 +16,62 @@
         {
             'ensure' >> @>log;
         }
-    }
 
-    on {: see(I, $x) :} ($x >> @x) => 
-    {
-        'on Fired' >> @>log;
-        @x >> @>log;
+        'End of `Init`' >> @>log;
     }
 }
+
+//app PeaceKeeper
+//{
+//    fun a(@param_1: fuzzy) =>
+//    {
+//        '`a` (fuzzy) has been called!' >> @>log;
+//        @param_1 >> @>log;
+
+//        error {: see(I, #a) :};
+//    }
+
+//    on Init =>
+//    {
+//        try
+//        {
+//            'Begin' >> @>log;
+//            a(param_1: 1);
+//            'End' >> @>log;
+//        }
+//        catch
+//        {
+//            'catch' >> @>log;
+//        }
+//        catch(@e)
+//        {
+//            'catch(@e)' >> @>log;
+//            @e >> @>log;
+//        }
+//        catch(@e) where {: hit(enemy, I) :}
+//        {
+//            'catch(@e) where {: hit(enemy, I) :}' >> @>log;
+//        }
+//        catch(@e) where {: see(I, $x) :}
+//        {
+//            'catch(@e) where {: see(I, $x) :}' >> @>log;
+//        }
+//        else
+//        {
+//            'else' >> @>log;
+//        }
+//        ensure
+//        {
+//            'ensure' >> @>log;
+//        }
+//    }
+
+//    on {: see(I, $x) :} ($x >> @x) => 
+//    {
+//        'on Fired' >> @>log;
+//        @x >> @>log;
+//    }
+//}
 
 //---------------------------------------------------------
 //linvar logic for range [0, 1]

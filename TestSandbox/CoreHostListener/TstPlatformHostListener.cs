@@ -36,13 +36,27 @@ namespace TestSandbox.CoreHostListener
     {
         private static readonly IEntityLogger _logger = new LoggerImpementation();
 
+        private static object _lockObj = new object();
+
+        private static int _methodId;
+
+        private int GetMethodId()
+        {
+            lock(_lockObj)
+            {
+                _methodId++;
+                return _methodId;
+            }
+        }
+
         [BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void GoToImpl(CancellationToken cancellationToken, 
             [EndpointParam("To", KindOfEndpointParam.Position)] Vector3 point,
             float speed = 12)
         {
             //var name = NameHelper.GetNewEntityNameString();
-            var name = string.Empty;
+            //var name = string.Empty;
+            var name = GetMethodId();
 
             _logger.Log($"Begin {name}");
 
@@ -50,7 +64,7 @@ namespace TestSandbox.CoreHostListener
             _logger.Log($"{name} speed = {speed}");
 
             var n = 0;
-
+            
             while (true)
             {
                 n++;

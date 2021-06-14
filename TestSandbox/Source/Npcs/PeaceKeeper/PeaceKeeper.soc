@@ -1,9 +1,18 @@
 ﻿app PeaceKeeper
 {
+    on Init =>
+    {
+        'Begin' >> @>log;
+        @@host.`go`(to: #@[10]);
+        'End' >> @>log;
+    }
+
     on {: see(I, $x) :} ($x >> @x) => 
     {
         'on Fired' >> @>log;
         @x >> @>log;
+        @@host.`go`(to: #@[15]);
+        'End on Fired' >> @>log;
     }
 }
 

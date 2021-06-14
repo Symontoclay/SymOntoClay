@@ -49,7 +49,7 @@ namespace TestSandbox.Handlers
 
             _world.Start();
 
-            Thread.Sleep(1000);
+            Thread.Sleep(5000);
 
             _npc.InsertFact("{: see(I, #a) :}");
 

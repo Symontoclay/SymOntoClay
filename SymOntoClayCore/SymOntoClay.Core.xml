@@ -4137,6 +4137,12 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.RemovePublicFact(System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.RemoveFact(System.String)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertPerceptedFact(System.String)">
             <inheritdoc/>
         </member>

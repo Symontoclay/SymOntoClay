@@ -227,12 +227,6 @@
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.IsWaited">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.InsertPublicFact(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.RemovePublicFact(System.String)">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.OnDisposed">
             <inheritdoc/>
         </member>
@@ -267,6 +261,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.RemovePublicFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.InsertFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.RemoveFact(System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.Die">

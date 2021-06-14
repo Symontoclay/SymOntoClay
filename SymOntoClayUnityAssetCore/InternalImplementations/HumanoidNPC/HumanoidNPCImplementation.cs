@@ -124,6 +124,18 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
+        public string InsertFact(string text)
+        {
+            return _gameComponent.InsertFact(text);
+        }
+
+        /// <inheritdoc/>
+        public void RemoveFact(string id)
+        {
+            _gameComponent.RemoveFact(id);
+        }
+
+        /// <inheritdoc/>
         public void Die()
         {
             _gameComponent.Die();

@@ -38,5 +38,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         bool EnableLogging { get; set; }
         void Die();
+        string InsertFact(string text);
+        void RemoveFact(string id);
     }
 }

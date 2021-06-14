@@ -150,16 +150,24 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             }
         }
 
-        /// <inheritdoc/>
         public string InsertPublicFact(string text)
         {
             return _coreEngine.InsertPublicFact(text);
         }
 
-        /// <inheritdoc/>
         public void RemovePublicFact(string id)
         {
             _coreEngine.RemovePublicFact(id);
+        }
+
+        public string InsertFact(string text)
+        {
+            return _coreEngine.InsertFact(text);
+        }
+
+        public void RemoveFact(string id)
+        {
+            _coreEngine.RemoveFact(id);
         }
 
         public void Die()

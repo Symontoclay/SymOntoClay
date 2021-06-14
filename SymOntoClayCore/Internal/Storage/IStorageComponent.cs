@@ -33,6 +33,8 @@ namespace SymOntoClay.Core.Internal.Storage
         IStorage PerceptedFactsStorage { get; }
         string InsertPublicFact(string text);
         void RemovePublicFact(string id);
+        string InsertFact(string text);
+        void RemoveFact(string id);
         string InsertPerceptedFact(string text);
         void RemovePerceptedFact(string id);
     }

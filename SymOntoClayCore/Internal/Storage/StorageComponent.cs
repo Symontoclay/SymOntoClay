@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -169,19 +170,18 @@ namespace SymOntoClay.Core.Internal.Storage
             return result;
         }
 
-        /// <inheritdoc/>
-        public string InsertPublicFact(string text)
+        private RuleInstance ParseFact(string text)
         {
 #if DEBUG
             //Log($"text = {text}");
 #endif
 
-            if(string.IsNullOrWhiteSpace(text))
+            if (string.IsNullOrWhiteSpace(text))
             {
-                return string.Empty;
+                return null;
             }
 
-            if(!text.StartsWith("{:"))
+            if (!text.StartsWith("{:"))
             {
                 text = $"{{: {text} :}}";
             }
@@ -190,11 +190,26 @@ namespace SymOntoClay.Core.Internal.Storage
             //Log($"text = {text}");
 #endif
 
-            var fact = _logicQueryParseAndCache.GetLogicRuleOrFact(text);
+            return _logicQueryParseAndCache.GetLogicRuleOrFact(text);
+        }
+
+        /// <inheritdoc/>
+        public string InsertPublicFact(string text)
+        {
+#if DEBUG
+            //Log($"text = {text}");
+#endif
+
+            var fact = ParseFact(text);
 
 #if DEBUG
             //Log($"fact = {fact}");
 #endif
+
+            if(fact == null)
+            {
+                return string.Empty;
+            }
 
             _publicFactsStorage.LogicalStorage.Append(fact);
             _selfFactsStorage.LogicalStorage.Append(fact);
@@ -211,6 +226,35 @@ namespace SymOntoClay.Core.Internal.Storage
 
             _publicFactsStorage.LogicalStorage.RemoveById(id);
             _selfFactsStorage.LogicalStorage.RemoveById(id);
+        }
+
+        /// <inheritdoc/>
+        public string InsertFact(string text)
+        {
+#if DEBUG
+            //Log($"text = {text}");
+#endif
+
+            var fact = ParseFact(text);
+
+#if DEBUG
+            //Log($"fact = {fact}");
+#endif
+
+            if (fact == null)
+            {
+                return string.Empty;
+            }
+
+            _globalStorage.LogicalStorage.Append(fact);
+
+            return fact.Name.NameValue;
+        }
+
+        /// <inheritdoc/>
+        public void RemoveFact(string id)
+        {
+            _globalStorage.LogicalStorage.RemoveById(id);
         }
 
         public void AddVisibleStorage(IStorage storage)

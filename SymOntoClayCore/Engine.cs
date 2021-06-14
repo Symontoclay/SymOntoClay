@@ -151,6 +151,16 @@ namespace SymOntoClay.Core
             _context.Storage.RemovePublicFact(id);
         }
 
+        public string InsertFact(string text)
+        {
+            return _context.Storage.InsertFact(text);
+        }
+
+        public void RemoveFact(string id)
+        {
+            _context.Storage.RemoveFact(id);
+        }
+
         public IStorage PublicFactsStorage => _context.Storage.PublicFactsStorage;
 
         public void AddVisibleStorage(IStorage storage)

@@ -1,23 +1,9 @@
 ﻿app PeaceKeeper
 {
-    on Init =>
+    on {: see(I, $x) :} ($x >> @x) => 
     {
-        try
-        {
-            'Begin' >> @>log;
-            error {: see(I, #a) :};
-            'End' >> @>log;        
-        }
-        else
-        {
-            'else' >> @>log;
-        }
-        ensure
-        {
-            'ensure' >> @>log;
-        }
-
-        'End of `Init`' >> @>log;
+        'on Fired' >> @>log;
+        @x >> @>log;
     }
 }
 

@@ -25,6 +25,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Numerics;
 using System.Text;
 using System.Threading;
@@ -49,6 +50,7 @@ namespace TestSandbox.CoreHostListener
             }
         }
 
+        [DebuggerHidden]
         [BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void GoToImpl(CancellationToken cancellationToken, 
             [EndpointParam("To", KindOfEndpointParam.Position)] Vector3 point,

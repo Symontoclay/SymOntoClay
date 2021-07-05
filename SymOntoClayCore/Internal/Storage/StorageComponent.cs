@@ -212,7 +212,16 @@ namespace SymOntoClay.Core.Internal.Storage
             }
 
             _publicFactsStorage.LogicalStorage.Append(fact);
+
+#if DEBUG
+            //Log($"NEXT text = {text}");
+#endif
+
             _selfFactsStorage.LogicalStorage.Append(fact);
+
+#if DEBUG
+            //Log($"NEXT (2) text = {text}");
+#endif
 
             return fact.Name.NameValue;
         }
@@ -224,8 +233,23 @@ namespace SymOntoClay.Core.Internal.Storage
             //Log($"id = {id}");
 #endif
 
+            if(string.IsNullOrWhiteSpace(id))
+            {
+                return;
+            }
+
             _publicFactsStorage.LogicalStorage.RemoveById(id);
+
+#if DEBUG
+            //Log($"NEXT id = {id}");
+#endif
+
             _selfFactsStorage.LogicalStorage.RemoveById(id);
+
+
+#if DEBUG
+            //Log($"NEXT 2 id = {id}");
+#endif
         }
 
         /// <inheritdoc/>

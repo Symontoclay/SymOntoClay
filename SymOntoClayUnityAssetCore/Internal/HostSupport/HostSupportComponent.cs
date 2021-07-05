@@ -53,7 +53,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.HostSupport
         public Vector3 ConvertFromRelativeToAbsolute(RelativeCoordinate relativeCoordinate)
         {
 #if DEBUG
-            Log($"relativeCoordinate = {relativeCoordinate}");
+            //Log($"relativeCoordinate = {relativeCoordinate}");
 #endif
 
             var invocableInMainThreadObj = new InvocableInMainThreadObj<Vector3>(() => {

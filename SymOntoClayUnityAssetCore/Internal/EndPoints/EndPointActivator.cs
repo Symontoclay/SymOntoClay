@@ -88,13 +88,22 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
                     processInfo.Status = ProcessStatus.Completed;
                 }
-                catch (TargetInvocationException)
+                catch (TargetInvocationException e)
                 {
+#if DEBUG
+                    //Log($"e = {e}");
+                    //Log($"e.InnerException = {e.InnerException}");
+#endif
+
+                    if (e.InnerException.GetType() == typeof(OperationCanceledException))
+                    {
+                        processInfo.Status = ProcessStatus.Canceled;
+                    }
                 }
                 catch (Exception e)
                 {
 #if DEBUG
-                    Log($"e = {e}");
+                    //Log($"e = {e}");
 #endif
 
                     processInfo.Status = ProcessStatus.Faulted;
@@ -117,13 +126,22 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
                     processInfo.Status = ProcessStatus.Completed;
                 }
-                catch (TargetInvocationException)
+                catch (TargetInvocationException e)
                 {
+#if DEBUG
+                    //Log($"e = {e}");
+                    //Log($"e.InnerException = {e.InnerException}");
+#endif
+
+                    if(e.InnerException.GetType() == typeof(OperationCanceledException))
+                    {
+                        processInfo.Status = ProcessStatus.Canceled;
+                    }
                 }
                 catch (Exception e)
                 {
 #if DEBUG
-                    Log($"e = {e}");
+                    //Log($"e = {e}");
 #endif
 
                     processInfo.Status = ProcessStatus.Faulted;

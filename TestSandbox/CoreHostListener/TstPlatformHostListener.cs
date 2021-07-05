@@ -50,7 +50,7 @@ namespace TestSandbox.CoreHostListener
             }
         }
 
-        //[DebuggerHidden]
+        [DebuggerHidden]
         [BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void GoToImpl(CancellationToken cancellationToken, 
             [EndpointParam("To", KindOfEndpointParam.Position)] Vector3 point,

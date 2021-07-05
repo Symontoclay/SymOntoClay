@@ -860,6 +860,27 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     ProcessInfoHelper.Wait(processInfo);
                 }
 
+                var status = processInfo.Status;
+
+#if DEBUG
+                //Log($"status = {status}");
+#endif
+
+                switch(status)
+                {
+                    case ProcessStatus.Canceled:
+                        _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Canceled;
+
+                        GoBackToPrevCodeFrame();
+                        return;
+
+                    case ProcessStatus.Faulted:
+                        _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Faulted;
+
+                        GoBackToPrevCodeFrame();
+                        return;
+                }
+
                 _currentCodeFrame.CurrentPosition++;
 
                 return;

@@ -4,6 +4,10 @@
     {
         'Begin' >> @>log;
         @@host.`go`(to: #@[10]);
+        'End of step 1' >> @>log;
+        @@host.`go`(to: #@[20]);
+        'End of step 2' >> @>log;
+        @@host.`go`(to: #@[10]);
         'End' >> @>log;
     }
 

@@ -50,7 +50,7 @@ namespace TestSandbox.CoreHostListener
             }
         }
 
-        [DebuggerHidden]
+        //[DebuggerHidden]
         [BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void GoToImpl(CancellationToken cancellationToken, 
             [EndpointParam("To", KindOfEndpointParam.Position)] Vector3 point,
@@ -79,6 +79,8 @@ namespace TestSandbox.CoreHostListener
                 Thread.Sleep(1000);
 
                 _logger.Log($"{name} Hi! n = {n}");
+
+                _logger.Log($"{name} Hi! cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
 
                 cancellationToken.ThrowIfCancellationRequested();
             }

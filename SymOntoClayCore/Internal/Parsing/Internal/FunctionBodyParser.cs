@@ -104,6 +104,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case TokenKind.Identifier:
+                            ProcessExpressionStatement();
+                            break;
+
                         case TokenKind.CloseFigureBracket:
                             Exit();
                             break;

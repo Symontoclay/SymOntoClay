@@ -3,11 +3,9 @@
     on Init =>
     {
         'Begin' >> @>log;
-        @@host.`go`(to: #@[10]);
-        'End of step 1' >> @>log;
-        @@host.`go`(to: #@[20]);
-        'End of step 2' >> @>log;
-        @@host.`go`(to: #@[10]);
+        `Step 1`();
+        `Step 2`();
+        `Step 3`();    
         'End' >> @>log;
     }
 
@@ -17,6 +15,27 @@
         @x >> @>log;
         @@host.`go`(to: #@[15]);
         'End on Fired' >> @>log;
+    }
+
+    fun `Step 1`()
+    {
+        'Begin of step 1' >> @>log;
+        @@host.`go`(to: #@[10]);
+        'End of step 1' >> @>log;
+    }
+
+    fun `Step 2`()
+    {
+        'Begin of step 2' >> @>log;
+        @@host.`go`(to: #@[20]);
+        'End of step 2' >> @>log;
+    }
+
+    fun `Step 3`()
+    {
+        'Begin of step 3' >> @>log;
+        @@host.`go`(to: #@[10]);
+        'End of step 3' >> @>log;
     }
 }
 

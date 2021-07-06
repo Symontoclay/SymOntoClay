@@ -94,6 +94,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private IVarStorage _currentVarStorage;
 
         private ErrorValue _currentError;
+        private bool _isCanceled;
 
         protected IActivePeriodicObject _activeObject { get; private set; }
 
@@ -683,6 +684,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             else
             {
                 _currentCodeFrame = _codeFrames.Peek();
+
+#if DEBUG
+                //Log($"_isCanceled = {_isCanceled}");
+#endif
+                
+                if(_isCanceled)
+                {
+                    _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Canceled;
+
+                    GoBackToPrevCodeFrame();
+                    return;
+                }
+
                 SetUpCurrentCodeFrame();
             }
         }
@@ -870,6 +884,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
                     case ProcessStatus.Canceled:
                         _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Canceled;
+                        _isCanceled = true;
 
                         GoBackToPrevCodeFrame();
                         return;

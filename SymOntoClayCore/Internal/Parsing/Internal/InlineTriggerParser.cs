@@ -215,6 +215,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             switch(_currToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.On:
+                                case KeyWordTokenKind.Fun:
                                     _context.Recovery(_currToken);
                                     Exit();
                                     break;

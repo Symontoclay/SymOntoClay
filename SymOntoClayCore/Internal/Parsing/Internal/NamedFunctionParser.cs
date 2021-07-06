@@ -184,6 +184,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
+                        case TokenKind.CloseFigureBracket:
                             _context.Recovery(_currToken);
                             Exit();
                             break;

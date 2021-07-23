@@ -139,6 +139,49 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             }
         }
 
+        public static void PrintPODValue(this StringBuilder sb, uint n, string value)
+        {
+            var spaces = Spaces(n);
+
+            var linesList = value.Replace('\r', ' ').Split('\n');
+
+            foreach (var line in linesList)
+            {
+                sb.AppendLine($"{spaces}{line}");
+            }
+        }
+
+        public static void PrintPODProp(this StringBuilder sb, uint n, string propName, string value)
+        {
+            var spaces = Spaces(n);
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                sb.AppendLine($"{spaces}{propName} = ");
+                return;
+            }
+
+            var linesList = value.Replace('\r', ' ').Split('\n');
+
+            if (linesList.Length == 1)
+            {
+                sb.AppendLine($"{spaces}{propName} = {value}");
+                return;
+            }
+
+            var nextN = n + 4;
+            var nextNSpaces = Spaces(nextN);
+
+            sb.AppendLine($"{spaces}Begin {propName}");
+
+            foreach (var line in linesList)
+            {
+                sb.AppendLine($"{nextNSpaces}{line}");
+            }
+
+            sb.AppendLine($"{spaces}End {propName}");
+        }
+
         public static void PrintPODList<T>(this StringBuilder sb, uint n, string propName, IList<T> items)
         {
             var spaces = Spaces(n);

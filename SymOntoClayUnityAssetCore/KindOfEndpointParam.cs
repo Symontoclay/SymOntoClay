@@ -26,9 +26,19 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core
 {
+    /// <summary>
+    /// Describes a tip about conversion between C# and SymOntoclay DSL types.
+    /// </summary>
     public enum KindOfEndpointParam
     {
+        /// <summary>
+        /// The type is unknown.
+        /// </summary>
         Unknown,
+
+        /// <summary>
+        /// The type is absolute position.
+        /// </summary>
         Position
     }
 }

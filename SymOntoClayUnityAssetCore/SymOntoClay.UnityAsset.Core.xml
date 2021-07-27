@@ -36,6 +36,63 @@
         <member name="M:SymOntoClay.UnityAsset.Core.BaseStoredGameComponentSettings.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="T:SymOntoClay.UnityAsset.Core.BipedEndpointAttribute">
+            <summary>
+            Marks C# method as external method for SymOntoClay DSL.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.BipedEndpointAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the class with default properties.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.BipedEndpointAttribute.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+            <param name="useMainThread"><b>true</b> if marked method requires calling in the main thread only. <b>false</b> if the marked method can be called in any thread.</param>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.BipedEndpointAttribute.#ctor(SymOntoClay.UnityAsset.Core.DeviceOfBiped[])">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+            <param name="devices">Describes parts of body which will be used during execution of the marked method.</param>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.BipedEndpointAttribute.#ctor(System.Boolean,SymOntoClay.UnityAsset.Core.DeviceOfBiped[])">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+            <param name="useMainThread"><b>true</b> if marked method requires calling in the main thread only. <b>false</b> if the marked method can be called in any thread.</param>
+            <param name="devices">Describes parts of body which will be used during execution of the marked method.</param>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.BipedEndpointAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+            <param name="methodName">Alias of the marked method in SymOntoClay DSL.</param>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.BipedEndpointAttribute.#ctor(System.String,System.Boolean)">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+            <param name="methodName"></param>
+            <param name="useMainThread"><b>true</b> if marked method requires calling in the main thread only. <b>false</b> if the marked method can be called in any thread.</param>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.BipedEndpointAttribute.#ctor(System.String,SymOntoClay.UnityAsset.Core.DeviceOfBiped[])">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+            <param name="methodName">Alias of the marked method in SymOntoClay DSL.</param>
+            <param name="devices">Describes parts of body which will be used during execution of the marked method.</param>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.BipedEndpointAttribute.#ctor(System.String,System.Boolean,SymOntoClay.UnityAsset.Core.DeviceOfBiped[])">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+            <param name="methodName">Alias of the marked method in SymOntoClay DSL.</param>
+            <param name="useMainThread"><b>true</b> if marked method requires calling in the main thread only. <b>false</b> if the marked method can be called in any thread.</param>
+            <param name="devices">Describes parts of body which will be used during execution of the marked method.</param>
+        </member>
         <member name="T:SymOntoClay.UnityAsset.Core.DeviceOfBiped">
             <summary>
             Represents part of body of the NPC or Player which are required for doing actions or using things (game objects). 

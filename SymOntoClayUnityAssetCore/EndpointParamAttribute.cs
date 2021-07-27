@@ -26,17 +26,33 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core
 {
+    /// <summary>
+    /// Marks parameter of C# external method for SymOntoClay DSL.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = true)]
     public class EndpointParamAttribute : Attribute
     {
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        /// <param name="name">Alias of the marked parameter in SymOntoClay DSL.</param>
         public EndpointParamAttribute(string name)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        /// <param name="kindOfParameter">Describes a tip about conversion between C# and SymOntoclay DSL types.</param>
         public EndpointParamAttribute(KindOfEndpointParam kindOfParameter)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        /// <param name="name">Alias of the marked parameter in SymOntoClay DSL.</param>
+        /// <param name="kindOfParameter">Describes a tip about conversion between C# and SymOntoclay DSL types.</param>
         public EndpointParamAttribute(string name, KindOfEndpointParam kindOfParameter)
         {
         }

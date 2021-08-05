@@ -123,6 +123,30 @@
             Represents the left leg  of the NPC or Player.
             </summary>
         </member>
+        <member name="T:SymOntoClay.UnityAsset.Core.EndpointParamAttribute">
+            <summary>
+            Marks parameter of C# external method for SymOntoClay DSL.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.EndpointParamAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+            <param name="name">Alias of the marked parameter in SymOntoClay DSL.</param>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.EndpointParamAttribute.#ctor(SymOntoClay.UnityAsset.Core.KindOfEndpointParam)">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+            <param name="kindOfParameter">Describes a tip about conversion between C# and SymOntoclay DSL types.</param>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.EndpointParamAttribute.#ctor(System.String,SymOntoClay.UnityAsset.Core.KindOfEndpointParam)">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+            <param name="name">Alias of the marked parameter in SymOntoClay DSL.</param>
+            <param name="kindOfParameter">Describes a tip about conversion between C# and SymOntoclay DSL types.</param>
+        </member>
         <member name="T:SymOntoClay.UnityAsset.Core.GameObjectSettings">
             <summary>
             Game object settings.
@@ -1081,6 +1105,21 @@
             Deletes image by Id.
             </summary>
             <param name="id">Image id.</param>
+        </member>
+        <member name="T:SymOntoClay.UnityAsset.Core.KindOfEndpointParam">
+            <summary>
+            Describes a tip about conversion between C# and SymOntoclay DSL types.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.UnityAsset.Core.KindOfEndpointParam.Unknown">
+            <summary>
+            The type is unknown.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.UnityAsset.Core.KindOfEndpointParam.Position">
+            <summary>
+            The type is absolute position.
+            </summary>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.LoggingSettings">
             <summary>

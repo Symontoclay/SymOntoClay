@@ -1,5 +1,9 @@
-# SymOntoClay 
 [![Website](https://img.shields.io/badge/documentation-online-brightgreen)](https://symontoclay.github.io/docs/index.html)
+
+
+SymOntoClay
+
+# SymOntoClay
 
 A hybrid language with logic programming and fuzzy logic for defining game characters behavior.
 
@@ -15,3 +19,5 @@ You can build and install the project from source code.
 * [CLI](https://symontoclay.github.io/docs/cli.html)
 
 Feel free to contact me about the project.
+
+

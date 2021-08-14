@@ -20,4 +20,5 @@ You can build and install the project from source code.
 
 Feel free to contact me about the project.
 
+:)
 

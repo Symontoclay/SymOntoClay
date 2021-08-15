@@ -501,7 +501,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         }
 
 #if DEBUG
-                        _gbcLogger.Info($"resultOfComparison = {resultOfComparison}");
+                        //_gbcLogger.Info($"resultOfComparison = {resultOfComparison}");
 #endif
 
                         if (resultOfComparison)

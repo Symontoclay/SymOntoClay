@@ -528,7 +528,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
                 }
                 sb.AppendLine($"{spaces}End {propName}");
             }
-        }s
+        }
 
         public static void PrintExisting(this StringBuilder sb, uint n, string propName, object value)
         {

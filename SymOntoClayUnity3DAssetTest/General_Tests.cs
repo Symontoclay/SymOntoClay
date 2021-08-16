@@ -31,6 +31,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     public class General_Tests
     {
         [Test]
+        [Parallelizable]
         public void Case1()
         {
             var text = @"app PeaceKeeper
@@ -62,6 +63,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case2()
         {
             var text = @"app PeaceKeeper
@@ -98,6 +100,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case3()
         {
             var text = @"app PeaceKeeper
@@ -131,6 +134,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case4()
         {
             var text = @"app PeaceKeeper
@@ -168,6 +172,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case5()
         {
             var text = @"app PeaceKeeper
@@ -205,6 +210,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         //[Test]
+        //[Parallelizable]
         //public void Case6()
         //{
         //    var text = @"";
@@ -220,6 +226,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         //}
 
         //[Test]
+        //[Parallelizable]
         //public void Case7()
         //{
         //    var text = @"";
@@ -235,14 +242,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         //}
 
         //[Test]
+        //[Parallelizable]
         //public void Case8()
         //{
         //    var text = @"app PeaceKeeper
-//{
-//    on Init =>
-//    {
-//    }
-//}";
+        //{
+        //    on Init =>
+        //    {
+        //    }
+        //}";
 
         //    throw new NotImplementedException();
 

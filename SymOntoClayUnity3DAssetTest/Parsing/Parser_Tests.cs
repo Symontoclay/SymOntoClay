@@ -38,6 +38,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
     public class Parser_Tests
     {
         [Test]
+        [Parallelizable]
         public void Parser_Tests_Case1()
         {
             var text = @"app Enemy
@@ -54,6 +55,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
         }
 
         [Test]
+        [Parallelizable]
         public void Parser_Tests_Case2()
         {
             var text = @"app PixKeeper

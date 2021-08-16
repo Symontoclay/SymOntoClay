@@ -43,6 +43,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         private IMainStorageContext _mainStorageContext;
 
         [Test]
+        [Parallelizable]
         public void NameHelper_Tests_Case_Empty()
         {
             var name = new StrongIdentifierValue();
@@ -58,6 +59,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void NameHelper_Tests_Case_2_Empty()
         {
             var name = NameHelper.CreateName(string.Empty);
@@ -73,6 +75,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void NameHelper_Tests_Case_Concept()
         {
             var text = "dog";
@@ -86,6 +89,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void NameHelper_Tests_Case_2_Concept()
         {
             var name = NameHelper.CreateName("Dog");
@@ -97,6 +101,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void NameHelper_Tests_Case_3_Concept()
         {
             var text = "small dog";
@@ -110,6 +115,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void NameHelper_Tests_Case_Channel()
         {
             var text = "@>log";
@@ -123,6 +129,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void NameHelper_Tests_Case_CreateRuleOrFactName()
         {
             var name = NameHelper.CreateRuleOrFactName();
@@ -134,6 +141,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void NameHelper_Tests_Case_Entity()
         {
             var text = "#dog1";
@@ -147,6 +155,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void NameHelper_Tests_Case_2_Entity()
         {
             var text = "#Tom";
@@ -160,6 +169,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void NameHelper_Tests_Case_3_Entity()
         {
             var text = "#`Barrel 1`";
@@ -173,6 +183,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void NameHelper_Tests_Case_Var()
         {
             var text = "@a";
@@ -186,6 +197,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void NameHelper_Tests_Case_SystemVar()
         {
             var text = "@@host";
@@ -199,6 +211,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void NameHelper_Tests_Case_LogicVar()
         {
             var text = "$x";

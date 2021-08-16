@@ -41,6 +41,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
         private IEntityLogger _logger;
 
         [Test]
+        [Parallelizable]
         public void Lexer_Tests_Case1()
         {
             var text = @"app Enemy

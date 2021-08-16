@@ -32,6 +32,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Test
     public class AstNodesLinker_Tests
     {
         [Test]
+        [Parallelizable]
         public void AstNodesLinker_Tests_Case1()
         {
             var nodePoint = new IntermediateAstNodePoint();
@@ -71,6 +72,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Test
         }
 
         [Test]
+        [Parallelizable]
         public void AstNodesLinker_Tests_Case2()
         {
             var nodePoint = new IntermediateAstNodePoint();
@@ -126,6 +128,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Test
         }
 
         [Test]
+        [Parallelizable]
         public void AstNodesLinker_Tests_Case3()
         {
             var nodePoint = new IntermediateAstNodePoint();
@@ -181,6 +184,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Test
         }
 
         [Test]
+        [Parallelizable]
         public void AstNodesLinker_Tests_Case4()
         {
             var nodePoint = new IntermediateAstNodePoint();
@@ -252,6 +256,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Test
         }
 
         [Test]
+        [Parallelizable]
         public void AstNodesLinker_Tests_Case5()
         {
             var nodePoint = new IntermediateAstNodePoint();
@@ -300,6 +305,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Test
         }
 
         [Test]
+        [Parallelizable]
         public void AstNodesLinker_Tests_Case6()
         {
             var nodePoint = new IntermediateAstNodePoint();
@@ -357,6 +363,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Test
         }
 
         [Test]
+        [Parallelizable]
         public void AstNodesLinker_Tests_Case7()
         {
             var nodePoint = new IntermediateAstNodePoint();
@@ -404,6 +411,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Test
         }
 
         [Test]
+        [Parallelizable]
         public void AstNodesLinker_Tests_Case8()
         {
             var nodePoint = new IntermediateAstNodePoint();
@@ -461,6 +469,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Test
         }
 
         [Test]
+        [Parallelizable]
         public void AstNodesLinker_Tests_Case9()
         {
             var nodePoint = new IntermediateAstNodePoint();
@@ -572,7 +581,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Test
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
-
         }
     }
 }

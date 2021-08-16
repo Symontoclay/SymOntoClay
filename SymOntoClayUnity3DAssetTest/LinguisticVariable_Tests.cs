@@ -36,6 +36,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     public class LinguisticVariable_Tests
     {
         [Test]
+        [Parallelizable]
         public void Case1()
         {
             var text = @"linvar age for range (0, 150]
@@ -78,6 +79,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case1_a()
         {
             var text = @"linvar age for range [0, 150)
@@ -120,6 +122,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case1_b()
         {
             var text = @"linvar age for range (0, 150)
@@ -162,6 +165,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case1_c()
         {
             var text = @"linvar age for range [0, 150]
@@ -204,6 +208,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case2()
         {
             var text = @"linvar age for range (-∞, +∞)
@@ -246,6 +251,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case3()
         {
             var text = @"linvar age for range (*, *)
@@ -288,6 +294,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case4()
         {
             var text = @"linvar age
@@ -330,6 +337,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case5()
         {
             var text = @"linvar age
@@ -371,6 +379,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case6()
         {
             var text = @"linvar age for range (0, 150]
@@ -412,6 +421,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case7()
         {
             var text = @"linvar age for range (0, 150]
@@ -451,6 +461,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case8()
         {
             var text = @"linvar age for range (0, 150]
@@ -491,6 +502,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case9()
         {
             var text = @"linvar age for range (0, 150]
@@ -531,6 +543,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case10()
         {
             var text = @"linvar age for range (0, 150]
@@ -595,6 +608,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case11()
         {
             var text = @"linvar age for range (0, 150]
@@ -659,6 +673,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case12()
         {
             var text = @"linvar age for range (0, 150]
@@ -717,6 +732,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case13()
         {
             var text = @"linvar age for range (0, 150]
@@ -775,6 +791,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case14()
         {
             var text = @"linvar age for range (0, 150]
@@ -829,6 +846,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case15()
         {
             var text = @"linvar age for range (0, 150]
@@ -883,6 +901,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case16()
         {
             var text = @"linvar logic for range [0, 1]

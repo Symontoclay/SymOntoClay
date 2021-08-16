@@ -31,6 +31,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     public class LogicConditionalTriggers_Tests
     {
         [Test]
+        [Parallelizable]
         public void Case1()
         {
             var text = @"app PeaceKeeper
@@ -52,6 +53,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case1_a()
         {
             var text = @"app PeaceKeeper
@@ -83,6 +85,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case1_b()
         {
             var text = @"app PeaceKeeper
@@ -111,6 +114,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case2()
         {
             var text = @"app PeaceKeeper
@@ -133,6 +137,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case2_a()
         {
             var text = @"app PeaceKeeper
@@ -162,6 +167,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case2_b()
         {
             var text = @"app PeaceKeeper
@@ -195,6 +201,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case2_c()
         {
             var text = @"app PeaceKeeper
@@ -221,6 +228,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case3()
         {
             var text = @"app PeaceKeeper

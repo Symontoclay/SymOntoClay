@@ -31,6 +31,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     public class Functions_Tests
     {
         [Test]
+        [Parallelizable]
         public void Case1()
         {
             var text = @"app PeaceKeeper
@@ -71,6 +72,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case1_a()
         {
             var text = @"app PeaceKeeper
@@ -111,6 +113,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case2_a()
         {
             var text = @"app PeaceKeeper
@@ -156,6 +159,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case2_b()
         {
             var text = @"app PeaceKeeper
@@ -201,6 +205,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case2_c()
         {
             var text = @"app PeaceKeeper
@@ -246,6 +251,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case2_c_1()
         {
             var text = @"app PeaceKeeper
@@ -291,6 +297,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case3()
         {
             var text = @"app PeaceKeeper
@@ -336,6 +343,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case4()
         {
             var text = @"app PeaceKeeper
@@ -381,6 +389,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case5()
         {
             var text = @"app PeaceKeeper
@@ -428,6 +437,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case6()
         {
             var text = @"app PeaceKeeper
@@ -482,6 +492,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case7()
         {
             var text = @"app PeaceKeeper
@@ -549,6 +560,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case8_a()
         {
             var text = @"app PeaceKeeper
@@ -601,6 +613,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case8_b()
         {
             var text = @"app PeaceKeeper
@@ -653,6 +666,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case8_c()
         {
             var text = @"app PeaceKeeper
@@ -705,6 +719,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case8_c_1()
         {
             var text = @"app PeaceKeeper
@@ -757,6 +772,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case8_d()
         {
             var text = @"app PeaceKeeper
@@ -802,6 +818,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case8_e()
         {
             var text = @"app PeaceKeeper
@@ -852,6 +869,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case9_a_1()
         {
             var text = @"app PeaceKeeper
@@ -907,6 +925,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case9_a_2()
         {
             var text = @"app PeaceKeeper
@@ -963,6 +982,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case9_a_3()
         {
             var text = @"app PeaceKeeper
@@ -1020,6 +1040,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case9_a_4()
         {
             var text = @"app PeaceKeeper
@@ -1077,6 +1098,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case10_a_1()
         {
             var text = @"app PeaceKeeper
@@ -1132,6 +1154,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case10_a_2()
         {
             var text = @"app PeaceKeeper
@@ -1188,6 +1211,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case10_a_3()
         {
             var text = @"app PeaceKeeper
@@ -1245,6 +1269,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case10_a_4()
         {
             var text = @"app PeaceKeeper
@@ -1302,6 +1327,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case10_a_5()
         {
             var text = @"app PeaceKeeper
@@ -1365,6 +1391,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case11()
         {
             var text = @"fun a(@param_1)
@@ -1410,6 +1437,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case12_a()
         {
             var text = @"app PeaceKeeper
@@ -1470,6 +1498,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case12_b()
         {
             var text = @"app PeaceKeeper
@@ -1530,6 +1559,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case12_c()
         {
             var text = @"app PeaceKeeper

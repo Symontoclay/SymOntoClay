@@ -31,6 +31,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     public class Inheritance_Tests
     {
         [Test]
+        [Parallelizable]
         public void Case1()
         {
             var text = @"app PeaceKeeper is [0.5] exampleClass
@@ -100,6 +101,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case2()
         {
             var text = @"linvar logic for range [0, 1]
@@ -182,6 +184,7 @@ app PeaceKeeper is [middle] exampleClass
         }
 
         [Test]
+        [Parallelizable]
         public void Case3()
         {
             var text = @"linvar logic for range [0, 1]

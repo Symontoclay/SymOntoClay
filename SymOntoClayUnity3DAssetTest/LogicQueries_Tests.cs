@@ -31,6 +31,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     public class LogicQueries_Tests
     {
         [Test]
+        [Parallelizable]
         public void Case1()
         {
             var text = @"app PeaceKeeper
@@ -62,6 +63,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case2()
         {
             var text = @"app PeaceKeeper
@@ -93,6 +95,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case3()
         {
             var text = @"app PeaceKeeper
@@ -124,6 +127,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case4()
         {
             var text = @"app PeaceKeeper
@@ -155,6 +159,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case5()
         {
             var text = @"app PeaceKeeper
@@ -185,6 +190,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case6()
         {
             var text = @"app PeaceKeeper
@@ -214,6 +220,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case7()
         {
             var text = @"app PeaceKeeper
@@ -245,6 +252,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case8()
         {
             var text = @"app PeaceKeeper
@@ -273,6 +281,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case9()
         {
             var text = @"app PeaceKeeper
@@ -302,6 +311,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case9_a()
         {
             var text = @"app PeaceKeeper
@@ -331,6 +341,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case10()
         {
             var text = @"app PeaceKeeper
@@ -359,6 +370,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case10_a()
         {
             var text = @"app PeaceKeeper
@@ -387,6 +399,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case10_b()
         {
             var text = @"app PeaceKeeper
@@ -415,6 +428,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case10_c()
         {
             var text = @"app PeaceKeeper
@@ -443,6 +457,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case11()
         {
             var text = @"app PeaceKeeper
@@ -475,6 +490,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case11_a()
         {
             var text = @"app PeaceKeeper
@@ -505,6 +521,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         }
 
         [Test]
+        [Parallelizable]
         public void Case12()
         {
             var text = @"linvar age for range (0, 150]
@@ -542,6 +559,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case12_a()
         {
             var text = @"linvar age for range (0, 150]
@@ -579,6 +597,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case12_b()
         {
             var text = @"linvar age for range (0, 150]
@@ -616,6 +635,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case12_c()
         {
             var text = @"linvar age for range (0, 150]
@@ -653,6 +673,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case12_d()
         {
             var text = @"linvar age for range (0, 150]
@@ -690,6 +711,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case12_e()
         {
             var text = @"linvar age for range (0, 150]
@@ -727,6 +749,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case12_f()
         {
             var text = @"linvar age for range (0, 150]
@@ -764,6 +787,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case12_g()
         {
             var text = @"linvar age for range (0, 150]
@@ -801,6 +825,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case12_h()
         {
             var text = @"linvar age for range (0, 150]
@@ -838,6 +863,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case12_j()
         {
             var text = @"linvar age for range (0, 150]
@@ -872,6 +898,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case12_k()
         {
             var text = @"linvar age
@@ -909,6 +936,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case12_i()
         {
             var text = @"linvar age
@@ -943,6 +971,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case12_l()
         {
             var text = @"linvar age for range (0, 150]
@@ -980,6 +1009,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case13()
         {
             var text = @"app PeaceKeeper
@@ -1012,6 +1042,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case13_a()
         {
             var text = @"app PeaceKeeper
@@ -1042,6 +1073,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case14()
         {
             var text = @"app PeaceKeeper
@@ -1072,6 +1104,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case15()
         {
             var text = @"app PeaceKeeper
@@ -1102,6 +1135,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case15_a()
         {
             var text = @"app PeaceKeeper
@@ -1131,6 +1165,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case16()
         {
             var text = @"app PeaceKeeper
@@ -1161,6 +1196,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case16_a()
         {
             var text = @"app PeaceKeeper
@@ -1190,6 +1226,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case16_b()
         {
             var text = @"app PeaceKeeper
@@ -1219,6 +1256,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case17()
         {
             var text = @"app PeaceKeeper
@@ -1249,6 +1287,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case17_a()
         {
             var text = @"app PeaceKeeper
@@ -1279,6 +1318,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case17_b()
         {
             var text = @"app PeaceKeeper
@@ -1308,6 +1348,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case18()
         {
             var text = @"app PeaceKeeper
@@ -1337,6 +1378,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case18_a()
         {
             var text = @"app PeaceKeeper
@@ -1366,6 +1408,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case18_b()
         {
             var text = @"app PeaceKeeper
@@ -1396,6 +1439,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case19()
         {
             var text = @"app PeaceKeeper
@@ -1425,6 +1469,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case19_a()
         {
             var text = @"app PeaceKeeper
@@ -1455,6 +1500,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case19_b()
         {
             var text = @"app PeaceKeeper
@@ -1485,6 +1531,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case20()
         {
             var text = @"linvar age for range (0, 150]
@@ -1523,6 +1570,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case20_a()
         {
             var text = @"linvar age for range (0, 150]
@@ -1560,6 +1608,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case20_b()
         {
             var text = @"linvar age for range (0, 150]
@@ -1597,6 +1646,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case21()
         {
             var text = @"linvar age for range (0, 150]
@@ -1635,6 +1685,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case21_a()
         {
             var text = @"linvar age for range (0, 150]
@@ -1673,6 +1724,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case21_b()
         {
             var text = @"linvar age for range (0, 150]
@@ -1710,6 +1762,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case22()
         {
             var text = @"linvar age for range (0, 150]
@@ -1747,6 +1800,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case22_a()
         {
             var text = @"linvar age for range (0, 150]
@@ -1784,6 +1838,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case22_b()
         {
             var text = @"linvar age for range (0, 150]
@@ -1822,6 +1877,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case23()
         {
             var text = @"linvar age for range (0, 150]
@@ -1859,6 +1915,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case23_a()
         {
             var text = @"linvar age for range (0, 150]
@@ -1897,6 +1954,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case23_b()
         {
             var text = @"linvar age for range (0, 150]
@@ -1935,6 +1993,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case24()
         {
             var text = @"linvar age for range (0, 150]
@@ -1973,6 +2032,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case24_a()
         {
             var text = @"linvar age for range (0, 150]
@@ -2010,6 +2070,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case24_b()
         {
             var text = @"linvar age for range (0, 150]
@@ -2047,6 +2108,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case25()
         {
             var text = @"linvar age for range (0, 150]
@@ -2085,6 +2147,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case25_a()
         {
             var text = @"linvar age for range (0, 150]
@@ -2123,6 +2186,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case25_b()
         {
             var text = @"linvar age for range (0, 150]
@@ -2160,6 +2224,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case26()
         {
             var text = @"linvar age for range (0, 150]
@@ -2197,6 +2262,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case26_a()
         {
             var text = @"linvar age for range (0, 150]
@@ -2234,6 +2300,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case26_b()
         {
             var text = @"linvar age for range (0, 150]
@@ -2272,6 +2339,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case27()
         {
             var text = @"linvar age for range (0, 150]
@@ -2309,6 +2377,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case27_a()
         {
             var text = @"linvar age for range (0, 150]
@@ -2347,6 +2416,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case27_b()
         {
             var text = @"linvar age for range (0, 150]
@@ -2385,6 +2455,7 @@ app PeaceKeeper
         }
 
         [Test]
+        [Parallelizable]
         public void Case28()
         {
             var text = @"app PeaceKeeper

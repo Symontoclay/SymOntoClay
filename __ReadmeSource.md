@@ -1,1 +1,1 @@
-SymOntoClay
+The core of SymOntoClay Engine.

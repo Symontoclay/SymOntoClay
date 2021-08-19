@@ -1,9 +1,13 @@
 [![Website](https://img.shields.io/badge/documentation-online-brightgreen)](https://symontoclay.github.io/docs/index.html)
 
 
-SymOntoClay
+The core of SymOntoClay Engine.
 
-# SymOntoClay
+<p align="center"><a href="https://symontoclay.github.io" target="_blank">
+    <img src="https://symontoclay.github.io/logo.png">
+</a></p>
+
+[SymOntoClay][1]
 
 A hybrid language with logic programming and fuzzy logic for defining game characters behavior.
 

@@ -63,6 +63,29 @@ Learn key features in details <a href='https://symontoclay.github.io/docs/key-fe
 </p>
 </div>
 
+## Domain-specific language (DSL)
+
+<div><div><p>
+SymOntoClay has own Domain-specific language (DSL).
+</p>
+
+<p>
+It helps using interesting AI features in more convenient way.
+Some features are difficult to add for existing languages, for example, multiple fuzzy inheritance.
+</p>
+
+<p>
+The language is also called SymOntoClay like the engine.
+</p>
+
+<p>
+I'm completely free in my experiments with syntax.
+</p>
+
+<p>
+My main criterion in SymOntoClay's syntax decisions is including interesting features into the syntax as gracefully as possible and making using them convenient in game development.
+</p></div></div>
+
 ## Project status
 
 <div><div><p>

@@ -1,6 +1,11 @@
+<div>The core of SymOntoClay Engine.</div>
+
 <p align="center"><a href="https://symontoclay.github.io" target="_blank">
     <img src="https://symontoclay.github.io/favicon.png">&nbsp;<span style="font-size: 30px; font-weight: bold;">SymOntoClay</span>
 </a></p>
+
+<span>[![Website](https://img.shields.io/badge/documentation-online-brightgreen)](https://symontoclay.github.io/docs/index.html)
+</span><span></span>
 
 [SymOntoClay][1]
 

@@ -120,6 +120,7 @@ You can build and install the project from source code.
 ## Documentation
 
 * [Home page](https://symontoclay.github.io/)
+* [Documentation](https://symontoclay.github.io/docs/index.html)
 * [Language specification](https://symontoclay.github.io/docs/spec.html)
 * [CLI](https://symontoclay.github.io/docs/cli.html)
 

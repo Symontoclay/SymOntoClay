@@ -10,7 +10,7 @@ SymOntoClay is a hybrid language with logic programming and fuzzy logic for defi
 </p>
 
 <p>
-The project is planned as open source asset for Unity3D.
+The project is open source component for Unity.
 </p></div></div>
 
 ## Aim
@@ -125,12 +125,8 @@ You can build and install the project from source code.
 
 ## Examples
 
-* [Examples](https://symontoclay.github.io/docs/lng_examples/index.html)
+* [DSL code examples](https://symontoclay.github.io/docs/lng_examples/index.html)
 * [Unity examples](https://symontoclay.github.io/docs/unity-examples.html)
-
-## Usage
-
-<div style="font-weight: bold; color: red;">COMPLETE ME!</div>
 
 <p>
 Feel free contact to me about the project. 

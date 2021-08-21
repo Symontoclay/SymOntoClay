@@ -115,12 +115,14 @@ And I hope this project will become useful for many indie game developers in the
 You can build and install the project from source code.
 
 * [Installation](https://symontoclay.github.io/docs/install.html)
-* [Getting started](https://symontoclay.github.io/docs/getting-started-cli.html)
+* [Getting started with SymOntoClay's CLI](https://symontoclay.github.io/docs/getting-started-cli.html)
+* [Getting started game development with SymOntoClay](https://symontoclay.github.io/docs/getting-started-unity.html)
 
 ## Documentation
 
 * [Home page](https://symontoclay.github.io/)
 * [Documentation](https://symontoclay.github.io/docs/index.html)
+* [Unity components](https://symontoclay.github.io/docs/unity_components.html)
 * [Language specification](https://symontoclay.github.io/docs/spec.html)
 * [CLI](https://symontoclay.github.io/docs/cli.html)
 

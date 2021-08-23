@@ -111,6 +111,20 @@ I'm going to continue my experiments.
 And I hope this project will become useful for many indie game developers in the future.
 </p></div></div>
 
+## Requirements
+<p>
+SymOntoClay CLI requires:
+    <ul><li>NET 5.0</li>
+</ul>
+
+
+<p>
+SymOntoClay's components for Unity require:
+    <ul><li>Unity 2020.2.3f1</li>
+<li>NET 5.0</li>
+</ul>
+
+
 ## Installation
 You can build and install the project from source code.
 

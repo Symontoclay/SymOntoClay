@@ -33,7 +33,23 @@ namespace SymOntoClayProjectFiles
     {
         public static FileInfo CreateWithWSpaceFile(WorldSpaceCreationSettings settings, FileInfo wSpaceFile, Action<string> errorCallBack)
         {
-            var appDir = wSpaceFile.Directory.GetDirectories().SingleOrDefault(p => p.Name == "Npcs");
+            DirectoryInfo appDir = null;
+
+            var kindOfNewCommand = settings.KindOfNewCommand;
+
+            switch (kindOfNewCommand)
+            {
+                case KindOfNewCommand.NPC:
+                    appDir = wSpaceFile.Directory.GetDirectories().SingleOrDefault(p => p.Name == "Npcs");
+                    break;
+
+                case KindOfNewCommand.Thing:
+                    appDir = wSpaceFile.Directory.GetDirectories().SingleOrDefault(p => p.Name == "Things");
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfNewCommand), kindOfNewCommand, null);
+            }
 
             if (appDir == null)
             {
@@ -79,11 +95,11 @@ namespace SymOntoClayProjectFiles
                 File.WriteAllText(worldFileName, "{}");
             }
 
-            var hostsDirName = Path.Combine(worldSpaceDirName, "Things");
+            var thingDirName = Path.Combine(worldSpaceDirName, "Things");
 
-            if (!Directory.Exists(hostsDirName))
+            if (!Directory.Exists(thingDirName))
             {
-                Directory.CreateDirectory(hostsDirName);
+                Directory.CreateDirectory(thingDirName);
             }
 
             var playerDirName = Path.Combine(worldSpaceDirName, "Players");
@@ -107,7 +123,28 @@ namespace SymOntoClayProjectFiles
                 Directory.CreateDirectory(npcsDirName);
             }
 
-            CreateProject(settings, npcsDirName, errorCallBack);
+            if(!settings.CreateOnlyWorldspace)
+            {
+                var targetDirName = string.Empty;
+
+                var kindOfNewCommand = settings.KindOfNewCommand;
+
+                switch (kindOfNewCommand)
+                {
+                    case KindOfNewCommand.NPC:
+                        targetDirName = npcsDirName;
+                        break;
+
+                    case KindOfNewCommand.Thing:
+                        targetDirName = thingDirName;
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfNewCommand), kindOfNewCommand, null);
+                }
+
+                CreateProject(settings, targetDirName, errorCallBack);
+            }            
 
             return new FileInfo(wSpaceFileName);
         }

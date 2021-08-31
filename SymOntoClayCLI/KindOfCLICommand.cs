@@ -31,6 +31,7 @@ namespace SymOntoClay.CLI
         Unknown,
         Help,
         New,
+        NewWorlspace,
         Run,
         Version
     }

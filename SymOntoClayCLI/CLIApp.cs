@@ -33,7 +33,7 @@ namespace SymOntoClay.CLI
     public class CLIApp : IDisposable
     {
 #if DEBUG
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        //private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public void Run(string[] args)
@@ -49,7 +49,11 @@ namespace SymOntoClay.CLI
 
             var command = CLICommandParser.Parse(args);
 
-            if(!command.IsValid)
+#if DEBUG
+            //_logger.Info($"command = {command}");
+#endif
+
+            if (!command.IsValid)
             {
                 PrintAboutWrongCommandLine(command);
                 PrintHowToExitAndWait();
@@ -75,6 +79,13 @@ namespace SymOntoClay.CLI
                 case KindOfCLICommand.New:
                     {
                         var handler = new CLINewHandler();
+                        handler.Run(command);
+                        return;
+                    }
+
+                case KindOfCLICommand.NewWorlspace:
+                    {
+                        var handler = new CLINewWorldspaceHandler();
                         handler.Run(command);
                         return;
                     }

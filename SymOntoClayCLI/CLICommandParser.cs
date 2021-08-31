@@ -23,6 +23,7 @@ SOFTWARE.*/
 using Newtonsoft.Json;
 using NLog;
 using SymOntoClay.CoreHelper;
+using SymOntoClayProjectFiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -93,15 +94,62 @@ namespace SymOntoClay.CLI
 
         private static CLICommand ParseNewCommand(string[] args)
         {
-            var command = new CLICommand() { Kind = KindOfCLICommand.New };
-
             switch (args.Length)
             {
                 case 2:
                     {
+                        var command = new CLICommand() 
+                        {
+                            Kind = KindOfCLICommand.New,
+                            KindOfNewCommand = KindOfNewCommand.NPC
+                        };
                         command.ProjectName = args[1];
                         command.IsValid = true;
                         return command;
+                    }
+
+                case 3:
+                    {
+                        var modificator = args[1];
+
+                        switch (modificator)
+                        {
+                            case "-w":
+                            case "-world":
+                                {
+                                    var command = new CLICommand() { Kind = KindOfCLICommand.NewWorlspace };
+                                    command.ProjectName = args[2];
+                                    command.IsValid = true;
+                                    return command;
+                                }
+
+                            case "-npc":
+                                {
+                                    var command = new CLICommand()
+                                    {
+                                        Kind = KindOfCLICommand.New,
+                                        KindOfNewCommand = KindOfNewCommand.NPC
+                                    };
+                                    command.ProjectName = args[2];
+                                    command.IsValid = true;
+                                    return command;
+                                }
+
+                            case "-thing":
+                                {
+                                    var command = new CLICommand()
+                                    {
+                                        Kind = KindOfCLICommand.New,
+                                        KindOfNewCommand = KindOfNewCommand.Thing
+                                    };
+                                    command.ProjectName = args[2];
+                                    command.IsValid = true;
+                                    return command;
+                                }
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(modificator), modificator, null);
+                        }
                     }
 
                 default:

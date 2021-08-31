@@ -30,6 +30,8 @@ namespace SymOntoClayProjectFiles
     public class WorldSpaceCreationSettings : IObjectToString
     {
         public string ProjectName { get; set; }
+        public bool CreateOnlyWorldspace { get; set; }
+        public KindOfNewCommand KindOfNewCommand { get; set; } = KindOfNewCommand.NPC;
 
         /// <inheritdoc/>
         public override string ToString()
@@ -50,6 +52,8 @@ namespace SymOntoClayProjectFiles
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(ProjectName)} = {ProjectName}");
+            sb.AppendLine($"{spaces}{nameof(CreateOnlyWorldspace)} = {CreateOnlyWorldspace}");
+            sb.AppendLine($"{spaces}{nameof(KindOfNewCommand)} = {KindOfNewCommand}");
 
             return sb.ToString();
         }

@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClayProjectFiles;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,6 +31,7 @@ namespace SymOntoClay.CLI
     public class CLICommand : IObjectToString
     {
         public KindOfCLICommand Kind { get; set; } = KindOfCLICommand.Unknown;
+        public KindOfNewCommand KindOfNewCommand { get; set; } = KindOfNewCommand.NPC;
         public string InputFile { get; set; }
         public string InputDir { get; set; }
         public string ProjectName { get; set; }
@@ -54,6 +56,7 @@ namespace SymOntoClay.CLI
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(KindOfNewCommand)} = {KindOfNewCommand}");
             sb.AppendLine($"{spaces}{nameof(InputFile)} = {InputFile}");
             sb.AppendLine($"{spaces}{nameof(InputDir)} = {InputDir}");
             sb.AppendLine($"{spaces}{nameof(ProjectName)} = {ProjectName}");

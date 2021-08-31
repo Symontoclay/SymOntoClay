@@ -41,7 +41,7 @@ namespace SymOntoClay.CLI
         {
             var wSpaceFile = RunCommandFilesSearcher.FindWSpaceFile(Directory.GetCurrentDirectory());
 
-            var worldSpaceCreationSettings = new WorldSpaceCreationSettings() { ProjectName = command.ProjectName };
+            var worldSpaceCreationSettings = new WorldSpaceCreationSettings() { ProjectName = command.ProjectName, KindOfNewCommand = command.KindOfNewCommand };
 
             if (wSpaceFile == null)
             {

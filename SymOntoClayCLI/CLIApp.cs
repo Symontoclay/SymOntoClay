@@ -104,7 +104,7 @@ namespace SymOntoClay.CLI
 
         private void PrintHeader()
         {
-            ConsoleWrapper.WriteText("Copyright © 2020 Sergiy Tolkachov aka metatypeman");
+            ConsoleWrapper.WriteText($"Copyright © 2020 - {DateTime.Today.Year:####} Sergiy Tolkachov aka metatypeman");
         }
 
         private void PrintHowToExitAndWait()

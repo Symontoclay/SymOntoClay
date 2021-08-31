@@ -130,8 +130,11 @@ namespace SymOntoClay.CLI
             ConsoleWrapper.WriteText("run <NPC file name> - runs NPC and waits when you write 'exit' for exit.");
             ConsoleWrapper.WriteText("run - runs current NPC and waits when you write 'exit' for exit. The current NPC is detected by locators.");
             ConsoleWrapper.WriteText("exit - ends running NPC.");
-            ConsoleWrapper.WriteText("new <NPC name> - creates new NPC in new or existing worldspace. For creating NPC in existing worldspace runs command 'new' in worldspace directory.");
+            ConsoleWrapper.WriteText("new [-npc] <NPC name> - creates new NPC in new or existing worldspace. For creating NPC in existing worldspace runs command 'new' in worldspace directory.");
             ConsoleWrapper.WriteText("n - alias of 'new' command.");
+            ConsoleWrapper.WriteText("new -thing <NPC name> - creates new Thing in new or existing worldspace. For creating NPC in existing worldspace runs command 'new' in worldspace directory.");
+            ConsoleWrapper.WriteText("new -world <NPC name> - creates new worldspace.");
+            ConsoleWrapper.WriteText("new -w <NPC name> - creates new worldspace.");
             ConsoleWrapper.WriteText("version - prints current version of SymOntoClay.");
             ConsoleWrapper.WriteText("v - alias of 'version' command.");
         }

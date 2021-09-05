@@ -1,7 +1,6 @@
 <div>The core of SymOntoClay Engine.</div>
 
 # SymOntoClay
-
 <span>[![Website](https://img.shields.io/badge/documentation-online-brightgreen)](https://symontoclay.github.io/docs/index.html)
 </span><span></span>
 
@@ -14,7 +13,6 @@ The project is open source component for Unity.
 </p></div></div>
 
 ## Aim
-
 <div><div><p>
 The main aim of the project is experimenting on using various symbolic artificial intelligence approaches in game developing.
 First of all It's logic programming, fuzzy logic, fuzzy inheritance and natural language processing (NLP).
@@ -37,7 +35,6 @@ I will be very glad If It helps to increase amount of cool games, happy users an
 </p></div></div>
 
 ## Key features
-
 <div><ul>
 <li>
 <b>Simple, clear and clean code</b>
@@ -64,7 +61,6 @@ Learn key features in details <a href='https://symontoclay.github.io/docs/key-fe
 </div>
 
 ## Domain-specific language (DSL)
-
 <div><div><p>
 SymOntoClay has own Domain-specific language (DSL).
 </p>
@@ -87,7 +83,6 @@ My main criterion in SymOntoClay's syntax decisions is including interesting fea
 </p></div></div>
 
 ## Project status
-
 <div><div><p>
 I've making SymOntoClay alone in my free time since 2016. 
 So It's not fast.
@@ -112,18 +107,18 @@ And I hope this project will become useful for many indie game developers in the
 </p></div></div>
 
 ## Requirements
-<p>
+<div><div><div><div><p>
 SymOntoClay CLI requires:
     <ul><li>NET 5.0</li>
 </ul>
+</div></div>
 
-
-<p>
+<div><div><p>
 SymOntoClay's components for Unity require:
     <ul><li>Unity 2020.2.3f1</li>
 <li>NET 5.0</li>
 </ul>
-
+</div></div></div></div>
 
 ## Installation
 You can build and install the project from source code.
@@ -133,7 +128,6 @@ You can build and install the project from source code.
 * [Getting started game development with SymOntoClay](https://symontoclay.github.io/docs/getting-started-unity.html)
 
 ## Documentation
-
 * [Home page](https://symontoclay.github.io/)
 * [Documentation](https://symontoclay.github.io/docs/index.html)
 * [Unity components](https://symontoclay.github.io/docs/unity_components.html)
@@ -141,7 +135,6 @@ You can build and install the project from source code.
 * [CLI](https://symontoclay.github.io/docs/cli.html)
 
 ## Examples
-
 * [DSL code examples](https://symontoclay.github.io/docs/lng_examples/index.html)
 * [Unity examples](https://symontoclay.github.io/docs/unity-examples.html)
 

@@ -771,9 +771,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
                         }
 
+                        if (string.Compare(content, "action", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Action;
+                            break;
+                        }
+
                         if (string.Compare(content, "fun", true) == 0)
                         {
                             kindOfKeyWord = KeyWordTokenKind.Fun;
+                            break;
+                        }
+
+                        if (string.Compare(content, "op", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Operator;
                             break;
                         }
 

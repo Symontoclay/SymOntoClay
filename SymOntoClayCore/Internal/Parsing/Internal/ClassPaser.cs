@@ -28,7 +28,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public class ClassPaser : BaseInternalParser
+    public class ClassPaser : BaseObjectParser
     {
         private enum State
         {
@@ -39,39 +39,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
 
         public ClassPaser(InternalParserContext context)
-            : base(context)
+            : base(context, KindOfCodeEntity.Class)
         {
         }
 
         private State _state = State.Init;
-        public CodeEntity Result { get; private set; }
-
-        /// <inheritdoc/>
-        protected override void OnEnter()
-        {
-#if DEBUG
-            //Log("Begin");
-#endif
-            Result = CreateCodeEntityAndSetAsCurrent(KindOfCodeEntity.Class);
-
-#if DEBUG
-            //Log("End");
-#endif
-        }
-
-        /// <inheritdoc/>
-        protected override void OnFinish()
-        {
-#if DEBUG
-            //Log("Begin");
-#endif
-
-            RemoveCurrentCodeEntity();
-
-#if DEBUG
-            //Log("End");
-#endif
-        }
 
         /// <inheritdoc/>
         protected override void OnRun()
@@ -140,50 +112,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case State.ContentStarted:
-                    switch (_currToken.TokenKind)
-                    {
-                        case TokenKind.CloseFigureBracket:
-                            Exit();
-                            break;
-
-                        case TokenKind.Word:
-                            switch (_currToken.KeyWordTokenKind)
-                            {
-                                case KeyWordTokenKind.On:
-                                    {
-                                        _context.Recovery(_currToken);
-                                        var parser = new InlineTriggerParser(_context);
-                                        parser.Run();
-                                        Result.SubItems.Add(parser.Result);
-                                    }
-                                    break;
-
-                                case KeyWordTokenKind.Fun:
-                                    {
-                                        _context.Recovery(_currToken);
-                                        var parser = new NamedFunctionParser(_context);
-                                        parser.Run();
-                                        Result.SubItems.Add(parser.Result);
-                                    }
-                                    break;
-
-                                default:
-                                    throw new UnexpectedTokenException(_currToken);
-                            }
-                            break;
-
-                        case TokenKind.OpenFactBracket:
-                            {
-                                _context.Recovery(_currToken);
-                                var parser = new LogicalQueryAsCodeEntityParser(_context);
-                                parser.Run();
-                                Result.SubItems.Add(parser.Result);
-                            }
-                            break;
-
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
-                    }
+                    ProcessGeneralContent();
                     break;
 
                 default:

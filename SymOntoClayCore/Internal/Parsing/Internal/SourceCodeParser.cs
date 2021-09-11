@@ -78,6 +78,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case KeyWordTokenKind.Action:
+                            {
+                                _context.Recovery(_currToken);
+                                var parser = new ActionPaser(_context);
+                                parser.Run();
+                                Result.Add(parser.Result);
+                            }
+                            break;
+
                         case KeyWordTokenKind.LinguisticVariable:
                             {
                                 _context.Recovery(_currToken);

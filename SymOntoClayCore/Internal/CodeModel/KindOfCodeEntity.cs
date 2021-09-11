@@ -32,6 +32,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         World,
         App,
         Class,
+        Action,
         Instance,
         InlineTrigger,
         Function,

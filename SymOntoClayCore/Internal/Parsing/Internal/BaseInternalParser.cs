@@ -165,6 +165,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             return result;
         }
 
+        protected Operator CreateOperator()
+        {
+            var result = new Operator();
+
+            DefaultSettingsOfCodeEntityHelper.SetUpOperator(result, CurrentDefaultSetings);
+            return result;
+        }
+
         protected InheritanceItem CreateInheritanceItem()
         {
             var result = new InheritanceItem();

@@ -188,6 +188,10 @@ namespace SymOntoClay.Core.Internal.Serialization
                     AddSystemDefinedSettingsToClass(codeEntity);
                     break;
 
+                case KindOfCodeEntity.Action:
+                    AddSystemDefinedSettingsToAction(codeEntity);
+                    break;
+
                 case KindOfCodeEntity.InlineTrigger:
                     break;
 
@@ -198,6 +202,9 @@ namespace SymOntoClay.Core.Internal.Serialization
                     break;
 
                 case KindOfCodeEntity.Function:
+                    break;
+
+                case KindOfCodeEntity.Operator:
                     break;
 
                 default:
@@ -250,6 +257,24 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             inheritanceItem.SubName = codeEntity.Name;
             inheritanceItem.SuperName = _context.CommonNamesStorage.ClassName;
+            inheritanceItem.Rank = new LogicalValue(1.0F);
+
+#if DEBUG
+            //Log($"inheritanceItem = {inheritanceItem}");
+#endif
+
+            codeEntity.InheritanceItems.Add(inheritanceItem);
+        }
+
+        private void AddSystemDefinedSettingsToAction(CodeEntity codeEntity)
+        {
+            var inheritanceItem = new InheritanceItem()
+            {
+                IsSystemDefined = true
+            };
+
+            inheritanceItem.SubName = codeEntity.Name;
+            inheritanceItem.SuperName = _context.CommonNamesStorage.ActionName;
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
 #if DEBUG

@@ -34,6 +34,7 @@ namespace SymOntoClay.Core.Internal
         public const string WorldTypeName = "world";
         public const string AppTypeName = "app";
         public const string ClassTypeName = "class";
+        public const string ActionTypeName = "action";
         public const string NumberTypeName = "number";
         public const string StringTypeName = "string";
         public const string FuzzyTypeName = "fuzzy";

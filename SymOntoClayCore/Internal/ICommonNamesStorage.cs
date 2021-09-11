@@ -36,6 +36,8 @@ namespace SymOntoClay.Core.Internal
 
         StrongIdentifierValue ClassName { get; }
 
+        StrongIdentifierValue ActionName { get; }
+
         StrongIdentifierValue DefaultHolder { get; }
 
         StrongIdentifierValue SelfSystemVarName { get; }

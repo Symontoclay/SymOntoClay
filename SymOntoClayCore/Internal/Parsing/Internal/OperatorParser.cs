@@ -10,7 +10,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private enum State
         {
             Init,
-            GotOperatorMark
+            GotOperatorMark,
+            GotParameters,
+            WaitForAction,
+            GotAction
         }
 
         public OperatorParser(InternalParserContext context)
@@ -84,6 +87,71 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotOperatorMark:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.OpenRoundBracket:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var parser = new FunctionParametersParser(_context);
+                                parser.Run();
+
+                                _operator.Arguments = parser.Result;
+
+                                _state = State.GotParameters;
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotParameters:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Lambda:
+                            _state = State.WaitForAction;
+                            break;
+
+                        case TokenKind.OpenFigureBracket:
+                            _context.Recovery(_currToken);
+                            _state = State.WaitForAction;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForAction:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenFigureBracket:
+                            {
+                                _context.Recovery(_currToken);
+                                var parser = new FunctionBodyParser(_context);
+                                parser.Run();
+                                var statementsList = parser.Result;
+
+                                _operator.Statements = statementsList;
+                                _operator.CompiledFunctionBody = _context.Compiler.Compile(statementsList);
+                                _state = State.GotAction;
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotAction:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                        case TokenKind.CloseFigureBracket:
+                            _context.Recovery(_currToken);
+                            Exit();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

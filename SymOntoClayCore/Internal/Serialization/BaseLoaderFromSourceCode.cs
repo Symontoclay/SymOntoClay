@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -349,6 +350,13 @@ namespace SymOntoClay.Core.Internal.Serialization
                 case KindOfCodeEntity.Action:
                     globalStorage.ActionsStorage.Append(codeEntity.Action);
                     break;
+
+                case KindOfCodeEntity.Operator:
+                    if(codeEntity.Operator.KindOfOperator == KindOfOperator.CallFunction)
+                    {
+                        break;
+                    }
+                    throw new NotImplementedException();
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfEntity), kindOfEntity, null);

@@ -44,27 +44,117 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStorage
 
                 action.CheckDirty();
 
+                var holder = action.Holder;
+
+#if DEBUG
+                Log($"holder = {holder}");
+#endif
+
                 var namesList = action.NamesList;
 
 #if DEBUG
                 Log($"namesList = {namesList.WriteListToString()}");
 #endif
 
-                var paramsCountList = GetParamsCountList(action);
+                var paramsCountDict = GetParamsCountDict(action);
+
+                var paramsCountList = paramsCountDict.Keys.ToList();
 
 #if DEBUG
                 Log($"paramsCountList = {paramsCountList.WritePODListToString()}");
 #endif
 
-                throw new NotImplementedException();
+                foreach(var name in namesList)
+                {
+#if DEBUG
+                    Log($"name = {name}");
+#endif
+
+                    var targetDict = GetDictByNames(holder, name);
+
+                    foreach (var count in paramsCountList)
+                    {
+#if DEBUG
+                        Log($"count = {count}");
+#endif
+
+                        var operatorsList = paramsCountDict[count];
+
+                        List<ActionPtr> targetList = null;
+
+                        if (targetDict.ContainsKey(count))
+                        {
+                            targetList = targetDict[count];
+                        }
+                        else
+                        {
+                            targetList = new List<ActionPtr>();
+                            targetDict[count] = targetList;
+                        }
+
+                        foreach(var op in operatorsList)
+                        {
+#if DEBUG
+                            Log($"op = {op}");
+#endif
+
+                            if (!targetList.Any(p => p.Action == action && p.Operator == op))
+                            {
+                                targetList.Add(new ActionPtr(action, op));
+                            }
+                        }
+                    }
+                }
             }
         }
 
-        private List<int> GetParamsCountList(ActionDef action)
+        private Dictionary<int, List<Operator>> GetParamsCountDict(ActionDef action)
+        {
+            var result = new Dictionary<int, List<Operator>>();
+
+            foreach(var op in action.Operators)
+            {
+#if DEBUG
+                Log($"op = {op}");
+#endif
+
+                var paramsCountList = GetParamsCountList(op);
+
+#if DEBUG
+                Log($"paramsCountList = {paramsCountList.WritePODListToString()}");
+#endif
+
+                foreach(var count in paramsCountList)
+                {
+                    AddToDict(count, result, op);
+                }
+            }
+
+            return result;
+        }
+
+        private void AddToDict(int paramCount, Dictionary<int, List<Operator>> dict, Operator @operator)
+        {
+            if(dict.ContainsKey(paramCount))
+            {
+                var list = dict[paramCount];
+
+                if(!list.Contains(@operator))
+                {
+                    list.Add(@operator);
+                }
+
+                return;
+            }
+
+            dict[paramCount] = new List<Operator>() { @operator };
+        }
+
+        private List<int> GetParamsCountList(Operator @operator)
         {
             var result = new List<int>();
 
-            var argumentsList = action.Operators.SelectMany(p => p.Arguments).ToList();
+            var argumentsList = @operator.Arguments;
 
 #if DEBUG
             Log($"argumentsList.Count = {argumentsList.Count}");
@@ -91,6 +181,33 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStorage
             }
 
             return result;
+        }
+
+        private Dictionary<int, List<ActionPtr>> GetDictByNames(StrongIdentifierValue holder, StrongIdentifierValue name)
+        {
+            if (_actionsDict.ContainsKey(holder))
+            {
+                var dict = _actionsDict[holder];
+
+                if (dict.ContainsKey(name))
+                {
+                    return dict[name];
+                }
+
+                {
+                    var targetDict = new Dictionary<int, List<ActionPtr>>();
+                    dict[name] = targetDict;
+                    return targetDict;
+                }
+            }
+
+            {
+                var dict = new Dictionary<StrongIdentifierValue, Dictionary<int, List<ActionPtr>>>();
+                _actionsDict[holder] = dict;
+                var targetDict = new Dictionary<int, List<ActionPtr>>();
+                dict[name] = targetDict;
+                return targetDict;
+            }
         }
     }
 }

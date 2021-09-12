@@ -67,6 +67,11 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStorage
                 //Log($"name = {name}");
 #endif
 
+                if(name == null)
+                {
+                    return;
+                }
+
                 if (_codeEntitiesDict.ContainsKey(name))
                 {
                     var targetList = _codeEntitiesDict[name];

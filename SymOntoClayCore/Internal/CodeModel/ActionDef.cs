@@ -1,6 +1,8 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
@@ -26,6 +28,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         private List<Operator> _operatorsList = new List<Operator>();
+
+        public IList<Operator> Operators => _operatorsList;
 
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
@@ -59,10 +63,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             context[this] = result;
 
             result.Name = Name.Clone(context);
+            result._namesList = _namesList?.Select(p => p.Clone(context)).ToList();
             //result.Range = Range?.Clone(context);
             //result.Constraint = Constraint?.Clone(context);
             //result.Values = Values?.Select(p => p.Clone(context)).ToList();
-            //result.Operators = Operators?.Select(p => p.Clone(context)).ToList();
+            result._operatorsList = _operatorsList?.Select(p => p.Clone(context)).ToList();
 
             result.CodeEntity = CodeEntity.Clone(context);
 
@@ -86,13 +91,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
             //    }
             //}
 
-            //if (!Operators.IsNullOrEmpty())
-            //{
-            //    foreach (var op in Operators)
-            //    {
-            //        op.DiscoverAllAnnotations(result);
-            //    }
-            //}
+            if (!Operators.IsNullOrEmpty())
+            {
+                foreach (var op in Operators)
+                {
+                    op.DiscoverAllAnnotations(result);
+                }
+            }
         }
 
         /// <inheritdoc/>
@@ -126,15 +131,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
             //    }
             //}
 
-            //if (!Operators.IsNullOrEmpty())
-            //{
-            //    foreach (var op in Operators)
-            //    {
-            //        op.CheckDirty();
+            if (!Operators.IsNullOrEmpty())
+            {
+                foreach (var op in Operators)
+                {
+                    op.CheckDirty();
 
-            //        result ^= op.GetLongHashCode();
-            //    }
-            //}
+                    result ^= op.GetLongHashCode();
+                }
+            }
 
             return result;
         }

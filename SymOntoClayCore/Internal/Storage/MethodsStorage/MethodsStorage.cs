@@ -74,7 +74,7 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStorage
                 //Log($"paramsCountList = {paramsCountList.WritePODListToString()}");
 #endif
 
-                var targetDict = GetDictByParamsCount(namedFunction);
+                var targetDict = GetDictByNames(namedFunction);
 
                 foreach (var count in paramsCountList)
                 {
@@ -98,7 +98,7 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStorage
             }
         }
 
-        private Dictionary<int, List<NamedFunction>> GetDictByParamsCount(NamedFunction namedFunction)
+        private Dictionary<int, List<NamedFunction>> GetDictByNames(NamedFunction namedFunction)
         {
             var holder = namedFunction.Holder;
 

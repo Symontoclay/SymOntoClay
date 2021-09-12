@@ -35,22 +35,78 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class MethodsResolver : BaseResolver
     {
+        #region public constructors
         public MethodsResolver(IMainStorageContext context)
             : base(context)
         {
         }
+        #endregion
 
-        private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
-
-        public NamedFunction Resolve(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
+        #region public methods
+        public IExecutable Resolve(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(name, localCodeExecutionContext, _defaultOptions);
         }
 
-        public NamedFunction Resolve(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public IExecutable Resolve(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var method = ResolveMethod(name, localCodeExecutionContext, options);
+
+            if(method == null)
+            {
+                return ResolveAction(name, localCodeExecutionContext, options);
+            }
+
+            return method;
+        }
+
+        public IExecutable Resolve(StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Resolve(name, namedParameters, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public IExecutable Resolve(StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var method = ResolveMethod(name, namedParameters, localCodeExecutionContext, options);
+
+            if (method == null)
+            {
+                return ResolveAction(name, namedParameters, localCodeExecutionContext, options);
+            }
+
+            return method;
+        }
+
+        public IExecutable Resolve(StrongIdentifierValue name, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Resolve(name, positionedParameters, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public IExecutable Resolve(StrongIdentifierValue name, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var method = ResolveMethod(name, positionedParameters, localCodeExecutionContext, options);
+
+            if (method == null)
+            {
+                return ResolveAction(name, namedParameters, localCodeExecutionContext, options);
+            }
+
+            return method;
+        }
+        #endregion
+
+        #region private fields
+        private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
+
+        private static readonly StrongIdentifierValue _fuzzyTypeIdentifier = NameHelper.CreateName(StandardNamesConstants.FuzzyTypeName);
+        private static readonly StrongIdentifierValue _numberTypeIdentifier = NameHelper.CreateName(StandardNamesConstants.NumberTypeName);
+        #endregion
+
+        #region private methods
+        private IExecutable ResolveMethod(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            //Log($"name = {name}");
+            Log($"name = {name}");
 #endif
 
             var storage = localCodeExecutionContext.Storage;
@@ -110,12 +166,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return GetTargetValueFromList(filteredList, 0, localCodeExecutionContext, options);
         }
 
-        public NamedFunction Resolve(StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext)
-        {
-            return Resolve(name, namedParameters, localCodeExecutionContext, _defaultOptions);
-        }
-
-        public NamedFunction Resolve(StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private IExecutable ResolveMethod(StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"name = {name}");
@@ -184,7 +235,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return null;
             }
 
-            if(filteredList.Count == 1)
+            if (filteredList.Count == 1)
             {
                 return filteredList.Single().ResultItem;
             }
@@ -192,12 +243,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return GetTargetValueFromList(filteredList, namedParameters.Count, localCodeExecutionContext, options);
         }
 
-        public NamedFunction Resolve(StrongIdentifierValue name, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext)
-        {
-            return Resolve(name, positionedParameters, localCodeExecutionContext, _defaultOptions);
-        }
-
-        public NamedFunction Resolve(StrongIdentifierValue name, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private IExecutable ResolveMethod(StrongIdentifierValue name, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"name = {name}");
@@ -248,7 +294,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"filteredList = {filteredList.WriteListToString()}");
 #endif
 
-            if(!filteredList.Any())
+            if (!filteredList.Any())
             {
                 return null;
             }
@@ -272,11 +318,28 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return GetTargetValueFromList(filteredList, positionedParameters.Count, localCodeExecutionContext, options);
         }
 
+        private IExecutable ResolveAction(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {//ActionInstanceValue
+
+
+            throw new NotImplementedException();
+        }
+
+        private IExecutable ResolveAction(StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        private IExecutable ResolveAction(StrongIdentifierValue name, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
         private Dictionary<StrongIdentifierValue, Value> NormalizeNamedParameters(Dictionary<StrongIdentifierValue, Value> source)
         {
             var result = new Dictionary<StrongIdentifierValue, Value>();
 
-            foreach(var namedParameter in source)
+            foreach (var namedParameter in source)
             {
                 var parameterName = namedParameter.Key;
 
@@ -348,7 +411,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var result = new List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>>();
 
-            foreach(var function in source)
+            foreach (var function in source)
             {
                 var rankMatrix = IsFit(function.ResultItem, namedParameters, localCodeExecutionContext, options);
 
@@ -356,7 +419,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //Log($"rankMatrix = {rankMatrix.WritePODListToString()}");
 #endif
 
-                if(rankMatrix == null)
+                if (rankMatrix == null)
                 {
                     continue;
                 }
@@ -432,7 +495,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"namedParameters.Count = {namedParameters.Count}");
 #endif
 
-            if(countOfUsedParameters < namedParameters.Count)
+            if (countOfUsedParameters < namedParameters.Count)
             {
                 return null;
             }
@@ -526,9 +589,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (paramsCount > 0)
             {
-                for(var i = 0; i < paramsCount; i++)
+                for (var i = 0; i < paramsCount; i++)
                 {
-                    switch(i)
+                    switch (i)
                     {
                         case 0:
                             if (orderedList == null)
@@ -646,7 +709,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
             }
 
-            if(orderedList == null)
+            if (orderedList == null)
             {
                 orderedList = source.OrderByDescending(p => p.IsSelf);
             }
@@ -664,7 +727,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var advicesDict = CheckSpecialCasesInParameters(source);
 
-            if(advicesDict.Count == 0)
+            if (advicesDict.Count == 0)
             {
                 return;
             }
@@ -683,7 +746,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 var argumentsDict = ConvertArgumentsListToDictByPosition(argumentsList);
 
-                foreach(var advice in advicesDict)
+                foreach (var advice in advicesDict)
                 {
                     var position = advice.Key;
                     var checkedTypeName = advice.Value;
@@ -698,17 +761,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                     var typesList = argument.TypesList;
 
-                    if(typesList.IsNullOrEmpty())
+                    if (typesList.IsNullOrEmpty())
                     {
                         continue;
                     }
 
-                    if(typesList.Contains(checkedTypeName))
+                    if (typesList.Contains(checkedTypeName))
                     {
                         continue;
                     }
 
-                    if(checkedTypeName == _fuzzyTypeIdentifier)
+                    if (checkedTypeName == _fuzzyTypeIdentifier)
                     {
                         if (typesList.Contains(_numberTypeIdentifier))
                         {
@@ -728,9 +791,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     else
                     {
                         throw new NotImplementedException();
-                    }                    
+                    }
                 }
-            }            
+            }
         }
 
         private Dictionary<int, FunctionArgumentInfo> ConvertArgumentsListToDictByPosition(List<FunctionArgumentInfo> argumentsList)
@@ -739,7 +802,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var i = 0;
 
-            foreach(var argument in argumentsList)
+            foreach (var argument in argumentsList)
             {
                 result[i] = argument;
 
@@ -748,9 +811,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             return result;
         }
-
-        private static readonly StrongIdentifierValue _fuzzyTypeIdentifier = NameHelper.CreateName(StandardNamesConstants.FuzzyTypeName);
-        private static readonly StrongIdentifierValue _numberTypeIdentifier = NameHelper.CreateName(StandardNamesConstants.NumberTypeName);
 
         private Dictionary<int, StrongIdentifierValue> CheckSpecialCasesInParameters(List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>> source)
         {
@@ -764,14 +824,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //Log($"argumentsList = {argumentsList.WriteListToString()}");
 #endif
 
-                if(argumentsList.IsNullOrEmpty())
+                if (argumentsList.IsNullOrEmpty())
                 {
                     continue;
                 }
 
                 var i = -1;
 
-                foreach(var argument in argumentsList)
+                foreach (var argument in argumentsList)
                 {
                     i++;
 #if DEBUG
@@ -781,12 +841,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                     var typesList = argument.TypesList;
 
-                    if(typesList.IsNullOrEmpty())
+                    if (typesList.IsNullOrEmpty())
                     {
                         continue;
                     }
 
-                    if(typesList.Contains(_fuzzyTypeIdentifier))
+                    if (typesList.Contains(_fuzzyTypeIdentifier))
                     {
                         result[i] = _fuzzyTypeIdentifier;
                     }
@@ -795,5 +855,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             return result;
         }
+        #endregion
     }
 }

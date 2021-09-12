@@ -909,13 +909,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             bool isSync)
         {
 #if DEBUG
-            //Log($"methodName = {methodName}");
-            //Log($"kindOfParameters = {kindOfParameters}");
-            //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
-            //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
-            //Log($"isSync = {isSync}");
+            Log($"methodName = {methodName}");
+            Log($"kindOfParameters = {kindOfParameters}");
+            Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
+            Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+            Log($"isSync = {isSync}");
 #endif
-            NamedFunction method = null;
+            IExecutable method = null;
 
             switch(kindOfParameters)
             {
@@ -936,7 +936,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            //Log($"method = {method}");
+            Log($"method = {method}");
 #endif
 
             CallExecutable(method, kindOfParameters, namedParameters, positionedParameters, isSync);

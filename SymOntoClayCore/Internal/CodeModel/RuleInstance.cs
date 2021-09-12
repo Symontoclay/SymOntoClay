@@ -298,6 +298,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         IMethodsStorage IStorage.MethodsStorage => throw new NotImplementedException();
 
         /// <inheritdoc/>
+        IActionsStorage IStorage.ActionsStorage => throw new NotImplementedException();
+
+        /// <inheritdoc/>
         ITriggersStorage IStorage.TriggersStorage => throw new NotImplementedException();
 
         /// <inheritdoc/>

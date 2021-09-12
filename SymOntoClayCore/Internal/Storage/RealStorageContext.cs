@@ -34,6 +34,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public IMainStorageContext MainStorageContext { get; set; }
         public LogicalStorage.LogicalStorage LogicalStorage { get; set; }
         public MethodsStorage.MethodsStorage MethodsStorage { get; set; }
+        public ActionsStorage.ActionsStorage ActionsStorage { get; set; }
         public TriggersStorage.TriggersStorage TriggersStorage { get; set; }
         public InheritanceStorage.InheritanceStorage InheritanceStorage { get; set; }
         public SynonymsStorage.SynonymsStorage SynonymsStorage { get; set; }

@@ -22,6 +22,19 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private State _state = State.Init;
 
+        private ActionDef _action;
+
+        /// <inheritdoc/>
+        protected override void OnEnter()
+        {
+            base.OnEnter();
+
+            _action = CreateAction();
+            _action.CodeEntity = Result;
+
+            Result.Action = _action;
+        }
+
         /// <inheritdoc/>
         protected override void OnRun()
         {
@@ -50,7 +63,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.Word:
                         case TokenKind.Identifier:
-                            Result.Name = ParseName(_currToken.Content);
+                            var name = ParseName(_currToken.Content);
+
+                            Result.Name = name;
+
+                            _action.Name = name;
+
                             _state = State.GotName;
                             break;
 

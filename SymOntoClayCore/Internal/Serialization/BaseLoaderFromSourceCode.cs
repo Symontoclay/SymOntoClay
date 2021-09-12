@@ -346,6 +346,10 @@ namespace SymOntoClay.Core.Internal.Serialization
                     globalStorage.MethodsStorage.Append(codeEntity.NamedFunction);
                     break;
 
+                case KindOfCodeEntity.Action:
+                    globalStorage.ActionsStorage.Append(codeEntity.Action);
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfEntity), kindOfEntity, null);
             }

@@ -15,7 +15,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private readonly KindOfCodeEntity _kindOfCodeEntity;
 
-        public CodeEntity Result { get; private set; }
+        public CodeEntity Result { get; protected set; }
 
         /// <inheritdoc/>
         protected override void OnEnter()

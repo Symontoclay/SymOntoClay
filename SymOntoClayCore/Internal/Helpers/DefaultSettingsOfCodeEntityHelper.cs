@@ -67,6 +67,13 @@ namespace SymOntoClay.Core.Internal.Helpers
             SetUpAnnotatedItem(linguisticVariable, defaultSettings, context);
         }
 
+        public static void SetUpAction(ActionDef action, DefaultSettingsOfCodeEntity defaultSettings)
+        {
+            var context = new Dictionary<object, object>();
+
+            SetUpAnnotatedItem(action, defaultSettings, context);
+        }
+
         public static void SetUpNamedFunction(NamedFunction namedFunction, DefaultSettingsOfCodeEntity defaultSettings)
         {
             var context = new Dictionary<object, object>();

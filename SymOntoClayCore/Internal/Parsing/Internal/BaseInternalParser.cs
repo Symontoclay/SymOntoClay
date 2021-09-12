@@ -158,6 +158,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             return result;
         }
 
+        protected ActionDef CreateAction()
+        {
+            var result = new ActionDef();
+            DefaultSettingsOfCodeEntityHelper.SetUpAction(result, CurrentDefaultSetings);
+            return result;
+        }
+
         protected NamedFunction CreateNamedFunction()
         {
             var result = new NamedFunction();

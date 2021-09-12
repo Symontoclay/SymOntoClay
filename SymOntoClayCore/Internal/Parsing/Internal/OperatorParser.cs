@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -49,6 +50,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnFinish()
         {
+            if(_operator.KindOfOperator == KindOfOperator.Unknown)
+            {
+                _operator.KindOfOperator = KindOfOperator.CallFunction;
+            }
+
             RemoveCurrentCodeEntity();
         }
 

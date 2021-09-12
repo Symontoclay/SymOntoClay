@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,6 +34,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _action.CodeEntity = Result;
 
             Result.Action = _action;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnAddOperator(Operator op, CodeEntity codeEntity)
+        {
+            base.OnAddOperator(op, codeEntity);
+
+#if DEBUG
+            Log($"op = {op}");
+#endif
+
+            if(op.KindOfOperator == KindOfOperator.CallFunction)
+            {
+                _action.AddOperator(op);
+            }
         }
 
         /// <inheritdoc/>

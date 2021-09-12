@@ -44,6 +44,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #endif
         }
 
+        protected virtual void OnAddInlineTrigger(InlineTrigger inlineTrigger, CodeEntity codeEntity)
+        {
+        }
+
+        protected virtual void OnAddNamedFunction(NamedFunction namedFunction, CodeEntity codeEntity)
+        {
+        }
+
+        protected virtual void OnAddOperator(Operator op, CodeEntity codeEntity)
+        {
+        }
+
+        protected virtual void OnAddRuleInstance(RuleInstance ruleInstance, CodeEntity codeEntity)
+        {
+        }
+
         protected void ProcessGeneralContent()
         {
             switch (_currToken.TokenKind)
@@ -60,7 +76,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _context.Recovery(_currToken);
                                 var parser = new InlineTriggerParser(_context);
                                 parser.Run();
-                                Result.SubItems.Add(parser.Result);
+
+                                var codeEntity = parser.Result;
+
+                                Result.SubItems.Add(codeEntity);
+
+                                OnAddInlineTrigger(codeEntity.InlineTrigger, codeEntity);
                             }
                             break;
 
@@ -69,7 +90,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _context.Recovery(_currToken);
                                 var parser = new NamedFunctionParser(_context);
                                 parser.Run();
-                                Result.SubItems.Add(parser.Result);
+
+                                var codeEntity = parser.Result;
+
+                                Result.SubItems.Add(codeEntity);
+
+                                OnAddNamedFunction(codeEntity.NamedFunction, codeEntity);
                             }
                             break;
 
@@ -78,7 +104,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _context.Recovery(_currToken);
                                 var parser = new OperatorParser(_context);
                                 parser.Run();
-                                Result.SubItems.Add(parser.Result);
+
+                                var codeEntity = parser.Result;
+
+                                Result.SubItems.Add(codeEntity);
+
+                                OnAddOperator(codeEntity.Operator, codeEntity);
                             }
                             break;
 
@@ -92,7 +123,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         _context.Recovery(_currToken);
                         var parser = new LogicalQueryAsCodeEntityParser(_context);
                         parser.Run();
-                        Result.SubItems.Add(parser.Result);
+
+                        var codeEntity = parser.Result;
+
+                        Result.SubItems.Add(codeEntity);
+
+                        OnAddRuleInstance(codeEntity.RuleInstance, codeEntity);
                     }
                     break;
 

@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStorage
                 action.CheckDirty();
 
                 throw new NotImplementedException();
-            }                
+            }
         }
     }
 }

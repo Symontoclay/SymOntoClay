@@ -11,6 +11,22 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public CodeEntity CodeEntity { get; set; }
 
+        public IList<StrongIdentifierValue> NamesList => _namesList;
+
+        private List<StrongIdentifierValue> _namesList;
+
+        public void AddOperator(Operator op)
+        {
+            if(_operatorsList.Contains(op))
+            {
+                return;
+            }
+
+            _operatorsList.Add(op);
+        }
+
+        private List<Operator> _operatorsList = new List<Operator>();
+
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
         {
@@ -85,6 +101,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             Name.CheckDirty();
 
             var result = base.CalculateLongHashCode() ^ Name.GetLongHashCode();
+
+            _namesList = new List<StrongIdentifierValue>() { Name };
 
             //if (Range != null)
             //{

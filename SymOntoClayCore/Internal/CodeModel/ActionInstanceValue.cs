@@ -30,13 +30,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
         private readonly ActionPtr _actionPtr;
         private readonly IStorage _parentStorage;
 
-        public void TryActivate(IEngineContext context)
+        /// <inheritdoc/>
+        public IExecutionCoordinator TryActivate(IEngineContext context)
         {
             var actionInstance = new ActionInstance(_actionPtr, context, _parentStorage);
 
             actionInstance.Init();
 
             ActionInstance = actionInstance;
+
+            return actionInstance.ExecutionCoordinator;
         }
 
         /// <inheritdoc/>

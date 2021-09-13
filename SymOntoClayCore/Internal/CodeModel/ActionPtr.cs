@@ -46,8 +46,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return _iOp.ContainsArgument(name);
         }
 
-        void IExecutable.TryActivate(IEngineContext context)
+        /// <inheritdoc/>
+        IExecutionCoordinator IExecutable.TryActivate(IEngineContext context)
         {
+            return null;
         }
 
         /// <inheritdoc/>

@@ -25,14 +25,17 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly Operator _operator;
         private readonly IExecutable _iOp;
 
+        public IExecutionCoordinator ExecutionCoordinator => throw new NotImplementedException();
+
         //public void Init()
         //{
         //    throw new NotImplementedException();
         //}
 
         /// <inheritdoc/>
-        void IExecutable.TryActivate(IEngineContext context)
+        IExecutionCoordinator IExecutable.TryActivate(IEngineContext context)
         {
+            return null;
         }
 
         /// <inheritdoc/>

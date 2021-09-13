@@ -339,7 +339,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        public uint? GetDistance(List<StrongIdentifierValue> typeNamesList, Value value, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public uint? GetDistance(IList<StrongIdentifierValue> typeNamesList, Value value, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"typeNamesList = {typeNamesList.WriteListToString()}");

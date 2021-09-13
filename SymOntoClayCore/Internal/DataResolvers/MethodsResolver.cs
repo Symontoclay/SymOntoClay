@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -88,7 +89,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (method == null)
             {
-                return ResolveAction(name, namedParameters, localCodeExecutionContext, options);
+                return ResolveAction(name, positionedParameters, localCodeExecutionContext, options);
             }
 
             return method;
@@ -136,7 +137,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
 #endif
 
-            var rawList = GetRawList(name, 0, storagesList, weightedInheritanceItems);
+            var rawList = GetRawMethodsList(name, 0, storagesList, weightedInheritanceItems);
 
 #if DEBUG
             //Log($"rawList = {rawList.WriteListToString()}");
@@ -200,7 +201,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
 #endif
 
-            var rawList = GetRawList(name, namedParameters.Count, storagesList, weightedInheritanceItems);
+            var rawList = GetRawMethodsList(name, namedParameters.Count, storagesList, weightedInheritanceItems);
 
 #if DEBUG
             //Log($"rawList = {rawList.WriteListToString()}");
@@ -277,7 +278,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
 #endif
 
-            var rawList = GetRawList(name, positionedParameters.Count, storagesList, weightedInheritanceItems);
+            var rawList = GetRawMethodsList(name, positionedParameters.Count, storagesList, weightedInheritanceItems);
 
 #if DEBUG
             //Log($"rawList = {rawList.WriteListToString()}");
@@ -320,19 +321,230 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private IExecutable ResolveAction(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {//ActionInstanceValue
+#if DEBUG
+            Log($"name = {name}");
+#endif
 
+            var storage = localCodeExecutionContext.Storage;
 
-            throw new NotImplementedException();
+            var storagesList = GetStoragesList(storage);
+
+#if DEBUG
+            //Log($"name = {name}");
+            //Log($"value = {value}");
+            //Log($"reason = {reason}");
+            //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
+            //Log($"storagesList.Count = {storagesList.Count}");
+            //foreach (var tmpStorage in storagesList)
+            //{
+            //    Log($"tmpStorage = {tmpStorage}");
+            //}
+#endif
+
+            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
+
+            var optionsForInheritanceResolver = options.Clone();
+            optionsForInheritanceResolver.AddSelf = true;
+
+            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+
+#if DEBUG
+            //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
+#endif
+
+            var rawList = GetRawActionsList(name, 0, storagesList, weightedInheritanceItems);
+
+#if DEBUG
+            Log($"rawList = {rawList.WriteListToString()}");
+#endif
+
+            if (!rawList.Any())
+            {
+                return null;
+            }
+
+            var filteredList = Filter(rawList);
+
+#if DEBUG
+            Log($"filteredList = {filteredList.WriteListToString()}");
+#endif
+
+            if (!filteredList.Any())
+            {
+                return null;
+            }
+
+            if (filteredList.Count == 1)
+            {
+                return ConvertToActionInstance(filteredList.Single().ResultItem, localCodeExecutionContext, options);
+            }
+
+            return ConvertToActionInstance(GetTargetValueFromList(filteredList, 0, localCodeExecutionContext, options), localCodeExecutionContext, options);
         }
 
         private IExecutable ResolveAction(StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            throw new NotImplementedException();
+#if DEBUG
+            //Log($"name = {name}");
+            //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
+#endif
+
+            var storage = localCodeExecutionContext.Storage;
+
+            var storagesList = GetStoragesList(storage);
+
+#if DEBUG
+            //Log($"name = {name}");
+            //Log($"value = {value}");
+            //Log($"reason = {reason}");
+            //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
+            //Log($"storagesList.Count = {storagesList.Count}");
+            //foreach (var tmpStorage in storagesList)
+            //{
+            //    Log($"tmpStorage = {tmpStorage}");
+            //}
+#endif
+
+            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
+
+            var optionsForInheritanceResolver = options.Clone();
+            optionsForInheritanceResolver.AddSelf = true;
+
+            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+
+#if DEBUG
+            //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
+#endif
+
+            var rawList = GetRawActionsList(name, namedParameters.Count, storagesList, weightedInheritanceItems);
+
+#if DEBUG
+            //Log($"rawList = {rawList.WriteListToString()}");
+#endif
+
+            if (!rawList.Any())
+            {
+                return null;
+            }
+
+            var filteredList = Filter(rawList);
+
+#if DEBUG
+            //Log($"filteredList = {filteredList.WriteListToString()}");
+#endif
+
+            if (!filteredList.Any())
+            {
+                return null;
+            }
+
+            namedParameters = NormalizeNamedParameters(namedParameters);
+
+            filteredList = FilterByTypeOfParameters(filteredList, namedParameters, localCodeExecutionContext, options);
+
+#if DEBUG
+            //Log($"filteredList (2) = {filteredList.WriteListToString()}");
+#endif
+
+            if (!filteredList.Any())
+            {
+                return null;
+            }
+
+            if (filteredList.Count == 1)
+            {
+                return ConvertToActionInstance(filteredList.Single().ResultItem, localCodeExecutionContext, options);
+            }
+
+            return ConvertToActionInstance(GetTargetValueFromList(filteredList, namedParameters.Count, localCodeExecutionContext, options), localCodeExecutionContext, options);
         }
 
         private IExecutable ResolveAction(StrongIdentifierValue name, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            throw new NotImplementedException();
+#if DEBUG
+            //Log($"name = {name}");
+            //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+#endif
+
+            var storage = localCodeExecutionContext.Storage;
+
+            var storagesList = GetStoragesList(storage);
+
+#if DEBUG
+            //Log($"name = {name}");
+            //Log($"value = {value}");
+            //Log($"reason = {reason}");
+            //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
+            //Log($"storagesList.Count = {storagesList.Count}");
+            //foreach (var tmpStorage in storagesList)
+            //{
+            //    Log($"tmpStorage = {tmpStorage}");
+            //}
+#endif
+
+            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
+
+            var optionsForInheritanceResolver = options.Clone();
+            optionsForInheritanceResolver.AddSelf = true;
+
+            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+
+#if DEBUG
+            //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
+#endif
+
+            var rawList = GetRawActionsList(name, positionedParameters.Count, storagesList, weightedInheritanceItems);
+
+#if DEBUG
+            //Log($"rawList = {rawList.WriteListToString()}");
+#endif
+
+            if (!rawList.Any())
+            {
+                return null;
+            }
+
+            var filteredList = Filter(rawList);
+
+#if DEBUG
+            //Log($"filteredList = {filteredList.WriteListToString()}");
+#endif
+
+            if (!filteredList.Any())
+            {
+                return null;
+            }
+
+            filteredList = FilterByTypeOfParameters(filteredList, positionedParameters, localCodeExecutionContext, options);
+
+#if DEBUG
+            //Log($"filteredList (2) = {filteredList.WriteListToString()}");
+#endif
+
+            if (!filteredList.Any())
+            {
+                return null;
+            }
+
+            if (filteredList.Count == 1)
+            {
+                return ConvertToActionInstance(filteredList.Single().ResultItem, localCodeExecutionContext, options);
+            }
+
+            return ConvertToActionInstance(GetTargetValueFromList(filteredList, positionedParameters.Count, localCodeExecutionContext, options), localCodeExecutionContext, options);
+        }
+
+        private ActionInstanceValue ConvertToActionInstance(ActionPtr actionPtr, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+#if DEBUG
+            Log($"actionPtr = {actionPtr}");
+#endif
+
+            var result = new ActionInstanceValue(actionPtr, localCodeExecutionContext.Storage);
+
+            result.CheckDirty();
+            
+            return result;
         }
 
         private Dictionary<StrongIdentifierValue, Value> NormalizeNamedParameters(Dictionary<StrongIdentifierValue, Value> source)
@@ -372,7 +584,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>> GetRawList(StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>> GetRawMethodsList(StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
             //Log($"name = {name}");
@@ -407,9 +619,45 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>> FilterByTypeOfParameters(List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>> source, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private List<WeightedInheritanceResultItemWithStorageInfo<ActionPtr>> GetRawActionsList(StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-            var result = new List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>>();
+#if DEBUG
+            //Log($"name = {name}");
+            //Log($"paramsCount = {paramsCount}");
+#endif
+
+            if (!storagesList.Any())
+            {
+                return new List<WeightedInheritanceResultItemWithStorageInfo<ActionPtr>>();
+            }
+
+            var result = new List<WeightedInheritanceResultItemWithStorageInfo<ActionPtr>>();
+
+            foreach (var storageItem in storagesList)
+            {
+                var itemsList = storageItem.Storage.ActionsStorage.GetActionsDirectly(name, paramsCount, weightedInheritanceItems);
+
+                if (!itemsList.Any())
+                {
+                    continue;
+                }
+
+                var distance = storageItem.Priority;
+                var storage = storageItem.Storage;
+
+                foreach (var item in itemsList)
+                {
+                    result.Add(new WeightedInheritanceResultItemWithStorageInfo<ActionPtr>(item, distance, storage));
+                }
+            }
+
+            return result;
+        }
+
+        private List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterByTypeOfParameters<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+            where T : AnnotatedItem, IExecutable
+        {
+            var result = new List<WeightedInheritanceResultItemWithStorageInfo<T>>();
 
             foreach (var function in source)
             {
@@ -432,7 +680,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private List<uint> IsFit(NamedFunction function, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private List<uint> IsFit(IExecutable function, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
@@ -503,9 +751,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>> FilterByTypeOfParameters(List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>> source, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterByTypeOfParameters<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+            where T : AnnotatedItem, IExecutable
         {
-            var result = new List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>>();
+            var result = new List<WeightedInheritanceResultItemWithStorageInfo<T>>();
 
             foreach (var function in source)
             {
@@ -528,7 +777,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private List<uint> IsFit(NamedFunction function, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private List<uint> IsFit(IExecutable function, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
 
@@ -577,7 +826,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private NamedFunction GetTargetValueFromList(List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>> source, int paramsCount, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private T GetTargetValueFromList<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, int paramsCount, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+            where T : AnnotatedItem, IExecutable
         {
 #if DEBUG
             //Log($"paramsCount = {paramsCount}");
@@ -585,7 +835,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             CorrectParametersRankMatrixForSpecialCases(source);
 
-            IOrderedEnumerable<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>> orderedList = null;
+            IOrderedEnumerable<WeightedInheritanceResultItemWithStorageInfo<T>> orderedList = null;
 
             if (paramsCount > 0)
             {
@@ -723,7 +973,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return orderedList.FirstOrDefault()?.ResultItem;
         }
 
-        private void CorrectParametersRankMatrixForSpecialCases(List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>> source)
+        private void CorrectParametersRankMatrixForSpecialCases<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source)
+            where T : AnnotatedItem, IExecutable
         {
             var advicesDict = CheckSpecialCasesInParameters(source);
 
@@ -796,9 +1047,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private Dictionary<int, FunctionArgumentInfo> ConvertArgumentsListToDictByPosition(List<FunctionArgumentInfo> argumentsList)
+        private Dictionary<int, IFunctionArgument> ConvertArgumentsListToDictByPosition(IList<IFunctionArgument> argumentsList)
         {
-            var result = new Dictionary<int, FunctionArgumentInfo>();
+            var result = new Dictionary<int, IFunctionArgument>();
 
             var i = 0;
 
@@ -812,7 +1063,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private Dictionary<int, StrongIdentifierValue> CheckSpecialCasesInParameters(List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>> source)
+        private Dictionary<int, StrongIdentifierValue> CheckSpecialCasesInParameters<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source)
+            where T: AnnotatedItem, IExecutable
         {
             var result = new Dictionary<int, StrongIdentifierValue>();
 

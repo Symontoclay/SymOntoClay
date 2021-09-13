@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -105,6 +106,51 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStorage
                         }
                     }
                 }
+            }
+        }
+
+        /// <inheritdoc/>
+        public IList<WeightedInheritanceResultItem<ActionPtr>> GetActionsDirectly(StrongIdentifierValue name, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+            lock (_lockObj)
+            {
+#if DEBUG
+                Log($"name = {name}");
+                Log($"paramsCount = {paramsCount}");
+#endif
+
+                var result = new List<WeightedInheritanceResultItem<ActionPtr>>();
+
+                foreach (var weightedInheritanceItem in weightedInheritanceItems)
+                {
+                    var targetHolder = weightedInheritanceItem.SuperName;
+
+#if DEBUG
+                    //Log($"targetHolder = {targetHolder}");
+#endif
+
+                    if (_actionsDict.ContainsKey(targetHolder))
+                    {
+                        var dict = _actionsDict[targetHolder];
+
+                        if (dict.ContainsKey(name))
+                        {
+                            var targetDict = dict[name];
+
+                            if (targetDict.ContainsKey(paramsCount))
+                            {
+                                var targetList = targetDict[paramsCount];
+
+                                foreach (var targetVal in targetList)
+                                {
+                                    result.Add(new WeightedInheritanceResultItem<ActionPtr>(targetVal, weightedInheritanceItem));
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return result;
             }
         }
 

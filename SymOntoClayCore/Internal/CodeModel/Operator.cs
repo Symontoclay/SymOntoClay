@@ -69,6 +69,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        void IExecutable.TryActivate(IEngineContext context)
+        {
+        }
+
+        /// <inheritdoc/>
         protected override ulong CalculateLongHashCode()
         {
             var result = base.CalculateLongHashCode() ^ LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(KindOfOperator.GetHashCode());

@@ -39,7 +39,7 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class LogicConditionalTriggerInstanceInfo : BaseComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public LogicConditionalTriggerInstanceInfo(InlineTrigger trigger, InstanceInfo parent, IEngineContext context, IStorage parentStorage)
+        public LogicConditionalTriggerInstanceInfo(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage)
             : base(context.Logger)
         {
             _context = context;
@@ -72,7 +72,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly IStorage _storage;
         private InlineTrigger _trigger;
         private readonly LocalCodeExecutionContext _localCodeExecutionContext;
-        private InstanceInfo _parent;
+        private BaseInstance _parent;
         private RuleInstance _condition;
         private bool _isOn;
         private List<StrongIdentifierValue> _usedKeysList = new List<StrongIdentifierValue>();

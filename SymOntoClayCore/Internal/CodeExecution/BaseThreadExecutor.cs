@@ -1132,6 +1132,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallExecutable(IExecutable executable, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, bool isSync)
         {
+            executable.TryActivate(_context);
+
             if (executable.IsSystemDefined)
             {
                 Value result = null;

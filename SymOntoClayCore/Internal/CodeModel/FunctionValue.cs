@@ -83,6 +83,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        void IExecutable.TryActivate(IEngineContext context)
+        {
+        }
+
+        /// <inheritdoc/>
         public override object GetSystemValue()
         {
             throw new NotImplementedException();

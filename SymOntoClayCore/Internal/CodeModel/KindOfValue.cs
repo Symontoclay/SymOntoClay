@@ -46,6 +46,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         FuzzyLogicNonNumericSequenceValue,
         RangeValue,
         FunctionValue,
-        ErrorValue
+        ErrorValue,
+        ActionInstanceValue
     }
 }

@@ -419,31 +419,113 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionDef.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.ToString">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.KindOfValue">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.ToString(System.UInt32)">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.IsActionInstanceValue">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.AsActionInstanceValue">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.ToShortString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.GetSystemValue">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.ToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.CalculateLongHashCode">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.IsSystemDefined">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.ToBriefString">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.Arguments">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.ToBriefString(System.UInt32)">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.CompiledFunctionBody">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.CodeEntity">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.SystemHandler">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.CloneValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionPtr.IsSystemDefined">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionPtr.Arguments">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionPtr.CompiledFunctionBody">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionPtr.CodeEntity">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionPtr.SystemHandler">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionPtr.WhereSection">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionPtr.Holder">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionPtr.Annotations">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.Clone">
+            <summary>
+            Clones the instance and returns cloned instance.
+            </summary>
+            <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            Clones the instance using special context and returns cloned instance.
+            </summary>
+            <param name="context">Special context for providing references continuity.</param>
+            <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.CalculateLongHashCode">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.WhereSection">
@@ -1190,6 +1272,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.SymOntoClay#Core#Internal#CodeExecution#IExecutable#TryActivate(SymOntoClay.Core.Internal.IEngineContext)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.GetSystemValue">
             <inheritdoc/>
         </member>
@@ -1861,6 +1946,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.SymOntoClay#Core#Internal#CodeExecution#IExecutable#TryActivate(SymOntoClay.Core.Internal.IEngineContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.CalculateLongHashCode">
@@ -3244,6 +3332,57 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceResultItem`1.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.SymOntoClay#Core#Internal#CodeExecution#IExecutable#TryActivate(SymOntoClay.Core.Internal.IEngineContext)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.ActionInstance.IsSystemDefined">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.ActionInstance.Arguments">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.ActionInstance.CompiledFunctionBody">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.ActionInstance.CodeEntity">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.ActionInstance.SystemHandler">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.OnDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.ActivateMainEntity">
             <inheritdoc/>
         </member>
@@ -3254,36 +3393,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.PrintProcessesList">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstanceInfo.OnDisposed">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstanceInfo.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstanceInfo.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstanceInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstanceInfo.ToShortString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstanceInfo.ToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstanceInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstanceInfo.ToBriefString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstanceInfo.ToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstanceInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.LoadFromSourceFiles">
@@ -3986,6 +4095,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStorage.ActionsStorage.Append(SymOntoClay.Core.Internal.CodeModel.ActionDef)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStorage.ActionsStorage.GetActionsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.ChannelsStorage.ChannelsStorage.Kind">

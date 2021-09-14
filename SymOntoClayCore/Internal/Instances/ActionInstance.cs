@@ -10,7 +10,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class ActionInstance : InstanceInfo, IExecutable
+    public class ActionInstance : BaseInstance, IExecutable
     {
         public ActionInstance(ActionPtr actionPtr, IEngineContext context, IStorage parentStorage)
             : base(actionPtr.Action.Name, context, parentStorage)
@@ -24,8 +24,6 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly ActionDef _action;
         private readonly Operator _operator;
         private readonly IExecutable _iOp;
-
-        public IExecutionCoordinator ExecutionCoordinator => throw new NotImplementedException();
 
         //public void Init()
         //{

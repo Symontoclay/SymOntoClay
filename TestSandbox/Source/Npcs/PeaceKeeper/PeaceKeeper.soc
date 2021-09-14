@@ -12,9 +12,23 @@
 
 action Go 
 {
+    on Init =>
+    {
+        'Init Go' >> @>log;
+    }
+
     op () => 
     {
-        @@host.`go`(to: #@[10]);
+        'Begin Go' >> @>log;
+        //@@host.`go`(to: #@[10]);
+        await;
+    }
+
+    on {: see(I, $x) :} ($x >> @x) => 
+    {
+        'on Fired' >> @>log;
+        @x >> @>log;
+        complete action;
     }
 }
 

@@ -926,6 +926,24 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Where;
                             break;
                         }
+
+                        if (string.Compare(content, "await", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Await;
+                            break;
+                        }
+
+                        if (string.Compare(content, "complete", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Complete;
+                            break;
+                        }
+
+                        if (string.Compare(content, "break", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Break;
+                            break;
+                        }
                     }
                     break;
 

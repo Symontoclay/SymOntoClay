@@ -18,6 +18,8 @@ namespace SymOntoClay.Core.Internal.Instances
             Name = name;
             _context = context;
 
+            _executionCoordinator = new ExecutionCoordinator();
+
             _localCodeExecutionContext = new LocalCodeExecutionContext();
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
             _storage = new LocalStorage(localStorageSettings);
@@ -39,6 +41,10 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly TriggersResolver _triggersResolver;
         private InstanceState _instanceState = InstanceState.Created;
         private List<LogicConditionalTriggerInstanceInfo> _logicConditionalTriggersList = new List<LogicConditionalTriggerInstanceInfo>();
+
+        private readonly ExecutionCoordinator _executionCoordinator;
+
+        public IExecutionCoordinator ExecutionCoordinator => _executionCoordinator;
 
         public virtual void Init()
         {
@@ -77,7 +83,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 //Log($"processInitialInfoList = {processInitialInfoList.WriteListToString()}");
 #endif
 
-                var taskValue = _context.CodeExecutor.ExecuteBatchAsync(processInitialInfoList);
+                var taskValue = _context.CodeExecutor.ExecuteBatchAsync(processInitialInfoList, _executionCoordinator);
 
 #if DEBUG
                 //Log($"taskValue = {taskValue}");
@@ -104,6 +110,8 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
             _instanceState = InstanceState.Initialized;
+
+            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
         }
 
         /// <inheritdoc/>

@@ -195,6 +195,11 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.UseNotInheritance:
                 case OperationCode.Error:
                 case OperationCode.RemoveSEHGroup:
+                case OperationCode.Await:
+                case OperationCode.CompleteAction:
+                case OperationCode.CompleteActionVal:
+                case OperationCode.BreakAction:
+                case OperationCode.BreakActionVal:
                     return $"{spaces}{OperationCode}";
 
                 case OperationCode.PushVal:

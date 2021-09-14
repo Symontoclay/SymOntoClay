@@ -42,6 +42,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public LocalCodeExecutionContext LocalContext { get; set; }
         public ProcessInfo ProcessInfo { get; set; }
         public CodeEntity Metadata { get; set; }
+        public IExecutionCoordinator ExecutionCoordinator { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -77,6 +78,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintBriefObjProp(n, nameof(ProcessInfo), ProcessInfo);
 
             sb.PrintObjProp(n, nameof(Metadata), Metadata);
+
+            sb.PrintObjProp(n, nameof(ExecutionCoordinator), ExecutionCoordinator);
 
             return sb.ToString();
         }
@@ -116,6 +119,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             sb.PrintShortObjProp(n, nameof(Metadata), Metadata);
 
+            sb.PrintShortObjProp(n, nameof(ExecutionCoordinator), ExecutionCoordinator);
+
             return sb.ToString();
         }
 
@@ -153,6 +158,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintExisting(n, nameof(ProcessInfo), ProcessInfo);
 
             sb.PrintBriefObjProp(n, nameof(Metadata), Metadata);
+
+            sb.PrintBriefObjProp(n, nameof(ExecutionCoordinator), ExecutionCoordinator);
 
             return sb.ToString();
         }

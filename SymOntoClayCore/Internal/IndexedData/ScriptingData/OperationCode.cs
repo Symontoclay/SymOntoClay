@@ -70,6 +70,11 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         Error,
         SetSEHGroup,
         RemoveSEHGroup,
-        JumpTo
+        JumpTo,
+        Await,
+        CompleteAction,
+        CompleteActionVal,
+        BreakAction,
+        BreakActionVal
     }
 }

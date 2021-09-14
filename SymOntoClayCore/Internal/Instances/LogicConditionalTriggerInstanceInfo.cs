@@ -44,6 +44,9 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             _context = context;
             _parent = parent;
+
+            _executionCoordinator = parent.ExecutionCoordinator;
+
             _trigger = trigger;
             _condition = trigger.Condition;
 
@@ -69,6 +72,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly LogicalSearchResolver _searcher;
         private readonly object _lockObj = new object();
         private readonly IEngineContext _context;
+        private readonly IExecutionCoordinator _executionCoordinator;
         private readonly IStorage _storage;
         private InlineTrigger _trigger;
         private readonly LocalCodeExecutionContext _localCodeExecutionContext;
@@ -219,7 +223,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     processInitialInfo.LocalContext = localCodeExecutionContext;
                     processInitialInfo.Metadata = _trigger.CodeEntity;
 
-                    var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo);
+                    var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo, _executionCoordinator);
                 }
             }
 

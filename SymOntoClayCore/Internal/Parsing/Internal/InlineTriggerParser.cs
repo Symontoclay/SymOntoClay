@@ -216,6 +216,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             {
                                 case KeyWordTokenKind.On:
                                 case KeyWordTokenKind.Fun:
+                                case KeyWordTokenKind.Operator:
                                     _context.Recovery(_currToken);
                                     Exit();
                                     break;

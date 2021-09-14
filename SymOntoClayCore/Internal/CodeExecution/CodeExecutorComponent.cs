@@ -42,13 +42,25 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         /// <inheritdoc/>
         public Value ExecuteBatchAsync(List<ProcessInitialInfo> processInitialInfoList)
         {
+            return ExecuteBatchAsync(processInitialInfoList, null);
+        }
+
+        /// <inheritdoc/>
+        public Value ExecuteAsync(ProcessInitialInfo processInitialInfo)
+        {
+            return ExecuteAsync(processInitialInfo, null);
+        }
+
+        /// <inheritdoc/>
+        public Value ExecuteBatchAsync(List<ProcessInitialInfo> processInitialInfoList, IExecutionCoordinator executionCoordinator)
+        {
 #if DEBUG
             //Log($"processInitialInfoList = {processInitialInfoList.WriteListToString()}");
 #endif
 
             var codeFramesList = new List<CodeFrame>();
 
-            foreach(var processInitialInfo in processInitialInfoList)
+            foreach (var processInitialInfo in processInitialInfoList)
             {
                 var codeFrame = new CodeFrame();
                 codeFrame.CompiledFunctionBody = processInitialInfo.CompiledFunctionBody;
@@ -69,16 +81,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //_context.InstancesStorage.PrintProcessesList();
 #endif
 
-            var threadExecutor = new AsyncThreadExecutor(_context);
+            var threadExecutor = new AsyncThreadExecutor(_context, executionCoordinator);
             threadExecutor.SetCodeFrames(codeFramesList);
 
             return threadExecutor.Start();
         }
 
         /// <inheritdoc/>
-        public Value ExecuteAsync(ProcessInitialInfo processInitialInfo)
+        public Value ExecuteAsync(ProcessInitialInfo processInitialInfo, IExecutionCoordinator executionCoordinator)
         {
-            return ExecuteBatchAsync(new List<ProcessInitialInfo>() { processInitialInfo });
+            return ExecuteBatchAsync(new List<ProcessInitialInfo>() { processInitialInfo }, executionCoordinator);
         }
     }
 }

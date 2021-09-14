@@ -31,7 +31,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     public class SyncThreadExecutor: BaseThreadExecutor
     {
         public SyncThreadExecutor(IEngineContext context)
-            : base(context, new SyncActivePeriodicObject())
+             : this(context, null)
+        {
+        }
+
+        public SyncThreadExecutor(IEngineContext context, IExecutionCoordinator executionCoordinator)
+            : base(context, new SyncActivePeriodicObject(), executionCoordinator)
         {
         }
     }

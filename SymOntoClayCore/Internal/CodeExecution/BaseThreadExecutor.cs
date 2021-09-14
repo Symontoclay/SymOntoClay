@@ -49,10 +49,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             PositionedParameters
         }
 
-        protected BaseThreadExecutor(IEngineContext context, IActivePeriodicObject activeObject)
+        protected BaseThreadExecutor(IEngineContext context, IActivePeriodicObject activeObject, IExecutionCoordinator executionCoordinator)
             :base(context.Logger)
         {
             _context = context;
+
+            _executionCoordinator = executionCoordinator;
 
             _globalStorage = context.Storage.GlobalStorage;
             _globalLogicalStorage = _globalStorage.LogicalStorage;
@@ -75,6 +77,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         private readonly IEngineContext _context;
+        private readonly IExecutionCoordinator _executionCoordinator;
         private readonly IStorage _globalStorage;
         private readonly ILogicalStorage _globalLogicalStorage;
         private readonly IHostListener _hostListener;
@@ -149,6 +152,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             try
             {
+                if(_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing)
+                {
+#if DEBUG
+                    Log("_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing; return false;");
+#endif
+
+                    return false;
+                }
+
                 if(_currentCodeFrame == null)
                 {
 #if DEBUG
@@ -494,6 +506,37 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #endif
 
                             _currentCodeFrame.CurrentPosition = currentCommand.TargetPosition;
+                        }
+                        break;
+
+                    case OperationCode.Await:
+                        {
+                            var coordinator = _currentCodeFrame.ExecutionCoordinator;
+
+#if DEBUG
+                            Log($"coordinator = {coordinator}");
+#endif
+
+                            if (coordinator == null)
+                            {
+                                _currentCodeFrame.CurrentPosition++;
+                                break;
+                            }
+
+                            if(coordinator.ExecutionStatus == ActionExecutionStatus.Executing)
+                            {
+                                break;
+                            }
+
+                            _currentCodeFrame.CurrentPosition++;
+                        }
+                        break;
+
+                    case OperationCode.CompleteAction:
+                        {
+                            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
+
+                            _currentCodeFrame.CurrentPosition++;
                         }
                         break;
 
@@ -943,7 +986,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         private CodeFrame ConvertExecutableToCodeFrame(IExecutable function,
-            KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters)
+            KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
+            IExecutionCoordinator executionCoordinator)
         {
 #if DEBUG
             //Log($"kindOfParameters = {kindOfParameters}");
@@ -996,6 +1040,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var codeFrame = new CodeFrame();
             codeFrame.CompiledFunctionBody = function.CompiledFunctionBody;
             codeFrame.LocalContext = localCodeExecutionContext;
+            codeFrame.ExecutionCoordinator = executionCoordinator;
 
             var processInfo = new ProcessInfo();
 
@@ -1132,7 +1177,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallExecutable(IExecutable executable, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, bool isSync)
         {
-            executable.TryActivate(_context);
+            var coordinator = executable.TryActivate(_context);
 
             if (executable.IsSystemDefined)
             {
@@ -1162,7 +1207,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
             else
             {
-                var newCodeFrame = ConvertExecutableToCodeFrame(executable, kindOfParameters, namedParameters, positionedParameters);
+                var newCodeFrame = ConvertExecutableToCodeFrame(executable, kindOfParameters, namedParameters, positionedParameters, coordinator);
 
 #if DEBUG
                 //Log($"newCodeFrame = {newCodeFrame}");

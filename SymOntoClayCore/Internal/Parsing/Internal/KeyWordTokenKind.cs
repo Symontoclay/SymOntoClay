@@ -58,6 +58,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Catch,
         Else,
         Ensure,
-        Where
+        Where,
+        Await,
+        Complete,
+        Break
     }
 }

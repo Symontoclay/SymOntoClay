@@ -20,8 +20,9 @@ action Go
     op () => 
     {
         'Begin Go' >> @>log;
-        //@@host.`go`(to: #@[10]);
-        await;
+        @@host.`go`(to: #@[10]);
+        //await;
+        'End Go' >> @>log;
     }
 
     on {: see(I, $x) :} ($x >> @x) => 

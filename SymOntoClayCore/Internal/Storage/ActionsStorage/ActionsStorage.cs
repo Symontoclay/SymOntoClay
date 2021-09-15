@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStorage
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"action = {action}");
+                //Log($"action = {action}");
 #endif
 
                 AnnotatedItemHelper.CheckAndFillUpHolder(action, _realStorageContext.MainStorageContext.CommonNamesStorage);
@@ -48,13 +48,13 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStorage
                 var holder = action.Holder;
 
 #if DEBUG
-                Log($"holder = {holder}");
+                //Log($"holder = {holder}");
 #endif
 
                 var namesList = action.NamesList;
 
 #if DEBUG
-                Log($"namesList = {namesList.WriteListToString()}");
+                //Log($"namesList = {namesList.WriteListToString()}");
 #endif
 
                 var paramsCountDict = GetParamsCountDict(action);
@@ -62,13 +62,13 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStorage
                 var paramsCountList = paramsCountDict.Keys.ToList();
 
 #if DEBUG
-                Log($"paramsCountList = {paramsCountList.WritePODListToString()}");
+                //Log($"paramsCountList = {paramsCountList.WritePODListToString()}");
 #endif
 
                 foreach(var name in namesList)
                 {
 #if DEBUG
-                    Log($"name = {name}");
+                    //Log($"name = {name}");
 #endif
 
                     var targetDict = GetDictByNames(holder, name);
@@ -76,7 +76,7 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStorage
                     foreach (var count in paramsCountList)
                     {
 #if DEBUG
-                        Log($"count = {count}");
+                        //Log($"count = {count}");
 #endif
 
                         var operatorsList = paramsCountDict[count];
@@ -96,7 +96,7 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStorage
                         foreach(var op in operatorsList)
                         {
 #if DEBUG
-                            Log($"op = {op}");
+                            //Log($"op = {op}");
 #endif
 
                             if (!targetList.Any(p => p.Action == action && p.Operator == op))
@@ -115,8 +115,8 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStorage
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"name = {name}");
-                Log($"paramsCount = {paramsCount}");
+                //Log($"name = {name}");
+                //Log($"paramsCount = {paramsCount}");
 #endif
 
                 var result = new List<WeightedInheritanceResultItem<ActionPtr>>();
@@ -161,13 +161,13 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStorage
             foreach(var op in action.Operators)
             {
 #if DEBUG
-                Log($"op = {op}");
+                //Log($"op = {op}");
 #endif
 
                 var paramsCountList = GetParamsCountList(op);
 
 #if DEBUG
-                Log($"paramsCountList = {paramsCountList.WritePODListToString()}");
+                //Log($"paramsCountList = {paramsCountList.WritePODListToString()}");
 #endif
 
                 foreach(var count in paramsCountList)
@@ -203,7 +203,7 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStorage
             var argumentsList = @operator.Arguments;
 
 #if DEBUG
-            Log($"argumentsList.Count = {argumentsList.Count}");
+            //Log($"argumentsList.Count = {argumentsList.Count}");
 #endif
 
             if (!argumentsList.Any())

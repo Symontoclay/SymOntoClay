@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.Instances
             lock (_lockObj)
             {
                 DoSearch();
-            }                
+            }
         }
 
         private readonly LogicalSearchResolver _searcher;
@@ -86,17 +86,17 @@ namespace SymOntoClay.Core.Internal.Instances
             lock(_lockObj)
             {
 #if DEBUG
-                //Log($"changedKeysList = {JsonConvert.SerializeObject(changedKeysList)}");
+                Log($"changedKeysList = {JsonConvert.SerializeObject(changedKeysList?.Select(p => p.NameValue))}");
 #endif
 
-                if (_usedKeysList.Any())
-                {
-                    if(_usedKeysList.Intersect(changedKeysList).Any())
-                    {
-                        DoSearch();
-                    }
-                    return;
-                }
+                //if (_usedKeysList.Any())
+                //{
+                //    if (_usedKeysList.Intersect(changedKeysList).Any())
+                //    {
+                //        DoSearch();
+                //    }
+                //    return;
+                //}
 
                 DoSearch();
             }
@@ -124,10 +124,10 @@ namespace SymOntoClay.Core.Internal.Instances
             //}
 #endif
 
-            _usedKeysList = searchResult.UsedKeysList;
+            //_usedKeysList = searchResult.UsedKeysList;
 
 #if DEBUG
-            //Log($"_isOn = {_isOn}");
+            Log($"_isOn = {_isOn}");
 #endif
 
             if (_isOn)
@@ -141,7 +141,7 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 if(searchResult.IsSuccess)
                 {
-                    _isOn = true;
+                    //_isOn = true;
 
 #if DEBUG
                     //Log($"searchResult = {searchResult}");
@@ -154,12 +154,16 @@ namespace SymOntoClay.Core.Internal.Instances
                     localCodeExecutionContext.Storage = storage;
                     localCodeExecutionContext.Holder = _parent.Name;
 
-                    var varStorage = storage.VarStorage;
+#if DEBUG
+                    Log($"searchResult.Items.Count = {searchResult.Items.Count}");
+#endif
 
                     var bindingVariables = _trigger.BindingVariables;
 
                     if (bindingVariables.Any())
                     {
+                        var varStorage = storage.VarStorage;
+
                         var foundResultItem = searchResult.Items.FirstOrDefault();
 
                         if(foundResultItem == null)
@@ -228,7 +232,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            //Log($"_isOn (after) = {_isOn}");
+            Log($"_isOn (after) = {_isOn}");
 #endif
         }
 

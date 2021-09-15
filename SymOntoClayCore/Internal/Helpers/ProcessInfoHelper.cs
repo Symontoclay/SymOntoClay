@@ -20,18 +20,25 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Helpers
 {
     public static class ProcessInfoHelper
     {
         public static void Wait(params IProcessInfo[] processes)
+        {
+            Wait(null, processes);
+        }
+
+        public static void Wait(List<IExecutionCoordinator> executionCoordinators, params IProcessInfo[] processes)
         {
             if(processes.IsNullOrEmpty())
             {
@@ -43,6 +50,19 @@ namespace SymOntoClay.Core.Internal.Helpers
                 if(processes.All(p => p.IsFinished))
                 {
                     return;
+                }
+
+                if(executionCoordinators != null)
+                {
+                    if(executionCoordinators.Any(p => p.ExecutionStatus != ActionExecutionStatus.Executing))
+                    {
+                        foreach(var proc in processes)
+                        {
+                            proc.Cancel();
+                        }
+
+                        return;
+                    }
                 }
 
                 Thread.Sleep(100);

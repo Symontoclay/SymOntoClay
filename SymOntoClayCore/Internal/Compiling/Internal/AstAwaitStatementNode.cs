@@ -16,7 +16,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         public void Run(AstAwaitStatement statement)
         {
 #if DEBUG
-            Log($"statement = {statement}");
+            //Log($"statement = {statement}");
 #endif
 
             AddCommand(new IntermediateScriptCommand() 

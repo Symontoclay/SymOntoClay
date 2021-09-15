@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,28 @@ namespace SymOntoClay.Core.Internal.Instances
         private ActionExecutionStatus _executionStatus;
 
         /// <inheritdoc/>
+        public RuleInstance RuleInstance
+        {
+            get
+            {
+                lock (_lockObj)
+                {
+                    return _ruleInstance;
+                }
+            }
+
+            set
+            {
+                lock (_lockObj)
+                {
+                    _ruleInstance = value;
+                }
+            }
+        }
+
+        private RuleInstance _ruleInstance;
+
+        /// <inheritdoc/>
         public override string ToString()
         {
             return ToString(0u);
@@ -51,6 +74,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(ExecutionStatus)} = {ExecutionStatus}");
+            sb.PrintObjProp(n, nameof(RuleInstance), RuleInstance);
 
             return sb.ToString();
         }
@@ -74,6 +98,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(ExecutionStatus)} = {ExecutionStatus}");
+            sb.PrintShortObjProp(n, nameof(RuleInstance), RuleInstance);
 
             return sb.ToString();
         }
@@ -97,6 +122,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(ExecutionStatus)} = {ExecutionStatus}");
+            sb.PrintBriefObjProp(n, nameof(RuleInstance), RuleInstance);
 
             return sb.ToString();
         }

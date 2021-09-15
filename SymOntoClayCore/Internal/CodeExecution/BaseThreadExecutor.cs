@@ -155,7 +155,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 if(_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing)
                 {
 #if DEBUG
-                    Log("_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing; return false;");
+                    //Log("_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing; return false;");
 #endif
 
                     return false;
@@ -194,8 +194,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var currentCommand = compiledFunctionBodyCommands[currentPosition];
 
 #if DEBUG
-                Log($"currentCommand = {currentCommand}");
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                //Log($"currentCommand = {currentCommand}");
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 if (!CheckReturnedInfo())
@@ -540,6 +540,24 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         }
                         break;
 
+                    case OperationCode.BreakActionVal:
+                        {
+                            var currentValue = _currentCodeFrame.ValuesStack.Peek();
+
+#if DEBUG
+                            //Log($"currentValue = {currentValue}");
+#endif
+
+                            var ruleInstance = currentValue.AsRuleInstanceValue.RuleInstance;
+
+                            _executionCoordinator.RuleInstance = ruleInstance;
+
+                            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
+
+                            _currentCodeFrame.CurrentPosition++;
+                        }
+                        break;
+
                     case OperationCode.Error:
                         {
 #if DEBUG
@@ -559,38 +577,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             var ruleInstance = currentValue.AsRuleInstanceValue.RuleInstance;
 
-                            var errorValue = new ErrorValue(ruleInstance);
-                            errorValue.CheckDirty();
-
-#if DEBUG
-                            //Log($"errorValue = {errorValue}");
-#endif
-
-                            _currentError = errorValue;
-
-                            
-
-                            if (_currentCodeFrame.CurrentSEHGroup == null)
-                            {
-                                _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Faulted;
-
-                                GoBackToPrevCodeFrame();
-                            }
-                            else
-                            {
-#if DEBUG
-                                //Log("_currentSEHGroup != null");
-#endif
-
-                                if(!CheckSEH())
-                                {
-                                    _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Faulted;
-
-                                    GoBackToPrevCodeFrame();
-                                }
-                            }
-
-                            _globalLogicalStorage.Append(ruleInstance);
+                            ProcessError(ruleInstance);
 
 #if DEBUG
                             //Log("End case OperationCode.Error");
@@ -630,6 +617,45 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 
                 throw;
             }
+        }
+
+        private void ProcessError(RuleInstance ruleInstance)
+        {
+            RegisterError(ruleInstance);
+
+            if (_currentCodeFrame.CurrentSEHGroup == null)
+            {
+                _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Faulted;
+
+                GoBackToPrevCodeFrame();
+            }
+            else
+            {
+#if DEBUG
+                //Log("_currentSEHGroup != null");
+#endif
+
+                if (!CheckSEH())
+                {
+                    _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Faulted;
+
+                    GoBackToPrevCodeFrame();
+                }
+            }
+        }
+
+        private void RegisterError(RuleInstance ruleInstance)
+        {
+            var errorValue = new ErrorValue(ruleInstance);
+            errorValue.CheckDirty();
+
+#if DEBUG
+            //Log($"errorValue = {errorValue}");
+#endif
+
+            _currentError = errorValue;
+
+            _globalLogicalStorage.Append(ruleInstance);
         }
 
         private bool CheckSEH()
@@ -912,31 +938,42 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 _instancesStorage.AppendAndTryStartProcessInfo(processInfo);
 
-                if(isSync)
-                {
-                    ProcessInfoHelper.Wait(processInfo);
-                }
+                var localExecutionCoordinator = _currentCodeFrame.ExecutionCoordinator;
 
-                var status = processInfo.Status;
+                if (isSync)
+                {
+                    ProcessInfoHelper.Wait(new List<IExecutionCoordinator>() { localExecutionCoordinator, _executionCoordinator}, processInfo);
+
+                    //Log($"localExecutionCoordinator = {localExecutionCoordinator}");
+
+                    if(localExecutionCoordinator.ExecutionStatus == ActionExecutionStatus.Broken)
+                    {
+                        ProcessError(localExecutionCoordinator.RuleInstance);
+
+                        return;
+                    }
+
+                    var status = processInfo.Status;
 
 #if DEBUG
-                //Log($"status = {status}");
+                    //Log($"status = {status}");
 #endif
 
-                switch(status)
-                {
-                    case ProcessStatus.Canceled:
-                        _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Canceled;
-                        _isCanceled = true;
+                    switch (status)
+                    {
+                        case ProcessStatus.Canceled:
+                            _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Canceled;
+                            _isCanceled = true;
 
-                        GoBackToPrevCodeFrame();
-                        return;
+                            GoBackToPrevCodeFrame();
+                            return;
 
-                    case ProcessStatus.Faulted:
-                        _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Faulted;
+                        case ProcessStatus.Faulted:
+                            _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Faulted;
 
-                        GoBackToPrevCodeFrame();
-                        return;
+                            GoBackToPrevCodeFrame();
+                            return;
+                    }
                 }
 
                 _currentCodeFrame.CurrentPosition++;
@@ -952,11 +989,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             bool isSync)
         {
 #if DEBUG
-            Log($"methodName = {methodName}");
-            Log($"kindOfParameters = {kindOfParameters}");
-            Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
-            Log($"positionedParameters = {positionedParameters.WriteListToString()}");
-            Log($"isSync = {isSync}");
+            //Log($"methodName = {methodName}");
+            //Log($"kindOfParameters = {kindOfParameters}");
+            //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
+            //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+            //Log($"isSync = {isSync}");
 #endif
             IExecutable method = null;
 
@@ -979,15 +1016,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Log($"method = {method}");
+            //Log($"method = {method}");
 #endif
 
             CallExecutable(method, kindOfParameters, namedParameters, positionedParameters, isSync);
         }
 
         private CodeFrame ConvertExecutableToCodeFrame(IExecutable function,
-            KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
-            IExecutionCoordinator executionCoordinator)
+            KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters)
         {
 #if DEBUG
             //Log($"kindOfParameters = {kindOfParameters}");
@@ -1039,8 +1075,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var codeFrame = new CodeFrame();
             codeFrame.CompiledFunctionBody = function.CompiledFunctionBody;
-            codeFrame.LocalContext = localCodeExecutionContext;
-            codeFrame.ExecutionCoordinator = executionCoordinator;
+            codeFrame.LocalContext = localCodeExecutionContext;            
 
             var processInfo = new ProcessInfo();
 
@@ -1207,7 +1242,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
             else
             {
-                var newCodeFrame = ConvertExecutableToCodeFrame(executable, kindOfParameters, namedParameters, positionedParameters, coordinator);
+                var newCodeFrame = ConvertExecutableToCodeFrame(executable, kindOfParameters, namedParameters, positionedParameters);
 
 #if DEBUG
                 //Log($"newCodeFrame = {newCodeFrame}");
@@ -1222,6 +1257,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 if (isSync)
                 {
                     _currentCodeFrame.CurrentPosition++;
+
+                    newCodeFrame.ExecutionCoordinator = coordinator;
 
                     SetCodeFrame(newCodeFrame);
                 }

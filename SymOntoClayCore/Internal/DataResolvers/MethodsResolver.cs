@@ -107,7 +107,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private IExecutable ResolveMethod(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"name = {name}");
+            //Log($"name = {name}");
 #endif
 
             var storage = localCodeExecutionContext.Storage;
@@ -320,9 +320,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         private IExecutable ResolveAction(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
-        {//ActionInstanceValue
+        {
 #if DEBUG
-            Log($"name = {name}");
+            //Log($"name = {name}");
 #endif
 
             var storage = localCodeExecutionContext.Storage;
@@ -355,7 +355,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var rawList = GetRawActionsList(name, 0, storagesList, weightedInheritanceItems);
 
 #if DEBUG
-            Log($"rawList = {rawList.WriteListToString()}");
+            //Log($"rawList = {rawList.WriteListToString()}");
 #endif
 
             if (!rawList.Any())
@@ -366,7 +366,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var filteredList = Filter(rawList);
 
 #if DEBUG
-            Log($"filteredList = {filteredList.WriteListToString()}");
+            //Log($"filteredList = {filteredList.WriteListToString()}");
 #endif
 
             if (!filteredList.Any())
@@ -537,7 +537,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private ActionInstanceValue ConvertToActionInstance(ActionPtr actionPtr, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"actionPtr = {actionPtr}");
+            //Log($"actionPtr = {actionPtr}");
 #endif
 
             var result = new ActionInstanceValue(actionPtr, localCodeExecutionContext.Storage);

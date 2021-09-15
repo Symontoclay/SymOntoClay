@@ -46,7 +46,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             foreach (var statement in statements)
             {
 #if DEBUG
-                Log($"statement = {statement}");
+                //Log($"statement = {statement}");
 #endif
 
                 var kind = statement.Kind;

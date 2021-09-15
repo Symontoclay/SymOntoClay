@@ -8,6 +8,55 @@
 
         'End' >> @>log;
     }
+
+    //on {: see(I, $x) :} ($x >> @x) => 
+    on {: see(I, #a) :} =>
+    {
+        'on Fired in App' >> @>log;
+    }
+}
+
+action Go 
+{
+    on Init =>
+    {
+        'Init Go' >> @>log;
+    }
+
+    op () => 
+    {
+        try
+        {
+            'Begin Go' >> @>log;
+            @@host.`go`(to: #@[10]);
+            //await;
+            'End Go' >> @>log;
+        }
+        catch(@e)
+        {
+            'catch(@e)' >> @>log;
+            @e >> @>log;
+        }
+    }
+
+    on {: see(I, $x) :} ($x >> @x) => 
+    {
+        'on Fired' >> @>log;
+        @x >> @>log;
+        break action {: see(I, #a) :};
+    }
+}
+
+/*app PeaceKeeper
+{
+    on Init =>
+    {
+        'Begin' >> @>log;
+ 
+        Go();
+
+        'End' >> @>log;
+    }
 }
 
 action Go 
@@ -31,7 +80,7 @@ action Go
         @x >> @>log;
         complete action;
     }
-}
+}*/
 
 //app PeaceKeeper
 //{

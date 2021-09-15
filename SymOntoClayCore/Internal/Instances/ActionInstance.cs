@@ -56,5 +56,15 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             return _iOp.ContainsArgument(name);
         }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+#if DEBUG
+            Log("ActionInstance OnDisposed()");
+#endif
+
+            base.OnDisposed();
+        }
     }
 }

@@ -3586,6 +3586,9 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.ActionPaser.OnRun">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.AliasPaser.OnRun">
+            <inheritdoc/>
+        </member>
         <member name="T:SymOntoClay.Core.Internal.Parsing.Internal.AppPaser">
             <summary>
             It is parser for app.

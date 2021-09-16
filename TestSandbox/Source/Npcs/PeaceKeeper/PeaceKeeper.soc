@@ -8,6 +8,41 @@
 
         'End' >> @>log;
     }
+}
+
+action `my Go 1` alias Go
+{
+    on Init =>
+    {
+        'Init Go' >> @>log;
+    }
+
+    op () => 
+    {
+        'Begin Go' >> @>log;
+        @@host.`go`(to: #@[10]);
+        //await;
+        'End Go' >> @>log;
+    }
+
+    on {: see(I, $x) :} ($x >> @x) => 
+    {
+        'on Fired' >> @>log;
+        @x >> @>log;
+        complete action;
+    }
+}
+
+/*app PeaceKeeper
+{
+    on Init =>
+    {
+        'Begin' >> @>log;
+ 
+        Go();
+
+        'End' >> @>log;
+    }
  
     on {: see(I, #a) :} =>
     {
@@ -50,7 +85,7 @@ action Go
         @x >> @>log;
         break action {: see(I, #a) :};
     }
-}
+}*/
 
 /*app PeaceKeeper
 {
@@ -86,7 +121,7 @@ action Go
         complete action;
     }
 }*/
-
+//--------------------------------------------------------------------------------------
 //app PeaceKeeper
 //{
 //    fun a(@param_1: fuzzy) =>

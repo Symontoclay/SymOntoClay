@@ -13,6 +13,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Init,
             GotActionMark,
             GotName,
+            GotInheritance,
+            GotAlias,
             ContentStarted
         }
 
@@ -55,8 +57,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -104,17 +106,61 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             switch (_currToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.Is:
+                                    ProcessInheritance();
+                                    break;
+
+                                case KeyWordTokenKind.Alias:
                                     {
                                         _context.Recovery(_currToken);
-                                        var parser = new InheritanceParser(_context, Result.Name);
+
+                                        var parser = new AliasPaser(_context);
                                         parser.Run();
-                                        Result.InheritanceItems.AddRange(parser.Result);
+
+                                        _action.AddAliasRange(parser.Result);
+
+                                        _state = State.GotAlias;
                                     }
                                     break;
 
                                 default:
                                     throw new UnexpectedTokenException(_currToken);
                             }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotAlias:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenFigureBracket:
+                            _state = State.ContentStarted;
+                            break;
+
+                        case TokenKind.Word:
+                            switch (_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Is:
+                                    ProcessInheritance();
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotInheritance:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenFigureBracket:
+                            _state = State.ContentStarted;
                             break;
 
                         default:
@@ -129,6 +175,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
+        }
+
+        private void ProcessInheritance()
+        {
+            _context.Recovery(_currToken);
+            var parser = new InheritanceParser(_context, Result.Name);
+            parser.Run();
+            Result.InheritanceItems.AddRange(parser.Result);
+
+            _state = State.GotInheritance;
         }
     }
 }

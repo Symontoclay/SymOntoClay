@@ -944,6 +944,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Break;
                             break;
                         }
+
+                        if (string.Compare(content, "alias", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Alias;
+                            break;
+                        }
                     }
                     break;
 

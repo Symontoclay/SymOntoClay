@@ -34,6 +34,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Init,
             GotWorld,
             GotName,
+            GotInheritance,
             ContentStarted
         }
 
@@ -97,12 +98,26 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         var parser = new InheritanceParser(_context, Result.Name);
                                         parser.Run();
                                         Result.InheritanceItems.AddRange(parser.Result);
+
+                                        _state = State.GotInheritance;
                                     }
                                     break;
 
                                 default:
                                     throw new UnexpectedTokenException(_currToken);
                             }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotInheritance:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenFigureBracket:
+                            _state = State.ContentStarted;
                             break;
 
                         default:

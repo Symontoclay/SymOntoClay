@@ -13,6 +13,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public CodeEntity CodeEntity { get; set; }
 
+        public void AddAliasRange(List<StrongIdentifierValue> aliasList)
+        {
+            throw new NotImplementedException();
+        }
+
         public IList<StrongIdentifierValue> NamesList => _namesList;
 
         private List<StrongIdentifierValue> _namesList;

@@ -80,25 +80,11 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
                         var targetList = dict[holder];
 
 #if DEBUG
-                        Log($"dict[holder].Count = {dict[holder].Count}");
-                        Log($"targetList = {targetList.WriteListToString()}");
-#endif
-                        var targetLongConditionalHashCode = channel.GetLongConditionalHashCode();
-
-#if DEBUG
-                        Log($"targetLongConditionalHashCode = {targetLongConditionalHashCode}");
+                        //Log($"dict[holder].Count = {dict[holder].Count}");
+                        //Log($"targetList = {targetList.WriteListToString()}");
 #endif
 
-                        var itemsWithTheSameLongConditionalHashCodeList = targetList.Where(p => p.GetLongConditionalHashCode() == targetLongConditionalHashCode).ToList();
-
-#if DEBUG
-                        Log($"itemsWithTheSameLongConditionalHashCodeList = {itemsWithTheSameLongConditionalHashCodeList.WriteListToString()}");
-#endif
-
-                        foreach (var itemWithTheSameLongConditionalHashCode in itemsWithTheSameLongConditionalHashCodeList)
-                        {
-                            targetList.Remove(itemWithTheSameLongConditionalHashCode);
-                        }
+                        StorageHelper.RemoveSameItems(targetList, channel);
 
                         targetList.Add(channel);
                     }

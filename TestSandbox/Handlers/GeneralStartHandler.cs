@@ -53,15 +53,15 @@ namespace TestSandbox.Handlers
 
             var factId = _npc.InsertFact("{: see(I, #a) :}");
 
-            //Thread.Sleep(10000);
-
-            //_npc.RemoveFact(factId);
-
             Thread.Sleep(10000);
 
             _logger.Log("!---");
 
             _npc.InsertFact("{: see(I, #b) :}");
+
+            Thread.Sleep(10000);
+
+            _npc.RemoveFact(factId);
 
             Thread.Sleep(50000);
 

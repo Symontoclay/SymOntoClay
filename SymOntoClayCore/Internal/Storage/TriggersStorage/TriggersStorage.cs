@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
@@ -88,6 +89,13 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
         {
             lock (_lockObj)
             {
+                inlineTrigger.CheckDirty();
+
+#if DEBUG
+                //Log($"inlineTrigger.Holder = {inlineTrigger.Holder}");
+                //Log($"inlineTrigger.Condition = {DebugHelperForRuleInstance.ToString(inlineTrigger.Condition)}");
+#endif
+
                 if (_nonIndexedLogicConditionalsInfo.ContainsKey(inlineTrigger.Holder))
                 {
                     var targetList = _nonIndexedLogicConditionalsInfo[inlineTrigger.Holder];
@@ -96,22 +104,8 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                     //Log($"_nonIndexedLogicConditionalsInfo[superName].Count = {_nonIndexedLogicConditionalsInfo[inlineTrigger.Holder].Count}");
                     //Log($"targetList = {targetList.WriteListToString()}");
 #endif
-                    var targetLongConditionalHashCode = inlineTrigger.GetLongConditionalHashCode();
 
-#if DEBUG
-                    //Log($"targetLongConditionalHashCode = {targetLongConditionalHashCode}");
-#endif
-
-                    var itemsWithTheSameLongConditionalHashCodeList = targetList.Where(p => p.GetLongConditionalHashCode() == targetLongConditionalHashCode).ToList();
-
-#if DEBUG
-                    //Log($"itemsWithTheSameLongConditionalHashCodeList = {itemsWithTheSameLongConditionalHashCodeList.WriteListToString()}");
-#endif
-
-                    foreach (var itemWithTheSameLongConditionalHashCode in itemsWithTheSameLongConditionalHashCodeList)
-                    {
-                        targetList.Remove(itemWithTheSameLongConditionalHashCode);
-                    }
+                    StorageHelper.RemoveSameItems(targetList, inlineTrigger);
 
                     targetList.Add(inlineTrigger);
                 }
@@ -140,18 +134,8 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                         //Log($"dict[superName].Count = {dict[inlineTrigger.Holder].Count}");
                         //Log($"targetList = {targetList.WriteListToString()}");
 #endif
-                        var targetLongConditionalHashCode = inlineTrigger.GetLongConditionalHashCode();
 
-#if DEBUG
-                        //Log($"targetLongConditionalHashCode = {targetLongConditionalHashCode}");
-#endif
-
-                        var itemsWithTheSameLongConditionalHashCodeList = targetList.Where(p => p.GetLongConditionalHashCode() == targetLongConditionalHashCode).ToList();
-
-                        foreach (var itemWithTheSameLongConditionalHashCode in itemsWithTheSameLongConditionalHashCodeList)
-                        {
-                            targetList.Remove(itemWithTheSameLongConditionalHashCode);
-                        }
+                        StorageHelper.RemoveSameItems(targetList, inlineTrigger);
 
                         targetList.Add(inlineTrigger);
                     }
@@ -213,9 +197,17 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
             {
                 var targetHolder = weightedInheritanceItem.SuperName;
 
+#if DEBUG
+                //Log($"targetHolder = {targetHolder}");
+#endif
+
                 if (_nonIndexedLogicConditionalsInfo.ContainsKey(targetHolder))
                 {
                     var targetList = _nonIndexedLogicConditionalsInfo[targetHolder];
+
+#if DEBUG
+                    //Log($"targetList.Count = {targetList.Count}");
+#endif
 
                     foreach (var targetVal in targetList)
                     {

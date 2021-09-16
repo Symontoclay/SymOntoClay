@@ -66,6 +66,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var rawList = GetLogicConditionalRawList(holder, storagesList, weightedInheritanceItems);
 
 #if DEBUG
+            //Log($"rawList.Count = {rawList.Count}");
             //Log($"rawList = {rawList.WriteListToString()}");
 #endif
 

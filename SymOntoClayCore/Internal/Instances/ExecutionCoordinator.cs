@@ -26,7 +26,17 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 lock (_lockObj)
                 {
+                    if(_executionStatus == value)
+                    {
+                        return;
+                    }
+
                     _executionStatus = value;
+
+                    if(_executionStatus != ActionExecutionStatus.Executing)
+                    {
+                        OnFinished?.Invoke();
+                    }
                 }
             }
         }
@@ -54,6 +64,9 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         private RuleInstance _ruleInstance;
+
+        /// <inheritdoc/>
+        public event Action OnFinished;
 
         /// <inheritdoc/>
         public override string ToString()

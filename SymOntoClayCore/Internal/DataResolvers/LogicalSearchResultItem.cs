@@ -20,17 +20,53 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class LogicalSearchResultItem : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
+        public string KeyForTrigger
+        {
+            get
+            {
+                if(_keyForTrigger == null)
+                {
+                    CalculateKeyForTrigger();
+                }
+
+                return _keyForTrigger;
+            }
+        }
+
+        private string _keyForTrigger;
+
+        private void CalculateKeyForTrigger()
+        {
+            if(ResultOfVarOfQueryToRelationList.IsNullOrEmpty())
+            {
+                _keyForTrigger = string.Empty;
+                return;
+            }
+
+            var strList = new List<string>();
+
+            foreach(var resultVar in ResultOfVarOfQueryToRelationList.OrderBy(p => p.NameOfVar.NormalizedNameValue))
+            {
+                strList.Add(resultVar.NameOfVar.NormalizedNameValue);
+                strList.Add(DebugHelperForRuleInstance.ToString(resultVar.FoundExpression));
+            }
+
+            _keyForTrigger = string.Join(string.Empty, strList);
+        }
+
         public IList<ResultOfVarOfQueryToRelation> ResultOfVarOfQueryToRelationList { get; set; }
 
         public ulong GetLongHashCode()

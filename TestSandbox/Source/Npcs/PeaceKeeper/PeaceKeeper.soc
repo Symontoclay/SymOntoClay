@@ -8,11 +8,16 @@
 
         'End' >> @>log;
     }
-
-    //on {: see(I, $x) :} ($x >> @x) => 
+ 
     on {: see(I, #a) :} =>
     {
         'on Fired in App' >> @>log;
+    }
+
+    on {: see(I, $x) :} ($x >> @x) => 
+    {
+        'on Fired $x in App' >> @>log;
+        @x >> @>log;
     }
 }
 
@@ -41,7 +46,7 @@ action Go
 
     on {: see(I, $x) :} ($x >> @x) => 
     {
-        'on Fired' >> @>log;
+        'on Fired $x in Go' >> @>log;
         @x >> @>log;
         break action {: see(I, #a) :};
     }

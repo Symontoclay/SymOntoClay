@@ -131,22 +131,8 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
                     //Log($"dict[holder].Count = {dict[holder].Count}");
                     //Log($"targetList = {targetList.WriteListToString()}");
 #endif
-                    var targetLongConditionalHashCode = value.GetLongConditionalHashCode();
 
-#if DEBUG
-                    //Log($"targetLongConditionalHashCode = {targetLongConditionalHashCode}");
-#endif
-
-                    var itemsWithTheSameLongConditionalHashCodeList = targetList.Where(p => p.GetLongConditionalHashCode() == targetLongConditionalHashCode).ToList();
-
-#if DEBUG
-                    //Log($"itemsWithTheSameLongConditionalHashCodeList = {itemsWithTheSameLongConditionalHashCodeList.WriteListToString()}");
-#endif
-
-                    foreach (var itemWithTheSameLongConditionalHashCode in itemsWithTheSameLongConditionalHashCodeList)
-                    {
-                        targetList.Remove(itemWithTheSameLongConditionalHashCode);
-                    }
+                    StorageHelper.RemoveSameItems(targetList, value);
 
                     targetList.Add(value);
                 }

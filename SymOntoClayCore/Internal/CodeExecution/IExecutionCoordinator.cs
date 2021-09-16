@@ -10,5 +10,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     {
         ActionExecutionStatus ExecutionStatus { get; set; }
         RuleInstance RuleInstance { get; set; }
+        event Action OnFinished;
     }
 }

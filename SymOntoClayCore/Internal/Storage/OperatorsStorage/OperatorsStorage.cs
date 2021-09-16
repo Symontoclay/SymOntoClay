@@ -77,25 +77,11 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStorage
                         var targetList = dict[op.Holder];
 
 #if DEBUG
-                        Log($"dict[superName].Count = {dict[op.Holder].Count}");
-                        Log($"targetList = {targetList.WriteListToString()}");
-#endif
-                        var targetLongConditionalHashCode = op.GetLongConditionalHashCode();
-
-#if DEBUG
-                        Log($"targetLongConditionalHashCode = {targetLongConditionalHashCode}");
+                        //Log($"dict[superName].Count = {dict[op.Holder].Count}");
+                        //Log($"targetList = {targetList.WriteListToString()}");
 #endif
 
-                        var itemsWithTheSameLongConditionalHashCodeList = targetList.Where(p => p.GetLongConditionalHashCode() == targetLongConditionalHashCode).ToList();
-
-#if DEBUG
-                        Log($"itemsWithTheSameLongConditionalHashCodeList = {itemsWithTheSameLongConditionalHashCodeList.WriteListToString()}");
-#endif
-
-                        foreach (var itemWithTheSameLongConditionalHashCode in itemsWithTheSameLongConditionalHashCodeList)
-                        {
-                            targetList.Remove(itemWithTheSameLongConditionalHashCode);
-                        }
+                        StorageHelper.RemoveSameItems(targetList, op);
 
                         targetList.Add(op);
                     }

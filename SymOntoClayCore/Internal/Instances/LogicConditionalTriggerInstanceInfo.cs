@@ -34,6 +34,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -50,6 +51,10 @@ namespace SymOntoClay.Core.Internal.Instances
             _trigger = trigger;
             _condition = trigger.Condition;
 
+#if DEBUG
+            //Log($"_condition = {DebugHelperForRuleInstance.ToString(_condition)}");
+#endif
+
             var dataResolversFactory = context.DataResolversFactory;
 
             _searcher = dataResolversFactory.GetLogicalSearchResolver();
@@ -61,7 +66,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _localCodeExecutionContext.Holder = parent.Name;
 
-            _storage.LogicalStorage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys;
+            _storage.LogicalStorage.OnChanged += LogicalStorage_OnChanged;
 
             lock (_lockObj)
             {
@@ -79,27 +84,17 @@ namespace SymOntoClay.Core.Internal.Instances
         private BaseInstance _parent;
         private RuleInstance _condition;
         private bool _isOn;
-        private List<StrongIdentifierValue> _usedKeysList = new List<StrongIdentifierValue>();
+        private List<string> _foundKeys = new List<string>();
 
-        private void LogicalStorage_OnChangedWithKeys(IList<StrongIdentifierValue> changedKeysList)
+        private void LogicalStorage_OnChanged()
         {
-            lock(_lockObj)
+            Task.Run(() => 
             {
-#if DEBUG
-                Log($"changedKeysList = {JsonConvert.SerializeObject(changedKeysList?.Select(p => p.NameValue))}");
-#endif
-
-                //if (_usedKeysList.Any())
-                //{
-                //    if (_usedKeysList.Intersect(changedKeysList).Any())
-                //    {
-                //        DoSearch();
-                //    }
-                //    return;
-                //}
-
-                DoSearch();
-            }
+                lock (_lockObj)
+                {
+                    DoSearch();
+                }
+            });
         }
 
         private void DoSearch()
@@ -116,7 +111,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
 #if DEBUG
             //Log($"searchResult = {searchResult}");
-            //Log($"result = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
+            //Log($"_condition = {DebugHelperForRuleInstance.ToString(_condition)}");
+            //Log($"searchResult = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
             //foreach(var usedKey in searchResult.UsedKeysList)
             //{
             //    Log($"usedKey = {usedKey}");
@@ -124,122 +120,184 @@ namespace SymOntoClay.Core.Internal.Instances
             //}
 #endif
 
-            //_usedKeysList = searchResult.UsedKeysList;
-
 #if DEBUG
-            Log($"_isOn = {_isOn}");
+            //Log($"searchResult.Items.Count = {searchResult.Items.Count}");
+#endif
+
+            if (searchResult.IsSuccess)
+            {
+                if(searchResult.Items.Count == 0)
+                {
+                    ProcessResultWithNoItems();
+                }
+                else
+                {
+                    ProcessResultWithItems(searchResult);
+                }                
+            }
+            else
+            {
+                CleansingPreviousResults();
+            }
+        }
+
+        private void CleansingPreviousResults()
+        {
+#if DEBUG
+            //Log("CleansingPreviousResults()");
+#endif
+
+            _isOn = false;
+            _foundKeys.Clear();
+        }
+
+        private void ProcessResultWithNoItems()
+        {
+#if DEBUG
+            //Log("ProcessResultWithNoItems()");
+            //Log($"_isOn = {_isOn}");
 #endif
 
             if (_isOn)
             {
-                if (!searchResult.IsSuccess)
-                {
-                    _isOn = false;
-                }
+                return;
             }
-            else
+
+            _isOn = true;
+
+            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
+            var storage = new LocalStorage(localStorageSettings);
+            localCodeExecutionContext.Storage = storage;
+            localCodeExecutionContext.Holder = _parent.Name;
+
+            var processInitialInfo = new ProcessInitialInfo();
+            processInitialInfo.CompiledFunctionBody = _trigger.CompiledFunctionBody;
+            processInitialInfo.LocalContext = localCodeExecutionContext;
+            processInitialInfo.Metadata = _trigger.CodeEntity;
+
+            var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo, _executionCoordinator);
+        }
+
+        private void ProcessResultWithItems(LogicalSearchResult searchResult)
+        {
+#if DEBUG
+            //Log("ProcessResultWithItems()");
+#endif
+
+            var usedKeys = new List<string>();
+            var keysForAdding = new List<string>();
+
+            var bindingVariables = _trigger.BindingVariables;
+            
+            foreach (var foundResultItem in searchResult.Items)
             {
-                if(searchResult.IsSuccess)
+#if DEBUG
+                //Log($"foundResultItem = {foundResultItem}");
+                //Log($"foundResultItem.KeyForTrigger = {foundResultItem.KeyForTrigger}");
+#endif
+
+                var keyForTrigger = foundResultItem.KeyForTrigger;
+
+                usedKeys.Add(keyForTrigger);
+
+                if (_foundKeys.Contains(keyForTrigger))
                 {
-                    //_isOn = true;
+                    continue;
+                }
+
+                keysForAdding.Add(keyForTrigger);
+                _foundKeys.Add(keyForTrigger);
 
 #if DEBUG
-                    //Log($"searchResult = {searchResult}");
-                    //Log($"result = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
+                //Log("Next");
 #endif
 
-                    var localCodeExecutionContext = new LocalCodeExecutionContext();
-                    var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
-                    var storage = new LocalStorage(localStorageSettings);
-                    localCodeExecutionContext.Storage = storage;
-                    localCodeExecutionContext.Holder = _parent.Name;
+                var localCodeExecutionContext = new LocalCodeExecutionContext();
+                var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
+                var storage = new LocalStorage(localStorageSettings);
+                localCodeExecutionContext.Storage = storage;
+                localCodeExecutionContext.Holder = _parent.Name;
+
+                if (bindingVariables.Any())
+                {
+                    var varStorage = storage.VarStorage;
+
+                    var resultVarsList = foundResultItem.ResultOfVarOfQueryToRelationList;
 
 #if DEBUG
-                    Log($"searchResult.Items.Count = {searchResult.Items.Count}");
+                    //Log($"resultVarsList.Count = {resultVarsList.Count}");
 #endif
 
-                    var bindingVariables = _trigger.BindingVariables;
-
-                    if (bindingVariables.Any())
+                    if (bindingVariables.Count != resultVarsList.Count)
                     {
-                        var varStorage = storage.VarStorage;
-
-                        var foundResultItem = searchResult.Items.FirstOrDefault();
-
-                        if(foundResultItem == null)
-                        {
-                            throw new NotImplementedException();
-                        }
-
-                        var resultVarsList = foundResultItem.ResultOfVarOfQueryToRelationList;
-
-#if DEBUG
-                        //Log($"resultVarsList.Count = {resultVarsList.Count}");
-#endif
-                        
-                        if(bindingVariables.Count != resultVarsList.Count)
-                        {
-                            throw new NotImplementedException();
-                        }
-
-                        foreach(var resultVar in resultVarsList)
-                        {
-#if DEBUG
-                            //Log($"resultVar = {resultVar}");
-#endif
-
-                            Value value = null;
-
-                            var foundExpression = resultVar.FoundExpression;
-
-                            var kindOfFoundExpression = foundExpression.Kind;
-
-                            switch(kindOfFoundExpression)
-                            {
-                                case KindOfLogicalQueryNode.Entity:
-                                    value = foundExpression.Name;
-                                    break;
-
-                                case KindOfLogicalQueryNode.Value:
-                                    value = foundExpression.Value;
-                                    break;
-
-                                default:
-                                    throw new ArgumentOutOfRangeException(nameof(kindOfFoundExpression), kindOfFoundExpression, null);
-                            }
-
-#if DEBUG
-                            //Log($"value = {value}");
-#endif
-
-                            var destVar = bindingVariables.GetDest(resultVar.NameOfVar);
-
-#if DEBUG
-                            //Log($"destVar = {destVar}");
-#endif
-
-                            varStorage.SetValue(destVar, value);
-                        }
+                        throw new NotImplementedException();
                     }
 
-                    var processInitialInfo = new ProcessInitialInfo();
-                    processInitialInfo.CompiledFunctionBody = _trigger.CompiledFunctionBody;
-                    processInitialInfo.LocalContext = localCodeExecutionContext;
-                    processInitialInfo.Metadata = _trigger.CodeEntity;
+                    foreach (var resultVar in resultVarsList)
+                    {
+#if DEBUG
+                        //Log($"resultVar = {resultVar}");
+#endif
 
-                    var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo, _executionCoordinator);
-                }
-            }
+                        Value value = null;
+
+                        var foundExpression = resultVar.FoundExpression;
+
+                        var kindOfFoundExpression = foundExpression.Kind;
+
+                        switch (kindOfFoundExpression)
+                        {
+                            case KindOfLogicalQueryNode.Entity:
+                                value = foundExpression.Name;
+                                break;
+
+                            case KindOfLogicalQueryNode.Value:
+                                value = foundExpression.Value;
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(kindOfFoundExpression), kindOfFoundExpression, null);
+                        }
 
 #if DEBUG
-            Log($"_isOn (after) = {_isOn}");
+                        //Log($"value = {value}");
 #endif
+
+                        var destVar = bindingVariables.GetDest(resultVar.NameOfVar);
+
+#if DEBUG
+                        //Log($"destVar = {destVar}");
+#endif
+
+                        varStorage.SetValue(destVar, value);
+                    }
+                }
+
+                var processInitialInfo = new ProcessInitialInfo();
+                processInitialInfo.CompiledFunctionBody = _trigger.CompiledFunctionBody;
+                processInitialInfo.LocalContext = localCodeExecutionContext;
+                processInitialInfo.Metadata = _trigger.CodeEntity;
+
+                var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo, _executionCoordinator);
+            }
+
+            //var keysForRemoving = _foundKeys.Except(usedKeys);
+
+            _foundKeys = usedKeys;
+
+//#if DEBUG
+//            Log($"_foundKeys = {JsonConvert.SerializeObject(_foundKeys)}");
+//            Log($"usedKeys = {JsonConvert.SerializeObject(usedKeys)}");
+//            Log($"keysForAdding = {JsonConvert.SerializeObject(keysForAdding)}");
+//            Log($"keysForRemoving = {JsonConvert.SerializeObject(keysForRemoving)}");
+//#endif
         }
 
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
-            _storage.LogicalStorage.OnChangedWithKeys -= LogicalStorage_OnChangedWithKeys;
+            _storage.LogicalStorage.OnChanged -= LogicalStorage_OnChanged;
 
             base.OnDisposed();
         }

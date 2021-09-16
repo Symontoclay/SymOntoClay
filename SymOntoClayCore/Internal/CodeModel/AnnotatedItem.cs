@@ -32,7 +32,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class AnnotatedItem : IAnnotatedItem, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, ISymOntoClayDisposable
+    public abstract class AnnotatedItem : IAnnotatedItem, IObjectWithLongHashCodes, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, ISymOntoClayDisposable
     {
         /// <summary>
         /// It is 'Clauses section' in the documentation.

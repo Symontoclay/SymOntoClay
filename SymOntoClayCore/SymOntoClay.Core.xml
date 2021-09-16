@@ -3416,9 +3416,6 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.OnDisposed">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.OnDisposed">
             <inheritdoc/>
         </member>
@@ -3465,6 +3462,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.RuleInstance">
+            <inheritdoc/>
+        </member>
+        <member name="E:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.OnFinished">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.ToString">

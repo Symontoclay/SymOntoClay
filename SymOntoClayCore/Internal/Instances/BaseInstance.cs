@@ -19,6 +19,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _context = context;
 
             _executionCoordinator = new ExecutionCoordinator();
+            _executionCoordinator.OnFinished += _executionCoordinator_OnFinished;
 
             _localCodeExecutionContext = new LocalCodeExecutionContext();
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
@@ -90,9 +91,15 @@ namespace SymOntoClay.Core.Internal.Instances
 #endif
             }
 
+#if DEBUG
+            //Log($"Name = {Name}");
+#endif
+
             var targetLogicConditionalTriggersList = _triggersResolver.ResolveLogicConditionalTriggersList(Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
+
+            //Log($"targetLogicConditionalTriggersList.Count = {targetLogicConditionalTriggersList.Count}");
             //Log($"targetLogicConditionalTriggersList = {targetLogicConditionalTriggersList.WriteListToString()}");
 #endif
 
@@ -112,6 +119,11 @@ namespace SymOntoClay.Core.Internal.Instances
             _instanceState = InstanceState.Initialized;
 
             _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
+        }
+
+        private void _executionCoordinator_OnFinished()
+        {
+            Dispose();
         }
 
         /// <inheritdoc/>

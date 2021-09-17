@@ -79,11 +79,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 6:
-                            Assert.AreEqual(message, "0");
+                            Assert.AreEqual(message, "0.5");
                             break;
 
                         case 7:
-                            Assert.AreEqual(message, "1");
+                            Assert.AreEqual(message, "0.5");
                             break;
 
                         case 8:
@@ -91,6 +91,172 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 9:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case1_a()
+        {
+            var text = @"app PeaceKeeper is [0.5] `exampleClass`
+{
+    on Init =>
+    {
+        'Begin' >> @>log;
+        exampleClass is human >> @>log;
+        exampleClass is not human >> @>log;
+        use exampleClass is [0.5] human;
+        exampleClass is human >> @>log;
+        exampleClass is not human >> @>log;
+        use exampleClass is not human;
+        exampleClass is human >> @>log;
+        exampleClass is not human >> @>log;
+        use @@self is linux;
+        @@self is linux >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "0");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "1");
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(message, "0.5");
+                            break;
+
+                        case 5:
+                            Assert.AreEqual(message, "0.5");
+                            break;
+
+                        case 6:
+                            Assert.AreEqual(message, "0.5");
+                            break;
+
+                        case 7:
+                            Assert.AreEqual(message, "0.5");
+                            break;
+
+                        case 8:
+                            Assert.AreEqual(message, "1");
+                            break;
+
+                        case 9:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case1_b()
+        {
+            var text = @"app PeaceKeeper is [0.5] exampleClass, [0.6] humanoid
+{
+    on Init =>
+    {
+        'Begin' >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case1_c()
+        {
+            var text = @"app PeaceKeeper is exampleClass, humanoid
+{
+    on Init =>
+    {
+        'Begin' >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case1_d()
+        {
+            var text = @"app PeaceKeeper is `exampleClass`, `humanoid`
+{
+    on Init =>
+    {
+        'Begin' >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
                             Assert.AreEqual(message, "End");
                             break;
 

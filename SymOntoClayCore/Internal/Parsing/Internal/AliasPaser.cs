@@ -9,7 +9,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
     {
         private enum State
         {
-            Init
+            Init,
+            GotAliasMark,
+            GotItem,
+            GotComma
         }
 
         public AliasPaser(InternalParserContext context)
@@ -25,16 +28,109 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_currToken = {_currToken}");
+            //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
 #endif
 
             switch (_state)
             {
+                case State.Init:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                            switch (_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Alias:
+                                    _state = State.GotAliasMark;
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotAliasMark:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                        case TokenKind.Identifier:
+                            ProcessAliasItem();
+                            _state = State.GotItem;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotItem:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenFigureBracket:
+                            _context.Recovery(_currToken);
+                            Exit();
+                            break;
+
+                        case TokenKind.Comma:
+                            _state = State.GotComma;
+                            break;
+
+                        case TokenKind.Word:
+                            switch (_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Is:
+                                    _context.Recovery(_currToken);
+                                    Exit();
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotComma:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                        case TokenKind.Identifier:
+                            ProcessAliasItem();
+                            _state = State.GotItem;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
+        }
+
+        private void ProcessAliasItem()
+        {
+#if DEBUG
+            //Log($"_currToken = {_currToken}");
+#endif
+
+            var item = ParseName(_currToken.Content);
+
+            if(Result.Contains(item))
+            {
+                throw new UnexpectedTokenException(_currToken);
+            }
+
+            Result.Add(item);
         }
     }
 }

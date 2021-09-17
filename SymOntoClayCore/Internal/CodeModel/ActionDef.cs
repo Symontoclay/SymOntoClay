@@ -15,12 +15,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public void AddAliasRange(List<StrongIdentifierValue> aliasList)
         {
-            throw new NotImplementedException();
+            _aliasesList.AddRange(aliasList);
         }
 
         public IList<StrongIdentifierValue> NamesList => _namesList;
 
         private List<StrongIdentifierValue> _namesList;
+        private List<StrongIdentifierValue> _aliasesList = new List<StrongIdentifierValue>();
 
         public void AddOperator(Operator op)
         {
@@ -68,7 +69,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
             context[this] = result;
 
             result.Name = Name.Clone(context);
+
+            result._aliasesList = _aliasesList?.Select(p => p.Clone(context)).ToList();
             result._namesList = _namesList?.Select(p => p.Clone(context)).ToList();
+            
             //result.Range = Range?.Clone(context);
             //result.Constraint = Constraint?.Clone(context);
             //result.Values = Values?.Select(p => p.Clone(context)).ToList();
@@ -110,9 +114,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             Name.CheckDirty();
 
+            foreach(var alias in _aliasesList)
+            {
+                alias.CheckDirty();
+            }
+
             var result = base.CalculateLongHashCode() ^ Name.GetLongHashCode();
 
             _namesList = new List<StrongIdentifierValue>() { Name };
+            _namesList.AddRange(_aliasesList);
 
             //if (Range != null)
             //{

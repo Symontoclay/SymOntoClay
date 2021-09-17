@@ -95,6 +95,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
+                        case TokenKind.Identifier:
                             TryCreateCurrentItem();
 
                             _currentItem.Rank = new LogicalValue(1.0F);
@@ -221,6 +222,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
+                        case TokenKind.Identifier:
                             TryCreateCurrentItem();
 
                             _currentItem.SuperName = ParseName(_currToken.Content);

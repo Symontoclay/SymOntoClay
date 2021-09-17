@@ -10,7 +10,7 @@
     }
 }
 
-action `my Go 1` alias Go
+action `my Go 1` alias `Go`, Run is `base app`
 {
     on Init =>
     {

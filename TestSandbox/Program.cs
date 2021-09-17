@@ -78,6 +78,7 @@ namespace TestSandbox
             //TstCreatorExamples();
             //TstLinguisticVariable_Tests();
             //TstManageTempProject();
+            TstAdvancedTestRunner();//<=
             //TstTestRunner();//<=
             //TstNameHelper();
             //TstDeffuzzification();
@@ -113,7 +114,7 @@ namespace TestSandbox
             //TstExprNodeHandler();
             //TstParsing();
             //TstMonoBehaviourTestingHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -385,29 +386,72 @@ app PeaceKeeper is [very middle] exampleClass
             _logger.Log("End");
         }
 
-        private static void TstTestRunner()
+        private static void TstAdvancedTestRunner()
         {
             _logger.Log("Begin");
+
+            var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
 {
     on Init =>
     {
-        try
-        {
-            'Begin' >> @>log;
-            'End' >> @>log;        
-        }
-        else
-        {
-            'else' >> @>log;
-        }
-        ensure
-        {
-            'ensure' >> @>log;
+        'Begin' >> @>log;
+ 
+        Go();
+
+        'End' >> @>log;
+    }
+}
+
+action Go 
+{
+    on Init =>
+    {
+        'Init Go' >> @>log;
+    }
+
+    op () => 
+    {
+        'Begin Go' >> @>log;
+        await;
+        'End Go' >> @>log;
+    }
+
+    on {: see(I, $x) :} ($x >> @x) => 
+    {
+        'on Fired' >> @>log;
+        @x >> @>log;
+        complete action;
+    }
+}";
+
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                _logger.Log($"n = {n}; message = {message}");
+            });
+
+            Thread.Sleep(5000);
+
+            npc.InsertFact("{: see(I, #a) :}");
+
+            Thread.Sleep(50000);
+
+            _logger.Log("End");
         }
 
-        'End of `Init`' >> @>log;
+        private static void TstTestRunner()
+        {
+            _logger.Log("Begin");
+
+            var text = @"app PeaceKeeper is [0.5] exampleClass, [0.6] humanoid
+{
+    on Init =>
+    {
+        'Begin' >> @>log;
+        'End' >> @>log;
     }
 }";
 

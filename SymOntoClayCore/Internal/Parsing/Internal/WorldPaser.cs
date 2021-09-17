@@ -32,7 +32,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private enum State
         {
             Init,
-            GotWorld,
+            GotWorldMark,
             GotName,
             GotInheritance,
             ContentStarted
@@ -60,7 +60,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.KeyWordTokenKind)
                     {
                         case KeyWordTokenKind.World:
-                            _state = State.GotWorld;
+                            _state = State.GotWorldMark;
                             break;
 
                         default:
@@ -68,7 +68,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotWorld:
+                case State.GotWorldMark:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:

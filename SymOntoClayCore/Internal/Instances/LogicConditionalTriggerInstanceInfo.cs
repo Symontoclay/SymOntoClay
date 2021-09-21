@@ -194,7 +194,7 @@ namespace SymOntoClay.Core.Internal.Instances
             {
 #if DEBUG
                 //Log($"foundResultItem = {foundResultItem}");
-                //Log($"foundResultItem.KeyForTrigger = {foundResultItem.KeyForTrigger}");
+                Log($"foundResultItem.KeyForTrigger = {foundResultItem.KeyForTrigger}");
 #endif
 
                 var keyForTrigger = foundResultItem.KeyForTrigger;

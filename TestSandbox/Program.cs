@@ -78,7 +78,7 @@ namespace TestSandbox
             //TstCreatorExamples();
             //TstLinguisticVariable_Tests();
             //TstManageTempProject();
-            TstAdvancedTestRunner();//<=
+            //TstAdvancedTestRunner();//<=
             //TstTestRunner();//<=
             //TstNameHelper();
             //TstDeffuzzification();
@@ -114,7 +114,7 @@ namespace TestSandbox
             //TstExprNodeHandler();
             //TstParsing();
             //TstMonoBehaviourTestingHandler();
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

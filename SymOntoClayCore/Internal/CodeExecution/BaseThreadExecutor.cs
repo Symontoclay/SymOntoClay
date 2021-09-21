@@ -942,7 +942,24 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (isSync)
                 {
-                    ProcessInfoHelper.Wait(new List<IExecutionCoordinator>() { localExecutionCoordinator, _executionCoordinator}, processInfo);
+                    List<IExecutionCoordinator> executionCoordinators = null;
+
+                    if(localExecutionCoordinator != null || _executionCoordinator != null)
+                    {
+                        executionCoordinators = new List<IExecutionCoordinator>();
+
+                        if(localExecutionCoordinator != null)
+                        {
+                            executionCoordinators.Add(localExecutionCoordinator);
+                        }
+
+                        if(_executionCoordinator != null)
+                        {
+                            executionCoordinators.Add(_executionCoordinator);
+                        }
+                    }
+
+                    ProcessInfoHelper.Wait(executionCoordinators, processInfo);
 
                     //Log($"localExecutionCoordinator = {localExecutionCoordinator}");
 

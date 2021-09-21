@@ -285,6 +285,11 @@ namespace SymOntoClay.Core.Internal.Convertors
                 return (LogicalQueryNode)convertingContext[source];
             }
 
+            if (source.KindOfOperator == KindOfOperatorOfLogicalQueryNode.Is && source.Left != null && source.Right != null && source.Right.Kind == KindOfLogicalQueryNode.Concept)
+            {
+                return ConvertIsExpressionAsInhritance(source, convertingContext);
+            }
+
             var result = new LogicalQueryNode();
             convertingContext[source] = result;
 
@@ -322,6 +327,41 @@ namespace SymOntoClay.Core.Internal.Convertors
 
 #if DEBUG
             //_gbcLogger.Info($"result = {result}");
+#endif
+
+            return result;
+        }
+
+        private static LogicalQueryNode ConvertIsExpressionAsInhritance(LogicalQueryNode source, Dictionary<object, object> convertingContext)
+        {
+#if DEBUG
+            //_gbcLogger.Info("ConvertIsExpressionAsInhritance!!!!!");
+            //_gbcLogger.Info($"source = {source}");
+#endif
+
+            var result = new LogicalQueryNode();
+            convertingContext[source] = result;
+
+            result.Kind = KindOfLogicalQueryNode.Relation;
+            result.Name = NameHelper.CreateName("is");
+            result.ParamsList = new List<LogicalQueryNode>();
+
+            result.ParamsList.Add(source.Left);
+
+            var superNameNode = new LogicalQueryNode();
+            superNameNode.Kind = KindOfLogicalQueryNode.Concept;
+            superNameNode.Name = source.Right.Name;
+
+            result.ParamsList.Add(superNameNode);
+
+            var rankNode = new LogicalQueryNode();
+            result.ParamsList.Add(rankNode);
+            rankNode.Kind = KindOfLogicalQueryNode.Value;
+            rankNode.Value = new LogicalValue(1);
+
+#if DEBUG
+            //_gbcLogger.Info($"result = {result}");
+            //_gbcLogger.Info($"result.GetHumanizeDbgString() = {result.GetHumanizeDbgString()}");
 #endif
 
             return result;

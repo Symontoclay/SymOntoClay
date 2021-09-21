@@ -1,4 +1,52 @@
-﻿app PeaceKeeper
+﻿app MyNPC
+{
+    on Init =>
+    {
+		"Begin" >> @>log;
+        go();
+	    "End" >> @>log;
+    }
+}
+
+action Go
+{
+    op () => 
+	{
+	    @@host.`go`(to: #@[200]);
+	}
+	
+    on {: see(I, $x) & $x is barrel & distance(I, $x, $y) :} ($y >> @y, $x >> @x) => 
+	{
+	    "I see 1" >> @>log;
+		@x >> @>log;
+		@y >> @>log;
+        complete action;
+	}
+
+    //on {: see(I, $x) & barrel ($x) & distance(I, $x, $y) :} ($y >> @y, $x >> @x) => 
+	//{
+	//    "I see 2" >> @>log;
+	//	@x >> @>log;
+	//	@y >> @>log;
+	//}
+
+	/*on {: see(I, $x) & $x is barrel & distance(I, $x, $y) :} ($y >> @y, $x >> @x) => 
+    //on {: see(I, $x) & barrel ($x) & distance(I, $x, $y) :} ($y >> @y, $x >> @x) => 
+	{
+	    "I see " >> @>log;
+		@x >> @>log;
+		@y >> @>log;
+		complete action;
+	}*/
+	
+	//on {: see(I, barrel) :} => {
+	//    "It is barrel!" >> @>log;
+		//@@host.`go`(to: #@[20, 180]);
+		//complete action;
+	//}
+}
+
+/*app PeaceKeeper
 {
     on Init =>
     {
@@ -32,6 +80,7 @@ action `my Go 1` alias `Go`, Run is `base app`
         complete action;
     }
 }
+*/
 
 /*app PeaceKeeper
 {

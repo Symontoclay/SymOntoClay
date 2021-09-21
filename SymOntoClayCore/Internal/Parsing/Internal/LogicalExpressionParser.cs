@@ -342,6 +342,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.LessOrEqual);
                             break;
 
+                        case TokenKind.And:
+                            ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.And);
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -475,10 +479,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
 #if DEBUG
             //Log($"nextToken = {nextToken}");
+            //Log($"value.KindOfName = {value.KindOfName}");
 
             //if(nextToken.Content == "is")
             //{
-                //throw new NotImplementedException();
+            //throw new NotImplementedException();
             //}
 #endif
 
@@ -519,6 +524,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     break;
 
                                 default:
+#if DEBUG
+                                    //Log($"^)$$$$$");
+#endif
+
                                     _context.Recovery(nextToken);
                                     StartProcessingFuzzyLogicNonNumericSequenceValue(value);
                                     break;
@@ -539,8 +548,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case TokenKind.And:
+                            _context.Recovery(nextToken);
+                            ProcessConceptOrQuestionVar(value);
+                            break;
+
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(nextToken);
                     }
                     break;
 

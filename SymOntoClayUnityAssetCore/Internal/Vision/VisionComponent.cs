@@ -294,7 +294,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                     var distanceFactStr = $"distance(I, {idForFacts}, {newVisibleItem.MinDistance.ToString("G", CultureInfo.InvariantCulture)})";
 
 #if DEBUG
-                    Log($"distanceFactStr = {distanceFactStr}");
+                    //Log($"distanceFactStr = {distanceFactStr}");
 #endif
 
                     _visibleObjectsDistanceFactsIdRegistry[instanceId] = _coreEngine.InsertPerceptedFact(distanceFactStr);

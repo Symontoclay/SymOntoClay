@@ -215,6 +215,10 @@ namespace SymOntoClay.Core.Internal.Storage
                 return;
             }
 
+#if DEBUG
+            Log($"_kind = {_kind}");
+#endif
+
             result.Add(this);
 
             lock (_lockObj)

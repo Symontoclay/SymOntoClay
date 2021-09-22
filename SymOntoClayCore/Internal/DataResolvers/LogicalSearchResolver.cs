@@ -116,7 +116,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var targetStorageList = GetStoragesList(options.TargetStorage);
 
 #if DEBUG
-                //Log($"targetStorageList = {targetStorageList.WriteListToString()}");
+                Log($"targetStorageList = {targetStorageList.WriteListToString()}");
 #endif
 
                 var maxPriority = targetStorageList.Max(p => p.Priority);
@@ -150,7 +150,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
 #if DEBUG
             //Log($"queryExpression = {queryExpression}");
-            //Log($"DebugHelperForRuleInstance.ToString(queryExpression) = {DebugHelperForRuleInstance.ToString(queryExpression)}");
+            Log($"DebugHelperForRuleInstance.ToString(queryExpression) = {DebugHelperForRuleInstance.ToString(queryExpression)}");
 #endif
 
             queryExpression.CheckDirty();
@@ -159,7 +159,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
 #if DEBUG
             //Log($"queryExpression (after) = {queryExpression}");
-            //Log($"DebugHelperForRuleInstance.ToString(queryExpression) (after) = {DebugHelperForRuleInstance.ToString(queryExpression)}");
+            Log($"DebugHelperForRuleInstance.ToString(queryExpression) (after) = {DebugHelperForRuleInstance.ToString(queryExpression)}");
 #endif
 
             FillExecutingCard(queryExpression, queryExecutingCard, dataSource, optionsOfFillExecutingCard);

@@ -25,6 +25,7 @@ using SymOntoClay.UnityAsset.Core.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.UnityAsset.Core.Tests
 {
@@ -256,13 +257,164 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case4()
+        {
+            var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{ 
+    on {: see(I, #a) :} =>
+    {
+        'on Fired in App' >> @>log;
+    }
+
+    on {: see(I, $x) :} ($x >> @x) => 
+    {
+        'on Fired $x in App' >> @>log;
+        @x >> @>log;
+    }
+}";
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual(message, "on Fired in App");
+                        break;
+
+                    case 2:
+                        Assert.AreEqual(message, "on Fired $x in App");
+                        break;
+
+                    case 3:
+                        Assert.AreEqual(message, "#a");
+                        break;
+
+                    case 4:
+                        Assert.AreEqual(message, "on Fired $x in App");
+                        break;
+
+                    case 5:
+                        Assert.AreEqual(message, "#b");
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+            Thread.Sleep(1000);
+
+            var factId = npc.InsertFact("{: see(I, #a) :}");
+
+            Thread.Sleep(1000);
+
+            npc.InsertFact("{: see(I, #b) :}");
+
+            Thread.Sleep(1000);
+
+            npc.RemoveFact(factId);
+
+            Thread.Sleep(1000);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case5()
+        {
+            var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{ 
+    on {: see(I, $x) & barrel($x) & distance(I, $x, $y) :} ($y >> @y, $x >> @x) => 
+	{
+	    'I see!!' >> @>log;
+        @x >> @>log;
+        @y >> @>log;
+    }
+}";
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual(message, "I see!!");
+                        break;
+
+                    case 2:
+                        Assert.AreEqual(message, "#a");
+                        break;
+
+                    case 3:
+                        Assert.AreEqual(message, "14.71526");
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+            Thread.Sleep(1000);
+
+            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact("{: barrel (#a) :}");
+            npc.InsertFact("distance(I, #a, 14.71526)");
+
+            Thread.Sleep(1000);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case6()
+        {
+            var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{ 
+    on {: see(I, $x) & $x is barrel & distance(I, $x, $y) :} ($y >> @y, $x >> @x) => 
+	{
+	    'I see!!' >> @>log;
+        @x >> @>log;
+        @y >> @>log;
+    }
+}";
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual(message, "I see!!");
+                        break;
+
+                    case 2:
+                        Assert.AreEqual(message, "#a");
+                        break;
+
+                    case 3:
+                        Assert.AreEqual(message, "14.71526");
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+            Thread.Sleep(1000);
+
+            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact("{: barrel (#a) :}");
+            npc.InsertFact("distance(I, #a, 14.71526)");
+
+            Thread.Sleep(1000);
+        }
     }
 }
-
-/*
-
-*/
-
-/*
-
-*/

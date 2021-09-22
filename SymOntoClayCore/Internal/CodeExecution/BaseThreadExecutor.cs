@@ -514,7 +514,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             var coordinator = _currentCodeFrame.ExecutionCoordinator;
 
 #if DEBUG
-                            Log($"coordinator = {coordinator}");
+                            //Log($"coordinator = {coordinator}");
 #endif
 
                             if (coordinator == null)
@@ -525,6 +525,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             if(coordinator.ExecutionStatus == ActionExecutionStatus.Executing)
                             {
+                                break;
+                            }
+
+                            if(coordinator.ExecutionStatus == ActionExecutionStatus.Broken)
+                            {
+                                ProcessError(coordinator.RuleInstance);
                                 break;
                             }
 

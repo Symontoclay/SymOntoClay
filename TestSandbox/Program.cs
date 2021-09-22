@@ -75,7 +75,7 @@ namespace TestSandbox
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
             //TstNavigationHandler();
-            //TstCreatorExamples();
+            TstCreatorExamples();
             //TstLinguisticVariable_Tests();
             //TstManageTempProject();
             //TstAdvancedTestRunner();//<=
@@ -114,7 +114,7 @@ namespace TestSandbox
             //TstExprNodeHandler();
             //TstParsing();
             //TstMonoBehaviourTestingHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -135,7 +135,8 @@ namespace TestSandbox
             _logger.Log("Begin");
 
             //using var handler = new CreatorExamples_Fun_01_06_2021();
-            using var handler = new CreatorExamples_Error_Processing_07_06_2021();
+            //using var handler = new CreatorExamples_Error_Processing_07_06_2021();
+            using var handler = new CreatorExamples_Actions_22_09_2021();
             handler.Run();
 
             _logger.Log("End");
@@ -414,18 +415,9 @@ action Go
     op () => 
     {
         'Begin Go' >> @>log;
-        await;
         'End Go' >> @>log;
     }
-
-    on {: see(I, $x) :} ($x >> @x) => 
-    {
-        'on Fired' >> @>log;
-        @x >> @>log;
-        complete action;
-    }
 }";
-
 
             instance.WriteFile(text);
 
@@ -433,11 +425,11 @@ action Go
                 _logger.Log($"n = {n}; message = {message}");
             });
 
-            Thread.Sleep(5000);
+            Thread.Sleep(1000);
 
             npc.InsertFact("{: see(I, #a) :}");
 
-            Thread.Sleep(50000);
+            Thread.Sleep(1000);
 
             _logger.Log("End");
         }

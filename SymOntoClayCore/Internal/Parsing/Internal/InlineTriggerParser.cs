@@ -178,6 +178,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _state = State.WaitForAction;
                             break;
 
+                        case TokenKind.OpenFigureBracket:
+                            ProcessFunctionBody();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -187,15 +191,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.OpenFigureBracket:
-                            {
-                                _context.Recovery(_currToken);
-                                var parser = new FunctionBodyParser(_context);
-                                parser.Run();
-                                var statementsList = parser.Result;
-                                _inlineTrigger.Statements = statementsList;
-                                _inlineTrigger.CompiledFunctionBody = _context.Compiler.Compile(statementsList);
-                                _state = State.GotAction;
-                            }
+                            ProcessFunctionBody();
                             break;
 
                         default:
@@ -234,6 +230,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
+        }
+
+        private void ProcessFunctionBody()
+        {
+            _context.Recovery(_currToken);
+            var parser = new FunctionBodyParser(_context);
+            parser.Run();
+            var statementsList = parser.Result;
+            _inlineTrigger.Statements = statementsList;
+            _inlineTrigger.CompiledFunctionBody = _context.Compiler.Compile(statementsList);
+            _state = State.GotAction;
         }
     }
 }

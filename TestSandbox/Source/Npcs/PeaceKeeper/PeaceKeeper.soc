@@ -10,12 +10,12 @@
 
 action Go
 {
-    op () => 
+    op () 
 	{
 	    @@host.`go`(to: #@[200]);
 	}
 	
-    on {: see(I, $x) & $x is barrel & distance(I, $x, $y) :} ($y >> @y, $x >> @x) => 
+    on {: see(I, $x) & $x is barrel & distance(I, $x, $y) :} ($y >> @y, $x >> @x) 
 	{
 	    "I see 1" >> @>log;
 		@x >> @>log;

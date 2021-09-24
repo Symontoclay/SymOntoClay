@@ -150,7 +150,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
 #if DEBUG
             //Log($"queryExpression = {queryExpression}");
-            Log($"DebugHelperForRuleInstance.ToString(queryExpression) = {DebugHelperForRuleInstance.ToString(queryExpression)}");
+            //Log($"DebugHelperForRuleInstance.ToString(queryExpression) = {DebugHelperForRuleInstance.ToString(queryExpression)}");
 #endif
 
             queryExpression.CheckDirty();
@@ -159,13 +159,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
 #if DEBUG
             //Log($"queryExpression (after) = {queryExpression}");
-            Log($"DebugHelperForRuleInstance.ToString(queryExpression) (after) = {DebugHelperForRuleInstance.ToString(queryExpression)}");
+            //Log($"DebugHelperForRuleInstance.ToString(queryExpression) (after) = {DebugHelperForRuleInstance.ToString(queryExpression)}");
 #endif
 
             FillExecutingCard(queryExpression, queryExecutingCard, dataSource, optionsOfFillExecutingCard);
 
 #if DEBUG
-            Log($"@!@!@!@!@!@!@! queryExecutingCard = {queryExecutingCard}");
+            //Log($"@!@!@!@!@!@!@! queryExecutingCard = {queryExecutingCard}");
 #endif
 
             if(queryExecutingCard.IsPostFiltersListOnly)
@@ -181,11 +181,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var usedKeysList = queryExecutingCard.UsedKeysList.Distinct().ToList();
 
 #if DEBUG
-            Log($"usedKeysList.Count = {usedKeysList.Count}");
-            foreach(var usedKey in usedKeysList)
-            {
-                Log($"usedKey = {usedKey}");
-            }
+            //Log($"usedKeysList.Count = {usedKeysList.Count}");
+            //foreach(var usedKey in usedKeysList)
+            //{
+            //    Log($"usedKey = {usedKey}");
+            //}
 #endif
 
             result.UsedKeysList = usedKeysList;
@@ -204,7 +204,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             result.Items = resultItemsList;
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
 
             return result;
@@ -232,7 +232,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private void FillExecutingCard(RuleInstance processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log("Begin");
+            //options.Logger.Log("Begin");
 #endif
 
             var queryExecutingCardForPart_1 = new QueryExecutingCardForIndexedPersistLogicalData();
@@ -258,15 +258,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForPart_1.UsedKeysList);
 #if DEBUG
-            options.Logger.Log("End");
+            //options.Logger.Log("End");
 #endif
         }
 
         private void FillExecutingCard(PrimaryRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log($"Begin ~~~~~~ processedExpr = {processedExpr}");
-            options.Logger.Log($"Begin ~~~~~~ processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
+            //options.Logger.Log($"Begin ~~~~~~ processedExpr = {processedExpr}");
+            //options.Logger.Log($"Begin ~~~~~~ processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
 #endif
 
             var queryExecutingCardForExpression = new QueryExecutingCardForIndexedPersistLogicalData();
@@ -274,9 +274,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             FillExecutingCard(processedExpr.Expression, queryExecutingCardForExpression, dataSource, options);
 
 #if DEBUG
-            options.Logger.Log($"~~~~~~ (after) processedExpr = {processedExpr}");
-            options.Logger.Log($"~~~~~~ (after) processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
-            options.Logger.Log($"#$%^$%^^ queryExecutingCardForExpression = {queryExecutingCardForExpression}");
+            //options.Logger.Log($"~~~~~~ (after) processedExpr = {processedExpr}");
+            //options.Logger.Log($"~~~~~~ (after) processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
+            //options.Logger.Log($"#$%^$%^^ queryExecutingCardForExpression = {queryExecutingCardForExpression}");
 #endif
 
             if(!queryExecutingCardForExpression.IsSuccess)
@@ -300,7 +300,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            options.Logger.Log($"*************()()()()()()======== queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log($"*************()()()()()()======== queryExecutingCard = {queryExecutingCard}");
             //if (queryExecutingCardForExpression.UsedKeysList.Any())
             //{
             //    throw new NotImplementedException();
@@ -312,7 +312,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private void FillExecutingCardUsingPostFiltersList(QueryExecutingCardForIndexedPersistLogicalData sourceQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData destQueryExecutingCard, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log($"sourceQueryExecutingCard = {sourceQueryExecutingCard}");
+            //options.Logger.Log($"sourceQueryExecutingCard = {sourceQueryExecutingCard}");
 #endif
 
             var postFiltersList = sourceQueryExecutingCard.PostFiltersList;
@@ -337,7 +337,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     case KindOfOperatorOfLogicalQueryNode.And:
                         FillExecutingCardUsingPostFilterListWithAndStrategy(oldTargetSourceQueryExecutingCard, targetSourceQueryExecutingCard, postFilter, options);
 #if DEBUG
-                        options.Logger.Log($"targetSourceQueryExecutingCard = {targetSourceQueryExecutingCard}");
+                        //options.Logger.Log($"targetSourceQueryExecutingCard = {targetSourceQueryExecutingCard}");
 #endif
                         break;
 
@@ -347,7 +347,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            options.Logger.Log($"targetSourceQueryExecutingCard (after) = {targetSourceQueryExecutingCard}");
+            //options.Logger.Log($"targetSourceQueryExecutingCard (after) = {targetSourceQueryExecutingCard}");
 #endif
 
             if(targetSourceQueryExecutingCard.IsSuccess)
@@ -359,15 +359,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            options.Logger.Log($"///////////////// destQueryExecutingCard = {destQueryExecutingCard}");
+            //options.Logger.Log($"///////////////// destQueryExecutingCard = {destQueryExecutingCard}");
 #endif
         }
 
         private void FillExecutingCardUsingPostFilterListWithAndStrategy(QueryExecutingCardForIndexedPersistLogicalData sourceQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData destQueryExecutingCard, PostFilterOfQueryExecutingCardForPersistLogicalData postFilter, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log($"sourceQueryExecutingCard = {sourceQueryExecutingCard}");
-            options.Logger.Log($"postFilter = {postFilter}");
+            //options.Logger.Log($"sourceQueryExecutingCard = {sourceQueryExecutingCard}");
+            //options.Logger.Log($"postFilter = {postFilter}");
 #endif
 
             var processedExpr = postFilter.ProcessedExpr;
@@ -377,9 +377,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var kindOfOperator = processedExpr.KindOfOperator;
 
 #if DEBUG
-            options.Logger.Log($"leftExpr = {leftExpr}");
-            options.Logger.Log($"rightExpr = {rightExpr}");
-            options.Logger.Log($"kindOfOperator = {kindOfOperator}");
+            ///options.Logger.Log($"leftExpr = {leftExpr}");
+            //options.Logger.Log($"rightExpr = {rightExpr}");
+            //options.Logger.Log($"kindOfOperator = {kindOfOperator}");
 #endif
 
             var resultsOfQueryToRelationList = new List<ResultOfQueryToRelation>();
@@ -391,14 +391,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var rightVariableName = rightExpr.Name;
 
 #if DEBUG
-                options.Logger.Log($"leftVariableName = {leftVariableName}");
-                options.Logger.Log($"rightVariableName = {rightVariableName}");
+                //options.Logger.Log($"leftVariableName = {leftVariableName}");
+                //options.Logger.Log($"rightVariableName = {rightVariableName}");
 #endif
 
                 foreach (var sourceResultOfQueryToRelation in sourceQueryExecutingCard.ResultsOfQueryToRelationList)
                 {
 #if DEBUG
-                    options.Logger.Log($"sourceResultOfQueryToRelation = {sourceResultOfQueryToRelation}");
+                    //options.Logger.Log($"sourceResultOfQueryToRelation = {sourceResultOfQueryToRelation}");
 #endif
 
                     var sourceVarsList = sourceResultOfQueryToRelation.ResultOfVarOfQueryToRelationList;
@@ -406,7 +406,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     var sourceVarNamesList = sourceVarsList.Select(p => p.NameOfVar);
 
 #if DEBUG
-                    options.Logger.Log($"sourceVarNamesList = {JsonConvert.SerializeObject(sourceVarNamesList.Select(p => p.NameValue))}");
+                    //options.Logger.Log($"sourceVarNamesList = {JsonConvert.SerializeObject(sourceVarNamesList.Select(p => p.NameValue))}");
 #endif
 
                     if (sourceVarsDict.ContainsKey(leftVariableName) && sourceVarsDict.ContainsKey(rightVariableName))
@@ -415,8 +415,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         var sourceRightNode = sourceVarsDict[rightVariableName];
 
 #if DEBUG
-                        options.Logger.Log($"sourceLeftNode = {sourceLeftNode}");
-                        options.Logger.Log($"sourceRightNode = {sourceRightNode}");
+                        //options.Logger.Log($"sourceLeftNode = {sourceLeftNode}");
+                        //options.Logger.Log($"sourceRightNode = {sourceRightNode}");
 #endif
 
                         var comparisonQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
@@ -424,13 +424,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         var resultOfComparison = CompareForPostFilter(kindOfOperator, sourceLeftNode, sourceRightNode, options, comparisonQueryExecutingCard);
 
 #if DEBUG
-                        options.Logger.Log($"resultOfComparison = {resultOfComparison}");
+                        //options.Logger.Log($"resultOfComparison = {resultOfComparison}");
 #endif
 
                         if (resultOfComparison)
                         {
 #if DEBUG
-                            options.Logger.Log($"comparisonQueryExecutingCard = {comparisonQueryExecutingCard}");
+                            //options.Logger.Log($"comparisonQueryExecutingCard = {comparisonQueryExecutingCard}");
 #endif
 
                             resultsOfQueryToRelationList.Add(sourceResultOfQueryToRelation);
@@ -460,14 +460,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
 #if DEBUG
-                options.Logger.Log($"variableOfFilter = {variableOfFilter}");
-                options.Logger.Log($"valueOfFilter = {nodeOfFilter}");
+                //options.Logger.Log($"variableOfFilter = {variableOfFilter}");
+                //options.Logger.Log($"valueOfFilter = {nodeOfFilter}");
 #endif
 
                 foreach (var sourceResultOfQueryToRelation in sourceQueryExecutingCard.ResultsOfQueryToRelationList)
                 {
 #if DEBUG
-                    options.Logger.Log($"sourceResultOfQueryToRelation = {sourceResultOfQueryToRelation}");
+                    //options.Logger.Log($"sourceResultOfQueryToRelation = {sourceResultOfQueryToRelation}");
 #endif
 
                     var sourceVarsList = sourceResultOfQueryToRelation.ResultOfVarOfQueryToRelationList;
@@ -475,7 +475,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     var sourceVarNamesList = sourceVarsList.Select(p => p.NameOfVar);
 
 #if DEBUG
-                    options.Logger.Log($"sourceVarNamesList = {JsonConvert.SerializeObject(sourceVarNamesList.Select(p => p.NameValue))}");
+                    //options.Logger.Log($"sourceVarNamesList = {JsonConvert.SerializeObject(sourceVarNamesList.Select(p => p.NameValue))}");
 #endif
 
                     if (sourceVarsDict.ContainsKey(variableOfFilter))
@@ -483,7 +483,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         var sourceNode = sourceVarsDict[variableOfFilter];
 
 #if DEBUG
-                        options.Logger.Log($"sourceNode = {sourceNode}");
+                        //options.Logger.Log($"sourceNode = {sourceNode}");
 #endif
 
                         var comparisonQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
@@ -500,13 +500,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         }
 
 #if DEBUG
-                        options.Logger.Log($"resultOfComparison = {resultOfComparison}");
+                        //options.Logger.Log($"resultOfComparison = {resultOfComparison}");
 #endif
 
                         if (resultOfComparison)
                         {
 #if DEBUG
-                            options.Logger.Log($"comparisonQueryExecutingCard = {comparisonQueryExecutingCard}");
+                            //options.Logger.Log($"comparisonQueryExecutingCard = {comparisonQueryExecutingCard}");
 #endif
 
                             resultsOfQueryToRelationList.Add(sourceResultOfQueryToRelation);
@@ -557,8 +557,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private bool CompareForPostFilterByOperatorIs(LogicalQueryNode leftNode, LogicalQueryNode rightNode, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard)
         {
 #if DEBUG
-            options.Logger.Log($"leftNode = {leftNode}");
-            options.Logger.Log($"rightNode = {rightNode}");
+            //options.Logger.Log($"leftNode = {leftNode}");
+            //options.Logger.Log($"rightNode = {rightNode}");
 #endif
 
             List<StrongIdentifierValue> additionalKeys_1 = null;
@@ -600,9 +600,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private bool CompareForPostFilterByOperatorsMoreOrLess(KindOfOperatorOfLogicalQueryNode kindOfOperator, LogicalQueryNode leftNode, LogicalQueryNode rightNode, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard)
         {
 #if DEBUG
-            options.Logger.Log($"kindOfOperator = {kindOfOperator}");
-            options.Logger.Log($"leftNode = {leftNode}");
-            options.Logger.Log($"rightNode = {rightNode}");
+            //options.Logger.Log($"kindOfOperator = {kindOfOperator}");
+            //options.Logger.Log($"leftNode = {leftNode}");
+            //options.Logger.Log($"rightNode = {rightNode}");
 #endif
 
             var localCodeExecutionContext = options.LocalCodeExecutionContext;
@@ -614,8 +614,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var rightValue = rightNode.Value;
 
 #if DEBUG
-                options.Logger.Log($"leftValue = {leftValue}");
-                options.Logger.Log($"rightValue = {rightValue}");
+                //options.Logger.Log($"leftValue = {leftValue}");
+                //options.Logger.Log($"rightValue = {rightValue}");
 #endif                
 
                 if(numberValueLinearResolver.CanBeResolved(leftValue) && numberValueLinearResolver.CanBeResolved(rightValue))
@@ -624,16 +624,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     var rightNumberValue = numberValueLinearResolver.Resolve(rightValue, localCodeExecutionContext);
 
 #if DEBUG
-                    options.Logger.Log($"leftNumberValue = {leftNumberValue}");
-                    options.Logger.Log($"rightNumberValue = {rightNumberValue}");
+                    //options.Logger.Log($"leftNumberValue = {leftNumberValue}");
+                    //options.Logger.Log($"rightNumberValue = {rightNumberValue}");
 #endif
 
                     var leftSystemNullaleValue = leftNumberValue.SystemValue;
                     var rightSystemNullaleValue = rightNumberValue.SystemValue;
 
 #if DEBUG
-                    options.Logger.Log($"leftSystemNullaleValue = {leftSystemNullaleValue}");
-                    options.Logger.Log($"rightSystemNullaleValue = {rightSystemNullaleValue}");
+                    //options.Logger.Log($"leftSystemNullaleValue = {leftSystemNullaleValue}");
+                    //options.Logger.Log($"rightSystemNullaleValue = {rightSystemNullaleValue}");
 #endif
 
                     if (leftSystemNullaleValue.HasValue && rightSystemNullaleValue.HasValue)
@@ -665,8 +665,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var rightValue = rightNode.Value;
 
 #if DEBUG
-                options.Logger.Log($"leftName = {leftName}");
-                options.Logger.Log($"rightValue = {rightValue}");
+                //options.Logger.Log($"leftName = {leftName}");
+                //options.Logger.Log($"rightValue = {rightValue}");
 #endif
 
                 if(numberValueLinearResolver.CanBeResolved(rightValue))
@@ -674,7 +674,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     var rightNumberValue = numberValueLinearResolver.Resolve(rightValue, localCodeExecutionContext);
 
 #if DEBUG
-                    options.Logger.Log($"rightNumberValue = {rightNumberValue}");
+                    //options.Logger.Log($"rightNumberValue = {rightNumberValue}");
 #endif
 
                     if (!rightNumberValue.SystemValue.HasValue)
@@ -691,7 +691,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var eqResult = fuzzyLogicResolver.Equals(leftName, rightNumberValue, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"eqResult = {eqResult}");
+                                //options.Logger.Log($"eqResult = {eqResult}");
 #endif
                                 if (eqResult)
                                 {
@@ -701,7 +701,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var deffuzzificatedValue = fuzzyLogicResolver.Resolve(leftName, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+                                //options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
 #endif
 
                                 var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
@@ -712,7 +712,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 }
 
 #if DEBUG
-                                options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+                                //options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
 #endif
 
                                 return systemDeffuzzificatedValue.Value > rightNumberValue.SystemValue.Value;
@@ -723,72 +723,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var eqResult = fuzzyLogicResolver.Equals(leftName, rightNumberValue, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"eqResult = {eqResult}");
-#endif
-
-                                if (eqResult)
-                                {
-                                    return true;
-                                }
-
-                                var deffuzzificatedValue = fuzzyLogicResolver.Resolve(leftName, localCodeExecutionContext);
-
-#if DEBUG
-                                options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
-#endif
-
-                                var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
-
-                                if (!systemDeffuzzificatedValue.HasValue)
-                                {
-                                    return false;
-                                }
-
-#if DEBUG
-                                options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
-#endif
-
-                                return systemDeffuzzificatedValue.Value >= rightNumberValue.SystemValue.Value;
-                            }
-
-                        case KindOfOperatorOfLogicalQueryNode.Less:
-                            {
-                                var eqResult = fuzzyLogicResolver.Equals(leftName, rightNumberValue, localCodeExecutionContext);
-
-#if DEBUG
-                                options.Logger.Log($"eqResult = {eqResult}");
-#endif
-                                if (eqResult)
-                                {
-                                    return false;
-                                }
-
-                                var deffuzzificatedValue = fuzzyLogicResolver.Resolve(leftName, localCodeExecutionContext);
-
-#if DEBUG
-                                options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
-#endif
-
-                                var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
-
-                                if (!systemDeffuzzificatedValue.HasValue)
-                                {
-                                    return false;
-                                }
-
-#if DEBUG
-                                options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
-#endif
-
-                                return systemDeffuzzificatedValue.Value < rightNumberValue.SystemValue.Value;
-                            }
-
-                        case KindOfOperatorOfLogicalQueryNode.LessOrEqual:
-                            {
-                                var eqResult = fuzzyLogicResolver.Equals(leftName, rightNumberValue, localCodeExecutionContext);
-
-#if DEBUG
-                                options.Logger.Log($"eqResult = {eqResult}");
+                                //options.Logger.Log($"eqResult = {eqResult}");
 #endif
 
                                 if (eqResult)
@@ -810,7 +745,72 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 }
 
 #if DEBUG
-                                options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+                                //options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+#endif
+
+                                return systemDeffuzzificatedValue.Value >= rightNumberValue.SystemValue.Value;
+                            }
+
+                        case KindOfOperatorOfLogicalQueryNode.Less:
+                            {
+                                var eqResult = fuzzyLogicResolver.Equals(leftName, rightNumberValue, localCodeExecutionContext);
+
+#if DEBUG
+                                //options.Logger.Log($"eqResult = {eqResult}");
+#endif
+                                if (eqResult)
+                                {
+                                    return false;
+                                }
+
+                                var deffuzzificatedValue = fuzzyLogicResolver.Resolve(leftName, localCodeExecutionContext);
+
+#if DEBUG
+                                //options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+#endif
+
+                                var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
+
+                                if (!systemDeffuzzificatedValue.HasValue)
+                                {
+                                    return false;
+                                }
+
+#if DEBUG
+                                //options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+#endif
+
+                                return systemDeffuzzificatedValue.Value < rightNumberValue.SystemValue.Value;
+                            }
+
+                        case KindOfOperatorOfLogicalQueryNode.LessOrEqual:
+                            {
+                                var eqResult = fuzzyLogicResolver.Equals(leftName, rightNumberValue, localCodeExecutionContext);
+
+#if DEBUG
+                                //options.Logger.Log($"eqResult = {eqResult}");
+#endif
+
+                                if (eqResult)
+                                {
+                                    return true;
+                                }
+
+                                var deffuzzificatedValue = fuzzyLogicResolver.Resolve(leftName, localCodeExecutionContext);
+
+#if DEBUG
+                                //options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+#endif
+
+                                var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
+
+                                if (!systemDeffuzzificatedValue.HasValue)
+                                {
+                                    return false;
+                                }
+
+#if DEBUG
+                                //options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
 #endif
 
                                 return systemDeffuzzificatedValue.Value <= rightNumberValue.SystemValue.Value;
@@ -829,8 +829,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var leftSequence = leftNode.FuzzyLogicNonNumericSequenceValue;
                 var rightValue = rightNode.Value;
 #if DEBUG
-                options.Logger.Log($"leftSequence = {leftSequence}");
-                options.Logger.Log($"rightValue = {rightValue}");                
+                //options.Logger.Log($"leftSequence = {leftSequence}");
+                //options.Logger.Log($"rightValue = {rightValue}");                
 #endif
 
                 if (numberValueLinearResolver.CanBeResolved(rightValue))
@@ -838,7 +838,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     var rightNumberValue = numberValueLinearResolver.Resolve(rightValue, localCodeExecutionContext);
 
 #if DEBUG
-                    options.Logger.Log($"rightNumberValue = {rightNumberValue}");
+                    //options.Logger.Log($"rightNumberValue = {rightNumberValue}");
 #endif
 
                     if (!rightNumberValue.SystemValue.HasValue)
@@ -855,7 +855,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var eqResult = fuzzyLogicResolver.Equals(leftSequence, rightNumberValue, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"eqResult = {eqResult}");
+                                //options.Logger.Log($"eqResult = {eqResult}");
 #endif
                                 if (eqResult)
                                 {
@@ -865,7 +865,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var deffuzzificatedValue = fuzzyLogicResolver.Resolve(leftSequence, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+                                //options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
 #endif
 
                                 var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
@@ -876,7 +876,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 }
 
 #if DEBUG
-                                options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+                                //options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
 #endif
 
                                 return systemDeffuzzificatedValue.Value > rightNumberValue.SystemValue.Value;
@@ -887,7 +887,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var eqResult = fuzzyLogicResolver.Equals(leftSequence, rightNumberValue, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"eqResult = {eqResult}");
+                                //options.Logger.Log($"eqResult = {eqResult}");
 #endif
 
                                 if (eqResult)
@@ -898,7 +898,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var deffuzzificatedValue = fuzzyLogicResolver.Resolve(leftSequence, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+                                //options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
 #endif
 
                                 var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
@@ -909,7 +909,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 }
 
 #if DEBUG
-                                options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+                                //options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
 #endif
 
                                 return systemDeffuzzificatedValue.Value >= rightNumberValue.SystemValue.Value;
@@ -920,7 +920,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var eqResult = fuzzyLogicResolver.Equals(leftSequence, rightNumberValue, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"eqResult = {eqResult}");
+                                //options.Logger.Log($"eqResult = {eqResult}");
 #endif
                                 if (eqResult)
                                 {
@@ -930,7 +930,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var deffuzzificatedValue = fuzzyLogicResolver.Resolve(leftSequence, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+                                //options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
 #endif
 
                                 var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
@@ -941,7 +941,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 }
 
 #if DEBUG
-                                options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+                                //options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
 #endif
 
                                 return systemDeffuzzificatedValue.Value < rightNumberValue.SystemValue.Value;
@@ -952,7 +952,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var eqResult = fuzzyLogicResolver.Equals(leftSequence, rightNumberValue, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"eqResult = {eqResult}");
+                                //options.Logger.Log($"eqResult = {eqResult}");
 #endif
 
                                 if (eqResult)
@@ -963,7 +963,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var deffuzzificatedValue = fuzzyLogicResolver.Resolve(leftSequence, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+                                //options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
 #endif
 
                                 var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
@@ -974,7 +974,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 }
 
 #if DEBUG
-                                options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+                                //options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
 #endif
 
                                 return systemDeffuzzificatedValue.Value <= rightNumberValue.SystemValue.Value;
@@ -994,8 +994,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var rightName = rightNode.Name;
 
 #if DEBUG
-                options.Logger.Log($"leftValue = {leftValue}");
-                options.Logger.Log($"rightName = {rightName}");
+                //options.Logger.Log($"leftValue = {leftValue}");
+                //options.Logger.Log($"rightName = {rightName}");
 #endif
 
                 if (numberValueLinearResolver.CanBeResolved(leftValue))
@@ -1003,7 +1003,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     var leftNumberValue = numberValueLinearResolver.Resolve(leftValue, localCodeExecutionContext);
 
 #if DEBUG
-                    options.Logger.Log($"leftNumberValue = {leftNumberValue}");
+                    //options.Logger.Log($"leftNumberValue = {leftNumberValue}");
 #endif
 
                     if (!leftNumberValue.SystemValue.HasValue)
@@ -1020,7 +1020,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var eqResult = fuzzyLogicResolver.Equals(rightName, leftNumberValue, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"eqResult = {eqResult}");
+                                //options.Logger.Log($"eqResult = {eqResult}");
 #endif
                                 if (eqResult)
                                 {
@@ -1030,7 +1030,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var deffuzzificatedValue = fuzzyLogicResolver.Resolve(rightName, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+                                //options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
 #endif
 
                                 var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
@@ -1041,7 +1041,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 }
 
 #if DEBUG
-                                options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+                                //options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
 #endif
 
                                 return leftNumberValue.SystemValue.Value > systemDeffuzzificatedValue.Value;
@@ -1052,7 +1052,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var eqResult = fuzzyLogicResolver.Equals(rightName, leftNumberValue, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"eqResult = {eqResult}");
+                                //options.Logger.Log($"eqResult = {eqResult}");
 #endif
 
                                 if(eqResult)
@@ -1063,7 +1063,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var deffuzzificatedValue = fuzzyLogicResolver.Resolve(rightName, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+                                //options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
 #endif
 
                                 var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
@@ -1074,7 +1074,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 }
 
 #if DEBUG
-                                options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+                                //options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
 #endif
 
                                 return leftNumberValue.SystemValue.Value >= systemDeffuzzificatedValue.Value;
@@ -1085,7 +1085,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var eqResult = fuzzyLogicResolver.Equals(rightName, leftNumberValue, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"eqResult = {eqResult}");
+                                //options.Logger.Log($"eqResult = {eqResult}");
 #endif
                                 if (eqResult)
                                 {
@@ -1095,7 +1095,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var deffuzzificatedValue = fuzzyLogicResolver.Resolve(rightName, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+                                //options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
 #endif
                                 var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
 
@@ -1105,7 +1105,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 }
 
 #if DEBUG
-                                options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+                                //options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
 #endif
 
                                 return leftNumberValue.SystemValue.Value < systemDeffuzzificatedValue.Value;
@@ -1116,13 +1116,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var eqResult = fuzzyLogicResolver.Equals(rightName, leftNumberValue, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"eqResult = {eqResult}");
+                                //options.Logger.Log($"eqResult = {eqResult}");
 #endif
 
                                 var deffuzzificatedValue = fuzzyLogicResolver.Resolve(rightName, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+                                //options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
 #endif
 
                                 if (eqResult)
@@ -1138,7 +1138,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 }
 
 #if DEBUG
-                                options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+                                //options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
 #endif
 
                                 return leftNumberValue.SystemValue.Value <= systemDeffuzzificatedValue.Value;
@@ -1158,15 +1158,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var rightSequence = rightNode.FuzzyLogicNonNumericSequenceValue;
 
 #if DEBUG
-                options.Logger.Log($"leftValue = {leftValue}");
-                options.Logger.Log($"rightSequence = {rightSequence}");
+                //options.Logger.Log($"leftValue = {leftValue}");
+                //options.Logger.Log($"rightSequence = {rightSequence}");
 #endif
                 if (numberValueLinearResolver.CanBeResolved(leftValue))
                 {
                     var leftNumberValue = numberValueLinearResolver.Resolve(leftValue, localCodeExecutionContext);
 
 #if DEBUG
-                    options.Logger.Log($"leftNumberValue = {leftNumberValue}");
+                    //options.Logger.Log($"leftNumberValue = {leftNumberValue}");
 #endif
 
                     if (!leftNumberValue.SystemValue.HasValue)
@@ -1183,7 +1183,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var eqResult = fuzzyLogicResolver.Equals(rightSequence, leftNumberValue, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"eqResult = {eqResult}");
+                                //options.Logger.Log($"eqResult = {eqResult}");
 #endif
                                 if (eqResult)
                                 {
@@ -1193,7 +1193,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var deffuzzificatedValue = fuzzyLogicResolver.Resolve(rightSequence, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+                                //options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
 #endif
 
                                 var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
@@ -1204,7 +1204,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 }
 
 #if DEBUG
-                                options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+                                //options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
 #endif
 
                                 return leftNumberValue.SystemValue.Value > systemDeffuzzificatedValue.Value;
@@ -1215,7 +1215,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var eqResult = fuzzyLogicResolver.Equals(rightSequence, leftNumberValue, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"eqResult = {eqResult}");
+                                //options.Logger.Log($"eqResult = {eqResult}");
 #endif
 
                                 if (eqResult)
@@ -1226,7 +1226,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var deffuzzificatedValue = fuzzyLogicResolver.Resolve(rightSequence, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+                                //options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
 #endif
 
                                 var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
@@ -1237,7 +1237,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 }
 
 #if DEBUG
-                                options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+                                //options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
 #endif
 
                                 return leftNumberValue.SystemValue.Value >= systemDeffuzzificatedValue.Value;
@@ -1248,7 +1248,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var eqResult = fuzzyLogicResolver.Equals(rightSequence, leftNumberValue, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"eqResult = {eqResult}");
+                                //options.Logger.Log($"eqResult = {eqResult}");
 #endif
                                 if (eqResult)
                                 {
@@ -1258,7 +1258,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var deffuzzificatedValue = fuzzyLogicResolver.Resolve(rightSequence, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+                                //options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
 #endif
                                 var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
 
@@ -1268,7 +1268,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 }
 
 #if DEBUG
-                                options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+                                //options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
 #endif
 
                                 return leftNumberValue.SystemValue.Value < systemDeffuzzificatedValue.Value;
@@ -1279,13 +1279,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var eqResult = fuzzyLogicResolver.Equals(rightSequence, leftNumberValue, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"eqResult = {eqResult}");
+                                //options.Logger.Log($"eqResult = {eqResult}");
 #endif
 
                                 var deffuzzificatedValue = fuzzyLogicResolver.Resolve(rightSequence, localCodeExecutionContext);
 
 #if DEBUG
-                                options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+                                //options.Logger.Log($"deffuzzificatedValue = {deffuzzificatedValue}");
 #endif
 
                                 if (eqResult)
@@ -1301,7 +1301,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 }
 
 #if DEBUG
-                                options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+                                //options.Logger.Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
 #endif
 
                                 return leftNumberValue.SystemValue.Value <= systemDeffuzzificatedValue.Value;
@@ -1321,9 +1321,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private bool CompareSystemValues(KindOfOperatorOfLogicalQueryNode kindOfOperator, double left, double right, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log($"kindOfOperator = {kindOfOperator}");
-            options.Logger.Log($"left = {left}");
-            options.Logger.Log($"right = {right}");
+            //options.Logger.Log($"kindOfOperator = {kindOfOperator}");
+            //options.Logger.Log($"left = {left}");
+            //options.Logger.Log($"right = {right}");
 #endif
 
             switch (kindOfOperator)
@@ -1351,7 +1351,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private void FillExecutingCard(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
 #endif
 
             var kind = processedExpr.Kind;
@@ -1423,16 +1423,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            options.Logger.Log($"queryExecutingCard (after) = {queryExecutingCard}");
+            //options.Logger.Log($"queryExecutingCard (after) = {queryExecutingCard}");
 #endif
         }
 
         private void FillExecutingCardForRelationLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log($"processedExpr.Name = {processedExpr.Name}");
-            options.Logger.Log($"processedExpr.IsQuestion = {processedExpr.IsQuestion}");
-            options.Logger.Log($"processedExpr = {processedExpr}");
+            //options.Logger.Log($"processedExpr.Name = {processedExpr.Name}");
+            //options.Logger.Log($"processedExpr.IsQuestion = {processedExpr.IsQuestion}");
+            //options.Logger.Log($"processedExpr = {processedExpr}");
 #endif
 
             if (processedExpr.IsQuestion)
@@ -1442,54 +1442,54 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            options.Logger.Log($"processedExpr.Name = {processedExpr.Name}");
-            options.Logger.Log($"processedExpr.IsQuestion = {processedExpr.IsQuestion}");
-            options.Logger.Log($"processedExpr.Params.Count = {processedExpr.ParamsList.Count}");
-            foreach (var param in processedExpr.ParamsList)
-            {
-                options.Logger.Log($"param = {param}");
-            }
-            options.Logger.Log($"processedExpr.KnownInfoList.Count = {processedExpr.KnownInfoList.Count}");
-            foreach (var knownInfo in processedExpr.KnownInfoList)
-            {
-                options.Logger.Log($"knownInfo = {knownInfo}");
-            }
-            options.Logger.Log($"VarsInfoList.Count = {processedExpr.VarsInfoList.Count}");
-            foreach (var varInfo in processedExpr.VarsInfoList)
-            {
-                options.Logger.Log($"varInfo = {varInfo}");
-            }
-            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log($"processedExpr.Name = {processedExpr.Name}");
+            //options.Logger.Log($"processedExpr.IsQuestion = {processedExpr.IsQuestion}");
+            //options.Logger.Log($"processedExpr.Params.Count = {processedExpr.ParamsList.Count}");
+            //foreach (var param in processedExpr.ParamsList)
+            //{
+            //    options.Logger.Log($"param = {param}");
+            //}
+            //options.Logger.Log($"processedExpr.KnownInfoList.Count = {processedExpr.KnownInfoList.Count}");
+            //foreach (var knownInfo in processedExpr.KnownInfoList)
+            //{
+            //    options.Logger.Log($"knownInfo = {knownInfo}");
+            //}
+            //options.Logger.Log($"VarsInfoList.Count = {processedExpr.VarsInfoList.Count}");
+            //foreach (var varInfo in processedExpr.VarsInfoList)
+            //{
+            //    options.Logger.Log($"varInfo = {varInfo}");
+            //}
+            //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
             //options.Logger.Log($"queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString() = {queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString()}");
             //options.Logger.Log($"queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString()}");
             //options.Logger.Log($"queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
-            options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
+            //options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
 #endif
 
             NFillExecutingCard(processedExpr, queryExecutingCard, dataSource, options);
 
 #if DEBUG
-            options.Logger.Log($"^^^^^^queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log($"^^^^^^queryExecutingCard = {queryExecutingCard}");
             //options.Logger.Log($"queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString() = {queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString()}");
             //options.Logger.Log($"queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString()}");
             //options.Logger.Log($"queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
-            options.Logger.Log($"processedExpr.GetHumanizeDbgString() (after) = {processedExpr.GetHumanizeDbgString()}");
+            //options.Logger.Log($"processedExpr.GetHumanizeDbgString() (after) = {processedExpr.GetHumanizeDbgString()}");
 
-            options.Logger.Log("End");
+            //options.Logger.Log("End");
 #endif
         }
 
         private void NFillExecutingCard(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log($"processedExpr.Name = {processedExpr.Name}");
-            options.Logger.Log($"DebugHelperForRuleInstance.ToString(processedExpr) = {DebugHelperForRuleInstance.ToString(processedExpr)}");
+            //options.Logger.Log($"processedExpr.Name = {processedExpr.Name}");
+            //options.Logger.Log($"DebugHelperForRuleInstance.ToString(processedExpr) = {DebugHelperForRuleInstance.ToString(processedExpr)}");
 #endif
 
             var indexedRulePartsOfFactsList = dataSource.GetIndexedRulePartOfFactsByKeyOfRelation(processedExpr.Name);
 
 #if DEBUG
-            options.Logger.Log($"indexedRulePartsOfFactsList?.Count = {indexedRulePartsOfFactsList?.Count}");
+            //options.Logger.Log($"indexedRulePartsOfFactsList?.Count = {indexedRulePartsOfFactsList?.Count}");
 #endif
 
             var mergingResult = QueryExecutingCardAboutKnownInfoHelper.Merge(processedExpr.KnownInfoList, processedExpr.VarsInfoList, queryExecutingCard.KnownInfoList, false);
@@ -1504,11 +1504,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             queryExecutingCard.UsedKeysList.Add(processedExpr.Name);
 
 #if DEBUG
-            options.Logger.Log($"targetKnownInfoList.Count = {targetKnownInfoList.Count}");
-            foreach (var tmpKnownInfo in targetKnownInfoList)
-            {
-                options.Logger.Log($"tmpKnownInfo = {tmpKnownInfo}");
-            }
+            //options.Logger.Log($"targetKnownInfoList.Count = {targetKnownInfoList.Count}");
+            //foreach (var tmpKnownInfo in targetKnownInfoList)
+            //{
+            //    options.Logger.Log($"tmpKnownInfo = {tmpKnownInfo}");
+            //}
             //if(targetKnownInfoList.Any())
             //{
             //    throw new NotImplementedException();
@@ -1520,8 +1520,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 foreach (var indexedRulePartsOfFacts in indexedRulePartsOfFactsList)
                 {
 #if DEBUG
-                    options.Logger.Log($"processedExpr = {DebugHelperForRuleInstance.ToString(processedExpr)}");
-                    options.Logger.Log($"indexedRulePartsOfFacts = {DebugHelperForRuleInstance.BaseRulePartToString(indexedRulePartsOfFacts)}");
+                    //options.Logger.Log($"processedExpr = {DebugHelperForRuleInstance.ToString(processedExpr)}");
+                    //options.Logger.Log($"indexedRulePartsOfFacts = {DebugHelperForRuleInstance.BaseRulePartToString(indexedRulePartsOfFacts)}");
 #endif
                     var queryExecutingCardForTargetFact = new QueryExecutingCardForIndexedPersistLogicalData();
                     queryExecutingCardForTargetFact.TargetRelation = processedExpr.Name;
@@ -1532,7 +1532,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     FillExecutingCardForCallingFromRelationForFact(indexedRulePartsOfFacts, queryExecutingCardForTargetFact, dataSource, options);
 
 #if DEBUG
-                    options.Logger.Log($"++++++queryExecutingCardForTargetFact = {queryExecutingCardForTargetFact}");
+                    //options.Logger.Log($"++++++queryExecutingCardForTargetFact = {queryExecutingCardForTargetFact}");
                     //if (queryExecutingCardForTargetFact.UsedKeysList.Any())
                     //{
                     //    throw new NotImplementedException();
@@ -1564,13 +1564,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            options.Logger.Log($"~~~~~~~~~~~~~~~~~queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log($"~~~~~~~~~~~~~~~~~queryExecutingCard = {queryExecutingCard}");
 #endif
 
             var indexedRulePartWithOneRelationsList = dataSource.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(processedExpr.Name);
 
 #if DEBUG
-            options.Logger.Log($"indexedRulePartWithOneRelationsList?.Count = {indexedRulePartWithOneRelationsList?.Count}");
+            //options.Logger.Log($"indexedRulePartWithOneRelationsList?.Count = {indexedRulePartWithOneRelationsList?.Count}");
 #endif
 
             if (!indexedRulePartWithOneRelationsList.IsNullOrEmpty())
@@ -1578,8 +1578,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 foreach (var indexedRulePartsOfRule in indexedRulePartWithOneRelationsList)
                 {
 #if DEBUG
-                    options.Logger.Log($"processedExpr = {processedExpr}");
-                    options.Logger.Log($"indexedRulePartsOfRule = {indexedRulePartsOfRule}");
+                    //options.Logger.Log($"processedExpr = {processedExpr}");
+                    //options.Logger.Log($"indexedRulePartsOfRule = {indexedRulePartsOfRule}");
 #endif
                     var queryExecutingCardForTargetRule = new QueryExecutingCardForIndexedPersistLogicalData();
                     queryExecutingCardForTargetRule.TargetRelation = processedExpr.Name;
@@ -1596,7 +1596,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     FillExecutingCardForCallingFromRelationForProduction(indexedRulePartsOfRule, queryExecutingCardForTargetRule, dataSource, options);
 
 #if DEBUG
-                    options.Logger.Log($"&&&&&&&&&&&&&&&&&queryExecutingCardForTargetRule = {queryExecutingCardForTargetRule}");
+                    //options.Logger.Log($"&&&&&&&&&&&&&&&&&queryExecutingCardForTargetRule = {queryExecutingCardForTargetRule}");
 #endif
 
                     if (queryExecutingCardForTargetRule.IsSuccess)
@@ -1622,37 +1622,37 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
 
 #if DEBUG
-                    options.Logger.Log($"!!!!!!!!!!!!!!!!!!queryExecutingCard = {queryExecutingCard}");
+                    //options.Logger.Log($"!!!!!!!!!!!!!!!!!!queryExecutingCard = {queryExecutingCard}");
 #endif
                 }
             }
 
 #if DEBUG
-            options.Logger.Log($"###~~~~~!!!!!!!!!!!!!!!!!!queryExecutingCard = {queryExecutingCard}");
-            options.Logger.Log("End");
+            //options.Logger.Log($"###~~~~~!!!!!!!!!!!!!!!!!!queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log("End");
 #endif
         }
 
         private void FillExecutingCardForQuestion(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log($"processedExpr.Name = {processedExpr.Name}");
-            options.Logger.Log($"processedExpr.IsQuestion = {processedExpr.IsQuestion}");
-            options.Logger.Log($"processedExpr.Params.Count = {processedExpr.ParamsList.Count}");
-            foreach (var param in processedExpr.ParamsList)
-            {
-                options.Logger.Log($"param = {param}");
-            }
-            options.Logger.Log($"processedExpr.VarsInfoList.Count = {processedExpr.VarsInfoList.Count}");
-            foreach (var varInfo in processedExpr.VarsInfoList)
-            {
-                options.Logger.Log($"varInfo = {varInfo}");
-            }
-            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log($"processedExpr.Name = {processedExpr.Name}");
+            //options.Logger.Log($"processedExpr.IsQuestion = {processedExpr.IsQuestion}");
+            //options.Logger.Log($"processedExpr.Params.Count = {processedExpr.ParamsList.Count}");
+            //foreach (var param in processedExpr.ParamsList)
+            //{
+            //    options.Logger.Log($"param = {param}");
+            //}
+            //options.Logger.Log($"processedExpr.VarsInfoList.Count = {processedExpr.VarsInfoList.Count}");
+            //foreach (var varInfo in processedExpr.VarsInfoList)
+            //{
+            //    options.Logger.Log($"varInfo = {varInfo}");
+            //}
+            //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
             //options.Logger.Log($"queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString() = {queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString()}");
             //options.Logger.Log($"queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString()}");
             //options.Logger.Log($"queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
-            options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
+            //options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
 #endif
 
             var hasAnnotations = !processedExpr.Annotations.IsNullOrEmpty();
@@ -1664,11 +1664,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var targetRelationsList = dataSource.AllRelationsForProductions;
 
 #if DEBUG
-            options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");
-            foreach (var targetRelation in targetRelationsList)
-            {
-                options.Logger.Log($"targetRelation.GetHumanizeDbgString() = {targetRelation.GetHumanizeDbgString()}");
-            }
+            //options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");
+            //foreach (var targetRelation in targetRelationsList)
+            //{
+            //    options.Logger.Log($"targetRelation.GetHumanizeDbgString() = {targetRelation.GetHumanizeDbgString()}");
+            //}
 #endif
 
             foreach (var targetRelation in targetRelationsList)
@@ -1678,9 +1678,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     continue;
                 }
 #if DEBUG
-                options.Logger.Log($"targetRelation.GetHumanizeDbgString() = {targetRelation.GetHumanizeDbgString()}");
-                options.Logger.Log($"targetRelation = {targetRelation}");
-                options.Logger.Log($"hasAnnotations = {hasAnnotations}");
+                //options.Logger.Log($"targetRelation.GetHumanizeDbgString() = {targetRelation.GetHumanizeDbgString()}");
+                //options.Logger.Log($"targetRelation = {targetRelation}");
+                //options.Logger.Log($"hasAnnotations = {hasAnnotations}");
 #endif
 
                 var isCheckAnnotation = false;
@@ -1701,8 +1701,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
 #if DEBUG
-                options.Logger.Log($"NEXT targetRelation.GetHumanizeDbgString() = {targetRelation.GetHumanizeDbgString()}");
-                options.Logger.Log($"NEXT targetRelation = {targetRelation}");
+                //options.Logger.Log($"NEXT targetRelation.GetHumanizeDbgString() = {targetRelation.GetHumanizeDbgString()}");
+                //options.Logger.Log($"NEXT targetRelation = {targetRelation}");
 #endif
 
                 var resultOfQueryToRelation = new ResultOfQueryToRelation();
@@ -1721,7 +1721,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 foreach (var param in processedExpr.ParamsList)
                 {
 #if DEBUG
-                    options.Logger.Log($"n = {n} param = {param}");
+                    //options.Logger.Log($"n = {n} param = {param}");
 #endif
 
                     n++;
@@ -1741,13 +1741,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
 
 #if DEBUG
-                    options.Logger.Log($"resultOfVarOfQueryToRelation = {resultOfVarOfQueryToRelation}");
+                    //options.Logger.Log($"resultOfVarOfQueryToRelation = {resultOfVarOfQueryToRelation}");
                     //throw new NotImplementedException();
 #endif
                 }
 
 #if DEBUG
-                options.Logger.Log($"resultOfQueryToRelation = {resultOfQueryToRelation}");
+                //options.Logger.Log($"resultOfQueryToRelation = {resultOfQueryToRelation}");
                 //throw new NotImplementedException();
 #endif
             }
@@ -1756,13 +1756,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //LogInstance.Log($"queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString() = {queryExecutingCard.GetSenderExpressionNodeHumanizeDbgString()}");
             //LogInstance.Log($"queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRulePartHumanizeDbgString()}");
             //LogInstance.Log($"queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCard.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
-            options.Logger.Log($"processedExpr.GetHumanizeDbgString() (after)= {processedExpr.GetHumanizeDbgString()}");
+            //options.Logger.Log($"processedExpr.GetHumanizeDbgString() (after)= {processedExpr.GetHumanizeDbgString()}");
             //LogInstance.Log($"this = {this}");
 #endif
 
 #if DEBUG
             //throw new NotImplementedException();
-            options.Logger.Log("End");
+            //options.Logger.Log("End");
 #endif
         }
 
@@ -1787,7 +1787,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private void FillExecutingCardForAndOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log("||||||||||||||||||||||||||||||||||||||||||||||||||||");
+            //options.Logger.Log("||||||||||||||||||||||||||||||||||||||||||||||||||||");
 #endif
             var leftQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
 
@@ -1795,7 +1795,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             FillExecutingCard(processedExpr.Left, leftQueryExecutingCard, dataSource, options);
 
 #if DEBUG
-            options.Logger.Log($"leftQueryExecutingCard = {leftQueryExecutingCard}");
+            //options.Logger.Log($"leftQueryExecutingCard = {leftQueryExecutingCard}");
 #endif
 
             if (!leftQueryExecutingCard.IsSuccess)
@@ -1809,7 +1809,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             FillExecutingCard(processedExpr.Right, rightQueryExecutingCard, dataSource, options);
 
 #if DEBUG
-            options.Logger.Log($"rightQueryExecutingCard = {rightQueryExecutingCard}");
+            //options.Logger.Log($"rightQueryExecutingCard = {rightQueryExecutingCard}");
 #endif
 
             if (!rightQueryExecutingCard.IsSuccess)
@@ -1857,7 +1857,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 CopyPostFilters(rightQueryExecutingCard, queryExecutingCard, KindOfOperatorOfLogicalQueryNode.And);
 
 #if DEBUG
-                options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+                //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
                 //throw new NotImplementedException();
 #endif
 
@@ -1875,7 +1875,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 CopyPostFilters(rightQueryExecutingCard, queryExecutingCard, KindOfOperatorOfLogicalQueryNode.And);
 
 #if DEBUG
-                options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+                //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
                 //throw new NotImplementedException();
 #endif
 
@@ -1885,7 +1885,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             foreach (var leftResultOfQueryToRelation in leftQueryExecutingCardResultsOfQueryToRelationList)
             {
 #if DEBUG
-                options.Logger.Log($"leftResultOfQueryToRelation = {leftResultOfQueryToRelation}");
+                //options.Logger.Log($"leftResultOfQueryToRelation = {leftResultOfQueryToRelation}");
 #endif
 
                 var leftVarsList = leftResultOfQueryToRelation.ResultOfVarOfQueryToRelationList;
@@ -1895,7 +1895,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 foreach (var rightResultOfQueryToRelation in rightQueryExecutingCardResultsOfQueryToRelationList)
                 {
 #if DEBUG
-                    options.Logger.Log($"rightResultOfQueryToRelation = {rightResultOfQueryToRelation}");
+                    //options.Logger.Log($"rightResultOfQueryToRelation = {rightResultOfQueryToRelation}");
 #endif
 
                     var rightVarsList = rightResultOfQueryToRelation.ResultOfVarOfQueryToRelationList;
@@ -1910,7 +1910,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     foreach (var varName in varNamesList)
                     {
 #if DEBUG
-                        options.Logger.Log($"varName = {varName}");
+                        //options.Logger.Log($"varName = {varName}");
 #endif
 
                         var leftVarsDictContainsKey = leftVarsDict.ContainsKey(varName);
@@ -1922,8 +1922,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             var rightVal = rightVarsDict[varName];
 
 #if DEBUG
-                            options.Logger.Log($"leftVal = {leftVal}");
-                            options.Logger.Log($"rightVal = {rightVal}");
+                            //options.Logger.Log($"leftVal = {leftVal}");
+                            //options.Logger.Log($"rightVal = {rightVal}");
 #endif
 
                             var resultOfComparison = EqualityCompare(leftVal, rightVal, null, null, null, options, null);
@@ -1951,7 +1951,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
 
 #if DEBUG
-                    options.Logger.Log($"isFit = {isFit}");
+                    //options.Logger.Log($"isFit = {isFit}");
 #endif
 
                     if (!isFit)
@@ -1960,19 +1960,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
 
 #if DEBUG
-                    options.Logger.Log($"varValuesList.Count = {varValuesList.Count}");
-                    foreach (var varValue in varValuesList)
-                    {
-                        options.Logger.Log("------------");
-                        options.Logger.Log($"varValue.Item1 = {varValue.Item1}");
-                        options.Logger.Log($"varValue.Item2 = {varValue.Item2}");
-                    }
+                    //options.Logger.Log($"varValuesList.Count = {varValuesList.Count}");
+                    //foreach (var varValue in varValuesList)
+                    //{
+                    //    options.Logger.Log("------------");
+                    //    options.Logger.Log($"varValue.Item1 = {varValue.Item1}");
+                    //    options.Logger.Log($"varValue.Item2 = {varValue.Item2}");
+                    //}
 #endif
 
                     var varValuesDict = varValuesList.GroupBy(p => p.Item1).ToDictionary(p => p.Key, p => p.ToList());
 
 #if DEBUG
-                    options.Logger.Log($"varValuesDict.Count = {varValuesDict.Count}");
+                    //options.Logger.Log($"varValuesDict.Count = {varValuesDict.Count}");
 #endif
 
                     var varNamesListEnumerator = varNamesList.GetEnumerator();
@@ -2001,8 +2001,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
-            options.Logger.Log("End");
+            //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log("End");
 #endif
         }
 
@@ -2016,7 +2016,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             queryExecutingCard.UsedKeysList.AddRange(leftQueryExecutingCard.UsedKeysList);
 
 #if DEBUG
-            options.Logger.Log($"leftQueryExecutingCard = {leftQueryExecutingCard}");
+            //options.Logger.Log($"leftQueryExecutingCard = {leftQueryExecutingCard}");
 #endif
 
             var rightQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
@@ -2025,7 +2025,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             FillExecutingCard(processedExpr.Right, rightQueryExecutingCard, dataSource, options);
 
 #if DEBUG
-            options.Logger.Log($"rightQueryExecutingCard = {rightQueryExecutingCard}");
+            //options.Logger.Log($"rightQueryExecutingCard = {rightQueryExecutingCard}");
 #endif
 
             if(!leftQueryExecutingCard.IsSuccess && !rightQueryExecutingCard.IsSuccess)
@@ -2120,7 +2120,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             foreach (var leftResultOfQueryToRelation in leftQueryExecutingCardResultsOfQueryToRelationList)
             {
 #if DEBUG
-                options.Logger.Log($"leftResultOfQueryToRelation = {leftResultOfQueryToRelation}");
+                //options.Logger.Log($"leftResultOfQueryToRelation = {leftResultOfQueryToRelation}");
 #endif
 
                 var leftVarsList = leftResultOfQueryToRelation.ResultOfVarOfQueryToRelationList;
@@ -2130,7 +2130,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 foreach (var rightResultOfQueryToRelation in rightQueryExecutingCardResultsOfQueryToRelationList)
                 {
 #if DEBUG
-                    options.Logger.Log($"rightResultOfQueryToRelation = {rightResultOfQueryToRelation}");
+                    //options.Logger.Log($"rightResultOfQueryToRelation = {rightResultOfQueryToRelation}");
 #endif
 
                     var rightVarsList = rightResultOfQueryToRelation.ResultOfVarOfQueryToRelationList;
@@ -2143,7 +2143,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     foreach (var varName in varNamesList)
                     {
 #if DEBUG
-                        options.Logger.Log($"varName = {varName}");
+                        //options.Logger.Log($"varName = {varName}");
 #endif
 
                         var resultOfVarOfQueryToRelationItem = new ResultOfVarOfQueryToRelation();
@@ -2183,19 +2183,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
 
 #if DEBUG
-                    options.Logger.Log($"varValuesList.Count = {varValuesList.Count}");
-                    foreach(var varValue in varValuesList)
-                    {
-                        options.Logger.Log("------------");
-                        options.Logger.Log($"varValue.Item1 = {varValue.Item1}");
-                        options.Logger.Log($"varValue.Item2 = {varValue.Item2}");
-                    }
+                    //options.Logger.Log($"varValuesList.Count = {varValuesList.Count}");
+                    //foreach(var varValue in varValuesList)
+                    //{
+                    //    options.Logger.Log("------------");
+                    //    options.Logger.Log($"varValue.Item1 = {varValue.Item1}");
+                    //    options.Logger.Log($"varValue.Item2 = {varValue.Item2}");
+                    //}
 #endif
 
                     var varValuesDict = varValuesList.GroupBy(p => p.Item1).ToDictionary(p => p.Key, p => p.ToList());
 
 #if DEBUG
-                    options.Logger.Log($"varValuesDict.Count = {varValuesDict.Count}");
+                    //options.Logger.Log($"varValuesDict.Count = {varValuesDict.Count}");
 #endif
 
                     var varNamesListEnumerator = varNamesList.GetEnumerator();
@@ -2214,25 +2214,25 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
-            options.Logger.Log("End");
+            //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log("End");
 #endif
         }
 
         private void FillExecutingCardForIsOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
-            options.Logger.Log($"processedExpr = {processedExpr}");
-            options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
+            //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log($"processedExpr = {processedExpr}");
+            //options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
 #endif
 
             var leftExpr = processedExpr.Left;
             var rightExpr = processedExpr.Right;
 
 #if DEBUG
-            options.Logger.Log($"leftExpr = {leftExpr}");
-            options.Logger.Log($"rightExpr = {rightExpr}");
+            //options.Logger.Log($"leftExpr = {leftExpr}");
+            //options.Logger.Log($"rightExpr = {rightExpr}");
 #endif
 
             if ((leftExpr.Kind == KindOfLogicalQueryNode.Concept || leftExpr.Kind == KindOfLogicalQueryNode.Entity) && (rightExpr.Kind == KindOfLogicalQueryNode.Concept || rightExpr.Kind == KindOfLogicalQueryNode.Entity))
@@ -2246,7 +2246,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var resultOfComparison = EqualityCompare(leftExpr, rightExpr, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, null);
 
 #if DEBUG
-                options.Logger.Log($"resultOfComparison = {resultOfComparison}");
+                //options.Logger.Log($"resultOfComparison = {resultOfComparison}");
 #endif
 
                 if(resultOfComparison == true)
@@ -2269,7 +2269,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 queryExecutingCard.PostFiltersList.Add(postFilter);
 
 #if DEBUG
-                options.Logger.Log($"queryExecutingCard (after) = {queryExecutingCard}");
+                //options.Logger.Log($"queryExecutingCard (after) = {queryExecutingCard}");
 #endif
 
                 return;
@@ -2281,17 +2281,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private void FillExecutingCardForIsNotOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
-            options.Logger.Log($"processedExpr = {processedExpr}");
-            options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
+            //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log($"processedExpr = {processedExpr}");
+            //options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
 #endif
 
             var leftExpr = processedExpr.Left;
             var rightExpr = processedExpr.Right;
 
 #if DEBUG
-            options.Logger.Log($"leftExpr = {leftExpr}");
-            options.Logger.Log($"rightExpr = {rightExpr}");
+            //options.Logger.Log($"leftExpr = {leftExpr}");
+            //options.Logger.Log($"rightExpr = {rightExpr}");
 #endif
 
             if ((leftExpr.Kind == KindOfLogicalQueryNode.Concept || leftExpr.Kind == KindOfLogicalQueryNode.Entity) && (rightExpr.Kind == KindOfLogicalQueryNode.Concept || rightExpr.Kind == KindOfLogicalQueryNode.Entity))
@@ -2305,7 +2305,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var resultOfComparison = EqualityCompare(leftExpr, rightExpr, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, null);
 
 #if DEBUG
-                options.Logger.Log($"resultOfComparison = {resultOfComparison}");
+                //options.Logger.Log($"resultOfComparison = {resultOfComparison}");
 #endif
 
                 if (resultOfComparison == false)
@@ -2328,7 +2328,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 queryExecutingCard.PostFiltersList.Add(postFilter);
 
 #if DEBUG
-                options.Logger.Log($"queryExecutingCard (after) = {queryExecutingCard}");
+                //options.Logger.Log($"queryExecutingCard (after) = {queryExecutingCard}");
 #endif
 
                 return;
@@ -2340,17 +2340,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private void FillExecutingCardForMoreOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
-            options.Logger.Log($"processedExpr = {processedExpr}");
-            options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
+            //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log($"processedExpr = {processedExpr}");
+            //options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
 #endif
 
             var leftExpr = processedExpr.Left;
             var rightExpr = processedExpr.Right;
 
 #if DEBUG
-            options.Logger.Log($"leftExpr = {leftExpr}");
-            options.Logger.Log($"rightExpr = {rightExpr}");
+            //options.Logger.Log($"leftExpr = {leftExpr}");
+            //options.Logger.Log($"rightExpr = {rightExpr}");
 #endif
 
             if (leftExpr.Kind == KindOfLogicalQueryNode.LogicalVar || rightExpr.Kind == KindOfLogicalQueryNode.LogicalVar)
@@ -2363,7 +2363,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 queryExecutingCard.PostFiltersList.Add(postFilter);
 
 #if DEBUG
-                options.Logger.Log($"queryExecutingCard (after) = {queryExecutingCard}");
+                //options.Logger.Log($"queryExecutingCard (after) = {queryExecutingCard}");
 #endif
 
                 return;
@@ -2375,17 +2375,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private void FillExecutingCardForMoreOrEqualOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
-            options.Logger.Log($"processedExpr = {processedExpr}");
-            options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
+            //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log($"processedExpr = {processedExpr}");
+            //options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
 #endif
 
             var leftExpr = processedExpr.Left;
             var rightExpr = processedExpr.Right;
 
 #if DEBUG
-            options.Logger.Log($"leftExpr = {leftExpr}");
-            options.Logger.Log($"rightExpr = {rightExpr}");
+            //options.Logger.Log($"leftExpr = {leftExpr}");
+            //options.Logger.Log($"rightExpr = {rightExpr}");
 #endif
 
             if (leftExpr.Kind == KindOfLogicalQueryNode.LogicalVar || rightExpr.Kind == KindOfLogicalQueryNode.LogicalVar)
@@ -2398,7 +2398,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 queryExecutingCard.PostFiltersList.Add(postFilter);
 
 #if DEBUG
-                options.Logger.Log($"queryExecutingCard (after) = {queryExecutingCard}");
+                //options.Logger.Log($"queryExecutingCard (after) = {queryExecutingCard}");
 #endif
 
                 return;
@@ -2410,17 +2410,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private void FillExecutingCardForLessOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
-            options.Logger.Log($"processedExpr = {processedExpr}");
-            options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
+            //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log($"processedExpr = {processedExpr}");
+            //options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
 #endif
 
             var leftExpr = processedExpr.Left;
             var rightExpr = processedExpr.Right;
 
 #if DEBUG
-            options.Logger.Log($"leftExpr = {leftExpr}");
-            options.Logger.Log($"rightExpr = {rightExpr}");
+            //options.Logger.Log($"leftExpr = {leftExpr}");
+            //options.Logger.Log($"rightExpr = {rightExpr}");
 #endif
 
             if (leftExpr.Kind == KindOfLogicalQueryNode.LogicalVar || rightExpr.Kind == KindOfLogicalQueryNode.LogicalVar)
@@ -2433,7 +2433,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 queryExecutingCard.PostFiltersList.Add(postFilter);
 
 #if DEBUG
-                options.Logger.Log($"queryExecutingCard (after) = {queryExecutingCard}");
+                //options.Logger.Log($"queryExecutingCard (after) = {queryExecutingCard}");
 #endif
 
                 return;
@@ -2445,17 +2445,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private void FillExecutingCardForLessOrEqualOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
-            options.Logger.Log($"processedExpr = {processedExpr}");
-            options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
+            //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log($"processedExpr = {processedExpr}");
+            //options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
 #endif
 
             var leftExpr = processedExpr.Left;
             var rightExpr = processedExpr.Right;
 
 #if DEBUG
-            options.Logger.Log($"leftExpr = {leftExpr}");
-            options.Logger.Log($"rightExpr = {rightExpr}");
+            //options.Logger.Log($"leftExpr = {leftExpr}");
+            //options.Logger.Log($"rightExpr = {rightExpr}");
 #endif
 
             if (leftExpr.Kind == KindOfLogicalQueryNode.LogicalVar || rightExpr.Kind == KindOfLogicalQueryNode.LogicalVar)
@@ -2468,7 +2468,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 queryExecutingCard.PostFiltersList.Add(postFilter);
 
 #if DEBUG
-                options.Logger.Log($"queryExecutingCard (after) = {queryExecutingCard}");
+                //options.Logger.Log($"queryExecutingCard (after) = {queryExecutingCard}");
 #endif
 
                 return;
@@ -2482,19 +2482,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var varName = varNamesListEnumerator.Current;
 
 #if DEBUG
-            options.Logger.Log($"varName = {varName}");
+            //options.Logger.Log($"varName = {varName}");
 #endif
 
             var targetVarsValuesList = varValuesDict[varName];
 
 #if DEBUG
-            options.Logger.Log($"targetVarsValuesList.Count = {targetVarsValuesList.Count}");
+            //options.Logger.Log($"targetVarsValuesList.Count = {targetVarsValuesList.Count}");
 #endif
 
             foreach (var varValue in targetVarsValuesList)
             {
 #if DEBUG
-                options.Logger.Log($"varValue = {varValue}");
+                //options.Logger.Log($"varValue = {varValue}");
 #endif
 
                 var newResultVarValuesList = resultVarValuesList.ToList();
@@ -2508,7 +2508,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 else
                 {
 #if DEBUG
-                    options.Logger.Log($"newResultVarValuesList.Count = {newResultVarValuesList.Count}");
+                    //options.Logger.Log($"newResultVarValuesList.Count = {newResultVarValuesList.Count}");
 #endif
 
                     var resultOfQueryToRelation = new ResultOfQueryToRelation();
@@ -2516,7 +2516,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     foreach (var newResultVarValue in newResultVarValuesList)
                     {
 #if DEBUG
-                        options.Logger.Log($"newResultVarValue = {newResultVarValue}");
+                        //options.Logger.Log($"newResultVarValue = {newResultVarValue}");
 #endif
 
                         var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
@@ -2541,7 +2541,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             queryExecutingCard.UsedKeysList.AddRange(leftQueryExecutingCard.UsedKeysList);
 
 #if DEBUG
-            options.Logger.Log($"leftQueryExecutingCard = {leftQueryExecutingCard}");
+            //options.Logger.Log($"leftQueryExecutingCard = {leftQueryExecutingCard}");
 #endif
 
             if (leftQueryExecutingCard.IsPostFiltersListOnly)
@@ -2564,18 +2564,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             queryExecutingCard.UsedKeysList = queryExecutingCard.UsedKeysList.Distinct().ToList();
 #if DEBUG
-            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
 #endif
         }
 
         private void FillExecutingCardForCallingFromRelationForFact(BaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
-            foreach(var item in queryExecutingCard.KnownInfoList)
-            {
-                options.Logger.Log($"item = {item}");
-            }
+            //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //foreach(var item in queryExecutingCard.KnownInfoList)
+            //{
+            //    options.Logger.Log($"item = {item}");
+            //}
 #endif
 
             var targetRelationName = queryExecutingCard.TargetRelation;
@@ -2588,8 +2588,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var targetRelationsList = processedExpr.RelationsDict[targetRelationName];
 
 #if DEBUG
-            options.Logger.Log($"targetRelationName = {targetRelationName}");
-            options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");
+            //options.Logger.Log($"targetRelationName = {targetRelationName}");
+            //options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");
 #endif
 
             var reasonOfFuzzyLogicResolving = new ReasonOfFuzzyLogicResolving();
@@ -2604,9 +2604,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
 #if DEBUG
-                options.Logger.Log($"targetRelation = {targetRelation}");
-                options.Logger.Log($"targetRelation = {targetRelation.GetHumanizeDbgString()}");
-                options.Logger.Log($"targetRelation.Name = {targetRelation.Name}");
+                //options.Logger.Log($"targetRelation = {targetRelation}");
+                //options.Logger.Log($"targetRelation = {targetRelation.GetHumanizeDbgString()}");
+                //options.Logger.Log($"targetRelation.Name = {targetRelation.Name}");
 #endif
 
                 usedKeysList.Add(targetRelation.Name);
@@ -2622,7 +2622,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 foreach (var knownInfo in queryExecutingCard.KnownInfoList)
                 {
 #if DEBUG
-                    options.Logger.Log($"knownInfo = {knownInfo}");
+                    //options.Logger.Log($"knownInfo = {knownInfo}");
 #endif
 
                     List<StrongIdentifierValue> additionalKeys_1 = null;
@@ -2649,7 +2649,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
 
 #if DEBUG
-                    options.Logger.Log($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1?.Select(p => p.NameValue), Formatting.Indented)}");
+                    //options.Logger.Log($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1?.Select(p => p.NameValue), Formatting.Indented)}");
 #endif
 
                     var position = knownInfo.Position;
@@ -2659,7 +2659,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         var paramOfTargetRelation = paramsListOfTargetRelation[position.Value];
 
 #if DEBUG
-                        options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
+                        //options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
 #endif
 
                         List<StrongIdentifierValue> additionalKeys_2 = null;
@@ -2670,13 +2670,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         }
 
 #if DEBUG
-                        options.Logger.Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");
+                        //options.Logger.Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");
 #endif
 
                         var resultOfComparison = CompareKnownInfoAndExpressionNode(knownInfo, paramOfTargetRelation, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, comparisonQueryExecutingCard);
 
 #if DEBUG
-                        options.Logger.Log($"resultOfComparison = {resultOfComparison}");
+                        //options.Logger.Log($"resultOfComparison = {resultOfComparison}");
 #endif
 
                         if (!resultOfComparison)
@@ -2693,8 +2693,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
 #if DEBUG
-                options.Logger.Log($"isFit = {isFit}");
-                options.Logger.Log($"comparisonQueryExecutingCard = {comparisonQueryExecutingCard}");
+                //options.Logger.Log($"isFit = {isFit}");
+                //options.Logger.Log($"comparisonQueryExecutingCard = {comparisonQueryExecutingCard}");
 #endif
 
                 if (isFit)
@@ -2722,7 +2722,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
 
 #if DEBUG
-                    options.Logger.Log($"queryExecutingCard.VarsInfoList.Count = {queryExecutingCard.VarsInfoList.Count}");
+                    //options.Logger.Log($"queryExecutingCard.VarsInfoList.Count = {queryExecutingCard.VarsInfoList.Count}");
 #endif
 
                     if (queryExecutingCard.VarsInfoList.Any())
@@ -2730,13 +2730,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         foreach (var varItem in queryExecutingCard.VarsInfoList)
                         {
 #if DEBUG
-                            options.Logger.Log($"varItem = {varItem}");
+                            //options.Logger.Log($"varItem = {varItem}");
 #endif
 
                             var paramOfTargetRelation = paramsListOfTargetRelation[varItem.Position];
 
 #if DEBUG
-                            options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
+                            //options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
 #endif
 
                             if (isEntityIdOnly && !paramOfTargetRelation.IsEntityRef)
@@ -2745,7 +2745,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             }
 
 #if DEBUG
-                            options.Logger.Log($"NEXT paramOfTargetRelation = {paramOfTargetRelation}");
+                            //options.Logger.Log($"NEXT paramOfTargetRelation = {paramOfTargetRelation}");
                             //options.Logger.Log($"NEXT options.EntityDictionary.GetName(paramOfTargetRelation.AsKeyRef.Key) = {options.EntityDictionary.GetName(paramOfTargetRelation.AsKeyRef.Key)}");
 #endif
 
@@ -2782,7 +2782,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     queryExecutingCard.ResultsOfQueryToRelationList.AddRange(comparisonQueryExecutingCard.ResultsOfQueryToRelationList);
 
 #if DEBUG
-                    options.Logger.Log($"^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& queryExecutingCard = {queryExecutingCard}");
+                    //options.Logger.Log($"^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& queryExecutingCard = {queryExecutingCard}");
 #endif
                 }
             }
@@ -2837,14 +2837,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private void FillExecutingCardForCallingFromRelationForProduction(BaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
-            options.Logger.Log($"processedExpr = {DebugHelperForRuleInstance.BaseRulePartToString(processedExpr)}");
+            //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log($"processedExpr = {DebugHelperForRuleInstance.BaseRulePartToString(processedExpr)}");
 #endif
 
             var targetRelationsList = processedExpr.RelationsDict[queryExecutingCard.TargetRelation];
 
 #if DEBUG
-            options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");
+            //options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");
 #endif
 
             if (targetRelationsList.Count != 1)
@@ -2855,7 +2855,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var targetRelation = targetRelationsList.First();
 
 #if DEBUG
-            options.Logger.Log($"targetRelation = {targetRelation}");
+            //options.Logger.Log($"targetRelation = {targetRelation}");
 #endif
 
             if (targetRelation.ParamsList.Count != queryExecutingCard.CountParams)
@@ -2866,11 +2866,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var targetRelationVarsInfoList = targetRelation.VarsInfoList;
 
 #if DEBUG
-            options.Logger.Log($"targetRelationVarsInfoList.Count = {targetRelationVarsInfoList.Count}");
-            foreach (var varInfo in targetRelationVarsInfoList)
-            {
-                options.Logger.Log($"varInfo = {varInfo}");
-            }
+            //options.Logger.Log($"targetRelationVarsInfoList.Count = {targetRelationVarsInfoList.Count}");
+            //foreach (var varInfo in targetRelationVarsInfoList)
+            //{
+            //    options.Logger.Log($"varInfo = {varInfo}");
+            //}
 #endif
 
             var targetRelationVarsInfoDictByPosition = targetRelationVarsInfoList.ToDictionary(p => p.Position, p => p.NameOfVar);
@@ -2884,11 +2884,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var targetKnownInfoList = mergingResult.KnownInfoList;
 
 #if DEBUG
-            options.Logger.Log($"########################targetKnownInfoList.Count = {targetKnownInfoList.Count}");
-            foreach (var tmpKnownInfo in targetKnownInfoList)
-            {
-                options.Logger.Log($"tmpKnownInfo = {tmpKnownInfo}");
-            }
+            //options.Logger.Log($"########################targetKnownInfoList.Count = {targetKnownInfoList.Count}");
+            //foreach (var tmpKnownInfo in targetKnownInfoList)
+            //{
+            //    options.Logger.Log($"tmpKnownInfo = {tmpKnownInfo}");
+            //}
             //if (targetKnownInfoList.Any())
             //{
             //    throw new NotImplementedException();
@@ -2898,13 +2898,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var nextPartsList = processedExpr.GetNextPartsList();
 
 #if DEBUG
-            options.Logger.Log($"nextPartsList.Count = {nextPartsList.Count}");
+            //options.Logger.Log($"nextPartsList.Count = {nextPartsList.Count}");
 #endif
 
             foreach (var nextPart in nextPartsList)
             {
 #if DEBUG
-                options.Logger.Log($"nextPart = {DebugHelperForRuleInstance.BaseRulePartToString(nextPart)}");
+                //options.Logger.Log($"nextPart = {DebugHelperForRuleInstance.BaseRulePartToString(nextPart)}");
 #endif
 
                 var queryExecutingCardForNextPart = new QueryExecutingCardForIndexedPersistLogicalData();
@@ -2916,14 +2916,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForNextPart.UsedKeysList);
 
 #if DEBUG
-                options.Logger.Log($"queryExecutingCardForNextPart = {queryExecutingCardForNextPart}");
+                //options.Logger.Log($"queryExecutingCardForNextPart = {queryExecutingCardForNextPart}");
 
                 //if (queryExecutingCardForNextPart.UsedKeysList.Any())
                 //{
                 //    throw new NotImplementedException();
                 //}
 
-                options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+                //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
                 //options.Logger.Log($"queryExecutingCardForNextPart.GetSenderExpressionNodeHumanizeDbgString() = {queryExecutingCardForNextPart.GetSenderExpressionNodeHumanizeDbgString()}");
                 //options.Logger.Log($"queryExecutingCardForNextPart.GetSenderIndexedRulePartHumanizeDbgString() = {queryExecutingCardForNextPart.GetSenderIndexedRulePartHumanizeDbgString()}");
                 //options.Logger.Log($"queryExecutingCardForNextPart.GetSenderIndexedRuleInstanceHumanizeDbgString() = {queryExecutingCardForNextPart.GetSenderIndexedRuleInstanceHumanizeDbgString()}");
@@ -2953,20 +2953,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     var backKeysDict = new Dictionary<StrongIdentifierValue, StrongIdentifierValue>();
 
 #if DEBUG
-                    options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
-                    options.Logger.Log($"processedExpr = {DebugHelperForRuleInstance.BaseRulePartToString(processedExpr)}");
+                    //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+                    //options.Logger.Log($"processedExpr = {DebugHelperForRuleInstance.BaseRulePartToString(processedExpr)}");
 #endif
 
                     foreach (var varInfo in varsInfoList)
                     {
 #if DEBUG
-                        options.Logger.Log($"varInfo = {varInfo}");
+                        //options.Logger.Log($"varInfo = {varInfo}");
 #endif
 
                         var targetInternalKeyOfVar = targetRelationVarsInfoDictByPosition[varInfo.Position];
 
 #if DEBUG
-                        options.Logger.Log($"targetInternalKeyOfVar = {targetInternalKeyOfVar}");
+                        //options.Logger.Log($"targetInternalKeyOfVar = {targetInternalKeyOfVar}");
 #endif
 
                         backKeysDict[targetInternalKeyOfVar] = varInfo.NameOfVar;
@@ -2975,7 +2975,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     foreach (var resultOfQueryToRelation in resultsOfQueryToRelationList)
                     {
 #if DEBUG
-                        options.Logger.Log($"resultOfQueryToRelation = {resultOfQueryToRelation}");
+                        //options.Logger.Log($"resultOfQueryToRelation = {resultOfQueryToRelation}");
 #endif
 
                         var newResultOfQueryToRelation = new ResultOfQueryToRelation();
@@ -2984,13 +2984,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         foreach (var resultOfVarOfQueryToRelation in resultOfQueryToRelation.ResultOfVarOfQueryToRelationList)
                         {
 #if DEBUG
-                            options.Logger.Log($"resultOfVarOfQueryToRelation = {resultOfVarOfQueryToRelation}");
+                            //options.Logger.Log($"resultOfVarOfQueryToRelation = {resultOfVarOfQueryToRelation}");
 #endif
 
                             var internalKeyOfVar = resultOfVarOfQueryToRelation.NameOfVar;
 
 #if DEBUG
-                            options.Logger.Log($"internalKeyOfVar = {internalKeyOfVar}");
+                            //options.Logger.Log($"internalKeyOfVar = {internalKeyOfVar}");
 #endif
 
                             if (backKeysDict.ContainsKey(internalKeyOfVar))
@@ -2998,14 +2998,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var externalKeyOfVar = backKeysDict[internalKeyOfVar];
 
 #if DEBUG
-                                options.Logger.Log($"externalKeyOfVar = {externalKeyOfVar}");
-                                options.Logger.Log($"resultOfVarOfQueryToRelation before = {resultOfVarOfQueryToRelation}");
+                                //options.Logger.Log($"externalKeyOfVar = {externalKeyOfVar}");
+                                //options.Logger.Log($"resultOfVarOfQueryToRelation before = {resultOfVarOfQueryToRelation}");
 #endif
 
                                 resultOfVarOfQueryToRelation.NameOfVar = externalKeyOfVar;
 
 #if DEBUG
-                                options.Logger.Log($"resultOfVarOfQueryToRelation after = {resultOfVarOfQueryToRelation}");
+                                //options.Logger.Log($"resultOfVarOfQueryToRelation after = {resultOfVarOfQueryToRelation}");
 #endif
 
                                 newResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
@@ -3024,18 +3024,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            options.Logger.Log($"+++++++++queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log($"+++++++++queryExecutingCard = {queryExecutingCard}");
 #endif
 #if DEBUG
-            options.Logger.Log("End");
+            //options.Logger.Log("End");
 #endif
         }
 
         private void FillExecutingCardForCallingFromOtherPart(BaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            options.Logger.Log("Begin ^&*^&*");
-            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log("Begin ^&*^&*");
+            //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
 #endif
             var queryExecutingCardForExpression = new QueryExecutingCardForIndexedPersistLogicalData();
 
@@ -3045,7 +3045,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForExpression.UsedKeysList);
 
 #if DEBUG
-            options.Logger.Log($"%%%%%%%% queryExecutingCardForExpression = {queryExecutingCardForExpression}");
+            //options.Logger.Log($"%%%%%%%% queryExecutingCardForExpression = {queryExecutingCardForExpression}");
             //if (queryExecutingCardForExpression.UsedKeysList.Any())
             //{
             //    throw new NotImplementedException();
@@ -3066,25 +3066,25 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             queryExecutingCard.IsSuccess = queryExecutingCardForExpression.IsSuccess;
 
 #if DEBUG
-            options.Logger.Log("End  ^&*^&*");
+            //options.Logger.Log("End  ^&*^&*");
 #endif
         }
 
         private bool EqualityCompare(LogicalQueryNode expressionNode1, LogicalQueryNode expressionNode2, List<StrongIdentifierValue> additionalKeys_1, List<StrongIdentifierValue> additionalKeys_2, ReasonOfFuzzyLogicResolving reason, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard)
         {
 #if DEBUG
-            options.Logger.Log($"(expressionNode1 == null) = {expressionNode1 == null} (expressionNode2 == null) = {expressionNode2 == null}");
-            options.Logger.Log($"expressionNode1 = {expressionNode1}");
-            options.Logger.Log($"expressionNode2 = {expressionNode2}");
-            options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
-            options.Logger.Log($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1?.Select(p => p.NameValue), Formatting.Indented)}");
-            options.Logger.Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");
+            //options.Logger.Log($"(expressionNode1 == null) = {expressionNode1 == null} (expressionNode2 == null) = {expressionNode2 == null}");
+            //options.Logger.Log($"expressionNode1 = {expressionNode1}");
+            //options.Logger.Log($"expressionNode2 = {expressionNode2}");
+            //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //options.Logger.Log($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1?.Select(p => p.NameValue), Formatting.Indented)}");
+            //options.Logger.Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");
 #endif
 
             if (expressionNode1.Kind == KindOfLogicalQueryNode.LogicalVar && (expressionNode2.Kind == KindOfLogicalQueryNode.Concept || expressionNode2.Kind == KindOfLogicalQueryNode.Entity))
             {
 #if DEBUG
-                options.Logger.Log($"%%%%%% expressionNode1.Kind == KindOfLogicalQueryNode.LogicalVar && expressionNode2.IsKeyRef");
+                //options.Logger.Log($"%%%%%% expressionNode1.Kind == KindOfLogicalQueryNode.LogicalVar && expressionNode2.IsKeyRef");
 #endif
 
                 var resultOfQueryToRelation = new ResultOfQueryToRelation();
@@ -3109,7 +3109,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 if (key_1 == key_2)
                 {
 #if DEBUG
-                    options.Logger.Log($"key_1 == key_2 = {key_1 == key_2}");
+                    //options.Logger.Log($"key_1 == key_2 = {key_1 == key_2}");
 #endif
 
                     if(queryExecutingCard != null)
@@ -3159,8 +3159,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if (expressionNode1.Kind == KindOfLogicalQueryNode.Value && expressionNode2.Kind == KindOfLogicalQueryNode.Value)
             {
 #if DEBUG
-                options.Logger.Log($"expressionNode1.Value.GetSystemValue() = {expressionNode1.Value.GetSystemValue()}");
-                options.Logger.Log($"expressionNode2.Value.GetSystemValue() = {expressionNode2.Value.GetSystemValue()}");
+                //options.Logger.Log($"expressionNode1.Value.GetSystemValue() = {expressionNode1.Value.GetSystemValue()}");
+                //options.Logger.Log($"expressionNode2.Value.GetSystemValue() = {expressionNode2.Value.GetSystemValue()}");
 #endif
 
                 if (expressionNode1.Value.GetSystemValue().Equals(expressionNode2.Value.GetSystemValue()))
@@ -3174,7 +3174,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if ((expressionNode1.IsKeyRef && expressionNode2.Kind == KindOfLogicalQueryNode.Value && (expressionNode2.Value.IsLogicalValue || expressionNode2.Value.IsNumberValue)) || (expressionNode2.IsKeyRef && expressionNode1.Kind == KindOfLogicalQueryNode.Value && (expressionNode1.Value.IsNumberValue || expressionNode1.Value.IsLogicalValue)))
             {
 #if DEBUG
-                options.Logger.Log("Try to check fuzzy logic!");
+                //options.Logger.Log("Try to check fuzzy logic!");
 #endif
 
                 LogicalQueryNode conceptNode = null;
@@ -3192,8 +3192,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
 #if DEBUG
-                options.Logger.Log($"conceptNode = {conceptNode}");
-                options.Logger.Log($"valueNode = {valueNode}");
+                //options.Logger.Log($"conceptNode = {conceptNode}");
+                //options.Logger.Log($"valueNode = {valueNode}");
 #endif
 
                 var value = valueNode.Value;
@@ -3210,7 +3210,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if ((expressionNode1.Kind == KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence && expressionNode2.Kind == KindOfLogicalQueryNode.Value && (expressionNode2.Value.IsLogicalValue || expressionNode2.Value.IsNumberValue)) || (expressionNode2.Kind == KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence && expressionNode1.Kind == KindOfLogicalQueryNode.Value && (expressionNode1.Value.IsNumberValue || expressionNode1.Value.IsLogicalValue)))
             {
 #if DEBUG
-                options.Logger.Log("Try to check fuzzy logic!");
+                //options.Logger.Log("Try to check fuzzy logic!");
 #endif
 
                 LogicalQueryNode sequenceNode = null;
@@ -3228,8 +3228,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
 #if DEBUG
-                options.Logger.Log($"sequenceNode = {sequenceNode}");
-                options.Logger.Log($"valueNode = {valueNode}");
+                //options.Logger.Log($"sequenceNode = {sequenceNode}");
+                //options.Logger.Log($"valueNode = {valueNode}");
 #endif
 
                 var value = valueNode.Value;
@@ -3246,7 +3246,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if (expressionNode1.Kind == KindOfLogicalQueryNode.Relation && expressionNode2.Kind == KindOfLogicalQueryNode.Relation)
             {
 #if DEBUG
-                options.Logger.Log("Try to compare relations!");
+                //options.Logger.Log("Try to compare relations!");
 #endif
 
                 if (expressionNode1.Name != expressionNode2.Name)
@@ -3274,10 +3274,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     var param2 = paramsList2Enumerator.Current;
 
 #if DEBUG
-                    options.Logger.Log($"param1 = {param1}");
-                    options.Logger.Log($"param2 = {param2}");
-                    options.Logger.Log($"EqualityCompare(param1, param2, null, null, reason, options) = {EqualityCompare(param1, param2, null, null, reason, options, queryExecutingCard)}");
-                    options.Logger.Log($"?????????????????>>>>>>>>>>queryExecutingCard (after) = {queryExecutingCard}");
+                    //options.Logger.Log($"param1 = {param1}");
+                    //options.Logger.Log($"param2 = {param2}");
+                    //options.Logger.Log($"EqualityCompare(param1, param2, null, null, reason, options) = {EqualityCompare(param1, param2, null, null, reason, options, queryExecutingCard)}");
+                    //options.Logger.Log($"?????????????????>>>>>>>>>>queryExecutingCard (after) = {queryExecutingCard}");
 #endif
 
                     if (!EqualityCompare(param1, param2, null, null, reason, options, queryExecutingCard))

@@ -39,7 +39,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
     public class LogicalSearchResolver : BaseResolver
     {
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         private InheritanceResolver _inheritanceResolver;

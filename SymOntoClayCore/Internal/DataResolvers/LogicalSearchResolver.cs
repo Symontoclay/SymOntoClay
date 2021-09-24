@@ -1483,16 +1483,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
 #if DEBUG
             //options.Logger.Log($"processedExpr.Name = {processedExpr.Name}");
-            //options.Logger.Log($"DebugHelperForRuleInstance.ToString(processedExpr) = {DebugHelperForRuleInstance.ToString(processedExpr)}");
+            options.Logger.Log($"DebugHelperForRuleInstance.ToString(processedExpr) = {DebugHelperForRuleInstance.ToString(processedExpr)}");
 #endif
 
             var indexedRulePartsOfFactsList = dataSource.GetIndexedRulePartOfFactsByKeyOfRelation(processedExpr.Name);
 
 #if DEBUG
-            //options.Logger.Log($"indexedRulePartsOfFactsList?.Count = {indexedRulePartsOfFactsList?.Count}");
+            options.Logger.Log($"indexedRulePartsOfFactsList?.Count = {indexedRulePartsOfFactsList?.Count}");
 #endif
 
             var mergingResult = QueryExecutingCardAboutKnownInfoHelper.Merge(processedExpr.KnownInfoList, processedExpr.VarsInfoList, queryExecutingCard.KnownInfoList, false);
+
+#if DEBUG
+            options.Logger.Log($"mergingResult.IsSuccess = {mergingResult.IsSuccess}");
+#endif
 
             if (!mergingResult.IsSuccess)
             {
@@ -1520,8 +1524,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 foreach (var indexedRulePartsOfFacts in indexedRulePartsOfFactsList)
                 {
 #if DEBUG
-                    //options.Logger.Log($"processedExpr = {DebugHelperForRuleInstance.ToString(processedExpr)}");
-                    //options.Logger.Log($"indexedRulePartsOfFacts = {DebugHelperForRuleInstance.BaseRulePartToString(indexedRulePartsOfFacts)}");
+                    options.Logger.Log($"processedExpr = {DebugHelperForRuleInstance.ToString(processedExpr)}");
+                    options.Logger.Log($"indexedRulePartsOfFacts = {DebugHelperForRuleInstance.BaseRulePartToString(indexedRulePartsOfFacts)}");
 #endif
                     var queryExecutingCardForTargetFact = new QueryExecutingCardForIndexedPersistLogicalData();
                     queryExecutingCardForTargetFact.TargetRelation = processedExpr.Name;
@@ -1532,6 +1536,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     FillExecutingCardForCallingFromRelationForFact(indexedRulePartsOfFacts, queryExecutingCardForTargetFact, dataSource, options);
 
 #if DEBUG
+                    options.Logger.Log($"++++++queryExecutingCardForTargetFact.IsSuccess = {queryExecutingCardForTargetFact.IsSuccess}");
                     //options.Logger.Log($"++++++queryExecutingCardForTargetFact = {queryExecutingCardForTargetFact}");
                     //if (queryExecutingCardForTargetFact.UsedKeysList.Any())
                     //{
@@ -1570,7 +1575,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var indexedRulePartWithOneRelationsList = dataSource.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(processedExpr.Name);
 
 #if DEBUG
-            //options.Logger.Log($"indexedRulePartWithOneRelationsList?.Count = {indexedRulePartWithOneRelationsList?.Count}");
+            options.Logger.Log($"indexedRulePartWithOneRelationsList?.Count = {indexedRulePartWithOneRelationsList?.Count}");
 #endif
 
             if (!indexedRulePartWithOneRelationsList.IsNullOrEmpty())
@@ -1578,8 +1583,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 foreach (var indexedRulePartsOfRule in indexedRulePartWithOneRelationsList)
                 {
 #if DEBUG
-                    //options.Logger.Log($"processedExpr = {processedExpr}");
-                    //options.Logger.Log($"indexedRulePartsOfRule = {indexedRulePartsOfRule}");
+                    options.Logger.Log($"processedExpr = {processedExpr}");
+                    options.Logger.Log($"indexedRulePartsOfRule = {indexedRulePartsOfRule}");
 #endif
                     var queryExecutingCardForTargetRule = new QueryExecutingCardForIndexedPersistLogicalData();
                     queryExecutingCardForTargetRule.TargetRelation = processedExpr.Name;
@@ -1596,6 +1601,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     FillExecutingCardForCallingFromRelationForProduction(indexedRulePartsOfRule, queryExecutingCardForTargetRule, dataSource, options);
 
 #if DEBUG
+                    options.Logger.Log($"&&&&&&&&&&&&&&&&&queryExecutingCardForTargetRule.IsSuccess = {queryExecutingCardForTargetRule.IsSuccess}");
                     //options.Logger.Log($"&&&&&&&&&&&&&&&&&queryExecutingCardForTargetRule = {queryExecutingCardForTargetRule}");
 #endif
 
@@ -2838,13 +2844,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
 #if DEBUG
             //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
-            //options.Logger.Log($"processedExpr = {DebugHelperForRuleInstance.BaseRulePartToString(processedExpr)}");
+            options.Logger.Log($"processedExpr = {DebugHelperForRuleInstance.BaseRulePartToString(processedExpr)}");
 #endif
 
             var targetRelationsList = processedExpr.RelationsDict[queryExecutingCard.TargetRelation];
 
 #if DEBUG
-            //options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");
+            options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");
 #endif
 
             if (targetRelationsList.Count != 1)

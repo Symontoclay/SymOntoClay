@@ -387,8 +387,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"name = {name}");
-                Log($"_kind = {_kind}");
+                //Log($"name = {name}");
+                //Log($"_kind = {_kind}");
 #endif
 
                 return _commonPersistIndexedLogicalData.GetIndexedRulePartOfFactsByKeyOfRelation(name);
@@ -401,8 +401,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"name = {name}");
-                Log($"_kind = {_kind}");
+                //Log($"name = {name}");
+                //Log($"_kind = {_kind}");
 #endif
 
                 return _commonPersistIndexedLogicalData.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name);

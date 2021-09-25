@@ -216,7 +216,7 @@ namespace SymOntoClay.Core.Internal.Storage
             }
 
 #if DEBUG
-            Log($"_kind = {_kind}");
+            //Log($"_kind = {_kind}");
 #endif
 
             result.Add(this);

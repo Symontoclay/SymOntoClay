@@ -86,12 +86,40 @@ namespace SymOntoClay.Core.Internal.Instances
         private bool _isOn;
         private List<string> _foundKeys = new List<string>();
 
+        private bool _isBusy;
+        private bool _needRepeat;
+
         private void LogicalStorage_OnChanged()
         {
             Task.Run(() => 
             {
                 lock (_lockObj)
                 {
+                    if(_isBusy)
+                    {
+                        _needRepeat = true;
+                        return;
+                    }
+
+                    _isBusy = true;
+                    _needRepeat = false;
+                }
+
+                DoSearch();
+
+                while(true)
+                {
+                    lock (_lockObj)
+                    {
+                        if(!_needRepeat)
+                        {
+                            _isBusy = false;
+                            return;
+                        }
+
+                        _needRepeat = false;
+                    }
+
                     DoSearch();
                 }
             });

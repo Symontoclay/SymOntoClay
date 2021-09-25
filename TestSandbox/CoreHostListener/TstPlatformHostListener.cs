@@ -71,7 +71,7 @@ namespace TestSandbox.CoreHostListener
             {
                 n++;
 
-                if(n > 10)
+                if(n > 1000)
                 {
                     break;
                 }

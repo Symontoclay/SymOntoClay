@@ -69,5 +69,13 @@ namespace SymOntoClay.Core.Internal
         ICommonNamesStorage IMainStorageContext.CommonNamesStorage => CommonNamesStorage;
         ILoaderFromSourceCode IMainStorageContext.LoaderFromSourceCode => LoaderFromSourceCode;
         IInstancesStorageComponent IMainStorageContext.InstancesStorage => InstancesStorage;
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            Log("OnDisposed()");
+
+            base.OnDisposed();
+        }
     }
 }

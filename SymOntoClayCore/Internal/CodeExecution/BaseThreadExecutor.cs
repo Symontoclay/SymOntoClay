@@ -145,6 +145,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         /// <inheritdoc/>
         public void Dispose()
         {
+#if DEBUG
+            Log("Dispose()");
+#endif
+
             _activeObject.Dispose();
         }
 

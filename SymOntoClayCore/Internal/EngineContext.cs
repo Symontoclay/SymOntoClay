@@ -44,5 +44,13 @@ namespace SymOntoClay.Core.Internal
 
         ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;        
         IActivePeriodicObjectContext IEngineContext.ActivePeriodicObjectContext => ActivePeriodicObjectContext;
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            Log("OnDisposed()");
+
+            base.OnDisposed();
+        }
     }
 }

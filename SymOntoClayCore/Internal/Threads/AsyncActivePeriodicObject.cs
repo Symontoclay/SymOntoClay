@@ -128,6 +128,10 @@ namespace SymOntoClay.Core.Internal.Threads
         /// <inheritdoc/>
         public void Stop()
         {
+#if DEBUG
+            _logger.Info("Stop()");
+#endif
+
             lock (_lockObj)
             {
                 if (_isDisposed)
@@ -152,6 +156,10 @@ namespace SymOntoClay.Core.Internal.Threads
         /// <inheritdoc/>
         public void Dispose()
         {
+#if DEBUG
+            _logger.Info("Dispose()");
+#endif
+
             lock (_lockObj)
             {
                 if (_isDisposed)

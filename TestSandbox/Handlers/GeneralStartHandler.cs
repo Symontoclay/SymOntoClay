@@ -55,9 +55,13 @@ namespace TestSandbox.Handlers
             _npc.InsertFact("{: barrel (#a) :}");
             _npc.InsertFact("distance(I, #a, 14.71526)");
 
-            Thread.Sleep(10000);
+            Thread.Sleep(5000);
 
             _logger.Log("!---");
+
+            _world.Dispose();
+
+            _logger.Log("!(+)---");
 
             //_npc.InsertFact("{: see(I, #b) :}");
 
@@ -65,7 +69,7 @@ namespace TestSandbox.Handlers
 
             //_npc.RemoveFact(factId);
 
-            Thread.Sleep(50000);
+            //Thread.Sleep(50000);
 
             _logger.Log("End");
         }

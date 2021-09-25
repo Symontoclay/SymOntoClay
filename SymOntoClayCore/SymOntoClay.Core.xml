@@ -2993,6 +2993,9 @@
         <member name="M:SymOntoClay.Core.Internal.DefaultSettingsOfCodeEntity.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.EngineContext.OnDisposed">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalAnnotation.ToString">
             <inheritdoc/>
         </member>
@@ -3575,6 +3578,9 @@
             </summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.MainStorageContext.LogicQueryParseAndCache">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.MainStorageContext.OnDisposed">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.ActionPaser.OnEnter">

@@ -12,7 +12,8 @@ action Go
 {
     op () 
 	{
-	    @@host.`go`(to: #@[200]);
+	    //@@host.`go`(to: #@[200]);
+        await;
 	}
 	
     on {: see(I, $x) & $x is barrel & distance(I, $x, $y) :} ($y >> @y, $x >> @x) 

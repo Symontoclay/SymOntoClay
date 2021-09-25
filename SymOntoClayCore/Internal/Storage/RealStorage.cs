@@ -118,6 +118,10 @@ namespace SymOntoClay.Core.Internal.Storage
         {
             lock (_lockObj)
             {
+#if DEBUG
+                Log($"storage.Kind = {storage.Kind}");
+#endif
+
                 var parentsList = _realStorageContext.Parents;
 
                 if(parentsList.Contains(storage))
@@ -136,6 +140,10 @@ namespace SymOntoClay.Core.Internal.Storage
         {
             lock (_lockObj)
             {
+#if DEBUG
+                Log($"storage.Kind = {storage.Kind}");
+#endif
+
                 var parentsList = _realStorageContext.Parents;
 
                 if (parentsList.Contains(storage))

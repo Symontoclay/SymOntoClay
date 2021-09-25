@@ -85,7 +85,11 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public override void Cancel()
         {
-            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
         }
 
         #region private fields

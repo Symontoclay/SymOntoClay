@@ -30,7 +30,7 @@ namespace SymOntoClay.Core
 {
     public delegate void ProcessInfoEvent(IProcessInfo sender);
 
-    public interface IProcessInfo : IObjectToString, IObjectToShortString, IObjectToBriefString
+    public interface IProcessInfo : IDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         string Id { get; }
         ProcessStatus Status { get; set; }

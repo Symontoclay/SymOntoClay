@@ -28,7 +28,7 @@ using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Threads
 {
-    public class ActivePeriodicObjectContext : IActivePeriodicObjectContext
+    public class ActivePeriodicObjectContext : IActivePeriodicObjectContext, IDisposable
     {
         public ActivePeriodicObjectContext(IActivePeriodicObjectCommonContext commonContext)
         {
@@ -105,6 +105,29 @@ namespace SymOntoClay.Core.Internal.Threads
                 {
                     child.Stop();
                 }
+            }
+        }
+
+        private bool _isDisposed;
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            lock (_lockObj)
+            {
+                if(_isDisposed)
+                {
+                    return;
+                }
+
+                _isDisposed = true;
+            }
+
+            var tmpChildren = _children.ToList();
+
+            foreach (var child in tmpChildren)
+            {
+                child.Dispose();
             }
         }
     }

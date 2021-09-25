@@ -187,6 +187,26 @@ namespace SymOntoClay.Core
         private readonly List<IProcessInfo> _childrenProcessInfoList = new List<IProcessInfo>();
         #endregion
 
+        private bool _isDisposed;
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            lock(_lockObj)
+            {
+                if(_isDisposed)
+                {
+                    return;
+                }
+
+                _isDisposed = true;
+            }
+
+            OnDisposed();
+        }
+
+        protected abstract void OnDisposed();
+
         /// <inheritdoc/>
         public override string ToString()
         {

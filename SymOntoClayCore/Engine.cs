@@ -191,10 +191,6 @@ namespace SymOntoClay.Core
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
-#if DEBUG
-            Log("OnDisposed()");
-#endif
-
             _context.Dispose();
 
             base.OnDisposed();

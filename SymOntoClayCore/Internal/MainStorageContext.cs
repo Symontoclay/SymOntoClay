@@ -73,7 +73,12 @@ namespace SymOntoClay.Core.Internal
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
-            Log("OnDisposed()");
+            Storage.Dispose();
+            Parser.Dispose();
+            //DataResolversFactory.Dispose();
+            CommonNamesStorage.Dispose();
+            InstancesStorage.Dispose();
+            LoaderFromSourceCode.Dispose();
 
             base.OnDisposed();
         }

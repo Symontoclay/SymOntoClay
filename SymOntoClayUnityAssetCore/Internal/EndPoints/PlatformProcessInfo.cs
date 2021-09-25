@@ -108,6 +108,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         /// <inheritdoc/>
         public override event ProcessInfoEvent OnFinish;
 
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            lock (_lockObj)
+            {
+                _cancellationTokenSource.Cancel();
+            }
+        }
+
         #region private fields
         private readonly object _lockObj = new object();
         private ProcessStatus _status = ProcessStatus.Created;

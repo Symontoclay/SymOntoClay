@@ -57,6 +57,9 @@
         <member name="M:SymOntoClay.Core.BaseProcessInfo.RemoveChild(SymOntoClay.Core.IProcessInfo)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.Dispose">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.BaseProcessInfo.ToString">
             <inheritdoc/>
         </member>
@@ -3512,6 +3515,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.PrintProcessesList">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.OnDisposed">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstanceInfo.OnDisposed">
             <inheritdoc/>
         </member>
@@ -3555,6 +3561,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.Cancel">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.OnDisposed">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.PropertiesToString(System.UInt32)">
@@ -4542,6 +4551,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Threads.ActivePeriodicObjectContext.StopAll">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Threads.ActivePeriodicObjectContext.Dispose">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Threads.AsyncActivePeriodicObject.PeriodicMethod">

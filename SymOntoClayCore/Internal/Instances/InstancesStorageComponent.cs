@@ -282,11 +282,11 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public override void PrintProcessesList()
         {
-            List<IProcessInfo> tmpPprocessesInfoList;
+            List<IProcessInfo> tmpProcessesInfoList;
 
             lock (_processLockObj)
             {
-                tmpPprocessesInfoList = _processesInfoList.ToList();
+                tmpProcessesInfoList = _processesInfoList.ToList();
             }
 
             uint n = 4;
@@ -296,7 +296,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             sb.AppendLine("Begin ProcessesList");
 
-            foreach(var processInfo in tmpPprocessesInfoList)
+            foreach(var processInfo in tmpProcessesInfoList)
             {
                 sb.AppendLine($"{spaces}{processInfo.Id} {processInfo.Status} {processInfo.Priority} {processInfo.GlobalPriority}");
             }
@@ -306,5 +306,15 @@ namespace SymOntoClay.Core.Internal.Instances
             Log(sb.ToString());
         }
 #endif
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            foreach (var processInfo in _processesInfoList)
+            {
+                processInfo.Dispose();
+            }
+
+            base.OnDisposed();
+        }
     }
 }

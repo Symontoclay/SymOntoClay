@@ -48,7 +48,9 @@ namespace SymOntoClay.Core.Internal
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
-            Log("OnDisposed()");
+            CodeExecutor.Dispose();
+            StatesStorage.Dispose();
+            ActivePeriodicObjectContext.Dispose();
 
             base.OnDisposed();
         }

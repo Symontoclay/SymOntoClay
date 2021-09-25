@@ -295,7 +295,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public string InsertPerceptedFact(string text)
         {
 #if DEBUG
-            Log($"text = {text}");
+            //Log($"text = {text}");
 #endif
 
             if (string.IsNullOrWhiteSpace(text))
@@ -327,7 +327,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public void RemovePerceptedFact(string id)
         {
 #if DEBUG
-            Log($"id = {id}");
+            //Log($"id = {id}");
 #endif
 
             _perceptedFactsStorage.LogicalStorage.RemoveById(id);

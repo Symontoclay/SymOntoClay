@@ -119,7 +119,7 @@ namespace SymOntoClay.Core.Internal.Storage
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"storage.Kind = {storage.Kind}");
+                //Log($"storage.Kind = {storage.Kind}");
 #endif
 
                 var parentsList = _realStorageContext.Parents;
@@ -141,7 +141,7 @@ namespace SymOntoClay.Core.Internal.Storage
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"storage.Kind = {storage.Kind}");
+                //Log($"storage.Kind = {storage.Kind}");
 #endif
 
                 var parentsList = _realStorageContext.Parents;

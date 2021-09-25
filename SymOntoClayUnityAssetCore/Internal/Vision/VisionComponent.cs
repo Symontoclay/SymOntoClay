@@ -69,6 +69,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
         private Dictionary<int, IStorage> _visibleObjectsStoragesRegistry;
         private Dictionary<int, string> _visibleObjectsIdForFactsRegistry;
 
+        private Dictionary<int, int> _lifeTimeCycleOfVisibleObjectsRegistry;
+
+        private const int DEFAULT_INITIAL_TIME = 10;
+
         public void LoadFromSourceCode()
         {
             lock (_lockObj)
@@ -82,6 +86,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             _visibleObjectsDistanceFactsIdRegistry = new Dictionary<int, string>();
             _visibleObjectsStoragesRegistry = new Dictionary<int, IStorage>();
             _visibleObjectsIdForFactsRegistry = new Dictionary<int, string>();
+
+            _lifeTimeCycleOfVisibleObjectsRegistry = new Dictionary<int, int>();
 
             _idForFacts = _internalContext.IdForFacts;
             _coreEngine = _internalContext.CoreEngine;
@@ -126,6 +132,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                     var instanceId = visibleItem.InstanceId;
 
                     removedInstancesIdList.Remove(instanceId);
+
+                    _lifeTimeCycleOfVisibleObjectsRegistry[instanceId] = DEFAULT_INITIAL_TIME;
 
                     if (_visibleObjectsRegistry.ContainsKey(instanceId))
                     {
@@ -184,29 +192,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
                     _visibleObjectsRegistry[instanceId] = visibleItem;
                 }
-
-                foreach(var instanceId in removedInstancesIdList)
-                {
-                    _visibleObjectsRegistry.Remove(instanceId);
-
-                    lock (_lockObj)
-                    {
-                        _visibleObjectsPositionRegistry.Remove(instanceId);
-                    }
-                }
             }
             else
             {
                 if (_visibleObjectsRegistry.Count > 0)
                 {
                     removedInstancesIdList = _visibleObjectsRegistry.Keys.ToList();
-
-                    _visibleObjectsRegistry.Clear();
-
-                    lock (_lockObj)
-                    {
-                        _visibleObjectsPositionRegistry.Clear();
-                    }
                 }
             }
 
@@ -222,6 +213,29 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             {
                 foreach (var removedInstancesId in removedInstancesIdList)
                 {
+#if DEBUG
+                    //Log($"removedInstancesId = {removedInstancesId}");
+#endif
+
+                    var lifeCycle = _lifeTimeCycleOfVisibleObjectsRegistry[removedInstancesId];
+
+#if DEBUG
+                    //Log($"lifeCycle = {lifeCycle}");
+#endif
+
+                    if (lifeCycle > 0)
+                    {
+                        _lifeTimeCycleOfVisibleObjectsRegistry[removedInstancesId] = lifeCycle - 1;
+                        continue;
+                    }
+
+                    _visibleObjectsRegistry.Remove(removedInstancesId);
+
+                    lock (_lockObj)
+                    {
+                        _visibleObjectsPositionRegistry.Remove(removedInstancesId);
+                    }
+
                     var storage = _visibleObjectsStoragesRegistry[removedInstancesId];
 
                     _visibleObjectsStoragesRegistry.Remove(removedInstancesId);

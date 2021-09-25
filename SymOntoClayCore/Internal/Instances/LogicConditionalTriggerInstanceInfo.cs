@@ -52,7 +52,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _condition = trigger.Condition;
 
 #if DEBUG
-            Log($"_condition = {DebugHelperForRuleInstance.ToString(_condition)}");
+            //Log($"_condition = {DebugHelperForRuleInstance.ToString(_condition)}");
 #endif
 
             var dataResolversFactory = context.DataResolversFactory;
@@ -139,8 +139,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
 #if DEBUG
             //Log($"searchResult = {searchResult}");
-            Log($"_condition = {DebugHelperForRuleInstance.ToString(_condition)}");
-            Log($"searchResult = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
+            //Log($"_condition = {DebugHelperForRuleInstance.ToString(_condition)}");
+            //Log($"searchResult = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
             //foreach(var usedKey in searchResult.UsedKeysList)
             //{
             //    Log($"usedKey = {usedKey}");
@@ -149,7 +149,7 @@ namespace SymOntoClay.Core.Internal.Instances
 #endif
 
 #if DEBUG
-            Log($"searchResult.Items.Count = {searchResult.Items.Count}");
+            //Log($"searchResult.Items.Count = {searchResult.Items.Count}");
 #endif
 
             if (searchResult.IsSuccess)
@@ -182,8 +182,8 @@ namespace SymOntoClay.Core.Internal.Instances
         private void ProcessResultWithNoItems()
         {
 #if DEBUG
-            Log("ProcessResultWithNoItems()");
-            Log($"_isOn = {_isOn}");
+            //Log("ProcessResultWithNoItems()");
+            //Log($"_isOn = {_isOn}");
 #endif
 
             if (_isOn)
@@ -210,7 +210,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private void ProcessResultWithItems(LogicalSearchResult searchResult)
         {
 #if DEBUG
-            Log("ProcessResultWithItems()");
+            //Log("ProcessResultWithItems()");
 #endif
 
             var usedKeys = new List<string>();
@@ -222,7 +222,7 @@ namespace SymOntoClay.Core.Internal.Instances
             {
 #if DEBUG
                 //Log($"foundResultItem = {foundResultItem}");
-                Log($"foundResultItem.KeyForTrigger = {foundResultItem.KeyForTrigger}");
+                //Log($"foundResultItem.KeyForTrigger = {foundResultItem.KeyForTrigger}");
 #endif
 
                 var keyForTrigger = foundResultItem.KeyForTrigger;
@@ -238,7 +238,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 _foundKeys.Add(keyForTrigger);
 
 #if DEBUG
-                Log("Next");
+                //Log("Next");
 #endif
 
                 var localCodeExecutionContext = new LocalCodeExecutionContext();

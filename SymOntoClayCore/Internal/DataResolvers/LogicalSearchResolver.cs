@@ -151,7 +151,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
 #if DEBUG
             //Log($"queryExpression = {queryExpression}");
-            Log($"DebugHelperForRuleInstance.ToString(queryExpression) = {DebugHelperForRuleInstance.ToString(queryExpression)}");
+            //Log($"DebugHelperForRuleInstance.ToString(queryExpression) = {DebugHelperForRuleInstance.ToString(queryExpression)}");
 #endif
 
             queryExpression.CheckDirty();
@@ -160,7 +160,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
 #if DEBUG
             //Log($"queryExpression (after) = {queryExpression}");
-            Log($"DebugHelperForRuleInstance.ToString(queryExpression) (after) = {DebugHelperForRuleInstance.ToString(queryExpression)}");
+            //Log($"DebugHelperForRuleInstance.ToString(queryExpression) (after) = {DebugHelperForRuleInstance.ToString(queryExpression)}");
 #endif
 
             FillExecutingCard(queryExpression, queryExecutingCard, dataSource, optionsOfFillExecutingCard);
@@ -314,6 +314,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
 #if DEBUG
             //options.Logger.Log($"sourceQueryExecutingCard = {sourceQueryExecutingCard}");
+            //options.Logger.Log($"destQueryExecutingCard = {destQueryExecutingCard}");
 #endif
 
             var postFiltersList = sourceQueryExecutingCard.PostFiltersList;
@@ -368,17 +369,22 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
 #if DEBUG
             //options.Logger.Log($"sourceQueryExecutingCard = {sourceQueryExecutingCard}");
+            //options.Logger.Log($"destQueryExecutingCard = {destQueryExecutingCard}");
             //options.Logger.Log($"postFilter = {postFilter}");
 #endif
 
             var processedExpr = postFilter.ProcessedExpr;
+
+#if DEBUG
+            //options.Logger.Log($"DebugHelperForRuleInstance.ToString(processedExpr) = {DebugHelperForRuleInstance.ToString(processedExpr)}");
+#endif
 
             var leftExpr = processedExpr.Left;
             var rightExpr = processedExpr.Right;
             var kindOfOperator = processedExpr.KindOfOperator;
 
 #if DEBUG
-            ///options.Logger.Log($"leftExpr = {leftExpr}");
+            //options.Logger.Log($"leftExpr = {leftExpr}");
             //options.Logger.Log($"rightExpr = {rightExpr}");
             //options.Logger.Log($"kindOfOperator = {kindOfOperator}");
 #endif
@@ -518,7 +524,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
             }
 
-            if(resultsOfQueryToRelationList.Any())
+#if DEBUG
+            //options.Logger.Log($"resultsOfQueryToRelationList.Count = {resultsOfQueryToRelationList.Count}");
+#endif
+
+            if (resultsOfQueryToRelationList.Any())
             {
                 destQueryExecutingCard.IsSuccess = true;
 
@@ -531,7 +541,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             else
             {
                 destQueryExecutingCard.IsSuccess = false;
-            }            
+            }
+
+#if DEBUG
+            //options.Logger.Log($"destQueryExecutingCard (after) = {destQueryExecutingCard}");
+#endif
         }
 
         private bool CompareForPostFilter(KindOfOperatorOfLogicalQueryNode kindOfOperator, LogicalQueryNode leftNode, LogicalQueryNode rightNode, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard)
@@ -579,6 +593,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     case KindOfLogicalQueryNode.Value:
                         break;
 
+                    case KindOfLogicalQueryNode.Entity:
+                    case KindOfLogicalQueryNode.Concept:
+                        additionalKeys_1 = inheritanceResolver.GetSuperClassesKeysList(leftNode.Name, options.LocalCodeExecutionContext);
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(kindOfSourceNode), kindOfSourceNode, null);
                 }
@@ -588,6 +607,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 switch (kindOfNodeOfFilter)
                 {
                     case KindOfLogicalQueryNode.Value:
+                        break;
+
+                    case KindOfLogicalQueryNode.Entity:
+                    case KindOfLogicalQueryNode.Concept:
+                        additionalKeys_2 = inheritanceResolver.GetSuperClassesKeysList(rightNode.Name, options.LocalCodeExecutionContext);
                         break;
 
                     default:
@@ -1484,7 +1508,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
 #if DEBUG
             //options.Logger.Log($"processedExpr.Name = {processedExpr.Name}");
-            options.Logger.Log($"DebugHelperForRuleInstance.ToString(processedExpr) = {DebugHelperForRuleInstance.ToString(processedExpr)}");
+            //options.Logger.Log($"DebugHelperForRuleInstance.ToString(processedExpr) = {DebugHelperForRuleInstance.ToString(processedExpr)}");
+
+            //if(processedExpr.Name.NameValue == "is")
+            //{
+            //    options.Logger.Log($"processedExpr = {processedExpr}");
+            //    options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+            //}
 #endif
 
             var indexedRulePartsOfFactsList = dataSource.GetIndexedRulePartOfFactsByKeyOfRelation(processedExpr.Name);
@@ -2243,6 +2273,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
             //options.Logger.Log($"leftExpr = {leftExpr}");
             //options.Logger.Log($"rightExpr = {rightExpr}");
+            //options.Logger.Log($"DebugHelperForRuleInstance.ToString(processedExpr) = {DebugHelperForRuleInstance.ToString(processedExpr)}");
+            //options.Logger.Log($"DebugHelperForRuleInstance.ToString(leftExpr) = {DebugHelperForRuleInstance.ToString(leftExpr)}");
+            //options.Logger.Log($"DebugHelperForRuleInstance.ToString(rightExpr) = {DebugHelperForRuleInstance.ToString(rightExpr)}");
 #endif
 
             if ((leftExpr.Kind == KindOfLogicalQueryNode.Concept || leftExpr.Kind == KindOfLogicalQueryNode.Entity) && (rightExpr.Kind == KindOfLogicalQueryNode.Concept || rightExpr.Kind == KindOfLogicalQueryNode.Entity))
@@ -2279,6 +2312,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 queryExecutingCard.PostFiltersList.Add(postFilter);
 
 #if DEBUG
+                //options.Logger.Log($"DebugHelperForRuleInstance.ToString(processedExpr) has been added to queryExecutingCard.PostFiltersList = {DebugHelperForRuleInstance.ToString(processedExpr)}");
                 //options.Logger.Log($"queryExecutingCard (after) = {queryExecutingCard}");
 #endif
 
@@ -2583,7 +2617,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
             //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
             //options.Logger.Log($"processedExpr = {processedExpr}");
-            options.Logger.Log($"DebugHelperForRuleInstance.ToString(processedExpr) = {DebugHelperForRuleInstance.BaseRulePartToString(processedExpr)}");
+            //options.Logger.Log($"DebugHelperForRuleInstance.ToString(processedExpr) = {DebugHelperForRuleInstance.BaseRulePartToString(processedExpr)}");
             //foreach(var item in queryExecutingCard.KnownInfoList)
             //{
             //    options.Logger.Log($"item = {item}");
@@ -3092,8 +3126,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
 #if DEBUG
             //options.Logger.Log($"(expressionNode1 == null) = {expressionNode1 == null} (expressionNode2 == null) = {expressionNode2 == null}");
-            options.Logger.Log($"expressionNode1 = {expressionNode1}");
-            options.Logger.Log($"expressionNode2 = {expressionNode2}");
+            //options.Logger.Log($"expressionNode1 = {expressionNode1}");
+            //options.Logger.Log($"expressionNode2 = {expressionNode2}");
             //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
             //options.Logger.Log($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1?.Select(p => p.NameValue), Formatting.Indented)}");
             //options.Logger.Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");

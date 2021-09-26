@@ -159,7 +159,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                             if(currentItem.MinDistance != visibleItem.MinDistance)
                             {
 #if DEBUG
-                                //Log("currentItem.MinDistance != visibleItem.MinDistance");
+                                Log("currentItem.MinDistance != visibleItem.MinDistance");
 #endif
                                 changedDistanceVisibleItemsList.Add(visibleItem);
                             }
@@ -349,7 +349,22 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
             if (changedDistanceVisibleItemsList.Any())
             {
-                //throw new NotImplementedException();
+                foreach(var item in changedDistanceVisibleItemsList)
+                {
+                    var instanceId = item.InstanceId;
+
+                    _coreEngine.RemovePerceptedFact(_visibleObjectsDistanceFactsIdRegistry[instanceId]);
+
+                    var idForFacts = _worldContext.GetIdForFactsByInstanceId(instanceId);
+
+                    var distanceFactStr = $"distance(I, {idForFacts}, {item.MinDistance.ToString("G", CultureInfo.InvariantCulture)})";
+
+#if DEBUG
+                    Log($"distanceFactStr = {distanceFactStr}");
+#endif
+
+                    _visibleObjectsDistanceFactsIdRegistry[instanceId] = _coreEngine.InsertPerceptedFact(distanceFactStr);
+                }
             }
 
             return true;

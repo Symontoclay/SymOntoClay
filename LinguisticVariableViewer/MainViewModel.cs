@@ -57,16 +57,35 @@ namespace LinguisticVariableViewer
 
             //MyModel.Series.Add(customSeries);
 
+            CreateCase2();
             //CreateLogicValueCase();
-            CreateCase1();
+            //CreateCase1();
 
-            var fileName = @"c:\Users\Acer\Documents\GitHub\SymOntoClay\TestSandbox\bin\Debug\net5.0\SFunction.svg";
+            //var fileName = @"c:\Users\Acer\Documents\GitHub\SymOntoClay\TestSandbox\bin\Debug\net5.0\SFunction.svg";
 
-            using (var stream = File.Create(fileName))
-            {
-                var exporter = new SvgExporter { Width = 600, Height = 400 };
-                exporter.Export(MyModel, stream);
-            }
+            //using (var stream = File.Create(fileName))
+            //{
+            //    var exporter = new SvgExporter { Width = 600, Height = 400 };
+            //    exporter.Export(MyModel, stream);
+            //}
+        }
+
+        private void CreateCase2()
+        {
+            var xList = Range(0, 20, 0.1);
+
+            var minimalSeries = DefineLFunction(0, 1, xList);
+            MyModel.Series.Add(minimalSeries);
+
+            var lowSeries = DefineTrapezoid(0, 0.5, 5, 7, xList);
+            MyModel.Series.Add(lowSeries);
+
+            var middleSeries = DefineTrapezoid(4, 5, 16, 20, xList);
+            MyModel.Series.Add(middleSeries);
+
+
+            var maximalSeries = DefineSFunction(10, 15, 20, xList);
+            MyModel.Series.Add(maximalSeries);
         }
 
         private void CreateLogicValueCase()

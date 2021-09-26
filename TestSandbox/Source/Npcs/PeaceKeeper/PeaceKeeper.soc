@@ -1,4 +1,12 @@
-﻿app MyNPC
+﻿linvar distance
+{
+    closely = L(0, 1);
+	near = Trapezoid(0, 0.5, 5, 7);
+	middle = Trapezoid(4, 5, 16, 20);
+	far = S(10, 15, 20);
+}
+
+app MyNPC
 {
     on Init =>
     {
@@ -12,17 +20,17 @@ action Go
 {
     op () 
 	{
-	    @@host.`go`(to: #@[200]);
-        //await;
+	    //@@host.`go`(to: #@[200]);
+        await;
 	}
 	
-    //on {: see(I, $x) & $x is barrel & distance(I, $x, $y) :} ($y >> @y, $x >> @x) 
-	//{
-	//    "I see 1" >> @>log;
-	//	@x >> @>log;
-	//	@y >> @>log;
+    on {: see(I, $x) & $x is barrel & distance(I, $x, $y) & $y is middle :} ($y >> @y, $x >> @x) 
+	{
+	    "I see 1" >> @>log;
+		@x >> @>log;
+		@y >> @>log;
         //complete action;
-	//}
+	}
 
     //on {: see(I, $x) & barrel ($x) & distance(I, $x, $y) :} ($y >> @y, $x >> @x) => 
 	//{

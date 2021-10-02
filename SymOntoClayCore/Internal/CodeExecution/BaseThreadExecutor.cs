@@ -973,7 +973,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     //Log($"localExecutionCoordinator = {localExecutionCoordinator}");
 
-                    if(localExecutionCoordinator.ExecutionStatus == ActionExecutionStatus.Broken)
+                    if(localExecutionCoordinator != null && localExecutionCoordinator.ExecutionStatus == ActionExecutionStatus.Broken)
                     {
                         ProcessError(localExecutionCoordinator.RuleInstance);
 

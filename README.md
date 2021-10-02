@@ -1,7 +1,8 @@
 <div>The core of SymOntoClay Engine.</div>
 
 # SymOntoClay
-<span>[![Website](https://img.shields.io/badge/documentation-online-brightgreen)](https://symontoclay.github.io/docs/index.html)
+<span>[![experimental](https://img.shields.io/badge/stability-experimental-orange.svg?style=flat)](https://github.com/Symontoclay/SymOntoClay)
+[![Website](https://img.shields.io/badge/documentation-online-brightgreen)](https://symontoclay.github.io/docs/index.html)
 </span><span></span>
 
 <div><div><p>

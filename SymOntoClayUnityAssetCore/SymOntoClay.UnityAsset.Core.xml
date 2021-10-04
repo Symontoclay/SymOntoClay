@@ -407,6 +407,9 @@
         <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.EnableLogging">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.Logger">
             <inheritdoc/>
         </member>
@@ -945,6 +948,12 @@
         <member name="T:SymOntoClay.UnityAsset.Core.IPlayer">
             <summary>
             Represents Player.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.IPlayer.EnableLogging">
+            <summary>
+            Gets or sets value of enable logging.
+            It alows enable or disable logging or remote connection for the NPC.
             </summary>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.IRunTimeImageInfo">

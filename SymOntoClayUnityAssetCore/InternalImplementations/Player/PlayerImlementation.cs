@@ -31,79 +31,119 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
     /// <inheritdoc/>
     public class PlayerImlementation : IPlayer, IDeferredInitialized
     {
+        private PlayerGameComponent _gameComponent;
+
         public PlayerImlementation(PlayerSettings settings, IWorldCoreGameComponentContext context)
         {
-
+            _gameComponent = new PlayerGameComponent(settings, worldContext);
         }
 
         public PlayerImlementation(PlayerSettings settings)
         {
-
+            _settings = settings;
         }
 
         void IDeferredInitialized.Initialize(IWorldCoreGameComponentContext worldContext)
         {
-
+            if (_gameComponent == null)
+            {
+                _gameComponent = new PlayerGameComponent(_settings, worldContext);
+            }
         }
 
         /// <inheritdoc/>
-        public IEntityLogger Logger => throw new NotImplementedException();
+        public bool EnableLogging { get => _gameComponent.EnableLogging; set => _gameComponent.EnableLogging = value; }
+
+        /// <inheritdoc/>
+        public IEntityLogger Logger => _gameComponent.Logger;
 
         /// <inheritdoc/>
         public void RunInMainThread(Action function)
         {
-            throw new NotImplementedException();
+            _gameComponent.RunInMainThread(function);
         }
 
         /// <inheritdoc/>
         public TResult RunInMainThread<TResult>(Func<TResult> function)
         {
-            throw new NotImplementedException();
+            return _gameComponent.RunInMainThread(function);
         }
 
         /// <inheritdoc/>
         public void AddToManualControl(IGameObject obj, DeviceOfBiped device)
         {
-            throw new NotImplementedException();
+            _gameComponent.AddToManualControl(obj, (int)device);
         }
 
         /// <inheritdoc/>
         public void AddToManualControl(IGameObject obj, IList<DeviceOfBiped> devices)
         {
-            throw new NotImplementedException();
+            _gameComponent.AddToManualControl(obj, devices?.Select(p => (int)p).ToList());
         }
 
         /// <inheritdoc/>
         public void RemoveFromManualControl(IGameObject obj)
         {
-            throw new NotImplementedException();
+            _gameComponent.RemoveFromManualControl(obj);
         }
 
         /// <inheritdoc/>
         public IList<IHumanoidManualControlledObject> GetManualControlledObjects()
         {
-            throw new NotImplementedException();
+            var initialResultList = _gameComponent.GetManualControlledObjects();
+
+            if (initialResultList.IsNullOrEmpty())
+            {
+                return new List<IHumanoidManualControlledObject>();
+            }
+
+            var result = new List<IHumanoidManualControlledObject>();
+
+            foreach (var initialResultItem in initialResultList)
+            {
+                result.Add(new HumanoidManualControlledObject(initialResultItem.GameObject, initialResultItem.Devices));
+            }
+
+            return result;
         }
 
         /// <inheritdoc/>
         public string InsertPublicFact(string text)
         {
-            throw new NotImplementedException();
+            return _gameComponent.InsertPublicFact(text);
         }
 
         /// <inheritdoc/>
         public void RemovePublicFact(string id)
         {
-            throw new NotImplementedException();
+            _gameComponent.RemovePublicFact(id);
         }
 
         /// <inheritdoc/>
-        public bool IsDisposed => throw new NotImplementedException();
+        public string InsertFact(string text)
+        {
+            return _gameComponent.InsertFact(text);
+        }
+
+        /// <inheritdoc/>
+        public void RemoveFact(string id)
+        {
+            _gameComponent.RemoveFact(id);
+        }
+
+        /// <inheritdoc/>
+        public void Die()
+        {
+            _gameComponent.Die();
+        }
+
+        /// <inheritdoc/>
+        public bool IsDisposed => _gameComponent.IsDisposed;
 
         /// <inheritdoc/>
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _gameComponent.Dispose();
         }
     }
 }

@@ -404,10 +404,16 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.Dispose">
             <inheritdoc/>
         </member>
-        <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerGameComponent.InsertPublicFact(System.String)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.EnableLogging">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerGameComponent.RemovePublicFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerGameComponent.IsWaited">
+            <inheritdoc/>
+        </member>
+        <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.Logger">
@@ -417,18 +423,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.RunInMainThread``1(System.Func{``0})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,SymOntoClay.UnityAsset.Core.DeviceOfBiped)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,System.Collections.Generic.IList{SymOntoClay.UnityAsset.Core.DeviceOfBiped})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.RemoveFromManualControl(SymOntoClay.UnityAsset.Core.IGameObject)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.GetManualControlledObjects">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.InsertPublicFact(System.String)">
@@ -948,12 +942,6 @@
         <member name="T:SymOntoClay.UnityAsset.Core.IPlayer">
             <summary>
             Represents Player.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.IPlayer.EnableLogging">
-            <summary>
-            Gets or sets value of enable logging.
-            It alows enable or disable logging or remote connection for the NPC.
             </summary>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.IRunTimeImageInfo">

@@ -30,7 +30,7 @@ namespace SymOntoClay.UnityAsset.Core
     /// <summary>
     /// Player settings.
     /// </summary>
-    public class PlayerSettings: BaseManualControllingGameComponentSettings
+    public class PlayerSettings: BaseStoredGameComponentSettings
     {
     }
 }

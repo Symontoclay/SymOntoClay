@@ -35,7 +35,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
 
         public PlayerImlementation(PlayerSettings settings, IWorldCoreGameComponentContext context)
         {
-            _gameComponent = new PlayerGameComponent(settings, worldContext);
+            _gameComponent = new PlayerGameComponent(settings, context);
         }
 
         public PlayerImlementation(PlayerSettings settings)
@@ -51,8 +51,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
             }
         }
 
-        /// <inheritdoc/>
-        public bool EnableLogging { get => _gameComponent.EnableLogging; set => _gameComponent.EnableLogging = value; }
+        private readonly PlayerSettings _settings;
 
         /// <inheritdoc/>
         public IEntityLogger Logger => _gameComponent.Logger;
@@ -70,44 +69,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        public void AddToManualControl(IGameObject obj, DeviceOfBiped device)
-        {
-            _gameComponent.AddToManualControl(obj, (int)device);
-        }
-
-        /// <inheritdoc/>
-        public void AddToManualControl(IGameObject obj, IList<DeviceOfBiped> devices)
-        {
-            _gameComponent.AddToManualControl(obj, devices?.Select(p => (int)p).ToList());
-        }
-
-        /// <inheritdoc/>
-        public void RemoveFromManualControl(IGameObject obj)
-        {
-            _gameComponent.RemoveFromManualControl(obj);
-        }
-
-        /// <inheritdoc/>
-        public IList<IHumanoidManualControlledObject> GetManualControlledObjects()
-        {
-            var initialResultList = _gameComponent.GetManualControlledObjects();
-
-            if (initialResultList.IsNullOrEmpty())
-            {
-                return new List<IHumanoidManualControlledObject>();
-            }
-
-            var result = new List<IHumanoidManualControlledObject>();
-
-            foreach (var initialResultItem in initialResultList)
-            {
-                result.Add(new HumanoidManualControlledObject(initialResultItem.GameObject, initialResultItem.Devices));
-            }
-
-            return result;
-        }
-
-        /// <inheritdoc/>
         public string InsertPublicFact(string text)
         {
             return _gameComponent.InsertPublicFact(text);
@@ -117,24 +78,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         public void RemovePublicFact(string id)
         {
             _gameComponent.RemovePublicFact(id);
-        }
-
-        /// <inheritdoc/>
-        public string InsertFact(string text)
-        {
-            return _gameComponent.InsertFact(text);
-        }
-
-        /// <inheritdoc/>
-        public void RemoveFact(string id)
-        {
-            _gameComponent.RemoveFact(id);
-        }
-
-        /// <inheritdoc/>
-        public void Die()
-        {
-            _gameComponent.Die();
         }
 
         /// <inheritdoc/>

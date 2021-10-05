@@ -30,12 +30,7 @@ namespace SymOntoClay.UnityAsset.Core
     /// <summary>
     /// Represents Player.
     /// </summary>
-    public interface IPlayer: IManualControlling, IWorldComponent
+    public interface IPlayer: IWorldComponent
     {
-        /// <summary>
-        /// Gets or sets value of enable logging.
-        /// It alows enable or disable logging or remote connection for the NPC.
-        /// </summary>
-        bool EnableLogging { get; set; }
     }
 }

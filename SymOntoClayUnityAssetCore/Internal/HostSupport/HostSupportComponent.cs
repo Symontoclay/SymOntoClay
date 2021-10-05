@@ -41,7 +41,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.HostSupport
             _worldContext = worldContext;
             _invokerInMainThread = worldContext.InvokerInMainThread;
             _platformSupport = platformSupport;
-
         }
 
         private readonly HumanoidNPCGameComponentContext _internalContext;

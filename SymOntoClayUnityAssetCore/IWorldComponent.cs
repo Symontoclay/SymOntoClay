@@ -35,6 +35,6 @@ namespace SymOntoClay.UnityAsset.Core
         TResult RunInMainThread<TResult>(Func<TResult> function);
         string InsertPublicFact(string text);
         void RemovePublicFact(string id);
-        void PushSoundFact(string text);
+        //void PushSoundFact(string text);
     }
 }

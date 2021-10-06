@@ -61,6 +61,7 @@ using TestSandbox.Threads;
 using SymOntoClay.Core.Internal.Parsing.Internal;
 using TestSandbox.CreatingExamples;
 using TestSandbox.Navigations;
+using TestSandbox.SoundBusHandler;
 
 namespace TestSandbox
 {
@@ -74,6 +75,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            TstSoundBus();
             //TstNavigationHandler();
             //TstCreatorExamples();
             //TstLinguisticVariable_Tests();
@@ -114,10 +116,20 @@ namespace TestSandbox
             //TstExprNodeHandler();
             //TstParsing();
             //TstMonoBehaviourTestingHandler();//VT<=
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstSoundBus()
+        {
+            _logger.Log("Begin");
+
+            var handler = new TstSoundBusHandler();
+            handler.Run();
+
+            _logger.Log("End");
         }
 
         private static void TstNavigationHandler()

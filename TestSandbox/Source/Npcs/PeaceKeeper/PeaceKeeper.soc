@@ -4,6 +4,7 @@
 
     on Init
     {
-        @x = 12;//Where the var is placed: on object or in the method scope?
+        //@x = 12;//Where the var is placed: on object or in the method scope?
+        {: $x = act(M16, shoot) & hear(I, $x) :}
     }
 }

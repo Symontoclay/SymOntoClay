@@ -180,8 +180,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             _ruleInstancesDictById[ruleInstanceId] = ruleInstance;
 
 #if DEBUG
-            //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
-            //Log($"ruleInstance.Normalized = {DebugHelperForRuleInstance.ToString(ruleInstance.Normalized)}");
+            Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+            Log($"ruleInstance.Normalized = {DebugHelperForRuleInstance.ToString(ruleInstance.Normalized)}");
 #endif            
 
             _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(ruleInstance.Normalized);

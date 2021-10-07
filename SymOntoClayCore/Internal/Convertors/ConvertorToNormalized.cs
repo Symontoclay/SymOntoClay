@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Convertors
@@ -33,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Convertors
     public static class ConvertorToNormalized
     {
 #if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static RuleInstance Convert(RuleInstance source)
@@ -153,15 +154,15 @@ namespace SymOntoClay.Core.Internal.Convertors
             dest.Parent = ruleInstance;
             dest.IsActive = source.IsActive;
 
-            dest.Expression = ConvertLogicalQueryNode(source.Expression, convertingContext);
+            dest.Expression = ConvertLogicalQueryNode(source.Expression, convertingContext, source.AliasesDict);
 
             FillAnnotationsModalitiesAndSections(source, dest, convertingContext);
         }
 
-        private static LogicalQueryNode ConvertLogicalQueryNode(LogicalQueryNode source, Dictionary<object, object> convertingContext)
+        private static LogicalQueryNode ConvertLogicalQueryNode(LogicalQueryNode source, Dictionary<object, object> convertingContext, Dictionary<StrongIdentifierValue, LogicalQueryNode> aliasesDict)
         {
 #if DEBUG
-            //_gbcLogger.Info($"source = {source}");
+            _gbcLogger.Info($"source = {source}");
 #endif
 
             switch (source.Kind)
@@ -177,7 +178,7 @@ namespace SymOntoClay.Core.Internal.Convertors
                         case KindOfOperatorOfLogicalQueryNode.MoreOrEqual:
                         case KindOfOperatorOfLogicalQueryNode.Less:
                         case KindOfOperatorOfLogicalQueryNode.LessOrEqual:
-                            return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext);
+                            return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext, aliasesDict);
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(source.KindOfOperator), source.KindOfOperator, null);
@@ -187,43 +188,43 @@ namespace SymOntoClay.Core.Internal.Convertors
                     switch (source.KindOfOperator)
                     {
                         case KindOfOperatorOfLogicalQueryNode.Not:
-                            return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext);
+                            return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext, aliasesDict);
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(source.KindOfOperator), source.KindOfOperator, null);
                     }
 
                 case KindOfLogicalQueryNode.Concept:
-                    return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext);
+                    return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext, aliasesDict);
 
                 case KindOfLogicalQueryNode.Entity:
-                    return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext);
+                    return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext, aliasesDict);
 
                 case KindOfLogicalQueryNode.Relation:
                     if(source.ParamsList.Count == 1)
                     {
-                        return ConvertUnaryPredicateToFullIsPredicate(source, convertingContext);
+                        return ConvertUnaryPredicateToFullIsPredicate(source, convertingContext, aliasesDict);
                     }
-                    return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext);
+                    return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext, aliasesDict);
 
                 case KindOfLogicalQueryNode.LogicalVar:
-                    return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext);
+                    return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext, aliasesDict);
 
                 case KindOfLogicalQueryNode.QuestionVar:
-                    return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext);
+                    return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext, aliasesDict);
 
                 case KindOfLogicalQueryNode.Value:
-                    return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext);
+                    return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext, aliasesDict);
 
                 case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
-                    return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext);
+                    return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext, aliasesDict);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, null);
             }
         }
 
-        private static LogicalQueryNode ConvertUnaryPredicateToFullIsPredicate(LogicalQueryNode source, Dictionary<object, object> convertingContext)
+        private static LogicalQueryNode ConvertUnaryPredicateToFullIsPredicate(LogicalQueryNode source, Dictionary<object, object> convertingContext, Dictionary<StrongIdentifierValue, LogicalQueryNode> aliasesDict)
         {
 #if DEBUG
             //_gbcLogger.Info($"source = {source}");
@@ -268,16 +269,24 @@ namespace SymOntoClay.Core.Internal.Convertors
             return result;
         }
 
-        private static LogicalQueryNode ConvertLogicalQueryNodeInDefaultWay(LogicalQueryNode source, Dictionary<object, object> convertingContext)
+        private static LogicalQueryNode ConvertLogicalQueryNodeInDefaultWay(LogicalQueryNode source, Dictionary<object, object> convertingContext, Dictionary<StrongIdentifierValue, LogicalQueryNode> aliasesDict)
         {
 #if DEBUG
-            //_gbcLogger.Info("ConvertLogicalQueryNodeInDefaultWay!!!!!");
-            //_gbcLogger.Info($"source = {source}");
+            _gbcLogger.Info("ConvertLogicalQueryNodeInDefaultWay!!!!!");
+            _gbcLogger.Info($"source = {source}");
 #endif
 
             if (source == null)
             {
                 return null;
+            }
+
+            if (source.Kind == KindOfLogicalQueryNode.LogicalVar && aliasesDict.Any())
+            {
+                if(aliasesDict.ContainsKey(source.Name))
+                {
+                    return ConvertLogicalQueryNode(aliasesDict[source.Name], convertingContext, aliasesDict);
+                }
             }
 
             if (convertingContext.ContainsKey(source))
@@ -294,12 +303,12 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             if(source.Left != null)
             {
-                result.Left = ConvertLogicalQueryNode(source.Left, convertingContext);
+                result.Left = ConvertLogicalQueryNode(source.Left, convertingContext, aliasesDict);
             }
             
             if(source.Right != null)
             {
-                result.Right = ConvertLogicalQueryNode(source.Right, convertingContext);
+                result.Right = ConvertLogicalQueryNode(source.Right, convertingContext, aliasesDict);
             }
             
             if(!source.ParamsList.IsNullOrEmpty())
@@ -308,7 +317,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 
                 foreach (var param in source.ParamsList)
                 {
-                    destParametersList.Add(ConvertLogicalQueryNode(param, convertingContext));
+                    destParametersList.Add(ConvertLogicalQueryNode(param, convertingContext, aliasesDict));
                 }
 
                 result.ParamsList = destParametersList;

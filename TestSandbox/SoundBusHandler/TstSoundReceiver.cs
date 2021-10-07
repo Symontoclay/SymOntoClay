@@ -47,13 +47,19 @@ namespace TestSandbox.SoundBusHandler
 
             var horizontalAngle = GetHorizontalAngle(position);
 
+            var distanceStr = distance.ToString(CultureInfo.InvariantCulture);
+            var directionStr = horizontalAngle.ToString(CultureInfo.InvariantCulture);
+
             var sb = new StringBuilder();
 
             sb.Append("{: ");
             sb.Append(varName);
             sb.Append(" = ");
             sb.Append(query);
-            sb.Append($" & hear(I, {varName}) & distance(I, {varName}, {distance.ToString(CultureInfo.InvariantCulture)})");
+            sb.Append($" & hear(I, {varName})");
+            sb.Append($" & distance(I, {varName}, {distanceStr})");
+            sb.Append($" & direction({varName}, {directionStr})");
+            sb.Append($" & point({varName}, #@[{distanceStr}, {directionStr}])");
             sb.Append(" :}");
 
             return sb.ToString();

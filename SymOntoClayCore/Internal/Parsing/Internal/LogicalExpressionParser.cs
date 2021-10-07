@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
@@ -43,11 +44,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotQuestionVar,
             GotConcept,
             GotFuzzyLogicNonNumericSequenceItem,
-            GotOperator
+            GotOperator,
+            GotAliasVar
         }
 
-        public LogicalExpressionParser(InternalParserContext context, bool isGroup)
-            : base(context)
+        public LogicalExpressionParser(LogicalExpressionParserContext context, bool isGroup)
+            : base(context.InternalParserContext)
         {
             if(isGroup)
             {
@@ -58,27 +60,30 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 _terminatingTokenKindList = new List<TokenKind> { TokenKind.Comma, TokenKind.CloseRoundBracket };
             }
 
+            _logicalExpressionParserContext = context;
             _isGroup = isGroup;
         }
 
-        public LogicalExpressionParser(InternalParserContext context)
+        public LogicalExpressionParser(LogicalExpressionParserContext context)
             : this(context, new List<TokenKind> { TokenKind.Comma, TokenKind.CloseRoundBracket })
         {
         }
 
-        public LogicalExpressionParser(InternalParserContext context, TokenKind terminatingTokenKind)
+        public LogicalExpressionParser(LogicalExpressionParserContext context, TokenKind terminatingTokenKind)
             : this(context, new List<TokenKind>() { terminatingTokenKind })
         {
         }
 
-        public LogicalExpressionParser(InternalParserContext context, List<TokenKind> terminatingTokenKindList)
-            : base(context)
+        public LogicalExpressionParser(LogicalExpressionParserContext context, List<TokenKind> terminatingTokenKindList)
+            : base(context.InternalParserContext)
         {
-            _terminatingTokenKindList = terminatingTokenKindList; 
+            _terminatingTokenKindList = terminatingTokenKindList;
+            _logicalExpressionParserContext = context;
         }
 
         private bool _isGroup;
         private List<TokenKind> _terminatingTokenKindList = new List<TokenKind>();
+        private LogicalExpressionParserContext _logicalExpressionParserContext;
         private State _state = State.Init;
 
         public LogicalQueryNode Result { get; private set; }
@@ -87,6 +92,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private LogicalQueryNode _lastLogicalQueryNode;
         private FuzzyLogicNonNumericSequenceValue _fuzzyLogicNonNumericSequenceValue;
+
+        private List<StrongIdentifierValue> _unresolvedAiases = new List<StrongIdentifierValue>();
 
         /// <inheritdoc/>
         protected override void OnFinish()
@@ -98,11 +105,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_isGroup = {_isGroup}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_isGroup = {_isGroup}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");
-            //Log($"_nodePoint = {_nodePoint}");
+            Log($"_nodePoint = {_nodePoint}");
 #endif
 
             if(_terminatingTokenKindList.Contains(_currToken.TokenKind))
@@ -156,7 +163,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         {
                                 _context.Recovery(_currToken);
 
-                                var parser = new LogicalExpressionParser(_context);
+                                var parser = new LogicalExpressionParser(_logicalExpressionParserContext);
                                 parser.Run();
 
 #if DEBUG
@@ -221,7 +228,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                             _context.Recovery(nextToken);
                                             
 
-                                            var parser = new LogicalExpressionParser(_context, terminatingTokenKindList);
+                                            var parser = new LogicalExpressionParser(_logicalExpressionParserContext, terminatingTokenKindList);
                                             parser.Run();
 
 #if DEBUG
@@ -259,6 +266,29 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _lastLogicalQueryNode.ParamsList.Add(node);
 
                                 _state = State.GotPredicateParameter;
+                            }
+                            break;
+
+                        case TokenKind.EntityCondition:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var parser = new EntityConditionParser(_context);
+                                parser.Run();
+
+#if DEBUG
+                                Log($"parser.Result = {parser.Result}");
+#endif
+
+                                throw new NotImplementedException();
+
+                                //var node = new LogicalQueryNode();
+                                //node.Kind = KindOfLogicalQueryNode.Value;
+                                //node.Value = parser.Result;
+
+                                //_lastLogicalQueryNode.ParamsList.Add(node);
+
+                                //_state = State.GotPredicateParameter;
                             }
                             break;
 
@@ -435,6 +465,19 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
+                case State.GotAliasVar:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                        case TokenKind.Identifier:
+                            ProcessWord();
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
@@ -446,7 +489,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _lastLogicalQueryNode = node;
             node.Kind = KindOfLogicalQueryNode.Group;
 
-            var parser = new LogicalExpressionParser(_context, true);
+            var parser = new LogicalExpressionParser(_logicalExpressionParserContext, true);
             parser.Run();
 
 #if DEBUG
@@ -478,7 +521,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var nextToken = _context.GetToken();
 
 #if DEBUG
-            //Log($"nextToken = {nextToken}");
+            Log($"nextToken = {nextToken}");
             //Log($"value.KindOfName = {value.KindOfName}");
 
             //if(nextToken.Content == "is")
@@ -571,6 +614,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessConceptOrQuestionVar(value);
                             break;
 
+                        case TokenKind.Assign:
+                            _unresolvedAiases.Add(value);
+                            _state = State.GotAliasVar;
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -656,6 +704,27 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             node.Name = name;
 
             node.ParamsList = new List<LogicalQueryNode>();
+
+            if(_unresolvedAiases.Any())
+            {
+                var aliasesDict = _logicalExpressionParserContext.AliasesDict;
+
+                foreach (var unresolvedAlias in _unresolvedAiases)
+                {
+#if DEBUG
+                    Log($"unresolvedAlias = {unresolvedAlias}");
+#endif
+
+                    if(aliasesDict.ContainsKey(unresolvedAlias))
+                    {
+                        throw new Exception($"Variable {unresolvedAlias.NameValue} has been bound multiple time.");
+                    }
+
+                    aliasesDict[unresolvedAlias] = node;
+                }
+
+                _unresolvedAiases.Clear();
+            }
 
             var priority = OperatorsHelper.GetPriority(KindOfOperator.Predicate);
 

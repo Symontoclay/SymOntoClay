@@ -1,10 +1,12 @@
 ﻿app PeaceKeeper
 {
-    //@x;
-
     on Init
     {
-        //@x = 12;//Where the var is placed: on object or in the method scope?
-        {: $x = act(M16, shoot) & hear(I, $x) :}
+        'Begin' >> @>log;
+
+        //insert {: $x = act(M16, shoot) & hear(I, $x) :};
+        insert {: $x = act(M16, shoot) & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :};
+
+        'End' >> @>log;
     }
 }

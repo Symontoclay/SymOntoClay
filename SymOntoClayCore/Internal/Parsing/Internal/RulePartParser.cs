@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
@@ -52,12 +53,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 _context.Recovery(_currToken);
             }
 
-            var paser = new LogicalExpressionParser(_context, _terminatingTokenKind);
+            var logicalExpressionParserContext = new LogicalExpressionParserContext(_context);
+
+            var paser = new LogicalExpressionParser(logicalExpressionParserContext, _terminatingTokenKind);
             paser.Run();
 
 #if DEBUG
             //Log($"paser.Result = {paser.Result}");
 #endif
+
+            if(logicalExpressionParserContext.AliasesDict.Any())
+            {
+                _baseRulePart.AliasesDict = logicalExpressionParserContext.AliasesDict;
+            }
+            else
+            {
+                _baseRulePart.AliasesDict = new Dictionary<StrongIdentifierValue, LogicalQueryNode>();
+            }
 
             _baseRulePart.Expression = paser.Result;
 

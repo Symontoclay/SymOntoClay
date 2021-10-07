@@ -77,11 +77,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             if (IsSource)
             {
+#if DEBUG
+                _gbcLogger.Info($"this = {DebugHelperForRuleInstance.ToString(this)}");
+#endif 
+
                 Normalized = ConvertorToNormalized.Convert(this);
                 Normalized.PrepareDirty();
 
 #if DEBUG
-                //_gbcLogger.Info($"Normalized = {DebugHelperForRuleInstance.ToString(Normalized)}");
+                _gbcLogger.Info($"Normalized = {DebugHelperForRuleInstance.ToString(Normalized)}");
 #endif               
             }
             else

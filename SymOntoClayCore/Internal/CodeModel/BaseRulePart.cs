@@ -39,6 +39,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public RuleInstance Parent { get; set; }
         public bool IsActive { get; set; }
         public LogicalQueryNode Expression { get; set; }
+        public Dictionary<StrongIdentifierValue, LogicalQueryNode> AliasesDict { get; set; }
 
         public bool HasQuestionVars { get; set; }
         public bool HasVars { get; set; }
@@ -50,6 +51,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             IsActive = source.IsActive;
             Parent = source.Parent.Clone(context);
             Expression = source.Expression.Clone(context);
+            AliasesDict = source.AliasesDict?.ToDictionary(p => p.Key.Clone(context), p => p.Value.Clone(context));
             HasQuestionVars = source.HasQuestionVars;
             HasVars = source.HasVars;
             RelationsDict = source.RelationsDict.ToDictionary(p => p.Key, p => (IList<LogicalQueryNode>)(p.Value.Select(x => x.Clone(context)).ToList()));
@@ -117,6 +119,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintObjProp(n, nameof(Expression), Expression);
 
+            sb.PrintObjDict_1_Prop(n, nameof(AliasesDict), AliasesDict);
+
             if (RelationsDict == null)
             {
                 sb.AppendLine($"{spaces}{nameof(RelationsDict)} = null");
@@ -156,6 +160,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintShortObjProp(n, nameof(Expression), Expression);
 
+            sb.PrintShortObjDict_1_Prop(n, nameof(AliasesDict), AliasesDict);
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -167,6 +173,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(Parent), Parent);
+
+            sb.PrintBriefObjDict_1_Prop(n, nameof(AliasesDict), AliasesDict);
 
             sb.AppendLine($"{spaces}{nameof(IsActive)} = {IsActive}");
             sb.AppendLine($"{spaces}{nameof(HasVars)} = {HasVars}");

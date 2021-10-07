@@ -149,6 +149,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _state = State.WaitForAction;
                             break;
 
+                        case TokenKind.OpenFigureBracket:
+                            ProcessFunctionBody();
+                            break;
+
                         case TokenKind.OpenRoundBracket:
                             {
                                 _context.Recovery(_currToken);

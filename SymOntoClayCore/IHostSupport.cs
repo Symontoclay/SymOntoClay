@@ -30,5 +30,6 @@ namespace SymOntoClay.Core
     public interface IHostSupport
     {
         Vector3 ConvertFromRelativeToAbsolute(RelativeCoordinate relativeCoordinate);
+        Vector3 GetCurrentAbsolutePosition();
     }
 }

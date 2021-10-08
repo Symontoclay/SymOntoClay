@@ -81,6 +81,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
+        public void PushSoundFact(float power, string text)
+        {
+            _gameComponent.PushSoundFact(power, text);
+        }
+
+        /// <inheritdoc/>
         public bool IsDisposed => _gameComponent.IsDisposed;
 
         /// <inheritdoc/>

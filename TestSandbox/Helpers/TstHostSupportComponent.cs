@@ -43,5 +43,11 @@ namespace TestSandbox.Helpers
         {
             return _platformSupport.ConvertFromRelativeToAbsolute(relativeCoordinate);
         }
+
+        /// <inheritdoc/>
+        public Vector3 GetCurrentAbsolutePosition()
+        {
+            return _platformSupport.GetCurrentAbsolutePosition();
+        }
     }
 }

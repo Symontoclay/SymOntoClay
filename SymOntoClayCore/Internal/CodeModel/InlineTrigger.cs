@@ -47,17 +47,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public CodeEntity CodeEntity { get; set; }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-           
-
-            var result =  base.CalculateLongHashCode() ^ (ulong)Math.Abs(Kind.GetHashCode()) ^ (ulong)Math.Abs(KindOfSystemEvent.GetHashCode());
+            var result =  base.CalculateLongHashCode(options) ^ (ulong)Math.Abs(Kind.GetHashCode()) ^ (ulong)Math.Abs(KindOfSystemEvent.GetHashCode());
 
             if(Condition != null)
             {
-                Condition.CheckDirty();
+                Condition.CheckDirty(options);
 
-                result ^= Condition.GetLongHashCode();
+                result ^= Condition.GetLongHashCode(options);
             }
 
             return result;

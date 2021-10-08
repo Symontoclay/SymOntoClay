@@ -47,9 +47,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            return LongHashCodeWeights.NullWeight ^ base.CalculateLongHashCode();
+            return LongHashCodeWeights.NullWeight ^ base.CalculateLongHashCode(options);
         }
 
         /// <inheritdoc/>

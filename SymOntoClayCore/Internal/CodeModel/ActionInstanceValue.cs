@@ -71,11 +71,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
             _actionPtr.CheckDirty();
 
-            return base.CalculateLongHashCode() ^ _actionPtr.GetLongHashCode();
+            return base.CalculateLongHashCode(options) ^ _actionPtr.GetLongHashCode();
         }
 
         /// <inheritdoc/>

@@ -30,6 +30,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TestSandbox.PlatformImplementations;
+using TestSandbox.SoundBusHandler;
 
 namespace TestSandbox.Handlers
 {
@@ -68,6 +69,8 @@ namespace TestSandbox.Handlers
             settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\World\World.world");
 
             settings.InvokerInMainThread = invokingInMainThread;
+
+            settings.SoundBus = new SimpleSoundBus();
 
             settings.Logging = new LoggingSettings()
             {

@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace TestSandbox.SoundBusHandler
+namespace SymOntoClay.UnityAsset.Core
 {
     public interface ISoundReceiver
     {
+        int InstanceId { get; }
         Vector3 Position { get; }
-        double Threshold { get; }//Decibel
+
+        /// <summary>
+        /// Gets threshold of audibility in decibels.
+        /// </summary>
+        double Threshold { get; }
         void CallBack(double power, double distance, Vector3 position, string query);
     }
 }

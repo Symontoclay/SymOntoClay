@@ -56,18 +56,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            var result = base.CalculateLongHashCode();
+            var result = base.CalculateLongHashCode(options);
 
             if (LeftOperand != null)
             {
-                result ^= LongHashCodeWeights.BaseParamWeight ^ LeftOperand.GetLongHashCode();
+                result ^= LongHashCodeWeights.BaseParamWeight ^ LeftOperand.GetLongHashCode(options);
             }
 
             if (RightOperand != null)
             {
-                result ^= LongHashCodeWeights.BaseParamWeight ^ RightOperand.GetLongHashCode();
+                result ^= LongHashCodeWeights.BaseParamWeight ^ RightOperand.GetLongHashCode(options);
             }
 
             return result;

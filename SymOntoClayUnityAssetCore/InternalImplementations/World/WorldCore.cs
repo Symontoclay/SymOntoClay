@@ -171,6 +171,12 @@ namespace SymOntoClay.UnityAsset.Core.World
         }
 
         /// <inheritdoc/>
+        public void PushSoundFact(float power, string text)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public void Load(IRunTimeImageInfo imageInfo)
         {
             _context.Load(imageInfo);

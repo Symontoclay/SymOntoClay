@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData();
 
-        private void PrepareDirty()
+        private void PrepareDirty(CheckDirtyOptions options)
         {
             if(Name == null || Name.IsEmpty)
             {
@@ -81,8 +81,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 _gbcLogger.Info($"this = {DebugHelperForRuleInstance.ToString(this)}");
 #endif 
 
-                Normalized = ConvertorToNormalized.Convert(this);
-                Normalized.PrepareDirty();
+                Normalized = ConvertorToNormalized.Convert(this, options);
+                Normalized.PrepareDirty(options);
 
 #if DEBUG
                 _gbcLogger.Info($"Normalized = {DebugHelperForRuleInstance.ToString(Normalized)}");
@@ -125,17 +125,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            PrepareDirty();
+            PrepareDirty(options);
 
-            var result = base.CalculateLongHashCode() ^ PrimaryPart.GetLongHashCode();
+            var result = base.CalculateLongHashCode(options) ^ PrimaryPart.GetLongHashCode(options);
 
             if (!SecondaryParts.IsNullOrEmpty())
             {
                 foreach (var secondaryPart in SecondaryParts)
                 {
-                    result ^= secondaryPart.GetLongHashCode();
+                    result ^= secondaryPart.GetLongHashCode(options);
                 }
             }
 

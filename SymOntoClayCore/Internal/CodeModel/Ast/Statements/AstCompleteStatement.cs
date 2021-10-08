@@ -61,11 +61,11 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         }
 
         /// <inheritdoc/>
-        public override void CalculateLongHashCodes()
+        public override void CalculateLongHashCodes(CheckDirtyOptions options)
         {
-            RuleInstanceValue?.CheckDirty();
+            RuleInstanceValue?.CheckDirty(options);
 
-            base.CalculateLongHashCodes();
+            base.CalculateLongHashCodes(options);
         }
 
         /// <inheritdoc/>

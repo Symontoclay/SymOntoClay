@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.Internal.HostSupport;
+using SymOntoClay.UnityAsset.Core.Internal.SoundPerception;
 using SymOntoClay.UnityAsset.Core.Internal.Vision;
 using System;
 using System.Collections.Generic;
@@ -61,8 +62,10 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                     internalContext.VisionComponent = _visionComponent;
                 }
 
-                _hostSupport = new HostSupportComponent(Logger, settings.PlatformSupport, internalContext, worldContext);
+                _hostSupport = new HostSupportComponent(Logger, settings.PlatformSupport, worldContext);
                 internalContext.HostSupportComponent = _hostSupport;
+
+                _soundPublisher = new SoundPublisherComponent(Logger, settings.InstanceId, _hostSupport, worldContext);
 
                 var coreEngineSettings = new EngineSettings();
                 coreEngineSettings.Id = settings.Id;
@@ -95,6 +98,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         private readonly Engine _coreEngine;
         private readonly VisionComponent _visionComponent;
         private readonly HostSupportComponent _hostSupport;
+        private readonly SoundPublisherComponent _soundPublisher;
 
         /// <inheritdoc/>
         public override IStorage PublicFactsStorage => _coreEngine.PublicFactsStorage;
@@ -168,6 +172,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         public void RemoveFact(string id)
         {
             _coreEngine.RemoveFact(id);
+        }
+
+        public void PushSoundFact(float power, string text)
+        {
+            _soundPublisher.PushSoundFact(power, text);
         }
 
         public void Die()

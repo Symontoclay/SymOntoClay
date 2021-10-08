@@ -37,14 +37,14 @@ namespace SymOntoClay.Core.Internal.Convertors
         private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
-        public static RuleInstance Convert(RuleInstance source)
+        public static RuleInstance Convert(RuleInstance source, CheckDirtyOptions options)
         {
             var convertingContext = new Dictionary<object, object>();
 
-            return Convert(source, convertingContext);
+            return Convert(source, options, convertingContext);
         }
 
-        public static RuleInstance Convert(RuleInstance source, Dictionary<object, object> convertingContext)
+        public static RuleInstance Convert(RuleInstance source, CheckDirtyOptions options, Dictionary<object, object> convertingContext)
         {
 #if DEBUG
             //_gbcLogger.Info($"source = {source}");
@@ -64,17 +64,17 @@ namespace SymOntoClay.Core.Internal.Convertors
             convertingContext[source] = result;
             result.Normalized = result;
 
-            result.PrimaryPart = ConvertPrimaryRulePart(source.PrimaryPart, result, convertingContext);
+            result.PrimaryPart = ConvertPrimaryRulePart(source.PrimaryPart, result, options, convertingContext);
 
             if (!source.SecondaryParts.IsNullOrEmpty())
             {
                 foreach (var secondaryPart in source.SecondaryParts)
                 {
-                    result.SecondaryParts.Add(ConvertSecondaryRulePart(secondaryPart, result, convertingContext));
+                    result.SecondaryParts.Add(ConvertSecondaryRulePart(secondaryPart, result, options, convertingContext));
                 }
             }
 
-            FillAnnotationsModalitiesAndSections(source, result, convertingContext);
+            FillAnnotationsModalitiesAndSections(source, result, options, convertingContext);
 
 #if DEBUG
             //_gbcLogger.Info($"result = {result}");
@@ -83,7 +83,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             return result;
         }
 
-        private static PrimaryRulePart ConvertPrimaryRulePart(PrimaryRulePart source, RuleInstance ruleInstance, Dictionary<object, object> convertingContext)
+        private static PrimaryRulePart ConvertPrimaryRulePart(PrimaryRulePart source, RuleInstance ruleInstance, CheckDirtyOptions options, Dictionary<object, object> convertingContext)
         {
 #if DEBUG
             //_gbcLogger.Info($"source = {source}");
@@ -102,13 +102,13 @@ namespace SymOntoClay.Core.Internal.Convertors
             var result = new PrimaryRulePart();
             convertingContext[source] = result;
 
-            FillBaseRulePart(source, result, ruleInstance, convertingContext);
+            FillBaseRulePart(source, result, ruleInstance, options, convertingContext);
 
             if (!source.SecondaryParts.IsNullOrEmpty())
             {
                 foreach (var secondaryPart in source.SecondaryParts)
                 {
-                    result.SecondaryParts.Add(ConvertSecondaryRulePart(secondaryPart, ruleInstance, convertingContext));
+                    result.SecondaryParts.Add(ConvertSecondaryRulePart(secondaryPart, ruleInstance, options, convertingContext));
                 }
             }
 
@@ -119,7 +119,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             return result;
         }
 
-        private static SecondaryRulePart ConvertSecondaryRulePart(SecondaryRulePart source, RuleInstance ruleInstance, Dictionary<object, object> convertingContext)
+        private static SecondaryRulePart ConvertSecondaryRulePart(SecondaryRulePart source, RuleInstance ruleInstance, CheckDirtyOptions options, Dictionary<object, object> convertingContext)
         {
 #if DEBUG
             //_gbcLogger.Info($"source = {source}");
@@ -138,9 +138,9 @@ namespace SymOntoClay.Core.Internal.Convertors
             var result = new SecondaryRulePart();
             convertingContext[source] = result;
 
-            FillBaseRulePart(source, result, ruleInstance, convertingContext);
+            FillBaseRulePart(source, result, ruleInstance, options, convertingContext);
 
-            result.PrimaryPart = ConvertPrimaryRulePart(source.PrimaryPart, ruleInstance, convertingContext);
+            result.PrimaryPart = ConvertPrimaryRulePart(source.PrimaryPart, ruleInstance, options, convertingContext);
 
 #if DEBUG
             //_gbcLogger.Info($"result = {result}");
@@ -149,17 +149,17 @@ namespace SymOntoClay.Core.Internal.Convertors
             return result;
         }
 
-        private static void FillBaseRulePart(BaseRulePart source, BaseRulePart dest, RuleInstance ruleInstance, Dictionary<object, object> convertingContext)
+        private static void FillBaseRulePart(BaseRulePart source, BaseRulePart dest, RuleInstance ruleInstance, CheckDirtyOptions options, Dictionary<object, object> convertingContext)
         {
             dest.Parent = ruleInstance;
             dest.IsActive = source.IsActive;
 
-            dest.Expression = ConvertLogicalQueryNode(source.Expression, convertingContext, source.AliasesDict);
+            dest.Expression = ConvertLogicalQueryNode(source.Expression, options, convertingContext, source.AliasesDict);
 
-            FillAnnotationsModalitiesAndSections(source, dest, convertingContext);
+            FillAnnotationsModalitiesAndSections(source, dest, options, convertingContext);
         }
 
-        private static LogicalQueryNode ConvertLogicalQueryNode(LogicalQueryNode source, Dictionary<object, object> convertingContext, Dictionary<StrongIdentifierValue, LogicalQueryNode> aliasesDict)
+        private static LogicalQueryNode ConvertLogicalQueryNode(LogicalQueryNode source, CheckDirtyOptions options, Dictionary<object, object> convertingContext, Dictionary<StrongIdentifierValue, LogicalQueryNode> aliasesDict)
         {
 #if DEBUG
             _gbcLogger.Info($"source = {source}");
@@ -178,7 +178,7 @@ namespace SymOntoClay.Core.Internal.Convertors
                         case KindOfOperatorOfLogicalQueryNode.MoreOrEqual:
                         case KindOfOperatorOfLogicalQueryNode.Less:
                         case KindOfOperatorOfLogicalQueryNode.LessOrEqual:
-                            return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext, aliasesDict);
+                            return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict);
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(source.KindOfOperator), source.KindOfOperator, null);
@@ -188,36 +188,36 @@ namespace SymOntoClay.Core.Internal.Convertors
                     switch (source.KindOfOperator)
                     {
                         case KindOfOperatorOfLogicalQueryNode.Not:
-                            return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext, aliasesDict);
+                            return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict);
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(source.KindOfOperator), source.KindOfOperator, null);
                     }
 
                 case KindOfLogicalQueryNode.Concept:
-                    return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext, aliasesDict);
+                    return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict);
 
                 case KindOfLogicalQueryNode.Entity:
-                    return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext, aliasesDict);
+                    return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict);
 
                 case KindOfLogicalQueryNode.Relation:
                     if(source.ParamsList.Count == 1)
                     {
                         return ConvertUnaryPredicateToFullIsPredicate(source, convertingContext, aliasesDict);
                     }
-                    return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext, aliasesDict);
+                    return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict);
 
                 case KindOfLogicalQueryNode.LogicalVar:
-                    return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext, aliasesDict);
+                    return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict);
 
                 case KindOfLogicalQueryNode.QuestionVar:
-                    return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext, aliasesDict);
+                    return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict);
 
                 case KindOfLogicalQueryNode.Value:
-                    return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext, aliasesDict);
+                    return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict);
 
                 case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
-                    return ConvertLogicalQueryNodeInDefaultWay(source, convertingContext, aliasesDict);
+                    return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, null);
@@ -269,7 +269,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             return result;
         }
 
-        private static LogicalQueryNode ConvertLogicalQueryNodeInDefaultWay(LogicalQueryNode source, Dictionary<object, object> convertingContext, Dictionary<StrongIdentifierValue, LogicalQueryNode> aliasesDict)
+        private static LogicalQueryNode ConvertLogicalQueryNodeInDefaultWay(LogicalQueryNode source, CheckDirtyOptions options, Dictionary<object, object> convertingContext, Dictionary<StrongIdentifierValue, LogicalQueryNode> aliasesDict)
         {
 #if DEBUG
             _gbcLogger.Info("ConvertLogicalQueryNodeInDefaultWay!!!!!");
@@ -285,8 +285,13 @@ namespace SymOntoClay.Core.Internal.Convertors
             {
                 if(aliasesDict.ContainsKey(source.Name))
                 {
-                    return ConvertLogicalQueryNode(aliasesDict[source.Name], convertingContext, aliasesDict);
+                    return ConvertLogicalQueryNode(aliasesDict[source.Name], options, convertingContext, aliasesDict);
                 }
+            }
+
+            if(source.Kind == KindOfLogicalQueryNode.Value && source.Value.IsWaypointSourceValue && options != null)
+            {
+                throw new NotImplementedException();
             }
 
             if (convertingContext.ContainsKey(source))
@@ -303,12 +308,12 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             if(source.Left != null)
             {
-                result.Left = ConvertLogicalQueryNode(source.Left, convertingContext, aliasesDict);
+                result.Left = ConvertLogicalQueryNode(source.Left, options, convertingContext, aliasesDict);
             }
             
             if(source.Right != null)
             {
-                result.Right = ConvertLogicalQueryNode(source.Right, convertingContext, aliasesDict);
+                result.Right = ConvertLogicalQueryNode(source.Right, options, convertingContext, aliasesDict);
             }
             
             if(!source.ParamsList.IsNullOrEmpty())
@@ -317,7 +322,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 
                 foreach (var param in source.ParamsList)
                 {
-                    destParametersList.Add(ConvertLogicalQueryNode(param, convertingContext, aliasesDict));
+                    destParametersList.Add(ConvertLogicalQueryNode(param, options, convertingContext, aliasesDict));
                 }
 
                 result.ParamsList = destParametersList;
@@ -327,7 +332,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.FuzzyLogicNonNumericSequenceValue = source.FuzzyLogicNonNumericSequenceValue;
             result.IsQuestion = source.IsQuestion;
 
-            FillAnnotationsModalitiesAndSections(source, result, convertingContext);
+            FillAnnotationsModalitiesAndSections(source, result, options, convertingContext);
 
 #if DEBUG
             //_gbcLogger.Info($"result = {result}");
@@ -336,7 +341,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             return result;
         }
 
-        private static void FillAnnotationsModalitiesAndSections(AnnotatedItem source, AnnotatedItem dest, Dictionary<object, object> convertingContext)
+        private static void FillAnnotationsModalitiesAndSections(AnnotatedItem source, AnnotatedItem dest, CheckDirtyOptions options, Dictionary<object, object> convertingContext)
         {
             if (dest.WhereSection == null)
             {
@@ -361,7 +366,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 
                 foreach (var sourceAnnotation in source.Annotations)
                 {
-                    var destAnnotation = Convert(sourceAnnotation, convertingContext);
+                    var destAnnotation = Convert(sourceAnnotation, options, convertingContext);
 
                     destAnnotationsList.Add(destAnnotation);
                 }

@@ -78,16 +78,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private bool _isDirty = true;
 
-        public void CheckDirty()
+        public void CheckDirty(CheckDirtyOptions options)
         {
             if (_isDirty)
             {
-                Check();
+                Check(options);
                 _isDirty = false;
             }
         }
 
-        public void Check()
+        public void Check(CheckDirtyOptions options = null)
         {
             if (_items.Any(p => p.Kind == KindOfLinguisticVariableConstraintItem.Unknown))
             {

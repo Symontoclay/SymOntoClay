@@ -65,12 +65,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            Distance.CheckDirty();
-            HorizontalAngle.CheckDirty();
+            Distance.CheckDirty(options);
+            HorizontalAngle.CheckDirty(options);
 
-            return base.CalculateLongHashCode() ^ LongHashCodeWeights.BaseFunctionWeight ^ (Name?.GetLongHashCode() ?? 0) ^ LongHashCodeWeights.BaseParamWeight ^ Distance.GetLongHashCode() ^ HorizontalAngle.GetLongHashCode();
+            return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.BaseFunctionWeight ^ (Name?.GetLongHashCode(options) ?? 0) ^ LongHashCodeWeights.BaseParamWeight ^ Distance.GetLongHashCode(options) ^ HorizontalAngle.GetLongHashCode(options);
         }
 
         /// <inheritdoc/>

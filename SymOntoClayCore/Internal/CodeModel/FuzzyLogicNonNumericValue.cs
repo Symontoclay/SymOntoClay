@@ -81,11 +81,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
             Name?.DiscoverAllAnnotations(result);
         }
 
-        public override void CalculateLongHashCodes()
+        public override void CalculateLongHashCodes(CheckDirtyOptions options)
         {
             Handler.Check();
 
-            base.CalculateLongHashCodes();
+            Name?.CheckDirty(options);
+
+            base.CalculateLongHashCodes(options);
         }
 
         /// <inheritdoc/>

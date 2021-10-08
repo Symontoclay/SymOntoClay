@@ -76,27 +76,27 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override ulong GetLongConditionalHashCode()
+        public override ulong GetLongConditionalHashCode(CheckDirtyOptions options)
         {
-            return RuleInstance.GetLongConditionalHashCode();
+            return RuleInstance.GetLongConditionalHashCode(options);
         }
 
         /// <inheritdoc/>
-        public override ulong GetLongHashCode()
+        public override ulong GetLongHashCode(CheckDirtyOptions options)
         {
-            return RuleInstance.GetLongHashCode();
+            return RuleInstance.GetLongHashCode(options);
         }
 
         /// <inheritdoc/>
-        protected override void CalculateLongConditionalHashCode()
+        protected override void CalculateLongConditionalHashCode(CheckDirtyOptions options)
         {
-            RuleInstance.CheckDirty();
+            RuleInstance.CheckDirty(options);
         }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            return RuleInstance.GetLongHashCode();
+            return RuleInstance.GetLongHashCode(options);
         }
 
         /// <inheritdoc/>

@@ -34,17 +34,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.HostSupport
 {
     public class HostSupportComponent : BaseComponent, IHostSupport
     {
-        public HostSupportComponent(IEntityLogger logger, IPlatformSupport platformSupport, HumanoidNPCGameComponentContext internalContext, IWorldCoreGameComponentContext worldContext)
+        public HostSupportComponent(IEntityLogger logger, IPlatformSupport platformSupport, IWorldCoreGameComponentContext worldContext)
             : base(logger)
         {
-            _internalContext = internalContext;
-            _worldContext = worldContext;
             _invokerInMainThread = worldContext.InvokerInMainThread;
             _platformSupport = platformSupport;
         }
 
-        private readonly HumanoidNPCGameComponentContext _internalContext;
-        private readonly IWorldCoreGameComponentContext _worldContext;
         private readonly IInvokerInMainThread _invokerInMainThread;
         private readonly IPlatformSupport _platformSupport;
 
@@ -57,6 +53,16 @@ namespace SymOntoClay.UnityAsset.Core.Internal.HostSupport
 
             var invocableInMainThreadObj = new InvocableInMainThreadObj<Vector3>(() => {
                 return _platformSupport.ConvertFromRelativeToAbsolute(relativeCoordinate);
+            }, _invokerInMainThread);
+
+            return invocableInMainThreadObj.Run();
+        }
+
+        /// <inheritdoc/>
+        public Vector3 GetCurrentAbsolutePosition()
+        {
+            var invocableInMainThreadObj = new InvocableInMainThreadObj<Vector3>(() => {
+                return _platformSupport.GetCurrentAbsolutePosition();
             }, _invokerInMainThread);
 
             return invocableInMainThreadObj.Run();

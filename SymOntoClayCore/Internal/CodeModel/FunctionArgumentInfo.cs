@@ -73,27 +73,27 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return result;
         }
 
-        public ulong GetLongConditionalHashCode()
+        public ulong GetLongConditionalHashCode(CheckDirtyOptions options)
         {
-            Name.CheckDirty();
+            Name.CheckDirty(options);
 
             if (!TypesList.IsNullOrEmpty())
             {
                 foreach(var item in TypesList)
                 {
-                    item.CheckDirty();
+                    item.CheckDirty(options);
                 }
             }                
 
-            DefaultValue?.CheckDirty();
+            DefaultValue?.CheckDirty(options);
 
-            var result = Name.GetLongConditionalHashCode();
+            var result = Name.GetLongConditionalHashCode(options);
 
             if (!TypesList.IsNullOrEmpty())
             {
                 foreach (var item in TypesList)
                 {
-                    result ^= item.GetLongConditionalHashCode();
+                    result ^= item.GetLongConditionalHashCode(options);
                 }
             }
 

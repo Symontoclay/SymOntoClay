@@ -1,4 +1,5 @@
 ﻿using NLog;
+using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -13,10 +14,15 @@ namespace TestSandbox.SoundBusHandler
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public TstSoundReceiver(Vector3 position)
+        public TstSoundReceiver(int instanceId, Vector3 position)
         {
+            _instanceId = instanceId;
             _position = position;
         }
+
+        private int _instanceId;
+
+        public int InstanceId => _instanceId;
 
         private Vector3 _position;
 

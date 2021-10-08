@@ -162,12 +162,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
             _action.CheckDirty();
             _operator.CheckDirty();
 
-            var result = base.CalculateLongHashCode() ^ _action.GetLongHashCode() ^ _operator.GetLongHashCode();
+            var result = base.CalculateLongHashCode(options) ^ _action.GetLongHashCode(options) ^ _operator.GetLongHashCode(options);
 
             return result;
         }

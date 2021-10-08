@@ -4,5 +4,11 @@
         <name>SymOntoClayDefaultCLIEnvironment</name>
     </assembly>
     <members>
+        <member name="M:SymOntoClayDefaultCLIEnvironment.PlatformSupportCLIStub.ConvertFromRelativeToAbsolute(SymOntoClay.Core.RelativeCoordinate)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClayDefaultCLIEnvironment.PlatformSupportCLIStub.GetCurrentAbsolutePosition">
+            <inheritdoc/>
+        </member>
     </members>
 </doc>

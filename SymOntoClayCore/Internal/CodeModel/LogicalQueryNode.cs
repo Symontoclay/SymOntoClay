@@ -319,7 +319,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
 #if DEBUG
             //_gbcLogger.Info($"this = {DebugHelperForRuleInstance.ToString(this)}");
@@ -338,7 +338,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         case KindOfOperatorOfLogicalQueryNode.MoreOrEqual:
                         case KindOfOperatorOfLogicalQueryNode.Less:
                         case KindOfOperatorOfLogicalQueryNode.LessOrEqual:
-                            return base.CalculateLongHashCode() ^ LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(KindOfOperator.GetHashCode()) ^ Left.GetLongHashCode() ^ Right.GetLongHashCode();
+                            return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(KindOfOperator.GetHashCode()) ^ Left.GetLongHashCode(options) ^ Right.GetLongHashCode(options);
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(KindOfOperator), KindOfOperator, null);
@@ -348,7 +348,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     switch (KindOfOperator)
                     {
                         case KindOfOperatorOfLogicalQueryNode.Not:
-                            return base.CalculateLongHashCode() ^ LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(KindOfOperator.GetHashCode()) ^ Left.GetLongHashCode();
+                            return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(KindOfOperator.GetHashCode()) ^ Left.GetLongHashCode(options);
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(KindOfOperator), KindOfOperator, null);
@@ -358,16 +358,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 case KindOfLogicalQueryNode.Entity:
                 case KindOfLogicalQueryNode.QuestionVar:
                 case KindOfLogicalQueryNode.LogicalVar:
-                    return base.CalculateLongHashCode() ^ Name.GetLongHashCode();
+                    return base.CalculateLongHashCode(options) ^ Name.GetLongHashCode(options);
 
                 case KindOfLogicalQueryNode.Value:
-                    return base.CalculateLongHashCode() ^ Value.GetLongHashCode();
+                    return base.CalculateLongHashCode(options) ^ Value.GetLongHashCode(options);
 
                 case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
-                    return base.CalculateLongHashCode() ^ FuzzyLogicNonNumericSequenceValue.GetLongHashCode();
+                    return base.CalculateLongHashCode(options) ^ FuzzyLogicNonNumericSequenceValue.GetLongHashCode(options);
 
                 case KindOfLogicalQueryNode.StubParam:
-                    return LongHashCodeWeights.StubWeight ^ base.CalculateLongHashCode();
+                    return LongHashCodeWeights.StubWeight ^ base.CalculateLongHashCode(options);
 
                 case KindOfLogicalQueryNode.EntityCondition:
                 case KindOfLogicalQueryNode.EntityRef:
@@ -375,18 +375,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 case KindOfLogicalQueryNode.Relation:
                     {
-                        var result = base.CalculateLongHashCode() ^ LongHashCodeWeights.BaseFunctionWeight ^ Name.GetLongHashCode();
+                        var result = base.CalculateLongHashCode(options) ^ LongHashCodeWeights.BaseFunctionWeight ^ Name.GetLongHashCode(options);
 
                         foreach (var param in ParamsList)
                         {
-                            result ^= LongHashCodeWeights.BaseParamWeight ^ param.GetLongHashCode();
+                            result ^= LongHashCodeWeights.BaseParamWeight ^ param.GetLongHashCode(options);
                         }
 
                         return result;
                     }
 
                 case KindOfLogicalQueryNode.Group:
-                    return base.CalculateLongHashCode() ^ LongHashCodeWeights.GroupWeight ^ Left.GetLongHashCode();
+                    return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.GroupWeight ^ Left.GetLongHashCode(options);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);

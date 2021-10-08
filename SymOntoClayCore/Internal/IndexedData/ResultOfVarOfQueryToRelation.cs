@@ -33,9 +33,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public StrongIdentifierValue NameOfVar { get; set; }
         public LogicalQueryNode FoundExpression { get; set; }
 
-        public ulong GetLongHashCode()
+        public ulong GetLongHashCode(CheckDirtyOptions options)
         {
-            return (ulong)Math.Abs(NameOfVar.GetHashCode()) ^ FoundExpression.GetLongHashCode();
+            return NameOfVar.GetLongHashCode(options) ^ FoundExpression.GetLongHashCode(options);
         }
 
         /// <inheritdoc/>

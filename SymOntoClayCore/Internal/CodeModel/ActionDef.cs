@@ -132,47 +132,25 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            Name.CheckDirty();
+            Name.CheckDirty(options);
 
             foreach(var alias in _aliasesList)
             {
-                alias.CheckDirty();
+                alias.CheckDirty(options);
             }
 
-            var result = base.CalculateLongHashCode() ^ Name.GetLongHashCode();
+            var result = base.CalculateLongHashCode(options) ^ Name.GetLongHashCode();
 
             _namesList = new List<StrongIdentifierValue>() { Name };
             _namesList.AddRange(_aliasesList);
-
-            //if (Range != null)
-            //{
-            //    Range.CheckDirty();
-
-            //    result ^= Range.GetLongHashCode();
-            //}
-
-            //if (Constraint != null)
-            //{
-            //    Constraint.CheckDirty();
-            //}
-
-            //if (!Values.IsNullOrEmpty())
-            //{
-            //    foreach (var value in Values)
-            //    {
-            //        value.CheckDirty();
-
-            //        result ^= value.GetLongHashCode();
-            //    }
-            //}
 
             if (!Operators.IsNullOrEmpty())
             {
                 foreach (var op in Operators)
                 {
-                    op.CheckDirty();
+                    op.CheckDirty(options);
 
                     result ^= op.GetLongHashCode();
                 }

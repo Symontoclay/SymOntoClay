@@ -136,6 +136,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
+        public void PushSoundFact(float power, string text)
+        {
+            _gameComponent.PushSoundFact(power, text);
+        }
+
+        /// <inheritdoc/>
         public void Die()
         {
             _gameComponent.Die();

@@ -101,17 +101,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public static bool operator == (StrongIdentifierValue a, StrongIdentifierValue b)
         {
-            if(object.ReferenceEquals(a, b))
+            if(ReferenceEquals(a, b))
             {
                 return true;
             }
 
-            if(object.ReferenceEquals(a, null))
+            if(ReferenceEquals(a, null))
             {
                 return false;
             }
 
-            if (object.ReferenceEquals(b, null))
+            if (ReferenceEquals(b, null))
             {
                 return false;
             }
@@ -121,17 +121,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public static bool operator != (StrongIdentifierValue a, StrongIdentifierValue b)
         {
-            if (object.ReferenceEquals(a, b))
+            if (ReferenceEquals(a, b))
             {
                 return false;
             }
 
-            if (object.ReferenceEquals(a, null))
+            if (ReferenceEquals(a, null))
             {
                 return true;
             }
 
-            if (object.ReferenceEquals(b, null))
+            if (ReferenceEquals(b, null))
             {
                 return true;
             }
@@ -146,9 +146,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            return base.CalculateLongHashCode() ^ (ulong)NormalizedNameValue.GetHashCode();
+            return base.CalculateLongHashCode(options) ^ (ulong)NormalizedNameValue.GetHashCode();
         }
 
         /// <inheritdoc/>

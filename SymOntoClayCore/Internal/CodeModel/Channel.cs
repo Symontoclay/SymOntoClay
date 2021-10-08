@@ -36,9 +36,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public IChannelHandler Handler { get; set; }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            return base.CalculateLongHashCode() ^ Name.GetLongHashCode() ^ Handler.GetLongHashCode();
+            return base.CalculateLongHashCode(options) ^ Name.GetLongHashCode(options) ^ Handler.GetLongHashCode();
         }
 
         /// <inheritdoc/>

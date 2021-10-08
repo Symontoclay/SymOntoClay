@@ -123,19 +123,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            var result = base.CalculateLongHashCode();
+            var result = base.CalculateLongHashCode(options);
 
             if(LeftBoundary != null)
             {
-                LeftBoundary.CheckDirty();
+                LeftBoundary.CheckDirty(options);
                 result ^= LeftBoundary.GetLongHashCode();
             }
 
             if (RightBoundary != null)
             {
-                RightBoundary.CheckDirty();
+                RightBoundary.CheckDirty(options);
                 result ^= RightBoundary.GetLongHashCode();
             }
 

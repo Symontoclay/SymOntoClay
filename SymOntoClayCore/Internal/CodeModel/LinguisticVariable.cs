@@ -175,31 +175,31 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
         }
 
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            Name.CheckDirty();
+            Name.CheckDirty(options);
 
-            var result = base.CalculateLongHashCode() ^ Name.GetLongHashCode();
+            var result = base.CalculateLongHashCode(options) ^ Name.GetLongHashCode(options);
 
             if(Range != null)
             {
-                Range.CheckDirty();
+                Range.CheckDirty(options);
 
-                result ^= Range.GetLongHashCode();
+                result ^= Range.GetLongHashCode(options);
             }
 
             if (Constraint != null)
             {
-                Constraint.CheckDirty();
+                Constraint.CheckDirty(options);
             }
 
             if (!Values.IsNullOrEmpty())
             {
                 foreach (var value in Values)
                 {
-                    value.CheckDirty();
+                    value.CheckDirty(options);
 
-                    result ^= value.GetLongHashCode();
+                    result ^= value.GetLongHashCode(options);
                 }
             }
 
@@ -207,9 +207,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 foreach (var op in Operators)
                 {
-                    op.CheckDirty();
+                    op.CheckDirty(options);
 
-                    result ^= op.GetLongHashCode();
+                    result ^= op.GetLongHashCode(options);
                 }
             }
 

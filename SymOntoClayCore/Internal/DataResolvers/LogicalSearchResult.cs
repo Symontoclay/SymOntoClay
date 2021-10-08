@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public IList<LogicalSearchResultItem> Items { get; set; }
         public List<StrongIdentifierValue> UsedKeysList { get; set; } = new List<StrongIdentifierValue>();
 
-        public ulong GetLongHashCode()
+        public ulong GetLongHashCode(CheckDirtyOptions options)
         {
             ulong result = 0;
 
@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 foreach(var item in Items)
                 {
-                    result ^= item.GetLongHashCode();
+                    result ^= item.GetLongHashCode(options);
                 }
             }
 

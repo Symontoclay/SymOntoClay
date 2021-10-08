@@ -85,9 +85,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            var result = base.CalculateLongHashCode();
+            var result = base.CalculateLongHashCode(options);
 
             var systemValuesList = new List<string>();
             var debugViewsList = new List<string>();
@@ -96,7 +96,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 foreach(var op in _operators)
                 {
-                    result ^= op.GetLongHashCode();
+                    result ^= op.GetLongHashCode(options);
                     systemValuesList.Add(op.NormalizedNameValue);
                     debugViewsList.Add(op.NameValue);
                 }
@@ -104,7 +104,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             if(NonNumericValue != null)
             {
-                result ^= NonNumericValue.GetLongHashCode();
+                result ^= NonNumericValue.GetLongHashCode(options);
                 systemValuesList.Add(NonNumericValue.NormalizedNameValue);
                 debugViewsList.Add(NonNumericValue.NameValue);
             }

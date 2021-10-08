@@ -95,11 +95,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            Name.CheckDirty();
+            Name.CheckDirty(options);
 
-            var result = base.CalculateLongHashCode() ^ Name.GetLongHashCode();
+            var result = base.CalculateLongHashCode(options) ^ Name.GetLongHashCode();
 
             return result;
         }

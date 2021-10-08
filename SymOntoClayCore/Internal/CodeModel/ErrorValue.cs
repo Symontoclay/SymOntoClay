@@ -52,13 +52,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            var result = base.CalculateLongHashCode();
+            var result = base.CalculateLongHashCode(options);
 
-            RuleInstance.CheckDirty();
+            RuleInstance.CheckDirty(options);
 
-            result ^= RuleInstance.GetLongHashCode();
+            result ^= RuleInstance.GetLongHashCode(options);
 
             return result;
         }

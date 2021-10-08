@@ -31,9 +31,16 @@ namespace SymOntoClayDefaultCLIEnvironment
 {
     public class PlatformSupportCLIStub : IPlatformSupport
     {
+        /// <inheritdoc/>
         public Vector3 ConvertFromRelativeToAbsolute(RelativeCoordinate relativeCoordinate)
         {
             return new Vector3(666, 999, 0);
+        }
+
+        /// <inheritdoc/>
+        public Vector3 GetCurrentAbsolutePosition()
+        {
+            return new Vector3(10, 10, 10);
         }
     }
 }

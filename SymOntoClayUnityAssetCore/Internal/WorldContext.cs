@@ -72,6 +72,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             Directory.CreateDirectory(_tmpDir);
 
             InvokerInMainThread = settings.InvokerInMainThread;
+            SoundBus = settings.SoundBus;
         }
 
         private void CreateLogging(WorldSettings settings)
@@ -158,6 +159,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         /// <inheritdoc/>
         public IInvokerInMainThread InvokerInMainThread { get; private set; }
+
+        /// <inheritdoc/>
+        public ISoundBus SoundBus { get; private set; }
 
         public DateTimeProvider DateTimeProvider { get; private set; }
         IDateTimeProvider IWorldCoreGameComponentContext.DateTimeProvider => DateTimeProvider;

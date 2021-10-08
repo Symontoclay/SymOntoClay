@@ -31,5 +31,6 @@ namespace SymOntoClay.UnityAsset.Core
     public interface IPlatformSupport
     {
         Vector3 ConvertFromRelativeToAbsolute(RelativeCoordinate relativeCoordinate);
+        Vector3 GetCurrentAbsolutePosition();
     }
 }

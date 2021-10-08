@@ -73,6 +73,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
             _gameComponent.RemovePublicFact(id);
         }
 
+        /// <inheritdoc/>
+        public void PushSoundFact(float power, string text)
+        {
+            _gameComponent.PushSoundFact(power, text);
+        }
+
         private readonly GameObjectSettings _settings;
 
         private GameObjectGameComponent _gameComponent;

@@ -1,4 +1,5 @@
 ﻿using NLog;
+using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,12 +42,13 @@ namespace TestSandbox.SoundBusHandler
         }
 
         /// <inheritdoc/>
-        public void PushSound(double power, Vector3 position, string query)
+        public void PushSound(int instanceId, float power, Vector3 position, string query)
         {
 #if DEBUG
-            //_logger.Info($"power = {power}");
-            //_logger.Info($"position = {position}");
-            //_logger.Info($"query = {query}");
+            _logger.Info($"instanceId = {instanceId}");
+            _logger.Info($"power = {power}");
+            _logger.Info($"position = {position}");
+            _logger.Info($"query = {query}");
 #endif
 
             foreach(var receiver in _soundReceivers)
@@ -55,6 +57,11 @@ namespace TestSandbox.SoundBusHandler
                 //_logger.Info($"receiver.Position = {receiver.Position}");
                 //_logger.Info($"receiver.Threshold = {receiver.Threshold}");
 #endif
+
+                if(receiver.InstanceId == instanceId)
+                {
+                    continue;
+                }
 
                 var distance = Vector3.Distance(receiver.Position, position);
 

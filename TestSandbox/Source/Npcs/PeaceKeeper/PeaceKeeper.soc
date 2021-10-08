@@ -7,6 +7,8 @@
         //insert {: $x = act(M16, shoot) & hear(I, $x) :};
         insert {: $x = act(M16, shoot) & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :};
 
+        //@@host.`go`(to: #@[10]);
+
         'End' >> @>log;
     }
 }

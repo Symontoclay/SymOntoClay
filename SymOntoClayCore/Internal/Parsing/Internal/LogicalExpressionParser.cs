@@ -280,15 +280,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 Log($"parser.Result = {parser.Result}");
 #endif
 
-                                throw new NotImplementedException();
+                                //throw new NotImplementedException();
 
-                                //var node = new LogicalQueryNode();
-                                //node.Kind = KindOfLogicalQueryNode.Value;
-                                //node.Value = parser.Result;
+                                var node = new LogicalQueryNode();
+                                node.Kind = KindOfLogicalQueryNode.Value;
+                                node.Value = parser.Result;
 
-                                //_lastLogicalQueryNode.ParamsList.Add(node);
+                                _lastLogicalQueryNode.ParamsList.Add(node);
 
-                                //_state = State.GotPredicateParameter;
+                                _state = State.GotPredicateParameter;
                             }
                             break;
 

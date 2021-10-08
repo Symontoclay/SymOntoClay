@@ -223,8 +223,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     case OperationCode.PushVal:
-                        _currentCodeFrame.ValuesStack.Push(currentCommand.Value);
-                        _currentCodeFrame.CurrentPosition++;
+                        {
+                            var value = currentCommand.Value;
+
+                            if(value.IsWaypointSourceValue)
+                            {
+                                var waypointSourceValue = value.AsWaypointSourceValue;
+
+                                value = waypointSourceValue.ConvertToWaypointValue(_context, _currentCodeFrame.LocalContext);
+                            }
+
+                            _currentCodeFrame.ValuesStack.Push(value);
+                            _currentCodeFrame.CurrentPosition++;
+                        }
                         break;
 
                     case OperationCode.PushValFromVar:
@@ -386,81 +397,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     case OperationCode.UseNotInheritance:
                         ProcessUseNotInheritance();
-                        break;
-
-                    case OperationCode.AllocateAnonymousWaypoint:
-                        {
-                            if(currentCommand.CountParams == 0)
-                            {
-                                throw new NotImplementedException();
-                                //break;
-                            }
-
-#if DEBUG
-                            //Log($"currentCommand.CountParams = {currentCommand.CountParams}");
-#endif
-
-                            var paramsList = TakePositionedParameters(currentCommand.CountParams);
-
-#if DEBUG
-                            //Log($"paramsList = {paramsList.WriteListToString()}");
-                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-#endif
-
-                            switch(currentCommand.CountParams)
-                            {
-                                case 2:
-                                    {
-                                        var firstParam = paramsList[0];
-
-#if DEBUG
-                                        //Log($"firstParam = {firstParam}");
-#endif
-
-                                        var resolvedFirstParam = _numberValueLinearResolver.Resolve(firstParam, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
-
-                                        var annotationValue = paramsList[1].AsAnnotationValue;
-
-                                        var value = new WaypointValue((float)(double)resolvedFirstParam.GetSystemValue(), _context);
-
-                                        _currentCodeFrame.ValuesStack.Push(value);
-
-                                        _currentCodeFrame.CurrentPosition++;
-                                    }
-                                    break;
-
-                                case 3:
-                                    {
-                                        var firstParam = paramsList[0];
-
-#if DEBUG
-                                        //Log($"firstParam = {firstParam}");
-#endif
-
-                                        var resolvedFirstParam = _numberValueLinearResolver.Resolve(firstParam, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
-
-                                        var secondParam = paramsList[1];
-
-#if DEBUG
-                                        //Log($"secondParam = {secondParam}");
-#endif
-
-                                        var resolvedSecondParam = _numberValueLinearResolver.Resolve(secondParam, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
-
-                                        var annotationValue = paramsList[2].AsAnnotationValue;
-
-                                        var value = new WaypointValue((float)(double)resolvedFirstParam.GetSystemValue(), (float)(double)resolvedSecondParam.GetSystemValue(), _context);
-
-                                        _currentCodeFrame.ValuesStack.Push(value);
-
-                                        _currentCodeFrame.CurrentPosition++;
-                                    }
-                                    break;
-
-                                default:
-                                    throw new ArgumentOutOfRangeException(nameof(currentCommand.CountParams), currentCommand.CountParams, null);
-                            }
-                        }
                         break;
 
                     case OperationCode.SetSEHGroup:

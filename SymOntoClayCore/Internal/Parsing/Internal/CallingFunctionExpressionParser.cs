@@ -214,7 +214,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new EntityConditionParser(_context);
                                 parser.Run();
 
-                                _currentParameter.Value = parser.Result;
+                                var node = new ConstValueAstExpression();
+                                node.Value = parser.Result;
+
+                                _currentParameter.Value = node;
 
                                 _state = State.GotValueOfNamedMainParameter;
                             }

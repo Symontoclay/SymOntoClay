@@ -34,7 +34,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         BinaryOperator,
         UnaryOperator,
         Channel,
-        CallingFunction,
-        EntityCondition
+        CallingFunction
     }
 }

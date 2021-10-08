@@ -56,6 +56,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsWaypointValue => false;
         public virtual WaypointValue AsWaypointValue => null;
 
+        public virtual bool IsWaypointSourceValue => false;
+        public virtual WaypointSourceValue AsWaypointSourceValue => null;
+
         public virtual bool IsInstanceValue => false;
         public virtual InstanceValue AsInstanceValue => null;
 

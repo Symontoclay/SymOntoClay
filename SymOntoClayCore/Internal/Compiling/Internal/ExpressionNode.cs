@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         public void Run(AstExpression expression)
         {
 #if DEBUG
-            //Log($"expression = {expression}");
+            Log($"expression = {expression}");
 #endif
 
             var kind = expression.Kind;
@@ -73,14 +73,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     {
                         var node = new CallingFunctionNode(_context);
                         node.Run(expression as CallingFunctionAstExpression);
-                        AddCommands(node.Result);
-                    }
-                    break;
-
-                case KindOfAstExpression.EntityCondition:
-                    {
-                        var node = new EntityConditionNode(_context);
-                        node.Run(expression as EntityConditionAstExpression);
                         AddCommands(node.Result);
                     }
                     break;

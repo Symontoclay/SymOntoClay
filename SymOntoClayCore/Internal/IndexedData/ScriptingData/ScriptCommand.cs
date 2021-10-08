@@ -211,10 +211,6 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.CallBinOp:
                     return $"{spaces}{OperationCode} {OperatorsHelper.GetSymbol(KindOfOperator)}";
 
-                case OperationCode.AllocateAnonymousWaypoint:
-                case OperationCode.AllocateNamedWaypoint:
-                    return $"{spaces}{OperationCode} {CountParams}";
-
                 case OperationCode.Call:
                 case OperationCode.Call_N:
                 case OperationCode.Call_P:

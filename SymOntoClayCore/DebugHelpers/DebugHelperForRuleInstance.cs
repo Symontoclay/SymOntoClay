@@ -327,9 +327,20 @@ namespace SymOntoClay.Core.DebugHelpers
                 case KindOfValue.StrongIdentifierValue:
                     return StrongIdentifierValueToString(value.AsStrongIdentifierValue);
 
+                case KindOfValue.WaypointSourceValue:
+                case KindOfValue.WaypointValue:
+                    return WaypointValueToString(value);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(value.KindOfValue), value.KindOfValue, null);
             }
+        }
+
+        private static string WaypointValueToString(Value value)
+        {
+            var sb = new StringBuilder(value.ToDbgString());
+            sb.Append(AnnotatedItemToString(value));
+            return sb.ToString();
         }
 
         private static string NullValueToString(Value value)

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using System;
@@ -46,12 +47,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
 
         private State _state = State.Init;
-        public EntityConditionAstExpression Result { get; private set; }
+        private bool _isWayPoint;
+        public Value Result { get; private set; }
+        private StrongIdentifierValue _name;
+        private Value _firstCoordinate;
+        private Value _secondCoordinate;
 
         /// <inheritdoc/>
-        protected override void OnEnter()
+        protected override void OnFinish()
         {
-            Result = new EntityConditionAstExpression();
+            if(_isWayPoint)
+            {
+                Result = new WaypointSourceValue(_firstCoordinate, _secondCoordinate, _name);
+                return;
+            }
+
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
@@ -76,7 +87,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 //Log($"name = {name}");
 #endif
 
-                                Result.Name = name;
+                                _name = name;
 
                                 _state = State.GotName;
                             }
@@ -91,7 +102,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.OpenSquareBracket:
-                            Result.KindOfEntityConditionAstExpression = KindOfEntityConditionAstExpression.Waypoint;
+                            _isWayPoint = true;
                             _state = State.WaitForFirstCoordinate;
                             break;
 
@@ -108,11 +119,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _context.Recovery(_currToken);
                                 var parser = new NumberParser(_context);
                                 parser.Run();
-                                
-                                var node = new ConstValueAstExpression();
-                                node.Value = parser.Result;
 
-                                Result.FirstCoordinate = node;
+                                _firstCoordinate = parser.Result;
 
                                 _state = State.GotFirstCoordinate;
                             }
@@ -131,7 +139,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.CloseSquareBracket:
-                            if (Result.KindOfEntityConditionAstExpression == KindOfEntityConditionAstExpression.Waypoint)
+                            if (_isWayPoint)
                             {
                                 Exit();
                                 break;
@@ -152,10 +160,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new NumberParser(_context);
                                 parser.Run();
 
-                                var node = new ConstValueAstExpression();
-                                node.Value = parser.Result;
-
-                                Result.SecondCoordinate = node;
+                                _secondCoordinate = parser.Result;
 
                                 _state = State.GotSecondCoordinate;
                             }
@@ -170,7 +175,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.CloseSquareBracket:
-                            if(Result.KindOfEntityConditionAstExpression == KindOfEntityConditionAstExpression.Waypoint)
+                            if(_isWayPoint)
                             {
                                 Exit();
                                 break;

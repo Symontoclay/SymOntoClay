@@ -31,6 +31,18 @@ namespace SymOntoClayDefaultCLIEnvironment
 {
     public class PlatformSupportCLIStub : IPlatformSupport
     {
+        public PlatformSupportCLIStub()
+            : this(new Vector3(10, 10, 10))
+        {
+        }
+
+        public PlatformSupportCLIStub(Vector3 currentAbsolutePosition)
+        {
+            _currentAbsolutePosition = currentAbsolutePosition;
+        }
+
+        private readonly Vector3 _currentAbsolutePosition;
+
         /// <inheritdoc/>
         public Vector3 ConvertFromRelativeToAbsolute(RelativeCoordinate relativeCoordinate)
         {
@@ -40,7 +52,13 @@ namespace SymOntoClayDefaultCLIEnvironment
         /// <inheritdoc/>
         public Vector3 GetCurrentAbsolutePosition()
         {
-            return new Vector3(10, 10, 10);
+            return _currentAbsolutePosition;
+        }
+
+        /// <inheritdoc/>
+        public float GetDirectionToPosition(Vector3 position)
+        {
+            return 12;
         }
     }
 }

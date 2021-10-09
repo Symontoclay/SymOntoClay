@@ -67,5 +67,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.HostSupport
 
             return invocableInMainThreadObj.Run();
         }
+
+        /// <inheritdoc/>
+        public float GetDirectionToPosition(Vector3 position)
+        {
+            var invocableInMainThreadObj = new InvocableInMainThreadObj<float>(() => {
+                return _platformSupport.GetDirectionToPosition(position);
+            }, _invokerInMainThread);
+
+            return invocableInMainThreadObj.Run();
+        }
     }
 }

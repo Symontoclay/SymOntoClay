@@ -3,6 +3,7 @@ using SymOntoClay.Core.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Numerics;
 using System.Text;
 
@@ -67,7 +68,28 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
             Log($"varName = {varName}");
 #endif
 
-            throw new NotImplementedException();
+            var directionToPosition = _hostSupport.GetDirectionToPosition(position);
+
+#if DEBUG
+            Log($"directionToPosition = {directionToPosition}");
+#endif
+
+            var distanceStr = distance.ToString(CultureInfo.InvariantCulture);
+            var directionStr = directionToPosition.ToString(CultureInfo.InvariantCulture);
+
+            var sb = new StringBuilder();
+
+            sb.Append("{: ");
+            sb.Append(varName);
+            sb.Append(" = ");
+            sb.Append(query);
+            sb.Append($" & hear(I, {varName})");
+            sb.Append($" & distance(I, {varName}, {distanceStr})");
+            sb.Append($" & direction({varName}, {directionStr})");
+            sb.Append($" & point({varName}, #@[{distanceStr}, {directionStr}])");
+            sb.Append(" :}");
+
+            return sb.ToString();
         }
 
         private string GetTargetVarName(string query)

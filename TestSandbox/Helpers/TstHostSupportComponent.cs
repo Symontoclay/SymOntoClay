@@ -49,5 +49,11 @@ namespace TestSandbox.Helpers
         {
             return _platformSupport.GetCurrentAbsolutePosition();
         }
+
+        /// <inheritdoc/>
+        public float GetDirectionToPosition(Vector3 position)
+        {
+            return _platformSupport.GetDirectionToPosition(position);
+        }
     }
 }

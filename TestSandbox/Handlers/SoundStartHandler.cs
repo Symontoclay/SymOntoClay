@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace TestSandbox.Handlers
             settings.InstanceId = 2;
             settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Npcs\Barrel\Barrel.sobj");
             settings.HostListener = platformListener2;
-            settings.PlatformSupport = new PlatformSupportCLIStub();
+            settings.PlatformSupport = new PlatformSupportCLIStub(new Vector3(100, 100, 100));
 
             var gameObject = WorldFactory.WorldInstance.GetGameObject(settings);
 

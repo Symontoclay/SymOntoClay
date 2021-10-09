@@ -10,5 +10,8 @@
         <member name="M:SymOntoClayDefaultCLIEnvironment.PlatformSupportCLIStub.GetCurrentAbsolutePosition">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClayDefaultCLIEnvironment.PlatformSupportCLIStub.GetDirectionToPosition(System.Numerics.Vector3)">
+            <inheritdoc/>
+        </member>
     </members>
 </doc>

@@ -67,6 +67,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
                 _soundPublisher = new SoundPublisherComponent(Logger, settings.InstanceId, _hostSupport, worldContext);
 
+                _soundReceiverComponent = new SoundReceiverComponent(Logger, settings.InstanceId, _hostSupport, worldContext);
+
                 var coreEngineSettings = new EngineSettings();
                 coreEngineSettings.Id = settings.Id;
                 coreEngineSettings.AppFile = settings.LogicFile;
@@ -99,6 +101,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         private readonly VisionComponent _visionComponent;
         private readonly HostSupportComponent _hostSupport;
         private readonly SoundPublisherComponent _soundPublisher;
+        private readonly SoundReceiverComponent _soundReceiverComponent;
 
         /// <inheritdoc/>
         public override IStorage PublicFactsStorage => _coreEngine.PublicFactsStorage;
@@ -190,6 +193,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         {           
             _coreEngine.Dispose();
             _visionComponent?.Dispose();
+            _soundPublisher.Dispose();
+            _soundReceiverComponent.Dispose();
             _hostSupport.Dispose();
 
             base.OnDisposed();

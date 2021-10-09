@@ -116,7 +116,8 @@ namespace TestSandbox
             //TstExprNodeHandler();
             //TstParsing();
             //TstMonoBehaviourTestingHandler();//VT<=
-            TstGeneralStartHandler();//<=
+            TstSoundStartHandler();
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -1230,6 +1231,16 @@ action Go
             _logger.Log("Begin");
 
             var handler = new MonoBehaviourTestingHandler();
+            handler.Run();
+
+            _logger.Log("End");
+        }
+
+        private static void TstSoundStartHandler()
+        {
+            _logger.Log("Begin");
+
+            var handler = new SoundStartHandler();
             handler.Run();
 
             _logger.Log("End");

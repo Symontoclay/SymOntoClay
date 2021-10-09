@@ -1,4 +1,5 @@
 ﻿using NLog;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
@@ -7,12 +8,13 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.SoundBusHandler
 {
     public class TstSoundReceiver: ISoundReceiver
     {
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private static readonly IEntityLogger _logger = new LoggerImpementation();
 
         public TstSoundReceiver(int instanceId, Vector3 position)
         {
@@ -28,26 +30,28 @@ namespace TestSandbox.SoundBusHandler
 
         public Vector3 Position => _position;
 
+        IEntityLogger ISoundReceiver.Logger => _logger;
+
         public double Threshold { get; set; }
 
         public void CallBack(double power, double distance, Vector3 position, string query)
         {
-            _logger.Info($"power = {power}");
-            _logger.Info($"distance = {distance}");
-            _logger.Info($"position = {position}");
-            _logger.Info($"query = {query}");
+            _logger.Log($"power = {power}");
+            _logger.Log($"distance = {distance}");
+            _logger.Log($"position = {position}");
+            _logger.Log($"query = {query}");
 
             var convertedQuery = ConvertQuery(power, distance, position, query);
 
-            _logger.Info($"convertedQuery = {convertedQuery}");
+            _logger.Log($"convertedQuery = {convertedQuery}");
         }
 
         private string ConvertQuery(double power, double distance, Vector3 position, string query)
         {
-            _logger.Info($"power = {power}");
-            _logger.Info($"distance = {distance}");
-            _logger.Info($"position = {position}");
-            _logger.Info($"query = {query}");
+            _logger.Log($"power = {power}");
+            _logger.Log($"distance = {distance}");
+            _logger.Log($"position = {position}");
+            _logger.Log($"query = {query}");
 
             var varName = GetTargetVarName(query);
 

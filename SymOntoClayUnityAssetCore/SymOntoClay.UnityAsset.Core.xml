@@ -832,6 +832,24 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache.GetLogicRuleOrFact(System.String)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.SymOntoClay#UnityAsset#Core#ISoundReceiver#InstanceId">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.SymOntoClay#UnityAsset#Core#ISoundReceiver#Position">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.SymOntoClay#UnityAsset#Core#ISoundReceiver#Logger">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.SymOntoClay#UnityAsset#Core#ISoundReceiver#Threshold">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.SymOntoClay#UnityAsset#Core#ISoundReceiver#CallBack(System.Double,System.Double,System.Numerics.Vector3,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.OnDisposed">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent.SymOntoClay#Core#Internal#Threads#IActivePeriodicObjectCommonContext#IsNeedWating">
             <inheritdoc/>
         </member>

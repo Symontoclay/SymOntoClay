@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
@@ -9,6 +10,7 @@ namespace SymOntoClay.UnityAsset.Core
     {
         int InstanceId { get; }
         Vector3 Position { get; }
+        IEntityLogger Logger { get; }
 
         /// <summary>
         /// Gets threshold of audibility in decibels.

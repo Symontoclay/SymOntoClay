@@ -80,9 +80,16 @@ namespace TestSandbox.SoundBusHandler
                     continue;
                 }
 
-                //Task.Run(() => { 
-                    receiver.CallBack(targetPower, distance, position, query); 
-                //});
+                Task.Run(() => {
+                    try
+                    {
+                        receiver.CallBack(targetPower, distance, position, query);
+                    }
+                    catch(Exception e)
+                    {
+                        receiver.Logger.Error(e.ToString());
+                    }                    
+                });
             }
         }
 

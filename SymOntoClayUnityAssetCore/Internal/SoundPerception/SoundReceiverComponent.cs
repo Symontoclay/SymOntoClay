@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -11,18 +12,20 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
 {
     public class SoundReceiverComponent : BaseComponent, ISoundReceiver
     {
-        public SoundReceiverComponent(IEntityLogger logger, int instanceId, IHostSupport hostSupport, IWorldCoreGameComponentContext worldContext)
+        public SoundReceiverComponent(IEntityLogger logger, int instanceId, HumanoidNPCGameComponentContext internalContext, IWorldCoreGameComponentContext worldContext)
             : base(logger)
         {
+            _internalContext = internalContext;
             _instanceId = instanceId;
-            _soundBus = worldContext.SoundBus;
-            _hostSupport = hostSupport;
+            _soundBus = worldContext.SoundBus;            
 
             _soundBus.AddReceiver(this);
         }
 
+        private readonly HumanoidNPCGameComponentContext _internalContext;
         private readonly ISoundBus _soundBus;
-        private readonly IHostSupport _hostSupport;
+        private IHostSupport _hostSupport;
+        private Engine _coreEngine;
         private readonly int _instanceId;
 
         /// <inheritdoc/>
@@ -36,6 +39,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
 
         /// <inheritdoc/>
         double ISoundReceiver.Threshold => 0;
+
+        public void LoadFromSourceCode()
+        {
+            _hostSupport = _internalContext.HostSupportComponent;
+            _coreEngine = _internalContext.CoreEngine;
+        }
 
         /// <inheritdoc/>
         void ISoundReceiver.CallBack(double power, double distance, Vector3 position, string query)
@@ -51,6 +60,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
 #if DEBUG
             Log($"convertedQuery = {convertedQuery}");
 #endif
+
+            _coreEngine
+
             throw new NotImplementedException();
         }
 

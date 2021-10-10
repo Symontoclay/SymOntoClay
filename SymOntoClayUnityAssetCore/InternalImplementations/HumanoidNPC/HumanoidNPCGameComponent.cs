@@ -117,6 +117,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             //try
             //{
             _visionComponent?.LoadFromSourceCode();
+            _soundReceiverComponent.LoadFromSourceCode();
                 _coreEngine.LoadFromSourceCode();
             //}
             //catch(Exception e)

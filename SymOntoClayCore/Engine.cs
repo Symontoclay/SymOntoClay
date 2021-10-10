@@ -183,6 +183,11 @@ namespace SymOntoClay.Core
             _context.Storage.RemovePerceptedFact(id);
         }
 
+        public void InsertListenedFact(string text)
+        {
+            _context.Storage.InsertListenedFact(text);
+        }
+
         public void Die()
         {
             throw new NotImplementedException();

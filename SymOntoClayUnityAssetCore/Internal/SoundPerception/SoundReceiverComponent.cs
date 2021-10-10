@@ -61,9 +61,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
             Log($"convertedQuery = {convertedQuery}");
 #endif
 
-            _coreEngine
-
-            throw new NotImplementedException();
+            _coreEngine.InsertListenedFact(convertedQuery);
         }
 
         private string ConvertQuery(double power, double distance, Vector3 position, string query)

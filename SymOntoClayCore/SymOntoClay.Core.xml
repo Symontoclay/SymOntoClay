@@ -4511,6 +4511,9 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.RemovePerceptedFact(System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertListenedFact(System.String)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.SynonymsStorage.SynonymsStorage.Kind">
             <inheritdoc/>
         </member>

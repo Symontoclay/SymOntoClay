@@ -53,6 +53,7 @@ namespace SymOntoClay.Core.Internal.Storage
         private RealStorage _publicFactsStorage;
         private RealStorage _selfFactsStorage;
         private RealStorage _perceptedFactsStorage;
+        private RealStorage _listenedFactsStorage;
         private InheritancePublicFactsReplicator _inheritancePublicFactsReplicator;
 
         /// <inheritdoc/>
@@ -63,6 +64,9 @@ namespace SymOntoClay.Core.Internal.Storage
 
         /// <inheritdoc/>
         public IStorage PerceptedFactsStorage => _perceptedFactsStorage;
+
+        /// <inheritdoc/>
+        public IStorage ListenedFactsStorage => _listenedFactsStorage;
 
         //private List<RealStorage> _storagesList;
 
@@ -100,6 +104,11 @@ namespace SymOntoClay.Core.Internal.Storage
                         //_storagesList.Add(_perceptedFactsStorage);
 
                         parentStoragesList.Add(_perceptedFactsStorage);
+
+                        var listenedFactsStorageSettings = new RealStorageSettings();
+                        listenedFactsStorageSettings.MainStorageContext = _context;
+
+                        _listenedFactsStorage = 
                     }
                     break;
 
@@ -309,7 +318,7 @@ namespace SymOntoClay.Core.Internal.Storage
             }
 
 #if DEBUG
-            //Log($"text = {text}");
+            //Log($"text (after) = {text}");
 #endif
 
             var fact = _logicQueryParseAndCache.GetLogicRuleOrFact(text);
@@ -331,6 +340,16 @@ namespace SymOntoClay.Core.Internal.Storage
 #endif
 
             _perceptedFactsStorage.LogicalStorage.RemoveById(id);
+        }
+
+        /// <inheritdoc/>
+        public void InsertListenedFact(string text)
+        {
+#if DEBUG
+            Log($"text = {text}");
+#endif
+
+            throw new NotImplementedException();
         }
     }
 }

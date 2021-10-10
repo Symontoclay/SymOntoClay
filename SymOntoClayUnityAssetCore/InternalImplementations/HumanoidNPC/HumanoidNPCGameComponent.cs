@@ -67,7 +67,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
                 _soundPublisher = new SoundPublisherComponent(Logger, settings.InstanceId, _hostSupport, worldContext);
 
-                _soundReceiverComponent = new SoundReceiverComponent(Logger, settings.InstanceId, _hostSupport, worldContext);
+                _soundReceiverComponent = new SoundReceiverComponent(Logger, settings.InstanceId, internalContext, worldContext);
 
                 var coreEngineSettings = new EngineSettings();
                 coreEngineSettings.Id = settings.Id;

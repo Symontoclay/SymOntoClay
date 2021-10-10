@@ -31,11 +31,13 @@ namespace SymOntoClay.Core.Internal.Storage
         IStorage GlobalStorage { get; }
         IStorage PublicFactsStorage { get; }
         IStorage PerceptedFactsStorage { get; }
+        IStorage ListenedFactsStorage { get; }
         string InsertPublicFact(string text);
         void RemovePublicFact(string id);
         string InsertFact(string text);
         void RemoveFact(string id);
         string InsertPerceptedFact(string text);
         void RemovePerceptedFact(string id);
+        void InsertListenedFact(string text);
     }
 }

@@ -36,7 +36,7 @@ namespace SymOntoClay.Core
         /// </summary>
         public IHostListener HostListener { get; set; }
 
-        public IActivePeriodicObjectCommonContext SyncContext { get; set; }
+        
 
         public string TmpDir { get; set; }
 
@@ -50,7 +50,7 @@ namespace SymOntoClay.Core
 
             sb.PrintExisting(n, nameof(HostListener), HostListener);
 
-            sb.PrintExisting(n, nameof(SyncContext), SyncContext);
+            
             sb.AppendLine($"{spaces}{nameof(TmpDir)} = {TmpDir}");
             sb.PrintExisting(n, nameof(HostSupport), HostSupport);
 

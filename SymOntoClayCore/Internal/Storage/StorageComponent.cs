@@ -20,7 +20,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Parsing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,11 +37,6 @@ namespace SymOntoClay.Core.Internal.Storage
             : base(context.Logger)
         {
             _context = context;
-            _logicQueryParseAndCache = context.LogicQueryParseAndCache;
-
-#if DEBUG
-            //Log($"_logicQueryParseAndCache == null = {_logicQueryParseAndCache == null}");
-#endif
 
             _parentStorage = parentStorage;
             _kindGlobalOfStorage = kindGlobalOfStorage;
@@ -47,7 +45,8 @@ namespace SymOntoClay.Core.Internal.Storage
         private readonly IMainStorageContext _context;
         private readonly IStandaloneStorage _parentStorage;
         private readonly KindOfStorage _kindGlobalOfStorage;
-        private readonly ILogicQueryParseAndCache _logicQueryParseAndCache;
+        private ILogicQueryParseAndCache _logicQueryParseAndCache;
+        private IParser _parser;
 
         private RealStorage _globalStorage;
         private RealStorage _publicFactsStorage;
@@ -55,6 +54,8 @@ namespace SymOntoClay.Core.Internal.Storage
         private RealStorage _perceptedFactsStorage;
         private RealStorage _listenedFactsStorage;
         private InheritancePublicFactsReplicator _inheritancePublicFactsReplicator;
+
+        private CheckDirtyOptions _checkDirtyOptions;
 
         /// <inheritdoc/>
         public IStorage GlobalStorage => _globalStorage;
@@ -70,8 +71,15 @@ namespace SymOntoClay.Core.Internal.Storage
 
         //private List<RealStorage> _storagesList;
 
-        public void LoadFromSourceCode()
+        public void LoadFromSourceCode(IEngineContext engineContext = null)
         {
+            _logicQueryParseAndCache = _context.LogicQueryParseAndCache;
+            _parser = _context.Parser;
+
+#if DEBUG
+            //Log($"_logicQueryParseAndCache == null = {_logicQueryParseAndCache == null}");
+#endif
+
             //_storagesList = new List<RealStorage>();
 
             var globalStorageSettings = new RealStorageSettings();
@@ -107,8 +115,11 @@ namespace SymOntoClay.Core.Internal.Storage
 
                         var listenedFactsStorageSettings = new RealStorageSettings();
                         listenedFactsStorageSettings.MainStorageContext = _context;
+                        listenedFactsStorageSettings.KindOfGC = KindOfGC.ByTimeOut;
 
-                        _listenedFactsStorage = 
+                        _listenedFactsStorage = new RealStorage(KindOfStorage.PerceptedFacts, listenedFactsStorageSettings);
+
+                        parentStoragesList.Add(_listenedFactsStorage);
                     }
                     break;
 
@@ -164,6 +175,14 @@ namespace SymOntoClay.Core.Internal.Storage
             //_storagesList.Add(_globalStorage);
 
             _globalStorage.DefaultSettingsOfCodeEntity = CreateDefaultSettingsOfCodeEntity();
+
+            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            localCodeExecutionContext.Storage = _globalStorage;
+
+            _checkDirtyOptions = new CheckDirtyOptions();
+            _checkDirtyOptions.LocalContext = localCodeExecutionContext;
+            _checkDirtyOptions.EngineContext = engineContext;
+            _checkDirtyOptions.ConvertWaypointValueFromSource = true;
 
 #if IMAGINE_WORKING
             //Log("Do");
@@ -349,7 +368,21 @@ namespace SymOntoClay.Core.Internal.Storage
             Log($"text = {text}");
 #endif
 
-            throw new NotImplementedException();
+            var fact = _parser.ParseRuleInstance(text, false);
+
+#if DEBUG
+            //Log($"fact = {fact}");
+            Log($"fact = {DebugHelperForRuleInstance.ToString(fact)}");
+#endif
+
+            fact.CheckDirty(_checkDirtyOptions);
+
+#if DEBUG
+            //Log($"fact.Normalized = {fact.Normalized}");
+            Log($"fact.Normalized = {DebugHelperForRuleInstance.ToString(fact.Normalized)}");
+#endif
+
+            _listenedFactsStorage.LogicalStorage.Append(fact);
         }
     }
 }

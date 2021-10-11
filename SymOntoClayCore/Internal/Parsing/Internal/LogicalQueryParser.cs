@@ -93,7 +93,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 }
             }
 
-            Result.CheckDirty();
+            if(_context.NeedCheckDirty)
+            {
+                Result.CheckDirty();
+            }            
         }
 
         /// <inheritdoc/>

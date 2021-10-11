@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,8 @@ namespace SymOntoClay.Core
         /// Gets or sets app file.
         /// </summary>
         public string AppFile { get; set; }
+
+        public IActivePeriodicObjectCommonContext SyncContext { get; set; }
 
         /// <summary>
         /// Gets or ses reference to shared modules storage.
@@ -61,6 +64,7 @@ namespace SymOntoClay.Core
             sb.AppendLine($"{spaces}{nameof(Id)} = {Id}");
             sb.AppendLine($"{spaces}{nameof(AppFile)} = {AppFile}");
 
+            sb.PrintExisting(n, nameof(SyncContext), SyncContext);
             sb.PrintExisting(n, nameof(ModulesStorage), ModulesStorage);
             sb.PrintExisting(n, nameof(ParentStorage), ParentStorage);
             sb.PrintExisting(n, nameof(LogicQueryParseAndCache), LogicQueryParseAndCache);

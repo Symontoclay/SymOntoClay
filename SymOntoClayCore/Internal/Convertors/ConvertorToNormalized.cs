@@ -274,6 +274,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 #if DEBUG
             _gbcLogger.Info("ConvertLogicalQueryNodeInDefaultWay!!!!!");
             _gbcLogger.Info($"source = {source}");
+            _gbcLogger.Info($"(options != null) = {options != null}");
 #endif
 
             if (source == null)
@@ -287,11 +288,6 @@ namespace SymOntoClay.Core.Internal.Convertors
                 {
                     return ConvertLogicalQueryNode(aliasesDict[source.Name], options, convertingContext, aliasesDict);
                 }
-            }
-
-            if(source.Kind == KindOfLogicalQueryNode.Value && source.Value.IsWaypointSourceValue && options != null)
-            {
-                throw new NotImplementedException();
             }
 
             if (convertingContext.ContainsKey(source))
@@ -328,7 +324,15 @@ namespace SymOntoClay.Core.Internal.Convertors
                 result.ParamsList = destParametersList;
             }
 
-            result.Value = source.Value;
+            if (source.Kind == KindOfLogicalQueryNode.Value && source.Value.IsWaypointSourceValue && options != null && options.ConvertWaypointValueFromSource)
+            {
+                result.Value = source.Value.AsWaypointSourceValue.ConvertToWaypointValue(options.EngineContext, options.LocalContext);
+            }
+            else
+            {
+                result.Value = source.Value;
+            }
+            
             result.FuzzyLogicNonNumericSequenceValue = source.FuzzyLogicNonNumericSequenceValue;
             result.IsQuestion = source.IsQuestion;
 

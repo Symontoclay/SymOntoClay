@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.Core.Internal.Storage;
+using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -52,6 +53,8 @@ namespace SymOntoClay.Core.Internal
         /// </summary>
         public string AppFile { get; set; }
 
+        public ActivePeriodicObjectContext ActivePeriodicObjectContext { get; set; }
+
         public StorageComponent Storage { get; set; }
         public Parser Parser { get; set; }
         public DataResolversFactory DataResolversFactory { get; set; }
@@ -70,9 +73,12 @@ namespace SymOntoClay.Core.Internal
         ILoaderFromSourceCode IMainStorageContext.LoaderFromSourceCode => LoaderFromSourceCode;
         IInstancesStorageComponent IMainStorageContext.InstancesStorage => InstancesStorage;
 
+        IActivePeriodicObjectContext IMainStorageContext.ActivePeriodicObjectContext => ActivePeriodicObjectContext;
+
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
+            ActivePeriodicObjectContext.Dispose();
             Storage.Dispose();
             Parser.Dispose();
             //DataResolversFactory.Dispose();

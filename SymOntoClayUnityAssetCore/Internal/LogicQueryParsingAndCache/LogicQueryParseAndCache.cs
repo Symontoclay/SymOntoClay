@@ -61,16 +61,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache
                 return _cache[textKey];
             }
 
-            var codeEntity = _parser.Parse(text).First();
-
-            if(codeEntity.Kind == KindOfCodeEntity.RuleOrFact)
-            {
-                var result = codeEntity.RuleInstance;
-                _cache[textKey] = result;
-                return result;
-            }
-
-            throw new NotSupportedException($"There can only be rule or fact here!");
+            var result = _parser.ParseRuleInstance(text);
+            _cache[textKey] = result;
+            return result;            
         }
     }
 }

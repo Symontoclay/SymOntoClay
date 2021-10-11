@@ -4074,6 +4074,12 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Parser.Parse(System.Collections.Generic.List{SymOntoClay.Core.Internal.Parsing.ParsedFileInfo},SymOntoClay.Core.Internal.DefaultSettingsOfCodeEntity)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Parser.ParseRuleInstance(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Parser.ParseRuleInstance(System.String,System.Boolean)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.GetLongHashCode">
             <inheritdoc/>
         </member>
@@ -4491,6 +4497,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.StorageComponent.PerceptedFactsStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.StorageComponent.ListenedFactsStorage">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertPublicFact(System.String)">

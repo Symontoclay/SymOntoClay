@@ -44,6 +44,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _lexer = new Lexer(text, context.Logger);
         }
 
+        public bool NeedCheckDirty { get; set; } = true;
+
         public IEntityLogger Logger => _context.Logger;
         public ICompiler Compiler => _context.Compiler;
 
@@ -164,6 +166,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             var result = new InternalParserContext();
             result._context = _context;
+            result.NeedCheckDirty = NeedCheckDirty;
             result._lexer = _lexer.Fork();
             result._recoveriesTokens = new Queue<Token>(_recoveriesTokens.ToList());
             result.CodeFile = CodeFile;

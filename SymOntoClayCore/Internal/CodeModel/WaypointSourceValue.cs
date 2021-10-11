@@ -55,7 +55,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             var resolvedSecondParam = numberValueLinearResolver.Resolve(HorizontalAngle, localContext, ResolverOptions.GetDefaultOptions());
 
-            return new WaypointValue((float)(double)resolvedFirstParam.GetSystemValue(), (float)(double)resolvedSecondParam.GetSystemValue(), context);
+            var result = new WaypointValue((float)(double)resolvedFirstParam.GetSystemValue(), (float)(double)resolvedSecondParam.GetSystemValue(), context);
+
+            result.CheckDirty();
+
+            return result;
         }
 
         /// <inheritdoc/>

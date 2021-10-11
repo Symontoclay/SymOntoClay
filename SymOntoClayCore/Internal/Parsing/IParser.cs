@@ -30,7 +30,10 @@ namespace SymOntoClay.Core.Internal.Parsing
     public interface IParser
     {
         List<CodeEntity> Parse(string text);
+        List<CodeEntity> Parse(string text, bool needCheckDirty);
         CodeFile Parse(ParsedFileInfo parsedFileInfo, DefaultSettingsOfCodeEntity defaultSettings);
         List<CodeFile> Parse(List<ParsedFileInfo> parsedFileInfoList, DefaultSettingsOfCodeEntity defaultSettings);
+        RuleInstance ParseRuleInstance(string text);
+        RuleInstance ParseRuleInstance(string text, bool needCheckDirty);
     }
 }

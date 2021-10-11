@@ -51,7 +51,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.InstancesStorage = new InstancesStorageComponent(context);
             context.StatesStorage = new StatesStorageComponent(context);
 
-            context.ActivePeriodicObjectContext = new ActivePeriodicObjectContext(settings.SyncContext);
+            
 
             return context;
         }
@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.Helpers
         public static void LoadFromSourceCode(EngineContext context)
         {
             context.CommonNamesStorage.LoadFromSourceCode();
-            context.Storage.LoadFromSourceCode();
+            context.Storage.LoadFromSourceCode(context);
             context.StandardLibraryLoader.LoadFromSourceCode();
             context.StatesStorage.LoadFromSourceCode();
             context.InstancesStorage.LoadFromSourceFiles();
@@ -108,7 +108,9 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.Parser = new Parser(context);
             context.Compiler = new Compiler(context);
             context.CommonNamesStorage = new CommonNamesStorage(context);
-            context.DataResolversFactory = new DataResolversFactory(context);            
+            context.DataResolversFactory = new DataResolversFactory(context);
+
+            context.ActivePeriodicObjectContext = new ActivePeriodicObjectContext(settings.SyncContext);
         }
 
         private static void BaseInitBaseCoreContext(BaseCoreContext context, BaseCoreSettings settings)

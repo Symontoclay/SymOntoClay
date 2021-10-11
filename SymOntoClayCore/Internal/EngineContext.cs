@@ -38,20 +38,18 @@ namespace SymOntoClay.Core.Internal
         public CodeExecutorComponent CodeExecutor { get; set; }
         public StatesStorageComponent StatesStorage { get; set; }       
         public StandardLibraryLoader StandardLibraryLoader { get; set; }       
-        public ActivePeriodicObjectContext ActivePeriodicObjectContext { get; set; }
+        
         public IHostSupport HostSupport { get; set; }
         public IHostListener HostListener { get; set; }
 
         ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;        
-        IActivePeriodicObjectContext IEngineContext.ActivePeriodicObjectContext => ActivePeriodicObjectContext;
-
+        
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
             CodeExecutor.Dispose();
             StatesStorage.Dispose();
-            ActivePeriodicObjectContext.Dispose();
-
+            
             base.OnDisposed();
         }
     }

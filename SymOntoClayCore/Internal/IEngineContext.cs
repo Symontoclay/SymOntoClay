@@ -28,7 +28,6 @@ namespace SymOntoClay.Core.Internal
     public interface IEngineContext: IMainStorageContext
     {   
         ICodeExecutorComponent CodeExecutor { get; }
-        IActivePeriodicObjectContext ActivePeriodicObjectContext { get; }
         IHostSupport HostSupport { get; }
         IHostListener HostListener { get; }
     }

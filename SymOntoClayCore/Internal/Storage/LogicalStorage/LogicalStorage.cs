@@ -62,6 +62,21 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             realStorageContext.OnAddParentStorage += RealStorageContext_OnAddParentStorage;
             realStorageContext.OnRemoveParentStorage += RealStorageContext_OnRemoveParentStorage;
+
+            var kindOfGC = realStorageContext.KindOfGC;
+
+            switch(kindOfGC)
+            {
+                case KindOfGC.None:
+                    break;
+
+                case KindOfGC.ByTimeOut:
+                    InitGCByTimeOut();
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfGC), kindOfGC, null);
+            }
         }
 
         private readonly KindOfStorage _kind;
@@ -83,6 +98,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         private Dictionary<string, RuleInstance> _ruleInstancesDictById;
         private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData;
         private List<ILogicalStorage> _parentLogicalStoragesList = new List<ILogicalStorage>();
+
+        private void InitGCByTimeOut()
+        {
+            throw new NotImplementedException();
+        }
 
         /// <inheritdoc/>
         public void Append(RuleInstance ruleInstance)

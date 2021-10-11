@@ -78,6 +78,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             if (IsSource)
             {
 #if DEBUG
+                _gbcLogger.Info($"(options != null) = {options != null}");
                 _gbcLogger.Info($"this = {DebugHelperForRuleInstance.ToString(this)}");
 #endif 
 

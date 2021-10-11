@@ -31,6 +31,7 @@ using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Core.Internal.Instances;
+using SymOntoClay.Core.Internal.Threads;
 
 namespace SymOntoClay.Core.Internal
 {
@@ -38,7 +39,9 @@ namespace SymOntoClay.Core.Internal
     {
         string Id { get; }
         string AppFile { get; }
-        
+
+        IActivePeriodicObjectContext ActivePeriodicObjectContext { get; }
+
         IStorageComponent Storage { get; }
         IParser Parser { get; }
         IDataResolversFactory DataResolversFactory { get; }

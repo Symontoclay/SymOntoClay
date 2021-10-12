@@ -93,34 +93,41 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             Task.Run(() => 
             {
-                lock (_lockObj)
-                {
-                    if(_isBusy)
-                    {
-                        _needRepeat = true;
-                        return;
-                    }
-
-                    _isBusy = true;
-                    _needRepeat = false;
-                }
-
-                DoSearch();
-
-                while(true)
+                try
                 {
                     lock (_lockObj)
                     {
-                        if(!_needRepeat)
+                        if (_isBusy)
                         {
-                            _isBusy = false;
+                            _needRepeat = true;
                             return;
                         }
 
+                        _isBusy = true;
                         _needRepeat = false;
                     }
 
                     DoSearch();
+
+                    while (true)
+                    {
+                        lock (_lockObj)
+                        {
+                            if (!_needRepeat)
+                            {
+                                _isBusy = false;
+                                return;
+                            }
+
+                            _needRepeat = false;
+                        }
+
+                        DoSearch();
+                    }
+                }
+                catch(Exception e)
+                {
+                    Error(e);
                 }
             });
         }
@@ -265,7 +272,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     foreach (var resultVar in resultVarsList)
                     {
 #if DEBUG
-                        //Log($"resultVar = {resultVar}");
+                        Log($"resultVar = {resultVar}");
 #endif
 
                         Value value = null;

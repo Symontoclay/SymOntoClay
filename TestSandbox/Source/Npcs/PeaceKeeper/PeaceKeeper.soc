@@ -1,5 +1,7 @@
 ﻿app PeaceKeeper
 {
+    {: gun(M16) :}
+
     on Init
     {
         'Begin' >> @>log;
@@ -10,5 +12,17 @@
         //@@host.`go`(to: #@[10]);
 
         'End' >> @>log;
+    }
+
+    /*on {: hear(I, M16) :} => 
+    {
+        'M16!!!!' >> @>log;
+    }*/
+
+    //on {: hear(I, $x) & gun($x) & distance(I, $x, $y) :} ($x >> @x, $y >> @y)
+    on {: hear(I, $x) & gun($x) :} ($x >> @x)
+    {
+        @x >> @>log;
+        '!!!M16!!!!' >> @>log;
     }
 }

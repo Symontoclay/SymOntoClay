@@ -365,21 +365,21 @@ namespace SymOntoClay.Core.Internal.Storage
         public void InsertListenedFact(string text)
         {
 #if DEBUG
-            Log($"text = {text}");
+            //Log($"text = {text}");
 #endif
 
             var fact = _parser.ParseRuleInstance(text, false);
 
 #if DEBUG
             //Log($"fact = {fact}");
-            Log($"fact = {DebugHelperForRuleInstance.ToString(fact)}");
+            //Log($"fact = {DebugHelperForRuleInstance.ToString(fact)}");
 #endif
 
             fact.CheckDirty(_checkDirtyOptions);
 
 #if DEBUG
             //Log($"fact.Normalized = {fact.Normalized}");
-            Log($"fact.Normalized = {DebugHelperForRuleInstance.ToString(fact.Normalized)}");
+            //Log($"fact.Normalized = {DebugHelperForRuleInstance.ToString(fact.Normalized)}");
 #endif
 
             _listenedFactsStorage.LogicalStorage.Append(fact);

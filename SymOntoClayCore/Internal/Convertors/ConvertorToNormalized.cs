@@ -162,7 +162,7 @@ namespace SymOntoClay.Core.Internal.Convertors
         private static LogicalQueryNode ConvertLogicalQueryNode(LogicalQueryNode source, CheckDirtyOptions options, Dictionary<object, object> convertingContext, Dictionary<StrongIdentifierValue, LogicalQueryNode> aliasesDict)
         {
 #if DEBUG
-            _gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"source = {source}");
 #endif
 
             switch (source.Kind)
@@ -272,9 +272,9 @@ namespace SymOntoClay.Core.Internal.Convertors
         private static LogicalQueryNode ConvertLogicalQueryNodeInDefaultWay(LogicalQueryNode source, CheckDirtyOptions options, Dictionary<object, object> convertingContext, Dictionary<StrongIdentifierValue, LogicalQueryNode> aliasesDict)
         {
 #if DEBUG
-            _gbcLogger.Info("ConvertLogicalQueryNodeInDefaultWay!!!!!");
-            _gbcLogger.Info($"source = {source}");
-            _gbcLogger.Info($"(options != null) = {options != null}");
+            //_gbcLogger.Info("ConvertLogicalQueryNodeInDefaultWay!!!!!");
+            //_gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"(options != null) = {options != null}");
 #endif
 
             if (source == null)

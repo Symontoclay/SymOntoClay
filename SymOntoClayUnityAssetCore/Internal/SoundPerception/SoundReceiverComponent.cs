@@ -50,15 +50,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         void ISoundReceiver.CallBack(double power, double distance, Vector3 position, string query)
         {
 #if DEBUG
-            Log($"power = {power}");
-            Log($"distance = {distance}");
-            Log($"position = {position}");
-            Log($"query = {query}");
+            //Log($"power = {power}");
+            //Log($"distance = {distance}");
+            //Log($"position = {position}");
+            //Log($"query = {query}");
 #endif
             var convertedQuery = ConvertQuery(power, distance, position, query);
 
 #if DEBUG
-            Log($"convertedQuery = {convertedQuery}");
+            //Log($"convertedQuery = {convertedQuery}");
 #endif
 
             _coreEngine.InsertListenedFact(convertedQuery);
@@ -67,21 +67,21 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         private string ConvertQuery(double power, double distance, Vector3 position, string query)
         {
 #if DEBUG
-            Log($"power = {power}");
-            Log($"distance = {distance}");
-            Log($"position = {position}");
-            Log($"query = {query}");
+            //Log($"power = {power}");
+            //Log($"distance = {distance}");
+            //Log($"position = {position}");
+            //Log($"query = {query}");
 #endif
             var varName = GetTargetVarName(query);
 
 #if DEBUG
-            Log($"varName = {varName}");
+            //Log($"varName = {varName}");
 #endif
 
             var directionToPosition = _hostSupport.GetDirectionToPosition(position);
 
 #if DEBUG
-            Log($"directionToPosition = {directionToPosition}");
+            //Log($"directionToPosition = {directionToPosition}");
 #endif
 
             var distanceStr = distance.ToString(CultureInfo.InvariantCulture);

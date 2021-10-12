@@ -39,7 +39,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class RuleInstance: AnnotatedItem, IStorage, ILogicalStorage
     {
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public bool IsSource { get; set; } = true;
@@ -78,15 +78,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
             if (IsSource)
             {
 #if DEBUG
-                _gbcLogger.Info($"(options != null) = {options != null}");
-                _gbcLogger.Info($"this = {DebugHelperForRuleInstance.ToString(this)}");
+                //_gbcLogger.Info($"(options != null) = {options != null}");
+                //_gbcLogger.Info($"this = {DebugHelperForRuleInstance.ToString(this)}");
 #endif 
 
                 Normalized = ConvertorToNormalized.Convert(this, options);
                 Normalized.PrepareDirty(options);
 
 #if DEBUG
-                _gbcLogger.Info($"Normalized = {DebugHelperForRuleInstance.ToString(Normalized)}");
+                //_gbcLogger.Info($"Normalized = {DebugHelperForRuleInstance.ToString(Normalized)}");
 #endif               
             }
             else

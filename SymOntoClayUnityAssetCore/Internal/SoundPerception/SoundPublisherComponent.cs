@@ -24,8 +24,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         public void PushSoundFact(float power, string text)
         {
 #if DEBUG
-            Log($"power = {power}");
-            Log($"text = {text}");
+            //Log($"power = {power}");
+            //Log($"text = {text}");
 #endif
 
             if(_soundBus == null)
@@ -34,8 +34,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
             }
 
 #if DEBUG
-            Log("NEXT");
-            Log($"_hostSupport.GetCurrentAbsolutePosition() = {_hostSupport.GetCurrentAbsolutePosition()}");
+            //Log("NEXT");
+            //Log($"_hostSupport.GetCurrentAbsolutePosition() = {_hostSupport.GetCurrentAbsolutePosition()}");
 #endif
 
             _soundBus.PushSound(_instanceId, power, _hostSupport.GetCurrentAbsolutePosition(), text);

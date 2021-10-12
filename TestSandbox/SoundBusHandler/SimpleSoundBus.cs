@@ -12,7 +12,7 @@ namespace TestSandbox.SoundBusHandler
     public class SimpleSoundBus : ISoundBus
     {
 #if DEBUG
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         /// <inheritdoc/>
@@ -45,10 +45,10 @@ namespace TestSandbox.SoundBusHandler
         public void PushSound(int instanceId, float power, Vector3 position, string query)
         {
 #if DEBUG
-            _logger.Info($"instanceId = {instanceId}");
-            _logger.Info($"power = {power}");
-            _logger.Info($"position = {position}");
-            _logger.Info($"query = {query}");
+            //_logger.Info($"instanceId = {instanceId}");
+            //_logger.Info($"power = {power}");
+            //_logger.Info($"position = {position}");
+            //_logger.Info($"query = {query}");
 #endif
 
             foreach(var receiver in _soundReceivers)
@@ -80,16 +80,16 @@ namespace TestSandbox.SoundBusHandler
                     continue;
                 }
 
-                //Task.Run(() => {
-                //    try
-                //    {
+                Task.Run(() => {
+                    try
+                    {
                         receiver.CallBack(targetPower, distance, position, query);
-                //    }
-                //    catch(Exception e)
-                //    {
-                //        receiver.Logger.Error(e.ToString());
-                //    }                    
-                //});
+                    }
+                    catch(Exception e)
+                    {
+                        receiver.Logger.Error(e.ToString());
+                    }                    
+                });
             }
         }
 

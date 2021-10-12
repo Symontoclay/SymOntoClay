@@ -4361,6 +4361,9 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.DbgPrintFactsAndRules">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.OnDisposed">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.MetadataStorage.MetadataStorage.Kind">
             <inheritdoc/>
         </member>

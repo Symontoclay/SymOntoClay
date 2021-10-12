@@ -26,20 +26,24 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 {
-    public class LogicalStorage: BaseLoggedComponent, ILogicalStorage
+    public class LogicalStorage: BaseComponent, ILogicalStorage
     {
 #if DEBUG
         //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
+
+        private const int DEFAULT_INITIAL_TIME = 20;
 
         public LogicalStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(realStorageContext.MainStorageContext.Logger)
@@ -53,6 +57,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             _ruleInstancesDict = new Dictionary<StrongIdentifierValue, RuleInstance>();
             _ruleInstancesDictByHashCode = new Dictionary<ulong, RuleInstance>();
             _ruleInstancesDictById = new Dictionary<string, RuleInstance>();
+            _lifeTimeCycleById = new Dictionary<string, int>();
             _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData(realStorageContext.MainStorageContext.Logger);
 
             foreach(var parentStorage in _parentLogicalStoragesList)
@@ -96,12 +101,17 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         private Dictionary<StrongIdentifierValue, RuleInstance> _ruleInstancesDict;
         private Dictionary<ulong, RuleInstance> _ruleInstancesDictByHashCode;
         private Dictionary<string, RuleInstance> _ruleInstancesDictById;
+        private Dictionary<string, int> _lifeTimeCycleById;
         private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData;
         private List<ILogicalStorage> _parentLogicalStoragesList = new List<ILogicalStorage>();
 
+        private AsyncActivePeriodicObject _activeObject;
+
         private void InitGCByTimeOut()
         {
-            throw new NotImplementedException();
+            _activeObject = new AsyncActivePeriodicObject(_mainStorageContext.ActivePeriodicObjectContext);
+            _activeObject.PeriodicMethod = GCByTimeOutCommandLoop;
+            _activeObject.Start();
         }
 
         /// <inheritdoc/>
@@ -150,6 +160,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             if (_ruleInstancesList.Contains(ruleInstance))
             {
+                RefreshLifeTime(ruleInstance);
+
                 return;
             }
 
@@ -157,6 +169,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             if (_ruleInstancesDictById.ContainsKey(ruleInstanceId))
             {
+                RefreshLifeTime(ruleInstanceId);
+
                 return;
             }
 
@@ -180,6 +194,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             if (_ruleInstancesDict.ContainsKey(ruleInstanceName))
             {
+                RefreshLifeTime(ruleInstanceName);
+
                 return;
             }
 
@@ -191,6 +207,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             if(_ruleInstancesDictByHashCode.ContainsKey(longHashCode))
             {
+                RefreshLifeTime(longHashCode);
+
                 return;
             }
 
@@ -198,10 +216,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             _ruleInstancesDict[ruleInstanceName] = ruleInstance;
             _ruleInstancesDictByHashCode[longHashCode] = ruleInstance;
             _ruleInstancesDictById[ruleInstanceId] = ruleInstance;
+            _lifeTimeCycleById[ruleInstanceId] = DEFAULT_INITIAL_TIME;
 
 #if DEBUG
-            Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
-            Log($"ruleInstance.Normalized = {DebugHelperForRuleInstance.ToString(ruleInstance.Normalized)}");
+            //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+            //Log($"ruleInstance.Normalized = {DebugHelperForRuleInstance.ToString(ruleInstance.Normalized)}");
 #endif            
 
             _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(ruleInstance.Normalized);
@@ -309,10 +328,19 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                     return;
                 }
 
-                if (_ruleInstancesDictById.ContainsKey(id))
-                {
-                    NRemove(_ruleInstancesDictById[id]);
-                }
+                NRemoveById(id);
+            }
+        }
+
+        private void NRemoveById(string id)
+        {
+#if DEBUG
+            //Log($"id = {id}");
+#endif
+
+            if (_ruleInstancesDictById.ContainsKey(id))
+            {
+                NRemove(_ruleInstancesDictById[id]);
             }
         }
 
@@ -340,6 +368,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             var ruleInstanceId = ruleInstance.Name.NameValue;
 
             _ruleInstancesDictById.Remove(ruleInstanceId);
+
+            _lifeTimeCycleById.Remove(ruleInstanceId);
 
             _commonPersistIndexedLogicalData.NRemoveIndexedRuleInstanceFromIndexData(ruleInstance.Normalized);
 
@@ -449,5 +479,99 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             }
         }
 #endif
+
+        private void RefreshLifeTime(RuleInstance ruleInstance)
+        {
+#if DEBUG
+            //Log($"ruleInstance = {ruleInstance}");
+#endif
+            NRefreshLifeTime(ruleInstance.Name.NameValue);
+        }
+
+        private void RefreshLifeTime(string ruleInstanceId)
+        {
+#if DEBUG
+            //Log($"ruleInstanceId = {ruleInstanceId}");
+#endif
+
+            NRefreshLifeTime(ruleInstanceId);
+        }
+
+        private void RefreshLifeTime(StrongIdentifierValue ruleInstanceName)
+        {
+#if DEBUG
+            //Log($"ruleInstanceName = {ruleInstanceName}");
+#endif
+
+            NRefreshLifeTime(ruleInstanceName.NameValue);
+        }
+
+        private void RefreshLifeTime(ulong longHashCode)
+        {
+#if DEBUG
+            //Log($"longHashCode = {longHashCode}");
+#endif
+
+            NRefreshLifeTime(_ruleInstancesDictByHashCode[longHashCode].Name.NameValue);
+        }
+
+        private void NRefreshLifeTime(string ruleInstanceId)
+        {
+#if DEBUG
+            //Log($"ruleInstanceId = {ruleInstanceId}");
+#endif
+
+            _lifeTimeCycleById[ruleInstanceId] = DEFAULT_INITIAL_TIME;
+        }
+
+        private bool GCByTimeOutCommandLoop()
+        {
+            Thread.Sleep(200);
+
+#if DEBUG
+            //Log("Do");
+#endif
+
+            lock (_lockObj)
+            {
+                var itemsList = _lifeTimeCycleById.ToList();
+
+                foreach(var item in itemsList)
+                {
+#if DEBUG
+                    //Log($"item = {item}");
+#endif
+
+                    var lifeCycle = item.Value - 1;
+
+                    if (lifeCycle == 0)
+                    {
+                        NRemoveById(item.Key);
+                    }
+                    else
+                    {
+                        _lifeTimeCycleById[item.Key] = lifeCycle;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _activeObject?.Dispose();
+
+            foreach (var parentStorage in _parentLogicalStoragesList)
+            {
+                parentStorage.OnChangedWithKeys -= LogicalStorage_OnChangedWithKeys;
+            }
+
+            _realStorageContext.OnAddParentStorage -= RealStorageContext_OnAddParentStorage;
+            _realStorageContext.OnRemoveParentStorage -= RealStorageContext_OnRemoveParentStorage;
+
+            base.OnDisposed();
+        }
     }
 }

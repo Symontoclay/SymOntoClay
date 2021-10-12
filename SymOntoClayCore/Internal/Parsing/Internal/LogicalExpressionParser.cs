@@ -105,11 +105,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_isGroup = {_isGroup}");
-            Log($"_currToken = {_currToken}");
+            //Log($"_state = {_state}");
+            //Log($"_isGroup = {_isGroup}");
+            //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");
-            Log($"_nodePoint = {_nodePoint}");
+            //Log($"_nodePoint = {_nodePoint}");
 #endif
 
             if(_terminatingTokenKindList.Contains(_currToken.TokenKind))
@@ -277,7 +277,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 parser.Run();
 
 #if DEBUG
-                                Log($"parser.Result = {parser.Result}");
+                                //Log($"parser.Result = {parser.Result}");
 #endif
 
                                 //throw new NotImplementedException();
@@ -521,7 +521,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var nextToken = _context.GetToken();
 
 #if DEBUG
-            Log($"nextToken = {nextToken}");
+            //Log($"nextToken = {nextToken}");
             //Log($"value.KindOfName = {value.KindOfName}");
 
             //if(nextToken.Content == "is")
@@ -712,7 +712,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 foreach (var unresolvedAlias in _unresolvedAiases)
                 {
 #if DEBUG
-                    Log($"unresolvedAlias = {unresolvedAlias}");
+                    //Log($"unresolvedAlias = {unresolvedAlias}");
 #endif
 
                     if(aliasesDict.ContainsKey(unresolvedAlias))

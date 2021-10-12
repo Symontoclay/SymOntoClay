@@ -46,9 +46,11 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(5000);
 
+            _world.Dispose();
+
             _logger.Log("!---");
 
-            _world.Dispose();
+            Thread.Sleep(5000);
 
             _logger.Log("End");
         }

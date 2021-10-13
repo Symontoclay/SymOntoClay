@@ -19,10 +19,11 @@
         'M16!!!!' >> @>log;
     }*/
 
-    //on {: hear(I, $x) & gun($x) & distance(I, $x, $y) :} ($x >> @x, $y >> @y)
-    on {: hear(I, $x) & gun($x) :} ($x >> @x)
+    on {: hear(I, $x) & gun($x) & distance(I, $x, $y) :} ($x >> @x, $y >> @y)
+    //on {: hear(I, $x) & gun($x) :} ($x >> @x)
     {
         @x >> @>log;
+        @y >> @>log;
         '!!!M16!!!!' >> @>log;
     }
 }

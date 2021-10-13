@@ -1962,19 +1962,26 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             var rightVal = rightVarsDict[varName];
 
 #if DEBUG
-                            options.Logger.Log($"leftVal = {leftVal}");
-                            options.Logger.Log($"rightVal = {rightVal}");
+                            //options.Logger.Log($"leftVal = {leftVal}");
+                            //options.Logger.Log($"rightVal = {rightVal}");
 #endif
 
                             var resultOfComparison = EqualityCompare(leftVal, rightVal, null, null, null, options, null);
 
 #if DEBUG
-                            options.Logger.Log($"resultOfComparison = {resultOfComparison}");
+                            //options.Logger.Log($"resultOfComparison = {resultOfComparison}");
 #endif
 
                             if (resultOfComparison)
                             {
-                                varValuesList.Add((varName, leftVal));
+                                if(leftVal.Kind == KindOfLogicalQueryNode.Relation && rightVal.Kind != KindOfLogicalQueryNode.Relation)
+                                {
+                                    varValuesList.Add((varName, rightVal));
+                                }
+                                else
+                                {
+                                    varValuesList.Add((varName, leftVal));
+                                }                                
                             }
                             else
                             {
@@ -2621,7 +2628,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
             //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
             //options.Logger.Log($"processedExpr = {processedExpr}");
-            options.Logger.Log($"DebugHelperForRuleInstance.ToString(processedExpr) = {DebugHelperForRuleInstance.BaseRulePartToString(processedExpr)}");
+            //options.Logger.Log($"DebugHelperForRuleInstance.ToString(processedExpr) = {DebugHelperForRuleInstance.BaseRulePartToString(processedExpr)}");
             //foreach(var item in queryExecutingCard.KnownInfoList)
             //{
             //    options.Logger.Log($"item = {item}");
@@ -2660,7 +2667,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
 #if DEBUG
-                options.Logger.Log($"DebugHelperForRuleInstance.ToString(targetRelation) = {DebugHelperForRuleInstance.ToString(targetRelation)}");
+                //options.Logger.Log($"DebugHelperForRuleInstance.ToString(targetRelation) = {DebugHelperForRuleInstance.ToString(targetRelation)}");
                 //options.Logger.Log($"targetRelation = {targetRelation}");
                 //options.Logger.Log($"targetRelation = {targetRelation.GetHumanizeDbgString()}");
                 //options.Logger.Log($"targetRelation.Name = {targetRelation.Name}");
@@ -2733,7 +2740,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         var resultOfComparison = CompareKnownInfoAndExpressionNode(knownInfo, paramOfTargetRelation, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, comparisonQueryExecutingCard);
 
 #if DEBUG
-                        options.Logger.Log($"resultOfComparison = {resultOfComparison}");
+                        //options.Logger.Log($"resultOfComparison = {resultOfComparison}");
 #endif
 
                         if (!resultOfComparison)
@@ -3131,11 +3138,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
 #if DEBUG
             //options.Logger.Log($"(expressionNode1 == null) = {expressionNode1 == null} (expressionNode2 == null) = {expressionNode2 == null}");
-            options.Logger.Log($"expressionNode1 = {expressionNode1}");
-            options.Logger.Log($"expressionNode2 = {expressionNode2}");
+            //options.Logger.Log($"expressionNode1 = {expressionNode1}");
+            //options.Logger.Log($"expressionNode2 = {expressionNode2}");
             //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
-            options.Logger.Log($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1?.Select(p => p.NameValue), Formatting.Indented)}");
-            options.Logger.Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");
+            //options.Logger.Log($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1?.Select(p => p.NameValue), Formatting.Indented)}");
+            //options.Logger.Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");
 #endif
 
             if (expressionNode1.Kind == KindOfLogicalQueryNode.LogicalVar && (expressionNode2.Kind == KindOfLogicalQueryNode.Concept || expressionNode2.Kind == KindOfLogicalQueryNode.Entity))
@@ -3364,7 +3371,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 || ((expressionNode2.Kind == KindOfLogicalQueryNode.Entity || expressionNode2.Kind == KindOfLogicalQueryNode.Concept || expressionNode2.Kind == KindOfLogicalQueryNode.Value || expressionNode2.Kind == KindOfLogicalQueryNode.EntityCondition || expressionNode2.Kind == KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence) && expressionNode1.Kind == KindOfLogicalQueryNode.Relation && expressionNode1.VarsInfoList.IsNullOrEmpty()))
             {
 #if DEBUG
-                options.Logger.Log("Try to compare relation and entity, concept or value!");
+                //options.Logger.Log("Try to compare relation and entity, concept or value!");
 #endif
 
                 LogicalQueryNode relationNode = null;
@@ -3404,9 +3411,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"valueAdditionalKeys = {JsonConvert.SerializeObject(valueAdditionalKeys?.Select(p => p.NameValue), Formatting.Indented)}");
 #endif
 
-            var boolRez = false;
-            var substitutedLogicalQueryNodes = new List<LogicalQueryNode>();
-
             foreach (var param in relationNode.ParamsList)
             {
 #if DEBUG
@@ -3419,9 +3423,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 {
                     if (RecursiveComparisonRelationWithNonRelation(param, valueNode, valueAdditionalKeys, reason, options, queryExecutingCard))
                     {
-                        substitutedLogicalQueryNodes.Add(valueNode);
-                        boolRez = true;
-                        continue;
+                        return true;
                     }
                 }
 
@@ -3447,13 +3449,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if(EqualityCompare(valueNode, param, valueAdditionalKeys, additionalKeysOfParam, reason, options, queryExecutingCard))
                 {
-                    substitutedLogicalQueryNodes.Add(valueNode);
-                    boolRez = true;
-                    continue;
+                    return true;
                 }
             }
 
-            return boolRez;
+            return false;
         }
     }
 }

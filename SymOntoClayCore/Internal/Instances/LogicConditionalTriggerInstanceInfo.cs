@@ -272,7 +272,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     foreach (var resultVar in resultVarsList)
                     {
 #if DEBUG
-                        Log($"resultVar = {resultVar}");
+                        //Log($"resultVar = {resultVar}");
 #endif
 
                         Value value = null;
@@ -284,6 +284,7 @@ namespace SymOntoClay.Core.Internal.Instances
                         switch (kindOfFoundExpression)
                         {
                             case KindOfLogicalQueryNode.Entity:
+                            case KindOfLogicalQueryNode.Concept:
                                 value = foundExpression.Name;
                                 break;
 

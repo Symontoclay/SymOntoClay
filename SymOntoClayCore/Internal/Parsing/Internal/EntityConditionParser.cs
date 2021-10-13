@@ -38,7 +38,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             WaitForFirstCoordinate,
             GotFirstCoordinate,
             WaitForSecondCoordinate,
-            GotSecondCoordinate
+            GotSecondCoordinate,
+            WaitForCondition
         }
 
         public EntityConditionParser(InternalParserContext context)
@@ -69,9 +70,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");
-            //Log($"_state = {_state}");
+            Log($"_state = {_state}");
 #endif
 
             switch (_state)
@@ -104,6 +105,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.OpenSquareBracket:
                             _isWayPoint = true;
                             _state = State.WaitForFirstCoordinate;
+                            break;
+
+                        case TokenKind.OpenRoundBracket:
+                            _isWayPoint = false;
+                            _state = State.WaitForCondition;
                             break;
 
                         default:
@@ -182,6 +188,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             throw new UnexpectedTokenException(_currToken);
 
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForCondition:
+                    switch (_currToken.TokenKind)
+                    {
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

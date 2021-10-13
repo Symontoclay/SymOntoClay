@@ -1,29 +1,16 @@
 ﻿app PeaceKeeper
 {
-    {: gun(M16) :}
-
     on Init
     {
         'Begin' >> @>log;
 
-        //insert {: $x = act(M16, shoot) & hear(I, $x) :};
-        insert {: $x = act(M16, shoot) & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :};
+        //@a = #@[10, 20];
+        @a = #@(barrel);
+        //@a = #@{: barrel($_) :};
+        //@a = #@{: >: { barrel($_) } :};
 
-        //@@host.`go`(to: #@[10]);
+        @a >> @>log;
 
         'End' >> @>log;
-    }
-
-    /*on {: hear(I, M16) :} => 
-    {
-        'M16!!!!' >> @>log;
-    }*/
-
-    on {: hear(I, $x) & gun($x) & distance(I, $x, $y) :} ($x >> @x, $y >> @y)
-    //on {: hear(I, $x) & gun($x) :} ($x >> @x)
-    {
-        @x >> @>log;
-        @y >> @>log;
-        '!!!M16!!!!' >> @>log;
     }
 }

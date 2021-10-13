@@ -62,8 +62,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
             //Log($"_nodePoint = {_nodePoint}");
 #endif
 
@@ -112,6 +112,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.QuestionMark:
                             _context.Recovery(_currToken);
                             ProcessLogicalQueryOperator();
+                            break;
+
+                        case TokenKind.EntityCondition:
+                            ProcessEntityCondition();
                             break;
 
                         default:
@@ -246,6 +250,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var value = new StringValue(_currToken.Content);
 
             node.Value = value;
+
+            var intermediateNode = new IntermediateAstNode(node);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+        }
+
+        private void ProcessEntityCondition()
+        {
+            _context.Recovery(_currToken);
+
+            var parser = new EntityConditionParser(_context);
+            parser.Run();
+
+            var node = new ConstValueAstExpression();
+            node.Value = parser.Result;
 
             var intermediateNode = new IntermediateAstNode(node);
 

@@ -27,7 +27,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject;
-using SymOntoClayDefaultCLIEnvironment;
+using SymOntoClay.DefaultCLIEnvironment;
 using System;
 using System.Collections.Generic;
 using System.IO;

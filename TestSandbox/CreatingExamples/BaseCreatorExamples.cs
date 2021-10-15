@@ -24,7 +24,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Tests.Helpers;
 using SymOntoClay.UnityAsset.Core.World;
-using SymOntoClayDefaultCLIEnvironment;
+using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClayProjectFiles;
 using System;
 using System.Collections.Generic;

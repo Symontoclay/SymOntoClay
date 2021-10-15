@@ -5,6 +5,8 @@
     <FileVersion>0.3.4</FileVersion>
     <Version>0.3.4</Version>
     <Copyright>Copyright (c) 2020 - 2021 Sergiy Tolkachov aka metatypeman</Copyright>
+    <AssemblyName>SymOntoClay.DefaultCLIEnvironment</AssemblyName>
+    <RootNamespace>SymOntoClay.DefaultCLIEnvironment</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>SymOntoClayDefaultCLIEnvironment.xml</DocumentationFile>

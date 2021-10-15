@@ -37,7 +37,7 @@ using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Helpers;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
-using SymOntoClayDefaultCLIEnvironment;
+using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClayProjectFiles;
 using System;
 using System.Collections;

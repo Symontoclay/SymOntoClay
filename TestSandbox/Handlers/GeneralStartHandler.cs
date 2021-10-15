@@ -23,7 +23,7 @@ SOFTWARE.*/
 using NLog;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
-using SymOntoClayDefaultCLIEnvironment;
+using SymOntoClay.DefaultCLIEnvironment;
 using System;
 using System.Collections.Generic;
 using System.IO;

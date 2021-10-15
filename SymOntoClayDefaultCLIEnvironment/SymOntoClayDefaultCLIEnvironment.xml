@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>SymOntoClayDefaultCLIEnvironment</name>
+        <name>SymOntoClay.DefaultCLIEnvironment</name>
     </assembly>
     <members>
-        <member name="M:SymOntoClayDefaultCLIEnvironment.PlatformSupportCLIStub.ConvertFromRelativeToAbsolute(SymOntoClay.Core.RelativeCoordinate)">
+        <member name="M:SymOntoClay.DefaultCLIEnvironment.PlatformSupportCLIStub.ConvertFromRelativeToAbsolute(SymOntoClay.Core.RelativeCoordinate)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClayDefaultCLIEnvironment.PlatformSupportCLIStub.GetCurrentAbsolutePosition">
+        <member name="M:SymOntoClay.DefaultCLIEnvironment.PlatformSupportCLIStub.GetCurrentAbsolutePosition">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClayDefaultCLIEnvironment.PlatformSupportCLIStub.GetDirectionToPosition(System.Numerics.Vector3)">
+        <member name="M:SymOntoClay.DefaultCLIEnvironment.PlatformSupportCLIStub.GetDirectionToPosition(System.Numerics.Vector3)">
             <inheritdoc/>
         </member>
     </members>

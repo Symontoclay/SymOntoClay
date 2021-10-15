@@ -21,7 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.UnityAsset.Core.World;
-using SymOntoClayDefaultCLIEnvironment;
+using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClayProjectFiles;
 using System;
 using System.Collections.Generic;

@@ -2,12 +2,11 @@
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestSandbox.SoundBusHandler
+namespace SymOntoClay.SoundBuses
 {
     public class SimpleSoundBus : ISoundBus
     {
@@ -18,9 +17,9 @@ namespace TestSandbox.SoundBusHandler
         /// <inheritdoc/>
         public void AddReceiver(ISoundReceiver receiver)
         {
-            lock(_lockObj)
+            lock (_lockObj)
             {
-                if(_soundReceivers.Contains(receiver))
+                if (_soundReceivers.Contains(receiver))
                 {
                     return;
                 }
@@ -51,14 +50,14 @@ namespace TestSandbox.SoundBusHandler
             //_logger.Info($"query = {query}");
 #endif
 
-            foreach(var receiver in _soundReceivers)
+            foreach (var receiver in _soundReceivers)
             {
 #if DEBUG
                 //_logger.Info($"receiver.Position = {receiver.Position}");
                 //_logger.Info($"receiver.Threshold = {receiver.Threshold}");
 #endif
 
-                if(receiver.InstanceId == instanceId)
+                if (receiver.InstanceId == instanceId)
                 {
                     continue;
                 }
@@ -75,7 +74,7 @@ namespace TestSandbox.SoundBusHandler
                 //_logger.Info($"targetPower = {targetPower}");
 #endif
 
-                if(targetPower < receiver.Threshold)
+                if (targetPower < receiver.Threshold)
                 {
                     continue;
                 }
@@ -85,10 +84,10 @@ namespace TestSandbox.SoundBusHandler
                     {
                         receiver.CallBack(targetPower, distance, position, query);
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         receiver.Logger.Error(e.ToString());
-                    }                    
+                    }
                 });
             }
         }

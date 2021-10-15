@@ -22,13 +22,14 @@ SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
-using SymOntoClayDefaultCLIEnvironment;
+using SymOntoClay.DefaultCLIEnvironment;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using TestSandbox.CoreHostListener;
 using TestSandbox.PlatformImplementations;
+using SymOntoClay.SoundBuses;
 
 namespace TestSandbox.MonoBehaviourTesting
 {
@@ -67,6 +68,8 @@ namespace TestSandbox.MonoBehaviourTesting
             settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\World\World.world");
 
             settings.InvokerInMainThread = invokingInMainThread;
+
+            settings.SoundBus = new SimpleSoundBus();
 
             settings.Logging = new LoggingSettings()
             {

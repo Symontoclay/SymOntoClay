@@ -28,19 +28,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public Value Value { get; set; }
         public FuzzyLogicNonNumericSequenceValue FuzzyLogicNonNumericSequenceValue { get; set; }
 
-
-        public bool IsQuestion { get; set; }
-
-        public int CountParams { get; set; }
-        public IList<QueryExecutingCardAboutVar> VarsInfoList { get; set; }
-        public IList<QueryExecutingCardAboutKnownInfo> KnownInfoList { get; set; }
-
-        public bool IsKeyRef => Kind == KindOfLogicalQueryNode.Concept || Kind == KindOfLogicalQueryNode.Entity || Kind == KindOfLogicalQueryNode.LogicalVar || Kind == KindOfLogicalQueryNode.QuestionVar;
-        public bool IsEntityRef => Kind == KindOfLogicalQueryNode.EntityRef;
-
-        public RuleInstance RuleInstance { get; set; }
-        public BaseRulePart RulePart { get; set; }
-
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
@@ -186,42 +173,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             Value?.DiscoverAllAnnotations(result);
             FuzzyLogicNonNumericSequenceValue?.DiscoverAllAnnotations(result);
-        }
-
-        public void DiscoverAllInheritanceRelations(IList<LogicalQueryNode> result)
-        {
-            switch (Kind)
-            {
-                case KindOfLogicalQueryNode.Relation:
-                    if (ParamsList.Count == 1)
-                    {
-                        var param = ParamsList.Single();
-
-                        if (param.Kind == KindOfLogicalQueryNode.Entity || param.Kind == KindOfLogicalQueryNode.Concept)
-                        {
-                            result.Add(this);
-                        }
-                        break;
-                    }
-
-                    if (Name == NameHelper.CreateName("is"))
-                    {
-                        result.Add(this);
-                    }
-                    break;
-
-                case KindOfLogicalQueryNode.BinaryOperator:
-                    Left.DiscoverAllInheritanceRelations(result);
-                    Right.DiscoverAllInheritanceRelations(result);
-                    break;
-
-                case KindOfLogicalQueryNode.UnaryOperator:
-                    Left.DiscoverAllInheritanceRelations(result);
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, string.Empty);
-            }
         }
 
         /// <inheritdoc/>

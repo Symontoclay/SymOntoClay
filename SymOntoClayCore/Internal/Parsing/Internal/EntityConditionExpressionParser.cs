@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -16,7 +18,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             if (isGroup)
             {
-                _terminatingTokenKindList = new List<TokenKind> { TokenKind.CloseFactBracket };
+                _terminatingTokenKindList = new List<TokenKind> { TokenKind.CloseRoundBracket };
             }
             else
             {
@@ -28,22 +30,36 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
 
         public EntityConditionExpressionParser(EntityConditionExpressionParserContext context)
+            : this(context, new List<TokenKind> { TokenKind.Comma, TokenKind.CloseRoundBracket })
         {
-            throw new NotImplementedException();
         }
 
-        public EntityConditionExpressionParser(EntityConditionExpressionParserContext context)
+        public EntityConditionExpressionParser(EntityConditionExpressionParserContext context, TokenKind terminatingTokenKind)
+            : this(context, new List<TokenKind>() { terminatingTokenKind })
         {
-            throw new NotImplementedException();
         }
 
         public EntityConditionExpressionParser(EntityConditionExpressionParserContext context, List<TokenKind> terminatingTokenKindList)
-            : base(context)
+            : base(context.InternalParserContext)
         {
-            throw new NotImplementedException();
+            _terminatingTokenKindList = terminatingTokenKindList;
+            _logicalExpressionParserContext = context;
         }
 
+        private bool _isGroup;
+        private List<TokenKind> _terminatingTokenKindList = new List<TokenKind>();
+        private EntityConditionExpressionParserContext _logicalExpressionParserContext;
         private State _state = State.Init;
+
+        public EntityConditionExpressionNode Result { get; private set; }
+
+        private IntermediateAstNodePoint _nodePoint = new IntermediateAstNodePoint();
+
+        /// <inheritdoc/>
+        protected override void OnFinish()
+        {
+            Result = _nodePoint.BuildExpr<EntityConditionExpressionNode>();
+        }
 
         /// <inheritdoc/>
         protected override void OnRun()
@@ -53,6 +69,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             //Log($"Result = {Result}");
             Log($"_state = {_state}");
 #endif
+
+            if (_terminatingTokenKindList.Contains(_currToken.TokenKind))
+            {
+                _context.Recovery(_currToken);
+                Exit();
+                return;
+            }
 
             switch (_state)
             {

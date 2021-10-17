@@ -50,7 +50,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             {
                                 _context.Recovery(_currToken);
 
-                                var parser = new EntityConditionExpressionParser(_context);
+                                var entityConditionExpressionParserContext = new EntityConditionExpressionParserContext(_context);
+
+                                var parser = new EntityConditionExpressionParser(entityConditionExpressionParserContext);
                                 parser.Run();
 
                                 throw new NotImplementedException();

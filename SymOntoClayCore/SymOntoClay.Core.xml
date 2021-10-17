@@ -3708,7 +3708,13 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.CompleteStatementParser.OnRun">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.EntityConditionParser.OnFinish">
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.ConditionalEntityParser.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.ConditionalEntityParser.OnRun">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.EntityConditionExpressionParser.OnRun">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.EntityConditionParser.OnRun">

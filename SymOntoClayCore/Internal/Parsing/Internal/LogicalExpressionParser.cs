@@ -273,7 +273,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             {
                                 _context.Recovery(_currToken);
 
-                                var parser = new EntityConditionParser(_context);
+                                var parser = new ConditionalEntityParser(_context);
                                 parser.Run();
 
 #if DEBUG

@@ -60,63 +60,61 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
         public Value Write(Value value)
         {
 #if DEBUG
-            //Log($"value = {value}");
+            Log($"value = {value}");
 #endif
 
-            switch(value.KindOfValue)
-            {
-                case KindOfValue.LogicalSearchResultValue:
-                    LogChannel(DebugHelperForLogicalSearchResult.ToString(value.AsLogicalSearchResultValue.LogicalSearchResult));
-                    break;
+            LogChannel(value.ToHumanizedString());
 
-                case KindOfValue.ErrorValue:
-                    LogChannel($"ERROR: {DebugHelperForRuleInstance.ToString(value.AsErrorValue.RuleInstance)}");
-                    break;
+//            switch (value.KindOfValue)
+//            {
+//                case KindOfValue.LogicalSearchResultValue:
+//                    LogChannel(DebugHelperForLogicalSearchResult.ToString(value.AsLogicalSearchResultValue.LogicalSearchResult));
+//                    break;
 
-                case KindOfValue.NullValue:
-                    LogChannel("NULL");
-                    break;
+//                case KindOfValue.NullValue:
+//                    LogChannel("NULL");
+//                    break;
 
-                default:
-                    {
-                        var sysValue = value.GetSystemValue();
+//                default:
+//                    {
+//                        var sysValue = value.GetSystemValue();
 
-                        if(sysValue == null)
-                        {
-                            LogChannel("NULL");
-                            break;
-                        }
+//                        if(sysValue == null)
+//                        {
+//                            LogChannel("NULL");
+//                            break;
+//                        }
 
-                        var sysValueType = sysValue.GetType();
+//                        var sysValueType = sysValue.GetType();
 
-#if DEBUG
-                        //Log($"sysValue = {sysValue}");
-                        //Log($"sysValue.GetType().FullName = {sysValue.GetType().FullName}");
-#endif
+//#if DEBUG
+//                        //Log($"sysValue = {sysValue}");
+//                        //Log($"sysValue.GetType().FullName = {sysValue.GetType().FullName}");
+//#endif
 
-                        if(sysValueType == typeof(double))
-                        {
-                            LogChannel(((double)sysValue).ToString(CultureInfo.InvariantCulture));
-                            break;
-                        }
+//                        if(sysValueType == typeof(double))
+//                        {
+//                            LogChannel(((double)sysValue).ToString(CultureInfo.InvariantCulture));
+//                            break;
+//                        }
 
-                        if(sysValueType == typeof(float))
-                        {
-                            LogChannel(((float)sysValue).ToString(CultureInfo.InvariantCulture));
-                            break;
-                        }
+//                        if(sysValueType == typeof(float))
+//                        {
+//                            LogChannel(((float)sysValue).ToString(CultureInfo.InvariantCulture));
+//                            break;
+//                        }
 
-                        if (sysValueType == typeof(decimal))
-                        {
-                            LogChannel(((decimal)sysValue).ToString(CultureInfo.InvariantCulture));
-                            break;
-                        }
+//                        if (sysValueType == typeof(decimal))
+//                        {
+//                            LogChannel(((decimal)sysValue).ToString(CultureInfo.InvariantCulture));
+//                            break;
+//                        }
 
-                        LogChannel(sysValue.ToString());
-                    }
+//                        LogChannel(sysValue.ToString());
+//                    }
 
-                    break;
-            }
+//                    break;
+//            }
 
             return value;
         }

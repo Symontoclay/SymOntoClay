@@ -164,7 +164,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 #if DEBUG
             //_gbcLogger.Info($"source = {source}");
 #endif
-
+            
             switch (source.Kind)
             {
                 case KindOfLogicalQueryNode.BinaryOperator:

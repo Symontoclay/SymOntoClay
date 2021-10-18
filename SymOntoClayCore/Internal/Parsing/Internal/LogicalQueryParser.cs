@@ -96,7 +96,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             if(_context.NeedCheckDirty)
             {
                 Result.CheckDirty();
-            }            
+            }
         }
 
         /// <inheritdoc/>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -19,6 +20,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
 
         private State _state = State.Init;
+
+        public EntityConditionExpressionNode Result { get; private set; }
 
         /// <inheritdoc/>
         protected override void OnRun()
@@ -55,7 +58,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new EntityConditionExpressionParser(entityConditionExpressionParserContext);
                                 parser.Run();
 
-                                throw new NotImplementedException();
+#if DEBUG
+                                Log($"parser.Result = {parser.Result}");
+                                Log($"parser.Result.GetHumanizeDbgString() = {parser.Result.GetHumanizeDbgString()}");
+#endif
+
+                                Result = parser.Result;
+
+                                _state = State.GotExpresion;
                             }
                             break;
 
@@ -67,6 +77,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotExpresion:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.CloseRoundBracket:
+                            Exit();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

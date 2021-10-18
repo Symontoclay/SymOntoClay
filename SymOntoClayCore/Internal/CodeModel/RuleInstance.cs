@@ -289,7 +289,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
 
-            return $"{spaces}{DebugHelperForRuleInstance.ToString(this)}";
+            return $"{spaces}{ToHumanizedString()}";
+        }
+
+        public string ToHumanizedString()
+        {
+            return DebugHelperForRuleInstance.ToString(this);
         }
 
         #region IStorage

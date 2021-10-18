@@ -147,8 +147,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.ParamsList = ParamsList?.Select(p => p.Clone(context)).ToList();
             result.Value = Value?.CloneValue(context);
             result.FuzzyLogicNonNumericSequenceValue = FuzzyLogicNonNumericSequenceValue?.Clone(context);
-            result.IsQuestion = IsQuestion;
-
+            
             result.AppendAnnotations(this, context);
 
             return result;
@@ -192,15 +191,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjProp(n, nameof(Value), Value);
             sb.PrintObjProp(n, nameof(FuzzyLogicNonNumericSequenceValue), FuzzyLogicNonNumericSequenceValue);
 
-            sb.AppendLine($"{spaces}{nameof(IsQuestion)} = {IsQuestion}");
-            sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
-
-            sb.PrintObjListProp(n, nameof(VarsInfoList), VarsInfoList);
-            sb.PrintObjListProp(n, nameof(KnownInfoList), KnownInfoList);
-
-            sb.AppendLine($"{spaces}{nameof(IsKeyRef)} = {IsKeyRef}");
-            sb.AppendLine($"{spaces}{nameof(IsEntityRef)} = {IsEntityRef}");
-
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -221,15 +211,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintShortObjProp(n, nameof(Value), Value);
             sb.PrintShortObjProp(n, nameof(FuzzyLogicNonNumericSequenceValue), FuzzyLogicNonNumericSequenceValue);
-
-            sb.AppendLine($"{spaces}{nameof(IsQuestion)} = {IsQuestion}");
-            sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
-
-            sb.PrintShortObjListProp(n, nameof(VarsInfoList), VarsInfoList);
-            sb.PrintShortObjListProp(n, nameof(KnownInfoList), KnownInfoList);
-
-            sb.AppendLine($"{spaces}{nameof(IsKeyRef)} = {IsKeyRef}");
-            sb.AppendLine($"{spaces}{nameof(IsEntityRef)} = {IsEntityRef}");
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -252,22 +233,20 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjProp(n, nameof(Value), Value);
             sb.PrintBriefObjProp(n, nameof(FuzzyLogicNonNumericSequenceValue), FuzzyLogicNonNumericSequenceValue);
 
-            sb.AppendLine($"{spaces}{nameof(IsQuestion)} = {IsQuestion}");
-            sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
-
-            sb.PrintBriefObjListProp(n, nameof(VarsInfoList), VarsInfoList);
-            sb.PrintBriefObjListProp(n, nameof(KnownInfoList), KnownInfoList);
-
-            sb.AppendLine($"{spaces}{nameof(IsKeyRef)} = {IsKeyRef}");
-            sb.AppendLine($"{spaces}{nameof(IsEntityRef)} = {IsEntityRef}");
-
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }
 
+        /// <inheritdoc/>
+        protected override string PropertiesToDbgString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            return $"{spaces}{GetHumanizeDbgString()}";
+        }
+
         public string GetHumanizeDbgString()
         {
-            return DebugHelperForRuleInstance.ToString(this);
+            return DebugHelperForEntityConditionExpression.ToString(this);
         }
     }
 }

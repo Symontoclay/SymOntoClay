@@ -653,7 +653,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             //Log($"value = {value}");
 #endif
 
-            var node = CreateLogicalQueryNodeByStrongIdentifierValue(value);
+            var node = CreateExpressionNodeByStrongIdentifierValue(value);
 
 #if DEBUG
             //Log($"node = {node}");
@@ -666,7 +666,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _state = State.GotConcept;
         }
 
-        private LogicalQueryNode CreateLogicalQueryNodeByStrongIdentifierValue(StrongIdentifierValue value)
+        private LogicalQueryNode CreateExpressionNodeByStrongIdentifierValue(StrongIdentifierValue value)
         {
             var node = new LogicalQueryNode();
 

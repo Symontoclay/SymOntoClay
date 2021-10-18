@@ -38,8 +38,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             WaitForFirstCoordinate,
             GotFirstCoordinate,
             WaitForSecondCoordinate,
-            GotSecondCoordinate,
-            GotCondition
+            GotSecondCoordinate
         }
 
         public ConditionalEntityParser(InternalParserContext context)
@@ -53,6 +52,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private StrongIdentifierValue _name;
         private Value _firstCoordinate;
         private Value _secondCoordinate;
+        private EntityConditionExpressionNode _entityConditionExpression;
+        private RuleInstance _entityConditionFact;
 
         /// <inheritdoc/>
         protected override void OnFinish()
@@ -60,6 +61,28 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             if(_isWayPoint)
             {
                 Result = new WaypointSourceValue(_firstCoordinate, _secondCoordinate, _name);
+                return;
+            }
+
+            if(_entityConditionExpression != null)
+            {
+                var result = new ConditionalEntityValue(_entityConditionExpression, _name);
+
+#if DEBUG
+                Log($"result = {result}");
+#endif
+
+                if (_context.NeedCheckDirty)
+                {
+                    result.CheckDirty();
+                }
+
+#if DEBUG
+                Log($"result (after) = {result}");
+                Log($"result.ToDbgString() (after) = {result.ToDbgString()}");
+#endif
+
+                Result = result;
                 return;
             }
 
@@ -116,9 +139,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new EntityConditionParser(_context);
                                 parser.Run();
 
-                                throw new NotImplementedException();
+#if DEBUG
+                                Log($"parser.Result = {parser.Result}");
+                                Log($"parser.Result.GetHumanizeDbgString() = {parser.Result.GetHumanizeDbgString()}");
+#endif
 
-                                _state = State.GotCondition;
+                                _entityConditionExpression = parser.Result;
+
+                                Exit();
                             }
                             break;
 
@@ -198,14 +226,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             throw new UnexpectedTokenException(_currToken);
 
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
-                    }
-                    break;
-
-                case State.GotCondition:
-                    switch (_currToken.TokenKind)
-                    {
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

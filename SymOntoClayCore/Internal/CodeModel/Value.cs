@@ -92,6 +92,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsActionInstanceValue => false;
         public virtual ActionInstanceValue AsActionInstanceValue => null;
 
+        public virtual bool IsConditionalEntitySourceValue => false;
+        public virtual ConditionalEntitySourceValue AsConditionalEntitySourceValue => null;
+
         public virtual bool IsConditionalEntityValue => false;
         public virtual ConditionalEntityValue AsConditionalEntityValue => null;
 

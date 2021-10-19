@@ -376,6 +376,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.And);
                             break;
 
+                        case TokenKind.Or:
+                            ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.Or);
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -592,6 +596,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.And:
+                        case TokenKind.Or:
                             _context.Recovery(nextToken);
                             ProcessConceptOrQuestionVar(value);
                             break;

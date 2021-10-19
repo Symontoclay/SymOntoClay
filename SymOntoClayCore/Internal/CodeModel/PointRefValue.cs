@@ -147,7 +147,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         protected override string PropertiesToDbgString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            return $"{spaces}{LeftOperand.ToDbgString()}.{RightOperand.ToDbgString()}";
+            return $"{spaces}{ToHumanizedString()}";
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString()
+        {
+            return $"{LeftOperand.ToHumanizedString()}.{RightOperand.ToHumanizedString()}";
         }
     }
 }

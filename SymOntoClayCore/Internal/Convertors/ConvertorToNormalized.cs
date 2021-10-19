@@ -219,6 +219,9 @@ namespace SymOntoClay.Core.Internal.Convertors
                 case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
                     return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict);
 
+                case KindOfLogicalQueryNode.Group:
+                    return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, null);
             }
@@ -282,7 +285,7 @@ namespace SymOntoClay.Core.Internal.Convertors
                 return null;
             }
 
-            if (source.Kind == KindOfLogicalQueryNode.LogicalVar && aliasesDict.Any())
+            if (source.Kind == KindOfLogicalQueryNode.LogicalVar && aliasesDict != null && aliasesDict.Any())
             {
                 if(aliasesDict.ContainsKey(source.Name))
                 {

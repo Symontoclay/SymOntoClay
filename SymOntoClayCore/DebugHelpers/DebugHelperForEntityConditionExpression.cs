@@ -12,7 +12,7 @@ namespace SymOntoClay.Core.DebugHelpers
     public static class DebugHelperForEntityConditionExpression
     {
 #if DEBUG
-        private static ILogger _logger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         private static readonly CultureInfo _cultureInfo = new CultureInfo("en-GB");
@@ -20,11 +20,14 @@ namespace SymOntoClay.Core.DebugHelpers
         public static string ToString(EntityConditionExpressionNode expr)
         {
 #if DEBUG
-            _logger.Info($"expr = {expr}");
+            //_logger.Info($"expr = {expr}");
 #endif
 
             switch (expr.Kind)
             {
+                case KindOfLogicalQueryNode.Relation:
+                    return RelationToString(expr);
+
                 case KindOfLogicalQueryNode.Concept:
                 case KindOfLogicalQueryNode.QuestionVar:
                 case KindOfLogicalQueryNode.Entity:
@@ -34,9 +37,91 @@ namespace SymOntoClay.Core.DebugHelpers
                 case KindOfLogicalQueryNode.Value:
                     return ValueToString(expr);
 
+                case KindOfLogicalQueryNode.BinaryOperator:
+                    return BinaryOperatorToString(expr);
+
+                case KindOfLogicalQueryNode.Group:
+                    return GroupToString(expr);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(expr.Kind), expr.Kind, null);
             }
+        }
+
+        private static string GroupToString(EntityConditionExpressionNode expr)
+        {
+            return $"({ToString(expr.Left)})";
+        }
+
+        private static string BinaryOperatorToString(EntityConditionExpressionNode expr)
+        {
+            var mark = string.Empty;
+
+            switch (expr.KindOfOperator)
+            {
+                case KindOfOperatorOfLogicalQueryNode.And:
+                    mark = "&";
+                    break;
+
+                case KindOfOperatorOfLogicalQueryNode.Or:
+                    mark = "|";
+                    break;
+
+                case KindOfOperatorOfLogicalQueryNode.Is:
+                    mark = "=";
+                    break;
+
+                case KindOfOperatorOfLogicalQueryNode.IsNot:
+                    mark = "is not";
+                    break;
+
+                case KindOfOperatorOfLogicalQueryNode.More:
+                    mark = ">";
+                    break;
+                case KindOfOperatorOfLogicalQueryNode.MoreOrEqual:
+                    mark = ">=";
+                    break;
+
+                case KindOfOperatorOfLogicalQueryNode.Less:
+                    mark = "<";
+                    break;
+
+                case KindOfOperatorOfLogicalQueryNode.LessOrEqual:
+                    mark = "<=";
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(expr.KindOfOperator), expr.KindOfOperator, null);
+            }
+
+            var sb = new StringBuilder();
+            sb.Append(ToString(expr.Left));
+            sb.Append($" {mark} ");
+            sb.Append(AnnotatedItemToString(expr));
+            sb.Append(ToString(expr.Right));
+
+            return sb.ToString();
+        }
+
+        private static string RelationToString(EntityConditionExpressionNode expr)
+        {
+            var sb = new StringBuilder();
+
+            sb.Append($"{expr.Name.NameValue}(");
+
+            var resultParamsList = new List<string>();
+
+            foreach (var param in expr.ParamsList)
+            {
+                resultParamsList.Add(ToString(param));
+            }
+
+            sb.Append(string.Join(",", resultParamsList));
+
+            sb.Append(")");
+            sb.Append(AnnotatedItemToString(expr));
+
+            return sb.ToString();
         }
 
         private static string ConceptToString(EntityConditionExpressionNode expr)

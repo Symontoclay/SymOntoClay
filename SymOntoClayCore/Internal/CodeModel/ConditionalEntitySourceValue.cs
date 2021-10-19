@@ -1,5 +1,7 @@
-﻿using SymOntoClay.Core.DebugHelpers;
+﻿using NLog;
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -8,33 +10,53 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class ConditionalEntityValue : Value
+    public class ConditionalEntitySourceValue : Value
     {
-        public ConditionalEntityValue(EntityConditionExpressionNode entityConditionExpression, RuleInstance logicalQuery, StrongIdentifierValue name, IEngineContext context, LocalCodeExecutionContext localContext)
+        public ConditionalEntitySourceValue(EntityConditionExpressionNode entityConditionExpression, StrongIdentifierValue name)
         {
-            _context = context;
-            _localContext = localContext;
-
             Expression = entityConditionExpression;
+            Name = name;
+
+            CheckName();
+        }
+
+        public ConditionalEntitySourceValue(RuleInstance logicalQuery, StrongIdentifierValue name)
+        {
             LogicalQuery = logicalQuery;
             Name = name;
+
+            CheckName();
+        }
+
+        private void CheckName()
+        {
+            if(Name == null)
+            {
+                Name = new StrongIdentifierValue();
+            }
         }
 
         public EntityConditionExpressionNode Expression { get; private set; }
         public StrongIdentifierValue Name { get; private set; }
         public RuleInstance LogicalQuery { get; private set; }
 
-        private IEngineContext _context;
-        private LocalCodeExecutionContext _localContext;
+        private ConditionalEntitySourceValue()
+        {
+        }
 
         /// <inheritdoc/>
-        public override KindOfValue KindOfValue => KindOfValue.ConditionalEntityValue;
+        public override KindOfValue KindOfValue => KindOfValue.ConditionalEntitySourceValue;
 
         /// <inheritdoc/>
-        public override bool IsConditionalEntityValue => true;
+        public override bool IsConditionalEntitySourceValue => true;
 
         /// <inheritdoc/>
-        public override ConditionalEntityValue AsConditionalEntityValue => this;
+        public override ConditionalEntitySourceValue AsConditionalEntitySourceValue => this;
+
+        public ConditionalEntityValue ConvertToConditionalEntityValue(IEngineContext context, LocalCodeExecutionContext localContext)
+        {
+            return new ConditionalEntityValue(Expression, LogicalQuery, Name, context, localContext);
+        }
 
         /// <inheritdoc/>
         public override object GetSystemValue()
@@ -45,6 +67,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
+            if (LogicalQuery == null)
+            {
+                LogicalQuery = ConvertorEntityConditionExpressionToRuleInstance.Convert(Expression, options);
+            }
+
             LogicalQuery.CheckDirty(options);
 
             return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.BaseFunctionWeight ^ (Name?.GetLongHashCode(options) ?? 0) ^ LongHashCodeWeights.BaseParamWeight ^ LogicalQuery.GetLongHashCode(options);
@@ -64,8 +91,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return (Value)cloneContext[this];
             }
 
-            var result = new ConditionalEntityValue(Expression?.Clone(cloneContext), LogicalQuery?.Clone(cloneContext), Name?.Clone(cloneContext), _context, _localContext);
+            var result = new ConditionalEntitySourceValue();
             cloneContext[this] = result;
+
+            result.Name = Name?.Clone(cloneContext);
+            result.Expression = Expression?.Clone(cloneContext);
+            result.LogicalQuery = LogicalQuery?.Clone(cloneContext);
 
             result.AppendAnnotations(this, cloneContext);
 

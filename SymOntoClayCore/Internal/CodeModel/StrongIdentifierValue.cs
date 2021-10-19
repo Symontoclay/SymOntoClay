@@ -253,5 +253,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             return $"{spaces}`{NameValue}`";
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString()
+        {
+            return $"`{NameValue}`";
+        }
     }
 }

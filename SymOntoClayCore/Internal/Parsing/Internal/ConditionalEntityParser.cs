@@ -53,7 +53,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private Value _firstCoordinate;
         private Value _secondCoordinate;
         private EntityConditionExpressionNode _entityConditionExpression;
-        private RuleInstance _entityConditionFact;
+        private RuleInstance _entityConditionQuery;
 
         /// <inheritdoc/>
         protected override void OnFinish()
@@ -66,10 +66,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if(_entityConditionExpression != null)
             {
-                var result = new ConditionalEntityValue(_entityConditionExpression, _name);
+                var result = new ConditionalEntitySourceValue(_entityConditionExpression, _name);
 
 #if DEBUG
-                Log($"result = {result}");
+                //Log($"result = {result}");
 #endif
 
                 if (_context.NeedCheckDirty)
@@ -78,24 +78,38 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 }
 
 #if DEBUG
-                Log($"result (after) = {result}");
-                Log($"result.ToDbgString() (after) = {result.ToDbgString()}");
+                //Log($"result (after) = {result}");
+                //Log($"result.ToDbgString() (after) = {result.ToDbgString()}");
 #endif
 
                 Result = result;
                 return;
             }
 
-            throw new NotImplementedException();
+            {
+                var result = new ConditionalEntitySourceValue(_entityConditionQuery, _name);
+
+                if (_context.NeedCheckDirty)
+                {
+                    result.CheckDirty();
+                }
+
+#if DEBUG
+                //Log($"result (after) = {result}");
+                //Log($"result.ToDbgString() (after) = {result.ToDbgString()}");
+#endif
+
+                Result = result;
+            }
         }
 
         /// <inheritdoc/>
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
+            //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");
-            Log($"_state = {_state}");
+            //Log($"_state = {_state}");
 #endif
 
             switch (_state)
@@ -140,8 +154,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 parser.Run();
 
 #if DEBUG
-                                Log($"parser.Result = {parser.Result}");
-                                Log($"parser.Result.GetHumanizeDbgString() = {parser.Result.GetHumanizeDbgString()}");
+                                //Log($"parser.Result = {parser.Result}");
+                                //Log($"parser.Result.GetHumanizeDbgString() = {parser.Result.ToHumanizedString()}");
 #endif
 
                                 _entityConditionExpression = parser.Result;
@@ -149,6 +163,25 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 Exit();
                             }
                             break;
+
+                        case TokenKind.OpenFactBracket:
+                            {
+                                _isWayPoint = false;
+
+                                _context.Recovery(_currToken);
+
+                                var parser = new LogicalQueryParser(_context);
+                                parser.Run();
+
+#if DEBUG
+                                //Log($"parser.Result = {parser.Result}");
+                                //Log($"parser.Result.GetHumanizeDbgString() = {parser.Result.ToHumanizedString()}");
+#endif
+                                _entityConditionQuery = parser.Result;
+
+                                Exit();
+                            }
+                            break;                            
 
                         default:
                             throw new UnexpectedTokenException(_currToken);

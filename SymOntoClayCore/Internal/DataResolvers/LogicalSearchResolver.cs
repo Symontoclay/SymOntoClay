@@ -3206,16 +3206,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return true;
                 }
 
-                if (additionalKeys_1 != null && additionalKeys_2 != null && additionalKeys_1.Intersect(additionalKeys_2).Any())
-                {
-                    if (queryExecutingCard != null)
-                    {
-                        queryExecutingCard.UsedKeysList.Add(key_1);
-                        queryExecutingCard.UsedKeysList.Add(key_2);
-                    }
+                //if (additionalKeys_1 != null && additionalKeys_2 != null && additionalKeys_1.Intersect(additionalKeys_2).Any())
+                //{
+                //    if (queryExecutingCard != null)
+                //    {
+                //        queryExecutingCard.UsedKeysList.Add(key_1);
+                //        queryExecutingCard.UsedKeysList.Add(key_2);
+                //    }
 
-                    return true;
-                }
+                //    return true;
+                //}
 
                 return false;
             }

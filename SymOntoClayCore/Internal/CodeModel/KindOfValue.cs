@@ -49,6 +49,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         FunctionValue,
         ErrorValue,
         ActionInstanceValue,
+        ConditionalEntitySourceValue,
         ConditionalEntityValue
     }
 }

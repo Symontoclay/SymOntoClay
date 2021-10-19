@@ -27,9 +27,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
+            //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");
-            Log($"_state = {_state}");
+            //Log($"_state = {_state}");
 #endif
 
             switch(_state)
@@ -59,8 +59,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 parser.Run();
 
 #if DEBUG
-                                Log($"parser.Result = {parser.Result}");
-                                Log($"parser.Result.GetHumanizeDbgString() = {parser.Result.GetHumanizeDbgString()}");
+                                //Log($"parser.Result = {parser.Result}");
+                                //Log($"parser.Result.GetHumanizeDbgString() = {parser.Result.ToHumanizedString()}");
 #endif
 
                                 Result = parser.Result;

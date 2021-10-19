@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
@@ -140,6 +141,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             return $"{spaces}{SystemValue}";
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString()
+        {
+            if (SystemValue == null)
+            {
+                return "NULL";
+            }
+
+            return SystemValue.Value.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

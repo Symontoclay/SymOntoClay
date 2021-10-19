@@ -241,10 +241,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         protected override string PropertiesToDbgString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            return $"{spaces}{GetHumanizeDbgString()}";
+            return $"{spaces}{ToHumanizedString()}";
         }
 
-        public string GetHumanizeDbgString()
+        public string ToHumanizedString()
         {
             return DebugHelperForEntityConditionExpression.ToString(this);
         }

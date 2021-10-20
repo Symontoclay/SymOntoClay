@@ -231,6 +231,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
 
+            return $"{spaces}{ToHumanizedString()}";
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString()
+        {
             var sb = new StringBuilder();
 
             if (LeftBoundary == null)
@@ -239,7 +245,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
             else
             {
-                if(LeftBoundary.Includes)
+                if (LeftBoundary.Includes)
                 {
                     sb.Append("[");
                 }
@@ -253,7 +259,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.Append(",");
 
-            if(RightBoundary == null)
+            if (RightBoundary == null)
             {
                 sb.Append("+∞)");
             }
@@ -271,7 +277,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 }
             }
 
-            return $"{spaces}{sb}";
+            return sb.ToString();
         }
     }
 }

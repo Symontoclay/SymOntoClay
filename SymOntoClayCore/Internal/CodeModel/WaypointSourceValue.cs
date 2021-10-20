@@ -152,6 +152,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override string PropertiesToDbgString(uint n)
         {
+            var spaces = DisplayHelper.Spaces(n);
+            return $"{spaces}{ToHumanizedString()}";
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString()
+        {
             if (Name != null && !Name.IsEmpty)
             {
                 return $"{Name.NameValue}[{Distance.ToDbgString()}, {HorizontalAngle.ToDbgString()}]";

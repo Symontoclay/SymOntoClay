@@ -1,25 +1,4 @@
-/*MIT License
-
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.*/
-
+﻿using Newtonsoft.Json;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
@@ -31,7 +10,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public class LogicalExpressionParser : BaseInternalParser
+    public class EntityConditionExpressionParser : BaseInternalParser
     {
         private enum State
         {
@@ -40,57 +19,33 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotPredicateParameter,
             GotPredicate,
             GotEntity,
-            GotLogicalVar,
-            GotQuestionVar,
             GotConcept,
             GotFuzzyLogicNonNumericSequenceItem,
-            GotOperator,
-            GotAliasVar
+            GotOperator
         }
 
-        public LogicalExpressionParser(LogicalExpressionParserContext context, bool isGroup)
+        public EntityConditionExpressionParser(EntityConditionExpressionParserContext context, bool isGroup)
             : base(context.InternalParserContext)
         {
-            if(isGroup)
-            {
-                _terminatingTokenKindList = new List<TokenKind> { TokenKind.CloseFactBracket };
-            }
-            else
-            {
-                _terminatingTokenKindList = new List<TokenKind> { TokenKind.Comma, TokenKind.CloseRoundBracket };
-            }
-
-            _logicalExpressionParserContext = context;
+            _entityConditionExpressionParserContext = context;
             _isGroup = isGroup;
         }
 
-        public LogicalExpressionParser(LogicalExpressionParserContext context)
-            : this(context, new List<TokenKind> { TokenKind.Comma, TokenKind.CloseRoundBracket })
+        public EntityConditionExpressionParser(EntityConditionExpressionParserContext context)
+            : this(context, false)
         {
-        }
-
-        public LogicalExpressionParser(LogicalExpressionParserContext context, TokenKind terminatingTokenKind)
-            : this(context, new List<TokenKind>() { terminatingTokenKind })
-        {
-        }
-
-        public LogicalExpressionParser(LogicalExpressionParserContext context, List<TokenKind> terminatingTokenKindList)
-            : base(context.InternalParserContext)
-        {
-            _terminatingTokenKindList = terminatingTokenKindList;
-            _logicalExpressionParserContext = context;
+            _entityConditionExpressionParserContext = context;
         }
 
         private bool _isGroup;
-        private List<TokenKind> _terminatingTokenKindList = new List<TokenKind>();
-        private LogicalExpressionParserContext _logicalExpressionParserContext;
+        private EntityConditionExpressionParserContext _entityConditionExpressionParserContext;
         private State _state = State.Init;
 
-        public LogicalQueryNode Result { get; private set; }
+        public EntityConditionExpressionNode Result { get; private set; }
 
         private IntermediateAstNodePoint _nodePoint = new IntermediateAstNodePoint();
 
-        private LogicalQueryNode _lastLogicalQueryNode;
+        private EntityConditionExpressionNode _lastLogicalQueryNode;
         private FuzzyLogicNonNumericSequenceValue _fuzzyLogicNonNumericSequenceValue;
 
         private List<StrongIdentifierValue> _unresolvedAiases = new List<StrongIdentifierValue>();
@@ -98,28 +53,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnFinish()
         {
-            Result = _nodePoint.BuildExpr<LogicalQueryNode>();
+            Result = _nodePoint.BuildExpr<EntityConditionExpressionNode>();
         }
 
         /// <inheritdoc/>
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_isGroup = {_isGroup}");
             //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");
-            //Log($"_nodePoint = {_nodePoint}");
+            //Log($"_state = {_state}");
+            //Log($"_isGroup = {_isGroup}");
 #endif
 
-            if(_terminatingTokenKindList.Contains(_currToken.TokenKind))
-            {
-                _context.Recovery(_currToken);
-                Exit();
-                return;
-            }
-
-            switch(_state)
+            switch (_state)
             {
                 case State.Init:
                     switch (_currToken.TokenKind)
@@ -138,7 +85,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 //Log($"name = {name}");
 #endif
 
-                                var node = new LogicalQueryNode();
+                                var node = new EntityConditionExpressionNode();
                                 node.Kind = KindOfLogicalQueryNode.Entity;
                                 node.Name = name;
 
@@ -158,12 +105,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.WaitForPredicateParameter:
                     switch (_currToken.TokenKind)
                     {
-                        case TokenKind.Entity:                        
+                        case TokenKind.Entity:
                         case TokenKind.LogicalVar:
-                        {
+                            {
                                 _context.Recovery(_currToken);
 
-                                var parser = new LogicalExpressionParser(_logicalExpressionParserContext);
+                                var parser = new EntityConditionExpressionParser(_entityConditionExpressionParserContext);
                                 parser.Run();
 
 #if DEBUG
@@ -179,7 +126,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Word:
                         case TokenKind.Identifier:
                             {
-                                switch(_currToken.KeyWordTokenKind)
+                                switch (_currToken.KeyWordTokenKind)
                                 {
                                     case KeyWordTokenKind.Null:
                                         {
@@ -192,7 +139,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                             //Log($"parser.Result = {parser.Result}");
 #endif
 
-                                            var node = new LogicalQueryNode();
+                                            var node = new EntityConditionExpressionNode();
                                             node.Kind = KindOfLogicalQueryNode.Value;
                                             node.Value = parser.Result;
 
@@ -208,7 +155,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                             var terminatingTokenKindList = new List<TokenKind>() { TokenKind.CloseRoundBracket };
 
-                                            if(nextToken.TokenKind != TokenKind.OpenRoundBracket)
+                                            if (nextToken.TokenKind != TokenKind.OpenRoundBracket)
                                             {
                                                 terminatingTokenKindList.Add(TokenKind.Comma);
                                             }
@@ -216,19 +163,19 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #if DEBUG
                                             //if (_currToken.Content == "distance")
                                             //{
-                                                //throw new NotImplementedException();
+                                            //throw new NotImplementedException();
                                             //}
 #endif
 
 #if DEBUG
-                                            //Log($"nextToken = {nextToken}");
+                                            Log($"nextToken = {nextToken}");
 #endif
 
                                             _context.Recovery(_currToken);
                                             _context.Recovery(nextToken);
-                                            
 
-                                            var parser = new LogicalExpressionParser(_logicalExpressionParserContext, terminatingTokenKindList);
+
+                                            var parser = new EntityConditionExpressionParser(_entityConditionExpressionParserContext);
                                             parser.Run();
 
 #if DEBUG
@@ -259,7 +206,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #if DEBUG
                                 //Log($"parser.Result = {parser.Result}");
 #endif
-                                var node = new LogicalQueryNode();
+                                var node = new EntityConditionExpressionNode();
                                 node.Kind = KindOfLogicalQueryNode.Value;
                                 node.Value = parser.Result;
 
@@ -282,7 +229,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                 //throw new NotImplementedException();
 
-                                var node = new LogicalQueryNode();
+                                var node = new EntityConditionExpressionNode();
                                 node.Kind = KindOfLogicalQueryNode.Value;
                                 node.Value = parser.Result;
 
@@ -329,47 +276,26 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.CloseRoundBracket:
-                            if(_isGroup)
-                            {
-                                Exit();
-                                break;
-                            }
-                            throw new UnexpectedTokenException(_currToken);
+                            //if(!_isGroup)
+                            //{
+                            //    _context.Recovery(_currToken);
+                            //}
+                            Exit();
+                            break;
 
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
                     break;
 
+                case State.GotEntity:
                 case State.GotConcept:
                     switch (_currToken.TokenKind)
                     {
-                        case TokenKind.Word:
-                            switch (_currToken.KeyWordTokenKind)
-                            {
-                                case KeyWordTokenKind.Is:
-                                    ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.Is);
-                                    break;
-
-                                default:
-                                    throw new UnexpectedTokenException(_currToken);
-                            }
-                            break;
-
-                        case TokenKind.More:
-                            ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.More);
-                            break;
-
-                        case TokenKind.MoreOrEqual:
-                            ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.MoreOrEqual);
-                            break;
-
-                        case TokenKind.Less:
-                            ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.Less);
-                            break;
-
-                        case TokenKind.LessOrEqual:
-                            ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.LessOrEqual);
+                        case TokenKind.Comma:
+                        case TokenKind.CloseRoundBracket:
+                            _context.Recovery(_currToken);
+                            Exit();
                             break;
 
                         case TokenKind.And:
@@ -378,6 +304,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.Or:
                             ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.Or);
+                            break;
+
+                        case TokenKind.Assign:
+                            ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.Is);
                             break;
 
                         default:
@@ -395,40 +325,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.OpenRoundBracket:
                             ProcessGroup();
-                            break;
-
-                        case TokenKind.Not:
-                            ProcessUnaryOperator(KindOfOperatorOfLogicalQueryNode.Not);
-                            break;
-
-                        case TokenKind.LogicalVar:
-                            {
-                                var value = NameHelper.CreateName(_currToken.Content);
-
-                                ProcessConceptOrQuestionVar(value);
-                            }
-                            break;
-
-                        case TokenKind.Number:
-                            {
-                                _context.Recovery(_currToken);
-
-                                var parser = new NumberParser(_context);
-                                parser.Run();
-
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-#endif
-                                var node = new LogicalQueryNode();
-                                node.Kind = KindOfLogicalQueryNode.Value;
-                                node.Value = parser.Result;
-
-                                var intermediateNode = new IntermediateAstNode(node);
-
-                                AstNodesLinker.SetNode(intermediateNode, _nodePoint);
-
-                                _state = State.GotConcept;
-                            }
                             break;
 
                         default:
@@ -469,19 +365,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotAliasVar:
-                    switch (_currToken.TokenKind)
-                    {
-                        case TokenKind.Word:
-                        case TokenKind.Identifier:
-                            ProcessWord();
-                            break;
-
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
-                    }
-                    break;
-
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
@@ -489,11 +372,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessGroup()
         {
-            var node = new LogicalQueryNode();
+            var node = new EntityConditionExpressionNode();
             _lastLogicalQueryNode = node;
             node.Kind = KindOfLogicalQueryNode.Group;
 
-            var parser = new LogicalExpressionParser(_logicalExpressionParserContext, true);
+            var parser = new EntityConditionExpressionParser(_entityConditionExpressionParserContext, true);
             parser.Run();
 
 #if DEBUG
@@ -537,7 +420,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             switch (value.KindOfName)
             {
                 case KindOfName.Concept:
-                    if(_lastLogicalQueryNode != null && _lastLogicalQueryNode.KindOfOperator == KindOfOperatorOfLogicalQueryNode.Is && _currToken.KeyWordTokenKind == KeyWordTokenKind.Not)
+                    if (_lastLogicalQueryNode != null && _lastLogicalQueryNode.KindOfOperator == KindOfOperatorOfLogicalQueryNode.Is && _currToken.KeyWordTokenKind == KeyWordTokenKind.Not)
                     {
                         _context.Recovery(nextToken);
                         _lastLogicalQueryNode.KindOfOperator = KindOfOperatorOfLogicalQueryNode.IsNot;
@@ -552,8 +435,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.Comma:
                         case TokenKind.CloseRoundBracket:
-                        case TokenKind.CloseFigureBracket:
-                        case TokenKind.CloseFactBracket:
                         case TokenKind.More:
                         case TokenKind.MoreOrEqual:
                         case TokenKind.Less:
@@ -582,7 +463,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.Identifier:
-                            switch(_state)
+                            switch (_state)
                             {
                                 case State.Init:
                                 case State.GotOperator:
@@ -597,35 +478,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.And:
                         case TokenKind.Or:
+                        case TokenKind.Assign:
                             _context.Recovery(nextToken);
                             ProcessConceptOrQuestionVar(value);
                             break;
 
                         default:
                             throw new UnexpectedTokenException(nextToken);
-                    }
-                    break;
-
-                case KindOfName.LogicalVar:
-                    switch(nextToken.TokenKind)
-                    {
-                        case TokenKind.OpenRoundBracket:
-                            ProcessPredicate(value);
-                            break;
-
-                        case TokenKind.Comma:
-                        case TokenKind.CloseRoundBracket:
-                            _context.Recovery(nextToken);
-                            ProcessConceptOrQuestionVar(value);
-                            break;
-
-                        case TokenKind.Assign:
-                            _unresolvedAiases.Add(value);
-                            _state = State.GotAliasVar;
-                            break;
-
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
                     }
                     break;
 
@@ -638,7 +497,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _fuzzyLogicNonNumericSequenceValue = new FuzzyLogicNonNumericSequenceValue();
 
-            var node = new LogicalQueryNode();
+            var node = new EntityConditionExpressionNode();
             node.Kind = KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence;
 
             node.FuzzyLogicNonNumericSequenceValue = _fuzzyLogicNonNumericSequenceValue;
@@ -671,9 +530,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _state = State.GotConcept;
         }
 
-        private LogicalQueryNode CreateExpressionNodeByStrongIdentifierValue(StrongIdentifierValue value)
+        private EntityConditionExpressionNode CreateExpressionNodeByStrongIdentifierValue(StrongIdentifierValue value)
         {
-            var node = new LogicalQueryNode();
+            var node = new EntityConditionExpressionNode();
 
             var kindOfName = value.KindOfName;
 
@@ -702,17 +561,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessPredicate(StrongIdentifierValue name)
         {
-            var node = new LogicalQueryNode();
+            var node = new EntityConditionExpressionNode();
             _lastLogicalQueryNode = node;
             node.Kind = KindOfLogicalQueryNode.Relation;
 
             node.Name = name;
 
-            node.ParamsList = new List<LogicalQueryNode>();
+            node.ParamsList = new List<EntityConditionExpressionNode>();
 
-            if(_unresolvedAiases.Any())
+            if (_unresolvedAiases.Any())
             {
-                var aliasesDict = _logicalExpressionParserContext.AliasesDict;
+                var aliasesDict = _entityConditionExpressionParserContext.AliasesDict;
 
                 foreach (var unresolvedAlias in _unresolvedAiases)
                 {
@@ -720,7 +579,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     //Log($"unresolvedAlias = {unresolvedAlias}");
 #endif
 
-                    if(aliasesDict.ContainsKey(unresolvedAlias))
+                    if (aliasesDict.ContainsKey(unresolvedAlias))
                     {
                         throw new Exception($"Variable {unresolvedAlias.NameValue} has been bound multiple time.");
                     }
@@ -746,14 +605,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode kindOfOperator)
         {
-            var node = new LogicalQueryNode();
+            var node = new EntityConditionExpressionNode();
             _lastLogicalQueryNode = node;
             node.Kind = KindOfLogicalQueryNode.BinaryOperator;
             node.KindOfOperator = kindOfOperator;
 
             var kind = KindOfOperator.Unknown;
 
-            switch(kindOfOperator)
+            switch (kindOfOperator)
             {
                 case KindOfOperatorOfLogicalQueryNode.And:
                     kind = KindOfOperator.And;
@@ -798,39 +657,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #endif
 
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.BinaryOperator, priority);
-
-            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
-
-            _state = State.GotOperator;
-        }
-
-        private void ProcessUnaryOperator(KindOfOperatorOfLogicalQueryNode kindOfOperator)
-        {
-            var node = new LogicalQueryNode();
-            _lastLogicalQueryNode = node;
-            node.Kind = KindOfLogicalQueryNode.UnaryOperator;
-
-            node.KindOfOperator = kindOfOperator;
-
-            var kind = KindOfOperator.Unknown;
-
-            switch (kindOfOperator)
-            {
-                case KindOfOperatorOfLogicalQueryNode.Not:
-                    kind = KindOfOperator.Not;
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, null);
-            }
-
-            var priority = OperatorsHelper.GetPriority(kind);
-
-#if DEBUG
-            //Log($"priority = {priority}");
-#endif
-
-            var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.UnaryOperator, priority);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
 

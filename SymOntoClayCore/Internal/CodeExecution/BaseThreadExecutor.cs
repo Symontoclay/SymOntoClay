@@ -226,11 +226,28 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         {
                             var value = currentCommand.Value;
 
-                            if(value.IsWaypointSourceValue)
-                            {
-                                var waypointSourceValue = value.AsWaypointSourceValue;
+                            var kindOfValue = value.KindOfValue;
 
-                                value = waypointSourceValue.ConvertToWaypointValue(_context, _currentCodeFrame.LocalContext);
+                            switch(kindOfValue)
+                            {
+                                case KindOfValue.WaypointSourceValue:
+                                    {
+                                        var waypointSourceValue = value.AsWaypointSourceValue;
+
+                                        value = waypointSourceValue.ConvertToWaypointValue(_context, _currentCodeFrame.LocalContext);
+                                    }
+                                    break;
+
+                                case KindOfValue.ConditionalEntitySourceValue:
+                                    {
+                                        var conditionalEntitySourceValue = value.AsConditionalEntitySourceValue;
+
+                                        value = conditionalEntitySourceValue.ConvertToConditionalEntityValue(_context, _currentCodeFrame.LocalContext);
+                                    }
+                                    break;
+
+                                default:
+                                    break;
                             }
 
                             _currentCodeFrame.ValuesStack.Push(value);

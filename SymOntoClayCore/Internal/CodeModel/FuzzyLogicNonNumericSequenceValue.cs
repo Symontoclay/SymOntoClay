@@ -205,5 +205,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             return $"{spaces}`{_debugView}`";
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString()
+        {
+            return $"`{_debugView}`";
+        }
     }
 }

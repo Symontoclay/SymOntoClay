@@ -127,6 +127,9 @@ namespace SymOntoClay.Core.DebugHelpers
                 case KindOfLogicalQueryNode.Relation:
                     return RelationToString(expr);
 
+                case KindOfLogicalQueryNode.Group:
+                    return GroupToString(expr);
+
                 case KindOfLogicalQueryNode.Concept:
                 case KindOfLogicalQueryNode.QuestionVar:
                 case KindOfLogicalQueryNode.Entity:
@@ -142,6 +145,11 @@ namespace SymOntoClay.Core.DebugHelpers
                 default:
                     throw new ArgumentOutOfRangeException(nameof(expr.Kind), expr.Kind, null);
             }
+        }
+
+        private static string GroupToString(LogicalQueryNode expr)
+        {
+            return $"({ToString(expr.Left)})";
         }
 
         private static string UnaryOperatorToString(LogicalQueryNode expr)

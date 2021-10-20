@@ -164,7 +164,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 #if DEBUG
             //_gbcLogger.Info($"source = {source}");
 #endif
-
+            
             switch (source.Kind)
             {
                 case KindOfLogicalQueryNode.BinaryOperator:
@@ -217,6 +217,9 @@ namespace SymOntoClay.Core.Internal.Convertors
                     return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict);
 
                 case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
+                    return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict);
+
+                case KindOfLogicalQueryNode.Group:
                     return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict);
 
                 default:
@@ -282,7 +285,7 @@ namespace SymOntoClay.Core.Internal.Convertors
                 return null;
             }
 
-            if (source.Kind == KindOfLogicalQueryNode.LogicalVar && aliasesDict.Any())
+            if (source.Kind == KindOfLogicalQueryNode.LogicalVar && aliasesDict != null && aliasesDict.Any())
             {
                 if(aliasesDict.ContainsKey(source.Name))
                 {

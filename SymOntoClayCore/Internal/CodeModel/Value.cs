@@ -92,9 +92,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsActionInstanceValue => false;
         public virtual ActionInstanceValue AsActionInstanceValue => null;
 
+        public virtual bool IsConditionalEntitySourceValue => false;
+        public virtual ConditionalEntitySourceValue AsConditionalEntitySourceValue => null;
+
+        public virtual bool IsConditionalEntityValue => false;
+        public virtual ConditionalEntityValue AsConditionalEntityValue => null;
+
         public virtual IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => throw new NotImplementedException();
 
         public abstract object GetSystemValue();
+
+        public abstract string ToHumanizedString();
 
         /// <summary>
         /// Clones the instance and returns cloned instance.

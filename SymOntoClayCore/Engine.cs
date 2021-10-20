@@ -190,7 +190,7 @@ namespace SymOntoClay.Core
 
         public void Die()
         {
-            throw new NotImplementedException();
+            _context.Die();
         }
 
         /// <inheritdoc/>

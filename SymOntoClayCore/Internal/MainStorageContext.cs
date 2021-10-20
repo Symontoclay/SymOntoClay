@@ -75,6 +75,11 @@ namespace SymOntoClay.Core.Internal
 
         IActivePeriodicObjectContext IMainStorageContext.ActivePeriodicObjectContext => ActivePeriodicObjectContext;
 
+        public virtual void Die()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <inheritdoc/>
         protected override void OnDisposed()
         {

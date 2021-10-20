@@ -1252,6 +1252,18 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntitySourceValue.ToHumanizedString">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.InstanceId">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.Id">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.Position">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.Specify(SymOntoClay.Core.EntityConstraints[])">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.KindOfValue">
             <inheritdoc/>
         </member>
@@ -3190,6 +3202,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DefaultSettingsOfCodeEntity.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.EngineContext.Die">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.EngineContext.OnDisposed">

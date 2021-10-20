@@ -4,11 +4,12 @@ using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class ConditionalEntityValue : Value
+    public class ConditionalEntityValue : Value, IEntity
     {
         public ConditionalEntityValue(EntityConditionExpressionNode entityConditionExpression, RuleInstance logicalQuery, StrongIdentifierValue name, IEngineContext context, LocalCodeExecutionContext localContext)
         {
@@ -26,6 +27,21 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private IEngineContext _context;
         private LocalCodeExecutionContext _localContext;
+
+        /// <inheritdoc/>
+        public int InstanceId => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        public string Id => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        public Vector3 Position => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        public void Specify(EntityConstraints[] constraints)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.ConditionalEntityValue;

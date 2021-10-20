@@ -39,6 +39,8 @@ namespace SymOntoClay.UnityAsset.Core
         /// <summary>
         /// The type is absolute position.
         /// </summary>
-        Position
+        Position,
+        InstanceId,
+        EntityId
     }
 }

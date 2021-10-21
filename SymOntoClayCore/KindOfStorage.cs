@@ -37,6 +37,7 @@ namespace SymOntoClay.Core
         QueryResult,
         Sentence,
         PublicFacts,
-        PerceptedFacts
+        PerceptedFacts,
+        WorldPublicFacts
     }
 }

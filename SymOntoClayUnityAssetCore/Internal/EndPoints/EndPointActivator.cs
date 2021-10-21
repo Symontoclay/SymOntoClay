@@ -164,9 +164,55 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 case KindOfCommandParameters.ParametersByDict:
                     return MapParamsByParametersByDict(cancellationToken, endpointInfo, command);
 
+                case KindOfCommandParameters.ParametersByList:
+                    return MapParamsByParametersByList(cancellationToken, endpointInfo, command);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfCommandParameters), kindOfCommandParameters, null);
             }
+        }
+
+        private object[] MapParamsByParametersByList(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command)
+        {
+            var argumentsList = endpointInfo.Arguments.Where(p => !p.IsSystemDefiend);
+
+            var resultList = new List<object>();
+            resultList.Add(cancellationToken);
+
+#if DEBUG
+            //Log($"argumentsList.Count() = {argumentsList.Count()}");
+#endif
+
+            var commandParamsEnumerator = command.ParamsList.GetEnumerator();
+
+            foreach (var targetArgument in argumentsList)
+            {
+#if DEBUG
+                //Log($"targetArgument.ParameterInfo.ParameterType.FullName = {targetArgument.ParameterInfo.ParameterType.FullName}");
+#endif
+
+                if(commandParamsEnumerator.MoveNext())
+                {
+                    var targetCommandValue = commandParamsEnumerator.Current;
+
+#if DEBUG
+                    //Log($"targetCommandValue.GetType().FullName = {targetCommandValue.GetType().FullName}");
+                    //Log($"targetCommandValue = {targetCommandValue.ToHumanizedString()}");
+#endif
+                    var targetValue = _platformTypesConvertorsRegistry.Convert(targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType, targetCommandValue);
+
+                    resultList.Add(targetValue);
+                }
+                else
+                {
+                    if (targetArgument.HasDefaultValue)
+                    {
+                        resultList.Add(targetArgument.DefaultValue);
+                    }
+                }
+            }
+
+            return resultList.ToArray();
         }
 
         private object[] MapParamsByParametersByDict(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command)

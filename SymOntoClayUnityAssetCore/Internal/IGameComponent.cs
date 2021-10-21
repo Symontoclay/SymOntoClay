@@ -38,5 +38,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         void RunInMainThread(Action function);
         TResult RunInMainThread<TResult>(Func<TResult> function);
         IStorage PublicFactsStorage { get; }
+        void AddPublicFactsStorageOfOtherGameComponent(IStorage storage);
+        void RemovePublicFactsStorageOfOtherGameComponent(IStorage storage);
     }
 }

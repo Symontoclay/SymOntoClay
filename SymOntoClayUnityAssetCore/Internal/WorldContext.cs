@@ -174,6 +174,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private readonly object _worldComponentsListLockObj = new object();
         private readonly List<IWorldCoreComponent> _worldComponentsList = new List<IWorldCoreComponent>();
 
+        /// <inheritdoc/>
         void IWorldCoreContext.AddWorldComponent(IWorldCoreComponent component)
         {
             lock(_worldComponentsListLockObj)
@@ -192,6 +193,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private readonly List<int> _availableInstanceIdList = new List<int>();
         private readonly Dictionary<int, IGameComponent> _gameComponentsDictByInstanceId = new Dictionary<int, IGameComponent>();
 
+        /// <inheritdoc/>
         void IWorldCoreGameComponentContext.AddGameComponent(IGameComponent component)
         {
             lock(_gameComponentsListLockObj)
@@ -209,6 +211,26 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             }
         }
 
+        /// <inheritdoc/>
+        void IWorldCoreGameComponentContext.AddPublicFactsStorage(IGameComponent component)
+        {
+            lock (_gameComponentsListLockObj)
+            {
+                var publicFactsStorage = component.PublicFactsStorage;
+
+                foreach(var gameComponent in _gameComponentsList)
+                {
+                    if(gameComponent == component)
+                    {
+                        continue;
+                    }
+
+                    gameComponent.AddPublicFactsStorageOfOtherGameComponent(publicFactsStorage);
+                }
+            }
+        }
+
+        /// <inheritdoc/>
         void IWorldCoreGameComponentContext.RemoveGameComponent(IGameComponent component)
         {
             lock (_gameComponentsListLockObj)
@@ -220,10 +242,18 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     _availableInstanceIdList.Remove(component.InstanceId);
                     _gameComponentsList.Remove(component);
                     _gameComponentsDictByInstanceId.Remove(instanceId);
+
+                    var publicFactsStorage = component.PublicFactsStorage;
+
+                    foreach (var gameComponent in _gameComponentsList)
+                    {
+                        gameComponent.RemovePublicFactsStorageOfOtherGameComponent(publicFactsStorage);
+                    }
                 }
             }
         }
 
+        /// <inheritdoc/>
         IList<int> IWorldCoreGameComponentContext.AvailableInstanceIdList
         {
             get
@@ -235,6 +265,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             }
         }
 
+        /// <inheritdoc/>
         IStorage IWorldCoreGameComponentContext.GetPublicFactsStorageByInstanceId(int instanceId)
         {
             lock (_gameComponentsListLockObj)
@@ -243,6 +274,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             }
         }
 
+        /// <inheritdoc/>
         string IWorldCoreGameComponentContext.GetIdForFactsByInstanceId(int instanceId)
         {
             lock (_gameComponentsListLockObj)

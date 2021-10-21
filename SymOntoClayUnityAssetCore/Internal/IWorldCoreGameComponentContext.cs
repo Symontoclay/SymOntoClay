@@ -32,7 +32,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
     public interface IWorldCoreGameComponentContext
     {
         void AddGameComponent(IGameComponent component);
+        void AddPublicFactsStorage(IGameComponent component);
         void RemoveGameComponent(IGameComponent component);
+
         IList<int> AvailableInstanceIdList { get; }
         IStorage GetPublicFactsStorageByInstanceId(int instanceId);
         string GetIdForFactsByInstanceId(int instanceId);

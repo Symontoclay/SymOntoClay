@@ -87,6 +87,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 #endif
                 _coreEngine = new Engine(coreEngineSettings);
                 internalContext.CoreEngine = _coreEngine;
+
+                
             }
             catch (Exception e)
             {
@@ -110,6 +112,18 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         public override string IdForFacts => _idForFacts;
 
         /// <inheritdoc/>
+        protected override void OnAddPublicFactsStorageOfOtherGameComponent(IStorage storage)
+        {
+            _coreEngine.AddPublicFactsStorageOfOtherGameComponent(storage);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnRemovePublicFactsStorageOfOtherGameComponent(IStorage storage)
+        {
+            _coreEngine.RemovePublicFactsStorageOfOtherGameComponent(storage);
+        }
+
+        /// <inheritdoc/>
         public override void LoadFromSourceCode()
         {
             base.LoadFromSourceCode();
@@ -118,11 +132,13 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             //{
             _visionComponent?.LoadFromSourceCode();
             _soundReceiverComponent.LoadFromSourceCode();
-                _coreEngine.LoadFromSourceCode();
+            _coreEngine.LoadFromSourceCode();
+
+            _worldContext.AddPublicFactsStorage(this);
             //}
             //catch(Exception e)
             //{
-                //Log(e.ToString());
+            //Log(e.ToString());
 
             //    throw e;
             //}

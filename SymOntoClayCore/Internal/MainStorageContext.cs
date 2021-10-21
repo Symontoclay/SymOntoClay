@@ -77,7 +77,13 @@ namespace SymOntoClay.Core.Internal
 
         public virtual void Die()
         {
-            throw new NotImplementedException();
+            ActivePeriodicObjectContext.Dispose();
+            Storage.Die();
+            Parser.Dispose();
+            //DataResolversFactory.Dispose();
+            CommonNamesStorage.Dispose();
+            InstancesStorage.Dispose();
+            LoaderFromSourceCode.Dispose();
         }
 
         /// <inheritdoc/>

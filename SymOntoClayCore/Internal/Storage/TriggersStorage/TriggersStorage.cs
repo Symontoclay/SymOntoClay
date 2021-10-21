@@ -32,7 +32,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
 {
-    public class TriggersStorage: BaseLoggedComponent, ITriggersStorage
+    public class TriggersStorage: BaseComponent, ITriggersStorage
     {
         public TriggersStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(realStorageContext.MainStorageContext.Logger)
@@ -217,6 +217,15 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
             }
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _nonIndexedSystemEventsInfo.Clear();
+            _nonIndexedLogicConditionalsInfo.Clear();
+
+            base.OnDisposed();
         }
     }
 }

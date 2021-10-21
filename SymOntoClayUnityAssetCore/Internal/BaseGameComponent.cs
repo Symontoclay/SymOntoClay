@@ -26,12 +26,13 @@ using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
 {
     public abstract class BaseGameComponent : IGameComponent
     {
-        private readonly IWorldCoreGameComponentContext _worldContext;
+        protected readonly IWorldCoreGameComponentContext _worldContext;
         private readonly IEntityLogger _logger;
         private readonly IInvokerInMainThread _invokerInMainThread;
         private readonly int _instanceId;
@@ -72,6 +73,26 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         /// <inheritdoc/>
         public abstract string IdForFacts { get; }
+
+        /// <inheritdoc/>
+        void IGameComponent.AddPublicFactsStorageOfOtherGameComponent(IStorage storage)
+        {
+            Task.Run(() => { OnAddPublicFactsStorageOfOtherGameComponent(storage); });
+        }
+
+        protected virtual void OnAddPublicFactsStorageOfOtherGameComponent(IStorage storage)
+        {
+        }
+
+        /// <inheritdoc/>
+        void IGameComponent.RemovePublicFactsStorageOfOtherGameComponent(IStorage storage)
+        {
+            Task.Run(() => { OnRemovePublicFactsStorageOfOtherGameComponent(storage); });
+        }
+
+        protected virtual void OnRemovePublicFactsStorageOfOtherGameComponent(IStorage storage)
+        {
+        }
 
         /// <inheritdoc/>
         public virtual void LoadFromSourceCode()

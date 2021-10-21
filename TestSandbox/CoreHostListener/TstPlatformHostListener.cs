@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
@@ -86,6 +87,21 @@ namespace TestSandbox.CoreHostListener
             }
 
             //Thread.Sleep(5000);
+
+            _logger.Log($"End {name}");
+        }
+
+        [DebuggerHidden]
+        [BipedEndpoint("Take", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
+        public void TakeImpl(CancellationToken cancellationToken, IEntity entity)
+        {
+            var name = GetMethodId();
+
+            _logger.Log($"Begin {name}");
+
+            entity.Specify(EntityConstraints.CanBeTaken, EntityConstraints.OnlyVisible, EntityConstraints.Nearest);
+
+            _logger.Log($"{name} entity.InstanceId = {entity.InstanceId}");
 
             _logger.Log($"End {name}");
         }

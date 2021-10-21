@@ -10,10 +10,13 @@
         //@a = #@(hold(I, this) & weapon);
         //@a = #@(hold(I, this) & (weapon & dog) );
         //@a = #@(hold(#a, this) & (weapon & dog) );
-        @a = #@(color = black);
+        //@a = #@(color = black);
         //@a = #@{: >: { barrel($_) } :};
 
-        @a >> @>log;
+        //@a >> @>log;
+
+        //@@host.take(#@(gun));
+        @@host.take(#@(barrel));
 
         'End' >> @>log;
     }

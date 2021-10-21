@@ -32,7 +32,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
 {
-    public class FuzzyLogicStorage : BaseLoggedComponent, IFuzzyLogicStorage
+    public class FuzzyLogicStorage : BaseComponent, IFuzzyLogicStorage
     {
         public FuzzyLogicStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(realStorageContext.MainStorageContext.Logger)
@@ -209,6 +209,15 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
 
                 return null;
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _valuesDict.Clear();
+            _defaultOperatorsDict.Clear();
+
+            base.OnDisposed();
         }
     }
 }

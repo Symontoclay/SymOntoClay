@@ -48,7 +48,8 @@ namespace SymOntoClay.Core.Internal
         /// <inheritdoc/>
         public override void Die()
         {
-            throw new NotImplementedException();
+            CodeExecutor.Dispose();
+            StatesStorage.Dispose();
 
             base.Die();
         }

@@ -31,7 +31,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 
 namespace SymOntoClay.Core.Internal.Storage.MethodsStorage
 {
-    public class MethodsStorage: BaseLoggedComponent, IMethodsStorage
+    public class MethodsStorage: BaseComponent, IMethodsStorage
     {
         public MethodsStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(realStorageContext.MainStorageContext.Logger)
@@ -203,6 +203,14 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStorage
             }
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _namedFunctionsDict.Clear();
+
+            base.OnDisposed();
         }
     }
 }

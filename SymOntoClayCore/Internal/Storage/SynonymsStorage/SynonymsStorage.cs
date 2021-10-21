@@ -26,7 +26,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.SynonymsStorage
 {
-    public class SynonymsStorage: BaseLoggedComponent, ISynonymsStorage
+    public class SynonymsStorage: BaseComponent, ISynonymsStorage
     {
         public SynonymsStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(realStorageContext.MainStorageContext.Logger)

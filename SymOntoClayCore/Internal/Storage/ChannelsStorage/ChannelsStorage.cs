@@ -31,7 +31,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
 {
-    public class ChannelsStorage: BaseLoggedComponent, IChannelsStorage
+    public class ChannelsStorage: BaseComponent, IChannelsStorage
     {
         public ChannelsStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(realStorageContext.MainStorageContext.Logger)
@@ -135,6 +135,14 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
 
                 return new List<WeightedInheritanceResultItem<Channel>>();
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _nonIndexedInfo.Clear();
+
+            base.OnDisposed();
         }
     }
 }

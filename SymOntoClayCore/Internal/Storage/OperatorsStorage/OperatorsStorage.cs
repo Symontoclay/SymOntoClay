@@ -32,7 +32,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.OperatorsStorage
 {
-    public class OperatorsStorage : BaseLoggedComponent, IOperatorsStorage
+    public class OperatorsStorage : BaseComponent, IOperatorsStorage
     {
         public OperatorsStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(realStorageContext.MainStorageContext.Logger)
@@ -132,6 +132,14 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStorage
 
                 return new List<WeightedInheritanceResultItem<Operator>>();
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _nonIndexedInfo.Clear();
+
+            base.OnDisposed();
         }
     }
 }

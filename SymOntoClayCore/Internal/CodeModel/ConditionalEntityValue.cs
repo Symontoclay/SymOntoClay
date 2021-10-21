@@ -1,24 +1,44 @@
-﻿using SymOntoClay.Core.DebugHelpers;
+﻿using Newtonsoft.Json;
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Storage;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class ConditionalEntityValue : Value, IEntity
+    public class ConditionalEntityValue : LoggedValue, IEntity
     {
         public ConditionalEntityValue(EntityConditionExpressionNode entityConditionExpression, RuleInstance logicalQuery, StrongIdentifierValue name, IEngineContext context, LocalCodeExecutionContext localContext)
+            : base(context.Logger)
         {
             _context = context;
             _localContext = localContext;
+            _worldPublicFactsStorage = context.Storage.WorldPublicFactsStorage;
 
             Expression = entityConditionExpression;
             LogicalQuery = logicalQuery;
             Name = name;
+
+            var dataResolversFactory = context.DataResolversFactory;
+
+            _searcher = dataResolversFactory.GetLogicalSearchResolver();
+
+            _localCodeExecutionContext = new LocalCodeExecutionContext();
+            var localStorageSettings = RealStorageSettingsHelper.Create(context, new List<IStorage> { localContext.Storage, _worldPublicFactsStorage });
+            _storage = new LocalStorage(localStorageSettings);
+            _localCodeExecutionContext.Storage = _storage;
+
+            _searchOptions = new LogicalSearchOptions();
+            _searchOptions.QueryExpression = logicalQuery;
+            _searchOptions.LocalCodeExecutionContext = _localCodeExecutionContext;
         }
 
         public EntityConditionExpressionNode Expression { get; private set; }
@@ -27,19 +47,206 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private IEngineContext _context;
         private LocalCodeExecutionContext _localContext;
+        private IStorage _worldPublicFactsStorage;
+        private readonly LogicalSearchResolver _searcher;
+        private readonly LocalCodeExecutionContext _localCodeExecutionContext;
+        private readonly IStorage _storage;
+        private LogicalSearchOptions _searchOptions;
 
         /// <inheritdoc/>
-        public int InstanceId => throw new NotImplementedException();
-
-        /// <inheritdoc/>
-        public string Id => throw new NotImplementedException();
-
-        /// <inheritdoc/>
-        public Vector3 Position => throw new NotImplementedException();
-
-        /// <inheritdoc/>
-        public void Specify(EntityConstraints[] constraints)
+        public int InstanceId
         {
+            get
+            {
+                CheckForUpdates();
+
+                return _instanceId;
+            }
+        }
+
+        /// <inheritdoc/>
+        public string Id
+        {
+            get
+            {
+                CheckForUpdates();
+
+                return _id;
+            }
+        }
+
+        /// <inheritdoc/>
+        public Vector3 Position
+        {
+            get
+            {
+                CheckForUpdates();
+
+                return _position;
+            }
+        }
+
+        /// <inheritdoc/>
+        public bool IsEmpty
+        {
+            get
+            {
+                CheckForUpdates();
+
+                return _isEmpty;
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Specify(params EntityConstraints[] constraints)
+        {
+#if DEBUG
+            Log($"constraints = {JsonConvert.SerializeObject(constraints?.Select(p => p.ToString()))}");
+#endif
+
+            _constraints = constraints;
+
+            _needUpdate = true;
+        }
+
+        private bool _needUpdate = true;
+        private int _instanceId;
+        private string _id;
+        private Vector3 _position;
+        private bool _isEmpty = true;
+        private EntityConstraints[] _constraints;
+
+        private void CheckForUpdates()
+        {
+#if DEBUG
+            Log("Begin");
+#endif
+
+            if(!_needUpdate)
+            {
+                return;
+            }
+
+#if DEBUG
+            Log($"constraints = {JsonConvert.SerializeObject(_constraints?.Select(p => p.ToString()))}");
+#endif
+
+#if DEBUG
+            //Log($"searchOptions = {searchOptions}");
+#endif
+
+            var searchResult = _searcher.Run(_searchOptions);
+
+#if DEBUG
+            Log($"searchResult = {searchResult}");
+            Log($"_condition = {DebugHelperForRuleInstance.ToString(LogicalQuery)}");
+            Log($"searchResult = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
+            //foreach(var usedKey in searchResult.UsedKeysList)
+            //{
+            //    Log($"usedKey = {usedKey}");
+            //    Log($"_context.Dictionary.GetName(usedKey) = {_context.Dictionary.GetName(usedKey)}");
+            //}
+#endif
+
+            if(searchResult.IsSuccess)
+            {
+                if (searchResult.Items.Count == 0)
+                {
+                    ResetCurrEntity();
+                }
+                else
+                {
+                    ProcessResultWithItems(searchResult);
+                }
+            }
+            else
+            {
+                ResetCurrEntity();
+            }
+        }
+
+        private void ResetCurrEntity()
+        {
+            _id = string.Empty;
+            _instanceId = 0;
+            _position = Vector3.Zero;            
+            _isEmpty = true;
+        }
+
+        private void ProcessResultWithItems(LogicalSearchResult searchResult)
+        {
+            var foundIdsList = new List<StrongIdentifierValue>();
+
+            var targetVarName = "$_";
+
+            foreach (var foundResultItem in searchResult.Items)
+            {
+#if DEBUG
+                Log($"foundResultItem = {foundResultItem}");
+#endif
+
+                foreach(var resultOfVarOfQueryToRelation in foundResultItem.ResultOfVarOfQueryToRelationList)
+                {
+#if DEBUG
+                    Log($"resultOfVarOfQueryToRelation = {resultOfVarOfQueryToRelation}");
+#endif
+
+                    if(resultOfVarOfQueryToRelation.NameOfVar.NameValue == targetVarName && resultOfVarOfQueryToRelation.FoundExpression.Kind == KindOfLogicalQueryNode.Entity)
+                    {
+                        foundIdsList.Add(resultOfVarOfQueryToRelation.FoundExpression.Name);
+                    }
+                }
+            }
+
+#if DEBUG
+            Log($"foundIdsList = {JsonConvert.SerializeObject(foundIdsList?.Select(p => p.NameValue))}");
+#endif
+
+            if(!foundIdsList.Any())
+            {
+                ResetCurrEntity();
+                return;
+            }
+
+            if (_constraints.IsNullOrEmpty())
+            {
+                SetCurrEntity(foundIdsList.First());
+                return;
+            }
+
+            var filteredIdsList = new List<StrongIdentifierValue>();
+
+            foreach(var foundId in foundIdsList)
+            {
+#if DEBUG
+                Log($"foundId = {foundId}");
+#endif
+
+                var isFit = true;
+
+                foreach(var constraint in _constraints)
+                {
+#if DEBUG
+                    Log($"constraint = {constraint}");
+#endif
+
+                    switch(constraint)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(constraint), constraint, null);
+                    }
+                }
+            }
+
+            throw new NotImplementedException();
+        }
+
+        private void SetCurrEntity(StrongIdentifierValue name)
+        {
+#if DEBUG
+            Log($"name = {name}");
+#endif
+
             throw new NotImplementedException();
         }
 

@@ -56,6 +56,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 //Log($"standaloneStorageSettings = {standaloneStorageSettings}");
 #endif
                 HostStorage = new StandaloneStorage(standaloneStorageSettings);
+
+                
             }
             catch (Exception e)
             {
@@ -86,6 +88,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             //try
             //{
                 HostStorage.LoadFromSourceCode();
+
+            _worldContext.AddPublicFactsStorage(this);
             //}
             //catch (Exception e)
             //{

@@ -10,7 +10,8 @@ namespace SymOntoClay.Core
         int InstanceId { get; }
         string Id { get; }
         Vector3 Position { get; }
+        bool IsEmpty { get; }
 
-        void Specify(EntityConstraints[] constraints);
+        void Specify(params EntityConstraints[] constraints);
     }
 }

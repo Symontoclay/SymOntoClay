@@ -99,9 +99,11 @@ namespace TestSandbox.CoreHostListener
 
             _logger.Log($"Begin {name}");
 
-            entity.Specify(EntityConstraints.CanBeTaken, EntityConstraints.OnlyVisible, EntityConstraints.Nearest);
+            entity.Specify(EntityConstraints.CanBeTaken, /*EntityConstraints.OnlyVisible,*/ EntityConstraints.Nearest);
 
             _logger.Log($"{name} entity.InstanceId = {entity.InstanceId}");
+            _logger.Log($"{name} entity.Id = {entity.Id}");
+            _logger.Log($"{name} entity.Position = {entity.Position}");
 
             _logger.Log($"End {name}");
         }

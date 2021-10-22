@@ -20,6 +20,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             : base(context.Logger)
         {
             _context = context;
+            _conditionalEntityHostSupport = context.ConditionalEntityHostSupport;
             _localContext = localContext;
             _worldPublicFactsStorage = context.Storage.WorldPublicFactsStorage;
 
@@ -46,6 +47,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public RuleInstance LogicalQuery { get; private set; }
 
         private IEngineContext _context;
+        private IConditionalEntityHostSupport _conditionalEntityHostSupport;
         private LocalCodeExecutionContext _localContext;
         private IStorage _worldPublicFactsStorage;
         private readonly LogicalSearchResolver _searcher;
@@ -76,7 +78,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public Vector3 Position
+        public string IdForFacts
+        {
+            get
+            {
+                CheckForUpdates();
+
+                return _idForFacts;
+            }
+        }
+
+        /// <inheritdoc/>
+        public Vector3? Position
         {
             get
             {
@@ -100,10 +113,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public void Specify(params EntityConstraints[] constraints)
         {
-#if DEBUG
-            Log($"constraints = {JsonConvert.SerializeObject(constraints?.Select(p => p.ToString()))}");
-#endif
-
             _constraints = constraints;
 
             _needUpdate = true;
@@ -112,14 +121,22 @@ namespace SymOntoClay.Core.Internal.CodeModel
         private bool _needUpdate = true;
         private int _instanceId;
         private string _id;
-        private Vector3 _position;
+        private string _idForFacts;
+        private Vector3? _position;
         private bool _isEmpty = true;
         private EntityConstraints[] _constraints;
+
+        private struct FilteredItem
+        {
+            public StrongIdentifierValue Id { get; set; }
+            public int InstanceId { get; set; }
+            public Vector3? Position { get; set; }
+        }
 
         private void CheckForUpdates()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             if(!_needUpdate)
@@ -127,8 +144,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return;
             }
 
+            _needUpdate = false;
+
 #if DEBUG
-            Log($"constraints = {JsonConvert.SerializeObject(_constraints?.Select(p => p.ToString()))}");
+            //Log($"constraints = {JsonConvert.SerializeObject(_constraints?.Select(p => p.ToString()))}");
 #endif
 
 #if DEBUG
@@ -138,14 +157,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var searchResult = _searcher.Run(_searchOptions);
 
 #if DEBUG
-            Log($"searchResult = {searchResult}");
-            Log($"_condition = {DebugHelperForRuleInstance.ToString(LogicalQuery)}");
-            Log($"searchResult = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
-            //foreach(var usedKey in searchResult.UsedKeysList)
-            //{
-            //    Log($"usedKey = {usedKey}");
-            //    Log($"_context.Dictionary.GetName(usedKey) = {_context.Dictionary.GetName(usedKey)}");
-            //}
+            //Log($"searchResult = {searchResult}");
+            //Log($"_condition = {DebugHelperForRuleInstance.ToString(LogicalQuery)}");
+            //Log($"searchResult = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
 #endif
 
             if(searchResult.IsSuccess)
@@ -165,14 +179,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
         }
 
-        private void ResetCurrEntity()
-        {
-            _id = string.Empty;
-            _instanceId = 0;
-            _position = Vector3.Zero;            
-            _isEmpty = true;
-        }
-
         private void ProcessResultWithItems(LogicalSearchResult searchResult)
         {
             var foundIdsList = new List<StrongIdentifierValue>();
@@ -181,26 +187,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             foreach (var foundResultItem in searchResult.Items)
             {
-#if DEBUG
-                Log($"foundResultItem = {foundResultItem}");
-#endif
-
                 foreach(var resultOfVarOfQueryToRelation in foundResultItem.ResultOfVarOfQueryToRelationList)
                 {
-#if DEBUG
-                    Log($"resultOfVarOfQueryToRelation = {resultOfVarOfQueryToRelation}");
-#endif
-
                     if(resultOfVarOfQueryToRelation.NameOfVar.NameValue == targetVarName && resultOfVarOfQueryToRelation.FoundExpression.Kind == KindOfLogicalQueryNode.Entity)
                     {
                         foundIdsList.Add(resultOfVarOfQueryToRelation.FoundExpression.Name);
                     }
                 }
             }
-
-#if DEBUG
-            Log($"foundIdsList = {JsonConvert.SerializeObject(foundIdsList?.Select(p => p.NameValue))}");
-#endif
 
             if(!foundIdsList.Any())
             {
@@ -214,40 +208,168 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return;
             }
 
-            var filteredIdsList = new List<StrongIdentifierValue>();
+            var filteredItemsList = new List<FilteredItem>();
 
-            foreach(var foundId in foundIdsList)
+            float? minDistance = null;
+
+            foreach (var foundId in foundIdsList)
             {
-#if DEBUG
-                Log($"foundId = {foundId}");
-#endif
+                var instanceId = _conditionalEntityHostSupport.GetInstanceId(foundId);
+
+                if(instanceId == 0)
+                {
+                    continue;
+                }
 
                 var isFit = true;
 
-                foreach(var constraint in _constraints)
+                float? currentMinDistance = null;
+                Vector3? currentPosition = null;
+                var clearFilteredItemsList = false;
+
+                foreach (var constraint in _constraints)
                 {
-#if DEBUG
-                    Log($"constraint = {constraint}");
-#endif
+                    if(!isFit)
+                    {
+                        break;
+                    }
 
                     switch(constraint)
                     {
+                        case EntityConstraints.CanBeTaken:
+                            if(!_conditionalEntityHostSupport.CanBeTaken(instanceId))
+                            {
+                                isFit = false;
+                            }
+                            break;
+
+                        case EntityConstraints.OnlyVisible:
+                            if(!_conditionalEntityHostSupport.IsVisible(instanceId))
+                            {
+                                isFit = false;
+                            }
+                            break;
+
+                        case EntityConstraints.OnlyInvisible:
+                            if (_conditionalEntityHostSupport.IsVisible(instanceId))
+                            {
+                                isFit = false;
+                            }
+                            break;
+
+                        case EntityConstraints.Nearest:
+                            var distanceToAndPosition = _conditionalEntityHostSupport.DistanceToAndPosition(instanceId);
+
+                            var distance = distanceToAndPosition.Item1;
+
+                            if (distance.HasValue)
+                            {
+                                currentPosition = distanceToAndPosition.Item2;
+
+                                if (minDistance.HasValue)
+                                {
+                                    if(minDistance == distance)
+                                    {
+                                        currentMinDistance = distance;
+                                    }
+                                    else
+                                    {
+                                        if(minDistance < distance)
+                                        {
+                                            currentMinDistance = distance;
+                                            
+                                            clearFilteredItemsList = true;
+                                        }
+                                        else
+                                        {
+                                            isFit = false;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    currentMinDistance = distance;
+                                }
+
+                                break;
+                            }
+
+                            isFit = false;
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(constraint), constraint, null);
                     }
                 }
+
+                if(!isFit)
+                {
+                    continue;
+                }
+
+                if (clearFilteredItemsList)
+                {
+                    filteredItemsList.Clear();
+                }
+
+                if(currentMinDistance.HasValue && currentMinDistance < minDistance)
+                {
+                    minDistance = currentMinDistance;
+                }
+
+                filteredItemsList.Add(new FilteredItem() 
+                { 
+                    Id = foundId, 
+                    InstanceId = instanceId,
+                    Position = currentPosition
+                });
             }
 
-            throw new NotImplementedException();
+            if(!filteredItemsList.Any())
+            {
+                ResetCurrEntity();
+                return;
+            }
+
+            var targetFilteredItem = filteredItemsList.First();
+
+            SetCurrEntity(targetFilteredItem.Id, targetFilteredItem.InstanceId, targetFilteredItem.Position);
         }
 
-        private void SetCurrEntity(StrongIdentifierValue name)
+        private void SetCurrEntity(StrongIdentifierValue id)
         {
-#if DEBUG
-            Log($"name = {name}");
-#endif
+            var instanceId = _conditionalEntityHostSupport.GetInstanceId(id);
 
-            throw new NotImplementedException();
+            if(instanceId == 0)
+            {
+                ResetCurrEntity();
+                return;
+            }
+
+            SetCurrEntity(id, instanceId, null);
+        }
+
+        private void SetCurrEntity(StrongIdentifierValue id, int instanceId, Vector3? position)
+        {
+            if (!position.HasValue)
+            {
+                position = _conditionalEntityHostSupport.GetPosition(instanceId);
+            }
+
+            _id = id.NameValue;
+            _idForFacts = _id;
+            _instanceId = instanceId;
+            _position = position;
+            _isEmpty = false;
+        }
+
+        private void ResetCurrEntity()
+        {
+            _id = string.Empty;
+            _idForFacts = string.Empty;
+            _instanceId = 0;
+            _position = null;
+            _isEmpty = true;
         }
 
         /// <inheritdoc/>

@@ -37,8 +37,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         {
             try
             {
-                _idForFacts = settings.IdForFacts;
-
                 _hostSupport = new HostSupportComponent(Logger, settings.PlatformSupport, worldContext);
                 _soundPublisher = new SoundPublisherComponent(Logger, settings.InstanceId, _hostSupport, worldContext);
 
@@ -67,8 +65,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             }
         }
         
-        private readonly string _idForFacts;
-
         private readonly HostSupportComponent _hostSupport;
         private readonly SoundPublisherComponent _soundPublisher;
 
@@ -76,9 +72,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
         /// <inheritdoc/>
         public override IStorage PublicFactsStorage => HostStorage.PublicFactsStorage;
-
-        /// <inheritdoc/>
-        public override string IdForFacts => _idForFacts;
 
         /// <inheritdoc/>
         public override void LoadFromSourceCode()

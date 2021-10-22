@@ -39,6 +39,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading;
 
@@ -192,6 +193,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private readonly List<IGameComponent> _gameComponentsList = new List<IGameComponent>();
         private readonly List<int> _availableInstanceIdList = new List<int>();
         private readonly Dictionary<int, IGameComponent> _gameComponentsDictByInstanceId = new Dictionary<int, IGameComponent>();
+        private readonly Dictionary<string, int> _instancesIdDict = new Dictionary<string, int>();
 
         /// <inheritdoc/>
         void IWorldCoreGameComponentContext.AddGameComponent(IGameComponent component)
@@ -208,6 +210,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 _availableInstanceIdList.Add(instanceId);
                 _gameComponentsList.Add(component);
                 _gameComponentsDictByInstanceId[instanceId] = component;
+                _instancesIdDict[component.Id] = instanceId;
             }
         }
 
@@ -242,6 +245,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     _availableInstanceIdList.Remove(component.InstanceId);
                     _gameComponentsList.Remove(component);
                     _gameComponentsDictByInstanceId.Remove(instanceId);
+                    _instancesIdDict.Remove(component.Id);
 
                     var publicFactsStorage = component.PublicFactsStorage;
 
@@ -250,6 +254,34 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                         gameComponent.RemovePublicFactsStorageOfOtherGameComponent(publicFactsStorage);
                     }
                 }
+            }
+        }
+
+        /// <inheritdoc/>
+        bool IWorldCoreGameComponentContext.CanBeTakenBy(int instanceId, IEntity subject)
+        {
+            lock (_gameComponentsListLockObj)
+            {
+                if(!_gameComponentsDictByInstanceId.ContainsKey(instanceId))
+                {
+                    return false;
+                }
+
+                return _gameComponentsDictByInstanceId[instanceId].CanBeTakenBy(subject);
+            }
+        }
+
+        /// <inheritdoc/>
+        Vector3? IWorldCoreGameComponentContext.GetPosition(int instanceId)
+        {
+            lock (_gameComponentsListLockObj)
+            {
+                if (!_gameComponentsDictByInstanceId.ContainsKey(instanceId))
+                {
+                    return null;
+                }
+
+                return _gameComponentsDictByInstanceId[instanceId].GetPosition();
             }
         }
 
@@ -280,6 +312,20 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             lock (_gameComponentsListLockObj)
             {
                 return _gameComponentsDictByInstanceId[instanceId].IdForFacts;
+            }
+        }
+
+        /// <inheritdoc/>
+        int IWorldCoreGameComponentContext.GetInstanceIdByIdForFacts(string id)
+        {
+            lock (_gameComponentsListLockObj)
+            {
+                if(_instancesIdDict.ContainsKey(id))
+                {
+                    return _instancesIdDict[id];
+                }
+
+                return 0;
             }
         }
 

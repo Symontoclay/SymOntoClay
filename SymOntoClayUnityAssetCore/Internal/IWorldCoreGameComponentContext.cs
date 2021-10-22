@@ -26,6 +26,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
 {
@@ -35,9 +36,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         void AddPublicFactsStorage(IGameComponent component);
         void RemoveGameComponent(IGameComponent component);
 
+        bool CanBeTakenBy(int instanceId, IEntity subject);
+        Vector3? GetPosition(int instanceId);
+
         IList<int> AvailableInstanceIdList { get; }
         IStorage GetPublicFactsStorageByInstanceId(int instanceId);
         string GetIdForFactsByInstanceId(int instanceId);
+        int GetInstanceIdByIdForFacts(string id);
         IEntityLogger CreateLogger(string name);
         IActivePeriodicObjectCommonContext SyncContext { get; }
         

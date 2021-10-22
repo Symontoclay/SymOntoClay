@@ -30,5 +30,6 @@ namespace SymOntoClay.Core.Internal
         ICodeExecutorComponent CodeExecutor { get; }
         IHostSupport HostSupport { get; }
         IHostListener HostListener { get; }
+        IConditionalEntityHostSupport ConditionalEntityHostSupport { get; }
     }
 }

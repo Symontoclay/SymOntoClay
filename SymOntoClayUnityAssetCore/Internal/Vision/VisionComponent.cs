@@ -93,6 +93,19 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             _coreEngine = _internalContext.CoreEngine;
         }
 
+        public Vector3? GetPosition(int instanceId)
+        {
+            lock (_lockObj)
+            {
+                if (_visibleObjectsPositionRegistry.ContainsKey(instanceId))
+                {
+                    return _visibleObjectsPositionRegistry[instanceId];
+                }
+
+                return null;
+            }
+        }
+
         private bool CommandLoop()
         {
             Thread.Sleep(200);
@@ -368,6 +381,20 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             }
 
             return true;
+        }
+
+        public bool IsVisible(int instanceId)
+        {
+#if DEBUG
+            Log($"instanceId = {instanceId}");
+#endif
+
+            if(_visibleObjectsRegistry.ContainsKey(instanceId))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public void BeginStarting()

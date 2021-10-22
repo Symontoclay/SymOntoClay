@@ -1258,6 +1258,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.Id">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.IdForFacts">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.Position">
             <inheritdoc/>
         </member>

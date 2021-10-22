@@ -22,12 +22,14 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.UnityAsset.Core.Internal;
+using SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport;
 using SymOntoClay.UnityAsset.Core.Internal.HostSupport;
 using SymOntoClay.UnityAsset.Core.Internal.SoundPerception;
 using SymOntoClay.UnityAsset.Core.Internal.Vision;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
 using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
@@ -47,9 +49,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
                 var internalContext = new HumanoidNPCGameComponentContext();
 
-                _idForFacts = settings.IdForFacts;
+                _allowPublicPosition = settings.AllowPublicPosition;
 
-                internalContext.IdForFacts = _idForFacts;
+                internalContext.IdForFacts = settings.IdForFacts;
                 internalContext.SelfInstanceId = settings.InstanceId;
 
                 var tmpDir = Path.Combine(worldContext.TmpDir, settings.Id);
@@ -64,6 +66,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
                 _hostSupport = new HostSupportComponent(Logger, settings.PlatformSupport, worldContext);
                 internalContext.HostSupportComponent = _hostSupport;
+
+                _conditionalEntityHostSupportComponent = new ConditionalEntityHostSupportComponent(Logger, settings, _visionComponent, _hostSupport, worldContext);
 
                 _soundPublisher = new SoundPublisherComponent(Logger, settings.InstanceId, _hostSupport, worldContext);
 
@@ -81,6 +85,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 coreEngineSettings.HostListener = this;
                 coreEngineSettings.DateTimeProvider = worldContext.DateTimeProvider;
                 coreEngineSettings.HostSupport = _hostSupport;
+                coreEngineSettings.ConditionalEntityHostSupport = _conditionalEntityHostSupportComponent;
 
 #if DEBUG
                 //Log($"coreEngineSettings = {coreEngineSettings}");
@@ -98,18 +103,16 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             }   
         }
 
-        private readonly string _idForFacts;
+        private readonly bool _allowPublicPosition;
         private readonly Engine _coreEngine;
         private readonly VisionComponent _visionComponent;
         private readonly HostSupportComponent _hostSupport;
         private readonly SoundPublisherComponent _soundPublisher;
         private readonly SoundReceiverComponent _soundReceiverComponent;
+        private readonly ConditionalEntityHostSupportComponent _conditionalEntityHostSupportComponent;
 
         /// <inheritdoc/>
         public override IStorage PublicFactsStorage => _coreEngine.PublicFactsStorage;
-
-        /// <inheritdoc/>
-        public override string IdForFacts => _idForFacts;
 
         /// <inheritdoc/>
         protected override void OnAddPublicFactsStorageOfOtherGameComponent(IStorage storage)
@@ -197,6 +200,23 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         public void PushSoundFact(float power, string text)
         {
             _soundPublisher.PushSoundFact(power, text);
+        }
+
+        /// <inheritdoc/>
+        public override bool CanBeTakenBy(IEntity subject)
+        {
+            return false;
+        }
+
+        /// <inheritdoc/>
+        public override Vector3? GetPosition()
+        {
+            if (_allowPublicPosition)
+            {
+                return _hostSupport.GetCurrentAbsolutePosition();
+            }
+
+            return null;
         }
 
         public void Die()

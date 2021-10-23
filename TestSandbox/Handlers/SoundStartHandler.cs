@@ -32,6 +32,10 @@ namespace TestSandbox.Handlers
 
             settings.Id = "#a";
             settings.InstanceId = 2;
+
+            settings.AllowPublicPosition = true;
+            settings.UseStaticPosition = new Vector3(10, 10, 10);
+
             settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Npcs\Barrel\Barrel.sobj");
             settings.HostListener = platformListener2;
             settings.PlatformSupport = new PlatformSupportCLIStub(new Vector3(100, 100, 100));

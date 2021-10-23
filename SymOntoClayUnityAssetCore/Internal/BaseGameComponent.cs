@@ -25,13 +25,15 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
 {
     public abstract class BaseGameComponent : IGameComponent
     {
-        private readonly IWorldCoreGameComponentContext _worldContext;
+        protected readonly IWorldCoreGameComponentContext _worldContext;
         private readonly IEntityLogger _logger;
         private readonly IInvokerInMainThread _invokerInMainThread;
         private readonly int _instanceId;
@@ -39,14 +41,23 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         protected BaseGameComponent(BaseGameComponentSettings settings, IWorldCoreGameComponentContext worldContext)
         {
             _instanceId = settings.InstanceId;
+            _id = settings.Id;
+            _idForFacts = settings.IdForFacts;
+
             worldContext.AddGameComponent(this);
             _worldContext = worldContext;
             _invokerInMainThread = worldContext.InvokerInMainThread;
             _logger = _worldContext.CreateLogger(settings.Id);
         }
 
+        private readonly string _idForFacts;
+        private readonly string _id;
+
         /// <inheritdoc/>
         public int InstanceId => _instanceId;
+
+        /// <inheritdoc/>
+        public string Id => _id;
 
         public IEntityLogger Logger => _logger;
 
@@ -71,7 +82,33 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public abstract IStorage PublicFactsStorage { get; }
 
         /// <inheritdoc/>
-        public abstract string IdForFacts { get; }
+        public string IdForFacts => _idForFacts;
+
+        /// <inheritdoc/>
+        void IGameComponent.AddPublicFactsStorageOfOtherGameComponent(IStorage storage)
+        {
+            Task.Run(() => { OnAddPublicFactsStorageOfOtherGameComponent(storage); });
+        }
+
+        protected virtual void OnAddPublicFactsStorageOfOtherGameComponent(IStorage storage)
+        {
+        }
+
+        /// <inheritdoc/>
+        void IGameComponent.RemovePublicFactsStorageOfOtherGameComponent(IStorage storage)
+        {
+            Task.Run(() => { OnRemovePublicFactsStorageOfOtherGameComponent(storage); });
+        }
+
+        protected virtual void OnRemovePublicFactsStorageOfOtherGameComponent(IStorage storage)
+        {
+        }
+
+        /// <inheritdoc/>
+        public abstract bool CanBeTakenBy(IEntity subject);
+
+        /// <inheritdoc/>
+        public abstract Vector3? GetPosition();
 
         /// <inheritdoc/>
         public virtual void LoadFromSourceCode()

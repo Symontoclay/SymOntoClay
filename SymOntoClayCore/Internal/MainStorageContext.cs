@@ -75,6 +75,17 @@ namespace SymOntoClay.Core.Internal
 
         IActivePeriodicObjectContext IMainStorageContext.ActivePeriodicObjectContext => ActivePeriodicObjectContext;
 
+        public virtual void Die()
+        {
+            ActivePeriodicObjectContext.Dispose();
+            Storage.Die();
+            Parser.Dispose();
+            //DataResolversFactory.Dispose();
+            CommonNamesStorage.Dispose();
+            InstancesStorage.Dispose();
+            LoaderFromSourceCode.Dispose();
+        }
+
         /// <inheritdoc/>
         protected override void OnDisposed()
         {

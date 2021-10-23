@@ -132,5 +132,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             return $"{spaces}'{SystemValue}'";
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString()
+        {
+            if (SystemValue == null)
+            {
+                return "NULL";
+            }
+
+            return $"'{SystemValue}'";
+        }
     }
 }

@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ using System.Text;
 
 namespace SymOntoClay.Core
 {
-    public interface IStorage : IObjectToString, IObjectToShortString, IObjectToBriefString
+    public interface IStorage : ISymOntoClayDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         KindOfStorage Kind { get; }
         ILogicalStorage LogicalStorage { get; }

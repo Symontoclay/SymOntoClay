@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.StandardLibrary;
 using SymOntoClay.Core.Internal.States;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using System;
 
 namespace SymOntoClay.Core.Internal
 {
@@ -41,9 +42,19 @@ namespace SymOntoClay.Core.Internal
         
         public IHostSupport HostSupport { get; set; }
         public IHostListener HostListener { get; set; }
+        public IConditionalEntityHostSupport ConditionalEntityHostSupport { get; set; }
 
-        ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;        
-        
+        ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;
+
+        /// <inheritdoc/>
+        public override void Die()
+        {
+            CodeExecutor.Dispose();
+            StatesStorage.Dispose();
+
+            base.Die();
+        }
+
         /// <inheritdoc/>
         protected override void OnDisposed()
         {

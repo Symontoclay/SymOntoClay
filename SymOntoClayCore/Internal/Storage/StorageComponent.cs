@@ -53,6 +53,7 @@ namespace SymOntoClay.Core.Internal.Storage
         private RealStorage _selfFactsStorage;
         private RealStorage _perceptedFactsStorage;
         private RealStorage _listenedFactsStorage;
+        private WorldPublicFactsStorage _worldPublicFactsStorage;
         private InheritancePublicFactsReplicator _inheritancePublicFactsReplicator;
 
         private CheckDirtyOptions _checkDirtyOptions;
@@ -68,6 +69,9 @@ namespace SymOntoClay.Core.Internal.Storage
 
         /// <inheritdoc/>
         public IStorage ListenedFactsStorage => _listenedFactsStorage;
+
+        /// <inheritdoc/>
+        public IStorage WorldPublicFactsStorage => _worldPublicFactsStorage;
 
         //private List<RealStorage> _storagesList;
 
@@ -120,6 +124,8 @@ namespace SymOntoClay.Core.Internal.Storage
                         _listenedFactsStorage = new RealStorage(KindOfStorage.PerceptedFacts, listenedFactsStorageSettings);
 
                         parentStoragesList.Add(_listenedFactsStorage);
+
+                        _worldPublicFactsStorage = new WorldPublicFactsStorage(_context.Logger);
                     }
                     break;
 
@@ -383,6 +389,40 @@ namespace SymOntoClay.Core.Internal.Storage
 #endif
 
             _listenedFactsStorage.LogicalStorage.Append(fact);
+        }
+
+        /// <inheritdoc/>
+        public void AddPublicFactsStorageOfOtherGameComponent(IStorage storage)
+        {
+            _worldPublicFactsStorage.AddPublicFactsStorageOfOtherGameComponent(storage);
+        }
+
+        /// <inheritdoc/>
+        public void RemovePublicFactsStorageOfOtherGameComponent(IStorage storage)
+        {
+            _worldPublicFactsStorage.RemovePublicFactsStorageOfOtherGameComponent(storage);
+        }
+
+        public void Die()
+        {
+            _globalStorage.Dispose();
+            _selfFactsStorage.Dispose();
+            _perceptedFactsStorage.Dispose();
+            _listenedFactsStorage.Dispose();
+            _worldPublicFactsStorage.Dispose();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _globalStorage.Dispose();
+            _publicFactsStorage.Dispose();
+            _selfFactsStorage.Dispose();
+            _perceptedFactsStorage.Dispose();
+            _listenedFactsStorage.Dispose();
+            _worldPublicFactsStorage.Dispose();
+
+            base.OnDisposed();
         }
     }
 }

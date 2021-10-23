@@ -57,6 +57,7 @@ namespace SymOntoClay.UnityAsset.Core
 
         public string IdForFacts => _idForFacts;
         public int InstanceId { get; set; }
+        public bool AllowPublicPosition { get; set; }
         public Vector3? UseStaticPosition { get; set; }
 
         #region private members
@@ -64,7 +65,7 @@ namespace SymOntoClay.UnityAsset.Core
         private string _idForFacts;
         private void CalculateIdForFacts()
         {
-            _idForFacts = NameHelper.NormalizeNameStr(_id);
+            _idForFacts = NameHelper.ConvertNameToId(_id);
         }
         #endregion
 
@@ -94,6 +95,7 @@ namespace SymOntoClay.UnityAsset.Core
 
             sb.AppendLine($"{spaces}{nameof(Id)} = {Id}");
             sb.AppendLine($"{spaces}{nameof(InstanceId)} = {InstanceId}");
+            sb.AppendLine($"{spaces}{nameof(AllowPublicPosition)} = {AllowPublicPosition}");
             sb.AppendLine($"{spaces}{nameof(UseStaticPosition)} = {UseStaticPosition}");
 
             return sb.ToString();

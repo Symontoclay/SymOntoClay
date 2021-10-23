@@ -26,6 +26,7 @@ using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.InternalImplementations;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 
 namespace TestSandbox.CoreHostListener
@@ -39,6 +40,16 @@ namespace TestSandbox.CoreHostListener
 
         public override IStorage PublicFactsStorage => throw new NotImplementedException();
 
-        public override string IdForFacts => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public override bool CanBeTakenBy(IEntity subject)
+        {
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public override Vector3? GetPosition()
+        {
+            return null;
+        }
     }
 }

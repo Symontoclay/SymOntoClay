@@ -273,7 +273,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             {
                                 _context.Recovery(_currToken);
 
-                                var parser = new EntityConditionParser(_context);
+                                var parser = new ConditionalEntityParser(_context);
                                 parser.Run();
 
 #if DEBUG
@@ -374,6 +374,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.And:
                             ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.And);
+                            break;
+
+                        case TokenKind.Or:
+                            ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.Or);
                             break;
 
                         default:
@@ -592,6 +596,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.And:
+                        case TokenKind.Or:
                             _context.Recovery(nextToken);
                             ProcessConceptOrQuestionVar(value);
                             break;
@@ -653,7 +658,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             //Log($"value = {value}");
 #endif
 
-            var node = CreateLogicalQueryNodeByStrongIdentifierValue(value);
+            var node = CreateExpressionNodeByStrongIdentifierValue(value);
 
 #if DEBUG
             //Log($"node = {node}");
@@ -666,7 +671,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _state = State.GotConcept;
         }
 
-        private LogicalQueryNode CreateLogicalQueryNodeByStrongIdentifierValue(StrongIdentifierValue value)
+        private LogicalQueryNode CreateExpressionNodeByStrongIdentifierValue(StrongIdentifierValue value)
         {
             var node = new LogicalQueryNode();
 

@@ -37,8 +37,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         {
             try
             {
-                _idForFacts = settings.IdForFacts;
-
                 _hostSupport = new HostSupportComponent(Logger, settings.PlatformSupport, worldContext);
                 _soundPublisher = new SoundPublisherComponent(Logger, settings.InstanceId, _hostSupport, worldContext);
 
@@ -56,6 +54,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 //Log($"standaloneStorageSettings = {standaloneStorageSettings}");
 #endif
                 HostStorage = new StandaloneStorage(standaloneStorageSettings);
+
+                
             }
             catch (Exception e)
             {
@@ -65,8 +65,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             }
         }
         
-        private readonly string _idForFacts;
-
         private readonly HostSupportComponent _hostSupport;
         private readonly SoundPublisherComponent _soundPublisher;
 
@@ -76,9 +74,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         public override IStorage PublicFactsStorage => HostStorage.PublicFactsStorage;
 
         /// <inheritdoc/>
-        public override string IdForFacts => _idForFacts;
-
-        /// <inheritdoc/>
         public override void LoadFromSourceCode()
         {
             base.LoadFromSourceCode();
@@ -86,6 +81,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             //try
             //{
                 HostStorage.LoadFromSourceCode();
+
+            _worldContext.AddPublicFactsStorage(this);
             //}
             //catch (Exception e)
             //{

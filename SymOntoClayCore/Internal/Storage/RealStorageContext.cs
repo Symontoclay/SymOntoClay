@@ -60,5 +60,20 @@ namespace SymOntoClay.Core.Internal.Storage
 
         public event Action<IStorage> OnAddParentStorage;
         public event Action<IStorage> OnRemoveParentStorage;
+
+        public void Dispose()
+        {
+            LogicalStorage.Dispose();
+            MethodsStorage.Dispose();
+            ActionsStorage.Dispose();
+            TriggersStorage.Dispose();
+            InheritanceStorage.Dispose();
+            SynonymsStorage.Dispose();
+            OperatorsStorage.Dispose();
+            ChannelsStorage.Dispose();
+            MetadataStorage.Dispose();
+            VarStorage.Dispose();
+            FuzzyLogicStorage.Dispose();
+        }
     }
 }

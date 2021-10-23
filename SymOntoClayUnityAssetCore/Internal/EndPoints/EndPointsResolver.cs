@@ -76,9 +76,77 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 case KindOfCommandParameters.ParametersByDict:
                     return NGetEndpointInfoByParametersByDict(endPointsList, command);
 
+                case KindOfCommandParameters.ParametersByList:
+                    return NGetEndpointInfoByParametersByList(endPointsList, command);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfCommandParameters), kindOfCommandParameters, null);
             }
+        }
+
+        private IEndpointInfo NGetEndpointInfoByParametersByList(IList<IEndpointInfo> endPointsList, ICommand command)
+        {
+#if DEBUG
+            //Log($"command = {command}");
+#endif
+
+            var resultList = new List<IEndpointInfo>();
+
+            foreach (var endPointInfo in endPointsList)
+            {
+#if DEBUG
+                //Log($"endPointInfo.Name = {endPointInfo.Name}");
+#endif
+
+                var argumentsList = endPointInfo.Arguments.Where(p => !p.IsSystemDefiend);
+
+#if DEBUG
+                //Log($"argumentsList.Count() = {argumentsList.Count()}");
+#endif
+
+                var isFitEndpoint = true;
+
+                var argumentsListEnumerator = argumentsList.GetEnumerator();
+
+                foreach (var commandParamItem in command.ParamsList)
+                {
+#if DEBUG
+                    //Log($"commandParamItem.GetType().FullName = {commandParamItem.GetType().FullName}");
+                    //Log($"commandParamItem = {commandParamItem.ToHumanizedString()}");
+#endif
+
+                    if(!argumentsListEnumerator.MoveNext())
+                    {
+                        isFitEndpoint = false;
+                        break;
+                    }
+
+                    var targetArgument = argumentsListEnumerator.Current;
+
+#if DEBUG
+                    //Log($"targetArgument.ParameterInfo.ParameterType.FullName = {targetArgument.ParameterInfo.ParameterType.FullName}");
+#endif
+
+                    if (!_platformTypesConvertorsRegistry.CanConvert(commandParamItem.GetType(), targetArgument.ParameterInfo.ParameterType))
+                    {
+                        isFitEndpoint = false;
+                        break;
+                    }
+                }
+
+#if DEBUG
+                //Log($"isFitEndpoint = {isFitEndpoint}");
+#endif
+
+                if (!isFitEndpoint)
+                {
+                    break;
+                }
+
+                resultList.Add(endPointInfo);
+            }
+
+            return resultList.FirstOrDefault();
         }
 
         private IEndpointInfo NGetEndpointInfoByParametersByDict(IList<IEndpointInfo> endPointsList, ICommand command)

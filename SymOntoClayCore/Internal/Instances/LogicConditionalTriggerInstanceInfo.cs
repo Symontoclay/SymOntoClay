@@ -68,6 +68,14 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _storage.LogicalStorage.OnChanged += LogicalStorage_OnChanged;
 
+            _searchOptions = new LogicalSearchOptions();
+            _searchOptions.QueryExpression = _condition;
+            _searchOptions.LocalCodeExecutionContext = _localCodeExecutionContext;
+
+#if DEBUG
+            //Log($"searchOptions = {searchOptions}");
+#endif
+
             lock (_lockObj)
             {
                 DoSearch();
@@ -83,6 +91,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly LocalCodeExecutionContext _localCodeExecutionContext;
         private BaseInstance _parent;
         private RuleInstance _condition;
+        private LogicalSearchOptions _searchOptions;
         private bool _isOn;
         private List<string> _foundKeys = new List<string>();
 
@@ -134,15 +143,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void DoSearch()
         {
-            var searchOptions = new LogicalSearchOptions();
-            searchOptions.QueryExpression = _condition;
-            searchOptions.LocalCodeExecutionContext = _localCodeExecutionContext;
-
-#if DEBUG
-            //Log($"searchOptions = {searchOptions}");
-#endif
-
-            var searchResult = _searcher.Run(searchOptions);
+            var searchResult = _searcher.Run(_searchOptions);
 
 #if DEBUG
             //Log($"searchResult = {searchResult}");

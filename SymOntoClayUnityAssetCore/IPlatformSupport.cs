@@ -33,5 +33,6 @@ namespace SymOntoClay.UnityAsset.Core
         Vector3 ConvertFromRelativeToAbsolute(RelativeCoordinate relativeCoordinate);
         Vector3 GetCurrentAbsolutePosition();
         float GetDirectionToPosition(Vector3 position);
+        bool CanBeTakenBy(IEntity subject);
     }
 }

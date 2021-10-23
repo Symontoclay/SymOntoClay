@@ -31,7 +31,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.ActionsStorage
 {
-    public class ActionsStorage: BaseLoggedComponent, IActionsStorage
+    public class ActionsStorage: BaseComponent, IActionsStorage
     {
         public ActionsStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(realStorageContext.MainStorageContext.Logger)
@@ -276,6 +276,14 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStorage
                 dict[name] = targetDict;
                 return targetDict;
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _actionsDict.Clear();
+
+            base.OnDisposed();
         }
     }
 }

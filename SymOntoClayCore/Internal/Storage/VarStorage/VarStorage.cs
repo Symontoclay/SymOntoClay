@@ -28,7 +28,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.VarStorage
 {
-    public class VarStorage: BaseLoggedComponent, IVarStorage
+    public class VarStorage: BaseComponent, IVarStorage
     {
         public VarStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(realStorageContext.MainStorageContext.Logger)
@@ -114,6 +114,15 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
 
                 return null;
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _systemVariables.Clear();
+            _variables.Clear();
+
+            base.OnDisposed();
         }
     }
 }

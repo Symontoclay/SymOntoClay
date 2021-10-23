@@ -169,6 +169,25 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case TokenKind.EntityCondition:
+                            {
+                                _currentParameter = new CallingParameter();
+                                Result.Parameters.Add(_currentParameter);
+
+                                _context.Recovery(_currToken);
+
+                                var parser = new ConditionalEntityParser(_context);
+                                parser.Run();
+
+                                var node = new ConstValueAstExpression();
+                                node.Value = parser.Result;
+
+                                _currentParameter.Value = node;
+
+                                _state = State.GotPositionedMainParameter;
+                            }
+                            break;
+
                         case TokenKind.CloseRoundBracket:
                             Exit();
                             break;
@@ -211,7 +230,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             {
                                 _context.Recovery(_currToken);
 
-                                var parser = new EntityConditionParser(_context);
+                                var parser = new ConditionalEntityParser(_context);
                                 parser.Run();
 
                                 var node = new ConstValueAstExpression();

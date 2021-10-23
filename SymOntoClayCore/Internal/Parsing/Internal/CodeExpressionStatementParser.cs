@@ -114,6 +114,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessLogicalQueryOperator();
                             break;
 
+                        case TokenKind.EntityCondition:
+                            ProcessEntityCondition();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -246,6 +250,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var value = new StringValue(_currToken.Content);
 
             node.Value = value;
+
+            var intermediateNode = new IntermediateAstNode(node);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+        }
+
+        private void ProcessEntityCondition()
+        {
+            _context.Recovery(_currToken);
+
+            var parser = new ConditionalEntityParser(_context);
+            parser.Run();
+
+            var node = new ConstValueAstExpression();
+            node.Value = parser.Result;
 
             var intermediateNode = new IntermediateAstNode(node);
 

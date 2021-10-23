@@ -60,5 +60,11 @@ namespace SymOntoClay.DefaultCLIEnvironment
         {
             return 12;
         }
+
+        /// <inheritdoc/>
+        public bool CanBeTakenBy(IEntity subject)
+        {
+            return true;
+        }
     }
 }

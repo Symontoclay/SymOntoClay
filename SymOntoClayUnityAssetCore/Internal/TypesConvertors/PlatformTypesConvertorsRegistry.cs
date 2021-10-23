@@ -91,19 +91,27 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors
                 //Log($"dest.FullName = {dest.FullName}");
 #endif
 
-                if (!_convertorsDict.ContainsKey(source))
+                if (_convertorsDict.ContainsKey(source))
                 {
-                    return false;
+                    var targetDict = _convertorsDict[source];
+
+                    if (targetDict.ContainsKey(dest))
+                    {
+                        return true;
+                    }
                 }
 
-                var targetDict = _convertorsDict[source];
-
-                if (!targetDict.ContainsKey(dest))
+                if (source == dest)
                 {
-                    return false;
+                    return true;
                 }
 
-                return true;
+                if (dest.IsAssignableFrom(source))
+                {
+                    return true;
+                }
+
+                return false;
             }
         }
 
@@ -118,18 +126,24 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors
                 //Log($"sourceValue = {sourceValue}");
 #endif
 
-                var convertor = _convertorsDict[sourceType][destType];
-
-#if DEBUG
-                //Log($"convertor = {convertor}");
-#endif
-
-                if (convertor.CoreType == sourceType)
+                if (_convertorsDict.ContainsKey(sourceType))
                 {
-                    return convertor.ConvertToPlatformType(sourceValue, Logger);
+                    var targetDict = _convertorsDict[sourceType];
+
+                    if (targetDict.ContainsKey(destType))
+                    {
+                        var convertor = targetDict[destType];
+
+                        if (convertor.CoreType == sourceType)
+                        {
+                            return convertor.ConvertToPlatformType(sourceValue, Logger);
+                        }
+
+                        return convertor.ConvertToCoreType(sourceValue, Logger);
+                    }
                 }
 
-                return convertor.ConvertToCoreType(sourceValue, Logger);
+                return sourceValue;
             }
         }
     }

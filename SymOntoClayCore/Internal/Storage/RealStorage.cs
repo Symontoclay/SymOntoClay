@@ -257,6 +257,41 @@ namespace SymOntoClay.Core.Internal.Storage
         /// <inheritdoc/>
         public DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get; set; }
 
+        private bool _isDisposed;
+
+        /// <inheritdoc/>
+        public bool IsDisposed
+        {
+            get
+            {
+                lock (_lockObj)
+                {
+                    return _isDisposed;
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            lock (_lockObj)
+            {
+                if (_isDisposed)
+                {
+                    return;
+                }
+
+                _isDisposed = true;
+            }
+
+            OnDisposed();
+        }
+
+        protected virtual void OnDisposed()
+        {
+            _realStorageContext.Dispose();
+        }
+
 #if DEBUG
         /// <inheritdoc/>
         public void DbgPrintFactsAndRules()

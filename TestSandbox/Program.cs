@@ -116,8 +116,8 @@ namespace TestSandbox
             //TstExprNodeHandler();
             //TstParsing();
             //TstMonoBehaviourTestingHandler();//VT<=
-            //TstSoundStartHandler();//<==
-            TstGeneralStartHandler();//<=
+            TstSoundStartHandler();//<==
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

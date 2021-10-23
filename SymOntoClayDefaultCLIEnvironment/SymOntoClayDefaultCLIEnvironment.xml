@@ -13,5 +13,8 @@
         <member name="M:SymOntoClay.DefaultCLIEnvironment.PlatformSupportCLIStub.GetDirectionToPosition(System.Numerics.Vector3)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.DefaultCLIEnvironment.PlatformSupportCLIStub.CanBeTakenBy(SymOntoClay.Core.IEntity)">
+            <inheritdoc/>
+        </member>
     </members>
 </doc>

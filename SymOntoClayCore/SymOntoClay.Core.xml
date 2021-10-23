@@ -482,6 +482,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.ToHumanizedString">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionPtr.IsSystemDefined">
             <inheritdoc/>
         </member>
@@ -642,6 +645,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.ToHumanizedString">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.AstExpression.CloneAstExpression">
@@ -1207,6 +1213,136 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeFile.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntitySourceValue.KindOfValue">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntitySourceValue.IsConditionalEntitySourceValue">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntitySourceValue.AsConditionalEntitySourceValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntitySourceValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntitySourceValue.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntitySourceValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntitySourceValue.CloneValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntitySourceValue.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntitySourceValue.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntitySourceValue.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntitySourceValue.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntitySourceValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntitySourceValue.ToHumanizedString">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.InstanceId">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.Id">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.IdForFacts">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.Position">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.Specify(SymOntoClay.Core.EntityConstraints[])">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.KindOfValue">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.IsConditionalEntityValue">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.AsConditionalEntityValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.CloneValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.ToHumanizedString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EntityConditionExpressionNode.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EntityConditionExpressionNode.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EntityConditionExpressionNode.Clone">
+            <summary>
+            Clones the instance and returns cloned instance.
+            </summary>
+            <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EntityConditionExpressionNode.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            Clones the instance using special context and returns cloned instance.
+            </summary>
+            <param name="context">Special context for providing references continuity.</param>
+            <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EntityConditionExpressionNode.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EntityConditionExpressionNode.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EntityConditionExpressionNode.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EntityConditionExpressionNode.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EntityConditionExpressionNode.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ErrorValue.KindOfValue">
             <inheritdoc/>
         </member>
@@ -1254,6 +1390,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ErrorValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ErrorValue.ToHumanizedString">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.FunctionArgumentInfo.SymOntoClay#Core#Internal#CodeExecution#IFunctionArgument#TypesList">
@@ -1409,6 +1548,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicNonNumericSequenceValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicNonNumericSequenceValue.ToHumanizedString">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicNonNumericValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
@@ -1496,6 +1638,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.HostValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.HostValue.ToHumanizedString">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.InheritanceItem.SuperName">
@@ -1602,6 +1747,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.ToHumanizedString">
             <inheritdoc/>
         </member>
         <member name="F:SymOntoClay.Core.Internal.CodeModel.KindOfLogicalQueryNode.Entity">
@@ -1726,6 +1874,21 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariableConstraintItem.SymOntoClay#CoreHelper#DebugHelpers#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LoggedValue.Log(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LoggedValue.LogChannel(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LoggedValue.Warning(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LoggedValue.Error(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LoggedValue.Error(System.Exception)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
             <inheritdoc/>
         </member>
@@ -1795,6 +1958,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryOperationValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryOperationValue.ToHumanizedString">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.KindOfValue">
             <inheritdoc/>
         </member>
@@ -1828,6 +1994,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.ToHumanizedString">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalValue.KindOfValue">
             <inheritdoc/>
         </member>
@@ -1859,6 +2028,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.ToHumanizedString">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -1911,6 +2083,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.ToHumanizedString">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NullValue.KindOfValue">
             <inheritdoc/>
         </member>
@@ -1933,6 +2108,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NullValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.NullValue.ToHumanizedString">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NumberValue.KindOfValue">
@@ -1982,6 +2160,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.ToHumanizedString">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Operator.IsSystemDefined">
@@ -2070,6 +2251,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.ToHumanizedString">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart.GetNextPartsList">
@@ -2184,6 +2368,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeValue.ToHumanizedString">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
@@ -2383,6 +2570,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.ToHumanizedString">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.SecondaryRulePart.GetNextPartsList">
             <inheritdoc/>
         </member>
@@ -2447,6 +2637,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StringValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StringValue.ToHumanizedString">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.KindOfValue">
             <inheritdoc/>
         </member>
@@ -2505,6 +2698,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.ToHumanizedString">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.TaskValue.KindOfValue">
             <inheritdoc/>
         </member>
@@ -2536,6 +2732,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.ToHumanizedString">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.CloneValue">
@@ -2596,6 +2795,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointSourceValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointSourceValue.ToHumanizedString">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.WaypointValue.KindOfValue">
             <inheritdoc/>
         </member>
@@ -2630,6 +2832,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointValue.ToHumanizedString">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.WorldName">
@@ -3018,6 +3223,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DefaultSettingsOfCodeEntity.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.EngineContext.Die">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.EngineContext.OnDisposed">
@@ -3708,7 +3916,16 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.CompleteStatementParser.OnRun">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.EntityConditionParser.OnFinish">
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.ConditionalEntityParser.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.ConditionalEntityParser.OnRun">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.EntityConditionExpressionParser.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.EntityConditionExpressionParser.OnRun">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.EntityConditionParser.OnRun">
@@ -4274,6 +4491,9 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStorage.ActionsStorage.GetActionsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStorage.ActionsStorage.OnDisposed">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.ChannelsStorage.ChannelsStorage.Kind">
             <inheritdoc/>
         </member>
@@ -4284,6 +4504,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStorage.ChannelsStorage.GetChannelsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStorage.ChannelsStorage.OnDisposed">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.FuzzyLogic.FuzzyLogicStorage.Kind">
@@ -4302,6 +4525,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.FuzzyLogicStorage.GetDefaultOperator(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.FuzzyLogicStorage.OnDisposed">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritancePublicFactsReplicator.ProcessChangeInheritance(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
@@ -4323,6 +4549,30 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStorage.InheritanceStorage.GetItemsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStorage.InheritanceStorage.OnDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.InheritanceStorage.WorldPublicFactsInheritanceStorage.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.InheritanceStorage.WorldPublicFactsInheritanceStorage.Storage">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStorage.WorldPublicFactsInheritanceStorage.GetItemsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStorage.WorldPublicFactsInheritanceStorage.RemoveInheritance(SymOntoClay.Core.Internal.CodeModel.InheritanceItem)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStorage.WorldPublicFactsInheritanceStorage.SetInheritance(SymOntoClay.Core.Internal.CodeModel.InheritanceItem)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStorage.WorldPublicFactsInheritanceStorage.SetInheritance(SymOntoClay.Core.Internal.CodeModel.InheritanceItem,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStorage.WorldPublicFactsInheritanceStorage.OnDisposed">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.Kind">
@@ -4364,6 +4614,45 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.OnDisposed">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.LogicalStorage.WorldPublicFactsLogicalStorage.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.LogicalStorage.WorldPublicFactsLogicalStorage.Storage">
+            <inheritdoc/>
+        </member>
+        <member name="E:SymOntoClay.Core.Internal.Storage.LogicalStorage.WorldPublicFactsLogicalStorage.OnChanged">
+            <inheritdoc/>
+        </member>
+        <member name="E:SymOntoClay.Core.Internal.Storage.LogicalStorage.WorldPublicFactsLogicalStorage.OnChangedWithKeys">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.WorldPublicFactsLogicalStorage.Append(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.WorldPublicFactsLogicalStorage.Append(SymOntoClay.Core.Internal.CodeModel.RuleInstance,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.WorldPublicFactsLogicalStorage.DbgPrintFactsAndRules">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.WorldPublicFactsLogicalStorage.GetAllRelations">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.WorldPublicFactsLogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.WorldPublicFactsLogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.WorldPublicFactsLogicalStorage.Remove(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.WorldPublicFactsLogicalStorage.RemoveById(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.WorldPublicFactsLogicalStorage.OnDisposed">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.MetadataStorage.MetadataStorage.Kind">
             <inheritdoc/>
         </member>
@@ -4374,6 +4663,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.MetadataStorage.MetadataStorage.MainCodeEntity">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.MetadataStorage.MetadataStorage.OnDisposed">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.MethodsStorage.MethodsStorage.Kind">
@@ -4388,6 +4680,9 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.MethodsStorage.MethodsStorage.GetNamedFunctionsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.MethodsStorage.MethodsStorage.OnDisposed">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.OperatorsStorage.OperatorsStorage.Kind">
             <inheritdoc/>
         </member>
@@ -4398,6 +4693,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.OperatorsStorage.OperatorsStorage.GetOperatorsDirectly(SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.KindOfOperator,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.OperatorsStorage.OperatorsStorage.OnDisposed">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.Kind">
@@ -4454,6 +4752,12 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.DefaultSettingsOfCodeEntity">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.IsDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.Dispose">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.DbgPrintFactsAndRules">
             <inheritdoc/>
         </member>
@@ -4505,6 +4809,9 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.StorageComponent.ListenedFactsStorage">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.StorageComponent.WorldPublicFactsStorage">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertPublicFact(System.String)">
             <inheritdoc/>
         </member>
@@ -4524,6 +4831,15 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertListenedFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.AddPublicFactsStorageOfOtherGameComponent(SymOntoClay.Core.IStorage)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.RemovePublicFactsStorageOfOtherGameComponent(SymOntoClay.Core.IStorage)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.OnDisposed">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.SynonymsStorage.SynonymsStorage.Kind">
@@ -4547,6 +4863,9 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStorage.TriggersStorage.GetLogicConditionalTriggersDirectly(System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStorage.TriggersStorage.OnDisposed">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.Kind">
             <inheritdoc/>
         </member>
@@ -4563,6 +4882,93 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.GetValueDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.OnDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.LogicalStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.MethodsStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.ActionsStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.TriggersStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.InheritanceStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.SynonymsStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.OperatorsStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.ChannelsStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.MetadataStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.VarStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.FuzzyLogicStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.DefaultSettingsOfCodeEntity">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.AddParentStorage(SymOntoClay.Core.IStorage)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.RemoveParentStorage(SymOntoClay.Core.IStorage)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.SymOntoClay#Core#IStorage#CollectChainOfStorages(System.Collections.Generic.IList{SymOntoClay.Core.StorageUsingOptions},System.Collections.Generic.IList{SymOntoClay.Core.IStorage},System.Int32,SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.SymOntoClay#Core#IStorage#CollectChainOfStorages(System.Collections.Generic.IList{SymOntoClay.Core.IStorage})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.GetStorages">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.DbgPrintFactsAndRules">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.OnDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Threads.ActivePeriodicObjectCommonContext.IsNeedWating">

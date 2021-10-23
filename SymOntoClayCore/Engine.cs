@@ -188,9 +188,19 @@ namespace SymOntoClay.Core
             _context.Storage.InsertListenedFact(text);
         }
 
+        public void AddPublicFactsStorageOfOtherGameComponent(IStorage storage)
+        {
+            _context.Storage.AddPublicFactsStorageOfOtherGameComponent(storage);
+        }
+
+        public void RemovePublicFactsStorageOfOtherGameComponent(IStorage storage)
+        {
+            _context.Storage.RemovePublicFactsStorageOfOtherGameComponent(storage);
+        }
+
         public void Die()
         {
-            throw new NotImplementedException();
+            _context.Die();
         }
 
         /// <inheritdoc/>

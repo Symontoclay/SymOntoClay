@@ -25,6 +25,7 @@ using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
@@ -34,6 +35,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
         public GameObjectGameComponent(GameObjectSettings settings, IWorldCoreGameComponentContext worldContext)
             : base(settings, worldContext)
         {
+            _allowPublicPosition = settings.AllowPublicPosition;
+            _useStaticPosition = settings.UseStaticPosition;
+
+            _platformSupport = settings.PlatformSupport;
+
             _hostEndpointsRegistry = new EndpointsRegistry(Logger);
 
             var platformEndpointsList = EndpointDescriber.GetEndpointsInfoList(settings.HostListener);
@@ -41,7 +47,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
             _hostEndpointsRegistry.AddEndpointsRange(platformEndpointsList);
         }
 
+        private readonly IPlatformSupport _platformSupport;
+
         private readonly EndpointsRegistry _hostEndpointsRegistry;
+
+        private readonly bool _allowPublicPosition;
+        private readonly Vector3? _useStaticPosition;
 
         public IEndpointsRegistry EndpointsRegistry => _hostEndpointsRegistry;
 
@@ -59,5 +70,32 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
 
         /// <inheritdoc/>
         public override bool IsWaited => true;
+
+        /// <inheritdoc/>
+        public override bool CanBeTakenBy(IEntity subject)
+        {
+            if(_platformSupport == null)
+            {
+                return false;
+            }
+
+            return _platformSupport.CanBeTakenBy(subject);
+        }
+
+        /// <inheritdoc/>
+        public override Vector3? GetPosition()
+        {
+            if(_allowPublicPosition)
+            {
+                if (_platformSupport == null)
+                {
+                    return _useStaticPosition;
+                }
+
+                return _platformSupport.GetCurrentAbsolutePosition();
+            }
+
+            return null;
+        }
     }
 }

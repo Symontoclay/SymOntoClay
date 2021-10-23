@@ -44,14 +44,15 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             context.HostSupport = settings.HostSupport;
             context.HostListener = settings.HostListener;
+
+            context.ConditionalEntityHostSupport = settings.ConditionalEntityHostSupport;
+
             context.StandardLibraryLoader = new StandardLibraryLoader(context);
             context.CodeExecutor = new CodeExecutorComponent(context);
             
             context.LoaderFromSourceCode = new ActiveLoaderFromSourceCode(context);
             context.InstancesStorage = new InstancesStorageComponent(context);
             context.StatesStorage = new StatesStorageComponent(context);
-
-            
 
             return context;
         }

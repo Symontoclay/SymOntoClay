@@ -24,6 +24,7 @@ using SymOntoClay.Core;
 using SymOntoClay.CoreHelper;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
@@ -31,6 +32,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
     public interface IGameComponent: ISymOntoClayDisposable
     {
         int InstanceId { get; }
+        string Id { get; }
         string IdForFacts { get; }
         void LoadFromSourceCode();
         void BeginStarting();
@@ -38,5 +40,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         void RunInMainThread(Action function);
         TResult RunInMainThread<TResult>(Func<TResult> function);
         IStorage PublicFactsStorage { get; }
+        void AddPublicFactsStorageOfOtherGameComponent(IStorage storage);
+        void RemovePublicFactsStorageOfOtherGameComponent(IStorage storage);
+        bool CanBeTakenBy(IEntity subject);
+        Vector3? GetPosition();
     }
 }

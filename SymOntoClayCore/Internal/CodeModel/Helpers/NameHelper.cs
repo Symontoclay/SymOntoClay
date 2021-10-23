@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             return $"#{Guid.NewGuid():D}";
         }
 
-        public static string NormalizeNameStr(string source)
+        public static string ConvertNameToId(string source)
         {
             if(string.IsNullOrWhiteSpace(source))
             {

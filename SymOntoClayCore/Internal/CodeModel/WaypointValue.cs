@@ -31,7 +31,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class WaypointValue : Value
+    public class WaypointValue : LoggedValue
     {
         public WaypointValue(float distance, IEngineContext context)
             : this(distance, 0f, new StrongIdentifierValue(), context)
@@ -44,6 +44,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         public WaypointValue(float distance, float horizontalAngle, StrongIdentifierValue name, IEngineContext context)
+            : base(context.Logger)
         {
             Distance = distance;
             HorizontalAngle = horizontalAngle;
@@ -55,6 +56,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         private WaypointValue(float distance, float horizontalAngle, Vector3 abcoluteCoordinates, StrongIdentifierValue name, IEngineContext context)
+            : base(context.Logger)
         {
             Distance = distance;
             HorizontalAngle = horizontalAngle;
@@ -168,6 +170,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         protected override string PropertiesToDbgString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            return $"{spaces}{ToHumanizedString()}";
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString()
         {
             if (Name != null && !Name.IsEmpty)
             {

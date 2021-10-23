@@ -34,7 +34,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 {
-    public class InheritanceStorage: BaseLoggedComponent, IInheritanceStorage
+    public class InheritanceStorage: BaseComponent, IInheritanceStorage
     {
         public InheritanceStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(realStorageContext.MainStorageContext.Logger)
@@ -279,6 +279,15 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 
                 return new List<WeightedInheritanceResultItem<InheritanceItem>>();
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _nonIndexedInfo.Clear();
+            _factsIdRegistry.Clear();
+
+            base.OnDisposed();
         }
     }
 }

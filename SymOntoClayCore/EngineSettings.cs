@@ -36,7 +36,7 @@ namespace SymOntoClay.Core
         /// </summary>
         public IHostListener HostListener { get; set; }
 
-        
+        public IConditionalEntityHostSupport ConditionalEntityHostSupport { get; set; }
 
         public string TmpDir { get; set; }
 
@@ -50,7 +50,8 @@ namespace SymOntoClay.Core
 
             sb.PrintExisting(n, nameof(HostListener), HostListener);
 
-            
+            sb.PrintExisting(n, nameof(ConditionalEntityHostSupport), ConditionalEntityHostSupport);
+
             sb.AppendLine($"{spaces}{nameof(TmpDir)} = {TmpDir}");
             sb.PrintExisting(n, nameof(HostSupport), HostSupport);
 

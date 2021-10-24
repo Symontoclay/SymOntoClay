@@ -45,6 +45,12 @@
     <None Update="Source\HelloWorld.wspace">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Source\Npcs\Things\M4A1\M4A1.sobj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Source\Npcs\Things\M4A1\M4A1.soc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Source\World\HelloWorld.world">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

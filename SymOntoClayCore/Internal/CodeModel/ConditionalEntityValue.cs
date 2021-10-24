@@ -158,8 +158,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
 #if DEBUG
             //Log($"searchResult = {searchResult}");
-            //Log($"_condition = {DebugHelperForRuleInstance.ToString(LogicalQuery)}");
-            //Log($"searchResult = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
+            Log($"_condition = {DebugHelperForRuleInstance.ToString(LogicalQuery)}");
+            Log($"searchResult = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
 #endif
 
             if(searchResult.IsSuccess)

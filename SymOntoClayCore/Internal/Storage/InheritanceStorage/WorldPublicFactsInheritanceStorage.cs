@@ -82,6 +82,13 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
             throw new NotImplementedException();
         }
 
+#if DEBUG
+        public void DbgPrintInheritances()
+        {
+            throw new NotImplementedException();
+        }
+#endif
+
         /// <inheritdoc/>
         protected override void OnDisposed()
         {

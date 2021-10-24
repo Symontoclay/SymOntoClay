@@ -119,9 +119,14 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 
             name.NameValue = text;
 
-            name.NormalizedNameValue = text.ToLower().Replace("`", string.Empty).Trim();
+            name.NormalizedNameValue = NormalizeString(text);
 
             return name;
+        }
+
+        public static string NormalizeString(string value)
+        {
+            return value.ToLower().Replace("`", string.Empty).Trim();
         }
     }
 }

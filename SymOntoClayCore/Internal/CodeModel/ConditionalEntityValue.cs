@@ -135,47 +135,55 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private void CheckForUpdates()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
-            if(!_needUpdate)
+            try
             {
-                return;
-            }
-
-            _needUpdate = false;
-
 #if DEBUG
-            //Log($"constraints = {JsonConvert.SerializeObject(_constraints?.Select(p => p.ToString()))}");
+                //Log("Begin");
 #endif
 
-#if DEBUG
-            //Log($"searchOptions = {searchOptions}");
-#endif
-
-            var searchResult = _searcher.Run(_searchOptions);
-
-#if DEBUG
-            //Log($"searchResult = {searchResult}");
-            Log($"_condition = {DebugHelperForRuleInstance.ToString(LogicalQuery)}");
-            Log($"searchResult = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
-#endif
-
-            if(searchResult.IsSuccess)
-            {
-                if (searchResult.Items.Count == 0)
+                if (!_needUpdate)
                 {
-                    ResetCurrEntity();
+                    return;
+                }
+
+                _needUpdate = false;
+
+#if DEBUG
+                //Log($"constraints = {JsonConvert.SerializeObject(_constraints?.Select(p => p.ToString()))}");
+#endif
+
+#if DEBUG
+                //Log($"searchOptions = {searchOptions}");
+#endif
+
+                var searchResult = _searcher.Run(_searchOptions);
+
+#if DEBUG
+                //Log($"searchResult = {searchResult}");
+                Log($"_condition = {DebugHelperForRuleInstance.ToString(LogicalQuery)}");
+                Log($"searchResult = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
+                //_worldPublicFactsStorage.DbgPrintFactsAndRules();
+#endif
+
+                if (searchResult.IsSuccess)
+                {
+                    if (searchResult.Items.Count == 0)
+                    {
+                        ResetCurrEntity();
+                    }
+                    else
+                    {
+                        ProcessResultWithItems(searchResult);
+                    }
                 }
                 else
                 {
-                    ProcessResultWithItems(searchResult);
+                    ResetCurrEntity();
                 }
             }
-            else
+            catch(Exception e)
             {
-                ResetCurrEntity();
+                Error(e);
             }
         }
 
@@ -196,7 +204,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 }
             }
 
-            if(!foundIdsList.Any())
+#if DEBUG
+            Log($"foundIdsList = {JsonConvert.SerializeObject(foundIdsList?.Select(p => p.NameValue))}");
+#endif
+
+            if (!foundIdsList.Any())
             {
                 ResetCurrEntity();
                 return;
@@ -214,9 +226,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             foreach (var foundId in foundIdsList)
             {
+#if DEBUG
+                Log($"foundId = {foundId}");
+#endif
+
                 var instanceId = _conditionalEntityHostSupport.GetInstanceId(foundId);
 
-                if(instanceId == 0)
+#if DEBUG
+                Log($"instanceId = {instanceId}");
+#endif
+
+                if (instanceId == 0)
                 {
                     continue;
                 }
@@ -234,7 +254,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         break;
                     }
 
-                    switch(constraint)
+#if DEBUG
+                    Log($"constraint = {constraint}");
+#endif
+
+                    switch (constraint)
                     {
                         case EntityConstraints.CanBeTaken:
                             if(!_conditionalEntityHostSupport.CanBeTaken(instanceId))
@@ -302,7 +326,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     }
                 }
 
-                if(!isFit)
+#if DEBUG
+                Log($"isFit = {isFit}");
+#endif
+
+                if (!isFit)
                 {
                     continue;
                 }

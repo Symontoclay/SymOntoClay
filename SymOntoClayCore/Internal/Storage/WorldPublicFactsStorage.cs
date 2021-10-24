@@ -150,11 +150,18 @@ namespace SymOntoClay.Core.Internal.Storage
             result.Add(this);
         }
 
+#if DEBUG
         /// <inheritdoc/>
         public void DbgPrintFactsAndRules()
         {
-            throw new NotImplementedException();
+            Log("Begin");
+
+            _logicalStorage.DbgPrintFactsAndRules();
+            //_inheritanceStorage.DbgPrintInheritances();
+
+            Log("End");
         }
+#endif
 
         /// <inheritdoc/>
         protected override void OnDisposed()

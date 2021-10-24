@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using NLog.Fluent;
 using SymOntoClay.Core;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -210,7 +211,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 _availableInstanceIdList.Add(instanceId);
                 _gameComponentsList.Add(component);
                 _gameComponentsDictByInstanceId[instanceId] = component;
-                _instancesIdDict[component.Id] = instanceId;
+                _instancesIdDict[NameHelper.NormalizeString(component.Id)] = instanceId;
             }
         }
 
@@ -245,7 +246,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     _availableInstanceIdList.Remove(component.InstanceId);
                     _gameComponentsList.Remove(component);
                     _gameComponentsDictByInstanceId.Remove(instanceId);
-                    _instancesIdDict.Remove(component.Id);
+                    _instancesIdDict.Remove(NameHelper.NormalizeString(component.Id));
 
                     var publicFactsStorage = component.PublicFactsStorage;
 

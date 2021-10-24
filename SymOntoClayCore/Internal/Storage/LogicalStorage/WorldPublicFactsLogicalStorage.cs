@@ -88,11 +88,19 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             throw new NotImplementedException();
         }
 
+#if DEBUG
         /// <inheritdoc/>
         public void DbgPrintFactsAndRules()
         {
-            throw new NotImplementedException();
+            lock (_lockObj)
+            {
+                foreach (var storage in _logicalStorages)
+                {
+                    storage.DbgPrintFactsAndRules();
+                }
+            }
         }
+#endif
 
         /// <inheritdoc/>
         public IList<LogicalQueryNode> GetAllRelations()

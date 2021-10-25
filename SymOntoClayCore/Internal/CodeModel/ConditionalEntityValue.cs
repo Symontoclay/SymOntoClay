@@ -118,6 +118,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
             _needUpdate = true;
         }
 
+        /// <inheritdoc/>
+        public void ResolveIfNeeds()
+        {
+            CheckForUpdates();
+        }
+
+        /// <inheritdoc/>
+        public void Resolve()
+        {
+            NResolve();
+        }
+
         private bool _needUpdate = true;
         private int _instanceId;
         private string _id;
@@ -135,16 +147,21 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private void CheckForUpdates()
         {
+            if (!_needUpdate)
+            {
+                return;
+            }
+
+            NResolve();
+        }
+
+        private void NResolve()
+        {
             try
             {
 #if DEBUG
                 //Log("Begin");
 #endif
-
-                if (!_needUpdate)
-                {
-                    return;
-                }
 
                 _needUpdate = false;
 
@@ -160,8 +177,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
 #if DEBUG
                 //Log($"searchResult = {searchResult}");
-                Log($"_condition = {DebugHelperForRuleInstance.ToString(LogicalQuery)}");
-                Log($"searchResult = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
+                //Log($"_condition = {DebugHelperForRuleInstance.ToString(LogicalQuery)}");
+                //Log($"searchResult = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
                 //_worldPublicFactsStorage.DbgPrintFactsAndRules();
 #endif
 
@@ -181,7 +198,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     ResetCurrEntity();
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Error(e);
             }
@@ -205,7 +222,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
 
 #if DEBUG
-            Log($"foundIdsList = {JsonConvert.SerializeObject(foundIdsList?.Select(p => p.NameValue))}");
+            //Log($"foundIdsList = {JsonConvert.SerializeObject(foundIdsList?.Select(p => p.NameValue))}");
 #endif
 
             if (!foundIdsList.Any())
@@ -227,13 +244,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
             foreach (var foundId in foundIdsList)
             {
 #if DEBUG
-                Log($"foundId = {foundId}");
+                //Log($"foundId = {foundId}");
 #endif
 
                 var instanceId = _conditionalEntityHostSupport.GetInstanceId(foundId);
 
 #if DEBUG
-                Log($"instanceId = {instanceId}");
+                //Log($"instanceId = {instanceId}");
 #endif
 
                 if (instanceId == 0)
@@ -255,7 +272,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     }
 
 #if DEBUG
-                    Log($"constraint = {constraint}");
+                    //Log($"constraint = {constraint}");
 #endif
 
                     switch (constraint)
@@ -327,7 +344,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 }
 
 #if DEBUG
-                Log($"isFit = {isFit}");
+                //Log($"isFit = {isFit}");
 #endif
 
                 if (!isFit)

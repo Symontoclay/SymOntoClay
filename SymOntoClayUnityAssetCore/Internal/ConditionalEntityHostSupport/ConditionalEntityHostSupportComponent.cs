@@ -109,5 +109,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport
         public void Specify(params EntityConstraints[] constraints)
         {
         }
+
+        /// <inheritdoc/>
+        public void Resolve()
+        {
+        }
+
+        /// <inheritdoc/>
+        public void ResolveIfNeeds()
+        {
+        }
     }
 }

@@ -1,8 +1,12 @@
 ﻿app PeaceKeeper
 {
+    //{: see(I, #a) :}
+
     on Init
     {
         'Begin' >> @>log;
+
+        //select {: see(I, $x) & PeaceKeeper($x) :} >> @>log;
 
         //@a = #@[10, 20];
         //@a = #@(barrel);

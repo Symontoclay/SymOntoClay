@@ -93,7 +93,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             var inheritanceItem = new InheritanceItem()
             {
-                IsSystemDefined = true
+                IsSystemDefined = false
             };
 
             inheritanceItem.SubName = newName;

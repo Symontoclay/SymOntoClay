@@ -19,8 +19,9 @@
 
         //@a >> @>log;
 
-        @@host.take(#@(gun));
+        //@@host.take(#@(gun));
         //@@host.take(#@(barrel));
+        @@host.`rotate`(30);
 
         'End' >> @>log;
     }

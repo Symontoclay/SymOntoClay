@@ -125,5 +125,22 @@ namespace TestSandbox.CoreHostListener
 
             _logger.Log("End");
         }
+
+        [DebuggerHidden]
+        [BipedEndpoint("Rotate", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
+        public void RotateImpl(CancellationToken cancellationToken, float direction)
+        {
+#if DEBUG
+            var methodId = GetMethodId();
+
+            _logger.Log($"RotateImpl Begin {methodId}; direction = {direction}");
+#endif
+
+
+
+#if DEBUG
+            _logger.Log($"RotateImpl End {methodId}");
+#endif
+        }
     }
 }

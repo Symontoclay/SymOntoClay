@@ -137,7 +137,13 @@ namespace SymOntoClay.Core.Internal.Storage
             var weightedInheritanceItemsList = _inheritanceResolver.GetWeightedInheritanceItems(_selfName, _localCodeExecutionContext, _resolverOptions).Where(p => !p.OriginalItem.IsSystemDefined);
 
 #if DEBUG
+            //Log($"weightedInheritanceItemsList = {weightedInheritanceItemsList.Select(p => p.OriginalItem).WriteListToString()}");
             //Log($"weightedInheritanceItemsList = {weightedInheritanceItemsList.WriteListToString()}");
+            //Log($"_context.Id = {_context.Id}");
+#endif
+
+#if DEBUG
+            //Log($"weightedInheritanceItemsList (after) = {weightedInheritanceItemsList.Select(p => p.OriginalItem).WriteListToString()}");
             //Log($"_context.Id = {_context.Id}");
 #endif
 

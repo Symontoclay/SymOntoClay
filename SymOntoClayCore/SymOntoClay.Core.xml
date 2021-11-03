@@ -1270,6 +1270,12 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.Specify(SymOntoClay.Core.EntityConstraints[])">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.SpecifyOnce(SymOntoClay.Core.EntityConstraints[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.SpecifyOnce(SymOntoClay.Core.IStorage)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.ResolveIfNeeds">
             <inheritdoc/>
         </member>
@@ -4515,6 +4521,90 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStorage.ChannelsStorage.OnDisposed">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.LogicalStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.MethodsStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.ActionsStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.TriggersStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.InheritanceStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.SynonymsStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.OperatorsStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.ChannelsStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.MetadataStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.VarStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.FuzzyLogicStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.DefaultSettingsOfCodeEntity">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.AddParentStorage(SymOntoClay.Core.IStorage)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.RemoveParentStorage(SymOntoClay.Core.IStorage)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.SymOntoClay#Core#IStorage#CollectChainOfStorages(System.Collections.Generic.IList{SymOntoClay.Core.StorageUsingOptions},System.Collections.Generic.IList{SymOntoClay.Core.IStorage},System.Int32,SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.SymOntoClay#Core#IStorage#CollectChainOfStorages(System.Collections.Generic.IList{SymOntoClay.Core.IStorage})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.GetStorages">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.DbgPrintFactsAndRules">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.OnDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.FuzzyLogic.FuzzyLogicStorage.Kind">
             <inheritdoc/>
         </member>
@@ -4891,90 +4981,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.OnDisposed">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.LogicalStorage">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.MethodsStorage">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.ActionsStorage">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.TriggersStorage">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.InheritanceStorage">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.SynonymsStorage">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.OperatorsStorage">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.ChannelsStorage">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.MetadataStorage">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.VarStorage">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.FuzzyLogicStorage">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.DefaultSettingsOfCodeEntity">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.AddParentStorage(SymOntoClay.Core.IStorage)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.RemoveParentStorage(SymOntoClay.Core.IStorage)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.SymOntoClay#Core#IStorage#CollectChainOfStorages(System.Collections.Generic.IList{SymOntoClay.Core.StorageUsingOptions},System.Collections.Generic.IList{SymOntoClay.Core.IStorage},System.Int32,SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.SymOntoClay#Core#IStorage#CollectChainOfStorages(System.Collections.Generic.IList{SymOntoClay.Core.IStorage})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.GetStorages">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.DbgPrintFactsAndRules">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.OnDisposed">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.ToShortString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.ToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.ToBriefString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.ToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.WorldPublicFactsStorage.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Threads.ActivePeriodicObjectCommonContext.IsNeedWating">

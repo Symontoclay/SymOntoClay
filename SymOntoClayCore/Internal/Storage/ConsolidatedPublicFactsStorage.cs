@@ -8,9 +8,9 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage
 {
-    public class WorldPublicFactsStorage: BaseComponent, IStorage
+    public class ConsolidatedPublicFactsStorage: BaseComponent, IStorage
     {
-        public WorldPublicFactsStorage(IEntityLogger logger)
+        public ConsolidatedPublicFactsStorage(IEntityLogger logger)
             : base(logger)
         {
             _logicalStorage = new WorldPublicFactsLogicalStorage(this, logger);

@@ -114,7 +114,26 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public void Specify(params EntityConstraints[] constraints)
         {
             _constraints = constraints;
+            _onceStorage = null;
+            _specifiedOnce = false;
+            _needUpdate = true;
+        }
 
+        /// <inheritdoc/>
+        public void SpecifyOnce(params EntityConstraints[] constraints)
+        {
+            _constraints = constraints;
+            _onceStorage = null;
+            _specifiedOnce = true;
+            _needUpdate = true;
+        }
+
+        /// <inheritdoc/>
+        public void SpecifyOnce(IStorage storage)
+        {
+            _constraints = null;
+            _specifiedOnce = true;
+            _onceStorage = storage;
             _needUpdate = true;
         }
 
@@ -131,6 +150,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         private bool _needUpdate = true;
+        private bool _specifiedOnce;
+        private IStorage _onceStorage;
         private int _instanceId;
         private string _id;
         private string _idForFacts;
@@ -173,7 +194,23 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 //Log($"searchOptions = {searchOptions}");
 #endif
 
-                var searchResult = _searcher.Run(_searchOptions);
+                var searchOptions = _searchOptions;
+
+                if (_onceStorage != null)
+                {
+                    var localCodeExecutionContext = new LocalCodeExecutionContext();
+
+                    var localStorageSettings = RealStorageSettingsHelper.Create(_context, new List<IStorage> { _localContext.Storage, _onceStorage });
+                    var storage = new LocalStorage(localStorageSettings);
+
+                    localCodeExecutionContext.Storage = storage;
+
+                    searchOptions = new LogicalSearchOptions();
+                    searchOptions.QueryExpression = LogicalQuery;
+                    searchOptions.LocalCodeExecutionContext = localCodeExecutionContext;     
+                }
+                
+                var searchResult = _searcher.Run(searchOptions);
 
 #if DEBUG
                 //Log($"searchResult = {searchResult}");
@@ -197,6 +234,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 {
                     ResetCurrEntity();
                 }
+
+                if(_specifiedOnce)
+                {
+                    _onceStorage = null;
+                    _constraints = null;
+                    _specifiedOnce = false;
+                }
+                
             }
             catch (Exception e)
             {

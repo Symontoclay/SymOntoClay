@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core;
 using SymOntoClay.CoreHelper;
 using System;
 using System.Collections.Generic;
@@ -40,5 +41,10 @@ namespace SymOntoClay.UnityAsset.Core
         void Die();
         string InsertFact(string text);
         void RemoveFact(string id);
+
+        IStorage BackpackStorage { get; }
+
+        void AddToBackpack(IGameObject obj);
+        void RemoveFromBackpack(IGameObject obj);
     }
 }

@@ -92,8 +92,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 #endif
                 _coreEngine = new Engine(coreEngineSettings);
                 internalContext.CoreEngine = _coreEngine;
-
-                
             }
             catch (Exception e)
             {
@@ -218,6 +216,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
             return null;
         }
+
+        public IStorage BackpackStorage { get; }
+
+        public void AddToBackpack(IGameObject obj);
+        public void RemoveFromBackpack(IGameObject obj);
 
         public void Die()
         {

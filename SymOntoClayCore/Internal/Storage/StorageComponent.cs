@@ -53,7 +53,7 @@ namespace SymOntoClay.Core.Internal.Storage
         private RealStorage _selfFactsStorage;
         private RealStorage _perceptedFactsStorage;
         private RealStorage _listenedFactsStorage;
-        private WorldPublicFactsStorage _worldPublicFactsStorage;
+        private ConsolidatedPublicFactsStorage _worldPublicFactsStorage;
         private InheritancePublicFactsReplicator _inheritancePublicFactsReplicator;
 
         private CheckDirtyOptions _checkDirtyOptions;
@@ -125,7 +125,7 @@ namespace SymOntoClay.Core.Internal.Storage
 
                         parentStoragesList.Add(_listenedFactsStorage);
 
-                        _worldPublicFactsStorage = new WorldPublicFactsStorage(_context.Logger);
+                        _worldPublicFactsStorage = new ConsolidatedPublicFactsStorage(_context.Logger);
                     }
                     break;
 

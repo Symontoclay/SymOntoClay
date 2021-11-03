@@ -10,14 +10,14 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 {
     public class WorldPublicFactsLogicalStorage : BaseComponent, ILogicalStorage
     {
-        public WorldPublicFactsLogicalStorage(WorldPublicFactsStorage parent, IEntityLogger logger)
+        public WorldPublicFactsLogicalStorage(ConsolidatedPublicFactsStorage parent, IEntityLogger logger)
             : base(logger)
         {
             _parent = parent;
         }
 
         private readonly object _lockObj = new object();
-        private readonly WorldPublicFactsStorage _parent;
+        private readonly ConsolidatedPublicFactsStorage _parent;
         private readonly List<ILogicalStorage> _logicalStorages = new List<ILogicalStorage>();
 
         /// <inheritdoc/>

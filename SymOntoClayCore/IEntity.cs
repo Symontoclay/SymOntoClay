@@ -14,6 +14,8 @@ namespace SymOntoClay.Core
         bool IsEmpty { get; }
 
         void Specify(params EntityConstraints[] constraints);
+        void SpecifyOnce(params EntityConstraints[] constraints);
+        void SpecifyOnce(IStorage storage);
 
         void Resolve();
         void ResolveIfNeeds();

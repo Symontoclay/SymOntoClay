@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal;
@@ -139,6 +140,21 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         public void PushSoundFact(float power, string text)
         {
             _gameComponent.PushSoundFact(power, text);
+        }
+
+        /// <inheritdoc/>
+        public IStorage BackpackStorage => _gameComponent.BackpackStorage;
+
+        /// <inheritdoc/>
+        public void AddToBackpack(IGameObject obj)
+        {
+            _gameComponent.AddToBackpack(obj);
+        }
+
+        /// <inheritdoc/>
+        public void RemoveFromBackpack(IGameObject obj)
+        {
+            _gameComponent.RemoveFromBackpack(obj);
         }
 
         /// <inheritdoc/>

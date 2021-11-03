@@ -10,7 +10,7 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport
 {
-    public class ConditionalEntityHostSupportComponent: BaseComponent, IConditionalEntityHostSupport, IEntity
+    public class ConditionalEntityHostSupportComponent : BaseComponent, IConditionalEntityHostSupport, IEntity
     {
         public ConditionalEntityHostSupportComponent(IEntityLogger logger, HumanoidNPCSettings settings, VisionComponent visionComponent, IHostSupport hostSupport, IWorldCoreGameComponentContext worldContext)
             : base(logger)
@@ -56,7 +56,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport
         /// <inheritdoc/>
         public bool IsVisible(int instanceId)
         {
-            if(_visionComponent == null)
+            if (_visionComponent == null)
             {
                 return false;
             }
@@ -77,7 +77,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport
             {
                 var visionPosition = _visionComponent.GetPosition(instanceId);
 
-                if(visionPosition.HasValue)
+                if (visionPosition.HasValue)
                 {
                     return visionPosition;
                 }
@@ -107,6 +107,16 @@ namespace SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport
 
         /// <inheritdoc/>
         public void Specify(params EntityConstraints[] constraints)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void SpecifyOnce(params EntityConstraints[] constraints)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void SpecifyOnce(IStorage storage)
         {
         }
 

@@ -9,14 +9,14 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 {
     public class WorldPublicFactsInheritanceStorage : BaseComponent, IInheritanceStorage
     {
-        public WorldPublicFactsInheritanceStorage(WorldPublicFactsStorage parent, IEntityLogger logger)
+        public WorldPublicFactsInheritanceStorage(ConsolidatedPublicFactsStorage parent, IEntityLogger logger)
             : base(logger)
         {
             _parent = parent;
         }
 
         private readonly object _lockObj = new object();
-        private readonly WorldPublicFactsStorage _parent;
+        private readonly ConsolidatedPublicFactsStorage _parent;
         private readonly List<IInheritanceStorage> _inheritanceStorages = new List<IInheritanceStorage>();
 
         /// <inheritdoc/>

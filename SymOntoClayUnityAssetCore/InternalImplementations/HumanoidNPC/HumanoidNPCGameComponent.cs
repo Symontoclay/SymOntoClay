@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core;
+using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport;
 using SymOntoClay.UnityAsset.Core.Internal.HostSupport;
@@ -73,6 +74,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
                 _soundReceiverComponent = new SoundReceiverComponent(Logger, settings.InstanceId, internalContext, worldContext);
 
+                _backpackStorage = new ConsolidatedPublicFactsStorage(Logger);
+
                 var coreEngineSettings = new EngineSettings();
                 coreEngineSettings.Id = settings.Id;
                 coreEngineSettings.AppFile = settings.LogicFile;
@@ -108,6 +111,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         private readonly SoundPublisherComponent _soundPublisher;
         private readonly SoundReceiverComponent _soundReceiverComponent;
         private readonly ConditionalEntityHostSupportComponent _conditionalEntityHostSupportComponent;
+        private readonly ConsolidatedPublicFactsStorage _backpackStorage;
 
         /// <inheritdoc/>
         public override IStorage PublicFactsStorage => _coreEngine.PublicFactsStorage;
@@ -217,10 +221,17 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             return null;
         }
 
-        public IStorage BackpackStorage { get; }
+        public IStorage BackpackStorage => _backpackStorage;
 
-        public void AddToBackpack(IGameObject obj);
-        public void RemoveFromBackpack(IGameObject obj);
+        public void AddToBackpack(IGameObject obj)
+        {
+            _backpackStorage.AddPublicFactsStorageOfOtherGameComponent(obj.PublicFactsStorage);
+        }
+
+        public void RemoveFromBackpack(IGameObject obj)
+        {
+            _backpackStorage.RemovePublicFactsStorageOfOtherGameComponent(obj.PublicFactsStorage);
+        }
 
         public void Die()
         {

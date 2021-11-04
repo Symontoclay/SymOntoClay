@@ -281,6 +281,9 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.PushSoundFact(System.Single,System.String)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.PublicFactsStorage">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.EndpointsRegistry">
             <inheritdoc/>
         </member>
@@ -366,6 +369,15 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.PushSoundFact(System.Single,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.BackpackStorage">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.AddToBackpack(SymOntoClay.UnityAsset.Core.IGameObject)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.RemoveFromBackpack(SymOntoClay.UnityAsset.Core.IGameObject)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.Die">

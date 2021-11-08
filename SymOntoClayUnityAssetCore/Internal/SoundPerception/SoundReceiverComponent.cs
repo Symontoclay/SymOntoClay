@@ -17,9 +17,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         {
             _internalContext = internalContext;
             _instanceId = instanceId;
-            _soundBus = worldContext.SoundBus;            
+            _soundBus = worldContext.SoundBus;
 
-            _soundBus.AddReceiver(this);
+            _soundBus?.AddReceiver(this);
         }
 
         private readonly HumanoidNPCGameComponentContext _internalContext;
@@ -110,7 +110,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
-            _soundBus.RemoveReceiver(this);
+            _soundBus?.RemoveReceiver(this);
 
             base.OnDisposed();
         }

@@ -99,6 +99,13 @@ namespace TestSandbox.CoreHostListener
 
             _logger.Log($"Begin {name}");
 
+            _logger.Log($"(entity == null) = {entity == null}");
+
+            if(entity == null)
+            {
+                return;
+            }
+
             entity.Specify(EntityConstraints.CanBeTaken, /*EntityConstraints.OnlyVisible,*/ EntityConstraints.Nearest);
 
             entity.Resolve();
@@ -128,7 +135,7 @@ namespace TestSandbox.CoreHostListener
 
         [DebuggerHidden]
         [BipedEndpoint("Rotate", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
-        public void RotateImpl(CancellationToken cancellationToken, float direction)
+        public void RotateImpl(CancellationToken cancellationToken, float? direction)
         {
 #if DEBUG
             var methodId = GetMethodId();

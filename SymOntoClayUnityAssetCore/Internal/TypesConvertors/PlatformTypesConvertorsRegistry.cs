@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors
             : base(logger)
         {
         }
+
+        private readonly Type _nullValueType = typeof(NullValue);
 
         private readonly object _lockObj = new object();
         private readonly Dictionary<Type, Dictionary<Type, IPlatformTypesConvertor>> _convertorsDict = new Dictionary<Type, Dictionary<Type, IPlatformTypesConvertor>>();
@@ -89,7 +92,26 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors
 #if DEBUG
                 //Log($"source.FullName = {source.FullName}");
                 //Log($"dest.FullName = {dest.FullName}");
+                //Log($"dest.IsGenericType = {dest.IsGenericType}");
+                //Log($"dest.IsNested = {dest.IsNested}");
+                //Log($"dest.IsPrimitive = {dest.IsPrimitive}");
+                //Log($"dest.IsSpecialName = {dest.IsSpecialName}");
+                //Log($"dest.IsClass = {dest.IsClass}");
+                //Log($"dest.IsInterface = {dest.IsInterface}");
+
+                //if (dest.IsGenericType)
+                //{
+                //    foreach(var genericArgument in dest.GenericTypeArguments)
+                //    {
+                //        Log($"genericArgument.FullName = {genericArgument.FullName}");
+                //    }
+                //}
 #endif
+
+                if (source == _nullValueType && (dest.IsClass || dest.IsInterface || (dest.IsGenericType && dest.FullName.StartsWith("System.Nullable"))))
+                {
+                    return true;
+                }
 
                 if (_convertorsDict.ContainsKey(source))
                 {
@@ -111,6 +133,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors
                     return true;
                 }
 
+                if(dest.IsGenericType && dest.FullName.StartsWith("System.Nullable"))
+                {
+                    return CanConvert(source, dest.GenericTypeArguments[0]);
+                }
+
                 return false;
             }
         }
@@ -118,6 +145,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors
         /// <inheritdoc/>
         public object Convert(Type sourceType, Type destType, object sourceValue)
         {
+            if (sourceType == _nullValueType)
+            {
+                return null;
+            }
+
             lock (_lockObj)
             {
 #if DEBUG
@@ -141,6 +173,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors
 
                         return convertor.ConvertToCoreType(sourceValue, Logger);
                     }
+                }
+
+#if DEBUG
+                //Log($"!_convertorsDict.ContainsKey(sourceType)");
+#endif
+
+                if (destType.IsGenericType && destType.FullName.StartsWith("System.Nullable"))
+                {
+                    return Convert(sourceType, destType.GenericTypeArguments[0], sourceValue);
                 }
 
                 return sourceValue;

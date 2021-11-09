@@ -22,6 +22,8 @@
         //@@host.take(#@(gun));
         //@@host.take(#@(barrel));
         @@host.`rotate`(30);
+        @@host.`rotate`(NULL);
+        @@host.take(NULL);
 
         'End' >> @>log;
     }

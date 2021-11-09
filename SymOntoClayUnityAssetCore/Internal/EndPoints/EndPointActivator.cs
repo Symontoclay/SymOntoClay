@@ -122,7 +122,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             {
                 try
                 {
+#if DEBUG
+                    //Log("Pre endpointInfo.MethodInfo.Invoke");
+#endif
+
                     endpointInfo.MethodInfo.Invoke(platformListener, paramsList);
+
+#if DEBUG
+                    //Log("after endpointInfo.MethodInfo.Invoke");
+#endif
 
                     processInfo.Status = ProcessStatus.Completed;
                 }
@@ -200,6 +208,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     //Log($"targetCommandValue = {targetCommandValue.ToHumanizedString()}");
 #endif
                     var targetValue = _platformTypesConvertorsRegistry.Convert(targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType, targetCommandValue);
+
+#if DEBUG
+                    //Log($"targetValue = {targetValue}");
+#endif
 
                     resultList.Add(targetValue);
                 }

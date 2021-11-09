@@ -112,12 +112,29 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _currentParameter = new CallingParameter();
                                 Result.Parameters.Add(_currentParameter);
 
-                                var value = NameHelper.CreateName(_currToken.Content);
+                                switch(_currToken.KeyWordTokenKind)
+                                {
+                                    case KeyWordTokenKind.Null:
+                                        {
+                                            var node = new ConstValueAstExpression();
+                                            node.Value = new NullValue();
 
-                                var node = new ConstValueAstExpression();
-                                node.Value = value;
+                                            _currentParameter.Value = node;
+                                        }
+                                        break;
 
-                                _currentParameter.Value = node;
+                                    default:
+                                        {
+                                            var value = NameHelper.CreateName(_currToken.Content);
+
+                                            var node = new ConstValueAstExpression();
+                                            node.Value = value;
+
+                                            _currentParameter.Value = node;
+                                        }
+                                        break;
+                                }
+
                                 _state = State.GotPositionedMainParameter;
                             }
                             break;

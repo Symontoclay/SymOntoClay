@@ -62,6 +62,7 @@ using SymOntoClay.Core.Internal.Parsing.Internal;
 using TestSandbox.CreatingExamples;
 using TestSandbox.Navigations;
 using TestSandbox.SoundBusHandler;
+using SymOntoClay.UnityAsset.Core.Tests;
 
 namespace TestSandbox
 {
@@ -80,7 +81,9 @@ namespace TestSandbox
             //TstCreatorExamples();
             //TstLinguisticVariable_Tests();
             //TstManageTempProject();
+            //TstAdvancedTestRunnerWithHostListener();//<=~
             //TstAdvancedTestRunner();//<=
+            TstTestRunnerWithHostListener();//<=t
             //TstTestRunner();//<=
             //TstNameHelper();
             //TstDeffuzzification();
@@ -116,7 +119,7 @@ namespace TestSandbox
             //TstExprNodeHandler();
             //TstParsing();
             //TstMonoBehaviourTestingHandler();//VT<=
-            TstSoundStartHandler();//<==
+            //TstSoundStartHandler();//<==
             //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
@@ -400,6 +403,25 @@ app PeaceKeeper is [very middle] exampleClass
             _logger.Log("End");
         }
 
+        private static void TstAdvancedTestRunnerWithHostListener()
+        {
+            _logger.Log("Begin");
+
+            var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        @@host.`rotate`(30);
+    }
+}";
+
+
+
+            _logger.Log("End");
+        }
+
         private static void TstAdvancedTestRunner()
         {
             _logger.Log("Begin");
@@ -447,15 +469,51 @@ action Go
             _logger.Log("End");
         }
 
-        private static void TstTestRunner()
+        private static void TstTestRunnerWithHostListener()
         {
             _logger.Log("Begin");
 
-            var text = @"app PeaceKeeper is [0.5] exampleClass, [0.6] humanoid
+            var text = @"app PeaceKeeper
 {
     on Init =>
     {
         'Begin' >> @>log;
+
+        @@host.`rotate`(30);
+
+        'End' >> @>log;
+    }
+}";
+
+            var hostListener = new HostMethods_Tests_HostListener();
+
+            BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    _logger.Log($"n = {n}; message = {message}");
+                }, hostListener);
+
+            _logger.Log("End");
+        }
+
+        private static void TstTestRunner()
+        {
+            _logger.Log("Begin");
+
+            var text = @"app PeaceKeeper is [0.5] exampleClass
+{
+    on Init =>
+    {
+        'Begin' >> @>log;
+        exampleClass is human >> @>log;
+        exampleClass is not human >> @>log;
+        use exampleClass is [0.5] human;
+        exampleClass is human >> @>log;
+        exampleClass is not human >> @>log;
+        use exampleClass is not human;
+        exampleClass is human >> @>log;
+        exampleClass is not human >> @>log;
+        use @@self is linux;
+        @@self is linux >> @>log;
         'End' >> @>log;
     }
 }";

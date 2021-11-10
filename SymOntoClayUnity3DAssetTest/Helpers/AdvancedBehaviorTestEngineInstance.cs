@@ -88,13 +88,23 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 
         public IHumanoidNPC CreateAndStartNPC(Action<int, string> logChannel)
         {
+            return CreateAndStartNPC(logChannel, new object());
+        }
+
+        public IHumanoidNPC CreateAndStartNPC(Action<int, string> logChannel, object platformListener)
+        {
             var n = 0;
 
             return CreateAndStartNPC(message => { n++; logChannel(n, message); },
-                error => { throw new Exception(error); });
+                error => { throw new Exception(error); }, platformListener);
         }
 
         public IHumanoidNPC CreateAndStartNPC(Action<string> logChannel, Action<string> error)
+        {
+            return CreateAndStartNPC(logChannel, error, new object());
+        }
+
+        public IHumanoidNPC CreateAndStartNPC(Action<string> logChannel, Action<string> error, object platformListener)
         {
             var supportBasePath = Path.Combine(_testDir, "SysDirs");
 
@@ -117,10 +127,17 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 
             settings.InvokerInMainThread = invokingInMainThread;
 
+            ILoggedTestHostListener loggedTestHostListener = null;
+
+            if (platformListener != null)
+            {
+                loggedTestHostListener = platformListener as ILoggedTestHostListener;
+            }                
+
             var callBackLogger = new CallBackLogger(
                 message => { logChannel(message); },
-                errorMsg => { error(errorMsg); }
-                );
+                errorMsg => { error(errorMsg); },
+                loggedTestHostListener != null);
 
             settings.Logging = new LoggingSettings()
             {
@@ -133,8 +150,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 
             instance.SetSettings(settings);
 
-            var platformListener = new object();
-
             var npcSettings = new HumanoidNPCSettings();
             npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
             npcSettings.LogicFile = Path.Combine(_wSpaceDir, $"Npcs/{_projectName}/{_projectName}.sobj");
@@ -142,6 +157,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
 
             var npc = instance.GetHumanoidNPC(npcSettings);
+
+            loggedTestHostListener?.SetLogger(npc.Logger);
 
             instance.Start();
 

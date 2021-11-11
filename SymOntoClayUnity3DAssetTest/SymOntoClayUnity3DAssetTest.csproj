@@ -22,6 +22,7 @@
     <ProjectReference Include="..\SymOntoClayCore\SymOntoClayCore.csproj" />
     <ProjectReference Include="..\SymOntoClayDefaultCLIEnvironment\SymOntoClayDefaultCLIEnvironment.csproj" />
     <ProjectReference Include="..\SymOntoClayProjectFiles\SymOntoClayProjectFiles.csproj" />
+    <ProjectReference Include="..\SymOntoClaySoundBuses\SymOntoClaySoundBuses.csproj" />
     <ProjectReference Include="..\SymOntoClayUnityAssetCore\SymOntoClayUnityAssetCore.csproj" />
   </ItemGroup>
 </Project>

@@ -12,7 +12,40 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case1()
         {
-            throw new NotImplementedException();
+            var text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        'Begin' >> @>log;
+
+        @@host.`boo`();
+
+        'End' >> @>log;
+    }
+}";
+
+            var hostListener = new HostMethods_Tests_HostListener();
+
+            BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "BooImpl Begin");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }, hostListener);
         }
 
         [Test]
@@ -35,22 +68,72 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             BehaviorTestEngineInstance.Run(text,
                 (n, message) => {
-                    //_logger.Log($"n = {n}; message = {message}");
-                }, hostListener);
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
 
-            /*
-             n = 1; message = 'Begin'
-10-11-2021 13:59:10.63296 TestSandbox.Program+<>c <TstTestRunnerWithHostListener>b__9_0 LOG n = 2; message = RotateImpl Begin
-10-11-2021 13:59:10.63561 TestSandbox.Program+<>c <TstTestRunnerWithHostListener>b__9_0 LOG n = 3; message = 30
-10-11-2021 13:59:10.73554 TestSandbox.Program+<>c <TstTestRunnerWithHostListener>b__9_0 LOG n = 4; message = 'End'
-             */
+                        case 2:
+                            Assert.AreEqual(message, "RotateImpl Begin");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "30");
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }, hostListener);
         }
 
         [Test]
         [Parallelizable]
         public void Case2_b()
         {
-            throw new NotImplementedException();
+            var text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        'Begin' >> @>log;
+
+        @@host.`rotate`(NULL);
+
+        'End' >> @>log;
+    }
+}";
+
+            var hostListener = new HostMethods_Tests_HostListener();
+
+            BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "RotateImpl Begin");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, string.Empty);
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }, hostListener);
         }
     }
 }

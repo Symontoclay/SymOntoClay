@@ -54,7 +54,7 @@ namespace SymOntoClay.CLI
 
                     if(string.IsNullOrWhiteSpace(inputNpcFile))
                     {
-                        var wSpaceFile = FindWSpaceFile(command.InputDir);
+                        var wSpaceFile = WFilesSearcher.FindWSpaceFile(command.InputDir);
 
                         if(wSpaceFile == null)
                         {
@@ -190,7 +190,7 @@ namespace SymOntoClay.CLI
 
             var fileInfo = new FileInfo(inputFile);
 
-            var wSpaceFile = FindWSpaceFile(fileInfo.Directory);
+            var wSpaceFile = WFilesSearcher.FindWSpaceFile(fileInfo.Directory);
 
 #if DEBUG
             //_logger.Info($"wSpaceFile = {wSpaceFile}");
@@ -256,39 +256,6 @@ namespace SymOntoClay.CLI
 #endif
 
             return result;
-        }
-
-        public static FileInfo FindWSpaceFile(string dir)
-        {
-            return FindWSpaceFile(new DirectoryInfo(dir));
-        }
-
-        private static FileInfo FindWSpaceFile(DirectoryInfo dir)
-        {
-            var wSpaceFilesList = dir.EnumerateFiles().Where(p => p.Name.EndsWith(".wspace"));
-
-            var count = wSpaceFilesList.Count();
-
-            switch (count)
-            {
-                case 0:
-                    {
-                        var parentDir = dir.Parent;
-
-                        if(parentDir == null)
-                        {
-                            return null;
-                        }
-
-                        return FindWSpaceFile(parentDir);
-                    }
-
-                case 1:
-                    return wSpaceFilesList.First();
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(count), count, null);
-            }
         }
     }
 }

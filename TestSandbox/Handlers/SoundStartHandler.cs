@@ -36,8 +36,8 @@ namespace TestSandbox.Handlers
             settings.AllowPublicPosition = true;
             settings.UseStaticPosition = new Vector3(10, 10, 10);
 
-            //settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Npcs\Barrel\Barrel.sobj");
-            settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Npcs\Things\M4A1\M4A1.sobj");
+            //settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Things\Barrel\Barrel.sobj");
+            settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Things\M4A1\M4A1.sobj");
             settings.HostListener = platformListener2;
             settings.PlatformSupport = new PlatformSupportCLIStub(new Vector3(100, 100, 100));
 

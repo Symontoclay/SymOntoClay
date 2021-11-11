@@ -141,7 +141,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return "NULL";
             }
 
-            return $"'{SystemValue}'";
+            return $"{SystemValue}";
         }
     }
 }

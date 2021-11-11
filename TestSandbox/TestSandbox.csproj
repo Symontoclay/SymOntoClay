@@ -27,10 +27,10 @@
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Source\Npcs\Barrel\Barrel.sobj">
+    <None Update="Source\Things\Barrel\Barrel.sobj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Source\Npcs\Barrel\Barrel.soc">
+    <None Update="Source\Things\Barrel\Barrel.soc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Source\Npcs\PeaceKeeper\ExampleClass.soc">
@@ -45,10 +45,10 @@
     <None Update="Source\HelloWorld.wspace">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Source\Npcs\Things\M4A1\M4A1.sobj">
+    <None Update="Source\Things\M4A1\M4A1.sobj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Source\Npcs\Things\M4A1\M4A1.soc">
+    <None Update="Source\Things\M4A1\M4A1.soc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Source\World\HelloWorld.world">

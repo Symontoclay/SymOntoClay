@@ -6,24 +6,21 @@
     {
         'Begin' >> @>log;
 
-        //select {: see(I, $x) & PeaceKeeper($x) :} >> @>log;
-
-        //@a = #@[10, 20];
         //@a = #@(barrel);
-        //@a = #@{: barrel($_) :};
+        @a = #@{: barrel($_) :};
         //@a = #@(hold(I, this) & weapon);
         //@a = #@(hold(I, this) & (weapon & dog) );
         //@a = #@(hold(#a, this) & (weapon & dog) );
         //@a = #@(color = black);
         //@a = #@{: >: { barrel($_) } :};
 
-        //@a >> @>log;
+        @a >> @>log;
 
         //@@host.take(#@(gun));
         //@@host.take(#@(barrel));
-        @@host.`rotate`(30);
-        @@host.`rotate`(NULL);
-        @@host.take(NULL);
+        //@@host.`rotate`(30);
+        //@@host.`rotate`(NULL);
+        //@@host.take(NULL);
 
         'End' >> @>log;
     }

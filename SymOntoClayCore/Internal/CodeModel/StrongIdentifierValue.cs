@@ -257,7 +257,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedString()
         {
-            return $"`{NameValue}`";
+            return NameValue;
         }
     }
 }

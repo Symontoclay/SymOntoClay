@@ -565,6 +565,7 @@ action `my Go 1` alias `Go` is `base app`
                     case 6:
                         Assert.AreEqual(message, "End");
                         break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(n), n, null);
                 }

@@ -29,6 +29,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             }
         }
 
+        [BipedEndpoint("Boo", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
+        public void BooImpl(CancellationToken cancellationToken)
+        {
+            _logger.Log($"BooImpl Begin");
+        }
+
         [BipedEndpoint("Rotate", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void RotateImpl(CancellationToken cancellationToken, float? direction)
         {

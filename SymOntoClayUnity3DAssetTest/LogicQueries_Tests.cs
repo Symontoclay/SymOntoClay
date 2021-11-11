@@ -2487,5 +2487,49 @@ app PeaceKeeper
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case29()
+        {
+            var text = @"app PeaceKeeper
+{
+    {: gun(M4A1) :}
+
+    on Init
+    {
+        insert {: $x = act(M4A1, shoot) & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :};
+    }
+
+    on {: hear(I, $x) & gun($x) & distance(I, $x, $y) :} ($x >> @x, $y >> @y)
+    {
+        @x >> @>log;
+        @y >> @>log;
+        '!!!M4A1!!!!' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "m4a1");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message.StartsWith("15.588"), true);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "!!!M4A1!!!!");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

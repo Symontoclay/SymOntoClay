@@ -63,6 +63,7 @@ using TestSandbox.CreatingExamples;
 using TestSandbox.Navigations;
 using TestSandbox.SoundBusHandler;
 using SymOntoClay.UnityAsset.Core.Tests;
+using System.Numerics;
 
 namespace TestSandbox
 {
@@ -81,9 +82,9 @@ namespace TestSandbox
             //TstCreatorExamples();
             //TstLinguisticVariable_Tests();
             //TstManageTempProject();
-            //TstAdvancedTestRunnerWithHostListener();//<=~
+            //TstAdvancedTestRunnerForMultipleInstances();//<=~
             //TstAdvancedTestRunner();//<=
-            TstTestRunnerWithHostListener();//<=t
+            //TstTestRunnerWithHostListener();//<=t
             //TstTestRunner();//<=
             //TstNameHelper();
             //TstDeffuzzification();
@@ -119,7 +120,7 @@ namespace TestSandbox
             //TstExprNodeHandler();
             //TstParsing();
             //TstMonoBehaviourTestingHandler();//VT<=
-            //TstSoundStartHandler();//<==
+            TstSoundStartHandler();//<==
             //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
@@ -403,21 +404,45 @@ app PeaceKeeper is [very middle] exampleClass
             _logger.Log("End");
         }
 
-        private static void TstAdvancedTestRunnerWithHostListener()
+        private static void TstAdvancedTestRunnerForMultipleInstances()
         {
             _logger.Log("Begin");
 
             var instance = new AdvancedBehaviorTestEngineInstance();
 
-            var text = @"app PeaceKeeper
+            var world = instance.CreateWorld((n, message) => {
+                _logger.Log($"n = {n}; message = {message}");
+            });
+
+            instance.WriteFile(@"app PeaceKeeper
 {
-    on Init =>
+    {: gun(M4A1) :}
+
+    on {: hear(I, $x) & gun($x) & distance(I, $x, $y) :} ($x >> @x, $y >> @y)
     {
-        @@host.`rotate`(30);
+        @x >> @>log;
+        @y >> @>log;
+        '!!!M4A1!!!!' >> @>log;
     }
-}";
+}");
 
+            instance.CreateNPC(world);
 
+            var thingProjName = "M4A1";
+
+            instance.WriteThingFile(thingProjName, @"app M4A1_app is gun
+{
+}");
+
+            var gun = instance.CreateThing(world, thingProjName, new Vector3(100, 100, 100));
+
+            world.Start();
+
+            Thread.Sleep(100);
+
+            gun.PushSoundFact(60, "act(M4A1, shoot)");
+
+            Thread.Sleep(5000);
 
             _logger.Log("End");
         }
@@ -479,7 +504,7 @@ action Go
     {
         'Begin' >> @>log;
 
-        @@host.`rotate`(30);
+        @@host.`boo`();
 
         'End' >> @>log;
     }
@@ -499,21 +524,13 @@ action Go
         {
             _logger.Log("Begin");
 
-            var text = @"app PeaceKeeper is [0.5] exampleClass
+            var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Init
     {
         'Begin' >> @>log;
-        exampleClass is human >> @>log;
-        exampleClass is not human >> @>log;
-        use exampleClass is [0.5] human;
-        exampleClass is human >> @>log;
-        exampleClass is not human >> @>log;
-        use exampleClass is not human;
-        exampleClass is human >> @>log;
-        exampleClass is not human >> @>log;
-        use @@self is linux;
-        @@self is linux >> @>log;
+        @a = #@[10, 20];
+        @a >> @>log;
         'End' >> @>log;
     }
 }";

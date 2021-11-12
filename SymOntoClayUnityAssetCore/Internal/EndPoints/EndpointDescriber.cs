@@ -37,7 +37,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         private static Type targetParameterAttributeType = typeof(EndpointParamAttribute);
 
 #if DEBUG
-        private static ILogger _logger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static IList<IEndpointInfo> GetEndpointsInfoList(object platformListener)
@@ -124,8 +124,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     var firstParam = customAttribute.ConstructorArguments[0];
 
 #if DEBUG
-                    _logger.Info($"firstParam.ArgumentType.FullName = {firstParam.ArgumentType.FullName}");
-                    _logger.Info($"firstParam.Value.GetType().FullName = {firstParam.Value.GetType().FullName}");
+                    //_logger.Info($"firstParam.ArgumentType.FullName = {firstParam.ArgumentType.FullName}");
+                    //_logger.Info($"firstParam.Value.GetType().FullName = {firstParam.Value.GetType().FullName}");
 #endif
 
                     friendsList.AddRange(((IEnumerable<CustomAttributeTypedArgument>)firstParam.Value).Select(p => ((string)(p.Value)).ToLower()).Distinct().ToList());

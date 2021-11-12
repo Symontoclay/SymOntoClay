@@ -153,7 +153,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 var concurentProcessesInfoList = NGetConcurrentProcessesInfo(processInfo);
 
 #if DEBUG
-                Log($"concurentProcessesInfoList = {concurentProcessesInfoList.WriteListToString()}");
+                //Log($"concurentProcessesInfoList = {concurentProcessesInfoList.WriteListToString()}");
 #endif
 
                 if(concurentProcessesInfoList.IsNullOrEmpty())
@@ -165,7 +165,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 if(concurentProcessesInfoList.All(p => p.ParentProcessInfo == processInfo.ParentProcessInfo))
                 {
 #if DEBUG
-                    Log("concurentProcessesInfoList.All(p => p.ParentProcessInfo == processInfo.ParentProcessInfo)");
+                    //Log("concurentProcessesInfoList.All(p => p.ParentProcessInfo == processInfo.ParentProcessInfo)");
 #endif
 
                     NAppendAndTryStartProcessInfoWithDevices(processInfo);
@@ -278,7 +278,7 @@ namespace SymOntoClay.Core.Internal.Instances
             foreach(var device in processInfo.Devices)
             {
 #if DEBUG
-                Log($"device = {device}");
+                //Log($"device = {device}");
 #endif
 
                 if (_processesInfoByDevicesDict.ContainsKey(device))
@@ -286,9 +286,9 @@ namespace SymOntoClay.Core.Internal.Instances
                     var otherProcessInfo = _processesInfoByDevicesDict[device];
 
 #if DEBUG
-                    Log("_processesInfoByDevicesDict.ContainsKey(device)");
-                    Log($"otherProcessInfo = {otherProcessInfo}");
-                    Log($"processInfo.IsFriend(otherProcessInfo) = {processInfo.IsFriend(otherProcessInfo)}");
+                    //Log("_processesInfoByDevicesDict.ContainsKey(device)");
+                    //Log($"otherProcessInfo = {otherProcessInfo}");
+                    //Log($"processInfo.IsFriend(otherProcessInfo) = {processInfo.IsFriend(otherProcessInfo)}");
 #endif
 
                     if(!processInfo.IsFriend(otherProcessInfo))

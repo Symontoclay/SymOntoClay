@@ -120,8 +120,8 @@ namespace TestSandbox
             //TstExprNodeHandler();
             //TstParsing();
             //TstMonoBehaviourTestingHandler();//VT<=
-            TstSoundStartHandler();//<==
-            //TstGeneralStartHandler();//<=
+            //TstSoundStartHandler();//<==
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -408,41 +408,43 @@ app PeaceKeeper is [very middle] exampleClass
         {
             _logger.Log("Begin");
 
-            var instance = new AdvancedBehaviorTestEngineInstance();
+            using (var instance = new AdvancedBehaviorTestEngineInstance())
+            {
+                instance.CreateWorld((n, message) =>
+                {
+                    _logger.Log($"n = {n}; message = {message}");
+                }, true);
 
-            var world = instance.CreateWorld((n, message) => {
-                _logger.Log($"n = {n}; message = {message}");
-            });
-
-            instance.WriteFile(@"app PeaceKeeper
+                instance.WriteFile(@"app PeaceKeeper
 {
-    {: gun(M4A1) :}
-
-    on {: hear(I, $x) & gun($x) & distance(I, $x, $y) :} ($x >> @x, $y >> @y)
+    on Init
     {
-        @x >> @>log;
-        @y >> @>log;
-        '!!!M4A1!!!!' >> @>log;
+        'Begin' >> @>log;
+        @@host.`rotate`(#@(gun));
+        'End' >> @>log;
     }
 }");
 
-            instance.CreateNPC(world);
+                var hostListener = new HostMethods_Tests_HostListener();
 
-            var thingProjName = "M4A1";
+                instance.CreateNPC(hostListener);
 
-            instance.WriteThingFile(thingProjName, @"app M4A1_app is gun
+                var thingProjName = "M4A1";
+
+                instance.WriteThingFile(thingProjName, @"app M4A1_app is gun
 {
 }");
 
-            var gun = instance.CreateThing(world, thingProjName, new Vector3(100, 100, 100));
+                var gun = instance.CreateThing(thingProjName/*, new Vector3(100, 100, 100)*/);
 
-            world.Start();
+                instance.StartWorld();
 
-            Thread.Sleep(100);
+                //Thread.Sleep(100);
 
-            gun.PushSoundFact(60, "act(M4A1, shoot)");
+                //gun.PushSoundFact(60, "act(M4A1, shoot)");
 
-            Thread.Sleep(5000);
+                Thread.Sleep(5000);
+            }
 
             _logger.Log("End");
         }
@@ -503,9 +505,7 @@ action Go
     on Init =>
     {
         'Begin' >> @>log;
-
-        @@host.`boo`();
-
+        @@host.`rotate`(#@(gun));
         'End' >> @>log;
     }
 }";
@@ -529,8 +529,7 @@ action Go
     on Init
     {
         'Begin' >> @>log;
-        @a = #@[10, 20];
-        @a >> @>log;
+        #@(color = black) >> @>log;
         'End' >> @>log;
     }
 }";

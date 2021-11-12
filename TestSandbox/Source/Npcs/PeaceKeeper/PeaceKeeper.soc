@@ -6,22 +6,21 @@
     {
         'Begin' >> @>log;
 
-        //@a = #@(barrel);
-        @a = #@{: barrel($_) :};
-        //@a = #@(hold(I, this) & weapon);
-        //@a = #@(hold(I, this) & (weapon & dog) );
-        //@a = #@(hold(#a, this) & (weapon & dog) );
-        //@a = #@(color = black);
-        //@a = #@{: >: { barrel($_) } :};
-
-        @a >> @>log;
-
-        //@@host.take(#@(gun));
+        //@@host.take(#@(gun));        
         //@@host.take(#@(barrel));
         //@@host.`rotate`(30);
         //@@host.`rotate`(NULL);
+        //@@host.`rotate`(#@(gun));
         //@@host.take(NULL);
+        @@host.fire();
 
         'End' >> @>log;
+    }
+
+    on {: see(I, #a) :}
+    {
+        'Begin see(I, #a)' >> @>log;
+        @@host.aim();
+        'End see(I, #a)' >> @>log;
     }
 }

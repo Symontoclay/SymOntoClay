@@ -125,12 +125,36 @@ namespace TestSandbox.CoreHostListener
             _logger.Log("End");
         }
 
-        [BipedEndpoint("Aim", true, DeviceOfBiped.Head, DeviceOfBiped.LeftHand, DeviceOfBiped.RightHand)]
-        private void AimTo(CancellationToken cancellationToken)
+        //[BipedEndpoint("Aim", true, DeviceOfBiped.LeftHand, DeviceOfBiped.RightHand)]
+        [BipedEndpoint("Aim", DeviceOfBiped.LeftHand, DeviceOfBiped.RightHand)]
+        private void AimToImpl(CancellationToken cancellationToken)
         {
-            _logger.Log("Begin");
+            _logger.Log("AimToImpl Begin");
 
-            _logger.Log("End");
+            _logger.Log("AimToImpl End");
+        }
+
+        [FriendsEndpoints("Aim")]
+        //[BipedEndpoint("Fire", true, DeviceOfBiped.LeftHand, DeviceOfBiped.RightHand)]
+        [BipedEndpoint("Fire", DeviceOfBiped.LeftHand, DeviceOfBiped.RightHand)]
+        private void FireImpl(CancellationToken cancellationToken)
+        {
+            _logger.Log("FireImpl Begin");
+
+            for(var i = 0; i < 100; i++)
+            {
+                _logger.Log($"FireImpl {i}");
+
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    _logger.Log("FireImpl Cancel");
+                    return;
+                }
+
+                Thread.Sleep(100);
+            }
+
+            _logger.Log("FireImpl End");
         }
 
         [DebuggerHidden]
@@ -148,6 +172,14 @@ namespace TestSandbox.CoreHostListener
 #if DEBUG
             _logger.Log($"RotateImpl End {methodId}");
 #endif
+        }
+
+        [DebuggerHidden]
+        [BipedEndpoint("Rotate", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
+        public void RotateToEntityImpl(CancellationToken cancellationToken, IEntity entity,
+            float speed = 2)
+        {
+            _logger.Log("RotateToEntityImpl Begin");
         }
     }
 }

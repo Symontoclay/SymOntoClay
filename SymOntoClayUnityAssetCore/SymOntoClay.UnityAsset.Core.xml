@@ -755,6 +755,9 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointInfo.SymOntoClay#UnityAsset#Core#IEndpointInfo#Devices">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointInfo.SymOntoClay#UnityAsset#Core#IEndpointInfo#Friends">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointInfo.Arguments">
             <inheritdoc/>
         </member>
@@ -806,6 +809,9 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread.InvokerInMainThread.SetInvocableObj(SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread.IInvocableInMainThread)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.EndPointName">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.Status">
             <inheritdoc/>
         </member>
@@ -819,6 +825,12 @@
             <inheritdoc/>
         </member>
         <member name="E:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.Friends">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.IsFriend(SymOntoClay.Core.IProcessInfo)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.OnDisposed">

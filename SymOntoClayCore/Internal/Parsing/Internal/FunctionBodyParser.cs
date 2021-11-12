@@ -74,6 +74,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Var:
                         case TokenKind.SystemVar:
                         case TokenKind.QuestionMark:
+                        case TokenKind.EntityCondition:
                             ProcessExpressionStatement();
                             break;
 

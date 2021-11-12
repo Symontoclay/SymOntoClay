@@ -92,6 +92,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             var resultList = new List<IEndpointInfo>();
 
+#if DEBUG
+            //Log($"endPointsList.Count = {endPointsList.Count}");
+#endif
+
             foreach (var endPointInfo in endPointsList)
             {
 #if DEBUG
@@ -138,12 +142,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 //Log($"isFitEndpoint = {isFitEndpoint}");
 #endif
 
-                if (!isFitEndpoint)
+                if (isFitEndpoint)
                 {
-                    break;
-                }
-
-                resultList.Add(endPointInfo);
+                    resultList.Add(endPointInfo);
+                }                
             }
 
             return resultList.FirstOrDefault();

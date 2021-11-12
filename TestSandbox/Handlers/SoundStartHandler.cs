@@ -47,7 +47,7 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(5000);
 
-            gameObject.PushSoundFact(60, "act(M16, shoot)");
+            //gameObject.PushSoundFact(60, "act(M16, shoot)");
 
             Thread.Sleep(5000);
 

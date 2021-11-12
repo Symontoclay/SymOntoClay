@@ -14,29 +14,30 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case1()
         {
-            var instance = new AdvancedBehaviorTestEngineInstance();
-
-            var world = instance.CreateWorld((n, message) => {
-                switch(n)
+            using (var instance = new AdvancedBehaviorTestEngineInstance())
+            {
+                instance.CreateWorld((n, message) =>
                 {
-                    case 1:
-                        Assert.AreEqual(message, "m4a1");
-                        break;
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "m4a1");
+                            break;
 
-                    case 2:
-                        Assert.AreEqual(message.StartsWith("155.88"), true);
-                        break;
+                        case 2:
+                            Assert.AreEqual(message.StartsWith("155.88"), true);
+                            break;
 
-                    case 3:
-                        Assert.AreEqual(message, "!!!M4A1!!!!");
-                        break;
+                        case 3:
+                            Assert.AreEqual(message, "!!!M4A1!!!!");
+                            break;
 
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
-                }
-            });
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                });
 
-            instance.WriteFile(@"app PeaceKeeper
+                instance.WriteFile(@"app PeaceKeeper
 {
     {: gun(M4A1) :}
 
@@ -48,23 +49,24 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     }
 }");
 
-            instance.CreateNPC(world);
+                instance.CreateNPC();
 
-            var thingProjName = "M4A1";
+                var thingProjName = "M4A1";
 
-            instance.WriteThingFile(thingProjName, @"app M4A1_app is gun
+                instance.WriteThingFile(thingProjName, @"app M4A1_app is gun
 {
 }");
 
-            var gun = instance.CreateThing(world, thingProjName, new Vector3(100, 100, 100));
+                var gun = instance.CreateThing(thingProjName, new Vector3(100, 100, 100));
 
-            world.Start();
+                instance.StartWorld();
 
-            Thread.Sleep(100);
+                Thread.Sleep(100);
 
-            gun.PushSoundFact(60, "act(M4A1, shoot)");
+                gun.PushSoundFact(60, "act(M4A1, shoot)");
 
-            Thread.Sleep(5000);
+                Thread.Sleep(5000);
+            }
         }
     }
 }

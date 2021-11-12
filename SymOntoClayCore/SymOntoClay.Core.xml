@@ -21,6 +21,9 @@
         <member name="P:SymOntoClay.Core.BaseProcessInfo.Id">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.BaseProcessInfo.EndPointName">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.BaseProcessInfo.Status">
             <inheritdoc/>
         </member>
@@ -43,6 +46,12 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.BaseProcessInfo.GlobalPriority">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.BaseProcessInfo.Friends">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.IsFriend(SymOntoClay.Core.IProcessInfo)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.BaseProcessInfo.ParentProcessInfo">
@@ -3795,6 +3804,9 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.ProcessInfo.Status">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.ProcessInfo.EndPointName">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ProcessInfo.Devices">
             <inheritdoc/>
         </member>
@@ -3805,6 +3817,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.Cancel">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.ProcessInfo.Friends">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.IsFriend(SymOntoClay.Core.IProcessInfo)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.OnDisposed">

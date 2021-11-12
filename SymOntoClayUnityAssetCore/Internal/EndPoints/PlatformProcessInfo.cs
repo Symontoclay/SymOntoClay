@@ -20,11 +20,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using Newtonsoft.Json;
+using NLog;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,16 +37,25 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
     public class PlatformProcessInfo : BaseProcessInfo
     {
-        public PlatformProcessInfo(CancellationTokenSource cancellationTokenSource, IReadOnlyList<int> devices)
+#if DEBUG
+        //private static ILogger _logger = LogManager.GetCurrentClassLogger();
+#endif
+
+        public PlatformProcessInfo(CancellationTokenSource cancellationTokenSource, string endPointName, IReadOnlyList<int> devices, IReadOnlyList<string> friends)
         {
             _cancellationTokenSource = cancellationTokenSource;
+            _endPointName = endPointName;
             _devices = devices;
+            _friends = friends;
         }
 
         public void SetTask(Task task)
         {
             _task = task;
         }
+
+        /// <inheritdoc/>
+        public override string EndPointName => _endPointName;
 
         /// <inheritdoc/>
         public override ProcessStatus Status
@@ -89,6 +102,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             lock (_lockObj)
             {
                 _task.Start();
+
                 _status = ProcessStatus.Running;
             }
         }
@@ -109,6 +123,26 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         public override event ProcessInfoEvent OnFinish;
 
         /// <inheritdoc/>
+        public override IReadOnlyList<string> Friends => _friends;
+
+        /// <inheritdoc/>
+        public override bool IsFriend(IProcessInfo other)
+        {
+#if DEBUG
+            //_logger.Info($"other.EndPointName = {other.EndPointName}");
+            //_logger.Info($"other.Friends = {JsonConvert.SerializeObject(other.Friends)}");
+            //_logger.Info($"EndPointName = {EndPointName}");
+            //_logger.Info($"Friends = {JsonConvert.SerializeObject(Friends)}");
+#endif
+            if ((!other.Friends.IsNullOrEmpty() && other.Friends.Any(p => p == EndPointName)) || (!Friends.IsNullOrEmpty() && Friends.Any(p => p == other.EndPointName)))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <inheritdoc/>
         protected override void OnDisposed()
         {
             lock (_lockObj)
@@ -119,8 +153,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         #region private fields
         private readonly object _lockObj = new object();
+        private readonly string _endPointName;
         private ProcessStatus _status = ProcessStatus.Created;
         private readonly IReadOnlyList<int> _devices;
+        private readonly IReadOnlyList<string> _friends;
         private Task _task;
         private readonly CancellationTokenSource _cancellationTokenSource;
         #endregion

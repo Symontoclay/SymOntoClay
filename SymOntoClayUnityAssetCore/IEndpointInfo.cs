@@ -33,6 +33,7 @@ namespace SymOntoClay.UnityAsset.Core
         string Name { get; }
         bool NeedMainThread { get; }
         IReadOnlyList<int> Devices { get; }
+        IReadOnlyList<string> Friends { get; }
         IReadOnlyList<IEndpointArgumentInfo> Arguments { get; }
         MethodInfo MethodInfo { get; }
         object Object { get; }

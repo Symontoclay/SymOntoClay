@@ -115,15 +115,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
             File.WriteAllText(targetFileName, fileContent);
         }
 
-        public IWorld CreateWorld(Action<int, string> logChannel, bool enableWriteLnRawLog = false)
+        public void CreateWorld(Action<int, string> logChannel, bool enableWriteLnRawLog = false)
         {
             var n = 0;
 
-            return CreateWorld(message => { n++; logChannel(n, message); },
+            CreateWorld(message => { n++; logChannel(n, message); },
                 error => { throw new Exception(error); }, enableWriteLnRawLog);
         }
 
-        public IWorld CreateWorld(Action<string> logChannel, Action<string> error, bool enableWriteLnRawLog = false)
+        public void CreateWorld(Action<string> logChannel, Action<string> error, bool enableWriteLnRawLog = false)
         {
             var supportBasePath = Path.Combine(_testDir, "SysDirs");
 
@@ -131,7 +131,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 
             var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
 
-            var world = new WorldCore();
+            _world = new WorldCore();
 
             var settings = new WorldSettings();
             settings.EnableAutoloadingConvertors = true;
@@ -162,9 +162,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
                 EnableRemoteConnection = true
             };
 
-            world.SetSettings(settings);
+            _world.SetSettings(settings);
+        }
 
-            return world;
+        public void StartWorld()
+        {
+            _world?.Start();
         }
 
         private void CreateNPCDSLProject(string npcName)
@@ -196,22 +199,22 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
                 , errorMsg => throw new Exception(errorMsg));
         }
 
-        public IHumanoidNPC CreateNPC(IWorld world)
+        public IHumanoidNPC CreateNPC()
         {
-            return CreateNPC(world, _projectName, new object(), new Vector3(10, 10, 10));
+            return CreateNPC(_projectName, new object(), new Vector3(10, 10, 10));
         }
 
-        public IHumanoidNPC CreateNPC(IWorld world, object platformListener)
+        public IHumanoidNPC CreateNPC(object platformListener)
         {
-            return CreateNPC(world, _projectName, platformListener, new Vector3(10, 10, 10));
+            return CreateNPC(_projectName, platformListener, new Vector3(10, 10, 10));
         }
 
-        public IHumanoidNPC CreateNPC(IWorld world, string npcName, object platformListener)
+        public IHumanoidNPC CreateNPC(string npcName, object platformListener)
         {
-            return CreateNPC(world, npcName, platformListener, new Vector3(10, 10, 10));
+            return CreateNPC(npcName, platformListener, new Vector3(10, 10, 10));
         }
 
-        public IHumanoidNPC CreateNPC(IWorld world, string npcName, object platformListener, Vector3 currentAbsolutePosition)
+        public IHumanoidNPC CreateNPC(string npcName, object platformListener, Vector3 currentAbsolutePosition)
         {
             ILoggedTestHostListener loggedTestHostListener = null;
 
@@ -227,7 +230,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
             npcSettings.HostListener = platformListener;
             npcSettings.PlatformSupport = new PlatformSupportCLIStub(currentAbsolutePosition);
 
-            var npc = world.GetHumanoidNPC(npcSettings);
+            var npc = _world.GetHumanoidNPC(npcSettings);
 
             loggedTestHostListener?.SetLogger(npc.Logger);
 
@@ -261,21 +264,26 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
                 loggedTestHostListener = platformListener as ILoggedTestHostListener;
             }
 
-            var world = CreateWorld(logChannel, error, loggedTestHostListener != null);
+            CreateWorld(logChannel, error, loggedTestHostListener != null);
 
-            var npc = CreateNPC(world, _projectName, platformListener);
+            var npc = CreateNPC(_projectName, platformListener);
 
-            world.Start();
+            StartWorld();
 
             return npc;
         }
 
-        public IGameObject CreateThing(IWorld world, string thingName, Vector3 currentAbsolutePosition)
+        public IGameObject CreateThing(string thingName)
         {
-            return CreateThing(world, thingName, new object(), currentAbsolutePosition);
+            return CreateThing(thingName, new object(), new Vector3(10, 10, 10));
         }
 
-        public IGameObject CreateThing(IWorld world, string thingName, object platformListener, Vector3 currentAbsolutePosition)
+        public IGameObject CreateThing(string thingName, Vector3 currentAbsolutePosition)
+        {
+            return CreateThing(thingName, new object(), currentAbsolutePosition);
+        }
+
+        public IGameObject CreateThing(string thingName, object platformListener, Vector3 currentAbsolutePosition)
         {
             var settings = new GameObjectSettings();
 
@@ -289,7 +297,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
             settings.HostListener = platformListener;
             settings.PlatformSupport = new PlatformSupportCLIStub(currentAbsolutePosition);
 
-            var gameObject = world.GetGameObject(settings);
+            var gameObject = _world.GetGameObject(settings);
 
             return gameObject;
         }
@@ -298,6 +306,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
         private readonly string _projectName = "Example";
         private readonly string _testDir;
         private readonly string _wSpaceDir;
+        private IWorld _world;
 
         private readonly List<string> _createdNPCsDSLProjects = new List<string>();
         private readonly List<string> _createdThingsDSLProjects = new List<string>();
@@ -326,6 +335,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
             }
 
             _isDisposed = true;
+
+            _world?.Dispose();
 
             Directory.Delete(_testDir, true);
         }

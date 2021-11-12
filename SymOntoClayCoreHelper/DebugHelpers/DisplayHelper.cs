@@ -182,7 +182,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             sb.AppendLine($"{spaces}End {propName}");
         }
 
-        public static void PrintPODList<T>(this StringBuilder sb, uint n, string propName, IList<T> items)
+        public static void PrintPODList<T>(this StringBuilder sb, uint n, string propName, IEnumerable<T> items)
         {
             var spaces = Spaces(n);
             var nextN = n + 4;

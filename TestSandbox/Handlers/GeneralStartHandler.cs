@@ -53,16 +53,18 @@ namespace TestSandbox.Handlers
 
             //_npc.PushSoundFact(60, "act(M16, shoot)");
 
-            //var factId = _npc.InsertFact("{: see(I, #a) :}");
+            var factId = _npc.InsertFact("{: see(I, #a) :}");
             //_npc.InsertFact("{: barrel (#a) :}");
             //_npc.InsertFact("distance(I, #a, 14.71526)");
 
             //Thread.Sleep(5000);
+            Thread.Sleep(50000);
+            //Thread.Sleep(500000);
 
             _logger.Log("!---");
 
             _world.Dispose();
-
+            
             _logger.Log("!(+)---");
 
             //_npc.InsertFact("{: see(I, #b) :}");

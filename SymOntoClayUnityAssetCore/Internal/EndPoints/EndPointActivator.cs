@@ -56,7 +56,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             var paramsList = MapParams(cancellationToken, endpointInfo, command);
 
             Task task = null;
-            var processInfo = new PlatformProcessInfo(cancellationTokenSource, endpointInfo.Devices);
+            var processInfo = new PlatformProcessInfo(cancellationTokenSource, endpointInfo.Name, endpointInfo.Devices, endpointInfo.Friends);
 
             if (endpointInfo.NeedMainThread)
             {

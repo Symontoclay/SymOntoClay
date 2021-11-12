@@ -33,6 +33,7 @@ namespace SymOntoClay.Core
     public interface IProcessInfo : IDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         string Id { get; }
+        string EndPointName { get; }
         ProcessStatus Status { get; set; }
         bool IsFinished { get; }
         IReadOnlyList<int> Devices { get; }
@@ -41,6 +42,8 @@ namespace SymOntoClay.Core
         event ProcessInfoEvent OnFinish;
         float Priority { get; }
         float GlobalPriority { get; }
+        IReadOnlyList<string> Friends { get; }
+        bool IsFriend(IProcessInfo other);
         IProcessInfo ParentProcessInfo { get; set; }
         IReadOnlyList<IProcessInfo> GetChildrenProcessInfoList { get; }
         void AddChild(IProcessInfo processInfo);

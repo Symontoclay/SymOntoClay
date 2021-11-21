@@ -197,7 +197,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 if (_onceStorage != null)
                 {
 #if DEBUG
-                    Log("_onceStorage != null");
+                    //Log("_onceStorage != null");
 #endif
 
                     searchOptions = new LogicalSearchOptions();

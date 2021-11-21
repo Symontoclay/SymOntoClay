@@ -104,8 +104,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             get
             {
-                CheckForUpdates();
-
                 return _isEmpty;
             }
         }
@@ -198,16 +196,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 if (_onceStorage != null)
                 {
-                    var localCodeExecutionContext = new LocalCodeExecutionContext();
-
-                    var localStorageSettings = RealStorageSettingsHelper.Create(_context, new List<IStorage> { _localContext.Storage, _onceStorage });
-                    var storage = new LocalStorage(localStorageSettings);
-
-                    localCodeExecutionContext.Storage = storage;
+#if DEBUG
+                    Log("_onceStorage != null");
+#endif
 
                     searchOptions = new LogicalSearchOptions();
                     searchOptions.QueryExpression = LogicalQuery;
-                    searchOptions.LocalCodeExecutionContext = localCodeExecutionContext;     
+                    searchOptions.TargetStorage = _onceStorage;
+                    searchOptions.LocalCodeExecutionContext = _localCodeExecutionContext;  
                 }
                 
                 var searchResult = _searcher.Run(searchOptions);

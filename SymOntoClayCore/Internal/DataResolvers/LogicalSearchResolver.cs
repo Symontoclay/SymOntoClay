@@ -117,7 +117,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var targetStorageList = GetStoragesList(options.TargetStorage);
 
 #if DEBUG
-                Log($"targetStorageList = {targetStorageList.WriteListToString()}");
+                //Log($"targetStorageList = {targetStorageList.WriteListToString()}");
 #endif
 
                 var maxPriority = targetStorageList.Max(p => p.Priority);

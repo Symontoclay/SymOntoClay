@@ -175,49 +175,49 @@ namespace SymOntoClay.Core.Internal.Storage
         /// <inheritdoc/>
         public string ToString(uint n)
         {
-            throw new NotImplementedException();
+            return string.Empty;
         }
 
         /// <inheritdoc/>
         public string PropertiesToString(uint n)
         {
-            throw new NotImplementedException();
+            return string.Empty;
         }
 
         /// <inheritdoc/>
         public string ToShortString()
         {
-            throw new NotImplementedException();
+            return string.Empty;
         }
 
         /// <inheritdoc/>
         public string ToShortString(uint n)
         {
-            throw new NotImplementedException();
+            return string.Empty;
         }
 
         /// <inheritdoc/>
         public string PropertiesToShortString(uint n)
         {
-            throw new NotImplementedException();
+            return string.Empty;
         }
 
         /// <inheritdoc/>
         public string ToBriefString()
         {
-            throw new NotImplementedException();
+            return string.Empty;
         }
 
         /// <inheritdoc/>
         public string ToBriefString(uint n)
         {
-            throw new NotImplementedException();
+            return string.Empty;
         }
 
         /// <inheritdoc/>
         public string PropertiesToBriefString(uint n)
         {
-            throw new NotImplementedException();
+            return string.Empty;
         }
     }
 }

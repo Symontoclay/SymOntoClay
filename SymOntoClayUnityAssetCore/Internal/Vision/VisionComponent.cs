@@ -386,7 +386,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
         public bool IsVisible(int instanceId)
         {
 #if DEBUG
-            Log($"instanceId = {instanceId}");
+            //Log($"instanceId = {instanceId}");
 #endif
 
             if(_visibleObjectsRegistry.ContainsKey(instanceId))

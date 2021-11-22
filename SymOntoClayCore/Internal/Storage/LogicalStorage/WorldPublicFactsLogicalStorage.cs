@@ -36,6 +36,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         {
             lock(_lockObj)
             {
+                if(_logicalStorages.Contains(storage))
+                {
+                    return;
+                }
+
                 storage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys;
 
                 _logicalStorages.Add(storage);
@@ -46,6 +51,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         {
             lock (_lockObj)
             {
+                if (!_logicalStorages.Contains(storage))
+                {
+                    return;
+                }
+
                 storage.OnChangedWithKeys -= LogicalStorage_OnChangedWithKeys;
 
                 _logicalStorages.Remove(storage);

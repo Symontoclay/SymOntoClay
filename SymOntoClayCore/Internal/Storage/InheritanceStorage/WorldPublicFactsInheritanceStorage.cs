@@ -29,6 +29,11 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
         {
             lock (_lockObj)
             {
+                if(_inheritanceStorages.Contains(storage))
+                {
+                    return;
+                }
+
                 _inheritanceStorages.Add(storage);
             }
         }
@@ -37,6 +42,11 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
         {
             lock (_lockObj)
             {
+                if (!_inheritanceStorages.Contains(storage))
+                {
+                    return;
+                }
+
                 _inheritanceStorages.Remove(storage);
             }
         }

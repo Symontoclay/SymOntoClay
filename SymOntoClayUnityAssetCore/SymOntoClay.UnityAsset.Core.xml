@@ -147,6 +147,21 @@
             <param name="name">Alias of the marked parameter in SymOntoClay DSL.</param>
             <param name="kindOfParameter">Describes a tip about conversion between C# and SymOntoclay DSL types.</param>
         </member>
+        <member name="T:SymOntoClay.UnityAsset.Core.FriendsEndpointsAttribute">
+            <summary>
+            Marks C# method as friends for marked method.
+            Both friends methods and marked method should be also marked as external methods for SymOntoClay DSL.
+            Friends methods can be executed as parallel with such NPC devices.
+            For example, NPC can aim to something and shoot as parallel. 
+            And these host methods use NPC's hands. 
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.FriendsEndpointsAttribute.#ctor(System.String[])">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+            <param name="friendsEnpoints">Names of friends methods.</param>
+        </member>
         <member name="T:SymOntoClay.UnityAsset.Core.GameObjectSettings">
             <summary>
             Game object settings.

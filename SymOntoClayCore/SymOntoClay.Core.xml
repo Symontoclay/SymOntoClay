@@ -176,6 +176,77 @@
             The nearest entity on game level will be preferred.
             </summary>
         </member>
+        <member name="T:SymOntoClay.Core.IEntity">
+            <summary>
+            Represents an entity (concrete or conditional).
+            This interface can be used in host-methods.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.IEntity.InstanceId">
+            <summary>
+            Returns Instance ID on Unity game object.
+            It allows to bing SymOntoClay's entity to entity on game level.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.IEntity.Id">
+            <summary>
+            Gets unique Id.
+            It allows us to identify each item of the game.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.IEntity.IdForFacts">
+            <summary>
+            Gets unique Id which is prepared to using in building fact string.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.IEntity.Position">
+            <summary>
+            Gets position of the entity.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.IEntity.IsEmpty">
+            <summary>
+            Returns <b>true</b> if the entity is not resolved, otherwise returns <b>false</b>.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.Core.IEntity.Specify(SymOntoClay.Core.EntityConstraints[])">
+            <summary>
+            Sets constraints that will be used during resolving.
+            It allows to resolve entity in way which is fit for the host-method.
+            These constraints will be used every resolving.
+            </summary>
+            <param name="constraints">Array of constraints.</param>
+        </member>
+        <member name="M:SymOntoClay.Core.IEntity.SpecifyOnce(SymOntoClay.Core.EntityConstraints[])">
+            <summary>
+            Sets constraints that will be used during resolving.
+            It allows to resolve entity in way which is fit for the host-method.
+            These constraints will be used once.
+            Next resolving will not use these constraints.
+            </summary>
+            <param name="constraints">Array of constraints.</param>
+        </member>
+        <member name="M:SymOntoClay.Core.IEntity.SpecifyOnce(SymOntoClay.Core.IStorage)">
+            <summary>
+            Sets backpack storage that will be used during resolving.
+            It allows to resolve entity in way which is fit for the host-method.
+            This backpack storage will be used once.
+            Next resolving will not use this backpack storage.
+            </summary>
+            <param name="storage">Backpack storage</param>
+        </member>
+        <member name="M:SymOntoClay.Core.IEntity.Resolve">
+            <summary>
+            Resolves (finds) entity with constraints or backpack storage.
+            If entity has been previously resolved, the more fittable entity will has been found.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.Core.IEntity.ResolveIfNeeds">
+            <summary>
+            Resolves (finds) entity with constraints or backpack storage.
+            If entity has been previously resolved, the method does nothing.
+            </summary>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.BaseComponent.IsDisposed">
             <inheritdoc/>
         </member>

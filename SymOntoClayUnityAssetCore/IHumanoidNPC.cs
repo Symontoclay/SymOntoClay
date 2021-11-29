@@ -38,13 +38,31 @@ namespace SymOntoClay.UnityAsset.Core
         /// It alows enable or disable logging or remote connection for the NPC.
         /// </summary>
         bool EnableLogging { get; set; }
+
+        /// <summary>
+        /// Performs death of the NPC.
+        /// All active processes will have been stopped.
+        /// Another NPCs will percept the NPC as died.
+        /// </summary>
         void Die();
         string InsertFact(string text);
         void RemoveFact(string id);
 
+        /// <summary>
+        /// Returns storage that represents a backpack.
+        /// </summary>
         IStorage BackpackStorage { get; }
 
+        /// <summary>
+        /// Adds a game object into backpack.
+        /// </summary>
+        /// <param name="obj">Instance of the game object.</param>
         void AddToBackpack(IGameObject obj);
+
+        /// <summary>
+        /// Removes game object from backpack.
+        /// </summary>
+        /// <param name="obj">Instance of the game object.</param>
         void RemoveFromBackpack(IGameObject obj);
     }
 }

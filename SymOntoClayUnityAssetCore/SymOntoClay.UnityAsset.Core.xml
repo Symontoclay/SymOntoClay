@@ -220,6 +220,30 @@
             It alows enable or disable logging or remote connection for the NPC.
             </summary>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IHumanoidNPC.Die">
+            <summary>
+            Performs death of the NPC.
+            All active processes will have been stopped.
+            Another NPCs will percept the NPC as died.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.IHumanoidNPC.BackpackStorage">
+            <summary>
+            Returns storage that represents a backpack.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IHumanoidNPC.AddToBackpack(SymOntoClay.UnityAsset.Core.IGameObject)">
+            <summary>
+            Adds a game object into backpack.
+            </summary>
+            <param name="obj">Instance of the game object.</param>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IHumanoidNPC.RemoveFromBackpack(SymOntoClay.UnityAsset.Core.IGameObject)">
+            <summary>
+            Removes game object from backpack.
+            </summary>
+            <param name="obj">Instance of the game object.</param>
+        </member>
         <member name="T:SymOntoClay.UnityAsset.Core.IManualControlling">
             <summary>
             Represent aspect as manual controlling things by the NPC or Player.
@@ -227,27 +251,27 @@
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.IManualControlling.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,SymOntoClay.UnityAsset.Core.DeviceOfBiped)">
             <summary>
-            Adds a game object into manual controlled area of the NPC or Player.
+            Adds a game object into manual controlled area of the NPC.
             </summary>
             <param name="obj">Instance of the game object.</param>
             <param name="device">Describes biped device which will be using the game object.</param>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.IManualControlling.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,System.Collections.Generic.IList{SymOntoClay.UnityAsset.Core.DeviceOfBiped})">
             <summary>
-            Adds a game object into manual controlled area of the NPC or Player.
+            Adds a game object into manual controlled area of the NPC.
             </summary>
             <param name="obj">Instance of the game object.</param>
             <param name="devices">Describes list of biped devices which will be using the game object.</param>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.IManualControlling.RemoveFromManualControl(SymOntoClay.UnityAsset.Core.IGameObject)">
             <summary>
-            Removes a game object from manual controlled area of an NPC or Player.
+            Removes a game object from manual controlled area of an NPC.
             </summary>
             <param name="obj">Instance of the game object.</param>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.IManualControlling.GetManualControlledObjects">
             <summary>
-            Gets list of manual controlled game objects by the NPC or Player.
+            Gets list of manual controlled game objects by the NPC.
             </summary>
             <returns>List of manual controlled game objects.</returns>
         </member>

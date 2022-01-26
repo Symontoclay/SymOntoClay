@@ -408,12 +408,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         CallFunction(KindOfFunctionParameters.NamedParameters, currentCommand.CountParams, false);
                         break;
 
-                    case OperationCode.UseInheritance:
-                        ProcessUseInheritance();
+                    case OperationCode.SetInheritance:
+                        ProcessSetInheritance();
                         break;
 
-                    case OperationCode.UseNotInheritance:
-                        ProcessUseNotInheritance();
+                    case OperationCode.SetNotInheritance:
+                        ProcessSetNotInheritance();
                         break;
 
                     case OperationCode.SetSEHGroup:
@@ -1256,7 +1256,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private void ProcessUseInheritance()
+        private void ProcessSetInheritance()
         {
             var paramsList = TakePositionedParameters(4);
 
@@ -1297,7 +1297,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentCodeFrame.CurrentPosition++;
         }
 
-        private void ProcessUseNotInheritance()
+        private void ProcessSetNotInheritance()
         {
             var paramsList = TakePositionedParameters(4);
 

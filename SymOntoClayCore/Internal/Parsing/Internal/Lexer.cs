@@ -807,9 +807,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
                         }
 
-                        if (string.Compare(content, "use", true) == 0)
+                        if (string.Compare(content, "set", true) == 0)
                         {
-                            kindOfKeyWord = KeyWordTokenKind.Use;
+                            kindOfKeyWord = KeyWordTokenKind.Set;
                             break;
                         }
 

@@ -191,8 +191,8 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.ClearStack:
                 case OperationCode.Return:
                 case OperationCode.ReturnVal:
-                case OperationCode.UseInheritance:
-                case OperationCode.UseNotInheritance:
+                case OperationCode.SetInheritance:
+                case OperationCode.SetNotInheritance:
                 case OperationCode.Error:
                 case OperationCode.RemoveSEHGroup:
                 case OperationCode.Await:

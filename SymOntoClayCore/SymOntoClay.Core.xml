@@ -1066,6 +1066,27 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstExpressionStatement.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstSetInheritanceStatement.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstSetInheritanceStatement.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstSetInheritanceStatement.CloneAstStatement(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstSetInheritanceStatement.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstSetInheritanceStatement.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstSetInheritanceStatement.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstSetInheritanceStatement.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstStatement.CloneAstStatement">
             <summary>
             Clones the instance and returns cloned instance.
@@ -1110,27 +1131,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstTryStatement.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstUseInheritanceStatement.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstUseInheritanceStatement.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstUseInheritanceStatement.CloneAstStatement(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstUseInheritanceStatement.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstUseInheritanceStatement.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstUseInheritanceStatement.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstUseInheritanceStatement.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseRulePart.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
@@ -4243,6 +4243,15 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.SecondaryRulePartParser.OnEnter">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.SetStatementParser.OnEnter">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.SetStatementParser.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.SetStatementParser.OnRun">
+            <inheritdoc/>
+        </member>
         <member name="T:SymOntoClay.Core.Internal.Parsing.Internal.SourceCodeParser">
             <summary>
             It is top level parser for source code file.
@@ -4390,15 +4399,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.TupleOfTypesParser.OnRun">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.UseStatementParser.OnEnter">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.UseStatementParser.OnFinish">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.UseStatementParser.OnRun">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.WorldPaser.OnRun">

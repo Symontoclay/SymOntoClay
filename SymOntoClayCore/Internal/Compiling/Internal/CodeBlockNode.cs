@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -63,8 +63,8 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                     case KindOfAstStatement.UseInheritance:
                         {
-                            var node = new UseInheritanceStatementNode(_context);
-                            node.Run(statement as AstUseInheritanceStatement);
+                            var node = new SetInheritanceStatementNode(_context);
+                            node.Run(statement as AstSetInheritanceStatement);
                             AddCommands(node.Result);
                         }
                         break;

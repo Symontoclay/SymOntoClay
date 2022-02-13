@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,12 +30,12 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public class UseStatementParser : BaseInternalParser
+    public class SetStatementParser : BaseInternalParser
     {
         private enum State
         {
             Init,
-            GotUse,
+            GotSet,
             GotFirstName,
             GotIs,
             GotIsNot,
@@ -46,7 +46,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotFuzzyLogicNonNumericSequenceItem
         }
 
-        public UseStatementParser(InternalParserContext context)
+        public SetStatementParser(InternalParserContext context)
             : base(context)
         {
         }
@@ -84,7 +84,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void CreateAstUseInheritanceStatement()
         {
-            var result = new AstUseInheritanceStatement();
+            var result = new AstSetInheritanceStatement();
 
             DefaultSettingsOfCodeEntityHelper.SetUpAnnotatedItem(result, CurrentDefaultSetings);
 
@@ -125,8 +125,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Word:
                             switch(_currToken.KeyWordTokenKind)
                             {
-                                case KeyWordTokenKind.Use:
-                                    _state = State.GotUse;
+                                case KeyWordTokenKind.Set:
+                                    _state = State.GotSet;
                                     break;
 
                                 default:
@@ -139,10 +139,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotUse:
+                case State.GotSet:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
+                        case TokenKind.Entity:
                         case TokenKind.SystemVar:
                             _rawStatement.FirstName = ParseName(_currToken.Content);
                             _state = State.GotFirstName;

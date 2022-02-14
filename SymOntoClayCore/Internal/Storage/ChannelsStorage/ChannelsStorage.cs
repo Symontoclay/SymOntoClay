@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
 {
-    public class ChannelsStorage: BaseLoggedComponent, IChannelsStorage
+    public class ChannelsStorage: BaseComponent, IChannelsStorage
     {
         public ChannelsStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(realStorageContext.MainStorageContext.Logger)
@@ -135,6 +135,14 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
 
                 return new List<WeightedInheritanceResultItem<Channel>>();
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _nonIndexedInfo.Clear();
+
+            base.OnDisposed();
         }
     }
 }

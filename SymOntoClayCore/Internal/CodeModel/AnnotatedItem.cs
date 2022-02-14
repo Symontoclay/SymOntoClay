@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -51,22 +51,27 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private bool _isDirty = true;
 
-        public void CheckDirty()
+        public void CheckDirty(CheckDirtyOptions options = null)
         {
             if (_isDirty)
             {
-                CalculateLongHashCodes();
+                CalculateLongHashCodes(options);
                 _isDirty = false;
             }
         }
 
         private ulong? _longConditionalHashCode;
 
-        public virtual ulong GetLongConditionalHashCode()
+        public ulong GetLongConditionalHashCode()
+        {
+            return GetLongConditionalHashCode(null);
+        }
+
+        public virtual ulong GetLongConditionalHashCode(CheckDirtyOptions options)
         {
             if(!_longConditionalHashCode.HasValue)
             {
-                CalculateLongHashCodes();
+                CalculateLongHashCodes(options);
             }
 
             return _longConditionalHashCode.Value;
@@ -74,24 +79,29 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private ulong? _longHashCode;
 
-        public virtual ulong GetLongHashCode()
+        public ulong GetLongHashCode()
+        {
+            return GetLongHashCode(null);
+        }
+
+        public virtual ulong GetLongHashCode(CheckDirtyOptions options)
         {
             if(!_longHashCode.HasValue)
             {
-                CalculateLongHashCodes();
+                CalculateLongHashCodes(options);
             }
 
             return _longHashCode.Value;
         }
 
-        public virtual void CalculateLongHashCodes()
+        public virtual void CalculateLongHashCodes(CheckDirtyOptions options)
         {
-            _longHashCode = CalculateLongHashCode();
-            CalculateLongConditionalHashCode();
+            _longHashCode = CalculateLongHashCode(options);
+            CalculateLongConditionalHashCode(options);
             _isDirty = false;
         }
 
-        protected virtual void CalculateLongConditionalHashCode()
+        protected virtual void CalculateLongConditionalHashCode(CheckDirtyOptions options)
         {
             ulong result = 0;
 
@@ -99,14 +109,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 foreach (var whereItem in WhereSection)
                 {
-                    result ^= whereItem.GetLongHashCode();
+                    result ^= whereItem.GetLongHashCode(options);
                 }
             }
 
             _longConditionalHashCode = result;
         }
 
-        protected virtual ulong CalculateLongHashCode()
+        protected virtual ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
             ulong result = 0;
 
@@ -114,20 +124,20 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 foreach (var item in WhereSection)
                 {
-                    result ^= LongHashCodeWeights.BaseModalityWeight ^ item.GetLongHashCode();
+                    result ^= LongHashCodeWeights.BaseModalityWeight ^ item.GetLongHashCode(options);
                 }
             }
 
             if (Holder != null)
             {
-                result ^= LongHashCodeWeights.BaseModalityWeight ^ Holder.GetLongHashCode();
+                result ^= LongHashCodeWeights.BaseModalityWeight ^ Holder.GetLongHashCode(options);
             }
 
             if (!Annotations.IsNullOrEmpty())
             {
                 foreach (var item in Annotations)
                 {
-                    result ^= LongHashCodeWeights.BaseModalityWeight ^ item.GetLongHashCode();
+                    result ^= LongHashCodeWeights.BaseModalityWeight ^ item.GetLongHashCode(options);
                 }
             }
 

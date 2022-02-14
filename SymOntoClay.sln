@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinguisticVariableViewer", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClayProjectFiles", "SymOntoClayProjectFiles\SymOntoClayProjectFiles.csproj", "{1BBE8C32-4DDC-42AF-A835-18ECA09E6369}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymOntoClayDefaultCLIEnvironment", "SymOntoClayDefaultCLIEnvironment\SymOntoClayDefaultCLIEnvironment.csproj", "{19173425-5C60-4E70-9221-73AC38F6F6E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClayDefaultCLIEnvironment", "SymOntoClayDefaultCLIEnvironment\SymOntoClayDefaultCLIEnvironment.csproj", "{19173425-5C60-4E70-9221-73AC38F6F6E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymOntoClaySoundBuses", "SymOntoClaySoundBuses\SymOntoClaySoundBuses.csproj", "{473E55C2-BE0F-4898-BA47-B55337D9169C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{19173425-5C60-4E70-9221-73AC38F6F6E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19173425-5C60-4E70-9221-73AC38F6F6E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19173425-5C60-4E70-9221-73AC38F6F6E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{473E55C2-BE0F-4898-BA47-B55337D9169C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{473E55C2-BE0F-4898-BA47-B55337D9169C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{473E55C2-BE0F-4898-BA47-B55337D9169C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{473E55C2-BE0F-4898-BA47-B55337D9169C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.VarStorage
 {
-    public class VarStorage: BaseLoggedComponent, IVarStorage
+    public class VarStorage: BaseComponent, IVarStorage
     {
         public VarStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(realStorageContext.MainStorageContext.Logger)
@@ -114,6 +114,15 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
 
                 return null;
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _systemVariables.Clear();
+            _variables.Clear();
+
+            base.OnDisposed();
         }
     }
 }

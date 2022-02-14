@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -76,27 +76,27 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override ulong GetLongConditionalHashCode()
+        public override ulong GetLongConditionalHashCode(CheckDirtyOptions options)
         {
-            return RuleInstance.GetLongConditionalHashCode();
+            return RuleInstance.GetLongConditionalHashCode(options);
         }
 
         /// <inheritdoc/>
-        public override ulong GetLongHashCode()
+        public override ulong GetLongHashCode(CheckDirtyOptions options)
         {
-            return RuleInstance.GetLongHashCode();
+            return RuleInstance.GetLongHashCode(options);
         }
 
         /// <inheritdoc/>
-        protected override void CalculateLongConditionalHashCode()
+        protected override void CalculateLongConditionalHashCode(CheckDirtyOptions options)
         {
-            RuleInstance.CheckDirty();
+            RuleInstance.CheckDirty(options);
         }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            return RuleInstance.GetLongHashCode();
+            return RuleInstance.GetLongHashCode(options);
         }
 
         /// <inheritdoc/>
@@ -179,7 +179,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         protected override string PropertiesToDbgString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            return $"{spaces}ref: {RuleInstance.GetDefaultToDbgStringInformation(0u)}";
+            return $"{spaces}{RuleInstance.ToHumanizedString()}";
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString()
+        {
+            return RuleInstance.ToHumanizedString();
         }
     }
 }

@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -92,11 +93,20 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         }
 
         /// <inheritdoc/>
-        public override void CalculateLongHashCodes()
+        public override void CalculateLongHashCodes(CheckDirtyOptions options)
         {
-            //RuleInstanceValue.CheckDirty();
+            VariableName?.CheckDirty(options);
+            Condition?.CheckDirty(options);
 
-            base.CalculateLongHashCodes();
+            if(!Statements.IsNullOrEmpty())
+            {
+                foreach(var statement in Statements)
+                {
+                    statement?.CheckDirty(options);
+                }
+            }
+
+            base.CalculateLongHashCodes(options);
         }
 
         /// <inheritdoc/>

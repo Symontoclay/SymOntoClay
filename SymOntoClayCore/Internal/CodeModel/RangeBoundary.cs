@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -65,11 +65,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private bool _isDirty = true;
 
-        public void CheckDirty()
+        public void CheckDirty(CheckDirtyOptions options)
         {
             if (_isDirty)
             {
-                CalculateLongHashCodes();
+                CalculateLongHashCodes(options);
                 _isDirty = false;
             }
         }
@@ -78,17 +78,22 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public ulong GetLongHashCode()
         {
+            return GetLongHashCode(null);
+        }
+
+        public ulong GetLongHashCode(CheckDirtyOptions options)
+        {
             if (!_longHashCode.HasValue)
             {
-                CalculateLongHashCodes();
+                CalculateLongHashCodes(options);
             }
 
             return _longHashCode.Value;
         }
 
-        public void CalculateLongHashCodes()
+        public void CalculateLongHashCodes(CheckDirtyOptions options)
         {
-            Value.CheckDirty();
+            Value.CheckDirty(options);
 
             _longHashCode = Value.GetLongHashCode() ^ (ulong)Includes.GetHashCode();
 

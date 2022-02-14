@@ -1,0 +1,6 @@
+app M4A1_app is gun
+{
+    on Init =>
+    {
+    }
+}

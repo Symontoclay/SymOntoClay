@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -56,7 +56,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             var paramsList = MapParams(cancellationToken, endpointInfo, command);
 
             Task task = null;
-            var processInfo = new PlatformProcessInfo(cancellationTokenSource, endpointInfo.Devices);
+            var processInfo = new PlatformProcessInfo(cancellationTokenSource, endpointInfo.Name, endpointInfo.Devices, endpointInfo.Friends);
 
             if (endpointInfo.NeedMainThread)
             {
@@ -122,7 +122,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             {
                 try
                 {
+#if DEBUG
+                    //Log("Pre endpointInfo.MethodInfo.Invoke");
+#endif
+
                     endpointInfo.MethodInfo.Invoke(platformListener, paramsList);
+
+#if DEBUG
+                    //Log("after endpointInfo.MethodInfo.Invoke");
+#endif
 
                     processInfo.Status = ProcessStatus.Completed;
                 }
@@ -164,9 +172,59 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 case KindOfCommandParameters.ParametersByDict:
                     return MapParamsByParametersByDict(cancellationToken, endpointInfo, command);
 
+                case KindOfCommandParameters.ParametersByList:
+                    return MapParamsByParametersByList(cancellationToken, endpointInfo, command);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfCommandParameters), kindOfCommandParameters, null);
             }
+        }
+
+        private object[] MapParamsByParametersByList(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command)
+        {
+            var argumentsList = endpointInfo.Arguments.Where(p => !p.IsSystemDefiend);
+
+            var resultList = new List<object>();
+            resultList.Add(cancellationToken);
+
+#if DEBUG
+            //Log($"argumentsList.Count() = {argumentsList.Count()}");
+#endif
+
+            var commandParamsEnumerator = command.ParamsList.GetEnumerator();
+
+            foreach (var targetArgument in argumentsList)
+            {
+#if DEBUG
+                //Log($"targetArgument.ParameterInfo.ParameterType.FullName = {targetArgument.ParameterInfo.ParameterType.FullName}");
+#endif
+
+                if(commandParamsEnumerator.MoveNext())
+                {
+                    var targetCommandValue = commandParamsEnumerator.Current;
+
+#if DEBUG
+                    //Log($"targetCommandValue.GetType().FullName = {targetCommandValue.GetType().FullName}");
+                    //Log($"targetCommandValue = {targetCommandValue.ToHumanizedString()}");
+#endif
+                    var targetValue = _platformTypesConvertorsRegistry.Convert(targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType, targetCommandValue);
+
+#if DEBUG
+                    //Log($"targetValue = {targetValue}");
+#endif
+
+                    resultList.Add(targetValue);
+                }
+                else
+                {
+                    if (targetArgument.HasDefaultValue)
+                    {
+                        resultList.Add(targetArgument.DefaultValue);
+                    }
+                }
+            }
+
+            return resultList.ToArray();
         }
 
         private object[] MapParamsByParametersByDict(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command)

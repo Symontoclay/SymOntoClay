@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -46,6 +46,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public RealStorage Storage { get; set; }
         public IList<IStorage> Parents { get; set; }
         public IInheritancePublicFactsReplicator InheritancePublicFactsReplicator { get; set; }
+        public KindOfGC KindOfGC { get; set; }
 
         public void EmitOnAddParentStorage(IStorage storage)
         {
@@ -59,5 +60,20 @@ namespace SymOntoClay.Core.Internal.Storage
 
         public event Action<IStorage> OnAddParentStorage;
         public event Action<IStorage> OnRemoveParentStorage;
+
+        public void Dispose()
+        {
+            LogicalStorage.Dispose();
+            MethodsStorage.Dispose();
+            ActionsStorage.Dispose();
+            TriggersStorage.Dispose();
+            InheritanceStorage.Dispose();
+            SynonymsStorage.Dispose();
+            OperatorsStorage.Dispose();
+            ChannelsStorage.Dispose();
+            MetadataStorage.Dispose();
+            VarStorage.Dispose();
+            FuzzyLogicStorage.Dispose();
+        }
     }
 }

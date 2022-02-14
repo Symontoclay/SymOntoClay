@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,8 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.UnityAsset.Core.Internal;
+using SymOntoClay.UnityAsset.Core.Internal.HostSupport;
+using SymOntoClay.UnityAsset.Core.Internal.SoundPerception;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -35,7 +37,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         {
             try
             {
-                _idForFacts = settings.IdForFacts;
+                _hostSupport = new HostSupportComponent(Logger, settings.PlatformSupport, worldContext);
+                _soundPublisher = new SoundPublisherComponent(Logger, settings.InstanceId, _hostSupport, worldContext);
 
                 var standaloneStorageSettings = new StandaloneStorageSettings();
                 standaloneStorageSettings.Id = settings.Id;
@@ -51,6 +54,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 //Log($"standaloneStorageSettings = {standaloneStorageSettings}");
 #endif
                 HostStorage = new StandaloneStorage(standaloneStorageSettings);
+
+                
             }
             catch (Exception e)
             {
@@ -59,16 +64,14 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 throw e;
             }
         }
-
-        private readonly string _idForFacts;
+        
+        private readonly HostSupportComponent _hostSupport;
+        private readonly SoundPublisherComponent _soundPublisher;
 
         protected StandaloneStorage HostStorage { get; private set; }
 
         /// <inheritdoc/>
         public override IStorage PublicFactsStorage => HostStorage.PublicFactsStorage;
-
-        /// <inheritdoc/>
-        public override string IdForFacts => _idForFacts;
 
         /// <inheritdoc/>
         public override void LoadFromSourceCode()
@@ -78,6 +81,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             //try
             //{
                 HostStorage.LoadFromSourceCode();
+
+            _worldContext.AddPublicFactsStorage(this);
             //}
             //catch (Exception e)
             //{
@@ -85,6 +90,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
             //    throw e;
             //}
+        }
+
+        public void PushSoundFact(float power, string text)
+        {
+            _soundPublisher.PushSoundFact(power, text);
         }
 
         /// <inheritdoc/>

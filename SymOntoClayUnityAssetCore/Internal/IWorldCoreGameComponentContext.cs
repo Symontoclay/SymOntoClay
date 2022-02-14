@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,16 +26,23 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
 {
     public interface IWorldCoreGameComponentContext
     {
         void AddGameComponent(IGameComponent component);
+        void AddPublicFactsStorage(IGameComponent component);
         void RemoveGameComponent(IGameComponent component);
+
+        bool CanBeTakenBy(int instanceId, IEntity subject);
+        Vector3? GetPosition(int instanceId);
+
         IList<int> AvailableInstanceIdList { get; }
         IStorage GetPublicFactsStorageByInstanceId(int instanceId);
         string GetIdForFactsByInstanceId(int instanceId);
+        int GetInstanceIdByIdForFacts(string id);
         IEntityLogger CreateLogger(string name);
         IActivePeriodicObjectCommonContext SyncContext { get; }
         
@@ -45,6 +52,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         IPlatformTypesConvertorsRegistry PlatformTypesConvertors { get; }
         IInvokerInMainThread InvokerInMainThread { get; }
         IDateTimeProvider DateTimeProvider { get; }
-        ILogicQueryParseAndCache LogicQueryParseAndCache { get; }        
+        ILogicQueryParseAndCache LogicQueryParseAndCache { get; }
+        ISoundBus SoundBus { get; }
     }
 }

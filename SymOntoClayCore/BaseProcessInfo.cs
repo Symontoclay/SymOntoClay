@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +38,9 @@ namespace SymOntoClay.Core
 
         /// <inheritdoc/>
         public string Id { get; private set; }
+
+        /// <inheritdoc/>
+        public abstract string EndPointName { get; }
 
         /// <inheritdoc/>
         public abstract ProcessStatus Status { get; set; }
@@ -80,6 +83,12 @@ namespace SymOntoClay.Core
                 return Priority * ParentProcessInfo.GlobalPriority;
             }
         }
+
+        /// <inheritdoc/>
+        public abstract IReadOnlyList<string> Friends { get; }
+
+        /// <inheritdoc/>
+        public abstract bool IsFriend(IProcessInfo other);
 
         /// <inheritdoc/>
         public IProcessInfo ParentProcessInfo
@@ -231,9 +240,11 @@ namespace SymOntoClay.Core
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Id)} = {Id}");
+            sb.AppendLine($"{spaces}{nameof(EndPointName)} = {EndPointName}");
             sb.AppendLine($"{spaces}{nameof(Status)} = {Status}");
             sb.AppendLine($"{spaces}{nameof(IsFinished)} = {IsFinished}");
             sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
+            sb.PrintPODList(n, nameof(Friends), Friends);
 
             sb.AppendLine($"{spaces}{nameof(Priority)} = {Priority}");
             sb.AppendLine($"{spaces}{nameof(GlobalPriority)} = {GlobalPriority}");
@@ -268,9 +279,11 @@ namespace SymOntoClay.Core
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Id)} = {Id}");
+            sb.AppendLine($"{spaces}{nameof(EndPointName)} = {EndPointName}");
             sb.AppendLine($"{spaces}{nameof(Status)} = {Status}");
             sb.AppendLine($"{spaces}{nameof(IsFinished)} = {IsFinished}");
             sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
+            sb.PrintPODList(n, nameof(Friends), Friends);
 
             sb.AppendLine($"{spaces}{nameof(Priority)} = {Priority}");
             sb.AppendLine($"{spaces}{nameof(GlobalPriority)} = {GlobalPriority}");
@@ -305,9 +318,11 @@ namespace SymOntoClay.Core
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Id)} = {Id}");
+            sb.AppendLine($"{spaces}{nameof(EndPointName)} = {EndPointName}");
             sb.AppendLine($"{spaces}{nameof(Status)} = {Status}");
             sb.AppendLine($"{spaces}{nameof(IsFinished)} = {IsFinished}");
             sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
+            sb.PrintPODList(n, nameof(Friends), Friends);
 
             sb.AppendLine($"{spaces}{nameof(Priority)} = {Priority}");
             sb.AppendLine($"{spaces}{nameof(GlobalPriority)} = {GlobalPriority}");

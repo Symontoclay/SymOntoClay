@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -112,6 +112,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.QuestionMark:
                             _context.Recovery(_currToken);
                             ProcessLogicalQueryOperator();
+                            break;
+
+                        case TokenKind.EntityCondition:
+                            ProcessEntityCondition();
                             break;
 
                         default:
@@ -246,6 +250,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var value = new StringValue(_currToken.Content);
 
             node.Value = value;
+
+            var intermediateNode = new IntermediateAstNode(node);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+        }
+
+        private void ProcessEntityCondition()
+        {
+            _context.Recovery(_currToken);
+
+            var parser = new ConditionalEntityParser(_context);
+            parser.Run();
+
+            var node = new ConstValueAstExpression();
+            node.Value = parser.Result;
 
             var intermediateNode = new IntermediateAstNode(node);
 

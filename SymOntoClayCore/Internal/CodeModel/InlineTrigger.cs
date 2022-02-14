@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -47,17 +47,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public CodeEntity CodeEntity { get; set; }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-           
-
-            var result =  base.CalculateLongHashCode() ^ (ulong)Math.Abs(Kind.GetHashCode()) ^ (ulong)Math.Abs(KindOfSystemEvent.GetHashCode());
+            var result =  base.CalculateLongHashCode(options) ^ (ulong)Math.Abs(Kind.GetHashCode()) ^ (ulong)Math.Abs(KindOfSystemEvent.GetHashCode());
 
             if(Condition != null)
             {
-                Condition.CheckDirty();
+                Condition.CheckDirty(options);
 
-                result ^= Condition.GetLongHashCode();
+                result ^= Condition.GetLongHashCode(options);
             }
 
             return result;

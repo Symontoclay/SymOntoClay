@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -56,18 +56,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            var result = base.CalculateLongHashCode();
+            var result = base.CalculateLongHashCode(options);
 
             if (LeftOperand != null)
             {
-                result ^= LongHashCodeWeights.BaseParamWeight ^ LeftOperand.GetLongHashCode();
+                result ^= LongHashCodeWeights.BaseParamWeight ^ LeftOperand.GetLongHashCode(options);
             }
 
             if (RightOperand != null)
             {
-                result ^= LongHashCodeWeights.BaseParamWeight ^ RightOperand.GetLongHashCode();
+                result ^= LongHashCodeWeights.BaseParamWeight ^ RightOperand.GetLongHashCode(options);
             }
 
             return result;
@@ -147,7 +147,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         protected override string PropertiesToDbgString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            return $"{spaces}{LeftOperand.ToDbgString()}.{RightOperand.ToDbgString()}";
+            return $"{spaces}{ToHumanizedString()}";
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString()
+        {
+            return $"{LeftOperand.ToHumanizedString()}.{RightOperand.ToHumanizedString()}";
         }
     }
 }

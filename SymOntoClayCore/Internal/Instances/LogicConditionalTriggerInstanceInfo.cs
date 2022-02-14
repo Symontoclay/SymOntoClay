@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -68,6 +68,14 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _storage.LogicalStorage.OnChanged += LogicalStorage_OnChanged;
 
+            _searchOptions = new LogicalSearchOptions();
+            _searchOptions.QueryExpression = _condition;
+            _searchOptions.LocalCodeExecutionContext = _localCodeExecutionContext;
+
+#if DEBUG
+            //Log($"searchOptions = {searchOptions}");
+#endif
+
             lock (_lockObj)
             {
                 DoSearch();
@@ -83,6 +91,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly LocalCodeExecutionContext _localCodeExecutionContext;
         private BaseInstance _parent;
         private RuleInstance _condition;
+        private LogicalSearchOptions _searchOptions;
         private bool _isOn;
         private List<string> _foundKeys = new List<string>();
 
@@ -93,49 +102,48 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             Task.Run(() => 
             {
-                lock (_lockObj)
-                {
-                    if(_isBusy)
-                    {
-                        _needRepeat = true;
-                        return;
-                    }
-
-                    _isBusy = true;
-                    _needRepeat = false;
-                }
-
-                DoSearch();
-
-                while(true)
+                try
                 {
                     lock (_lockObj)
                     {
-                        if(!_needRepeat)
+                        if (_isBusy)
                         {
-                            _isBusy = false;
+                            _needRepeat = true;
                             return;
                         }
 
+                        _isBusy = true;
                         _needRepeat = false;
                     }
 
                     DoSearch();
+
+                    while (true)
+                    {
+                        lock (_lockObj)
+                        {
+                            if (!_needRepeat)
+                            {
+                                _isBusy = false;
+                                return;
+                            }
+
+                            _needRepeat = false;
+                        }
+
+                        DoSearch();
+                    }
+                }
+                catch(Exception e)
+                {
+                    Error(e);
                 }
             });
         }
 
         private void DoSearch()
         {
-            var searchOptions = new LogicalSearchOptions();
-            searchOptions.QueryExpression = _condition;
-            searchOptions.LocalCodeExecutionContext = _localCodeExecutionContext;
-
-#if DEBUG
-            //Log($"searchOptions = {searchOptions}");
-#endif
-
-            var searchResult = _searcher.Run(searchOptions);
+            var searchResult = _searcher.Run(_searchOptions);
 
 #if DEBUG
             //Log($"searchResult = {searchResult}");
@@ -277,6 +285,7 @@ namespace SymOntoClay.Core.Internal.Instances
                         switch (kindOfFoundExpression)
                         {
                             case KindOfLogicalQueryNode.Entity:
+                            case KindOfLogicalQueryNode.Concept:
                                 value = foundExpression.Name;
                                 break;
 

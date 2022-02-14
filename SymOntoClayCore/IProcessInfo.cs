@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +33,7 @@ namespace SymOntoClay.Core
     public interface IProcessInfo : IDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         string Id { get; }
+        string EndPointName { get; }
         ProcessStatus Status { get; set; }
         bool IsFinished { get; }
         IReadOnlyList<int> Devices { get; }
@@ -41,6 +42,8 @@ namespace SymOntoClay.Core
         event ProcessInfoEvent OnFinish;
         float Priority { get; }
         float GlobalPriority { get; }
+        IReadOnlyList<string> Friends { get; }
+        bool IsFriend(IProcessInfo other);
         IProcessInfo ParentProcessInfo { get; set; }
         IReadOnlyList<IProcessInfo> GetChildrenProcessInfoList { get; }
         void AddChild(IProcessInfo processInfo);

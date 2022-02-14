@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public IList<LogicalSearchResultItem> Items { get; set; }
         public List<StrongIdentifierValue> UsedKeysList { get; set; } = new List<StrongIdentifierValue>();
 
-        public ulong GetLongHashCode()
+        public ulong GetLongHashCode(CheckDirtyOptions options)
         {
             ulong result = 0;
 
@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 foreach(var item in Items)
                 {
-                    result ^= item.GetLongHashCode();
+                    result ^= item.GetLongHashCode(options);
                 }
             }
 

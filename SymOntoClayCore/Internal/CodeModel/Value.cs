@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -56,6 +56,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsWaypointValue => false;
         public virtual WaypointValue AsWaypointValue => null;
 
+        public virtual bool IsWaypointSourceValue => false;
+        public virtual WaypointSourceValue AsWaypointSourceValue => null;
+
         public virtual bool IsInstanceValue => false;
         public virtual InstanceValue AsInstanceValue => null;
 
@@ -89,9 +92,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsActionInstanceValue => false;
         public virtual ActionInstanceValue AsActionInstanceValue => null;
 
+        public virtual bool IsConditionalEntitySourceValue => false;
+        public virtual ConditionalEntitySourceValue AsConditionalEntitySourceValue => null;
+
+        public virtual bool IsConditionalEntityValue => false;
+        public virtual ConditionalEntityValue AsConditionalEntityValue => null;
+
         public virtual IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => throw new NotImplementedException();
 
         public abstract object GetSystemValue();
+
+        public abstract string ToHumanizedString();
 
         /// <summary>
         /// Clones the instance and returns cloned instance.

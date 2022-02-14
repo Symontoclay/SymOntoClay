@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -32,27 +32,27 @@ namespace SymOntoClay.UnityAsset.Core
     public interface IManualControlling
     {
         /// <summary>
-        /// Adds a game object into manual controlled area of the NPC or Player.
+        /// Adds a game object into manual controlled area of the NPC.
         /// </summary>
         /// <param name="obj">Instance of the game object.</param>
         /// <param name="device">Describes biped device which will be using the game object.</param>
         void AddToManualControl(IGameObject obj, DeviceOfBiped device);
 
         /// <summary>
-        /// Adds a game object into manual controlled area of the NPC or Player.
+        /// Adds a game object into manual controlled area of the NPC.
         /// </summary>
         /// <param name="obj">Instance of the game object.</param>
         /// <param name="devices">Describes list of biped devices which will be using the game object.</param>
         void AddToManualControl(IGameObject obj, IList<DeviceOfBiped> devices);
 
         /// <summary>
-        /// Removes a game object from manual controlled area of an NPC or Player.
+        /// Removes a game object from manual controlled area of an NPC.
         /// </summary>
         /// <param name="obj">Instance of the game object.</param>
         void RemoveFromManualControl(IGameObject obj);
 
         /// <summary>
-        /// Gets list of manual controlled game objects by the NPC or Player.
+        /// Gets list of manual controlled game objects by the NPC.
         /// </summary>
         /// <returns>List of manual controlled game objects.</returns>
         IList<IHumanoidManualControlledObject> GetManualControlledObjects();

@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
@@ -55,9 +56,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            return base.CalculateLongHashCode() ^ LogicalSearchResult.GetLongHashCode();
+            return base.CalculateLongHashCode(options) ^ LogicalSearchResult.GetLongHashCode(options);
         }
 
         /// <inheritdoc/>
@@ -121,6 +122,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             return $"{spaces} < Logical Search result >";
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString()
+        {
+            return DebugHelperForLogicalSearchResult.ToString(LogicalSearchResult);
         }
     }
 }

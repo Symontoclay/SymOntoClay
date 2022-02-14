@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -42,6 +42,7 @@ namespace SymOntoClay.Core.Internal.Storage
 
             _kind = kind;
             _realStorageContext = new RealStorageContext();
+            _realStorageContext.KindOfGC = settings.KindOfGC;
             _realStorageContext.Storage = this;
             _realStorageContext.MainStorageContext = settings.MainStorageContext;
             _realStorageContext.InheritancePublicFactsReplicator = settings.InheritancePublicFactsReplicator;
@@ -255,6 +256,41 @@ namespace SymOntoClay.Core.Internal.Storage
 
         /// <inheritdoc/>
         public DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get; set; }
+
+        private bool _isDisposed;
+
+        /// <inheritdoc/>
+        public bool IsDisposed
+        {
+            get
+            {
+                lock (_lockObj)
+                {
+                    return _isDisposed;
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            lock (_lockObj)
+            {
+                if (_isDisposed)
+                {
+                    return;
+                }
+
+                _isDisposed = true;
+            }
+
+            OnDisposed();
+        }
+
+        protected virtual void OnDisposed()
+        {
+            _realStorageContext.Dispose();
+        }
 
 #if DEBUG
         /// <inheritdoc/>

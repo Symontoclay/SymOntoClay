@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// The file describes facts which are visible for other NPCs or can be recognized in some way by player.
         /// </summary>
         public string HostFile { get; set; }
+        public IPlatformSupport PlatformSupport { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -42,6 +43,7 @@ namespace SymOntoClay.UnityAsset.Core
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(HostFile)} = {HostFile}");
+            sb.PrintExisting(n, nameof(PlatformSupport), PlatformSupport);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();

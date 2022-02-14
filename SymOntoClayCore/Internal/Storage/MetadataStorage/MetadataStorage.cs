@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.MetadataStorage
 {
-    public class MetadataStorage: BaseLoggedComponent, IMetadataStorage
+    public class MetadataStorage: BaseComponent, IMetadataStorage
     {
         public MetadataStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(realStorageContext.MainStorageContext.Logger)
@@ -105,6 +105,15 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStorage
             {
                 return _mainCodeEntity;
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _codeEntitiesDict.Clear();
+            _mainCodeEntity = null;
+
+            base.OnDisposed();
         }
     }
 }

@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@ SOFTWARE.*/
 using NLog;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
-using SymOntoClayDefaultCLIEnvironment;
+using SymOntoClay.DefaultCLIEnvironment;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -51,21 +51,27 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(5000);
 
-            var factId = _npc.InsertFact("{: see(I, #a) :}");
-            _npc.InsertFact("{: barrel (#a) :}");
-            _npc.InsertFact("distance(I, #a, 14.71526)");
+            //_npc.PushSoundFact(60, "act(M16, shoot)");
 
-            Thread.Sleep(5000);
+            var factId = _npc.InsertFact("{: see(I, #a) :}");
+            //_npc.InsertFact("{: barrel (#a) :}");
+            //_npc.InsertFact("distance(I, #a, 14.71526)");
+
+            //Thread.Sleep(5000);
+            Thread.Sleep(50000);
+            //Thread.Sleep(500000);
 
             _logger.Log("!---");
 
             _world.Dispose();
-
+            
             _logger.Log("!(+)---");
 
             //_npc.InsertFact("{: see(I, #b) :}");
 
-            Thread.Sleep(10000);
+            Thread.Sleep(1000);
+
+            //Thread.Sleep(10000);
 
             //_npc.RemoveFact(factId);
 

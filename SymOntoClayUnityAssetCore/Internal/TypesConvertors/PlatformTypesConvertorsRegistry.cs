@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors
             : base(logger)
         {
         }
+
+        private readonly Type _nullValueType = typeof(NullValue);
 
         private readonly object _lockObj = new object();
         private readonly Dictionary<Type, Dictionary<Type, IPlatformTypesConvertor>> _convertorsDict = new Dictionary<Type, Dictionary<Type, IPlatformTypesConvertor>>();
@@ -89,27 +92,64 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors
 #if DEBUG
                 //Log($"source.FullName = {source.FullName}");
                 //Log($"dest.FullName = {dest.FullName}");
+                //Log($"dest.IsGenericType = {dest.IsGenericType}");
+                //Log($"dest.IsNested = {dest.IsNested}");
+                //Log($"dest.IsPrimitive = {dest.IsPrimitive}");
+                //Log($"dest.IsSpecialName = {dest.IsSpecialName}");
+                //Log($"dest.IsClass = {dest.IsClass}");
+                //Log($"dest.IsInterface = {dest.IsInterface}");
+
+                //if (dest.IsGenericType)
+                //{
+                //    foreach(var genericArgument in dest.GenericTypeArguments)
+                //    {
+                //        Log($"genericArgument.FullName = {genericArgument.FullName}");
+                //    }
+                //}
 #endif
 
-                if (!_convertorsDict.ContainsKey(source))
+                if (source == _nullValueType && (dest.IsClass || dest.IsInterface || (dest.IsGenericType && dest.FullName.StartsWith("System.Nullable"))))
                 {
-                    return false;
+                    return true;
                 }
 
-                var targetDict = _convertorsDict[source];
-
-                if (!targetDict.ContainsKey(dest))
+                if (_convertorsDict.ContainsKey(source))
                 {
-                    return false;
+                    var targetDict = _convertorsDict[source];
+
+                    if (targetDict.ContainsKey(dest))
+                    {
+                        return true;
+                    }
                 }
 
-                return true;
+                if (source == dest)
+                {
+                    return true;
+                }
+
+                if (dest.IsAssignableFrom(source))
+                {
+                    return true;
+                }
+
+                if(dest.IsGenericType && dest.FullName.StartsWith("System.Nullable"))
+                {
+                    return CanConvert(source, dest.GenericTypeArguments[0]);
+                }
+
+                return false;
             }
         }
 
         /// <inheritdoc/>
         public object Convert(Type sourceType, Type destType, object sourceValue)
         {
+            if (sourceType == _nullValueType)
+            {
+                return null;
+            }
+
             lock (_lockObj)
             {
 #if DEBUG
@@ -118,18 +158,33 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors
                 //Log($"sourceValue = {sourceValue}");
 #endif
 
-                var convertor = _convertorsDict[sourceType][destType];
-
-#if DEBUG
-                //Log($"convertor = {convertor}");
-#endif
-
-                if (convertor.CoreType == sourceType)
+                if (_convertorsDict.ContainsKey(sourceType))
                 {
-                    return convertor.ConvertToPlatformType(sourceValue, Logger);
+                    var targetDict = _convertorsDict[sourceType];
+
+                    if (targetDict.ContainsKey(destType))
+                    {
+                        var convertor = targetDict[destType];
+
+                        if (convertor.CoreType == sourceType)
+                        {
+                            return convertor.ConvertToPlatformType(sourceValue, Logger);
+                        }
+
+                        return convertor.ConvertToCoreType(sourceValue, Logger);
+                    }
                 }
 
-                return convertor.ConvertToCoreType(sourceValue, Logger);
+#if DEBUG
+                //Log($"!_convertorsDict.ContainsKey(sourceType)");
+#endif
+
+                if (destType.IsGenericType && destType.FullName.StartsWith("System.Nullable"))
+                {
+                    return Convert(sourceType, destType.GenericTypeArguments[0], sourceValue);
+                }
+
+                return sourceValue;
             }
         }
     }

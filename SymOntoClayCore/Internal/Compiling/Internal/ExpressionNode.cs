@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -73,14 +73,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     {
                         var node = new CallingFunctionNode(_context);
                         node.Run(expression as CallingFunctionAstExpression);
-                        AddCommands(node.Result);
-                    }
-                    break;
-
-                case KindOfAstExpression.EntityCondition:
-                    {
-                        var node = new EntityConditionNode(_context);
-                        node.Run(expression as EntityConditionAstExpression);
                         AddCommands(node.Result);
                     }
                     break;

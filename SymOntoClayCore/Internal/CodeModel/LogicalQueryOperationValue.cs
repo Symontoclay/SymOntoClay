@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -57,23 +57,23 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            var result = base.CalculateLongHashCode() ^ LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(KindOfLogicalQueryOperation.GetHashCode());
+            var result = base.CalculateLongHashCode(options) ^ LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(KindOfLogicalQueryOperation.GetHashCode());
 
             if (Target != null)
             {
-                result ^= Target.GetLongHashCode();
+                result ^= Target.GetLongHashCode(options);
             }
 
             if (Source != null)
             {
-                result ^= Source.GetLongHashCode();
+                result ^= Source.GetLongHashCode(options);
             }
 
             if (Dest != null)
             {
-                result ^= Dest.GetLongHashCode();
+                result ^= Dest.GetLongHashCode(options);
             }
 
             return result;
@@ -158,8 +158,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         protected override string PropertiesToDbgString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
+            return $"{spaces}{ToHumanizedString()}";
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString()
+        {
             var sb = new StringBuilder();
-            sb.Append(spaces);
 
             switch (KindOfLogicalQueryOperation)
             {

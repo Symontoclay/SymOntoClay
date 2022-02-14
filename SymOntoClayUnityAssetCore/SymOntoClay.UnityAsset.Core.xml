@@ -147,6 +147,21 @@
             <param name="name">Alias of the marked parameter in SymOntoClay DSL.</param>
             <param name="kindOfParameter">Describes a tip about conversion between C# and SymOntoclay DSL types.</param>
         </member>
+        <member name="T:SymOntoClay.UnityAsset.Core.FriendsEndpointsAttribute">
+            <summary>
+            Marks C# method as friends for marked method.
+            Both friends methods and marked method should be also marked as external methods for SymOntoClay DSL.
+            Friends methods can be executed as parallel with such NPC devices.
+            For example, NPC can aim to something and shoot as parallel. 
+            And these host methods use NPC's hands. 
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.FriendsEndpointsAttribute.#ctor(System.String[])">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+            <param name="friendsEnpoints">Names of friends methods.</param>
+        </member>
         <member name="T:SymOntoClay.UnityAsset.Core.GameObjectSettings">
             <summary>
             Game object settings.
@@ -205,6 +220,30 @@
             It alows enable or disable logging or remote connection for the NPC.
             </summary>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IHumanoidNPC.Die">
+            <summary>
+            Performs death of the NPC.
+            All active processes will have been stopped.
+            Another NPCs will percept the NPC as died.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.IHumanoidNPC.BackpackStorage">
+            <summary>
+            Returns storage that represents a backpack.
+            </summary>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IHumanoidNPC.AddToBackpack(SymOntoClay.UnityAsset.Core.IGameObject)">
+            <summary>
+            Adds a game object into backpack.
+            </summary>
+            <param name="obj">Instance of the game object.</param>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IHumanoidNPC.RemoveFromBackpack(SymOntoClay.UnityAsset.Core.IGameObject)">
+            <summary>
+            Removes game object from backpack.
+            </summary>
+            <param name="obj">Instance of the game object.</param>
+        </member>
         <member name="T:SymOntoClay.UnityAsset.Core.IManualControlling">
             <summary>
             Represent aspect as manual controlling things by the NPC or Player.
@@ -212,27 +251,27 @@
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.IManualControlling.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,SymOntoClay.UnityAsset.Core.DeviceOfBiped)">
             <summary>
-            Adds a game object into manual controlled area of the NPC or Player.
+            Adds a game object into manual controlled area of the NPC.
             </summary>
             <param name="obj">Instance of the game object.</param>
             <param name="device">Describes biped device which will be using the game object.</param>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.IManualControlling.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,System.Collections.Generic.IList{SymOntoClay.UnityAsset.Core.DeviceOfBiped})">
             <summary>
-            Adds a game object into manual controlled area of the NPC or Player.
+            Adds a game object into manual controlled area of the NPC.
             </summary>
             <param name="obj">Instance of the game object.</param>
             <param name="devices">Describes list of biped devices which will be using the game object.</param>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.IManualControlling.RemoveFromManualControl(SymOntoClay.UnityAsset.Core.IGameObject)">
             <summary>
-            Removes a game object from manual controlled area of an NPC or Player.
+            Removes a game object from manual controlled area of an NPC.
             </summary>
             <param name="obj">Instance of the game object.</param>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.IManualControlling.GetManualControlledObjects">
             <summary>
-            Gets list of manual controlled game objects by the NPC or Player.
+            Gets list of manual controlled game objects by the NPC.
             </summary>
             <returns>List of manual controlled game objects.</returns>
         </member>
@@ -240,9 +279,6 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.BaseStoredGameComponent.PublicFactsStorage">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.BaseStoredGameComponent.IdForFacts">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BaseStoredGameComponent.LoadFromSourceCode">
@@ -260,6 +296,12 @@
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectGameComponent.IsWaited">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectGameComponent.CanBeTakenBy(SymOntoClay.Core.IEntity)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectGameComponent.GetPosition">
+            <inheritdoc/>
+        </member>
         <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation">
             <inheritdoc/>
         </member>
@@ -273,6 +315,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.RemovePublicFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.PushSoundFact(System.Single,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.PublicFactsStorage">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.EndpointsRegistry">
@@ -296,7 +344,10 @@
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.PublicFactsStorage">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.IdForFacts">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.OnAddPublicFactsStorageOfOtherGameComponent(SymOntoClay.Core.IStorage)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.OnRemovePublicFactsStorageOfOtherGameComponent(SymOntoClay.Core.IStorage)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.LoadFromSourceCode">
@@ -306,6 +357,12 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.IsWaited">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.CanBeTakenBy(SymOntoClay.Core.IEntity)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.GetPosition">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.OnDisposed">
@@ -348,6 +405,18 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.RemoveFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.PushSoundFact(System.Single,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.BackpackStorage">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.AddToBackpack(SymOntoClay.UnityAsset.Core.IGameObject)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.RemoveFromBackpack(SymOntoClay.UnityAsset.Core.IGameObject)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.Die">
@@ -401,7 +470,25 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.RemovePublicFact(System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.PushSoundFact(System.Single,System.String)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerGameComponent.InsertPublicFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerGameComponent.RemovePublicFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerGameComponent.IsWaited">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerGameComponent.CanBeTakenBy(SymOntoClay.Core.IEntity)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerGameComponent.GetPosition">
             <inheritdoc/>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation">
@@ -416,22 +503,13 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.RunInMainThread``1(System.Func{``0})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,SymOntoClay.UnityAsset.Core.DeviceOfBiped)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,System.Collections.Generic.IList{SymOntoClay.UnityAsset.Core.DeviceOfBiped})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.RemoveFromManualControl(SymOntoClay.UnityAsset.Core.IGameObject)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.GetManualControlledObjects">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.InsertPublicFact(System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.RemovePublicFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.PushSoundFact(System.Single,System.String)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.IsDisposed">
@@ -474,6 +552,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.RemovePublicFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.PushSoundFact(System.Single,System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.Load(SymOntoClay.UnityAsset.Core.IRunTimeImageInfo)">
@@ -521,6 +602,9 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.InstanceId">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.Id">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.EnableLogging">
             <inheritdoc/>
         </member>
@@ -534,6 +618,18 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.IdForFacts">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.SymOntoClay#UnityAsset#Core#Internal#IGameComponent#AddPublicFactsStorageOfOtherGameComponent(SymOntoClay.Core.IStorage)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.SymOntoClay#UnityAsset#Core#Internal#IGameComponent#RemovePublicFactsStorageOfOtherGameComponent(SymOntoClay.Core.IStorage)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.CanBeTakenBy(SymOntoClay.Core.IEntity)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.GetPosition">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.LoadFromSourceCode">
@@ -573,6 +669,54 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseWorldCoreComponent.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.InstanceId">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.Id">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.IdForFacts">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.Position">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.IsEmpty">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.GetInstanceId(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.IsVisible(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.CanBeTaken(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.GetPosition(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.DistanceToAndPosition(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.DistanceTo(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.Specify(SymOntoClay.Core.EntityConstraints[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.SpecifyOnce(SymOntoClay.Core.EntityConstraints[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.SpecifyOnce(SymOntoClay.Core.IStorage)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.Resolve">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.ResolveIfNeeds">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.CurrentTiks">
@@ -650,6 +794,9 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointInfo.SymOntoClay#UnityAsset#Core#IEndpointInfo#Devices">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointInfo.SymOntoClay#UnityAsset#Core#IEndpointInfo#Friends">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointInfo.Arguments">
             <inheritdoc/>
         </member>
@@ -701,6 +848,9 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread.InvokerInMainThread.SetInvocableObj(SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread.IInvocableInMainThread)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.EndPointName">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.Status">
             <inheritdoc/>
         </member>
@@ -714,6 +864,12 @@
             <inheritdoc/>
         </member>
         <member name="E:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.Friends">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.IsFriend(SymOntoClay.Core.IProcessInfo)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.OnDisposed">
@@ -756,6 +912,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.HostSupport.HostSupportComponent.ConvertFromRelativeToAbsolute(SymOntoClay.Core.RelativeCoordinate)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.HostSupport.HostSupportComponent.GetCurrentAbsolutePosition">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.HostSupport.HostSupportComponent.GetDirectionToPosition(System.Numerics.Vector3)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.ILoggerContext.Enable">
@@ -815,6 +977,24 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache.GetLogicRuleOrFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.SymOntoClay#UnityAsset#Core#ISoundReceiver#InstanceId">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.SymOntoClay#UnityAsset#Core#ISoundReceiver#Position">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.SymOntoClay#UnityAsset#Core#ISoundReceiver#Logger">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.SymOntoClay#UnityAsset#Core#ISoundReceiver#Threshold">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.SymOntoClay#UnityAsset#Core#ISoundReceiver#CallBack(System.Double,System.Double,System.Numerics.Vector3,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.OnDisposed">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.Threads.ThreadsCoreComponent.SymOntoClay#Core#Internal#Threads#IActivePeriodicObjectCommonContext#IsNeedWating">
@@ -928,6 +1108,39 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.InvokerInMainThread">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.SoundBus">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.SymOntoClay#UnityAsset#Core#Internal#IWorldCoreContext#AddWorldComponent(SymOntoClay.UnityAsset.Core.Internal.IWorldCoreComponent)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.SymOntoClay#UnityAsset#Core#Internal#IWorldCoreGameComponentContext#AddGameComponent(SymOntoClay.UnityAsset.Core.Internal.IGameComponent)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.SymOntoClay#UnityAsset#Core#Internal#IWorldCoreGameComponentContext#AddPublicFactsStorage(SymOntoClay.UnityAsset.Core.Internal.IGameComponent)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.SymOntoClay#UnityAsset#Core#Internal#IWorldCoreGameComponentContext#RemoveGameComponent(SymOntoClay.UnityAsset.Core.Internal.IGameComponent)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.SymOntoClay#UnityAsset#Core#Internal#IWorldCoreGameComponentContext#CanBeTakenBy(System.Int32,SymOntoClay.Core.IEntity)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.SymOntoClay#UnityAsset#Core#Internal#IWorldCoreGameComponentContext#GetPosition(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.SymOntoClay#UnityAsset#Core#Internal#IWorldCoreGameComponentContext#AvailableInstanceIdList">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.SymOntoClay#UnityAsset#Core#Internal#IWorldCoreGameComponentContext#GetPublicFactsStorageByInstanceId(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.SymOntoClay#UnityAsset#Core#Internal#IWorldCoreGameComponentContext#GetIdForFactsByInstanceId(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.SymOntoClay#UnityAsset#Core#Internal#IWorldCoreGameComponentContext#GetInstanceIdByIdForFacts(System.String)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.Log(System.String)">
             <inheritdoc/>
         </member>
@@ -971,6 +1184,11 @@
         <member name="P:SymOntoClay.UnityAsset.Core.IRunTimeImageInfo.ParentId">
             <summary>
             Gets parent image id or <c>null</c> if the image was created directly from source code.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.ISoundReceiver.Threshold">
+            <summary>
+            Gets threshold of audibility in decibels.
             </summary>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.IWorld">

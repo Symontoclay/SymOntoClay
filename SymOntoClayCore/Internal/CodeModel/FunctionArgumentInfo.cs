@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -73,27 +73,27 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return result;
         }
 
-        public ulong GetLongConditionalHashCode()
+        public ulong GetLongConditionalHashCode(CheckDirtyOptions options)
         {
-            Name.CheckDirty();
+            Name.CheckDirty(options);
 
             if (!TypesList.IsNullOrEmpty())
             {
                 foreach(var item in TypesList)
                 {
-                    item.CheckDirty();
+                    item.CheckDirty(options);
                 }
             }                
 
-            DefaultValue?.CheckDirty();
+            DefaultValue?.CheckDirty(options);
 
-            var result = Name.GetLongConditionalHashCode();
+            var result = Name.GetLongConditionalHashCode(options);
 
             if (!TypesList.IsNullOrEmpty())
             {
                 foreach (var item in TypesList)
                 {
-                    result ^= item.GetLongConditionalHashCode();
+                    result ^= item.GetLongConditionalHashCode(options);
                 }
             }
 

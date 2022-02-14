@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,13 +27,44 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
 
-namespace SymOntoClayDefaultCLIEnvironment
+namespace SymOntoClay.DefaultCLIEnvironment
 {
     public class PlatformSupportCLIStub : IPlatformSupport
     {
+        public PlatformSupportCLIStub()
+            : this(new Vector3(10, 10, 10))
+        {
+        }
+
+        public PlatformSupportCLIStub(Vector3 currentAbsolutePosition)
+        {
+            _currentAbsolutePosition = currentAbsolutePosition;
+        }
+
+        private readonly Vector3 _currentAbsolutePosition;
+
+        /// <inheritdoc/>
         public Vector3 ConvertFromRelativeToAbsolute(RelativeCoordinate relativeCoordinate)
         {
             return new Vector3(666, 999, 0);
+        }
+
+        /// <inheritdoc/>
+        public Vector3 GetCurrentAbsolutePosition()
+        {
+            return _currentAbsolutePosition;
+        }
+
+        /// <inheritdoc/>
+        public float GetDirectionToPosition(Vector3 position)
+        {
+            return 12;
+        }
+
+        /// <inheritdoc/>
+        public bool CanBeTakenBy(IEntity subject)
+        {
+            return true;
         }
     }
 }

@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -31,79 +31,68 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
     /// <inheritdoc/>
     public class PlayerImlementation : IPlayer, IDeferredInitialized
     {
+        private PlayerGameComponent _gameComponent;
+
         public PlayerImlementation(PlayerSettings settings, IWorldCoreGameComponentContext context)
         {
-
+            _gameComponent = new PlayerGameComponent(settings, context);
         }
 
         public PlayerImlementation(PlayerSettings settings)
         {
-
+            _settings = settings;
         }
 
         void IDeferredInitialized.Initialize(IWorldCoreGameComponentContext worldContext)
         {
-
+            if (_gameComponent == null)
+            {
+                _gameComponent = new PlayerGameComponent(_settings, worldContext);
+            }
         }
 
+        private readonly PlayerSettings _settings;
+
         /// <inheritdoc/>
-        public IEntityLogger Logger => throw new NotImplementedException();
+        public IEntityLogger Logger => _gameComponent.Logger;
 
         /// <inheritdoc/>
         public void RunInMainThread(Action function)
         {
-            throw new NotImplementedException();
+            _gameComponent.RunInMainThread(function);
         }
 
         /// <inheritdoc/>
         public TResult RunInMainThread<TResult>(Func<TResult> function)
         {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public void AddToManualControl(IGameObject obj, DeviceOfBiped device)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public void AddToManualControl(IGameObject obj, IList<DeviceOfBiped> devices)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public void RemoveFromManualControl(IGameObject obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public IList<IHumanoidManualControlledObject> GetManualControlledObjects()
-        {
-            throw new NotImplementedException();
+            return _gameComponent.RunInMainThread(function);
         }
 
         /// <inheritdoc/>
         public string InsertPublicFact(string text)
         {
-            throw new NotImplementedException();
+            return _gameComponent.InsertPublicFact(text);
         }
 
         /// <inheritdoc/>
         public void RemovePublicFact(string id)
         {
-            throw new NotImplementedException();
+            _gameComponent.RemovePublicFact(id);
         }
 
         /// <inheritdoc/>
-        public bool IsDisposed => throw new NotImplementedException();
+        public void PushSoundFact(float power, string text)
+        {
+            _gameComponent.PushSoundFact(power, text);
+        }
+
+        /// <inheritdoc/>
+        public bool IsDisposed => _gameComponent.IsDisposed;
 
         /// <inheritdoc/>
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _gameComponent.Dispose();
         }
     }
 }

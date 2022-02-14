@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -20,8 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
-using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.CodeModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,11 +32,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private enum State
         {
             Init,
-            GotName,
-            WaitForFirstCoordinate,
-            GotFirstCoordinate,
-            WaitForSecondCoordinate,
-            GotSecondCoordinate
+            WaitForExpression,
+            GotExpresion
         }
 
         public EntityConditionParser(InternalParserContext context)
@@ -46,13 +42,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
 
         private State _state = State.Init;
-        public EntityConditionAstExpression Result { get; private set; }
 
-        /// <inheritdoc/>
-        protected override void OnEnter()
-        {
-            Result = new EntityConditionAstExpression();
-        }
+        public EntityConditionExpressionNode Result { get; private set; }
 
         /// <inheritdoc/>
         protected override void OnRun()
@@ -63,22 +54,40 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             //Log($"_state = {_state}");
 #endif
 
-            switch (_state)
+            switch(_state)
             {
                 case State.Init:
                     switch (_currToken.TokenKind)
                     {
-                        case TokenKind.EntityCondition:
+                        case TokenKind.OpenRoundBracket:
+                            _state = State.WaitForExpression;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForExpression:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
                             {
-                                var name = NameHelper.CreateName(_currToken.Content);
+                                _context.Recovery(_currToken);
+
+                                var entityConditionExpressionParserContext = new EntityConditionExpressionParserContext(_context);
+
+                                var parser = new EntityConditionExpressionParser(entityConditionExpressionParserContext);
+                                parser.Run();
 
 #if DEBUG
-                                //Log($"name = {name}");
+                                //Log($"parser.Result = {parser.Result}");
+                                //Log($"parser.Result.GetHumanizeDbgString() = {parser.Result.ToHumanizedString()}");
 #endif
 
-                                Result.Name = name;
+                                Result = parser.Result;
 
-                                _state = State.GotName;
+                                _state = State.GotExpresion;
                             }
                             break;
 
@@ -87,95 +96,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotName:
+                case State.GotExpresion:
                     switch (_currToken.TokenKind)
                     {
-                        case TokenKind.OpenSquareBracket:
-                            Result.KindOfEntityConditionAstExpression = KindOfEntityConditionAstExpression.Waypoint;
-                            _state = State.WaitForFirstCoordinate;
+                        case TokenKind.CloseRoundBracket:
+                            Exit();
                             break;
-
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
-                    }
-                    break;
-
-                case State.WaitForFirstCoordinate:
-                    switch (_currToken.TokenKind)
-                    {
-                        case TokenKind.Number:
-                            {
-                                _context.Recovery(_currToken);
-                                var parser = new NumberParser(_context);
-                                parser.Run();
-                                
-                                var node = new ConstValueAstExpression();
-                                node.Value = parser.Result;
-
-                                Result.FirstCoordinate = node;
-
-                                _state = State.GotFirstCoordinate;
-                            }
-                            break;
-
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
-                    }
-                    break;
-
-                case State.GotFirstCoordinate:
-                    switch (_currToken.TokenKind)
-                    {
-                        case TokenKind.Comma:
-                            _state = State.WaitForSecondCoordinate;
-                            break;
-
-                        case TokenKind.CloseSquareBracket:
-                            if (Result.KindOfEntityConditionAstExpression == KindOfEntityConditionAstExpression.Waypoint)
-                            {
-                                Exit();
-                                break;
-                            }
-                            throw new UnexpectedTokenException(_currToken);
-
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
-                    }
-                    break;
-
-                case State.WaitForSecondCoordinate:
-                    switch (_currToken.TokenKind)
-                    {
-                        case TokenKind.Number:
-                            {
-                                _context.Recovery(_currToken);
-                                var parser = new NumberParser(_context);
-                                parser.Run();
-
-                                var node = new ConstValueAstExpression();
-                                node.Value = parser.Result;
-
-                                Result.SecondCoordinate = node;
-
-                                _state = State.GotSecondCoordinate;
-                            }
-                            break;
-
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
-                    }
-                    break;
-
-                case State.GotSecondCoordinate:
-                    switch (_currToken.TokenKind)
-                    {
-                        case TokenKind.CloseSquareBracket:
-                            if(Result.KindOfEntityConditionAstExpression == KindOfEntityConditionAstExpression.Waypoint)
-                            {
-                                Exit();
-                                break;
-                            }
-                            throw new UnexpectedTokenException(_currToken);
 
                         default:
                             throw new UnexpectedTokenException(_currToken);

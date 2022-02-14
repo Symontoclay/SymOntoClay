@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -41,13 +41,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'Begin' >> @>log;
         exampleClass is human >> @>log;
         exampleClass is not human >> @>log;
-        use exampleClass is [0.5] human;
+        set exampleClass is [0.5] human;
         exampleClass is human >> @>log;
         exampleClass is not human >> @>log;
-        use exampleClass is not human;
+        set exampleClass is not human;
         exampleClass is human >> @>log;
         exampleClass is not human >> @>log;
-        use @@self is linux;
+        set @@self is linux;
         @@self is linux >> @>log;
         'End' >> @>log;
     }
@@ -111,13 +111,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'Begin' >> @>log;
         exampleClass is human >> @>log;
         exampleClass is not human >> @>log;
-        use exampleClass is [0.5] human;
+        set exampleClass is [0.5] human;
         exampleClass is human >> @>log;
         exampleClass is not human >> @>log;
-        use exampleClass is not human;
+        set exampleClass is not human;
         exampleClass is human >> @>log;
         exampleClass is not human >> @>log;
-        use @@self is linux;
+        set @@self is linux;
         @@self is linux >> @>log;
         'End' >> @>log;
     }
@@ -290,13 +290,13 @@ app PeaceKeeper is [middle] exampleClass
         'Begin' >> @>log;
         exampleClass is human >> @>log;
         exampleClass is not human >> @>log;
-        use exampleClass is [middle] human;
+        set exampleClass is [middle] human;
         exampleClass is human >> @>log;
         exampleClass is not human >> @>log;
-        use exampleClass is not human;
+        set exampleClass is not human;
         exampleClass is human >> @>log;
         exampleClass is not human >> @>log;
-        use @@self is linux;
+        set @@self is linux;
         @@self is linux >> @>log;
         'End' >> @>log;
     }
@@ -373,13 +373,13 @@ app PeaceKeeper is [very middle] exampleClass
         'Begin' >> @>log;
         exampleClass is human >> @>log;
         exampleClass is not human >> @>log;
-        use exampleClass is [very middle] human;
+        set exampleClass is [very middle] human;
         exampleClass is human >> @>log;
         exampleClass is not human >> @>log;
-        use exampleClass is not human;
+        set exampleClass is not human;
         exampleClass is human >> @>log;
         exampleClass is not human >> @>log;
-        use @@self is linux;
+        set @@self is linux;
         @@self is linux >> @>log;
         'End' >> @>log;
     }
@@ -423,6 +423,44 @@ app PeaceKeeper is [very middle] exampleClass
                             break;
 
                         case 9:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case4()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Init
+    {
+        'Begin' >> @>log;
+
+         set @@self is linux;
+         set exampleClass is human;
+         set exampleClass is [0.5] human;
+         set #`Alisa 12` is [0.6] human;
+
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
                             Assert.AreEqual(message, "End");
                             break;
 

@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.SoundBuses;
 using SymOntoClay.UnityAsset.Core;
-using SymOntoClayDefaultCLIEnvironment;
+using SymOntoClay.DefaultCLIEnvironment;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,6 +31,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TestSandbox.PlatformImplementations;
+using TestSandbox.SoundBusHandler;
 
 namespace TestSandbox.Handlers
 {
@@ -69,6 +71,8 @@ namespace TestSandbox.Handlers
 
             settings.InvokerInMainThread = invokingInMainThread;
 
+            settings.SoundBus = new SimpleSoundBus();
+
             settings.Logging = new LoggingSettings()
             {
                 LogDir = logDir,
@@ -84,6 +88,7 @@ namespace TestSandbox.Handlers
 
             var npcSettings = new HumanoidNPCSettings();
             npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
+            npcSettings.InstanceId = 1;
             //npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
             npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Npcs\PeaceKeeper\PeaceKeeper.sobj");
             npcSettings.HostListener = hostListener;

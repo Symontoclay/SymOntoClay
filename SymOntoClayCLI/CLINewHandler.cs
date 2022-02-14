@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,7 @@ namespace SymOntoClay.CLI
 
         public void Run(CLICommand command)
         {
-            var wSpaceFile = RunCommandFilesSearcher.FindWSpaceFile(Directory.GetCurrentDirectory());
+            var wSpaceFile = WFilesSearcher.FindWSpaceFile(Directory.GetCurrentDirectory());
 
             var worldSpaceCreationSettings = new WorldSpaceCreationSettings() { ProjectName = command.ProjectName, KindOfNewCommand = command.KindOfNewCommand };
 

@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             return $"#{Guid.NewGuid():D}";
         }
 
-        public static string NormalizeNameStr(string source)
+        public static string ConvertNameToId(string source)
         {
             if(string.IsNullOrWhiteSpace(source))
             {
@@ -119,9 +119,14 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 
             name.NameValue = text;
 
-            name.NormalizedNameValue = text.ToLower().Replace("`", string.Empty).Trim();
+            name.NormalizedNameValue = NormalizeString(text);
 
             return name;
+        }
+
+        public static string NormalizeString(string value)
+        {
+            return value.ToLower().Replace("`", string.Empty).Trim();
         }
     }
 }

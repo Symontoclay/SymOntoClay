@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,43 +25,40 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading;
 
-namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
+namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
 {
-    public class EntityConditionAstExpression: AstExpression
+    public class AstSetInheritanceStatement : AstStatement
     {
         /// <inheritdoc/>
-        public override KindOfAstExpression Kind => KindOfAstExpression.EntityCondition;
+        public override KindOfAstStatement Kind => KindOfAstStatement.UseInheritance;
 
-        public KindOfEntityConditionAstExpression KindOfEntityConditionAstExpression { get; set; }
-
-        public StrongIdentifierValue Name { get; set; }
-        public AstExpression FirstCoordinate { get; set; }
-        public AstExpression SecondCoordinate { get; set; }
+        public StrongIdentifierValue SubName { get; set; }
+        public StrongIdentifierValue SuperName { get; set; }
+        public Value Rank { get; set; }
+        public bool HasNot { get; set; }
 
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
         {
-            return CloneAstExpression(context);
+            return CloneAstStatement(context);
         }
 
         /// <inheritdoc/>
-        public override AstExpression CloneAstExpression(Dictionary<object, object> context)
+        public override AstStatement CloneAstStatement(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {
-                return (AstExpression)context[this];
+                return (AstStatement)context[this];
             }
 
-            var result = new EntityConditionAstExpression();
+            var result = new AstSetInheritanceStatement();
             context[this] = result;
 
-            result.KindOfEntityConditionAstExpression = KindOfEntityConditionAstExpression;
-            result.Name = Name.Clone(context);
-
-            result.FirstCoordinate = FirstCoordinate?.CloneAstExpression(context);
-            result.SecondCoordinate = SecondCoordinate?.CloneAstExpression(context);
+            result.SubName = SubName.Clone(context);
+            result.SuperName = SuperName.Clone(context);
+            result.Rank = Rank.CloneValue(context);
+            result.HasNot = HasNot;
 
             result.AppendAnnotations(this, context);
 
@@ -73,9 +70,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         {
             base.DiscoverAllAnnotations(result);
 
-            Name?.DiscoverAllAnnotations(result);
-            FirstCoordinate?.DiscoverAllAnnotations(result);
-            SecondCoordinate?.DiscoverAllAnnotations(result);
+            SubName?.DiscoverAllAnnotations(result);
+            SuperName?.DiscoverAllAnnotations(result);
+            Rank?.DiscoverAllAnnotations(result);
         }
 
         /// <inheritdoc/>
@@ -84,14 +81,13 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(KindOfEntityConditionAstExpression)} = {KindOfEntityConditionAstExpression}");
-            
-            sb.PrintObjProp(n, nameof(Name), Name);
-            sb.PrintObjProp(n, nameof(FirstCoordinate), FirstCoordinate);
-            sb.PrintObjProp(n, nameof(SecondCoordinate), SecondCoordinate);
+            sb.PrintObjProp(n, nameof(SubName), SubName);
+            sb.PrintObjProp(n, nameof(SuperName), SuperName);
+            sb.PrintObjProp(n, nameof(Rank), Rank);
+
+            sb.AppendLine($"{spaces}{nameof(HasNot)} = {HasNot}");
 
             sb.Append(base.PropertiesToString(n));
-
             return sb.ToString();
         }
 
@@ -101,14 +97,13 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(KindOfEntityConditionAstExpression)} = {KindOfEntityConditionAstExpression}");
+            sb.PrintShortObjProp(n, nameof(SubName), SubName);
+            sb.PrintShortObjProp(n, nameof(SuperName), SuperName);
+            sb.PrintShortObjProp(n, nameof(Rank), Rank);
 
-            sb.PrintShortObjProp(n, nameof(Name), Name);
-            sb.PrintShortObjProp(n, nameof(FirstCoordinate), FirstCoordinate);
-            sb.PrintShortObjProp(n, nameof(SecondCoordinate), SecondCoordinate);
+            sb.AppendLine($"{spaces}{nameof(HasNot)} = {HasNot}");
 
             sb.Append(base.PropertiesToShortString(n));
-
             return sb.ToString();
         }
 
@@ -118,14 +113,13 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(KindOfEntityConditionAstExpression)} = {KindOfEntityConditionAstExpression}");
+            sb.PrintBriefObjProp(n, nameof(SubName), SubName);
+            sb.PrintBriefObjProp(n, nameof(SuperName), SuperName);
+            sb.PrintBriefObjProp(n, nameof(Rank), Rank);
 
-            sb.PrintBriefObjProp(n, nameof(Name), Name);
-            sb.PrintBriefObjProp(n, nameof(FirstCoordinate), FirstCoordinate);
-            sb.PrintBriefObjProp(n, nameof(SecondCoordinate), SecondCoordinate);
+            sb.AppendLine($"{spaces}{nameof(HasNot)} = {HasNot}");
 
             sb.Append(base.PropertiesToBriefString(n));
-
             return sb.ToString();
         }
     }

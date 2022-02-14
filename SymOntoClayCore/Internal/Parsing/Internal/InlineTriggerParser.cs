@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -147,6 +147,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.Lambda:
                             _state = State.WaitForAction;
+                            break;
+
+                        case TokenKind.OpenFigureBracket:
+                            ProcessFunctionBody();
                             break;
 
                         case TokenKind.OpenRoundBracket:

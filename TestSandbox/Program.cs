@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,7 @@ using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Helpers;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
-using SymOntoClayDefaultCLIEnvironment;
+using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClayProjectFiles;
 using System;
 using System.Collections;
@@ -61,6 +61,9 @@ using TestSandbox.Threads;
 using SymOntoClay.Core.Internal.Parsing.Internal;
 using TestSandbox.CreatingExamples;
 using TestSandbox.Navigations;
+using TestSandbox.SoundBusHandler;
+using SymOntoClay.UnityAsset.Core.Tests;
+using System.Numerics;
 
 namespace TestSandbox
 {
@@ -74,11 +77,14 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            //TstSoundBus();
             //TstNavigationHandler();
             //TstCreatorExamples();
             //TstLinguisticVariable_Tests();
             //TstManageTempProject();
+            //TstAdvancedTestRunnerForMultipleInstances();//<=~
             //TstAdvancedTestRunner();//<=
+            //TstTestRunnerWithHostListener();//<=t
             //TstTestRunner();//<=
             //TstNameHelper();
             //TstDeffuzzification();
@@ -114,10 +120,21 @@ namespace TestSandbox
             //TstExprNodeHandler();
             //TstParsing();
             //TstMonoBehaviourTestingHandler();//VT<=
+            //TstSoundStartHandler();//<==
             TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstSoundBus()
+        {
+            _logger.Log("Begin");
+
+            var handler = new TstSoundBusHandler();
+            handler.Run();
+
+            _logger.Log("End");
         }
 
         private static void TstNavigationHandler()
@@ -387,6 +404,51 @@ app PeaceKeeper is [very middle] exampleClass
             _logger.Log("End");
         }
 
+        private static void TstAdvancedTestRunnerForMultipleInstances()
+        {
+            _logger.Log("Begin");
+
+            using (var instance = new AdvancedBehaviorTestEngineInstance())
+            {
+                instance.CreateWorld((n, message) =>
+                {
+                    _logger.Log($"n = {n}; message = {message}");
+                }, true);
+
+                instance.WriteFile(@"app PeaceKeeper
+{
+    on Init
+    {
+        'Begin' >> @>log;
+        @@host.`rotate`(#@(gun));
+        'End' >> @>log;
+    }
+}");
+
+                var hostListener = new HostMethods_Tests_HostListener();
+
+                instance.CreateNPC(hostListener);
+
+                var thingProjName = "M4A1";
+
+                instance.WriteThingFile(thingProjName, @"app M4A1_app is gun
+{
+}");
+
+                var gun = instance.CreateThing(thingProjName/*, new Vector3(100, 100, 100)*/);
+
+                instance.StartWorld();
+
+                //Thread.Sleep(100);
+
+                //gun.PushSoundFact(60, "act(M4A1, shoot)");
+
+                Thread.Sleep(5000);
+            }
+
+            _logger.Log("End");
+        }
+
         private static void TstAdvancedTestRunner()
         {
             _logger.Log("Begin");
@@ -434,15 +496,40 @@ action Go
             _logger.Log("End");
         }
 
-        private static void TstTestRunner()
+        private static void TstTestRunnerWithHostListener()
         {
             _logger.Log("Begin");
 
-            var text = @"app PeaceKeeper is [0.5] exampleClass, [0.6] humanoid
+            var text = @"app PeaceKeeper
 {
     on Init =>
     {
         'Begin' >> @>log;
+        @@host.`rotate`(#@(gun));
+        'End' >> @>log;
+    }
+}";
+
+            var hostListener = new HostMethods_Tests_HostListener();
+
+            BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    _logger.Log($"n = {n}; message = {message}");
+                }, hostListener);
+
+            _logger.Log("End");
+        }
+
+        private static void TstTestRunner()
+        {
+            _logger.Log("Begin");
+
+            var text = @"app PeaceKeeper
+{
+    on Init
+    {
+        'Begin' >> @>log;
+        #@(color = black) >> @>log;
         'End' >> @>log;
     }
 }";
@@ -1218,6 +1305,16 @@ action Go
             _logger.Log("Begin");
 
             var handler = new MonoBehaviourTestingHandler();
+            handler.Run();
+
+            _logger.Log("End");
+        }
+
+        private static void TstSoundStartHandler()
+        {
+            _logger.Log("Begin");
+
+            var handler = new SoundStartHandler();
             handler.Run();
 
             _logger.Log("End");

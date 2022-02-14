@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -209,21 +209,43 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }), true);
         }
 
-        //[Test]
-        //[Parallelizable]
-        //public void Case6()
-        //{
-        //    var text = @"";
+        [Test]
+        [Parallelizable]
+        public void Case6()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Init
+    {
+        'Begin' >> @>log;
+        @a = #@[10, 20];
+        @a >> @>log;
+        'End' >> @>log;
+    }
+}";
 
-        //    Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
-        //        (n, message) => {
-        //            switch (n)
-        //            {
-        //                default:
-        //                    throw new ArgumentOutOfRangeException(nameof(n), n, null);
-        //            }
-        //        }), true);
-        //}
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "#@[10, 20]");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
 
         //[Test]
         //[Parallelizable]

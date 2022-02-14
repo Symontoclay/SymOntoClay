@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-    <Version>0.3.3</Version>
-    <AssemblyVersion>0.3.3</AssemblyVersion>
-    <FileVersion>0.3.3</FileVersion>
+    <TargetFramework>net6.0</TargetFramework>
+    <Version>0.3.5</Version>
+    <AssemblyVersion>0.3.5</AssemblyVersion>
+    <FileVersion>0.3.5</FileVersion>
     <Copyright>Copyright (c) 2020 - 2021 Sergiy Tolkachov aka metatypeman</Copyright>
   </PropertyGroup>
   <ItemGroup>
@@ -15,6 +15,7 @@
     <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
     <ProjectReference Include="..\SymOntoClayCore\SymOntoClayCore.csproj" />
     <ProjectReference Include="..\SymOntoClayProjectFiles\SymOntoClayProjectFiles.csproj" />
+    <ProjectReference Include="..\SymOntoClaySoundBuses\SymOntoClaySoundBuses.csproj" />
     <ProjectReference Include="..\SymOntoClayUnity3DAssetTest\SymOntoClayUnity3DAssetTest.csproj" />
     <ProjectReference Include="..\SymOntoClayUnityAssetCore\SymOntoClayUnityAssetCore.csproj" />
   </ItemGroup>
@@ -26,10 +27,10 @@
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Source\Npcs\Barrel\Barrel.sobj">
+    <None Update="Source\Things\Barrel\Barrel.sobj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Source\Npcs\Barrel\Barrel.soc">
+    <None Update="Source\Things\Barrel\Barrel.soc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Source\Npcs\PeaceKeeper\ExampleClass.soc">
@@ -42,6 +43,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Source\HelloWorld.wspace">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Source\Things\M4A1\M4A1.sobj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Source\Things\M4A1\M4A1.soc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Source\World\HelloWorld.world">

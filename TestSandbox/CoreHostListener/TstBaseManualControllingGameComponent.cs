@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,7 @@ using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.InternalImplementations;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 
 namespace TestSandbox.CoreHostListener
@@ -39,6 +40,16 @@ namespace TestSandbox.CoreHostListener
 
         public override IStorage PublicFactsStorage => throw new NotImplementedException();
 
-        public override string IdForFacts => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public override bool CanBeTakenBy(IEntity subject)
+        {
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public override Vector3? GetPosition()
+        {
+            return null;
+        }
     }
 }

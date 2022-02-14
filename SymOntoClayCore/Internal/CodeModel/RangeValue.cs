@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -123,19 +123,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            var result = base.CalculateLongHashCode();
+            var result = base.CalculateLongHashCode(options);
 
             if(LeftBoundary != null)
             {
-                LeftBoundary.CheckDirty();
+                LeftBoundary.CheckDirty(options);
                 result ^= LeftBoundary.GetLongHashCode();
             }
 
             if (RightBoundary != null)
             {
-                RightBoundary.CheckDirty();
+                RightBoundary.CheckDirty(options);
                 result ^= RightBoundary.GetLongHashCode();
             }
 
@@ -231,6 +231,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
 
+            return $"{spaces}{ToHumanizedString()}";
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString()
+        {
             var sb = new StringBuilder();
 
             if (LeftBoundary == null)
@@ -239,7 +245,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
             else
             {
-                if(LeftBoundary.Includes)
+                if (LeftBoundary.Includes)
                 {
                     sb.Append("[");
                 }
@@ -253,7 +259,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.Append(",");
 
-            if(RightBoundary == null)
+            if (RightBoundary == null)
             {
                 sb.Append("+∞)");
             }
@@ -271,7 +277,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 }
             }
 
-            return $"{spaces}{sb}";
+            return sb.ToString();
         }
     }
 }

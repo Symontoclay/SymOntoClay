@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -39,6 +39,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             Name = source.Name;
             NeedMainThread = source.NeedMainThread;
             Devices = new List<int>(source.Devices);
+            Friends = new List<string>(source.Friends);
             Arguments = new List<IEndpointArgumentInfo>(source.Arguments);
             MethodInfo = source.MethodInfo;
             Object = source.Object;
@@ -55,6 +56,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         /// <inheritdoc/>
         IReadOnlyList<int> IEndpointInfo.Devices => Devices;
+
+        public List<string> Friends { get; set; }
+
+        /// <inheritdoc/>
+        IReadOnlyList<string> IEndpointInfo.Friends => Friends;
 
         /// <inheritdoc/>
         public List<IEndpointArgumentInfo> Arguments { get; set; }
@@ -88,6 +94,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
             sb.AppendLine($"{spaces}{nameof(NeedMainThread)} = {NeedMainThread}");
             sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
+            sb.PrintPODList(n, nameof(Friends), Friends);
             sb.PrintObjListProp(n, nameof(Arguments), Arguments);
 
             return sb.ToString();
@@ -114,6 +121,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
             sb.AppendLine($"{spaces}{nameof(NeedMainThread)} = {NeedMainThread}");
             sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
+            sb.PrintPODList(n, nameof(Friends), Friends);
             sb.PrintShortObjListProp(n, nameof(Arguments), Arguments);
 
             return sb.ToString();
@@ -140,6 +148,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
             sb.AppendLine($"{spaces}{nameof(NeedMainThread)} = {NeedMainThread}");
             sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
+            sb.PrintPODList(n, nameof(Friends), Friends);
             sb.PrintBriefObjListProp(n, nameof(Arguments), Arguments);
 
             return sb.ToString();

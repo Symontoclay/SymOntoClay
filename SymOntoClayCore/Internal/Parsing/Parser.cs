@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -44,6 +44,11 @@ namespace SymOntoClay.Core.Internal.Parsing
         /// <inheritdoc/>
         public List<CodeEntity> Parse(string text)
         {
+            return Parse(text, true);
+        }
+
+        public List<CodeEntity> Parse(string text, bool needCheckDirty)
+        {
 #if DEBUG
             //Log($"text = {text}");
 #endif
@@ -51,6 +56,7 @@ namespace SymOntoClay.Core.Internal.Parsing
             var codeFile = new CodeFile();
 
             var internalParserContext = new InternalParserContext(text, codeFile, _context);
+            internalParserContext.NeedCheckDirty = needCheckDirty;
 
             var parser = new SourceCodeParser(internalParserContext);
             parser.Run();
@@ -108,6 +114,25 @@ namespace SymOntoClay.Core.Internal.Parsing
             }
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        public RuleInstance ParseRuleInstance(string text)
+        {
+            return ParseRuleInstance(text, true);
+        }
+
+        /// <inheritdoc/>
+        public RuleInstance ParseRuleInstance(string text, bool needCheckDirty)
+        {
+            var codeEntity = Parse(text, needCheckDirty).First();
+
+            if (codeEntity.Kind == KindOfCodeEntity.RuleOrFact)
+            {
+                return codeEntity.RuleInstance;
+            }
+
+            throw new NotSupportedException($"There can only be rule or fact here!");
         }
     }
 }

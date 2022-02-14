@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -68,6 +68,9 @@ namespace SymOntoClay.Core.Internal.Instances
             }
         }
 
+        /// <inheritdoc/>
+        public override string EndPointName => string.Empty;
+
         public CodeFrame CodeFrame { get; set; }
 
         /// <inheritdoc/>
@@ -88,6 +91,15 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
+        public override IReadOnlyList<string> Friends => _friends;
+
+        /// <inheritdoc/>
+        public override bool IsFriend(IProcessInfo other)
+        {
+            return false;
+        }
+
+        /// <inheritdoc/>
         protected override void OnDisposed()
         {
         }
@@ -96,6 +108,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly object _lockObj = new object();
         private ProcessStatus _status = ProcessStatus.Created;
         private readonly List<int> _devices = new List<int>();
+        private readonly List<string> _friends = new List<string>();
         #endregion
 
         /// <inheritdoc/>

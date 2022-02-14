@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ namespace SymOntoClay.Core
         /// </summary>
         public IHostListener HostListener { get; set; }
 
-        public IActivePeriodicObjectCommonContext SyncContext { get; set; }
+        public IConditionalEntityHostSupport ConditionalEntityHostSupport { get; set; }
 
         public string TmpDir { get; set; }
 
@@ -50,7 +50,8 @@ namespace SymOntoClay.Core
 
             sb.PrintExisting(n, nameof(HostListener), HostListener);
 
-            sb.PrintExisting(n, nameof(SyncContext), SyncContext);
+            sb.PrintExisting(n, nameof(ConditionalEntityHostSupport), ConditionalEntityHostSupport);
+
             sb.AppendLine($"{spaces}{nameof(TmpDir)} = {TmpDir}");
             sb.PrintExisting(n, nameof(HostSupport), HostSupport);
 

@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using NLog.Fluent;
 using SymOntoClay.Core;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -39,6 +40,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading;
 
@@ -72,6 +74,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             Directory.CreateDirectory(_tmpDir);
 
             InvokerInMainThread = settings.InvokerInMainThread;
+            SoundBus = settings.SoundBus;
         }
 
         private void CreateLogging(WorldSettings settings)
@@ -159,6 +162,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         /// <inheritdoc/>
         public IInvokerInMainThread InvokerInMainThread { get; private set; }
 
+        /// <inheritdoc/>
+        public ISoundBus SoundBus { get; private set; }
+
         public DateTimeProvider DateTimeProvider { get; private set; }
         IDateTimeProvider IWorldCoreGameComponentContext.DateTimeProvider => DateTimeProvider;
         IDateTimeProvider IWorldCoreContext.DateTimeProvider => DateTimeProvider;
@@ -170,6 +176,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private readonly object _worldComponentsListLockObj = new object();
         private readonly List<IWorldCoreComponent> _worldComponentsList = new List<IWorldCoreComponent>();
 
+        /// <inheritdoc/>
         void IWorldCoreContext.AddWorldComponent(IWorldCoreComponent component)
         {
             lock(_worldComponentsListLockObj)
@@ -187,7 +194,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private readonly List<IGameComponent> _gameComponentsList = new List<IGameComponent>();
         private readonly List<int> _availableInstanceIdList = new List<int>();
         private readonly Dictionary<int, IGameComponent> _gameComponentsDictByInstanceId = new Dictionary<int, IGameComponent>();
+        private readonly Dictionary<string, int> _instancesIdDict = new Dictionary<string, int>();
 
+        /// <inheritdoc/>
         void IWorldCoreGameComponentContext.AddGameComponent(IGameComponent component)
         {
             lock(_gameComponentsListLockObj)
@@ -202,9 +211,30 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 _availableInstanceIdList.Add(instanceId);
                 _gameComponentsList.Add(component);
                 _gameComponentsDictByInstanceId[instanceId] = component;
+                _instancesIdDict[NameHelper.NormalizeString(component.Id)] = instanceId;
             }
         }
 
+        /// <inheritdoc/>
+        void IWorldCoreGameComponentContext.AddPublicFactsStorage(IGameComponent component)
+        {
+            lock (_gameComponentsListLockObj)
+            {
+                var publicFactsStorage = component.PublicFactsStorage;
+
+                foreach(var gameComponent in _gameComponentsList)
+                {
+                    if(gameComponent == component)
+                    {
+                        continue;
+                    }
+
+                    gameComponent.AddPublicFactsStorageOfOtherGameComponent(publicFactsStorage);
+                }
+            }
+        }
+
+        /// <inheritdoc/>
         void IWorldCoreGameComponentContext.RemoveGameComponent(IGameComponent component)
         {
             lock (_gameComponentsListLockObj)
@@ -216,10 +246,47 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     _availableInstanceIdList.Remove(component.InstanceId);
                     _gameComponentsList.Remove(component);
                     _gameComponentsDictByInstanceId.Remove(instanceId);
+                    _instancesIdDict.Remove(NameHelper.NormalizeString(component.Id));
+
+                    var publicFactsStorage = component.PublicFactsStorage;
+
+                    foreach (var gameComponent in _gameComponentsList)
+                    {
+                        gameComponent.RemovePublicFactsStorageOfOtherGameComponent(publicFactsStorage);
+                    }
                 }
             }
         }
 
+        /// <inheritdoc/>
+        bool IWorldCoreGameComponentContext.CanBeTakenBy(int instanceId, IEntity subject)
+        {
+            lock (_gameComponentsListLockObj)
+            {
+                if(!_gameComponentsDictByInstanceId.ContainsKey(instanceId))
+                {
+                    return false;
+                }
+
+                return _gameComponentsDictByInstanceId[instanceId].CanBeTakenBy(subject);
+            }
+        }
+
+        /// <inheritdoc/>
+        Vector3? IWorldCoreGameComponentContext.GetPosition(int instanceId)
+        {
+            lock (_gameComponentsListLockObj)
+            {
+                if (!_gameComponentsDictByInstanceId.ContainsKey(instanceId))
+                {
+                    return null;
+                }
+
+                return _gameComponentsDictByInstanceId[instanceId].GetPosition();
+            }
+        }
+
+        /// <inheritdoc/>
         IList<int> IWorldCoreGameComponentContext.AvailableInstanceIdList
         {
             get
@@ -231,6 +298,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             }
         }
 
+        /// <inheritdoc/>
         IStorage IWorldCoreGameComponentContext.GetPublicFactsStorageByInstanceId(int instanceId)
         {
             lock (_gameComponentsListLockObj)
@@ -239,11 +307,26 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             }
         }
 
+        /// <inheritdoc/>
         string IWorldCoreGameComponentContext.GetIdForFactsByInstanceId(int instanceId)
         {
             lock (_gameComponentsListLockObj)
             {
                 return _gameComponentsDictByInstanceId[instanceId].IdForFacts;
+            }
+        }
+
+        /// <inheritdoc/>
+        int IWorldCoreGameComponentContext.GetInstanceIdByIdForFacts(string id)
+        {
+            lock (_gameComponentsListLockObj)
+            {
+                if(_instancesIdDict.ContainsKey(id))
+                {
+                    return _instancesIdDict[id];
+                }
+
+                return 0;
             }
         }
 

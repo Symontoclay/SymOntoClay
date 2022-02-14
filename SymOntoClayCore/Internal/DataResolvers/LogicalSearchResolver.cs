@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -117,7 +117,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var targetStorageList = GetStoragesList(options.TargetStorage);
 
 #if DEBUG
-                Log($"targetStorageList = {targetStorageList.WriteListToString()}");
+                //Log($"targetStorageList = {targetStorageList.WriteListToString()}");
 #endif
 
                 var maxPriority = targetStorageList.Max(p => p.Priority);
@@ -1968,9 +1968,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                             var resultOfComparison = EqualityCompare(leftVal, rightVal, null, null, null, options, null);
 
+#if DEBUG
+                            //options.Logger.Log($"resultOfComparison = {resultOfComparison}");
+#endif
+
                             if (resultOfComparison)
                             {
-                                varValuesList.Add((varName, leftVal));
+                                if(leftVal.Kind == KindOfLogicalQueryNode.Relation && rightVal.Kind != KindOfLogicalQueryNode.Relation)
+                                {
+                                    varValuesList.Add((varName, rightVal));
+                                }
+                                else
+                                {
+                                    varValuesList.Add((varName, leftVal));
+                                }                                
                             }
                             else
                             {
@@ -2645,7 +2656,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var targetRelation in targetRelationsList)
             {
-#if DEBUG
+#if DEBUG          
                 //options.Logger.Log($"targetRelation = {targetRelation.GetHumanizeDbgString()}");
                 //options.Logger.Log($"targetRelation.CountParams = {targetRelation.CountParams}");
                 //options.Logger.Log($"queryExecutingCard.CountParams = {queryExecutingCard.CountParams}");
@@ -2656,6 +2667,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
 #if DEBUG
+                //options.Logger.Log($"DebugHelperForRuleInstance.ToString(targetRelation) = {DebugHelperForRuleInstance.ToString(targetRelation)}");
                 //options.Logger.Log($"targetRelation = {targetRelation}");
                 //options.Logger.Log($"targetRelation = {targetRelation.GetHumanizeDbgString()}");
                 //options.Logger.Log($"targetRelation.Name = {targetRelation.Name}");
@@ -3158,10 +3170,27 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var key_1 = expressionNode1.Name;
                 var key_2 = expressionNode2.Name;
 
+#if DEBUG
+                if((key_1.NameValue == "#cleaned metal barrel" && key_2.NameValue == "mynpc") || (key_1.NameValue == "mynpc" && key_2.NameValue == "#cleaned metal barrel"))
+                {
+                    //options.Logger.Log($"(expressionNode1 == null) = {expressionNode1 == null} (expressionNode2 == null) = {expressionNode2 == null}");
+                    //options.Logger.Log($"expressionNode1 = {expressionNode1}");
+                    //options.Logger.Log($"expressionNode2 = {expressionNode2}");
+                    //options.Logger.Log($"key_1 = {key_1}");
+                    //options.Logger.Log($"key_2 = {key_2}");
+                    //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
+                    //options.Logger.Log($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1?.Select(p => p.NameValue), Formatting.Indented)}");
+                    //options.Logger.Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");
+                }
+#endif
+
                 if (key_1 == key_2)
                 {
 #if DEBUG
-                    //options.Logger.Log($"key_1 == key_2 = {key_1 == key_2}");
+                    if ((key_1.NameValue == "#cleaned metal barrel" && key_2.NameValue == "mynpc") || (key_1.NameValue == "mynpc" && key_2.NameValue == "#cleaned metal barrel"))
+                    {
+                        //options.Logger.Log($"key_1 == key_2 = {key_1 == key_2}");
+                    }                    
 #endif
 
                     if(queryExecutingCard != null)
@@ -3174,6 +3203,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if (additionalKeys_1 != null && additionalKeys_1.Any(p => p == key_2))
                 {
+#if DEBUG
+                    if ((key_1.NameValue == "#cleaned metal barrel" && key_2.NameValue == "mynpc") || (key_1.NameValue == "mynpc" && key_2.NameValue == "#cleaned metal barrel"))
+                    {
+                        //options.Logger.Log("additionalKeys_1 != null && additionalKeys_1.Any(p => p == key_2)");
+                    }                    
+#endif
+
                     if (queryExecutingCard != null)
                     {
                         queryExecutingCard.UsedKeysList.Add(key_1);
@@ -3185,6 +3221,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if (additionalKeys_2 != null && additionalKeys_2.Any(p => p == key_1))
                 {
+#if DEBUG
+                    if ((key_1.NameValue == "#cleaned metal barrel" && key_2.NameValue == "mynpc") || (key_1.NameValue == "mynpc" && key_2.NameValue == "#cleaned metal barrel"))
+                    {
+                        //options.Logger.Log("additionalKeys_2 != null && additionalKeys_2.Any(p => p == key_1)");
+                    }                    
+#endif
+
                     if (queryExecutingCard != null)
                     {
                         queryExecutingCard.UsedKeysList.Add(key_1);
@@ -3194,16 +3237,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return true;
                 }
 
-                if (additionalKeys_1 != null && additionalKeys_2 != null && additionalKeys_1.Intersect(additionalKeys_2).Any())
-                {
-                    if (queryExecutingCard != null)
-                    {
-                        queryExecutingCard.UsedKeysList.Add(key_1);
-                        queryExecutingCard.UsedKeysList.Add(key_2);
-                    }
+                //if (additionalKeys_1 != null && additionalKeys_2 != null && additionalKeys_1.Intersect(additionalKeys_2).Any())
+                //{
+                //    if (queryExecutingCard != null)
+                //    {
+                //        queryExecutingCard.UsedKeysList.Add(key_1);
+                //        queryExecutingCard.UsedKeysList.Add(key_2);
+                //    }
 
-                    return true;
-                }
+                //    return true;
+                //}
 
                 return false;
             }
@@ -3355,7 +3398,93 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return true;
             }
 
+            if(((expressionNode1.Kind == KindOfLogicalQueryNode.Entity || expressionNode1.Kind == KindOfLogicalQueryNode.Concept || expressionNode1.Kind == KindOfLogicalQueryNode.Value || expressionNode1.Kind == KindOfLogicalQueryNode.EntityCondition || expressionNode1.Kind == KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence) && expressionNode2.Kind == KindOfLogicalQueryNode.Relation && expressionNode2.VarsInfoList.IsNullOrEmpty()) 
+                || ((expressionNode2.Kind == KindOfLogicalQueryNode.Entity || expressionNode2.Kind == KindOfLogicalQueryNode.Concept || expressionNode2.Kind == KindOfLogicalQueryNode.Value || expressionNode2.Kind == KindOfLogicalQueryNode.EntityCondition || expressionNode2.Kind == KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence) && expressionNode1.Kind == KindOfLogicalQueryNode.Relation && expressionNode1.VarsInfoList.IsNullOrEmpty()))
+            {
+#if DEBUG
+                //options.Logger.Log("Try to compare relation and entity, concept or value!");
+#endif
+
+                LogicalQueryNode relationNode = null;
+                LogicalQueryNode valueNode = null;
+                List<StrongIdentifierValue> valueAdditionalKeys = null;
+
+                if (expressionNode1.Kind == KindOfLogicalQueryNode.Relation)
+                {
+                    relationNode = expressionNode1;
+                    valueNode = expressionNode2;
+                    valueAdditionalKeys = additionalKeys_2;
+                }
+                else
+                {
+                    relationNode = expressionNode2;
+                    valueNode = expressionNode1;
+                    valueAdditionalKeys = additionalKeys_1;
+                }
+
+#if DEBUG
+                //options.Logger.Log($"relationNode = {relationNode}");
+                //options.Logger.Log($"valueNode = {valueNode}");
+                //options.Logger.Log($"valueAdditionalKeys = {JsonConvert.SerializeObject(valueAdditionalKeys?.Select(p => p.NameValue), Formatting.Indented)}");
+#endif
+
+                return RecursiveComparisonRelationWithNonRelation(relationNode, valueNode, valueAdditionalKeys, reason, options, queryExecutingCard);
+            }
+
             throw new NotImplementedException();
+        }
+
+        private bool RecursiveComparisonRelationWithNonRelation(LogicalQueryNode relationNode, LogicalQueryNode valueNode, List<StrongIdentifierValue> valueAdditionalKeys, ReasonOfFuzzyLogicResolving reason, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard)
+        {
+#if DEBUG
+            //options.Logger.Log($"relationNode = {relationNode}");
+            //options.Logger.Log($"valueNode = {valueNode}");
+            //options.Logger.Log($"valueAdditionalKeys = {JsonConvert.SerializeObject(valueAdditionalKeys?.Select(p => p.NameValue), Formatting.Indented)}");
+#endif
+
+            foreach (var param in relationNode.ParamsList)
+            {
+#if DEBUG
+                //options.Logger.Log($"param = {param}");
+#endif
+
+                var kindOfParam = param.Kind;
+
+                if (kindOfParam == KindOfLogicalQueryNode.Relation)
+                {
+                    if (RecursiveComparisonRelationWithNonRelation(param, valueNode, valueAdditionalKeys, reason, options, queryExecutingCard))
+                    {
+                        return true;
+                    }
+                }
+
+                List<StrongIdentifierValue> additionalKeysOfParam = null;
+
+                switch (kindOfParam)
+                {
+                    case KindOfLogicalQueryNode.Value:
+                        break;
+
+                    case KindOfLogicalQueryNode.Entity:
+                    case KindOfLogicalQueryNode.Concept:
+                        additionalKeysOfParam = _inheritanceResolver.GetSuperClassesKeysList(param.Name, options.LocalCodeExecutionContext);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParam), kindOfParam, null);
+                }
+
+#if DEBUG
+                //options.Logger.Log($"additionalKeysOfParam = {JsonConvert.SerializeObject(additionalKeysOfParam?.Select(p => p.NameValue), Formatting.Indented)}");
+#endif
+
+                if(EqualityCompare(valueNode, param, valueAdditionalKeys, additionalKeysOfParam, reason, options, queryExecutingCard))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

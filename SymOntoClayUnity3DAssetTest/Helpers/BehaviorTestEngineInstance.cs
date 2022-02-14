@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.World;
-using SymOntoClayDefaultCLIEnvironment;
+using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClayProjectFiles;
 using System;
 using System.Collections.Generic;
@@ -60,12 +60,17 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 
         public static bool Run(string fileContent, Action<int, string> logChannel, int timeoutToEnd = DefaultTimeoutToEnd)
         {
+            return Run(fileContent, logChannel, new object(), timeoutToEnd);
+        }
+
+        public static bool Run(string fileContent, Action<int, string> logChannel, object platformListener, int timeoutToEnd = DefaultTimeoutToEnd)
+        {
             var n = 0;
 
             return Run(fileContent,
                 message => { n++; logChannel(n, message); },
                 error => { throw new Exception(error); },
-                timeoutToEnd);
+                platformListener, timeoutToEnd);
         }
 
         public static bool Run(string fileContent, Action<string> logChannel, int timeoutToEnd = DefaultTimeoutToEnd)
@@ -75,8 +80,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
                 error => { throw new Exception(error); },
                 timeoutToEnd);
         }
-
         public static bool Run(string fileContent, Action<string> logChannel, Action<string> error, int timeoutToEnd = DefaultTimeoutToEnd)
+        {
+            return Run(fileContent, logChannel, error, new object(), timeoutToEnd);
+        }
+
+        public static bool Run(string fileContent, Action<string> logChannel, Action<string> error, object platformListener, int timeoutToEnd = DefaultTimeoutToEnd)
         {
             if(string.IsNullOrWhiteSpace(fileContent))
             {
@@ -89,17 +98,22 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 
                 return behaviorTestEngineInstance.Run(timeoutToEnd,
                     message => { logChannel(message); },
-                    errorMsg => { error(errorMsg); }
+                    errorMsg => { error(errorMsg); }, platformListener
                     );
             }
         }
 
         public bool Run(int timeoutToEnd, Action<string> logChannel, Action<string> error)
         {
+            return Run(timeoutToEnd, logChannel, error, new object());
+        }
+
+        public bool Run(int timeoutToEnd, Action<string> logChannel, Action<string> error, object platformListener)
+        {
             var result = true;
 
             _internalInstance.CreateAndStartNPC(message => { logChannel(message); },
-                errorMsg => { result = false; error(errorMsg); });
+                errorMsg => { result = false; error(errorMsg); }, platformListener);
 
             Thread.Sleep(timeoutToEnd);
 

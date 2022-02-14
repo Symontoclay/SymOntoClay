@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -223,8 +223,36 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     case OperationCode.PushVal:
-                        _currentCodeFrame.ValuesStack.Push(currentCommand.Value);
-                        _currentCodeFrame.CurrentPosition++;
+                        {
+                            var value = currentCommand.Value;
+
+                            var kindOfValue = value.KindOfValue;
+
+                            switch(kindOfValue)
+                            {
+                                case KindOfValue.WaypointSourceValue:
+                                    {
+                                        var waypointSourceValue = value.AsWaypointSourceValue;
+
+                                        value = waypointSourceValue.ConvertToWaypointValue(_context, _currentCodeFrame.LocalContext);
+                                    }
+                                    break;
+
+                                case KindOfValue.ConditionalEntitySourceValue:
+                                    {
+                                        var conditionalEntitySourceValue = value.AsConditionalEntitySourceValue;
+
+                                        value = conditionalEntitySourceValue.ConvertToConditionalEntityValue(_context, _currentCodeFrame.LocalContext);
+                                    }
+                                    break;
+
+                                default:
+                                    break;
+                            }
+
+                            _currentCodeFrame.ValuesStack.Push(value);
+                            _currentCodeFrame.CurrentPosition++;
+                        }
                         break;
 
                     case OperationCode.PushValFromVar:
@@ -380,87 +408,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         CallFunction(KindOfFunctionParameters.NamedParameters, currentCommand.CountParams, false);
                         break;
 
-                    case OperationCode.UseInheritance:
-                        ProcessUseInheritance();
+                    case OperationCode.SetInheritance:
+                        ProcessSetInheritance();
                         break;
 
-                    case OperationCode.UseNotInheritance:
-                        ProcessUseNotInheritance();
-                        break;
-
-                    case OperationCode.AllocateAnonymousWaypoint:
-                        {
-                            if(currentCommand.CountParams == 0)
-                            {
-                                throw new NotImplementedException();
-                                //break;
-                            }
-
-#if DEBUG
-                            //Log($"currentCommand.CountParams = {currentCommand.CountParams}");
-#endif
-
-                            var paramsList = TakePositionedParameters(currentCommand.CountParams);
-
-#if DEBUG
-                            //Log($"paramsList = {paramsList.WriteListToString()}");
-                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-#endif
-
-                            switch(currentCommand.CountParams)
-                            {
-                                case 2:
-                                    {
-                                        var firstParam = paramsList[0];
-
-#if DEBUG
-                                        //Log($"firstParam = {firstParam}");
-#endif
-
-                                        var resolvedFirstParam = _numberValueLinearResolver.Resolve(firstParam, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
-
-                                        var annotationValue = paramsList[1].AsAnnotationValue;
-
-                                        var value = new WaypointValue((float)(double)resolvedFirstParam.GetSystemValue(), _context);
-
-                                        _currentCodeFrame.ValuesStack.Push(value);
-
-                                        _currentCodeFrame.CurrentPosition++;
-                                    }
-                                    break;
-
-                                case 3:
-                                    {
-                                        var firstParam = paramsList[0];
-
-#if DEBUG
-                                        //Log($"firstParam = {firstParam}");
-#endif
-
-                                        var resolvedFirstParam = _numberValueLinearResolver.Resolve(firstParam, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
-
-                                        var secondParam = paramsList[1];
-
-#if DEBUG
-                                        //Log($"secondParam = {secondParam}");
-#endif
-
-                                        var resolvedSecondParam = _numberValueLinearResolver.Resolve(secondParam, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
-
-                                        var annotationValue = paramsList[2].AsAnnotationValue;
-
-                                        var value = new WaypointValue((float)(double)resolvedFirstParam.GetSystemValue(), (float)(double)resolvedSecondParam.GetSystemValue(), _context);
-
-                                        _currentCodeFrame.ValuesStack.Push(value);
-
-                                        _currentCodeFrame.CurrentPosition++;
-                                    }
-                                    break;
-
-                                default:
-                                    throw new ArgumentOutOfRangeException(nameof(currentCommand.CountParams), currentCommand.CountParams, null);
-                            }
-                        }
+                    case OperationCode.SetNotInheritance:
+                        ProcessSetNotInheritance();
                         break;
 
                     case OperationCode.SetSEHGroup:
@@ -1303,7 +1256,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private void ProcessUseInheritance()
+        private void ProcessSetInheritance()
         {
             var paramsList = TakePositionedParameters(4);
 
@@ -1344,7 +1297,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentCodeFrame.CurrentPosition++;
         }
 
-        private void ProcessUseNotInheritance()
+        private void ProcessSetNotInheritance()
         {
             var paramsList = TakePositionedParameters(4);
 

@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -34,18 +34,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.HostSupport
 {
     public class HostSupportComponent : BaseComponent, IHostSupport
     {
-        public HostSupportComponent(IEntityLogger logger, IPlatformSupport platformSupport, HumanoidNPCGameComponentContext internalContext, IWorldCoreGameComponentContext worldContext)
+        public HostSupportComponent(IEntityLogger logger, IPlatformSupport platformSupport, IWorldCoreGameComponentContext worldContext)
             : base(logger)
         {
-            _internalContext = internalContext;
-            _worldContext = worldContext;
             _invokerInMainThread = worldContext.InvokerInMainThread;
             _platformSupport = platformSupport;
-
         }
 
-        private readonly HumanoidNPCGameComponentContext _internalContext;
-        private readonly IWorldCoreGameComponentContext _worldContext;
         private readonly IInvokerInMainThread _invokerInMainThread;
         private readonly IPlatformSupport _platformSupport;
 
@@ -58,6 +53,26 @@ namespace SymOntoClay.UnityAsset.Core.Internal.HostSupport
 
             var invocableInMainThreadObj = new InvocableInMainThreadObj<Vector3>(() => {
                 return _platformSupport.ConvertFromRelativeToAbsolute(relativeCoordinate);
+            }, _invokerInMainThread);
+
+            return invocableInMainThreadObj.Run();
+        }
+
+        /// <inheritdoc/>
+        public Vector3 GetCurrentAbsolutePosition()
+        {
+            var invocableInMainThreadObj = new InvocableInMainThreadObj<Vector3>(() => {
+                return _platformSupport.GetCurrentAbsolutePosition();
+            }, _invokerInMainThread);
+
+            return invocableInMainThreadObj.Run();
+        }
+
+        /// <inheritdoc/>
+        public float GetDirectionToPosition(Vector3 position)
+        {
+            var invocableInMainThreadObj = new InvocableInMainThreadObj<float>(() => {
+                return _platformSupport.GetDirectionToPosition(position);
             }, _invokerInMainThread);
 
             return invocableInMainThreadObj.Run();

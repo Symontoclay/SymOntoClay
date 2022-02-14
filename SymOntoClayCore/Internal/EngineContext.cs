@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.StandardLibrary;
 using SymOntoClay.Core.Internal.States;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using System;
 
 namespace SymOntoClay.Core.Internal
 {
@@ -38,20 +39,28 @@ namespace SymOntoClay.Core.Internal
         public CodeExecutorComponent CodeExecutor { get; set; }
         public StatesStorageComponent StatesStorage { get; set; }       
         public StandardLibraryLoader StandardLibraryLoader { get; set; }       
-        public ActivePeriodicObjectContext ActivePeriodicObjectContext { get; set; }
+        
         public IHostSupport HostSupport { get; set; }
         public IHostListener HostListener { get; set; }
+        public IConditionalEntityHostSupport ConditionalEntityHostSupport { get; set; }
 
-        ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;        
-        IActivePeriodicObjectContext IEngineContext.ActivePeriodicObjectContext => ActivePeriodicObjectContext;
+        ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;
+
+        /// <inheritdoc/>
+        public override void Die()
+        {
+            CodeExecutor.Dispose();
+            StatesStorage.Dispose();
+
+            base.Die();
+        }
 
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
             CodeExecutor.Dispose();
             StatesStorage.Dispose();
-            ActivePeriodicObjectContext.Dispose();
-
+            
             base.OnDisposed();
         }
     }

@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -91,6 +91,19 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
             _idForFacts = _internalContext.IdForFacts;
             _coreEngine = _internalContext.CoreEngine;
+        }
+
+        public Vector3? GetPosition(int instanceId)
+        {
+            lock (_lockObj)
+            {
+                if (_visibleObjectsPositionRegistry.ContainsKey(instanceId))
+                {
+                    return _visibleObjectsPositionRegistry[instanceId];
+                }
+
+                return null;
+            }
         }
 
         private bool CommandLoop()
@@ -368,6 +381,20 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             }
 
             return true;
+        }
+
+        public bool IsVisible(int instanceId)
+        {
+#if DEBUG
+            //Log($"instanceId = {instanceId}");
+#endif
+
+            if(_visibleObjectsRegistry.ContainsKey(instanceId))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public void BeginStarting()

@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,13 +22,14 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.UnityAsset.Core;
-using SymOntoClayDefaultCLIEnvironment;
+using SymOntoClay.DefaultCLIEnvironment;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
 using System.Text;
 using System.Threading;
+using SymOntoClay.SoundBuses;
 
 namespace SymOntoClay.CLI
 {
@@ -71,6 +72,8 @@ namespace SymOntoClay.CLI
             settings.HostFile = targetFiles.WorldFile;
 
             settings.InvokerInMainThread = invokingInMainThread;
+
+            settings.SoundBus = new SimpleSoundBus();
 
             var logDir = Path.Combine(Environment.GetEnvironmentVariable("APPDATA"), "SymOntoClay", "CLI", "NpcLogs");
 

@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -44,6 +44,9 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             context.HostSupport = settings.HostSupport;
             context.HostListener = settings.HostListener;
+
+            context.ConditionalEntityHostSupport = settings.ConditionalEntityHostSupport;
+
             context.StandardLibraryLoader = new StandardLibraryLoader(context);
             context.CodeExecutor = new CodeExecutorComponent(context);
             
@@ -51,15 +54,13 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.InstancesStorage = new InstancesStorageComponent(context);
             context.StatesStorage = new StatesStorageComponent(context);
 
-            context.ActivePeriodicObjectContext = new ActivePeriodicObjectContext(settings.SyncContext);
-
             return context;
         }
 
         public static void LoadFromSourceCode(EngineContext context)
         {
             context.CommonNamesStorage.LoadFromSourceCode();
-            context.Storage.LoadFromSourceCode();
+            context.Storage.LoadFromSourceCode(context);
             context.StandardLibraryLoader.LoadFromSourceCode();
             context.StatesStorage.LoadFromSourceCode();
             context.InstancesStorage.LoadFromSourceFiles();
@@ -108,7 +109,9 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.Parser = new Parser(context);
             context.Compiler = new Compiler(context);
             context.CommonNamesStorage = new CommonNamesStorage(context);
-            context.DataResolversFactory = new DataResolversFactory(context);            
+            context.DataResolversFactory = new DataResolversFactory(context);
+
+            context.ActivePeriodicObjectContext = new ActivePeriodicObjectContext(settings.SyncContext);
         }
 
         private static void BaseInitBaseCoreContext(BaseCoreContext context, BaseCoreSettings settings)

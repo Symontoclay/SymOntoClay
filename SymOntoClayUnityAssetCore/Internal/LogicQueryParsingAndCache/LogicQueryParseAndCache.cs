@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -61,16 +61,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache
                 return _cache[textKey];
             }
 
-            var codeEntity = _parser.Parse(text).First();
-
-            if(codeEntity.Kind == KindOfCodeEntity.RuleOrFact)
-            {
-                var result = codeEntity.RuleInstance;
-                _cache[textKey] = result;
-                return result;
-            }
-
-            throw new NotSupportedException($"There can only be rule or fact here!");
+            var result = _parser.ParseRuleInstance(text);
+            _cache[textKey] = result;
+            return result;            
         }
     }
 }

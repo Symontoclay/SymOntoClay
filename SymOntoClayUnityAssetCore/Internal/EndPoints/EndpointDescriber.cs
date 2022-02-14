@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
     public static class EndpointDescriber
     {
         private static List<Type> targetAttributesList = new List<Type>() { typeof(EndpointAttribute), typeof(BipedEndpointAttribute) };
+        private static Type friendsAttributeType = typeof(FriendsEndpointsAttribute);
         private static Type targetParameterAttributeType = typeof(EndpointParamAttribute);
+
+#if DEBUG
+        //private static ILogger _logger = LogManager.GetCurrentClassLogger();
+#endif
 
         public static IList<IEndpointInfo> GetEndpointsInfoList(object platformListener)
         {
@@ -107,6 +113,24 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 else
                 {
                     platformEndpointInfo.Name = method.Name.ToLower();
+                }
+
+                customAttribute = method.CustomAttributes.FirstOrDefault(p => p.AttributeType == friendsAttributeType);
+
+                if (customAttribute != null && customAttribute.ConstructorArguments.Any())
+                {
+                    var friendsList = new List<string>();
+
+                    var firstParam = customAttribute.ConstructorArguments[0];
+
+#if DEBUG
+                    //_logger.Info($"firstParam.ArgumentType.FullName = {firstParam.ArgumentType.FullName}");
+                    //_logger.Info($"firstParam.Value.GetType().FullName = {firstParam.Value.GetType().FullName}");
+#endif
+
+                    friendsList.AddRange(((IEnumerable<CustomAttributeTypedArgument>)firstParam.Value).Select(p => ((string)(p.Value)).ToLower()).Distinct().ToList());
+
+                    platformEndpointInfo.Friends = friendsList;
                 }
 
                 platformEndpointInfo.Arguments = new List<IEndpointArgumentInfo>();

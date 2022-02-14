@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal;
 using System;
@@ -72,6 +73,15 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
         {
             _gameComponent.RemovePublicFact(id);
         }
+
+        /// <inheritdoc/>
+        public void PushSoundFact(float power, string text)
+        {
+            _gameComponent.PushSoundFact(power, text);
+        }
+
+        /// <inheritdoc/>
+        public IStorage PublicFactsStorage => _gameComponent.PublicFactsStorage;
 
         private readonly GameObjectSettings _settings;
 

@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -127,6 +127,9 @@ namespace SymOntoClay.Core.DebugHelpers
                 case KindOfLogicalQueryNode.Relation:
                     return RelationToString(expr);
 
+                case KindOfLogicalQueryNode.Group:
+                    return GroupToString(expr);
+
                 case KindOfLogicalQueryNode.Concept:
                 case KindOfLogicalQueryNode.QuestionVar:
                 case KindOfLogicalQueryNode.Entity:
@@ -142,6 +145,11 @@ namespace SymOntoClay.Core.DebugHelpers
                 default:
                     throw new ArgumentOutOfRangeException(nameof(expr.Kind), expr.Kind, null);
             }
+        }
+
+        private static string GroupToString(LogicalQueryNode expr)
+        {
+            return $"({ToString(expr.Left)})";
         }
 
         private static string UnaryOperatorToString(LogicalQueryNode expr)
@@ -327,9 +335,20 @@ namespace SymOntoClay.Core.DebugHelpers
                 case KindOfValue.StrongIdentifierValue:
                     return StrongIdentifierValueToString(value.AsStrongIdentifierValue);
 
+                case KindOfValue.WaypointSourceValue:
+                case KindOfValue.WaypointValue:
+                    return WaypointValueToString(value);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(value.KindOfValue), value.KindOfValue, null);
             }
+        }
+
+        private static string WaypointValueToString(Value value)
+        {
+            var sb = new StringBuilder(value.ToDbgString());
+            sb.Append(AnnotatedItemToString(value));
+            return sb.ToString();
         }
 
         private static string NullValueToString(Value value)

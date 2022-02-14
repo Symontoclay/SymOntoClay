@@ -3,10 +3,10 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>SymOntoClay.UnityAsset.Core</AssemblyName>
     <RootNamespace>SymOntoClay.UnityAsset.Core</RootNamespace>
-    <Version>0.3.3</Version>
+    <Version>0.3.5</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>0.3.3</AssemblyVersion>
-    <FileVersion>0.3.3</FileVersion>
+    <AssemblyVersion>0.3.5</AssemblyVersion>
+    <FileVersion>0.3.5</FileVersion>
     <Copyright>Copyright (c) 2020 - 2021 Sergiy Tolkachov aka metatypeman</Copyright>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

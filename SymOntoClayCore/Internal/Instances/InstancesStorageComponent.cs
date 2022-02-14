@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -232,6 +232,10 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void NAppendAndTryStartProcessInfoWithDevices(IProcessInfo processInfo)
         {
+#if DEBUG
+            //Log($"processInfo = {processInfo}");
+#endif
+
             foreach (var device in processInfo.Devices)
             {
                 _processesInfoByDevicesDict[device] = processInfo;
@@ -240,6 +244,10 @@ namespace SymOntoClay.Core.Internal.Instances
             processInfo.OnFinish += OnFinishProcessWithDevicesHandler;
 
             processInfo.Start();
+
+#if DEBUG
+            //Log($"processInfo.Start()");
+#endif
         }
 
         private void OnFinishProcessWithDevicesHandler(IProcessInfo sender)
@@ -269,9 +277,24 @@ namespace SymOntoClay.Core.Internal.Instances
 
             foreach(var device in processInfo.Devices)
             {
-                if(_processesInfoByDevicesDict.ContainsKey(device))
+#if DEBUG
+                //Log($"device = {device}");
+#endif
+
+                if (_processesInfoByDevicesDict.ContainsKey(device))
                 {
-                    result.Add(_processesInfoByDevicesDict[device]);
+                    var otherProcessInfo = _processesInfoByDevicesDict[device];
+
+#if DEBUG
+                    //Log("_processesInfoByDevicesDict.ContainsKey(device)");
+                    //Log($"otherProcessInfo = {otherProcessInfo}");
+                    //Log($"processInfo.IsFriend(otherProcessInfo) = {processInfo.IsFriend(otherProcessInfo)}");
+#endif
+
+                    if(!processInfo.IsFriend(otherProcessInfo))
+                    {
+                        result.Add(otherProcessInfo);
+                    }                    
                 }
             }
 

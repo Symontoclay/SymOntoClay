@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.Core.Internal.Storage;
+using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -52,6 +53,8 @@ namespace SymOntoClay.Core.Internal
         /// </summary>
         public string AppFile { get; set; }
 
+        public ActivePeriodicObjectContext ActivePeriodicObjectContext { get; set; }
+
         public StorageComponent Storage { get; set; }
         public Parser Parser { get; set; }
         public DataResolversFactory DataResolversFactory { get; set; }
@@ -70,9 +73,23 @@ namespace SymOntoClay.Core.Internal
         ILoaderFromSourceCode IMainStorageContext.LoaderFromSourceCode => LoaderFromSourceCode;
         IInstancesStorageComponent IMainStorageContext.InstancesStorage => InstancesStorage;
 
+        IActivePeriodicObjectContext IMainStorageContext.ActivePeriodicObjectContext => ActivePeriodicObjectContext;
+
+        public virtual void Die()
+        {
+            ActivePeriodicObjectContext.Dispose();
+            Storage.Die();
+            Parser.Dispose();
+            //DataResolversFactory.Dispose();
+            CommonNamesStorage.Dispose();
+            InstancesStorage.Dispose();
+            LoaderFromSourceCode.Dispose();
+        }
+
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
+            ActivePeriodicObjectContext.Dispose();
             Storage.Dispose();
             Parser.Dispose();
             //DataResolversFactory.Dispose();

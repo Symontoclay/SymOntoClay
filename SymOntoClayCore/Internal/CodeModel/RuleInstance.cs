@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class RuleInstance: AnnotatedItem, IStorage, ILogicalStorage
     {
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public bool IsSource { get; set; } = true;
@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData();
 
-        private void PrepareDirty()
+        private void PrepareDirty(CheckDirtyOptions options)
         {
             if(Name == null || Name.IsEmpty)
             {
@@ -77,8 +77,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             if (IsSource)
             {
-                Normalized = ConvertorToNormalized.Convert(this);
-                Normalized.PrepareDirty();
+#if DEBUG
+                //_gbcLogger.Info($"(options != null) = {options != null}");
+                //_gbcLogger.Info($"this = {DebugHelperForRuleInstance.ToString(this)}");
+#endif 
+
+                Normalized = ConvertorToNormalized.Convert(this, options);
+                Normalized.PrepareDirty(options);
 
 #if DEBUG
                 //_gbcLogger.Info($"Normalized = {DebugHelperForRuleInstance.ToString(Normalized)}");
@@ -121,17 +126,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode()
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            PrepareDirty();
+            PrepareDirty(options);
 
-            var result = base.CalculateLongHashCode() ^ PrimaryPart.GetLongHashCode();
+            var result = base.CalculateLongHashCode(options) ^ PrimaryPart.GetLongHashCode(options);
 
             if (!SecondaryParts.IsNullOrEmpty())
             {
                 foreach (var secondaryPart in SecondaryParts)
                 {
-                    result ^= secondaryPart.GetLongHashCode();
+                    result ^= secondaryPart.GetLongHashCode(options);
                 }
             }
 
@@ -284,7 +289,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
 
-            return $"{spaces}{DebugHelperForRuleInstance.ToString(this)}";
+            return $"{spaces}{ToHumanizedString()}";
+        }
+
+        public string ToHumanizedString()
+        {
+            return DebugHelperForRuleInstance.ToString(this);
         }
 
         #region IStorage

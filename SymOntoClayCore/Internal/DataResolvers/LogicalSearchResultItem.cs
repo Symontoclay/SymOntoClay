@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -69,7 +70,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public IList<ResultOfVarOfQueryToRelation> ResultOfVarOfQueryToRelationList { get; set; }
 
-        public ulong GetLongHashCode()
+        public ulong GetLongHashCode(CheckDirtyOptions options)
         {
             ulong result = 0;
 
@@ -77,7 +78,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 foreach (var item in ResultOfVarOfQueryToRelationList)
                 {
-                    result ^= item.GetLongHashCode();
+                    result ^= item.GetLongHashCode(options);
                 }
             }
 

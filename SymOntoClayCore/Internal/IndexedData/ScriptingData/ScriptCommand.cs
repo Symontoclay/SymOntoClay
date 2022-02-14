@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -191,8 +191,8 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.ClearStack:
                 case OperationCode.Return:
                 case OperationCode.ReturnVal:
-                case OperationCode.UseInheritance:
-                case OperationCode.UseNotInheritance:
+                case OperationCode.SetInheritance:
+                case OperationCode.SetNotInheritance:
                 case OperationCode.Error:
                 case OperationCode.RemoveSEHGroup:
                 case OperationCode.Await:
@@ -210,10 +210,6 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.CallUnOp:
                 case OperationCode.CallBinOp:
                     return $"{spaces}{OperationCode} {OperatorsHelper.GetSymbol(KindOfOperator)}";
-
-                case OperationCode.AllocateAnonymousWaypoint:
-                case OperationCode.AllocateNamedWaypoint:
-                    return $"{spaces}{OperationCode} {CountParams}";
 
                 case OperationCode.Call:
                 case OperationCode.Call_N:

@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,12 +29,14 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 {
     public class CallBackLogger : IPlatformLogger
     {
-        public CallBackLogger(Action<string> logChannel, Action<string> error)
+        public CallBackLogger(Action<string> logChannel, Action<string> error, bool enableWriteLnRawLog = false)
         {
+            _enableWriteLnRawLog = enableWriteLnRawLog;
             _logChannel = logChannel;
             _error = error;
         }
 
+        private readonly bool _enableWriteLnRawLog;
         private readonly Action<string> _logChannel;
         private readonly Action<string> _error;
 
@@ -52,11 +54,16 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
         /// <inheritdoc/>
         public void WriteLnRawLog(string message)
         {
+            if(_enableWriteLnRawLog)
+            {
+                _logChannel?.Invoke(message);
+            }            
         }
 
         /// <inheritdoc/>
         public void WriteLnRawWarning(string message)
         {
+            _logChannel?.Invoke(message);
         }
 
         /// <inheritdoc/>

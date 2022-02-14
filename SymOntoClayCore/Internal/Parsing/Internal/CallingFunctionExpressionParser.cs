@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -112,12 +112,29 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _currentParameter = new CallingParameter();
                                 Result.Parameters.Add(_currentParameter);
 
-                                var value = NameHelper.CreateName(_currToken.Content);
+                                switch(_currToken.KeyWordTokenKind)
+                                {
+                                    case KeyWordTokenKind.Null:
+                                        {
+                                            var node = new ConstValueAstExpression();
+                                            node.Value = new NullValue();
 
-                                var node = new ConstValueAstExpression();
-                                node.Value = value;
+                                            _currentParameter.Value = node;
+                                        }
+                                        break;
 
-                                _currentParameter.Value = node;
+                                    default:
+                                        {
+                                            var value = NameHelper.CreateName(_currToken.Content);
+
+                                            var node = new ConstValueAstExpression();
+                                            node.Value = value;
+
+                                            _currentParameter.Value = node;
+                                        }
+                                        break;
+                                }
+
                                 _state = State.GotPositionedMainParameter;
                             }
                             break;
@@ -169,6 +186,25 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case TokenKind.EntityCondition:
+                            {
+                                _currentParameter = new CallingParameter();
+                                Result.Parameters.Add(_currentParameter);
+
+                                _context.Recovery(_currToken);
+
+                                var parser = new ConditionalEntityParser(_context);
+                                parser.Run();
+
+                                var node = new ConstValueAstExpression();
+                                node.Value = parser.Result;
+
+                                _currentParameter.Value = node;
+
+                                _state = State.GotPositionedMainParameter;
+                            }
+                            break;
+
                         case TokenKind.CloseRoundBracket:
                             Exit();
                             break;
@@ -211,10 +247,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             {
                                 _context.Recovery(_currToken);
 
-                                var parser = new EntityConditionParser(_context);
+                                var parser = new ConditionalEntityParser(_context);
                                 parser.Run();
 
-                                _currentParameter.Value = parser.Result;
+                                var node = new ConstValueAstExpression();
+                                node.Value = parser.Result;
+
+                                _currentParameter.Value = node;
 
                                 _state = State.GotValueOfNamedMainParameter;
                             }

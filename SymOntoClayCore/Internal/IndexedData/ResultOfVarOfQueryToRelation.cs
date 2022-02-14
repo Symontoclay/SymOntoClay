@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -33,9 +33,9 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public StrongIdentifierValue NameOfVar { get; set; }
         public LogicalQueryNode FoundExpression { get; set; }
 
-        public ulong GetLongHashCode()
+        public ulong GetLongHashCode(CheckDirtyOptions options)
         {
-            return (ulong)Math.Abs(NameOfVar.GetHashCode()) ^ FoundExpression.GetLongHashCode();
+            return NameOfVar.GetLongHashCode(options) ^ FoundExpression.GetLongHashCode(options);
         }
 
         /// <inheritdoc/>

@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public IList<IStorage> ParentsStorages { get; set; }
         public DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get; set; }
         public IInheritancePublicFactsReplicator InheritancePublicFactsReplicator { get; set; }
+        public KindOfGC KindOfGC { get; set; } = KindOfGC.None;
 
         /// <inheritdoc/>
         public override string ToString()
@@ -56,6 +57,7 @@ namespace SymOntoClay.Core.Internal.Storage
             sb.PrintExisting(n, nameof(MainStorageContext), MainStorageContext);
             sb.PrintObjListProp(n, nameof(ParentsStorages), ParentsStorages);
             sb.PrintObjProp(n, nameof(DefaultSettingsOfCodeEntity), DefaultSettingsOfCodeEntity);
+            sb.AppendLine($"{spaces}{nameof(KindOfGC)} = {KindOfGC}");
             return sb.ToString();
         }
     }

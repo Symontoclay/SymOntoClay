@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2020 - 2021 Sergiy Tolkachov
+Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,17 +21,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.UnityAsset.Core.World;
-using SymOntoClayDefaultCLIEnvironment;
+using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClayProjectFiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Numerics;
+using NLog;
+using SymOntoClay.SoundBuses;
 
 namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 {
     public class AdvancedBehaviorTestEngineInstance : IDisposable
     {
+#if DEBUG
+        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+#endif
+
         static AdvancedBehaviorTestEngineInstance()
         {
             _rootDir = Path.Combine(Environment.GetEnvironmentVariable("TMP"), $"TstTempProjects_{Guid.NewGuid().ToString("D").Replace("-", string.Empty)}");
@@ -60,7 +67,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
                 Directory.CreateDirectory(_testDir);
             }
 
-            var worldSpaceCreationSettings = new WorldSpaceCreationSettings() { ProjectName = _projectName };
+            var worldSpaceCreationSettings = new WorldSpaceCreationSettings() { CreateOnlyWorldspace = true, ProjectName = _projectName };
 
             var wSpaceFile = WorldSpaceCreator.CreateWithOutWSpaceFile(worldSpaceCreationSettings, _testDir
                     , errorMsg => throw new Exception(errorMsg)
@@ -71,7 +78,29 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 
         public void WriteFile(string fileContent)
         {
-            WriteFile(_defaultRelativeFileName, fileContent);
+            WriteNPCFile(_projectName, fileContent);
+        }
+
+        public void WriteNPCFile(string npcName, string fileContent)
+        {
+            if (!_createdNPCsDSLProjects.Contains(npcName))
+            {
+                _createdNPCsDSLProjects.Add(npcName);
+                CreateNPCDSLProject(npcName);
+            }
+
+            WriteFile($"/Npcs/{npcName}/{npcName}.soc", fileContent);
+        }
+
+        public void WriteThingFile(string thingName, string fileContent)
+        {
+            if(!_createdThingsDSLProjects.Contains(thingName))
+            {
+                _createdThingsDSLProjects.Add(thingName);
+                CreateThingDSLProject(thingName);
+            }
+
+            WriteFile($"/Things/{thingName}/{thingName}.soc", fileContent);
         }
 
         public void WriteFile(string relativeFileName, string fileContent)
@@ -86,15 +115,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
             File.WriteAllText(targetFileName, fileContent);
         }
 
-        public IHumanoidNPC CreateAndStartNPC(Action<int, string> logChannel)
+        public void CreateWorld(Action<int, string> logChannel, bool enableWriteLnRawLog = false)
         {
             var n = 0;
 
-            return CreateAndStartNPC(message => { n++; logChannel(n, message); },
-                error => { throw new Exception(error); });
+            CreateWorld(message => { n++; logChannel(n, message); },
+                error => { throw new Exception(error); }, enableWriteLnRawLog);
         }
 
-        public IHumanoidNPC CreateAndStartNPC(Action<string> logChannel, Action<string> error)
+        public void CreateWorld(Action<string> logChannel, Action<string> error, bool enableWriteLnRawLog = false)
         {
             var supportBasePath = Path.Combine(_testDir, "SysDirs");
 
@@ -102,8 +131,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 
             var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
 
-            var instance = new WorldCore();
-            
+            _world = new WorldCore();
+
             var settings = new WorldSettings();
             settings.EnableAutoloadingConvertors = true;
 
@@ -117,10 +146,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 
             settings.InvokerInMainThread = invokingInMainThread;
 
+            settings.SoundBus = new SimpleSoundBus();
+
             var callBackLogger = new CallBackLogger(
                 message => { logChannel(message); },
-                errorMsg => { error(errorMsg); }
-                );
+                errorMsg => { error(errorMsg); },
+                enableWriteLnRawLog);
 
             settings.Logging = new LoggingSettings()
             {
@@ -131,27 +162,167 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
                 EnableRemoteConnection = true
             };
 
-            instance.SetSettings(settings);
+            _world.SetSettings(settings);
+        }
 
-            var platformListener = new object();
+        public void StartWorld()
+        {
+            _world?.Start();
+        }
+
+        private void CreateNPCDSLProject(string npcName)
+        {
+#if DEBUG
+            //_logger.Info($"npcName = {npcName}");
+            //_logger.Info($"_wSpaceDir = {_wSpaceDir}");
+#endif
+
+            var wSpaceFile = WFilesSearcher.FindWSpaceFile(_wSpaceDir);
+
+#if DEBUG
+            //_logger.Info($"wSpaceFile.FullName = {wSpaceFile.FullName}");
+#endif
+
+            var worldSpaceCreationSettings = new WorldSpaceCreationSettings() { ProjectName = npcName, KindOfNewCommand = KindOfNewCommand.NPC };
+
+            WorldSpaceCreator.CreateWithWSpaceFile(worldSpaceCreationSettings, wSpaceFile
+                , errorMsg => throw new Exception(errorMsg));
+        }
+
+        private void CreateThingDSLProject(string thingName)
+        {
+            var wSpaceFile = WFilesSearcher.FindWSpaceFile(_wSpaceDir);
+
+            var worldSpaceCreationSettings = new WorldSpaceCreationSettings() { ProjectName = thingName, KindOfNewCommand = KindOfNewCommand.Thing };
+
+            WorldSpaceCreator.CreateWithWSpaceFile(worldSpaceCreationSettings, wSpaceFile
+                , errorMsg => throw new Exception(errorMsg));
+        }
+
+        public IHumanoidNPC CreateNPC()
+        {
+            return CreateNPC(_projectName, new object(), new Vector3(10, 10, 10));
+        }
+
+        public IHumanoidNPC CreateNPC(object platformListener)
+        {
+            return CreateNPC(_projectName, platformListener, new Vector3(10, 10, 10));
+        }
+
+        public IHumanoidNPC CreateNPC(string npcName, object platformListener)
+        {
+            return CreateNPC(npcName, platformListener, new Vector3(10, 10, 10));
+        }
+
+        public IHumanoidNPC CreateNPC(string npcName, object platformListener, Vector3 currentAbsolutePosition)
+        {
+            ILoggedTestHostListener loggedTestHostListener = null;
+
+            if (platformListener != null)
+            {
+                loggedTestHostListener = platformListener as ILoggedTestHostListener;
+            }
 
             var npcSettings = new HumanoidNPCSettings();
-            npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
-            npcSettings.LogicFile = Path.Combine(_wSpaceDir, $"Npcs/{_projectName}/{_projectName}.sobj");
+            npcSettings.Id = $"#{Guid.NewGuid():D}";
+            npcSettings.InstanceId = GetInstanceId();
+            npcSettings.LogicFile = Path.Combine(_wSpaceDir, $"Npcs/{npcName}/{npcName}.sobj");
             npcSettings.HostListener = platformListener;
-            npcSettings.PlatformSupport = new PlatformSupportCLIStub();
+            npcSettings.PlatformSupport = new PlatformSupportCLIStub(currentAbsolutePosition);
 
-            var npc = instance.GetHumanoidNPC(npcSettings);
+            var npc = _world.GetHumanoidNPC(npcSettings);
 
-            instance.Start();
+            loggedTestHostListener?.SetLogger(npc.Logger);
 
             return npc;
         }
 
-        private string _defaultRelativeFileName = @"/Npcs/Example/Example.soc";
+        public IHumanoidNPC CreateAndStartNPC(Action<int, string> logChannel)
+        {
+            return CreateAndStartNPC(logChannel, new object());
+        }
+
+        public IHumanoidNPC CreateAndStartNPC(Action<int, string> logChannel, object platformListener)
+        {
+            var n = 0;
+
+            return CreateAndStartNPC(message => { n++; logChannel(n, message); },
+                error => { throw new Exception(error); }, platformListener);
+        }
+
+        public IHumanoidNPC CreateAndStartNPC(Action<string> logChannel, Action<string> error)
+        {
+            return CreateAndStartNPC(logChannel, error, new object());
+        }
+
+        public IHumanoidNPC CreateAndStartNPC(Action<string> logChannel, Action<string> error, object platformListener)
+        {
+            ILoggedTestHostListener loggedTestHostListener = null;
+
+            if (platformListener != null)
+            {
+                loggedTestHostListener = platformListener as ILoggedTestHostListener;
+            }
+
+            CreateWorld(logChannel, error, loggedTestHostListener != null);
+
+            var npc = CreateNPC(_projectName, platformListener);
+
+            StartWorld();
+
+            return npc;
+        }
+
+        public IGameObject CreateThing(string thingName)
+        {
+            return CreateThing(thingName, new object(), new Vector3(10, 10, 10));
+        }
+
+        public IGameObject CreateThing(string thingName, Vector3 currentAbsolutePosition)
+        {
+            return CreateThing(thingName, new object(), currentAbsolutePosition);
+        }
+
+        public IGameObject CreateThing(string thingName, object platformListener, Vector3 currentAbsolutePosition)
+        {
+            var settings = new GameObjectSettings();
+
+            settings.Id = $"#{Guid.NewGuid():D}";
+            settings.InstanceId = GetInstanceId();
+
+            settings.AllowPublicPosition = true;
+            settings.UseStaticPosition = currentAbsolutePosition;
+
+            settings.HostFile = Path.Combine(_wSpaceDir, $"Things/{thingName}/{thingName}.sobj");
+            settings.HostListener = platformListener;
+            settings.PlatformSupport = new PlatformSupportCLIStub(currentAbsolutePosition);
+
+            var gameObject = _world.GetGameObject(settings);
+
+            return gameObject;
+        }
+
+        //private string _defaultRelativeFileName = @"/Npcs/Example/Example.soc";
         private readonly string _projectName = "Example";
         private readonly string _testDir;
         private readonly string _wSpaceDir;
+        private IWorld _world;
+
+        private readonly List<string> _createdNPCsDSLProjects = new List<string>();
+        private readonly List<string> _createdThingsDSLProjects = new List<string>();
+
+        private object _lockObj = new object();
+
+        private int _currInstanceId;
+
+        private int GetInstanceId()
+        {
+            lock(_lockObj)
+            {
+                _currInstanceId++;
+                return _currInstanceId;
+            }
+        }
 
         private bool _isDisposed;
 
@@ -164,6 +335,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
             }
 
             _isDisposed = true;
+
+            _world?.Dispose();
 
             Directory.Delete(_testDir, true);
         }

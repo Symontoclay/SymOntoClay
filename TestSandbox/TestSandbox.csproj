@@ -2,9 +2,9 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
-    <Version>0.3.5</Version>
-    <AssemblyVersion>0.3.5</AssemblyVersion>
-    <FileVersion>0.3.5</FileVersion>
+    <Version>0.3.6</Version>
+    <AssemblyVersion>0.3.6</AssemblyVersion>
+    <FileVersion>0.3.6</FileVersion>
     <Copyright>Copyright (c) 2020 - 2021 Sergiy Tolkachov aka metatypeman</Copyright>
   </PropertyGroup>
   <ItemGroup>

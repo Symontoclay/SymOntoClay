@@ -32,7 +32,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public string FileName { get; set; }
         public bool IsMain { get; set; }
         public bool IsLocator { get; set; }
-        public List<CodeEntity> CodeEntities { get; set; } = new List<CodeEntity>();
+        public List<CodeItem> CodeEntities { get; set; } = new List<CodeItem>();
 
         /// <inheritdoc/>
         public override string ToString()

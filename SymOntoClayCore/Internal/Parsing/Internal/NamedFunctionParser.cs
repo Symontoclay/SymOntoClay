@@ -46,23 +46,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private State _state = State.Init;
 
-        public CodeEntity Result { get; private set; }
+        public NamedFunction Result => _namedFunction;
         private NamedFunction _namedFunction;
 
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            Result = CreateCodeEntity();
-            Result.Kind = KindOfCodeEntity.Function;
+            _namedFunction = CreateNamedFunctionAndSetAsCurrentCodeItem();
 
-            _namedFunction = CreateNamedFunction();
-            _namedFunction.CodeEntity = Result;
-            Result.NamedFunction = _namedFunction;
-            Result.CodeFile = _context.CodeFile;
-            Result.ParentCodeEntity = CurrentCodeEntity;
-            SetCurrentCodeEntity(Result);
-
-            if (Result.ParentCodeEntity != null)
+            if (_namedFunction.ParentCodeEntity != null)
             {
                 _namedFunction.Holder = Result.ParentCodeEntity.Name;
             }

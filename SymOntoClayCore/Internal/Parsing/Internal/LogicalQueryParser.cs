@@ -72,16 +72,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 if(primaryPart.HasQuestionVars)
                 {
-                    Result.Kind = KindOfRuleInstance.Question;
+                    Result.KindOfRuleInstance = KindOfRuleInstance.Question;
                 }
                 else
                 {
-                    Result.Kind = KindOfRuleInstance.Fact;
+                    Result.KindOfRuleInstance = KindOfRuleInstance.Fact;
                 }
             }
             else
             {
-                Result.Kind = KindOfRuleInstance.Rule;
+                Result.KindOfRuleInstance = KindOfRuleInstance.Rule;
 
                 var primaryPart = Result.PrimaryPart;
 

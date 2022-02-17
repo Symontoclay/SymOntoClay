@@ -42,12 +42,13 @@ namespace SymOntoClay.Core.Internal.Parsing
         private readonly IBaseCoreContext _context;
 
         /// <inheritdoc/>
-        public List<CodeEntity> Parse(string text)
+        public List<CodeItem> Parse(string text)
         {
             return Parse(text, true);
         }
 
-        public List<CodeEntity> Parse(string text, bool needCheckDirty)
+        /// <inheritdoc/>
+        public List<CodeItem> Parse(string text, bool needCheckDirty)
         {
 #if DEBUG
             //Log($"text = {text}");
@@ -129,7 +130,7 @@ namespace SymOntoClay.Core.Internal.Parsing
 
             if (codeEntity.Kind == KindOfCodeEntity.RuleOrFact)
             {
-                return codeEntity.RuleInstance;
+                return codeEntity.AsRuleInstance;
             }
 
             throw new NotSupportedException($"There can only be rule or fact here!");

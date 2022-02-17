@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         bool IsSystemDefined { get; }
         IList<IFunctionArgument> Arguments { get; }
         CompiledFunctionBody CompiledFunctionBody { get; }
-        CodeEntity CodeEntity { get; }
+        CodeItem CodeItem { get; }
         ISystemHandler SystemHandler { get; }
         bool ContainsArgument(StrongIdentifierValue name);
     }

@@ -1061,7 +1061,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             codeFrame.ProcessInfo = processInfo;
             processInfo.CodeFrame = codeFrame;
-            codeFrame.Metadata = function.CodeEntity;
+            codeFrame.Metadata = function.CodeItem;
 
 #if DEBUG
             //Log($"codeFrame = {codeFrame}");

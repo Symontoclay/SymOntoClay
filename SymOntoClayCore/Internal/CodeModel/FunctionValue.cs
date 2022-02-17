@@ -32,20 +32,25 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class FunctionValue : Value, IExecutable
+    public class FunctionValue : Value, IExecutable
     {
-        public List<FunctionArgumentInfo> Arguments { get; set; } = new List<FunctionArgumentInfo>();
+        public FunctionValue(Function function)
+        {
+            Function = function;
+            _iExecutable = function;
+        }
+
+        public Function Function { get; private set; }
+        private IExecutable _iExecutable;
 
         /// <inheritdoc/>
-        IList<IFunctionArgument> IExecutable.Arguments => _iArgumentsList;
-
-        public List<AstStatement> Statements { get; set; } = new List<AstStatement>();
+        IList<IFunctionArgument> IExecutable.Arguments => _iExecutable.Arguments;
 
         /// <inheritdoc/>
-        public CompiledFunctionBody CompiledFunctionBody { get; set; }
+        public CompiledFunctionBody CompiledFunctionBody => _iExecutable.CompiledFunctionBody;
 
         /// <inheritdoc/>
-        public CodeEntity CodeEntity { get; set; }
+        public CodeItem CodeItem => _iExecutable.CodeItem;
 
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.FunctionValue;
@@ -54,32 +59,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override bool IsFunctionValue => true;
 
         /// <inheritdoc/>
-        public bool IsSystemDefined => false;
+        public bool IsSystemDefined => Function.IsSystemDefined;
 
         /// <inheritdoc/>
-        public ISystemHandler SystemHandler => null;
+        public ISystemHandler SystemHandler => Function.SystemHandler;
 
         /// <inheritdoc/>
         public override FunctionValue AsFunctionValue => this;
 
-        private Dictionary<StrongIdentifierValue, FunctionArgumentInfo> _argumentsDict;
-
-        private IList<IFunctionArgument> _iArgumentsList;
-
         /// <inheritdoc/>
         public bool ContainsArgument(StrongIdentifierValue name)
         {
-            return _argumentsDict.ContainsKey(name);
-        }
-
-        public FunctionArgumentInfo GetArgument(StrongIdentifierValue name)
-        {
-            if(_argumentsDict.ContainsKey(name))
-            {
-                return _argumentsDict[name];
-            }
-
-            return null;
+            return Function.ContainsArgument(name);
         }
 
         /// <inheritdoc/>
@@ -95,76 +86,89 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        [ResolveToType(typeof(LogicalValue))]
+        public override IList<Value> WhereSection { get => Function.WhereSection; set => Function.WhereSection = value; }
+
+        /// <inheritdoc/>
+        public override StrongIdentifierValue Holder { get => Function.Holder; set => Function.Holder = value; }
+
+        /// <inheritdoc/>
+        public override IList<RuleInstance> Annotations { get => Function.Annotations; set => Function.Annotations = value; }
+
+        /// <inheritdoc/>
+        public override ulong GetLongConditionalHashCode(CheckDirtyOptions options)
+        {
+            return Function.GetLongConditionalHashCode(options);
+        }
+
+        /// <inheritdoc/>
+        public override ulong GetLongHashCode(CheckDirtyOptions options)
+        {
+            return Function.GetLongHashCode(options);
+        }
+
+        /// <inheritdoc/>
+        protected override void CalculateLongConditionalHashCode(CheckDirtyOptions options)
+        {
+            Function.CheckDirty(options);
+        }
+
+        /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            var result = base.CalculateLongHashCode(options);
+            return Function.GetLongHashCode(options);
+        }
 
-            if (Arguments.IsNullOrEmpty())
-            {
-                _argumentsDict = new Dictionary<StrongIdentifierValue, FunctionArgumentInfo>();
-                _iArgumentsList = new List<IFunctionArgument>();
-            }
-            else
-            {
-                _iArgumentsList = Arguments.Cast<IFunctionArgument>().ToList();
+        /// <inheritdoc/>
+        public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
+        {
+            return Clone(context);
+        }
 
-                _argumentsDict = Arguments.ToDictionary(p => p.Name, p => p);
-
-                foreach (var argument in Arguments)
-                {
-                    result ^= argument.GetLongConditionalHashCode(options);
-                }
-            }
-
-            return result;
+        /// <inheritdoc/>
+        public override Value CloneValue(Dictionary<object, object> context)
+        {
+            return Clone(context);
         }
 
         /// <summary>
         /// Clones the instance and returns cloned instance.
         /// </summary>
         /// <returns>Cloned instance.</returns>
-        public abstract FunctionValue CloneFunctionValue();
+        public FunctionValue Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
 
         /// <summary>
         /// Clones the instance using special context and returns cloned instance.
         /// </summary>
         /// <param name="context">Special context for providing references continuity.</param>
         /// <returns>Cloned instance.</returns>
-        public abstract FunctionValue CloneFunctionValue(Dictionary<object, object> context);
-
-        protected void AppendFuction(FunctionValue source, Dictionary<object, object> context)
+        public FunctionValue Clone(Dictionary<object, object> context)
         {
-            Arguments = source.Arguments?.Select(p => p.Clone(context)).ToList();
+            if (context.ContainsKey(this))
+            {
+                return (FunctionValue)context[this];
+            }
 
-            Statements = source.Statements.Select(p => p.CloneAstStatement(context)).ToList();
+            var result = new FunctionValue(Function.CloneFunction(context));
+            context[this] = result;
 
-            CompiledFunctionBody = source.CompiledFunctionBody.Clone(context);
-
-            CodeEntity = source.CodeEntity?.Clone(context);
-
-            AppendAnnotations(this, context);
+            return result;
         }
 
         /// <inheritdoc/>
         public override void DiscoverAllAnnotations(IList<RuleInstance> result)
         {
-            base.DiscoverAllAnnotations(result);
+            Function.DiscoverAllAnnotations(result);
+        }
 
-            if(!Arguments.IsNullOrEmpty())
-            {
-                foreach (var item in Arguments)
-                {
-                    item.DiscoverAllAnnotations(result);
-                }
-            }
-
-            if (!Statements.IsNullOrEmpty())
-            {
-                foreach (var item in Statements)
-                {
-                    item.DiscoverAllAnnotations(result);
-                }
-            }
+        /// <inheritdoc/>
+        public override Value GetAnnotationValue()
+        {
+            return Function.GetAnnotationValue();
         }
 
         /// <inheritdoc/>
@@ -173,12 +177,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjListProp(n, nameof(Arguments), Arguments);
-
-            sb.PrintObjListProp(n, nameof(Statements), Statements);
-            sb.PrintObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
-
-            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
+            sb.PrintObjProp(n, nameof(Function), Function);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -190,12 +189,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjListProp(n, nameof(Arguments), Arguments);
-
-            sb.PrintShortObjListProp(n, nameof(Statements), Statements);
-            sb.PrintShortObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
-
-            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
+            sb.PrintShortObjProp(n, nameof(Function), Function);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -207,15 +201,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjListProp(n, nameof(Arguments), Arguments);
-
-            sb.PrintBriefObjListProp(n, nameof(Statements), Statements);
-            sb.PrintBriefObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
-
-            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
+            sb.PrintBriefObjProp(n, nameof(Function), Function);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString()
+        {
+            throw new NotImplementedException();
         }
     }
 }

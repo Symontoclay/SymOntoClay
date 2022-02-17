@@ -88,7 +88,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public CompiledFunctionBody CompiledFunctionBody => ActionInstance.CompiledFunctionBody;
 
         /// <inheritdoc/>
-        public CodeEntity CodeEntity => ActionInstance.CodeEntity;
+        public CodeItem CodeItem => ActionInstance.CodeItem;
 
         /// <inheritdoc/>
         public ISystemHandler SystemHandler => ActionInstance.SystemHandler;

@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private readonly KindOfCodeEntity _kindOfCodeEntity;
 
-        public CodeEntity Result { get; protected set; }
+        public CodeItem Result { get; protected set; }
 
         /// <inheritdoc/>
         protected override void OnEnter()
@@ -66,19 +66,19 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #endif
         }
 
-        protected virtual void OnAddInlineTrigger(InlineTrigger inlineTrigger, CodeEntity codeEntity)
+        protected virtual void OnAddInlineTrigger(InlineTrigger inlineTrigger)
         {
         }
 
-        protected virtual void OnAddNamedFunction(NamedFunction namedFunction, CodeEntity codeEntity)
+        protected virtual void OnAddNamedFunction(NamedFunction namedFunction)
         {
         }
 
-        protected virtual void OnAddOperator(Operator op, CodeEntity codeEntity)
+        protected virtual void OnAddOperator(Operator op)
         {
         }
 
-        protected virtual void OnAddRuleInstance(RuleInstance ruleInstance, CodeEntity codeEntity)
+        protected virtual void OnAddRuleInstance(RuleInstance ruleInstance)
         {
         }
 

@@ -55,15 +55,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             base.OnEnter();
 
             _action = CreateAction();
-            _action.CodeEntity = Result;
-
-            Result.Action = _action;
         }
 
         /// <inheritdoc/>
-        protected override void OnAddOperator(Operator op, CodeEntity codeEntity)
+        protected override void OnAddOperator(Operator op)
         {
-            base.OnAddOperator(op, codeEntity);
+            base.OnAddOperator(op);
 
 #if DEBUG
             //Log($"op = {op}");

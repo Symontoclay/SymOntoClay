@@ -68,7 +68,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
 
             inlineTrigger.CheckDirty();
 
-            var kind = inlineTrigger.Kind;
+            var kind = inlineTrigger.KindOfInlineTrigger;
 
             switch (kind)
             {

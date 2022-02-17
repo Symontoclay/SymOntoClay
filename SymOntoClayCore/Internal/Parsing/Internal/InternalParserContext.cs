@@ -55,28 +55,28 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private Lexer _lexer;
         private Queue<Token> _recoveriesTokens = new Queue<Token>();
 
-        private Stack<CodeEntity> _codeEntities = new Stack<CodeEntity>();
+        private Stack<CodeItem> _codeItems = new Stack<CodeItem>();
 
-        public void SetCurrentCodeEntity(CodeEntity codeEntity)
+        public void SetCurrentCodeItem(CodeItem codeEntity)
         {
-            _codeEntities.Push(codeEntity);
+            _codeItems.Push(codeEntity);
         }
 
-        public void RemoveCurrentCodeEntity()
+        public void RemoveCurrentCodeItem()
         {
-            _codeEntities.Pop();
+            _codeItems.Pop();
         }
 
-        public CodeEntity CurrentCodeEntity
+        public CodeItem CurrentCodeItem
         {
             get
             {
-                if(!_codeEntities.Any())
+                if(!_codeItems.Any())
                 {
                     return null;
                 }
 
-                return _codeEntities.Peek();
+                return _codeItems.Peek();
             }
         }
 
@@ -170,7 +170,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             result._lexer = _lexer.Fork();
             result._recoveriesTokens = new Queue<Token>(_recoveriesTokens.ToList());
             result.CodeFile = CodeFile;
-            result._codeEntities = new Stack<CodeEntity>(_codeEntities.Select(p => p.Clone()).ToList());
+            result._codeItems = new Stack<CodeItem>(_codeItems.Select(p => p.CloneCodeItem()).ToList());
 
             result._defaultSettingsOfCodeEntity = new Stack<DefaultSettingsOfCodeEntity>(_defaultSettingsOfCodeEntity.Select(p => p.Clone()).ToList());
             result._currentDefaultSetings = result._defaultSettingsOfCodeEntity.Peek();

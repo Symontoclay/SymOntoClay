@@ -94,17 +94,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             return name;
         }
 
-        protected void SetCurrentCodeEntity(CodeEntity codeEntity)
+        protected void SetCurrentCodeItem(CodeItem codeEntity)
         {
-            _context.SetCurrentCodeEntity(codeEntity);
+            _context.SetCurrentCodeItem(codeEntity);
         }
 
         protected void RemoveCurrentCodeEntity()
         {
-            _context.RemoveCurrentCodeEntity();
+            _context.RemoveCurrentCodeItem();
         }
 
-        protected CodeEntity CurrentCodeEntity => _context.CurrentCodeEntity;
+        protected CodeItem CurrentCodeItem => _context.CurrentCodeItem;
 
         protected DefaultSettingsOfCodeEntity CurrentDefaultSetings => _context.CurrentDefaultSetings;
         protected void SetCurrentDefaultSetings(DefaultSettingsOfCodeEntity defaultSettings)
@@ -129,18 +129,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var result = CreateCodeEntity();
             result.Kind = kind;
 
-            result.CodeFile = _context.CodeFile;
-
-            result.ParentCodeEntity = CurrentCodeEntity;
-
             return result;
         }
 
         protected CodeEntity CreateCodeEntityAndSetAsCurrent(KindOfCodeEntity kind)
         {
             var result = CreateCodeEntity(kind);
-            SetCurrentCodeEntity(result);
-
+            
             return result;
         }
 
@@ -148,6 +143,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             var result = new InlineTrigger();
             DefaultSettingsOfCodeEntityHelper.SetUpInlineTrigger(result, CurrentDefaultSetings);
+
+            FillUpCodeItem(result);
+
+            return result;
+        }
+
+        protected LinguisticVariable CreateLinguisticVariableAndSetAsCurrentCodeItem()
+        {
+            var result = CreateLinguisticVariable();
+
+            SetCurrentCodeItem(result);
+
             return result;
         }
 
@@ -155,6 +162,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             var result = new LinguisticVariable();
             DefaultSettingsOfCodeEntityHelper.SetUpLinguisticVariable(result, CurrentDefaultSetings);
+
+            FillUpCodeItem(result);            
+
             return result;
         }
 
@@ -162,6 +172,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             var result = new ActionDef();
             DefaultSettingsOfCodeEntityHelper.SetUpAction(result, CurrentDefaultSetings);
+
+            FillUpCodeItem(result);
+
+            return result;
+        }
+
+        protected NamedFunction CreateNamedFunctionAndSetAsCurrentCodeItem()
+        {
+            var result = CreateNamedFunction();
+
+            SetCurrentCodeItem(result);
+
             return result;
         }
 
@@ -169,6 +191,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             var result = new NamedFunction();
             DefaultSettingsOfCodeEntityHelper.SetUpNamedFunction(result, CurrentDefaultSetings);
+
+            FillUpCodeItem(result);
+
+            return result;
+        }
+
+        protected Operator CreateOperatorAndSetAsCurrentCodeItem()
+        {
+            var result = CreateOperator();
+
+            SetCurrentCodeItem(result);
+
             return result;
         }
 
@@ -177,6 +211,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var result = new Operator();
 
             DefaultSettingsOfCodeEntityHelper.SetUpOperator(result, CurrentDefaultSetings);
+
+            FillUpCodeItem(result);
+
             return result;
         }
 
@@ -184,7 +221,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             var result = new InheritanceItem();
             DefaultSettingsOfCodeEntityHelper.SetUpInheritanceItem(result, CurrentDefaultSetings);
+
             return result;
+        }
+
+        private void FillUpCodeItem(CodeItem codeItem)
+        {
+            codeItem.CodeFile = _context.CodeFile;
+
+            codeItem.ParentCodeEntity = CurrentCodeItem;
         }
 
         /// <inheritdoc/>

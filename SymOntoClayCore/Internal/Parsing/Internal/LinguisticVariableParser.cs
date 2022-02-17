@@ -60,7 +60,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
 
         private State _state = State.Init;
-        public CodeEntity Result { get; private set; }
+        public LinguisticVariable Result => _linguisticVariable;
         private LinguisticVariable _linguisticVariable;
         private FuzzyLogicNonNumericValue _currentFuzzyLogicNonNumericValue;
         private string _nameOfPredefinedMembershipFunction = string.Empty;
@@ -70,12 +70,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            Result = CreateCodeEntityAndSetAsCurrent(KindOfCodeEntity.LinguisticVariable);
-
-            _linguisticVariable = CreateLinguisticVariable();
-            _linguisticVariable.CodeEntity = Result;
-
-            Result.LinguisticVariable = _linguisticVariable;
+            _linguisticVariable = CreateLinguisticVariableAndSetAsCurrentCodeItem();
         }
 
         /// <inheritdoc/>
@@ -121,7 +116,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Word:
                         case TokenKind.Identifier:
                             var name = ParseName(_currToken.Content);
-                            Result.Name = name;
                             _linguisticVariable.Name = name;
                             _state = State.GotName;
                             break;

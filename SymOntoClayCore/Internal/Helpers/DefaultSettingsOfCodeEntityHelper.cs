@@ -46,11 +46,11 @@ namespace SymOntoClay.Core.Internal.Helpers
             }
         }
 
-        public static void SetUpCodeEntity(CodeEntity codeEntity, DefaultSettingsOfCodeEntity defaultSettings)
+        public static void SetUpCodeEntity(CodeItem codeItem, DefaultSettingsOfCodeEntity defaultSettings)
         {
             var context = new Dictionary<object, object>();
 
-            SetUpAnnotatedItem(codeEntity, defaultSettings, context);
+            SetUpAnnotatedItem(codeItem, defaultSettings, context);
         }
 
         public static void SetUpInlineTrigger(InlineTrigger inlineTrigger, DefaultSettingsOfCodeEntity defaultSettings)

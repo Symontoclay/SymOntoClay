@@ -30,15 +30,26 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class Channel : AnnotatedItem
+    public class Channel : CodeItem
     {
-        public StrongIdentifierValue Name { get; set; }
         public IChannelHandler Handler { get; set; }
 
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            return base.CalculateLongHashCode(options) ^ Name.GetLongHashCode(options) ^ Handler.GetLongHashCode();
+            return base.CalculateLongHashCode(options) ^ Handler.GetLongHashCode();
+        }
+
+        /// <inheritdoc/>
+        public override CodeItem CloneCodeItem()
+        {
+            return Clone();
+        }
+
+        /// <inheritdoc/>
+        public override CodeItem CloneCodeItem(Dictionary<object, object> cloneContext)
+        {
+            return Clone(cloneContext);
         }
 
         /// <inheritdoc/>
@@ -72,20 +83,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new Channel();
             context[this] = result;
 
-            result.Name = Name.Clone(context);
             result.Handler = Handler;
 
-            result.AppendAnnotations(this, context);
+            result.AppendCodeItem(this, context);
 
             return result;
-        }
-
-        /// <inheritdoc/>
-        public override void DiscoverAllAnnotations(IList<RuleInstance> result)
-        {
-            base.DiscoverAllAnnotations(result);
-
-            Name?.DiscoverAllAnnotations(result);
         }
 
         /// <inheritdoc/>
@@ -94,7 +96,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(Name), Name);
             sb.PrintExisting(n, nameof(Handler), Handler);
 
             sb.Append(base.PropertiesToString(n));
@@ -107,7 +108,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjProp(n, nameof(Name), Name);
             sb.PrintExisting(n, nameof(Handler), Handler);
 
             sb.Append(base.PropertiesToShortString(n));
@@ -120,7 +120,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjProp(n, nameof(Name), Name);
             sb.PrintExisting(n, nameof(Handler), Handler);
 
             sb.Append(base.PropertiesToBriefString(n));

@@ -46,24 +46,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private State _state = State.Init;
 
-        public CodeEntity Result { get; private set; }
+        public Operator Result => _operator;
         private Operator _operator;
 
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            Result = CreateCodeEntity();
-            Result.Kind = KindOfCodeEntity.Operator;
+            _operator = CreateOperatorAndSetAsCurrentCodeItem();
 
-            _operator = CreateOperator();
-            _operator.CodeEntity = Result;
+            _operator.CodeFile = _context.CodeFile;
+            _operator.ParentCodeEntity = CurrentCodeItem;
 
-            Result.Operator = _operator;
-            Result.CodeFile = _context.CodeFile;
-            Result.ParentCodeEntity = CurrentCodeEntity;
-            SetCurrentCodeEntity(Result);
-
-            if (Result.ParentCodeEntity != null)
+            if (_operator.ParentCodeEntity != null)
             {
                 _operator.Holder = Result.ParentCodeEntity.Name;
             }

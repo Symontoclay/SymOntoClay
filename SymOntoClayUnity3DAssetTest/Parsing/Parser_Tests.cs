@@ -80,7 +80,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
             var inlineTrigger = subItem.InlineTrigger;
 
             Assert.AreNotEqual(inlineTrigger, null);
-            Assert.AreEqual(inlineTrigger.Kind, KindOfInlineTrigger.SystemEvent);
+            Assert.AreEqual(inlineTrigger.KindOfInlineTrigger, KindOfInlineTrigger.SystemEvent);
             Assert.AreEqual(inlineTrigger.KindOfSystemEvent, KindOfSystemEventOfInlineTrigger.Init);
 
             Assert.AreEqual(inlineTrigger.Statements.Count, 1);

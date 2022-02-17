@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
         }
 
-        public List<CodeEntity> Result { get; set; } = new List<CodeEntity>();
+        public List<CodeItem> Result { get; set; } = new List<CodeItem>();
 
         /// <inheritdoc/>
         protected override void OnRun()

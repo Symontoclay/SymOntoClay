@@ -68,7 +68,7 @@ namespace SymOntoClay.Core.Internal.Instances
         public CompiledFunctionBody CompiledFunctionBody => _iOp.CompiledFunctionBody;
 
         /// <inheritdoc/>
-        public CodeEntity CodeEntity => _iOp.CodeEntity;
+        public CodeItem CodeItem => _iOp.CodeItem;
 
         /// <inheritdoc/>
         public ISystemHandler SystemHandler => _iOp.SystemHandler;

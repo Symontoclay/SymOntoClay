@@ -27,37 +27,22 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class NamedFunction: FunctionValue
+    public class NamedFunction: Function
     {
-        public StrongIdentifierValue Name { get; set; }
-
         /// <inheritdoc/>
-        public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
-        {
-            return Clone(context);
-        }
-
-        /// <inheritdoc/>
-        public override Value CloneValue(Dictionary<object, object> cloneContext)
-        {
-            return Clone(cloneContext);
-        }
-
-        /// <summary>
-        /// Clones the instance and returns cloned instance.
-        /// </summary>
-        /// <returns>Cloned instance.</returns>
-        public override FunctionValue CloneFunctionValue()
+        public override CodeItem CloneCodeItem()
         {
             return Clone();
         }
 
-        /// <summary>
-        /// Clones the instance using special context and returns cloned instance.
-        /// </summary>
-        /// <param name="context">Special context for providing references continuity.</param>
-        /// <returns>Cloned instance.</returns>
-        public override FunctionValue CloneFunctionValue(Dictionary<object, object> context)
+        /// <inheritdoc/>
+        public override CodeItem CloneCodeItem(Dictionary<object, object> cloneContext)
+        {
+            return Clone(cloneContext);
+        }
+
+        /// <inheritdoc/>
+        public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
         {
             return Clone(context);
         }
@@ -87,77 +72,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new NamedFunction();
             context[this] = result;
 
-            result.Name = Name.Clone(context);
-
             result.AppendFuction(this, context);            
 
             return result;
         }
 
         /// <inheritdoc/>
-        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
+        public override Function CloneFunction(Dictionary<object, object> context)
         {
-            Name.CheckDirty(options);
-
-            var result = base.CalculateLongHashCode(options) ^ Name.GetLongHashCode();
-
-            return result;
-        }
-
-        /// <inheritdoc/>
-        public override void DiscoverAllAnnotations(IList<RuleInstance> result)
-        {
-            base.DiscoverAllAnnotations(result);
-
-            Name?.DiscoverAllAnnotations(result);
-        }
-
-        /// <inheritdoc/>
-        protected override string PropertiesToString(uint n)
-        {
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
-            sb.PrintObjProp(n, nameof(Name), Name);
-
-            sb.Append(base.PropertiesToString(n));
-            return sb.ToString();
-        }
-
-        /// <inheritdoc/>
-        protected override string PropertiesToShortString(uint n)
-        {
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
-            sb.PrintShortObjProp(n, nameof(Name), Name);           
-
-            sb.Append(base.PropertiesToShortString(n));
-            return sb.ToString();
-        }
-
-        /// <inheritdoc/>
-        protected override string PropertiesToBriefString(uint n)
-        {
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
-            sb.PrintBriefObjProp(n, nameof(Name), Name);
-
-            sb.Append(base.PropertiesToBriefString(n));
-            return sb.ToString();
-        }
-
-        /// <inheritdoc/>
-        protected override string PropertiesToDbgString(uint n)
-        {
-            var spaces = DisplayHelper.Spaces(n);
-            //return $"{spaces}{SystemValue}";
-
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override string ToHumanizedString()
-        {
-            throw new NotImplementedException();
+            return Clone(context);
         }
     }
 }

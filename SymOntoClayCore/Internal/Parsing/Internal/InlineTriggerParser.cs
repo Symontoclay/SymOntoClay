@@ -49,7 +49,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
         
         private State _state = State.Init;
-        public CodeEntity Result { get; private set; }
+        public InlineTrigger Result => _inlineTrigger;
         private InlineTrigger _inlineTrigger;
 
         /// <inheritdoc/>
@@ -60,8 +60,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Result.Name = NameHelper.CreateRuleOrFactName();
             _inlineTrigger = CreateInlineTrigger();
             _inlineTrigger.CodeEntity = Result;
-            Result.InlineTrigger = _inlineTrigger;
-
+            
             if(Result.ParentCodeEntity != null)
             {
                 _inlineTrigger.Holder = Result.ParentCodeEntity.Name;
@@ -112,7 +111,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             switch(_currToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.Init:
-                                    _inlineTrigger.Kind = KindOfInlineTrigger.SystemEvent;
+                                    _inlineTrigger.KindOfInlineTrigger = KindOfInlineTrigger.SystemEvent;
                                     _inlineTrigger.KindOfSystemEvent = KindOfSystemEventOfInlineTrigger.Init;
                                     _state = State.GotCondition;
                                     break;
@@ -124,7 +123,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.OpenFactBracket:
                             {
-                                _inlineTrigger.Kind = KindOfInlineTrigger.LogicConditional;
+                                _inlineTrigger.KindOfInlineTrigger = KindOfInlineTrigger.LogicConditional;
 
                                 _context.Recovery(_currToken);
 

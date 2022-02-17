@@ -507,6 +507,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler.Call(System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionDef.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionDef.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
@@ -1231,6 +1234,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Channel.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Channel.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Channel.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
@@ -1246,9 +1252,6 @@
             </summary>
             <param name="context">Special context for providing references continuity.</param>
             <returns>Cloned instance.</returns>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Channel.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
-            <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Channel.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -1321,6 +1324,28 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeFile.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeItem.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeItem.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            Clones the instance using special context and returns cloned instance.
+            </summary>
+            <param name="cloneContext">Special context for providing references continuity.</param>
+            <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeItem.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeItem.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeItem.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeItem.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntitySourceValue.KindOfValue">
@@ -1517,6 +1542,42 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ErrorValue.ToHumanizedString">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Function.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Arguments">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Function.CompiledFunctionBody">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Function.CodeEntity">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Function.IsSystemDefined">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Function.SystemHandler">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.SymOntoClay#Core#Internal#CodeExecution#IExecutable#TryActivate(SymOntoClay.Core.Internal.IEngineContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.FunctionArgumentInfo.SymOntoClay#Core#Internal#CodeExecution#IFunctionArgument#TypesList">
             <inheritdoc/>
         </member>
@@ -1593,16 +1654,40 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.GetSystemValue">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.FunctionValue.WhereSection">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.FunctionValue.Holder">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.FunctionValue.Annotations">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.GetLongConditionalHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.GetLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.CalculateLongConditionalHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.CloneFunctionValue">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.CloneValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.Clone">
             <summary>
             Clones the instance and returns cloned instance.
             </summary>
             <returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.CloneFunctionValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
             Clones the instance using special context and returns cloned instance.
             </summary>
@@ -1612,6 +1697,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.GetAnnotationValue">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -1619,6 +1707,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.ToHumanizedString">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicNonNumericSequenceValue.KindOfValue">
@@ -1810,6 +1901,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InlineTrigger.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.InlineTrigger.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InlineTrigger.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
@@ -1879,6 +1973,9 @@
             Represents entity identifier. Entity identifier always atarts from symbol '#'. For example, '#123', '#Piter', '#_123W12_1', '#`Tom Jones`'.
             </summary>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariable.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariable.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
@@ -1896,6 +1993,9 @@
             <returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariable.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariable.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariable.PropertiesToString(System.UInt32)">
@@ -2155,24 +2255,11 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.ToHumanizedString">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.CloneValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.CloneFunctionValue">
-            <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.CloneFunctionValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.Clone">
             <summary>
@@ -2187,25 +2274,7 @@
             <param name="context">Special context for providing references continuity.</param>
             <returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.CloneFunction(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NullValue.KindOfValue">
@@ -2309,6 +2378,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -2496,6 +2568,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -2858,6 +2933,16 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.ToHumanizedString">
             <inheritdoc/>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.CodeModel.TypeOfAccess.Local">
+            <summary>
+            Defined in body of function.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.CodeModel.TypeOfAccess.Internal">
+            <summary>
+            Reserved for CodeEntities which will be accessible in module.
+            </summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.CloneValue">
             <summary>

@@ -33,7 +33,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     {
         public CompiledFunctionBody CompiledFunctionBody { get; set; }
         public LocalCodeExecutionContext LocalContext { get; set; }
-        public CodeEntity Metadata { get; set; }
+        public CodeItem Metadata { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

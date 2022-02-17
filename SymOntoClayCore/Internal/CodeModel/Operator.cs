@@ -35,8 +35,11 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class Operator : AnnotatedItem, IExecutable
+    public class Operator : CodeItem, IExecutable
     {
+        /// <inheritdoc/>
+        public override KindOfCodeEntity Kind => KindOfCodeEntity.Operator;
+
         public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
         
         /// <inheritdoc/>
@@ -57,10 +60,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         private IList<IFunctionArgument> _iArgumentsList;
 
         /// <inheritdoc/>
-        IList<IFunctionArgument> IExecutable.Arguments => _iArgumentsList;
+        public CodeItem CodeItem => this;
 
         /// <inheritdoc/>
-        public CodeEntity CodeEntity { get; set; }
+        IList<IFunctionArgument> IExecutable.Arguments => _iArgumentsList;
 
         /// <inheritdoc/>
         public bool ContainsArgument(StrongIdentifierValue name)
@@ -92,6 +95,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        public override CodeItem CloneCodeItem()
+        {
+            return Clone();
+        }
+
+        /// <inheritdoc/>
+        public override CodeItem CloneCodeItem(Dictionary<object, object> cloneContext)
+        {
+            return Clone(cloneContext);
         }
 
         /// <inheritdoc/>
@@ -133,7 +148,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             result.CodeEntity = CodeEntity?.Clone(context);
 
-            result.AppendAnnotations(this, context);
+            result.AppendCodeItem(this, context);
 
             return result;
         }

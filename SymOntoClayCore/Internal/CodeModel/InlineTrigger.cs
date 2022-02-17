@@ -34,9 +34,9 @@ using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class InlineTrigger : AnnotatedItem
+    public class InlineTrigger : CodeItem
     {
-        public KindOfInlineTrigger Kind { get; set; } = KindOfInlineTrigger.Unknown;
+        public KindOfInlineTrigger KindOfInlineTrigger { get; set; } = KindOfInlineTrigger.Unknown;
         public KindOfSystemEventOfInlineTrigger KindOfSystemEvent { get; set; } = KindOfSystemEventOfInlineTrigger.Unknown;
         public RuleInstance Condition { get; set; }
         public BindingVariables BindingVariables { get; set; } = new BindingVariables();
@@ -49,7 +49,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            var result =  base.CalculateLongHashCode(options) ^ (ulong)Math.Abs(Kind.GetHashCode()) ^ (ulong)Math.Abs(KindOfSystemEvent.GetHashCode());
+            var result =  base.CalculateLongHashCode(options) ^ (ulong)Math.Abs(KindOfInlineTrigger.GetHashCode()) ^ (ulong)Math.Abs(KindOfSystemEvent.GetHashCode());
 
             if(Condition != null)
             {
@@ -59,6 +59,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        public override CodeItem CloneCodeItem()
+        {
+            return Clone();
+        }
+
+        /// <inheritdoc/>
+        public override CodeItem CloneCodeItem(Dictionary<object, object> cloneContext)
+        {
+            return Clone(cloneContext);
         }
 
         /// <inheritdoc/>
@@ -92,7 +104,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new InlineTrigger();
             context[this] = result;
 
-            result.Kind = Kind;
+            result.KindOfInlineTrigger = KindOfInlineTrigger;
             result.KindOfSystemEvent = KindOfSystemEvent;
             result.Condition = Condition?.Clone(context);
             result.BindingVariables = BindingVariables.Clone(context);
@@ -100,7 +112,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             result.CodeEntity = CodeEntity.Clone(context);
             result.CompiledFunctionBody = CompiledFunctionBody.Clone(context);
-            result.AppendAnnotations(this, context);
+            result.AppendCodeItem(this, context);
 
             return result;
         }
@@ -124,7 +136,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(KindOfInlineTrigger)} = {KindOfInlineTrigger}");
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
             sb.PrintBriefObjProp(n, nameof(Condition), Condition);
             sb.PrintObjProp(n, nameof(BindingVariables), BindingVariables);
@@ -142,7 +154,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(KindOfInlineTrigger)} = {KindOfInlineTrigger}");
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
             sb.PrintBriefObjProp(n, nameof(Condition), Condition);
             sb.PrintShortObjProp(n, nameof(BindingVariables), BindingVariables);
@@ -160,7 +172,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(KindOfInlineTrigger)} = {KindOfInlineTrigger}");
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
             sb.PrintBriefObjProp(n, nameof(Condition), Condition);
             sb.PrintBriefObjProp(n, nameof(BindingVariables), BindingVariables);

@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public Stack<SEHGroup> SEHStack { get; private set; } = new Stack<SEHGroup>();        
         public LocalCodeExecutionContext LocalContext { get; set; }
         public ProcessInfo ProcessInfo { get; set; }
-        public CodeEntity Metadata { get; set; }
+        public CodeItem Metadata { get; set; }
         public IExecutionCoordinator ExecutionCoordinator { get; set; }
 
         /// <inheritdoc/>

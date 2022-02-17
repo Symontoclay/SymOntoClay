@@ -30,15 +30,15 @@ using SymOntoClay.Core.Internal.DataResolvers;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class LinguisticVariable : AnnotatedItem
+    public class LinguisticVariable : CodeItem
     {
-        public StrongIdentifierValue Name { get; set; }
+        /// <inheritdoc/>
+        public override KindOfCodeEntity Kind => KindOfCodeEntity.LinguisticVariable;
+
         public RangeValue Range { get; set; } = new RangeValue();
         public LinguisticVariableConstraint Constraint { get; set; } = new LinguisticVariableConstraint();
         public List<FuzzyLogicNonNumericValue> Values { get; set; } = new List<FuzzyLogicNonNumericValue>();
         public List<FuzzyLogicOperator> Operators { get; set; } = new List<FuzzyLogicOperator>();
-
-        public CodeEntity CodeEntity { get; set; }
 
         public bool IsFitByСonstraintOrDontHasСonstraint(ReasonOfFuzzyLogicResolving reason)
         {
@@ -108,6 +108,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        public override CodeItem CloneCodeItem()
+        {
+            return Clone();
+        }
+
+        /// <inheritdoc/>
+        public override CodeItem CloneCodeItem(Dictionary<object, object> cloneContext)
+        {
+            return Clone(cloneContext);
+        }
+
+        /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
         {
             return Clone(context);
@@ -138,15 +150,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new LinguisticVariable();
             context[this] = result;
 
-            result.Name = Name.Clone(context);
             result.Range = Range?.Clone(context);
             result.Constraint = Constraint?.Clone(context);
             result.Values = Values?.Select(p => p.Clone(context)).ToList();
             result.Operators = Operators?.Select(p => p.Clone(context)).ToList();
 
-            result.CodeEntity = CodeEntity.Clone(context);
-
-            result.AppendAnnotations(this, context);
+            result.AppendCodeItem(this, context);
 
             return result;
         }
@@ -155,8 +164,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override void DiscoverAllAnnotations(IList<RuleInstance> result)
         {
             base.DiscoverAllAnnotations(result);
-
-            Name?.DiscoverAllAnnotations(result);
 
             if(!Values.IsNullOrEmpty())
             {
@@ -175,11 +182,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
         }
 
+        /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            Name.CheckDirty(options);
-
-            var result = base.CalculateLongHashCode(options) ^ Name.GetLongHashCode(options);
+            var result = base.CalculateLongHashCode(options);
 
             if(Range != null)
             {
@@ -222,13 +228,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(Name), Name);
             sb.PrintObjProp(n, nameof(Range), Range);
             sb.PrintObjProp(n, nameof(Constraint), Constraint);
             sb.PrintObjListProp(n, nameof(Values), Values);
             sb.PrintObjListProp(n, nameof(Operators), Operators);
-
-            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -240,12 +243,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjProp(n, nameof(Name), Name);
             sb.PrintShortObjProp(n, nameof(Range), Range);
             sb.PrintShortObjProp(n, nameof(Constraint), Constraint);
             sb.PrintShortObjListProp(n, nameof(Values), Values);
-
-            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -257,12 +257,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjProp(n, nameof(Name), Name);
             sb.PrintExisting(n, nameof(Range), Range);
             sb.PrintExisting(n, nameof(Constraint), Constraint);
             sb.PrintExistingList(n, nameof(Values), Values);
-
-            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

@@ -73,7 +73,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             IndexedRuleInstancesDict[indexedRuleInstance.Name] = indexedRuleInstance;
 
-            var kind = indexedRuleInstance.Kind;
+            var kind = indexedRuleInstance.KindOfRuleInstance;
 
             switch (kind)
             {
@@ -186,7 +186,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             IndexedRuleInstancesDict.Remove(indexedRuleInstance.Name);
 
-            var kind = indexedRuleInstance.Kind;
+            var kind = indexedRuleInstance.KindOfRuleInstance;
 
             switch (kind)
             {

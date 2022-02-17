@@ -211,7 +211,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 #endif
 
             var fact = new RuleInstance();
-            fact.Kind = KindOfRuleInstance.Fact;
+            fact.KindOfRuleInstance = KindOfRuleInstance.Fact;
             fact.AppendAnnotations(inheritanceItem);
             fact.Name = factName;
             //fact.KeysOfPrimaryRecords.Add(inheritanceItem.Id);

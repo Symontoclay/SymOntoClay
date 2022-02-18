@@ -90,9 +90,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override IList<Value> WhereSection { get => Function.WhereSection; set => Function.WhereSection = value; }
 
         /// <inheritdoc/>
-        public override StrongIdentifierValue Holder { get => Function.Holder; set => Function.Holder = value; }
-
-        /// <inheritdoc/>
         public override IList<RuleInstance> Annotations { get => Function.Annotations; set => Function.Annotations = value; }
 
         /// <inheritdoc/>

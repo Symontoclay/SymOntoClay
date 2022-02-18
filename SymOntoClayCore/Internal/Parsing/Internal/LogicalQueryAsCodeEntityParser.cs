@@ -34,13 +34,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
         }
 
-        public CodeEntity Result { get; private set; }
-
-        /// <inheritdoc/>
-        protected override void OnEnter()
-        {
-            Result = CreateCodeEntity(KindOfCodeEntity.RuleOrFact);
-        }
+        public RuleInstance Result => _ruleInstance;
+        private RuleInstance _ruleInstance;
 
         /// <inheritdoc/>
         protected override void OnRun()
@@ -53,14 +48,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var parser = new LogicalQueryParser(_context);
             parser.Run();
 
-            var ruleInstanceItem = parser.Result;
+            _ruleInstance = parser.Result;
 
 #if DEBUG
             //Log($"ruleInstanceItem = {ruleInstanceItem}");
 #endif
-
-            Result.Name = ruleInstanceItem.Name;
-            Result.RuleInstance = ruleInstanceItem;
 
             Exit();            
         }

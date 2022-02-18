@@ -29,7 +29,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 {
     public static class AnnotatedItemHelper
     {
-        public static void CheckAndFillUpHolder(AnnotatedItem item, ICommonNamesStorage commonNamesStorage)
+        public static void CheckAndFillUpHolder(CodeItem item, ICommonNamesStorage commonNamesStorage)
         {
             if (item.Holder == null)
             {

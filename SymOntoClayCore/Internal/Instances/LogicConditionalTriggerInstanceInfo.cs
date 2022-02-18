@@ -210,7 +210,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var processInitialInfo = new ProcessInitialInfo();
             processInitialInfo.CompiledFunctionBody = _trigger.CompiledFunctionBody;
             processInitialInfo.LocalContext = localCodeExecutionContext;
-            processInitialInfo.Metadata = _trigger.CodeEntity;
+            processInitialInfo.Metadata = _trigger;
 
             var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo, _executionCoordinator);
         }
@@ -314,7 +314,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 var processInitialInfo = new ProcessInitialInfo();
                 processInitialInfo.CompiledFunctionBody = _trigger.CompiledFunctionBody;
                 processInitialInfo.LocalContext = localCodeExecutionContext;
-                processInitialInfo.Metadata = _trigger.CodeEntity;
+                processInitialInfo.Metadata = _trigger;
 
                 var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo, _executionCoordinator);
             }

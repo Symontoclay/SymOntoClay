@@ -42,6 +42,7 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStorage
 
         private readonly object _lockObj = new object();
         private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, Dictionary<int, List<NamedFunction>>>> _namedFunctionsDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, Dictionary<int, List<NamedFunction>>>>();
+        private readonly Dictionary<StrongIdentifierValue, Dictionary<int, List<NamedFunction>>> _localNamedFunctionsDict = new Dictionary<StrongIdentifierValue, Dictionary<int, List<NamedFunction>>>();
 
         private readonly KindOfStorage _kind;
 
@@ -62,7 +63,10 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStorage
                 //Log($"namedFunction = {namedFunction}");
 #endif
 
-                AnnotatedItemHelper.CheckAndFillUpHolder(namedFunction, _realStorageContext.MainStorageContext.CommonNamesStorage);
+                if(namedFunction.TypeOfAccess != TypeOfAccess.Local)
+                {
+                    AnnotatedItemHelper.CheckAndFillUpHolder(namedFunction, _realStorageContext.MainStorageContext.CommonNamesStorage);
+                }
 
                 namedFunction.CheckDirty();
 
@@ -78,21 +82,17 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStorage
 
                 foreach (var count in paramsCountList)
                 {
-                    List<NamedFunction> targetList = null;
-
                     if (targetDict.ContainsKey(count))
                     {
-                        targetList = targetDict[count];
+                        var targetList = targetDict[count];
+
+                        StorageHelper.RemoveSameItems(targetList, namedFunction);
+
+                        targetList.Add(namedFunction);
                     }
                     else
                     {
-                        targetList = new List<NamedFunction>();
-                        targetDict[count] = targetList;
-                    }
-
-                    if (!targetList.Contains(namedFunction))
-                    {
-                        targetList.Add(namedFunction);
+                        targetDict[count] = new List<NamedFunction>() { namedFunction };
                     }
                 }
             }
@@ -100,24 +100,38 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStorage
 
         private Dictionary<int, List<NamedFunction>> GetDictByNames(NamedFunction namedFunction)
         {
+            var name = namedFunction.Name;
+
+            if(namedFunction.TypeOfAccess == TypeOfAccess.Local)
+            {
+                if(_localNamedFunctionsDict.ContainsKey(name))
+                {
+                    return _localNamedFunctionsDict[name];
+                }
+
+                var targetDict = new Dictionary<int, List<NamedFunction>>();
+                _localNamedFunctionsDict[name] = targetDict;
+                return targetDict;
+            }
+
             var holder = namedFunction.Holder;
 
 #if DEBUG
             //Log($"holder = {holder}");
 #endif
 
-            if(_namedFunctionsDict.ContainsKey(holder))
+            if (_namedFunctionsDict.ContainsKey(holder))
             {
                 var dict = _namedFunctionsDict[holder];
 
-                if(dict.ContainsKey(namedFunction.Name))
+                if(dict.ContainsKey(name))
                 {
-                    return dict[namedFunction.Name];
+                    return dict[name];
                 }
 
                 {
                     var targetDict = new Dictionary<int, List<NamedFunction>>();
-                    dict[namedFunction.Name] = targetDict;
+                    dict[name] = targetDict;
                     return targetDict;
                 }
             }
@@ -126,7 +140,7 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStorage
                 var dict = new Dictionary<StrongIdentifierValue, Dictionary<int, List<NamedFunction>>>();
                 _namedFunctionsDict[holder] = dict;
                 var targetDict = new Dictionary<int, List<NamedFunction>>();
-                dict[namedFunction.Name] = targetDict;
+                dict[name] = targetDict;
                 return targetDict;
             }
         }
@@ -168,6 +182,21 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStorage
                                     result.Add(new WeightedInheritanceResultItem<NamedFunction>(targetVal, weightedInheritanceItem));
                                 }
                             }
+                        }
+                    }
+                }
+
+                if(_localNamedFunctionsDict.ContainsKey(name))
+                {
+                    var targetDict = _localNamedFunctionsDict[name];
+
+                    if (targetDict.ContainsKey(paramsCount))
+                    {
+                        var targetList = targetDict[paramsCount];
+
+                        foreach (var targetVal in targetList)
+                        {
+                            result.Add(new WeightedInheritanceResultItem<NamedFunction>(targetVal, null));
                         }
                     }
                 }

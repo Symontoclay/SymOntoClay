@@ -30,6 +30,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class NamedFunction: Function
     {
         /// <inheritdoc/>
+        public override bool IsNamedFunction => true;
+
+        /// <inheritdoc/>
+        public override NamedFunction AsNamedFunction => this;
+
+        /// <inheritdoc/>
         public override CodeItem CloneCodeItem()
         {
             return Clone();

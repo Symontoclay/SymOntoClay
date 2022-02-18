@@ -39,6 +39,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         Operator,
         Channel,
         RuleOrFact,
-        LinguisticVariable
+        LinguisticVariable,
+        Var
     }
 }

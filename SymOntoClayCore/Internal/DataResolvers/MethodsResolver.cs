@@ -968,7 +968,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 orderedList = orderedList.ThenByDescending(p => p.IsSelf);
             }
 
-            orderedList = orderedList.ThenBy(p => p.Distance).ThenBy(p => p.StorageDistance);
+            orderedList = orderedList.ThenBy(p => p.Distance).ThenByDescending(p => p.ResultItem.CodeItem.TypeOfAccess == TypeOfAccess.Local).ThenBy(p => p.StorageDistance);
 
             return orderedList.FirstOrDefault()?.ResultItem;
         }

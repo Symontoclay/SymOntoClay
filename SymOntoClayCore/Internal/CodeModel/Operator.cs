@@ -40,6 +40,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.Operator;
 
+        /// <inheritdoc/>
+        public override bool IsOperator => true;
+
+        /// <inheritdoc/>
+        public override Operator AsOperator => this;
+
         public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
         
         /// <inheritdoc/>
@@ -146,8 +152,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.CompiledFunctionBody = CompiledFunctionBody?.Clone(context);
             result.SystemHandler = SystemHandler;
 
-            result.CodeEntity = CodeEntity?.Clone(context);
-
             result.AppendCodeItem(this, context);
 
             return result;
@@ -190,8 +194,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintExisting(n, nameof(SystemHandler), SystemHandler);
 
-            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
-
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -212,8 +214,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintExisting(n, nameof(SystemHandler), SystemHandler);
 
-            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
-
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -233,8 +233,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
             sb.PrintExisting(n, nameof(SystemHandler), SystemHandler);
-
-            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

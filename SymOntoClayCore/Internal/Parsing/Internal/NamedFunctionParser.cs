@@ -53,11 +53,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnEnter()
         {
             _namedFunction = CreateNamedFunctionAndSetAsCurrentCodeItem();
-
-            if (_namedFunction.ParentCodeEntity != null)
-            {
-                _namedFunction.Holder = Result.ParentCodeEntity.Name;
-            }
         }
 
         /// <inheritdoc/>

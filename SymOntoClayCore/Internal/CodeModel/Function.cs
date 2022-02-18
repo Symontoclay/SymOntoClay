@@ -36,6 +36,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         private IList<IFunctionArgument> _iArgumentsList;
 
         /// <inheritdoc/>
+        public CodeItem CodeItem => this;
+
+        /// <inheritdoc/>
         public bool ContainsArgument(StrongIdentifierValue name)
         {
             return _argumentsDict.ContainsKey(name);
@@ -92,8 +95,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             CompiledFunctionBody = source.CompiledFunctionBody.Clone(context);
 
-            CodeEntity = source.CodeEntity?.Clone(context);
-
             AppendCodeItem(this, context);
         }
 
@@ -130,8 +131,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjListProp(n, nameof(Statements), Statements);
             sb.PrintObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
-            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
-
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -147,8 +146,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjListProp(n, nameof(Statements), Statements);
             sb.PrintShortObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
-            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
-
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -163,8 +160,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintBriefObjListProp(n, nameof(Statements), Statements);
             sb.PrintBriefObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
-
-            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

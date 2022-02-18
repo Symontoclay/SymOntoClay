@@ -36,6 +36,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class InlineTrigger : CodeItem
     {
+        /// <inheritdoc/>
+        public override KindOfCodeEntity Kind => KindOfCodeEntity.InlineTrigger;
+
+        /// <inheritdoc/>
+        public override bool IsInlineTrigger => true;
+
+        /// <inheritdoc/>
+        public override InlineTrigger AsInlineTrigger => this;
+
         public KindOfInlineTrigger KindOfInlineTrigger { get; set; } = KindOfInlineTrigger.Unknown;
         public KindOfSystemEventOfInlineTrigger KindOfSystemEvent { get; set; } = KindOfSystemEventOfInlineTrigger.Unknown;
         public RuleInstance Condition { get; set; }
@@ -43,8 +52,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public List<AstStatement> Statements { get; set; } = new List<AstStatement>();
 
         public CompiledFunctionBody CompiledFunctionBody { get; set; }
-
-        public CodeEntity CodeEntity { get; set; }
 
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
@@ -110,7 +117,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.BindingVariables = BindingVariables.Clone(context);
             result.Statements = Statements.Select(p => p.CloneAstStatement(context)).ToList();
 
-            result.CodeEntity = CodeEntity.Clone(context);
             result.CompiledFunctionBody = CompiledFunctionBody.Clone(context);
             result.AppendCodeItem(this, context);
 
@@ -143,8 +149,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjListProp(n, nameof(Statements), Statements);
             sb.PrintObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
-            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
-
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -161,8 +165,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjListProp(n, nameof(Statements), Statements);
             sb.PrintShortObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
-            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
-
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -178,8 +180,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjProp(n, nameof(BindingVariables), BindingVariables);
             sb.PrintBriefObjListProp(n, nameof(Statements), Statements);
             sb.PrintBriefObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
-
-            sb.PrintBriefObjProp(n, nameof(CodeEntity), CodeEntity);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

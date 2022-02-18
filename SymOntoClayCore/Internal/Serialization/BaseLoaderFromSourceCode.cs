@@ -108,7 +108,7 @@ namespace SymOntoClay.Core.Internal.Serialization
 #endif
         }
 
-        private void DetectMainCodeEntity(List<CodeEntity> source)
+        private void DetectMainCodeEntity(List<CodeItem> source)
         {
             var possibleMainCodeEntities = source.Where(p => p.Kind == KindOfCodeEntity.App || p.Kind == KindOfCodeEntity.World);
 
@@ -134,9 +134,9 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
         }
 
-        private List<CodeEntity> LinearizeSubItems(List<CodeFile> source)
+        private List<CodeItem> LinearizeSubItems(List<CodeFile> source)
         {
-            var result = new List<CodeEntity>();
+            var result = new List<CodeItem>();
 
             foreach(var item in source)
             {
@@ -146,7 +146,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             return result.Distinct().ToList();
         }
 
-        private void EnumerateSubItems(List<CodeEntity> source, List<CodeEntity> result)
+        private void EnumerateSubItems(List<CodeItem> source, List<CodeItem> result)
         {
             if(source.IsNullOrEmpty())
             {
@@ -161,7 +161,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
         }
 
-        private void AddSystemDefinedSettings(List<CodeEntity> source)
+        private void AddSystemDefinedSettings(List<CodeItem> source)
         {
             foreach(var item in source)
             {
@@ -169,7 +169,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
         }
 
-        private void AddSystemDefinedSettings(CodeEntity codeEntity)
+        private void AddSystemDefinedSettings(CodeItem codeEntity)
         {
 #if DEBUG
             //Log($"codeEntity = {codeEntity}");
@@ -213,7 +213,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
         }
 
-        private void AddSystemDefinedSettingsToWorld(CodeEntity codeEntity)
+        private void AddSystemDefinedSettingsToWorld(CodeItem codeEntity)
         {
             var inheritanceItem = new InheritanceItem()
             {
@@ -231,7 +231,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             codeEntity.InheritanceItems.Add(inheritanceItem);
         }
 
-        private void AddSystemDefinedSettingsToApp(CodeEntity codeEntity)
+        private void AddSystemDefinedSettingsToApp(CodeItem codeEntity)
         {
             var inheritanceItem = new InheritanceItem()
             {
@@ -249,7 +249,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             codeEntity.InheritanceItems.Add(inheritanceItem);
         }
 
-        private void AddSystemDefinedSettingsToClass(CodeEntity codeEntity)
+        private void AddSystemDefinedSettingsToClass(CodeItem codeEntity)
         {
             var inheritanceItem = new InheritanceItem()
             {
@@ -267,7 +267,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             codeEntity.InheritanceItems.Add(inheritanceItem);
         }
 
-        private void AddSystemDefinedSettingsToAction(CodeEntity codeEntity)
+        private void AddSystemDefinedSettingsToAction(CodeItem codeEntity)
         {
             var inheritanceItem = new InheritanceItem()
             {
@@ -285,7 +285,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             codeEntity.InheritanceItems.Add(inheritanceItem);
         }
 
-        private void SaveItems(List<CodeEntity> source)
+        private void SaveItems(List<CodeItem> source)
         {
             foreach (var item in source)
             {
@@ -293,7 +293,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
         }
 
-        private void SaveItem(CodeEntity codeEntity)
+        private void SaveItem(CodeItem codeEntity)
         {
 #if DEBUG
             //Log($"codeEntity = {codeEntity}");
@@ -332,27 +332,27 @@ namespace SymOntoClay.Core.Internal.Serialization
                     break;
 
                 case KindOfCodeEntity.InlineTrigger:
-                    globalStorage.TriggersStorage.Append(codeEntity.InlineTrigger);
+                    globalStorage.TriggersStorage.Append(codeEntity.AsInlineTrigger);
                     break;
 
                 case KindOfCodeEntity.RuleOrFact:
-                    globalStorage.LogicalStorage.Append(codeEntity.RuleInstance);
+                    globalStorage.LogicalStorage.Append(codeEntity.AsRuleInstance);
                     break;
 
                 case KindOfCodeEntity.LinguisticVariable:
-                    globalStorage.FuzzyLogicStorage.Append(codeEntity.LinguisticVariable);
+                    globalStorage.FuzzyLogicStorage.Append(codeEntity.AsLinguisticVariable);
                     break;
 
                 case KindOfCodeEntity.Function:
-                    globalStorage.MethodsStorage.Append(codeEntity.NamedFunction);
+                    globalStorage.MethodsStorage.Append(codeEntity.AsNamedFunction);
                     break;
 
                 case KindOfCodeEntity.Action:
-                    globalStorage.ActionsStorage.Append(codeEntity.Action);
+                    globalStorage.ActionsStorage.Append(codeEntity.AsAction);
                     break;
 
                 case KindOfCodeEntity.Operator:
-                    if(codeEntity.Operator.KindOfOperator == KindOfOperator.CallFunction)
+                    if(codeEntity.AsOperator.KindOfOperator == KindOfOperator.CallFunction)
                     {
                         break;
                     }

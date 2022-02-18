@@ -104,8 +104,6 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
 
                 foreach (var fuzzyValue in linguisticVariable.Values)
                 {
-                    AnnotatedItemHelper.CheckAndFillUpHolder(fuzzyValue, _commonNamesStorage);
-
                     NAppendValue(fuzzyValue, holder);
                 }
             }
@@ -189,8 +187,6 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
         /// <inheritdoc/>
         public void AppendDefaultOperator(FuzzyLogicOperator fuzzyLogicOperator)
         {
-            AnnotatedItemHelper.CheckAndFillUpHolder(fuzzyLogicOperator, _commonNamesStorage);
-
             lock (_lockObj)
             {
                 _defaultOperatorsDict[fuzzyLogicOperator.Name] = fuzzyLogicOperator;

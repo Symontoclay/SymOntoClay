@@ -6,10 +6,9 @@
     {
         'Begin' >> @>log;
 
-         set @@self is linux;
-         set exampleClass is human;
-         set exampleClass is [0.5] human;
-         set #`Alisa 12` is [0.6] human;
+        @a = 1;
+
+        @a >> @>log;
 
         'End' >> @>log;
     }

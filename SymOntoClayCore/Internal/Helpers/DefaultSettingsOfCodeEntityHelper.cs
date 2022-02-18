@@ -46,46 +46,39 @@ namespace SymOntoClay.Core.Internal.Helpers
             }
         }
 
-        public static void SetUpCodeEntity(CodeItem codeItem, DefaultSettingsOfCodeEntity defaultSettings)
-        {
-            var context = new Dictionary<object, object>();
-
-            SetUpAnnotatedItem(codeItem, defaultSettings, context);
-        }
-
         public static void SetUpInlineTrigger(InlineTrigger inlineTrigger, DefaultSettingsOfCodeEntity defaultSettings)
         {
             var context = new Dictionary<object, object>();
 
-            SetUpAnnotatedItem(inlineTrigger, defaultSettings, context);
+            SetUpCodeItem(inlineTrigger, defaultSettings, context);
         }
 
         public static void SetUpLinguisticVariable(LinguisticVariable linguisticVariable, DefaultSettingsOfCodeEntity defaultSettings)
         {
             var context = new Dictionary<object, object>();
 
-            SetUpAnnotatedItem(linguisticVariable, defaultSettings, context);
+            SetUpCodeItem(linguisticVariable, defaultSettings, context);
         }
 
         public static void SetUpAction(ActionDef action, DefaultSettingsOfCodeEntity defaultSettings)
         {
             var context = new Dictionary<object, object>();
 
-            SetUpAnnotatedItem(action, defaultSettings, context);
+            SetUpCodeItem(action, defaultSettings, context);
         }
 
         public static void SetUpNamedFunction(NamedFunction namedFunction, DefaultSettingsOfCodeEntity defaultSettings)
         {
             var context = new Dictionary<object, object>();
 
-            SetUpAnnotatedItem(namedFunction, defaultSettings, context);
+            SetUpCodeItem(namedFunction, defaultSettings, context);
         }
 
         public static void SetUpOperator(Operator op, DefaultSettingsOfCodeEntity defaultSettings)
         {
             var context = new Dictionary<object, object>();
 
-            SetUpAnnotatedItem(op, defaultSettings, context);
+            SetUpCodeItem(op, defaultSettings, context);
         }
 
         public static void SetUpInheritanceItem(InheritanceItem inheritanceItem, DefaultSettingsOfCodeEntity defaultSettings)
@@ -93,6 +86,21 @@ namespace SymOntoClay.Core.Internal.Helpers
             var context = new Dictionary<object, object>();
 
             SetUpAnnotatedItem(inheritanceItem, defaultSettings, context);
+        }
+
+        public static void SetUpCodeItem(CodeItem item, DefaultSettingsOfCodeEntity defaultSettings, Dictionary<object, object> context)
+        {
+            if (defaultSettings == null)
+            {
+                return;
+            }
+
+            if (item.Holder == null && defaultSettings.Holder != null)
+            {
+                item.Holder = defaultSettings.Holder.Clone(context);
+            }
+
+            SetUpAnnotatedItem(item, defaultSettings, context);
         }
 
         public static void SetUpAnnotatedItem(AnnotatedItem item, DefaultSettingsOfCodeEntity defaultSettings)
@@ -112,11 +120,6 @@ namespace SymOntoClay.Core.Internal.Helpers
             if(item.WhereSection.IsNullOrEmpty() && !defaultSettings.WhereSection.IsNullOrEmpty())
             {
                 item.WhereSection = defaultSettings.WhereSection.Select(p => p.CloneValue(context)).ToList();
-            }
-
-            if (item.Holder == null && defaultSettings.Holder != null)
-            {
-                item.Holder = defaultSettings.Holder.Clone(context);
             }
         }
     }

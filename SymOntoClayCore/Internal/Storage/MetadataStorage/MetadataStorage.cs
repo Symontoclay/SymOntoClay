@@ -48,12 +48,12 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStorage
 
         private readonly object _lockObj = new object();
 
-        private CodeEntity _mainCodeEntity;
+        private CodeItem _mainCodeEntity;
 
-        private Dictionary<StrongIdentifierValue, List<CodeEntity>> _codeEntitiesDict = new Dictionary<StrongIdentifierValue, List<CodeEntity>>();
+        private Dictionary<StrongIdentifierValue, List<CodeItem>> _codeEntitiesDict = new Dictionary<StrongIdentifierValue, List<CodeItem>>();
 
         /// <inheritdoc/>
-        public void Append(CodeEntity codeEntity)
+        public void Append(CodeItem codeItem)
         {
             lock (_lockObj)
             {
@@ -61,7 +61,7 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStorage
                 //Log($"codeEntity = {codeEntity}");
 #endif
 
-                var name = codeEntity.Name;
+                var name = codeItem.Name;
 
 #if DEBUG
                 //Log($"name = {name}");
@@ -76,21 +76,21 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStorage
                 {
                     var targetList = _codeEntitiesDict[name];
 
-                    if(!targetList.Contains(codeEntity))
+                    if(!targetList.Contains(codeItem))
                     {
-                        targetList.Add(codeEntity);
+                        targetList.Add(codeItem);
                     }
                 }
                 else
                 {
-                    _codeEntitiesDict[name] = new List<CodeEntity>() { codeEntity };
+                    _codeEntitiesDict[name] = new List<CodeItem>() { codeItem };
                 }
 
-                SetAsMainCodeEntity(codeEntity);
+                SetAsMainCodeEntity(codeItem);
             }
         }
 
-        private void SetAsMainCodeEntity(CodeEntity codeEntity)
+        private void SetAsMainCodeEntity(CodeItem codeEntity)
         {
             if (codeEntity.Kind == KindOfCodeEntity.App && codeEntity.CodeFile != null && codeEntity.CodeFile.IsMain)
             {
@@ -99,7 +99,7 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStorage
         }
 
         /// <inheritdoc/>
-        public CodeEntity MainCodeEntity 
+        public CodeItem MainCodeEntity 
         {
             get
             {

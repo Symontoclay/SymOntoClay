@@ -297,8 +297,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
                             //Log($"currentValue = {currentValue}");
 #endif
-
-                            _currentVarStorage.SetValue(varName, currentValue);
+                            _varsResolver.SetVarValue(varName, currentValue, _currentCodeFrame.LocalContext);
 
 #if DEBUG
                             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");

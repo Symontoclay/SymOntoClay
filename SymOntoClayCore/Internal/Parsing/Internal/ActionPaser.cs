@@ -54,7 +54,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             base.OnEnter();
 
-            _action = CreateAction();
+            _action = Result.AsAction;
         }
 
         /// <inheritdoc/>

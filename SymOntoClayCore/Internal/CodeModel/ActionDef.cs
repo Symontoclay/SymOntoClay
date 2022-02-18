@@ -34,6 +34,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.Action;
 
+        /// <inheritdoc/>
+        public override bool IsAction => true;
+
+        /// <inheritdoc/>
+        public override ActionDef AsAction => this;
+
         public void AddAliasRange(List<StrongIdentifierValue> aliasList)
         {
             _aliasesList.AddRange(aliasList);

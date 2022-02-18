@@ -29,7 +29,7 @@ namespace SymOntoClay.Core.Internal
 {
     public interface IMetadataStorage : ISpecificStorage
     {
-        void Append(CodeEntity codeEntity);
-        CodeEntity MainCodeEntity { get; }
+        void Append(CodeItem codeItem);
+        CodeItem MainCodeEntity { get; }
     }
 }

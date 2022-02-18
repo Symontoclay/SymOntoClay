@@ -189,11 +189,11 @@ namespace TestSandbox
 
             var firstItem = result.SingleOrDefault();
 
-            firstItem.LinguisticVariable.CheckDirty();
+            firstItem.AsLinguisticVariable.CheckDirty();
 
             _logger.Log($"firstItem = {firstItem}");
 
-            var term = firstItem.LinguisticVariable.Values[4];
+            var term = firstItem.AsLinguisticVariable.Values[4];
 
             _logger.Log($"term = {term}");
 

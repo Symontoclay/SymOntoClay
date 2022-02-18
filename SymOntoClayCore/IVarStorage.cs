@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,7 +32,10 @@ namespace SymOntoClay.Core
     {
         void SetSystemValue(StrongIdentifierValue varName, Value value);
         Value GetSystemValueDirectly(StrongIdentifierValue varName);
+
+        void AppendVar(Var varItem);
+        IList<WeightedInheritanceResultItem<Var>> GetVarDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems);
+
         void SetValue(StrongIdentifierValue varName, Value value);
-        Value GetValueDirectly(StrongIdentifierValue varName);
     }
 }

@@ -85,7 +85,7 @@ namespace TestSandbox.CodeExecution
 
             var triggersStorage = globalStorage.TriggersStorage;
 
-            triggersStorage.Append(inlineTrigger.InlineTrigger);
+            triggersStorage.Append(inlineTrigger.AsInlineTrigger);
 
             var mainEntity = metadataStorage.MainCodeEntity;
 
@@ -113,9 +113,9 @@ namespace TestSandbox.CodeExecution
             _logger.Log("End");
         }
 
-        private List<CodeEntity> LinearizeSubItems(List<CodeFile> source)
+        private List<CodeItem> LinearizeSubItems(List<CodeFile> source)
         {
-            var result = new List<CodeEntity>();
+            var result = new List<CodeItem>();
 
             foreach (var item in source)
             {
@@ -125,7 +125,7 @@ namespace TestSandbox.CodeExecution
             return result.Distinct().ToList();
         }
 
-        private void EnumerateSubItems(List<CodeEntity> source, List<CodeEntity> result)
+        private void EnumerateSubItems(List<CodeItem> source, List<CodeItem> result)
         {
             if (source.IsNullOrEmpty())
             {

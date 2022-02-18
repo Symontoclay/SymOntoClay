@@ -49,7 +49,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             CheckCodeEntity(codeEntity, "age");
 
-            var lingiusticVariable = codeEntity.LinguisticVariable;
+            var lingiusticVariable = codeEntity.AsLinguisticVariable;
 
             lingiusticVariable.CheckDirty();
 
@@ -92,7 +92,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             CheckCodeEntity(codeEntity, "age");
 
-            var lingiusticVariable = codeEntity.LinguisticVariable;
+            var lingiusticVariable = codeEntity.AsLinguisticVariable;
 
             lingiusticVariable.CheckDirty();
 
@@ -135,7 +135,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             CheckCodeEntity(codeEntity, "age");
 
-            var lingiusticVariable = codeEntity.LinguisticVariable;
+            var lingiusticVariable = codeEntity.AsLinguisticVariable;
 
             lingiusticVariable.CheckDirty();
 
@@ -178,7 +178,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             CheckCodeEntity(codeEntity, "age");
 
-            var lingiusticVariable = codeEntity.LinguisticVariable;
+            var lingiusticVariable = codeEntity.AsLinguisticVariable;
 
             lingiusticVariable.CheckDirty();
 
@@ -221,7 +221,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             CheckCodeEntity(codeEntity, "age");
 
-            var lingiusticVariable = codeEntity.LinguisticVariable;
+            var lingiusticVariable = codeEntity.AsLinguisticVariable;
 
             lingiusticVariable.CheckDirty();
 
@@ -264,7 +264,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             CheckCodeEntity(codeEntity, "age");
 
-            var lingiusticVariable = codeEntity.LinguisticVariable;
+            var lingiusticVariable = codeEntity.AsLinguisticVariable;
 
             lingiusticVariable.CheckDirty();
 
@@ -307,7 +307,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             CheckCodeEntity(codeEntity, "age");
 
-            var lingiusticVariable = codeEntity.LinguisticVariable;
+            var lingiusticVariable = codeEntity.AsLinguisticVariable;
 
             lingiusticVariable.CheckDirty();
 
@@ -349,7 +349,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             CheckCodeEntity(codeEntity, "age");
 
-            var lingiusticVariable = codeEntity.LinguisticVariable;
+            var lingiusticVariable = codeEntity.AsLinguisticVariable;
 
             lingiusticVariable.CheckDirty();
 
@@ -391,7 +391,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             CheckCodeEntity(codeEntity, "age");
 
-            var lingiusticVariable = codeEntity.LinguisticVariable;
+            var lingiusticVariable = codeEntity.AsLinguisticVariable;
 
             lingiusticVariable.CheckDirty();
 
@@ -433,7 +433,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             CheckCodeEntity(codeEntity, "age");
 
-            var lingiusticVariable = codeEntity.LinguisticVariable;
+            var lingiusticVariable = codeEntity.AsLinguisticVariable;
 
             lingiusticVariable.CheckDirty();
 
@@ -473,7 +473,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             CheckCodeEntity(codeEntity, "age");
 
-            var lingiusticVariable = codeEntity.LinguisticVariable;
+            var lingiusticVariable = codeEntity.AsLinguisticVariable;
 
             lingiusticVariable.CheckDirty();
 
@@ -514,7 +514,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             CheckCodeEntity(codeEntity, "age");
 
-            var lingiusticVariable = codeEntity.LinguisticVariable;
+            var lingiusticVariable = codeEntity.AsLinguisticVariable;
 
             lingiusticVariable.CheckDirty();
 
@@ -560,7 +560,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             CheckCodeEntity(codeEntity, "age");
 
-            var lingiusticVariable = codeEntity.LinguisticVariable;
+            var lingiusticVariable = codeEntity.AsLinguisticVariable;
 
             lingiusticVariable.CheckDirty();
 
@@ -625,7 +625,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             CheckCodeEntity(codeEntity, "age");
 
-            var lingiusticVariable = codeEntity.LinguisticVariable;
+            var lingiusticVariable = codeEntity.AsLinguisticVariable;
 
             lingiusticVariable.CheckDirty();
 
@@ -689,7 +689,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             CheckCodeEntity(codeEntity, "age");
 
-            var lingiusticVariable = codeEntity.LinguisticVariable;
+            var lingiusticVariable = codeEntity.AsLinguisticVariable;
 
             lingiusticVariable.CheckDirty();
 
@@ -748,7 +748,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             CheckCodeEntity(codeEntity, "age");
 
-            var lingiusticVariable = codeEntity.LinguisticVariable;
+            var lingiusticVariable = codeEntity.AsLinguisticVariable;
 
             lingiusticVariable.CheckDirty();
 
@@ -807,7 +807,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             CheckCodeEntity(codeEntity, "age");
 
-            var lingiusticVariable = codeEntity.LinguisticVariable;
+            var lingiusticVariable = codeEntity.AsLinguisticVariable;
 
             lingiusticVariable.CheckDirty();
 
@@ -862,7 +862,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             CheckCodeEntity(codeEntity, "age");
 
-            var lingiusticVariable = codeEntity.LinguisticVariable;
+            var lingiusticVariable = codeEntity.AsLinguisticVariable;
 
             lingiusticVariable.CheckDirty();
 
@@ -921,7 +921,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             CheckCodeEntity(codeEntity, "logic");
 
-            var lingiusticVariable = codeEntity.LinguisticVariable;
+            var lingiusticVariable = codeEntity.AsLinguisticVariable;
 
             lingiusticVariable.CheckDirty();
 
@@ -1036,11 +1036,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(handlerStr5.Contains("_b = 1"), true);
         }
 
-        private void CheckCodeEntity(CodeEntity codeEntity, string name)
+        private void CheckCodeEntity(CodeItem codeEntity, string name)
         {
             Assert.AreEqual(codeEntity.Kind, KindOfCodeEntity.LinguisticVariable);
             Assert.AreEqual(codeEntity.Name, NameHelper.CreateName(name));
-            Assert.AreNotEqual(codeEntity.LinguisticVariable, null);
+            Assert.AreNotEqual(codeEntity.AsLinguisticVariable, null);
             Assert.AreEqual(codeEntity.InheritanceItems.Count, 0);
         }
 
@@ -1066,7 +1066,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
         private IMainStorageContext _mainStorageContext;
 
-        private CodeEntity Parse(string text)
+        private CodeItem Parse(string text)
         {
             var codeFile = new CodeFile();
 

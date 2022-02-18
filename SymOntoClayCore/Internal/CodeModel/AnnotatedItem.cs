@@ -40,8 +40,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         [ResolveToType(typeof(LogicalValue))]
         public virtual IList<Value> WhereSection { get; set; } = new List<Value>();
 
-        public virtual StrongIdentifierValue Holder { get; set; }
-
         /// <summary>
         /// Returns <c>true</c> if the instance has modalities or additional sections, otherwise returns <c>false</c>.
         /// </summary>
@@ -128,11 +126,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 }
             }
 
-            if (Holder != null)
-            {
-                result ^= LongHashCodeWeights.BaseModalityWeight ^ Holder.GetLongHashCode(options);
-            }
-
             if (!Annotations.IsNullOrEmpty())
             {
                 foreach (var item in Annotations)
@@ -185,15 +178,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 }
             }
 
-            if(source.Holder == null)
-            {
-                Holder = null;
-            }
-            else
-            {
-                Holder = source.Holder;
-            }
-
             if(source.Annotations == null)
             {
                 Annotations = null;
@@ -234,11 +218,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 {
                     item.DiscoverAllAnnotations(result);
                 }
-            }
-
-            if (Holder != null)
-            {
-                Holder.DiscoverAllAnnotations(result);
             }
         }
 
@@ -323,7 +302,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(_longHashCode)} = {_longHashCode}");
 
             sb.PrintObjListProp(n, nameof(WhereSection), WhereSection);
-            sb.PrintObjProp(n, nameof(Holder), Holder);
+            
             sb.PrintObjListProp(n, nameof(Annotations), Annotations);
 
             return sb.ToString();
@@ -359,7 +338,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(_longHashCode)} = {_longHashCode}");
 
             sb.PrintShortObjListProp(n, nameof(WhereSection), WhereSection);
-            sb.PrintShortObjProp(n, nameof(Holder), Holder);
+            
             sb.PrintShortObjListProp(n, nameof(Annotations), Annotations);
 
             return sb.ToString();
@@ -395,8 +374,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(_longHashCode)} = {_longHashCode}");
 
             sb.PrintExistingList(n, nameof(WhereSection), WhereSection);
-
-            sb.PrintBriefObjProp(n, nameof(Holder), Holder);
 
             sb.PrintExistingList(n, nameof(Annotations), Annotations);
 

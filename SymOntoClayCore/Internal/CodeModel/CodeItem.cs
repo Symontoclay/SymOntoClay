@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.CollectionsHelpers;
+﻿using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class CodeItem: AnnotatedItem
+    public abstract class CodeItem: AnnotatedItem, IMemberAccess, IReadOnlyMemberAccess
     {
         public abstract KindOfCodeEntity Kind { get;}
         public StrongIdentifierValue Name { get; set; }
@@ -16,8 +17,28 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public CodeItem ParentCodeEntity { get; set; }
         public List<CodeItem> SubItems { get; set; } = new List<CodeItem>();
 
+        public StrongIdentifierValue Holder { get; set; }
+
+        /// <inheritdoc/>
+        public TypeOfAccess TypeOfAccess { get; set; } = TypeOfAccess.Local;
+
         public virtual bool IsRuleInstance => false;
         public virtual RuleInstance AsRuleInstance => null;
+
+        public virtual bool IsAction => false;
+        public virtual ActionDef AsAction => null;
+
+        public virtual bool IsOperator => false;
+        public virtual Operator AsOperator => null;
+
+        public virtual bool IsInlineTrigger => false;
+        public virtual InlineTrigger AsInlineTrigger => null;
+
+        public virtual bool IsLinguisticVariable => false;
+        public virtual LinguisticVariable AsLinguisticVariable => null;
+
+        public virtual bool IsNamedFunction => false;
+        public virtual NamedFunction AsNamedFunction => null;
 
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
@@ -29,6 +50,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             if(Name != null)
             {
                 result ^= Name.GetLongHashCode();
+            }
+
+            if (Holder != null)
+            {
+                result ^= LongHashCodeWeights.BaseModalityWeight ^ Holder.GetLongHashCode(options);
             }
 
             return result;
@@ -56,6 +82,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
             ParentCodeEntity = source.ParentCodeEntity;
             SubItems = source.SubItems?.Select(p => p.CloneCodeItem(cloneContext)).ToList();
 
+            TypeOfAccess = source.TypeOfAccess;
+
+            if (source.Holder == null)
+            {
+                Holder = null;
+            }
+            else
+            {
+                Holder = source.Holder;
+            }
+
             AppendAnnotations(source, cloneContext);
         }
 
@@ -81,6 +118,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     item.DiscoverAllAnnotations(result);
                 }
             }
+
+            if (Holder != null)
+            {
+                Holder.DiscoverAllAnnotations(result);
+            }
         }
 
         /// <inheritdoc/>
@@ -98,6 +140,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjProp(n, nameof(CodeFile), CodeFile);
             sb.PrintBriefObjProp(n, nameof(ParentCodeEntity), ParentCodeEntity);
             sb.PrintObjListProp(n, nameof(SubItems), SubItems);
+
+            sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
+
+            sb.PrintObjProp(n, nameof(Holder), Holder);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -119,6 +165,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjProp(n, nameof(ParentCodeEntity), ParentCodeEntity);
             sb.PrintShortObjListProp(n, nameof(SubItems), SubItems);
 
+            sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
+
+            sb.PrintShortObjProp(n, nameof(Holder), Holder);
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -131,6 +181,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.PrintBriefObjProp(n, nameof(Name), Name);
+            sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
+
+            sb.PrintBriefObjProp(n, nameof(Holder), Holder);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

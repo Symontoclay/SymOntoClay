@@ -89,20 +89,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override StrongIdentifierValue Holder 
-        { 
-            get
-            {
-                return _action.Holder;
-            }
-
-            set
-            {
-                _action.Holder = value;
-            }
-        }
-
-        /// <inheritdoc/>
         public override IList<RuleInstance> Annotations 
         { 
             get

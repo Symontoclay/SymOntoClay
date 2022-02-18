@@ -45,11 +45,34 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #if DEBUG
             //Log("Begin");
 #endif
-            Result = CreateCodeEntityAndSetAsCurrent(_kindOfCodeEntity);
+            Result = ObjectFactory(_kindOfCodeEntity);
+
+            SetCurrentCodeItem(Result);
 
 #if DEBUG
             //Log("End");
 #endif
+        }
+
+        private CodeItem ObjectFactory(KindOfCodeEntity kind)
+        {
+            switch(kind)
+            {
+                case KindOfCodeEntity.Action:
+                    return CreateAction();
+
+                case KindOfCodeEntity.App:
+                    return CreateApp();
+
+                case KindOfCodeEntity.Class:
+                    return CreateClass();
+
+                case KindOfCodeEntity.World:
+                    return CreateWorld();
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+            }
         }
 
         /// <inheritdoc/>
@@ -99,11 +122,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new InlineTriggerParser(_context);
                                 parser.Run();
 
-                                var codeEntity = parser.Result;
+                                var inlineTrigger = parser.Result;
 
-                                Result.SubItems.Add(codeEntity);
+                                Result.SubItems.Add(inlineTrigger);
 
-                                OnAddInlineTrigger(codeEntity.InlineTrigger, codeEntity);
+                                OnAddInlineTrigger(inlineTrigger);
                             }
                             break;
 
@@ -113,11 +136,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new NamedFunctionParser(_context);
                                 parser.Run();
 
-                                var codeEntity = parser.Result;
+                                var namedFunction = parser.Result;
 
-                                Result.SubItems.Add(codeEntity);
+                                Result.SubItems.Add(namedFunction);
 
-                                OnAddNamedFunction(codeEntity.NamedFunction, codeEntity);
+                                OnAddNamedFunction(namedFunction);
                             }
                             break;
 
@@ -127,11 +150,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new OperatorParser(_context);
                                 parser.Run();
 
-                                var codeEntity = parser.Result;
+                                var op = parser.Result;
 
-                                Result.SubItems.Add(codeEntity);
+                                Result.SubItems.Add(op);
 
-                                OnAddOperator(codeEntity.Operator, codeEntity);
+                                OnAddOperator(op);
                             }
                             break;
 
@@ -146,11 +169,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         var parser = new LogicalQueryAsCodeEntityParser(_context);
                         parser.Run();
 
-                        var codeEntity = parser.Result;
+                        var ruleInstance = parser.Result;
 
-                        Result.SubItems.Add(codeEntity);
+                        Result.SubItems.Add(ruleInstance);
 
-                        OnAddRuleInstance(codeEntity.RuleInstance, codeEntity);
+                        OnAddRuleInstance(ruleInstance);
                     }
                     break;
 

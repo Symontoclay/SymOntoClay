@@ -77,7 +77,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
 
             Assert.AreEqual(subItem.Kind, KindOfCodeEntity.InlineTrigger);
 
-            var inlineTrigger = subItem.InlineTrigger;
+            var inlineTrigger = subItem.AsInlineTrigger;
 
             Assert.AreNotEqual(inlineTrigger, null);
             Assert.AreEqual(inlineTrigger.KindOfInlineTrigger, KindOfInlineTrigger.SystemEvent);
@@ -113,7 +113,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
 
         private IMainStorageContext _mainStorageContext;
 
-        private CodeEntity Parse(string text)
+        private CodeItem Parse(string text)
         {
             var codeFile = new CodeFile();
 

@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.Instances
             GetOrCreateMainEntity();
         }
 
-        protected CodeEntity GetOrCreateMainEntity()
+        protected CodeItem GetOrCreateMainEntity()
         {
             var globalStorage = _context.Storage.GlobalStorage;
 
@@ -77,10 +77,9 @@ namespace SymOntoClay.Core.Internal.Instances
             return mainEntity;
         }
 
-        protected CodeEntity CreateAndSaveEntity(CodeEntity superCodeEntity)
+        protected CodeItem CreateAndSaveEntity(CodeItem superCodeEntity)
         {
-            var result = new CodeEntity();
-            result.Kind = KindOfCodeEntity.Instance;
+            var result = new Instance();
 
             var newName = _context.CommonNamesStorage.SelfName;
             result.Name = newName;

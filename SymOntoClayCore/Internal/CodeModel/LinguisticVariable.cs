@@ -35,6 +35,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.LinguisticVariable;
 
+        /// <inheritdoc/>
+        public override bool IsLinguisticVariable => true;
+
+        /// <inheritdoc/>
+        public override LinguisticVariable AsLinguisticVariable => this;
+
         public RangeValue Range { get; set; } = new RangeValue();
         public LinguisticVariableConstraint Constraint { get; set; } = new LinguisticVariableConstraint();
         public List<FuzzyLogicNonNumericValue> Values { get; set; } = new List<FuzzyLogicNonNumericValue>();

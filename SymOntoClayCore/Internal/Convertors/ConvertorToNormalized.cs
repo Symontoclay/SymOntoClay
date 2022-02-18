@@ -74,6 +74,9 @@ namespace SymOntoClay.Core.Internal.Convertors
                 }
             }
 
+            result.TypeOfAccess = source.TypeOfAccess;
+            result.Holder = source.Holder;
+
             FillAnnotationsModalitiesAndSections(source, result, options, convertingContext);
 
 #if DEBUG
@@ -362,8 +365,6 @@ namespace SymOntoClay.Core.Internal.Convertors
                     dest.WhereSection.Add(item);
                 }
             }
-
-            dest.Holder = source.Holder;
 
             if (!source.Annotations.IsNullOrEmpty())
             {

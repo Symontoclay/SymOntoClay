@@ -107,6 +107,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected CodeItem CurrentCodeItem => _context.CurrentCodeItem;
 
         protected DefaultSettingsOfCodeEntity CurrentDefaultSetings => _context.CurrentDefaultSetings;
+
         protected void SetCurrentDefaultSetings(DefaultSettingsOfCodeEntity defaultSettings)
         {
             _context.SetCurrentDefaultSetings(defaultSettings);
@@ -117,25 +118,51 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _context.RemoveCurrentDefaultSetings();
         }
 
-        protected CodeEntity CreateCodeEntity()
+        protected App CreateApp()
         {
-            var result = new CodeEntity();
-            DefaultSettingsOfCodeEntityHelper.SetUpCodeEntity(result, CurrentDefaultSetings);
-            return result;
-        }
+            var result = new App();
 
-        protected CodeEntity CreateCodeEntity(KindOfCodeEntity kind)
-        {
-            var result = CreateCodeEntity();
-            result.Kind = kind;
+            var context = new Dictionary<object, object>();
+
+            DefaultSettingsOfCodeEntityHelper.SetUpAnnotatedItem(result, CurrentDefaultSetings, context);
+
+            FillUpCodeItem(result);
 
             return result;
         }
 
-        protected CodeEntity CreateCodeEntityAndSetAsCurrent(KindOfCodeEntity kind)
+        protected Class CreateClass()
         {
-            var result = CreateCodeEntity(kind);
-            
+            var result = new Class();
+
+            var context = new Dictionary<object, object>();
+
+            DefaultSettingsOfCodeEntityHelper.SetUpAnnotatedItem(result, CurrentDefaultSetings, context);
+
+            FillUpCodeItem(result);
+
+            return result;
+        }
+
+        protected World CreateWorld()
+        {
+            var result = new World();
+
+            var context = new Dictionary<object, object>();
+
+            DefaultSettingsOfCodeEntityHelper.SetUpAnnotatedItem(result, CurrentDefaultSetings, context);
+
+            FillUpCodeItem(result);
+
+            return result;
+        }
+
+        protected InlineTrigger CreateInlineTriggerAndSetAsCurrentCodeItem()
+        {
+            var result = CreateInlineTrigger();
+
+            SetCurrentCodeItem(result);
+
             return result;
         }
 
@@ -145,6 +172,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             DefaultSettingsOfCodeEntityHelper.SetUpInlineTrigger(result, CurrentDefaultSetings);
 
             FillUpCodeItem(result);
+
+            if (result.ParentCodeEntity != null)
+            {
+                result.Holder = result.ParentCodeEntity.Name;
+            }
 
             return result;
         }
@@ -193,6 +225,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             DefaultSettingsOfCodeEntityHelper.SetUpNamedFunction(result, CurrentDefaultSetings);
 
             FillUpCodeItem(result);
+
+            if (result.ParentCodeEntity != null)
+            {
+                result.Holder = result.ParentCodeEntity.Name;
+            }
 
             return result;
         }

@@ -37,11 +37,14 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
         public WeightedInheritanceItem(WeightedInheritanceItem source)
         {
-            IsSelf = source.IsSelf;
-            Distance = source.Distance;
-            SuperName = source.SuperName;
-            Rank = source.Rank;
-            OriginalItem = source.OriginalItem;
+            if(source != null)
+            {
+                IsSelf = source.IsSelf;
+                Distance = source.Distance;
+                SuperName = source.SuperName;
+                Rank = source.Rank;
+                OriginalItem = source.OriginalItem;
+            }
         }
 
         public bool IsSelf { get; set; }

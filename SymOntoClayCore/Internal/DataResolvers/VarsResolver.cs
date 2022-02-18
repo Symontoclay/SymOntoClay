@@ -23,8 +23,10 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
@@ -34,6 +36,60 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public VarsResolver(IMainStorageContext context)
             : base(context)
         {
+        }
+
+        public void SetVarValue(StrongIdentifierValue varName, Value value, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            SetVarValue(varName, value, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public void SetVarValue(StrongIdentifierValue varName, Value value, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+#if DEBUG
+            //Log($"varName = {varName}");
+            //Log($"value = {value}");
+#endif
+
+            if (varName.KindOfName != KindOfName.Var)
+            {
+                throw new Exception($"It is impossible to set value '{value.ToHumanizedString()}' into '{varName.ToHumanizedString()}'. Value can be set only into variable.");
+            }
+
+            var varPtr = Resolve(varName, localCodeExecutionContext, _defaultOptions);
+
+#if DEBUG
+            //Log($"varPtr = {varPtr}");
+#endif
+
+            if(varPtr == null)
+            {
+                varPtr = CreateAndSaveLocalVariable(varName, localCodeExecutionContext);
+            }
+
+#if DEBUG
+            //Log($"varPtr (after) = {varPtr}");
+#endif
+
+            varPtr.Value = value;
+        }
+
+        private Var CreateAndSaveLocalVariable(StrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+#if DEBUG
+            //Log($"varName = {varName}");
+#endif
+
+            var result = new Var();
+            result.Name = varName;
+            result.TypeOfAccess = TypeOfAccess.Local;
+
+#if DEBUG
+            //Log($"localCodeExecutionContext.Storage = {localCodeExecutionContext.Storage}");
+#endif
+
+            localCodeExecutionContext.Storage.VarStorage.AppendVar(result);
+
+            return result;
         }
 
         public Value GetVarValue(StrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
@@ -91,33 +147,109 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"varName = {varName}");
 #endif
 
+            var varPtr = Resolve(varName, localCodeExecutionContext, _defaultOptions);
+
+#if DEBUG
+            //Log($"varPtr = {varPtr}");
+#endif
+
+            if (varPtr == null)
+            {
+                varPtr = CreateAndSaveLocalVariable(varName, localCodeExecutionContext);
+            }
+
+#if DEBUG
+            //Log($"varPtr (after) = {varPtr}");
+#endif
+
+            return varPtr.Value;
+        }
+
+        public Var Resolve(StrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+#if DEBUG
+            //Log($"varName = {varName}");
+#endif
+
             var storage = localCodeExecutionContext.Storage;
 
             var storagesList = GetStoragesList(storage);
 
 #if DEBUG
-            //Log($"storagesList.Count = {storagesList.Count}");
+            //foreach (var tmpStorage in storagesList)
+            //{
+            //    Log($"tmpStorage = {tmpStorage}");
+            //}
 #endif
+
+            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
+
+            var optionsForInheritanceResolver = options.Clone();
+            optionsForInheritanceResolver.AddSelf = true;
+
+            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+
+#if DEBUG
+            //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
+#endif
+
+            var rawList = GetRawVarsList(varName, storagesList, weightedInheritanceItems);
+
+#if DEBUG
+            //Log($"rawList = {rawList.WriteListToString()}");
+#endif
+
+            if (!rawList.Any())
+            {
+                return null;
+            }
+
+            if(rawList.Any(p => p.ResultItem.TypeOfAccess == TypeOfAccess.Local))
+            {
+                return rawList.Single().ResultItem;
+            }
+
+            throw new NotImplementedException();
+        }
+
+        private List<WeightedInheritanceResultItemWithStorageInfo<Var>> GetRawVarsList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+#if DEBUG
+            //Log($"name = {name}");
+#endif
+
+            if (!storagesList.Any())
+            {
+                return new List<WeightedInheritanceResultItemWithStorageInfo<Var>>();
+            }
+
+            var result = new List<WeightedInheritanceResultItemWithStorageInfo<Var>>();
 
             foreach (var storageItem in storagesList)
             {
-#if DEBUG
-                //Log($"storageItem.Key = {storageItem.Key}; storageItem.Value.Kind = '{storageItem.Value.Kind}'");
-#endif
-
-                var targetValue = storageItem.Storage.VarStorage.GetValueDirectly(varName);
+                var itemsList = storageItem.Storage.VarStorage.GetVarDirectly(name, weightedInheritanceItems);
 
 #if DEBUG
-                //Log($"targetValue = {targetValue}");
+                //Log($"itemsList = {itemsList.WriteListToString()}");
 #endif
 
-                if (targetValue != null)
+                if (!itemsList.Any())
                 {
-                    return targetValue;
+                    continue;
+                }
+
+                var distance = storageItem.Priority;
+                var storage = storageItem.Storage;
+
+                foreach (var item in itemsList)
+                {
+                    result.Add(new WeightedInheritanceResultItemWithStorageInfo<Var>(item, distance, storage));
                 }
             }
 
-            return new NullValue();
+            return result;
         }
+
+        private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
     }
 }

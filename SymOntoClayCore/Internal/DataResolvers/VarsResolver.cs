@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -55,7 +56,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 throw new Exception($"It is impossible to set value '{value.ToHumanizedString()}' into '{varName.ToHumanizedString()}'. Value can be set only into variable.");
             }
 
-            var varPtr = Resolve(varName, localCodeExecutionContext, _defaultOptions);
+            var varPtr = Resolve(varName, localCodeExecutionContext, options);
 
 #if DEBUG
             //Log($"varPtr = {varPtr}");
@@ -70,7 +71,42 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"varPtr (after) = {varPtr}");
 #endif
 
+            CheckFitVariableAndValue(varPtr, value, localCodeExecutionContext, options);
+
             varPtr.Value = value;
+        }
+
+        public void CheckFitVariableAndValue(Var varItem, Value value, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            CheckFitVariableAndValue(varItem, value, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public void CheckFitVariableAndValue(Var varItem, Value value, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            if(varItem.TypesList.IsNullOrEmpty())
+            {
+                return;
+            }
+
+            if(value.IsNullValue)
+            {
+                return;
+            }
+
+            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
+
+            var isFit = inheritanceResolver.IsFit(varItem.TypesList, value, localCodeExecutionContext, options);
+
+#if DEBUG
+            //Log($"isFit = {isFit}");
+#endif
+
+            if (isFit)
+            {
+                return;
+            }
+
+            throw new Exception($"The value '{value.ToHumanizedString()}' does not fit to variable {varItem.ToHumanizedString()}");
         }
 
         private Var CreateAndSaveLocalVariable(StrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext)
@@ -87,7 +123,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"localCodeExecutionContext.Storage = {localCodeExecutionContext.Storage}");
 #endif
 
-            localCodeExecutionContext.Storage.VarStorage.AppendVar(result);
+            localCodeExecutionContext.Storage.VarStorage.Append(result);
 
             return result;
         }
@@ -209,7 +245,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return rawList.Single().ResultItem;
             }
 
-            throw new NotImplementedException();
+            var filteredList = Filter(rawList);
+
+#if DEBUG
+            //Log($"filteredList = {filteredList.WriteListToString()}");
+#endif
+
+            if (!filteredList.Any())
+            {
+                return null;
+            }
+
+            if(filteredList.Count == 1)
+            {
+                return filteredList.Single().ResultItem;
+            }
+
+            return OrderAndDistinctByInheritance(filteredList, options).FirstOrDefault()?.ResultItem;
         }
 
         private List<WeightedInheritanceResultItemWithStorageInfo<Var>> GetRawVarsList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
@@ -227,6 +279,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
+#if DEBUG
+                //Log($"storageItem = {storageItem}");
+#endif
+
                 var itemsList = storageItem.Storage.VarStorage.GetVarDirectly(name, weightedInheritanceItems);
 
 #if DEBUG

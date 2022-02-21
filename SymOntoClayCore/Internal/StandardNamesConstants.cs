@@ -38,6 +38,9 @@ namespace SymOntoClay.Core.Internal
         public const string NumberTypeName = "number";
         public const string StringTypeName = "string";
         public const string FuzzyTypeName = "fuzzy";
+        public const string FactTypeName = "fact";
+        public const string WaypointTypeName = "waypoint";
+        public const string ConditionalEntityTypeName = "conditional entity";
         public const string SelfSystemVarName = "@@self";
         public const string HostSystemVarName = "@@host";
         #endregion

@@ -102,8 +102,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Identifier:
                             var name = ParseName(_currToken.Content);
 
-                            Result.Name = name;
-
                             _action.Name = name;
 
                             _state = State.GotName;

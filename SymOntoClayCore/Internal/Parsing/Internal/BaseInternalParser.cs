@@ -94,6 +94,93 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             return name;
         }
 
+        protected ResultOfParseValueOnObjDefLevel ParseValueOnObjDefLevel()
+        {
+            var result = new ResultOfParseValueOnObjDefLevel();
+
+            switch (_currToken.TokenKind)
+            {
+                case TokenKind.String:
+                    {
+                        result.Value = new StringValue(_currToken.Content);
+                        result.Kind = KindOfValueOnObjDefLevel.ConstLiteral;
+                    }
+                    break;
+
+                case TokenKind.Number:
+                    {
+                        _context.Recovery(_currToken);
+
+                        var parser = new NumberParser(_context);
+                        parser.Run();
+
+                        result.Value = parser.Result;
+
+                        result.Kind = KindOfValueOnObjDefLevel.ConstLiteral;
+                    }
+                    break;
+
+                case TokenKind.Identifier:
+                    {
+                        result.Value = ParseName(_currToken.Content);
+                        result.Kind = KindOfValueOnObjDefLevel.ConstLiteral;
+                    }
+                    break;
+
+                case TokenKind.Word:
+                    switch (_currToken.KeyWordTokenKind)
+                    {
+                        case KeyWordTokenKind.Null:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var parser = new NullParser(_context);
+                                parser.Run();
+
+                                result.Value = parser.Result;
+                                result.Kind = KindOfValueOnObjDefLevel.ConstLiteral;
+                            }
+                            break;
+
+                        default:
+                            result.Value = ParseName(_currToken.Content);
+                            result.Kind = KindOfValueOnObjDefLevel.ConstLiteral;
+                            break;
+                    }
+                    break;
+
+                case TokenKind.OpenFactBracket:
+                    {
+                        _context.Recovery(_currToken);
+
+                        var parser = new LogicalQueryParser(_context);
+                        parser.Run();
+
+                        var value = new RuleInstanceValue(parser.Result);
+                        result.Value = value;
+                        result.Kind = KindOfValueOnObjDefLevel.ConstLiteral;
+                    }
+                    break;
+
+                case TokenKind.EntityCondition:
+                    {
+                        _context.Recovery(_currToken);
+
+                        var parser = new ConditionalEntityParser(_context);
+                        parser.Run();
+
+                        result.Value = parser.Result;
+                        result.Kind = KindOfValueOnObjDefLevel.ConstLiteral;
+                    }
+                    break;
+
+                default:
+                    throw new UnexpectedTokenException(_currToken);
+            }
+
+            return result;
+        }
+
         protected void SetCurrentCodeItem(CodeItem codeEntity)
         {
             _context.SetCurrentCodeItem(codeEntity);
@@ -122,9 +209,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             var result = new App();
 
-            var context = new Dictionary<object, object>();
-
-            DefaultSettingsOfCodeEntityHelper.SetUpAnnotatedItem(result, CurrentDefaultSetings, context);
+            DefaultSettingsOfCodeEntityHelper.SetUpAnnotatedItem(result, CurrentDefaultSetings);
 
             FillUpCodeItem(result);
 
@@ -135,9 +220,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             var result = new Class();
 
-            var context = new Dictionary<object, object>();
-
-            DefaultSettingsOfCodeEntityHelper.SetUpAnnotatedItem(result, CurrentDefaultSetings, context);
+            DefaultSettingsOfCodeEntityHelper.SetUpAnnotatedItem(result, CurrentDefaultSetings);
 
             FillUpCodeItem(result);
 
@@ -148,9 +231,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             var result = new World();
 
-            var context = new Dictionary<object, object>();
-
-            DefaultSettingsOfCodeEntityHelper.SetUpAnnotatedItem(result, CurrentDefaultSetings, context);
+            DefaultSettingsOfCodeEntityHelper.SetUpAnnotatedItem(result, CurrentDefaultSetings);
 
             FillUpCodeItem(result);
 
@@ -251,6 +332,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             FillUpCodeItem(result);
 
+            if (result.ParentCodeEntity != null)
+            {
+                result.Holder = result.ParentCodeEntity.Name;
+            }
+
             return result;
         }
 
@@ -258,6 +344,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             var result = new InheritanceItem();
             DefaultSettingsOfCodeEntityHelper.SetUpInheritanceItem(result, CurrentDefaultSetings);
+
+            return result;
+        }
+
+        protected Field CreateField()
+        {
+            var result = new Field();
+            result.TypeOfAccess = TypeOfAccess.Private;
+
+            DefaultSettingsOfCodeEntityHelper.SetUpAnnotatedItem(result, CurrentDefaultSetings);
+
+            FillUpCodeItem(result);
+
+            if (result.ParentCodeEntity != null)
+            {
+                result.Holder = result.ParentCodeEntity.Name;
+            }
 
             return result;
         }

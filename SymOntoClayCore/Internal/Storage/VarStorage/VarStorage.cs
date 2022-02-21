@@ -89,7 +89,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
         }
 
         /// <inheritdoc/>
-        public void AppendVar(Var varItem)
+        public void Append(Var varItem)
         {
             lock (_lockObj)
             {
@@ -121,22 +121,29 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
 
             var holder = varItem.Holder;
 
+            Dictionary<StrongIdentifierValue, List<Var>> dict = null;
+
             if (_variablesDict.ContainsKey(holder))
             {
-                var dict = _variablesDict[holder];
+                dict = _variablesDict[holder];
+            }
+            else
+            {
+                dict = new Dictionary<StrongIdentifierValue, List<Var>>();
+                _variablesDict[holder] = dict;
+            }
 
-                if (dict.ContainsKey(name))
-                {
-                    var targetList = dict[name];
+            if (dict.ContainsKey(name))
+            {
+                var targetList = dict[name];
 
-                    StorageHelper.RemoveSameItems(targetList, varItem);
+                StorageHelper.RemoveSameItems(targetList, varItem);
 
-                    targetList.Add(varItem);
-                }
-                else
-                {
-                    dict[name] = new List<Var> { varItem };
-                }
+                targetList.Add(varItem);
+            }
+            else
+            {
+                dict[name] = new List<Var> { varItem };
             }
         }
 
@@ -163,7 +170,11 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
                     {
                         var targetDict = _variablesDict[targetHolder];
 
-                        if(targetDict.ContainsKey(name))
+#if DEBUG
+                        //Log($"targetDict.Count = {targetDict.Count}");
+#endif
+
+                        if (targetDict.ContainsKey(name))
                         {
                             var targetList = targetDict[name];
 

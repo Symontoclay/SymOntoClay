@@ -1,6 +1,8 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
@@ -11,6 +13,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override KindOfCodeEntity Kind => KindOfCodeEntity.Var;
 
         public Value Value { get; set; } = new NullValue();
+        public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
 
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem()
@@ -55,11 +58,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new Var();
             context[this] = result;
 
-            result.Value = Value?.CloneValue(context);
-
-            result.AppendCodeItem(this, context);
+            result.AppendVar(this, context);
 
             return result;
+        }
+
+        protected void AppendVar(Var source, Dictionary<object, object> cloneContext)
+        {
+            Value = source.Value?.CloneValue(cloneContext);
+            TypesList = source.TypesList?.Select(p => p.Clone(cloneContext)).ToList();
+
+            AppendCodeItem(source, cloneContext);
         }
 
         /// <inheritdoc/>
@@ -69,6 +78,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintObjProp(n, nameof(Value), Value);
+            sb.PrintObjListProp(n, nameof(TypesList), TypesList);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -81,6 +91,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintShortObjProp(n, nameof(Value), Value);
+            sb.PrintShortObjListProp(n, nameof(TypesList), TypesList);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -93,9 +104,25 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(Value), Value);
+            sb.PrintBriefObjListProp(n, nameof(TypesList), TypesList);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
+        }
+
+        public string TypesListToHumanizedString()
+        {
+            if(TypesList.IsNullOrEmpty())
+            {
+                return "(any)";
+            }
+
+            return $"({string.Join(" | ", TypesList.Select(p => p.NameValue))})";
+        }
+
+        public string ToHumanizedString()
+        {
+            return $"{Name.NameValue}: {TypesListToHumanizedString()}";
         }
     }
 }

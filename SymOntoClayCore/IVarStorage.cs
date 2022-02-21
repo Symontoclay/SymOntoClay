@@ -33,7 +33,7 @@ namespace SymOntoClay.Core
         void SetSystemValue(StrongIdentifierValue varName, Value value);
         Value GetSystemValueDirectly(StrongIdentifierValue varName);
 
-        void AppendVar(Var varItem);
+        void Append(Var varItem);
         IList<WeightedInheritanceResultItem<Var>> GetVarDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems);
 
         void SetValue(StrongIdentifierValue varName, Value value);

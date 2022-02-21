@@ -33,14 +33,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class NumberValue : Value
     {
-        //private static List<StrongIdentifierValue> _builtInSuperTypes;
-
-        //static NumberValue()
-        //{
-        //    _builtInSuperTypes = new List<StrongIdentifierValue>();
-        //    _builtInSuperTypes.Add();
-        //}
-
         public NumberValue(double? systemValue)
         {
             SystemValue = systemValue;
@@ -59,7 +51,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         public override IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => _builtInSuperTypes;
-
+        
         private bool _isFuzzy;
 
         public bool IsFuzzy => _isFuzzy;

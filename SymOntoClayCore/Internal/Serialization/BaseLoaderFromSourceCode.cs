@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.Helpers;
@@ -208,6 +209,9 @@ namespace SymOntoClay.Core.Internal.Serialization
                 case KindOfCodeEntity.Operator:
                     break;
 
+                case KindOfCodeEntity.Field:
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(codeEntity.Kind), codeEntity.Kind, null);
             }
@@ -293,32 +297,32 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
         }
 
-        private void SaveItem(CodeItem codeEntity)
+        private void SaveItem(CodeItem codeItem)
         {
 #if DEBUG
-            //Log($"codeEntity = {codeEntity}");
+            //Log($"codeItem = {codeItem}");
 #endif
 
-            var codeEntityName = codeEntity.Name;
+            var codeEntityName = codeItem.Name;
 
             var globalStorage = _context.Storage.GlobalStorage;
 
             var metadataStorage = globalStorage.MetadataStorage;
 
-            metadataStorage.Append(codeEntity);
+            metadataStorage.Append(codeItem);
 
             var inheritanceStorage = globalStorage.InheritanceStorage;
 
-            foreach(var inheritanceItem in codeEntity.InheritanceItems)
+            foreach(var inheritanceItem in codeItem.InheritanceItems)
             {
                 inheritanceStorage.SetInheritance(inheritanceItem);
             }
 
 #if DEBUG
-            //Log($"codeEntity (2) = {codeEntity}");
+            //Log($"codeItem (2) = {codeItem}");
 #endif
 
-            var kindOfEntity = codeEntity.Kind;
+            var kindOfEntity = codeItem.Kind;
 
             switch(kindOfEntity)
             {
@@ -332,31 +336,51 @@ namespace SymOntoClay.Core.Internal.Serialization
                     break;
 
                 case KindOfCodeEntity.InlineTrigger:
-                    globalStorage.TriggersStorage.Append(codeEntity.AsInlineTrigger);
+                    globalStorage.TriggersStorage.Append(codeItem.AsInlineTrigger);
                     break;
 
                 case KindOfCodeEntity.RuleOrFact:
-                    globalStorage.LogicalStorage.Append(codeEntity.AsRuleInstance);
+                    globalStorage.LogicalStorage.Append(codeItem.AsRuleInstance);
                     break;
 
                 case KindOfCodeEntity.LinguisticVariable:
-                    globalStorage.FuzzyLogicStorage.Append(codeEntity.AsLinguisticVariable);
+                    globalStorage.FuzzyLogicStorage.Append(codeItem.AsLinguisticVariable);
                     break;
 
                 case KindOfCodeEntity.Function:
-                    globalStorage.MethodsStorage.Append(codeEntity.AsNamedFunction);
+                    globalStorage.MethodsStorage.Append(codeItem.AsNamedFunction);
                     break;
 
                 case KindOfCodeEntity.Action:
-                    globalStorage.ActionsStorage.Append(codeEntity.AsAction);
+                    globalStorage.ActionsStorage.Append(codeItem.AsAction);
                     break;
 
                 case KindOfCodeEntity.Operator:
-                    if(codeEntity.AsOperator.KindOfOperator == KindOfOperator.CallFunction)
+                    if(codeItem.AsOperator.KindOfOperator == KindOfOperator.CallFunction)
                     {
                         break;
                     }
                     throw new NotImplementedException();
+
+                case KindOfCodeEntity.Field:
+                    {
+                        var varResolver = _context.DataResolversFactory.GetVarsResolver();
+
+                        var localCodeExecutionContext = new LocalCodeExecutionContext();
+                        localCodeExecutionContext.Holder = codeItem.Holder;
+                        localCodeExecutionContext.Storage = globalStorage;
+
+                        var field = codeItem.AsField;
+
+#if DEBUG
+                        //Log($"field = {field}");
+#endif
+
+                        varResolver.CheckFitVariableAndValue(field, field.Value, localCodeExecutionContext);
+
+                        globalStorage.VarStorage.Append(field);
+                    }                    
+                    break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfEntity), kindOfEntity, null);

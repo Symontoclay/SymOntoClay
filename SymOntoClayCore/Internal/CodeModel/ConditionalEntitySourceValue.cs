@@ -23,6 +23,7 @@ SOFTWARE.*/
 using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -80,6 +81,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return new ConditionalEntityValue(Expression, LogicalQuery, Name, context, localContext);
         }
 
+        private List<StrongIdentifierValue> _builtInSuperTypes;
+
+        /// <inheritdoc/>
+        public override IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => _builtInSuperTypes;
+
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
@@ -89,6 +95,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
+            _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.ConditionalEntityTypeName) };
+
             if (LogicalQuery == null)
             {
                 LogicalQuery = ConvertorEntityConditionExpressionToRuleInstance.Convert(Expression, options);

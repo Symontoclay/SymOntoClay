@@ -53,14 +53,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnEnter()
         {
             _operator = CreateOperatorAndSetAsCurrentCodeItem();
-
-            _operator.CodeFile = _context.CodeFile;
-            _operator.ParentCodeEntity = CurrentCodeItem;
-
-            if (_operator.ParentCodeEntity != null)
-            {
-                _operator.Holder = Result.ParentCodeEntity.Name;
-            }
         }
 
         /// <inheritdoc/>

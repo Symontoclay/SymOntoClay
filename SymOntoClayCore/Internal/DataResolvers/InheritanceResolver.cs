@@ -339,6 +339,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
+        public bool IsFit(IList<StrongIdentifierValue> typeNamesList, Value value, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            if(GetDistance(typeNamesList, value, localCodeExecutionContext, options).HasValue)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public uint? GetDistance(IList<StrongIdentifierValue> typeNamesList, Value value, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG

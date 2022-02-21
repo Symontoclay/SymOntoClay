@@ -23,6 +23,7 @@ SOFTWARE.*/
 using Newtonsoft.Json;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Storage;
@@ -489,6 +490,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override ConditionalEntityValue AsConditionalEntityValue => this;
 
+        private List<StrongIdentifierValue> _builtInSuperTypes;
+
+        /// <inheritdoc/>
+        public override IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => _builtInSuperTypes;
+
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
@@ -498,6 +504,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
+            _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.ConditionalEntityTypeName) };
+
             LogicalQuery.CheckDirty(options);
 
             return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.BaseFunctionWeight ^ (Name?.GetLongHashCode(options) ?? 0) ^ LongHashCodeWeights.BaseParamWeight ^ LogicalQuery.GetLongHashCode(options);

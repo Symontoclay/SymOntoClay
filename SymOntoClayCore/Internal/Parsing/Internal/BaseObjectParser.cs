@@ -107,6 +107,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         protected void ProcessGeneralContent()
         {
+#if DEBUG
+            //Log($"_currToken = {_currToken}");
+#endif
+
             switch (_currToken.TokenKind)
             {
                 case TokenKind.CloseFigureBracket:
@@ -174,6 +178,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         Result.SubItems.Add(ruleInstance);
 
                         OnAddRuleInstance(ruleInstance);
+                    }
+                    break;
+
+                case TokenKind.Var:
+                    {
+                        _context.Recovery(_currToken);
+
+                        var parser = new FieldParser(_context);
+                        parser.Run();
+
+                        Result.SubItems.Add(parser.Result);
                     }
                     break;
 

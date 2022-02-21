@@ -194,44 +194,67 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case State.WaitForDefaultValue:
-                    switch (_currToken.TokenKind)
                     {
-                        case TokenKind.String:
-                            {
-                                _curentFunctionArgumentInfo.DefaultValue = new StringValue(_currToken.Content);
+                        var parsingResult = ParseValueOnObjDefLevel();
+
+#if DEBUG
+                        //Log($"parsingResult = {parsingResult}");
+#endif
+
+                        var kindOfValueOnObjDefLevel = parsingResult.Kind;
+
+                        switch (kindOfValueOnObjDefLevel)
+                        {
+                            case KindOfValueOnObjDefLevel.ConstLiteral:
+                                _curentFunctionArgumentInfo.DefaultValue = parsingResult.Value;
                                 _curentFunctionArgumentInfo.HasDefaultValue = true;
                                 _state = State.GotDefaultValue;
-                            }
-                            break;
+                                break;
 
-                        case TokenKind.Number:
-                            {
-                                _context.Recovery(_currToken);
-
-                                var parser = new NumberParser(_context);
-                                parser.Run();
-
-                                _curentFunctionArgumentInfo.DefaultValue = parser.Result;
-
-                                _curentFunctionArgumentInfo.HasDefaultValue = true;
-                                _state = State.GotDefaultValue;
-                            }
-                            break;
-
-                        case TokenKind.Identifier:
-                        case TokenKind.Word:
-                            {
-                                _curentFunctionArgumentInfo.DefaultValue = ParseName(_currToken.Content);
-
-                                _curentFunctionArgumentInfo.HasDefaultValue = true;
-                                _state = State.GotDefaultValue;
-                            }
-                            break;
-
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(kindOfValueOnObjDefLevel), kindOfValueOnObjDefLevel, null);
+                        }
                     }
                     break;
+
+                    //switch (_currToken.TokenKind)
+                    //{
+                    //    case TokenKind.String:
+                    //        {
+                    //            _curentFunctionArgumentInfo.DefaultValue = new StringValue(_currToken.Content);
+                    //            _curentFunctionArgumentInfo.HasDefaultValue = true;
+                    //            _state = State.GotDefaultValue;
+                    //        }
+                    //        break;
+
+                    //    case TokenKind.Number:
+                    //        {
+                    //            _context.Recovery(_currToken);
+
+                    //            var parser = new NumberParser(_context);
+                    //            parser.Run();
+
+                    //            _curentFunctionArgumentInfo.DefaultValue = parser.Result;
+
+                    //            _curentFunctionArgumentInfo.HasDefaultValue = true;
+                    //            _state = State.GotDefaultValue;
+                    //        }
+                    //        break;
+
+                    //    case TokenKind.Identifier:
+                    //    case TokenKind.Word:
+                    //        {
+                    //            _curentFunctionArgumentInfo.DefaultValue = ParseName(_currToken.Content);
+
+                    //            _curentFunctionArgumentInfo.HasDefaultValue = true;
+                    //            _state = State.GotDefaultValue;
+                    //        }
+                    //        break;
+
+                    //    default:
+                    //        throw new UnexpectedTokenException(_currToken);
+                    //}
+                    //break;
 
                 case State.GotDefaultValue:
                     switch (_currToken.TokenKind)

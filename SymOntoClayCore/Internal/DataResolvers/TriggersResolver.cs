@@ -116,11 +116,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var inheritanceOrderOptions = options.Clone();
 
-            var result = OrderAndDistinctByInheritance(source, inheritanceOrderOptions);
-
-            result = result.OrderBy(p => p.Distance).ToList();
-
-            return result;
+            return OrderAndDistinctByInheritance(source, inheritanceOrderOptions);
         }
 
         private List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> GetLogicConditionalRawList(StrongIdentifierValue holder, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)

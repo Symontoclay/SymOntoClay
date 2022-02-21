@@ -40,6 +40,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsNamedFunction => false;
         public virtual NamedFunction AsNamedFunction => null;
 
+        public virtual bool IsField => false;
+        public virtual Field AsField => null;
+
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {

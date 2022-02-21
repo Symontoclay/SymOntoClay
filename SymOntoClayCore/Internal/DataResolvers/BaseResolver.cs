@@ -94,7 +94,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return source;
             }
 
-            return source.OrderByDescending(p => p.IsSelf).ToList();
+            return source.OrderByDescending(p => p.IsSelf).ThenByDescending(p => p.Rank).ThenBy(p => p.Distance).ToList();
         }
 
         protected virtual T ChooseTargetItem<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source) 

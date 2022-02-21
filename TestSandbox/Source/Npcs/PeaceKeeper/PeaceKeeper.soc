@@ -1,15 +1,11 @@
 ﻿app PeaceKeeper
 {
-    //{: see(I, #a) :}
+    @b: number;
 
-    on Init
+    on Init =>
     {
         'Begin' >> @>log;
-
-        @a = 1;
-
-        @a >> @>log;
-
+        @b >> @>log;
         'End' >> @>log;
     }
 }

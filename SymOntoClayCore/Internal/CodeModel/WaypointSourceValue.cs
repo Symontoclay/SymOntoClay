@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -84,6 +85,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return result;
         }
 
+        private List<StrongIdentifierValue> _builtInSuperTypes;
+
+        /// <inheritdoc/>
+        public override IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => _builtInSuperTypes;
+
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
@@ -93,6 +99,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
+            _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.WaypointTypeName) };
+
             Distance.CheckDirty(options);
             HorizontalAngle.CheckDirty(options);
 

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -53,6 +54,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         public override IList<RuleInstance> Annotations { get => RuleInstance.Annotations; set => RuleInstance.Annotations = value; }
+
+        private List<StrongIdentifierValue> _builtInSuperTypes;
+
+        /// <inheritdoc/>
+        public override IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => _builtInSuperTypes;
 
         /// <inheritdoc/>
         public override void DiscoverAllAnnotations(IList<RuleInstance> result)
@@ -93,6 +99,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
+            var kindOfRuleInstance = RuleInstance.KindOfRuleInstance;
+
+            switch(kindOfRuleInstance)
+            {
+                case KindOfRuleInstance.Fact:
+                    _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.FactTypeName) };
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfRuleInstance), kindOfRuleInstance, null);
+            }
+
             return RuleInstance.GetLongHashCode(options);
         }
 

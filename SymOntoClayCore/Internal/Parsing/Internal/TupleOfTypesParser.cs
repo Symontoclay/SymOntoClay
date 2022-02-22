@@ -37,12 +37,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotTypeIdentifier
         }
 
-        public TupleOfTypesParser(InternalParserContext context, bool boundedBuRoundBrackets)
+        public TupleOfTypesParser(InternalParserContext context, bool boundedByRoundBrackets)
             : base(context)
         {
-            _boundedBuRoundBrackets = boundedBuRoundBrackets;
+            _boundedByRoundBrackets = boundedByRoundBrackets;
 
-            if(boundedBuRoundBrackets)
+            if(boundedByRoundBrackets)
             {
                 _state = State.Init;
             }
@@ -52,7 +52,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             }
         }
 
-        private readonly bool _boundedBuRoundBrackets;
+        private readonly bool _boundedByRoundBrackets;
 
         private State _state = State.Init;
 
@@ -62,8 +62,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result.WriteListToString()}");            
 #endif
 
@@ -106,7 +106,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.CloseRoundBracket:
-                            if(!_boundedBuRoundBrackets)
+                            if(!_boundedByRoundBrackets)
                             {
                                 _context.Recovery(_currToken);
                             }

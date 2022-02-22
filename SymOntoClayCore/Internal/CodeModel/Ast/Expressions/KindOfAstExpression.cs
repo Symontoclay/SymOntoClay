@@ -31,6 +31,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         Unknown,
         ConstValue,
         Var,
+        VarDecl,
         BinaryOperator,
         UnaryOperator,
         Channel,

@@ -1,11 +1,14 @@
 ﻿app PeaceKeeper
 {
-    @b: number;
-
     on Init =>
     {
         'Begin' >> @>log;
+        var @a: number = 2;
+        @a >> @>log;
+        var @b: number;
         @b >> @>log;
+        var @c;
+        @c >> @>log;
         'End' >> @>log;
     }
 }

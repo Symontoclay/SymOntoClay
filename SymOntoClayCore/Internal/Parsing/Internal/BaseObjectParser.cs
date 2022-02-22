@@ -162,6 +162,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case KeyWordTokenKind.Var:
+                            ProcessVar();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -182,19 +186,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case TokenKind.Var:
-                    {
-                        _context.Recovery(_currToken);
-
-                        var parser = new FieldParser(_context);
-                        parser.Run();
-
-                        Result.SubItems.Add(parser.Result);
-                    }
+                    ProcessVar();
                     break;
 
                 default:
                     throw new UnexpectedTokenException(_currToken);
             }
+        }
+
+        private void ProcessVar()
+        {
+            _context.Recovery(_currToken);
+
+            var parser = new FieldParser(_context);
+            parser.Run();
+
+            Result.SubItems.Add(parser.Result);
         }
     }
 }

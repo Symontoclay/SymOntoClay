@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using System;
 using System.Collections.Generic;
@@ -87,6 +88,24 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.PushVal;
             command.Value = value;
+
+            AddCommand(command);
+        }
+
+        protected void CompileVarDecl(VarDeclAstExpression varDeclAstExpression)
+        {
+            CompilePushVal(varDeclAstExpression.Name);
+
+            foreach (var typeItem in varDeclAstExpression.TypesList)
+            {
+                CompilePushVal(typeItem);
+            }
+
+            CompilePushAnnotation(varDeclAstExpression);
+
+            var command = new IntermediateScriptCommand();
+            command.OperationCode = OperationCode.VarDecl;
+            command.CountParams = varDeclAstExpression.TypesList.Count;
 
             AddCommand(command);
         }

@@ -307,6 +307,69 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         }
                         break;
 
+                    case OperationCode.VarDecl:
+                        {
+                            var valueStack = _currentCodeFrame.ValuesStack;
+
+                            var annotation = valueStack.Pop();
+
+#if DEBUG
+                            //Log($"annotation = {annotation}");
+#endif
+
+                            var typesCount = currentCommand.CountParams;
+
+#if DEBUG
+                            //Log($"typesCount = {typesCount}");
+#endif
+
+                            var varPtr = new Var();
+
+                            while(typesCount > 0)
+                            {
+                                var typeName = valueStack.Pop();
+
+#if DEBUG
+                                //Log($"typeName = {typeName}");
+#endif
+
+                                if(!typeName.IsStrongIdentifierValue)
+                                {
+                                    throw new Exception($"Typename should be StrongIdentifierValue.");
+                                }
+
+                                varPtr.TypesList.Add(typeName.AsStrongIdentifierValue);
+
+                                typesCount--;
+                            }
+
+                            var varName = valueStack.Pop();
+
+#if DEBUG
+                            //Log($"varName = {varName}");
+#endif
+
+                            if(!varName.IsStrongIdentifierValue)
+                            {
+                                throw new Exception($"Varname should be StrongIdentifierValue.");
+                            }
+
+                            varPtr.Name = varName.AsStrongIdentifierValue;
+
+#if DEBUG
+                            //Log($"varPtr = {varPtr}");
+#endif
+
+                            _currentVarStorage.Append(varPtr);
+
+#if DEBUG
+                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+                            _currentCodeFrame.CurrentPosition++;
+                        }
+                        break;
+
                     case OperationCode.CallBinOp:
                         {
                             var paramsList = TakePositionedParameters(3);

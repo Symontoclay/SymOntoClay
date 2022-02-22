@@ -59,7 +59,6 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         AsyncCall,
         AsyncCall_N,
         AsyncCall_P,
-
         ClearStack,
         Return,
         ReturnVal,
@@ -73,6 +72,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         CompleteAction,
         CompleteActionVal,
         BreakAction,
-        BreakActionVal
+        BreakActionVal,
+        VarDecl
     }
 }

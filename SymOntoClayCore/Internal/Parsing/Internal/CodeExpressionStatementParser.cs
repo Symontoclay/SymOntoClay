@@ -155,6 +155,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessAssign();
                             break;
 
+                        case TokenKind.Semicolon:
+                            Exit();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -325,6 +329,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     ProcessNullToken();
                     break;
 
+                case KeyWordTokenKind.Var:
+                    ProcessVarDecl();
+                    break;
+
                 default:
                     throw new UnexpectedTokenException(_currToken);
             }
@@ -365,6 +373,24 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             AstNodesLinker.SetNode(valueIntermediateNode, _nodePoint);
 
             _state = State.GotCallLogicalQueryOperator;
+        }
+
+        private void ProcessVarDecl()
+        {
+            _context.Recovery(_currToken);
+
+            var parser = new VarDeclParser(_context);
+            parser.Run();
+
+#if DEBUG
+            //Log($"parser.Result = {parser.Result}");
+#endif
+
+            var intermediateNode = new IntermediateAstNode(parser.Result);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+            _state = State.GotName;
         }
 
         private void ProcessVar()

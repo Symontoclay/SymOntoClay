@@ -181,6 +181,50 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             return result;
         }
 
+        protected List<StrongIdentifierValue> ParseTypesOfParameterOrVar()
+        {
+            switch (_currToken.TokenKind)
+            {
+                case TokenKind.Identifier:
+                case TokenKind.Word:
+                    {
+                        var nextToken = _context.GetToken();
+
+#if DEBUG
+                        //Log($"nextToken = {nextToken}");
+#endif
+
+                        if (nextToken.TokenKind == TokenKind.Or)
+                        {
+                            _context.Recovery(_currToken);
+                            _context.Recovery(nextToken);
+
+                            var paser = new TupleOfTypesParser(_context, false);
+                            paser.Run();
+
+                            return paser.Result;
+                        }
+
+                        _context.Recovery(nextToken);
+
+                        return new List<StrongIdentifierValue>() { ParseName(_currToken.Content) };
+                    }
+
+                case TokenKind.OpenRoundBracket:
+                    {
+                        _context.Recovery(_currToken);
+
+                        var paser = new TupleOfTypesParser(_context, true);
+                        paser.Run();
+
+                        return paser.Result;
+                    }
+
+                default:
+                    throw new UnexpectedTokenException(_currToken);
+            }
+        }
+
         protected void SetCurrentCodeItem(CodeItem codeEntity)
         {
             _context.SetCurrentCodeItem(codeEntity);

@@ -123,55 +123,59 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case State.WaitForParameterType:
-                    switch (_currToken.TokenKind)
-                    {
-                        case TokenKind.Identifier:
-                        case TokenKind.Word:
-                            {
-                                var nextToken = _context.GetToken();
-
-#if DEBUG
-                                //Log($"nextToken = {nextToken}");
-#endif
-
-                                if(nextToken.TokenKind == TokenKind.Or)
-                                {
-                                    _context.Recovery(_currToken);
-                                    _context.Recovery(nextToken);
-
-                                    var paser = new TupleOfTypesParser(_context, false);
-                                    paser.Run();
-
-                                    _curentFunctionArgumentInfo.TypesList = paser.Result;
-                                }
-                                else
-                                {
-                                    _context.Recovery(nextToken);
-
-                                    _curentFunctionArgumentInfo.TypesList.Add(ParseName(_currToken.Content));                                    
-                                }
-
-                                _state = State.GotParameterType;
-                            }
-                            break;
-
-                        case TokenKind.OpenRoundBracket:
-                            {
-                                _context.Recovery(_currToken);
-
-                                var paser = new TupleOfTypesParser(_context, true);
-                                paser.Run();
-
-                                _curentFunctionArgumentInfo.TypesList = paser.Result;
-
-                                _state = State.GotParameterType;
-                            }
-                            break;
-
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
-                    }
+                    _curentFunctionArgumentInfo.TypesList = ParseTypesOfParameterOrVar();
+                    _state = State.GotParameterType;
                     break;
+
+//                    switch (_currToken.TokenKind)
+//                    {
+//                        case TokenKind.Identifier:
+//                        case TokenKind.Word:
+//                            {
+//                                var nextToken = _context.GetToken();
+
+//#if DEBUG
+//                                //Log($"nextToken = {nextToken}");
+//#endif
+
+//                                if(nextToken.TokenKind == TokenKind.Or)
+//                                {
+//                                    _context.Recovery(_currToken);
+//                                    _context.Recovery(nextToken);
+
+//                                    var paser = new TupleOfTypesParser(_context, false);
+//                                    paser.Run();
+
+//                                    _curentFunctionArgumentInfo.TypesList = paser.Result;
+//                                }
+//                                else
+//                                {
+//                                    _context.Recovery(nextToken);
+
+//                                    _curentFunctionArgumentInfo.TypesList.Add(ParseName(_currToken.Content));                                    
+//                                }
+
+//                                _state = State.GotParameterType;
+//                            }
+//                            break;
+
+//                        case TokenKind.OpenRoundBracket:
+//                            {
+//                                _context.Recovery(_currToken);
+
+//                                var paser = new TupleOfTypesParser(_context, true);
+//                                paser.Run();
+
+//                                _curentFunctionArgumentInfo.TypesList = paser.Result;
+
+//                                _state = State.GotParameterType;
+//                            }
+//                            break;
+
+//                        default:
+//                            throw new UnexpectedTokenException(_currToken);
+//                    }
+//                    break;
 
                 case State.GotParameterType:
                     switch (_currToken.TokenKind)

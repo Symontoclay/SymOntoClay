@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotValueOfNamedMainParameter,
             GotComma
         }
-
+        
         public CallingFunctionExpressionParser(InternalParserContext context)
             : base(context)
         {

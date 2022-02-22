@@ -223,6 +223,9 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.JumpTo:
                     return $"{spaces}{OperationCode} {TargetPosition}";
 
+                case OperationCode.VarDecl:
+                    return $"{spaces}{OperationCode} {CountParams}";
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(OperationCode), OperationCode, null);
             }

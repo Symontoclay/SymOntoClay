@@ -247,21 +247,55 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }), true);
         }
 
-        //[Test]
-        //[Parallelizable]
-        //public void Case7()
-        //{
-        //    var text = @"";
+        [Test]
+        [Parallelizable]
+        public void Case7()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        'Begin' >> @>log;
+        var @a: number = 2;
+        @a >> @>log;
+        var @b: number;
+        @b >> @>log;
+        var @c;
+        @c >> @>log;
+        'End' >> @>log;
+    }
+}";
 
-        //    Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
-        //        (n, message) => {
-        //            switch (n)
-        //            {
-        //                default:
-        //                    throw new ArgumentOutOfRangeException(nameof(n), n, null);
-        //            }
-        //        }), true);
-        //}
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "2");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "NULL");
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(message, "NULL");
+                            break;
+
+                        case 5:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
 
         //[Test]
         //[Parallelizable]

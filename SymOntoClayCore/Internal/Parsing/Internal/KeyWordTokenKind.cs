@@ -62,6 +62,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Await,
         Complete,
         Break,
-        Alias
+        Alias,
+        Var
     }
 }

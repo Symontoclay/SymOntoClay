@@ -77,6 +77,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     }
                     break;
 
+                case KindOfAstExpression.VarDecl:
+                    CompileVarDecl(expression as VarDeclAstExpression);
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }

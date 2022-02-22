@@ -59,6 +59,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         private void RunAssignBinaryOperator(BinaryOperatorAstExpression expression)
         {
 #if DEBUG
+            //Log($"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             //Log($"expression = {expression}");
 #endif
 
@@ -99,10 +100,33 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             }
             else
             {
-                var rightNode = new ExpressionNode(_context);
-                rightNode.Run(leftBranch);
-                AddCommands(rightNode.Result);
+                if(leftBranch.Kind == KindOfAstExpression.VarDecl)
+                {
+                    var varDeclAstExpression = leftBranch.AsVarDeclAstExpression;
+
+#if DEBUG
+                    //Log($"varDeclAstExpression = {varDeclAstExpression}");
+#endif
+
+                    CompileVarDecl(varDeclAstExpression);
+
+                    var command = new IntermediateScriptCommand();
+                    command.OperationCode = OperationCode.PushValToVar;
+                    command.Value = varDeclAstExpression.Name;
+
+                    AddCommand(command);
+                }
+                else
+                {
+                    var rightNode = new ExpressionNode(_context);
+                    rightNode.Run(leftBranch);
+                    AddCommands(rightNode.Result);
+                }
             }
+
+#if DEBUG
+            //throw new NotImplementedException();
+#endif
         }
 
         private void RunUsualBinaryOperator(BinaryOperatorAstExpression expression)

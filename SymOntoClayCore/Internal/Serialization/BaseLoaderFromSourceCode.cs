@@ -340,7 +340,16 @@ namespace SymOntoClay.Core.Internal.Serialization
                     break;
 
                 case KindOfCodeEntity.RuleOrFact:
-                    globalStorage.LogicalStorage.Append(codeItem.AsRuleInstance);
+                    {
+                        var ruleInstance = codeItem.AsRuleInstance;
+
+                        if(ruleInstance.IsParameterized)
+                        {
+                            throw new Exception($"SymOntoClay does not support parameterized rule or facts on object declaration.");
+                        }
+
+                        globalStorage.LogicalStorage.Append(ruleInstance);
+                    }                    
                     break;
 
                 case KindOfCodeEntity.LinguisticVariable:

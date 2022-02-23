@@ -109,7 +109,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var name = NameHelper.CreateName(text);
 
             Assert.AreEqual(name.IsEmpty, false);
-            Assert.AreEqual(name.NameValue, text);
+            Assert.AreEqual(name.NameValue, "`small dog`");
             Assert.AreEqual(name.NormalizedNameValue, text);
             Assert.AreEqual(name.KindOfName, KindOfName.Concept);
         }

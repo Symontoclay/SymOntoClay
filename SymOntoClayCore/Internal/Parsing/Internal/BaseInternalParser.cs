@@ -121,8 +121,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case TokenKind.Identifier:
+                case TokenKind.Entity:
                     {
                         result.Value = ParseName(_currToken.Content);
+
+#if DEBUG
+                        //Log($"result.Value = {result.Value}");
+#endif
+
                         result.Kind = KindOfValueOnObjDefLevel.ConstLiteral;
                     }
                     break;

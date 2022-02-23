@@ -24,6 +24,7 @@ using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Convertors;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
@@ -38,7 +39,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class LogicalQueryNode: AnnotatedItem, IAstNode
     {
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public KindOfLogicalQueryNode Kind { get; set; } = KindOfLogicalQueryNode.Unknown;
@@ -235,6 +236,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         }
                         break;
 
+                    case KindOfLogicalQueryNode.Var:
+                        contextOfConvertingExpressionNode.IsParameterized = true;
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(kindOfParam), kindOfParam, null);
                 }
@@ -245,6 +250,146 @@ namespace SymOntoClay.Core.Internal.CodeModel
             KnownInfoList = knownInfoList;
 
             contextOfConvertingExpressionNode.RelationsList.Add(this);
+        }
+
+        public void ResolveVariables(IPackedVarsResolver varsResolver)
+        {
+            switch (Kind)
+            {
+                case KindOfLogicalQueryNode.BinaryOperator:
+                    switch (KindOfOperator)
+                    {
+                        case KindOfOperatorOfLogicalQueryNode.And:
+                        case KindOfOperatorOfLogicalQueryNode.Or:
+                        case KindOfOperatorOfLogicalQueryNode.Is:
+                        case KindOfOperatorOfLogicalQueryNode.IsNot:
+                        case KindOfOperatorOfLogicalQueryNode.More:
+                        case KindOfOperatorOfLogicalQueryNode.MoreOrEqual:
+                        case KindOfOperatorOfLogicalQueryNode.Less:
+                        case KindOfOperatorOfLogicalQueryNode.LessOrEqual:
+                            Left.ResolveVariables(varsResolver);
+                            Right.ResolveVariables(varsResolver);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(KindOfOperator), KindOfOperator, null);
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.UnaryOperator:
+                    switch (KindOfOperator)
+                    {
+                        case KindOfOperatorOfLogicalQueryNode.Not:
+                            Left.ResolveVariables(varsResolver);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(KindOfOperator), KindOfOperator, null);
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.Concept:
+                case KindOfLogicalQueryNode.Entity:
+                case KindOfLogicalQueryNode.QuestionVar:
+                    break;
+
+                case KindOfLogicalQueryNode.LogicalVar:
+                    break;
+
+                case KindOfLogicalQueryNode.Value:
+                case KindOfLogicalQueryNode.StubParam:
+                case KindOfLogicalQueryNode.EntityCondition:
+                case KindOfLogicalQueryNode.EntityRef:
+                    break;
+
+                case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
+                    break;
+
+                case KindOfLogicalQueryNode.Relation:
+                    foreach (var param in ParamsList)
+                    {
+                        var kindOfParam = param.Kind;
+
+                        switch (kindOfParam)
+                        {
+                            case KindOfLogicalQueryNode.Concept:
+                            case KindOfLogicalQueryNode.Entity:
+                            case KindOfLogicalQueryNode.Value:
+                            case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
+                                break;
+
+                            case KindOfLogicalQueryNode.Relation:
+                                foreach (var subParam in param.ParamsList)
+                                {
+                                    subParam.ResolveVariables(varsResolver);
+                                }
+                                break;
+
+                            case KindOfLogicalQueryNode.LogicalVar:
+                                break;
+
+                            case KindOfLogicalQueryNode.QuestionVar:
+                                break;
+
+                            case KindOfLogicalQueryNode.Var:
+                                {
+#if DEBUG
+                                    //_gbcLogger.Info($"param = {param}");
+#endif
+
+                                    var value = varsResolver.GetVarValue(param.Name);
+
+#if DEBUG
+                                    //_gbcLogger.Info($"value = {value}");
+#endif
+                                    if(value.IsStrongIdentifierValue)
+                                    {
+                                        var strVal = value.AsStrongIdentifierValue;
+
+                                        var kindOfName = strVal.KindOfName;
+
+                                        switch (kindOfName)
+                                        {
+                                            case KindOfName.Concept:
+                                                param.Kind = KindOfLogicalQueryNode.Concept;
+                                                param.Name = strVal;
+                                                break;
+
+                                            case KindOfName.Entity:
+                                                param.Kind = KindOfLogicalQueryNode.Entity;
+                                                param.Name = strVal;
+                                                break;
+
+                                            default:
+                                                throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        param.Kind = KindOfLogicalQueryNode.Value;
+                                        param.Name = null;
+                                        param.Value = value;
+                                    }
+
+#if DEBUG
+                                    //_gbcLogger.Info($"param (after) = {param}");
+#endif
+                                }
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(kindOfParam), kindOfParam, null);
+                        }
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.Group:
+                    Left.ResolveVariables(varsResolver);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
+            }
         }
 
         public void CalculateUsedKeys(List<StrongIdentifierValue> usedKeysList)
@@ -291,6 +436,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     break;
 
                 case KindOfLogicalQueryNode.Value:
+                case KindOfLogicalQueryNode.Var:
                 case KindOfLogicalQueryNode.StubParam:
                 case KindOfLogicalQueryNode.EntityCondition:
                 case KindOfLogicalQueryNode.EntityRef:
@@ -372,6 +518,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 case KindOfLogicalQueryNode.EntityCondition:
                 case KindOfLogicalQueryNode.EntityRef:
                     break;
+
+                case KindOfLogicalQueryNode.Var:
+                    return 0;
 
                 case KindOfLogicalQueryNode.Relation:
                     {

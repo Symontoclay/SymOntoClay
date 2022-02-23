@@ -242,7 +242,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if(rawList.Any(p => p.ResultItem.TypeOfAccess == TypeOfAccess.Local))
             {
-                return rawList.Single().ResultItem;
+                return rawList.Single(p => p.ResultItem.TypeOfAccess == TypeOfAccess.Local).ResultItem;
             }
 
             var filteredList = Filter(rawList);
@@ -307,5 +307,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
+
+        public ResolverOptions DefaultOptions => _defaultOptions;
     }
 }

@@ -1,14 +1,16 @@
 ﻿app PeaceKeeper
 {
+    @a = #`gun 1`;
+
     on Init =>
     {
         'Begin' >> @>log;
-        var @a: number = 2;
-        @a >> @>log;
-        var @b: number;
-        @b >> @>log;
-        var @c;
-        @c >> @>log;
-        'End' >> @>log;
+        insert {: see(I, #`gun 1`) :};
+        //'End' >> @>log;
     }
+
+    on {: see(I, @a) :} => 
+    {
+	    'D' >> @>log;
+	}
 }

@@ -216,6 +216,9 @@ namespace SymOntoClay.Core.Internal.Convertors
                 case KindOfLogicalQueryNode.QuestionVar:
                     return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict);
 
+                case KindOfLogicalQueryNode.Var:
+                    return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict);
+
                 case KindOfLogicalQueryNode.Value:
                     return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict);
 

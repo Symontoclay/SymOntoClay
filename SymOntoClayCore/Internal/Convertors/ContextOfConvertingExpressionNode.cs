@@ -33,6 +33,7 @@ namespace SymOntoClay.Core.Internal.Convertors
     {
         public bool HasVars { get; set; }
         public bool HasQuestionVars { get; set; }
+        public bool IsParameterized { get; set; }
         public List<LogicalQueryNode> RelationsList { get; set; } = new List<LogicalQueryNode>();
 
         /// <inheritdoc/>
@@ -55,6 +56,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             sb.AppendLine($"{spaces}{nameof(HasVars)} = {HasVars}");
             sb.AppendLine($"{spaces}{nameof(HasQuestionVars)} = {HasQuestionVars}");
+            sb.AppendLine($"{spaces}{nameof(IsParameterized)} = {IsParameterized}");
 
             sb.PrintObjListProp(n, nameof(RelationsList), RelationsList);
 
@@ -81,6 +83,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             sb.AppendLine($"{spaces}{nameof(HasVars)} = {HasVars}");
             sb.AppendLine($"{spaces}{nameof(HasQuestionVars)} = {HasQuestionVars}");
+            sb.AppendLine($"{spaces}{nameof(IsParameterized)} = {IsParameterized}");
 
             sb.PrintShortObjListProp(n, nameof(RelationsList), RelationsList);
 
@@ -107,6 +110,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             sb.AppendLine($"{spaces}{nameof(HasVars)} = {HasVars}");
             sb.AppendLine($"{spaces}{nameof(HasQuestionVars)} = {HasQuestionVars}");
+            sb.AppendLine($"{spaces}{nameof(IsParameterized)} = {IsParameterized}");
 
             sb.PrintBriefObjListProp(n, nameof(RelationsList), RelationsList);
 

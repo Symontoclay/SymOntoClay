@@ -94,56 +94,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     _state = State.GotType;
                     break;
 
-//                    switch (_currToken.TokenKind)
-//                    {
-//                        case TokenKind.Identifier:
-//                        case TokenKind.Word:
-//                            {
-//                                var nextToken = _context.GetToken();
-
-//#if DEBUG
-//                                //Log($"nextToken = {nextToken}");
-//#endif
-
-//                                if (nextToken.TokenKind == TokenKind.Or)
-//                                {
-//                                    _context.Recovery(_currToken);
-//                                    _context.Recovery(nextToken);
-
-//                                    var paser = new TupleOfTypesParser(_context, false);
-//                                    paser.Run();
-
-//                                    _field.TypesList = paser.Result;
-//                                }
-//                                else
-//                                {
-//                                    _context.Recovery(nextToken);
-
-//                                    _field.TypesList.Add(ParseName(_currToken.Content));
-//                                }
-
-//                                _state = State.GotType;
-//                            }
-//                            break;
-
-//                        case TokenKind.OpenRoundBracket:
-//                            {
-//                                _context.Recovery(_currToken);
-
-//                                var paser = new TupleOfTypesParser(_context, true);
-//                                paser.Run();
-
-//                                _field.TypesList = paser.Result;
-
-//                                _state = State.GotType;
-//                            }
-//                            break;
-
-//                        default:
-//                            throw new UnexpectedTokenException(_currToken);
-//                    }
-//                    break;
-
                 case State.GotType:
                     switch (_currToken.TokenKind)
                     {

@@ -46,6 +46,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private InheritanceResolver _inheritanceResolver;
         private FuzzyLogicResolver _fuzzyLogicResolver;
         private NumberValueLinearResolver _numberValueLinearResolver;
+        private VarsResolver _varsResolver;
 
         public LogicalSearchResolver(IMainStorageContext context)
             : base(context)
@@ -76,6 +77,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
                 _fuzzyLogicResolver = dataResolversFactory.GetFuzzyLogicResolver();
                 _numberValueLinearResolver = dataResolversFactory.GetNumberValueLinearResolver();
+                _varsResolver = dataResolversFactory.GetVarsResolver();
             }
 
             var optionsOfFillExecutingCard = new OptionsOfFillExecutingCard();
@@ -149,18 +151,43 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var queryExpression = options.QueryExpression;
 
+            queryExpression.CheckDirty();
+
 #if DEBUG
             //Log($"queryExpression = {queryExpression}");
             //Log($"DebugHelperForRuleInstance.ToString(queryExpression) = {DebugHelperForRuleInstance.ToString(queryExpression)}");
 #endif
 
-            queryExpression.CheckDirty();
+            if(queryExpression.IsParameterized)
+            {
+                queryExpression = queryExpression.Clone();
+
+#if DEBUG
+                //Log($"queryExpression (1) = {queryExpression}");
+                //Log($"DebugHelperForRuleInstance.ToString(queryExpression) (1) = {DebugHelperForRuleInstance.ToString(queryExpression)}");
+#endif
+
+                var packedVarsResolver = new PackedVarsResolver(_varsResolver, options.LocalCodeExecutionContext);
+
+                queryExpression.ResolveVariables(packedVarsResolver);
+
+#if DEBUG
+                //Log($"queryExpression (2) = {queryExpression}");
+                //Log($"DebugHelperForRuleInstance.ToString(queryExpression) (2) = {DebugHelperForRuleInstance.ToString(queryExpression)}");
+#endif
+
+                queryExpression.CheckDirty();
+            }
 
             queryExpression = queryExpression.Normalized;
 
 #if DEBUG
             //Log($"queryExpression (after) = {queryExpression}");
             //Log($"DebugHelperForRuleInstance.ToString(queryExpression) (after) = {DebugHelperForRuleInstance.ToString(queryExpression)}");
+#endif
+
+#if DEBUG
+            //throw new NotImplementedException();
 #endif
 
             FillExecutingCard(queryExpression, queryExecutingCard, dataSource, optionsOfFillExecutingCard);

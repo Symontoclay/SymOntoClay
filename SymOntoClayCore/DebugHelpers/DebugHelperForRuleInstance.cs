@@ -134,6 +134,7 @@ namespace SymOntoClay.Core.DebugHelpers
                 case KindOfLogicalQueryNode.QuestionVar:
                 case KindOfLogicalQueryNode.Entity:
                 case KindOfLogicalQueryNode.LogicalVar:
+                case KindOfLogicalQueryNode.Var:
                     return ConceptToString(expr);
 
                 case KindOfLogicalQueryNode.Value:

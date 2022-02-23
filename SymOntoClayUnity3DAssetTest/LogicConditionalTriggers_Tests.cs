@@ -416,5 +416,77 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case7()
+        {
+            var text = @"app PeaceKeeper
+{
+    @a = #`gun 1`;
+
+    on Init =>
+    {
+        'Begin' >> @>log;
+        insert {: see(I, #`gun 1`) :};
+    }
+
+    on {: see(I, @a) :} => 
+    {
+	    'D' >> @>log;
+	}
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "D");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case7_a()
+        {
+            var text = @"app PeaceKeeper
+{
+    @a = #`gun 1`;
+
+    on Init =>
+    {
+        'Begin' >> @>log;
+        insert {: see(I, #`gun 2`) :};
+    }
+
+    on {: see(I, @a) :} => 
+    {
+	    'D' >> @>log;
+	}
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

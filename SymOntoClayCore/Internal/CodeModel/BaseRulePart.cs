@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.Core.Internal.Convertors;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public bool HasQuestionVars { get; set; }
         public bool HasVars { get; set; }
+        public bool IsParameterized { get; set; }
 
         public IDictionary<StrongIdentifierValue, IList<LogicalQueryNode>> RelationsDict { get; set; }
 
@@ -54,6 +56,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             AliasesDict = source.AliasesDict?.ToDictionary(p => p.Key.Clone(context), p => p.Value.Clone(context));
             HasQuestionVars = source.HasQuestionVars;
             HasVars = source.HasVars;
+            IsParameterized = source.IsParameterized;
             RelationsDict = source.RelationsDict.ToDictionary(p => p.Key, p => (IList<LogicalQueryNode>)(p.Value.Select(x => x.Clone(context)).ToList()));
 
             AppendAnnotations(source, context);
@@ -84,12 +87,20 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             HasQuestionVars = contextOfConvertingExpressionNode.HasQuestionVars;
             HasVars = contextOfConvertingExpressionNode.HasVars;
+            IsParameterized = contextOfConvertingExpressionNode.IsParameterized;
 
 #if DEBUG
             //_gbcLogger.Info($"HasVars = {HasVars}");
 #endif
 
             RelationsDict = contextOfConvertingExpressionNode.RelationsList.GroupBy(p => p.Name).ToDictionary(p => p.Key, p => (IList<LogicalQueryNode>)p.ToList());
+        }
+
+        public void ResolveVariables(IPackedVarsResolver varsResolver)
+        {
+            Expression.ResolveVariables(varsResolver);
+
+            IsParameterized = false;
         }
 
         public void CalculateUsedKeys(List<StrongIdentifierValue> usedKeysList)
@@ -116,6 +127,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(IsActive)} = {IsActive}");
             sb.AppendLine($"{spaces}{nameof(HasVars)} = {HasVars}");
             sb.AppendLine($"{spaces}{nameof(HasQuestionVars)} = {HasQuestionVars}");
+            sb.AppendLine($"{spaces}{nameof(IsParameterized)} = {IsParameterized}");
 
             sb.PrintObjProp(n, nameof(Expression), Expression);
 
@@ -157,6 +169,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(IsActive)} = {IsActive}");
             sb.AppendLine($"{spaces}{nameof(HasVars)} = {HasVars}");
             sb.AppendLine($"{spaces}{nameof(HasQuestionVars)} = {HasQuestionVars}");
+            sb.AppendLine($"{spaces}{nameof(IsParameterized)} = {IsParameterized}");
 
             sb.PrintShortObjProp(n, nameof(Expression), Expression);
 
@@ -179,6 +192,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(IsActive)} = {IsActive}");
             sb.AppendLine($"{spaces}{nameof(HasVars)} = {HasVars}");
             sb.AppendLine($"{spaces}{nameof(HasQuestionVars)} = {HasQuestionVars}");
+            sb.AppendLine($"{spaces}{nameof(IsParameterized)} = {IsParameterized}");
 
             sb.PrintBriefObjProp(n, nameof(Expression), Expression);
 

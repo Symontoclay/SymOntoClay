@@ -53,6 +53,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public bool IsSource { get; set; } = true;
 
+        public bool IsParameterized { get; set; }
+
         public KindOfRuleInstance KindOfRuleInstance { get; set; } = KindOfRuleInstance.Undefined;
         public PrimaryRulePart PrimaryPart { get; set; }
         public IList<SecondaryRulePart> SecondaryParts { get; set; } = new List<SecondaryRulePart>();
@@ -88,7 +90,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 #if DEBUG
                 //_gbcLogger.Info($"(options != null) = {options != null}");
                 //_gbcLogger.Info($"this = {DebugHelperForRuleInstance.ToString(this)}");
-#endif 
+#endif
+
+                NPrepareDirty();
 
                 Normalized = ConvertorToNormalized.Convert(this, options);
                 Normalized.PrepareDirty(options);
@@ -100,20 +104,44 @@ namespace SymOntoClay.Core.Internal.CodeModel
             else
             {
                 CalculateUsedKeys();
-                PrimaryPart?.PrepareDirty(this);
-
-                if (!SecondaryParts.IsNullOrEmpty())
-                {
-                    foreach (var item in SecondaryParts)
-                    {
-                        item.PrepareDirty(this);
-                    }
-                }
+                NPrepareDirty();
 
                 Normalized = this;
             }
 
+            if (PrimaryPart != null)
+            {
+                if (PrimaryPart.IsParameterized)
+                {
+                    IsParameterized = true;
+                }
+            }
+
+            if (!SecondaryParts.IsNullOrEmpty())
+            {
+                foreach (var item in SecondaryParts)
+                {
+                    if (item.IsParameterized)
+                    {
+                        IsParameterized = true;
+                    }
+                }
+            }
+
             _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(Normalized);
+        }
+
+        private void NPrepareDirty()
+        {
+            PrimaryPart?.PrepareDirty(this);
+
+            if (!SecondaryParts.IsNullOrEmpty())
+            {
+                foreach (var item in SecondaryParts)
+                {
+                    item.PrepareDirty(this);
+                }
+            }
         }
 
         public void CalculateUsedKeys()
@@ -131,6 +159,30 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
 
             UsedKeysList = usedKeysList.Distinct().ToList();
+        }
+
+        public void ResolveVariables(IPackedVarsResolver varsResolver)
+        {
+            if (PrimaryPart != null)
+            {
+                if (PrimaryPart.IsParameterized)
+                {
+                    PrimaryPart.ResolveVariables(varsResolver);
+                }
+            }
+
+            if (!SecondaryParts.IsNullOrEmpty())
+            {
+                foreach (var item in SecondaryParts)
+                {
+                    if (item.IsParameterized)
+                    {
+                        item.ResolveVariables(varsResolver);
+                    }
+                }
+            }
+
+            IsParameterized = false;
         }
 
         /// <inheritdoc/>
@@ -198,7 +250,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.KindOfRuleInstance = KindOfRuleInstance;
             result.PrimaryPart = PrimaryPart.Clone(context);
             result.SecondaryParts = SecondaryParts?.Select(p => p.Clone(context)).ToList();
-            UsedKeysList = UsedKeysList.ToList();
+            result.IsParameterized = IsParameterized;
+            result.UsedKeysList = UsedKeysList?.ToList();
 
             result.AppendCodeItem(this, context);
 
@@ -237,7 +290,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(IsSource)} = {IsSource}");
+            sb.AppendLine($"{spaces}{nameof(IsSource)} = {IsSource}"); 
+            sb.AppendLine($"{spaces}{nameof(IsParameterized)} = {IsParameterized}");
 
             sb.AppendLine($"{spaces}{nameof(KindOfRuleInstance)} = {KindOfRuleInstance}");
 
@@ -260,6 +314,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(IsSource)} = {IsSource}");
+            sb.AppendLine($"{spaces}{nameof(IsParameterized)} = {IsParameterized}");
 
             sb.AppendLine($"{spaces}{nameof(KindOfRuleInstance)} = {KindOfRuleInstance}");
 
@@ -282,6 +337,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(IsSource)} = {IsSource}");
+            sb.AppendLine($"{spaces}{nameof(IsParameterized)} = {IsParameterized}");
 
             sb.AppendLine($"{spaces}{nameof(KindOfRuleInstance)} = {KindOfRuleInstance}");
 

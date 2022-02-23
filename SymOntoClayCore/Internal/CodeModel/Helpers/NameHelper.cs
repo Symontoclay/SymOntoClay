@@ -119,6 +119,25 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 
             name.NameValue = text;
 
+            if(text.Contains(" ") && !text.Contains("`"))
+            {
+                var kindOfName = name.KindOfName;
+
+                switch(kindOfName)
+                {
+                    case KindOfName.Concept:
+                        name.NameValue = $"`{name.NameValue}`";
+                        break;
+
+                    case KindOfName.Entity:
+                        name.NameValue = $"#`{name.NameValue.Replace("#", string.Empty)}`";
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
+                }
+            }
+
             name.NormalizedNameValue = NormalizeString(text);
 
             return name;

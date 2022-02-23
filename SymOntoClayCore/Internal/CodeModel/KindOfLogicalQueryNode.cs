@@ -44,6 +44,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         StubParam,
         Value,
         Group,
-        FuzzyLogicNonNumericSequence
+        FuzzyLogicNonNumericSequence,
+        Var
     }
 }

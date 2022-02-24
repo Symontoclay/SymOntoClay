@@ -44,11 +44,13 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             var dataResolversFactory = engineContext.DataResolversFactory;
 
             _searcher = dataResolversFactory.GetLogicalSearchResolver();
+            _varsResolver = dataResolversFactory.GetVarsResolver();
         }
 
         private readonly IEngineContext _engineContext;
         private readonly LogicalSearchResolver _searcher;
-        private readonly ILogicalStorage _logicalStorage;
+        private readonly VarsResolver _varsResolver;
+        private readonly ILogicalStorage _logicalStorage;        
 
         /// <inheritdoc/>
         public Value Call(Value operand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
@@ -165,8 +167,30 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             var ruleInstance = target.AsRuleInstanceValue.RuleInstance;
 
 #if DEBUG
+            //Log($"ruleInstance = {ruleInstance}");
             //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
 #endif
+
+            if(ruleInstance.IsParameterized)
+            {
+                ruleInstance = ruleInstance.Clone();
+
+#if DEBUG
+                //Log($"queryExpression (1) = {ruleInstance}");
+                //Log($"DebugHelperForRuleInstance.ToString(queryExpression) (1) = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+#endif
+
+                var packedVarsResolver = new PackedVarsResolver(_varsResolver, localCodeExecutionContext);
+
+                ruleInstance.ResolveVariables(packedVarsResolver);
+
+#if DEBUG
+                //Log($"ruleInstance (2) = {ruleInstance}");
+                //Log($"DebugHelperForRuleInstance.ToString(queryExpression) (2) = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+#endif
+
+                ruleInstance.CheckDirty();
+            }            
 
             _logicalStorage.Append(ruleInstance);
 

@@ -128,6 +128,38 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
         [Test]
         [Parallelizable]
+        public void Case3_a()
+        {
+            var text = @"app PeaceKeeper
+{
+	{: male(#Tom) :}
+	{: parent(#Piter, #Tom) :}
+	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+    @a = #Tom;
+	on Init => {
+	    select {: son(@a, $y) :} >> @>log;
+	}
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$x = #tom"), false);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
         public void Case4()
         {
             var text = @"app PeaceKeeper

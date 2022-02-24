@@ -1,16 +1,12 @@
 ﻿app PeaceKeeper
 {
-    @a = #`gun 1`;
+	{: male(#Tom) :}
+	{: parent(#Piter, #Tom) :}
+	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
-    on Init =>
-    {
-        'Begin' >> @>log;
-        insert {: see(I, #`gun 1`) :};
-        //'End' >> @>log;
-    }
+	@a = #Tom;
 
-    on {: see(I, @a) :} => 
-    {
-	    'D' >> @>log;
+	on Init => {
+	    select {: son(@a, $y) :} >> @>log;
 	}
 }

@@ -36,11 +36,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
 
         protected BaseObjectParser(InternalParserContext context, CodeItem codeItem)
+            : base(context)
         {
-            throw new NotImplementedException();
+            _inAccessibilityAreas = true;
+            Result = codeItem;
         }
 
         private readonly KindOfCodeEntity _kindOfCodeEntity;
+        private readonly bool _inAccessibilityAreas;
 
         public CodeItem Result { get; protected set; }
 
@@ -50,9 +53,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #if DEBUG
             //Log("Begin");
 #endif
-            Result = ObjectFactory(_kindOfCodeEntity);
 
-            SetCurrentCodeItem(Result);
+            if(!_inAccessibilityAreas)
+            {
+                Result = ObjectFactory(_kindOfCodeEntity);
+
+                SetCurrentCodeItem(Result);
+            }
 
 #if DEBUG
             //Log("End");
@@ -175,6 +182,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case KeyWordTokenKind.Protected:
                         case KeyWordTokenKind.Private:
                             {
+                                _context.Recovery(_currToken);
+                                var parser = new AccessibilityAreasParser(_context, Result);
+                                parser.Run();
+
+#if DEBUG
+                                Log($"Result = {Result}");
+#endif
+
                                 throw new NotImplementedException();
                             }
 

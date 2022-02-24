@@ -38,6 +38,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class RuleInstance: CodeItem, IStorage, ILogicalStorage
     {
+        public RuleInstance()
+        {
+            TypeOfAccess = TypeOfAccess.Public;
+        }
+
 #if DEBUG
         //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif

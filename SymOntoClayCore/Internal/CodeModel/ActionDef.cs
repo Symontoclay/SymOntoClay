@@ -31,6 +31,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class ActionDef : CodeItem
     {
+        public ActionDef()
+        {
+            TypeOfAccess = TypeOfAccess.Public;
+        }
+
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.Action;
 

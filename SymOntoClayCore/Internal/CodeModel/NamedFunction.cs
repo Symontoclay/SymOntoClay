@@ -29,6 +29,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class NamedFunction: Function
     {
+        public NamedFunction()
+        {
+            TypeOfAccess = TypeOfAccess.Public;
+        }
+
         /// <inheritdoc/>
         public override bool IsNamedFunction => true;
 

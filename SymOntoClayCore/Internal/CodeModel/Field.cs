@@ -6,6 +6,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class Field: Var
     {
+        public Field()
+        {
+            TypeOfAccess = TypeOfAccess.Public;
+        }
+
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.Field;
 

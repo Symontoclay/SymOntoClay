@@ -8,7 +8,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         public App()
         {
-            TypeOfAccess = TypeOfAccess.Private;
+            TypeOfAccess = TypeOfAccess.Public;
         }
 
         /// <inheritdoc/>

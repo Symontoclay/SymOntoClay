@@ -63,6 +63,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Complete,
         Break,
         Alias,
-        Var
+        Var,
+        Public,
+        Protected,
+        Private
     }
 }

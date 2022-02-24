@@ -956,6 +956,24 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Var;
                             break;
                         }
+
+                        if (string.Compare(content, "public", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Public;
+                            break;
+                        }
+
+                        if (string.Compare(content, "protected", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Protected;
+                            break;
+                        }
+
+                        if (string.Compare(content, "private", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Private;
+                            break;
+                        }
                     }
                     break;
 

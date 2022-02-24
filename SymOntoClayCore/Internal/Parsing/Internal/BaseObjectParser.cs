@@ -166,6 +166,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessVar();
                             break;
 
+                        case KeyWordTokenKind.Public:
+                        case KeyWordTokenKind.Protected:
+                        case KeyWordTokenKind.Private:
+                            {
+                                throw new NotImplementedException();
+                            }
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

@@ -35,6 +35,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _kindOfCodeEntity = kindOfCodeEntity;
         }
 
+        protected BaseObjectParser(InternalParserContext context, CodeItem codeItem)
+        {
+            throw new NotImplementedException();
+        }
+
         private readonly KindOfCodeEntity _kindOfCodeEntity;
 
         public CodeItem Result { get; protected set; }

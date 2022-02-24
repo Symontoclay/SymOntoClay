@@ -1,12 +1,16 @@
 ﻿app PeaceKeeper
 {
+public:
 	{: male(#Tom) :}
 	{: parent(#Piter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
-	@a = #Tom;
-
 	on Init => {
+	    'Begin' >> @>log;
 	    select {: son(@a, $y) :} >> @>log;
+		'End' >> @>log;
 	}
+
+private:
+	@a = #Tom;
 }

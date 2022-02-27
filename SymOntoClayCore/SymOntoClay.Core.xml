@@ -4303,6 +4303,12 @@
         <member name="M:SymOntoClay.Core.Internal.MainStorageContext.OnDisposed">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.AccessibilityAreasParser.OnEnter">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.AccessibilityAreasParser.OnFinish">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.AccessibilityAreasParser.OnRun">
             <inheritdoc/>
         </member>

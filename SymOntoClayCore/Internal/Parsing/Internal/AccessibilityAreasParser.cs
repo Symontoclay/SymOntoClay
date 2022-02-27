@@ -26,6 +26,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnEnter()
         {
+#if DEBUG
+            Log($"(_context.CurrentDefaultSetings != null) = {_context.CurrentDefaultSetings != null}");
+#endif
+
             throw new NotImplementedException();
         }
 

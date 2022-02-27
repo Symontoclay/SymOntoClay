@@ -35,6 +35,8 @@ namespace SymOntoClay.Core.Internal
 
         public StrongIdentifierValue Holder { get; set; }
 
+        public TypeOfAccess TypeOfAccess { get; set; } = TypeOfAccess.Public;
+
         /// <summary>
         /// Clones the instance and returns cloned instance.
         /// </summary>
@@ -62,6 +64,7 @@ namespace SymOntoClay.Core.Internal
 
             result.WhereSection = WhereSection?.Select(p => p.CloneValue(context)).ToList();
             result.Holder = Holder?.Clone(context);
+            result.TypeOfAccess = TypeOfAccess;
 
             return result;
         }
@@ -86,6 +89,7 @@ namespace SymOntoClay.Core.Internal
 
             sb.PrintObjListProp(n, nameof(WhereSection), WhereSection);
             sb.PrintObjProp(n, nameof(Holder), Holder);
+            sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
 
             return sb.ToString();
         }
@@ -110,6 +114,7 @@ namespace SymOntoClay.Core.Internal
 
             sb.PrintShortObjListProp(n, nameof(WhereSection), WhereSection);
             sb.PrintShortObjProp(n, nameof(Holder), Holder);
+            sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
 
             return sb.ToString();
         }
@@ -133,8 +138,8 @@ namespace SymOntoClay.Core.Internal
             var sb = new StringBuilder();
 
             sb.PrintExistingList(n, nameof(WhereSection), WhereSection);
-
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
+            sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
 
             return sb.ToString();
         }

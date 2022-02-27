@@ -526,12 +526,19 @@ action Go
 
             var text = @"app PeaceKeeper
 {
-    on Init
-    {
-        'Begin' >> @>log;
-        #@(color = black) >> @>log;
-        'End' >> @>log;
-    }
+private:
+	{: male(#Tom) :}
+	{: parent(#Piter, #Tom) :}
+	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+
+	on Init => {
+	    'Begin' >> @>log;
+	    select {: son(@a, $y) :} >> @>log;
+		'End' >> @>log;
+	}
+
+private:
+	@a = #Tom;
 }";
 
             BehaviorTestEngineInstance.Run(text,

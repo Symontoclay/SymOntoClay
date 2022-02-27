@@ -62,6 +62,33 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
+        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterCodeItems<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source)
+            where T : CodeItem
+        {
+            if (!source.Any())
+            {
+                return new List<WeightedInheritanceResultItemWithStorageInfo<T>>();
+            }
+
+            source = Filter(source);
+
+            if (!source.Any())
+            {
+                return new List<WeightedInheritanceResultItemWithStorageInfo<T>>();
+            }
+
+            var result = new List<WeightedInheritanceResultItemWithStorageInfo<T>>();
+
+            foreach (var item in source)
+            {
+#if DEBUG
+                Log($"item = {item}");
+#endif
+            }
+
+            throw new NotImplementedException();
+        }
+
         protected List<WeightedInheritanceResultItemWithStorageInfo<T>> Filter<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source)
             where T: AnnotatedItem
         {

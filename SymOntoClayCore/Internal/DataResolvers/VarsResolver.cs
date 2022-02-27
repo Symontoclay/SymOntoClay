@@ -245,7 +245,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return rawList.Single(p => p.ResultItem.TypeOfAccess == TypeOfAccess.Local).ResultItem;
             }
 
-            var filteredList = FilterCodeItems(rawList);
+            var filteredList = FilterCodeItems(rawList, localCodeExecutionContext);
 
 #if DEBUG
             //Log($"filteredList = {filteredList.WriteListToString()}");

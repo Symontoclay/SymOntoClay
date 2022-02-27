@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using System;
@@ -62,7 +63,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterCodeItems<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source)
+        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterCodeItems<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, LocalCodeExecutionContext localCodeExecutionContext)
             where T : CodeItem
         {
             if (!source.Any())
@@ -81,9 +82,21 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var item in source)
             {
+                var resultItem = item.ResultItem;
+
 #if DEBUG
                 Log($"item = {item}");
+                Log($"resultItem.TypeOfAccess = {resultItem.TypeOfAccess}");
+                Log($"resultItem.Holder = {resultItem.Holder}");
 #endif
+
+                var typeOfAccess = resultItem.TypeOfAccess;
+
+                switch (typeOfAccess)
+                {
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(typeOfAccess), typeOfAccess, null);
+                }
             }
 
             throw new NotImplementedException();

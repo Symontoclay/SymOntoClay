@@ -148,7 +148,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return null;
             }
 
-            var filteredList = FilterCodeItems(rawList);
+            var filteredList = FilterCodeItems(rawList, localCodeExecutionContext);
 
 #if DEBUG
             Log($"filteredList = {filteredList.WriteListToString()}");

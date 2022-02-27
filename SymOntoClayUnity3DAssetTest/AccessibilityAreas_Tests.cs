@@ -96,5 +96,142 @@ private:
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case3()
+        {
+            var text = @"class Cls1
+{
+    fun a() => 
+    {
+        '`a` has been called!' >> @>log;
+    }
+}
+
+app PeaceKeeper is Cls1
+{
+private:
+    on Init =>
+    {
+        'Begin' >> @>log;
+        a();
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "`a` has been called!");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case3_a()
+        {
+            var text = @"class Cls1
+{
+private:
+    fun a() => 
+    {
+        '`a` has been called!' >> @>log;
+    }
+}
+
+app PeaceKeeper is Cls1
+{
+private:
+    on Init =>
+    {
+        'Begin' >> @>log;
+        a();
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "`a` has been called!");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case3_b()
+        {
+            var text = @"class Cls1
+{
+protected:
+    fun a() => 
+    {
+        '`a` has been called!' >> @>log;
+    }
+}
+
+app PeaceKeeper is Cls1
+{
+private:
+    on Init =>
+    {
+        'Begin' >> @>log;
+        a();
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "`a` has been called!");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

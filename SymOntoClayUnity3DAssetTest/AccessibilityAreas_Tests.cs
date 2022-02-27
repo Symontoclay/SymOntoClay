@@ -54,5 +54,47 @@ private:
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case2()
+        {
+            var text = @"app PeaceKeeper
+{
+private:
+    fun a() => 
+    {
+        '`a` has been called!' >> @>log;
+    }
+
+    on Init =>
+    {
+        'Begin' >> @>log;
+        a();
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "`a` has been called!");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

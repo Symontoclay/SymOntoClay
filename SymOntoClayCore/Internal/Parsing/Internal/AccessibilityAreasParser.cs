@@ -10,7 +10,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private enum State
         {
             Init,
-            GotAccessibilityAreasMark
+            GotAccessibilityAreasMark,
+            ContentStarted
         }
 
         public AccessibilityAreasParser(InternalParserContext context, CodeItem codeItem)
@@ -23,20 +24,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private CodeItem _codeItem;
 
+        private TypeOfAccess _prevTypeOfAccess;
+
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-#if DEBUG
-            Log($"(_context.CurrentDefaultSetings != null) = {_context.CurrentDefaultSetings != null}");
-#endif
-
-            throw new NotImplementedException();
+            _prevTypeOfAccess = _context.CurrentDefaultSetings.TypeOfAccess;
         }
 
         /// <inheritdoc/>
         protected override void OnFinish()
         {
-            throw new NotImplementedException();
+            _context.CurrentDefaultSetings.TypeOfAccess = _prevTypeOfAccess;
         }
 
         /// <inheritdoc/>
@@ -52,7 +51,28 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.Init:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Public:
+                                    _context.CurrentDefaultSetings.TypeOfAccess = TypeOfAccess.Public;
+                                    _state = State.GotAccessibilityAreasMark;
+                                    break;
 
+                                case KeyWordTokenKind.Protected:
+                                    _context.CurrentDefaultSetings.TypeOfAccess = TypeOfAccess.Protected;
+                                    _state = State.GotAccessibilityAreasMark;
+                                    break;
+
+                                case KeyWordTokenKind.Private:
+                                    _context.CurrentDefaultSetings.TypeOfAccess = TypeOfAccess.Private;
+                                    _state = State.GotAccessibilityAreasMark;
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
 
                         default:
                             throw new UnexpectedTokenException(_currToken);
@@ -62,11 +82,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotAccessibilityAreasMark:
                     switch (_currToken.TokenKind)
                     {
-
+                        case TokenKind.Colon:
+                            _state = State.ContentStarted;
+                            break;
 
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
+                    break;
+
+                case State.ContentStarted:
+                    ProcessGeneralContent();
                     break;
 
                 default:

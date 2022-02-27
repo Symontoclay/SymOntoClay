@@ -9,7 +9,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
     {
         private enum State
         {
-            Init
+            Init,
+            GotAccessibilityAreasMark
         }
 
         public AccessibilityAreasParser(InternalParserContext context, CodeItem codeItem)
@@ -23,6 +24,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private CodeItem _codeItem;
 
         /// <inheritdoc/>
+        protected override void OnEnter()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnFinish()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         protected override void OnRun()
         {
 #if DEBUG
@@ -33,6 +46,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             switch (_state)
             {
                 case State.Init:
+                    switch (_currToken.TokenKind)
+                    {
+
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotAccessibilityAreasMark:
                     switch (_currToken.TokenKind)
                     {
 

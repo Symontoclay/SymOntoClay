@@ -120,7 +120,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected void ProcessGeneralContent()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
+            //Log($"_currToken = {_currToken}");
+            //Log($"(_context.CurrentDefaultSetings != null) = {_context.CurrentDefaultSetings != null}");
 #endif
 
             switch (_currToken.TokenKind)
@@ -187,11 +188,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 parser.Run();
 
 #if DEBUG
-                                Log($"Result = {Result}");
+                                //Log($"Result = {Result}");
 #endif
 
-                                throw new NotImplementedException();
+                                Exit();
                             }
+                            break;
 
                         default:
                             throw new UnexpectedTokenException(_currToken);

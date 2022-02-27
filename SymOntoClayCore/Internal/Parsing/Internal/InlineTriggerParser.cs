@@ -54,7 +54,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         /// <inheritdoc/>
         protected override void OnEnter()
-        {            
+        {      
             _inlineTrigger = CreateInlineTriggerAndSetAsCurrentCodeItem();
             _inlineTrigger.Name = NameHelper.CreateRuleOrFactName();
         }

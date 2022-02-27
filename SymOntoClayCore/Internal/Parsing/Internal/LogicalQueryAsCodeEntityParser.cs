@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using System;
 using System.Collections.Generic;
@@ -51,8 +52,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _ruleInstance = parser.Result;
 
 #if DEBUG
-            //Log($"ruleInstanceItem = {ruleInstanceItem}");
+            //Log($"DebugHelperForRuleInstance.ToString(_ruleInstance) = {DebugHelperForRuleInstance.ToString(_ruleInstance)}");
+            //Log($"_ruleInstance = {_ruleInstance}");
 #endif
+
+            if(_context.CurrentDefaultSetings != null)
+            {
+                _ruleInstance.TypeOfAccess = _context.CurrentDefaultSetings.TypeOfAccess;
+            }            
 
             Exit();            
         }

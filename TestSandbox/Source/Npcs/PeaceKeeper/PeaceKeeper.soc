@@ -1,6 +1,6 @@
 ﻿app PeaceKeeper
 {
-public:
+private:
 	{: male(#Tom) :}
 	{: parent(#Piter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}

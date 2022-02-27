@@ -53,6 +53,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnEnter()
         {
             _namedFunction = CreateNamedFunctionAndSetAsCurrentCodeItem();
+
+            _namedFunction.TypeOfAccess = _context.CurrentDefaultSetings.TypeOfAccess;
         }
 
         /// <inheritdoc/>

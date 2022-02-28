@@ -80,6 +80,24 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var result = new List<WeightedInheritanceResultItemWithStorageInfo<T>>();
 
+            var holder = localCodeExecutionContext.Holder;
+
+#if DEBUG
+            Log($"holder = {holder}");
+#endif
+
+            var holderIsEntity = holder.KindOfName == KindOfName.Entity;
+
+#if DEBUG
+            Log($"holderIsEntity = {holderIsEntity}");
+#endif
+
+            var hasHolderInItems = source.Any(p => p.ResultItem.Holder == holder);
+
+#if DEBUG
+            Log($"hasHolderInItems = {hasHolderInItems}");
+#endif
+
             foreach (var item in source)
             {
                 var resultItem = item.ResultItem;
@@ -92,8 +110,26 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 var typeOfAccess = resultItem.TypeOfAccess;
 
+#if DEBUG
+                Log($"typeOfAccess = {typeOfAccess}");
+#endif
+
                 switch (typeOfAccess)
                 {
+                    case TypeOfAccess.Private:
+                        if(holderIsEntity)
+                        {
+                            if(hasHolderInItems)
+                            {
+                                throw new NotImplementedException();
+                            }
+                            else
+                            {
+                                throw new NotImplementedException();
+                            }
+                        }
+                        throw new NotImplementedException();
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(typeOfAccess), typeOfAccess, null);
                 }

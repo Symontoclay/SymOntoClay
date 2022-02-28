@@ -78,6 +78,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return new List<WeightedInheritanceResultItemWithStorageInfo<T>>();
             }
 
+
+        }
+
+        public static List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterByTypeOfAccess<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
+            where T : AnnotatedItem, IReadOnlyMemberAccess
+        {
             var result = new List<WeightedInheritanceResultItemWithStorageInfo<T>>();
 
             var holder = localCodeExecutionContext.Holder;
@@ -96,9 +102,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             InheritanceResolver inheritanceResolver = null;
 
-            if(holderIsEntity && !hasHolderInItems)
+            if (holderIsEntity && !hasHolderInItems)
             {
-                inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
+                inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
             }
 
 #if DEBUG
@@ -124,9 +130,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 switch (typeOfAccess)
                 {
                     case TypeOfAccess.Private:
-                        if(holderIsEntity)
+                        if (holderIsEntity)
                         {
-                            if(hasHolderInItems)
+                            if (hasHolderInItems)
                             {
                                 throw new NotImplementedException();
                             }
@@ -138,7 +144,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 //Log($"distance = {distance}");
 #endif
 
-                                if(distance == 1)
+                                if (distance == 1)
                                 {
                                     result.Add(item);
                                 }
@@ -158,7 +164,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             //Log($"rank = {rank}");
 #endif
 
-                            if(rank > 0)
+                            if (rank > 0)
                             {
                                 result.Add(item);
                             }
@@ -182,8 +188,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             return result;
         }
-
-        public static List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterByTypeOfAccess
 
         protected List<WeightedInheritanceResultItemWithStorageInfo<T>> Filter<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source)
             where T: AnnotatedItem

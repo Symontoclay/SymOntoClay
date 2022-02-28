@@ -209,6 +209,25 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        protected override void OnTypeOfAccessChanged()
+        {
+            base.OnTypeOfAccessChanged();
+
+            if (PrimaryPart != null)
+            {
+                PrimaryPart.TypeOfAccess = TypeOfAccess;
+            }
+
+            if (!SecondaryParts.IsNullOrEmpty())
+            {
+                foreach (var item in SecondaryParts)
+                {
+                    item.TypeOfAccess = TypeOfAccess;
+                }
+            }
+        }
+
+        /// <inheritdoc/>
         public override CodeItem CloneCodeItem()
         {
             return Clone();

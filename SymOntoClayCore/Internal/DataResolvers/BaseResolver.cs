@@ -183,6 +183,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
+        public static List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterByTypeOfAccess
+
         protected List<WeightedInheritanceResultItemWithStorageInfo<T>> Filter<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source)
             where T: AnnotatedItem
         {

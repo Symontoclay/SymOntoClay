@@ -20,7 +20,31 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public StrongIdentifierValue Holder { get; set; }
 
         /// <inheritdoc/>
-        public TypeOfAccess TypeOfAccess { get; set; } = TypeOfAccess.Local;
+        public TypeOfAccess TypeOfAccess 
+        { 
+            get
+            {
+                return _typeOfAccess;
+            }
+
+            set
+            {
+                if(_typeOfAccess == value)
+                {
+                    return;
+                }
+
+                _typeOfAccess = value;
+
+                OnTypeOfAccessChanged();
+            }
+        }
+
+        private TypeOfAccess _typeOfAccess = TypeOfAccess.Local;
+
+        protected virtual void OnTypeOfAccessChanged()
+        {
+        }
 
         public virtual bool IsRuleInstance => false;
         public virtual RuleInstance AsRuleInstance => null;

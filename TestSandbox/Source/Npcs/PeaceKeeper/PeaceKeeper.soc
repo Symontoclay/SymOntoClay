@@ -1,10 +1,9 @@
 ﻿class Cls1
 {
-public:
-    fun a() => 
-    {
-        '`a` has been called!' >> @>log;
-    }
+private:
+	{: male(#Tom) :}
+	{: parent(#Piter, #Tom) :}
+	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 }
 
 app PeaceKeeper is Cls1
@@ -13,7 +12,7 @@ private:
     on Init =>
     {
         'Begin' >> @>log;
-        a();
+        select {: son($x, $y) :} >> @>log;
         'End' >> @>log;
     }
 }

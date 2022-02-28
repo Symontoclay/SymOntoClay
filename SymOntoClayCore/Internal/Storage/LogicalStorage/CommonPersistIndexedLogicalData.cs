@@ -295,17 +295,17 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name)
         {
 #if DEBUG
-            //Log($"name = {name}");
-            //Log($"IndexedRulePartsOfFactsDict.Count = {IndexedRulePartsOfFactsDict.Count}");
-            //foreach (var tmpItem in IndexedRulePartsOfFactsDict)
-            //{
-            //    Log($"tmpItem.Key = {tmpItem.Key}");
-            //    foreach(var a in tmpItem.Value)
-            //    {
-            //        var dbgStr = DebugHelperForRuleInstance.BaseRulePartToString(a);
-            //        Log($"dbgStr = {dbgStr}");
-            //    }                
-            //}
+            Log($"name = {name}");
+            Log($"IndexedRulePartsOfFactsDict.Count = {IndexedRulePartsOfFactsDict.Count}");
+            foreach (var tmpItem in IndexedRulePartsOfFactsDict)
+            {
+                Log($"tmpItem.Key = {tmpItem.Key}");
+                foreach(var a in tmpItem.Value)
+                {
+                    var dbgStr = DebugHelperForRuleInstance.BaseRulePartToString(a);
+                    Log($"dbgStr = {dbgStr}");
+                }                
+            }
 #endif
 
             if (IndexedRulePartsOfFactsDict.ContainsKey(name))
@@ -319,17 +319,17 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name)
         {
 #if DEBUG
-            //Log($"name = {name}");
-            //Log($"IndexedRulePartsWithOneRelationWithVarsDict.Count = {IndexedRulePartsWithOneRelationWithVarsDict.Count}");
-            //foreach (var tmpItem in IndexedRulePartsWithOneRelationWithVarsDict)
-            //{
-            //    Log($"tmpItem.Key = {tmpItem.Key}");
-            //    foreach (var a in tmpItem.Value)
-            //    {
-            //        var dbgStr = DebugHelperForRuleInstance.BaseRulePartToString(a);
-            //        Log($"dbgStr = {dbgStr}");
-            //    }
-            //}
+            Log($"name = {name}");
+            Log($"IndexedRulePartsWithOneRelationWithVarsDict.Count = {IndexedRulePartsWithOneRelationWithVarsDict.Count}");
+            foreach (var tmpItem in IndexedRulePartsWithOneRelationWithVarsDict)
+            {
+                Log($"tmpItem.Key = {tmpItem.Key}");
+                foreach (var a in tmpItem.Value)
+                {
+                    var dbgStr = DebugHelperForRuleInstance.BaseRulePartToString(a);
+                    Log($"dbgStr = {dbgStr}");
+                }
+            }
 #endif
 
             if (IndexedRulePartsWithOneRelationWithVarsDict.ContainsKey(name))

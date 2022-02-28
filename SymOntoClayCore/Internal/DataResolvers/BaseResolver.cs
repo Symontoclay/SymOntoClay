@@ -83,13 +83,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var holder = localCodeExecutionContext.Holder;
 
 #if DEBUG
-            Log($"holder = {holder}");
+            //Log($"holder = {holder}");
 #endif
 
             var holderIsEntity = holder.KindOfName == KindOfName.Entity;
 
 #if DEBUG
-            Log($"holderIsEntity = {holderIsEntity}");
+            //Log($"holderIsEntity = {holderIsEntity}");
 #endif
 
             var hasHolderInItems = source.Any(p => p.ResultItem.Holder == holder);
@@ -102,7 +102,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            Log($"hasHolderInItems = {hasHolderInItems}");
+            //Log($"hasHolderInItems = {hasHolderInItems}");
 #endif
 
             foreach (var item in source)
@@ -110,15 +110,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var resultItem = item.ResultItem;
 
 #if DEBUG
-                Log($"item = {item}");
-                Log($"resultItem.TypeOfAccess = {resultItem.TypeOfAccess}");
-                Log($"resultItem.Holder = {resultItem.Holder}");
+                //Log($"item = {item}");
+                //Log($"resultItem.TypeOfAccess = {resultItem.TypeOfAccess}");
+                //Log($"resultItem.Holder = {resultItem.Holder}");
 #endif
 
                 var typeOfAccess = resultItem.TypeOfAccess;
 
 #if DEBUG
-                Log($"typeOfAccess = {typeOfAccess}");
+                //Log($"typeOfAccess = {typeOfAccess}");
 #endif
 
                 switch (typeOfAccess)
@@ -135,7 +135,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 var distance = inheritanceResolver.GetDistance(holder, resultItem.Holder, localCodeExecutionContext);
 
 #if DEBUG
-                                Log($"distance = {distance}");
+                                //Log($"distance = {distance}");
 #endif
 
                                 if(distance == 1)
@@ -155,7 +155,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             var rank = inheritanceResolver.GetRawInheritanceRank(holder, resultItem.Holder, localCodeExecutionContext);
 
 #if DEBUG
-                            Log($"rank = {rank}");
+                            //Log($"rank = {rank}");
 #endif
 
                             if(rank > 0)
@@ -175,7 +175,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            Log($"result.Count = {result.Count}");
+            //Log($"result.Count = {result.Count}");
 #endif
 
             //throw new NotImplementedException();

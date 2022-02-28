@@ -148,7 +148,7 @@ private:
         {
             var text = @"class Cls1
 {
-private:
+public:
     fun a() => 
     {
         '`a` has been called!' >> @>log;

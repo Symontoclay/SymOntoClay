@@ -1,17 +1,15 @@
 ﻿class Cls1
 {
-//private:
-
-}
-
-app PeaceKeeper is Cls1
-{
 private:
     fun a() => 
     {
         '`a` has been called!' >> @>log;
     }
+}
 
+app PeaceKeeper is Cls1
+{
+private:
     on Init =>
     {
         'Begin' >> @>log;

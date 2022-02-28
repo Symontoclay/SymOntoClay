@@ -94,6 +94,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var hasHolderInItems = source.Any(p => p.ResultItem.Holder == holder);
 
+            InheritanceResolver inheritanceResolver = null;
+
+            if(holderIsEntity && !hasHolderInItems)
+            {
+                inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
+            }
+
 #if DEBUG
             Log($"hasHolderInItems = {hasHolderInItems}");
 #endif
@@ -125,17 +132,36 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             }
                             else
                             {
-                                throw new NotImplementedException();
+                                var distance = inheritanceResolver.GetDistance(holder, resultItem.Holder, localCodeExecutionContext);
+
+#if DEBUG
+                                Log($"distance = {distance}");
+#endif
+
+                                if(distance == 1)
+                                {
+                                    result.Add(item);
+                                }
                             }
                         }
-                        throw new NotImplementedException();
+                        else
+                        {
+                            throw new NotImplementedException();
+                        }
+                        break;
 
                     default:
                         throw new ArgumentOutOfRangeException(nameof(typeOfAccess), typeOfAccess, null);
                 }
             }
 
+#if DEBUG
+            Log($"result.Count = {result.Count}");
+#endif
+
             throw new NotImplementedException();
+
+            return result;
         }
 
         protected List<WeightedInheritanceResultItemWithStorageInfo<T>> Filter<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source)

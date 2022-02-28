@@ -449,5 +449,47 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             throw new NotImplementedException();
         }
+
+        public uint? GetDistance(StrongIdentifierValue subName, StrongIdentifierValue superName, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return GetDistance(subName, superName, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public uint? GetDistance(StrongIdentifierValue subName, StrongIdentifierValue superName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+#if DEBUG
+            //Log($"subName = {subName}");
+            //Log($"superName = {superName}");
+#endif
+
+            var weightedInheritanceItemsList = GetWeightedInheritanceItems(subName, localCodeExecutionContext, options);
+
+#if DEBUG
+            //Log($"weightedInheritanceItemsList = {weightedInheritanceItemsList.WriteListToString()}");
+#endif
+
+            if (!weightedInheritanceItemsList.Any())
+            {
+                return null;
+            }
+
+            var targetWeightedInheritanceItemsList = weightedInheritanceItemsList.Where(p => p.SuperName.Equals(superName)).ToList();
+
+#if DEBUG
+            //Log($"targetWeightedInheritanceItemsList = {targetWeightedInheritanceItemsList.WriteListToString()}");
+#endif
+
+            if (!targetWeightedInheritanceItemsList.Any())
+            {
+                return null;
+            }
+
+            if (targetWeightedInheritanceItemsList.Count == 1)
+            {
+                return targetWeightedInheritanceItemsList.First().Distance;
+            }
+
+            throw new NotImplementedException();
+        }
     }
 }

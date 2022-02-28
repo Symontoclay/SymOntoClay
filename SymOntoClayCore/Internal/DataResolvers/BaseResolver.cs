@@ -150,6 +150,25 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         }
                         break;
 
+                    case TypeOfAccess.Protected:
+                        {
+                            var rank = inheritanceResolver.GetRawInheritanceRank(holder, resultItem.Holder, localCodeExecutionContext);
+
+#if DEBUG
+                            Log($"rank = {rank}");
+#endif
+
+                            if(rank > 0)
+                            {
+                                result.Add(item);
+                            }
+                        }
+                        break;
+
+                    case TypeOfAccess.Public:
+                        result.Add(item);
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(typeOfAccess), typeOfAccess, null);
                 }
@@ -159,7 +178,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             Log($"result.Count = {result.Count}");
 #endif
 
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
 
             return result;
         }

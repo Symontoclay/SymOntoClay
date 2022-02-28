@@ -1061,6 +1061,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"method = {method}");
 #endif
 
+            if(method == null)
+            {
+                throw new Exception($"Method '{methodName.NameValue}' is not found.");
+            }
+
             CallExecutable(method, kindOfParameters, namedParameters, positionedParameters, isSync);
         }
 
@@ -1254,6 +1259,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallExecutable(IExecutable executable, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, bool isSync)
         {
+            if(executable == null)
+            {
+                throw new ArgumentNullException(nameof(executable));
+            }
+
             var coordinator = executable.TryActivate(_context);
 
             if (executable.IsSystemDefined)

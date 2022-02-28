@@ -51,6 +51,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public Value GetInheritanceRank(StrongIdentifierValue subName, StrongIdentifierValue superName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
+            var result = new LogicalValue(GetRawInheritanceRank(subName, superName, localCodeExecutionContext, options));
+            return result;
+        }
+
+        public float GetRawInheritanceRank(StrongIdentifierValue subName, StrongIdentifierValue superName, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return GetRawInheritanceRank(subName, superName, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public float GetRawInheritanceRank(StrongIdentifierValue subName, StrongIdentifierValue superName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
 #if DEBUG
             //Log($"subName = {subName}");
             //Log($"superName = {superName}");
@@ -62,10 +73,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"weightedInheritanceItemsList = {weightedInheritanceItemsList.WriteListToString()}");
 #endif
 
-            if(!weightedInheritanceItemsList.Any())
+            if (!weightedInheritanceItemsList.Any())
             {
-                var result = new LogicalValue(0);
-                return result;
+                return 0;
             }
 
             var targetWeightedInheritanceItemsList = weightedInheritanceItemsList.Where(p => p.SuperName.Equals(superName)).ToList();
@@ -76,15 +86,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!targetWeightedInheritanceItemsList.Any())
             {
-                var result = new LogicalValue(0);
-                return result;
+                return 0;
             }
 
             if (targetWeightedInheritanceItemsList.Count == 1)
             {
-                var result = new LogicalValue(targetWeightedInheritanceItemsList.First().Rank);
-                
-                return result;
+                return targetWeightedInheritanceItemsList.First().Rank;
             }
 
             throw new NotImplementedException();

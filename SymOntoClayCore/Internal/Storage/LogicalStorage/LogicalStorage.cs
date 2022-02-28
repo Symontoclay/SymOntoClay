@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Threads;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -441,7 +442,24 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 //Log($"_kind = {_kind}");
 #endif
 
-                return _commonPersistIndexedLogicalData.GetIndexedRulePartOfFactsByKeyOfRelation(name);
+                var source = _commonPersistIndexedLogicalData.GetIndexedRulePartOfFactsByKeyOfRelation(name);
+
+                if(source.IsNullOrEmpty())
+                {
+                    return source;
+                }
+
+                if(name.NormalizedNameValue == "is")
+                {
+                    return source;
+                }
+
+#if DEBUG
+                Log($"name = {name}");
+                Log($"_kind = {_kind}");
+#endif
+
+                return source;
             }
         }
 
@@ -451,11 +469,18 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             lock (_lockObj)
             {
 #if DEBUG
-                //Log($"name = {name}");
-                //Log($"_kind = {_kind}");
+                Log($"name = {name}");
+                Log($"_kind = {_kind}");
 #endif
 
-                return _commonPersistIndexedLogicalData.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name);
+                var source = _commonPersistIndexedLogicalData.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name);
+
+                if (source.IsNullOrEmpty())
+                {
+                    return source;
+                }
+
+                return source;
             }
         }
 

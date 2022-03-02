@@ -462,7 +462,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 Log($"source.Count = {source.Count}");
 #endif
 
-                source = BaseResolver.FilterByTypeOfAccess(source, context, localCodeExecutionContext);
+                source = BaseResolver.FilterByTypeOfAccess(source, context, localCodeExecutionContext, true);
 
                 return source;
             }

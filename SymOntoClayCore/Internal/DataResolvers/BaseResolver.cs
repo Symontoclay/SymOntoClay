@@ -115,62 +115,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //Log($"resultItem.Holder = {resultItem.Holder}");
 #endif
 
-                var typeOfAccess = resultItem.TypeOfAccess;
-
-#if DEBUG
-                //Log($"typeOfAccess = {typeOfAccess}");
-#endif
-
-                switch (typeOfAccess)
+                if (IsFitByTypeOfAccess(resultItem, holder, inheritanceResolver, localCodeExecutionContext, holderIsEntity, hasHolderInItems, false))
                 {
-                    case TypeOfAccess.Private:
-                        if (holderIsEntity)
-                        {
-                            if (hasHolderInItems)
-                            {
-                                throw new NotImplementedException();
-                            }
-                            else
-                            {
-                                var distance = inheritanceResolver.GetDistance(holder, resultItem.Holder, localCodeExecutionContext);
-
-#if DEBUG
-                                //Log($"distance = {distance}");
-#endif
-
-                                if (distance == 1)
-                                {
-                                    result.Add(item);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            throw new NotImplementedException();
-                        }
-                        break;
-
-                    case TypeOfAccess.Protected:
-                        {
-                            var rank = inheritanceResolver.GetRawInheritanceRank(holder, resultItem.Holder, localCodeExecutionContext);
-
-#if DEBUG
-                            //Log($"rank = {rank}");
-#endif
-
-                            if (rank > 0)
-                            {
-                                result.Add(item);
-                            }
-                        }
-                        break;
-
-                    case TypeOfAccess.Public:
-                        result.Add(item);
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(typeOfAccess), typeOfAccess, null);
+                    result.Add(item);
                 }
             }
 
@@ -183,7 +130,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        public static List<T> FilterByTypeOfAccess<T>(IList<T> source, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        public static List<T> FilterByTypeOfAccess<T>(IList<T> source, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext, bool allowUnknown)
             where T : IReadOnlyMemberAccess
         {
             var result = new List<T>();
@@ -221,62 +168,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //Log($"resultItem.Holder = {resultItem.Holder}");
 #endif
 
-                var typeOfAccess = item.TypeOfAccess;
-
-#if DEBUG
-                //Log($"typeOfAccess = {typeOfAccess}");
-#endif
-
-                switch (typeOfAccess)
+                if(IsFitByTypeOfAccess(item, holder, inheritanceResolver, localCodeExecutionContext, holderIsEntity, hasHolderInItems, allowUnknown))
                 {
-                    case TypeOfAccess.Private:
-                        if (holderIsEntity)
-                        {
-                            if (hasHolderInItems)
-                            {
-                                throw new NotImplementedException();
-                            }
-                            else
-                            {
-                                var distance = inheritanceResolver.GetDistance(holder, item.Holder, localCodeExecutionContext);
-
-#if DEBUG
-                                //Log($"distance = {distance}");
-#endif
-
-                                if (distance == 1)
-                                {
-                                    result.Add(item);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            throw new NotImplementedException();
-                        }
-                        break;
-
-                    case TypeOfAccess.Protected:
-                        {
-                            var rank = inheritanceResolver.GetRawInheritanceRank(holder, item.Holder, localCodeExecutionContext);
-
-#if DEBUG
-                            //Log($"rank = {rank}");
-#endif
-
-                            if (rank > 0)
-                            {
-                                result.Add(item);
-                            }
-                        }
-                        break;
-
-                    case TypeOfAccess.Public:
-                        result.Add(item);
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(typeOfAccess), typeOfAccess, null);
+                    result.Add(item);
                 }
             }
 
@@ -287,6 +181,75 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //throw new NotImplementedException();
 
             return result;
+        }
+
+        private static bool IsFitByTypeOfAccess(IReadOnlyMemberAccess item, StrongIdentifierValue holder, InheritanceResolver inheritanceResolver, LocalCodeExecutionContext localCodeExecutionContext, bool holderIsEntity, bool hasHolderInItems, bool allowUnknown)
+        {
+            var typeOfAccess = item.TypeOfAccess;
+
+#if DEBUG
+            //Log($"typeOfAccess = {typeOfAccess}");
+#endif
+
+            switch (typeOfAccess)
+            {
+                case TypeOfAccess.Private:
+                    if (holderIsEntity)
+                    {
+                        if (hasHolderInItems)
+                        {
+                            throw new NotImplementedException();
+                        }
+                        else
+                        {
+                            var distance = inheritanceResolver.GetDistance(holder, item.Holder, localCodeExecutionContext);
+
+#if DEBUG
+                            //Log($"distance = {distance}");
+#endif
+
+                            if (distance == 1)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        throw new NotImplementedException();
+                    }
+                    break;
+
+                case TypeOfAccess.Protected:
+                    {
+                        var rank = inheritanceResolver.GetRawInheritanceRank(holder, item.Holder, localCodeExecutionContext);
+
+#if DEBUG
+                        //Log($"rank = {rank}");
+#endif
+
+                        if (rank > 0)
+                        {
+                            return true;
+                        }
+                    }
+                    break;
+
+                case TypeOfAccess.Public:
+                    return true;
+
+                case TypeOfAccess.Unknown:
+                    if (allowUnknown)
+                    {
+                        return true;
+                    }
+                    throw new ArgumentOutOfRangeException(nameof(typeOfAccess), typeOfAccess, null);
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(typeOfAccess), typeOfAccess, null);
+            }
+
+            return false;
         }
 
         protected List<WeightedInheritanceResultItemWithStorageInfo<T>> Filter<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source)

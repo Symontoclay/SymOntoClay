@@ -164,8 +164,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
 #if DEBUG
                 //Log($"item = {item}");
-                context.Logger.Log($"item.TypeOfAccess = {item.TypeOfAccess}");
-                context.Logger.Log($"item.Holder = {item.Holder}");
+                //context.Logger.Log($"item.TypeOfAccess = {item.TypeOfAccess}");
+                //context.Logger.Log($"item.Holder = {item.Holder}");
 #endif
 
                 if(IsFitByTypeOfAccess(item, holder, inheritanceResolver, localCodeExecutionContext, holderIsEntity, hasHolderInItems, allowUnknown))

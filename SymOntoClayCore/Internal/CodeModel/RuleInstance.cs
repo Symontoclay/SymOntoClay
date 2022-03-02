@@ -228,7 +228,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
 
 #if DEBUG
-            _gbcLogger.Info($"Normalized != null = {Normalized != null}; Normalized != this = {Normalized != this}");
+            //_gbcLogger.Info($"Normalized != null = {Normalized != null}; Normalized != this = {Normalized != this}");
 #endif
 
             if(Normalized != null && Normalized != this)

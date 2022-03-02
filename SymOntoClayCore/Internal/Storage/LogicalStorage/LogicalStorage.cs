@@ -232,11 +232,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
             //Log($"ruleInstance.Normalized = {DebugHelperForRuleInstance.ToString(ruleInstance.Normalized)}");
 
-            if(!DebugHelperForRuleInstance.ToString(ruleInstance).Contains("is"))
-            {
-                Log($"ruleInstance.Normalized = {DebugHelperForRuleInstance.ToString(ruleInstance.Normalized)}");
-                Log($"ruleInstance.Normalized = {ruleInstance.Normalized}");
-            }
+            //if(!DebugHelperForRuleInstance.ToString(ruleInstance).Contains("is"))
+            //{
+            //    Log($"ruleInstance.Normalized = {DebugHelperForRuleInstance.ToString(ruleInstance.Normalized)}");
+            //    Log($"ruleInstance.Normalized = {ruleInstance.Normalized}");
+            //}
 #endif            
 
             _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(ruleInstance.Normalized);
@@ -473,14 +473,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 }
 
 #if DEBUG
-                Log($"name = {name}");
-                Log($"_kind = {_kind}");
-                Log($"source.Count = {source.Count}");
+                //Log($"name = {name}");
+                //Log($"_kind = {_kind}");
+                //Log($"source.Count = {source.Count}");
 #endif
 
-                source = BaseResolver.FilterByTypeOfAccess(source, context, localCodeExecutionContext, true);
-
-                return source;
+                return BaseResolver.FilterByTypeOfAccess(source, context, localCodeExecutionContext, true);
             }
         }
 
@@ -502,17 +500,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 }
 
 #if DEBUG
-                Log($"name = {name}");
-                Log($"_kind = {_kind}");
+                //Log($"name = {name}");
+                //Log($"_kind = {_kind}");
 #endif
 
-                source = BaseResolver.FilterByTypeOfAccess(source, context, localCodeExecutionContext, true);
-
-#if DEBUG
-                Log($"source.Count = {source.Count}");
-#endif
-
-                return source;
+                return BaseResolver.FilterByTypeOfAccess(source, context, localCodeExecutionContext, true);
             }
         }
 

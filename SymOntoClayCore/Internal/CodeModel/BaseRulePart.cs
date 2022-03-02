@@ -31,7 +31,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class BaseRulePart: AnnotatedItem
+    public abstract class BaseRulePart: AnnotatedItem, IReadOnlyMemberAccess
     {
 #if DEBUG
         //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
@@ -46,6 +46,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public bool HasVars { get; set; }
         public bool IsParameterized { get; set; }
         public TypeOfAccess TypeOfAccess { get; set; } = TypeOfAccess.Unknown;
+        public StrongIdentifierValue Holder { get; set; }
 
         public IDictionary<StrongIdentifierValue, IList<LogicalQueryNode>> RelationsDict { get; set; }
 
@@ -59,6 +60,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             HasVars = source.HasVars;
             IsParameterized = source.IsParameterized;
             TypeOfAccess = source.TypeOfAccess;
+            Holder = source?.Holder;
 
             RelationsDict = source.RelationsDict.ToDictionary(p => p.Key, p => (IList<LogicalQueryNode>)(p.Value.Select(x => x.Clone(context)).ToList()));
 
@@ -132,6 +134,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(HasQuestionVars)} = {HasQuestionVars}");
             sb.AppendLine($"{spaces}{nameof(IsParameterized)} = {IsParameterized}");
             sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
+            sb.PrintObjProp(n, nameof(Holder), Holder);
 
             sb.PrintObjProp(n, nameof(Expression), Expression);
 
@@ -175,6 +178,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(HasQuestionVars)} = {HasQuestionVars}");
             sb.AppendLine($"{spaces}{nameof(IsParameterized)} = {IsParameterized}");
             sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
+            sb.PrintShortObjProp(n, nameof(Holder), Holder);
 
             sb.PrintShortObjProp(n, nameof(Expression), Expression);
 
@@ -199,6 +203,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(HasQuestionVars)} = {HasQuestionVars}");
             sb.AppendLine($"{spaces}{nameof(IsParameterized)} = {IsParameterized}");
             sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
+            sb.PrintBriefObjProp(n, nameof(Holder), Holder);
 
             sb.PrintBriefObjProp(n, nameof(Expression), Expression);
 

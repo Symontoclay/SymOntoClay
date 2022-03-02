@@ -26,6 +26,7 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
@@ -458,7 +459,10 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 #if DEBUG
                 Log($"name = {name}");
                 Log($"_kind = {_kind}");
+                Log($"source.Count = {source.Count}");
 #endif
+
+                source = BaseResolver.FilterByTypeOfAccess(source, context, localCodeExecutionContext);
 
                 return source;
             }
@@ -470,8 +474,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"name = {name}");
-                Log($"_kind = {_kind}");
+                //Log($"name = {name}");
+                //Log($"_kind = {_kind}");                
 #endif
 
                 var source = _commonPersistIndexedLogicalData.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name);
@@ -480,6 +484,14 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 {
                     return source;
                 }
+
+#if DEBUG
+                Log($"name = {name}");
+                Log($"_kind = {_kind}");
+#endif
+#if DEBUG
+                Log($"source.Count = {source.Count}");
+#endif
 
                 return source;
             }

@@ -78,12 +78,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return new List<WeightedInheritanceResultItemWithStorageInfo<T>>();
             }
 
-            return FilterByTypeOfAccess(source, _context, localCodeExecutionContext);
-        }
-
-        public static List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterByTypeOfAccess<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
-            where T : AnnotatedItem, IReadOnlyMemberAccess
-        {
             var result = new List<WeightedInheritanceResultItemWithStorageInfo<T>>();
 
             var holder = localCodeExecutionContext.Holder;
@@ -104,7 +98,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (holderIsEntity && !hasHolderInItems)
             {
-                inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
+                inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
             }
 
 #if DEBUG
@@ -159,6 +153,112 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     case TypeOfAccess.Protected:
                         {
                             var rank = inheritanceResolver.GetRawInheritanceRank(holder, resultItem.Holder, localCodeExecutionContext);
+
+#if DEBUG
+                            //Log($"rank = {rank}");
+#endif
+
+                            if (rank > 0)
+                            {
+                                result.Add(item);
+                            }
+                        }
+                        break;
+
+                    case TypeOfAccess.Public:
+                        result.Add(item);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(typeOfAccess), typeOfAccess, null);
+                }
+            }
+
+#if DEBUG
+            //Log($"result.Count = {result.Count}");
+#endif
+
+            //throw new NotImplementedException();
+
+            return result;
+        }
+
+        public static List<T> FilterByTypeOfAccess<T>(IList<T> source, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
+            where T : IReadOnlyMemberAccess
+        {
+            var result = new List<T>();
+
+            var holder = localCodeExecutionContext.Holder;
+
+#if DEBUG
+            //Log($"holder = {holder}");
+#endif
+
+            var holderIsEntity = holder.KindOfName == KindOfName.Entity;
+
+#if DEBUG
+            //Log($"holderIsEntity = {holderIsEntity}");
+#endif
+
+            var hasHolderInItems = source.Any(p => p.Holder == holder);
+
+            InheritanceResolver inheritanceResolver = null;
+
+            if (holderIsEntity && !hasHolderInItems)
+            {
+                inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
+            }
+
+#if DEBUG
+            //Log($"hasHolderInItems = {hasHolderInItems}");
+#endif
+
+            foreach (var item in source)
+            {
+#if DEBUG
+                //Log($"item = {item}");
+                //Log($"resultItem.TypeOfAccess = {resultItem.TypeOfAccess}");
+                //Log($"resultItem.Holder = {resultItem.Holder}");
+#endif
+
+                var typeOfAccess = item.TypeOfAccess;
+
+#if DEBUG
+                //Log($"typeOfAccess = {typeOfAccess}");
+#endif
+
+                switch (typeOfAccess)
+                {
+                    case TypeOfAccess.Private:
+                        if (holderIsEntity)
+                        {
+                            if (hasHolderInItems)
+                            {
+                                throw new NotImplementedException();
+                            }
+                            else
+                            {
+                                var distance = inheritanceResolver.GetDistance(holder, item.Holder, localCodeExecutionContext);
+
+#if DEBUG
+                                //Log($"distance = {distance}");
+#endif
+
+                                if (distance == 1)
+                                {
+                                    result.Add(item);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            throw new NotImplementedException();
+                        }
+                        break;
+
+                    case TypeOfAccess.Protected:
+                        {
+                            var rank = inheritanceResolver.GetRawInheritanceRank(holder, item.Holder, localCodeExecutionContext);
 
 #if DEBUG
                             //Log($"rank = {rank}");

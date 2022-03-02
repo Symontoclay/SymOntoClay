@@ -210,6 +210,25 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        protected override void OnHolderChanged()
+        {
+            base.OnHolderChanged();
+
+            if (PrimaryPart != null)
+            {
+                PrimaryPart.Holder = Holder;
+            }
+
+            if (!SecondaryParts.IsNullOrEmpty())
+            {
+                foreach (var item in SecondaryParts)
+                {
+                    item.Holder = Holder;
+                }
+            }
+        }
+
+        /// <inheritdoc/>
         protected override void OnTypeOfAccessChanged()
         {
             base.OnTypeOfAccessChanged();

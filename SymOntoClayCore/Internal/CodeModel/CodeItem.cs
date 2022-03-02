@@ -17,7 +17,25 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public CodeItem ParentCodeEntity { get; set; }
         public List<CodeItem> SubItems { get; set; } = new List<CodeItem>();
 
-        public StrongIdentifierValue Holder { get; set; }
+        public StrongIdentifierValue Holder
+        { 
+            get
+            {
+                return _holder;
+            }
+
+            set
+            {
+                if(_holder == value)
+                {
+                    return;
+                }
+
+                _holder = value;
+
+                OnHolderChanged();
+            }
+        }
 
         /// <inheritdoc/>
         public TypeOfAccess TypeOfAccess 
@@ -40,11 +58,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
         }
 
-        private TypeOfAccess _typeOfAccess = TypeOfAccess.Local;
+        protected virtual void OnHolderChanged()
+        {
+        }
 
         protected virtual void OnTypeOfAccessChanged()
         {
         }
+
+        private StrongIdentifierValue _holder;
+        private TypeOfAccess _typeOfAccess = TypeOfAccess.Local;
 
         public virtual bool IsRuleInstance => false;
         public virtual RuleInstance AsRuleInstance => null;

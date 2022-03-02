@@ -58,23 +58,54 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private Stack<CodeItem> _codeItems = new Stack<CodeItem>();
 
+        private CodeItem _currCodeItem;
+
         public void SetCurrentCodeItem(CodeItem codeEntity)
         {
             _codeItems.Push(codeEntity);
 
 #if DEBUG
-            Logger.Log($"codeEntity.Name = {codeEntity.Name}");
+            //Logger.Log($"codeEntity.Name = {codeEntity.Name}");
 #endif
 
-            //CurrentDefaultSetings.Holder = codeEntity.Name;
-            //CurrentDefaultSetings.Holder = NameHelper.CreateName("Pokemon");
+            if(_currCodeItem != null)
+            {
+                _currCodeItem.OnNameChanged -= OnNameOfCurrentCodeItemChanged;
+            }
 
-            t
+            _currCodeItem = codeEntity;
+
+            _currCodeItem.OnNameChanged += OnNameOfCurrentCodeItemChanged;
         }
 
         public void RemoveCurrentCodeItem()
         {
             _codeItems.Pop();
+
+            if (_currCodeItem != null)
+            {
+                _currCodeItem.OnNameChanged -= OnNameOfCurrentCodeItemChanged;
+            }
+
+            if(_codeItems.Count == 0)
+            {
+                _currCodeItem = null;
+                CurrentDefaultSetings.Holder = null;
+            }
+            else
+            {
+                _currCodeItem = _codeItems.Peek();
+                _currCodeItem.OnNameChanged += OnNameOfCurrentCodeItemChanged;
+            }
+        }
+
+        private void OnNameOfCurrentCodeItemChanged(StrongIdentifierValue name)
+        {
+#if DEBUG
+            //Logger.Log($"name = {name}");
+#endif
+
+            CurrentDefaultSetings.Holder = name;
         }
 
         public CodeItem CurrentCodeItem

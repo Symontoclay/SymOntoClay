@@ -344,7 +344,7 @@ namespace SymOntoClay.Core.Internal.Serialization
                         var ruleInstance = codeItem.AsRuleInstance;
 
 #if DEBUG
-                        Log($"ruleInstance = {ruleInstance}");
+                        //Log($"ruleInstance = {ruleInstance}");
 #endif
 
                         if (ruleInstance.IsParameterized)

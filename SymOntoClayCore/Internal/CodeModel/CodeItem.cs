@@ -11,7 +11,26 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public abstract class CodeItem: AnnotatedItem, IMemberAccess, IReadOnlyMemberAccess
     {
         public abstract KindOfCodeEntity Kind { get;}
-        public StrongIdentifierValue Name { get; set; }
+        public StrongIdentifierValue Name 
+        { 
+            get
+            {
+                return _name;
+            }
+
+            set
+            {
+                if(_name == value)
+                {
+                    return;
+                }
+
+                _name = value;
+
+                OnNameChanged?.Invoke(value);
+            }
+        }
+
         public List<InheritanceItem> InheritanceItems { get; set; } = new List<InheritanceItem>();
         public CodeFile CodeFile { get; set; }
         public CodeItem ParentCodeEntity { get; set; }
@@ -66,6 +85,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
         }
 
+        public event Action<StrongIdentifierValue> OnNameChanged;
+
+        private StrongIdentifierValue _name;
         private StrongIdentifierValue _holder;
         private TypeOfAccess _typeOfAccess = TypeOfAccess.Local;
 

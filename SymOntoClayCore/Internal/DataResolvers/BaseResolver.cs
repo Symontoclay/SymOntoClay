@@ -78,7 +78,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return new List<WeightedInheritanceResultItemWithStorageInfo<T>>();
             }
 
-
+            return FilterByTypeOfAccess(source, _context, localCodeExecutionContext);
         }
 
         public static List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterByTypeOfAccess<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)

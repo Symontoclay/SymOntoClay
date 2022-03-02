@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.DataResolvers;
@@ -305,7 +306,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return new List<LogicalQueryNode>();
             }
 
-            return PrimaryPart.GetInheritanceRelations();            
+            return PrimaryPart.GetInheritanceRelations();
         }
 
         /// <inheritdoc/>
@@ -504,7 +505,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name)
+        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //LogInstance.Log($"key = {key}");
@@ -514,7 +515,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name)
+        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
         {
             return _commonPersistIndexedLogicalData.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name);
         }

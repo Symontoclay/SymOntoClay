@@ -2886,10 +2886,10 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#GetAllRelations">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#GetIndexedRulePartOfFactsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#GetIndexedRulePartOfFactsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.IMainStorageContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.IMainStorageContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#DbgPrintFactsAndRules">
@@ -5198,10 +5198,10 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.GetAllRelations">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.IMainStorageContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.IMainStorageContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.DbgPrintFactsAndRules">
@@ -5234,10 +5234,10 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.WorldPublicFactsLogicalStorage.GetAllRelations">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.WorldPublicFactsLogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.WorldPublicFactsLogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.IMainStorageContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.WorldPublicFactsLogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.WorldPublicFactsLogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.IMainStorageContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.WorldPublicFactsLogicalStorage.Remove(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">

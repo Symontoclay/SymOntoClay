@@ -85,7 +85,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             optionsOfFillExecutingCard.UseAccessPolicy = !options.IgnoreAccessPolicy;
             optionsOfFillExecutingCard.UseInheritance = options.UseInheritance; 
             optionsOfFillExecutingCard.LocalCodeExecutionContext = options.LocalCodeExecutionContext;
-
+            optionsOfFillExecutingCard.MainStorageContext = _context;
 
 #if DEBUG
             optionsOfFillExecutingCard.Logger = Logger;
@@ -1544,7 +1544,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //}
 #endif
 
-            var indexedRulePartsOfFactsList = dataSource.GetIndexedRulePartOfFactsByKeyOfRelation(processedExpr.Name);
+            var indexedRulePartsOfFactsList = dataSource.GetIndexedRulePartOfFactsByKeyOfRelation(processedExpr.Name, options.MainStorageContext, options.LocalCodeExecutionContext);
 
 #if DEBUG
             //options.Logger.Log($"indexedRulePartsOfFactsList?.Count = {indexedRulePartsOfFactsList?.Count}");
@@ -1630,7 +1630,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"~~~~~~~~~~~~~~~~~queryExecutingCard = {queryExecutingCard}");
 #endif
 
-            var indexedRulePartWithOneRelationsList = dataSource.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(processedExpr.Name);
+            var indexedRulePartWithOneRelationsList = dataSource.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(processedExpr.Name, options.MainStorageContext, options.LocalCodeExecutionContext);
 
 #if DEBUG
             //options.Logger.Log($"indexedRulePartWithOneRelationsList?.Count = {indexedRulePartWithOneRelationsList?.Count}");

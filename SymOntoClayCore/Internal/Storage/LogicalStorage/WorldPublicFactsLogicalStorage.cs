@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -158,7 +159,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         }
 
         /// <inheritdoc/>
-        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name)
+        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
         {
             lock (_lockObj)
             {
@@ -166,7 +167,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 foreach (var storage in _logicalStorages)
                 {
-                    var targetRelationsList = storage.GetIndexedRulePartOfFactsByKeyOfRelation(name);
+                    var targetRelationsList = storage.GetIndexedRulePartOfFactsByKeyOfRelation(name, context, localCodeExecutionContext);
 
                     if (targetRelationsList == null)
                     {
@@ -195,7 +196,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         }
 
         /// <inheritdoc/>
-        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name)
+        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
         {
             lock (_lockObj)
             {
@@ -203,7 +204,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 foreach (var storage in _logicalStorages)
                 {
-                    var targetRelationsList = storage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name);
+                    var targetRelationsList = storage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name, context, localCodeExecutionContext);
 
                     if (targetRelationsList == null)
                     {

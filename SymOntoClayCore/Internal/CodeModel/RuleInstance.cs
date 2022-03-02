@@ -45,7 +45,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         //}
 
 #if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         /// <inheritdoc/>
@@ -226,6 +226,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     item.Holder = Holder;
                 }
             }
+
+#if DEBUG
+            _gbcLogger.Info($"Normalized != null = {Normalized != null}; Normalized != this = {Normalized != this}");
+#endif
+
+            if(Normalized != null && Normalized != this)
+            {
+                Normalized.Holder = Holder;
+            }
         }
 
         /// <inheritdoc/>
@@ -244,6 +253,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 {
                     item.TypeOfAccess = TypeOfAccess;
                 }
+            }
+
+            if (Normalized != null && Normalized != this)
+            {
+                Normalized.TypeOfAccess = TypeOfAccess;
             }
         }
 

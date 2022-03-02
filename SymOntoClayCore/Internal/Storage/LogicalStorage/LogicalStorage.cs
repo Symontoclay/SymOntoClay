@@ -156,9 +156,16 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         private void NAppend(RuleInstance ruleInstance, bool isPrimary)
         {
 #if DEBUG
+            //if(!DebugHelperForRuleInstance.ToString(ruleInstance).Contains("is"))
+            //{
+                //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+                //Log($"ruleInstance = {ruleInstance}");
+                //Log($"isPrimary = {isPrimary}");
+            //}
+
+            //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
             //Log($"ruleInstance = {ruleInstance}");
             //Log($"isPrimary = {isPrimary}");
-            //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
 #endif
 
             if (_ruleInstancesList.Contains(ruleInstance))
@@ -224,6 +231,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 #if DEBUG
             //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
             //Log($"ruleInstance.Normalized = {DebugHelperForRuleInstance.ToString(ruleInstance.Normalized)}");
+
+            if(!DebugHelperForRuleInstance.ToString(ruleInstance).Contains("is"))
+            {
+                Log($"ruleInstance.Normalized = {DebugHelperForRuleInstance.ToString(ruleInstance.Normalized)}");
+                Log($"ruleInstance.Normalized = {ruleInstance.Normalized}");
+            }
 #endif            
 
             _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(ruleInstance.Normalized);

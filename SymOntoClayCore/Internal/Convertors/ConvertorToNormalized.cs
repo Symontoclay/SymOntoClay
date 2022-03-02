@@ -77,6 +77,13 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.TypeOfAccess = source.TypeOfAccess;
             result.Holder = source.Holder;
 
+#if DEBUG
+            _gbcLogger.Info($"source.TypeOfAccess = {source.TypeOfAccess}");
+            _gbcLogger.Info($"result.TypeOfAccess = {result.TypeOfAccess}");
+            _gbcLogger.Info($"source.Holder = {source.Holder}");
+            _gbcLogger.Info($"result.Holder = {result.Holder}");
+#endif
+
             FillAnnotationsModalitiesAndSections(source, result, options, convertingContext);
 
 #if DEBUG

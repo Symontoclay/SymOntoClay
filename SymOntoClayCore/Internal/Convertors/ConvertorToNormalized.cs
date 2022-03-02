@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.Convertors
         public static RuleInstance Convert(RuleInstance source, CheckDirtyOptions options, Dictionary<object, object> convertingContext)
         {
 #if DEBUG
-            //_gbcLogger.Info($"source = {source}");
+            _gbcLogger.Info($"source = {source}");
 #endif
 
             if (source == null)
@@ -156,6 +156,9 @@ namespace SymOntoClay.Core.Internal.Convertors
         {
             dest.Parent = ruleInstance;
             dest.IsActive = source.IsActive;
+
+            dest.TypeOfAccess = source.TypeOfAccess;
+            dest.Holder = source.Holder;
 
             dest.Expression = ConvertLogicalQueryNode(source.Expression, options, convertingContext, source.AliasesDict);
 

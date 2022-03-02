@@ -430,6 +430,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         {
             lock (_lockObj)
             {
+#if DEBUG
+                Log("GO!!!!");
+#endif
                 return _commonPersistIndexedLogicalData.GetAllRelations();
             }
         }
@@ -489,6 +492,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 Log($"name = {name}");
                 Log($"_kind = {_kind}");
 #endif
+
+                source = BaseResolver.FilterByTypeOfAccess(source, context, localCodeExecutionContext, true);
+
 #if DEBUG
                 Log($"source.Count = {source.Count}");
 #endif

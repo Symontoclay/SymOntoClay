@@ -52,14 +52,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _ruleInstance = parser.Result;
 
 #if DEBUG
-            //Log($"DebugHelperForRuleInstance.ToString(_ruleInstance) = {DebugHelperForRuleInstance.ToString(_ruleInstance)}");
-            //Log($"_ruleInstance = {_ruleInstance}");
+            Log($"DebugHelperForRuleInstance.ToString(_ruleInstance) = {DebugHelperForRuleInstance.ToString(_ruleInstance)}");
+            Log($"_context.CurrentDefaultSetings?.TypeOfAccess = {_context.CurrentDefaultSetings?.TypeOfAccess}");
+            Log($"_context.CurrentDefaultSetings?.Holder = {_context.CurrentDefaultSetings?.Holder}");
 #endif
 
-            if(_context.CurrentDefaultSetings != null)
+            if (_context.CurrentDefaultSetings != null)
             {
                 _ruleInstance.TypeOfAccess = _context.CurrentDefaultSetings.TypeOfAccess;
-            }            
+                _ruleInstance.Holder = _context.CurrentDefaultSetings.Holder;
+            }
+
+#if DEBUG
+            Log($"DebugHelperForRuleInstance.ToString(_ruleInstance) = {DebugHelperForRuleInstance.ToString(_ruleInstance)}");
+            Log($"_ruleInstance = {_ruleInstance}");
+#endif
 
             Exit();            
         }

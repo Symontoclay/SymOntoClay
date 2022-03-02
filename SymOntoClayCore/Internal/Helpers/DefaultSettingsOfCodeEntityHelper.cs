@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
@@ -31,8 +32,17 @@ namespace SymOntoClay.Core.Internal.Helpers
 {
     public static class DefaultSettingsOfCodeEntityHelper
     {
+#if DEBUG
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         public static void Mix(DefaultSettingsOfCodeEntity source, DefaultSettingsOfCodeEntity dest)
         {
+#if DEBUG
+            //_gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"dest = {dest}");
+#endif
+
             var context = new Dictionary<object, object>();
 
             if (dest.WhereSection.IsNullOrEmpty() && !source.WhereSection.IsNullOrEmpty())
@@ -43,6 +53,11 @@ namespace SymOntoClay.Core.Internal.Helpers
             if (dest.Holder == null && source.Holder != null)
             {
                 dest.Holder = source.Holder.Clone(context);
+            }
+
+            if(dest.TypeOfAccess == TypeOfAccess.Unknown && source.TypeOfAccess != TypeOfAccess.Unknown)
+            {
+                dest.TypeOfAccess = source.TypeOfAccess;
             }
         }
 

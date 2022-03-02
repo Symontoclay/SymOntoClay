@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.Convertors
         public static RuleInstance Convert(RuleInstance source, CheckDirtyOptions options, Dictionary<object, object> convertingContext)
         {
 #if DEBUG
-            _gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"source = {source}");
 #endif
 
             if (source == null)

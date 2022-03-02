@@ -343,7 +343,11 @@ namespace SymOntoClay.Core.Internal.Serialization
                     {
                         var ruleInstance = codeItem.AsRuleInstance;
 
-                        if(ruleInstance.IsParameterized)
+#if DEBUG
+                        Log($"ruleInstance = {ruleInstance}");
+#endif
+
+                        if (ruleInstance.IsParameterized)
                         {
                             throw new Exception($"SymOntoClay does not support parameterized rule or facts on object declaration.");
                         }

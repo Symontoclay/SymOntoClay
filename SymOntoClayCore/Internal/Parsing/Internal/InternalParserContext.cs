@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -60,6 +61,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         public void SetCurrentCodeItem(CodeItem codeEntity)
         {
             _codeItems.Push(codeEntity);
+
+#if DEBUG
+            Logger.Log($"codeEntity.Name = {codeEntity.Name}");
+#endif
+
+            //CurrentDefaultSetings.Holder = codeEntity.Name;
+            //CurrentDefaultSetings.Holder = NameHelper.CreateName("Pokemon");
+
+            t
         }
 
         public void RemoveCurrentCodeItem()

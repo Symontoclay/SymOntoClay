@@ -1,6 +1,6 @@
 ﻿class Cls1
 {
-private:
+public:
 	{: male(#Tom) :}
 	{: parent(#Piter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}

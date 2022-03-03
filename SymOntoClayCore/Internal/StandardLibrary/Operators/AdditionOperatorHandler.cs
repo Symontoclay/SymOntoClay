@@ -29,6 +29,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 return new NumberValue((double)(leftOperand.AsNumberValue.GetSystemValue()) + (double)(rightOperand.AsNumberValue.GetSystemValue()));
             }
 
+            if(leftOperand.IsNullValue || rightOperand.IsNullValue)
+            {
+                return new NullValue();
+            }
+
             throw new NotImplementedException();
         }
     }

@@ -216,14 +216,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             if (PrimaryPart != null)
             {
-                PrimaryPart.Holder = Holder;
+                PrimaryPart.SetHolder(Holder);
             }
 
             if (!SecondaryParts.IsNullOrEmpty())
             {
                 foreach (var item in SecondaryParts)
                 {
-                    item.Holder = Holder;
+                    item.SetHolder(Holder);
                 }
             }
 
@@ -244,14 +244,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             if (PrimaryPart != null)
             {
-                PrimaryPart.TypeOfAccess = TypeOfAccess;
+                PrimaryPart.SetTypeOfAccess(TypeOfAccess);
             }
 
             if (!SecondaryParts.IsNullOrEmpty())
             {
                 foreach (var item in SecondaryParts)
                 {
-                    item.TypeOfAccess = TypeOfAccess;
+                    item.SetTypeOfAccess(TypeOfAccess);
                 }
             }
 
@@ -532,7 +532,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
 
         /// <inheritdoc/>
-        IList<LogicalQueryNode> ILogicalStorage.GetAllRelations()
+        IList<LogicalQueryNode> ILogicalStorage.GetAllRelations(IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
         {
             return _commonPersistIndexedLogicalData.GetAllRelations();
         }

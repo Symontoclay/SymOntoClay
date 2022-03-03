@@ -1726,7 +1726,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"hasAnnotations = {hasAnnotations}");
 #endif
 
-            var targetRelationsList = dataSource.AllRelationsForProductions;
+            var targetRelationsList = dataSource.AllRelationsForProductions(options.MainStorageContext, options.LocalCodeExecutionContext);
 
 #if DEBUG
             //options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");

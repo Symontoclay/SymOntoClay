@@ -31,7 +31,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class BaseRulePart: AnnotatedItem, IReadOnlyMemberAccess
+    public abstract class BaseRulePart: AnnotatedItem, IMemberAccess, IReadOnlyMemberAccess
     {
 #if DEBUG
         //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
@@ -50,6 +50,20 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public IDictionary<StrongIdentifierValue, IList<LogicalQueryNode>> RelationsDict { get; set; }
 
+        public void SetHolder(StrongIdentifierValue holder)
+        {
+            Holder = holder;
+
+            Expression.SetHolder(holder);
+        }
+
+        public void SetTypeOfAccess(TypeOfAccess typeOfAccess)
+        {
+            TypeOfAccess = typeOfAccess;
+
+            Expression.SetTypeOfAccess(typeOfAccess);
+        }
+
         protected void AppendBaseRulePart(BaseRulePart source, Dictionary<object, object> context)
         {
             IsActive = source.IsActive;
@@ -60,7 +74,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             HasVars = source.HasVars;
             IsParameterized = source.IsParameterized;
             TypeOfAccess = source.TypeOfAccess;
-            Holder = source?.Holder;
+            Holder = source.Holder;
 
             RelationsDict = source.RelationsDict.ToDictionary(p => p.Key, p => (IList<LogicalQueryNode>)(p.Value.Select(x => x.Clone(context)).ToList()));
 

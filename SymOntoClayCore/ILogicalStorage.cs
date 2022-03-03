@@ -40,7 +40,7 @@ namespace SymOntoClay.Core
         event Action OnChanged;
         event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
 
-        IList<LogicalQueryNode> GetAllRelations();
+        IList<LogicalQueryNode> GetAllRelations(IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext);
         IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext);
         IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext);
 

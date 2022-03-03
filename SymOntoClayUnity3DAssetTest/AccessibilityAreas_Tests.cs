@@ -375,5 +375,142 @@ private:
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case5()
+        {
+            var text = @"class Cls1
+{
+private:
+    {: can(bird, fly) :}
+    {: bird(#Alisa_12) :}
+}
+
+app PeaceKeeper is Cls1
+{
+private:
+    on Init =>
+    {
+        'Begin' >> @>log;
+        select {: $z(#Alisa_12, $x) :} >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message.Contains("<no>"), true);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case5_a()
+        {
+            var text = @"class Cls1
+{
+protected:
+    {: can(bird, fly) :}
+    {: bird(#Alisa_12) :}
+}
+
+app PeaceKeeper is Cls1
+{
+private:
+    on Init =>
+    {
+        'Begin' >> @>log;
+        select {: $z(#Alisa_12, $x) :} >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$z = can(bird,fly)"), true);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case5_b()
+        {
+            var text = @"class Cls1
+{
+public:
+    {: can(bird, fly) :}
+    {: bird(#Alisa_12) :}
+}
+
+app PeaceKeeper is Cls1
+{
+private:
+    on Init =>
+    {
+        'Begin' >> @>log;
+        select {: $z(#Alisa_12, $x) :} >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$z = can(bird,fly)"), true);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

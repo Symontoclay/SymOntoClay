@@ -52,62 +52,59 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private IList<StorageUsingOptions> _dataSourcesSettingsOrderedByPriorityAndUseProductionsList;
         //private IList<StorageUsingOptions> _dataSourcesSettingsOrderedByPriorityAndUseAdditionalInstances;
 
-        public IList<LogicalQueryNode> AllRelationsForProductions
+        public IList<LogicalQueryNode> AllRelationsForProductions(IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
         {
-            get
+            lock (_lockObj)
             {
-                lock (_lockObj)
+                var result = new List<LogicalQueryNode>();
+
+                var dataSourcesSettingsOrderedByPriorityAndUseProductionsList = _dataSourcesSettingsOrderedByPriorityAndUseProductionsList;
+
+                foreach (var dataSourcesSettings in dataSourcesSettingsOrderedByPriorityAndUseProductionsList)
                 {
-                    var result = new List<LogicalQueryNode>();
+                    var targetRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetAllRelations(context, localCodeExecutionContext);
 
-                    var dataSourcesSettingsOrderedByPriorityAndUseProductionsList = _dataSourcesSettingsOrderedByPriorityAndUseProductionsList;
-
-                    foreach (var dataSourcesSettings in dataSourcesSettingsOrderedByPriorityAndUseProductionsList)
+                    if (targetRelationsList == null)
                     {
-                        var targetRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetAllRelations();
-
-                        if (targetRelationsList == null)
-                        {
-                            continue;
-                        }
-
-                        result.AddRange(targetRelationsList);
+                        continue;
                     }
 
+                    result.AddRange(targetRelationsList);
+                }
+
 #if DEBUG
-                    //var tmpList = result.GroupBy(p => p.GetLongHashCode()).ToDictionary(p => p.Key, p => p.ToList());
+                //var tmpList = result.GroupBy(p => p.GetLongHashCode()).ToDictionary(p => p.Key, p => p.ToList());
 
-                    //DebugLogger.Instance.Info($"tmpList.Count = {tmpList.Count}");
+                //DebugLogger.Instance.Info($"tmpList.Count = {tmpList.Count}");
 
-                    //foreach (var tmpKVPItem in tmpList)
-                    //{
-                    //    DebugLogger.Instance.Info($"tmpKVPItem.Key = {tmpKVPItem.Key}");
-                    //    DebugLogger.Instance.Info($"tmpKVPItem.Value.Count = {tmpKVPItem.Value.Count}");
+                //foreach (var tmpKVPItem in tmpList)
+                //{
+                //    DebugLogger.Instance.Info($"tmpKVPItem.Key = {tmpKVPItem.Key}");
+                //    DebugLogger.Instance.Info($"tmpKVPItem.Value.Count = {tmpKVPItem.Value.Count}");
 
-                    //    if(tmpKVPItem.Value.Count > 1)
-                    //    {
-                    //        throw new NotImplementedException();
-                    //    }
-                    //}
+                //    if(tmpKVPItem.Value.Count > 1)
+                //    {
+                //        throw new NotImplementedException();
+                //    }
+                //}
 
-                    //var tmpList2 = result.GroupBy(p => p.Key).ToDictionary(p => p.Key, p => p.ToList());
+                //var tmpList2 = result.GroupBy(p => p.Key).ToDictionary(p => p.Key, p => p.ToList());
 
-                    //DebugLogger.Instance.Info($"tmpList2.Count = {tmpList2.Count}");
+                //DebugLogger.Instance.Info($"tmpList2.Count = {tmpList2.Count}");
 
-                    //foreach (var tmpKVPItem in tmpList2)
-                    //{
-                    //    DebugLogger.Instance.Info($"tmpKVPItem.Key (2) = {tmpKVPItem.Key}");
-                    //    DebugLogger.Instance.Info($"tmpKVPItem.Value.Count (2) = {tmpKVPItem.Value.Count}");
+                //foreach (var tmpKVPItem in tmpList2)
+                //{
+                //    DebugLogger.Instance.Info($"tmpKVPItem.Key (2) = {tmpKVPItem.Key}");
+                //    DebugLogger.Instance.Info($"tmpKVPItem.Value.Count (2) = {tmpKVPItem.Value.Count}");
 
-                    //    if (tmpKVPItem.Value.Count > 1)
-                    //    {
-                    //        throw new NotImplementedException();
-                    //    }
-                    //}
+                //    if (tmpKVPItem.Value.Count > 1)
+                //    {
+                //        throw new NotImplementedException();
+                //    }
+                //}
 #endif
 
-                    return result;
-                }
+                return result;
             }
         }
 

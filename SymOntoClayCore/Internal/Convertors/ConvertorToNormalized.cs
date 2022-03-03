@@ -164,10 +164,10 @@ namespace SymOntoClay.Core.Internal.Convertors
             dest.Parent = ruleInstance;
             dest.IsActive = source.IsActive;
 
-            dest.TypeOfAccess = source.TypeOfAccess;
-            dest.Holder = source.Holder;
-
             dest.Expression = ConvertLogicalQueryNode(source.Expression, options, convertingContext, source.AliasesDict);
+
+            dest.SetTypeOfAccess(source.TypeOfAccess);
+            dest.SetHolder(source.Holder);
 
             FillAnnotationsModalitiesAndSections(source, dest, options, convertingContext);
         }

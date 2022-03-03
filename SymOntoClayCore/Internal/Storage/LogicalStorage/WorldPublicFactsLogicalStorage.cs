@@ -136,7 +136,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 #endif
 
         /// <inheritdoc/>
-        public IList<LogicalQueryNode> GetAllRelations()
+        public IList<LogicalQueryNode> GetAllRelations(IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
         {
             lock (_lockObj)
             {
@@ -144,7 +144,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 foreach(var storage in _logicalStorages)
                 {
-                    var targetRelationsList = storage.GetAllRelations();
+                    var targetRelationsList = storage.GetAllRelations(context, localCodeExecutionContext);
 
                     if (targetRelationsList == null)
                     {

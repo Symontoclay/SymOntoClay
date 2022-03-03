@@ -36,7 +36,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class LogicalQueryNode: AnnotatedItem, IAstNode
+    public class LogicalQueryNode: AnnotatedItem, IAstNode, IMemberAccess, IReadOnlyMemberAccess
     {
 #if DEBUG
         //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
@@ -61,6 +61,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public RuleInstance RuleInstance { get; set; }
         public BaseRulePart RulePart { get; set; }
+
+        /// <inheritdoc/>
+        public TypeOfAccess TypeOfAccess { get; set; } = TypeOfAccess.Unknown;
+
+        /// <inheritdoc/>
+        public StrongIdentifierValue Holder { get; set; }
 
         //public bool HasQuestionVars
         //{
@@ -392,6 +398,204 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
         }
 
+        public void SetHolder(StrongIdentifierValue holder)
+        {
+            Holder = holder;
+
+            switch (Kind)
+            {
+                case KindOfLogicalQueryNode.BinaryOperator:
+                    switch (KindOfOperator)
+                    {
+                        case KindOfOperatorOfLogicalQueryNode.And:
+                        case KindOfOperatorOfLogicalQueryNode.Or:
+                        case KindOfOperatorOfLogicalQueryNode.Is:
+                        case KindOfOperatorOfLogicalQueryNode.IsNot:
+                        case KindOfOperatorOfLogicalQueryNode.More:
+                        case KindOfOperatorOfLogicalQueryNode.MoreOrEqual:
+                        case KindOfOperatorOfLogicalQueryNode.Less:
+                        case KindOfOperatorOfLogicalQueryNode.LessOrEqual:
+                            Left.SetHolder(holder);
+                            Right.SetHolder(holder);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(KindOfOperator), KindOfOperator, null);
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.UnaryOperator:
+                    switch (KindOfOperator)
+                    {
+                        case KindOfOperatorOfLogicalQueryNode.Not:
+                            Left.SetHolder(holder);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(KindOfOperator), KindOfOperator, null);
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.Concept:
+                case KindOfLogicalQueryNode.Entity:
+                case KindOfLogicalQueryNode.QuestionVar:
+                    break;
+
+                case KindOfLogicalQueryNode.LogicalVar:
+                    break;
+
+                case KindOfLogicalQueryNode.Value:
+                case KindOfLogicalQueryNode.StubParam:
+                case KindOfLogicalQueryNode.EntityCondition:
+                case KindOfLogicalQueryNode.EntityRef:
+                    break;
+
+                case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
+                    break;
+
+                case KindOfLogicalQueryNode.Relation:
+                    foreach (var param in ParamsList)
+                    {
+                        var kindOfParam = param.Kind;
+
+                        switch (kindOfParam)
+                        {
+                            case KindOfLogicalQueryNode.Concept:
+                            case KindOfLogicalQueryNode.Entity:
+                            case KindOfLogicalQueryNode.Value:
+                            case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
+                                break;
+
+                            case KindOfLogicalQueryNode.Relation:
+                                foreach (var subParam in param.ParamsList)
+                                {
+                                    subParam.SetHolder(holder);
+                                }
+                                break;
+
+                            case KindOfLogicalQueryNode.LogicalVar:
+                                break;
+
+                            case KindOfLogicalQueryNode.QuestionVar:
+                                break;
+
+                            case KindOfLogicalQueryNode.Var:
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(kindOfParam), kindOfParam, null);
+                        }
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.Group:
+                    Left.SetHolder(holder);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
+            }
+        }
+
+        public void SetTypeOfAccess(TypeOfAccess typeOfAccess)
+        {
+            TypeOfAccess = typeOfAccess; 
+
+            switch (Kind)
+            {
+                case KindOfLogicalQueryNode.BinaryOperator:
+                    switch (KindOfOperator)
+                    {
+                        case KindOfOperatorOfLogicalQueryNode.And:
+                        case KindOfOperatorOfLogicalQueryNode.Or:
+                        case KindOfOperatorOfLogicalQueryNode.Is:
+                        case KindOfOperatorOfLogicalQueryNode.IsNot:
+                        case KindOfOperatorOfLogicalQueryNode.More:
+                        case KindOfOperatorOfLogicalQueryNode.MoreOrEqual:
+                        case KindOfOperatorOfLogicalQueryNode.Less:
+                        case KindOfOperatorOfLogicalQueryNode.LessOrEqual:
+                            Left.SetTypeOfAccess(typeOfAccess);
+                            Right.SetTypeOfAccess(typeOfAccess);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(KindOfOperator), KindOfOperator, null);
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.UnaryOperator:
+                    switch (KindOfOperator)
+                    {
+                        case KindOfOperatorOfLogicalQueryNode.Not:
+                            Left.SetTypeOfAccess(typeOfAccess);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(KindOfOperator), KindOfOperator, null);
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.Concept:
+                case KindOfLogicalQueryNode.Entity:
+                case KindOfLogicalQueryNode.QuestionVar:
+                    break;
+
+                case KindOfLogicalQueryNode.LogicalVar:
+                    break;
+
+                case KindOfLogicalQueryNode.Value:
+                case KindOfLogicalQueryNode.StubParam:
+                case KindOfLogicalQueryNode.EntityCondition:
+                case KindOfLogicalQueryNode.EntityRef:
+                    break;
+
+                case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
+                    break;
+
+                case KindOfLogicalQueryNode.Relation:
+                    foreach (var param in ParamsList)
+                    {
+                        var kindOfParam = param.Kind;
+
+                        switch (kindOfParam)
+                        {
+                            case KindOfLogicalQueryNode.Concept:
+                            case KindOfLogicalQueryNode.Entity:
+                            case KindOfLogicalQueryNode.Value:
+                            case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
+                                break;
+
+                            case KindOfLogicalQueryNode.Relation:
+                                foreach (var subParam in param.ParamsList)
+                                {
+                                    subParam.SetTypeOfAccess(typeOfAccess);
+                                }
+                                break;
+
+                            case KindOfLogicalQueryNode.LogicalVar:
+                                break;
+
+                            case KindOfLogicalQueryNode.QuestionVar:
+                                break;
+
+                            case KindOfLogicalQueryNode.Var:
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(kindOfParam), kindOfParam, null);
+                        }
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.Group:
+                    Left.SetTypeOfAccess(typeOfAccess);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
+            }
+        }
+
         public void CalculateUsedKeys(List<StrongIdentifierValue> usedKeysList)
         {
             switch (Kind)
@@ -587,6 +791,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.Value = Value?.CloneValue(context);
             result.FuzzyLogicNonNumericSequenceValue = FuzzyLogicNonNumericSequenceValue?.Clone(context);
             result.IsQuestion = IsQuestion;
+            result.TypeOfAccess = TypeOfAccess;
+            result.Holder = Holder;
 
             result.AppendAnnotations(this, context);
 
@@ -676,6 +882,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(IsKeyRef)} = {IsKeyRef}");
             sb.AppendLine($"{spaces}{nameof(IsEntityRef)} = {IsEntityRef}");
 
+            sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
+            sb.PrintObjProp(n, nameof(Holder), Holder);
+
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -706,6 +915,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(IsKeyRef)} = {IsKeyRef}");
             sb.AppendLine($"{spaces}{nameof(IsEntityRef)} = {IsEntityRef}");
 
+            sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
+            sb.PrintShortObjProp(n, nameof(Holder), Holder);
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -735,6 +947,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{nameof(IsKeyRef)} = {IsKeyRef}");
             sb.AppendLine($"{spaces}{nameof(IsEntityRef)} = {IsEntityRef}");
+
+            sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
+            sb.PrintBriefObjProp(n, nameof(Holder), Holder);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

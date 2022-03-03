@@ -439,14 +439,31 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         }
 
         /// <inheritdoc/>
-        public IList<LogicalQueryNode> GetAllRelations()
+        public IList<LogicalQueryNode> GetAllRelations(IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
         {
             lock (_lockObj)
             {
+                var source = _commonPersistIndexedLogicalData.GetAllRelations();
+
+                if (source.IsNullOrEmpty())
+                {
+                    return source;
+                }
+
 #if DEBUG
-                Log("GO!!!!");
+                //Log("GO!!!!");
+                //Log($"source.Count = {source.Count}");
 #endif
-                return _commonPersistIndexedLogicalData.GetAllRelations();
+
+#if DEBUG
+                //foreach (var sourceItem in source)
+                //{
+                //    Log($"sourceItem.Name = '{sourceItem.Name.NameValue}'");
+                //    Log($"sourceItem = {sourceItem}");
+                //}
+#endif
+
+                return BaseResolver.FilterByTypeOfAccess(source, context, localCodeExecutionContext, true);
             }
         }
 

@@ -1,6 +1,6 @@
 ﻿class Cls1
 {
-private:
+protected:
     {: can(bird, fly) :}
     {: bird(#Alisa_12) :}
 }

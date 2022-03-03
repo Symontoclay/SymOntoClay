@@ -1,10 +1,14 @@
 ﻿app PeaceKeeper is Cls1
 {
 private:
+    @a = 2;
+
     on Init =>
     {
+        @b = 3;
+
         'Begin' >> @>log;
-        1 + 1 >> @>log;
+        @a + @b >> @>log;
         'End' >> @>log;
     }
 }

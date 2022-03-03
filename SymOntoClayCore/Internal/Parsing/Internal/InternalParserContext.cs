@@ -90,7 +90,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             if(_codeItems.Count == 0)
             {
                 _currCodeItem = null;
-                CurrentDefaultSetings.Holder = null;
+
+                if(CurrentDefaultSetings != null)
+                {
+                    CurrentDefaultSetings.Holder = null;
+                }                
             }
             else
             {
@@ -105,7 +109,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             //Logger.Log($"name = {name}");
 #endif
 
-            CurrentDefaultSetings.Holder = name;
+            if(CurrentDefaultSetings != null)
+            {
+                CurrentDefaultSetings.Holder = name;
+            }            
         }
 
         public CodeItem CurrentCodeItem

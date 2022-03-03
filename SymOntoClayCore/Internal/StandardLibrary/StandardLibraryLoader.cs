@@ -97,9 +97,19 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
 
             op = new Operator
             {
-                KindOfOperator = KindOfOperator.Addition,
+                KindOfOperator = KindOfOperator.Add,
                 IsSystemDefined = true,
-                SystemHandler = new BinaryOperatorSystemHandler(new AdditionOperatorHandler(_context)),
+                SystemHandler = new BinaryOperatorSystemHandler(new AddOperatorHandler(_context)),
+                Holder = _context.CommonNamesStorage.DefaultHolder
+            };
+
+            globalOperatorsStorage.Append(op);
+
+            op = new Operator
+            {
+                KindOfOperator = KindOfOperator.Sub,
+                IsSystemDefined = true,
+                SystemHandler = new BinaryOperatorSystemHandler(new SubOperatorHandler(_context)),
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 

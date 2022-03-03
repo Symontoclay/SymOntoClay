@@ -61,7 +61,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 case KindOfOperator.LessOrEqual:
                     return 9;
 
-                case KindOfOperator.Addition:
+                case KindOfOperator.Add:
+                case KindOfOperator.Sub:
                     return 6;
 
                 case KindOfOperator.Point:
@@ -117,8 +118,11 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 case KindOfOperator.LessOrEqual:
                     return "<=";
 
-                case KindOfOperator.Addition:
+                case KindOfOperator.Add:
                     return "+";
+
+                case KindOfOperator.Sub:
+                    return "-";
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);

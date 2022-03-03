@@ -6,16 +6,14 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
-    public class AdditionOperatorHandler : BaseLoggedComponent, IBinaryOperatorHandler
+    public class AddOperatorHandler : BaseLoggedComponent, IBinaryOperatorHandler
     {
-        public AdditionOperatorHandler(IEngineContext engineContext)
+        public AddOperatorHandler(IEngineContext engineContext)
             : base(engineContext.Logger)
         {
-            _engineContext = engineContext;
         }
 
-        private readonly IEngineContext _engineContext;
-
+        /// <inheritdoc/>
         public Value Call(Value leftOperand, Value rightOperand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG

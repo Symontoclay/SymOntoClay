@@ -483,12 +483,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessAddition()
         {
-            ProcessUsualBinaryOperator(KindOfOperator.Addition);
+            ProcessUsualBinaryOperator(KindOfOperator.Add);
         }
 
         private void ProcessMinus()
         {
-            throw new NotImplementedException();
+            ProcessUsualBinaryOperator(KindOfOperator.Sub);
         }
 
         private void ProcessMultiplication()

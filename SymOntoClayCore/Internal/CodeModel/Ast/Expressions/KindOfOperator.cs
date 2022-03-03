@@ -44,6 +44,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         MoreOrEqual,
         Less,
         LessOrEqual,
-        Addition
+        Add,
+        Sub
     }
 }

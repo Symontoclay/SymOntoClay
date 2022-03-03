@@ -4,7 +4,7 @@ private:
     on Init =>
     {
         'Begin' >> @>log;
-        1 + NULL >> @>log;
+        1 + 'Hi' >> @>log;
         'End' >> @>log;
     }
 }

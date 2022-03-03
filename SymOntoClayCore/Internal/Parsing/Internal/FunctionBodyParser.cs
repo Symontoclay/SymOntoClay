@@ -48,8 +48,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result.WriteListToString()}");            
 #endif
 
@@ -75,6 +75,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.SystemVar:
                         case TokenKind.QuestionMark:
                         case TokenKind.EntityCondition:
+                        case TokenKind.Number:
                             ProcessExpressionStatement();
                             break;
 

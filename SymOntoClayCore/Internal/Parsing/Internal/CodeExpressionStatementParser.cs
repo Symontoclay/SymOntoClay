@@ -62,8 +62,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
             //Log($"_nodePoint = {_nodePoint}");
 #endif
 
@@ -95,6 +95,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.LeftRightStream:
                             ProcessLeftRightStream();
+                            break;
+
+                        case TokenKind.Plus:
+                            ProcessAddition();
+                            break;
+
+                        case TokenKind.Minus:
+                            ProcessMinus();
+                            break;
+
+                        case TokenKind.Multiplication:
+                            ProcessMultiplication();
+                            break;
+
+                        case TokenKind.Division:
+                            ProcessDivision();
                             break;
 
                         case TokenKind.Point:
@@ -447,6 +463,26 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private void ProcessLeftRightStream()
         {
             ProcessUsualBinaryOperator(KindOfOperator.LeftRightStream);
+        }
+
+        private void ProcessAddition()
+        {
+            ProcessUsualBinaryOperator(KindOfOperator.Addition);
+        }
+
+        private void ProcessMinus()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ProcessMultiplication()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ProcessDivision()
+        {
+            throw new NotImplementedException();
         }
 
         private void ProcessPoint()

@@ -122,6 +122,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Semicolon:
                         case TokenKind.CloseRoundBracket:
                         case TokenKind.CloseFactBracket:
+                        case TokenKind.Plus:
+                        case TokenKind.Minus:
+                        case TokenKind.Multiplication:
+                        case TokenKind.Division:
+                        case TokenKind.LeftRightStream:
                             _context.Recovery(_currToken);
                             Exit();
                             break;

@@ -1,17 +1,10 @@
-﻿class Cls1
-{
-protected:
-    {: can(bird, fly) :}
-    {: bird(#Alisa_12) :}
-}
-
-app PeaceKeeper is Cls1
+﻿app PeaceKeeper is Cls1
 {
 private:
     on Init =>
     {
         'Begin' >> @>log;
-        select {: $z(#Alisa_12, $x) :} >> @>log;
+        1 + 1 >> @>log;
         'End' >> @>log;
     }
 }

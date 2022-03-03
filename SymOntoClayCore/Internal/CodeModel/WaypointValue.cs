@@ -94,6 +94,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        public override string ToSystemString()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
             _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.WaypointTypeName) };

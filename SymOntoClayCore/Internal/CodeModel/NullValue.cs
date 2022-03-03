@@ -47,6 +47,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return null;
         }
 
+        /// <inheritdoc/>
+        public override string ToSystemString()
+        {
+            return string.Empty;
+        }
+
         private List<StrongIdentifierValue> _builtInSuperTypes;
 
         /// <inheritdoc/>

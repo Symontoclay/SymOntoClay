@@ -79,6 +79,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        public override string ToSystemString()
+        {
+            return _systemValue;
+        }
+
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return _systemValue.GetHashCode();

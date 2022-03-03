@@ -72,6 +72,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        public override string ToSystemString()
+        {
+            return NameValue;
+        }
+
+        /// <inheritdoc/>
         public bool Equals(StrongIdentifierValue other)
         {
             if (other == null)

@@ -102,6 +102,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public abstract object GetSystemValue();
 
+        public abstract string ToSystemString();
+
         public abstract string ToHumanizedString();
 
         /// <summary>

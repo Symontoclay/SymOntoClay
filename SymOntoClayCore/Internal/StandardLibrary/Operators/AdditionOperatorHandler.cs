@@ -19,8 +19,8 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         public Value Call(Value leftOperand, Value rightOperand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Log($"leftOperand = {leftOperand}");
-            Log($"rightOperand = {rightOperand}");
+            //Log($"leftOperand = {leftOperand}");
+            //Log($"rightOperand = {rightOperand}");
             //Log($"annotation = {annotation}");
 #endif
 
@@ -32,6 +32,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             if(leftOperand.IsNullValue || rightOperand.IsNullValue)
             {
                 return new NullValue();
+            }
+
+            if(leftOperand.IsStringValue || rightOperand.IsStringValue)
+            {
+                return new StringValue(leftOperand.ToSystemString() + rightOperand.ToSystemString());
             }
 
             throw new NotImplementedException();

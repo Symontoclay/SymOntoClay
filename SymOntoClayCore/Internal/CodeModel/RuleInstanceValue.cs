@@ -79,6 +79,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        public override string ToSystemString()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public override ulong GetLongConditionalHashCode(CheckDirtyOptions options)
         {
             return RuleInstance.GetLongConditionalHashCode(options);

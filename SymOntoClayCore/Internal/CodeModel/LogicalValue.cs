@@ -76,6 +76,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        public override string ToSystemString()
+        {
+            return SystemValue.ToString();
+        }
+
+        /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
         {
             return CloneValue(context);

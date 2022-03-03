@@ -49,6 +49,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        public override string ToSystemString()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
             return base.CalculateLongHashCode(options) ^ (AnnotatedItem?.GetLongHashCode(options) ?? 0);

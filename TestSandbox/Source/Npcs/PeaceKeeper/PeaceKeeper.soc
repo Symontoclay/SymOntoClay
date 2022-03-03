@@ -1,9 +1,8 @@
 ﻿class Cls1
 {
-public:
-	{: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
-	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+private:
+    {: can(bird, fly) :}
+    {: bird(#Alisa_12) :}
 }
 
 app PeaceKeeper is Cls1
@@ -12,7 +11,7 @@ private:
     on Init =>
     {
         'Begin' >> @>log;
-        select {: son($x, $y) :} >> @>log;
+        select {: $z(#Alisa_12, $x) :} >> @>log;
         'End' >> @>log;
     }
 }

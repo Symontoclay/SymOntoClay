@@ -65,6 +65,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 case KindOfOperator.Sub:
                     return 6;
 
+                case KindOfOperator.Mul:
+                case KindOfOperator.Div:
+                    return 5;
+
                 case KindOfOperator.Point:
                     return 2;
 
@@ -123,6 +127,12 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 
                 case KindOfOperator.Sub:
                     return "-";
+
+                case KindOfOperator.Mul:
+                    return "*";
+
+                case KindOfOperator.Div:
+                    return "/";
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);

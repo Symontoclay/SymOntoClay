@@ -493,12 +493,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessMultiplication()
         {
-            throw new NotImplementedException();
+            ProcessUsualBinaryOperator(KindOfOperator.Mul);
         }
 
         private void ProcessDivision()
         {
-            throw new NotImplementedException();
+            ProcessUsualBinaryOperator(KindOfOperator.Div);
         }
 
         private void ProcessPoint()

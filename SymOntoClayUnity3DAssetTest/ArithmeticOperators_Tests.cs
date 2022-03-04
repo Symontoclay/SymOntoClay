@@ -317,5 +317,43 @@ private:
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case3()
+        {
+            var text = @"app PeaceKeeper
+{
+private:
+    on Init =>
+    {
+        'Begin' >> @>log;
+        3 * 4 >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "12");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

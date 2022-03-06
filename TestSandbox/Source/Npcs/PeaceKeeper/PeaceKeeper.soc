@@ -3,7 +3,8 @@
     fun a() => 
     {
         '`a` has been called!' >> @>log;
-        return 1;
+        @a = 3;
+        return 1 + @a;
         '`a` has been ended!' >> @>log;
     }
 

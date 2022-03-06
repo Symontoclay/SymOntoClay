@@ -10,7 +10,7 @@
     on Init =>
     {
         'Begin' >> @>log;
-        a();
+        a() >> @>log;
         'End' >> @>log;
     }
 }

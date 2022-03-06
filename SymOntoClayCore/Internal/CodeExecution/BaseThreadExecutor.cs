@@ -620,6 +620,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             GoBackToPrevCodeFrame();
 
+                            _currentCodeFrame.ValuesStack.Push(new NullValue());
+
 #if DEBUG
                             //_instancesStorage.PrintProcessesList();
 
@@ -881,6 +883,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
             //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
             //Log($"caller.IsPointRefValue = {caller.IsPointRefValue}");
+            //Log($"caller.IsStrongIdentifierValue = {caller.IsStrongIdentifierValue}");
 #endif
 
             if (caller.IsPointRefValue)

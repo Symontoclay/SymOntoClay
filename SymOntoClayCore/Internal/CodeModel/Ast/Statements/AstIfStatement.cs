@@ -1,7 +1,9 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
@@ -9,6 +11,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
     public class AstIfStatement : AstStatement
     {
         public AstExpression ConditionalExpression { get; set; }
+
+        public List<AstStatement> IfStatements { get; set; } = new List<AstStatement>();
 
         /// <inheritdoc/>
         public override KindOfAstStatement Kind => KindOfAstStatement.IfStatement;
@@ -32,7 +36,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
 
             result.ConditionalExpression = ConditionalExpression.CloneAstExpression(context);
 
-            //result.TryStatements = TryStatements?.Select(p => p.CloneAstStatement(context)).ToList();
+            result.IfStatements = IfStatements?.Select(p => p.CloneAstStatement(context)).ToList();
             //result.CatchStatements = CatchStatements?.Select(p => p.Clone(context)).ToList();
             //result.ElseStatements = ElseStatements?.Select(p => p.CloneAstStatement(context)).ToList();
             //result.EnsureStatements = EnsureStatements?.Select(p => p.CloneAstStatement(context)).ToList();
@@ -55,13 +59,13 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         {
             ConditionalExpression.CheckDirty(options);
 
-            //if (TryStatements.IsNullOrEmpty())
-            //{
-            //    foreach (var statement in TryStatements)
-            //    {
-            //        statement.CheckDirty(options);
-            //    }
-            //}
+            if (IfStatements.IsNullOrEmpty())
+            {
+                foreach (var statement in IfStatements)
+                {
+                    statement.CheckDirty(options);
+                }
+            }
 
             //if (CatchStatements.IsNullOrEmpty())
             //{
@@ -98,7 +102,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
 
             sb.PrintObjProp(n, nameof(ConditionalExpression), ConditionalExpression);
 
-            //sb.PrintObjListProp(n, nameof(TryStatements), TryStatements);
+            sb.PrintObjListProp(n, nameof(IfStatements), IfStatements);
             //sb.PrintObjListProp(n, nameof(CatchStatements), CatchStatements);
             //sb.PrintObjListProp(n, nameof(ElseStatements), ElseStatements);
             //sb.PrintObjListProp(n, nameof(EnsureStatements), EnsureStatements);
@@ -115,7 +119,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
 
             sb.PrintShortObjProp(n, nameof(ConditionalExpression), ConditionalExpression);
 
-            //sb.PrintShortObjListProp(n, nameof(TryStatements), TryStatements);
+            sb.PrintShortObjListProp(n, nameof(IfStatements), IfStatements);
             //sb.PrintShortObjListProp(n, nameof(CatchStatements), CatchStatements);
             //sb.PrintShortObjListProp(n, nameof(ElseStatements), ElseStatements);
             //sb.PrintShortObjListProp(n, nameof(EnsureStatements), EnsureStatements);
@@ -132,7 +136,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
 
             sb.PrintBriefObjProp(n, nameof(ConditionalExpression), ConditionalExpression);
 
-            //sb.PrintBriefObjListProp(n, nameof(TryStatements), TryStatements);
+            sb.PrintBriefObjListProp(n, nameof(IfStatements), IfStatements);
             //sb.PrintBriefObjListProp(n, nameof(CatchStatements), CatchStatements);
             //sb.PrintBriefObjListProp(n, nameof(ElseStatements), ElseStatements);
             //sb.PrintBriefObjListProp(n, nameof(EnsureStatements), EnsureStatements);

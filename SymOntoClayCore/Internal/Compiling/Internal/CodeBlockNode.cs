@@ -117,6 +117,14 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         }
                         break;
 
+                    case KindOfAstStatement.IfStatement:
+                        {
+                            var node = new AstIfStatementNode(_context);
+                            node.Run(statement as AstIfStatement);
+                            AddCommands(node.Result);
+                        }
+                        break;
+
                     default: 
                         throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
                 }

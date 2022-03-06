@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.Helpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,7 +16,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotIfMark,
             WaitForIfCondition,
             GotIfCondition,
-            WaitForIfBody,
             GotIfBody
         }
 
@@ -103,17 +103,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotIfCondition:
                     switch (_currToken.TokenKind)
                     {
-
-
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
-                    }
-                    break;
-
-                case State.WaitForIfBody:
-                    switch (_currToken.TokenKind)
-                    {
-
+                        case TokenKind.OpenFigureBracket:
+                            _rawStatement.IfStatements = ParseBody();
+                            _state = State.GotIfBody;
+                            break;
 
                         default:
                             throw new UnexpectedTokenException(_currToken);
@@ -123,7 +116,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotIfBody:
                     switch (_currToken.TokenKind)
                     {
-
+                        case TokenKind.String:
+                            _context.Recovery(_currToken);
+                            Exit();
+                            break;
 
                         default:
                             throw new UnexpectedTokenException(_currToken);
@@ -146,6 +142,19 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #endif
 
             return parser.Result.Expression;
+        }
+
+        private List<AstStatement> ParseBody()
+        {
+            _context.Recovery(_currToken);
+            var parser = new FunctionBodyParser(_context);
+            parser.Run();
+
+#if DEBUG
+            Log($"parser.Result.WriteListToString() = {parser.Result.WriteListToString()}");
+#endif
+
+            return parser.Result;
         }
     }
 }

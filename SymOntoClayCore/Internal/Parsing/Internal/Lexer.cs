@@ -980,6 +980,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Return;
                             break;
                         }
+
+                        if (string.Compare(content, "if", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.If;
+                            break;
+                        }
+
+                        if (string.Compare(content, "elif", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Elif;
+                            break;
+                        }
                     }
                     break;
 

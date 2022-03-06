@@ -46,6 +46,17 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         }
 
         /// <inheritdoc/>
+        public override void CalculateLongHashCodes(CheckDirtyOptions options)
+        {
+            if (Expression != null)
+            {
+                Expression.CheckDirty(options);
+            }
+
+            base.CalculateLongHashCodes(options);
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

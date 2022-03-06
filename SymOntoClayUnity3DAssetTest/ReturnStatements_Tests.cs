@@ -14,9 +14,22 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case1()
         {
-            throw new NotImplementedException();
+            var text = @"app PeaceKeeper
+{
+    fun a() => 
+    {
+        '`a` has been called!' >> @>log;
+        return;
+        '`a` has been ended!' >> @>log;
+    }
 
-            var text = @"";
+    on Init =>
+    {
+        'Begin' >> @>log;
+        a();
+        'End' >> @>log;
+    }
+}";
 
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
@@ -28,7 +41,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 2:
-                            Assert.AreEqual(message, "2");
+                            Assert.AreEqual(message, "`a` has been called!");
                             break;
 
                         case 3:

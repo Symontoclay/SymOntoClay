@@ -109,6 +109,14 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         }
                         break;
 
+                    case KindOfAstStatement.ReturnStatement:
+                        {
+                            var node = new AstReturnStatementNode(_context);
+                            node.Run(statement as AstReturnStatement);
+                            AddCommands(node.Result);
+                        }
+                        break;
+
                     default: 
                         throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
                 }

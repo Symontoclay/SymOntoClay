@@ -630,6 +630,31 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         }
                         break;
 
+                    case OperationCode.ReturnVal:
+                        {
+#if DEBUG
+                            //Log("Begin case OperationCode.ReturnVal");
+                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+                            var currentValue = _currentCodeFrame.ValuesStack.Pop();
+
+#if DEBUG
+                            //Log($"currentValue = {currentValue}");
+#endif
+
+                            GoBackToPrevCodeFrame();
+
+                            _currentCodeFrame.ValuesStack.Push(currentValue);
+
+#if DEBUG
+                            //_instancesStorage.PrintProcessesList();
+
+                            //Log("End case OperationCode.Return");
+#endif
+                        }
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(currentCommand.OperationCode), currentCommand.OperationCode, null);
                 }

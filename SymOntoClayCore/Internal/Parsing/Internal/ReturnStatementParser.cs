@@ -44,8 +44,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_currToken = {_currToken}");
+            //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
 #endif
 
             switch (_state)
@@ -84,7 +84,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 parser.Run();
 
 #if DEBUG
-                                Log($"parser.Result = {parser.Result}");
+                                //Log($"parser.Result = {parser.Result}");
 #endif
 
                                 _rawStatement.Expression = parser.Result.Expression;

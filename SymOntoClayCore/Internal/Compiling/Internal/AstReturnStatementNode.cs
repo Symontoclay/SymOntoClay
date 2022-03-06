@@ -16,18 +16,28 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         public void Run(AstReturnStatement statement)
         {
 #if DEBUG
-            Log($"statement = {statement}");
+            //Log($"statement = {statement}");
 #endif
 
-            if(statement.Expression != null)
+            if(statement.Expression == null)
             {
-                throw new NotImplementedException();
+                AddCommand(new IntermediateScriptCommand()
+                {
+                    OperationCode = OperationCode.Return
+                });
             }
-
-            AddCommand(new IntermediateScriptCommand()
+            else
             {
-                OperationCode = OperationCode.Return
-            });
+                var node = new ExpressionNode(_context);
+                node.Run(statement.Expression);
+
+                AddCommands(node.Result); 
+
+                AddCommand(new IntermediateScriptCommand()
+                {
+                    OperationCode = OperationCode.ReturnVal
+                });
+            }
         }
     }
 }

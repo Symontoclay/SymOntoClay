@@ -10,7 +10,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
     {
         private enum State
         {
-            Init
+            Init,
+            GotIfMark
         }
 
         public IfStatementParser(InternalParserContext context)
@@ -50,6 +51,24 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             switch (_state)
             {
                 case State.Init:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                            switch (_currToken.KeyWordTokenKind)
+                            {
+
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotIfMark:
                     switch (_currToken.TokenKind)
                     {
 

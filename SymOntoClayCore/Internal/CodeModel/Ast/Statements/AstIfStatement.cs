@@ -14,6 +14,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
 
         public List<AstStatement> IfStatements { get; set; } = new List<AstStatement>();
 
+        public List<AstElifStatement> ElifStatements { get; set; } = new List<AstElifStatement>();
+
+        public List<AstStatement> ElseStatements { get; set; } = new List<AstStatement>();
+
         /// <inheritdoc/>
         public override KindOfAstStatement Kind => KindOfAstStatement.IfStatement;
 
@@ -37,8 +41,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             result.ConditionalExpression = ConditionalExpression.CloneAstExpression(context);
 
             result.IfStatements = IfStatements?.Select(p => p.CloneAstStatement(context)).ToList();
-            //result.CatchStatements = CatchStatements?.Select(p => p.Clone(context)).ToList();
-            //result.ElseStatements = ElseStatements?.Select(p => p.CloneAstStatement(context)).ToList();
+            result.ElifStatements = ElifStatements?.Select(p => p.Clone(context)).ToList();
+            result.ElseStatements = ElseStatements?.Select(p => p.CloneAstStatement(context)).ToList();
             //result.EnsureStatements = EnsureStatements?.Select(p => p.CloneAstStatement(context)).ToList();
 
             result.AppendAnnotations(this, context);
@@ -67,21 +71,21 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
                 }
             }
 
-            //if (CatchStatements.IsNullOrEmpty())
-            //{
-            //    foreach (var statement in CatchStatements)
-            //    {
-            //        statement.CheckDirty(options);
-            //    }
-            //}
+            if (ElifStatements.IsNullOrEmpty())
+            {
+                foreach (var statement in ElifStatements)
+                {
+                    statement.CheckDirty(options);
+                }
+            }
 
-            //if (ElseStatements.IsNullOrEmpty())
-            //{
-            //    foreach (var statement in ElseStatements)
-            //    {
-            //        statement.CheckDirty(options);
-            //    }
-            //}
+            if (ElseStatements.IsNullOrEmpty())
+            {
+                foreach (var statement in ElseStatements)
+                {
+                    statement.CheckDirty(options);
+                }
+            }
 
             //if (EnsureStatements.IsNullOrEmpty())
             //{
@@ -103,8 +107,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             sb.PrintObjProp(n, nameof(ConditionalExpression), ConditionalExpression);
 
             sb.PrintObjListProp(n, nameof(IfStatements), IfStatements);
-            //sb.PrintObjListProp(n, nameof(CatchStatements), CatchStatements);
-            //sb.PrintObjListProp(n, nameof(ElseStatements), ElseStatements);
+            sb.PrintObjListProp(n, nameof(ElifStatements), ElifStatements);
+            sb.PrintObjListProp(n, nameof(ElseStatements), ElseStatements);
             //sb.PrintObjListProp(n, nameof(EnsureStatements), EnsureStatements);
 
             sb.Append(base.PropertiesToString(n));
@@ -120,8 +124,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             sb.PrintShortObjProp(n, nameof(ConditionalExpression), ConditionalExpression);
 
             sb.PrintShortObjListProp(n, nameof(IfStatements), IfStatements);
-            //sb.PrintShortObjListProp(n, nameof(CatchStatements), CatchStatements);
-            //sb.PrintShortObjListProp(n, nameof(ElseStatements), ElseStatements);
+            sb.PrintShortObjListProp(n, nameof(ElifStatements), ElifStatements);
+            sb.PrintShortObjListProp(n, nameof(ElseStatements), ElseStatements);
             //sb.PrintShortObjListProp(n, nameof(EnsureStatements), EnsureStatements);
 
             sb.Append(base.PropertiesToShortString(n));
@@ -137,8 +141,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             sb.PrintBriefObjProp(n, nameof(ConditionalExpression), ConditionalExpression);
 
             sb.PrintBriefObjListProp(n, nameof(IfStatements), IfStatements);
-            //sb.PrintBriefObjListProp(n, nameof(CatchStatements), CatchStatements);
-            //sb.PrintBriefObjListProp(n, nameof(ElseStatements), ElseStatements);
+            sb.PrintBriefObjListProp(n, nameof(ElifStatements), ElifStatements);
+            sb.PrintBriefObjListProp(n, nameof(ElseStatements), ElseStatements);
             //sb.PrintBriefObjListProp(n, nameof(EnsureStatements), EnsureStatements);
 
             sb.Append(base.PropertiesToBriefString(n));

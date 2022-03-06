@@ -188,6 +188,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.Semicolon:
+                        case TokenKind.CloseRoundBracket:
                             Exit();
                             break;
 

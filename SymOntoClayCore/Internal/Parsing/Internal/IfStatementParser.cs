@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
+﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.Helpers;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Init,
             GotIfMark,
             WaitForIfCondition,
-            GotIfCondition
+            GotIfCondition,
+            WaitForIfBody,
+            GotIfBody
         }
 
         public IfStatementParser(InternalParserContext context)
@@ -87,7 +90,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.WaitForIfCondition:
                     switch (_currToken.TokenKind)
                     {
-
+                        case TokenKind.Var:
+                            _rawStatement.ConditionalExpression = ProcessCondition();
+                            _state = State.GotIfCondition;
+                            break;
 
                         default:
                             throw new UnexpectedTokenException(_currToken);
@@ -104,9 +110,42 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
+                case State.WaitForIfBody:
+                    switch (_currToken.TokenKind)
+                    {
+
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotIfBody:
+                    switch (_currToken.TokenKind)
+                    {
+
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
+        }
+
+        private AstExpression ProcessCondition()
+        {
+            _context.Recovery(_currToken);
+            var parser = new CodeExpressionStatementParser(_context);
+            parser.Run();
+
+#if DEBUG
+            Log($"parser.Result = {parser.Result}");
+#endif
+
+            return parser.Result.Expression;
         }
     }
 }

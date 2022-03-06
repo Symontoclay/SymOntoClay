@@ -45,12 +45,12 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         PushValToVar,
 
         /// <summary>
-        /// Calls an unary operator
+        /// Calls an unary operator.
         /// </summary>
         CallUnOp,
 
         /// <summary>
-        /// Calls a binary operator
+        /// Calls a binary operator.
         /// </summary>
         CallBinOp,
         Call,
@@ -67,7 +67,14 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         Error,
         SetSEHGroup,
         RemoveSEHGroup,
+        /// <summary>
+        /// Jump to target position.
+        /// </summary>
         JumpTo,
+        /// <summary>
+        /// Jump to target position if top stack value equals <b>true</b> (1).
+        /// </summary>
+        JumpToIfTrue,
         Await,
         CompleteAction,
         CompleteActionVal,

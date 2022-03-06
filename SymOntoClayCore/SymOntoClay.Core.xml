@@ -4136,12 +4136,22 @@
         </member>
         <member name="F:SymOntoClay.Core.Internal.IndexedData.ScriptingData.OperationCode.CallUnOp">
             <summary>
-            Calls an unary operator
+            Calls an unary operator.
             </summary>
         </member>
         <member name="F:SymOntoClay.Core.Internal.IndexedData.ScriptingData.OperationCode.CallBinOp">
             <summary>
-            Calls a binary operator
+            Calls a binary operator.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.IndexedData.ScriptingData.OperationCode.JumpTo">
+            <summary>
+            Jump to target position.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.IndexedData.ScriptingData.OperationCode.JumpToIfTrue">
+            <summary>
+            Jump to target position if top stack value equals <b>true</b> (1).
             </summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.ScriptCommand.Clone">

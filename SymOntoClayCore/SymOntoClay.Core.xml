@@ -1145,6 +1145,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstIfStatement.CloneAstStatement(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstIfStatement.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstIfStatement.CalculateLongHashCodes(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
             <inheritdoc/>
         </member>

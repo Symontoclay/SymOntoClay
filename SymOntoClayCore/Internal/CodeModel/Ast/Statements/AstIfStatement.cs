@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,6 +8,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
 {
     public class AstIfStatement : AstStatement
     {
+        public AstExpression ConditionalExpression { get; set; }
+
         /// <inheritdoc/>
         public override KindOfAstStatement Kind => KindOfAstStatement.IfStatement;
 
@@ -27,6 +30,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var result = new AstIfStatement();
             context[this] = result;
 
+            result.ConditionalExpression = ConditionalExpression.CloneAstExpression(context);
+
             //result.TryStatements = TryStatements?.Select(p => p.CloneAstStatement(context)).ToList();
             //result.CatchStatements = CatchStatements?.Select(p => p.Clone(context)).ToList();
             //result.ElseStatements = ElseStatements?.Select(p => p.CloneAstStatement(context)).ToList();
@@ -38,8 +43,18 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         }
 
         /// <inheritdoc/>
+        public override void DiscoverAllAnnotations(IList<RuleInstance> result)
+        {
+            base.DiscoverAllAnnotations(result);
+
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public override void CalculateLongHashCodes(CheckDirtyOptions options)
         {
+            ConditionalExpression.CheckDirty(options);
+
             //if (TryStatements.IsNullOrEmpty())
             //{
             //    foreach (var statement in TryStatements)
@@ -81,6 +96,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintObjProp(n, nameof(ConditionalExpression), ConditionalExpression);
+
             //sb.PrintObjListProp(n, nameof(TryStatements), TryStatements);
             //sb.PrintObjListProp(n, nameof(CatchStatements), CatchStatements);
             //sb.PrintObjListProp(n, nameof(ElseStatements), ElseStatements);
@@ -96,6 +113,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintShortObjProp(n, nameof(ConditionalExpression), ConditionalExpression);
+
             //sb.PrintShortObjListProp(n, nameof(TryStatements), TryStatements);
             //sb.PrintShortObjListProp(n, nameof(CatchStatements), CatchStatements);
             //sb.PrintShortObjListProp(n, nameof(ElseStatements), ElseStatements);
@@ -110,6 +129,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintBriefObjProp(n, nameof(ConditionalExpression), ConditionalExpression);
 
             //sb.PrintBriefObjListProp(n, nameof(TryStatements), TryStatements);
             //sb.PrintBriefObjListProp(n, nameof(CatchStatements), CatchStatements);

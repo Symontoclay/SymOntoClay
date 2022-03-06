@@ -44,8 +44,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
 #endif
 
             switch (_state)
@@ -78,7 +78,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            {
+                                _context.Recovery(_currToken);
+                                var parser = new CodeExpressionStatementParser(_context);
+                                parser.Run();
+
+#if DEBUG
+                                Log($"parser.Result = {parser.Result}");
+#endif
+
+                                _rawStatement.Expression = parser.Result.Expression;
+
+                                Exit();
+                            }
+                            break;
                     }
                     break;
 

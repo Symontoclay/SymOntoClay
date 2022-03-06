@@ -17,10 +17,27 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         public Value Call(Value leftOperand, Value rightOperand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Log($"leftOperand = {leftOperand}");
-            Log($"rightOperand = {rightOperand}");
-            Log($"annotation = {annotation}");
+            //Log($"leftOperand = {leftOperand}");
+            //Log($"rightOperand = {rightOperand}");
+            //Log($"annotation = {annotation}");
 #endif
+
+            if(rightOperand.IsNullValue)
+            {
+                return new NullValue();
+            }
+
+            if (leftOperand.IsNumberValue && rightOperand.IsNumberValue)
+            {
+                var rightOperandNumSysValue = (double)rightOperand.AsNumberValue.GetSystemValue();
+
+                if(rightOperandNumSysValue == 0)
+                {
+                    return new NullValue();
+                }
+
+                return new NumberValue((double)leftOperand.AsNumberValue.GetSystemValue() / rightOperandNumSysValue);
+            }
 
             throw new NotImplementedException();
         }

@@ -974,6 +974,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Private;
                             break;
                         }
+
+                        if (string.Compare(content, "return", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Return;
+                            break;
+                        }
                     }
                     break;
 

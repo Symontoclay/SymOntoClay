@@ -75,6 +75,10 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         /// Jump to target position if top stack value equals <b>true</b> (1).
         /// </summary>
         JumpToIfTrue,
+        /// <summary>
+        /// Jump to target position if top stack value equals <b>false</b> (0).
+        /// </summary>
+        JumpToIfFalse,
         Await,
         CompleteAction,
         CompleteActionVal,

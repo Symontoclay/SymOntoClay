@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
@@ -199,7 +200,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 if (!CheckReturnedInfo())
@@ -528,6 +529,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         }
                         break;
 
+                    case OperationCode.JumpToIfTrue:
+                        JumpToIf(1, currentCommand.TargetPosition);
+                        break;
+
+                    case OperationCode.JumpToIfFalse:
+                        JumpToIf(0, currentCommand.TargetPosition);
+                        break;
+
                     case OperationCode.Await:
                         {
                             var coordinator = _currentCodeFrame.ExecutionCoordinator;
@@ -668,6 +677,51 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #endif
                 
                 throw;
+            }
+        }
+
+        private void JumpToIf(float targetValue, int targetPosition)
+        {
+#if DEBUG
+            Log($"targetValue = {targetValue}");
+#endif
+
+            var currLogicValue = GetLogicalValueFromCurrentStackValue();
+
+#if DEBUG
+            Log($"currLogicValue = {currLogicValue}");
+#endif
+
+            if(currLogicValue == targetValue)
+            {
+                _currentCodeFrame.CurrentPosition = targetPosition;
+            }
+            else
+            {
+                _currentCodeFrame.CurrentPosition++;
+            }                       
+        }
+
+        private float? GetLogicalValueFromCurrentStackValue()
+        {
+            var currentValue = _currentCodeFrame.ValuesStack.Pop();
+
+#if DEBUG
+            Log($"currentValue = {currentValue}");
+#endif
+
+            var kindOfValue = currentValue.KindOfValue;
+
+            switch(kindOfValue)
+            {
+                case KindOfValue.LogicalValue:
+                    return currentValue.AsLogicalValue.SystemValue;
+
+                case KindOfValue.NumberValue:
+                    return ValueConvertor.ConvertNumberValueToLogicalValue(currentValue.AsNumberValue, _context).SystemValue;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfValue), kindOfValue, null);
             }
         }
 

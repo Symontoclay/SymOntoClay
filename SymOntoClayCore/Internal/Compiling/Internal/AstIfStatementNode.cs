@@ -22,17 +22,65 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             var afterCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.Nop };
 
-            var ifCodeBlockNode = new ExpressionNode(_context);
-            ifCodeBlockNode.Run(statement.ConditionalExpression);
+            IntermediateScriptCommand firstElifCommand = null;
+            IntermediateScriptCommand firstElseCommand = null;
 
+            if (!statement.ElifStatements.IsNullOrEmpty())
+            {
+                firstElifCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.Nop };
+            }
+
+            if (!statement.ElseStatements.IsNullOrEmpty())
+            {
+                firstElseCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.Nop };
+            }
+
+            var ifConditionCodeBlockNode = new ExpressionNode(_context);
+            ifConditionCodeBlockNode.Run(statement.Condition);
+
+            AddCommands(ifConditionCodeBlockNode.Result);
+
+            var ifJumpCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.JumpToIfFalse };
+
+            if(firstElifCommand != null)
+            {
+                ifJumpCommand.JumpToMe = firstElifCommand;
+            }
+            else
+            {
+                if(firstElseCommand != null)
+                {
+                    ifJumpCommand.JumpToMe = firstElseCommand;
+                }
+                else
+                {
+                    ifJumpCommand.JumpToMe = afterCommand;
+                }
+            }
+
+            AddCommand(ifJumpCommand);
+
+            var ifCodeBlockNode = new CodeBlockNode(_context);
+            ifCodeBlockNode.Run(statement.IfStatements);
             AddCommands(ifCodeBlockNode.Result);
 
-            if(!statement.ElifStatements.IsNullOrEmpty())
+            if (!statement.ElifStatements.IsNullOrEmpty())
             {
                 throw new NotImplementedException();
             }
 
-            throw new NotImplementedException();
+            if(!statement.ElseStatements.IsNullOrEmpty())
+            {
+                throw new NotImplementedException();
+            }
+
+            AddCommand(afterCommand);
+
+#if DEBUG
+            //DbgPrintCommands();
+#endif
+
+            //throw new NotImplementedException();
         }
     }
 }

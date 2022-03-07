@@ -221,6 +221,8 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
                 case OperationCode.SetSEHGroup:
                 case OperationCode.JumpTo:
+                case OperationCode.JumpToIfTrue:
+                case OperationCode.JumpToIfFalse:
                     return $"{spaces}{OperationCode} {TargetPosition}";
 
                 case OperationCode.VarDecl:

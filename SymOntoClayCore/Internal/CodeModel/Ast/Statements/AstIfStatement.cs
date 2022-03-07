@@ -10,7 +10,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
 {
     public class AstIfStatement : AstStatement
     {
-        public AstExpression ConditionalExpression { get; set; }
+        public AstExpression Condition { get; set; }
 
         public List<AstStatement> IfStatements { get; set; } = new List<AstStatement>();
 
@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var result = new AstIfStatement();
             context[this] = result;
 
-            result.ConditionalExpression = ConditionalExpression.CloneAstExpression(context);
+            result.Condition = Condition.CloneAstExpression(context);
 
             result.IfStatements = IfStatements?.Select(p => p.CloneAstStatement(context)).ToList();
             result.ElifStatements = ElifStatements?.Select(p => p.Clone(context)).ToList();
@@ -61,7 +61,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         /// <inheritdoc/>
         public override void CalculateLongHashCodes(CheckDirtyOptions options)
         {
-            ConditionalExpression.CheckDirty(options);
+            Condition.CheckDirty(options);
 
             if (IfStatements.IsNullOrEmpty())
             {
@@ -104,7 +104,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(ConditionalExpression), ConditionalExpression);
+            sb.PrintObjProp(n, nameof(Condition), Condition);
 
             sb.PrintObjListProp(n, nameof(IfStatements), IfStatements);
             sb.PrintObjListProp(n, nameof(ElifStatements), ElifStatements);
@@ -121,7 +121,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjProp(n, nameof(ConditionalExpression), ConditionalExpression);
+            sb.PrintShortObjProp(n, nameof(Condition), Condition);
 
             sb.PrintShortObjListProp(n, nameof(IfStatements), IfStatements);
             sb.PrintShortObjListProp(n, nameof(ElifStatements), ElifStatements);
@@ -138,7 +138,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjProp(n, nameof(ConditionalExpression), ConditionalExpression);
+            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
 
             sb.PrintBriefObjListProp(n, nameof(IfStatements), IfStatements);
             sb.PrintBriefObjListProp(n, nameof(ElifStatements), ElifStatements);

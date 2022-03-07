@@ -22,7 +22,9 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -136,5 +138,102 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             AddCommand(command);
         }
+
+#if DEBUG
+        public void DbgPrintCommands()
+        {
+            var spaces = DisplayHelper.Spaces(4);
+
+            var sb = new StringBuilder();
+            sb.AppendLine("Begin Code");
+
+            var n = 0;
+
+            var cmdDict = new Dictionary<IntermediateScriptCommand, int>();
+            
+            foreach (var commandItem in _result)
+            {
+                cmdDict[commandItem] = n;
+                n++;
+            }
+
+            n = 0;
+
+            foreach (var commandItem in _result)
+            {
+                //Log($"commandItem = {commandItem}");
+
+                sb.AppendLine($"{spaces}{n}: {IntermediateScriptCommandToRawDbgString(commandItem, cmdDict)}");
+
+                n++;
+            }
+
+            sb.AppendLine("End Code");
+
+            Log($"sb = {sb}");
+        }
+
+        private string IntermediateScriptCommandToRawDbgString(IntermediateScriptCommand commandItem, Dictionary<IntermediateScriptCommand, int> cmdDict)
+        {
+            var operationCode = commandItem.OperationCode;
+
+            switch (operationCode)
+            {
+                case OperationCode.Nop:
+                case OperationCode.ClearStack:
+                case OperationCode.Return:
+                case OperationCode.ReturnVal:
+                case OperationCode.SetInheritance:
+                case OperationCode.SetNotInheritance:
+                case OperationCode.Error:
+                case OperationCode.RemoveSEHGroup:
+                case OperationCode.Await:
+                case OperationCode.CompleteAction:
+                case OperationCode.CompleteActionVal:
+                case OperationCode.BreakAction:
+                case OperationCode.BreakActionVal:
+                    return $"{operationCode}";
+
+                case OperationCode.PushVal:
+                case OperationCode.PushValFromVar:
+                case OperationCode.PushValToVar:
+                    return $"{operationCode} {commandItem.Value.ToDbgString()}";
+
+                case OperationCode.CallUnOp:
+                case OperationCode.CallBinOp:
+                    return $"{operationCode} {OperatorsHelper.GetSymbol(commandItem.KindOfOperator)}";
+
+                case OperationCode.Call:
+                case OperationCode.Call_N:
+                case OperationCode.Call_P:
+                case OperationCode.AsyncCall:
+                case OperationCode.AsyncCall_N:
+                case OperationCode.AsyncCall_P:
+                    return $"{operationCode} {commandItem.CountParams}";
+
+                case OperationCode.SetSEHGroup:
+                case OperationCode.JumpTo:
+                case OperationCode.JumpToIfTrue:
+                case OperationCode.JumpToIfFalse:
+                    if (commandItem.JumpToMe == null)
+                    {
+                        return $"{operationCode} -";
+                    }
+
+                    if(cmdDict.ContainsKey(commandItem.JumpToMe))
+                    {
+                        return $"{operationCode} {cmdDict[commandItem.JumpToMe]}";
+                    }
+
+                    return $"{operationCode} *";
+
+                case OperationCode.VarDecl:
+                    return $"{operationCode} {commandItem.CountParams}";
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(operationCode), operationCode, null);
+            }
+        }
+#endif
     }
 }

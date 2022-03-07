@@ -200,7 +200,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 if (!CheckReturnedInfo())
@@ -683,13 +683,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void JumpToIf(float targetValue, int targetPosition)
         {
 #if DEBUG
-            Log($"targetValue = {targetValue}");
+            //Log($"targetValue = {targetValue}");
 #endif
 
             var currLogicValue = GetLogicalValueFromCurrentStackValue();
 
 #if DEBUG
-            Log($"currLogicValue = {currLogicValue}");
+            //Log($"currLogicValue = {currLogicValue}");
 #endif
 
             if(currLogicValue == targetValue)
@@ -707,7 +707,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var currentValue = _currentCodeFrame.ValuesStack.Pop();
 
 #if DEBUG
-            Log($"currentValue = {currentValue}");
+            //Log($"currentValue = {currentValue}");
 #endif
 
             var kindOfValue = currentValue.KindOfValue;

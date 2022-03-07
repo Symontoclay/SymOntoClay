@@ -17,7 +17,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         public void Run(AstIfStatement statement)
         {
 #if DEBUG
-            Log($"statement = {statement}");
+            //Log($"statement = {statement}");
 #endif
 
             var afterCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.Nop };

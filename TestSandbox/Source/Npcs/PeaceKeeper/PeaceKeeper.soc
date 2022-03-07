@@ -9,6 +9,8 @@
         if({: >: { see(I, #`Barel 1`) } :})
         {
             'Yes!' >> @>log;
+        } else {
+            'Else Yes!' >> @>log;
         }
 
         'End' >> @>log;

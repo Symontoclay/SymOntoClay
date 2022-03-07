@@ -93,5 +93,89 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case1_b()
+        {
+            var text = @"app PeaceKeeper
+{
+    {: >: { see(I, #`Barel 1`) } :}
+
+    on Init =>
+    {
+        'Begin' >> @>log;
+        
+        if({: >: { see(I, #`Barel 1`) } :})
+        {
+            'Yes!' >> @>log;
+        }
+
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "Yes!");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case1_c()
+        {
+            var text = @"app PeaceKeeper
+{
+    {: >: { see(I, #`Barel 2`) } :}
+
+    on Init =>
+    {
+        'Begin' >> @>log;
+        
+        if({: >: { see(I, #`Barel 1`) } :})
+        {
+            'Yes!' >> @>log;
+        }
+
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

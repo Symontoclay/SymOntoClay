@@ -91,6 +91,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Var:
+                        case TokenKind.OpenFactBracket:
                             _rawStatement.Condition = ProcessCondition();
                             _state = State.GotIfCondition;
                             break;

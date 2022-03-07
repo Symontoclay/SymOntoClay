@@ -129,7 +129,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
 #if DEBUG
             //Log($"searchResult = {searchResult}");
-            //Log($"result = {DebugHelperForLogicalSearchResult.ToString(searchResult, _engineContext.Dictionary)}");
+            //Log($"result = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
 #endif
 
             return new LogicalSearchResultValue(searchResult);

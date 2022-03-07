@@ -134,6 +134,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessEntityCondition();
                             break;
 
+                        case TokenKind.OpenFactBracket:
+                            ProcessRuleOrFact();
+                            _state = State.GotName;
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

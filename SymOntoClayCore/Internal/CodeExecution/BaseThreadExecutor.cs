@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
@@ -719,6 +720,29 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 case KindOfValue.NumberValue:
                     return ValueConvertor.ConvertNumberValueToLogicalValue(currentValue.AsNumberValue, _context).SystemValue;
+
+                case KindOfValue.RuleInstanceValue:
+                    {
+                        var ruleInstance = currentValue.AsRuleInstanceValue.RuleInstance;
+
+                        var searchOptions = new LogicalSearchOptions();
+                        searchOptions.QueryExpression = ruleInstance;
+                        searchOptions.LocalCodeExecutionContext = _currentCodeFrame.LocalContext;
+
+                        var searchResult = _logicalSearchResolver.Run(searchOptions);
+
+#if DEBUG
+                        //Log($"searchResult = {searchResult}");
+                        //Log($"result = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
+#endif
+
+                        if(searchResult.IsSuccess)
+                        {
+                            return 1;
+                        }
+
+                        return 0;
+                    }
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfValue), kindOfValue, null);

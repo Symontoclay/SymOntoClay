@@ -1,12 +1,12 @@
 ﻿app PeaceKeeper
 {
+    {: >: { see(I, #`Barel 1`) } :}
+
     on Init =>
     {
         'Begin' >> @>log;
         
-        @a = 0;
-
-        if(@a)
+        if({: >: { see(I, #`Barel 1`) } :})
         {
             'Yes!' >> @>log;
         }

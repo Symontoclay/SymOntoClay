@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         {
         }
 
-        public void Run(List<AstStatement> statements)
+        public void Run(List<AstStatement> statements, LoopCompilingContext loopCompilingContext)
         {
 #if DEBUG
             //Log($"statements = {statements.WriteListToString()}");
@@ -80,7 +80,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     case KindOfAstStatement.TryStatement:
                         {
                             var node = new AstTryStatementNode(_context);
-                            node.Run(statement as AstTryStatement);
+                            node.Run(statement as AstTryStatement, loopCompilingContext);
                             AddCommands(node.Result);
                         }
                         break;
@@ -104,7 +104,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     case KindOfAstStatement.BreakStatement:
                         {
                             var node = new AstBreakStatementNode(_context);
-                            node.Run(statement as AstBreakStatement);
+                            node.Run(statement as AstBreakStatement, loopCompilingContext);
                             AddCommands(node.Result);
                         }
                         break;
@@ -120,7 +120,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     case KindOfAstStatement.IfStatement:
                         {
                             var node = new AstIfStatementNode(_context);
-                            node.Run(statement as AstIfStatement);
+                            node.Run(statement as AstIfStatement, loopCompilingContext);
                             AddCommands(node.Result);
                         }
                         break;

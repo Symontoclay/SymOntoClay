@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         {
         }
 
-        public void Run(AstTryStatement statement)
+        public void Run(AstTryStatement statement, LoopCompilingContext loopCompilingContext)
         {
 #if DEBUG
             //Log($"statement = {statement}");
@@ -74,7 +74,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             AddCommand(tryCommand);
 
             var tryCodeBlockNode = new CodeBlockNode(_context);
-            tryCodeBlockNode.Run(statement.TryStatements);
+            tryCodeBlockNode.Run(statement.TryStatements, loopCompilingContext);
             AddCommands(tryCodeBlockNode.Result);
 
             var removeSEHCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.RemoveSEHGroup };
@@ -115,7 +115,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     sehItem.JumpToMe = firstCatchCommand;
 
                     var catchCodeBlockNode = new CodeBlockNode(_context);
-                    catchCodeBlockNode.Run(catchStatement.Statements);
+                    catchCodeBlockNode.Run(catchStatement.Statements, loopCompilingContext);
                     AddCommands(catchCodeBlockNode.Result);
 
                     var catchAfterCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.JumpTo };
@@ -138,7 +138,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 AddCommand(firstElseCommand);
 
                 var elseCodeBlockNode = new CodeBlockNode(_context);
-                elseCodeBlockNode.Run(statement.ElseStatements);
+                elseCodeBlockNode.Run(statement.ElseStatements, loopCompilingContext);
                 AddCommands(elseCodeBlockNode.Result);
 
                 var elseAfterCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.JumpTo };
@@ -160,7 +160,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 AddCommand(firstEnsureComand);
 
                 var ensureCodeBlockNode = new CodeBlockNode(_context);
-                ensureCodeBlockNode.Run(statement.EnsureStatements);
+                ensureCodeBlockNode.Run(statement.EnsureStatements, loopCompilingContext);
                 AddCommands(ensureCodeBlockNode.Result);
 
                 var ensureAfterCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.JumpTo };

@@ -46,7 +46,7 @@ namespace SymOntoClay.Core.Internal.Compiling
         public CompiledFunctionBody Compile(List<AstStatement> statements)
         {
             var node = new CodeBlockNode(_context);
-            node.Run(statements);
+            node.Run(statements, null);
 
             var resultCommandsList = node.Result;
 

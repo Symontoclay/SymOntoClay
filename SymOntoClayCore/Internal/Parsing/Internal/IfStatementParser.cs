@@ -145,6 +145,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case TokenKind.CloseFigureBracket:
+                            Exit();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -213,6 +217,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case TokenKind.CloseFigureBracket:
+                            Exit();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -236,6 +244,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.String:
                             _context.Recovery(_currToken);
+                            Exit();
+                            break;
+
+                        case TokenKind.CloseFigureBracket:
                             Exit();
                             break;
 

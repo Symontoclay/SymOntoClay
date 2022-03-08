@@ -29,6 +29,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
     public enum KindOfBreak
     {
         Unknown,
-        Action
+        Action,
+        Loop
     }
 }

@@ -69,8 +69,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
 #endif
 
             switch (_state)
@@ -109,6 +109,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 default:
                                     throw new UnexpectedTokenException(_currToken);
                             }
+                            break;
+
+                        case TokenKind.Semicolon:
+                            _rawStatement.KindOfBreak = KindOfBreak.Loop;
+                            Exit();
                             break;
 
                         default:

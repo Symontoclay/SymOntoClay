@@ -14,7 +14,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         {
         }
 
-        public void Run(AstIfStatement statement)
+        public void Run(AstIfStatement statement, LoopCompilingContext loopCompilingContext)
         {
 #if DEBUG
             //Log($"statement = {statement}");
@@ -64,7 +64,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             AddCommand(ifJumpCommand);
 
             var ifCodeBlockNode = new CodeBlockNode(_context);
-            ifCodeBlockNode.Run(statement.IfStatements);
+            ifCodeBlockNode.Run(statement.IfStatements, loopCompilingContext);
             AddCommands(ifCodeBlockNode.Result);
 
             if(hasElifs || hasElse)
@@ -119,7 +119,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     AddCommand(elifJumpCommand);
 
                     var elifCodeBlockNode = new CodeBlockNode(_context);
-                    elifCodeBlockNode.Run(elifStatement.Statements);
+                    elifCodeBlockNode.Run(elifStatement.Statements, loopCompilingContext);
                     AddCommands(elifCodeBlockNode.Result);
 
                     if(elifsTotalCount > n || hasElse)
@@ -138,7 +138,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 AddCommand(firstElseCommand);
 
                 var elseCodeBlockNode = new CodeBlockNode(_context);
-                elseCodeBlockNode.Run(statement.ElseStatements);
+                elseCodeBlockNode.Run(statement.ElseStatements, loopCompilingContext);
                 AddCommands(elseCodeBlockNode.Result);
             }
 

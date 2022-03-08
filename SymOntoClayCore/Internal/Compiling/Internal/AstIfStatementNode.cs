@@ -73,10 +73,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 throw new NotImplementedException();
             }
 
-#if DEBUG
-            //DbgPrintCommands();
-#endif
-
             if (!statement.ElseStatements.IsNullOrEmpty())
             {
                 AddCommand(firstElseCommand);
@@ -84,16 +80,12 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 var elseCodeBlockNode = new CodeBlockNode(_context);
                 elseCodeBlockNode.Run(statement.ElseStatements);
                 AddCommands(elseCodeBlockNode.Result);
-
-#if DEBUG
-                DbgPrintCommands();
-#endif
             }
 
             AddCommand(afterCommand);
 
 #if DEBUG
-            DbgPrintCommands();
+            //DbgPrintCommands();
 #endif
 
             //throw new NotImplementedException();

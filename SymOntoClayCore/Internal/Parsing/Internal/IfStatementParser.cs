@@ -248,44 +248,5 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
         }
-
-        private bool IfCorrectFirstConditionToken()
-        {
-            switch (_currToken.TokenKind)
-            {
-                case TokenKind.Var:
-                case TokenKind.OpenFactBracket:
-                    return true;
-
-                default:
-                    return false;
-            }
-        }
-
-        private AstExpression ProcessCondition()
-        {
-            _context.Recovery(_currToken);
-            var parser = new CodeExpressionStatementParser(_context);
-            parser.Run();
-
-#if DEBUG
-            //Log($"parser.Result = {parser.Result}");
-#endif
-
-            return parser.Result.Expression;
-        }
-
-        private List<AstStatement> ParseBody()
-        {
-            _context.Recovery(_currToken);
-            var parser = new FunctionBodyParser(_context);
-            parser.Run();
-
-#if DEBUG
-            //Log($"parser.Result.WriteListToString() = {parser.Result.WriteListToString()}");
-#endif
-
-            return parser.Result;
-        }
     }
 }

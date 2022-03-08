@@ -21,6 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -229,6 +231,45 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new UnexpectedTokenException(_currToken);
             }
+        }
+
+        protected bool IfCorrectFirstConditionToken()
+        {
+            switch (_currToken.TokenKind)
+            {
+                case TokenKind.Var:
+                case TokenKind.OpenFactBracket:
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        protected AstExpression ProcessCondition()
+        {
+            _context.Recovery(_currToken);
+            var parser = new CodeExpressionStatementParser(_context);
+            parser.Run();
+
+#if DEBUG
+            //Log($"parser.Result = {parser.Result}");
+#endif
+
+            return parser.Result.Expression;
+        }
+
+        protected List<AstStatement> ParseBody()
+        {
+            _context.Recovery(_currToken);
+            var parser = new FunctionBodyParser(_context);
+            parser.Run();
+
+#if DEBUG
+            //Log($"parser.Result.WriteListToString() = {parser.Result.WriteListToString()}");
+#endif
+
+            return parser.Result;
         }
 
         protected void SetCurrentCodeItem(CodeItem codeEntity)

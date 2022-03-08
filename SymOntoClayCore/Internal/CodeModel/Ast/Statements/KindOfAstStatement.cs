@@ -39,6 +39,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         BreakStatement,
         ReturnStatement,
         IfStatement,
-        ElifStatement
+        ElifStatement,
+        WhileStatement
     }
 }

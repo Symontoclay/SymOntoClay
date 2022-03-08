@@ -992,6 +992,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Elif;
                             break;
                         }
+
+                        if (string.Compare(content, "while", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.While;
+                            break;
+                        }
                     }
                     break;
 

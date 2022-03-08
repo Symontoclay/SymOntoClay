@@ -125,6 +125,14 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         }
                         break;
 
+                    case KindOfAstStatement.WhileStatement:
+                        {
+                            var node = new AstWhileStatementNode(_context);
+                            node.Run(statement as AstWhileStatement);
+                            AddCommands(node.Result);
+                        }
+                        break;
+
                     default: 
                         throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
                 }

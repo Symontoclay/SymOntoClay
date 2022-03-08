@@ -4,13 +4,12 @@
     {
         'Begin' >> @>log;
         
-        @a = -1;
+        @a = 10;
 
-        if(@a > 0)
+        while (@a > 0)
         {
-            'Yes!' >> @>log;
-        } else {
-            'Else Yes!' >> @>log;
+            @a >> @>log;
+            @a = @a - 1;
         }
 
         'End' >> @>log;

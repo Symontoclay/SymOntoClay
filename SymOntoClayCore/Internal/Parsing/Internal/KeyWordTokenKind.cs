@@ -69,6 +69,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Private,
         Return,
         If,
-        Elif
+        Elif,
+        While
     }
 }

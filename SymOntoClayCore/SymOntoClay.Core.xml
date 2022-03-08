@@ -1288,6 +1288,43 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstTryStatement.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstWhileStatement.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstWhileStatement.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstWhileStatement.CloneAstStatement(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstWhileStatement.Clone">
+            <summary>
+            Clones the instance and returns cloned instance.
+            </summary>
+            <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstWhileStatement.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            Clones the instance using special context and returns cloned instance.
+            </summary>
+            <param name="context">Special context for providing references continuity.</param>
+            <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstWhileStatement.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstWhileStatement.CalculateLongHashCodes(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstWhileStatement.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstWhileStatement.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstWhileStatement.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseRulePart.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
             <inheritdoc/>
         </member>
@@ -4970,6 +5007,15 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.VarDeclParser.OnRun">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.WhileStatementParser.OnEnter">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.WhileStatementParser.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.WhileStatementParser.OnRun">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.WorldPaser.OnRun">

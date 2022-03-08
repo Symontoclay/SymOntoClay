@@ -1,12 +1,17 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
 {
     public class AstElifStatement : AstStatement
     {
+        public AstExpression Condition { get; set; }
+        public List<AstStatement> Statements { get; set; } = new List<AstStatement>();
+
         /// <inheritdoc/>
         public override KindOfAstStatement Kind => KindOfAstStatement.ElifStatement;
 
@@ -47,9 +52,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var result = new AstElifStatement();
             context[this] = result;
 
-            //result.VariableName = VariableName?.Clone(context);
-            //result.Condition = Condition?.Clone(context);
-            //result.Statements = Statements?.Select(p => p.CloneAstStatement(context)).ToList();
+            result.Condition = Condition.CloneAstExpression(context);
+            result.Statements = Statements.Select(p => p.CloneAstStatement(context)).ToList();
 
             result.AppendAnnotations(this, context);
 
@@ -67,16 +71,12 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         /// <inheritdoc/>
         public override void CalculateLongHashCodes(CheckDirtyOptions options)
         {
-            //VariableName?.CheckDirty(options);
-            //Condition?.CheckDirty(options);
+            Condition.CheckDirty(options);
 
-            //if (!Statements.IsNullOrEmpty())
-            //{
-            //    foreach (var statement in Statements)
-            //    {
-            //        statement?.CheckDirty(options);
-            //    }
-            //}
+            foreach (var statement in Statements)
+            {
+                statement?.CheckDirty(options);
+            }
 
             base.CalculateLongHashCodes(options);
         }
@@ -87,9 +87,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.PrintObjProp(n, nameof(VariableName), VariableName);
-            //sb.PrintBriefObjProp(n, nameof(Condition), Condition);
-            //sb.PrintObjListProp(n, nameof(Statements), Statements);
+            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
+            sb.PrintObjListProp(n, nameof(Statements), Statements);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -101,9 +100,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.PrintShortObjProp(n, nameof(VariableName), VariableName);
-            //sb.PrintBriefObjProp(n, nameof(Condition), Condition);
-            //sb.PrintShortObjListProp(n, nameof(Statements), Statements);
+            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
+            sb.PrintShortObjListProp(n, nameof(Statements), Statements);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -115,9 +113,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.PrintBriefObjProp(n, nameof(VariableName), VariableName);
-            //sb.PrintBriefObjProp(n, nameof(Condition), Condition);
-            //sb.PrintBriefObjListProp(n, nameof(Statements), Statements);
+            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
+            sb.PrintBriefObjListProp(n, nameof(Statements), Statements);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

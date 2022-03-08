@@ -1,16 +1,16 @@
 ﻿app PeaceKeeper
 {
-    {: >: { see(I, #`Barel 1`) } :}
+    {: >: { see(I, #`Barel 2`) } :}
 
     on Init =>
     {
         'Begin' >> @>log;
         
-        if({: >: { see(I, #`Barel 1`) } :})
+        if({: >: { see(I, #`Barel 0`) } :})
         {
             'Yes!' >> @>log;
-        } else {
-            'Else Yes!' >> @>log;
+        } elif ({: >: { see(I, #`Barel 1`) } :}) {
+            'Elif 1 Yes!' >> @>log;
         }
 
         'End' >> @>log;

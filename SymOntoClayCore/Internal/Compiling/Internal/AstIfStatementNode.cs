@@ -20,17 +20,20 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             //Log($"statement = {statement}");
 #endif
 
+            var hasElifs = !statement.ElifStatements.IsNullOrEmpty();
+            var hasElse = !statement.ElseStatements.IsNullOrEmpty();
+
             var afterCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.Nop };
 
             IntermediateScriptCommand firstElifCommand = null;
             IntermediateScriptCommand firstElseCommand = null;
 
-            if (!statement.ElifStatements.IsNullOrEmpty())
+            if (hasElifs)
             {
                 firstElifCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.Nop };
             }
 
-            if (!statement.ElseStatements.IsNullOrEmpty())
+            if (hasElse)
             {
                 firstElseCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.Nop };
             }
@@ -64,16 +67,62 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             ifCodeBlockNode.Run(statement.IfStatements);
             AddCommands(ifCodeBlockNode.Result);
 
-            var ifFinalJumpCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.JumpTo, JumpToMe = afterCommand };
-
-            AddCommand(ifFinalJumpCommand);
-
-            if (!statement.ElifStatements.IsNullOrEmpty())
+            if(hasElifs || hasElse)
             {
-                throw new NotImplementedException();
+                var ifFinalJumpCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.JumpTo, JumpToMe = afterCommand };
+
+                AddCommand(ifFinalJumpCommand);
             }
 
-            if (!statement.ElseStatements.IsNullOrEmpty())
+#if DEBUG
+            //DbgPrintCommands();
+#endif
+
+            if (hasElifs)
+            {
+                var n = 1;
+                var elifsTotalCount = statement.ElifStatements.Count;
+
+                foreach(var elifStatement in statement.ElifStatements)
+                {
+                    AddCommand(firstElifCommand);
+
+                    var elifConditionCodeBlockNode = new ExpressionNode(_context);
+                    elifConditionCodeBlockNode.Run(elifStatement.Condition);
+                    AddCommands(elifConditionCodeBlockNode.Result);
+
+#if DEBUG
+                    //Log($"n = {n}");
+                    //Log($"elifsTotalCount = {elifsTotalCount}");
+#endif
+
+                    var elifJumpCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.JumpToIfFalse };
+
+                    if (elifsTotalCount == n)
+                    {
+                        elifJumpCommand.JumpToMe = afterCommand;
+                    }
+                    else
+                    {
+                        throw new NotImplementedException();
+                    }
+
+                    AddCommand(elifJumpCommand);
+
+                    var elifCodeBlockNode = new CodeBlockNode(_context);
+                    elifCodeBlockNode.Run(elifStatement.Statements);
+                    AddCommands(elifCodeBlockNode.Result);
+
+                    if(elifsTotalCount > n || hasElse)
+                    {
+                        var elifFinalJumpCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.JumpTo, JumpToMe = afterCommand };
+
+                        AddCommand(elifFinalJumpCommand);
+                    }
+                }
+            }
+
+            if (hasElse)
             {
                 AddCommand(firstElseCommand);
 

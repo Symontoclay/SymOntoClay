@@ -269,5 +269,139 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case3()
+        {
+            var text = @"app PeaceKeeper
+{
+    {: >: { see(I, #`Barel 0`) } :}
+
+    on Init =>
+    {
+        'Begin' >> @>log;
+        
+        if({: >: { see(I, #`Barel 0`) } :})
+        {
+            'Yes!' >> @>log;
+        } elif ({: >: { see(I, #`Barel 1`) } :}) {
+            'Elif 1 Yes!' >> @>log;
+        }
+
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "Yes!");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case3_a()
+        {
+            var text = @"app PeaceKeeper
+{
+    {: >: { see(I, #`Barel 1`) } :}
+
+    on Init =>
+    {
+        'Begin' >> @>log;
+        
+        if({: >: { see(I, #`Barel 0`) } :})
+        {
+            'Yes!' >> @>log;
+        } elif ({: >: { see(I, #`Barel 1`) } :}) {
+            'Elif 1 Yes!' >> @>log;
+        }
+
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "Elif 1 Yes!");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case3_b()
+        {
+            var text = @"app PeaceKeeper
+{
+    {: >: { see(I, #`Barel 2`) } :}
+
+    on Init =>
+    {
+        'Begin' >> @>log;
+        
+        if({: >: { see(I, #`Barel 0`) } :})
+        {
+            'Yes!' >> @>log;
+        } elif ({: >: { see(I, #`Barel 1`) } :}) {
+            'Elif 1 Yes!' >> @>log;
+        }
+
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

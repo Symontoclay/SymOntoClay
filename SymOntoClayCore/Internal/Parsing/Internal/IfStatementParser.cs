@@ -17,6 +17,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             WaitForIfCondition,
             GotIfCondition,
             GotIfBody,
+            GotElifMark,
+            WaitForElifCondition,
+            GotElifCondition,
+            GotElifBody,
             GotElseMark,
             GotElseBody
         }
@@ -30,6 +34,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         public AstStatement Result { get; private set; }
         private AstIfStatement _rawStatement;
+        private AstElifStatement _currElifStatement;
 
         /// <inheritdoc/>
         protected override void OnEnter()
@@ -90,16 +95,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case State.WaitForIfCondition:
-                    switch (_currToken.TokenKind)
+                    if(IfCorrectFirstConditionToken())
                     {
-                        case TokenKind.Var:
-                        case TokenKind.OpenFactBracket:
-                            _rawStatement.Condition = ProcessCondition();
-                            _state = State.GotIfCondition;
-                            break;
-
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
+                        _rawStatement.Condition = ProcessCondition();
+                        _state = State.GotIfCondition;
+                    }
+                    else
+                    {
+                        throw new UnexpectedTokenException(_currToken);
                     }
                     break;
 
@@ -131,9 +134,65 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     _state = State.GotElseMark;
                                     break;
 
+                                case KeyWordTokenKind.Elif:
+                                    _currElifStatement = new AstElifStatement();
+                                    _rawStatement.ElifStatements.Add(_currElifStatement);
+                                    _state = State.GotElifMark;
+                                    break;
+
                                 default:
                                     throw new UnexpectedTokenException(_currToken);
                             }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotElifMark:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenRoundBracket:
+                            _state = State.WaitForElifCondition;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForElifCondition:
+                    if(IfCorrectFirstConditionToken())
+                    {
+                        _currElifStatement.Condition = ProcessCondition();
+                        _state = State.GotElifCondition;
+                    }
+                    else
+                    {
+                        throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotElifCondition:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenFigureBracket:
+                            _currElifStatement.Statements = ParseBody();
+                            _state = State.GotElifBody;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotElifBody:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.String:
+                            _context.Recovery(_currToken);
+                            Exit();
                             break;
 
                         default:
@@ -169,6 +228,19 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
+            }
+        }
+
+        private bool IfCorrectFirstConditionToken()
+        {
+            switch (_currToken.TokenKind)
+            {
+                case TokenKind.Var:
+                case TokenKind.OpenFactBracket:
+                    return true;
+
+                default:
+                    return false;
             }
         }
 

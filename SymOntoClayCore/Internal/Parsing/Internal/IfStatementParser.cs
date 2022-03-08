@@ -16,7 +16,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotIfMark,
             WaitForIfCondition,
             GotIfCondition,
-            GotIfBody
+            GotIfBody,
+            GotElseMark,
+            GotElseBody
         }
 
         public IfStatementParser(InternalParserContext context)
@@ -49,8 +51,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
 #endif
 
             switch (_state)
@@ -115,6 +117,44 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case State.GotIfBody:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.String:
+                            _context.Recovery(_currToken);
+                            Exit();
+                            break;
+
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Else:
+                                    _state = State.GotElseMark;
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotElseMark:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenFigureBracket:
+                            _rawStatement.ElseStatements = ParseBody();
+                            _state = State.GotElseBody;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotElseBody:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.String:

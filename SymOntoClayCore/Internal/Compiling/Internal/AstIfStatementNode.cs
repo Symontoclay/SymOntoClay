@@ -64,20 +64,36 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             ifCodeBlockNode.Run(statement.IfStatements);
             AddCommands(ifCodeBlockNode.Result);
 
+            var ifFinalJumpCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.JumpTo, JumpToMe = afterCommand };
+
+            AddCommand(ifFinalJumpCommand);
+
             if (!statement.ElifStatements.IsNullOrEmpty())
             {
                 throw new NotImplementedException();
             }
 
-            if(!statement.ElseStatements.IsNullOrEmpty())
+#if DEBUG
+            //DbgPrintCommands();
+#endif
+
+            if (!statement.ElseStatements.IsNullOrEmpty())
             {
-                throw new NotImplementedException();
+                AddCommand(firstElseCommand);
+
+                var elseCodeBlockNode = new CodeBlockNode(_context);
+                elseCodeBlockNode.Run(statement.ElseStatements);
+                AddCommands(elseCodeBlockNode.Result);
+
+#if DEBUG
+                DbgPrintCommands();
+#endif
             }
 
             AddCommand(afterCommand);
 
 #if DEBUG
-            //DbgPrintCommands();
+            DbgPrintCommands();
 #endif
 
             //throw new NotImplementedException();

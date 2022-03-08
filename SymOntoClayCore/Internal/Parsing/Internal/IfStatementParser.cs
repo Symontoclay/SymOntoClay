@@ -195,6 +195,24 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             Exit();
                             break;
 
+                        case TokenKind.Word:
+                            switch (_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Else:
+                                    _state = State.GotElseMark;
+                                    break;
+
+                                case KeyWordTokenKind.Elif:
+                                    _currElifStatement = new AstElifStatement();
+                                    _rawStatement.ElifStatements.Add(_currElifStatement);
+                                    _state = State.GotElifMark;
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

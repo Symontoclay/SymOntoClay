@@ -100,11 +100,20 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                     if (elifsTotalCount == n)
                     {
-                        elifJumpCommand.JumpToMe = afterCommand;
+                        if(hasElse)
+                        {
+                            elifJumpCommand.JumpToMe = firstElseCommand;
+                        }
+                        else
+                        {
+                            elifJumpCommand.JumpToMe = afterCommand;
+                        }                        
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        firstElifCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.Nop };
+
+                        elifJumpCommand.JumpToMe = firstElifCommand;
                     }
 
                     AddCommand(elifJumpCommand);
@@ -119,6 +128,8 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                         AddCommand(elifFinalJumpCommand);
                     }
+
+                    n++;
                 }
             }
 

@@ -85,7 +85,7 @@ namespace TestSandbox
             //TstAdvancedTestRunnerForMultipleInstances();//<=~
             //TstAdvancedTestRunner();//<=
             //TstTestRunnerWithHostListener();//<=t
-            //TstTestRunner();//<=
+            TstTestRunner();//<=
             //TstNameHelper();
             //TstDeffuzzification();
             //TstRangeValue();
@@ -121,7 +121,7 @@ namespace TestSandbox
             //TstParsing();
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -526,19 +526,20 @@ action Go
 
             var text = @"app PeaceKeeper
 {
-private:
-	{: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
-	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+    on Init =>
+    {
+        'Begin' >> @>log;
+        
+        @a = 10;
 
-	on Init => {
-	    'Begin' >> @>log;
-	    select {: son(@a, $y) :} >> @>log;
-		'End' >> @>log;
-	}
+        while (@a > 0)
+        {
+            @a >> @>log;
+            @a = @a - 1;
+        }
 
-private:
-	@a = #Tom;
+        'End' >> @>log;
+    }
 }";
 
             BehaviorTestEngineInstance.Run(text,

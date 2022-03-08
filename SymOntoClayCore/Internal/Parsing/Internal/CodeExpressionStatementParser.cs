@@ -139,6 +139,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _state = State.GotName;
                             break;
 
+                        case TokenKind.CloseRoundBracket:
+                            Exit();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -190,6 +194,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.Assign:
                             ProcessAssign();
+                            break;
+
+                        case TokenKind.More:
+                            ProcessMore();
                             break;
 
                         case TokenKind.Semicolon:
@@ -510,6 +518,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private void ProcessPoint()
         {
             ProcessUsualBinaryOperator(KindOfOperator.Point);
+        }
+
+        private void ProcessMore()
+        {
+            ProcessUsualBinaryOperator(KindOfOperator.More);
         }
 
         private void ProcessUsualBinaryOperator(KindOfOperator kindOfOperator)

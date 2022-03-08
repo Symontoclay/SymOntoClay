@@ -95,6 +95,8 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
 
             globalOperatorsStorage.Append(op);
 
+            //-----------
+
             op = new Operator
             {
                 KindOfOperator = KindOfOperator.Add,
@@ -130,6 +132,18 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 KindOfOperator = KindOfOperator.Div,
                 IsSystemDefined = true,
                 SystemHandler = new BinaryOperatorSystemHandler(new DivOperatorHandler(_context)),
+                Holder = _context.CommonNamesStorage.DefaultHolder
+            };
+
+            globalOperatorsStorage.Append(op);
+
+            //---------------
+
+            op = new Operator
+            {
+                KindOfOperator = KindOfOperator.More,
+                IsSystemDefined = true,
+                SystemHandler = new BinaryOperatorSystemHandler(new MoreOperatorHandler(_context)),
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 

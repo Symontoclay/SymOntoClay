@@ -6,9 +6,9 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
-    public class AddOperatorHandler : BaseLoggedComponent, IBinaryOperatorHandler
+    public class MoreOperatorHandler : BaseLoggedComponent, IBinaryOperatorHandler
     {
-        public AddOperatorHandler(IEngineContext engineContext)
+        public MoreOperatorHandler(IEngineContext engineContext)
             : base(engineContext.Logger)
         {
         }
@@ -22,19 +22,14 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             //Log($"annotation = {annotation}");
 #endif
 
-            if(leftOperand.IsNumberValue && rightOperand.IsNumberValue)
+            if (leftOperand.IsNumberValue && rightOperand.IsNumberValue)
             {
-                return new NumberValue((double)leftOperand.AsNumberValue.GetSystemValue() + (double)rightOperand.AsNumberValue.GetSystemValue());
-            }
+                if((double)leftOperand.AsNumberValue.GetSystemValue() > (double)rightOperand.AsNumberValue.GetSystemValue())
+                {
+                    return new LogicalValue(1);
+                }
 
-            if(leftOperand.IsNullValue || rightOperand.IsNullValue)
-            {
-                return new NullValue();
-            }
-
-            if(leftOperand.IsStringValue || rightOperand.IsStringValue)
-            {
-                return new StringValue(leftOperand.ToSystemString() + rightOperand.ToSystemString());
+                return new LogicalValue(0);
             }
 
             throw new NotImplementedException();

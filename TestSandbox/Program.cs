@@ -85,7 +85,7 @@ namespace TestSandbox
             //TstAdvancedTestRunnerForMultipleInstances();//<=~
             //TstAdvancedTestRunner();//<=
             //TstTestRunnerWithHostListener();//<=t
-            //TstTestRunner();//<=
+            TstTestRunner();//<=
             //TstNameHelper();
             //TstDeffuzzification();
             //TstRangeValue();
@@ -121,7 +121,7 @@ namespace TestSandbox
             //TstParsing();
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -536,6 +536,13 @@ action Go
         {
             @a >> @>log;
             @a = @a - 1;
+
+            if(@a > 5)
+            {
+                continue;
+            }
+
+            'End of while iteration' >> @>log;
         }
 
         'End' >> @>log;

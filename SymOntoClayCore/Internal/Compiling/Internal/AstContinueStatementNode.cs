@@ -16,7 +16,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         public void Run(AstContinueStatement statement, LoopCompilingContext loopCompilingContext)
         {
 #if DEBUG
-            Log($"statement = {statement}");
+            //Log($"statement = {statement}");
 #endif
 
             var jumpCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.JumpTo, JumpToMe = loopCompilingContext.FirstCommand };

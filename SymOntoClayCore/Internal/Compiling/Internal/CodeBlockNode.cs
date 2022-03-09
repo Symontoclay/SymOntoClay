@@ -109,6 +109,14 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         }
                         break;
 
+                    case KindOfAstStatement.ContinueStatement:
+                        {
+                            var node = new AstContinueStatementNode(_context);
+                            node.Run(statement as AstContinueStatement, loopCompilingContext);
+                            AddCommands(node.Result);
+                        }
+                        break;
+
                     case KindOfAstStatement.ReturnStatement:
                         {
                             var node = new AstReturnStatementNode(_context);

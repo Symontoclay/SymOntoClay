@@ -998,6 +998,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.While;
                             break;
                         }
+
+                        if (string.Compare(content, "continue", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Continue;
+                            break;
+                        }
                     }
                     break;
 

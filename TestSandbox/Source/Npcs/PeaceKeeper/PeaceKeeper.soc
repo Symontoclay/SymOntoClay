@@ -13,8 +13,10 @@
 
             if(@a > 5)
             {
-                break;
+                continue;
             }
+
+            'End of while iteration' >> @>log;
         }
 
         'End' >> @>log;

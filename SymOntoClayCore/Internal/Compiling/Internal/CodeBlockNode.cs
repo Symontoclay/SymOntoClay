@@ -141,6 +141,14 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         }
                         break;
 
+                    case KindOfAstStatement.RepeatStatement:
+                        {
+                            var node = new AstRepeatStatementNode(_context);
+                            node.Run(statement as AstRepeatStatement);
+                            AddCommands(node.Result);
+                        }
+                        break;
+
                     default: 
                         throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
                 }

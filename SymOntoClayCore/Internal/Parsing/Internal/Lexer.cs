@@ -1004,6 +1004,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Continue;
                             break;
                         }
+
+                        if (string.Compare(content, "repeat", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Repeat;
+                            break;
+                        }
                     }
                     break;
 

@@ -6,7 +6,7 @@
         
         @a = 10;
 
-        while (@a > 0)
+        repeat
         {
             @a >> @>log;
             @a = @a - 1;
@@ -17,6 +17,8 @@
             }
 
             'End of while iteration' >> @>log;
+
+            break;
         }
 
         'End' >> @>log;

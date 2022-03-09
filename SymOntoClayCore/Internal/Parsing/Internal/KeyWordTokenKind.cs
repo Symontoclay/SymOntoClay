@@ -71,6 +71,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         If,
         Elif,
         While,
-        Continue
+        Continue,
+        Repeat
     }
 }

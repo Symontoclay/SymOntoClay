@@ -85,7 +85,7 @@ namespace TestSandbox
             //TstAdvancedTestRunnerForMultipleInstances();//<=~
             //TstAdvancedTestRunner();//<=
             //TstTestRunnerWithHostListener();//<=t
-            TstTestRunner();//<=
+            //TstTestRunner();//<=
             //TstNameHelper();
             //TstDeffuzzification();
             //TstRangeValue();
@@ -120,7 +120,7 @@ namespace TestSandbox
             //TstExprNodeHandler();
             //TstParsing();
             //TstMonoBehaviourTestingHandler();//VT<=
-            //TstSoundStartHandler();//<==
+            TstSoundStartHandler();//<==
             //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 

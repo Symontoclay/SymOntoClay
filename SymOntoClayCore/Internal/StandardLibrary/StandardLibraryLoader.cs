@@ -148,6 +148,36 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
             };
 
             globalOperatorsStorage.Append(op);
+
+            op = new Operator
+            {
+                KindOfOperator = KindOfOperator.MoreOrEqual,
+                IsSystemDefined = true,
+                SystemHandler = new BinaryOperatorSystemHandler(new MoreOrEqualOperatorHandler(_context)),
+                Holder = _context.CommonNamesStorage.DefaultHolder
+            };
+
+            globalOperatorsStorage.Append(op);
+
+            op = new Operator
+            {
+                KindOfOperator = KindOfOperator.Less,
+                IsSystemDefined = true,
+                SystemHandler = new BinaryOperatorSystemHandler(new LessOperatorHandler(_context)),
+                Holder = _context.CommonNamesStorage.DefaultHolder
+            };
+
+            globalOperatorsStorage.Append(op);
+
+            op = new Operator
+            {
+                KindOfOperator = KindOfOperator.LessOrEqual,
+                IsSystemDefined = true,
+                SystemHandler = new BinaryOperatorSystemHandler(new LessOrEqualOperatorHandler(_context)),
+                Holder = _context.CommonNamesStorage.DefaultHolder
+            };
+
+            globalOperatorsStorage.Append(op);
         }
 
         private void RegChannels()

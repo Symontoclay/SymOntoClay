@@ -200,6 +200,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessMore();
                             break;
 
+                        case TokenKind.MoreOrEqual:
+                            ProcessMoreOrEqual();
+                            break;
+
+                        case TokenKind.Less:
+                            ProcessLess();
+                            break;
+
+                        case TokenKind.LessOrEqual:
+                            ProcessLessOrEqual();
+                            break;
+
                         case TokenKind.Semicolon:
                         case TokenKind.CloseRoundBracket:
                             Exit();
@@ -523,6 +535,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private void ProcessMore()
         {
             ProcessUsualBinaryOperator(KindOfOperator.More);
+        }
+
+        private void ProcessMoreOrEqual()
+        {
+            ProcessUsualBinaryOperator(KindOfOperator.MoreOrEqual);
+        }
+
+        private void ProcessLess()
+        {
+            ProcessUsualBinaryOperator(KindOfOperator.Less);
+        }
+
+        private void ProcessLessOrEqual()
+        {
+            ProcessUsualBinaryOperator(KindOfOperator.LessOrEqual);
         }
 
         private void ProcessUsualBinaryOperator(KindOfOperator kindOfOperator)

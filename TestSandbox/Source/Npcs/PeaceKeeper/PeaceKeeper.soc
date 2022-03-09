@@ -4,21 +4,13 @@
     {
         'Begin' >> @>log;
         
-        @a = 10;
+        @a = 1;
 
-        repeat
+        if(@a >= 0)
         {
-            @a >> @>log;
-            @a = @a - 1;
-
-            if(@a > 5)
-            {
-                continue;
-            }
-
-            'End of while iteration' >> @>log;
-
-            break;
+            'Yes!' >> @>log;
+        } else {
+            'Else Yes!' >> @>log;
         }
 
         'End' >> @>log;

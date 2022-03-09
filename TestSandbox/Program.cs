@@ -85,7 +85,7 @@ namespace TestSandbox
             //TstAdvancedTestRunnerForMultipleInstances();//<=~
             //TstAdvancedTestRunner();//<=
             //TstTestRunnerWithHostListener();//<=t
-            //TstTestRunner();//<=
+            TstTestRunner();//<=
             //TstNameHelper();
             //TstDeffuzzification();
             //TstRangeValue();
@@ -120,7 +120,7 @@ namespace TestSandbox
             //TstExprNodeHandler();
             //TstParsing();
             //TstMonoBehaviourTestingHandler();//VT<=
-            TstSoundStartHandler();//<==
+            //TstSoundStartHandler();//<==
             //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
@@ -532,7 +532,7 @@ action Go
         
         @a = 10;
 
-        while (@a > 0)
+        repeat
         {
             @a >> @>log;
             @a = @a - 1;
@@ -543,6 +543,8 @@ action Go
             }
 
             'End of while iteration' >> @>log;
+
+            break;
         }
 
         'End' >> @>log;

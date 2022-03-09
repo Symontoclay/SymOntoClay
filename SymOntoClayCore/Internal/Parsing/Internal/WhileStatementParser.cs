@@ -41,6 +41,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _rawStatement.CheckDirty();
 
             Result = _rawStatement;
+
+#if DEBUG
+            //Log($"_rawStatement = {_rawStatement}");
+#endif
         }
 
         /// <inheritdoc/>
@@ -102,6 +106,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.OpenFigureBracket:
                             _rawStatement.Statements = ParseBody();
+
+#if DEBUG
+                            //Log("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+#endif
+
                             _state = State.GotBody;
                             break;
 

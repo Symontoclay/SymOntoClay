@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         public void Run(AstBreakStatement statement, LoopCompilingContext loopCompilingContext)
         {
 #if DEBUG
-            Log($"statement = {statement}");
+            //Log($"statement = {statement}");
 #endif
 
             var kind = statement.KindOfBreak;
@@ -64,6 +64,14 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         {
                             OperationCode = OperationCode.BreakActionVal
                         });
+                    }
+                    break;
+
+                case KindOfBreak.Loop:
+                    {
+                        var jumpCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.JumpTo, JumpToMe = loopCompilingContext.AfterCommand };
+
+                        AddCommand(jumpCommand);
                     }
                     break;
 

@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #if DEBUG
             //Log($"_state = {_state}");
             //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result.WriteListToString()}");            
+            //Log($"Result = {Result.WriteListToString()}");          
 #endif
 
             switch (_state)

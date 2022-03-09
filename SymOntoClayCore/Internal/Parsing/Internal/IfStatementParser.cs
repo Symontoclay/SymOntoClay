@@ -50,6 +50,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _rawStatement.CheckDirty();
 
             Result = _rawStatement;
+
+#if DEBUG
+            //Log($"_rawStatement = {_rawStatement}");
+#endif
         }
 
         /// <inheritdoc/>
@@ -146,6 +150,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.CloseFigureBracket:
+                            _context.Recovery(_currToken);
                             Exit();
                             break;
 
@@ -218,6 +223,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.CloseFigureBracket:
+                            _context.Recovery(_currToken);
                             Exit();
                             break;
 
@@ -248,6 +254,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.CloseFigureBracket:
+                            _context.Recovery(_currToken);
                             Exit();
                             break;
 

@@ -25,6 +25,8 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             var afterCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.Nop };
 
+            var loopCompilingContext = new LoopCompilingContext() { FirstCommand = firstCommand, AfterCommand = afterCommand };
+
             var conditionCodeBlockNode = new ExpressionNode(_context);
             conditionCodeBlockNode.Run(statement.Condition);
 
@@ -35,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             AddCommand(jumpCommand);
 
             var codeBlockNode = new CodeBlockNode(_context);
-            codeBlockNode.Run(statement.Statements);
+            codeBlockNode.Run(statement.Statements, loopCompilingContext);
             AddCommands(codeBlockNode.Result);
 
             var finalJumpCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.JumpTo, JumpToMe = firstCommand };

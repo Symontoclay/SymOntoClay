@@ -98,6 +98,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsConditionalEntityValue => false;
         public virtual ConditionalEntityValue AsConditionalEntityValue => null;
 
+        public virtual bool IsSystemNull { get; }
+
         public virtual IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => throw new NotImplementedException();
 
         public abstract object GetSystemValue();

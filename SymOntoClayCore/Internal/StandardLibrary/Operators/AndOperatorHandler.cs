@@ -21,6 +21,15 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             Log($"rightOperand = {rightOperand}");
             //Log($"annotation = {annotation}");
 #endif
+            if (leftOperand.IsSystemNull || rightOperand.IsSystemNull)
+            {
+                return new NullValue();
+            }
+
+            if (leftOperand.IsLogicalValue && rightOperand.IsLogicalValue)
+            {
+                return LogicalValue.And(leftOperand.AsLogicalValue, rightOperand.AsLogicalValue);
+            }
 
             throw new NotImplementedException();
         }

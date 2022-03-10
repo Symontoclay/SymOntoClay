@@ -28,7 +28,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
 {
     public static class SystemFuzzyLogicOperators
     {
-        public static double Not(double x)
+        public static float Not(float x)
         {
             return 1 - x;
         }
@@ -36,6 +36,16 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
         public static double Very(double x)
         {
             return Math.Pow(x, 2);
+        }
+
+        public static float Or(float left, float right)
+        {
+            return Math.Max(left, right);
+        }
+
+        public static float And(float left, float right)
+        {
+            return Math.Min(left, right);
         }
     }
 }

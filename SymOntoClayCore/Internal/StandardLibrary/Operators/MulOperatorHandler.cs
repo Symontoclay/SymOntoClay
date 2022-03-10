@@ -22,6 +22,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             //Log($"annotation = {annotation}");
 #endif
 
+            if (leftOperand.IsSystemNull || rightOperand.IsSystemNull)
+            {
+                return new NullValue();
+            }
+
             if (leftOperand.IsNumberValue && rightOperand.IsNumberValue)
             {
                 return new NumberValue((double)(leftOperand.AsNumberValue.GetSystemValue()) * (double)(rightOperand.AsNumberValue.GetSystemValue()));

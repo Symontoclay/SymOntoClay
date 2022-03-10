@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic;
@@ -33,6 +34,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class LogicalValue: Value
     {
+#if DEBUG
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         public LogicalValue(float? systemValue)
         {
             if(systemValue.HasValue)
@@ -61,13 +66,34 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             if(SystemValue.HasValue)
             {
-                var newValue = SystemFuzzyLogicOperators.Not(SystemValue.Value);
-
-                return new LogicalValue((float)newValue);
+                return new LogicalValue(SystemFuzzyLogicOperators.Not(SystemValue.Value));
             }
 
             return new LogicalValue(null);
         }
+
+        public static LogicalValue Or(LogicalValue left, LogicalValue right)
+        {
+            if(!left.SystemValue.HasValue || right.SystemValue.HasValue)
+            {
+                return new LogicalValue(null);
+            }
+
+            return new LogicalValue(SystemFuzzyLogicOperators.Or(left.SystemValue.Value, right.SystemValue.Value));
+        }
+
+        public static LogicalValue And(LogicalValue left, LogicalValue right)
+        {
+            if (!left.SystemValue.HasValue || right.SystemValue.HasValue)
+            {
+                return new LogicalValue(null);
+            }
+
+            return new LogicalValue(SystemFuzzyLogicOperators.And(left.SystemValue.Value, right.SystemValue.Value));
+        }
+
+        /// <inheritdoc/>
+        public override bool IsSystemNull => !SystemValue.HasValue;
 
         /// <inheritdoc/>
         public override object GetSystemValue()

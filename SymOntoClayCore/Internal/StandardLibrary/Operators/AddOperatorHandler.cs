@@ -22,14 +22,22 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             //Log($"annotation = {annotation}");
 #endif
 
-            if(leftOperand.IsNumberValue && rightOperand.IsNumberValue)
-            {
-                return new NumberValue((double)leftOperand.AsNumberValue.GetSystemValue() + (double)rightOperand.AsNumberValue.GetSystemValue());
-            }
-
-            if(leftOperand.IsNullValue || rightOperand.IsNullValue)
+            if (leftOperand.IsNullValue || rightOperand.IsNullValue)
             {
                 return new NullValue();
+            }
+
+            if (leftOperand.IsNumberValue && rightOperand.IsNumberValue)
+            {
+                var leftOperandValue = leftOperand.AsNumberValue.GetSystemValue();
+                var rightOperandValue = rightOperand.AsNumberValue.GetSystemValue();
+
+                if (leftOperandValue == null || rightOperandValue == null)
+                {
+                    return new NullValue();
+                }
+
+                return new NumberValue((double)leftOperandValue + (double)rightOperandValue);
             }
 
             if(leftOperand.IsStringValue || rightOperand.IsStringValue)

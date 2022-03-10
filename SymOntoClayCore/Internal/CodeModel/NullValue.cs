@@ -42,6 +42,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override NullValue AsNullValue => this;
 
         /// <inheritdoc/>
+        public override bool IsSystemNull => true;
+
+        /// <inheritdoc/>
         public override object GetSystemValue()
         {
             return null;

@@ -59,6 +59,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public double? SystemValue { get; private set; }
 
         /// <inheritdoc/>
+        public override bool IsSystemNull => !SystemValue.HasValue;
+
+        /// <inheritdoc/>
         public override object GetSystemValue()
         {
             return SystemValue;

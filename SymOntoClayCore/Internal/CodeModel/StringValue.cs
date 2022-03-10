@@ -60,6 +60,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public string SystemValue { get; private set; }
 
         /// <inheritdoc/>
+        public override bool IsSystemNull => SystemValue == null;
+
+        /// <inheritdoc/>
         public override object GetSystemValue()
         {
             return SystemValue;

@@ -2606,6 +2606,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalValue.AsLogicalValue">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalValue.IsSystemNull">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.GetSystemValue">
             <inheritdoc/>
         </member>
@@ -2676,6 +2679,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NullValue.AsNullValue">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.NullValue.IsSystemNull">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NullValue.GetSystemValue">
             <inheritdoc/>
         </member>
@@ -2710,6 +2716,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NumberValue.BuiltInSuperTypes">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.NumberValue.IsSystemNull">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.GetSystemValue">
@@ -3246,6 +3255,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.StringValue.BuiltInSuperTypes">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.StringValue.IsSystemNull">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StringValue.GetSystemValue">

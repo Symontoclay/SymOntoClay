@@ -56,6 +56,24 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             //Log($"annotation = {annotation}");
 #endif
 
+            if(leftOperand.IsSystemNull && rightOperand.IsSystemNull)
+            {
+                return new LogicalValue(1);
+            }
+
+            if(leftOperand.IsNumberValue && rightOperand.IsNumberValue)
+            {
+                var leftOperandValue = leftOperand.AsNumberValue.GetSystemValue();
+                var rightOperandValue = rightOperand.AsNumberValue.GetSystemValue();
+
+                if ((double)leftOperandValue == (double)rightOperandValue)
+                {
+                    return new LogicalValue(1);
+                }
+
+                return new LogicalValue(0);
+            }
+
             if ((leftOperand.IsStrongIdentifierValue || leftOperand.IsInstanceValue) && (leftOperand.IsStrongIdentifierValue || leftOperand.IsInstanceValue))
             {
                 return GetInheritanceRank(leftOperand, rightOperand, localCodeExecutionContext);

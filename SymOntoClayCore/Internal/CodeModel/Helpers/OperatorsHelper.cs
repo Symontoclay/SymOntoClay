@@ -95,6 +95,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 case KindOfOperator.And:
                     return "AND";
 
+                case KindOfOperator.Or:
+                    return "OR";
+
                 case KindOfOperator.Is:
                     return "IS";
 

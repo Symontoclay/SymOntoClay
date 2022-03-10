@@ -74,7 +74,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public static LogicalValue Or(LogicalValue left, LogicalValue right)
         {
-            if(!left.SystemValue.HasValue || right.SystemValue.HasValue)
+            if(!left.SystemValue.HasValue || !right.SystemValue.HasValue)
             {
                 return new LogicalValue(null);
             }
@@ -84,7 +84,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public static LogicalValue And(LogicalValue left, LogicalValue right)
         {
-            if (!left.SystemValue.HasValue || right.SystemValue.HasValue)
+            if (!left.SystemValue.HasValue || !right.SystemValue.HasValue)
             {
                 return new LogicalValue(null);
             }

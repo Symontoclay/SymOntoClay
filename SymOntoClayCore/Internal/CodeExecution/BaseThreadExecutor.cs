@@ -201,7 +201,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 if (!CheckReturnedInfo())
@@ -401,7 +401,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             CallOperator(operatorInfo, paramsList);
 
 #if DEBUG
-                            Log($"_currentCodeFrame (^) = {_currentCodeFrame.ToDbgString()}");
+                            //Log($"_currentCodeFrame (^) = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                             if(currentCommand.KindOfOperator == KindOfOperator.IsNot)
@@ -684,19 +684,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void JumpToIf(float targetValue, int targetPosition)
         {
 #if DEBUG
-            Log($"targetValue = {targetValue}");
+            //Log($"targetValue = {targetValue}");
 #endif
 
             var currLogicValue = GetLogicalValueFromCurrentStackValue();
 
 #if DEBUG
-            Log($"currLogicValue = {currLogicValue}");
+            //Log($"currLogicValue = {currLogicValue}");
 #endif
 
             if(currLogicValue == targetValue)
             {
 #if DEBUG
-                Log("currLogicValue == targetValue");
+                //Log("currLogicValue == targetValue");
 #endif
 
                 _currentCodeFrame.CurrentPosition = targetPosition;
@@ -704,7 +704,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             else
             {
 #if DEBUG
-                Log("currLogicValue != targetValue");
+                //Log("currLogicValue != targetValue");
 #endif
 
                 _currentCodeFrame.CurrentPosition++;
@@ -1395,13 +1395,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
                
 #if DEBUG
-                Log($"result = {result}");
+                //Log($"result = {result}");
 #endif
 
                 _currentCodeFrame.ValuesStack.Push(result);
 
 #if DEBUG
-                Log($"_currentCodeFrame (co) = {_currentCodeFrame.ToDbgString()}");
+                //Log($"_currentCodeFrame (co) = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 return;

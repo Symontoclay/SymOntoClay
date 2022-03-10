@@ -143,6 +143,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             Exit();
                             break;
 
+                        case TokenKind.Or:
+                            ProcessOr();
+                            break;
+
+                        case TokenKind.And:
+                            ProcessAnd();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -545,6 +553,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private void ProcessLess()
         {
             ProcessUsualBinaryOperator(KindOfOperator.Less);
+        }
+
+        private void ProcessOr()
+        {
+            ProcessUsualBinaryOperator(KindOfOperator.Or);
+        }
+
+        private void ProcessAnd()
+        {
+            ProcessUsualBinaryOperator(KindOfOperator.And);
         }
 
         private void ProcessLessOrEqual()

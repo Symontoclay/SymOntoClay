@@ -119,7 +119,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// Represents symbol `&amp;`.
         /// </summary>
         And,
-
+        
         /// <summary>
         /// Represents symbol `|`.
         /// </summary>

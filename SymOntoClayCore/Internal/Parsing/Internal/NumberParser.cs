@@ -127,6 +127,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Multiplication:
                         case TokenKind.Division:
                         case TokenKind.LeftRightStream:
+                        case TokenKind.Or:
+                        case TokenKind.And:
+                        case TokenKind.Not:
+                        case TokenKind.More:
+                        case TokenKind.MoreOrEqual:
+                        case TokenKind.Less:
+                        case TokenKind.LessOrEqual:
                             _context.Recovery(_currToken);
                             Exit();
                             break;

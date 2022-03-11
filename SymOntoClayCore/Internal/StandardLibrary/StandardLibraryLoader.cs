@@ -198,6 +198,16 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
             };
 
             globalOperatorsStorage.Append(op);
+
+            op = new Operator
+            {
+                KindOfOperator = KindOfOperator.Not,
+                IsSystemDefined = true,
+                SystemHandler = new UnaryOperatorSystemHandler(new NotOperatorHandler(_context)),
+                Holder = _context.CommonNamesStorage.DefaultHolder
+            };
+
+            globalOperatorsStorage.Append(op);
         }
 
         private void RegChannels()

@@ -220,6 +220,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessLessOrEqual();
                             break;
 
+                        case TokenKind.Var:
+                        case TokenKind.SystemVar:
+                            ProcessVar();
+                            break;
+
                         case TokenKind.Semicolon:
                         case TokenKind.CloseRoundBracket:
                             Exit();
@@ -606,15 +611,38 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _state = State.Init;
         }
 
+        private void ProcessNotOperator()
+        {
+            ProcessUsualUnaryOperator(KindOfOperator.Not);
+        }
+
+        private void ProcessUsualUnaryOperator(KindOfOperator kindOfOperator)
+        {
+            var node = new UnaryOperatorAstExpression();
+            node.KindOfOperator = kindOfOperator;
+
+            var priority = OperatorsHelper.GetPriority(kindOfOperator);
+
+#if DEBUG
+            Log($"priority = {priority}");
+#endif
+
+            var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.UnaryOperator, priority);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+            _state = State.Init;
+        }
+
         private void ProcessNot()
         {
 #if DEBUG
-            //Log($"_lastIsOperator = {_lastIsOperator}");
+            Log($"_lastIsOperator = {_lastIsOperator}");
 #endif
 
-            if(_lastIsOperator == null)
+            if (_lastIsOperator == null)
             {
-                ProcessConceptLeaf();
+                ProcessNotOperator();
                 return;
             }
 

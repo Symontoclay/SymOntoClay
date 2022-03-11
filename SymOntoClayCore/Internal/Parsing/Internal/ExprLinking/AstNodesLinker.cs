@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -28,7 +29,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
 {
     public static class AstNodesLinker
     {
-        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+#if DEBUG
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+#endif
 
         public static void SetNode(IntermediateAstNode node, IntermediateAstNodePoint point)
         {
@@ -96,7 +99,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
                     break;
 
                 case KindOfIntermediateAstNode.Leaf:
-                    throw new NotSupportedException();
+#if DEBUG
+                    _logger.Info($"node = {node}");
+                    _logger.Info($"point = {point}");
+#endif
+
+                    currentNode.Left = node;
+                    node.Parent = currentNode;
+                    point.CurrentNode = node;
+
+#if DEBUG
+                    _logger.Info($"point (after) = {point}");
+#endif
+
+                    break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(currentNode.Kind), currentNode.Kind, null);

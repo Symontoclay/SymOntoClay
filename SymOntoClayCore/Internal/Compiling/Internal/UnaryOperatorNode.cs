@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         public void Run(UnaryOperatorAstExpression expression)
         {
 #if DEBUG
-            //Log($"expression = {expression}");
+            Log($"expression = {expression}");
 #endif
 
             var leftNode = new ExpressionNode(_context);
@@ -47,12 +47,17 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             CompilePushAnnotation(expression);
 
-
             var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.CallUnOp;
             command.KindOfOperator = expression.KindOfOperator;
 
             AddCommand(command);
+
+#if DEBUG
+            DbgPrintCommands();
+#endif
+
+            //throw new NotImplementedException();
         }
     }
 }

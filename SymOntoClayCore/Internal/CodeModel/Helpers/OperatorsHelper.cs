@@ -101,6 +101,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 case KindOfOperator.Is:
                     return "IS";
 
+                case KindOfOperator.Not:
+                    return "NOT";
+
                 case KindOfOperator.IsNot:
                     return "IS NOT";
 

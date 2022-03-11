@@ -41,18 +41,21 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
             _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
             _strongIdentifierLinearResolver = dataResolversFactory.GetStrongIdentifierLinearResolver();
+
+            _fuzzyLogicResolver = dataResolversFactory.GetFuzzyLogicResolver();
         }
 
         private readonly IEngineContext _engineContext;
         private readonly InheritanceResolver _inheritanceResolver;
         private readonly StrongIdentifierLinearResolver _strongIdentifierLinearResolver;
+        private readonly FuzzyLogicResolver _fuzzyLogicResolver;
 
         /// <inheritdoc/>
         public Value Call(Value leftOperand, Value rightOperand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            //Log($"leftOperand = {leftOperand}");
-            //Log($"rightOperand = {rightOperand}");
+            Log($"leftOperand = {leftOperand}");
+            Log($"rightOperand = {rightOperand}");
             //Log($"annotation = {annotation}");
 #endif
 
@@ -63,15 +66,17 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
             if(leftOperand.IsNumberValue && rightOperand.IsNumberValue)
             {
-                var leftOperandValue = leftOperand.AsNumberValue.GetSystemValue();
-                var rightOperandValue = rightOperand.AsNumberValue.GetSystemValue();
-
-                if ((double)leftOperandValue == (double)rightOperandValue)
+                if ((double)leftOperand.GetSystemValue() == (double)rightOperand.GetSystemValue())
                 {
                     return new LogicalValue(1);
                 }
 
                 return new LogicalValue(0);
+            }
+
+            if(((leftOperand.IsNumberValue || leftOperand.IsLogicalValue) && (rightOperand.IsStrongIdentifierValue || rightOperand.IsFuzzyLogicNonNumericSequenceValue)) || ((leftOperand.IsStrongIdentifierValue || leftOperand.IsFuzzyLogicNonNumericSequenceValue) && (rightOperand.IsNumberValue || rightOperand.IsLogicalValue)))
+            {
+                throw new NotImplementedException();
             }
 
             if ((leftOperand.IsStrongIdentifierValue || leftOperand.IsInstanceValue) && (leftOperand.IsStrongIdentifierValue || leftOperand.IsInstanceValue))

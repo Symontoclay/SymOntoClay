@@ -1,12 +1,18 @@
-﻿app PeaceKeeper
+﻿linvar age for range (0, 150]
+{
+    terms:
+	    `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
 {
     on Init =>
     {
         'Begin' >> @>log;
         
-        @a = false;
+        @a = 16;
 
-        if(@a)
+        if(@a is teenager)
         {
             'Yes!' >> @>log;
         } else {

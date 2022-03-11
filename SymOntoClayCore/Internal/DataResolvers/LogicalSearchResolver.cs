@@ -3198,8 +3198,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var key_2 = expressionNode2.Name;
 
 #if DEBUG
-                if((key_1.NameValue == "#cleaned metal barrel" && key_2.NameValue == "mynpc") || (key_1.NameValue == "mynpc" && key_2.NameValue == "#cleaned metal barrel"))
-                {
+                //if((key_1.NameValue == "#cleaned metal barrel" && key_2.NameValue == "mynpc") || (key_1.NameValue == "mynpc" && key_2.NameValue == "#cleaned metal barrel"))
+                //{
                     //options.Logger.Log($"(expressionNode1 == null) = {expressionNode1 == null} (expressionNode2 == null) = {expressionNode2 == null}");
                     //options.Logger.Log($"expressionNode1 = {expressionNode1}");
                     //options.Logger.Log($"expressionNode2 = {expressionNode2}");
@@ -3208,16 +3208,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
                     //options.Logger.Log($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1?.Select(p => p.NameValue), Formatting.Indented)}");
                     //options.Logger.Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");
-                }
+                //}
 #endif
 
                 if (key_1 == key_2)
                 {
 #if DEBUG
-                    if ((key_1.NameValue == "#cleaned metal barrel" && key_2.NameValue == "mynpc") || (key_1.NameValue == "mynpc" && key_2.NameValue == "#cleaned metal barrel"))
-                    {
-                        //options.Logger.Log($"key_1 == key_2 = {key_1 == key_2}");
-                    }                    
+                    //if ((key_1.NameValue == "#cleaned metal barrel" && key_2.NameValue == "mynpc") || (key_1.NameValue == "mynpc" && key_2.NameValue == "#cleaned metal barrel"))
+                    //{
+                    //    //options.Logger.Log($"key_1 == key_2 = {key_1 == key_2}");
+                    //}                    
 #endif
 
                     if(queryExecutingCard != null)
@@ -3231,10 +3231,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 if (additionalKeys_1 != null && additionalKeys_1.Any(p => p == key_2))
                 {
 #if DEBUG
-                    if ((key_1.NameValue == "#cleaned metal barrel" && key_2.NameValue == "mynpc") || (key_1.NameValue == "mynpc" && key_2.NameValue == "#cleaned metal barrel"))
-                    {
-                        //options.Logger.Log("additionalKeys_1 != null && additionalKeys_1.Any(p => p == key_2)");
-                    }                    
+                    //if ((key_1.NameValue == "#cleaned metal barrel" && key_2.NameValue == "mynpc") || (key_1.NameValue == "mynpc" && key_2.NameValue == "#cleaned metal barrel"))
+                    //{
+                    //    //options.Logger.Log("additionalKeys_1 != null && additionalKeys_1.Any(p => p == key_2)");
+                    //}                    
 #endif
 
                     if (queryExecutingCard != null)
@@ -3249,10 +3249,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 if (additionalKeys_2 != null && additionalKeys_2.Any(p => p == key_1))
                 {
 #if DEBUG
-                    if ((key_1.NameValue == "#cleaned metal barrel" && key_2.NameValue == "mynpc") || (key_1.NameValue == "mynpc" && key_2.NameValue == "#cleaned metal barrel"))
-                    {
-                        //options.Logger.Log("additionalKeys_2 != null && additionalKeys_2.Any(p => p == key_1)");
-                    }                    
+                    //if ((key_1.NameValue == "#cleaned metal barrel" && key_2.NameValue == "mynpc") || (key_1.NameValue == "mynpc" && key_2.NameValue == "#cleaned metal barrel"))
+                    //{
+                    //    //options.Logger.Log("additionalKeys_2 != null && additionalKeys_2.Any(p => p == key_1)");
+                    //}                    
 #endif
 
                     if (queryExecutingCard != null)

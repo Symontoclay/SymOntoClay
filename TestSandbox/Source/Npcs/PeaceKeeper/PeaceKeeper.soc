@@ -10,7 +10,7 @@ app PeaceKeeper
     {
         'Begin' >> @>log;
         
-        @a = 16;
+        @a = 30;
 
         if(@a is teenager)
         {

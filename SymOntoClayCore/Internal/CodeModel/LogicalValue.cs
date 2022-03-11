@@ -38,6 +38,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
+        public LogicalValue(bool systemBool)
+            : this(systemBool ? 1: 0)
+        {
+        }
+
         public LogicalValue(float? systemValue)
         {
             if(systemValue.HasValue)

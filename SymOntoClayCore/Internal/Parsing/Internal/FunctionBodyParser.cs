@@ -76,6 +76,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.QuestionMark:
                         case TokenKind.EntityCondition:
                         case TokenKind.Number:
+                        case TokenKind.OpenRoundBracket:
+                        case TokenKind.OpenFactBracket:
                             ProcessExpressionStatement();
                             break;
 
@@ -87,7 +89,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 case KeyWordTokenKind.Insert:
                                 case KeyWordTokenKind.Null:
                                 case KeyWordTokenKind.Var:
-                                case KeyWordTokenKind.Not:
+                                case KeyWordTokenKind.Not: 
                                     ProcessExpressionStatement();
                                     break;
 

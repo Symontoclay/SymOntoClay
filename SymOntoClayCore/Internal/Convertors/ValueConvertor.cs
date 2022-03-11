@@ -48,6 +48,23 @@ namespace SymOntoClay.Core.Internal.Convertors
             return result;
         }
 
+        public static LogicalValue ConvertStrongIdentifierValueToLogicalValue(StrongIdentifierValue source, IMainStorageContext mainStorageContext)
+        {
+            var normalizedNameValue = source.NormalizedNameValue;
+
+            switch (normalizedNameValue)
+            {
+                case "true":
+                    return new LogicalValue(1);
+
+                case "false":
+                    return new LogicalValue(0);
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         public static NumberValue ConvertNullValueToNumberValue(NullValue source, IMainStorageContext mainStorageContext)
         {
             var result = new NumberValue(null);

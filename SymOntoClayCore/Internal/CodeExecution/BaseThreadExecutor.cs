@@ -729,6 +729,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 case KindOfValue.NumberValue:
                     return ValueConvertor.ConvertNumberValueToLogicalValue(currentValue.AsNumberValue, _context).SystemValue;
 
+                case KindOfValue.StrongIdentifierValue:
+                    return ValueConvertor.ConvertStrongIdentifierValueToLogicalValue(currentValue.AsStrongIdentifierValue, _context).SystemValue;
+
                 case KindOfValue.RuleInstanceValue:
                     {
                         var ruleInstance = currentValue.AsRuleInstanceValue.RuleInstance;

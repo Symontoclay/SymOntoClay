@@ -32,15 +32,30 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 var leftOperandValue = leftOperand.GetSystemValue();
                 var rightOperandValue = rightOperand.GetSystemValue();
 
-                if ((double)leftOperandValue < (double)rightOperandValue)
+                return CompareSystemValues((double)leftOperandValue, (double)rightOperandValue);
+            }
+
+            if (((leftOperand.IsNumberValue || leftOperand.IsLogicalValue) && (rightOperand.IsStrongIdentifierValue || rightOperand.IsFuzzyLogicNonNumericSequenceValue)) || ((leftOperand.IsStrongIdentifierValue || leftOperand.IsFuzzyLogicNonNumericSequenceValue) && (rightOperand.IsNumberValue || rightOperand.IsLogicalValue)))
+            {
+                if ((leftOperand.IsNumberValue || leftOperand.IsLogicalValue) && (rightOperand.IsStrongIdentifierValue || rightOperand.IsFuzzyLogicNonNumericSequenceValue))
                 {
-                    return new LogicalValue(1);
+                    throw new NotImplementedException();
                 }
 
-                return new LogicalValue(0);
+                if ((leftOperand.IsStrongIdentifierValue || leftOperand.IsFuzzyLogicNonNumericSequenceValue) && (rightOperand.IsNumberValue || rightOperand.IsLogicalValue))
+                {
+                    throw new NotImplementedException();
+                }
+
+                throw new NotImplementedException();
             }
 
             throw new NotImplementedException();
+        }
+
+        private LogicalValue CompareSystemValues(double leftValue, double rightValue)
+        {
+            return new LogicalValue(leftValue < rightValue);
         }
     }
 }

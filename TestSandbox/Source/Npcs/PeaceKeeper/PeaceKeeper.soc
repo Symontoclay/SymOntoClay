@@ -12,7 +12,7 @@ app PeaceKeeper
         
         @a = 30;
 
-        if(@a is teenager)
+        if(@a > teenager)
         {
             'Yes!' >> @>log;
         } else {

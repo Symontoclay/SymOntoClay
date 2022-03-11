@@ -241,6 +241,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case TokenKind.OpenFactBracket:
                     return true;
 
+                case TokenKind.Word:
+                    switch(_currToken.KeyWordTokenKind)
+                    {
+                        case KeyWordTokenKind.Not:
+                            return true;
+
+                        default:
+                            return false;
+                    }
+
                 default:
                     return false;
             }

@@ -21,6 +21,16 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             //Log($"annotation = {annotation}");
 #endif
 
+            if (operand.IsSystemNull)
+            {
+                return new NullValue();
+            }
+
+            if(operand.IsLogicalValue)
+            {
+                return operand.AsLogicalValue.Inverse();
+            }
+
             throw new NotImplementedException();
         }
     }

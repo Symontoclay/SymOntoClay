@@ -4,9 +4,9 @@
     {
         'Begin' >> @>log;
         
-        @a = 6;
+        @a = 4;
 
-        if(not @a > 5)
+        if(not (@a > 5))
         {
             'Yes!' >> @>log;
         } else {

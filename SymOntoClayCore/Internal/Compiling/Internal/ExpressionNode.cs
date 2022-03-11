@@ -81,6 +81,14 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     CompileVarDecl(expression as VarDeclAstExpression);
                     break;
 
+                case KindOfAstExpression.Group:
+                    {
+                        var node = new ExpressionNode(_context);
+                        node.Run((expression as GroupAstExpression).Expression);
+                        AddCommands(node.Result);
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }

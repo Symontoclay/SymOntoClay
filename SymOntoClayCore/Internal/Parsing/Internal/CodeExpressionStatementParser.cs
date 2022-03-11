@@ -139,6 +139,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _state = State.GotName;
                             break;
 
+                        case TokenKind.OpenRoundBracket:
+                            ProcessGroup();
+                            break;
+
                         case TokenKind.CloseRoundBracket:
                             Exit();
                             break;
@@ -474,6 +478,27 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             node.Name = value;
 
             var intermediateNode = new IntermediateAstNode(node);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+            _state = State.GotName;
+        }
+
+        private void ProcessGroup()
+        {
+            _lastIsOperator = null;
+
+            var parser = new CodeExpressionStatementParser(_context);
+            parser.Run();
+
+#if DEBUG
+            Log($"parser.Result = {parser.Result}");
+#endif
+
+            var groupExpression = new GroupAstExpression();
+            groupExpression.Expression = parser.Result.Expression;
+
+            var intermediateNode = new IntermediateAstNode(groupExpression);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
 

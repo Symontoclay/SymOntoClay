@@ -29,8 +29,8 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
             if (leftOperand.IsNumberValue && rightOperand.IsNumberValue)
             {
-                var leftOperandValue = leftOperand.AsNumberValue.GetSystemValue();
-                var rightOperandValue = rightOperand.AsNumberValue.GetSystemValue();
+                var leftOperandValue = leftOperand.GetSystemValue();
+                var rightOperandValue = rightOperand.GetSystemValue();
 
                 if ((double)leftOperandValue <= (double)rightOperandValue)
                 {

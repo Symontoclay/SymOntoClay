@@ -29,7 +29,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
             if (leftOperand.IsNumberValue && rightOperand.IsNumberValue)
             {
-                return new NumberValue((double)(leftOperand.AsNumberValue.GetSystemValue()) * (double)(rightOperand.AsNumberValue.GetSystemValue()));
+                return new NumberValue((double)leftOperand.GetSystemValue() * (double)rightOperand.GetSystemValue());
             }
 
             throw new NotImplementedException();

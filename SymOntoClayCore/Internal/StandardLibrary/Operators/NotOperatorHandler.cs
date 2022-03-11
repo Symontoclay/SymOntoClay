@@ -17,7 +17,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         public Value Call(Value operand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Log($"operand = {operand}");
+            //Log($"operand = {operand}");
             //Log($"annotation = {annotation}");
 #endif
 

@@ -62,8 +62,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_currToken = {_currToken}");
+            //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
             //Log($"_nodePoint = {_nodePoint}");
 #endif
 
@@ -492,7 +492,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             parser.Run();
 
 #if DEBUG
-            Log($"parser.Result = {parser.Result}");
+            //Log($"parser.Result = {parser.Result}");
 #endif
 
             var groupExpression = new GroupAstExpression();
@@ -649,7 +649,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var priority = OperatorsHelper.GetPriority(kindOfOperator);
 
 #if DEBUG
-            Log($"priority = {priority}");
+            //Log($"priority = {priority}");
 #endif
 
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.UnaryOperator, priority);
@@ -662,7 +662,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private void ProcessNot()
         {
 #if DEBUG
-            Log($"_lastIsOperator = {_lastIsOperator}");
+            //Log($"_lastIsOperator = {_lastIsOperator}");
 #endif
 
             if (_lastIsOperator == null)

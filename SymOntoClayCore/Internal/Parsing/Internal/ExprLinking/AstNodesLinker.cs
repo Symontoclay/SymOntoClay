@@ -30,7 +30,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
     public static class AstNodesLinker
     {
 #if DEBUG
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static void SetNode(IntermediateAstNode node, IntermediateAstNodePoint point)
@@ -100,8 +100,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
 
                 case KindOfIntermediateAstNode.Leaf:
 #if DEBUG
-                    _logger.Info($"node = {node}");
-                    _logger.Info($"point = {point}");
+                    //_logger.Info($"node = {node}");
+                    //_logger.Info($"point = {point}");
 #endif
 
                     currentNode.Left = node;
@@ -109,7 +109,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
                     point.CurrentNode = node;
 
 #if DEBUG
-                    _logger.Info($"point (after) = {point}");
+                    //_logger.Info($"point (after) = {point}");
 #endif
 
                     break;

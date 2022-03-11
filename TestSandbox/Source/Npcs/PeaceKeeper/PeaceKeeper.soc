@@ -6,12 +6,7 @@
         
         @a = 6;
 
-        if(not (@a > 5))
-        {
-            'Yes!' >> @>log;
-        } else {
-            'Else Yes!' >> @>log;
-        }
+        not (@a > 5) >> @>log;
 
         'End' >> @>log;
     }

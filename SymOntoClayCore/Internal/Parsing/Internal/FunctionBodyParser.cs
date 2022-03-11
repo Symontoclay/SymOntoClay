@@ -87,6 +87,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 case KeyWordTokenKind.Insert:
                                 case KeyWordTokenKind.Null:
                                 case KeyWordTokenKind.Var:
+                                case KeyWordTokenKind.Not:
                                     ProcessExpressionStatement();
                                     break;
 

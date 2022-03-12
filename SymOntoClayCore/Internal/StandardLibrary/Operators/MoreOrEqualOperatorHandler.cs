@@ -73,13 +73,168 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                     var fuzzyKindOfValue = rightOperand.KindOfValue;
 
+                    switch (fuzzyKindOfValue)
+                    {
+                        case KindOfValue.StrongIdentifierValue:
+                            {
+                                var val = rightOperand.AsStrongIdentifierValue;
 
+                                var normalizedNameValue = val.NormalizedNameValue;
+
+                                switch (normalizedNameValue)
+                                {
+                                    case "true":
+                                        return CompareSystemValues((double)leftNumVal.GetSystemValue(), 1);
+
+                                    case "false":
+                                        return CompareSystemValues((double)leftNumVal.GetSystemValue(), 0);
+
+                                    default:
+                                        {
+                                            var eqResult = _fuzzyLogicResolver.Equals(val, leftNumVal, localCodeExecutionContext);
+
+#if DEBUG
+                                            //Log($"eqResult = {eqResult}");
+#endif
+
+                                            if(eqResult)
+                                            {
+                                                return new LogicalValue(1);
+                                            }
+
+                                            var deffuzzificatedValue = _fuzzyLogicResolver.Resolve(val, localCodeExecutionContext);
+
+#if DEBUG
+                                            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+#endif
+
+                                            var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
+
+                                            if (!systemDeffuzzificatedValue.HasValue)
+                                            {
+                                                return new LogicalValue(false);
+                                            }
+
+#if DEBUG
+                                            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+#endif
+
+                                            return CompareSystemValues(leftNumVal.SystemValue.Value, systemDeffuzzificatedValue.Value);
+                                        }
+                                }
+                            }
+
+                        case KindOfValue.FuzzyLogicNonNumericSequenceValue:
+                            {
+                                var val = rightOperand.AsFuzzyLogicNonNumericSequenceValue;
+
+                                var eqResult = _fuzzyLogicResolver.Equals(val, leftNumVal, localCodeExecutionContext);
+
+#if DEBUG
+                                //Log($"eqResult = {eqResult}");
+#endif
+
+                                if (eqResult)
+                                {
+                                    return new LogicalValue(1);
+                                }
+
+                                var deffuzzificatedValue = _fuzzyLogicResolver.Resolve(val, localCodeExecutionContext);
+
+#if DEBUG
+                                //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+#endif
+
+                                var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
+
+                                if (!systemDeffuzzificatedValue.HasValue)
+                                {
+                                    return new LogicalValue(false);
+                                }
+
+#if DEBUG
+                                //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+#endif
+                                return CompareSystemValues(leftNumVal.SystemValue.Value, systemDeffuzzificatedValue.Value);
+                            }
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(fuzzyKindOfValue), fuzzyKindOfValue, null);
+                    }
 
                     throw new NotImplementedException();
                 }
 
                 if ((leftOperand.IsStrongIdentifierValue || leftOperand.IsFuzzyLogicNonNumericSequenceValue) && (rightOperand.IsNumberValue || rightOperand.IsLogicalValue))
                 {
+                    NumberValue rightNumVal = null;
+
+                    var numKindOfValue = rightOperand.KindOfValue;
+
+                    switch (numKindOfValue)
+                    {
+                        case KindOfValue.NumberValue:
+                            rightNumVal = rightOperand.AsNumberValue;
+                            break;
+
+                        case KindOfValue.LogicalValue:
+                            rightNumVal = ValueConvertor.ConvertLogicalValueToNumberValue(rightOperand.AsLogicalValue, _engineContext);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(numKindOfValue), numKindOfValue, null);
+                    }
+
+#if DEBUG
+                    //Log($"rightNumVal = {rightNumVal}");
+#endif
+
+                    var fuzzyKindOfValue = leftOperand.KindOfValue;
+
+                    switch (fuzzyKindOfValue)
+                    {
+                        case KindOfValue.StrongIdentifierValue:
+                            {
+                                var val = leftOperand.AsStrongIdentifierValue;
+
+                                var normalizedNameValue = val.NormalizedNameValue;
+
+                                switch (normalizedNameValue)
+                                {
+                                    case "true":
+                                        return CompareSystemValues(1, (double)rightNumVal.GetSystemValue());
+
+                                    case "false":
+                                        return CompareSystemValues(0, (double)rightNumVal.GetSystemValue());
+
+                                    default:
+                                        {
+                                            var eqResult = _fuzzyLogicResolver.Equals(val, rightNumVal, localCodeExecutionContext);
+
+#if DEBUG
+                                            //Log($"eqResult = {eqResult}");
+#endif
+
+
+                                        }
+                                }
+                            }
+
+                        case KindOfValue.FuzzyLogicNonNumericSequenceValue:
+                            {
+                                var val = leftOperand.AsFuzzyLogicNonNumericSequenceValue;
+
+                                var eqResult = _fuzzyLogicResolver.Equals(val, rightNumVal, localCodeExecutionContext);
+
+#if DEBUG
+                                //Log($"eqResult = {eqResult}");
+#endif
+                            }
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(fuzzyKindOfValue), fuzzyKindOfValue, null);
+                    }
+
                     throw new NotImplementedException();
                 }
 

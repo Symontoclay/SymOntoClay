@@ -1,5 +1,7 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Convertors;
+using SymOntoClay.Core.Internal.DataResolvers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +13,15 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         public LessOrEqualOperatorHandler(IEngineContext engineContext)
             : base(engineContext.Logger)
         {
+            _engineContext = engineContext;
+
+            var dataResolversFactory = engineContext.DataResolversFactory;
+
+            _fuzzyLogicResolver = dataResolversFactory.GetFuzzyLogicResolver();
         }
+
+        private readonly IEngineContext _engineContext;
+        private readonly FuzzyLogicResolver _fuzzyLogicResolver;
 
         /// <inheritdoc/>
         public Value Call(Value leftOperand, Value rightOperand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
@@ -39,6 +49,30 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             {
                 if ((leftOperand.IsNumberValue || leftOperand.IsLogicalValue) && (rightOperand.IsStrongIdentifierValue || rightOperand.IsFuzzyLogicNonNumericSequenceValue))
                 {
+                    NumberValue leftNumVal = null;
+
+                    var numKindOfValue = leftOperand.KindOfValue;
+
+                    switch (numKindOfValue)
+                    {
+                        case KindOfValue.NumberValue:
+                            leftNumVal = leftOperand.AsNumberValue;
+                            break;
+
+                        case KindOfValue.LogicalValue:
+                            leftNumVal = ValueConvertor.ConvertLogicalValueToNumberValue(leftOperand.AsLogicalValue, _engineContext);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(numKindOfValue), numKindOfValue, null);
+                    }
+
+#if DEBUG
+                    //Log($"leftNumVal = {leftNumVal}");
+#endif
+
+                    var fuzzyKindOfValue = rightOperand.KindOfValue;
+
                     throw new NotImplementedException();
                 }
 

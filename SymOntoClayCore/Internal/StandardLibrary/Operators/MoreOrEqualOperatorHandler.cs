@@ -215,7 +215,29 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                                             //Log($"eqResult = {eqResult}");
 #endif
 
+                                            if (eqResult)
+                                            {
+                                                return new LogicalValue(1);
+                                            }
 
+                                            var deffuzzificatedValue = _fuzzyLogicResolver.Resolve(val, localCodeExecutionContext);
+
+#if DEBUG
+                                            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+#endif
+
+                                            var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
+
+                                            if (!systemDeffuzzificatedValue.HasValue)
+                                            {
+                                                return new LogicalValue(false);
+                                            }
+
+#if DEBUG
+                                            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+#endif
+
+                                            return CompareSystemValues(systemDeffuzzificatedValue.Value, rightNumVal.SystemValue.Value);
                                         }
                                 }
                             }
@@ -229,6 +251,30 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 #if DEBUG
                                 //Log($"eqResult = {eqResult}");
 #endif
+
+                                if (eqResult)
+                                {
+                                    return new LogicalValue(1);
+                                }
+
+                                var deffuzzificatedValue = _fuzzyLogicResolver.Resolve(val, localCodeExecutionContext);
+
+#if DEBUG
+                                //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+#endif
+
+                                var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
+
+                                if (!systemDeffuzzificatedValue.HasValue)
+                                {
+                                    return new LogicalValue(false);
+                                }
+
+#if DEBUG
+                                //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+#endif
+
+                                return CompareSystemValues(systemDeffuzzificatedValue.Value, rightNumVal.SystemValue.Value);
                             }
 
                         default:

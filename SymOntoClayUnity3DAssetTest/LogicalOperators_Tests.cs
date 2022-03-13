@@ -1157,7 +1157,97 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }), true);
         }
 
+        [Test]
+        [Parallelizable]
+        public void Case9_c()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        'Begin' >> @>log;
+        
+        @a = 4;
 
+        if(!(@a > 5))
+        {
+            'Yes!' >> @>log;
+        } else {
+            'Else Yes!' >> @>log;
+        }
+
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "Yes!");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case9_d()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        'Begin' >> @>log;
+        
+        @a = 6;
+
+        if(!(@a > 5))
+        {
+            'Yes!' >> @>log;
+        } else {
+            'Else Yes!' >> @>log;
+        }
+
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "Else Yes!");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
 
         [Test]
         [Parallelizable]

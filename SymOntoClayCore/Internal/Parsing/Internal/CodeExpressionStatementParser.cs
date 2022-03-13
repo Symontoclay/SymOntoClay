@@ -156,6 +156,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessAnd();
                             break;
 
+                        case TokenKind.Not:
+                            ProcessNotOperator();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

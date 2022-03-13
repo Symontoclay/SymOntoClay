@@ -57,6 +57,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private IntermediateAstNodePoint _nodePoint = new IntermediateAstNodePoint();
 
         private BinaryOperatorAstExpression _lastIsOperator;
+        private BinaryOperatorAstExpression _lastBinaryOperator;
 
         /// <inheritdoc/>
         protected override void OnRun()
@@ -268,6 +269,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessRuleOrFact()
         {
+            _lastBinaryOperator = null;
+            _lastIsOperator = null;
+
             _context.Recovery(_currToken);
 
             var parser = new LogicalQueryParser(_context);
@@ -290,6 +294,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessNumberToken()
         {
+            _lastBinaryOperator = null;
+            _lastIsOperator = null;
+
             _context.Recovery(_currToken);
             var parser = new NumberParser(_context);
             parser.Run();
@@ -304,6 +311,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessNullToken()
         {
+            _lastBinaryOperator = null;
+            _lastIsOperator = null;
+
             _context.Recovery(_currToken);
 
             var parser = new NullParser(_context);
@@ -323,6 +333,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessStringToken()
         {
+            _lastBinaryOperator = null;
             _lastIsOperator = null;
 
             var node = new ConstValueAstExpression();
@@ -337,6 +348,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessEntityCondition()
         {
+            _lastBinaryOperator = null;
+            _lastIsOperator = null;
+
             _context.Recovery(_currToken);
 
             var parser = new ConditionalEntityParser(_context);
@@ -415,6 +429,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessLogicalQueryOperator()
         {
+            _lastBinaryOperator = null;
             _lastIsOperator = null;
 
             //_context.Recovery(_currToken);
@@ -452,6 +467,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessVarDecl()
         {
+            _lastBinaryOperator = null;
+            _lastIsOperator = null;
+
             _context.Recovery(_currToken);
 
             var parser = new VarDeclParser(_context);
@@ -470,6 +488,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessVar()
         {
+            _lastBinaryOperator = null;
             _lastIsOperator = null;
 
             var value = NameHelper.CreateName(_currToken.Content);
@@ -486,6 +505,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessGroup()
         {
+            _lastBinaryOperator = null;
             _lastIsOperator = null;
 
             var parser = new CodeExpressionStatementParser(_context);
@@ -507,6 +527,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessConceptLeaf()
         {
+            _lastBinaryOperator = null;
             _lastIsOperator = null;
 
             var value = NameHelper.CreateName(_currToken.Content);
@@ -547,12 +568,28 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessAddition()
         {
-            ProcessUsualBinaryOperator(KindOfOperator.Add);
+            if (_lastBinaryOperator == null)
+            {
+                ProcessUsualBinaryOperator(KindOfOperator.Add);
+                return;
+            }
+
+            ProcessUsualUnaryOperator(KindOfOperator.UnaryPlus);
         }
 
         private void ProcessMinus()
         {
-            ProcessUsualBinaryOperator(KindOfOperator.Sub);
+#if DEBUG
+            //Log($"_lastBinaryOperator = {_lastBinaryOperator}");
+#endif
+
+            if(_lastBinaryOperator == null)
+            {
+                ProcessUsualBinaryOperator(KindOfOperator.Sub);
+                return;
+            }
+
+            ProcessUsualUnaryOperator(KindOfOperator.UnaryMinus);
         }
 
         private void ProcessMultiplication()
@@ -607,6 +644,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var node = new BinaryOperatorAstExpression();
             node.KindOfOperator = kindOfOperator;
 
+            _lastBinaryOperator = node;
+
             var priority = OperatorsHelper.GetPriority(kindOfOperator);
 
 #if DEBUG
@@ -626,6 +665,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             node.KindOfOperator = KindOfOperator.Is;
 
             _lastIsOperator = node;
+            _lastBinaryOperator = node;
 
             var priority = OperatorsHelper.GetPriority(node.KindOfOperator);
 
@@ -643,6 +683,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessUsualUnaryOperator(KindOfOperator kindOfOperator)
         {
+            _lastBinaryOperator = null;
+            _lastIsOperator = null;
+
             var node = new UnaryOperatorAstExpression();
             node.KindOfOperator = kindOfOperator;
 
@@ -683,6 +726,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessChannel()
         {
+            _lastBinaryOperator = null;
             _lastIsOperator = null;
 
             var name = NameHelper.CreateName(_currToken.Content);
@@ -701,6 +745,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessCallingFunction()
         {
+            _lastBinaryOperator = null;
             _lastIsOperator = null;
 
             _context.Recovery(_currToken);
@@ -731,6 +776,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnFinish()
         {
             Result.Expression = _nodePoint.BuildExpr<AstExpression>();
+
+#if DEBUG
+            //Log($"Result.Expression = {Result.Expression}");
+#endif
         }
     }
 }

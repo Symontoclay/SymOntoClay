@@ -47,6 +47,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         Add,
         Sub,
         Mul,
-        Div
+        Div,
+        UnaryPlus,
+        UnaryMinus
     }
 }

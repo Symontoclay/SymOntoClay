@@ -46,9 +46,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 case KindOfOperator.Or:
                     return 15;
 
-                case KindOfOperator.Not:
-                    return 3;
-
                 case KindOfOperator.Is:
                     return 10;
 
@@ -68,6 +65,11 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 case KindOfOperator.Mul:
                 case KindOfOperator.Div:
                     return 5;
+
+                case KindOfOperator.Not:
+                case KindOfOperator.UnaryPlus:
+                case KindOfOperator.UnaryMinus:
+                    return 3;
 
                 case KindOfOperator.Point:
                     return 2;
@@ -129,9 +131,11 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                     return "<=";
 
                 case KindOfOperator.Add:
+                case KindOfOperator.UnaryPlus:
                     return "+";
 
                 case KindOfOperator.Sub:
+                case KindOfOperator.UnaryMinus:
                     return "-";
 
                 case KindOfOperator.Mul:

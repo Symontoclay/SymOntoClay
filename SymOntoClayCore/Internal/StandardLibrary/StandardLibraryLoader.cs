@@ -137,6 +137,26 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
 
             globalOperatorsStorage.Append(op);
 
+            op = new Operator
+            {
+                KindOfOperator = KindOfOperator.UnaryPlus,
+                IsSystemDefined = true,
+                SystemHandler = new UnaryOperatorSystemHandler(new UnaryPlusOperatorHandler(_context)),
+                Holder = _context.CommonNamesStorage.DefaultHolder
+            };
+
+            globalOperatorsStorage.Append(op);
+
+            op = new Operator
+            {
+                KindOfOperator = KindOfOperator.UnaryMinus,
+                IsSystemDefined = true,
+                SystemHandler = new UnaryOperatorSystemHandler(new UnaryMinusOperatorHandler(_context)),
+                Holder = _context.CommonNamesStorage.DefaultHolder
+            };
+
+            globalOperatorsStorage.Append(op);
+
             //---------------
 
             op = new Operator

@@ -17,14 +17,14 @@ namespace TestSandbox.CreatingExamples
             _logger.Log("Begin");
 
             Variables();
-            MemberAccessModifiers();//in process
+            MemberAccessModifiers();
             Field();
-            ImperativeLogicOperators();//in process
-            ArithmeticOperators();//in process
-            LogicConditionalTriggers();//in process
-            LogicQueries();//in process
-            RepeatStatement();//in process
-            WhileStatement();//in process
+            ImperativeLogicOperators();
+            ArithmeticOperators();
+            LogicConditionalTriggers();
+            //LogicQueries();
+            RepeatStatement();
+            WhileStatement();
             ReturnStatement();//in process
             IfElifElseStatement();//in process
             ContinueLoopStatement();//in process
@@ -62,7 +62,73 @@ namespace TestSandbox.CreatingExamples
 
             var n = 1;
 
-            
+            var text = @"class Cls1
+{
+protected:
+    fun a() => 
+    {
+        '`a` has been called!' >> @>log;
+    }
+}
+
+app PeaceKeeper is Cls1
+{
+private:
+    on Init =>
+    {
+        'Begin' >> @>log;
+        a();
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
+
+            n++;
+
+            text = @"class Cls1
+{
+private:
+	{: male(#Tom) :}
+	{: parent(#Piter, #Tom) :}
+	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+}
+
+app PeaceKeeper is Cls1
+{
+private:
+    on Init =>
+    {
+        'Begin' >> @>log;
+        select {: son($x, $y) :} >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
+
+            n++;
+
+            text = @"class Cls1
+{
+protected:
+	{: male(#Tom) :}
+	{: parent(#Piter, #Tom) :}
+	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+}
+
+app PeaceKeeper is Cls1
+{
+private:
+    on Init =>
+    {
+        'Begin' >> @>log;
+        select {: son($x, $y) :} >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
         }
 
         private void Field()
@@ -107,6 +173,56 @@ namespace TestSandbox.CreatingExamples
             var prefix = "ImperativeLogicOperators";
 
             var n = 1;
+
+            var text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        'Begin' >> @>log;
+        
+        @a = 3;
+
+        if(@a <= 0 | @a is 3 | @a > 5)
+        {
+            'Yes!' >> @>log;
+        } else {
+            'Else Yes!' >> @>log;
+        }
+
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
+
+            n++;
+
+            text = @"linvar age for range (0, 150]
+{
+    terms:
+	    `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    on Init =>
+    {
+        'Begin' >> @>log;
+        
+        @a = 16;
+
+        if(@a <= teenager)
+        {
+            'Yes!' >> @>log;
+        } else {
+            'Else Yes!' >> @>log;
+        }
+
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
         }
 
         private void ArithmeticOperators()
@@ -114,6 +230,208 @@ namespace TestSandbox.CreatingExamples
             var prefix = "ArithmeticOperators";
 
             var n = 1;
+
+            var text = @"app PeaceKeeper
+{
+private:
+    on Init =>
+    {
+        'Begin' >> @>log;
+        1 + 1 >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
+
+            n++;
+
+            text = @"app PeaceKeeper
+{
+private:
+    @a = 2;
+
+    on Init =>
+    {
+        @b = 3;
+
+        'Begin' >> @>log;
+        @a + @b >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
+
+            n++;
+
+            text = @"app PeaceKeeper
+{
+private:
+    on Init =>
+    {
+        'Begin' >> @>log;
+        1 + NULL >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
+
+            n++;
+
+            text = @"app PeaceKeeper
+{
+private:
+    on Init =>
+    {
+        'Begin' >> @>log;
+        1 + 'Hi' >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
+
+            n++;
+
+            text = @"app PeaceKeeper
+{
+private:
+    on Init =>
+    {
+        'Begin' >> @>log;
+        3 - 1 >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
+
+            n++;
+
+            text = @"app PeaceKeeper
+{
+private:
+    on Init =>
+    {
+        'Begin' >> @>log;
+        3 * 4 >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
+
+            n++;
+
+            text = @"app PeaceKeeper
+{
+private:
+    on Init =>
+    {
+        'Begin' >> @>log;
+        12 / 4 >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
+
+            n++;
+
+            text = @"app PeaceKeeper
+{
+private:
+    on Init =>
+    {
+        'Begin' >> @>log;
+        12 / 0 >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
+
+            n++;
+
+            text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        'Begin' >> @>log;
+        
+        (3 + 5) * 2 >> @>log;
+
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
+
+            n++;
+
+            text = @"app PeaceKeeper
+{
+private:
+    on Init =>
+    {
+        'Begin' >> @>log;
+        @a = 2;
+        2 * -@a >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
+
+            n++;
+
+            text = @"app PeaceKeeper
+{
+private:
+    on Init =>
+    {
+        'Begin' >> @>log;
+        @a = -2;
+        2 * -@a >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
+
+            n++;
+
+            text = @"app PeaceKeeper
+{
+private:
+    on Init =>
+    {
+        'Begin' >> @>log;
+        @a = -2;
+        2 * +@a >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
+
+            n++;
+
+            text = @"app PeaceKeeper
+{
+private:
+    on Init =>
+    {
+        'Begin' >> @>log;
+        @a = 2;
+        2 * +@a >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
         }
 
         private void LogicConditionalTriggers()
@@ -122,22 +440,70 @@ namespace TestSandbox.CreatingExamples
 
             var n = 3;
 
+            var text = @"app PeaceKeeper
+{
+    @a = #`gun 1`;
+
+    on Init =>
+    {
+        'Begin' >> @>log;
+        insert {: see(I, @a) :};
+    }
+
+    on {: see(I, @a) :} => 
+    {
+	    'D' >> @>log;
+	}
+}";
+
+            Example(CreateName(prefix, n), text);
         }
 
-        private void LogicQueries()
-        {
-            var prefix = "LogicQueries";
+        //private void LogicQueries()
+        //{
+        //    var prefix = "LogicQueries";
 
-            var n = 13;
+        //    var n = 13;
 
+        //    var text = @"";
 
-        }
+        //    Example(CreateName(prefix, n), text);
+        //}
 
         private void RepeatStatement()
         {
             var prefix = "RepeatStatement";
 
             var n = 1;
+
+            var text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        'Begin' >> @>log;
+        
+        @a = 10;
+
+        repeat
+        {
+            @a >> @>log;
+            @a = @a - 1;
+
+            if(@a > 5)
+            {
+                continue;
+            }
+
+            'End of while iteration' >> @>log;
+
+            break;
+        }
+
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
         }
 
         private void WhileStatement()
@@ -146,7 +512,25 @@ namespace TestSandbox.CreatingExamples
 
             var n = 1;
 
+            var text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        'Begin' >> @>log;
+        
+        @a = 10;
 
+        while (@a > 0)
+        {
+            @a >> @>log;
+            @a = @a - 1;
+        }
+
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
         }
 
         private void ReturnStatement()
@@ -155,7 +539,66 @@ namespace TestSandbox.CreatingExamples
 
             var n = 1;
 
+            var text = @"app PeaceKeeper
+{
+    fun a() => 
+    {
+        '`a` has been called!' >> @>log;
+        return;
+        '`a` has been ended!' >> @>log;
+    }
 
+    on Init =>
+    {
+        'Begin' >> @>log;
+        a();
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
+
+            n++;
+
+            text = @"app PeaceKeeper
+{
+    fun a() => 
+    {
+        '`a` has been called!' >> @>log;
+        return;
+        '`a` has been ended!' >> @>log;
+    }
+
+    on Init =>
+    {
+        'Begin' >> @>log;
+        a() >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
+
+            n++;
+
+            text = @"app PeaceKeeper
+{
+    fun a() => 
+    {
+        '`a` has been called!' >> @>log;
+        return 1;
+        '`a` has been ended!' >> @>log;
+    }
+
+    on Init =>
+    {
+        'Begin' >> @>log;
+        a() >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
         }
 
         private void IfElifElseStatement()
@@ -164,7 +607,118 @@ namespace TestSandbox.CreatingExamples
 
             var n = 1;
 
+            var text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        'Begin' >> @>log;
+        
+        @a = 1;
 
+        if(@a)
+        {
+            'Yes!' >> @>log;
+        }
+
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
+
+            n++;
+
+            text = @"app PeaceKeeper
+{
+    {: >: { see(I, #`Barel 1`) } :}
+
+    on Init =>
+    {
+        'Begin' >> @>log;
+        
+        if({: >: { see(I, #`Barel 1`) } :})
+        {
+            'Yes!' >> @>log;
+        }
+
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
+
+            n++;
+
+            text = @"app PeaceKeeper
+{
+    {: >: { see(I, #`Barel 1`) } :}
+
+    on Init =>
+    {
+        'Begin' >> @>log;
+        
+        if({: >: { see(I, #`Barel 1`) } :})
+        {
+            'Yes!' >> @>log;
+        } else {
+            'Else Yes!' >> @>log;
+        }
+
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
+
+            n++;
+
+            text = @"app PeaceKeeper
+{
+    {: >: { see(I, #`Barel 0`) } :}
+
+    on Init =>
+    {
+        'Begin' >> @>log;
+        
+        if({: >: { see(I, #`Barel 0`) } :})
+        {
+            'Yes!' >> @>log;
+        } elif ({: >: { see(I, #`Barel 1`) } :}) {
+            'Elif 1 Yes!' >> @>log;
+        }
+
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
+
+            n++;
+
+            text = @"app PeaceKeeper
+{
+    {: >: { see(I, #`Barel 3`) } :}
+
+    on Init =>
+    {
+        'Begin' >> @>log;
+        
+        if({: >: { see(I, #`Barel 0`) } :})
+        {
+            'Yes!' >> @>log;
+        } elif ({: >: { see(I, #`Barel 1`) } :}) {
+            'Elif 1 Yes!' >> @>log;
+        }elif ({: >: { see(I, #`Barel 2`) } :}) {
+            'Elif 2 Yes!' >> @>log;
+        }else{
+            'Else Yes!' >> @>log;
+        }
+
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
         }
 
         private void ContinueLoopStatement()
@@ -173,7 +727,34 @@ namespace TestSandbox.CreatingExamples
 
             var n = 1;
 
+            var text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        'Begin' >> @>log;
+        
+        @a = 10;
 
+        repeat
+        {
+            @a >> @>log;
+            @a = @a - 1;
+
+            if(@a > 5)
+            {
+                continue;
+            }
+
+            'End of while iteration' >> @>log;
+
+            break;
+        }
+
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
         }
 
         private void BreakLoopStatement()
@@ -182,7 +763,30 @@ namespace TestSandbox.CreatingExamples
 
             var n = 1;
 
+            var text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        'Begin' >> @>log;
+        
+        @a = 10;
 
+        while (@a > 0)
+        {
+            @a >> @>log;
+            @a = @a - 1;
+
+            if(@a > 5)
+            {
+                break;
+            }
+        }
+
+        'End' >> @>log;
+    }
+}";
+
+            Example(CreateName(prefix, n), text);
         }
 
         /*

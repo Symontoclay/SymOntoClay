@@ -234,6 +234,11 @@ namespace TestSandbox.CreatingExamples
             Directory.Delete(fullDestDirName, true);
         }
 
+        protected string CreateName(string prefix, int n)
+        {
+            return $"{prefix}_Example{n}";
+        }
+
         private string NormalizeTextForConsole(string source)
         {
             return source.Replace("<", "&lt;").Replace(">", "&gt;");

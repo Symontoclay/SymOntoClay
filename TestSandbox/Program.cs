@@ -79,7 +79,7 @@ namespace TestSandbox
 
             //TstSoundBus();
             //TstNavigationHandler();
-            //TstCreatorExamples();
+            TstCreatorExamples();
             //TstLinguisticVariable_Tests();
             //TstManageTempProject();
             //TstAdvancedTestRunnerForMultipleInstances();//<=~
@@ -121,7 +121,7 @@ namespace TestSandbox
             //TstParsing();
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -153,7 +153,8 @@ namespace TestSandbox
 
             //using var handler = new CreatorExamples_Fun_01_06_2021();
             //using var handler = new CreatorExamples_Error_Processing_07_06_2021();
-            using var handler = new CreatorExamples_Actions_22_09_2021();
+            //using var handler = new CreatorExamples_Actions_22_09_2021();
+            using var handler = new CreatorExamples_16_03_2022();
             handler.Run();
 
             _logger.Log("End");

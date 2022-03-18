@@ -3,6 +3,7 @@
 # SymOntoClay
 <span>[![experimental](https://img.shields.io/badge/stability-experimental-orange.svg?style=flat)](https://github.com/Symontoclay/SymOntoClay)
 [![Website](https://img.shields.io/badge/documentation-online-brightgreen)](https://symontoclay.github.io/docs/index.html)
+[![](https://img.shields.io/badge/api-reference-blue.svg)](https://symontoclay.github.io/docs/engine_api/index.html)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Symontoclay/SymOntoClay)
 </span><span></span>
 
@@ -111,14 +112,14 @@ And I hope this project will become useful for many indie game developers in the
 ## Requirements
 <div><div><div><div><p>
 SymOntoClay CLI requires:
-    <ul><li>NET 5.0</li>
+    <ul><li>NET 6.0</li>
 </ul>
 </div></div>
 
 <div><div><p>
 SymOntoClay's components for Unity require:
     <ul><li>Unity 2020.2.3f1</li>
-<li>NET 5.0</li>
+<li>NET 6.0</li>
 </ul>
 </div></div></div></div>
 
@@ -140,11 +141,23 @@ You can build and install the project from source code.
 * [DSL code examples](https://symontoclay.github.io/docs/lng_examples/index.html)
 * [Unity examples](https://symontoclay.github.io/docs/unity-examples.html)
 
+## Contributing
+<div><div><p>
+SymOntoClay is still under development. 
+Contributions are always welcome!
+</p>
+
+<p>
+Any help testing the software, reporting or fixing bugs, reviewing pull requests and recent changes, writing tests, or helping with outstanding issues is very welcome. 
+Implementing new features, or improving/refactoring the codebase, is of course also welcome, but to avoid wasted effort, especially for larger changes, I encourage discussing these on the <a href='https://github.com/Symontoclay/SymOntoClay/issues'>issue tracker</a> or <a href='https://github.com/Symontoclay/SymOntoClay/discussions'>Discussion</a> first.
+</p>
+
+<p>
+Please follow the <a href='/dev/contributing.html'>Developers Guide</a> if you want to help
+</p>
+</div></div>
+
 <p>
 Feel free contact to me about the project. 
 I will be glad to receive feedback.
-</p>
-
-<p class='center-h'>
-<b>Sergiy Tolkachov</b> AKA metatypeman
 </p>

@@ -2,12 +2,12 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>SymOntoClay.CoreHelper</RootNamespace>
-    <Version>0.3.6</Version>
+    <Version>0.3.7</Version>
     <PackageId>SymOntoClay.CoreHelper</PackageId>
     <Company>SymOntoClayCoreHelper</Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>0.3.6</AssemblyVersion>
-    <FileVersion>0.3.6</FileVersion>
+    <AssemblyVersion>0.3.7</AssemblyVersion>
+    <FileVersion>0.3.7</FileVersion>
     <Copyright>Copyright (c) 2020 - 2021 Sergiy Tolkachov aka metatypeman</Copyright>
     <AssemblyName>SymOntoClay.CoreHelper</AssemblyName>
   </PropertyGroup>

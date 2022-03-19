@@ -114,12 +114,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override CodeItem CloneCodeItem()
-        {
-            return Clone();
-        }
-
-        /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> cloneContext)
         {
             return Clone(cloneContext);

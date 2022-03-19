@@ -22,12 +22,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override StateDef AsState => this;
 
         /// <inheritdoc/>
-        public override CodeItem CloneCodeItem()
-        {
-            return Clone();
-        }
-
-        /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> cloneContext)
         {
             return Clone(cloneContext);

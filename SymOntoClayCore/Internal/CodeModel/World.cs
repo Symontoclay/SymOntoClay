@@ -37,12 +37,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override KindOfCodeEntity Kind => KindOfCodeEntity.World;
 
         /// <inheritdoc/>
-        public override CodeItem CloneCodeItem()
-        {
-            return Clone();
-        }
-
-        /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> cloneContext)
         {
             return Clone(cloneContext);

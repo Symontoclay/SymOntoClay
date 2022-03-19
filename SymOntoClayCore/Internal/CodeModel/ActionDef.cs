@@ -70,12 +70,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public IList<Operator> Operators => _operatorsList;
 
         /// <inheritdoc/>
-        public override CodeItem CloneCodeItem()
-        {
-            return Clone();
-        }
-
-        /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> cloneContext)
         {
             return Clone(cloneContext);

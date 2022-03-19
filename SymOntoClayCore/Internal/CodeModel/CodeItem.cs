@@ -167,7 +167,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// Clones the instance and returns cloned instance.
         /// </summary>
         /// <returns>Cloned instance.</returns>
-        public abstract CodeItem CloneCodeItem();
+        public CodeItem CloneCodeItem()
+        {
+            var context = new Dictionary<object, object>();
+            return CloneCodeItem(context);
+        }
 
         /// <summary>
         /// Clones the instance using special context and returns cloned instance.

@@ -8,15 +8,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         public abstract KindOfCodeItemDirective KindOfCodeItemDirective { get; }
 
-        /// <summary>
-        /// Clones the instance and returns cloned instance.
-        /// </summary>
-        /// <returns>Cloned instance.</returns>
-        public CodeItemDirective CloneCodeItemDirective()
-        {
-            var context = new Dictionary<object, object>();
-            return CloneCodeItemDirective(context);
-        }
+        ///// <summary>
+        ///// Clones the instance and returns cloned instance.
+        ///// </summary>
+        ///// <returns>Cloned instance.</returns>
+        //public CodeItemDirective CloneCodeItemDirective()
+        //{
+        //    var context = new Dictionary<object, object>();
+        //    return CloneCodeItemDirective(context);
+        //}
 
 
     }

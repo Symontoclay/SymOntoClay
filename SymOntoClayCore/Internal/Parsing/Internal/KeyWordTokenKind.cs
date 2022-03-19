@@ -42,6 +42,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Is,
         On,
         Init,
+        Enter,
+        Leave,
         Set,
         Not,
         Select,
@@ -72,6 +74,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Elif,
         While,
         Continue,
-        Repeat
+        Repeat,
+        State
     }
 }

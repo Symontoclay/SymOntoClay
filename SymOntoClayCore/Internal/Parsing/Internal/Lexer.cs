@@ -807,11 +807,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
                         }
 
+                        if (string.Compare(content, "enter", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Enter;
+                            break;
+                        }
+
+                        if (string.Compare(content, "leave", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Leave;
+                            break;
+                        }                        
+
                         if (string.Compare(content, "set", true) == 0)
                         {
                             kindOfKeyWord = KeyWordTokenKind.Set;
                             break;
-                        }
+                        }                        
 
                         if (string.Compare(content, "not", true) == 0)
                         {
@@ -1008,6 +1020,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         if (string.Compare(content, "repeat", true) == 0)
                         {
                             kindOfKeyWord = KeyWordTokenKind.Repeat;
+                            break;
+                        }
+
+                        if (string.Compare(content, "state", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.State;
                             break;
                         }
                     }

@@ -194,6 +194,10 @@ namespace SymOntoClay.Core.Internal.Serialization
                     AddSystemDefinedSettingsToAction(codeEntity);
                     break;
 
+                case KindOfCodeEntity.State:
+                    AddSystemDefinedSettingsToState(codeEntity);
+                    break;
+
                 case KindOfCodeEntity.InlineTrigger:
                     break;
 
@@ -289,6 +293,24 @@ namespace SymOntoClay.Core.Internal.Serialization
             codeEntity.InheritanceItems.Add(inheritanceItem);
         }
 
+        private void AddSystemDefinedSettingsToState(CodeItem codeEntity)
+        {
+            var inheritanceItem = new InheritanceItem()
+            {
+                IsSystemDefined = true
+            };
+
+            inheritanceItem.SubName = codeEntity.Name;
+            inheritanceItem.SuperName = _context.CommonNamesStorage.StateName;
+            inheritanceItem.Rank = new LogicalValue(1.0F);
+
+#if DEBUG
+            //Log($"inheritanceItem = {inheritanceItem}");
+#endif
+
+            codeEntity.InheritanceItems.Add(inheritanceItem);
+        }
+
         private void SaveItems(List<CodeItem> source)
         {
             foreach (var item in source)
@@ -366,6 +388,10 @@ namespace SymOntoClay.Core.Internal.Serialization
 
                 case KindOfCodeEntity.Action:
                     globalStorage.ActionsStorage.Append(codeItem.AsAction);
+                    break;
+
+                case KindOfCodeEntity.State:
+                    globalStorage.StatesStorage.Append(codeItem.AsState);
                     break;
 
                 case KindOfCodeEntity.Operator:

@@ -52,6 +52,9 @@ namespace SymOntoClay.Core.Internal.CommonNames
         public StrongIdentifierValue ActionName { get; private set; }
 
         /// <inheritdoc/>
+        public StrongIdentifierValue StateName { get; private set; }
+
+        /// <inheritdoc/>
         public StrongIdentifierValue DefaultHolder { get; private set; }
 
         /// <inheritdoc/>
@@ -72,6 +75,8 @@ namespace SymOntoClay.Core.Internal.CommonNames
             ClassName = NameHelper.CreateName(StandardNamesConstants.ClassTypeName);
 
             ActionName = NameHelper.CreateName(StandardNamesConstants.ActionTypeName);
+
+            StateName = NameHelper.CreateName(StandardNamesConstants.StateTypeName);
 
             DefaultHolder = new StrongIdentifierValue();
 

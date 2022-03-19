@@ -63,6 +63,7 @@ namespace SymOntoClay.Core.Internal.Storage
             _realStorageContext.LogicalStorage = new LogicalStorage.LogicalStorage(_kind, _realStorageContext);
             _realStorageContext.MethodsStorage = new MethodsStorage.MethodsStorage(_kind, _realStorageContext);
             _realStorageContext.ActionsStorage = new ActionsStorage.ActionsStorage(_kind, _realStorageContext);
+            _realStorageContext.StatesStorage = new StatesStorage.StatesStorage(_kind, _realStorageContext);
             _realStorageContext.TriggersStorage = new TriggersStorage.TriggersStorage(_kind, _realStorageContext);
             _realStorageContext.InheritanceStorage = new InheritanceStorage.InheritanceStorage(_kind, _realStorageContext);
             _realStorageContext.SynonymsStorage = new SynonymsStorage.SynonymsStorage(_kind, _realStorageContext);
@@ -89,6 +90,9 @@ namespace SymOntoClay.Core.Internal.Storage
 
         /// <inheritdoc/>
         public IActionsStorage ActionsStorage => _realStorageContext.ActionsStorage;
+
+        /// <inheritdoc/>
+        public IStatesStorage StatesStorage => _realStorageContext.StatesStorage;
 
         /// <inheritdoc/>
         public ITriggersStorage TriggersStorage => _realStorageContext.TriggersStorage;

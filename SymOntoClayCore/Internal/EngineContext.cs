@@ -22,7 +22,6 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.StandardLibrary;
-using SymOntoClay.Core.Internal.States;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -36,8 +35,7 @@ namespace SymOntoClay.Core.Internal
         {
         }
 
-        public CodeExecutorComponent CodeExecutor { get; set; }
-        public StatesStorageComponent StatesStorage { get; set; }       
+        public CodeExecutorComponent CodeExecutor { get; set; }       
         public StandardLibraryLoader StandardLibraryLoader { get; set; }       
         
         public IHostSupport HostSupport { get; set; }
@@ -50,8 +48,7 @@ namespace SymOntoClay.Core.Internal
         public override void Die()
         {
             CodeExecutor.Dispose();
-            StatesStorage.Dispose();
-
+            
             base.Die();
         }
 
@@ -59,7 +56,6 @@ namespace SymOntoClay.Core.Internal
         protected override void OnDisposed()
         {
             CodeExecutor.Dispose();
-            StatesStorage.Dispose();
             
             base.OnDisposed();
         }

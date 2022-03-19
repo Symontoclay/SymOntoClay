@@ -35,6 +35,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public LogicalStorage.LogicalStorage LogicalStorage { get; set; }
         public MethodsStorage.MethodsStorage MethodsStorage { get; set; }
         public ActionsStorage.ActionsStorage ActionsStorage { get; set; }
+        public StatesStorage.StatesStorage StatesStorage { get; set; }
         public TriggersStorage.TriggersStorage TriggersStorage { get; set; }
         public InheritanceStorage.InheritanceStorage InheritanceStorage { get; set; }
         public SynonymsStorage.SynonymsStorage SynonymsStorage { get; set; }
@@ -66,6 +67,7 @@ namespace SymOntoClay.Core.Internal.Storage
             LogicalStorage.Dispose();
             MethodsStorage.Dispose();
             ActionsStorage.Dispose();
+            StatesStorage.Dispose();
             TriggersStorage.Dispose();
             InheritanceStorage.Dispose();
             SynonymsStorage.Dispose();

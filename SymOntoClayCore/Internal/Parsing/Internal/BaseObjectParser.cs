@@ -73,6 +73,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case KindOfCodeEntity.Action:
                     return CreateAction();
 
+                case KindOfCodeEntity.State:
+                    return CreateState();
+
                 case KindOfCodeEntity.App:
                     return CreateApp();
 

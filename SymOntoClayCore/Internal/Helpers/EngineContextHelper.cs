@@ -28,7 +28,6 @@ using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.Core.Internal.StandardLibrary;
-using SymOntoClay.Core.Internal.States;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Threads;
 
@@ -52,7 +51,6 @@ namespace SymOntoClay.Core.Internal.Helpers
             
             context.LoaderFromSourceCode = new ActiveLoaderFromSourceCode(context);
             context.InstancesStorage = new InstancesStorageComponent(context);
-            context.StatesStorage = new StatesStorageComponent(context);
 
             return context;
         }
@@ -62,7 +60,6 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.CommonNamesStorage.LoadFromSourceCode();
             context.Storage.LoadFromSourceCode(context);
             context.StandardLibraryLoader.LoadFromSourceCode();
-            context.StatesStorage.LoadFromSourceCode();
             context.InstancesStorage.LoadFromSourceFiles();
             context.LoaderFromSourceCode.LoadFromSourceFiles();
         }

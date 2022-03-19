@@ -393,6 +393,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             return result;
         }
 
+        protected StateDef CreateState()
+        {
+            var result = new StateDef();
+            DefaultSettingsOfCodeEntityHelper.SetUpState(result, CurrentDefaultSetings);
+
+            FillUpCodeItem(result);
+
+            return result;
+        }
+
         protected NamedFunction CreateNamedFunctionAndSetAsCurrentCodeItem()
         {
             var result = CreateNamedFunction();

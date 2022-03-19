@@ -167,12 +167,6 @@ namespace TestSandbox.Helpers
             //_logger.Log($"After context.StandardLibraryLoader.LoadFromSourceCode();");
 #endif
 
-            context.StatesStorage.LoadFromSourceCode();
-
-#if DEBUG
-            //_logger.Log($"After context.StatesStorage.LoadFromSourceCode();");
-#endif
-
             context.InstancesStorage.LoadFromSourceFiles();
 
             result.EngineContext = context;

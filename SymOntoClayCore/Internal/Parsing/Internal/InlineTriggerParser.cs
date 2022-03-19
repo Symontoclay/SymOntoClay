@@ -69,9 +69,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");
             //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
+            //Log($"Result = {Result}");            
 #endif
 
             switch (_state)
@@ -105,6 +105,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 case KeyWordTokenKind.Init:
                                     _inlineTrigger.KindOfInlineTrigger = KindOfInlineTrigger.SystemEvent;
                                     _inlineTrigger.KindOfSystemEvent = KindOfSystemEventOfInlineTrigger.Init;
+                                    _state = State.GotCondition;
+                                    break;
+
+                                case KeyWordTokenKind.Enter:
+                                    _inlineTrigger.KindOfInlineTrigger = KindOfInlineTrigger.SystemEvent;
+                                    _inlineTrigger.KindOfSystemEvent = KindOfSystemEventOfInlineTrigger.Enter;
+                                    _state = State.GotCondition;
+                                    break;
+
+                                case KeyWordTokenKind.Leave:
+                                    _inlineTrigger.KindOfInlineTrigger = KindOfInlineTrigger.SystemEvent;
+                                    _inlineTrigger.KindOfSystemEvent = KindOfSystemEventOfInlineTrigger.Leave;
                                     _state = State.GotCondition;
                                     break;
 

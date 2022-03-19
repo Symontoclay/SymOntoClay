@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             : base(context, KindOfCodeEntity.Action)
         {
         }
-
+        
         private State _state = State.Init;
 
         private ActionDef _action;

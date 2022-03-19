@@ -29,6 +29,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public enum KindOfSystemEventOfInlineTrigger
     {
         Unknown,
-        Init
+        Init,
+        Enter,
+        Leave
     }
 }

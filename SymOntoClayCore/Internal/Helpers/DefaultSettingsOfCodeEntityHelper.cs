@@ -82,6 +82,13 @@ namespace SymOntoClay.Core.Internal.Helpers
             SetUpCodeItem(action, defaultSettings, context);
         }
 
+        public static void SetUpState(StateDef state, DefaultSettingsOfCodeEntity defaultSettings)
+        {
+            var context = new Dictionary<object, object>();
+
+            SetUpCodeItem(state, defaultSettings, context);
+        }
+
         public static void SetUpNamedFunction(NamedFunction namedFunction, DefaultSettingsOfCodeEntity defaultSettings)
         {
             var context = new Dictionary<object, object>();

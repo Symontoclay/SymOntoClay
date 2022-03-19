@@ -36,6 +36,7 @@ namespace SymOntoClay.Core
         ILogicalStorage LogicalStorage { get; }
         IMethodsStorage MethodsStorage { get; }
         IActionsStorage ActionsStorage { get; }
+        IStatesStorage StatesStorage { get; }
         ITriggersStorage TriggersStorage { get; }
         IInheritanceStorage InheritanceStorage { get; }
         ISynonymsStorage SynonymsStorage { get; }

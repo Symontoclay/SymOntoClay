@@ -119,6 +119,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsAction => false;
         public virtual ActionDef AsAction => null;
 
+        public virtual bool IsState => false;
+        public virtual StateDef AsState => null;
+
         public virtual bool IsOperator => false;
         public virtual Operator AsOperator => null;
 

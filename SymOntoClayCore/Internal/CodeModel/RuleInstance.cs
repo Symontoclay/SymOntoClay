@@ -273,12 +273,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return Clone(cloneContext);
         }
 
-        /// <inheritdoc/>
-        public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
-        {
-            return Clone(context);
-        }
-
         /// <summary>
         /// Clones the instance and returns cloned instance.
         /// </summary>

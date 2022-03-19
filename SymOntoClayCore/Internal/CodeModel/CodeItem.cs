@@ -33,7 +33,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public abstract class CodeItem: AnnotatedItem, IMemberAccess, IReadOnlyMemberAccess
     {
         public abstract KindOfCodeEntity Kind { get;}
-        public StrongIdentifierValue Name 
+        public StrongIdentifierValue Name
         { 
             get
             {
@@ -155,6 +155,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
+        {
+            return CloneCodeItem(context);
         }
 
         /// <summary>

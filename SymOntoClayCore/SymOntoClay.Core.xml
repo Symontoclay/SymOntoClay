@@ -522,9 +522,6 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionDef.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionDef.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionDef.Clone">
             <summary>
             Clones the instance and returns cloned instance.
@@ -785,9 +782,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.App.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.App.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.App.Clone">
@@ -1538,9 +1532,6 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Channel.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Channel.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Channel.Clone">
             <summary>
             Clones the instance and returns cloned instance.
@@ -1579,9 +1570,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Class.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Class.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Class.Clone">
@@ -1628,6 +1616,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeItem.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeItem.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeItem.CloneCodeItem">
@@ -1877,9 +1868,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Field.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Field.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Field.Clone">
@@ -2278,9 +2266,6 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InlineTrigger.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.InlineTrigger.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InlineTrigger.Clone">
             <summary>
             Clones the instance and returns cloned instance.
@@ -2313,9 +2298,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Instance.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Instance.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Instance.Clone">
@@ -2388,9 +2370,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariable.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariable.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariable.Clone">
@@ -2699,9 +2678,6 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.Clone">
             <summary>
             Clones the instance and returns cloned instance.
@@ -2849,9 +2825,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.Clone">
@@ -3063,9 +3036,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.Clone">
@@ -3311,9 +3281,6 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StateDef.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.StateDef.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StateDef.Clone">
             <summary>
             Clones the instance and returns cloned instance.
@@ -3531,9 +3498,6 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Var.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Var.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Var.Clone">
             <summary>
             Clones the instance and returns cloned instance.
@@ -3653,9 +3617,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.World.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.World.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.World.Clone">

@@ -36,6 +36,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             }
 
             throw new NotImplementedException();
-        }
+        }        
     }
 }

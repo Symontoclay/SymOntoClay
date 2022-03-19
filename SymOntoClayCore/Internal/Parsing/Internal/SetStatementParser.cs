@@ -92,8 +92,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void CreateAstSetDefaultStateStatement()
         {
-            throw new NotImplementedException();
-        }
+            var result = new AstSetDefaultStateStatement();
+
+            DefaultSettingsOfCodeEntityHelper.SetUpAnnotatedItem(result, CurrentDefaultSetings);
+
+            result.AppendAnnotations(_rawStatement);
+
+            result.StateName = _rawStatement.FirstName;
+
+#if DEBUG
+            Log($"result = {result}");
+#endif
+
+            Result = result;
+        }        
 
         private void CreateAstSetInheritanceStatement()
         {

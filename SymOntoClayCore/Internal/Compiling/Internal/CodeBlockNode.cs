@@ -61,7 +61,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         }
                         break;
 
-                    case KindOfAstStatement.UseInheritance:
+                    case KindOfAstStatement.SetInheritance:
                         {
                             var node = new SetInheritanceStatementNode(_context);
                             node.Run(statement as AstSetInheritanceStatement);

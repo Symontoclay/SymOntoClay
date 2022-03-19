@@ -30,7 +30,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
     {
         Unknown,
         Expression,
-        UseInheritance,
+        SetInheritance,
+        SetDefaultState,
+        SetState,
         ErrorStatement,
         TryStatement,
         CatchStatement,

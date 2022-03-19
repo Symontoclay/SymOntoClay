@@ -21,9 +21,19 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var parser = new SetStatementParser(_context);
             parser.Run();
 
+            var result = parser.Result;
+
 #if DEBUG
-            Log($"parser.Result = {parser.Result}");
+            Log($"result = {result}");
 #endif
+
+            var kindOfStatement = result;
+
+            switch (kindOfStatement)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfStatement), kindOfStatement, null);
+            }
 
             throw new NotImplementedException();
         }

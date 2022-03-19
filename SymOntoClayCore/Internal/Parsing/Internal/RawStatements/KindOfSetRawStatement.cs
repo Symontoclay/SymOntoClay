@@ -26,9 +26,11 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal.RawStatements
 {
-    public enum KindOfUseRawStatement
+    public enum KindOfSetRawStatement
     {
         Unknown,
-        UseInheritance
+        SetInheritance,
+        SetDefaultState,
+        SetState
     }
 }

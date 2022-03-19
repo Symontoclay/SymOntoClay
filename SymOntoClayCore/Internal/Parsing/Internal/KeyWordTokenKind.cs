@@ -75,6 +75,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         While,
         Continue,
         Repeat,
-        State
+        State,
+        As,
+        Default
     }
 }

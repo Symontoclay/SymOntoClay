@@ -43,7 +43,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             WaitForInheritanceRank,
             GotInheritanceRankValue,
             GotInheritanceRank,
-            GotFuzzyLogicNonNumericSequenceItem
+            GotFuzzyLogicNonNumericSequenceItem,
+            GotAs,
+            GotAsDefault,
+            GotAsDefaultState,
+            GotAsState
         }
 
         public SetStatementParser(InternalParserContext context)
@@ -54,13 +58,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private State _state = State.Init;
 
         public AstStatement Result { get; private set; }
-        private UseRawStatement _rawStatement;
+        private SetRawStatement _rawStatement;
         private FuzzyLogicNonNumericSequenceValue _fuzzyLogicNonNumericSequenceValue;
 
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            _rawStatement = new UseRawStatement();
+            _rawStatement = new SetRawStatement();
         }
 
         /// <inheritdoc/>
@@ -69,12 +73,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #if DEBUG
             //Log($"_rawStatement = {_rawStatement}");
 #endif
-            var kindOfUseRawStatement = _rawStatement.KindOfUseRawStatement;
+            var kindOfUseRawStatement = _rawStatement.KindOfSetRawStatement;
 
             switch(kindOfUseRawStatement)
             {
-                case KindOfUseRawStatement.UseInheritance:
-                    CreateAstUseInheritanceStatement();
+                case KindOfSetRawStatement.SetInheritance:
+                    CreateAstSetInheritanceStatement();
+                    break;
+
+                case KindOfSetRawStatement.SetDefaultState:
+                    CreateAstSetDefaultStateStatement();
                     break;
 
                 default:
@@ -82,7 +90,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             }
         }
 
-        private void CreateAstUseInheritanceStatement()
+        private void CreateAstSetDefaultStateStatement()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CreateAstSetInheritanceStatement()
         {
             var result = new AstSetInheritanceStatement();
 
@@ -111,9 +124,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-            //Log($"_rawStatement = {_rawStatement}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
+            Log($"_rawStatement = {_rawStatement}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -162,6 +175,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             {
                                 case KeyWordTokenKind.Is:
                                     _state = State.GotIs;
+                                    break;
+
+                                case KeyWordTokenKind.As:
+                                    _state = State.GotAs;
                                     break;
 
                                 default:
@@ -327,6 +344,69 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
+                case State.GotAs:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Default:
+                                    _state = State.GotAsDefault;
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotAsDefault:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                            switch (_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.State:
+                                    _rawStatement.KindOfSetRawStatement = KindOfSetRawStatement.SetDefaultState;
+                                    _state = State.GotAsDefaultState;
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotAsDefaultState:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Semicolon:
+                            Exit();
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotAsState:
+                    switch (_currToken.TokenKind)
+                    {
+
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
@@ -335,7 +415,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private void ProcessGotUseInheritanceSecondName()
         {
             _rawStatement.SecondName = ParseName(_currToken.Content);
-            _rawStatement.KindOfUseRawStatement = KindOfUseRawStatement.UseInheritance;
+            _rawStatement.KindOfSetRawStatement = KindOfSetRawStatement.SetInheritance;
             _state = State.GotSecondName;
         }
     }

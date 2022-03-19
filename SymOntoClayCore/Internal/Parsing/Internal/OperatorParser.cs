@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             WaitForAction,
             GotAction
         }
-
+        
         public OperatorParser(InternalParserContext context)
             : base(context)
         {

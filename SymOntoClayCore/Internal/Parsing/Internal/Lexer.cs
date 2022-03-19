@@ -1028,6 +1028,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.State;
                             break;
                         }
+
+                        if (string.Compare(content, "as", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.As;
+                            break;
+                        }
+
+                        if (string.Compare(content, "default", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Default;
+                            break;
+                        }
+
+                        
                     }
                     break;
 

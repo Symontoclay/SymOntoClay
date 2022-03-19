@@ -1,6 +1,6 @@
 ﻿app PeaceKeeper
 {
-    //set Idling as default state;
+    set Idling as default state;
 
     on Init =>
     {

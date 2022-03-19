@@ -29,9 +29,9 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal.RawStatements
 {
-    public class UseRawStatement: AnnotatedItem
+    public class SetRawStatement: AnnotatedItem
     {
-        public KindOfUseRawStatement KindOfUseRawStatement { get; set; } = KindOfUseRawStatement.Unknown;
+        public KindOfSetRawStatement KindOfSetRawStatement { get; set; } = KindOfSetRawStatement.Unknown;
         public StrongIdentifierValue FirstName { get; set; }
         public StrongIdentifierValue SecondName { get; set; }
         public Value Rank { get; set; }
@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.RawStatements
         /// Clones the instance and returns cloned instance.
         /// </summary>
         /// <returns>Cloned instance.</returns>
-        public UseRawStatement Clone()
+        public SetRawStatement Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
@@ -58,17 +58,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.RawStatements
         /// </summary>
         /// <param name="context">Special context for providing references continuity.</param>
         /// <returns>Cloned instance.</returns>
-        public UseRawStatement Clone(Dictionary<object, object> context)
+        public SetRawStatement Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {
-                return (UseRawStatement)context[this];
+                return (SetRawStatement)context[this];
             }
 
-            var result = new UseRawStatement();
+            var result = new SetRawStatement();
             context[this] = result;
 
-            result.KindOfUseRawStatement = KindOfUseRawStatement;
+            result.KindOfSetRawStatement = KindOfSetRawStatement;
             result.FirstName = FirstName?.Clone(context);
             result.SecondName = SecondName?.Clone(context);
             result.Rank = Rank?.CloneValue(context);
@@ -95,7 +95,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.RawStatements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(KindOfUseRawStatement)} = {KindOfUseRawStatement}");
+            sb.AppendLine($"{spaces}{nameof(KindOfSetRawStatement)} = {KindOfSetRawStatement}");
 
             sb.PrintObjProp(n, nameof(FirstName), FirstName);
             sb.PrintObjProp(n, nameof(SecondName), SecondName);
@@ -113,7 +113,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.RawStatements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(KindOfUseRawStatement)} = {KindOfUseRawStatement}");
+            sb.AppendLine($"{spaces}{nameof(KindOfSetRawStatement)} = {KindOfSetRawStatement}");
 
             sb.PrintShortObjProp(n, nameof(FirstName), FirstName);
             sb.PrintShortObjProp(n, nameof(SecondName), SecondName);
@@ -131,7 +131,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.RawStatements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(KindOfUseRawStatement)} = {KindOfUseRawStatement}");
+            sb.AppendLine($"{spaces}{nameof(KindOfSetRawStatement)} = {KindOfSetRawStatement}");
 
             sb.PrintBriefObjProp(n, nameof(FirstName), FirstName);
             sb.PrintBriefObjProp(n, nameof(SecondName), SecondName);

@@ -4978,32 +4978,32 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.PrimaryRulePartParser.OnEnter">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.UseRawStatement.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.SetRawStatement.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.UseRawStatement.Clone">
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.SetRawStatement.Clone">
             <summary>
             Clones the instance and returns cloned instance.
             </summary>
             <returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.UseRawStatement.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.SetRawStatement.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
             Clones the instance using special context and returns cloned instance.
             </summary>
             <param name="context">Special context for providing references continuity.</param>
             <returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.UseRawStatement.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.SetRawStatement.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.UseRawStatement.PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.SetRawStatement.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.UseRawStatement.PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.SetRawStatement.PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.UseRawStatement.PropertiesToBriefString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.SetRawStatement.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RepeatStatementParser.OnEnter">
@@ -5037,6 +5037,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.SecondaryRulePartParser.OnEnter">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.SetDirectiveParser.OnRun">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.SetStatementParser.OnEnter">

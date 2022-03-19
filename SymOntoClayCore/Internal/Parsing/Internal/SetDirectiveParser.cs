@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,6 +10,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         public SetDirectiveParser(InternalParserContext context)
             : base(context)
         {
+        }
+
+        public List<CodeItemDirective> Result { get; private set; }
+
+        /// <inheritdoc/>
+        protected override void OnEnter()
+        {
+            Result = new List<CodeItemDirective>();
         }
 
         /// <inheritdoc/>

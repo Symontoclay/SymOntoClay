@@ -4,10 +4,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public enum KindOfCodeItemDirective
+    public class SetDefaultStateDirective: CodeItemDirective
     {
-        Unknown,
-        SetDefaultState,
-        SetState
     }
 }

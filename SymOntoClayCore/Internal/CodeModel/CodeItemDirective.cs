@@ -6,8 +6,14 @@ using System.Text;
 namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class CodeItemDirective: AnnotatedItem
-    {
+    {        
         public abstract KindOfCodeItemDirective KindOfCodeItemDirective { get; }
+
+        /// <inheritdoc/>
+        public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
+        {
+            return CloneCodeItemDirective(context);
+        }
 
         /// <summary>
         /// Clones the instance and returns cloned instance.

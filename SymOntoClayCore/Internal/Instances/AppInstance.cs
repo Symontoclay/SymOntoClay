@@ -49,7 +49,7 @@ namespace SymOntoClay.Core.Internal.Instances
 #endif
 
 #if DEBUG
-            Log($"_codeItem = {_codeItem}");
+            //Log($"_codeItem = {_codeItem}");
 #endif
 
             foreach (var directive in _codeItem.Directives)

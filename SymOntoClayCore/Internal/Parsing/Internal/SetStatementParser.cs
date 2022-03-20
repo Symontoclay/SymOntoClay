@@ -101,7 +101,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             result.StateName = _rawStatement.FirstName;
 
 #if DEBUG
-            Log($"result = {result}");
+            //Log($"result = {result}");
 #endif
 
             Result = result;
@@ -136,9 +136,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_currToken = {_currToken}");
-            Log($"_rawStatement = {_rawStatement}");
+            //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
+            //Log($"_rawStatement = {_rawStatement}");
             //Log($"Result = {Result}");            
 #endif
 

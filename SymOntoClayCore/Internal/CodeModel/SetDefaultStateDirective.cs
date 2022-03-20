@@ -11,7 +11,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         public override bool IsSetDefaultStateDirective => true;
-
+        
         /// <inheritdoc/>
         public override SetDefaultStateDirective AsSetDefaultStateDirective => this;
 

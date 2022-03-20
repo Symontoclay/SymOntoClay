@@ -61,6 +61,20 @@ namespace SymOntoClay.Core.Internal.Instances
 #if DEBUG
                 Log($"directive = {directive}");
 #endif
+
+                var kindOfDirective = directive.KindOfCodeItemDirective;
+
+                switch (kindOfDirective)
+                {
+                    case KindOfCodeItemDirective.SetDefaultState:
+                        {
+                            throw new NotImplementedException();
+                        }
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfDirective), kindOfDirective, null);
+                }
             }
 
 #if DEBUG

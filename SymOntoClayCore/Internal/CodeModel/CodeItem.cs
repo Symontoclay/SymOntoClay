@@ -113,6 +113,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         private StrongIdentifierValue _holder;
         private TypeOfAccess _typeOfAccess = TypeOfAccess.Local;
 
+        public List<CodeItemDirective> Directives { get; private set; } = new List<CodeItemDirective>();
+
         public virtual bool IsRuleInstance => false;
         public virtual RuleInstance AsRuleInstance => null;
 
@@ -200,6 +202,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 Holder = source.Holder;
             }
 
+            Directives = source.Directives?.Select(p => p.CloneCodeItemDirective(cloneContext)).ToList();
+
             AppendAnnotations(source, cloneContext);
         }
 
@@ -252,6 +256,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintObjProp(n, nameof(Holder), Holder);
 
+            sb.PrintObjListProp(n, nameof(Directives), Directives);
+
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -276,6 +282,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintShortObjProp(n, nameof(Holder), Holder);
 
+            sb.PrintShortObjListProp(n, nameof(Directives), Directives);
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -291,6 +299,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
 
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
+
+            sb.PrintBriefObjListProp(n, nameof(Directives), Directives);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

@@ -209,7 +209,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 Log($"parser.Result = {parser.Result.WriteListToString()}");
 #endif
 
-                                throw new NotImplementedException();
+                                Result.Directives.AddRange(parser.Result);
                             }
                             break;
 

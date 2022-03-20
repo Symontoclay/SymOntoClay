@@ -9,6 +9,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {        
         public abstract KindOfCodeItemDirective KindOfCodeItemDirective { get; }
 
+        public virtual bool IsSetDefaultStateDirective => false;
+        public virtual SetDefaultStateDirective AsSetDefaultStateDirective => null;
+
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
         {

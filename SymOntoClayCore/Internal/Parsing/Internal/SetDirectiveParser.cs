@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -36,15 +37,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Log($"result = {result}");
 #endif
 
-            var kindOfStatement = result;
+            var kindOfStatement = result.Kind;
 
             switch (kindOfStatement)
             {
+                case KindOfAstStatement.SetDefaultState:
+                    {
+                        var item = new SetDefaultStateDirective();
+                        item.StateName = (result as AstSetDefaultStateStatement).StateName;
+                        Result.Add(item);
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfStatement), kindOfStatement, null);
             }
 
-            throw new NotImplementedException();
+            Exit();
         }        
     }
 }

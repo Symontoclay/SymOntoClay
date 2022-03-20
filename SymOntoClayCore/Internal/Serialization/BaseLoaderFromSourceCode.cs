@@ -425,14 +425,14 @@ namespace SymOntoClay.Core.Internal.Serialization
                     throw new ArgumentOutOfRangeException(nameof(kindOfEntity), kindOfEntity, null);
             }
 
-            ApplyCodeDirectives(codeItem);
+            CheckCodeDirectives(codeItem);
 
 #if DEBUG
             //Log("End");
 #endif
         }
 
-        private void ApplyCodeDirectives(CodeItem codeItem)
+        private void CheckCodeDirectives(CodeItem codeItem)
         {
             var directives = codeItem.Directives;
 
@@ -448,7 +448,9 @@ namespace SymOntoClay.Core.Internal.Serialization
                         switch(kindOfDirective)
                         {
                             case KindOfCodeItemDirective.SetDefaultState:
-                                ApplySetDefaultStateDirective(directive.AsSetDefaultStateDirective);
+                                break;
+
+                            case KindOfCodeItemDirective.SetState:
                                 break;
 
                             default:
@@ -476,15 +478,6 @@ namespace SymOntoClay.Core.Internal.Serialization
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfEntity), kindOfEntity, null);
             }
-        }
-
-        private void ApplySetDefaultStateDirective(SetDefaultStateDirective directive)
-        {
-#if DEBUG
-            Log($"directive = {directive}");
-#endif
-
-            throw new NotImplementedException();
         }
     }
 }

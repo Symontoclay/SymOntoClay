@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.Instances
     public class ActionInstance : BaseInstance, IExecutable
     {
         public ActionInstance(ActionPtr actionPtr, IEngineContext context, IStorage parentStorage)
-            : base(actionPtr.Action.Name, context, parentStorage)
+            : base(actionPtr.Action, context, parentStorage)
         {
             _action = actionPtr.Action;
             _operator = actionPtr.Operator;

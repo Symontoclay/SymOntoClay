@@ -45,8 +45,8 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly object _registryLockObj = new object();
         private readonly object _processLockObj = new object();
 
-        private Dictionary<StrongIdentifierValue, InstanceInfo> _namesDict;
-        private InstanceInfo _rootInstanceInfo;
+        private Dictionary<StrongIdentifierValue, AppInstance> _namesDict;
+        private AppInstance _rootInstanceInfo;
 
         private List<IProcessInfo> _processesInfoList;
         private Dictionary<int, IProcessInfo> _processesInfoByDevicesDict = new Dictionary<int, IProcessInfo>();
@@ -58,7 +58,7 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log("Begin");
 #endif
 
-            _namesDict = new Dictionary<StrongIdentifierValue, InstanceInfo>();
+            _namesDict = new Dictionary<StrongIdentifierValue, AppInstance>();
             _rootInstanceInfo = null;
 
             _processesInfoList = new List<IProcessInfo>();
@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log($"NEXT mainEntity = {mainEntity}");
 #endif
 
-            InstanceInfo instanceInfo;
+            AppInstance instanceInfo;
 
             lock (_registryLockObj)
             {
@@ -102,7 +102,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     throw new NotImplementedException();
                 }
 
-                instanceInfo = new InstanceInfo(name: mainEntity.Name, context: _context, parentStorage: globalStorage);
+                instanceInfo = new AppInstance(codeItem: mainEntity, context: _context, parentStorage: globalStorage);
                 _rootInstanceInfo = instanceInfo;
                 _namesDict[mainEntityName] = instanceInfo;
 

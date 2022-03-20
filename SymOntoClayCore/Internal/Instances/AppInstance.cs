@@ -34,10 +34,10 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class InstanceInfo : BaseInstance
+    public class AppInstance : BaseInstance
     {
-        public InstanceInfo(StrongIdentifierValue name, IEngineContext context, IStorage parentStorage)
-            : base(name, context, parentStorage)
+        public AppInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage)
+            : base(codeItem, context, parentStorage)
         {
         }
     }

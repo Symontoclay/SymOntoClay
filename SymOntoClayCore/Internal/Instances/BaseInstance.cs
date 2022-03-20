@@ -34,10 +34,12 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public abstract class BaseInstance : BaseComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        protected BaseInstance(StrongIdentifierValue name, IEngineContext context, IStorage parentStorage)
+        protected BaseInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage)
             : base(context.Logger)
         {
-            Name = name;
+            _codeItem = codeItem;
+
+            Name = codeItem.Name;
             _context = context;
 
             _executionCoordinator = new ExecutionCoordinator();
@@ -55,6 +57,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _triggersResolver = new TriggersResolver(context);
         }
+
+        protected readonly CodeItem _codeItem;
 
         public StrongIdentifierValue Name { get; private set; }
 

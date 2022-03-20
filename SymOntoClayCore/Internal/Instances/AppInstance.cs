@@ -48,11 +48,15 @@ namespace SymOntoClay.Core.Internal.Instances
             Log("Begin");
 #endif
 
+            var codeItemDirectivesResolver = _context.DataResolversFactory.GetCodeItemDirectivesResolver();
+
+            var directivesList = codeItemDirectivesResolver.Resolve(_localCodeExecutionContext);
+
 #if DEBUG
             //Log($"_codeItem = {_codeItem}");
 #endif
 
-            foreach (var directive in _codeItem.Directives)
+            foreach (var directive in directivesList)
             {
 #if DEBUG
                 Log($"directive = {directive}");

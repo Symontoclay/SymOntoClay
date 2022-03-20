@@ -62,9 +62,9 @@ namespace SymOntoClay.Core.Internal.Instances
 
         public StrongIdentifierValue Name { get; private set; }
 
-        private readonly IEngineContext _context;
+        protected readonly IEngineContext _context;
         private readonly IStorage _storage;
-        private readonly LocalCodeExecutionContext _localCodeExecutionContext;
+        protected readonly LocalCodeExecutionContext _localCodeExecutionContext;
         private readonly TriggersResolver _triggersResolver;
         private InstanceState _instanceState = InstanceState.Created;
         private List<LogicConditionalTriggerInstanceInfo> _logicConditionalTriggersList = new List<LogicConditionalTriggerInstanceInfo>();

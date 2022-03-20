@@ -39,5 +39,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         LogicalSearchResolver GetLogicalSearchResolver();
         FuzzyLogicResolver GetFuzzyLogicResolver();
         MethodsResolver GetMethodsResolver();
+        CodeItemDirectivesResolver GetCodeItemDirectivesResolver();
     }
 }

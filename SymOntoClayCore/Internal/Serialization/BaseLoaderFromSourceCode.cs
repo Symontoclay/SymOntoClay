@@ -425,9 +425,46 @@ namespace SymOntoClay.Core.Internal.Serialization
                     throw new ArgumentOutOfRangeException(nameof(kindOfEntity), kindOfEntity, null);
             }
 
+            ApplyCodeDirectives(codeItem);
+
 #if DEBUG
             //Log("End");
 #endif
+        }
+
+        private void ApplyCodeDirectives(CodeItem codeItem)
+        {
+            var directives = codeItem.Directives;
+
+            var kindOfEntity = codeItem.Kind;
+
+            switch(kindOfEntity)
+            {
+                case KindOfCodeEntity.App:
+                    {
+                        throw new NotImplementedException();
+                    }
+                    break;
+
+                case KindOfCodeEntity.World:
+                case KindOfCodeEntity.Class:
+                case KindOfCodeEntity.InlineTrigger:
+                case KindOfCodeEntity.RuleOrFact:
+                case KindOfCodeEntity.LinguisticVariable:
+                case KindOfCodeEntity.Function:
+                case KindOfCodeEntity.Action:
+                case KindOfCodeEntity.State:
+                case KindOfCodeEntity.Operator:
+                case KindOfCodeEntity.Field:
+                    if(directives.Any())
+                    {
+                        throw new Exception($"Directives does not allowed for {kindOfEntity}.");
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfEntity), kindOfEntity, null);
+            }
         }
     }
 }

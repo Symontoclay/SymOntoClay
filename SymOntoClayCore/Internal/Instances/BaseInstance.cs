@@ -63,7 +63,7 @@ namespace SymOntoClay.Core.Internal.Instances
         public StrongIdentifierValue Name { get; private set; }
 
         protected readonly IEngineContext _context;
-        private readonly IStorage _storage;
+        protected readonly IStorage _storage;
         protected readonly LocalCodeExecutionContext _localCodeExecutionContext;
         private readonly TriggersResolver _triggersResolver;
         private InstanceState _instanceState = InstanceState.Created;
@@ -79,7 +79,52 @@ namespace SymOntoClay.Core.Internal.Instances
 
             ApplyCodeDirectives();
 
-            var targetSystemEventsTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger.Init, Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            RunInitialTriggers();
+
+            RunExplicitStates();
+
+#if DEBUG
+            //Log($"Name = {Name}");
+#endif
+
+            var targetLogicConditionalTriggersList = _triggersResolver.ResolveLogicConditionalTriggersList(Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+
+#if DEBUG
+
+            //Log($"targetLogicConditionalTriggersList.Count = {targetLogicConditionalTriggersList.Count}");
+            //Log($"targetLogicConditionalTriggersList = {targetLogicConditionalTriggersList.WriteListToString()}");
+#endif
+
+            if (targetLogicConditionalTriggersList.Any())
+            {
+                foreach (var targetTrigger in targetLogicConditionalTriggersList)
+                {
+#if DEBUG
+                    //Log($"targetTrigger = {targetTrigger}");
+#endif
+
+                    var triggerInstanceInfo = new LogicConditionalTriggerInstanceInfo(targetTrigger.ResultItem, this, _context, _storage);
+                    _logicConditionalTriggersList.Add(triggerInstanceInfo);
+                }
+            }
+
+            _instanceState = InstanceState.Initialized;
+
+            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
+        }
+
+        protected virtual void ApplyCodeDirectives()
+        {
+        }
+
+        protected virtual void RunInitialTriggers()
+        {
+            RunInitialTriggers(KindOfSystemEventOfInlineTrigger.Init);
+        }
+
+        protected void RunInitialTriggers(KindOfSystemEventOfInlineTrigger kindOfSystemEvent)
+        {
+            var targetSystemEventsTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(kindOfSystemEvent, Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
             //Log($"targetSystemEventsTriggersList = {targetSystemEventsTriggersList.WriteListToString()}");
@@ -118,38 +163,9 @@ namespace SymOntoClay.Core.Internal.Instances
                 //Log($"taskValue = {taskValue}");
 #endif
             }
-
-#if DEBUG
-            //Log($"Name = {Name}");
-#endif
-
-            var targetLogicConditionalTriggersList = _triggersResolver.ResolveLogicConditionalTriggersList(Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
-
-#if DEBUG
-
-            //Log($"targetLogicConditionalTriggersList.Count = {targetLogicConditionalTriggersList.Count}");
-            //Log($"targetLogicConditionalTriggersList = {targetLogicConditionalTriggersList.WriteListToString()}");
-#endif
-
-            if (targetLogicConditionalTriggersList.Any())
-            {
-                foreach (var targetTrigger in targetLogicConditionalTriggersList)
-                {
-#if DEBUG
-                    //Log($"targetTrigger = {targetTrigger}");
-#endif
-
-                    var triggerInstanceInfo = new LogicConditionalTriggerInstanceInfo(targetTrigger.ResultItem, this, _context, _storage);
-                    _logicConditionalTriggersList.Add(triggerInstanceInfo);
-                }
-            }
-
-            _instanceState = InstanceState.Initialized;
-
-            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
         }
 
-        protected virtual void ApplyCodeDirectives()
+        protected virtual void RunExplicitStates()
         {
         }
 

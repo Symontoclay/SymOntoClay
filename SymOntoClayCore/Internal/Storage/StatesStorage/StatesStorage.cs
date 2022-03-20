@@ -28,6 +28,7 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
         public IStorage Storage => _realStorageContext.Storage;
 
         private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<StateDef>>> _statesDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<StateDef>>>();
+        private StrongIdentifierValue _defaultStateName;
 
         /// <inheritdoc/>
         public void Append(StateDef state)
@@ -70,6 +71,19 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
                 {
                     dict[name] = new List<StateDef> { state };
                 }
+            }
+        }
+
+        /// <inheritdoc/>
+        public void SetDefaultStateName(StrongIdentifierValue name)
+        {
+            lock (_lockObj)
+            {
+#if DEBUG
+                //Log($"name = {name}");
+#endif
+
+                _defaultStateName = name;
             }
         }
     }

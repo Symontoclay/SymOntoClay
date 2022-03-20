@@ -8,5 +8,6 @@ namespace SymOntoClay.Core
     public interface IStatesStorage : ISpecificStorage
     {
         void Append(StateDef state);
+        void SetDefaultStateName(StrongIdentifierValue name);
     }
 }

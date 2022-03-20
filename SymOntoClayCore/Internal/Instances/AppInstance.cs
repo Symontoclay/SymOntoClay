@@ -68,7 +68,9 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     case KindOfCodeItemDirective.SetDefaultState:
                         {
-                            throw new NotImplementedException();
+                            var directiveItem = directive.AsSetDefaultStateDirective;
+
+                            _storage.StatesStorage.SetDefaultStateName(directiveItem.StateName);
                         }
                         break;
 
@@ -80,6 +82,16 @@ namespace SymOntoClay.Core.Internal.Instances
 #if DEBUG
             Log("End");
 #endif
+        }
+
+        /// <inheritdoc/>
+        protected override void RunExplicitStates()
+        {
+#if DEBUG
+            Log("Begin");
+#endif
+
+            throw new NotImplementedException();
         }
     }
 }

@@ -4507,6 +4507,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.ApplyCodeDirectives">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.RunExplicitStates">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.OnDisposed">
             <inheritdoc/>
         </member>
@@ -5891,6 +5894,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StatesStorage.StatesStorage.Append(SymOntoClay.Core.Internal.CodeModel.StateDef)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStorage.StatesStorage.SetDefaultStateName(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.StorageComponent.GlobalStorage">

@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _localCodeExecutionContext = new LocalCodeExecutionContext();
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
-            _storage = new LocalStorage(localStorageSettings);
+            _storage = storageFactory.CreateStorage(localStorageSettings);
             _localCodeExecutionContext.Storage = _storage;
             _localCodeExecutionContext.Holder = Name;
 

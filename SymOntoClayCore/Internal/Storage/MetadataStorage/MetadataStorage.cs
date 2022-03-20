@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.MetadataStorage
@@ -104,6 +105,31 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStorage
             get
             {
                 return _mainCodeEntity;
+            }
+        }
+
+        /// <inheritdoc/>
+        public CodeItem GetByName(StrongIdentifierValue name)
+        {
+            lock (_lockObj)
+            {
+#if DEBUG
+                //Log($"name = {name}");
+#endif
+
+                if (_codeEntitiesDict.ContainsKey(name))
+                {
+                    var targetList = _codeEntitiesDict[name];
+
+                    if(targetList.Count == 1)
+                    {
+                        return targetList.Single();
+                    }
+
+                    throw new NotImplementedException();
+                }
+
+                return null;
             }
         }
 

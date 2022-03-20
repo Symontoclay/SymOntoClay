@@ -31,5 +31,6 @@ namespace SymOntoClay.Core.Internal
     {
         void Append(CodeItem codeItem);
         CodeItem MainCodeEntity { get; }
+        CodeItem GetByName(StrongIdentifierValue name);
     }
 }

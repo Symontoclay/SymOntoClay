@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public abstract class BaseInstance : BaseComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        protected BaseInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage)
+        protected BaseInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, IStorageFactory storageFactory)
             : base(context.Logger)
         {
             _codeItem = codeItem;

@@ -5467,6 +5467,9 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStorage.ActionsStorage.OnDisposed">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ActionStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.ChannelsStorage.ChannelsStorage.Kind">
             <inheritdoc/>
         </member>
@@ -5741,6 +5744,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.MethodsStorage.MethodsStorage.OnDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ObjectStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.OperatorsStorage.OperatorsStorage.Kind">

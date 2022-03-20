@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Instances
     public class AppInstance : BaseInstance
     {
         public AppInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage)
-            : base(codeItem, context, parentStorage)
+            : base(codeItem, context, parentStorage, new ObjectStorageFactory())
         {
         }
     }

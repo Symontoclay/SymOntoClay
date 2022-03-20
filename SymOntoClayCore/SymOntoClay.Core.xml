@@ -4492,6 +4492,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.ApplyCodeDirectives">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.OnDisposed">
             <inheritdoc/>
         </member>

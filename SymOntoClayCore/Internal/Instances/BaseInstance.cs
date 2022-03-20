@@ -77,6 +77,8 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             _instanceState = InstanceState.Initializing;
 
+            ApplyCodeDirectives();
+
             var targetSystemEventsTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger.Init, Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
@@ -145,6 +147,10 @@ namespace SymOntoClay.Core.Internal.Instances
             _instanceState = InstanceState.Initialized;
 
             _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
+        }
+
+        protected virtual void ApplyCodeDirectives()
+        {
         }
 
         private void _executionCoordinator_OnFinished()

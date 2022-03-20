@@ -40,5 +40,28 @@ namespace SymOntoClay.Core.Internal.Instances
             : base(codeItem, context, parentStorage, new ObjectStorageFactory())
         {
         }
+
+        /// <inheritdoc/>
+        protected override void ApplyCodeDirectives()
+        {
+#if DEBUG
+            Log("Begin");
+#endif
+
+#if DEBUG
+            Log($"_codeItem = {_codeItem}");
+#endif
+
+            foreach (var directive in _codeItem.Directives)
+            {
+#if DEBUG
+                Log($"directive = {directive}");
+#endif
+            }
+
+#if DEBUG
+            Log("End");
+#endif
+        }
     }
 }

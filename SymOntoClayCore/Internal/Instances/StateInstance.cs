@@ -12,5 +12,11 @@ namespace SymOntoClay.Core.Internal.Instances
             : base(codeItem, context, parentStorage, new StateStorageFactory())
         {
         }
+
+        /// <inheritdoc/>
+        protected override void RunInitialTriggers()
+        {
+            RunInitialTriggers(KindOfSystemEventOfInlineTrigger.Enter);
+        }
     }
 }

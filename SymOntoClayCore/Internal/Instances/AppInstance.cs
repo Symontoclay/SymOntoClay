@@ -116,17 +116,35 @@ namespace SymOntoClay.Core.Internal.Instances
 #endif
 
             ActivateState(state);
+
+#if DEBUG
+            Log("End");
+#endif
         }
+
+        private Dictionary<StrongIdentifierValue, StateInstance> _activeStatesDict = new Dictionary<StrongIdentifierValue, StateInstance>();
+
+        private readonly object _statesLockObj = new object();
 
         public void ActivateState(StateDef state)
         {
+            lock(_statesLockObj)
+            {
 #if DEBUG
-            Log($"state = {state}");
+                Log($"state = {state}");
 #endif
 
-            var stateInstance = new StateInstance(state, _context, _storage);
+                if (_activeStatesDict.ContainsKey(state.Name))
+                {
+                    return;
+                }
 
-            throw new NotImplementedException();
+                var stateInstance = new StateInstance(state, _context, _storage);
+
+                _activeStatesDict[state.Name] = stateInstance;
+
+                stateInstance.Init();
+            }
         }
     }
 }

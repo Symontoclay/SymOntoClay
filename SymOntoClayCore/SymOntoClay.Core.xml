@@ -4759,6 +4759,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.RunInitialTriggers">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.MainStorageContext.Id">
             <summary>
             Gets or sets unique Id.
@@ -5987,6 +5990,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StatesStorage.StatesStorage.SetDefaultStateName(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StateStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.StorageComponent.GlobalStorage">

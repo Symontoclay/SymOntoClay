@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.Instances
         protected override void ApplyCodeDirectives()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             var codeItemDirectivesResolver = _context.DataResolversFactory.GetCodeItemDirectivesResolver();
@@ -61,7 +61,7 @@ namespace SymOntoClay.Core.Internal.Instances
             foreach (var directive in directivesList)
             {
 #if DEBUG
-                Log($"directive = {directive}");
+                //Log($"directive = {directive}");
 #endif
 
                 var kindOfDirective = directive.KindOfCodeItemDirective;
@@ -87,7 +87,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
@@ -95,11 +95,11 @@ namespace SymOntoClay.Core.Internal.Instances
         protected override void RunExplicitStates()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
 #if DEBUG
-            Log($"_stateNameForAutomaticStart = {_stateNameForAutomaticStart}");
+            //Log($"_stateNameForAutomaticStart = {_stateNameForAutomaticStart}");
 #endif
 
             if(_stateNameForAutomaticStart == null)
@@ -118,7 +118,7 @@ namespace SymOntoClay.Core.Internal.Instances
             ActivateState(state);
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
@@ -131,7 +131,7 @@ namespace SymOntoClay.Core.Internal.Instances
             lock(_statesLockObj)
             {
 #if DEBUG
-                Log($"state = {state}");
+                //Log($"state = {state}");
 #endif
 
                 if (_activeStatesDict.ContainsKey(state.Name))

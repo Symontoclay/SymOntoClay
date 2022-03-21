@@ -72,7 +72,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return null;
             }
 
-            throw new NotImplementedException();
+            if (filteredList.Count == 1)
+            {
+                return filteredList.Single().ResultItem;
+            }
+
+            return OrderAndDistinctByInheritance(filteredList, options).FirstOrDefault()?.ResultItem;
         }
 
         private List<WeightedInheritanceResultItemWithStorageInfo<StateDef>> GetRawStatesList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)

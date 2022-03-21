@@ -112,8 +112,19 @@ namespace SymOntoClay.Core.Internal.Instances
             var state = statesResolver.Resolve(_stateNameForAutomaticStart, _localCodeExecutionContext);
 
 #if DEBUG
+            //Log($"state = {state}");
+#endif
+
+            ActivateState(state);
+        }
+
+        public void ActivateState(StateDef state)
+        {
+#if DEBUG
             Log($"state = {state}");
 #endif
+
+            var stateInstance = new StateInstance(state, _context, _storage);
 
             throw new NotImplementedException();
         }

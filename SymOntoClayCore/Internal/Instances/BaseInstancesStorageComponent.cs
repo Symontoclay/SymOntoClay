@@ -125,6 +125,12 @@ namespace SymOntoClay.Core.Internal.Instances
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
+        public virtual void ActivateState(StateDef state)
+        {
+            throw new NotImplementedException();
+        }
+
 #if DEBUG
         /// <inheritdoc/>
         public virtual void PrintProcessesList()

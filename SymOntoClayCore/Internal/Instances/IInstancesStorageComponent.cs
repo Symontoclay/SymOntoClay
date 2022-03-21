@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,6 +32,8 @@ namespace SymOntoClay.Core.Internal.Instances
         void ActivateMainEntity();
         void AppendProcessInfo(IProcessInfo processInfo);
         void AppendAndTryStartProcessInfo(IProcessInfo processInfo);
+
+        void ActivateState(StateDef state);
 
 #if DEBUG
         void PrintProcessesList();

@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private List<IProcessInfo> _processesInfoList;
         private Dictionary<int, IProcessInfo> _processesInfoByDevicesDict = new Dictionary<int, IProcessInfo>();
-
+        
         /// <inheritdoc/>
         public override void LoadFromSourceFiles()
         {
@@ -113,6 +113,12 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log($"instanceInfo = {instanceInfo}");
 #endif
             instanceInfo.Init();
+        }
+
+        /// <inheritdoc/>
+        public override void ActivateState(StateDef state)
+        {
+            _rootInstanceInfo.ActivateState(state);
         }
 
         /// <inheritdoc/>

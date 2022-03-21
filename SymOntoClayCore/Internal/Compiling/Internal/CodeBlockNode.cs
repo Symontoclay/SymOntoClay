@@ -46,7 +46,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             foreach (var statement in statements)
             {
 #if DEBUG
-                //Log($"statement = {statement}");
+                Log($"statement = {statement}");
 #endif
 
                 var kind = statement.Kind;
@@ -145,6 +145,14 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         {
                             var node = new AstRepeatStatementNode(_context);
                             node.Run(statement as AstRepeatStatement);
+                            AddCommands(node.Result);
+                        }
+                        break;
+
+                    case KindOfAstStatement.SetState:
+                        {
+                            var node = new AstSetStateStatementNode(_context);
+                            node.Run(statement as AstSetStateStatement);
                             AddCommands(node.Result);
                         }
                         break;

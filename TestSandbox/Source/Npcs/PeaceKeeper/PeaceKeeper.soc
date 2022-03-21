@@ -24,6 +24,9 @@ state Patrolling
     on Enter
     {
         'Begin Patrolling Enter' >> @>log;
+
+        set Idling as state;
+
         'End Patrolling Enter' >> @>log;
     }
 }

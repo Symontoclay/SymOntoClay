@@ -201,7 +201,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 if (!CheckReturnedInfo())
@@ -662,6 +662,29 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             //Log("End case OperationCode.Return");
 #endif
+                        }
+                        break;
+
+                    case OperationCode.SetState:
+                        {
+                            var currentValue = _currentCodeFrame.ValuesStack.Pop();
+
+#if DEBUG
+                            Log($"currentValue = {currentValue}");
+#endif
+
+                            if(!currentValue.IsStrongIdentifierValue)
+                            {
+                                throw new Exception($"Unexpected value '{currentValue.ToSystemString()}'.");
+                            }
+
+                            var stateName = currentValue.AsStrongIdentifierValue;
+
+#if DEBUG
+                            Log($"stateName = {stateName}");
+#endif
+
+                            throw new NotImplementedException();
                         }
                         break;
 

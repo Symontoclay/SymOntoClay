@@ -99,5 +99,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         /// </summary>
         /// <returns>Instance of CodeItemDirectives resolver.</returns>
         CodeItemDirectivesResolver GetCodeItemDirectivesResolver();
+
+        /// <summary>
+        /// Gets instance of States resolver.
+        /// </summary>
+        /// <returns>Instance of States resolver.</returns>
+        StatesResolver GetStatesResolver();
     }
 }

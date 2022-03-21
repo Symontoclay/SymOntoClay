@@ -102,6 +102,19 @@ namespace SymOntoClay.Core.Internal.Instances
             Log($"_stateNameForAutomaticStart = {_stateNameForAutomaticStart}");
 #endif
 
+            if(_stateNameForAutomaticStart == null)
+            {
+                return;
+            }
+
+            var statesResolver = _context.DataResolversFactory.GetStatesResolver();
+
+            var state = statesResolver.Resolve(_stateNameForAutomaticStart, _localCodeExecutionContext);
+
+#if DEBUG
+            Log($"state = {state}");
+#endif
+
             throw new NotImplementedException();
         }
     }

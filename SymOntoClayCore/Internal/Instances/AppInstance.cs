@@ -41,6 +41,8 @@ namespace SymOntoClay.Core.Internal.Instances
         {
         }
 
+        private StrongIdentifierValue _stateNameForAutomaticStart;
+
         /// <inheritdoc/>
         protected override void ApplyCodeDirectives()
         {
@@ -71,6 +73,11 @@ namespace SymOntoClay.Core.Internal.Instances
                             var directiveItem = directive.AsSetDefaultStateDirective;
 
                             _storage.StatesStorage.SetDefaultStateName(directiveItem.StateName);
+
+                            if(!directivesList.Any(p => p.KindOfCodeItemDirective == KindOfCodeItemDirective.SetState))
+                            {
+                                _stateNameForAutomaticStart = directiveItem.StateName;
+                            }
                         }
                         break;
 
@@ -89,6 +96,10 @@ namespace SymOntoClay.Core.Internal.Instances
         {
 #if DEBUG
             Log("Begin");
+#endif
+
+#if DEBUG
+            Log($"_stateNameForAutomaticStart = {_stateNameForAutomaticStart}");
 #endif
 
             throw new NotImplementedException();

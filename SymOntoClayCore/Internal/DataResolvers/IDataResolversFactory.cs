@@ -28,17 +28,76 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public interface IDataResolversFactory
     {
+        /// <summary>
+        /// Gets instance of Channels resolver.
+        /// </summary>
+        /// <returns>Instance of Channels resolver.</returns>
         ChannelsResolver GetChannelsResolver();
+
+        /// <summary>
+        /// Gets instance of Inheritance resolver.
+        /// </summary>
+        /// <returns>Instance of Inheritance resolver.</returns>
         InheritanceResolver GetInheritanceResolver();
+
+        /// <summary>
+        /// Gets instance of LogicalValue resolver.
+        /// </summary>
+        /// <returns>Instance of LogicalValue resolver.</returns>
         LogicalValueLinearResolver GetLogicalValueLinearResolver();
+
+        /// <summary>
+        /// Gets instance of Operators resolver.
+        /// </summary>
+        /// <returns>Instance of Operators resolver.</returns>
         OperatorsResolver GetOperatorsResolver();
+
+        /// <summary>
+        /// Gets instance of NumberValue linear resolver.
+        /// </summary>
+        /// <returns>Instance of NumberValue linear resolver.</returns>
         NumberValueLinearResolver GetNumberValueLinearResolver();
+
+        /// <summary>
+        /// Gets instance of StrongIdentifier linear resolver.
+        /// </summary>
+        /// <returns>Instance of StrongIdentifier linear resolver.</returns>
         StrongIdentifierLinearResolver GetStrongIdentifierLinearResolver();
+
+        /// <summary>
+        /// Gets instance of Triggers resolver.
+        /// </summary>
+        /// <returns>Instance of Triggers resolver.</returns>
         TriggersResolver GetTriggersResolver();
+
+        /// <summary>
+        /// Gets instance of Vars resolver.
+        /// </summary>
+        /// <returns>Instance of Vars resolver.</returns>
         VarsResolver GetVarsResolver();
+
+        /// <summary>
+        /// Gets instance of LogicalSearch resolver.
+        /// </summary>
+        /// <returns>Instance of LogicalSearch resolver.</returns>
         LogicalSearchResolver GetLogicalSearchResolver();
+
+        /// <summary>
+        /// Gets instance of FuzzyLogic resolver.
+        /// </summary>
+        /// <returns>Instance of FuzzyLogic resolver.</returns>
         FuzzyLogicResolver GetFuzzyLogicResolver();
+
+        /// <summary>
+        /// Gets instance of Methods resolver.
+        /// </summary>
+        /// <returns>Instance of Methods resolver.</returns>
         MethodsResolver GetMethodsResolver();
+
+        /// <summary>
+        /// Gets instance of CodeItemDirectives resolver.
+        /// </summary>
+        /// <returns>Instance of CodeItemDirectives resolver.</returns>
         CodeItemDirectivesResolver GetCodeItemDirectivesResolver();
     }
 }

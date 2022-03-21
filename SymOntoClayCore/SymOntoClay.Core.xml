@@ -3864,6 +3864,78 @@
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory.GetCodeItemDirectivesResolver">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.IDataResolversFactory.GetChannelsResolver">
+            <summary>
+            Gets instance of Channels resolver.
+            </summary>
+            <returns>Instance of Channels resolver.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.IDataResolversFactory.GetInheritanceResolver">
+            <summary>
+            Gets instance of Inheritance resolver.
+            </summary>
+            <returns>Instance of Inheritance resolver.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.IDataResolversFactory.GetLogicalValueLinearResolver">
+            <summary>
+            Gets instance of LogicalValue resolver.
+            </summary>
+            <returns>Instance of LogicalValue resolver.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.IDataResolversFactory.GetOperatorsResolver">
+            <summary>
+            Gets instance of Operators resolver.
+            </summary>
+            <returns>Instance of Operators resolver.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.IDataResolversFactory.GetNumberValueLinearResolver">
+            <summary>
+            Gets instance of NumberValue linear resolver.
+            </summary>
+            <returns>Instance of NumberValue linear resolver.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.IDataResolversFactory.GetStrongIdentifierLinearResolver">
+            <summary>
+            Gets instance of StrongIdentifier linear resolver.
+            </summary>
+            <returns>Instance of StrongIdentifier linear resolver.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.IDataResolversFactory.GetTriggersResolver">
+            <summary>
+            Gets instance of Triggers resolver.
+            </summary>
+            <returns>Instance of Triggers resolver.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.IDataResolversFactory.GetVarsResolver">
+            <summary>
+            Gets instance of Vars resolver.
+            </summary>
+            <returns>Instance of Vars resolver.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.IDataResolversFactory.GetLogicalSearchResolver">
+            <summary>
+            Gets instance of LogicalSearch resolver.
+            </summary>
+            <returns>Instance of LogicalSearch resolver.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.IDataResolversFactory.GetFuzzyLogicResolver">
+            <summary>
+            Gets instance of FuzzyLogic resolver.
+            </summary>
+            <returns>Instance of FuzzyLogic resolver.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.IDataResolversFactory.GetMethodsResolver">
+            <summary>
+            Gets instance of Methods resolver.
+            </summary>
+            <returns>Instance of Methods resolver.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.IDataResolversFactory.GetCodeItemDirectivesResolver">
+            <summary>
+            Gets instance of CodeItemDirectives resolver.
+            </summary>
+            <returns>Instance of CodeItemDirectives resolver.</returns>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchOptions.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>

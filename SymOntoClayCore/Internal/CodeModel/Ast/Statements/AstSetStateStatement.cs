@@ -3,37 +3,45 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.CodeModel
+namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
 {
-    public class SetDefaultStateDirective: CodeItemDirective
+    public class AstSetStateStatement : AstStatement
     {
         /// <inheritdoc/>
-        public override KindOfCodeItemDirective KindOfCodeItemDirective => KindOfCodeItemDirective.SetDefaultState;
-
-        /// <inheritdoc/>
-        public override bool IsSetDefaultStateDirective => true;
-        
-        /// <inheritdoc/>
-        public override SetDefaultStateDirective AsSetDefaultStateDirective => this;
+        public override KindOfAstStatement Kind => KindOfAstStatement.SetState;
 
         public StrongIdentifierValue StateName { get; set; }
-        
+
         /// <inheritdoc/>
-        public override CodeItemDirective CloneCodeItemDirective(Dictionary<object, object> context)
+        public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
+        {
+            return CloneAstStatement(context);
+        }
+
+        /// <inheritdoc/>
+        public override AstStatement CloneAstStatement(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {
-                return (SetDefaultStateDirective)context[this];
+                return (AstStatement)context[this];
             }
 
-            var result = new SetDefaultStateDirective();
+            var result = new AstSetStateStatement();
             context[this] = result;
 
             result.StateName = StateName.Clone(context);
 
-            result.AppendAnnotations(this);
+            result.AppendAnnotations(this, context);
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        public override void DiscoverAllAnnotations(IList<RuleInstance> result)
+        {
+            base.DiscoverAllAnnotations(result);
+
+            StateName.DiscoverAllAnnotations(result);
         }
 
         /// <inheritdoc/>

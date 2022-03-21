@@ -49,6 +49,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
+                case KindOfAstStatement.SetState:
+                    {
+                        var item = new SetStateDirective();
+                        item.StateName = (result as AstSetStateStatement).StateName;
+                        Result.Add(item);
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfStatement), kindOfStatement, null);
             }

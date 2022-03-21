@@ -81,6 +81,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     CreateAstSetInheritanceStatement();
                     break;
 
+                case KindOfSetRawStatement.SetState:
+                    CreateAstSetStateStatement();
+                    break;
+
                 case KindOfSetRawStatement.SetDefaultState:
                     CreateAstSetDefaultStateStatement();
                     break;
@@ -88,6 +92,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfUseRawStatement), kindOfUseRawStatement, null);
             }
+        }
+
+        private void CreateAstSetStateStatement()
+        {
+            var result = new AstSetStateStatement();
+
+            DefaultSettingsOfCodeEntityHelper.SetUpAnnotatedItem(result, CurrentDefaultSetings);
+
+            result.AppendAnnotations(_rawStatement);
+
+            result.StateName = _rawStatement.FirstName;
+
+#if DEBUG
+            //Log($"result = {result}");
+#endif
+
+            Result = result;
         }
 
         private void CreateAstSetDefaultStateStatement()
@@ -366,6 +387,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     _state = State.GotAsDefault;
                                     break;
 
+                                case KeyWordTokenKind.State:
+                                    _rawStatement.KindOfSetRawStatement = KindOfSetRawStatement.SetState;
+                                    _state = State.GotAsState;
+                                    break;
+
                                 default:
                                     throw new UnexpectedTokenException(_currToken);
                             }
@@ -412,7 +438,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotAsState:
                     switch (_currToken.TokenKind)
                     {
-
+                        case TokenKind.Semicolon:
+                            Exit();
+                            break;
 
                         default:
                             throw new UnexpectedTokenException(_currToken);

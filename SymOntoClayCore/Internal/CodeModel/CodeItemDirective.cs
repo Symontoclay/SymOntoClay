@@ -12,6 +12,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsSetDefaultStateDirective => false;
         public virtual SetDefaultStateDirective AsSetDefaultStateDirective => null;
 
+        public virtual bool IsSetStateDirective => false;
+        public virtual SetStateDirective AsSetStateDirective => null;
+
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
         {

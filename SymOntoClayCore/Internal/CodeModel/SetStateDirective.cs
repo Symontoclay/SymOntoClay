@@ -5,19 +5,19 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class SetDefaultStateDirective: CodeItemDirective
+    public class SetStateDirective : CodeItemDirective
     {
         /// <inheritdoc/>
-        public override KindOfCodeItemDirective KindOfCodeItemDirective => KindOfCodeItemDirective.SetDefaultState;
+        public override KindOfCodeItemDirective KindOfCodeItemDirective => KindOfCodeItemDirective.SetState;
 
         /// <inheritdoc/>
-        public override bool IsSetDefaultStateDirective => true;
-        
+        public override bool IsSetStateDirective => true;
+
         /// <inheritdoc/>
-        public override SetDefaultStateDirective AsSetDefaultStateDirective => this;
+        public override SetStateDirective AsSetStateDirective => this;
 
         public StrongIdentifierValue StateName { get; set; }
-        
+
         /// <inheritdoc/>
         public override CodeItemDirective CloneCodeItemDirective(Dictionary<object, object> context)
         {

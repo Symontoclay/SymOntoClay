@@ -77,5 +77,73 @@ state Idling
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case2()
+        {
+            var text = @"app PeaceKeeper
+{
+    set Idling as state;
+
+    on Init =>
+    {
+        'Begin' >> @>log;        
+        'End' >> @>log;
+    }
+}
+
+state Idling
+{
+    on Enter
+    {
+        'Begin Enter' >> @>log;
+        'End Enter' >> @>log;
+    }
+}";
+
+            var initN = 0;
+            var enterN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (message) => {
+                    if (message.EndsWith(" Enter"))
+                    {
+                        enterN++;
+
+                        switch (enterN)
+                        {
+                            case 1:
+                                Assert.AreEqual(message, "Begin Enter");
+                                break;
+
+                            case 2:
+                                Assert.AreEqual(message, "End Enter");
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(enterN), enterN, null);
+                        }
+                    }
+                    else
+                    {
+                        initN++;
+
+                        switch (initN)
+                        {
+                            case 1:
+                                Assert.AreEqual(message, "Begin");
+                                break;
+
+                            case 2:
+                                Assert.AreEqual(message, "End");
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(initN), initN, null);
+                        }
+                    }
+                }), true);
+        }
     }
 }

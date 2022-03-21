@@ -81,6 +81,14 @@ namespace SymOntoClay.Core.Internal.Instances
                         }
                         break;
 
+                    case KindOfCodeItemDirective.SetState:
+                        {
+                            var directiveItem = directive.AsSetStateDirective;
+
+                            _stateNameForAutomaticStart = directiveItem.StateName;
+                        }
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(kindOfDirective), kindOfDirective, null);
                 }

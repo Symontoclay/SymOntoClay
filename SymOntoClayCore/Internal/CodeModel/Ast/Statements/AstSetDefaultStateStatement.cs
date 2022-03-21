@@ -17,7 +17,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         {
             return CloneAstStatement(context);
         }
-
+        
         /// <inheritdoc/>
         public override AstStatement CloneAstStatement(Dictionary<object, object> context)
         {

@@ -5977,6 +5977,9 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.StatesStorage.StatesStorage.Append(SymOntoClay.Core.Internal.CodeModel.StateDef)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStorage.StatesStorage.GetStatesDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StatesStorage.StatesStorage.SetDefaultStateName(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>

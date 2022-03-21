@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -71,6 +72,49 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
                 {
                     dict[name] = new List<StateDef> { state };
                 }
+            }
+        }
+
+        /// <inheritdoc/>
+        public IList<WeightedInheritanceResultItem<StateDef>> GetStatesDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+            lock (_lockObj)
+            {
+#if DEBUG
+                //Log($"name = {name}");
+#endif
+
+                var result = new List<WeightedInheritanceResultItem<StateDef>>();
+
+                foreach (var weightedInheritanceItem in weightedInheritanceItems)
+                {
+                    var targetHolder = weightedInheritanceItem.SuperName;
+
+#if DEBUG
+                    //Log($"targetHolder = {targetHolder}");
+#endif
+
+                    if (_statesDict.ContainsKey(targetHolder))
+                    {
+                        var targetDict = _statesDict[targetHolder];
+
+#if DEBUG
+                        //Log($"targetDict.Count = {targetDict.Count}");
+#endif
+
+                        if (targetDict.ContainsKey(name))
+                        {
+                            var targetList = targetDict[name];
+
+                            foreach (var targetVal in targetList)
+                            {
+                                result.Add(new WeightedInheritanceResultItem<StateDef>(targetVal, weightedInheritanceItem));
+                            }
+                        }
+                    }
+                }
+
+                return result;
             }
         }
 

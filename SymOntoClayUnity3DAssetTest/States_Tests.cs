@@ -145,5 +145,83 @@ state Idling
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case3()
+        {
+            var text = @"app PeaceKeeper
+{
+    set Idling as default state;
+    set Patrolling as state;
+
+    on Init =>
+    {
+        'Begin' >> @>log;        
+        'End' >> @>log;
+    }
+}
+
+state Idling
+{
+    on Enter
+    {
+        'Begin Idling Enter' >> @>log;
+        'End Idling Enter' >> @>log;
+    }
+}
+
+state Patrolling
+{
+    on Enter
+    {
+        'Begin Patrolling Enter' >> @>log;
+        'End Patrolling Enter' >> @>log;
+    }
+}";
+
+            var initN = 0;
+            var enterN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (message) => {
+                    if (message.EndsWith(" Enter"))
+                    {
+                        enterN++;
+
+                        switch (enterN)
+                        {
+                            case 1:
+                                Assert.AreEqual(message, "Begin Patrolling Enter");
+                                break;
+
+                            case 2:
+                                Assert.AreEqual(message, "End Patrolling Enter");
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(enterN), enterN, null);
+                        }
+                    }
+                    else
+                    {
+                        initN++;
+
+                        switch (initN)
+                        {
+                            case 1:
+                                Assert.AreEqual(message, "Begin");
+                                break;
+
+                            case 2:
+                                Assert.AreEqual(message, "End");
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(initN), initN, null);
+                        }
+                    }
+                }), true);
+        }
     }
 }

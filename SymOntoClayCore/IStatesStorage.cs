@@ -11,5 +11,6 @@ namespace SymOntoClay.Core
         void Append(StateDef state);
         IList<WeightedInheritanceResultItem<StateDef>> GetStatesDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems);
         void SetDefaultStateName(StrongIdentifierValue name);
+        StrongIdentifierValue GetDefaultStateNameDirectly();
     }
 }

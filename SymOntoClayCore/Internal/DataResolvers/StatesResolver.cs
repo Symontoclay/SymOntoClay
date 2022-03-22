@@ -16,6 +16,51 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
         }
 
+        public StrongIdentifierValue ResolveDefaultStateName(LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return ResolveDefaultStateName(localCodeExecutionContext, _defaultOptions);
+        }
+
+        public StrongIdentifierValue ResolveDefaultStateName(LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var storage = localCodeExecutionContext.Storage;
+
+            var storagesList = GetStoragesList(storage);
+
+#if DEBUG
+            //Log($"storagesList.Count = {storagesList.Count}");
+            //foreach (var tmpStorage in storagesList)
+            //{
+            //    Log($"tmpStorage = {tmpStorage}");
+            //}
+#endif
+
+            if (!storagesList.Any())
+            {
+                return null;
+            }
+
+            foreach (var storageItem in storagesList)
+            {
+#if DEBUG
+                //Log($"storageItem = {storageItem}");
+#endif
+
+                var item = storageItem.Storage.StatesStorage.GetDefaultStateNameDirectly();
+
+#if DEBUG
+                //Log($"item = {item}");
+#endif
+
+                if(item != null)
+                {
+                    return item;
+                }
+            }
+
+            return null;
+        }
+
         public StateDef Resolve(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(name, localCodeExecutionContext, _defaultOptions);

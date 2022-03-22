@@ -4822,6 +4822,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.RunInitialTriggers">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.StateExecutionCoordinator_OnFinished">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.MainStorageContext.Id">
             <summary>
             Gets or sets unique Id.
@@ -6050,6 +6053,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StatesStorage.StatesStorage.SetDefaultStateName(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStorage.StatesStorage.GetDefaultStateNameDirectly">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StateStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">

@@ -130,5 +130,14 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
                 _defaultStateName = name;
             }
         }
+
+        /// <inheritdoc/>
+        public StrongIdentifierValue GetDefaultStateNameDirectly()
+        {
+            lock (_lockObj)
+            {
+                return _defaultStateName;
+            }
+        }
     }
 }

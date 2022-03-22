@@ -31,6 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -149,22 +150,49 @@ namespace SymOntoClay.Core.Internal.Instances
 
         public void ActivateState(StateDef state)
         {
-            lock(_statesLockObj)
-            {
+            Task.Run(() => {
+                StateInstance stateInstance = null;
+
+                lock (_statesLockObj)
+                {
 #if DEBUG
-                //Log($"state = {state}");
+                    //Log($"state = {state}");
 #endif
 
-                if (_activeStatesDict.ContainsKey(state.Name))
-                {
-                    return;
+                    if (_activeStatesDict.ContainsKey(state.Name))
+                    {
+#if DEBUG
+                        //Log("_activeStatesDict.ContainsKey(state.Name) return;");
+#endif
+
+                        return;
+                    }
+
+                    stateInstance = new StateInstance(state, _context, _storage, _appInstanceExecutionCoordinator);
+
+                    _activeStatesDict[state.Name] = stateInstance;
+
+                    stateInstance.OnStateInstanceFinished += ChildStateInstance_OnFinished;
                 }
 
-                var stateInstance = new StateInstance(state, _context, _storage, _appInstanceExecutionCoordinator);
-
-                _activeStatesDict[state.Name] = stateInstance;
-
                 stateInstance.Init();
+            });
+        }
+
+        private void ChildStateInstance_OnFinished(StateInstance stateInstance)
+        {
+#if DEBUG
+            //Log($"stateInstance = {stateInstance}");
+#endif
+
+            stateInstance.OnStateInstanceFinished -= ChildStateInstance_OnFinished;
+
+            lock(_statesLockObj)
+            {
+                if(_activeStatesDict.ContainsKey(stateInstance.Name))
+                {
+                    _activeStatesDict.Remove(stateInstance.Name);
+                }
             }
         }
     }

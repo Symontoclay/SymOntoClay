@@ -104,6 +104,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     _state = State.GotActionMark;
                                     break;
 
+                                case KeyWordTokenKind.State:
+                                    _rawStatement.KindOfCompletion = KindOfCompletion.State;
+                                    _state = State.GotActionMark;
+                                    break;
+
                                 default:
                                     throw new UnexpectedTokenException(_currToken);
                             }

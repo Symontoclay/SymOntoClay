@@ -4,6 +4,7 @@ using SymOntoClay.Core.Internal.Storage;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -33,5 +34,17 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             RunInitialTriggers(KindOfSystemEventOfInlineTrigger.Enter);
         }
+
+        /// <inheritdoc/>
+        protected override void StateExecutionCoordinator_OnFinished()
+        {
+            Task.Run(() => {
+                OnStateInstanceFinished?.Invoke(this);
+            });
+
+            base.StateExecutionCoordinator_OnFinished();
+        }
+
+        public event Action<StateInstance> OnStateInstanceFinished;
     }
 }

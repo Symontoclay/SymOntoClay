@@ -726,6 +726,31 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         }
                         break;
 
+                    case OperationCode.CompleteState:
+                        {
+                            _stateExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
+
+                            var defaultStateName = _statesResolver.ResolveDefaultStateName(_currentCodeFrame.LocalContext);
+
+#if DEBUG
+                            //Log($"defaultStateName = {defaultStateName}");
+#endif
+
+                            if(defaultStateName != null)
+                            {
+                                var state = _statesResolver.Resolve(defaultStateName, _currentCodeFrame.LocalContext);
+
+#if DEBUG
+                                //Log($"state = {state}");
+#endif
+
+                                _context.InstancesStorage.ActivateState(state);
+                            }
+
+                            _currentCodeFrame.CurrentPosition++;
+                        }
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(currentCommand.OperationCode), currentCommand.OperationCode, null);
                 }

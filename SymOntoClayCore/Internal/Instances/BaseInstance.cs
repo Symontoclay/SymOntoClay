@@ -80,6 +80,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
             InitExecutionCoordinators();
 
+            SetExecutionStatusOfExecutionCoordinatorAsExecuting();
+
             ApplyCodeDirectives();
 
             RunInitialTriggers();
@@ -111,9 +113,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
             }
 
-            _instanceState = InstanceState.Initialized;
-
-            SetExecutionStatusOfExecutionCoordinatorAsExecuting();
+            _instanceState = InstanceState.Initialized;            
         }
 
         protected abstract void InitExecutionCoordinators();
@@ -181,7 +181,7 @@ namespace SymOntoClay.Core.Internal.Instances
             Dispose();
         }
 
-        protected void StateExecutionCoordinator_OnFinished()
+        protected virtual void StateExecutionCoordinator_OnFinished()
         {
             Dispose();
         }

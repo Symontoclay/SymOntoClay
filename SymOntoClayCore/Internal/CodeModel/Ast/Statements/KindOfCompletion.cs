@@ -29,6 +29,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
     public enum KindOfCompletion
     {
         Unknown,
-        Action
+        Action,
+        State
     }
 }

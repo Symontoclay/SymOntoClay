@@ -67,6 +67,28 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     }
                     break;
 
+                case KindOfCompletion.State:
+                    {
+                        var ruleInstance = statement.RuleInstanceValue;
+
+                        if(ruleInstance == null)
+                        {
+                            AddCommand(new IntermediateScriptCommand()
+                            {
+                                OperationCode = OperationCode.CompleteState
+                            });
+                            break;
+                        }
+
+                        CompileValue(statement.RuleInstanceValue);
+
+                        AddCommand(new IntermediateScriptCommand()
+                        {
+                            OperationCode = OperationCode.CompleteStateVal
+                        });
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }

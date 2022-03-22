@@ -225,7 +225,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 if (!CheckReturnedInfo())
@@ -694,7 +694,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             var currentValue = _currentCodeFrame.ValuesStack.Pop();
 
 #if DEBUG
-                            Log($"currentValue = {currentValue}");
+                            //Log($"currentValue = {currentValue}");
 #endif
 
                             if(!currentValue.IsStrongIdentifierValue)
@@ -705,17 +705,17 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             var stateName = currentValue.AsStrongIdentifierValue;
 
 #if DEBUG
-                            Log($"stateName = {stateName}");
+                            //Log($"stateName = {stateName}");
 #endif
 
                             var state = _statesResolver.Resolve(stateName, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-                            Log($"state = {state}");
+                            //Log($"state = {state}");
 #endif
 
 #if DEBUG
-                            Log($"(_stateExecutionCoordinator != null) = {_stateExecutionCoordinator != null}");
+                            //Log($"(_stateExecutionCoordinator != null) = {_stateExecutionCoordinator != null}");
 #endif
 
                             _stateExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;

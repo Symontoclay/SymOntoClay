@@ -30,6 +30,7 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
         public IStorage Storage => _realStorageContext.Storage;
 
         private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<StateDef>>> _statesDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<StateDef>>>();
+        private readonly Dictionary<StateDef, List<ActivationInfoOfStateDef>> _activationInfoDict = new Dictionary<StateDef, List<ActivationInfoOfStateDef>>();
         private StrongIdentifierValue _defaultStateName;
 
         /// <inheritdoc/>
@@ -68,6 +69,14 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
                     var removedItemsList = StorageHelper.RemoveSameItems(targetList, state);
 
                     targetList.Add(state);
+
+                    if(removedItemsList.Any())
+                    {
+                        foreach(var removedItem in removedItemsList)
+                        {
+                            _activationInfoDict.Remove(removedItem);
+                        }
+                    }
                 }
                 else
                 {
@@ -76,7 +85,14 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
 
                 if(state.ActivatingClauses.Any())
                 {
-                    throw new NotImplementedException();
+                    var activatingInfoList = new List<ActivationInfoOfStateDef>();
+
+                    foreach (var activatingClause in state.ActivatingClauses)
+                    {
+                        activatingInfoList.Add(new ActivationInfoOfStateDef(state, activatingClause));
+                    }
+
+                    _activationInfoDict[state] = activatingInfoList;
                 }
             }
         }

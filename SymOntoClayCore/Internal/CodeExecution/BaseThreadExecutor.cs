@@ -164,16 +164,34 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             try
             {
-                if(_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing)
+                if(_appInstanceExecutionCoordinator != null && _appInstanceExecutionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing)
                 {
 #if DEBUG
-                    //Log("_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing; return false;");
+                    //Log("_appInstanceExecutionCoordinator != null && _appInstanceExecutionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing; return false;");
 #endif
 
                     return false;
                 }
 
-                if(_currentCodeFrame == null)
+                if (_stateExecutionCoordinator != null && _stateExecutionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing)
+                {
+#if DEBUG
+                    //Log("_stateExecutionCoordinator != null && _stateExecutionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing; return false;");
+#endif
+
+                    return false;
+                }
+
+                if (_actionExecutionCoordinator != null && _actionExecutionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing)
+                {
+#if DEBUG
+                    //Log("_actionExecutionCoordinator != null && _actionExecutionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing; return false;");
+#endif
+
+                    return false;
+                }
+
+                if (_currentCodeFrame == null)
                 {
 #if DEBUG
                     //Log("_currentCodeFrame == null return false;");
@@ -575,7 +593,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     case OperationCode.CompleteAction:
                         {
-                            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
+                            _actionExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
 
                             _currentCodeFrame.CurrentPosition++;
                         }
@@ -591,9 +609,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             var ruleInstance = currentValue.AsRuleInstanceValue.RuleInstance;
 
-                            _executionCoordinator.RuleInstance = ruleInstance;
+                            _actionExecutionCoordinator.RuleInstance = ruleInstance;
 
-                            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
+                            _actionExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
 
                             _currentCodeFrame.CurrentPosition++;
                         }
@@ -1121,7 +1139,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
                     List<IExecutionCoordinator> executionCoordinators = null;
 
-                    if(localExecutionCoordinator != null || _executionCoordinator != null)
+                    if(localExecutionCoordinator != null || _appInstanceExecutionCoordinator != null || _stateExecutionCoordinator != null || _actionExecutionCoordinator != null)
                     {
                         executionCoordinators = new List<IExecutionCoordinator>();
 
@@ -1130,9 +1148,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             executionCoordinators.Add(localExecutionCoordinator);
                         }
 
-                        if(_executionCoordinator != null)
+                        if(_appInstanceExecutionCoordinator != null)
                         {
-                            executionCoordinators.Add(_executionCoordinator);
+                            executionCoordinators.Add(_appInstanceExecutionCoordinator);
+                        }
+
+                        if (_stateExecutionCoordinator != null)
+                        {
+                            executionCoordinators.Add(_stateExecutionCoordinator);
+                        }
+
+                        if (_actionExecutionCoordinator != null)
+                        {
+                            executionCoordinators.Add(_actionExecutionCoordinator);
                         }
                     }
 

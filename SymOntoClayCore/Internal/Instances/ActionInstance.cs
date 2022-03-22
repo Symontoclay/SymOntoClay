@@ -34,26 +34,37 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class ActionInstance : BaseInstance, IExecutable
     {
-        public ActionInstance(ActionPtr actionPtr, IEngineContext context, IStorage parentStorage)
+        public ActionInstance(ActionPtr actionPtr, IEngineContext context, IStorage parentStorage, IExecutionCoordinator appInstanceExecutionCoordinator, IExecutionCoordinator stateExecutionCoordinator)
             : base(actionPtr.Action, context, parentStorage, new ActionStorageFactory())
         {
             _action = actionPtr.Action;
             _operator = actionPtr.Operator;
 
             _iOp = _operator;
+
+            _appInstanceExecutionCoordinator = appInstanceExecutionCoordinator;
+            _stateExecutionCoordinator = stateExecutionCoordinator;
         }
 
         private readonly ActionDef _action;
         private readonly Operator _operator;
         private readonly IExecutable _iOp;
 
-        //public void Init()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        /// <inheritdoc/>
+        protected override void InitExecutionCoordinators()
+        {
+            _actionExecutionCoordinator = new ExecutionCoordinator();
+            _actionExecutionCoordinator.OnFinished += actionExecutionCoordinator_OnFinished;
+        }
 
         /// <inheritdoc/>
-        IExecutionCoordinator IExecutable.TryActivate(IEngineContext context)
+        protected override void SetExecutionStatusOfExecutionCoordinatorAsExecuting()
+        {
+            _actionExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
+        }
+
+        /// <inheritdoc/>
+        IExecutionCoordinator IExecutable.TryActivate(IEngineContext context, IExecutionCoordinator appInstanceExecutionCoordinator, IExecutionCoordinator stateExecutionCoordinator)
         {
             return null;
         }

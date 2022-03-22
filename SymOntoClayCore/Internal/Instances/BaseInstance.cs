@@ -42,9 +42,6 @@ namespace SymOntoClay.Core.Internal.Instances
             Name = codeItem.Name;
             _context = context;
 
-            _executionCoordinator = new ExecutionCoordinator();
-            _executionCoordinator.OnFinished += _executionCoordinator_OnFinished;
-
             _localCodeExecutionContext = new LocalCodeExecutionContext();
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
             _storage = storageFactory.CreateStorage(localStorageSettings);
@@ -117,7 +114,6 @@ namespace SymOntoClay.Core.Internal.Instances
             _instanceState = InstanceState.Initialized;
 
             SetExecutionStatusOfExecutionCoordinatorAsExecuting();
-            //_executionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
         }
 
         protected abstract void InitExecutionCoordinators();
@@ -166,7 +162,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 //Log($"processInitialInfoList = {processInitialInfoList.WriteListToString()}");
 #endif
 
-                var taskValue = _context.CodeExecutor.ExecuteBatchAsync(processInitialInfoList, _executionCoordinator);
+                var taskValue = _context.CodeExecutor.ExecuteBatchAsync(processInitialInfoList, _appInstanceExecutionCoordinator, _stateExecutionCoordinator, _actionExecutionCoordinator);
 
 #if DEBUG
                 //Log($"taskValue = {taskValue}");
@@ -180,17 +176,17 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected abstract void SetExecutionStatusOfExecutionCoordinatorAsExecuting();
 
-        private void appInstanceExecutionCoordinator_OnFinished()
+        protected void appInstanceExecutionCoordinator_OnFinished()
         {
             Dispose();
         }
 
-        private void stateExecutionCoordinator_OnFinished()
+        protected void stateExecutionCoordinator_OnFinished()
         {
             Dispose();
         }
 
-        private void actionExecutionCoordinator_OnFinished()
+        protected void actionExecutionCoordinator_OnFinished()
         {
             Dispose();
         }

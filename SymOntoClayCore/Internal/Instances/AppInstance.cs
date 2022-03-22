@@ -41,6 +41,19 @@ namespace SymOntoClay.Core.Internal.Instances
         {
         }
 
+        /// <inheritdoc/>
+        protected override void InitExecutionCoordinators()
+        {
+            _appInstanceExecutionCoordinator =new ExecutionCoordinator();
+            _appInstanceExecutionCoordinator.OnFinished += appInstanceExecutionCoordinator_OnFinished;
+        }
+
+        /// <inheritdoc/>
+        protected override void SetExecutionStatusOfExecutionCoordinatorAsExecuting()
+        {
+            _appInstanceExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
+        }
+
         private StrongIdentifierValue _stateNameForAutomaticStart;
 
         /// <inheritdoc/>
@@ -147,7 +160,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     return;
                 }
 
-                var stateInstance = new StateInstance(state, _context, _storage);
+                var stateInstance = new StateInstance(state, _context, _storage, _appInstanceExecutionCoordinator);
 
                 _activeStatesDict[state.Name] = stateInstance;
 

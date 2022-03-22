@@ -53,15 +53,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
         private readonly IStorage _parentStorage;
 
         /// <inheritdoc/>
-        public IExecutionCoordinator TryActivate(IEngineContext context)
+        public IExecutionCoordinator TryActivate(IEngineContext context, IExecutionCoordinator appInstanceExecutionCoordinator, IExecutionCoordinator stateExecutionCoordinator)
         {
-            var actionInstance = new ActionInstance(_actionPtr, context, _parentStorage);
+            var actionInstance = new ActionInstance(_actionPtr, context, _parentStorage, appInstanceExecutionCoordinator, stateExecutionCoordinator);
 
             actionInstance.Init();
 
             ActionInstance = actionInstance;
 
-            return actionInstance.ExecutionCoordinator;
+            return actionInstance.ActionExecutionCoordinator;
         }
 
         /// <inheritdoc/>

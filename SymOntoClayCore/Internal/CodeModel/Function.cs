@@ -77,7 +77,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        IExecutionCoordinator IExecutable.TryActivate(IEngineContext context)
+        IExecutionCoordinator IExecutable.TryActivate(IEngineContext context, IExecutionCoordinator appInstanceExecutionCoordinator, IExecutionCoordinator stateExecutionCoordinator)
         {
             return null;
         }

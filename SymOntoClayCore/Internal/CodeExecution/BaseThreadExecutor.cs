@@ -714,7 +714,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             Log($"state = {state}");
 #endif
 
-                            throw new NotImplementedException();
+#if DEBUG
+                            Log($"(_stateExecutionCoordinator != null) = {_stateExecutionCoordinator != null}");
+#endif
+
+                            _stateExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
+
+                            _context.InstancesStorage.ActivateState(state);
+
+                            _currentCodeFrame.CurrentPosition++;
                         }
                         break;
 
@@ -1444,7 +1452,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 throw new ArgumentNullException(nameof(executable));
             }
 
-            var coordinator = executable.TryActivate(_context);
+            var coordinator = executable.TryActivate(_context, _appInstanceExecutionCoordinator, _stateExecutionCoordinator);
 
             if (executable.IsSystemDefined)
             {

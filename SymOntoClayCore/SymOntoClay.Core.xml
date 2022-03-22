@@ -4645,6 +4645,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.RunExplicitStates">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.RunActivatorsOfStates">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.OnDisposed">
             <inheritdoc/>
         </member>

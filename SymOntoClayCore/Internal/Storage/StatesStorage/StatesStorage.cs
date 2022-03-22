@@ -3,6 +3,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.StatesStorage
@@ -64,13 +65,18 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
                 {
                     var targetList = dict[name];
 
-                    StorageHelper.RemoveSameItems(targetList, state);
+                    var removedItemsList = StorageHelper.RemoveSameItems(targetList, state);
 
                     targetList.Add(state);
                 }
                 else
                 {
                     dict[name] = new List<StateDef> { state };
+                }
+
+                if(state.ActivatingClauses.Any())
+                {
+                    throw new NotImplementedException();
                 }
             }
         }

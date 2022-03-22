@@ -30,7 +30,7 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public static class StorageHelper
     {
-        public static void RemoveSameItems<T>(List<T> targetList, T item)
+        public static List<T> RemoveSameItems<T>(List<T> targetList, T item)
             where T: IObjectWithLongHashCodes
         {
             var targetLongHashCode = item.GetLongHashCode();
@@ -50,6 +50,8 @@ namespace SymOntoClay.Core.Internal.Storage
             {
                 targetList.Remove(itemWithTheSameLongHashCode);
             }
+
+            return itemsWithTheSameLongHashCodeList;
         }
     }
 }

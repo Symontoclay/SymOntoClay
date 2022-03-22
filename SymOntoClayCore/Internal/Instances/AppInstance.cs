@@ -195,5 +195,19 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
             }
         }
+
+        /// <inheritdoc/>
+        protected override void RunActivatorsOfStates()
+        {
+#if DEBUG
+            Log("Begin");
+#endif
+
+            throw new NotImplementedException();
+
+#if DEBUG
+            Log("End");
+#endif
+        }
     }
 }

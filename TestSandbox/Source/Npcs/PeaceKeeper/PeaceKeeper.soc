@@ -1,7 +1,5 @@
 ﻿app PeaceKeeper
 {
-    set Patrolling as state;
-
     on Init =>
     {
         'Begin' >> @>log;        
@@ -9,23 +7,16 @@
     }
 }
 
-state Idling
+state Attacking
 {
+    enter on:
+        {: see(I, enemy) :}
+
+
     on Enter
     {
-        'Begin Idling Enter' >> @>log;
-        'End Idling Enter' >> @>log;
-    }
-}
+        'Begin Attacking Enter' >> @>log;
 
-state Patrolling
-{
-    on Enter
-    {
-        'Begin Patrolling Enter' >> @>log;
-
-        complete state;
-
-        'End Patrolling Enter' >> @>log;
+        'End Attacking Enter' >> @>log;
     }
 }

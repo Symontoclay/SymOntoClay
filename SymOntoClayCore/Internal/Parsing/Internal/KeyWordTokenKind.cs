@@ -43,6 +43,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         On,
         Init,
         Enter,
+        Leave,
         Set,
         Not,
         Select,

@@ -124,7 +124,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected void ProcessGeneralContent()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
+            Log($"_currToken = {_currToken}");
             //Log($"(_context.CurrentDefaultSetings != null) = {_context.CurrentDefaultSetings != null}");
 #endif
 
@@ -212,6 +212,41 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 Result.Directives.AddRange(parser.Result);
                             }
                             break;
+
+                        case KeyWordTokenKind.Enter:
+                            {
+                                var nextToken = _context.GetToken();
+
+#if DEBUG
+                                Log($"nextToken = {nextToken}");
+#endif
+
+                                switch (nextToken.TokenKind)
+                                {
+                                    case TokenKind.Word:
+                                        switch(nextToken.KeyWordTokenKind)
+                                        {
+                                            case KeyWordTokenKind.On:
+                                                {
+                                                    var parser = new LogicalClausesSectionParser(_context);
+                                                    parser.Run();
+
+#if DEBUG
+                                                    Log($"parser.Result = {parser.Result.WriteListToString()}");
+#endif
+
+                                                    throw new NotImplementedException();
+                                                }
+
+                                            default:
+                                                throw new UnexpectedTokenException(_currToken);
+                                        }
+                                        break;
+
+                                    default:
+                                        throw new UnexpectedTokenException(_currToken);
+                                }                                
+                            }
 
                         default:
                             throw new UnexpectedTokenException(_currToken);

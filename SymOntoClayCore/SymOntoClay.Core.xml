@@ -5069,6 +5069,12 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LinguisticVariableParser.OnRun">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalClausesSectionParser.OnEnter">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalClausesSectionParser.OnRun">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalExpressionParser.OnFinish">
             <inheritdoc/>
         </member>

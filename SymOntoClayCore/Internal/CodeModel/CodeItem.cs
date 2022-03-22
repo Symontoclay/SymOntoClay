@@ -115,6 +115,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public List<CodeItemDirective> Directives { get; private set; } = new List<CodeItemDirective>();
 
+        public List<RuleInstance> ActivatingClauses { get; private set; } = new List<RuleInstance>();
+
         public virtual bool IsRuleInstance => false;
         public virtual RuleInstance AsRuleInstance => null;
 
@@ -204,6 +206,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             Directives = source.Directives?.Select(p => p.CloneCodeItemDirective(cloneContext)).ToList();
 
+            ActivatingClauses = source.ActivatingClauses?.Select(p => p.Clone(cloneContext)).ToList();
+
             AppendAnnotations(source, cloneContext);
         }
 
@@ -257,6 +261,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjProp(n, nameof(Holder), Holder);
 
             sb.PrintObjListProp(n, nameof(Directives), Directives);
+            sb.PrintObjListProp(n, nameof(ActivatingClauses), ActivatingClauses);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -283,6 +288,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjProp(n, nameof(Holder), Holder);
 
             sb.PrintShortObjListProp(n, nameof(Directives), Directives);
+            sb.PrintShortObjListProp(n, nameof(ActivatingClauses), ActivatingClauses);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -301,6 +307,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
 
             sb.PrintBriefObjListProp(n, nameof(Directives), Directives);
+            sb.PrintBriefObjListProp(n, nameof(ActivatingClauses), ActivatingClauses);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

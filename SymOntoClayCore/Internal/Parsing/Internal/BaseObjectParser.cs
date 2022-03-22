@@ -227,16 +227,25 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         switch(nextToken.KeyWordTokenKind)
                                         {
                                             case KeyWordTokenKind.On:
+                                                switch(Result.Kind)
                                                 {
-                                                    var parser = new LogicalClausesSectionParser(_context);
-                                                    parser.Run();
+                                                    case KindOfCodeEntity.State:
+                                                        {
+                                                            var parser = new LogicalClausesSectionParser(_context);
+                                                            parser.Run();
 
 #if DEBUG
-                                                    Log($"parser.Result = {parser.Result.WriteListToString()}");
+                                                            Log($"parser.Result = {parser.Result.WriteListToString()}");
 #endif
 
-                                                    throw new NotImplementedException();
+                                                            Result.ActivatingClauses.AddRange(parser.Result);
+                                                        }
+                                                        break;
+
+                                                    default:
+                                                        throw new ArgumentOutOfRangeException(nameof(Result.Kind), Result.Kind, null);
                                                 }
+                                                break;
 
                                             default:
                                                 throw new UnexpectedTokenException(_currToken);
@@ -247,6 +256,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         throw new UnexpectedTokenException(_currToken);
                                 }                                
                             }
+                            break;
 
                         default:
                             throw new UnexpectedTokenException(_currToken);

@@ -30,17 +30,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     public class AsyncThreadExecutor: BaseThreadExecutor
     {
         public AsyncThreadExecutor(IEngineContext context)
-            : this(context, null, null)
+            : this(context, null)
         {
         }
 
-        public AsyncThreadExecutor(IEngineContext context, IExecutionCoordinator actionExecutionCoordinator)
-            : base(context, new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext), actionExecutionCoordinator, null)
-        {
-        }
-
-        public AsyncThreadExecutor(IEngineContext context, IExecutionCoordinator actionExecutionCoordinator, IExecutionCoordinator stateExecutionCoordinator)
-            : base(context, new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext), actionExecutionCoordinator, stateExecutionCoordinator)
+        public AsyncThreadExecutor(IEngineContext context, IExecutionCoordinator executionCoordinator)
+            : base(context, new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext), executionCoordinator)
         {
         }
     }

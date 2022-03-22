@@ -52,7 +52,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         /// <inheritdoc/>
-        public Value ExecuteBatchAsync(List<ProcessInitialInfo> processInitialInfoList, IExecutionCoordinator actionExecutionCoordinator)
+        public Value ExecuteBatchAsync(List<ProcessInitialInfo> processInitialInfoList, IExecutionCoordinator executionCoordinator)
         {
 #if DEBUG
             //Log($"processInitialInfoList = {processInitialInfoList.WriteListToString()}");
@@ -81,16 +81,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //_context.InstancesStorage.PrintProcessesList();
 #endif
 
-            var threadExecutor = new AsyncThreadExecutor(_context, actionExecutionCoordinator);
+            var threadExecutor = new AsyncThreadExecutor(_context, executionCoordinator);
             threadExecutor.SetCodeFrames(codeFramesList);
 
             return threadExecutor.Start();
         }
 
         /// <inheritdoc/>
-        public Value ExecuteAsync(ProcessInitialInfo processInitialInfo, IExecutionCoordinator actionExecutionCoordinator)
+        public Value ExecuteAsync(ProcessInitialInfo processInitialInfo, IExecutionCoordinator executionCoordinator)
         {
-            return ExecuteBatchAsync(new List<ProcessInitialInfo>() { processInitialInfo }, actionExecutionCoordinator);
+            return ExecuteBatchAsync(new List<ProcessInitialInfo>() { processInitialInfo }, executionCoordinator);
         }
     }
 }

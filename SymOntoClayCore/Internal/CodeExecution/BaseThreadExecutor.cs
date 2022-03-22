@@ -51,13 +51,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             PositionedParameters
         }
 
-        protected BaseThreadExecutor(IEngineContext context, IActivePeriodicObject activeObject, IExecutionCoordinator actionExecutionCoordinator, IExecutionCoordinator stateExecutionCoordinator)
+        protected BaseThreadExecutor(IEngineContext context, IActivePeriodicObject activeObject, IExecutionCoordinator executionCoordinator)
             :base(context.Logger)
         {
             _context = context;
 
-            _actionExecutionCoordinator = actionExecutionCoordinator;
-            _stateExecutionCoordinator = stateExecutionCoordinator;
+            _executionCoordinator = executionCoordinator;
 
             _globalStorage = context.Storage.GlobalStorage;
             _globalLogicalStorage = _globalStorage.LogicalStorage;
@@ -77,11 +76,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _varsResolver = dataResolversFactory.GetVarsResolver();
             _methodsResolver = dataResolversFactory.GetMethodsResolver();
             _logicalSearchResolver = dataResolversFactory.GetLogicalSearchResolver();
+            _statesResolver = dataResolversFactory.GetStatesResolver();
         }
 
         private readonly IEngineContext _context;
-        private readonly IExecutionCoordinator _actionExecutionCoordinator;
-        private readonly IExecutionCoordinator _stateExecutionCoordinator;
+        private readonly IExecutionCoordinator _executionCoordinator;
         private readonly IStorage _globalStorage;
         private readonly ILogicalStorage _globalLogicalStorage;
         private readonly IHostListener _hostListener;
@@ -94,6 +93,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly VarsResolver _varsResolver;
         private readonly MethodsResolver _methodsResolver;
         private readonly LogicalSearchResolver _logicalSearchResolver;
+        private readonly StatesResolver _statesResolver;
 
         private Stack<CodeFrame> _codeFrames = new Stack<CodeFrame>();
         private CodeFrame _currentCodeFrame;
@@ -160,7 +160,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             try
             {
-                if(_actionExecutionCoordinator != null && _actionExecutionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing)
+                if(_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing)
                 {
 #if DEBUG
                     //Log("_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing; return false;");
@@ -571,7 +571,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     case OperationCode.CompleteAction:
                         {
-                            _actionExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
+                            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
 
                             _currentCodeFrame.CurrentPosition++;
                         }
@@ -587,9 +587,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             var ruleInstance = currentValue.AsRuleInstanceValue.RuleInstance;
 
-                            _actionExecutionCoordinator.RuleInstance = ruleInstance;
+                            _executionCoordinator.RuleInstance = ruleInstance;
 
-                            _actionExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
+                            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
 
                             _currentCodeFrame.CurrentPosition++;
                         }
@@ -686,10 +686,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             Log($"stateName = {stateName}");
 #endif
 
-#if DEBUG
-                            Log($"(_stateExecutionCoordinator != null) = {_stateExecutionCoordinator != null}");
-#endif
+                            var state = _statesResolver.Resolve(stateName, _currentCodeFrame.LocalContext);
 
+#if DEBUG
+                            Log($"state = {state}");
+#endif
 
                             throw new NotImplementedException();
                         }
@@ -1116,7 +1117,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
                     List<IExecutionCoordinator> executionCoordinators = null;
 
-                    if(localExecutionCoordinator != null || _actionExecutionCoordinator != null)
+                    if(localExecutionCoordinator != null || _executionCoordinator != null)
                     {
                         executionCoordinators = new List<IExecutionCoordinator>();
 
@@ -1125,9 +1126,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             executionCoordinators.Add(localExecutionCoordinator);
                         }
 
-                        if(_actionExecutionCoordinator != null)
+                        if(_executionCoordinator != null)
                         {
-                            executionCoordinators.Add(_actionExecutionCoordinator);
+                            executionCoordinators.Add(_executionCoordinator);
                         }
                     }
 

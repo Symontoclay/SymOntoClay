@@ -19,7 +19,7 @@ namespace SymOntoClay.Core.Internal.Instances
         protected override void InitExecutionCoordinators()
         {
             _stateExecutionCoordinator = new ExecutionCoordinator();
-            _stateExecutionCoordinator.OnFinished += stateExecutionCoordinator_OnFinished;
+            _stateExecutionCoordinator.OnFinished += StateExecutionCoordinator_OnFinished;
         }
 
         /// <inheritdoc/>

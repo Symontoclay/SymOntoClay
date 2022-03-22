@@ -54,7 +54,7 @@ namespace SymOntoClay.Core.Internal.Instances
         protected override void InitExecutionCoordinators()
         {
             _actionExecutionCoordinator = new ExecutionCoordinator();
-            _actionExecutionCoordinator.OnFinished += actionExecutionCoordinator_OnFinished;
+            _actionExecutionCoordinator.OnFinished += ActionExecutionCoordinator_OnFinished;
         }
 
         /// <inheritdoc/>

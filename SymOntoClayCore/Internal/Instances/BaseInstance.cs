@@ -176,17 +176,17 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected abstract void SetExecutionStatusOfExecutionCoordinatorAsExecuting();
 
-        protected void appInstanceExecutionCoordinator_OnFinished()
+        protected void AppInstanceExecutionCoordinator_OnFinished()
         {
             Dispose();
         }
 
-        protected void stateExecutionCoordinator_OnFinished()
+        protected void StateExecutionCoordinator_OnFinished()
         {
             Dispose();
         }
 
-        protected void actionExecutionCoordinator_OnFinished()
+        protected void ActionExecutionCoordinator_OnFinished()
         {
             Dispose();
         }

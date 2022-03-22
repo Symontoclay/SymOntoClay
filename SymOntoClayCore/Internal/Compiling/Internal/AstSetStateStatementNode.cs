@@ -16,7 +16,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         public void Run(AstSetStateStatement statement)
         {
 #if DEBUG
-            Log($"statement = {statement}");
+            //Log($"statement = {statement}");
 #endif
 
             CompileValue(statement.StateName);
@@ -27,7 +27,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             });
 
 #if DEBUG
-            DbgPrintCommands();
+            //DbgPrintCommands();
 #endif
         }
     }

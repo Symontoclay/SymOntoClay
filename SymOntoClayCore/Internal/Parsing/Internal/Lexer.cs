@@ -813,12 +813,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
                         }
 
-                        if (string.Compare(content, "leave", true) == 0)
-                        {
-                            kindOfKeyWord = KeyWordTokenKind.Leave;
-                            break;
-                        }                        
-
                         if (string.Compare(content, "set", true) == 0)
                         {
                             kindOfKeyWord = KeyWordTokenKind.Set;

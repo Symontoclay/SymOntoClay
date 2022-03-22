@@ -30,7 +30,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         Unknown,
         Init,
-        Enter,
-        Leave
+        Enter
     }
 }

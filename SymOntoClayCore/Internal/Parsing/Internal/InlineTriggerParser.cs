@@ -114,12 +114,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     _state = State.GotCondition;
                                     break;
 
-                                case KeyWordTokenKind.Leave:
-                                    _inlineTrigger.KindOfInlineTrigger = KindOfInlineTrigger.SystemEvent;
-                                    _inlineTrigger.KindOfSystemEvent = KindOfSystemEventOfInlineTrigger.Leave;
-                                    _state = State.GotCondition;
-                                    break;
-
                                 default:
                                     throw new UnexpectedTokenException(_currToken);
                             }

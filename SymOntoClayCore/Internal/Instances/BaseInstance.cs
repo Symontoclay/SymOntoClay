@@ -116,7 +116,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _instanceState = InstanceState.Initialized;
 
-            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
+            SetExecutionStatusOfExecutionCoordinatorAsExecuting();
+            //_executionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
         }
 
         protected abstract void InitExecutionCoordinators();
@@ -177,7 +178,19 @@ namespace SymOntoClay.Core.Internal.Instances
         {
         }
 
-        private void _executionCoordinator_OnFinished()
+        protected abstract void SetExecutionStatusOfExecutionCoordinatorAsExecuting();
+
+        private void appInstanceExecutionCoordinator_OnFinished()
+        {
+            Dispose();
+        }
+
+        private void stateExecutionCoordinator_OnFinished()
+        {
+            Dispose();
+        }
+
+        private void actionExecutionCoordinator_OnFinished()
         {
             Dispose();
         }

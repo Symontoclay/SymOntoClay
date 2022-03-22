@@ -69,13 +69,19 @@ namespace SymOntoClay.Core.Internal.Instances
         private InstanceState _instanceState = InstanceState.Created;
         private List<LogicConditionalTriggerInstanceInfo> _logicConditionalTriggersList = new List<LogicConditionalTriggerInstanceInfo>();
 
-        private readonly ExecutionCoordinator _executionCoordinator;
+        protected IExecutionCoordinator _appInstanceExecutionCoordinator;
+        protected IExecutionCoordinator _stateExecutionCoordinator;
+        protected IExecutionCoordinator _actionExecutionCoordinator;
 
-        public IExecutionCoordinator ExecutionCoordinator => _executionCoordinator;
+        public IExecutionCoordinator AppInstanceExecutionCoordinator => _appInstanceExecutionCoordinator;
+        public IExecutionCoordinator StateExecutionCoordinator => _stateExecutionCoordinator;
+        public IExecutionCoordinator ActionExecutionCoordinator => _actionExecutionCoordinator;
 
         public virtual void Init()
         {
             _instanceState = InstanceState.Initializing;
+
+            InitExecutionCoordinators();
 
             ApplyCodeDirectives();
 
@@ -112,6 +118,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
         }
+
+        protected abstract void InitExecutionCoordinators();
 
         protected virtual void ApplyCodeDirectives()
         {

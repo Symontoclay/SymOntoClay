@@ -42,17 +42,17 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         /// <inheritdoc/>
         public Value ExecuteBatchAsync(List<ProcessInitialInfo> processInitialInfoList)
         {
-            return ExecuteBatchAsync(processInitialInfoList, null);
+            return ExecuteBatchAsync(processInitialInfoList, null, null, null);
         }
 
         /// <inheritdoc/>
         public Value ExecuteAsync(ProcessInitialInfo processInitialInfo)
         {
-            return ExecuteAsync(processInitialInfo, null);
+            return ExecuteAsync(processInitialInfo, null, null, null);
         }
 
         /// <inheritdoc/>
-        public Value ExecuteBatchAsync(List<ProcessInitialInfo> processInitialInfoList, IExecutionCoordinator executionCoordinator)
+        public Value ExecuteBatchAsync(List<ProcessInitialInfo> processInitialInfoList, IExecutionCoordinator appInstanceExecutionCoordinator, IExecutionCoordinator stateExecutionCoordinator, IExecutionCoordinator actionExecutionCoordinator)
         {
 #if DEBUG
             //Log($"processInitialInfoList = {processInitialInfoList.WriteListToString()}");
@@ -81,16 +81,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //_context.InstancesStorage.PrintProcessesList();
 #endif
 
-            var threadExecutor = new AsyncThreadExecutor(_context, executionCoordinator);
+            var threadExecutor = new AsyncThreadExecutor(_context, appInstanceExecutionCoordinator, stateExecutionCoordinator, actionExecutionCoordinator);
             threadExecutor.SetCodeFrames(codeFramesList);
 
             return threadExecutor.Start();
         }
 
         /// <inheritdoc/>
-        public Value ExecuteAsync(ProcessInitialInfo processInitialInfo, IExecutionCoordinator executionCoordinator)
+        public Value ExecuteAsync(ProcessInitialInfo processInitialInfo, IExecutionCoordinator appInstanceExecutionCoordinator, IExecutionCoordinator stateExecutionCoordinator, IExecutionCoordinator actionExecutionCoordinator)
         {
-            return ExecuteBatchAsync(new List<ProcessInitialInfo>() { processInitialInfo }, executionCoordinator);
+            return ExecuteBatchAsync(new List<ProcessInitialInfo>() { processInitialInfo }, appInstanceExecutionCoordinator, stateExecutionCoordinator, actionExecutionCoordinator);
         }
     }
 }

@@ -46,7 +46,9 @@ namespace SymOntoClay.Core.Internal.Instances
             _context = context;
             _parent = parent;
 
-            _executionCoordinator = parent.ExecutionCoordinator;
+            _appInstanceExecutionCoordinator = parent.AppInstanceExecutionCoordinator;
+            _stateExecutionCoordinator = parent.StateExecutionCoordinator;
+            _actionExecutionCoordinator = parent.ActionExecutionCoordinator;
 
             _trigger = trigger;
             _condition = trigger.Condition;
@@ -85,7 +87,9 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly LogicalSearchResolver _searcher;
         private readonly object _lockObj = new object();
         private readonly IEngineContext _context;
-        private readonly IExecutionCoordinator _executionCoordinator;
+        private readonly IExecutionCoordinator _appInstanceExecutionCoordinator;
+        private readonly IExecutionCoordinator _stateExecutionCoordinator; 
+        private readonly IExecutionCoordinator _actionExecutionCoordinator;
         private readonly IStorage _storage;
         private InlineTrigger _trigger;
         private readonly LocalCodeExecutionContext _localCodeExecutionContext;
@@ -212,7 +216,7 @@ namespace SymOntoClay.Core.Internal.Instances
             processInitialInfo.LocalContext = localCodeExecutionContext;
             processInitialInfo.Metadata = _trigger;
 
-            var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo, _executionCoordinator);
+            var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo, _appInstanceExecutionCoordinator, _stateExecutionCoordinator, _actionExecutionCoordinator);
         }
 
         private void ProcessResultWithItems(LogicalSearchResult searchResult)
@@ -316,7 +320,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 processInitialInfo.LocalContext = localCodeExecutionContext;
                 processInitialInfo.Metadata = _trigger;
 
-                var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo, _executionCoordinator);
+                var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo, _appInstanceExecutionCoordinator, _stateExecutionCoordinator, _actionExecutionCoordinator);
             }
 
             //var keysForRemoving = _foundKeys.Except(usedKeys);

@@ -51,12 +51,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             PositionedParameters
         }
 
-        protected BaseThreadExecutor(IEngineContext context, IActivePeriodicObject activeObject, IExecutionCoordinator executionCoordinator)
+        protected BaseThreadExecutor(IEngineContext context, IActivePeriodicObject activeObject, IExecutionCoordinator appInstanceExecutionCoordinator, IExecutionCoordinator stateExecutionCoordinator, IExecutionCoordinator actionExecutionCoordinator)
             :base(context.Logger)
         {
             _context = context;
 
-            _executionCoordinator = executionCoordinator;
+            _appInstanceExecutionCoordinator = appInstanceExecutionCoordinator;
+            _stateExecutionCoordinator = stateExecutionCoordinator;
+            _actionExecutionCoordinator = actionExecutionCoordinator;
 
             _globalStorage = context.Storage.GlobalStorage;
             _globalLogicalStorage = _globalStorage.LogicalStorage;
@@ -80,7 +82,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         private readonly IEngineContext _context;
-        private readonly IExecutionCoordinator _executionCoordinator;
+        private readonly IExecutionCoordinator _appInstanceExecutionCoordinator;
+        private readonly IExecutionCoordinator _stateExecutionCoordinator;
+        private readonly IExecutionCoordinator _actionExecutionCoordinator;
         private readonly IStorage _globalStorage;
         private readonly ILogicalStorage _globalLogicalStorage;
         private readonly IHostListener _hostListener;

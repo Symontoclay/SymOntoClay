@@ -64,7 +64,7 @@ namespace SymOntoClay.Core.Internal.Instances
         protected readonly LocalCodeExecutionContext _localCodeExecutionContext;
         private readonly TriggersResolver _triggersResolver;
         private InstanceState _instanceState = InstanceState.Created;
-        private List<LogicConditionalTriggerInstanceInfo> _logicConditionalTriggersList = new List<LogicConditionalTriggerInstanceInfo>();
+        private List<LogicConditionalTriggerInstance> _logicConditionalTriggersList = new List<LogicConditionalTriggerInstance>();
 
         protected IExecutionCoordinator _appInstanceExecutionCoordinator;
         protected IExecutionCoordinator _stateExecutionCoordinator;
@@ -110,7 +110,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     //Log($"targetTrigger = {targetTrigger}");
 #endif
 
-                    var triggerInstanceInfo = new LogicConditionalTriggerInstanceInfo(targetTrigger.ResultItem, this, _context, _storage);
+                    var triggerInstanceInfo = new LogicConditionalTriggerInstance(targetTrigger.ResultItem, this, _context, _storage);
                     _logicConditionalTriggersList.Add(triggerInstanceInfo);
                 }
             }

@@ -125,6 +125,50 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return OrderAndDistinctByInheritance(filteredList, options).FirstOrDefault()?.ResultItem;
         }
 
+        public List<ActivationInfoOfStateDef> ResolveActivationInfoOfStateList(LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return ResolveActivationInfoOfStateList(localCodeExecutionContext, _defaultOptions);
+        }
+        
+        public List<ActivationInfoOfStateDef> ResolveActivationInfoOfStateList(LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var storage = localCodeExecutionContext.Storage;
+
+            var storagesList = GetStoragesList(storage);
+
+#if DEBUG
+            //Log($"storagesList.Count = {storagesList.Count}");
+            //foreach (var tmpStorage in storagesList)
+            //{
+            //    Log($"tmpStorage = {tmpStorage}");
+            //}
+#endif
+
+            if (!storagesList.Any())
+            {
+                return new List<ActivationInfoOfStateDef>();
+            }
+
+            var result = new List<ActivationInfoOfStateDef>();
+
+            foreach (var storageItem in storagesList)
+            {
+#if DEBUG
+                //Log($"storageItem = {storageItem}");
+#endif
+
+                var itemsList = storageItem.Storage.StatesStorage.GetActivationInfoOfStateListDirectly();
+
+#if DEBUG
+                //Log($"itemsList = {itemsList.WriteListToString()}");
+#endif
+
+                result.AddRange(itemsList);
+            }
+
+            return result;
+        }
+
         private List<WeightedInheritanceResultItemWithStorageInfo<StateDef>> GetRawStatesList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG

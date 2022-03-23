@@ -204,7 +204,23 @@ namespace SymOntoClay.Core.Internal.Instances
             Log("Begin");
 #endif
 
-            var activatorsInfo = _statesResolver.ResolveActivationInfoOfState
+            var activatorsInfoList = _statesResolver.ResolveActivationInfoOfStateList(_localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"activatorsInfoList = {activatorsInfoList.WriteListToString()}");
+#endif
+
+            if(!activatorsInfoList.Any())
+            {
+                return;
+            }
+
+            foreach(var activatorInfo in activatorsInfoList)
+            {
+#if DEBUG
+                Log($"activatorInfo = {activatorInfo}");
+#endif
+            }
 
             throw new NotImplementedException();
 

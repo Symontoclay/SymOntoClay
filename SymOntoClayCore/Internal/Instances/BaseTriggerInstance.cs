@@ -1,46 +1,18 @@
-/*MIT License
-
-Copyright (c) 2020 - <curr_year/> Sergiy Tolkachov
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.*/
-
-using Newtonsoft.Json;
-using SymOntoClay.Core.DebugHelpers;
-using SymOntoClay.Core.Internal.CodeExecution;
+﻿using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
-using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Storage;
-using SymOntoClay.Core.Internal.Threads;
-using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class LogicConditionalTriggerInstanceInfo : BaseComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public abstract class BaseTriggerInstance : BaseComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public LogicConditionalTriggerInstanceInfo(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage)
+        protected BaseTriggerInstance(RuleInstance condition, BaseInstance parent, IEngineContext context, IStorage parentStorage)
             : base(context.Logger)
         {
             _context = context;
@@ -50,8 +22,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _stateExecutionCoordinator = parent.StateExecutionCoordinator;
             _actionExecutionCoordinator = parent.ActionExecutionCoordinator;
 
-            _trigger = trigger;
-            _condition = trigger.Condition;
+            _condition = condition;
 
 #if DEBUG
             //Log($"_condition = {DebugHelperForRuleInstance.ToString(_condition)}");
@@ -86,12 +57,11 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private readonly LogicalSearchResolver _searcher;
         private readonly object _lockObj = new object();
-        private readonly IEngineContext _context;
-        private readonly IExecutionCoordinator _appInstanceExecutionCoordinator;
-        private readonly IExecutionCoordinator _stateExecutionCoordinator; 
-        private readonly IExecutionCoordinator _actionExecutionCoordinator;
+        protected readonly IEngineContext _context;
+        protected readonly IExecutionCoordinator _appInstanceExecutionCoordinator;
+        protected readonly IExecutionCoordinator _stateExecutionCoordinator;
+        protected readonly IExecutionCoordinator _actionExecutionCoordinator;
         private readonly IStorage _storage;
-        private InlineTrigger _trigger;
         private readonly LocalCodeExecutionContext _localCodeExecutionContext;
         private BaseInstance _parent;
         private RuleInstance _condition;
@@ -102,9 +72,16 @@ namespace SymOntoClay.Core.Internal.Instances
         private bool _isBusy;
         private bool _needRepeat;
 
+        protected abstract void RunHandler(LocalCodeExecutionContext localCodeExecutionContext);
+
+        protected virtual BindingVariables GetBindingVariables()
+        {
+            throw new NotImplementedException();
+        }
+
         private void LogicalStorage_OnChanged()
         {
-            Task.Run(() => 
+            Task.Run(() =>
             {
                 try
                 {
@@ -138,7 +115,7 @@ namespace SymOntoClay.Core.Internal.Instances
                         DoSearch();
                     }
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Error(e);
                 }
@@ -166,14 +143,14 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if (searchResult.IsSuccess)
             {
-                if(searchResult.Items.Count == 0)
+                if (searchResult.Items.Count == 0)
                 {
                     ProcessResultWithNoItems();
                 }
                 else
                 {
                     ProcessResultWithItems(searchResult);
-                }                
+                }
             }
             else
             {
@@ -211,12 +188,7 @@ namespace SymOntoClay.Core.Internal.Instances
             localCodeExecutionContext.Storage = storage;
             localCodeExecutionContext.Holder = _parent.Name;
 
-            var processInitialInfo = new ProcessInitialInfo();
-            processInitialInfo.CompiledFunctionBody = _trigger.CompiledFunctionBody;
-            processInitialInfo.LocalContext = localCodeExecutionContext;
-            processInitialInfo.Metadata = _trigger;
-
-            var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo, _appInstanceExecutionCoordinator, _stateExecutionCoordinator, _actionExecutionCoordinator);
+            RunHandler(localCodeExecutionContext);
         }
 
         private void ProcessResultWithItems(LogicalSearchResult searchResult)
@@ -228,8 +200,8 @@ namespace SymOntoClay.Core.Internal.Instances
             var usedKeys = new List<string>();
             var keysForAdding = new List<string>();
 
-            var bindingVariables = _trigger.BindingVariables;
-            
+            var bindingVariables = GetBindingVariables();
+
             foreach (var foundResultItem in searchResult.Items)
             {
 #if DEBUG
@@ -315,24 +287,19 @@ namespace SymOntoClay.Core.Internal.Instances
                     }
                 }
 
-                var processInitialInfo = new ProcessInitialInfo();
-                processInitialInfo.CompiledFunctionBody = _trigger.CompiledFunctionBody;
-                processInitialInfo.LocalContext = localCodeExecutionContext;
-                processInitialInfo.Metadata = _trigger;
-
-                var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo, _appInstanceExecutionCoordinator, _stateExecutionCoordinator, _actionExecutionCoordinator);
+                RunHandler(localCodeExecutionContext);
             }
 
             //var keysForRemoving = _foundKeys.Except(usedKeys);
 
             _foundKeys = usedKeys;
 
-//#if DEBUG
-//            Log($"_foundKeys = {JsonConvert.SerializeObject(_foundKeys)}");
-//            Log($"usedKeys = {JsonConvert.SerializeObject(usedKeys)}");
-//            Log($"keysForAdding = {JsonConvert.SerializeObject(keysForAdding)}");
-//            Log($"keysForRemoving = {JsonConvert.SerializeObject(keysForRemoving)}");
-//#endif
+            //#if DEBUG
+            //            Log($"_foundKeys = {JsonConvert.SerializeObject(_foundKeys)}");
+            //            Log($"usedKeys = {JsonConvert.SerializeObject(usedKeys)}");
+            //            Log($"keysForAdding = {JsonConvert.SerializeObject(keysForAdding)}");
+            //            Log($"keysForRemoving = {JsonConvert.SerializeObject(keysForRemoving)}");
+            //#endif
         }
 
         /// <inheritdoc/>

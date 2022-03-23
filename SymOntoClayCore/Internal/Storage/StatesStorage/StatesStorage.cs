@@ -31,6 +31,7 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
 
         private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<StateDef>>> _statesDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<StateDef>>>();
         private readonly Dictionary<StateDef, List<ActivationInfoOfStateDef>> _activationInfoDict = new Dictionary<StateDef, List<ActivationInfoOfStateDef>>();
+        private List<ActivationInfoOfStateDef> _activationInfoList = new List<ActivationInfoOfStateDef>();
         private StrongIdentifierValue _defaultStateName;
 
         /// <inheritdoc/>
@@ -76,6 +77,8 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
                         {
                             _activationInfoDict.Remove(removedItem);
                         }
+
+                        _activationInfoList = _activationInfoDict.Values.SelectMany(p => p).ToList();
                     }
                 }
                 else
@@ -93,6 +96,8 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
                     }
 
                     _activationInfoDict[state] = activatingInfoList;
+
+                    _activationInfoList = _activationInfoDict.Values.SelectMany(p => p).ToList();
                 }
             }
         }
@@ -159,6 +164,15 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
             lock (_lockObj)
             {
                 return _defaultStateName;
+            }
+        }
+
+        /// <inheritdoc/>
+        public List<ActivationInfoOfStateDef> GetActivationInfoOfStateListDirectly()
+        {
+            lock (_lockObj)
+            {
+                return _activationInfoList;
             }
         }
     }

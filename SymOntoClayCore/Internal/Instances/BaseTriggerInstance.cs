@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.CodeExecution;
+﻿using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage;
@@ -79,12 +80,30 @@ namespace SymOntoClay.Core.Internal.Instances
             throw new NotImplementedException();
         }
 
+        protected virtual bool ShouldSearch()
+        {
+            return true;
+        }
+
         private void LogicalStorage_OnChanged()
         {
             Task.Run(() =>
             {
+#if DEBUG
+                Log("Begin");
+#endif
+
                 try
                 {
+                    if(!ShouldSearch())
+                    {
+                        return;
+                    }
+
+#if DEBUG
+                    Log("Begin NEXT");
+#endif
+
                     lock (_lockObj)
                     {
                         if (_isBusy)
@@ -128,8 +147,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
 #if DEBUG
             //Log($"searchResult = {searchResult}");
-            //Log($"_condition = {DebugHelperForRuleInstance.ToString(_condition)}");
-            //Log($"searchResult = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
+            Log($"_condition = {DebugHelperForRuleInstance.ToString(_condition)}");
+            Log($"searchResult = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
             //foreach(var usedKey in searchResult.UsedKeysList)
             //{
             //    Log($"usedKey = {usedKey}");

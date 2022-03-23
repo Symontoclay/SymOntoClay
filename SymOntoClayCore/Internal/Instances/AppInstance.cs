@@ -149,6 +149,19 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private readonly object _statesLockObj = new object();
 
+        public bool IsStateActivated(StrongIdentifierValue stateName)
+        {
+            lock (_statesLockObj)
+            {
+                if (_activeStatesDict.ContainsKey(stateName))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
         public void ActivateState(StateDef state)
         {
             Task.Run(() => {
@@ -197,6 +210,8 @@ namespace SymOntoClay.Core.Internal.Instances
             }
         }
 
+        private List<StateActivator> _stateActivators = new List<StateActivator>();
+
         /// <inheritdoc/>
         protected override void RunActivatorsOfStates()
         {
@@ -220,13 +235,24 @@ namespace SymOntoClay.Core.Internal.Instances
 #if DEBUG
                 Log($"activatorInfo = {activatorInfo}");
 #endif
-            }
 
-            throw new NotImplementedException();
+                _stateActivators.Add(new StateActivator(activatorInfo, this, _context, _storage));
+            }
 
 #if DEBUG
             Log("End");
 #endif
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            foreach(var stateActivator in _stateActivators)
+            {
+                stateActivator.Dispose();
+            }
+
+            base.OnDisposed();
         }
     }
 }

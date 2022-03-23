@@ -4858,6 +4858,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.StateActivator.RunHandler(SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.StateDeactivator.RunHandler(SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.InitExecutionCoordinators">
             <inheritdoc/>
         </member>

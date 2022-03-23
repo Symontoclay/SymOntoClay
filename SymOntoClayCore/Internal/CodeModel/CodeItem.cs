@@ -116,6 +116,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public List<CodeItemDirective> Directives { get; private set; } = new List<CodeItemDirective>();
 
         public List<RuleInstance> ActivatingClauses { get; private set; } = new List<RuleInstance>();
+        public List<RuleInstance> DeactivatingClauses { get; private set; } = new List<RuleInstance>();
 
         public virtual bool IsRuleInstance => false;
         public virtual RuleInstance AsRuleInstance => null;
@@ -207,6 +208,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             Directives = source.Directives?.Select(p => p.CloneCodeItemDirective(cloneContext)).ToList();
 
             ActivatingClauses = source.ActivatingClauses?.Select(p => p.Clone(cloneContext)).ToList();
+            DeactivatingClauses = source.DeactivatingClauses?.Select(p => p.Clone(cloneContext)).ToList();
 
             AppendAnnotations(source, cloneContext);
         }
@@ -261,7 +263,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjProp(n, nameof(Holder), Holder);
 
             sb.PrintObjListProp(n, nameof(Directives), Directives);
-            sb.PrintObjListProp(n, nameof(ActivatingClauses), ActivatingClauses);
+            sb.PrintObjListProp(n, nameof(ActivatingClauses), ActivatingClauses); 
+            sb.PrintObjListProp(n, nameof(DeactivatingClauses), DeactivatingClauses);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -289,6 +292,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintShortObjListProp(n, nameof(Directives), Directives);
             sb.PrintShortObjListProp(n, nameof(ActivatingClauses), ActivatingClauses);
+            sb.PrintShortObjListProp(n, nameof(DeactivatingClauses), DeactivatingClauses);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -308,6 +312,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintBriefObjListProp(n, nameof(Directives), Directives);
             sb.PrintBriefObjListProp(n, nameof(ActivatingClauses), ActivatingClauses);
+            sb.PrintBriefObjListProp(n, nameof(DeactivatingClauses), DeactivatingClauses);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

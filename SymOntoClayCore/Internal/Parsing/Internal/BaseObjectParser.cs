@@ -124,7 +124,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected void ProcessGeneralContent()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
+            Log($"_currToken = {_currToken}");
             //Log($"(_context.CurrentDefaultSetings != null) = {_context.CurrentDefaultSetings != null}");
 #endif
 
@@ -254,7 +254,52 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                     default:
                                         throw new UnexpectedTokenException(_currToken);
-                                }                                
+                                }
+                            }
+                            break;
+
+                        case KeyWordTokenKind.Leave:
+                            {
+                                var nextToken = _context.GetToken();
+
+#if DEBUG
+                                Log($"nextToken = {nextToken}");
+#endif
+
+                                switch (nextToken.TokenKind)
+                                {
+                                    case TokenKind.Word:
+                                        switch(nextToken.KeyWordTokenKind)
+                                        {
+                                            case KeyWordTokenKind.On:
+                                                switch(Result.Kind)
+                                                {
+                                                    case KindOfCodeEntity.State:
+                                                        {
+                                                            var parser = new LogicalClausesSectionParser(_context);
+                                                            parser.Run();
+
+#if DEBUG
+                                                            Log($"parser.Result = {parser.Result.WriteListToString()}");
+#endif
+
+                                                            Result.DeactivatingClauses.AddRange(parser.Result);
+                                                        }
+                                                        break;
+
+                                                    default:
+                                                        throw new ArgumentOutOfRangeException(nameof(Result.Kind), Result.Kind, null);
+                                                }
+                                                break;
+
+                                            default:
+                                                throw new UnexpectedTokenException(_currToken);
+                                        }
+                                        break;
+
+                                    default:
+                                        throw new UnexpectedTokenException(_currToken);
+                                }
                             }
                             break;
 

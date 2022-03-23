@@ -40,7 +40,10 @@ namespace SymOntoClay.Core.Internal.Instances
         public AppInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage)
             : base(codeItem, context, parentStorage, new ObjectStorageFactory())
         {
+            _statesResolver = _context.DataResolversFactory.GetStatesResolver();
         }
+
+        private StatesResolver _statesResolver;
 
         /// <inheritdoc/>
         protected override void InitExecutionCoordinators()
@@ -129,9 +132,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 return;
             }
 
-            var statesResolver = _context.DataResolversFactory.GetStatesResolver();
-
-            var state = statesResolver.Resolve(_stateNameForAutomaticStart, _localCodeExecutionContext);
+            var state = _statesResolver.Resolve(_stateNameForAutomaticStart, _localCodeExecutionContext);
 
 #if DEBUG
             //Log($"state = {state}");
@@ -202,6 +203,8 @@ namespace SymOntoClay.Core.Internal.Instances
 #if DEBUG
             Log("Begin");
 #endif
+
+            var activatorsInfo = _statesResolver.ResolveActivationInfoOfState
 
             throw new NotImplementedException();
 

@@ -11,7 +11,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             TypeOfAccess = TypeOfAccess.Public;
         }
-
+        
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.State;
 

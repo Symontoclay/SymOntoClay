@@ -7,6 +7,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class ActivationInfoOfStateDef: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
+        public ActivationInfoOfStateDef(StateDef state, RuleInstance activatingClause)
+        {
+            State = state;
+            ActivatingClause = activatingClause;
+        }
+
+        public StateDef State { get; set; }
+        public RuleInstance ActivatingClause { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -24,6 +33,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintObjProp(n, nameof(State), State);
+            sb.PrintObjProp(n, nameof(ActivatingClause), ActivatingClause);
+
             return sb.ToString();
         }
 
@@ -44,6 +57,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintShortObjProp(n, nameof(State), State);
+            sb.PrintShortObjProp(n, nameof(ActivatingClause), ActivatingClause);
+
             return sb.ToString();
         }
 
@@ -64,6 +81,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintBriefObjProp(n, nameof(State), State);
+            sb.PrintBriefObjProp(n, nameof(ActivatingClause), ActivatingClause);
+
             return sb.ToString();
         }
     }

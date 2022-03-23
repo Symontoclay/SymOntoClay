@@ -142,6 +142,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsField => false;
         public virtual Field AsField => null;
 
+        public virtual bool IsMutuallyExclusiveStatesSet => false;
+        public virtual MutuallyExclusiveStatesSet AsMutuallyExclusiveStatesSet => null;
+
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {

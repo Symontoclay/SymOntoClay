@@ -114,6 +114,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case KeyWordTokenKind.States:
+                            {
+                                _context.Recovery(_currToken);
+                                var parser = new MutuallyExclusiveStatesParser(_context);
+                                parser.Run();
+                                Result.Add(parser.Result);
+                            }
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

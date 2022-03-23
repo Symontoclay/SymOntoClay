@@ -2715,6 +2715,40 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.ToHumanizedString">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.MutuallyExclusiveStatesSet.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.MutuallyExclusiveStatesSet.IsMutuallyExclusiveStatesSet">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.MutuallyExclusiveStatesSet.AsMutuallyExclusiveStatesSet">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.MutuallyExclusiveStatesSet.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.MutuallyExclusiveStatesSet.Clone">
+            <summary>
+            Clones the instance and returns cloned instance.
+            </summary>
+            <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.MutuallyExclusiveStatesSet.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            Clones the instance using special context and returns cloned instance.
+            </summary>
+            <param name="context">Special context for providing references continuity.</param>
+            <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.MutuallyExclusiveStatesSet.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.MutuallyExclusiveStatesSet.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.MutuallyExclusiveStatesSet.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NamedFunction.IsNamedFunction">
             <inheritdoc/>
         </member>
@@ -5157,6 +5191,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalQueryParser.OnRun">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.MutuallyExclusiveStatesParser.OnEnter">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.MutuallyExclusiveStatesParser.OnRun">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.NamedFunctionParser.OnEnter">

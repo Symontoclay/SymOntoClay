@@ -42,6 +42,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         LinguisticVariable,
         Var,
         Field,
-        State
+        State,
+        MutuallyExclusiveStatesSet
     }
 }

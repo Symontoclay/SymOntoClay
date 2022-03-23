@@ -216,6 +216,9 @@ namespace SymOntoClay.Core.Internal.Serialization
                 case KindOfCodeEntity.Field:
                     break;
 
+                case KindOfCodeEntity.MutuallyExclusiveStatesSet:
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(codeEntity.Kind), codeEntity.Kind, null);
             }
@@ -322,7 +325,7 @@ namespace SymOntoClay.Core.Internal.Serialization
         private void SaveItem(CodeItem codeItem)
         {
 #if DEBUG
-            //Log($"codeItem = {codeItem}");
+            Log($"codeItem = {codeItem}");
 #endif
 
             var codeEntityName = codeItem.Name;

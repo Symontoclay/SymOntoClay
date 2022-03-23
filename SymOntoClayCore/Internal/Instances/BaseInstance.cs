@@ -87,6 +87,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             RunInitialTriggers();
 
+            RunMutuallyExclusiveStatesSets();
             RunExplicitStates();
 
             RunActivatorsOfStates();
@@ -175,6 +176,10 @@ namespace SymOntoClay.Core.Internal.Instances
                 //Log($"taskValue = {taskValue}");
 #endif
             }
+        }
+
+        protected virtual void RunMutuallyExclusiveStatesSets()
+        {
         }
 
         protected virtual void RunExplicitStates()

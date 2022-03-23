@@ -117,6 +117,25 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
+        protected override void RunMutuallyExclusiveStatesSets()
+        {
+#if DEBUG
+            Log("Begin");
+#endif
+
+            var itemsList = _statesResolver.ResolveMutuallyExclusiveStatesSetsList(_localCodeExecutionContext);
+
+            if(itemsList.Any())
+            {
+                throw new NotImplementedException();
+            }
+
+#if DEBUG
+            Log("End");
+#endif
+        }
+
+        /// <inheritdoc/>
         protected override void RunExplicitStates()
         {
 #if DEBUG

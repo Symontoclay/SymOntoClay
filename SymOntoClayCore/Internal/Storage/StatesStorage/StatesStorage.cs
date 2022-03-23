@@ -33,6 +33,7 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
         private readonly Dictionary<StateDef, List<ActivationInfoOfStateDef>> _activationInfoDict = new Dictionary<StateDef, List<ActivationInfoOfStateDef>>();
         private List<ActivationInfoOfStateDef> _activationInfoList = new List<ActivationInfoOfStateDef>();
         private StrongIdentifierValue _defaultStateName;
+        private readonly List<MutuallyExclusiveStatesSet> _mutuallyExclusiveStatesSetsList = new List<MutuallyExclusiveStatesSet>();
 
         /// <inheritdoc/>
         public void Append(StateDef state)
@@ -173,6 +174,31 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
             lock (_lockObj)
             {
                 return _activationInfoList;
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Append(MutuallyExclusiveStatesSet mutuallyExclusiveStatesSet)
+        {
+            lock (_lockObj)
+            {
+#if DEBUG
+                Log($"mutuallyExclusiveStatesSet = {mutuallyExclusiveStatesSet}");
+#endif
+                if(_mutuallyExclusiveStatesSetsList.Contains(mutuallyExclusiveStatesSet))
+                {
+                    return;
+                }
+
+                _mutuallyExclusiveStatesSetsList.Add(mutuallyExclusiveStatesSet);
+            }
+        }
+
+        public List<MutuallyExclusiveStatesSet> GetMutuallyExclusiveStatesSetsListDirectly()
+        {
+            lock (_lockObj)
+            {
+                return _mutuallyExclusiveStatesSetsList;
             }
         }
     }

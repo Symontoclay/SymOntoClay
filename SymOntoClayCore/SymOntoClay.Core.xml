@@ -4703,6 +4703,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.ApplyCodeDirectives">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.RunMutuallyExclusiveStatesSets">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.RunExplicitStates">
             <inheritdoc/>
         </member>
@@ -6165,6 +6168,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StatesStorage.StatesStorage.GetActivationInfoOfStateListDirectly">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStorage.StatesStorage.Append(SymOntoClay.Core.Internal.CodeModel.MutuallyExclusiveStatesSet)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StateStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">

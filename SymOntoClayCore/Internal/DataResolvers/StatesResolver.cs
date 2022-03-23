@@ -169,6 +169,50 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
+        public List<MutuallyExclusiveStatesSet> ResolveMutuallyExclusiveStatesSetsList(LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return ResolveMutuallyExclusiveStatesSetsList(localCodeExecutionContext, _defaultOptions);
+        }
+
+        public List<MutuallyExclusiveStatesSet> ResolveMutuallyExclusiveStatesSetsList(LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var storage = localCodeExecutionContext.Storage;
+
+            var storagesList = GetStoragesList(storage);
+
+#if DEBUG
+            //Log($"storagesList.Count = {storagesList.Count}");
+            //foreach (var tmpStorage in storagesList)
+            //{
+            //    Log($"tmpStorage = {tmpStorage}");
+            //}
+#endif
+
+            if (!storagesList.Any())
+            {
+                return new List<MutuallyExclusiveStatesSet>();
+            }
+
+            var result = new List<MutuallyExclusiveStatesSet>();
+
+            foreach (var storageItem in storagesList)
+            {
+#if DEBUG
+                //Log($"storageItem = {storageItem}");
+#endif
+
+                var itemsList = storageItem.Storage.StatesStorage.GetMutuallyExclusiveStatesSetsListDirectly();
+
+#if DEBUG
+                //Log($"itemsList = {itemsList.WriteListToString()}");
+#endif
+
+                result.AddRange(itemsList);
+            }
+
+            return result;
+        }
+
         private List<WeightedInheritanceResultItemWithStorageInfo<StateDef>> GetRawStatesList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG

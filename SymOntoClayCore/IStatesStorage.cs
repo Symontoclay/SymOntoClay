@@ -13,5 +13,7 @@ namespace SymOntoClay.Core
         void SetDefaultStateName(StrongIdentifierValue name);
         StrongIdentifierValue GetDefaultStateNameDirectly();
         List<ActivationInfoOfStateDef> GetActivationInfoOfStateListDirectly();
+        void Append(MutuallyExclusiveStatesSet mutuallyExclusiveStatesSet);
+        List<MutuallyExclusiveStatesSet> GetMutuallyExclusiveStatesSetsListDirectly();
     }
 }

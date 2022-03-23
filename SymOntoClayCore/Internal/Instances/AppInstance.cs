@@ -216,7 +216,7 @@ namespace SymOntoClay.Core.Internal.Instances
         protected override void RunActivatorsOfStates()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             var activatorsInfoList = _statesResolver.ResolveActivationInfoOfStateList(_localCodeExecutionContext);
@@ -233,14 +233,14 @@ namespace SymOntoClay.Core.Internal.Instances
             foreach(var activatorInfo in activatorsInfoList)
             {
 #if DEBUG
-                Log($"activatorInfo = {activatorInfo}");
+                //Log($"activatorInfo = {activatorInfo}");
 #endif
 
                 _stateActivators.Add(new StateActivator(activatorInfo, this, _context, _storage));
             }
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 

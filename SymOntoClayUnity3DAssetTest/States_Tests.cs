@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SymOntoClay.UnityAsset.Core.Tests
@@ -496,6 +497,86 @@ state Patrolling
                         }
                     }
                 }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case6()
+        {
+            using var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{
+    on Init =>
+    {
+        'Begin' >> @>log;        
+        'End' >> @>log;
+    }
+}
+
+state Attacking
+{
+    enter on:
+        {: see(I, enemy) :}
+
+
+    on Enter
+    {
+        'Begin Attacking Enter' >> @>log;
+
+        'End Attacking Enter' >> @>log;
+    }
+}";
+
+            instance.WriteFile(text);
+
+            var initN = 0;
+            var enterN = 0;
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                if (message.EndsWith(" Enter"))
+                {
+                    enterN++;
+
+                    switch (enterN)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin Attacking Enter");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "End Attacking Enter");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(enterN), enterN, null);
+                    }
+                }
+                else
+                {
+                    initN++;
+
+                    switch (initN)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(initN), initN, null);
+                    }
+                }
+            });
+
+            Thread.Sleep(1000);
+
+            npc.InsertFact("{: see(I, enemy) :}");
+
+            Thread.Sleep(1000);
         }
     }
 }

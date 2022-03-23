@@ -262,7 +262,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case4()
         {
-            var instance = new AdvancedBehaviorTestEngineInstance();
+            using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
 { 
@@ -327,7 +327,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case5()
         {
-            var instance = new AdvancedBehaviorTestEngineInstance();
+            using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
 { 
@@ -374,7 +374,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case6()
         {
-            var instance = new AdvancedBehaviorTestEngineInstance();
+            using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
 { 

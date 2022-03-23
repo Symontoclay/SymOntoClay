@@ -24,7 +24,7 @@ namespace SymOntoClay.Core.Internal.Instances
         protected override bool ShouldSearch()
         {
 #if DEBUG
-            Log($"_stateName = {_stateName}");
+            //Log($"_stateName = {_stateName}");
 #endif
 
             return !_appInstance.IsStateActivated(_stateName);
@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Instances
         protected override void RunHandler(LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             _appInstance.ActivateState(_stateDef);

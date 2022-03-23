@@ -90,7 +90,7 @@ namespace SymOntoClay.Core.Internal.Instances
             Task.Run(() =>
             {
 #if DEBUG
-                Log("Begin");
+                //Log("Begin");
 #endif
 
                 try
@@ -101,7 +101,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     }
 
 #if DEBUG
-                    Log("Begin NEXT");
+                    //Log("Begin NEXT");
 #endif
 
                     lock (_lockObj)
@@ -147,8 +147,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
 #if DEBUG
             //Log($"searchResult = {searchResult}");
-            Log($"_condition = {DebugHelperForRuleInstance.ToString(_condition)}");
-            Log($"searchResult = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
+            //Log($"_condition = {DebugHelperForRuleInstance.ToString(_condition)}");
+            //Log($"searchResult = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
             //foreach(var usedKey in searchResult.UsedKeysList)
             //{
             //    Log($"usedKey = {usedKey}");

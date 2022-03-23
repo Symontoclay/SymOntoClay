@@ -236,7 +236,11 @@ namespace SymOntoClay.Core.Internal.Instances
                 //Log($"activatorInfo = {activatorInfo}");
 #endif
 
-                _stateActivators.Add(new StateActivator(activatorInfo, this, _context, _storage));
+                var activatorInstance = new StateActivator(activatorInfo, this, _context, _storage);
+
+                _stateActivators.Add(activatorInstance);
+
+                Task.Run(() => { activatorInstance.Init(); });
             }
 
 #if DEBUG

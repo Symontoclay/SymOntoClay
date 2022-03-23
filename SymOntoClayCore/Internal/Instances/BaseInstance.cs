@@ -29,6 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -108,10 +109,13 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
 #if DEBUG
                     //Log($"targetTrigger = {targetTrigger}");
+                    //Log($"targetTrigger.ResultItem = {targetTrigger.ResultItem}");
 #endif
 
                     var triggerInstanceInfo = new LogicConditionalTriggerInstance(targetTrigger.ResultItem, this, _context, _storage);
                     _logicConditionalTriggersList.Add(triggerInstanceInfo);
+
+                    Task.Run(() => { triggerInstanceInfo.Init(); });                    
                 }
             }
 

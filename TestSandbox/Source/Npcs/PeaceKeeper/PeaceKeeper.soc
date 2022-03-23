@@ -1,22 +1,9 @@
 ﻿app PeaceKeeper
 {
-    on Init =>
+    {: see(I, #`gun 1`) :}
+
+	on {: see(I, #`gun 1`) :} => 
     {
-        'Begin' >> @>log;        
-        'End' >> @>log;
-    }
-}
-
-state Attacking
-{
-    enter on:
-        {: see(I, enemy) :}
-
-
-    on Enter
-    {
-        'Begin Attacking Enter' >> @>log;
-
-        'End Attacking Enter' >> @>log;
-    }
+	    'D' >> @>log;
+	}
 }

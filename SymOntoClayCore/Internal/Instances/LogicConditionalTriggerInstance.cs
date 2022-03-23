@@ -44,6 +44,10 @@ namespace SymOntoClay.Core.Internal.Instances
             : base(trigger.Condition, parent, context, parentStorage)
         {
             _trigger = trigger;
+
+#if DEBUG
+            //Log($"_trigger = {_trigger}");
+#endif
         }
 
         private InlineTrigger _trigger;
@@ -57,6 +61,10 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         protected override void RunHandler(LocalCodeExecutionContext localCodeExecutionContext)
         {
+#if DEBUG
+            //Log($"_trigger = {_trigger}");
+#endif
+
             var processInitialInfo = new ProcessInitialInfo();
             processInitialInfo.CompiledFunctionBody = _trigger.CompiledFunctionBody;
             processInitialInfo.LocalContext = localCodeExecutionContext;

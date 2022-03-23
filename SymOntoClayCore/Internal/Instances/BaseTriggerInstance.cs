@@ -50,10 +50,7 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log($"searchOptions = {searchOptions}");
 #endif
 
-            lock (_lockObj)
-            {
-                DoSearch();
-            }
+
         }
 
         private readonly LogicalSearchResolver _searcher;
@@ -72,6 +69,14 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private bool _isBusy;
         private bool _needRepeat;
+
+        public void Init()
+        {
+            lock (_lockObj)
+            {
+                DoSearch();
+            }
+        }
 
         protected abstract void RunHandler(LocalCodeExecutionContext localCodeExecutionContext);
 

@@ -90,6 +90,7 @@ namespace SymOntoClay.Core.Internal.Instances
             RunExplicitStates();
 
             RunActivatorsOfStates();
+            RunDeactivatorsOfStates();
 
 #if DEBUG
             //Log($"Name = {Name}");
@@ -181,6 +182,10 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         protected virtual void RunActivatorsOfStates()
+        {
+        }
+
+        protected virtual void RunDeactivatorsOfStates()
         {
         }
 

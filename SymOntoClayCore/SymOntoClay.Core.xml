@@ -4720,6 +4720,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.ActivateState(SymOntoClay.Core.Internal.CodeModel.StateDef)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.TryActivateDefaultState">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.PrintProcessesList">
             <inheritdoc/>
         </member>
@@ -4798,6 +4801,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.ActivateState(SymOntoClay.Core.Internal.CodeModel.StateDef)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.TryActivateDefaultState">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.AppendProcessInfo(SymOntoClay.Core.IProcessInfo)">
             <inheritdoc/>
         </member>
@@ -4870,7 +4876,13 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.RunInitialTriggers">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.RunDeactivatorsOfStates">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.StateExecutionCoordinator_OnFinished">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.OnDisposed">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.MainStorageContext.Id">

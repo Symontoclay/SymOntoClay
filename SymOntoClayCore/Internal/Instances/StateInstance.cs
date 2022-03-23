@@ -3,6 +3,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Storage;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,6 +36,24 @@ namespace SymOntoClay.Core.Internal.Instances
             RunInitialTriggers(KindOfSystemEventOfInlineTrigger.Enter);
         }
 
+        private List<StateDeactivator> _stateDeactivators = new List<StateDeactivator>();
+
+        /// <inheritdoc/>
+        protected override void RunDeactivatorsOfStates()
+        {
+            if(_codeItem.DeactivatingClauses.Any())
+            {
+                foreach(var clause in _codeItem.DeactivatingClauses)
+                {
+                    var deactivatorInstance = new StateDeactivator(clause, this, _context, _storage);
+
+                    _stateDeactivators.Add(deactivatorInstance);
+
+                    deactivatorInstance.Init();
+                }
+            }
+        }
+
         /// <inheritdoc/>
         protected override void StateExecutionCoordinator_OnFinished()
         {
@@ -46,5 +65,16 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         public event Action<StateInstance> OnStateInstanceFinished;
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            foreach (var stateDeactivator in _stateDeactivators)
+            {
+                stateDeactivator.Dispose();
+            }
+
+            base.OnDisposed();
+        }
     }
 }

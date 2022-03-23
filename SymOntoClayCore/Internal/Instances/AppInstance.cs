@@ -193,6 +193,26 @@ namespace SymOntoClay.Core.Internal.Instances
             });
         }
 
+        public void TryActivateDefaultState()
+        {
+            var defaultStateName = _statesResolver.ResolveDefaultStateName(_localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"defaultStateName = {defaultStateName}");
+#endif
+
+            if (defaultStateName != null)
+            {
+                var state = _statesResolver.Resolve(defaultStateName, _localCodeExecutionContext);
+
+#if DEBUG
+                //Log($"state = {state}");
+#endif
+
+                ActivateState(state);
+            }
+        }
+
         private void ChildStateInstance_OnFinished(StateInstance stateInstance)
         {
 #if DEBUG

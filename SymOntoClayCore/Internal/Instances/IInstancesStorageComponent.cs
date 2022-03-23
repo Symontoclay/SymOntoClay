@@ -34,6 +34,7 @@ namespace SymOntoClay.Core.Internal.Instances
         void AppendAndTryStartProcessInfo(IProcessInfo processInfo);
 
         void ActivateState(StateDef state);
+        void TryActivateDefaultState();
 
 #if DEBUG
         void PrintProcessesList();

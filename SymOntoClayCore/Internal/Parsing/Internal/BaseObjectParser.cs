@@ -124,7 +124,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected void ProcessGeneralContent()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
+            //Log($"_currToken = {_currToken}");
             //Log($"(_context.CurrentDefaultSetings != null) = {_context.CurrentDefaultSetings != null}");
 #endif
 
@@ -263,7 +263,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var nextToken = _context.GetToken();
 
 #if DEBUG
-                                Log($"nextToken = {nextToken}");
+                                //Log($"nextToken = {nextToken}");
 #endif
 
                                 switch (nextToken.TokenKind)
@@ -280,7 +280,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                                             parser.Run();
 
 #if DEBUG
-                                                            Log($"parser.Result = {parser.Result.WriteListToString()}");
+                                                            //Log($"parser.Result = {parser.Result.WriteListToString()}");
 #endif
 
                                                             Result.DeactivatingClauses.AddRange(parser.Result);

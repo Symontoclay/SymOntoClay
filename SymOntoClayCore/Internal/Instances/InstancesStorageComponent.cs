@@ -122,6 +122,12 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
+        public override void TryActivateDefaultState()
+        {
+            _rootInstanceInfo.TryActivateDefaultState();
+        }
+
+        /// <inheritdoc/>
         public override void AppendProcessInfo(IProcessInfo processInfo)
         {
             lock(_processLockObj)

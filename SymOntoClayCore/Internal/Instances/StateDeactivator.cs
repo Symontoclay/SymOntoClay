@@ -17,8 +17,12 @@ namespace SymOntoClay.Core.Internal.Instances
         protected override void RunHandler(LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
+
+            _stateExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
+
+            _context.InstancesStorage.TryActivateDefaultState();
         }
     }
 }

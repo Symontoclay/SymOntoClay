@@ -36,7 +36,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Init,
             GotBreakMark,
             GotBreakActionMark,
-            GotBreakActionFact
+            GotBreakActionFact,
+            GotBreakStateMark,
+            GotBreakStateFact
         }
 
         public BreakStatementParser(InternalParserContext context)
@@ -106,6 +108,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     _state = State.GotBreakActionMark;
                                     break;
 
+                                case KeyWordTokenKind.State:
+                                    _rawStatement.KindOfBreak = KindOfBreak.State;
+                                    _state = State.GotBreakStateMark;
+                                    break;
+
                                 default:
                                     throw new UnexpectedTokenException(_currToken);
                             }
@@ -147,6 +154,43 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case State.GotBreakActionFact:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Semicolon:
+                            Exit();
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotBreakStateMark:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenFactBracket:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var parser = new LogicalQueryParser(_context);
+                                parser.Run();
+
+#if DEBUG
+                                //Log($"parser.Result = {parser.Result}");
+#endif
+
+                                _rawStatement.RuleInstanceValue = new RuleInstanceValue(parser.Result);
+
+                                _state = State.GotBreakStateFact;
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotBreakStateFact:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Semicolon:

@@ -1,6 +1,18 @@
 ﻿app PeaceKeeper
 {
     set Idling as default state;
+    set Patrolling as state;
+
+    on Init =>
+    {
+        'Begin' >> @>log;        
+        'End' >> @>log;
+    }
+
+    on {: attack(I, enemy) :}
+    {
+        'D' >> @>log;
+    }
 }
 
 state Idling
@@ -8,9 +20,18 @@ state Idling
     on Enter
     {
         'Begin Idling Enter' >> @>log;
-        ? {: bird ($x) :} >> @>log;
-        insert {: >: { bird (#1234) } :};
-        ? {: bird ($x) :} >> @>log;
         'End Idling Enter' >> @>log;
+    }
+}
+
+state Patrolling
+{
+    on Enter
+    {
+        'Begin Patrolling Enter' >> @>log;
+
+        break state {: attack(I, enemy) :};
+
+        'End Patrolling Enter' >> @>log;
     }
 }

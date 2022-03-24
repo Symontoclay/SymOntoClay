@@ -75,6 +75,28 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     }
                     break;
 
+                case KindOfBreak.State:
+                    {
+                        var ruleInstance = statement.RuleInstanceValue;
+
+                        if (ruleInstance == null)
+                        {
+                            AddCommand(new IntermediateScriptCommand()
+                            {
+                                OperationCode = OperationCode.BreakState
+                            });
+                            break;
+                        }
+
+                        CompileValue(statement.RuleInstanceValue);
+
+                        AddCommand(new IntermediateScriptCommand()
+                        {
+                            OperationCode = OperationCode.BreakStateVal
+                        });
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }

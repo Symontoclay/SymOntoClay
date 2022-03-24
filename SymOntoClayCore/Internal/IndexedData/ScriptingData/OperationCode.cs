@@ -87,6 +87,8 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         VarDecl,
         SetState,
         CompleteState,
-        CompleteStateVal
+        CompleteStateVal,
+        BreakState,
+        BreakStateVal
     }
 }

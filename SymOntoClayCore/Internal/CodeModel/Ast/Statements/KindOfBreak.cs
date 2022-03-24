@@ -30,6 +30,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
     {
         Unknown,
         Action,
-        Loop
+        Loop,
+        State
     }
 }

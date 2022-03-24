@@ -120,18 +120,50 @@ namespace SymOntoClay.Core.Internal.Instances
         protected override void RunMutuallyExclusiveStatesSets()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             var itemsList = _statesResolver.ResolveMutuallyExclusiveStatesSetsList(_localCodeExecutionContext);
 
-            if(itemsList.Any())
+#if DEBUG
+            //Log($"itemsList.Count = {itemsList.Count}");
+            //Log($"itemsList = {itemsList.WriteListToString()}");
+#endif
+
+            if (itemsList.Any())
             {
-                throw new NotImplementedException();
+                var targetDict = itemsList.SelectMany(p => p.StateNames).Distinct().ToDictionary(p => p, p => new List<StrongIdentifierValue>());
+
+                foreach(var item in itemsList)
+                {
+#if DEBUG
+                    //Log($"item = {item.ToHumanizedString()}");
+#endif
+
+                    var stateNamesList = item.StateNames;
+
+                    foreach (var stateName in stateNamesList)
+                    {
+#if DEBUG
+                        //Log($"stateName = {stateName.ToHumanizedString()}");
+#endif
+
+                        var exceptList = stateNamesList.ToList();
+                        exceptList.Remove(stateName);
+
+#if DEBUG
+                        //Log($"exceptList = {exceptList.WriteListToString()}");
+#endif
+
+                        targetDict[stateName].AddRange(exceptList);
+                    }
+                }
+
+                _mutuallyExclusiveStatesSet = targetDict.ToDictionary(p => p.Key, p => new HashSet<StrongIdentifierValue>(p.Value.Distinct()));
             }
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
@@ -165,6 +197,7 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         private Dictionary<StrongIdentifierValue, StateInstance> _activeStatesDict = new Dictionary<StrongIdentifierValue, StateInstance>();
+        private Dictionary<StrongIdentifierValue, HashSet<StrongIdentifierValue>> _mutuallyExclusiveStatesSet = new Dictionary<StrongIdentifierValue, HashSet<StrongIdentifierValue>>();
 
         private readonly object _statesLockObj = new object();
 
@@ -186,26 +219,52 @@ namespace SymOntoClay.Core.Internal.Instances
             Task.Run(() => {
                 StateInstance stateInstance = null;
 
+                var statesForDeactivating = new List<StateInstance>();
+
                 lock (_statesLockObj)
                 {
 #if DEBUG
                     //Log($"state = {state}");
 #endif
 
-                    if (_activeStatesDict.ContainsKey(state.Name))
+                    var stateName = state.Name;
+
+                    if (_activeStatesDict.ContainsKey(stateName))
                     {
 #if DEBUG
-                        //Log("_activeStatesDict.ContainsKey(state.Name) return;");
+                        //Log("_activeStatesDict.ContainsKey(stateName) return;");
 #endif
 
                         return;
                     }
 
+                    if(_mutuallyExclusiveStatesSet.ContainsKey(stateName))
+                    {
+                        var initialMutuallyExclusiveStatesSet = _mutuallyExclusiveStatesSet[stateName];
+
+                        foreach(var nameItem in initialMutuallyExclusiveStatesSet)
+                        {
+                            if(_activeStatesDict.ContainsKey(nameItem))
+                            {
+                                statesForDeactivating.Add(_activeStatesDict[nameItem]);
+                                _activeStatesDict.Remove(nameItem);
+                            }
+                        }               
+                    }
+
                     stateInstance = new StateInstance(state, _context, _storage, _appInstanceExecutionCoordinator);
 
-                    _activeStatesDict[state.Name] = stateInstance;
+                    _activeStatesDict[stateName] = stateInstance;
 
                     stateInstance.OnStateInstanceFinished += ChildStateInstance_OnFinished;
+                }
+
+                if (statesForDeactivating.Any())
+                {
+                    foreach(var stateForDeactivating in statesForDeactivating)
+                    {
+                        stateForDeactivating.Dispose();
+                    }
                 }
 
                 stateInstance.Init();

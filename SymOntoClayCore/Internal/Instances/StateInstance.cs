@@ -69,6 +69,15 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
+#if DEBUG
+            //Log($"Name = {Name}");
+#endif
+
+            if (_stateExecutionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
+            {
+                _stateExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Canceled;
+            }
+
             foreach (var stateDeactivator in _stateDeactivators)
             {
                 stateDeactivator.Dispose();

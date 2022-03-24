@@ -183,7 +183,7 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"mutuallyExclusiveStatesSet = {mutuallyExclusiveStatesSet}");
+                //Log($"mutuallyExclusiveStatesSet = {mutuallyExclusiveStatesSet}");
 #endif
                 if(_mutuallyExclusiveStatesSetsList.Contains(mutuallyExclusiveStatesSet))
                 {
@@ -194,6 +194,7 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
             }
         }
 
+        /// <inheritdoc/>
         public List<MutuallyExclusiveStatesSet> GetMutuallyExclusiveStatesSetsListDirectly()
         {
             lock (_lockObj)

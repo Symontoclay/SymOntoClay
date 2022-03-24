@@ -31,6 +31,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         Unknown,
         Executing,
         Complete,
-        Broken
+        Broken,
+        Canceled
     }
 }

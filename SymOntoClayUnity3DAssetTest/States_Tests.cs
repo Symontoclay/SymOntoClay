@@ -738,5 +738,141 @@ state Attacking
 
             Thread.Sleep(1000);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case8()
+        {
+            using var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{
+    set Idling as default state;
+
+    on Init =>
+    {
+        'Begin' >> @>log;        
+        'End' >> @>log;
+    }
+}
+
+states { Idling, Attacking }
+
+state Idling
+{
+    on Enter
+    {
+        'Begin Idling Enter' >> @>log;
+        'End Idling Enter' >> @>log;
+    }
+}
+
+state Attacking
+{
+    enter on:
+        {: see(I, enemy) :}
+
+    leave on:
+        {: see(I, barrel) :}
+
+    on Enter
+    {
+        'Begin Attacking Enter' >> @>log;
+
+        'End Attacking Enter' >> @>log;
+    }
+}";
+
+            instance.WriteFile(text);
+
+            var initN = 0;
+            var idlingN = 0;
+            var attackingN = 0;
+
+            var warInit = false;
+            var wasAttaking = true;
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                if (message.Contains(" Idling "))
+                {
+                    idlingN++;
+
+                    switch (idlingN)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin Idling Enter");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "End Idling Enter");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "Begin Idling Enter");
+                            Assert.AreEqual(wasAttaking, true);
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(message, "End Idling Enter");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(idlingN), idlingN, null);
+                    }
+                }
+                else
+                {
+                    if (message.Contains(" Attacking "))
+                    {
+                        attackingN++;
+
+                        switch (attackingN)
+                        {
+                            case 1:
+                                Assert.AreEqual(message, "Begin Attacking Enter");
+                                Assert.AreEqual(warInit, true);
+                                break;
+
+                            case 2:
+                                Assert.AreEqual(message, "End Attacking Enter");
+                                wasAttaking = true;
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(attackingN), attackingN, null);
+                        }
+                    }
+                    else
+                    {
+                        initN++;
+
+                        switch (initN)
+                        {
+                            case 1:
+                                Assert.AreEqual(message, "Begin");
+                                break;
+
+                            case 2:
+                                Assert.AreEqual(message, "End");
+                                warInit = true;
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(initN), initN, null);
+                        }
+                    }
+                }
+            });
+
+            Thread.Sleep(1000);
+
+            npc.InsertFact("{: see(I, enemy) :}");
+
+            Thread.Sleep(1000);
+
+            npc.InsertFact("{: see(I, barrel) :}");
+
+            Thread.Sleep(1000);
+        }
     }
 }

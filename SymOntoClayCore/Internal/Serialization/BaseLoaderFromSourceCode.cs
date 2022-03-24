@@ -325,7 +325,7 @@ namespace SymOntoClay.Core.Internal.Serialization
         private void SaveItem(CodeItem codeItem)
         {
 #if DEBUG
-            Log($"codeItem = {codeItem}");
+            //Log($"codeItem = {codeItem}");
 #endif
 
             var codeEntityName = codeItem.Name;

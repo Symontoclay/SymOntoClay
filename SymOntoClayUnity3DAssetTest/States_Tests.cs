@@ -790,7 +790,7 @@ state Attacking
             var attackingN = 0;
 
             var warInit = false;
-            var wasAttaking = true;
+            var wasAttaking = false;
 
             var npc = instance.CreateAndStartNPC((n, message) => {
                 if (message.Contains(" Idling "))
@@ -920,6 +920,133 @@ state Idling
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case10()
+        {
+            var text = @"app PeaceKeeper
+{
+    set Idling as default state;
+    set Patrolling as state;
+
+    on Init =>
+    {
+        'Begin' >> @>log;        
+        'End' >> @>log;
+    }
+
+    on {: attack(I, enemy) :}
+    {
+        'D' >> @>log;
+    }
+}
+
+state Idling
+{
+    on Enter
+    {
+        'Begin Idling Enter' >> @>log;
+        'End Idling Enter' >> @>log;
+    }
+}
+
+state Patrolling
+{
+    on Enter
+    {
+        'Begin Patrolling Enter' >> @>log;
+
+        break state {: attack(I, enemy) :};
+
+        'End Patrolling Enter' >> @>log;
+    }
+}";
+
+            var initN = 0;
+            var idlingN = 0;
+            var patrollingN = 0;
+            var triggerN = 0;
+
+            var wasPatrolling = false;
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (message) => {
+                    if(message.Contains(" Idling "))
+                    {
+                        idlingN++;
+
+                        switch (idlingN)
+                        {
+                            case 1:
+                                Assert.AreEqual(message, "Begin Idling Enter");
+                                Assert.AreEqual(wasPatrolling, true);
+                                break;
+
+                            case 2:
+                                Assert.AreEqual(message, "End Idling Enter");
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(idlingN), idlingN, null);
+                        }
+                    }
+                    else
+                    {
+                        if (message.Contains(" Patrolling "))
+                        {
+                            patrollingN++;
+
+                            switch (patrollingN)
+                            {
+                                case 1:
+                                    Assert.AreEqual(message, "Begin Patrolling Enter");
+                                    wasPatrolling = true;
+                                    break;
+
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(patrollingN), patrollingN, null);
+                            }
+                        }
+                        else
+                        {
+                            if (message.Contains("D"))
+                            {
+                                triggerN++;
+
+                                switch (triggerN)
+                                {
+                                    case 1:
+                                        Assert.AreEqual(message, "D");
+                                        Assert.AreEqual(wasPatrolling, true);
+                                        break;
+
+                                    default:
+                                        throw new ArgumentOutOfRangeException(nameof(triggerN), triggerN, null);
+                                }
+                            }
+                            else
+                            {
+                                initN++;
+
+                                switch (initN)
+                                {
+                                    case 1:
+                                        Assert.AreEqual(message, "Begin");
+                                        break;
+
+                                    case 2:
+                                        Assert.AreEqual(message, "End");
+                                        break;
+
+                                    default:
+                                        throw new ArgumentOutOfRangeException(nameof(initN), initN, null);
+                                }
+                            }
+                        }
                     }
                 }), true);
         }

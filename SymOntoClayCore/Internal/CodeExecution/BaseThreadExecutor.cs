@@ -750,6 +750,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             _globalLogicalStorage.Append(ruleInstance);
 
+                            _context.InstancesStorage.TryActivateDefaultState();
+
                             _currentCodeFrame.CurrentPosition++;
                         }
                         break;

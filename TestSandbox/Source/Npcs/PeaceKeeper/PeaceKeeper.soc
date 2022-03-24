@@ -2,27 +2,18 @@
 {
     set Idling as default state;
 
-    on Init =>
-    {
-        'Begin' >> @>log;
-        
-        select {: son($x, $y) :} >> @>log;
-
-        'End' >> @>log;
-    }
+    {: male(#Tom) :}
+	{: parent(#Piter, #Tom) :}
+	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 }
 
 state Idling
 {
-    {: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
-	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
-
     on Enter
     {
         'Begin Idling Enter' >> @>log;
         
-        
+        select {: son($x, $y) :} >> @>log;
 
         'End Idling Enter' >> @>log;
     }

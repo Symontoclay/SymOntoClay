@@ -7,7 +7,7 @@ namespace SymOntoClay.Core.Internal.Storage
     public class StateStorage : RealStorage
     {
         public StateStorage(RealStorageSettings settings)
-            : base(KindOfStorage.Object, settings)
+            : base(KindOfStorage.State, settings)
         {
         }
     }

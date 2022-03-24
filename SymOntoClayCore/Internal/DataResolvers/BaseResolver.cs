@@ -42,12 +42,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         protected readonly IMainStorageContext _context;
 
-        protected List<StorageUsingOptions> GetStoragesList(IStorage storage)
+        public static List<StorageUsingOptions> GetStoragesList(IStorage storage)
         {
             return GetStoragesList(storage, null);
         }
 
-        protected List<StorageUsingOptions> GetStoragesList(IStorage storage, CollectChainOfStoragesOptions options)
+        public static List<StorageUsingOptions> GetStoragesList(IStorage storage, CollectChainOfStoragesOptions options)
         {
             var result = new List<StorageUsingOptions>();
 
@@ -151,12 +151,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var hasHolderInItems = source.Any(p => p.Holder == holder);
 
-            InheritanceResolver inheritanceResolver = null;
-
-            if (holderIsEntity && !hasHolderInItems)
-            {
-                inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
-            }
+            var inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
 
 #if DEBUG
             //Log($"hasHolderInItems = {hasHolderInItems}");
@@ -225,6 +220,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 case TypeOfAccess.Protected:
                     {
+#if DEBUG
+                        logger.Log($"inheritanceResolver != null = {inheritanceResolver != null}");
+#endif
+
                         var rank = inheritanceResolver.GetRawInheritanceRank(holder, item.Holder, localCodeExecutionContext);
 
 #if DEBUG

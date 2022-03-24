@@ -6,7 +6,7 @@
     {
         'Begin' >> @>log;
         
-        select {: son($x, $y) :} >> @>log;
+        //select {: son($x, $y) :} >> @>log;
 
         'End' >> @>log;
     }
@@ -21,6 +21,10 @@ state Idling
     on Enter
     {
         'Begin Idling Enter' >> @>log;
+        select {: son($x, $y) :} >> @>log;
+        //? {: bird ($x) :} >> @>log;
+        //insert {: >: { bird (#1234) } :};
+        //? {: bird ($x) :} >> @>log;
         'End Idling Enter' >> @>log;
     }
 }

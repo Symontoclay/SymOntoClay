@@ -39,7 +39,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             _engineContext = engineContext;
 
             var globalStorage = engineContext.Storage.GlobalStorage;
-            _logicalStorage = globalStorage.LogicalStorage;
+            _globalLogicalStorage = globalStorage.LogicalStorage;
 
             var dataResolversFactory = engineContext.DataResolversFactory;
 
@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly IEngineContext _engineContext;
         private readonly LogicalSearchResolver _searcher;
         private readonly VarsResolver _varsResolver;
-        private readonly ILogicalStorage _logicalStorage;        
+        private readonly ILogicalStorage _globalLogicalStorage;        
 
         /// <inheritdoc/>
         public Value Call(Value operand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
@@ -140,6 +140,15 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 #if DEBUG
             //Log($"operand = {operand}");
             //Log($"annotation = {annotation}");
+            Log($"localCodeExecutionContext.Holder = {localCodeExecutionContext.Holder}");
+            var storage = localCodeExecutionContext.Storage;
+
+            var storagesList = BaseResolver.GetStoragesList(storage);
+            Log($"storagesList.Count = {storagesList.Count}");
+            foreach (var tmpStorage in storagesList)
+            {
+                Log($"tmpStorage = {tmpStorage}");
+            }
 #endif
 
             if (operand.Target == null)
@@ -168,10 +177,22 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
 #if DEBUG
             //Log($"ruleInstance = {ruleInstance}");
+            //Log($"ruleInstance.Holder = {ruleInstance.Holder}");
+            Log($"ruleInstance.TypeOfAccess = {ruleInstance.TypeOfAccess}");
             //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
 #endif
 
-            if(ruleInstance.IsParameterized)
+            if (ruleInstance.Holder == null)
+            {
+                ruleInstance.Holder = localCodeExecutionContext.Holder;
+            }
+
+            if(ruleInstance.TypeOfAccess == TypeOfAccess.Local)
+            {
+                ruleInstance.TypeOfAccess = CodeItem.DefaultTypeOfAccess;
+            }
+
+            if (ruleInstance.IsParameterized)
             {
                 ruleInstance = ruleInstance.Clone();
 
@@ -192,7 +213,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 ruleInstance.CheckDirty();
             }            
 
-            _logicalStorage.Append(ruleInstance);
+            _globalLogicalStorage.Append(ruleInstance);
 
             return target;
         }

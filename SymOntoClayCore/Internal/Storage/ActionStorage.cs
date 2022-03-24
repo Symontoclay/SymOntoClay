@@ -7,7 +7,7 @@ namespace SymOntoClay.Core.Internal.Storage
     public class ActionStorage : RealStorage
     {
         public ActionStorage(RealStorageSettings settings)
-            : base(KindOfStorage.Object, settings)
+            : base(KindOfStorage.Action, settings)
         {
         }
     }

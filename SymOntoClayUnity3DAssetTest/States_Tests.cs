@@ -874,5 +874,54 @@ state Attacking
 
             Thread.Sleep(1000);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case9()
+        {
+            var text = @"app PeaceKeeper
+{
+    set Idling as default state;
+}
+
+state Idling
+{
+    on Enter
+    {
+        'Begin Idling Enter' >> @>log;
+        ? {: bird ($x) :} >> @>log;
+        insert {: >: { bird (#1234) } :};
+        ? {: bird ($x) :} >> @>log;
+        'End Idling Enter' >> @>log;
+    }
+}s";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin Idling Enter");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "<no>");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = #1234"), true);
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(message, "End Idling Enter");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

@@ -140,15 +140,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 #if DEBUG
             //Log($"operand = {operand}");
             //Log($"annotation = {annotation}");
-            Log($"localCodeExecutionContext.Holder = {localCodeExecutionContext.Holder}");
-            var storage = localCodeExecutionContext.Storage;
-
-            var storagesList = BaseResolver.GetStoragesList(storage);
-            Log($"storagesList.Count = {storagesList.Count}");
-            foreach (var tmpStorage in storagesList)
-            {
-                Log($"tmpStorage = {tmpStorage}");
-            }
+            //Log($"localCodeExecutionContext.Holder = {localCodeExecutionContext.Holder}");
 #endif
 
             if (operand.Target == null)
@@ -178,7 +170,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 #if DEBUG
             //Log($"ruleInstance = {ruleInstance}");
             //Log($"ruleInstance.Holder = {ruleInstance.Holder}");
-            Log($"ruleInstance.TypeOfAccess = {ruleInstance.TypeOfAccess}");
+            //Log($"ruleInstance.TypeOfAccess = {ruleInstance.TypeOfAccess}");
             //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
 #endif
 

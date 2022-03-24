@@ -186,12 +186,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
 #if DEBUG
             //Log($"typeOfAccess = {typeOfAccess}");
-            logger.Log($"holder = {holder}");
+            //logger.Log($"holder = {holder}");
 #endif
 
             switch (typeOfAccess)
             {
                 case TypeOfAccess.Private:
+                    if (holder == item.Holder)
+                    {
+                        return true;
+                    }
+
                     if (holderIsEntity)
                     {
                         if (hasHolderInItems)
@@ -222,8 +227,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     {
 #if DEBUG
                         //logger.Log($"inheritanceResolver != null = {inheritanceResolver != null}");
-                        logger.Log($"holder?.NameValue = {holder?.NameValue}");
-                        logger.Log($"item.Holder?.NameValue = {item.Holder?.NameValue}");
+                        //logger.Log($"holder?.NameValue = {holder?.NameValue}");
+                        //logger.Log($"item.Holder?.NameValue = {item.Holder?.NameValue}");
 #endif
 
                         if(holder == item.Holder)
@@ -234,7 +239,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         var rank = inheritanceResolver.GetRawInheritanceRank(holder, item.Holder, localCodeExecutionContext);
 
 #if DEBUG
-                        logger.Log($"rank = {rank}");
+                        //logger.Log($"rank = {rank}");
 #endif
 
                         if (rank > 0)

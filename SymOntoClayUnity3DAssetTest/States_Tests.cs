@@ -894,7 +894,7 @@ state Idling
         ? {: bird ($x) :} >> @>log;
         'End Idling Enter' >> @>log;
     }
-}s";
+}";
 
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) =>

@@ -20,9 +20,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -115,7 +117,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //Log($"resultItem.Holder = {resultItem.Holder}");
 #endif
 
-                if (IsFitByTypeOfAccess(resultItem, holder, inheritanceResolver, localCodeExecutionContext, holderIsEntity, hasHolderInItems, false))
+                if (IsFitByTypeOfAccess(resultItem, holder, inheritanceResolver, localCodeExecutionContext, holderIsEntity, hasHolderInItems, false, _context.Logger))
                 {
                     result.Add(item);
                 }
@@ -165,10 +167,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
                 //Log($"item = {item}");
                 //context.Logger.Log($"item.TypeOfAccess = {item.TypeOfAccess}");
-                //context.Logger.Log($"item.Holder = {item.Holder}");
+                context.Logger.Log($"item.Holder = {item.Holder}");
 #endif
 
-                if(IsFitByTypeOfAccess(item, holder, inheritanceResolver, localCodeExecutionContext, holderIsEntity, hasHolderInItems, allowUnknown))
+                if(IsFitByTypeOfAccess(item, holder, inheritanceResolver, localCodeExecutionContext, holderIsEntity, hasHolderInItems, allowUnknown, context.Logger))
                 {
                     result.Add(item);
                 }
@@ -183,12 +185,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private static bool IsFitByTypeOfAccess(IReadOnlyMemberAccess item, StrongIdentifierValue holder, InheritanceResolver inheritanceResolver, LocalCodeExecutionContext localCodeExecutionContext, bool holderIsEntity, bool hasHolderInItems, bool allowUnknown)
+        private static bool IsFitByTypeOfAccess(IReadOnlyMemberAccess item, StrongIdentifierValue holder, InheritanceResolver inheritanceResolver, LocalCodeExecutionContext localCodeExecutionContext, bool holderIsEntity, bool hasHolderInItems, bool allowUnknown, IEntityLogger logger)
         {
             var typeOfAccess = item.TypeOfAccess;
 
 #if DEBUG
             //Log($"typeOfAccess = {typeOfAccess}");
+            logger.Log($"holder = {holder}");
 #endif
 
             switch (typeOfAccess)

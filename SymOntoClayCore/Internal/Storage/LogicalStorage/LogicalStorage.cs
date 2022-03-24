@@ -490,9 +490,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 }
 
 #if DEBUG
-                //Log($"name = {name}");
-                //Log($"_kind = {_kind}");
-                //Log($"source.Count = {source.Count}");
+                Log($"name = {name}");
+                Log($"_kind = {_kind}");
+                Log($"source.Count = {source.Count}");
 #endif
 
                 return BaseResolver.FilterByTypeOfAccess(source, context, localCodeExecutionContext, true);
@@ -517,8 +517,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 }
 
 #if DEBUG
-                //Log($"name = {name}");
-                //Log($"_kind = {_kind}");
+                Log($"name = {name}");
+                Log($"_kind = {_kind}");
 #endif
 
                 return BaseResolver.FilterByTypeOfAccess(source, context, localCodeExecutionContext, true);

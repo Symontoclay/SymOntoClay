@@ -4,34 +4,23 @@
 
     on Init =>
     {
-        'Begin' >> @>log;        
+        'Begin' >> @>log;
+        
+        select {: son($x, $y) :} >> @>log;
+
         'End' >> @>log;
     }
 }
 
-states { Idling, Attacking }
-
 state Idling
 {
+	{: male(#Tom) :}
+	{: parent(#Piter, #Tom) :}
+	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+
     on Enter
     {
         'Begin Idling Enter' >> @>log;
         'End Idling Enter' >> @>log;
-    }
-}
-
-state Attacking
-{
-    enter on:
-        {: see(I, enemy) :}
-
-    leave on:
-        {: see(I, barrel) :}
-
-    on Enter
-    {
-        'Begin Attacking Enter' >> @>log;
-
-        'End Attacking Enter' >> @>log;
     }
 }

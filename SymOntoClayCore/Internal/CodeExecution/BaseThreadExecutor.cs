@@ -756,6 +756,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         }
                         break;
 
+                    case OperationCode.BreakState:
+                        {
+                            _stateExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
+
+                            _context.InstancesStorage.TryActivateDefaultState();
+
+                            _currentCodeFrame.CurrentPosition++;
+                        }
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(currentCommand.OperationCode), currentCommand.OperationCode, null);
                 }

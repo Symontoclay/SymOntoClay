@@ -30,7 +30,7 @@ state Patrolling
     {
         'Begin Patrolling Enter' >> @>log;
 
-        break state {: attack(I, enemy) :};
+        break state;
 
         'End Patrolling Enter' >> @>log;
     }

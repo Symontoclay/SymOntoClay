@@ -14,7 +14,6 @@
 
 state Idling
 {
-protected:
 	{: male(#Tom) :}
 	{: parent(#Piter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}

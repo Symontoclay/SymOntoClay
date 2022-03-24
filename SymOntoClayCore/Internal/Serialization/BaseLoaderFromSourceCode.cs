@@ -369,13 +369,20 @@ namespace SymOntoClay.Core.Internal.Serialization
                         var ruleInstance = codeItem.AsRuleInstance;
 
 #if DEBUG
-                        //Log($"ruleInstance = {ruleInstance}");
+                        Log($"ruleInstance = {ruleInstance}");
 #endif
 
                         if (ruleInstance.IsParameterized)
                         {
                             throw new Exception($"SymOntoClay does not support parameterized rule or facts on object declaration.");
                         }
+
+#if DEBUG
+                        //if(codeItem.ParentCodeEntity.Kind == KindOfCodeEntity.State)
+                        //{
+                        //    throw new NotImplementedException();
+                        //}
+#endif
 
                         globalStorage.LogicalStorage.Append(ruleInstance);
                     }                    

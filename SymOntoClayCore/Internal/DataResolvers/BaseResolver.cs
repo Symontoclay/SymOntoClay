@@ -221,13 +221,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 case TypeOfAccess.Protected:
                     {
 #if DEBUG
-                        logger.Log($"inheritanceResolver != null = {inheritanceResolver != null}");
+                        //logger.Log($"inheritanceResolver != null = {inheritanceResolver != null}");
+                        logger.Log($"holder?.NameValue = {holder?.NameValue}");
+                        logger.Log($"item.Holder?.NameValue = {item.Holder?.NameValue}");
 #endif
+
+                        if(holder == item.Holder)
+                        {
+                            return true;
+                        }
 
                         var rank = inheritanceResolver.GetRawInheritanceRank(holder, item.Holder, localCodeExecutionContext);
 
 #if DEBUG
-                        //Log($"rank = {rank}");
+                        logger.Log($"rank = {rank}");
 #endif
 
                         if (rank > 0)

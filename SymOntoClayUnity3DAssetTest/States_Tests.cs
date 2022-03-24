@@ -926,6 +926,88 @@ state Idling
 
         [Test]
         [Parallelizable]
+        public void Case9_a()
+        {
+            var text = @"app PeaceKeeper
+{
+    set Idling as default state;
+
+    on Init =>
+    {
+        'Begin' >> @>log;
+        
+        select {: son($x, $y) :} >> @>log;
+
+        'End' >> @>log;
+    }
+}
+
+state Idling
+{
+    {: male(#Tom) :}
+	{: parent(#Piter, #Tom) :}
+	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+
+    on Enter
+    {
+        'Begin Idling Enter' >> @>log;
+        
+        
+
+        'End Idling Enter' >> @>log;
+    }
+}";
+
+            var initN = 0;
+            var idlingN = 0;
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (message) => {
+                    if (message.Contains(" Idling "))
+                    {
+                        idlingN++;
+
+                        switch (idlingN)
+                        {
+                            case 1:
+                                Assert.AreEqual(message, "Begin Idling Enter");
+                                break;
+
+                            case 2:
+                                Assert.AreEqual(message, "End Idling Enter");
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(idlingN), idlingN, null);
+                        }
+                    }
+                    else
+                    {
+                        initN++;
+
+                        switch (initN)
+                        {
+                            case 1:
+                                Assert.AreEqual(message, "Begin");
+                                break;
+
+                            case 2:
+                                Assert.AreEqual(message, "<no>");
+                                break;
+
+                            case 3:
+                                Assert.AreEqual(message, "End");
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(initN), initN, null);
+                        }
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
         public void Case10()
         {
             var text = @"app PeaceKeeper

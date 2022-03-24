@@ -9,7 +9,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         public StateDef()
         {
-            TypeOfAccess = TypeOfAccess.Public;
+            TypeOfAccess = DefaultTypeOfAccess;
         }
         
         /// <inheritdoc/>

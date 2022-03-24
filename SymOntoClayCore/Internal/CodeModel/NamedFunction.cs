@@ -31,7 +31,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         public NamedFunction()
         {
-            TypeOfAccess = TypeOfAccess.Public;
+            TypeOfAccess = DefaultTypeOfAccess;
         }
 
         /// <inheritdoc/>

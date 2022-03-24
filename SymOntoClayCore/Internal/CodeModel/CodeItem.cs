@@ -32,6 +32,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class CodeItem: AnnotatedItem, IMemberAccess, IReadOnlyMemberAccess
     {
+        public static readonly TypeOfAccess DefaultTypeOfAccess = TypeOfAccess.Protected;
+
         public abstract KindOfCodeEntity Kind { get;}
         public StrongIdentifierValue Name
         { 

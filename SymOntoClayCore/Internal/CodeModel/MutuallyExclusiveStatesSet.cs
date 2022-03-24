@@ -10,7 +10,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         public MutuallyExclusiveStatesSet()
         {
-            TypeOfAccess = TypeOfAccess.Public;
+            TypeOfAccess = DefaultTypeOfAccess;
         }
 
         /// <inheritdoc/>

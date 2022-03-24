@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal
 
         public StrongIdentifierValue Holder { get; set; }
 
-        public TypeOfAccess TypeOfAccess { get; set; } = TypeOfAccess.Public;
+        public TypeOfAccess TypeOfAccess { get; set; } = CodeItem.DefaultTypeOfAccess;
 
         /// <summary>
         /// Clones the instance and returns cloned instance.

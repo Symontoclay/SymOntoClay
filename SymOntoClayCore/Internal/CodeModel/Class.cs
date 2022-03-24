@@ -30,7 +30,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         public Class()
         {
-            TypeOfAccess = TypeOfAccess.Public;
+            TypeOfAccess = DefaultTypeOfAccess;
         }
 
         /// <inheritdoc/>

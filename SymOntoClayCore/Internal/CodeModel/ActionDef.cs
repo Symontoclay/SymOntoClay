@@ -33,7 +33,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         public ActionDef()
         {
-            TypeOfAccess = TypeOfAccess.Public;
+            TypeOfAccess = CodeItem.DefaultTypeOfAccess;
         }
 
         /// <inheritdoc/>

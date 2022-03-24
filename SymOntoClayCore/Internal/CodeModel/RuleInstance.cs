@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         //public RuleInstance()
         //{
-        //    TypeOfAccess = TypeOfAccess.Public;
+        //    TypeOfAccess = DefaultTypeOfAccess;
         //}
 
 #if DEBUG

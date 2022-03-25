@@ -140,13 +140,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var holder = localCodeExecutionContext.Holder;
 
 #if DEBUG
-            context.Logger.Log($"holder = {holder}");
+            //context.Logger.Log($"holder = {holder}");
 #endif
 
             var holderIsEntity = holder.KindOfName == KindOfName.Entity;
 
 #if DEBUG
-            context.Logger.Log($"holderIsEntity = {holderIsEntity}");
+            //context.Logger.Log($"holderIsEntity = {holderIsEntity}");
 #endif
 
             StrongIdentifierValue additionalHolder = null;
@@ -164,7 +164,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var allStateNamesList = context.Storage.GlobalStorage.StatesStorage.AllStateNames();
 
 #if DEBUG
-                context.Logger.Log($"allStateNamesList = {allStateNamesList.WriteListToString()}");
+                //context.Logger.Log($"allStateNamesList = {allStateNamesList.WriteListToString()}");
 #endif
 
                 if (allStateNamesList.Any(p => p == holder))
@@ -180,9 +180,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            context.Logger.Log($"additionalHolder = {additionalHolder}");
-            context.Logger.Log($"additionalHolderIsEntity = {additionalHolderIsEntity}");
-            context.Logger.Log($"hasAdditionalHolderInItems = {hasAdditionalHolderInItems}");
+            //context.Logger.Log($"additionalHolder = {additionalHolder}");
+            //context.Logger.Log($"additionalHolderIsEntity = {additionalHolderIsEntity}");
+            //context.Logger.Log($"hasAdditionalHolderInItems = {hasAdditionalHolderInItems}");
 #endif
 
             var inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
@@ -191,8 +191,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
 #if DEBUG
                 //Log($"item = {item}");
-                context.Logger.Log($"item.TypeOfAccess = {item.TypeOfAccess}");
-                context.Logger.Log($"item.Holder = {item.Holder}");
+                //context.Logger.Log($"item.TypeOfAccess = {item.TypeOfAccess}");
+                //context.Logger.Log($"item.Holder = {item.Holder}");
 #endif
 
                 if(IsFitByTypeOfAccess(item, holder, inheritanceResolver, localCodeExecutionContext, holderIsEntity, hasHolderInItems, allowUnknown, context.Logger))

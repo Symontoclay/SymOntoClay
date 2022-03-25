@@ -146,16 +146,46 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var holderIsEntity = holder.KindOfName == KindOfName.Entity;
 
 #if DEBUG
-            //Log($"holderIsEntity = {holderIsEntity}");
+            context.Logger.Log($"holderIsEntity = {holderIsEntity}");
 #endif
+
+            StrongIdentifierValue additionalHolder = null;
+            var additionalHolderIsEntity = false;
+            var hasAdditionalHolderInItems = false;
 
             var hasHolderInItems = source.Any(p => p.Holder == holder);
 
-            var inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
+#if DEBUG
+            //context.Logger.Log($"hasHolderInItems = {hasHolderInItems}");
+#endif
+
+            if (!holderIsEntity)
+            {
+                var allStateNamesList = context.Storage.GlobalStorage.StatesStorage.AllStateNames();
 
 #if DEBUG
-            //Log($"hasHolderInItems = {hasHolderInItems}");
+                context.Logger.Log($"allStateNamesList = {allStateNamesList.WriteListToString()}");
 #endif
+
+                if (allStateNamesList.Any(p => p == holder))
+                {
+                    additionalHolder = context.InstancesStorage.MainEntity?.Name;
+
+                    if (additionalHolder != null)
+                    {
+                        additionalHolderIsEntity = additionalHolder.KindOfName == KindOfName.Entity;
+                        hasAdditionalHolderInItems = source.Any(p => p.Holder == additionalHolder);
+                    }
+                }
+            }
+
+#if DEBUG
+            context.Logger.Log($"additionalHolder = {additionalHolder}");
+            context.Logger.Log($"additionalHolderIsEntity = {additionalHolderIsEntity}");
+            context.Logger.Log($"hasAdditionalHolderInItems = {hasAdditionalHolderInItems}");
+#endif
+
+            var inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
 
             foreach (var item in source)
             {
@@ -169,10 +199,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 {
                     result.Add(item);
                 }
+                else
+                {
+                    if(additionalHolder != null)
+                    {
+                        if (IsFitByTypeOfAccess(item, additionalHolder, inheritanceResolver, localCodeExecutionContext, additionalHolderIsEntity, hasAdditionalHolderInItems, allowUnknown, context.Logger))
+                        {
+                            result.Add(item);
+                        }
+                    }
+                }
             }
 
 #if DEBUG
-            //Log($"result.Count = {result.Count}");
+            //context.Logger.Log($"result.Count = {result.Count}");
 #endif
 
             //throw new NotImplementedException();

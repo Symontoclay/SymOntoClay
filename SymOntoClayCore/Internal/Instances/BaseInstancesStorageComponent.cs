@@ -137,6 +137,8 @@ namespace SymOntoClay.Core.Internal.Instances
             throw new NotImplementedException();
         }
 
+        public virtual AppInstance MainEntity => null;
+
 #if DEBUG
         /// <inheritdoc/>
         public virtual void PrintProcessesList()

@@ -116,6 +116,9 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
+        public override AppInstance MainEntity => _rootInstanceInfo;
+
+        /// <inheritdoc/>
         public override void ActivateState(StateDef state)
         {
             _rootInstanceInfo.ActivateState(state);

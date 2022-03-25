@@ -36,6 +36,8 @@ namespace SymOntoClay.Core.Internal.Instances
         void ActivateState(StateDef state);
         void TryActivateDefaultState();
 
+        AppInstance MainEntity { get; }
+
 #if DEBUG
         void PrintProcessesList();
 #endif

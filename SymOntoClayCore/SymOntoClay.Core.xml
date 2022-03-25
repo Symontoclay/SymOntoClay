@@ -4835,6 +4835,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.ActivateMainEntity">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.MainEntity">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.ActivateState(SymOntoClay.Core.Internal.CodeModel.StateDef)">
             <inheritdoc/>
         </member>
@@ -6159,6 +6162,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StatesStorage.StatesStorage.GetStatesDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStorage.StatesStorage.AllStateNames">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StatesStorage.StatesStorage.SetDefaultStateName(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">

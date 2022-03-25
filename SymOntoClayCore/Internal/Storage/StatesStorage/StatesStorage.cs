@@ -32,6 +32,7 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
         private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<StateDef>>> _statesDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<StateDef>>>();
         private readonly Dictionary<StateDef, List<ActivationInfoOfStateDef>> _activationInfoDict = new Dictionary<StateDef, List<ActivationInfoOfStateDef>>();
         private List<ActivationInfoOfStateDef> _activationInfoList = new List<ActivationInfoOfStateDef>();
+        private List<StrongIdentifierValue> _stateNamesList = new List<StrongIdentifierValue>();
         private StrongIdentifierValue _defaultStateName;
         private readonly List<MutuallyExclusiveStatesSet> _mutuallyExclusiveStatesSetsList = new List<MutuallyExclusiveStatesSet>();
 
@@ -85,6 +86,8 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
                 else
                 {
                     dict[name] = new List<StateDef> { state };
+
+                    _stateNamesList.Add(name);
                 }
 
                 if(state.ActivatingClauses.Any())
@@ -143,6 +146,15 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
                 }
 
                 return result;
+            }
+        }
+
+        /// <inheritdoc/>
+        public List<StrongIdentifierValue> AllStateNames()
+        {
+            lock (_lockObj)
+            {
+                return _stateNamesList;
             }
         }
 

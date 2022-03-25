@@ -1240,5 +1240,55 @@ state Patrolling
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case12()
+        {
+            var text = @"app PeaceKeeper
+{
+    set Idling as default state;
+
+    {: male(#Tom) :}
+	{: parent(#Piter, #Tom) :}
+	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+}
+
+state Idling
+{
+    on Enter
+    {
+        'Begin Idling Enter' >> @>log;
+        
+        select {: son($x, $y) :} >> @>log;
+
+        'End Idling Enter' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin Idling Enter");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End Idling Enter");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

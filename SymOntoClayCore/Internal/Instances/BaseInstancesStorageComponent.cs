@@ -137,6 +137,7 @@ namespace SymOntoClay.Core.Internal.Instances
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public virtual AppInstance MainEntity => null;
 
 #if DEBUG

@@ -4760,6 +4760,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.TryActivateDefaultState">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.MainEntity">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.PrintProcessesList">
             <inheritdoc/>
         </member>

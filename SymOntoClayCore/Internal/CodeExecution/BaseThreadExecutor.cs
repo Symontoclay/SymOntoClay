@@ -726,6 +726,31 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         }
                         break;
 
+                    case OperationCode.SetDefaultState:
+                        {
+                            var currentValue = _currentCodeFrame.ValuesStack.Pop();
+
+#if DEBUG
+                            //Log($"currentValue = {currentValue}");
+#endif
+
+                            if (!currentValue.IsStrongIdentifierValue)
+                            {
+                                throw new Exception($"Unexpected value '{currentValue.ToSystemString()}'.");
+                            }
+
+                            var stateName = currentValue.AsStrongIdentifierValue;
+
+#if DEBUG
+                            //Log($"stateName = {stateName}");
+#endif
+
+                            _globalStorage.StatesStorage.SetDefaultStateName(stateName);
+
+                            _currentCodeFrame.CurrentPosition++;
+                        }
+                        break;
+
                     case OperationCode.CompleteState:
                         {
                             _stateExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;

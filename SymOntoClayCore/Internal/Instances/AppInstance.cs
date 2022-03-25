@@ -278,7 +278,7 @@ namespace SymOntoClay.Core.Internal.Instances
 #if DEBUG
             //Log($"defaultStateName = {defaultStateName}");
 #endif
-
+            
             if (defaultStateName != null)
             {
                 var state = _statesResolver.Resolve(defaultStateName, _localCodeExecutionContext);

@@ -6,14 +6,14 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Compiling.Internal
 {
-    public class AstSetStateStatementNode : BaseNode
+    public class AstSetDefaultStateStatementNode : BaseNode
     {
-        public AstSetStateStatementNode(IMainStorageContext context)
+        public AstSetDefaultStateStatementNode(IMainStorageContext context)
             : base(context)
         {
         }
-        
-        public void Run(AstSetStateStatement statement)
+
+        public void Run(AstSetDefaultStateStatement statement)
         {
 #if DEBUG
             //Log($"statement = {statement}");
@@ -23,7 +23,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             AddCommand(new IntermediateScriptCommand()
             {
-                OperationCode = OperationCode.SetState
+                OperationCode = OperationCode.SetDefaultState
             });
 
 #if DEBUG

@@ -326,6 +326,60 @@ state Patrolling
 
         [Test]
         [Parallelizable]
+        public void Case4_a()
+        {
+            var text = @"app PeaceKeeper
+{ 
+    set Patrolling as state;
+}
+
+state Idling
+{
+    on Enter
+    {
+        'Begin Idling Enter' >> @>log;
+        'End Idling Enter' >> @>log;
+    }
+}
+
+state Patrolling
+{
+    on Enter
+    {
+        'Begin Patrolling Enter' >> @>log;
+
+        set Idling as default state;
+        complete state;
+
+        'End Patrolling Enter' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin Patrolling Enter");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "Begin Idling Enter");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End Idling Enter");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
         public void Case5()
         {
             var text = @"app PeaceKeeper

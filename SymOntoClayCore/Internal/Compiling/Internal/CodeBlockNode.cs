@@ -149,6 +149,14 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         }
                         break;
 
+                    case KindOfAstStatement.SetDefaultState:
+                        {
+                            var node = new AstSetDefaultStateStatementNode(_context);
+                            node.Run(statement as AstSetDefaultStateStatement);
+                            AddCommands(node.Result);
+                        }
+                        break;
+
                     case KindOfAstStatement.SetState:
                         {
                             var node = new AstSetStateStatementNode(_context);

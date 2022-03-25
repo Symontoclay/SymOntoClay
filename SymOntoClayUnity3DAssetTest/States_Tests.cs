@@ -952,8 +952,6 @@ state Idling
     {
         'Begin Idling Enter' >> @>log;
         
-        
-
         'End Idling Enter' >> @>log;
     }
 }";

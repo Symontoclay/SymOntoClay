@@ -203,7 +203,7 @@ state Patrolling
                     {
                         idlingInitN++;
 
-                        switch ()
+                        switch (idlingInitN)
                         {
                             case 1:
                                 Assert.AreEqual(message, "Begin Idling Init");

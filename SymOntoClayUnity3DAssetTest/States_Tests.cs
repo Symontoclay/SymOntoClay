@@ -285,8 +285,6 @@ state Patrolling
                         }
                     }
                 }), true);
-
-            throw new NotImplementedException();
         }
 
         [Test]

@@ -31,6 +31,7 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
 
         private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<StateDef>>> _statesDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<StateDef>>>();
         private readonly Dictionary<StateDef, List<ActivationInfoOfStateDef>> _activationInfoDict = new Dictionary<StateDef, List<ActivationInfoOfStateDef>>();
+        private List<StateDef> _statesList = new List<StateDef>();
         private List<ActivationInfoOfStateDef> _activationInfoList = new List<ActivationInfoOfStateDef>();
         private List<StrongIdentifierValue> _stateNamesList = new List<StrongIdentifierValue>();
         private StrongIdentifierValue _defaultStateName;
@@ -45,6 +46,11 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
                 //Log($"state = {state}");
 #endif
 
+                if (_statesList.Contains(state))
+                {
+                    return;
+                }
+
                 AnnotatedItemHelper.CheckAndFillUpHolder(state, _realStorageContext.MainStorageContext.CommonNamesStorage);
 
                 state.CheckDirty();
@@ -52,6 +58,8 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
                 var name = state.Name;
 
                 var holder = state.Holder;
+
+                _statesList.Add(state);
 
                 Dictionary<StrongIdentifierValue, List<StateDef>> dict = null;
 
@@ -78,9 +86,10 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
                         foreach(var removedItem in removedItemsList)
                         {
                             _activationInfoDict.Remove(removedItem);
+                            _statesList.Remove(removedItem);
                         }
 
-                        _activationInfoList = _activationInfoDict.Values.SelectMany(p => p).ToList();
+                        _activationInfoList = _activationInfoDict.Values.SelectMany(p => p).ToList();                        
                     }
                 }
                 else
@@ -155,6 +164,15 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
             lock (_lockObj)
             {
                 return _stateNamesList;
+            }
+        }
+
+        /// <inheritdoc/>
+        public List<StateDef> GetAllStatesListDirectly()
+        {
+            lock (_lockObj)
+            {
+                return _statesList;
             }
         }
 

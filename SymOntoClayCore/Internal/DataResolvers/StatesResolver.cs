@@ -125,6 +125,42 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return OrderAndDistinctByInheritance(filteredList, options).FirstOrDefault()?.ResultItem;
         }
 
+        public List<StateDef> ResolveAllStatesList(LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return ResolveAllStatesList(localCodeExecutionContext, _defaultOptions);
+        }
+
+        public List<StateDef> ResolveAllStatesList(LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var storage = localCodeExecutionContext.Storage;
+
+            var storagesList = GetStoragesList(storage);
+
+            if (!storagesList.Any())
+            {
+                return new List<StateDef>();
+            }
+
+            var result = new List<StateDef>();
+
+            foreach (var storageItem in storagesList)
+            {
+#if DEBUG
+                //Log($"storageItem = {storageItem}");
+#endif
+
+                var itemsList = storageItem.Storage.StatesStorage.GetAllStatesListDirectly();
+
+#if DEBUG
+                //Log($"itemsList = {itemsList.WriteListToString()}");
+#endif
+
+                result.AddRange(itemsList);
+            }
+
+            return result;
+        }
+
         public List<ActivationInfoOfStateDef> ResolveActivationInfoOfStateList(LocalCodeExecutionContext localCodeExecutionContext)
         {
             return ResolveActivationInfoOfStateList(localCodeExecutionContext, _defaultOptions);

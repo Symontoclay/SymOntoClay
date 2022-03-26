@@ -4706,6 +4706,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.RunMutuallyExclusiveStatesSets">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.RunInitTriggersForAllStates">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.RunExplicitStates">
             <inheritdoc/>
         </member>
@@ -6168,6 +6171,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StatesStorage.StatesStorage.AllStateNames">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStorage.StatesStorage.GetAllStatesListDirectly">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StatesStorage.StatesStorage.SetDefaultStateName(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">

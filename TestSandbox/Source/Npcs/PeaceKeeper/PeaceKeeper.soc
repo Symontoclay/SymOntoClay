@@ -1,10 +1,22 @@
 ﻿app PeaceKeeper
 { 
     set Patrolling as state;
+
+    on Init =>
+    {
+        'Begin' >> @>log;        
+        'End' >> @>log;
+    }
 }
 
 state Idling
 {
+    on Init =>
+    {
+        'Begin Idling Init' >> @>log;        
+        'End Idling Init' >> @>log;
+    }
+
     on Enter
     {
         'Begin Idling Enter' >> @>log;
@@ -14,13 +26,15 @@ state Idling
 
 state Patrolling
 {
+    on Init =>
+    {
+        'Begin Patrolling Init' >> @>log;        
+        'End Patrolling Init' >> @>log;
+    }
+
     on Enter
     {
         'Begin Patrolling Enter' >> @>log;
-
-        set Idling as default state;
-        complete state;
-
         'End Patrolling Enter' >> @>log;
     }
 }

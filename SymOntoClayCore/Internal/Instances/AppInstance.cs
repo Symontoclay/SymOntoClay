@@ -168,6 +168,33 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
+        protected override void RunInitTriggersForAllStates()
+        {
+#if DEBUG
+            Log("Begin");
+#endif
+
+            var statesList = _statesResolver.ResolveAllStatesList(_localCodeExecutionContext);
+
+#if DEBUG
+            Log($"statesList.Count = {statesList.Count}");
+#endif
+
+            foreach (var state in statesList)
+            {
+#if DEBUG
+                Log($"state.Name = {state.Name}");
+#endif
+
+                RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger.Init, state.Name);
+            }
+
+#if DEBUG
+            Log("End");
+#endif
+        }
+
+        /// <inheritdoc/>
         protected override void RunExplicitStates()
         {
 #if DEBUG

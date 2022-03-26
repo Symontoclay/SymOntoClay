@@ -88,6 +88,9 @@ namespace SymOntoClay.Core.Internal.Instances
             RunInitialTriggers();
 
             RunMutuallyExclusiveStatesSets();
+
+            RunInitTriggersForAllStates();
+
             RunExplicitStates();
 
             RunActivatorsOfStates();
@@ -132,12 +135,17 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected virtual void RunInitialTriggers()
         {
-            RunInitialTriggers(KindOfSystemEventOfInlineTrigger.Init);
+            RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger.Init);
         }
 
-        protected void RunInitialTriggers(KindOfSystemEventOfInlineTrigger kindOfSystemEvent)
+        protected void RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger kindOfSystemEvent)
         {
-            var targetSystemEventsTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(kindOfSystemEvent, Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            RunLifecycleTriggers(kindOfSystemEvent, Name);
+        }
+
+        protected void RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, StrongIdentifierValue holder)
+        {
+            var targetSystemEventsTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(kindOfSystemEvent, holder, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
             //Log($"targetSystemEventsTriggersList = {targetSystemEventsTriggersList.WriteListToString()}");
@@ -156,7 +164,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
                     localCodeExecutionContext.Storage = new LocalStorage(localStorageSettings);
 
-                    localCodeExecutionContext.Holder = Name;
+                    localCodeExecutionContext.Holder = holder;
 
                     var processInitialInfo = new ProcessInitialInfo();
                     processInitialInfo.CompiledFunctionBody = targetTrigger.ResultItem.CompiledFunctionBody;
@@ -179,6 +187,10 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         protected virtual void RunMutuallyExclusiveStatesSets()
+        {
+        }
+
+        protected virtual void RunInitTriggersForAllStates()
         {
         }
 

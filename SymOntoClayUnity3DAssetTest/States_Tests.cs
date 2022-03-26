@@ -199,7 +199,7 @@ state Patrolling
 
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (message) => {
-                    if(message.Contains("Idling Init"))
+                    if (message.Contains("Idling Init"))
                     {
                         idlingInitN++;
 
@@ -216,6 +216,7 @@ state Patrolling
                             default:
                                 throw new ArgumentOutOfRangeException(nameof(idlingInitN), idlingInitN, null);
                         }
+                    }
                     else
                     {
                         if (message.Contains("Idling Enters"))

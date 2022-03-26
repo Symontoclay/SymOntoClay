@@ -7,14 +7,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class ActivationInfoOfStateDef: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public ActivationInfoOfStateDef(StateDef state, RuleInstance activatingClause)
+        public ActivationInfoOfStateDef(StateDef state, RuleInstance activatingConditions)
         {
             State = state;
-            ActivatingClause = activatingClause;
+            ActivatingConditions = activatingConditions;
         }
 
         public StateDef State { get; set; }
-        public RuleInstance ActivatingClause { get; set; }
+        public RuleInstance ActivatingConditions { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintObjProp(n, nameof(State), State);
-            sb.PrintObjProp(n, nameof(ActivatingClause), ActivatingClause);
+            sb.PrintObjProp(n, nameof(ActivatingConditions), ActivatingConditions);
 
             return sb.ToString();
         }
@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintShortObjProp(n, nameof(State), State);
-            sb.PrintShortObjProp(n, nameof(ActivatingClause), ActivatingClause);
+            sb.PrintShortObjProp(n, nameof(ActivatingConditions), ActivatingConditions);
 
             return sb.ToString();
         }
@@ -83,7 +83,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(State), State);
-            sb.PrintBriefObjProp(n, nameof(ActivatingClause), ActivatingClause);
+            sb.PrintBriefObjProp(n, nameof(ActivatingConditions), ActivatingConditions);
 
             return sb.ToString();
         }

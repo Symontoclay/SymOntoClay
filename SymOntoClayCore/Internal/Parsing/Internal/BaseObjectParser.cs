@@ -238,7 +238,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                                             //Log($"parser.Result = {parser.Result.WriteListToString()}");
 #endif
 
-                                                            Result.ActivatingClauses.AddRange(parser.Result);
+                                                            Result.ActivatingConditions.AddRange(parser.Result);
                                                         }
                                                         break;
 
@@ -283,7 +283,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                                             //Log($"parser.Result = {parser.Result.WriteListToString()}");
 #endif
 
-                                                            Result.DeactivatingClauses.AddRange(parser.Result);
+                                                            Result.DeactivatingConditions.AddRange(parser.Result);
                                                         }
                                                         break;
 

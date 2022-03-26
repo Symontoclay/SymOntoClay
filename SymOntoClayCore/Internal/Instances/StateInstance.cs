@@ -41,9 +41,9 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         protected override void RunDeactivatorsOfStates()
         {
-            if(_codeItem.DeactivatingClauses.Any())
+            if(_codeItem.DeactivatingConditions.Any())
             {
-                foreach(var clause in _codeItem.DeactivatingClauses)
+                foreach(var clause in _codeItem.DeactivatingConditions)
                 {
                     var deactivatorInstance = new StateDeactivator(clause, this, _context, _storage);
 

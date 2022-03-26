@@ -99,13 +99,13 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStorage
                     _stateNamesList.Add(name);
                 }
 
-                if(state.ActivatingClauses.Any())
+                if(state.ActivatingConditions.Any())
                 {
                     var activatingInfoList = new List<ActivationInfoOfStateDef>();
 
-                    foreach (var activatingClause in state.ActivatingClauses)
+                    foreach (var activatingCondition in state.ActivatingConditions)
                     {
-                        activatingInfoList.Add(new ActivationInfoOfStateDef(state, activatingClause));
+                        activatingInfoList.Add(new ActivationInfoOfStateDef(state, activatingCondition));
                     }
 
                     _activationInfoDict[state] = activatingInfoList;

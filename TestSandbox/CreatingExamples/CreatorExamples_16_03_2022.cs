@@ -810,15 +810,5 @@ private:
 
             Example(CreateName(prefix, n), text);
         }
-
-        /*
-        var text = @"";
-
-        Example(CreateName(prefix, n), text);
-
-        text = @"";
-
-        Example(CreateName(prefix, n), text);
-         */
     }
 }

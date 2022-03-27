@@ -96,12 +96,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var hasHolderInItems = source.Any(p => p.ResultItem.Holder == holder);
 
-            InheritanceResolver inheritanceResolver = null;
-
-            if (holderIsEntity && !hasHolderInItems)
-            {
-                inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
-            }
+            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
 
 #if DEBUG
             //Log($"hasHolderInItems = {hasHolderInItems}");

@@ -33,15 +33,14 @@ namespace SymOntoClay.CLI
     public class CLIApp : IDisposable
     {
 #if DEBUG
-        //private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public void Run(string[] args)
         {
-            PrintHeader();
-
             if(!args.Any())
             {
+                PrintHeader();
                 PrintHelp();
                 PrintHowToExitAndWait();
                 return;
@@ -50,15 +49,18 @@ namespace SymOntoClay.CLI
             var command = CLICommandParser.Parse(args);
 
 #if DEBUG
-            //_logger.Info($"command = {command}");
+            _logger.Info($"command = {command}");
 #endif
 
             if (!command.IsValid)
             {
+                PrintHeader();
                 PrintAboutWrongCommandLine(command);
                 PrintHowToExitAndWait();
                 return;
             }
+
+            PrintHeader();
 
             var kindOfComand = command.Kind;
 

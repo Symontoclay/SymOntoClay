@@ -28,6 +28,7 @@ namespace SymOntoClayProjectFiles
 {
     public enum KindOfNewCommand
     {
+        Unknown,
         NPC,
         Thing
     }

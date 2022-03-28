@@ -2,8 +2,7 @@
   "profiles": {
     "SymOntoClayCLI": {
       "commandName": "Project",
-      "commandLineArgs": "new -thing Barrel",
-      "workingDirectory": "C:\\Users\\sergiy.tolkachov\\source\\repos\\SymOntoClay\\SymOntoClayCLI\\bin\\Debug\\net5.0\\TmpWorld"
+      "commandLineArgs": "new -nologo"
     }
   }
 }

@@ -31,10 +31,11 @@ namespace SymOntoClay.CLI
     public class CLICommand : IObjectToString
     {
         public KindOfCLICommand Kind { get; set; } = KindOfCLICommand.Unknown;
-        public KindOfNewCommand KindOfNewCommand { get; set; } = KindOfNewCommand.NPC;
+        public KindOfNewCommand KindOfNewCommand { get; set; } = KindOfNewCommand.Unknown;
         public string InputFile { get; set; }
         public string InputDir { get; set; }
         public string ProjectName { get; set; }
+        public bool NoLogo { get; set; }
         public bool IsValid { get; set; }
 
         /// <inheritdoc/>
@@ -60,6 +61,7 @@ namespace SymOntoClay.CLI
             sb.AppendLine($"{spaces}{nameof(InputFile)} = {InputFile}");
             sb.AppendLine($"{spaces}{nameof(InputDir)} = {InputDir}");
             sb.AppendLine($"{spaces}{nameof(ProjectName)} = {ProjectName}");
+            sb.AppendLine($"{spaces}{nameof(NoLogo)} = {NoLogo}");
             sb.AppendLine($"{spaces}{nameof(IsValid)} = {IsValid}");
 
             return sb.ToString();

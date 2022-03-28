@@ -27,6 +27,7 @@ using SymOntoClayProjectFiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.CLI
@@ -34,61 +35,168 @@ namespace SymOntoClay.CLI
     public static class CLICommandParser
     {
 #if DEBUG
-        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static CLICommand Parse(string[] args)
         {
 #if DEBUG
-            //_logger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
+            _logger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 #endif
 
-            var firstParam = args[0].ToLower();
+            var argsList = args.ToList();
 
-            switch(firstParam)
+            var command = new CLICommand();
+
+            while(argsList.Any())
             {
-                case "h":
-                case "help":
-                    return new CLICommand() { Kind = KindOfCLICommand.Help, IsValid = true };
+#if DEBUG
+                _logger.Info($"argsList.Count = {argsList.Count}");
+#endif
 
-                case "run":
-                    return ParseRunCommand(args);
+                var firstArg = argsList.First();
 
-                case "new":
-                case "n":
-                    return ParseNewCommand(args);
+#if DEBUG
+                _logger.Info($"firstArg = {firstArg}");
+#endif
 
-                case "version":
-                case "v":
-                    return new CLICommand() { Kind = KindOfCLICommand.Version, IsValid = true };
+#if DEBUG
+                _logger.Info($"command = {command}");
+#endif
+
+                var reallyUsedArgs = 0;
+
+                switch (firstArg)
+                {
+                    case "h":
+                    case "help":
+                        CheckCommandAsUnknown(command);
+                        command.Kind = KindOfCLICommand.Help;
+                        command.IsValid = true;
+                        reallyUsedArgs = 1;
+                        break;
+
+                    case "version":
+                    case "v":
+                        CheckCommandAsUnknown(command);
+                        command.Kind = KindOfCLICommand.Version;
+                        command.IsValid = true;
+                        reallyUsedArgs = 1;
+                        break;
+
+                    case "run":
+                        {
+                            CheckCommandAsUnknown(command);
+                            command.Kind = KindOfCLICommand.Run;
+
+                            var inputFile = string.Empty;
+
+#if DEBUG
+                            //_logger.Info($"argsList.Count = {argsList.Count}");
+#endif
+
+                            if(argsList.Count > 1)
+                            {
+                                var secondArg = argsList[1];
+
+#if DEBUG
+                                //_logger.Info($"secondArg = {secondArg}");
+#endif
+                                if(!IsAdditionalOptions(secondArg))
+                                {
+                                    inputFile = secondArg;
+                                }                                
+                            }
+
+#if DEBUG
+                            //_logger.Info($"inputFile = {inputFile}");
+#endif
+
+                            if(string.IsNullOrWhiteSpace(inputFile))
+                            {
+                                command.InputDir = Directory.GetCurrentDirectory();
+                                command.IsValid = true;
+                                reallyUsedArgs = 1;
+                            }
+                            else
+                            {
+                                command.InputFile = EVPath.Normalize(inputFile);
+                                command.IsValid = true;
+                                reallyUsedArgs = 2;
+                            }
+                        }
+                        break;
+
+                    case "new":
+                    case "n":
+                        {
+                            CheckCommandAsUnknown(command);
+
+                            if(argsList.Count == 1)
+                            {
+                                throw new Exception(NewPureArgs);
+                            }
+
+                            command.Kind = KindOfCLICommand.New;
+
+                            var secondArg = argsList[1];
+
+                            throw new NotImplementedException();
+                        }
+                        break;
+
+                    case "-nologo":
+                        command.NoLogo = true;
+                        reallyUsedArgs = 1;
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(firstArg), firstArg, null);
+                }
+
+                argsList = argsList.Skip(reallyUsedArgs).ToList();
+            }
+
+#if DEBUG
+            _logger.Info($"command = {command}");
+#endif
+
+            throw new NotImplementedException();
+
+            //var firstParam = args[0].ToLower();
+
+            //switch(firstParam)
+            //{
+            //    case "new":
+            //    case "n":
+            //        return ParseNewCommand(args);
+
+
+
+            //    default:
+            //        throw new ArgumentOutOfRangeException(nameof(firstParam), firstParam, null);
+            //}
+        }
+
+        private const string NewPureArgs = $"It is not enough arguments. You should put at least Project name!";
+
+        private static bool IsAdditionalOptions(string arg)
+        {
+            switch(arg)
+            {
+                case "-nologo":
+                    return true;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(firstParam), firstParam, null);
+                    return false;
             }
         }
 
-        private static CLICommand ParseRunCommand(string[] args)
+        private static void CheckCommandAsUnknown(CLICommand command)
         {
-            var command = new CLICommand() { Kind = KindOfCLICommand.Run };
-
-            switch(args.Length)
+            if(command.Kind != KindOfCLICommand.Unknown)
             {
-                case 1:
-                    command.InputDir = Directory.GetCurrentDirectory();
-                    command.IsValid = true;
-                    return command;
-
-                case 2:
-                    {
-                        var inputFile = args[1];
-
-                        command.InputFile = EVPath.Normalize(inputFile);
-                        command.IsValid = true;
-                        return command;
-                    }
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(args.Length), args.Length, null);
+                throw new Exception("Mixed modes!");
             }
         }
 

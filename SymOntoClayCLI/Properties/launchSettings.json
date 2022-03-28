@@ -2,7 +2,7 @@
   "profiles": {
     "SymOntoClayCLI": {
       "commandName": "Project",
-      "commandLineArgs": "new -nologo"
+      "commandLineArgs": "help -nologo -timeout 10000"
     }
   }
 }

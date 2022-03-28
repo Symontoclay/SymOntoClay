@@ -41,7 +41,7 @@ namespace SymOntoClay.CLI
         public static CLICommand Parse(string[] args)
         {
 #if DEBUG
-            _logger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
+            //_logger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 #endif
 
             var argsList = args.ToList();
@@ -51,17 +51,17 @@ namespace SymOntoClay.CLI
             while(argsList.Any())
             {
 #if DEBUG
-                _logger.Info($"argsList.Count = {argsList.Count}");
+                //_logger.Info($"argsList.Count = {argsList.Count}");
 #endif
 
                 var firstArg = argsList.First();
 
 #if DEBUG
-                _logger.Info($"firstArg = {firstArg}");
+                //_logger.Info($"firstArg = {firstArg}");
 #endif
 
 #if DEBUG
-                _logger.Info($"command = {command}");
+                //_logger.Info($"command = {command}");
 #endif
 
                 var reallyUsedArgs = 0;
@@ -141,13 +141,100 @@ namespace SymOntoClay.CLI
 
                             var secondArg = argsList[1];
 
-                            throw new NotImplementedException();
+#if DEBUG
+                            //_logger.Info($"secondArg = {secondArg}");
+#endif
+
+                            if (IsAdditionalOptions(secondArg))
+                            {
+                                throw new Exception(NewPureArgs);
+                            }
+
+                            if(IsNewCommandClarification(secondArg))
+                            {
+                                if(argsList.Count == 2)
+                                {
+                                    throw new Exception(NewAbsenceProjectName);
+                                }
+                                else
+                                {
+                                    var thirdArg = argsList[2];
+
+#if DEBUG
+                                    //_logger.Info($"thirdArg = {thirdArg}");
+#endif
+
+                                    if(IsNewCommandClarification(thirdArg) || IsAdditionalOptions(thirdArg))
+                                    {
+                                        throw new Exception(NewAbsenceProjectName);
+                                    }
+                                    else
+                                    {
+                                        switch(secondArg)
+                                        {
+                                            case "-w":
+                                            case "-world":
+                                                command.Kind = KindOfCLICommand.NewWorlspace;
+                                                break;
+
+                                            case "-npc":
+                                                command.KindOfNewCommand = KindOfNewCommand.NPC;
+                                                break;
+
+                                            case "-thing":
+                                                command.KindOfNewCommand = KindOfNewCommand.Thing;
+                                                break;
+
+                                            default:
+                                                throw new ArgumentOutOfRangeException(nameof(secondArg), secondArg, null);
+                                        }
+
+                                        command.ProjectName = args[2];
+                                        command.IsValid = true;
+                                        reallyUsedArgs = 3;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                command.KindOfNewCommand = KindOfNewCommand.NPC;
+                                command.ProjectName = secondArg;
+                                command.IsValid = true;
+                                reallyUsedArgs = 2;
+                            }
                         }
                         break;
 
                     case "-nologo":
                         command.NoLogo = true;
                         reallyUsedArgs = 1;
+                        break;
+
+                    case "-timeout":
+                        {
+                            if(argsList.Count == 1)
+                            {
+                                throw new Exception(TimeoutAbsenceValue);
+                            }
+                            else
+                            {
+                                var secondArg = argsList[1];
+
+#if DEBUG
+                                //_logger.Info($"secondArg = {secondArg}");
+#endif
+
+                                if(int.TryParse(secondArg, out int timeout))
+                                {
+                                    command.Timeout = timeout;
+                                    reallyUsedArgs = 2;
+                                }
+                                else
+                                {
+                                    throw new Exception($"Timiout value '{secondArg}' can not be converted to milliseconds!");
+                                }
+                            }                            
+                        }
                         break;
 
                     default:
@@ -158,33 +245,37 @@ namespace SymOntoClay.CLI
             }
 
 #if DEBUG
-            _logger.Info($"command = {command}");
+            //_logger.Info($"command = {command}");
 #endif
 
-            throw new NotImplementedException();
-
-            //var firstParam = args[0].ToLower();
-
-            //switch(firstParam)
-            //{
-            //    case "new":
-            //    case "n":
-            //        return ParseNewCommand(args);
-
-
-
-            //    default:
-            //        throw new ArgumentOutOfRangeException(nameof(firstParam), firstParam, null);
-            //}
+            return command;
         }
 
         private const string NewPureArgs = $"It is not enough arguments. You should put at least Project name!";
+        private const string NewAbsenceProjectName = "ProjectName is absent!";
+        private const string TimeoutAbsenceValue = "You have used -timeout but have not difined the timeout's value in milliseconds!";
 
         private static bool IsAdditionalOptions(string arg)
         {
             switch(arg)
             {
                 case "-nologo":
+                case "-timeout":
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        private static bool IsNewCommandClarification(string arg)
+        {
+            switch (arg)
+            {
+                case "-w":
+                case "-world":
+                case "-npc":
+                case "-thing":
                     return true;
 
                 default:
@@ -197,71 +288,6 @@ namespace SymOntoClay.CLI
             if(command.Kind != KindOfCLICommand.Unknown)
             {
                 throw new Exception("Mixed modes!");
-            }
-        }
-
-        private static CLICommand ParseNewCommand(string[] args)
-        {
-            switch (args.Length)
-            {
-                case 2:
-                    {
-                        var command = new CLICommand() 
-                        {
-                            Kind = KindOfCLICommand.New,
-                            KindOfNewCommand = KindOfNewCommand.NPC
-                        };
-                        command.ProjectName = args[1];
-                        command.IsValid = true;
-                        return command;
-                    }
-
-                case 3:
-                    {
-                        var modificator = args[1];
-
-                        switch (modificator)
-                        {
-                            case "-w":
-                            case "-world":
-                                {
-                                    var command = new CLICommand() { Kind = KindOfCLICommand.NewWorlspace };
-                                    command.ProjectName = args[2];
-                                    command.IsValid = true;
-                                    return command;
-                                }
-
-                            case "-npc":
-                                {
-                                    var command = new CLICommand()
-                                    {
-                                        Kind = KindOfCLICommand.New,
-                                        KindOfNewCommand = KindOfNewCommand.NPC
-                                    };
-                                    command.ProjectName = args[2];
-                                    command.IsValid = true;
-                                    return command;
-                                }
-
-                            case "-thing":
-                                {
-                                    var command = new CLICommand()
-                                    {
-                                        Kind = KindOfCLICommand.New,
-                                        KindOfNewCommand = KindOfNewCommand.Thing
-                                    };
-                                    command.ProjectName = args[2];
-                                    command.IsValid = true;
-                                    return command;
-                                }
-
-                            default:
-                                throw new ArgumentOutOfRangeException(nameof(modificator), modificator, null);
-                        }
-                    }
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(args.Length), args.Length, null);
             }
         }
     }

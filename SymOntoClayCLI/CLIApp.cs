@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.CLI
 {
@@ -49,7 +50,7 @@ namespace SymOntoClay.CLI
             var command = CLICommandParser.Parse(args);
 
 #if DEBUG
-            _logger.Info($"command = {command}");
+            //_logger.Info($"command = {command}");
 #endif
 
             if (!command.IsValid)
@@ -60,7 +61,10 @@ namespace SymOntoClay.CLI
                 return;
             }
 
-            PrintHeader();
+            if(!command.NoLogo)
+            {
+                PrintHeader();
+            }           
 
             var kindOfComand = command.Kind;
 
@@ -68,7 +72,17 @@ namespace SymOntoClay.CLI
             {
                 case KindOfCLICommand.Help:
                     PrintHelp();
-                    PrintHowToExitAndWait();
+                    if (command.Timeout.HasValue)
+                    {
+                        if (command.Timeout.Value > 0)
+                        {
+                            Thread.Sleep(command.Timeout.Value);
+                        }
+                    }
+                    else
+                    {
+                        PrintHowToExitAndWait();
+                    }
                     return;
 
                 case KindOfCLICommand.Run:
@@ -95,7 +109,18 @@ namespace SymOntoClay.CLI
                 case KindOfCLICommand.Version:
                     {
                         ConsoleWrapper.WriteText(Assembly.GetExecutingAssembly().GetName().Version.ToString());
-                        PrintHowToExitAndWait();
+                        if(command.Timeout.HasValue)
+                        {
+                            if(command.Timeout.Value > 0)
+                            {
+                                Thread.Sleep(command.Timeout.Value);
+                            }                            
+                        }
+                        else
+                        {
+                            PrintHowToExitAndWait();
+                        }
+                        
                         return;
                     }
 
@@ -139,6 +164,10 @@ namespace SymOntoClay.CLI
             ConsoleWrapper.WriteText("new -w <NPC name> - creates new worldspace.");
             ConsoleWrapper.WriteText("version - prints current version of SymOntoClay.");
             ConsoleWrapper.WriteText("v - alias of 'version' command.");
+            ConsoleWrapper.WriteText("");
+            ConsoleWrapper.WriteText("Additional CLI arguments:");
+            ConsoleWrapper.WriteText("-nologo - supresses printing header.");
+            ConsoleWrapper.WriteText("-timeout <milleseconds> - terminates CLI after <milleseconds>. CLI will return 0.");
         }
 
         public void Dispose()

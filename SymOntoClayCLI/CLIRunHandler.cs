@@ -30,6 +30,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading;
 using SymOntoClay.SoundBuses;
+using System.Threading.Tasks;
 
 namespace SymOntoClay.CLI
 {
@@ -107,7 +108,23 @@ namespace SymOntoClay.CLI
 
             instance.Start();
 
-            ConsoleWrapper.WriteText("Press 'exit' and Enter for exit.");
+            if(command.Timeout.HasValue)
+            {
+                var timeoutValue = command.Timeout.Value;
+
+                Task.Run(() => { 
+                    if(timeoutValue > 0)
+                    {
+                        Thread.Sleep(timeoutValue);
+                    }
+
+                    Environment.Exit(0);
+                });
+            }
+            else
+            {
+                ConsoleWrapper.WriteText("Press 'exit' and Enter for exit.");
+            }            
 
             while(true)
             {

@@ -36,6 +36,7 @@ namespace SymOntoClay.CLI
         public string InputDir { get; set; }
         public string ProjectName { get; set; }
         public bool NoLogo { get; set; }
+        public int? Timeout { get; set; }
         public bool IsValid { get; set; }
 
         /// <inheritdoc/>
@@ -62,6 +63,7 @@ namespace SymOntoClay.CLI
             sb.AppendLine($"{spaces}{nameof(InputDir)} = {InputDir}");
             sb.AppendLine($"{spaces}{nameof(ProjectName)} = {ProjectName}");
             sb.AppendLine($"{spaces}{nameof(NoLogo)} = {NoLogo}");
+            sb.AppendLine($"{spaces}{nameof(Timeout)} = {Timeout}");
             sb.AppendLine($"{spaces}{nameof(IsValid)} = {IsValid}");
 
             return sb.ToString();

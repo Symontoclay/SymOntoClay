@@ -167,7 +167,7 @@ namespace SymOntoClay.CLI
             ConsoleWrapper.WriteText("");
             ConsoleWrapper.WriteText("Additional CLI arguments:");
             ConsoleWrapper.WriteText("-nologo - supresses printing header.");
-            ConsoleWrapper.WriteText("-timeout <milleseconds> - terminates CLI after <milleseconds>. CLI will return 0.");
+            ConsoleWrapper.WriteText("-timeout <milleseconds> - terminates CLI after <milliseconds>. CLI will return 0.");
         }
 
         public void Dispose()

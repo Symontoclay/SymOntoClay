@@ -47,7 +47,7 @@ namespace SymOntoClay.CLI
             if(!command.NoLogo)
             {
                 ConsoleWrapper.WriteText($"Loading {command.InputFile}...");
-            }            
+            }
 
 #if DEBUG
             //_logger.Info($"command = {command}");

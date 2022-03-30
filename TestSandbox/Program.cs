@@ -79,7 +79,7 @@ namespace TestSandbox
 
             //TstSoundBus();
             //TstNavigationHandler();
-            TstCreatorExamples();
+            //TstCreatorExamples();
             //TstLinguisticVariable_Tests();
             //TstManageTempProject();
             //TstAdvancedTestRunnerForMultipleInstances();//<=~
@@ -121,7 +121,7 @@ namespace TestSandbox
             //TstParsing();
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

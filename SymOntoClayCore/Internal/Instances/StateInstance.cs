@@ -30,12 +30,6 @@ namespace SymOntoClay.Core.Internal.Instances
             _stateExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
         }
 
-        /// <inheritdoc/>
-        protected override void RunInitialTriggers()
-        {
-            RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger.Enter);
-        }
-
         private List<StateDeactivator> _stateDeactivators = new List<StateDeactivator>();
 
         /// <inheritdoc/>

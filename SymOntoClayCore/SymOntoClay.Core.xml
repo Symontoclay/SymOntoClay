@@ -4706,9 +4706,6 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.RunMutuallyExclusiveStatesSets">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.RunInitTriggersForAllStates">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.RunExplicitStates">
             <inheritdoc/>
         </member>
@@ -4917,9 +4914,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.SetExecutionStatusOfExecutionCoordinatorAsExecuting">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.RunInitialTriggers">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.RunDeactivatorsOfStates">

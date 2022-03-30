@@ -89,8 +89,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
             RunMutuallyExclusiveStatesSets();
 
-            RunInitTriggersForAllStates();
-
             RunExplicitStates();
 
             RunActivatorsOfStates();
@@ -135,7 +133,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected virtual void RunInitialTriggers()
         {
-            RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger.Init);
+            RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger.Enter);
         }
 
         protected void RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger kindOfSystemEvent)
@@ -187,10 +185,6 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         protected virtual void RunMutuallyExclusiveStatesSets()
-        {
-        }
-
-        protected virtual void RunInitTriggersForAllStates()
         {
         }
 

@@ -60,7 +60,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
         {
             var text = @"app PixKeeper
 {
-    on Init => {
+    on Enter => {
 	     'Hello world!' >> @>log;
     }
 }";
@@ -81,7 +81,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
 
             Assert.AreNotEqual(inlineTrigger, null);
             Assert.AreEqual(inlineTrigger.KindOfInlineTrigger, KindOfInlineTrigger.SystemEvent);
-            Assert.AreEqual(inlineTrigger.KindOfSystemEvent, KindOfSystemEventOfInlineTrigger.Init);
+            Assert.AreEqual(inlineTrigger.KindOfSystemEvent, KindOfSystemEventOfInlineTrigger.Enter);
 
             Assert.AreEqual(inlineTrigger.Statements.Count, 1);
 

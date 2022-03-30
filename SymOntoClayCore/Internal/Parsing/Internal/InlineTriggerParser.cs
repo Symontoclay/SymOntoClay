@@ -102,12 +102,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Word:
                             switch(_currToken.KeyWordTokenKind)
                             {
-                                case KeyWordTokenKind.Init:
-                                    _inlineTrigger.KindOfInlineTrigger = KindOfInlineTrigger.SystemEvent;
-                                    _inlineTrigger.KindOfSystemEvent = KindOfSystemEventOfInlineTrigger.Init;
-                                    _state = State.GotCondition;
-                                    break;
-
                                 case KeyWordTokenKind.Enter:
                                     _inlineTrigger.KindOfInlineTrigger = KindOfInlineTrigger.SystemEvent;
                                     _inlineTrigger.KindOfSystemEvent = KindOfSystemEventOfInlineTrigger.Enter;

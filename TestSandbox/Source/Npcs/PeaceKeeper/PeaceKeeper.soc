@@ -5,7 +5,7 @@
         '`a` has been called!' >> @>log;
         @param_1 >> @>log;
     }
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @param_1 = 12;

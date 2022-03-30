@@ -1426,5 +1426,136 @@ state Idling
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case13()
+        {
+            var text = @"app PeaceKeeper
+{
+    set Idling as default state;
+    set Patrolling as state;
+
+    on Enter =>
+    {
+        'Begin' >> @>log;        
+        'End' >> @>log;
+    }
+}
+
+state Idling
+{
+    on Enter
+    {
+        'Begin Idling Enter' >> @>log;
+        'End Idling Enter' >> @>log;
+    }
+}
+
+state Patrolling
+{
+    on Enter
+    {
+        'Begin Patrolling Enter' >> @>log;
+
+        set Idling as state;
+
+        'End Patrolling Enter' >> @>log;
+    }
+
+    on Leave
+    {
+        'Begin Patrolling Leave' >> @>log;
+        'End Patrolling Leave' >> @>log;
+    }
+}";
+
+            var appN = 0;
+            var patrollingEnterN = 0;
+            var patrollingLeaveN = 0;
+            var idlingEnterN = 0;
+
+            var wasPatrollingEnter = false;
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (message) => {
+                    if(message.Contains(" Idling Enter"))
+                    {
+                        idlingEnterN++;
+
+                        switch (idlingEnterN)
+                        {
+                            case 1:
+                                Assert.AreEqual(message, "Begin Idling Enter");
+                                break;
+
+                            case 2:
+                                Assert.AreEqual(message, "End Idling Enter");
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(idlingEnterN), idlingEnterN, null);
+                        }
+                    }
+                    else
+                    {
+                        if (message.Contains(" Patrolling Enter"))
+                        {
+                            patrollingEnterN++;
+
+                            switch (patrollingEnterN)
+                            {
+                                case 1:
+                                    Assert.AreEqual(message, "Begin Patrolling Enter");
+                                    wasPatrollingEnter = true;
+                                    break;
+
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(patrollingEnterN), patrollingEnterN, null);
+                            }
+                        }
+                        else
+                        {
+                            if (message.Contains(" Patrolling Leave"))
+                            {
+                                patrollingLeaveN++;
+
+                                switch (patrollingLeaveN)
+                                {
+                                    case 1:
+                                        Assert.AreEqual(message, "Begin Patrolling Leave");
+                                        Assert.AreEqual(wasPatrollingEnter, true);
+                                        break;
+
+                                    case 2:
+                                        Assert.AreEqual(message, "End Patrolling Leave");
+                                        break;
+
+                                    default:
+                                        throw new ArgumentOutOfRangeException(nameof(patrollingLeaveN), patrollingLeaveN, null);
+                                }
+                            }
+                            else
+                            {
+                                appN++;
+
+                                switch (appN)
+                                {
+                                    case 1:
+                                        Assert.AreEqual(message, "Begin");
+                                        break;
+
+                                    case 2:
+                                        Assert.AreEqual(message, "End");
+                                        break;
+
+                                    default:
+                                        throw new ArgumentOutOfRangeException(nameof(appN), appN, null);
+                                }
+                            }
+                        }
+                    }
+                }), true);
+        }
     }
 }

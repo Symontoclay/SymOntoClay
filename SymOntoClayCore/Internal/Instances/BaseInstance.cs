@@ -141,17 +141,36 @@ namespace SymOntoClay.Core.Internal.Instances
             RunLifecycleTriggers(kindOfSystemEvent, Name);
         }
 
+        protected void RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IExecutionCoordinator appInstanceExecutionCoordinator, IExecutionCoordinator stateExecutionCoordinator, IExecutionCoordinator actionExecutionCoordinator, bool normalOrder = true)
+        {
+            RunLifecycleTriggers(kindOfSystemEvent, Name, appInstanceExecutionCoordinator, stateExecutionCoordinator, actionExecutionCoordinator, normalOrder);
+        }
+
         protected void RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, StrongIdentifierValue holder)
+        {
+            RunLifecycleTriggers(kindOfSystemEvent, holder, _appInstanceExecutionCoordinator, _stateExecutionCoordinator, _actionExecutionCoordinator);
+        }
+
+        protected void RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, StrongIdentifierValue holder,
+            IExecutionCoordinator appInstanceExecutionCoordinator, IExecutionCoordinator stateExecutionCoordinator, IExecutionCoordinator actionExecutionCoordinator, bool normalOrder = true)
         {
             var targetSystemEventsTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(kindOfSystemEvent, holder, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
+            //Log($"kindOfSystemEvent = {kindOfSystemEvent}");
+            //if(kindOfSystemEvent == KindOfSystemEventOfInlineTrigger.Leave)
+            //{
+            //    Log($"targetSystemEventsTriggersList = {targetSystemEventsTriggersList.WriteListToString()}");
+            //}
             //Log($"targetSystemEventsTriggersList = {targetSystemEventsTriggersList.WriteListToString()}");
 #endif
 
             if (targetSystemEventsTriggersList.Any())
             {
-                targetSystemEventsTriggersList.Reverse();
+                if(normalOrder)
+                {
+                    targetSystemEventsTriggersList.Reverse();
+                }                
 
                 var processInitialInfoList = new List<ProcessInitialInfo>();
 
@@ -174,9 +193,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
 #if DEBUG
                 //Log($"processInitialInfoList = {processInitialInfoList.WriteListToString()}");
+                //Log($"appInstanceExecutionCoordinator?.ExecutionStatus = {appInstanceExecutionCoordinator?.ExecutionStatus}");
+                //Log($"stateExecutionCoordinator?.ExecutionStatus = {stateExecutionCoordinator?.ExecutionStatus}");
+                //Log($"actionExecutionCoordinator?.ExecutionStatus = {actionExecutionCoordinator?.ExecutionStatus}");
 #endif
 
-                var taskValue = _context.CodeExecutor.ExecuteBatchAsync(processInitialInfoList, _appInstanceExecutionCoordinator, _stateExecutionCoordinator, _actionExecutionCoordinator);
+                var taskValue = _context.CodeExecutor.ExecuteBatchAsync(processInitialInfoList, appInstanceExecutionCoordinator, stateExecutionCoordinator, actionExecutionCoordinator);
 
 #if DEBUG
                 //Log($"taskValue = {taskValue}");
@@ -202,19 +224,70 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected abstract void SetExecutionStatusOfExecutionCoordinatorAsExecuting();
 
+        protected IExecutionCoordinator _appInstanceFinalizationExecutionCoordinator;
+        protected IExecutionCoordinator _stateFinalizationExecutionCoordinator;
+        protected IExecutionCoordinator _actionFinalizationExecutionCoordinator;
+
+        protected abstract void InitFinalizationExecutionCoordinators();
+
+        protected virtual void RunFinalizationTrigges()
+        {
+#if DEBUG
+            //Log("Begin");
+#endif
+
+            InitFinalizationExecutionCoordinators();
+
+            RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger.Leave, _appInstanceFinalizationExecutionCoordinator, _stateFinalizationExecutionCoordinator, _actionFinalizationExecutionCoordinator, false);
+
+#if DEBUG
+            //Log("End");
+#endif
+        }
+
         protected void AppInstanceExecutionCoordinator_OnFinished()
         {
+#if DEBUG
+            //Log("Begin");
+#endif
+
+            RunFinalizationTrigges();
+
             Dispose();
+
+#if DEBUG
+            //Log("End");
+#endif
         }
 
         protected virtual void StateExecutionCoordinator_OnFinished()
         {
+#if DEBUG
+            //Log("Begin");
+#endif
+
+            RunFinalizationTrigges();
+
             Dispose();
+
+#if DEBUG
+            //Log("End");
+#endif
         }
 
         protected void ActionExecutionCoordinator_OnFinished()
         {
+#if DEBUG
+            //Log("Begin");
+#endif
+
+            RunFinalizationTrigges();
+
             Dispose();
+
+#if DEBUG
+            //Log("End");
+#endif
         }
 
         /// <inheritdoc/>

@@ -61,6 +61,14 @@ namespace SymOntoClay.Core.Internal.Instances
         public event Action<StateInstance> OnStateInstanceFinished;
 
         /// <inheritdoc/>
+        protected override void InitFinalizationExecutionCoordinators()
+        {
+            _appInstanceFinalizationExecutionCoordinator = _appInstanceExecutionCoordinator;
+            _stateFinalizationExecutionCoordinator = new ExecutionCoordinator();
+            _stateFinalizationExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
+        }
+
+        /// <inheritdoc/>
         protected override void OnDisposed()
         {
 #if DEBUG

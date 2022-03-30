@@ -64,6 +64,15 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
+        protected override void InitFinalizationExecutionCoordinators()
+        {
+            _appInstanceFinalizationExecutionCoordinator = _appInstanceExecutionCoordinator;
+            _stateFinalizationExecutionCoordinator = _stateExecutionCoordinator;
+            _actionFinalizationExecutionCoordinator = new ExecutionCoordinator();
+            _actionFinalizationExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
+        }
+
+        /// <inheritdoc/>
         IExecutionCoordinator IExecutable.TryActivate(IEngineContext context, IExecutionCoordinator appInstanceExecutionCoordinator, IExecutionCoordinator stateExecutionCoordinator)
         {
             return null;

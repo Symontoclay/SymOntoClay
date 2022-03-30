@@ -4673,6 +4673,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.SetExecutionStatusOfExecutionCoordinatorAsExecuting">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.InitFinalizationExecutionCoordinators">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.SymOntoClay#Core#Internal#CodeExecution#IExecutable#TryActivate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
             <inheritdoc/>
         </member>
@@ -4710,6 +4713,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.RunActivatorsOfStates">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.InitFinalizationExecutionCoordinators">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.OnDisposed">
@@ -4920,6 +4926,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.StateExecutionCoordinator_OnFinished">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.InitFinalizationExecutionCoordinators">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.OnDisposed">

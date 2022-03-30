@@ -48,7 +48,7 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         protected override void InitExecutionCoordinators()
         {
-            _appInstanceExecutionCoordinator =new ExecutionCoordinator();
+            _appInstanceExecutionCoordinator = new ExecutionCoordinator();
             _appInstanceExecutionCoordinator.OnFinished += AppInstanceExecutionCoordinator_OnFinished;
         }
 
@@ -344,6 +344,13 @@ namespace SymOntoClay.Core.Internal.Instances
 #if DEBUG
             //Log("End");
 #endif
+        }
+
+        /// <inheritdoc/>
+        protected override void InitFinalizationExecutionCoordinators()
+        {
+            _appInstanceFinalizationExecutionCoordinator = new ExecutionCoordinator();
+            _appInstanceFinalizationExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
         }
 
         /// <inheritdoc/>

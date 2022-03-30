@@ -242,6 +242,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if(rawList.Any(p => p.ResultItem.TypeOfAccess == TypeOfAccess.Local))
             {
+#if DEBUG
+                //Log($"rawList = {rawList.Where(p => p.ResultItem.TypeOfAccess == TypeOfAccess.Local).WriteListToString()}");
+#endif
+
                 return rawList.Single(p => p.ResultItem.TypeOfAccess == TypeOfAccess.Local).ResultItem;
             }
 

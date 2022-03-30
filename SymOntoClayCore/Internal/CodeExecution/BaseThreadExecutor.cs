@@ -1322,8 +1322,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             CallExecutable(method, kindOfParameters, namedParameters, positionedParameters, isSync);
         }
 
-        private CodeFrame ConvertExecutableToCodeFrame(IExecutable function,
-            KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters)
+        private CodeFrame ConvertExecutableToCodeFrame(IExecutable function, KindOfFunctionParameters kindOfParameters,
+            Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters)
         {
 #if DEBUG
             //Log($"kindOfParameters = {kindOfParameters}");
@@ -1344,7 +1344,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #endif
 
             var localCodeExecutionContext = new LocalCodeExecutionContext();
-            var localStorageSettings = RealStorageSettingsHelper.Create(_context, storagesList.ToList());
+            var localStorageSettings = RealStorageSettingsHelper.Create(_context, storagesList.ToList(), false);
 
             var newStorage = new LocalStorage(localStorageSettings);
 
@@ -1518,6 +1518,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
             var coordinator = executable.TryActivate(_context, _appInstanceExecutionCoordinator, _stateExecutionCoordinator);
+
+#if DEBUG
+            //Log($"executable.IsSystemDefined = {executable.IsSystemDefined}");
+#endif
 
             if (executable.IsSystemDefined)
             {

@@ -1438,6 +1438,52 @@ app PeaceKeeper
 
         [Test]
         [Parallelizable]
+        public void Case11_a()
+        {
+            var text = @"app PeaceKeeper
+{
+    fun a(@param_1)
+    {
+        '`a` has been called!' >> @>log;
+        @param_1 >> @>log;
+    }
+    on Init =>
+    {
+        'Begin' >> @>log;
+        @param_1 = 12;
+        a(@param_1);
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "`a` has been called!");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "12");
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
         public void Case12_a()
         {
             var text = @"app PeaceKeeper

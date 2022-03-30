@@ -1,9 +1,15 @@
-﻿linvar age for range (0, 150]
+﻿app PeaceKeeper
 {
-    constraints:
-	    for inheritance;
-	    for relation age;
-
-    terms:
-        `teenager` = Trapezoid(10, 12, 17, 20);
+    fun a(@param_1)
+    {
+        '`a` has been called!' >> @>log;
+        @param_1 >> @>log;
+    }
+    on Init =>
+    {
+        'Begin' >> @>log;
+        @param_1 = 12;
+        a(@param_1);
+        'End' >> @>log;
+    }
 }

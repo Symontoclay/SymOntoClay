@@ -31,13 +31,23 @@ namespace SymOntoClay.Core.Internal.Storage
     {
         public static RealStorageSettings Create(IMainStorageContext context, IStorage parentStorage)
         {
-            return Create(context, new List<IStorage>() { parentStorage });
+            return Create(context, new List<IStorage>() { parentStorage }, true);
         }
 
         public static RealStorageSettings Create(IMainStorageContext context, List<IStorage> parentStorages)
         {
+            return Create(context, parentStorages, true);
+        }
+
+        public static RealStorageSettings Create(IMainStorageContext context, List<IStorage> parentStorages, bool allowParentLocalStorages)
+        {
             var result = new RealStorageSettings();
             result.MainStorageContext = context;
+
+            if(!allowParentLocalStorages)
+            {
+                parentStorages = parentStorages.Where(p => p.Kind != KindOfStorage.Local).ToList();
+            }
 
             result.ParentsStorages = (parentStorages?.ToList()) ?? new List<IStorage>();
             result.DefaultSettingsOfCodeEntity = parentStorages?.FirstOrDefault()?.DefaultSettingsOfCodeEntity;

@@ -46,7 +46,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End of `a`' >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a(param_1: 1);
@@ -106,7 +106,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End of `a`' >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         try
         {
@@ -119,7 +119,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             'catch' >> @>log;
         }
 
-        'End of `Init`' >> @>log;
+        'End of `Enter`' >> @>log;
     }
 }";
 
@@ -144,7 +144,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 5:
-                            Assert.AreEqual(message, "End of `Init`");
+                            Assert.AreEqual(message, "End of `Enter`");
                             break;
 
                         default:
@@ -169,7 +169,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End of `a`' >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         try
         {
@@ -178,7 +178,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             'End' >> @>log;        
         }
 
-        'End of `Init`' >> @>log;
+        'End of `Enter`' >> @>log;
     }
 }";
 
@@ -199,7 +199,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 4:
-                            Assert.AreEqual(message, "End of `Init`");
+                            Assert.AreEqual(message, "End of `Enter`");
                             break;
 
                         default:
@@ -222,7 +222,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End of `a`' >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         try
         {
@@ -235,7 +235,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             'catch' >> @>log;
         }
 
-        'End of `Init`' >> @>log;
+        'End of `Enter`' >> @>log;
     }
 }";
 
@@ -264,7 +264,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 6:
-                            Assert.AreEqual(message, "End of `Init`");
+                            Assert.AreEqual(message, "End of `Enter`");
                             break;
 
                         default:
@@ -287,7 +287,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End of `a`' >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         try
         {
@@ -296,7 +296,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             'End' >> @>log;        
         }
 
-        'End of `Init`' >> @>log;
+        'End of `Enter`' >> @>log;
     }
 }";
 
@@ -325,7 +325,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 6:
-                            Assert.AreEqual(message, "End of `Init`");
+                            Assert.AreEqual(message, "End of `Enter`");
                             break;
 
                         default:
@@ -348,7 +348,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End of `a`' >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         try
         {
@@ -409,7 +409,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End of `a`' >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         try
         {
@@ -426,7 +426,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             'else' >> @>log;
         }
 
-        'End of `Init`' >> @>log;
+        'End of `Enter`' >> @>log;
     }
 }";
 
@@ -451,7 +451,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 5:
-                            Assert.AreEqual(message, "End of `Init`");
+                            Assert.AreEqual(message, "End of `Enter`");
                             break;
 
                         default:
@@ -474,7 +474,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End of `a`' >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         try
         {
@@ -491,7 +491,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             'else' >> @>log;
         }
 
-        'End of `Init`' >> @>log;
+        'End of `Enter`' >> @>log;
     }
 }";
 
@@ -524,7 +524,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 7:
-                            Assert.AreEqual(message, "End of `Init`");
+                            Assert.AreEqual(message, "End of `Enter`");
                             break;
 
                         default:
@@ -549,7 +549,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End of `a`' >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         try
         {
@@ -570,7 +570,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             'ensure' >> @>log;
         }
 
-        'End of `Init`' >> @>log;
+        'End of `Enter`' >> @>log;
     }
 }";
 
@@ -599,7 +599,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 6:
-                            Assert.AreEqual(message, "End of `Init`");
+                            Assert.AreEqual(message, "End of `Enter`");
                             break;
 
                         default:
@@ -622,7 +622,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End of `a`' >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         try
         {
@@ -643,7 +643,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             'ensure' >> @>log;
         }
 
-        'End of `Init`' >> @>log;
+        'End of `Enter`' >> @>log;
     }
 }";
 
@@ -680,7 +680,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 8:
-                            Assert.AreEqual(message, "End of `Init`");
+                            Assert.AreEqual(message, "End of `Enter`");
                             break;
 
                         default:
@@ -705,7 +705,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End of `a`' >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         try
         {
@@ -731,7 +731,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             'ensure' >> @>log;
         }
 
-        'End of `Init`' >> @>log;
+        'End of `Enter`' >> @>log;
     }
 }";
 
@@ -767,7 +767,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 7:
-                            Assert.AreEqual(message, "End of `Init`");
+                            Assert.AreEqual(message, "End of `Enter`");
                             break;
 
                         default:
@@ -790,7 +790,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End of `a`' >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         try
         {
@@ -816,7 +816,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             'ensure' >> @>log;
         }
 
-        'End of `Init`' >> @>log;
+        'End of `Enter`' >> @>log;
     }
 }";
 
@@ -853,7 +853,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 8:
-                            Assert.AreEqual(message, "End of `Init`");
+                            Assert.AreEqual(message, "End of `Enter`");
                             break;
 
                         default:
@@ -878,7 +878,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End of `a`' >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         try
         {
@@ -908,7 +908,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             'ensure' >> @>log;
         }
 
-        'End of `Init`' >> @>log;
+        'End of `Enter`' >> @>log;
     }
 }";
 
@@ -944,7 +944,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 7:
-                            Assert.AreEqual(message, "End of `Init`");
+                            Assert.AreEqual(message, "End of `Enter`");
                             break;
 
                         default:
@@ -969,7 +969,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'End of `a`' >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         try
         {
@@ -1004,7 +1004,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             'ensure' >> @>log;
         }
 
-        'End of `Init`' >> @>log;
+        'End of `Enter`' >> @>log;
     }
 }";
 
@@ -1040,7 +1040,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 7:
-                            Assert.AreEqual(message, "End of `Init`");
+                            Assert.AreEqual(message, "End of `Enter`");
                             break;
 
                         default:
@@ -1055,7 +1055,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         try
         {
@@ -1090,7 +1090,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             'ensure' >> @>log;
         }
 
-        'End of `Init`' >> @>log;
+        'End of `Enter`' >> @>log;
     }
 }";
 
@@ -1118,7 +1118,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 5:
-                            Assert.AreEqual(message, "End of `Init`");
+                            Assert.AreEqual(message, "End of `Enter`");
                             break;
 
                         default:
@@ -1133,7 +1133,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         try
         {
@@ -1146,7 +1146,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             'else' >> @>log;
         }
 
-        'End of `Init`' >> @>log;
+        'End of `Enter`' >> @>log;
     }
 }";
 
@@ -1159,7 +1159,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 2:
-                            Assert.AreEqual(message, "End of `Init`");
+                            Assert.AreEqual(message, "End of `Enter`");
                             break;
 
                         default:
@@ -1174,7 +1174,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         try
         {
@@ -1186,7 +1186,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             'else' >> @>log;
         }
 
-        'End of `Init`' >> @>log;
+        'End of `Enter`' >> @>log;
     }
 }";
 
@@ -1207,7 +1207,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 4:
-                            Assert.AreEqual(message, "End of `Init`");
+                            Assert.AreEqual(message, "End of `Enter`");
                             break;
 
                         default:
@@ -1222,7 +1222,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         try
         {
@@ -1235,7 +1235,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             'ensure' >> @>log;
         }
 
-        'End of `Init`' >> @>log;
+        'End of `Enter`' >> @>log;
     }
 }";
 
@@ -1252,7 +1252,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 3:
-                            Assert.AreEqual(message, "End of `Init`");
+                            Assert.AreEqual(message, "End of `Enter`");
                             break;
 
                         default:
@@ -1267,7 +1267,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         try
         {
@@ -1279,7 +1279,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             'ensure' >> @>log;
         }
 
-        'End of `Init`' >> @>log;
+        'End of `Enter`' >> @>log;
     }
 }";
 
@@ -1300,7 +1300,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 4:
-                            Assert.AreEqual(message, "End of `Init`");
+                            Assert.AreEqual(message, "End of `Enter`");
                             break;
 
                         default:
@@ -1315,7 +1315,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         try
         {
@@ -1332,7 +1332,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             'ensure' >> @>log;
         }
 
-        'End of `Init`' >> @>log;
+        'End of `Enter`' >> @>log;
     }
 }";
 
@@ -1349,7 +1349,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 3:
-                            Assert.AreEqual(message, "End of `Init`");
+                            Assert.AreEqual(message, "End of `Enter`");
                             break;
 
                         default:
@@ -1364,7 +1364,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         try
         {
@@ -1380,7 +1380,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             'ensure' >> @>log;
         }
 
-        'End of `Init`' >> @>log;
+        'End of `Enter`' >> @>log;
     }
 }";
 
@@ -1405,7 +1405,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 5:
-                            Assert.AreEqual(message, "End of `Init`");
+                            Assert.AreEqual(message, "End of `Enter`");
                             break;
 
                         default:

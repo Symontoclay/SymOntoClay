@@ -38,7 +38,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         
@@ -82,7 +82,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         
@@ -124,7 +124,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     {: >: { see(I, #`Barel 1`) } :}
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         
@@ -168,7 +168,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     {: >: { see(I, #`Barel 2`) } :}
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         
@@ -208,7 +208,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     {: >: { see(I, #`Barel 1`) } :}
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         
@@ -254,7 +254,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     {: >: { see(I, #`Barel 2`) } :}
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         
@@ -300,7 +300,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     {: >: { see(I, #`Barel 0`) } :}
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         
@@ -346,7 +346,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     {: >: { see(I, #`Barel 1`) } :}
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         
@@ -392,7 +392,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     {: >: { see(I, #`Barel 2`) } :}
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         
@@ -434,7 +434,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     {: >: { see(I, #`Barel 2`) } :}
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         
@@ -482,7 +482,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     {: >: { see(I, #`Barel 3`) } :}
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         

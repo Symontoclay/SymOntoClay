@@ -39,7 +39,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
  
@@ -51,9 +51,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
 action Go 
 {
-    on Init =>
+    on Enter =>
     {
-        'Init Go' >> @>log;
+        'Enter Go' >> @>log;
     }
 
     op () => 
@@ -119,7 +119,7 @@ action Go
 
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
  
@@ -131,9 +131,9 @@ action Go
 
 action Go 
 {
-    on Init =>
+    on Enter =>
     {
-        'Init Go' >> @>log;
+        'Enter Go' >> @>log;
     }
 
     op () => 
@@ -200,7 +200,7 @@ action Go
 
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
  
@@ -212,9 +212,9 @@ action Go
 
 action Go 
 {
-    on Init =>
+    on Enter =>
     {
-        'Init Go' >> @>log;
+        'Enter Go' >> @>log;
     }
 
     op () => 
@@ -234,7 +234,7 @@ action Go
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Init Go");
+                        Assert.AreEqual(message, "Enter Go");
                         break;
 
                     case 3:
@@ -265,7 +265,7 @@ action Go
 
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
  
@@ -277,9 +277,9 @@ action Go
 
 action `my Go 1` alias `Go` 
 {
-    on Init =>
+    on Enter =>
     {
-        'Init Go' >> @>log;
+        'Enter Go' >> @>log;
     }
 
     op () => 
@@ -345,7 +345,7 @@ action `my Go 1` alias `Go`
 
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
  
@@ -357,9 +357,9 @@ action `my Go 1` alias `Go`
 
 action `my Go 1` alias `Go`, Run 
 {
-    on Init =>
+    on Enter =>
     {
-        'Init Go' >> @>log;
+        'Enter Go' >> @>log;
     }
 
     op () => 
@@ -425,7 +425,7 @@ action `my Go 1` alias `Go`, Run
 
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
  
@@ -437,9 +437,9 @@ action `my Go 1` alias `Go`, Run
 
 action `my Go 1` alias `Go`, `Run` 
 {
-    on Init =>
+    on Enter =>
     {
-        'Init Go' >> @>log;
+        'Enter Go' >> @>log;
     }
 
     op () => 
@@ -505,7 +505,7 @@ action `my Go 1` alias `Go`, `Run`
 
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
  
@@ -517,9 +517,9 @@ action `my Go 1` alias `Go`, `Run`
 
 action `my Go 1` alias `Go` is `base app` 
 {
-    on Init =>
+    on Enter =>
     {
-        'Init Go' >> @>log;
+        'Enter Go' >> @>log;
     }
 
     op () => 
@@ -586,7 +586,7 @@ action `my Go 1` alias `Go` is `base app`
 
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
  
@@ -598,9 +598,9 @@ action `my Go 1` alias `Go` is `base app`
 
 action `my Go 1` alias `Go`, Run is `base app` 
 {
-    on Init =>
+    on Enter =>
     {
-        'Init Go' >> @>log;
+        'Enter Go' >> @>log;
     }
 
     op () => 
@@ -666,7 +666,7 @@ action `my Go 1` alias `Go`, Run is `base app`
 
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
  
@@ -678,9 +678,9 @@ action `my Go 1` alias `Go`, Run is `base app`
 
 action `my Go 1` alias `Go`, `Run` is `base app` 
 {
-    on Init =>
+    on Enter =>
     {
-        'Init Go' >> @>log;
+        'Enter Go' >> @>log;
     }
 
     op () => 
@@ -746,7 +746,7 @@ action `my Go 1` alias `Go`, `Run` is `base app`
 
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
  
@@ -758,9 +758,9 @@ action `my Go 1` alias `Go`, `Run` is `base app`
 
 action `Go` is `base app` 
 {
-    on Init =>
+    on Enter =>
     {
-        'Init Go' >> @>log;
+        'Enter Go' >> @>log;
     }
 
     op () => 
@@ -826,7 +826,7 @@ action `Go` is `base app`
 
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
  
@@ -838,9 +838,9 @@ action `Go` is `base app`
 
 action Go is `base app` 
 {
-    on Init =>
+    on Enter =>
     {
-        'Init Go' >> @>log;
+        'Enter Go' >> @>log;
     }
 
     op () => 
@@ -906,7 +906,7 @@ action Go is `base app`
 
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
  
@@ -918,9 +918,9 @@ action Go is `base app`
 
 action Go 
 {
-    on Init =>
+    on Enter =>
     {
-        'Init Go' >> @>log;
+        'Enter Go' >> @>log;
     }
 
     op () => 
@@ -979,7 +979,7 @@ action Go
 
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
  
@@ -999,9 +999,9 @@ action Go
 
 action Go 
 {
-    on Init =>
+    on Enter =>
     {
-        'Init Go' >> @>log;
+        'Enter Go' >> @>log;
     }
 
     op () => 

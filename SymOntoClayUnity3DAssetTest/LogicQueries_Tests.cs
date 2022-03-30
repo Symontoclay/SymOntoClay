@@ -40,7 +40,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	{: parent(#Piter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
-	on Init => {
+	on Enter => {
 	    select {: son($x, $y) :} >> @>log;
 	}
 }";
@@ -71,7 +71,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	{: male(#Tom) :}
 	{: parent(#Piter, #Tom) :}
 	
-	on Init => {
+	on Enter => {
 	    select {: son($x, $y) :} >> @>log;
 	}
 }";
@@ -104,7 +104,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	{: parent(#Piter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
-	on Init => {
+	on Enter => {
 	    select {: son(#Tom, $y) :} >> @>log;
 	}
 }";
@@ -136,7 +136,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	{: parent(#Piter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
     @a = #Tom;
-	on Init => {
+	on Enter => {
 	    select {: son(@a, $y) :} >> @>log;
 	}
 }";
@@ -168,7 +168,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	{: parent(#Piter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
-	on Init => {
+	on Enter => {
 	    ? {: son(#Tom, $y) :} >> @>log;
 	}
 }";
@@ -199,7 +199,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     {: can(bird, fly) :}
     {: bird(#Alisa_12) :}
 
-    on Init =>
+    on Enter =>
     {
         ? {: can(#Alisa_12, $x) :} >> @>log;
     }
@@ -230,7 +230,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {: can(bird, fly) :}
         {: bird(#Alisa_12) :}
 
-    on Init =>
+    on Enter =>
     {
         ? {: can(#Alisa_12, fly) :} >> @>log;
     }
@@ -260,7 +260,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     {: can(bird, fly) :}
     {: bird(#Alisa_12) :}
 
-    on Init =>
+    on Enter =>
     {
         ? {: $z(#Alisa_12, $x) :} >> @>log;
     }
@@ -291,7 +291,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     {: >: { see(I, #`Barel 1`) } :}
 
-    on Init =>
+    on Enter =>
     {
         ? {: see(I, #`Barel 1`) :} >> @>log;
     }
@@ -321,7 +321,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     {: barrel(#a) :}
     {: see(I, #a) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: see(I, barrel) :} >> @>log;
     }
@@ -351,7 +351,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     {: is (#a, barrel) :}
     {: see(I, #a) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: see(I, barrel) :} >> @>log;
     }
@@ -380,7 +380,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     {: animal(cat) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: { cat is animal } :} >> @>log;
     }
@@ -409,7 +409,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     {: { animal(cat) } :}
 
-    on Init =>
+    on Enter =>
     {
         select {: { cat is animal } :} >> @>log;
     }
@@ -438,7 +438,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     {: animal(cat) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: cat is animal :} >> @>log;
     }
@@ -467,7 +467,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     {: animal(cat) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: >: { cat is animal } :} >> @>log;
     }
@@ -498,7 +498,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     {: is (#a, barrel) :}
     {: see(I, #a) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: $z($x, $y) :} >> @>log;
     }
@@ -531,7 +531,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     {: is (#a, barrel) :}
     {: see(I, #a) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: $z($x) :} >> @>log;
     }
@@ -569,7 +569,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 50) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, `teenager`) :} >> @>log;
     }
@@ -607,7 +607,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 15) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, `teenager`) :} >> @>log;
     }
@@ -645,7 +645,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 12) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, very `teenager`) :} >> @>log;
     }
@@ -683,7 +683,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 12) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, very teenager) :} >> @>log;
     }
@@ -721,7 +721,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 12) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, `very` `teenager`) :} >> @>log;
     }
@@ -759,7 +759,7 @@ app PeaceKeeper
 {
     {: age(#Tom, very `teenager`) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, 12) :} >> @>log;
     }
@@ -797,7 +797,7 @@ app PeaceKeeper
 {
     {: age(#Tom, `teenager`) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, 12) :} >> @>log;
     }
@@ -835,7 +835,7 @@ app PeaceKeeper
 {
     {: age(#Tom, teenager) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, 12) :} >> @>log;
     }
@@ -873,7 +873,7 @@ app PeaceKeeper
 {
     {: age(#Tom, `teenager`) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, 50) :} >> @>log;
     }
@@ -908,7 +908,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 15) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, `teenager`) :} >> @>log;
     }
@@ -946,7 +946,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 15) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, `teenager`) :} >> @>log;
     }
@@ -981,7 +981,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 15) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, `teenager`) :} >> @>log;
     }
@@ -1019,7 +1019,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 15) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, `teenager`) :} >> @>log;
     }
@@ -1050,7 +1050,7 @@ app PeaceKeeper
     {: age(#Tom, 50) :}
     {: distance(I, #Tom, 12) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & distance(#Tom, $y) & $x is not $y :} >> @>log;
     }
@@ -1083,7 +1083,7 @@ app PeaceKeeper
     {: age(#Tom, 12) :}
     {: distance(I, #Tom, 12) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & distance(#Tom, $y) & $x is not $y :} >> @>log;
     }
@@ -1113,7 +1113,7 @@ app PeaceKeeper
     {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
     {: distance(I, #Tom, 12) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: distance(#Tom, $x) :} >> @>log;
     }
@@ -1144,7 +1144,7 @@ app PeaceKeeper
     {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
     {: distance(I, #Tom, 12) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: distance(#Tom, $x) & $x is 12 :} >> @>log;
     }
@@ -1175,7 +1175,7 @@ app PeaceKeeper
     {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
     {: distance(I, #Tom, 50) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: distance(#Tom, $x) & $x is 12 :} >> @>log;
     }
@@ -1205,7 +1205,7 @@ app PeaceKeeper
     {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
     {: distance(I, #Tom, 50) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: distance(#Tom, $x) & $x > 5 :} >> @>log;
     }
@@ -1236,7 +1236,7 @@ app PeaceKeeper
     {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
     {: distance(I, #Tom, 5) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: distance(#Tom, $x) & $x > 5 :} >> @>log;
     }
@@ -1266,7 +1266,7 @@ app PeaceKeeper
     {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
     {: distance(I, #Tom, 4) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: distance(#Tom, $x) & $x > 5 :} >> @>log;
     }
@@ -1296,7 +1296,7 @@ app PeaceKeeper
     {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
     {: distance(I, #Tom, 50) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: distance(#Tom, $x) & $x >= 5 :} >> @>log;
     }
@@ -1327,7 +1327,7 @@ app PeaceKeeper
     {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
     {: distance(I, #Tom, 5) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: distance(#Tom, $x) & $x >= 5 :} >> @>log;
     }
@@ -1358,7 +1358,7 @@ app PeaceKeeper
     {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
     {: distance(I, #Tom, 4) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: distance(#Tom, $x) & $x >= 5 :} >> @>log;
     }
@@ -1388,7 +1388,7 @@ app PeaceKeeper
     {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
     {: distance(I, #Tom, 50) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: distance(#Tom, $x) & $x < 5 :} >> @>log;
     }
@@ -1418,7 +1418,7 @@ app PeaceKeeper
     {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
     {: distance(I, #Tom, 5) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: distance(#Tom, $x) & $x < 5 :} >> @>log;
     }
@@ -1448,7 +1448,7 @@ app PeaceKeeper
     {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
     {: distance(I, #Tom, 4) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: distance(#Tom, $x) & $x < 5 :} >> @>log;
     }
@@ -1479,7 +1479,7 @@ app PeaceKeeper
     {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
     {: distance(I, #Tom, 50) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: distance(#Tom, $x) & $x <= 5 :} >> @>log;
     }
@@ -1509,7 +1509,7 @@ app PeaceKeeper
     {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
     {: distance(I, #Tom, 5) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: distance(#Tom, $x) & $x <= 5 :} >> @>log;
     }
@@ -1540,7 +1540,7 @@ app PeaceKeeper
     {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
     {: distance(I, #Tom, 4) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: distance(#Tom, $x) & $x <= 5 :} >> @>log;
     }
@@ -1579,7 +1579,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 50) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x > `teenager` :} >> @>log;
     }
@@ -1618,7 +1618,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 15) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x > `teenager` :} >> @>log;
     }
@@ -1656,7 +1656,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 4) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x > `teenager` :} >> @>log;
     }
@@ -1694,7 +1694,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 50) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x >= `teenager` :} >> @>log;
     }
@@ -1733,7 +1733,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 15) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x >= `teenager` :} >> @>log;
     }
@@ -1772,7 +1772,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 4) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x >= `teenager` :} >> @>log;
     }
@@ -1810,7 +1810,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 50) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x < `teenager` :} >> @>log;
     }
@@ -1848,7 +1848,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 15) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x < `teenager` :} >> @>log;
     }
@@ -1886,7 +1886,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 4) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x < `teenager` :} >> @>log;
     }
@@ -1925,7 +1925,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 50) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x <= `teenager` :} >> @>log;
     }
@@ -1963,7 +1963,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 15) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x <= `teenager` :} >> @>log;
     }
@@ -2002,7 +2002,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 4) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x <= `teenager` :} >> @>log;
     }
@@ -2041,7 +2041,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 50) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x > very `teenager` :} >> @>log;
     }
@@ -2080,7 +2080,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 15) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x > very `teenager` :} >> @>log;
     }
@@ -2118,7 +2118,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 4) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x > very `teenager` :} >> @>log;
     }
@@ -2156,7 +2156,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 50) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x >= very `teenager` :} >> @>log;
     }
@@ -2195,7 +2195,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 15) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x >= very `teenager` :} >> @>log;
     }
@@ -2234,7 +2234,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 4) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x >= very `teenager` :} >> @>log;
     }
@@ -2272,7 +2272,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 50) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x < very `teenager` :} >> @>log;
     }
@@ -2310,7 +2310,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 15) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x < very `teenager` :} >> @>log;
     }
@@ -2348,7 +2348,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 4) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x < very `teenager` :} >> @>log;
     }
@@ -2387,7 +2387,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 50) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x <= very `teenager` :} >> @>log;
     }
@@ -2425,7 +2425,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 15) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x <= very `teenager` :} >> @>log;
     }
@@ -2464,7 +2464,7 @@ app PeaceKeeper
 {
     {: age(#Tom, 4) :}
 
-    on Init =>
+    on Enter =>
     {
         select {: age(#Tom, $x) & $x <= very `teenager` :} >> @>log;
     }
@@ -2492,7 +2492,7 @@ app PeaceKeeper
         {
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         ? {: bird ($x) :} >> @>log;
         insert {: >: { bird (#1234) } :};
@@ -2528,7 +2528,7 @@ app PeaceKeeper
 {
     {: gun(M4A1) :}
 
-    on Init
+    on Enter
     {
         insert {: $x = act(M4A1, shoot) & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :};
     }

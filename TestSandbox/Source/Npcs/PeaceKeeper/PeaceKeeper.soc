@@ -1,15 +1,28 @@
 ﻿app PeaceKeeper
-{
-    fun a(@param_1)
-    {
-        '`a` has been called!' >> @>log;
-        @param_1 >> @>log;
-    }
+{ 
+    set Patrolling as state;
+
     on Enter =>
     {
-        'Begin' >> @>log;
-        @param_1 = 12;
-        a(@param_1);
+        'Begin' >> @>log;        
         'End' >> @>log;
+    }
+}
+
+state Idling
+{
+    on Enter
+    {
+        'Begin Idling Enter' >> @>log;
+        'End Idling Enter' >> @>log;
+    }
+}
+
+state Patrolling
+{
+    on Enter
+    {
+        'Begin Patrolling Enter' >> @>log;
+        'End Patrolling Enter' >> @>log;
     }
 }

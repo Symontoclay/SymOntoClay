@@ -59,7 +59,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         insert {: see(I, #`gun 1`) :};
     }
@@ -175,7 +175,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     {: barrel(#a) :}
 
-    on Init =>
+    on Enter =>
     {
         insert {: see(I, #a) :};
     }
@@ -425,7 +425,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     @a = #`gun 1`;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         insert {: see(I, #`gun 1`) :};
@@ -463,7 +463,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     @a = #`gun 1`;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         insert {: see(I, #`gun 2`) :};
@@ -497,7 +497,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     @a = #`gun 1`;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         insert {: see(I, @a) :};

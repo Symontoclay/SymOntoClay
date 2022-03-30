@@ -45,7 +45,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         '`a` has been ended!' >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a();
@@ -89,7 +89,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         '`a` has been ended!' >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a() >> @>log;
@@ -137,7 +137,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         '`a` has been ended!' >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a() >> @>log;
@@ -186,7 +186,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         '`a` has been ended!' >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a() >> @>log;

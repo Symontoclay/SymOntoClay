@@ -41,7 +41,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         '`a` has been called!' >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a();
@@ -82,7 +82,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         '`a` has been called!' >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a();
@@ -124,7 +124,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_1 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a(1);
@@ -170,7 +170,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_1 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a('Hi');
@@ -216,7 +216,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_1 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a(dog);
@@ -262,7 +262,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_1 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a(`dog`);
@@ -308,7 +308,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_1 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a(@param_1: 1);
@@ -354,7 +354,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_1 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a(param_1: 1);
@@ -400,7 +400,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_1 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @param_1 = 12;
@@ -455,7 +455,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_2 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @param_1 = 12;
@@ -510,7 +510,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_2 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @param_1 = 12;
@@ -572,7 +572,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_2 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @param_1 = 12;
@@ -625,7 +625,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_2 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @param_1 = 12;
@@ -678,7 +678,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_2 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @param_1 = 12;
@@ -731,7 +731,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_2 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @param_1 = 12;
@@ -783,7 +783,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_1 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a(param_1: 1);
@@ -830,7 +830,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_2 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a(param_1: 1);
@@ -890,7 +890,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_1 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a(param_1: 1);
@@ -947,7 +947,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_1 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a(param_1: 'Hi');
@@ -1005,7 +1005,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_1 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a(param_1: dog);
@@ -1063,7 +1063,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_1 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a(param_1: `dog`);
@@ -1119,7 +1119,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_1 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a(1);
@@ -1176,7 +1176,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_1 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a('Hi');
@@ -1234,7 +1234,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_1 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a(dog);
@@ -1292,7 +1292,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_1 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a(`dog`);
@@ -1356,7 +1356,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @param_1 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a(param_1: 1);
@@ -1402,7 +1402,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
 app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a(param_1: 1);
@@ -1447,7 +1447,7 @@ app PeaceKeeper
         '`a` has been called!' >> @>log;
         @param_1 >> @>log;
     }
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @param_1 = 12;
@@ -1500,7 +1500,7 @@ app PeaceKeeper
         @param_1 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a(param_1: 1);
@@ -1561,7 +1561,7 @@ app PeaceKeeper
         @param_1 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a(param_1: 1);
@@ -1628,7 +1628,7 @@ app PeaceKeeper
         @param_1 >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a(param_1: 1);

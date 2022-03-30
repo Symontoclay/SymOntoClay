@@ -43,7 +43,7 @@ private:
 	{: parent(#Piter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
-	on Init => {
+	on Enter => {
 	    'Begin' >> @>log;
 	    select {: son(@a, $y) :} >> @>log;
 		'End' >> @>log;
@@ -89,7 +89,7 @@ private:
         '`a` has been called!' >> @>log;
     }
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a();
@@ -134,7 +134,7 @@ private:
 app PeaceKeeper is Cls1
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a();
@@ -180,7 +180,7 @@ public:
 app PeaceKeeper is Cls1
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a();
@@ -226,7 +226,7 @@ protected:
 app PeaceKeeper is Cls1
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         a();
@@ -271,7 +271,7 @@ private:
 app PeaceKeeper is Cls1
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         select {: son($x, $y) :} >> @>log;
@@ -317,7 +317,7 @@ protected:
 app PeaceKeeper is Cls1
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         select {: son($x, $y) :} >> @>log;
@@ -365,7 +365,7 @@ public:
 app PeaceKeeper is Cls1
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         select {: son($x, $y) :} >> @>log;
@@ -412,7 +412,7 @@ private:
 app PeaceKeeper is Cls1
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         select {: $z(#Alisa_12, $x) :} >> @>log;
@@ -457,7 +457,7 @@ protected:
 app PeaceKeeper is Cls1
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         select {: $z(#Alisa_12, $x) :} >> @>log;
@@ -503,7 +503,7 @@ public:
 app PeaceKeeper is Cls1
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         select {: $z(#Alisa_12, $x) :} >> @>log;

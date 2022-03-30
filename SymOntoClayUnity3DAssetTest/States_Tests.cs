@@ -19,7 +19,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     set Idling as default state;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;        
         'End' >> @>log;
@@ -87,7 +87,7 @@ state Idling
 {
     set Idling as state;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;        
         'End' >> @>log;
@@ -155,7 +155,7 @@ state Idling
 { 
     set Patrolling as state;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;        
         'End' >> @>log;
@@ -164,12 +164,6 @@ state Idling
 
 state Idling
 {
-    on Init =>
-    {
-        'Begin Idling Init' >> @>log;        
-        'End Idling Init' >> @>log;
-    }
-
     on Enter
     {
         'Begin Idling Enter' >> @>log;
@@ -179,12 +173,6 @@ state Idling
 
 state Patrolling
 {
-    on Init =>
-    {
-        'Begin Patrolling Init' >> @>log;        
-        'End Patrolling Init' >> @>log;
-    }
-
     on Enter
     {
         'Begin Patrolling Enter' >> @>log;
@@ -193,94 +181,50 @@ state Patrolling
 }";
 
             var appN = 0;
-            var idlingInitN = 0;
-            var patrollingInitN = 0;
             var patrollingEnterN = 0;
 
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (message) => {
-                    if (message.Contains("Idling Init"))
+                    if (message.Contains("Idling Enters"))
                     {
-                        idlingInitN++;
-
-                        switch (idlingInitN)
-                        {
-                            case 1:
-                                Assert.AreEqual(message, "Begin Idling Init");
-                                break;
-
-                            case 2:
-                                Assert.AreEqual(message, "End Idling Init");
-                                break;
-
-                            default:
-                                throw new ArgumentOutOfRangeException(nameof(idlingInitN), idlingInitN, null);
-                        }
+                        Assert.AreEqual(message.Contains("Idling Enters"), true);
                     }
                     else
                     {
-                        if (message.Contains("Idling Enters"))
+                        if (message.Contains("Patrolling Enter"))
                         {
-                            Assert.AreEqual(message.Contains("Idling Enters"), true);
+                            patrollingEnterN++;
+
+                            switch (patrollingEnterN)
+                            {
+                                case 1:
+                                    Assert.AreEqual(message, "Begin Patrolling Enter");
+                                    break;
+
+                                case 2:
+                                    Assert.AreEqual(message, "End Patrolling Enter");
+                                    break;
+
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(patrollingEnterN), patrollingEnterN, null);
+                            }
                         }
                         else
                         {
-                            if (message.Contains("Patrolling Init"))
+                            appN++;
+
+                            switch (appN)
                             {
-                                patrollingInitN++;
+                                case 1:
+                                    Assert.AreEqual(message, "Begin");
+                                    break;
 
-                                switch (patrollingInitN)
-                                {
-                                    case 1:
-                                        Assert.AreEqual(message, "Begin Patrolling Init");
-                                        break;
+                                case 2:
+                                    Assert.AreEqual(message, "End");
+                                    break;
 
-                                    case 2:
-                                        Assert.AreEqual(message, "End Patrolling Init");
-                                        break;
-
-                                    default:
-                                        throw new ArgumentOutOfRangeException(nameof(patrollingInitN), patrollingInitN, null);
-                                }
-                            }
-                            else
-                            {
-                                if (message.Contains("Patrolling Enter"))
-                                {
-                                    patrollingEnterN++;
-
-                                    switch (patrollingEnterN)
-                                    {
-                                        case 1:
-                                            Assert.AreEqual(message, "Begin Patrolling Enter");
-                                            break;
-
-                                        case 2:
-                                            Assert.AreEqual(message, "End Patrolling Enter");
-                                            break;
-
-                                        default:
-                                            throw new ArgumentOutOfRangeException(nameof(patrollingEnterN), patrollingEnterN, null);
-                                    }
-                                }
-                                else
-                                {
-                                    appN++;
-
-                                    switch (appN)
-                                    {
-                                        case 1:
-                                            Assert.AreEqual(message, "Begin");
-                                            break;
-
-                                        case 2:
-                                            Assert.AreEqual(message, "End");
-                                            break;
-
-                                        default:
-                                            throw new ArgumentOutOfRangeException(nameof(appN), appN, null);
-                                    }
-                                }
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(appN), appN, null);
                             }
                         }
                     }
@@ -296,7 +240,7 @@ state Patrolling
     set Idling as default state;
     set Patrolling as state;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;        
         'End' >> @>log;
@@ -321,16 +265,16 @@ state Patrolling
     }
 }";
 
-            var initN = 0;
-            var enterN = 0;
+            var appEnterN = 0;
+            var patrollingEnterN = 0;
 
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (message) => {
                     if (message.EndsWith(" Enter"))
                     {
-                        enterN++;
+                        patrollingEnterN++;
 
-                        switch (enterN)
+                        switch (patrollingEnterN)
                         {
                             case 1:
                                 Assert.AreEqual(message, "Begin Patrolling Enter");
@@ -341,14 +285,14 @@ state Patrolling
                                 break;
 
                             default:
-                                throw new ArgumentOutOfRangeException(nameof(enterN), enterN, null);
+                                throw new ArgumentOutOfRangeException(nameof(patrollingEnterN), patrollingEnterN, null);
                         }
                     }
                     else
                     {
-                        initN++;
+                        appEnterN++;
 
-                        switch (initN)
+                        switch (appEnterN)
                         {
                             case 1:
                                 Assert.AreEqual(message, "Begin");
@@ -359,7 +303,7 @@ state Patrolling
                                 break;
 
                             default:
-                                throw new ArgumentOutOfRangeException(nameof(initN), initN, null);
+                                throw new ArgumentOutOfRangeException(nameof(appEnterN), appEnterN, null);
                         }
                     }
                 }), true);
@@ -374,7 +318,7 @@ state Patrolling
     set Idling as default state;
     set Patrolling as state;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;        
         'End' >> @>log;
@@ -402,7 +346,7 @@ state Patrolling
     }
 }";
 
-            var initN = 0;
+            var appN = 0;
             var patrollingN = 0;
             var idlingN = 0;
 
@@ -444,9 +388,9 @@ state Patrolling
                         }
                         else
                         {
-                            initN++;
+                            appN++;
 
-                            switch (initN)
+                            switch (appN)
                             {
                                 case 1:
                                     Assert.AreEqual(message, "Begin");
@@ -457,7 +401,7 @@ state Patrolling
                                     break;
 
                                 default:
-                                    throw new ArgumentOutOfRangeException(nameof(initN), initN, null);
+                                    throw new ArgumentOutOfRangeException(nameof(appN), appN, null);
                             }
                         }
                     }
@@ -527,7 +471,7 @@ state Patrolling
     set Idling as default state;
     set Patrolling as state;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;        
         'End' >> @>log;
@@ -555,7 +499,7 @@ state Patrolling
     }
 }";
 
-            var initN = 0;
+            var appN = 0;
             var patrollingN = 0;
             var idlingN = 0;
 
@@ -597,9 +541,9 @@ state Patrolling
                         }
                         else
                         {
-                            initN++;
+                            appN++;
 
-                            switch (initN)
+                            switch (appN)
                             {
                                 case 1:
                                     Assert.AreEqual(message, "Begin");
@@ -610,7 +554,7 @@ state Patrolling
                                     break;
 
                                 default:
-                                    throw new ArgumentOutOfRangeException(nameof(initN), initN, null);
+                                    throw new ArgumentOutOfRangeException(nameof(appN), appN, null);
                             }
                         }
                     }
@@ -625,7 +569,7 @@ state Patrolling
 {
     set Patrolling as state;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;        
         'End' >> @>log;
@@ -653,7 +597,7 @@ state Patrolling
     }
 }";
 
-            var initN = 0;
+            var appN = 0;
             var enterN = 0;
 
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
@@ -674,9 +618,9 @@ state Patrolling
                     }
                     else
                     {
-                        initN++;
+                        appN++;
 
-                        switch (initN)
+                        switch (appN)
                         {
                             case 1:
                                 Assert.AreEqual(message, "Begin");
@@ -687,7 +631,7 @@ state Patrolling
                                 break;
 
                             default:
-                                throw new ArgumentOutOfRangeException(nameof(initN), initN, null);
+                                throw new ArgumentOutOfRangeException(nameof(appN), appN, null);
                         }
                     }
                 }), true);
@@ -701,7 +645,7 @@ state Patrolling
 
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;        
         'End' >> @>log;
@@ -723,7 +667,7 @@ state Attacking
 
             instance.WriteFile(text);
 
-            var initN = 0;
+            var appN = 0;
             var enterN = 0;
 
             var npc = instance.CreateAndStartNPC((n, message) => {
@@ -747,9 +691,9 @@ state Attacking
                 }
                 else
                 {
-                    initN++;
+                    appN++;
 
-                    switch (initN)
+                    switch (appN)
                     {
                         case 1:
                             Assert.AreEqual(message, "Begin");
@@ -760,7 +704,7 @@ state Attacking
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(initN), initN, null);
+                            throw new ArgumentOutOfRangeException(nameof(appN), appN, null);
                     }
                 }
             });
@@ -783,7 +727,7 @@ state Attacking
     set Idling as default state;
     set Patrolling as state;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;        
         'End' >> @>log;
@@ -826,7 +770,7 @@ state Attacking
 
             instance.WriteFile(text);
 
-            var initN = 0;
+            var appN = 0;
             var patrollingN = 0;
             var idlingN = 0;
             var attackingN = 0;
@@ -901,9 +845,9 @@ state Attacking
                         }
                         else
                         {
-                            initN++;
+                            appN++;
 
-                            switch (initN)
+                            switch (appN)
                             {
                                 case 1:
                                     Assert.AreEqual(message, "Begin");
@@ -915,7 +859,7 @@ state Attacking
                                     break;
 
                                 default:
-                                    throw new ArgumentOutOfRangeException(nameof(initN), initN, null);
+                                    throw new ArgumentOutOfRangeException(nameof(appN), appN, null);
                             }
                         }
                     }
@@ -943,7 +887,7 @@ state Attacking
 {
     set Idling as default state;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;        
         'End' >> @>log;
@@ -979,7 +923,7 @@ state Attacking
 
             instance.WriteFile(text);
 
-            var initN = 0;
+            var appN = 0;
             var idlingN = 0;
             var attackingN = 0;
 
@@ -1038,9 +982,9 @@ state Attacking
                     }
                     else
                     {
-                        initN++;
+                        appN++;
 
-                        switch (initN)
+                        switch (appN)
                         {
                             case 1:
                                 Assert.AreEqual(message, "Begin");
@@ -1052,7 +996,7 @@ state Attacking
                                 break;
 
                             default:
-                                throw new ArgumentOutOfRangeException(nameof(initN), initN, null);
+                                throw new ArgumentOutOfRangeException(nameof(appN), appN, null);
                         }
                     }
                 }
@@ -1126,7 +1070,7 @@ state Idling
 {
     set Idling as default state;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         
@@ -1150,7 +1094,7 @@ state Idling
     }
 }";
 
-            var initN = 0;
+            var appN = 0;
             var idlingN = 0;
 
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
@@ -1175,9 +1119,9 @@ state Idling
                     }
                     else
                     {
-                        initN++;
+                        appN++;
 
-                        switch (initN)
+                        switch (appN)
                         {
                             case 1:
                                 Assert.AreEqual(message, "Begin");
@@ -1192,7 +1136,7 @@ state Idling
                                 break;
 
                             default:
-                                throw new ArgumentOutOfRangeException(nameof(initN), initN, null);
+                                throw new ArgumentOutOfRangeException(nameof(appN), appN, null);
                         }
                     }
                 }), true);
@@ -1207,7 +1151,7 @@ state Idling
     set Idling as default state;
     set Patrolling as state;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;        
         'End' >> @>log;
@@ -1240,7 +1184,7 @@ state Patrolling
     }
 }";
 
-            var initN = 0;
+            var appN = 0;
             var idlingN = 0;
             var patrollingN = 0;
             var triggerN = 0;
@@ -1304,9 +1248,9 @@ state Patrolling
                             }
                             else
                             {
-                                initN++;
+                                appN++;
 
-                                switch (initN)
+                                switch (appN)
                                 {
                                     case 1:
                                         Assert.AreEqual(message, "Begin");
@@ -1317,7 +1261,7 @@ state Patrolling
                                         break;
 
                                     default:
-                                        throw new ArgumentOutOfRangeException(nameof(initN), initN, null);
+                                        throw new ArgumentOutOfRangeException(nameof(appN), appN, null);
                                 }
                             }
                         }
@@ -1334,7 +1278,7 @@ state Patrolling
     set Idling as default state;
     set Patrolling as state;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;        
         'End' >> @>log;
@@ -1367,7 +1311,7 @@ state Patrolling
     }
 }";
 
-            var initN = 0;
+            var appN = 0;
             var idlingN = 0;
             var patrollingN = 0;
 
@@ -1413,9 +1357,9 @@ state Patrolling
                         }
                         else
                         {
-                            initN++;
+                            appN++;
 
-                            switch (initN)
+                            switch (appN)
                             {
                                 case 1:
                                     Assert.AreEqual(message, "Begin");
@@ -1426,7 +1370,7 @@ state Patrolling
                                     break;
 
                                 default:
-                                    throw new ArgumentOutOfRangeException(nameof(initN), initN, null);
+                                    throw new ArgumentOutOfRangeException(nameof(appN), appN, null);
                             }
                         }
                     }

@@ -36,7 +36,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init
+    on Enter
     {
         'Begin' >> @>log;
         @a = #@(barrel);
@@ -74,7 +74,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init
+    on Enter
     {
         'Begin' >> @>log;
         @a = #@{: barrel($_) :};
@@ -113,7 +113,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init
+    on Enter
     {
         'Begin' >> @>log;
         @a = #@{: >: { barrel($_) } :};
@@ -152,7 +152,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init
+    on Enter
     {
         'Begin' >> @>log;
         @a = #@(hold(I, this) & weapon);
@@ -190,7 +190,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init
+    on Enter
     {
         'Begin' >> @>log;
         @a = #@(hold(I, this) & (weapon & dog) );
@@ -228,7 +228,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init
+    on Enter
     {
         'Begin' >> @>log;
         @a = #@(hold(#a, this) & (weapon & dog) );
@@ -266,7 +266,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init
+    on Enter
     {
         'Begin' >> @>log;
         @a = #@(color = black);
@@ -304,7 +304,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init
+    on Enter
     {
         'Begin' >> @>log;
         #@(color = black) >> @>log;

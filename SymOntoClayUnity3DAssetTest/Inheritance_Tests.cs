@@ -36,7 +36,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper is [0.5] exampleClass
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         exampleClass is human >> @>log;
@@ -106,7 +106,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper is [0.5] `exampleClass`
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         exampleClass is human >> @>log;
@@ -176,7 +176,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper is [0.5] exampleClass, [0.6] humanoid
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         'End' >> @>log;
@@ -208,7 +208,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper is exampleClass, humanoid
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         'End' >> @>log;
@@ -240,7 +240,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper is `exampleClass`, `humanoid`
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         'End' >> @>log;
@@ -285,7 +285,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
 app PeaceKeeper is [middle] exampleClass
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         exampleClass is human >> @>log;
@@ -368,7 +368,7 @@ app PeaceKeeper is [middle] exampleClass
 
 app PeaceKeeper is [very middle] exampleClass
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         exampleClass is human >> @>log;
@@ -438,7 +438,7 @@ app PeaceKeeper is [very middle] exampleClass
         {
             var text = @"app PeaceKeeper
 {
-    on Init
+    on Enter
     {
         'Begin' >> @>log;
 

@@ -37,7 +37,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
 
@@ -77,7 +77,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
 
@@ -121,7 +121,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
 
@@ -165,7 +165,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
 
@@ -254,7 +254,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                 instance.WriteFile(@"app PeaceKeeper
 {
-    on Init
+    on Enter
     {
         'Begin' >> @>log;
         @@host.take(#@(gun));
@@ -329,7 +329,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                 instance.WriteFile(@"app PeaceKeeper
 {
-    on Init
+    on Enter
     {
         'Begin' >> @>log;
         @@host.take(#@(gun));
@@ -380,7 +380,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
                 instance.WriteFile(@"app PeaceKeeper
 {
-    on Init
+    on Enter
     {
         'Begin' >> @>log;
         @@host.take(NULL);

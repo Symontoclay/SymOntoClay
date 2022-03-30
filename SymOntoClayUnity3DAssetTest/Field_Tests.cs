@@ -40,7 +40,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     @b;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @b >> @>log;
@@ -78,7 +78,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     @b: number;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @b >> @>log;
@@ -116,7 +116,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     var @b: number = 2;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @b >> @>log;
@@ -154,7 +154,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     @b: number;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @b = 1;
@@ -193,7 +193,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     @b: number = 2;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @b >> @>log;
@@ -231,7 +231,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     @b: number = NULL;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @b >> @>log;
@@ -269,7 +269,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     @b = 2;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @b >> @>log;
@@ -307,7 +307,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     @b = NULL;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @b >> @>log;
@@ -345,7 +345,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     @b = {: male(#Tom) :};
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @b >> @>log;
@@ -385,7 +385,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     @b = #@[10, 20];
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @b >> @>log;
@@ -423,7 +423,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     @b = #@(barrel);
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @b >> @>log;
@@ -461,7 +461,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     @a: number = 2;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         var @a: string;
@@ -500,7 +500,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     @a = #`gun 1`;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @a >> @>log;
@@ -538,7 +538,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     @a = dog;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @a >> @>log;
@@ -576,7 +576,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     @a = `white dog`;
 
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @a >> @>log;

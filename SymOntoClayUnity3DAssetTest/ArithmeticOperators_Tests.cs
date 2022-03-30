@@ -39,7 +39,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var text = @"app PeaceKeeper
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         1 + 1 >> @>log;
@@ -79,7 +79,7 @@ private:
 private:
     @a = 2;
 
-    on Init =>
+    on Enter =>
     {
         @b = 3;
 
@@ -119,7 +119,7 @@ private:
             var text = @"app PeaceKeeper
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         1 + NULL >> @>log;
@@ -157,7 +157,7 @@ private:
             var text = @"app PeaceKeeper
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         1 + 'Hi' >> @>log;
@@ -195,7 +195,7 @@ private:
             var text = @"app PeaceKeeper
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         3 + -1 >> @>log;
@@ -233,7 +233,7 @@ private:
             var text = @"app PeaceKeeper
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         3 - 1 >> @>log;
@@ -271,7 +271,7 @@ private:
             var text = @"app PeaceKeeper
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         3 - -1 >> @>log;
@@ -309,7 +309,7 @@ private:
             var text = @"app PeaceKeeper
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         -3 - 1 >> @>log;
@@ -347,7 +347,7 @@ private:
             var text = @"app PeaceKeeper
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         3 * 4 >> @>log;
@@ -385,7 +385,7 @@ private:
             var text = @"app PeaceKeeper
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         12 / 4 >> @>log;
@@ -423,7 +423,7 @@ private:
             var text = @"app PeaceKeeper
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         12 / 0 >> @>log;
@@ -460,7 +460,7 @@ private:
         {
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         
@@ -500,7 +500,7 @@ private:
             var text = @"app PeaceKeeper
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @a = 2;
@@ -539,7 +539,7 @@ private:
             var text = @"app PeaceKeeper
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @a = -2;
@@ -578,7 +578,7 @@ private:
             var text = @"app PeaceKeeper
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @a = -2;
@@ -617,7 +617,7 @@ private:
             var text = @"app PeaceKeeper
 {
 private:
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @a = 2;

@@ -36,7 +36,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         'End' >> @>log;
@@ -68,7 +68,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         //@r = @b = 1;
@@ -105,7 +105,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         /*@r = @b = 1;
@@ -139,7 +139,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @r = @b = 1;
@@ -177,7 +177,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         @r = @b = 1;
@@ -215,7 +215,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init
+    on Enter
     {
         'Begin' >> @>log;
         @a = #@[10, 20];
@@ -253,7 +253,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
         var @a: number = 2;
@@ -303,7 +303,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         //{
         //    var text = @"app PeaceKeeper
         //{
-        //    on Init =>
+        //    on Enter =>
         //    {
         //    }
         //}";
@@ -323,7 +323,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         /*
 app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
     }
 }

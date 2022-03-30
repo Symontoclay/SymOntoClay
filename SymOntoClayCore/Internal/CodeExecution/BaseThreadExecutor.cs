@@ -216,7 +216,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
 #if DEBUG
                     //Log("currentPosition >= compiledFunctionBodyCommands.Count return true;");
+                    //Log($"_currentCodeFrame.ExecutionCoordinator?.ExecutionStatus = {_currentCodeFrame.ExecutionCoordinator?.ExecutionStatus}");
 #endif
+
+                    if(_currentCodeFrame.ExecutionCoordinator != null && _currentCodeFrame.ExecutionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
+                    {
+                        _currentCodeFrame.ExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
+                    }
+
                     GoBackToPrevCodeFrame();
                     return true;
                 }

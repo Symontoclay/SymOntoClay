@@ -1066,5 +1066,75 @@ action Go
 
             Thread.Sleep(1000);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case4()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+ 
+        Go();
+
+        'End' >> @>log;
+    }
+}
+
+action Go 
+{
+    on Enter =>
+    {
+        'Enter Go' >> @>log;
+    }
+
+    on Leave
+    {
+        'Leave Go' >> @>log;
+    }
+
+    op () => 
+    {
+        'Begin Go' >> @>log;
+        'End Go' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "Enter Go");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "Begin Go");
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(message, "End Go");
+                            break;
+
+                        case 5:
+                            Assert.AreEqual(message, "Leave Go");
+                            break;
+
+                        case 6:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

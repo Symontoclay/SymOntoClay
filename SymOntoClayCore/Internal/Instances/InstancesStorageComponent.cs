@@ -86,6 +86,11 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log($"NEXT mainEntity = {mainEntity}");
 #endif
 
+            if(mainEntity == null)
+            {
+                return;
+            }
+
             AppInstance instanceInfo;
 
             lock (_registryLockObj)

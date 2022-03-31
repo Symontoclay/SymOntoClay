@@ -1557,5 +1557,38 @@ state Patrolling
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case14()
+        {
+            var text = @"app PeaceKeeper
+{
+    {: enemy(#a) :}
+
+    on Enter =>
+    {
+        'Begin' >> @>log;        
+        'End' >> @>log;
+    }
+}
+
+state Attacking
+{
+    enter on:
+        {: see(I, $x) & enemy($x) :} ($x >> @x)
+
+    on Enter
+    {
+        'Begin Attacking Enter' >> @>log;
+
+        @x >> @>log;
+
+        'End Attacking Enter' >> @>log;
+    }
+}";
+
+            throw new NotImplementedException();
+        }
     }
 }

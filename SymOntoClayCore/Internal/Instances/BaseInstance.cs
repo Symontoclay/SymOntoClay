@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public abstract class BaseInstance : BaseComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        protected BaseInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, IStorageFactory storageFactory)
+        protected BaseInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, IStorageFactory storageFactory, List<Var> varList)
             : base(context.Logger)
         {
             _codeItem = codeItem;
@@ -46,6 +47,17 @@ namespace SymOntoClay.Core.Internal.Instances
             _localCodeExecutionContext = new LocalCodeExecutionContext();
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
             _storage = storageFactory.CreateStorage(localStorageSettings);
+
+            if(!varList.IsNullOrEmpty())
+            {
+                var varStorage = _storage.VarStorage;
+
+                foreach(var varItem in varList)
+                {
+                    varStorage.Append(varItem);
+                }
+            }
+
             _localCodeExecutionContext.Storage = _storage;
             _localCodeExecutionContext.Holder = Name;
 

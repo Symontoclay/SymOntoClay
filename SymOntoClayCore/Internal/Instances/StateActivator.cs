@@ -46,8 +46,8 @@ namespace SymOntoClay.Core.Internal.Instances
         protected override void RunHandler(LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Log("Begin");
-            Log($"_bindingVariables.Any() = {_bindingVariables.Any()}");
+            //Log("Begin");
+            //Log($"_bindingVariables.Any() = {_bindingVariables.Any()}");
 #endif
 
             if (_bindingVariables.Any())
@@ -61,37 +61,33 @@ namespace SymOntoClay.Core.Internal.Instances
                 var varNamesList = _bindingVariables.GetDestList();
 
 #if DEBUG
-                Log($"varNamesList = {varNamesList.WriteListToString()}");
+                //Log($"varNamesList = {varNamesList.WriteListToString()}");
 #endif
+
+                var varList = new List<Var>();
 
                 foreach(var varName in varNamesList)
                 {
 
 #if DEBUG
-                    Log($"varName = {varName}");
+                    //Log($"varName = {varName}");
 #endif
 
                     var varItem = targetVarStorage.GetLocalVarDirectly(varName);
 
-                    Log($"varItem = {varItem}");
-                }
-
 #if DEBUG
-                Log($"storagesList.Count = {storagesList.Count}");
-                foreach (var tmpStorage in storagesList)
-                {
-                    Log($"tmpStorage = {tmpStorage}");
-
-                    if (tmpStorage.Storage.Kind == KindOfStorage.Local)
-                    {
-                        var varItem = tmpStorage.Storage.VarStorage.GetLocalVarDirectly(NameHelper.CreateName("@x"));
-
-                        Log($"varItem = {varItem}");
-                    }
-                }
+                    //Log($"varItem = {varItem}");
 #endif
 
-                throw new NotImplementedException();
+                    if(varItem == null)
+                    {
+                        throw new ArgumentNullException(nameof(varItem));
+                    }
+
+                    varList.Add(varItem);
+                }
+
+                _appInstance.ActivateState(_stateDef, varList);
             }
             else
             {

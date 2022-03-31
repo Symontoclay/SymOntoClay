@@ -11,8 +11,8 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class StateInstance : BaseInstance
     {
-        public StateInstance(StateDef codeItem, IEngineContext context, IStorage parentStorage, IExecutionCoordinator appInstanceExecutionCoordinator)
-            : base(codeItem, context, parentStorage, new StateStorageFactory())
+        public StateInstance(StateDef codeItem, IEngineContext context, IStorage parentStorage, List<Var> varList, IExecutionCoordinator appInstanceExecutionCoordinator)
+            : base(codeItem, context, parentStorage, new StateStorageFactory(), varList)
         {
             _appInstanceExecutionCoordinator = appInstanceExecutionCoordinator;
         }

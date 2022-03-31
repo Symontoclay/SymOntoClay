@@ -84,6 +84,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             throw new NotImplementedException();
         }
 
+        public List<StrongIdentifierValue> GetDestList()
+        {
+            return _varsDict.Values.ToList();
+        }
+
         /// <summary>
         /// Clones the instance and returns cloned instance.
         /// </summary>

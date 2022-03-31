@@ -198,6 +198,20 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
         }
 
         /// <inheritdoc/>
+        public Var GetLocalVarDirectly(StrongIdentifierValue name)
+        {
+            lock (_lockObj)
+            {
+                if (_localVariablesDict.ContainsKey(name))
+                {
+                    return _localVariablesDict[name];
+                }
+
+                return null;
+            }
+        }
+
+        /// <inheritdoc/>
         public void SetValue(StrongIdentifierValue varName, Value value)
         {
             lock (_lockObj)

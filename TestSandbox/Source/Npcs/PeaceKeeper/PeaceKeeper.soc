@@ -12,14 +12,13 @@
 state Attacking
 {
     enter on:
-        {: see(I, $x) & enemy($x) :}// ($x >> @x)
-        //{: see(I, enemy) :}
+        {: see(I, $x) & enemy($x) :} ($x >> @x)
 
     on Enter
     {
         'Begin Attacking Enter' >> @>log;
 
-        //@x >> @>log;
+        @x >> @>log;
 
         'End Attacking Enter' >> @>log;
     }

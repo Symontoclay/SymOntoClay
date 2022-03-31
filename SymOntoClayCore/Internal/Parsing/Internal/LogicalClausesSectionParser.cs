@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +11,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private enum State
         {
             Init,
-            GotColon
+            GotColon,
+            GotFact,
+            GotBindingVariables
         }
 
         public LogicalClausesSectionParser(InternalParserContext context)
@@ -55,23 +58,78 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.OpenFactBracket:
-                            {
-                                _currentItem = new ActivatingItem();
-                                Result.Add(_currentItem);
+                            ProcessFact();
+                            break;
 
-                                _context.Recovery(_currToken);
-                                var parser = new LogicalQueryAsCodeEntityParser(_context);
-                                parser.Run();
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
 
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-#endif
-                                _currentItem.Condition = parser.Result;                                
-                            }
+                case State.GotFact:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenFactBracket:
+                            ProcessFact();
                             break;
 
                         case TokenKind.Word:
-                            switch(_currToken.KeyWordTokenKind)
+                            switch (_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.On:
+                                case KeyWordTokenKind.Leave:
+                                case KeyWordTokenKind.Var:
+                                case KeyWordTokenKind.Operator:
+                                case KeyWordTokenKind.Fun:
+                                case KeyWordTokenKind.Public:
+                                case KeyWordTokenKind.Protected:
+                                case KeyWordTokenKind.Private:
+                                    _context.Recovery(_currToken);
+                                    Exit();
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        case TokenKind.OpenRoundBracket:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var parser = new InlineTriggerBindingVariablesParser(_context);
+                                parser.Run();
+
+#if DEBUG
+                                //Log($"parser.Result = {parser.Result.WriteListToString()}");
+#endif
+
+                                _currentItem.BindingVariables = new BindingVariables(parser.Result);
+
+                                _state = State.GotBindingVariables;
+                            }
+                            break;
+
+                        case TokenKind.Var:
+                        case TokenKind.CloseFigureBracket:
+                            _context.Recovery(_currToken);
+                            Exit();
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotBindingVariables:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenFactBracket:
+                            ProcessFact();
+                            break;
+
+                        case TokenKind.Word:
+                            switch (_currToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.On:
                                 case KeyWordTokenKind.Leave:
@@ -104,6 +162,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
+        }
+
+        private void ProcessFact()
+        {
+            _currentItem = new ActivatingItem();
+            Result.Add(_currentItem);
+
+            _context.Recovery(_currToken);
+            var parser = new LogicalQueryAsCodeEntityParser(_context);
+            parser.Run();
+
+#if DEBUG
+            //Log($"parser.Result = {parser.Result}");
+#endif
+            _currentItem.Condition = parser.Result;
+
+            _state = State.GotFact;
         }
     }
 }

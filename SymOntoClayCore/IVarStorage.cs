@@ -35,6 +35,7 @@ namespace SymOntoClay.Core
         
         void Append(Var varItem);
         IList<WeightedInheritanceResultItem<Var>> GetVarDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems);
+        Var GetLocalVarDirectly(StrongIdentifierValue name);
 
         void SetValue(StrongIdentifierValue varName, Value value);
     }

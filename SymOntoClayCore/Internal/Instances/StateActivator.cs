@@ -31,6 +31,12 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
+        protected override BindingVariables GetBindingVariables()
+        {
+            return new BindingVariables();
+        }
+
+        /// <inheritdoc/>
         protected override void RunHandler(LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG

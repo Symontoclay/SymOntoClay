@@ -1,33 +1,26 @@
 ﻿app PeaceKeeper
 {
+    {: enemy(#a) :}
+
     on Enter =>
     {
-        'Begin' >> @>log;
- 
-        Go();
-
+        'Begin' >> @>log;        
         'End' >> @>log;
     }
 }
 
-action Go 
+state Attacking
 {
-    on Enter =>
-    {
-        'Enter Go' >> @>log;
-    }
+    enter on:
+        {: see(I, $x) & enemy($x) :}// ($x >> @x)
+        //{: see(I, enemy) :}
 
-    op () => 
+    on Enter
     {
-        'Begin Go' >> @>log;
-        await;
-        'End Go' >> @>log;
-    }
+        'Begin Attacking Enter' >> @>log;
 
-    on {: see(I, $x) :} ($x >> @x) => 
-    {
-        'on Fired' >> @>log;
-        @x >> @>log;
-        complete action;
+        //@x >> @>log;
+
+        'End Attacking Enter' >> @>log;
     }
 }

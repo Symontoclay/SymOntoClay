@@ -4910,6 +4910,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.StateActivator.ShouldSearch">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.StateActivator.GetBindingVariables">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.StateActivator.RunHandler(SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>

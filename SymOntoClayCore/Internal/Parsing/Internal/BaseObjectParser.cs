@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
@@ -283,7 +284,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                                             //Log($"parser.Result = {parser.Result.WriteListToString()}");
 #endif
 
-                                                            Result.DeactivatingConditions.AddRange(parser.Result);
+                                                            Result.DeactivatingConditions.AddRange(parser.Result.Select(p => p.Condition));
                                                         }
                                                         break;
 

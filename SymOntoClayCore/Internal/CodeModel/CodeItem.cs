@@ -117,7 +117,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public List<CodeItemDirective> Directives { get; private set; } = new List<CodeItemDirective>();
 
-        public List<RuleInstance> ActivatingConditions { get; private set; } = new List<RuleInstance>();
+        public List<ActivatingItem> ActivatingConditions { get; private set; } = new List<ActivatingItem>();
         public List<RuleInstance> DeactivatingConditions { get; private set; } = new List<RuleInstance>();
 
         public virtual bool IsRuleInstance => false;

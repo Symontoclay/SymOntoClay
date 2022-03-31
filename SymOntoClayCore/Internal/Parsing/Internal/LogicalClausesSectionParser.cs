@@ -20,12 +20,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private State _state = State.Init;
 
-        public List<RuleInstance> Result { get; private set; }
+        public List<ActivatingItem> Result { get; private set; }
+        private ActivatingItem _currentItem;
 
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            Result = new List<RuleInstance>();
+            Result = new List<ActivatingItem>();
         }
 
         /// <inheritdoc/>
@@ -55,6 +56,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.OpenFactBracket:
                             {
+                                _currentItem = new ActivatingItem();
+                                Result.Add(_currentItem);
+
                                 _context.Recovery(_currToken);
                                 var parser = new LogicalQueryAsCodeEntityParser(_context);
                                 parser.Run();
@@ -62,8 +66,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #if DEBUG
                                 //Log($"parser.Result = {parser.Result}");
 #endif
-
-                                Result.Add(parser.Result);
+                                _currentItem.Condition = parser.Result;                                
                             }
                             break;
 

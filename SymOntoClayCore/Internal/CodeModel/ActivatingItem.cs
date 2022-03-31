@@ -5,30 +5,25 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class CodeItemDirective: AnnotatedItem
-    {        
-        public abstract KindOfCodeItemDirective KindOfCodeItemDirective { get; }
-        
-        public virtual bool IsSetDefaultStateDirective => false;
-        public virtual SetDefaultStateDirective AsSetDefaultStateDirective => null;
-
-        public virtual bool IsSetStateDirective => false;
-        public virtual SetStateDirective AsSetStateDirective => null;
+    public class ActivatingItem : AnnotatedItem
+    {
+        public RuleInstance Condition { get; set; }
+        public BindingVariables BindingVariables { get; set; } = new BindingVariables();
 
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
         {
-            return CloneCodeItemDirective(context);
+            return Clone(context);
         }
 
         /// <summary>
         /// Clones the instance and returns cloned instance.
         /// </summary>
         /// <returns>Cloned instance.</returns>
-        public CodeItemDirective CloneCodeItemDirective()
+        public ActivatingItem Clone()
         {
             var context = new Dictionary<object, object>();
-            return CloneCodeItemDirective(context);
+            return Clone(context);
         }
 
         /// <summary>
@@ -36,15 +31,31 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// </summary>
         /// <param name="context">Special context for providing references continuity.</param>
         /// <returns>Cloned instance.</returns>
-        public abstract CodeItemDirective CloneCodeItemDirective(Dictionary<object, object> context);
+        public ActivatingItem Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (ActivatingItem)context[this];
+            }
+
+            var result = new ActivatingItem();
+            context[this] = result;
+
+            result.Condition = Condition?.Clone(context);
+            result.BindingVariables = BindingVariables.Clone(context);
+
+            result.AppendAnnotations(this, context);
+
+            return result;
+        }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-
-            sb.AppendLine($"{spaces}{nameof(KindOfCodeItemDirective)} = {KindOfCodeItemDirective}");
+            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
+            sb.PrintObjProp(n, nameof(BindingVariables), BindingVariables);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -55,8 +66,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-
-            sb.AppendLine($"{spaces}{nameof(KindOfCodeItemDirective)} = {KindOfCodeItemDirective}");
+            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
+            sb.PrintShortObjProp(n, nameof(BindingVariables), BindingVariables);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -67,8 +78,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-
-            sb.AppendLine($"{spaces}{nameof(KindOfCodeItemDirective)} = {KindOfCodeItemDirective}");
+            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
+            sb.PrintBriefObjProp(n, nameof(BindingVariables), BindingVariables);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

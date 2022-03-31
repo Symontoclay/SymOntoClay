@@ -9,7 +9,7 @@ namespace SymOntoClay.Core.Internal.Instances
     public class StateActivator : BaseTriggerInstance
     {
         public StateActivator(ActivationInfoOfStateDef activationInfoOfState, AppInstance parent, IEngineContext context, IStorage parentStorage)
-            : base(activationInfoOfState.ActivatingConditions, parent, context, parentStorage)
+            : base(activationInfoOfState.ActivatingConditions.Condition, parent, context, parentStorage)
         {
             _stateDef = activationInfoOfState.State;
             _stateName = _stateDef.Name;

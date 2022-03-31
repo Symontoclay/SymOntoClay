@@ -7,14 +7,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class ActivationInfoOfStateDef: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public ActivationInfoOfStateDef(StateDef state, RuleInstance activatingConditions)
+        public ActivationInfoOfStateDef(StateDef state, ActivatingItem activatingConditions)
         {
             State = state;
             ActivatingConditions = activatingConditions;
         }
 
         public StateDef State { get; set; }
-        public RuleInstance ActivatingConditions { get; set; }
+        public ActivatingItem ActivatingConditions { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

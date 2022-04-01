@@ -1562,13 +1562,15 @@ state Patrolling
         [Parallelizable]
         public void Case14()
         {
+            using var instance = new AdvancedBehaviorTestEngineInstance();
+
             var text = @"app PeaceKeeper
 {
     {: enemy(#a) :}
 
     on Enter =>
     {
-        'Begin' >> @>log;        
+        'Begin' >> @>log;
         'End' >> @>log;
     }
 }
@@ -1588,7 +1590,65 @@ state Attacking
     }
 }";
 
-            throw new NotImplementedException();
+            instance.WriteFile(text);
+
+            var appN = 0;
+            var enterN = 0;
+
+            var wasBeginAttacking = false;
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                if (message.EndsWith(" Enter"))
+                {
+                    enterN++;
+
+                    switch (enterN)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin Attacking Enter");
+                            wasBeginAttacking = true;
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "End Attacking Enter");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(enterN), enterN, null);
+                    }
+                }
+                else
+                {
+                    if(message == "#a")
+                    {
+                        Assert.AreEqual(wasBeginAttacking, true);
+                    }
+                    else
+                    {
+                        appN++;
+
+                        switch (appN)
+                        {
+                            case 1:
+                                Assert.AreEqual(message, "Begin");
+                                break;
+
+                            case 2:
+                                Assert.AreEqual(message, "End");
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(appN), appN, null);
+                        }
+                    }
+                }
+            });
+
+            Thread.Sleep(1000);
+
+            npc.InsertFact("{: see(I, #a) :}");
+
+            Thread.Sleep(1000);
         }
     }
 }

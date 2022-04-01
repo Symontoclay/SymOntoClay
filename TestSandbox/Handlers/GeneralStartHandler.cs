@@ -63,9 +63,9 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(5000);
 
-            _logger.Log("|=|=|=|=|=|=|");
-            _npc.InsertFact("{: see(I, #a) :}");
-            //_npc.InsertFact("{: see(I, barrel) :}");
+            //_logger.Log("|=|=|=|=|=|=|");
+            //_npc.InsertFact("{: see(I, #a) :}");
+            _npc.InsertFact("{: see(I, barrel) :}");
 
             Thread.Sleep(50000);
             //Thread.Sleep(500000);

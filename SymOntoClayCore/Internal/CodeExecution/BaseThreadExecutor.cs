@@ -1535,6 +1535,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
                     if(coordinator != null)
                     {
+                        var instance = coordinator.Instance;
+
+#if DEBUG
+                        Log($"instance?.Name = {instance?.Name}");
+                        Log($"_currentInstance?.Name = {_currentInstance?.Name}");
+#endif
+
                         throw new NotImplementedException();
                     }
 

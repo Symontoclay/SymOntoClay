@@ -4695,6 +4695,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.InitExecutionCoordinators">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.ActionInstance.ExecutionCoordinator">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.SetExecutionStatusOfExecutionCoordinatorAsExecuting">
             <inheritdoc/>
         </member>
@@ -4725,6 +4728,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.InitExecutionCoordinators">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.AppInstance.ExecutionCoordinator">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.SetExecutionStatusOfExecutionCoordinatorAsExecuting">
             <inheritdoc/>
         </member>
@@ -4744,6 +4750,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.OnDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.ExecutionCoordinator">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.OnDisposed">
@@ -4825,6 +4834,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseTriggerInstance.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.Instance">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.ExecutionStatus">
@@ -4945,6 +4957,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.InitExecutionCoordinators">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.StateInstance.ExecutionCoordinator">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.SetExecutionStatusOfExecutionCoordinatorAsExecuting">

@@ -34,7 +34,7 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public abstract class BaseInstance : BaseComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public abstract class BaseInstance : BaseComponent, IInstance, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         protected BaseInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, IStorageFactory storageFactory, List<Var> varList)
             : base(context.Logger)
@@ -86,6 +86,9 @@ namespace SymOntoClay.Core.Internal.Instances
         public IExecutionCoordinator AppInstanceExecutionCoordinator => _appInstanceExecutionCoordinator;
         public IExecutionCoordinator StateExecutionCoordinator => _stateExecutionCoordinator;
         public IExecutionCoordinator ActionExecutionCoordinator => _actionExecutionCoordinator;
+        
+        /// <inheritdoc/>
+        public abstract IExecutionCoordinator ExecutionCoordinator { get; }
 
         public virtual void Init()
         {

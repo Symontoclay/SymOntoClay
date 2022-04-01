@@ -42,6 +42,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public LocalCodeExecutionContext LocalContext { get; set; }
         public ProcessInfo ProcessInfo { get; set; }
         public CodeItem Metadata { get; set; }
+        public Instance Instance { get; set; }
         public IExecutionCoordinator ExecutionCoordinator { get; set; }
 
         /// <inheritdoc/>

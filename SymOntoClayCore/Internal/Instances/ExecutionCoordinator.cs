@@ -31,7 +31,16 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class ExecutionCoordinator: IExecutionCoordinator
     {
+        public ExecutionCoordinator(IInstance instance)
+        {
+            _instance = instance;
+        }
+
+        private readonly IInstance _instance;
         private readonly object _lockObj = new object();
+
+        /// <inheritdoc/>
+        public IInstance Instance => _instance;
 
         /// <inheritdoc/>
         public ActionExecutionStatus ExecutionStatus 

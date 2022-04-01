@@ -11,7 +11,10 @@ namespace SymOntoClay.Core.Internal.Instances
         public StateDeactivator(RuleInstance condition, BaseInstance parent, IEngineContext context, IStorage parentStorage)
             : base(condition, parent, context, parentStorage)
         {
+            _executionCoordinator = parent.ExecutionCoordinator;
         }
+
+        private IExecutionCoordinator _executionCoordinator;
 
         /// <inheritdoc/>
         protected override void RunHandler(LocalCodeExecutionContext localCodeExecutionContext)
@@ -20,7 +23,7 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log("Begin");
 #endif
 
-            _stateExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
+            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
 
             _context.InstancesStorage.TryActivateDefaultState();
         }

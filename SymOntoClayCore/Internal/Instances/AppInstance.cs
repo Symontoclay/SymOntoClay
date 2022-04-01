@@ -45,22 +45,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private StatesResolver _statesResolver;
 
-        /// <inheritdoc/>
-        protected override void InitExecutionCoordinators()
-        {
-            _appInstanceExecutionCoordinator = new ExecutionCoordinator(this);
-            _appInstanceExecutionCoordinator.OnFinished += AppInstanceExecutionCoordinator_OnFinished;
-        }
-
-        /// <inheritdoc/>
-        public override IExecutionCoordinator ExecutionCoordinator => _appInstanceExecutionCoordinator;
-
-        /// <inheritdoc/>
-        protected override void SetExecutionStatusOfExecutionCoordinatorAsExecuting()
-        {
-            _appInstanceExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
-        }
-
         private StrongIdentifierValue _stateNameForAutomaticStart;
 
         /// <inheritdoc/>
@@ -260,7 +244,7 @@ namespace SymOntoClay.Core.Internal.Instances
                         }               
                     }
 
-                    stateInstance = new StateInstance(state, _context, _storage, varList, _appInstanceExecutionCoordinator);
+                    stateInstance = new StateInstance(state, _context, _storage, varList);
 
                     _activeStatesDict[stateName] = stateInstance;
 
@@ -352,13 +336,6 @@ namespace SymOntoClay.Core.Internal.Instances
 #if DEBUG
             //Log("End");
 #endif
-        }
-
-        /// <inheritdoc/>
-        protected override void InitFinalizationExecutionCoordinators()
-        {
-            _appInstanceFinalizationExecutionCoordinator = new ExecutionCoordinator(this);
-            _appInstanceFinalizationExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
         }
 
         /// <inheritdoc/>

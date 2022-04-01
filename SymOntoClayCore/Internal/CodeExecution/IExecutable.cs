@@ -31,7 +31,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface IExecutable: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        IExecutionCoordinator TryActivate(IEngineContext context, IExecutionCoordinator appInstanceExecutionCoordinator, IExecutionCoordinator stateExecutionCoordinator);
+        IExecutionCoordinator TryActivate(IEngineContext context);
         bool IsSystemDefined { get; }
         IList<IFunctionArgument> Arguments { get; }
         CompiledFunctionBody CompiledFunctionBody { get; }

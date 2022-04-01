@@ -40,19 +40,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly IEngineContext _context;
 
         /// <inheritdoc/>
-        public Value ExecuteBatchAsync(List<ProcessInitialInfo> processInitialInfoList)
-        {
-            return ExecuteBatchAsync(processInitialInfoList, null, null, null);
-        }
-
-        /// <inheritdoc/>
         public Value ExecuteAsync(ProcessInitialInfo processInitialInfo)
         {
-            return ExecuteAsync(processInitialInfo, null, null, null);
+            return ExecuteAsync(processInitialInfo);
         }
 
         /// <inheritdoc/>
-        public Value ExecuteBatchAsync(List<ProcessInitialInfo> processInitialInfoList, IExecutionCoordinator appInstanceExecutionCoordinator, IExecutionCoordinator stateExecutionCoordinator, IExecutionCoordinator actionExecutionCoordinator)
+        public Value ExecuteBatchAsync(List<ProcessInitialInfo> processInitialInfoList)
         {
 #if DEBUG
             //Log($"processInitialInfoList = {processInitialInfoList.WriteListToString()}");
@@ -65,6 +59,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var codeFrame = new CodeFrame();
                 codeFrame.CompiledFunctionBody = processInitialInfo.CompiledFunctionBody;
                 codeFrame.LocalContext = processInitialInfo.LocalContext;
+
+                codeFrame.Instance = processInitialInfo.Instance;
+                codeFrame.ExecutionCoordinator = processInitialInfo.ExecutionCoordinator;
 
                 var processInfo = new ProcessInfo();
 
@@ -81,16 +78,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //_context.InstancesStorage.PrintProcessesList();
 #endif
 
-            var threadExecutor = new AsyncThreadExecutor(_context, appInstanceExecutionCoordinator, stateExecutionCoordinator, actionExecutionCoordinator);
+            var threadExecutor = new AsyncThreadExecutor(_context);
             threadExecutor.SetCodeFrames(codeFramesList);
 
             return threadExecutor.Start();
-        }
-
-        /// <inheritdoc/>
-        public Value ExecuteAsync(ProcessInitialInfo processInitialInfo, IExecutionCoordinator appInstanceExecutionCoordinator, IExecutionCoordinator stateExecutionCoordinator, IExecutionCoordinator actionExecutionCoordinator)
-        {
-            return ExecuteBatchAsync(new List<ProcessInitialInfo>() { processInitialInfo }, appInstanceExecutionCoordinator, stateExecutionCoordinator, actionExecutionCoordinator);
         }
     }
 }

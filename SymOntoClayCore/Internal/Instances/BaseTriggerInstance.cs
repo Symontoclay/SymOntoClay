@@ -19,9 +19,9 @@ namespace SymOntoClay.Core.Internal.Instances
             _context = context;
             _parent = parent;
 
-            _appInstanceExecutionCoordinator = parent.AppInstanceExecutionCoordinator;
-            _stateExecutionCoordinator = parent.StateExecutionCoordinator;
-            _actionExecutionCoordinator = parent.ActionExecutionCoordinator;
+            //_appInstanceExecutionCoordinator = parent.AppInstanceExecutionCoordinator;
+            //_stateExecutionCoordinator = parent.StateExecutionCoordinator;
+            //_actionExecutionCoordinator = parent.ActionExecutionCoordinator;
 
             _condition = condition;
 
@@ -50,18 +50,17 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log($"searchOptions = {searchOptions}");
 #endif
 
-
         }
 
         private readonly LogicalSearchResolver _searcher;
         private readonly object _lockObj = new object();
         protected readonly IEngineContext _context;
-        protected readonly IExecutionCoordinator _appInstanceExecutionCoordinator;
-        protected readonly IExecutionCoordinator _stateExecutionCoordinator;
-        protected readonly IExecutionCoordinator _actionExecutionCoordinator;
+        //protected readonly IExecutionCoordinator _appInstanceExecutionCoordinator;
+        //protected readonly IExecutionCoordinator _stateExecutionCoordinator;
+        //protected readonly IExecutionCoordinator _actionExecutionCoordinator;
         private readonly IStorage _storage;
         private readonly LocalCodeExecutionContext _localCodeExecutionContext;
-        private BaseInstance _parent;
+        protected BaseInstance _parent;
         private RuleInstance _condition;
         private LogicalSearchOptions _searchOptions;
         private bool _isOn;

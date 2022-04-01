@@ -51,14 +51,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             PositionedParameters
         }
 
-        protected BaseThreadExecutor(IEngineContext context, IActivePeriodicObject activeObject, IExecutionCoordinator appInstanceExecutionCoordinator, IExecutionCoordinator stateExecutionCoordinator, IExecutionCoordinator actionExecutionCoordinator)
+        protected BaseThreadExecutor(IEngineContext context, IActivePeriodicObject activeObject)
             :base(context.Logger)
         {
             _context = context;
-
-            _appInstanceExecutionCoordinator = appInstanceExecutionCoordinator;
-            _stateExecutionCoordinator = stateExecutionCoordinator;
-            _actionExecutionCoordinator = actionExecutionCoordinator;
 
             _globalStorage = context.Storage.GlobalStorage;
             _globalLogicalStorage = _globalStorage.LogicalStorage;
@@ -82,9 +78,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         private readonly IEngineContext _context;
-        private readonly IExecutionCoordinator _appInstanceExecutionCoordinator;
-        private readonly IExecutionCoordinator _stateExecutionCoordinator;
-        private readonly IExecutionCoordinator _actionExecutionCoordinator;
+
         private readonly IStorage _globalStorage;
         private readonly ILogicalStorage _globalLogicalStorage;
         private readonly IHostListener _hostListener;
@@ -102,6 +96,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private Stack<CodeFrame> _codeFrames = new Stack<CodeFrame>();
         private CodeFrame _currentCodeFrame;
 
+        private IExecutionCoordinator _executionCoordinator;
+        private IInstance _currentInstance;
         private IVarStorage _currentVarStorage;
 
         private ErrorValue _currentError;
@@ -164,33 +160,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             try
             {
-                if(_appInstanceExecutionCoordinator != null && _appInstanceExecutionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing)
-                {
-#if DEBUG
-                    //Log("_appInstanceExecutionCoordinator != null && _appInstanceExecutionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing; return false;");
-#endif
-
-                    return false;
-                }
-
-                if (_stateExecutionCoordinator != null && _stateExecutionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing)
-                {
-#if DEBUG
-                    //Log("_stateExecutionCoordinator != null && _stateExecutionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing; return false;");
-#endif
-
-                    return false;
-                }
-
-                if (_actionExecutionCoordinator != null && _actionExecutionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing)
-                {
-#if DEBUG
-                    //Log("_actionExecutionCoordinator != null && _actionExecutionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing; return false;");
-#endif
-
-                    return false;
-                }
-
                 if (_currentCodeFrame == null)
                 {
 #if DEBUG
@@ -198,6 +167,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #endif
 
                     return false;
+                }
+
+                if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing)
+                {
+#if DEBUG
+                    //Log("_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing; return false;");
+#endif
+
+                    GoBackToPrevCodeFrame();
+                    return true;
                 }
 
                 var currentPosition = _currentCodeFrame.CurrentPosition;
@@ -600,7 +579,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     case OperationCode.CompleteAction:
                         {
-                            _actionExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
+                            _currentCodeFrame.ExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
 
                             _currentCodeFrame.CurrentPosition++;
                         }
@@ -616,9 +595,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             var ruleInstance = currentValue.AsRuleInstanceValue.RuleInstance;
 
-                            _actionExecutionCoordinator.RuleInstance = ruleInstance;
+                            _executionCoordinator.RuleInstance = ruleInstance;
 
-                            _actionExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
+                            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
 
                             _currentCodeFrame.CurrentPosition++;
                         }
@@ -725,7 +704,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             //Log($"(_stateExecutionCoordinator != null) = {_stateExecutionCoordinator != null}");
 #endif
 
-                            _stateExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
+                            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
 
                             _context.InstancesStorage.ActivateState(state);
 
@@ -760,7 +739,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     case OperationCode.CompleteState:
                         {
-                            _stateExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
+                            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
 
                             _context.InstancesStorage.TryActivateDefaultState();
 
@@ -778,7 +757,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             var ruleInstance = currentValue.AsRuleInstanceValue.RuleInstance;
 
-                            _stateExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
+                            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
 
                             _globalLogicalStorage.Append(ruleInstance);
 
@@ -790,7 +769,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     case OperationCode.BreakState:
                         {
-                            _stateExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
+                            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
 
                             _context.InstancesStorage.TryActivateDefaultState();
 
@@ -1013,6 +992,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void SetUpCurrentCodeFrame()
         {
+            _executionCoordinator = _currentCodeFrame.ExecutionCoordinator;
+            _currentInstance = _currentCodeFrame.Instance;
             _currentVarStorage = _currentCodeFrame.LocalContext.Storage.VarStorage;
         }
 
@@ -1213,44 +1194,22 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 _instancesStorage.AppendAndTryStartProcessInfo(processInfo);
 
-                var localExecutionCoordinator = _currentCodeFrame.ExecutionCoordinator;
-
                 if (isSync)
                 {
                     List<IExecutionCoordinator> executionCoordinators = null;
 
-                    if(localExecutionCoordinator != null || _appInstanceExecutionCoordinator != null || _stateExecutionCoordinator != null || _actionExecutionCoordinator != null)
+                    if (_executionCoordinator != null)
                     {
-                        executionCoordinators = new List<IExecutionCoordinator>();
-
-                        if(localExecutionCoordinator != null)
-                        {
-                            executionCoordinators.Add(localExecutionCoordinator);
-                        }
-
-                        if(_appInstanceExecutionCoordinator != null)
-                        {
-                            executionCoordinators.Add(_appInstanceExecutionCoordinator);
-                        }
-
-                        if (_stateExecutionCoordinator != null)
-                        {
-                            executionCoordinators.Add(_stateExecutionCoordinator);
-                        }
-
-                        if (_actionExecutionCoordinator != null)
-                        {
-                            executionCoordinators.Add(_actionExecutionCoordinator);
-                        }
+                        executionCoordinators = new List<IExecutionCoordinator>() { _executionCoordinator };
                     }
 
                     ProcessInfoHelper.Wait(executionCoordinators, processInfo);
 
                     //Log($"localExecutionCoordinator = {localExecutionCoordinator}");
 
-                    if(localExecutionCoordinator != null && localExecutionCoordinator.ExecutionStatus == ActionExecutionStatus.Broken)
+                    if(_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Broken)
                     {
-                        ProcessError(localExecutionCoordinator.RuleInstance);
+                        ProcessError(_executionCoordinator.RuleInstance);
 
                         return;
                     }
@@ -1524,7 +1483,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 throw new ArgumentNullException(nameof(executable));
             }
 
-            var coordinator = executable.TryActivate(_context, _appInstanceExecutionCoordinator, _stateExecutionCoordinator);
+            var coordinator = executable.TryActivate(_context);
 
 #if DEBUG
             Log($"executable.IsSystemDefined = {executable.IsSystemDefined}");

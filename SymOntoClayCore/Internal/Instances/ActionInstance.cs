@@ -34,16 +34,13 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class ActionInstance : BaseInstance, IExecutable
     {
-        public ActionInstance(ActionPtr actionPtr, IEngineContext context, IStorage parentStorage, IExecutionCoordinator appInstanceExecutionCoordinator, IExecutionCoordinator stateExecutionCoordinator)
+        public ActionInstance(ActionPtr actionPtr, IEngineContext context, IStorage parentStorage)
             : base(actionPtr.Action, context, parentStorage, new ActionStorageFactory(), null)
         {
             _action = actionPtr.Action;
             _operator = actionPtr.Operator;
 
             _iOp = _operator;
-
-            _appInstanceExecutionCoordinator = appInstanceExecutionCoordinator;
-            _stateExecutionCoordinator = stateExecutionCoordinator;
         }
 
         private readonly ActionDef _action;
@@ -51,32 +48,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly IExecutable _iOp;
 
         /// <inheritdoc/>
-        protected override void InitExecutionCoordinators()
-        {
-            _actionExecutionCoordinator = new ExecutionCoordinator(this);
-            _actionExecutionCoordinator.OnFinished += ActionExecutionCoordinator_OnFinished;
-        }
-
-        /// <inheritdoc/>
-        public override IExecutionCoordinator ExecutionCoordinator => _actionExecutionCoordinator;
-
-        /// <inheritdoc/>
-        protected override void SetExecutionStatusOfExecutionCoordinatorAsExecuting()
-        {
-            _actionExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
-        }
-
-        /// <inheritdoc/>
-        protected override void InitFinalizationExecutionCoordinators()
-        {
-            _appInstanceFinalizationExecutionCoordinator = _appInstanceExecutionCoordinator;
-            _stateFinalizationExecutionCoordinator = _stateExecutionCoordinator;
-            _actionFinalizationExecutionCoordinator = new ExecutionCoordinator(this);
-            _actionFinalizationExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
-        }
-
-        /// <inheritdoc/>
-        IExecutionCoordinator IExecutable.TryActivate(IEngineContext context, IExecutionCoordinator appInstanceExecutionCoordinator, IExecutionCoordinator stateExecutionCoordinator)
+        IExecutionCoordinator IExecutable.TryActivate(IEngineContext context)
         {
             return null;
         }

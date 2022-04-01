@@ -44,6 +44,9 @@ namespace SymOntoClay.Core.Internal.Instances
             Name = codeItem.Name;
             _context = context;
 
+            _executionCoordinator = new ExecutionCoordinator(this);
+            _executionCoordinator.OnFinished += ExecutionCoordinator_OnFinished;
+
             _localCodeExecutionContext = new LocalCodeExecutionContext();
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
             _storage = storageFactory.CreateStorage(localStorageSettings);
@@ -70,6 +73,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected readonly CodeItem _codeItem;
 
+        /// <inheritdoc/>
         public StrongIdentifierValue Name { get; private set; }
 
         protected readonly IEngineContext _context;
@@ -79,24 +83,16 @@ namespace SymOntoClay.Core.Internal.Instances
         private InstanceState _instanceState = InstanceState.Created;
         private List<LogicConditionalTriggerInstance> _logicConditionalTriggersList = new List<LogicConditionalTriggerInstance>();
 
-        protected IExecutionCoordinator _appInstanceExecutionCoordinator;
-        protected IExecutionCoordinator _stateExecutionCoordinator;
-        protected IExecutionCoordinator _actionExecutionCoordinator;
+        protected IExecutionCoordinator _executionCoordinator;
 
-        public IExecutionCoordinator AppInstanceExecutionCoordinator => _appInstanceExecutionCoordinator;
-        public IExecutionCoordinator StateExecutionCoordinator => _stateExecutionCoordinator;
-        public IExecutionCoordinator ActionExecutionCoordinator => _actionExecutionCoordinator;
-        
         /// <inheritdoc/>
-        public abstract IExecutionCoordinator ExecutionCoordinator { get; }
-
+        public IExecutionCoordinator ExecutionCoordinator => _executionCoordinator;
+        
         public virtual void Init()
         {
             _instanceState = InstanceState.Initializing;
 
-            InitExecutionCoordinators();
-
-            SetExecutionStatusOfExecutionCoordinatorAsExecuting();
+            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
 
             ApplyCodeDirectives();
 
@@ -140,8 +136,6 @@ namespace SymOntoClay.Core.Internal.Instances
             _instanceState = InstanceState.Initialized;            
         }
 
-        protected abstract void InitExecutionCoordinators();
-
         protected virtual void ApplyCodeDirectives()
         {
         }
@@ -156,18 +150,18 @@ namespace SymOntoClay.Core.Internal.Instances
             RunLifecycleTriggers(kindOfSystemEvent, Name);
         }
 
-        protected void RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IExecutionCoordinator appInstanceExecutionCoordinator, IExecutionCoordinator stateExecutionCoordinator, IExecutionCoordinator actionExecutionCoordinator, bool normalOrder = true)
+        protected void RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IExecutionCoordinator executionCoordinator, bool normalOrder = true)
         {
-            RunLifecycleTriggers(kindOfSystemEvent, Name, appInstanceExecutionCoordinator, stateExecutionCoordinator, actionExecutionCoordinator, normalOrder);
+            RunLifecycleTriggers(kindOfSystemEvent, Name, executionCoordinator, normalOrder);
         }
 
         protected void RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, StrongIdentifierValue holder)
         {
-            RunLifecycleTriggers(kindOfSystemEvent, holder, _appInstanceExecutionCoordinator, _stateExecutionCoordinator, _actionExecutionCoordinator);
+            RunLifecycleTriggers(kindOfSystemEvent, holder, _executionCoordinator);
         }
 
         protected void RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, StrongIdentifierValue holder,
-            IExecutionCoordinator appInstanceExecutionCoordinator, IExecutionCoordinator stateExecutionCoordinator, IExecutionCoordinator actionExecutionCoordinator, bool normalOrder = true)
+            IExecutionCoordinator executionCoordinator, bool normalOrder = true)
         {
             var targetSystemEventsTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(kindOfSystemEvent, holder, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
@@ -202,6 +196,8 @@ namespace SymOntoClay.Core.Internal.Instances
                     processInitialInfo.CompiledFunctionBody = targetTrigger.ResultItem.CompiledFunctionBody;
                     processInitialInfo.LocalContext = localCodeExecutionContext;
                     processInitialInfo.Metadata = targetTrigger.ResultItem;
+                    processInitialInfo.Instance = this;
+                    processInitialInfo.ExecutionCoordinator = executionCoordinator;
 
                     processInitialInfoList.Add(processInitialInfo);
                 }
@@ -213,7 +209,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 //Log($"actionExecutionCoordinator?.ExecutionStatus = {actionExecutionCoordinator?.ExecutionStatus}");
 #endif
 
-                var taskValue = _context.CodeExecutor.ExecuteBatchAsync(processInitialInfoList, appInstanceExecutionCoordinator, stateExecutionCoordinator, actionExecutionCoordinator);
+                var taskValue = _context.CodeExecutor.ExecuteBatchAsync(processInitialInfoList);
 
 #if DEBUG
                 //Log($"taskValue = {taskValue}");
@@ -237,23 +233,31 @@ namespace SymOntoClay.Core.Internal.Instances
         {
         }
 
-        protected abstract void SetExecutionStatusOfExecutionCoordinatorAsExecuting();
-
-        protected IExecutionCoordinator _appInstanceFinalizationExecutionCoordinator;
-        protected IExecutionCoordinator _stateFinalizationExecutionCoordinator;
-        protected IExecutionCoordinator _actionFinalizationExecutionCoordinator;
-
-        protected abstract void InitFinalizationExecutionCoordinators();
-
         protected virtual void RunFinalizationTrigges()
         {
 #if DEBUG
             //Log("Begin");
 #endif
 
-            InitFinalizationExecutionCoordinators();
+            var finalizationExecutionCoordinator = new ExecutionCoordinator(this);
+            finalizationExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
 
-            RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger.Leave, _appInstanceFinalizationExecutionCoordinator, _stateFinalizationExecutionCoordinator, _actionFinalizationExecutionCoordinator, false);
+            RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger.Leave, finalizationExecutionCoordinator, false);
+
+#if DEBUG
+            //Log("End");
+#endif
+        }
+
+        protected virtual void ExecutionCoordinator_OnFinished()
+        {
+#if DEBUG
+            //Log("Begin");
+#endif
+
+            RunFinalizationTrigges();
+
+            Dispose();
 
 #if DEBUG
             //Log("End");

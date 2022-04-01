@@ -277,16 +277,10 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.BinaryOperatorSystemHandler.Call(System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.ExecuteBatchAsync(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo})">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.ExecuteAsync(SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.ExecuteBatchAsync(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo},SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.ExecuteAsync(SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.ExecuteBatchAsync(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrame.ToString">
@@ -556,7 +550,7 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.AsActionInstanceValue">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.TryActivate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.TryActivate(SymOntoClay.Core.Internal.IEngineContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.GetSystemValue">
@@ -625,7 +619,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.SymOntoClay#Core#Internal#CodeExecution#IExecutable#TryActivate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.SymOntoClay#Core#Internal#CodeExecution#IExecutable#TryActivate(SymOntoClay.Core.Internal.IEngineContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionPtr.WhereSection">
@@ -1987,7 +1981,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.SymOntoClay#Core#Internal#CodeExecution#IExecutable#TryActivate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.SymOntoClay#Core#Internal#CodeExecution#IExecutable#TryActivate(SymOntoClay.Core.Internal.IEngineContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
@@ -2075,7 +2069,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.SymOntoClay#Core#Internal#CodeExecution#IExecutable#TryActivate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.SymOntoClay#Core#Internal#CodeExecution#IExecutable#TryActivate(SymOntoClay.Core.Internal.IEngineContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.GetSystemValue">
@@ -2920,7 +2914,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.SymOntoClay#Core#Internal#CodeExecution#IExecutable#TryActivate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.SymOntoClay#Core#Internal#CodeExecution#IExecutable#TryActivate(SymOntoClay.Core.Internal.IEngineContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
@@ -4692,19 +4686,7 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceResultItem`1.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.InitExecutionCoordinators">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Instances.ActionInstance.ExecutionCoordinator">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.SetExecutionStatusOfExecutionCoordinatorAsExecuting">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.InitFinalizationExecutionCoordinators">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.SymOntoClay#Core#Internal#CodeExecution#IExecutable#TryActivate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.SymOntoClay#Core#Internal#CodeExecution#IExecutable#TryActivate(SymOntoClay.Core.Internal.IEngineContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ActionInstance.IsSystemDefined">
@@ -4725,15 +4707,6 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.InitExecutionCoordinators">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Instances.AppInstance.ExecutionCoordinator">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.SetExecutionStatusOfExecutionCoordinatorAsExecuting">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.ApplyCodeDirectives">
             <inheritdoc/>
         </member>
@@ -4746,10 +4719,10 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.RunActivatorsOfStates">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.InitFinalizationExecutionCoordinators">
+        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.OnDisposed">
+        <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.Name">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.ExecutionCoordinator">
@@ -4956,22 +4929,10 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.StateDeactivator.RunHandler(SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.InitExecutionCoordinators">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Instances.StateInstance.ExecutionCoordinator">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.SetExecutionStatusOfExecutionCoordinatorAsExecuting">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.RunDeactivatorsOfStates">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.StateExecutionCoordinator_OnFinished">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.InitFinalizationExecutionCoordinators">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.OnDisposed">

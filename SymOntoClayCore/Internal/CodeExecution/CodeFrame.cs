@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public LocalCodeExecutionContext LocalContext { get; set; }
         public ProcessInfo ProcessInfo { get; set; }
         public CodeItem Metadata { get; set; }
-        public Instance Instance { get; set; }
+        public IInstance Instance { get; set; }
         public IExecutionCoordinator ExecutionCoordinator { get; set; }
 
         /// <inheritdoc/>
@@ -79,7 +79,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintBriefObjProp(n, nameof(ProcessInfo), ProcessInfo);
 
             sb.PrintObjProp(n, nameof(Metadata), Metadata);
-
+            sb.PrintObjProp(n, nameof(Instance), Instance);
             sb.PrintObjProp(n, nameof(ExecutionCoordinator), ExecutionCoordinator);
 
             return sb.ToString();
@@ -119,7 +119,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintBriefObjProp(n, nameof(ProcessInfo), ProcessInfo);
 
             sb.PrintShortObjProp(n, nameof(Metadata), Metadata);
-
+            sb.PrintShortObjProp(n, nameof(Instance), Instance);
             sb.PrintShortObjProp(n, nameof(ExecutionCoordinator), ExecutionCoordinator);
 
             return sb.ToString();
@@ -159,7 +159,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintExisting(n, nameof(ProcessInfo), ProcessInfo);
 
             sb.PrintBriefObjProp(n, nameof(Metadata), Metadata);
-
+            sb.PrintBriefObjProp(n, nameof(Instance), Instance);
             sb.PrintBriefObjProp(n, nameof(ExecutionCoordinator), ExecutionCoordinator);
 
             return sb.ToString();
@@ -184,6 +184,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var nextN = n + 4;
             var nextNSpaces = DisplayHelper.Spaces(nextN);
             var sb = new StringBuilder();
+            if(Instance != null)
+            {
+                sb.AppendLine($"{spaces}Instance: {Instance.Name}");
+            }
+            
             sb.AppendLine($"{spaces}Begin Code");
 
             foreach (var commandItem in CompiledFunctionBody.Commands)

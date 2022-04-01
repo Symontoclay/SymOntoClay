@@ -43,6 +43,7 @@ namespace SymOntoClay.Core.Internal.Instances
         public LogicConditionalTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage)
             : base(trigger.Condition, parent, context, parentStorage)
         {
+            _executionCoordinator = parent.ExecutionCoordinator;
             _trigger = trigger;
 
 #if DEBUG
@@ -50,6 +51,7 @@ namespace SymOntoClay.Core.Internal.Instances
 #endif
         }
 
+        private IExecutionCoordinator _executionCoordinator;
         private InlineTrigger _trigger;
 
         /// <inheritdoc/>
@@ -69,8 +71,10 @@ namespace SymOntoClay.Core.Internal.Instances
             processInitialInfo.CompiledFunctionBody = _trigger.CompiledFunctionBody;
             processInitialInfo.LocalContext = localCodeExecutionContext;
             processInitialInfo.Metadata = _trigger;
+            processInitialInfo.Instance = _parent;
+            processInitialInfo.ExecutionCoordinator = _executionCoordinator;
 
-            var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo, _appInstanceExecutionCoordinator, _stateExecutionCoordinator, _actionExecutionCoordinator);
+            var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo);
         }
     }
 }

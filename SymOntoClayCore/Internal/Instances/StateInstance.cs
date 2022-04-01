@@ -11,26 +11,9 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class StateInstance : BaseInstance
     {
-        public StateInstance(StateDef codeItem, IEngineContext context, IStorage parentStorage, List<Var> varList, IExecutionCoordinator appInstanceExecutionCoordinator)
+        public StateInstance(StateDef codeItem, IEngineContext context, IStorage parentStorage, List<Var> varList)
             : base(codeItem, context, parentStorage, new StateStorageFactory(), varList)
         {
-            _appInstanceExecutionCoordinator = appInstanceExecutionCoordinator;
-        }
-
-        /// <inheritdoc/>
-        protected override void InitExecutionCoordinators()
-        {
-            _stateExecutionCoordinator = new ExecutionCoordinator(this);
-            _stateExecutionCoordinator.OnFinished += StateExecutionCoordinator_OnFinished;
-        }
-
-        /// <inheritdoc/>
-        public override IExecutionCoordinator ExecutionCoordinator => _stateExecutionCoordinator;
-
-        /// <inheritdoc/>
-        protected override void SetExecutionStatusOfExecutionCoordinatorAsExecuting()
-        {
-            _stateExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
         }
 
         private List<StateDeactivator> _stateDeactivators = new List<StateDeactivator>();
@@ -64,23 +47,15 @@ namespace SymOntoClay.Core.Internal.Instances
         public event Action<StateInstance> OnStateInstanceFinished;
 
         /// <inheritdoc/>
-        protected override void InitFinalizationExecutionCoordinators()
-        {
-            _appInstanceFinalizationExecutionCoordinator = _appInstanceExecutionCoordinator;
-            _stateFinalizationExecutionCoordinator = new ExecutionCoordinator(this);
-            _stateFinalizationExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
-        }
-
-        /// <inheritdoc/>
         protected override void OnDisposed()
         {
 #if DEBUG
             //Log($"Name = {Name}");
 #endif
 
-            if (_stateExecutionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
+            if (_executionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
             {
-                _stateExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Canceled;
+                _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Canceled;
             }
 
             foreach (var stateDeactivator in _stateDeactivators)

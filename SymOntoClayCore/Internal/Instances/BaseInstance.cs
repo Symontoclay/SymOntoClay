@@ -150,8 +150,8 @@ namespace SymOntoClay.Core.Internal.Instances
         public void AddChildInstance(IInstance instance)
         {
 #if DEBUG
-            Log($"instance = {instance}");
-            Log($"this = {this}");
+            //Log($"instance = {instance}");
+            //Log($"this = {this}");
 #endif
 
             lock(_childInstancesLockObj)
@@ -171,8 +171,8 @@ namespace SymOntoClay.Core.Internal.Instances
         public void RemoveChildInstance(IInstance instance)
         {
 #if DEBUG
-            Log($"instance = {instance}");
-            Log($"this = {this}");
+            //Log($"instance = {instance}");
+            //Log($"this = {this}");
 #endif
 
             lock (_childInstancesLockObj)
@@ -192,8 +192,8 @@ namespace SymOntoClay.Core.Internal.Instances
         public void SetParent(IInstance instance)
         {
 #if DEBUG
-            Log($"instance = {instance}");
-            Log($"this = {this}");
+            //Log($"instance = {instance}");
+            //Log($"this = {this}");
 #endif
 
             lock (_childInstancesLockObj)
@@ -213,8 +213,8 @@ namespace SymOntoClay.Core.Internal.Instances
         public void ResetParent(IInstance instance)
         {
 #if DEBUG
-            Log($"instance = {instance}");
-            Log($"this = {this}");
+            //Log($"instance = {instance}");
+            //Log($"this = {this}");
 #endif
 
             lock (_childInstancesLockObj)
@@ -346,10 +346,11 @@ namespace SymOntoClay.Core.Internal.Instances
         protected virtual void ExecutionCoordinator_OnFinished()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
+            //Log($"this = {this}");
 #endif
 
-            if(_parentInstance != null)
+            if (_parentInstance != null)
             {
                 _parentInstance.RemoveChildInstance(this);
                 _parentInstance = null;
@@ -360,13 +361,13 @@ namespace SymOntoClay.Core.Internal.Instances
             if(_childInstances.Any())
             {
 #if DEBUG
-                Log($"_childInstances.Count = {_childInstances.Count}");
+                //Log($"_childInstances.Count = {_childInstances.Count}");
 #endif
 
                 foreach(var childInstance in _childInstances.ToList())
                 {
 #if DEBUG
-                    Log($"childInstance = {childInstance}");
+                    //Log($"childInstance = {childInstance}");
 #endif
 
                     childInstance.CancelExecution();
@@ -376,7 +377,7 @@ namespace SymOntoClay.Core.Internal.Instances
             Dispose();
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 

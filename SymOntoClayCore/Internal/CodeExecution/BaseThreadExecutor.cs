@@ -198,7 +198,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     //Log($"_currentCodeFrame.ExecutionCoordinator?.ExecutionStatus = {_currentCodeFrame.ExecutionCoordinator?.ExecutionStatus}");
 #endif
 
-                    if(_currentCodeFrame.ExecutionCoordinator != null && _currentCodeFrame.ExecutionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
+                    if (_currentCodeFrame.ExecutionCoordinator != null && _currentCodeFrame.ExecutionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
                     {
                         _currentCodeFrame.ExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
                     }
@@ -1250,7 +1250,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             bool isSync)
         {
 #if DEBUG
-            Log($"methodName = {methodName}");
+            //Log($"methodName = {methodName}");
             //Log($"kindOfParameters = {kindOfParameters}");
             //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
             //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
@@ -1277,7 +1277,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Log($"method = {method}");
+            //Log($"method = {method}");
 #endif
 
             if(method == null)
@@ -1486,9 +1486,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var coordinator = executable.TryActivate(_context);
 
 #if DEBUG
-            Log($"executable.IsSystemDefined = {executable.IsSystemDefined}");
-            Log($"coordinator != null = {coordinator != null}");
-            Log($"isSync = {isSync}");
+            //Log($"executable.IsSystemDefined = {executable.IsSystemDefined}");
+            //Log($"coordinator != null = {coordinator != null}");
+            //Log($"isSync = {isSync}");
 #endif
 
             if (executable.IsSystemDefined)
@@ -1538,8 +1538,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         var instance = coordinator.Instance;
 
 #if DEBUG
-                        Log($"instance?.Name = {instance?.Name}");
-                        Log($"_currentInstance?.Name = {_currentInstance?.Name}");
+                        //Log($"instance?.Name = {instance?.Name}");
+                        //Log($"_currentInstance?.Name = {_currentInstance?.Name}");
 #endif
 
                         if (_currentInstance != null && instance != null)

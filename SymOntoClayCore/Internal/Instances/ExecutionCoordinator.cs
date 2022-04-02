@@ -42,6 +42,8 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public IInstance Instance => _instance;
 
+        private bool _isFinished = false;
+
         /// <inheritdoc/>
         public ActionExecutionStatus ExecutionStatus 
         {
@@ -64,9 +66,16 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     _executionStatus = value;
 
-                    if(_executionStatus != ActionExecutionStatus.Executing)
+                    var currIsFinished = _executionStatus != ActionExecutionStatus.Executing;
+
+                    if(currIsFinished != _isFinished)
                     {
-                        OnFinished?.Invoke();
+                        _isFinished = currIsFinished;
+
+                        if (currIsFinished)
+                        {
+                            OnFinished?.Invoke();
+                        }
                     }
                 }
             }

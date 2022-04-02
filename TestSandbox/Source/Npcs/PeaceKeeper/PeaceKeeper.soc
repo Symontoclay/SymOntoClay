@@ -1,5 +1,36 @@
 ﻿app PeaceKeeper
 {
+    on Enter =>
+    {
+        'Begin' >> @>log;
+ 
+        Go();
+
+        'End' >> @>log;
+    }
+}
+
+action Go 
+{
+    on Enter =>
+    {
+        'Enter Go' >> @>log;
+    }
+
+    on Leave
+    {
+        'Leave Go' >> @>log;
+    }
+
+    op () => 
+    {
+        'Begin Go' >> @>log;
+        'End Go' >> @>log;
+    }
+}
+
+/*app PeaceKeeper
+{
     set Idling as default state;
     set Attacking as state;
 
@@ -57,4 +88,4 @@ action Kill
         await;
         'End Kill' >> @>log;
     }
-}
+}*/

@@ -1597,7 +1597,11 @@ state Attacking
 
             var wasBeginAttacking = false;
 
+            var totalN = 0;
+
             var npc = instance.CreateAndStartNPC((n, message) => {
+                totalN = n;
+
                 if (message.EndsWith(" Enter"))
                 {
                     enterN++;
@@ -1649,6 +1653,146 @@ state Attacking
             npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
+
+            Assert.AreEqual(totalN, 5);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case15()
+        {
+            using var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{
+    set Idling as default state;
+    set Attacking as state;
+
+    on Enter =>
+    {
+        'Begin' >> @>log;        
+        'End' >> @>log;
+    }
+}
+
+state Idling
+{
+    on Enter
+    {
+        'Begin Idling Enter' >> @>log;
+        'End Idling Enter' >> @>log;
+    }
+}
+
+state Attacking
+{
+    leave on:
+        {: see(I, barrel) :}
+
+    on Enter
+    {
+        'Begin Patrolling Enter' >> @>log;
+
+        Kill();
+
+        'End Patrolling Enter' >> @>log;
+    }
+
+    on Leave
+    {
+        'Leave Attacking' >> @>log;
+    }
+}
+
+action Kill 
+{
+    on Enter =>
+    {
+        'Enter Kill' >> @>log;
+    }
+
+    on Leave
+    {
+        'Leave Kill' >> @>log;
+    }
+
+    op () => 
+    {
+        'Begin Kill' >> @>log;
+        await;
+        'End Kill' >> @>log;
+    }
+}";
+
+            instance.WriteFile(text);
+
+            var totalN = 0;
+            var patrollingEnterN = 0;
+            var idlingEnterN = 0;
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                totalN = n;
+
+                if(message.EndsWith(" Patrolling Enter"))
+                {
+                    patrollingEnterN++;
+
+                    switch (patrollingEnterN)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin Patrolling Enter");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(patrollingEnterN), patrollingEnterN, null);
+                    }
+                }
+                else
+                {
+                    if (message.EndsWith(" Idling Enter"))
+                    {
+                        idlingEnterN++;
+
+                        switch (idlingEnterN)
+                        {
+                            case 1:
+                                Assert.AreEqual(message, "Begin Idling Enter");
+                                break;
+
+                            case 2:
+                                Assert.AreEqual(message, "End Idling Enter");
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(idlingEnterN), idlingEnterN, null);
+                        }
+                    }
+                    else
+                    {
+                        switch (message)
+                        {
+                            case "Begin":
+                            case "End":
+                            case "Enter Kill":
+                            case "Begin Kill":
+                            case "Leave Attacking":
+                            case "Leave Kill":
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(message), message, null);
+                        }
+                    }
+                }
+            });
+
+            Thread.Sleep(1000);
+
+            npc.InsertFact("{: see(I, barrel) :}");
+
+            Thread.Sleep(1000);
+
+            Assert.AreEqual(totalN, 9);
         }
     }
 }

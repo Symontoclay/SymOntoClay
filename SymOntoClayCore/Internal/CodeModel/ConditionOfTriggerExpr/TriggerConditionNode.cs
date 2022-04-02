@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -24,6 +25,60 @@ namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
+#if DEBUG
+            //_gbcLogger.Info($"this = {DebugHelperForTriggerCondition.ToString(this)}");
+#endif
+
+            switch (Kind)
+            {
+                case KindOfTriggerConditionNode.BinaryOperator:
+                    return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(KindOfOperator.GetHashCode()) ^ Left.GetLongHashCode(options) ^ Right.GetLongHashCode(options);
+
+                case KindOfTriggerConditionNode.UnaryOperator:
+                    return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(KindOfOperator.GetHashCode()) ^ Left.GetLongHashCode(options);
+
+                case KindOfTriggerConditionNode.Concept:
+                case KindOfTriggerConditionNode.Entity:
+                    return base.CalculateLongHashCode(options) ^ Name.GetLongHashCode(options);
+
+                case KindOfTriggerConditionNode.Value:
+                    return base.CalculateLongHashCode(options) ^ Value.GetLongHashCode(options);
+
+                case KindOfTriggerConditionNode.FuzzyLogicNonNumericSequence:
+                    return base.CalculateLongHashCode(options) ^ FuzzyLogicNonNumericSequenceValue.GetLongHashCode(options);
+
+                case KindOfTriggerConditionNode.EntityCondition:
+                case KindOfTriggerConditionNode.EntityRef:
+                    break;
+
+                case KindOfTriggerConditionNode.Var:
+                    return 0;
+
+                case KindOfTriggerConditionNode.Fact:
+                    return base.CalculateLongHashCode(options) ^ RuleInstance.GetLongHashCode(options);
+
+                case KindOfTriggerConditionNode.Duration:
+                    return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.StubWeight ^ Value.GetLongHashCode(options);
+
+                case KindOfTriggerConditionNode.CallFunction:
+                    {
+                        var result = base.CalculateLongHashCode(options) ^ LongHashCodeWeights.BaseFunctionWeight ^ Name.GetLongHashCode(options);
+
+                        foreach (var param in ParamsList)
+                        {
+                            result ^= LongHashCodeWeights.BaseParamWeight ^ param.GetLongHashCode(options);
+                        }
+
+                        return result;
+                    }
+
+                case KindOfTriggerConditionNode.Group:
+                    return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.GroupWeight ^ Left.GetLongHashCode(options);
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
+            }
+
             throw new NotImplementedException();
         }
 

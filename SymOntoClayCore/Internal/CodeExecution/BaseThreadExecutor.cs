@@ -1542,7 +1542,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         Log($"_currentInstance?.Name = {_currentInstance?.Name}");
 #endif
 
-                        throw new NotImplementedException();
+                        if (_currentInstance != null && instance != null)
+                        {
+                            _currentInstance.AddChildInstance(instance);
+                        }
                     }
 
                     _currentCodeFrame.CurrentPosition++;

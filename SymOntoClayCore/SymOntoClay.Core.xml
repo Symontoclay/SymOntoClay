@@ -4728,6 +4728,21 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.ExecutionCoordinator">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.CancelExecution">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.AddChildInstance(SymOntoClay.Core.Internal.CodeModel.IInstance)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.RemoveChildInstance(SymOntoClay.Core.Internal.CodeModel.IInstance)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.SetParent(SymOntoClay.Core.Internal.CodeModel.IInstance)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.ResetParent(SymOntoClay.Core.Internal.CodeModel.IInstance)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.OnDisposed">
             <inheritdoc/>
         </member>
@@ -4932,7 +4947,7 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.RunDeactivatorsOfStates">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.StateExecutionCoordinator_OnFinished">
+        <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.ExecutionCoordinator_OnFinished">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.OnDisposed">

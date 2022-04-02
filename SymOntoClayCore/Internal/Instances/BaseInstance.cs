@@ -85,9 +85,19 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected IExecutionCoordinator _executionCoordinator;
 
+        private List<IInstance> _childInstances = new List<IInstance>();
+        private IInstance _parentInstance;
+        private readonly object _childInstancesLockObj = new object();
+
         /// <inheritdoc/>
         public IExecutionCoordinator ExecutionCoordinator => _executionCoordinator;
-        
+
+        /// <inheritdoc/>
+        public void CancelExecution()
+        {
+            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Canceled;
+        }
+
         public virtual void Init()
         {
             _instanceState = InstanceState.Initializing;
@@ -134,6 +144,90 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
             _instanceState = InstanceState.Initialized;            
+        }
+
+        /// <inheritdoc/>
+        public void AddChildInstance(IInstance instance)
+        {
+#if DEBUG
+            Log($"instance = {instance}");
+            Log($"this = {this}");
+#endif
+
+            lock(_childInstancesLockObj)
+            {
+                if (_childInstances.Contains(instance))
+                {
+                    return;
+                }
+
+                _childInstances.Add(instance);
+
+                instance.SetParent(this);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void RemoveChildInstance(IInstance instance)
+        {
+#if DEBUG
+            Log($"instance = {instance}");
+            Log($"this = {this}");
+#endif
+
+            lock (_childInstancesLockObj)
+            {
+                if (!_childInstances.Contains(instance))
+                {
+                    return;
+                }
+
+                _childInstances.Remove(instance);
+
+                instance.ResetParent(this);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void SetParent(IInstance instance)
+        {
+#if DEBUG
+            Log($"instance = {instance}");
+            Log($"this = {this}");
+#endif
+
+            lock (_childInstancesLockObj)
+            {
+                if (_parentInstance == instance)
+                {
+                    return;
+                }
+
+                _parentInstance = instance;
+
+                instance.AddChildInstance(this);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void ResetParent(IInstance instance)
+        {
+#if DEBUG
+            Log($"instance = {instance}");
+            Log($"this = {this}");
+#endif
+
+            lock (_childInstancesLockObj)
+            {
+                if (_parentInstance != instance)
+                {
+                    return;
+                }
+
+                _parentInstance = null;
+
+                instance.RemoveChildInstance(this);
+            }
         }
 
         protected virtual void ApplyCodeDirectives()
@@ -252,60 +346,37 @@ namespace SymOntoClay.Core.Internal.Instances
         protected virtual void ExecutionCoordinator_OnFinished()
         {
 #if DEBUG
-            //Log("Begin");
+            Log("Begin");
 #endif
 
+            if(_parentInstance != null)
+            {
+                _parentInstance.RemoveChildInstance(this);
+                _parentInstance = null;
+            }
+
             RunFinalizationTrigges();
+
+            if(_childInstances.Any())
+            {
+#if DEBUG
+                Log($"_childInstances.Count = {_childInstances.Count}");
+#endif
+
+                foreach(var childInstance in _childInstances.ToList())
+                {
+#if DEBUG
+                    Log($"childInstance = {childInstance}");
+#endif
+
+                    childInstance.CancelExecution();
+                }
+            }
 
             Dispose();
 
 #if DEBUG
-            //Log("End");
-#endif
-        }
-
-        protected void AppInstanceExecutionCoordinator_OnFinished()
-        {
-#if DEBUG
-            //Log("Begin");
-#endif
-
-            RunFinalizationTrigges();
-
-            Dispose();
-
-#if DEBUG
-            //Log("End");
-#endif
-        }
-
-        protected virtual void StateExecutionCoordinator_OnFinished()
-        {
-#if DEBUG
-            //Log("Begin");
-#endif
-
-            RunFinalizationTrigges();
-
-            Dispose();
-
-#if DEBUG
-            //Log("End");
-#endif
-        }
-
-        protected void ActionExecutionCoordinator_OnFinished()
-        {
-#if DEBUG
-            //Log("Begin");
-#endif
-
-            RunFinalizationTrigges();
-
-            Dispose();
-
-#if DEBUG
-            //Log("End");
+            Log("End");
 #endif
         }
 
@@ -316,6 +387,15 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 triggerInstanceInfo.Dispose();
             }
+
+            _logicConditionalTriggersList.Clear();
+
+            foreach (var childInstance in _childInstances)
+            {
+                childInstance.Dispose();
+            }
+
+            _childInstances.Clear();
 
             base.OnDisposed();
         }

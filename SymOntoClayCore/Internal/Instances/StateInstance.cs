@@ -35,13 +35,13 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        protected override void StateExecutionCoordinator_OnFinished()
+        protected override void ExecutionCoordinator_OnFinished()
         {
             Task.Run(() => {
                 OnStateInstanceFinished?.Invoke(this);
             });
 
-            base.StateExecutionCoordinator_OnFinished();
+            base.ExecutionCoordinator_OnFinished();
         }
 
         public event Action<StateInstance> OnStateInstanceFinished;

@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -9,6 +10,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public interface IInstance: ISymOntoClayDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
+        KindOfInstance KindOfInstance { get; }
         StrongIdentifierValue Name { get; }
         IExecutionCoordinator ExecutionCoordinator { get; }
         void CancelExecution();

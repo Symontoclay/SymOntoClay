@@ -42,6 +42,9 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public IInstance Instance => _instance;
 
+        /// <inheritdoc/>
+        public KindOfInstance KindOfInstance => _instance.KindOfInstance;
+
         private bool _isFinished = false;
 
         /// <inheritdoc/>

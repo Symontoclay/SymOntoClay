@@ -43,6 +43,9 @@ namespace SymOntoClay.Core.Internal.Instances
             _iOp = _operator;
         }
 
+        /// <inheritdoc/>
+        public override KindOfInstance KindOfInstance => KindOfInstance.ActionInstance;
+
         private readonly ActionDef _action;
         private readonly Operator _operator;
         private readonly IExecutable _iOp;

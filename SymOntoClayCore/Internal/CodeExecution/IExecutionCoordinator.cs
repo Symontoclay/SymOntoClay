@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     public interface IExecutionCoordinator : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         IInstance Instance { get; }
+        KindOfInstance KindOfInstance { get; }
         ActionExecutionStatus ExecutionStatus { get; set; }
         RuleInstance RuleInstance { get; set; }
         event Action OnFinished;

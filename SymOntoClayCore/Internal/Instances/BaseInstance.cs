@@ -71,6 +71,9 @@ namespace SymOntoClay.Core.Internal.Instances
             _triggersResolver = new TriggersResolver(context);
         }
 
+        /// <inheritdoc/>
+        public abstract KindOfInstance KindOfInstance { get; }
+
         protected readonly CodeItem _codeItem;
 
         /// <inheritdoc/>
@@ -424,6 +427,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(KindOfInstance)} = {KindOfInstance}");
             sb.PrintObjProp(n, nameof(Name), Name);
             sb.AppendLine($"{spaces}{nameof(_instanceState)} = {_instanceState}");
 
@@ -453,6 +457,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(KindOfInstance)} = {KindOfInstance}");
             sb.PrintShortObjProp(n, nameof(Name), Name);
             sb.AppendLine($"{spaces}{nameof(_instanceState)} = {_instanceState}");
 
@@ -482,6 +487,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(KindOfInstance)} = {KindOfInstance}");
             sb.PrintBriefObjProp(n, nameof(Name), Name);
             sb.AppendLine($"{spaces}{nameof(_instanceState)} = {_instanceState}");
 

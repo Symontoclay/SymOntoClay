@@ -198,12 +198,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     //Log($"_currentCodeFrame.ExecutionCoordinator?.ExecutionStatus = {_currentCodeFrame.ExecutionCoordinator?.ExecutionStatus}");
 #endif
 
-                    //if (_currentCodeFrame.ExecutionCoordinator != null && _currentCodeFrame.ExecutionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
-                    //{
-                    //    _currentCodeFrame.ExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
-                    //}
-
-                    GoBackToPrevCodeFrame();
+                    GoBackToPrevCodeFrame( ActionExecutionStatus.Complete);
                     return true;
                 }
 
@@ -638,7 +633,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Completed;
 
-                            GoBackToPrevCodeFrame();
+                            GoBackToPrevCodeFrame(ActionExecutionStatus.Complete);
 
                             _currentCodeFrame.ValuesStack.Push(new NullValue());
 
@@ -663,7 +658,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             //Log($"currentValue = {currentValue}");
 #endif
 
-                            GoBackToPrevCodeFrame();
+                            _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Completed;
+
+                            GoBackToPrevCodeFrame(ActionExecutionStatus.Complete);
 
                             _currentCodeFrame.ValuesStack.Push(currentValue);
 
@@ -880,7 +877,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Faulted;
 
-                GoBackToPrevCodeFrame();
+                GoBackToPrevCodeFrame(ActionExecutionStatus.Faulted);
             }
             else
             {
@@ -892,7 +889,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
                     _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Faulted;
 
-                    GoBackToPrevCodeFrame();
+                    GoBackToPrevCodeFrame(ActionExecutionStatus.Faulted);
                 }
             }
         }
@@ -999,6 +996,38 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void GoBackToPrevCodeFrame()
         {
+            GoBackToPrevCodeFrame(ActionExecutionStatus.None);
+        }
+
+        private void GoBackToPrevCodeFrame(ActionExecutionStatus targetActionExecutionStatus)
+        {
+            if(_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
+            {
+                var specialMark = _currentCodeFrame.SpecialMark;
+
+#if DEBUG
+                //Log($"targetActionExecutionStatus = {targetActionExecutionStatus}");
+                //Log($"specialMark = {specialMark}");
+#endif
+
+                switch (specialMark)
+                {
+                    case SpecialMarkOfCodeFrame.None:
+                        break;
+
+                    case SpecialMarkOfCodeFrame.MainFrameOfActionInstance:
+                        if(targetActionExecutionStatus == ActionExecutionStatus.None)
+                        {
+                            break;
+                        }
+                        _executionCoordinator.ExecutionStatus = targetActionExecutionStatus;
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(specialMark), specialMark, null);
+                }
+            }
+
             _codeFrames.Pop();
 
             if (_codeFrames.Count == 0)
@@ -1017,7 +1046,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
                     _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Canceled;
 
-                    GoBackToPrevCodeFrame();
+                    GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
                     return;
                 }
 
@@ -1226,13 +1255,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Canceled;
                             _isCanceled = true;
 
-                            GoBackToPrevCodeFrame();
+                            GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
                             return;
 
                         case ProcessStatus.Faulted:
                             _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Faulted;
 
-                            GoBackToPrevCodeFrame();
+                            GoBackToPrevCodeFrame(ActionExecutionStatus.Faulted);
                             return;
                     }
                 }
@@ -1538,12 +1567,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         var instance = coordinator.Instance;
 
 #if DEBUG
-                        //Log($"instance?.Name = {instance?.Name}");
+                        //Log($"instance?.Name = {instance?.Name}");                        
                         //Log($"_currentInstance?.Name = {_currentInstance?.Name}");
+                        //Log($"coordinator.KindOfInstance = {coordinator.KindOfInstance}");
 #endif
 
                         if (_currentInstance != null && instance != null)
                         {
+                            SetSpecialMarkOfCodeFrame(newCodeFrame, coordinator);
+
                             _currentInstance.AddChildInstance(instance);
                         }
                     }
@@ -1565,6 +1597,30 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     _currentCodeFrame.ValuesStack.Push(task);
                 }
+            }
+        }
+
+        private void SetSpecialMarkOfCodeFrame(CodeFrame codeFrame, IExecutionCoordinator coordinator)
+        {
+            if(coordinator == null)
+            {
+                return;
+            }
+
+            var kindOfInstance = coordinator.KindOfInstance;
+
+#if DEBUG
+            //Log($"kindOfInstance = {kindOfInstance}");
+#endif
+
+            switch (kindOfInstance)
+            {
+                case KindOfInstance.ActionInstance:
+                    codeFrame.SpecialMark = SpecialMarkOfCodeFrame.MainFrameOfActionInstance;
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfInstance), kindOfInstance, null);
             }
         }
 

@@ -16,6 +16,9 @@ namespace SymOntoClay.Core.Internal.Instances
         {
         }
 
+        /// <inheritdoc/>
+        public override KindOfInstance KindOfInstance => KindOfInstance.StateInstance;
+
         private List<StateDeactivator> _stateDeactivators = new List<StateDeactivator>();
 
         /// <inheritdoc/>

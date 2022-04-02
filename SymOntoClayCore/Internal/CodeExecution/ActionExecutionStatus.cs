@@ -32,6 +32,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         Executing,
         Complete,
         Broken,
-        Canceled
+        Faulted,
+        Canceled,
+        /// <summary>
+        /// Special status for options of convertors.
+        /// It is not used in real ExecutionCoordinator.
+        /// </summary>
+        None
     }
 }

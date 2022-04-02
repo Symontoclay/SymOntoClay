@@ -268,6 +268,12 @@
         <member name="M:SymOntoClay.Core.Internal.BaseLoggedComponent.Error(System.Exception)">
             <inheritdoc/>
         </member>
+        <member name="F:SymOntoClay.Core.Internal.CodeExecution.ActionExecutionStatus.None">
+            <summary>
+            Special status for options of convertors.
+            It is not used in real ExecutionCoordinator.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.Dispose">
             <inheritdoc/>
         </member>
@@ -4686,6 +4692,9 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceResultItem`1.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.ActionInstance.KindOfInstance">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.SymOntoClay#Core#Internal#CodeExecution#IExecutable#TryActivate(SymOntoClay.Core.Internal.IEngineContext)">
             <inheritdoc/>
         </member>
@@ -4707,6 +4716,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.AppInstance.KindOfInstance">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.ApplyCodeDirectives">
             <inheritdoc/>
         </member>
@@ -4720,6 +4732,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.OnDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.KindOfInstance">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.Name">
@@ -4825,6 +4840,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.Instance">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.KindOfInstance">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.ExecutionStatus">
@@ -4942,6 +4960,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.StateDeactivator.RunHandler(SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.StateInstance.KindOfInstance">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.RunDeactivatorsOfStates">

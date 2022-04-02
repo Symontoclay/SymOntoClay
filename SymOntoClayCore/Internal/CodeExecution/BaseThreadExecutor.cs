@@ -198,10 +198,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     //Log($"_currentCodeFrame.ExecutionCoordinator?.ExecutionStatus = {_currentCodeFrame.ExecutionCoordinator?.ExecutionStatus}");
 #endif
 
-                    if (_currentCodeFrame.ExecutionCoordinator != null && _currentCodeFrame.ExecutionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
-                    {
-                        _currentCodeFrame.ExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
-                    }
+                    //if (_currentCodeFrame.ExecutionCoordinator != null && _currentCodeFrame.ExecutionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
+                    //{
+                    //    _currentCodeFrame.ExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
+                    //}
 
                     GoBackToPrevCodeFrame();
                     return true;

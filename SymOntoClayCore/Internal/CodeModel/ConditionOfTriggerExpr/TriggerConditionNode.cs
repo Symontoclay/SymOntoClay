@@ -1,0 +1,161 @@
+﻿using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
+using SymOntoClay.CoreHelper.DebugHelpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
+{
+    public class TriggerConditionNode : AnnotatedItem, IAstNode
+    {
+        public KindOfTriggerConditionNode Kind { get; set; } = KindOfTriggerConditionNode.Unknown;
+        public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
+        public StrongIdentifierValue Name { get; set; }
+        public TriggerConditionNode Left { get; set; }
+        public TriggerConditionNode Right { get; set; }
+        public IList<TriggerConditionNode> ParamsList { get; set; }
+        public RuleInstance RuleInstance { get; set; }
+        public Value Value { get; set; }
+        public FuzzyLogicNonNumericSequenceValue FuzzyLogicNonNumericSequenceValue { get; set; }
+
+        /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        IAstNode IAstNode.Left { get => Left; set => Left = (TriggerConditionNode)value; }
+        IAstNode IAstNode.Right { get => Right; set => Right = (TriggerConditionNode)value; }
+
+        /// <inheritdoc/>
+        public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
+        {
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public TriggerConditionNode Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public TriggerConditionNode Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (TriggerConditionNode)context[this];
+            }
+
+            var result = new TriggerConditionNode();
+            context[this] = result;
+
+            result.Kind = Kind;
+            result.KindOfOperator = KindOfOperator;
+            result.Name = Name?.Clone(context);
+            result.Left = Left?.Clone(context);
+            result.Right = Right?.Clone(context);
+            result.ParamsList = ParamsList?.Select(p => p.Clone(context)).ToList();
+            result.RuleInstance = RuleInstance?.Clone(context);
+            result.Value = Value?.CloneValue(context);
+            result.FuzzyLogicNonNumericSequenceValue = FuzzyLogicNonNumericSequenceValue?.Clone(context);
+
+            result.AppendAnnotations(this, context);
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public override void DiscoverAllAnnotations(IList<RuleInstance> result)
+        {
+            base.DiscoverAllAnnotations(result);
+
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
+
+            sb.PrintObjProp(n, nameof(Name), Name);
+
+            sb.PrintObjProp(n, nameof(Left), Left);
+            sb.PrintObjProp(n, nameof(Right), Right);
+            sb.PrintObjListProp(n, nameof(ParamsList), ParamsList);
+
+            sb.PrintObjProp(n, nameof(RuleInstance), RuleInstance);
+
+            sb.PrintObjProp(n, nameof(Value), Value);
+            sb.PrintObjProp(n, nameof(FuzzyLogicNonNumericSequenceValue), FuzzyLogicNonNumericSequenceValue);
+
+            sb.Append(base.PropertiesToString(n));
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToShortString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
+
+            sb.PrintShortObjProp(n, nameof(Name), Name);
+
+            sb.PrintShortObjProp(n, nameof(Left), Left);
+            sb.PrintShortObjProp(n, nameof(Right), Right);
+            sb.PrintShortObjListProp(n, nameof(ParamsList), ParamsList);
+
+            sb.PrintShortObjProp(n, nameof(RuleInstance), RuleInstance);
+
+            sb.PrintShortObjProp(n, nameof(Value), Value);
+            sb.PrintShortObjProp(n, nameof(FuzzyLogicNonNumericSequenceValue), FuzzyLogicNonNumericSequenceValue);
+
+            sb.Append(base.PropertiesToShortString(n));
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToBriefString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
+
+            sb.PrintBriefObjProp(n, nameof(Name), Name);
+
+            sb.PrintExisting(n, nameof(Left), Left);
+            sb.PrintExisting(n, nameof(Right), Right);
+            sb.PrintExistingList(n, nameof(ParamsList), ParamsList);
+
+            sb.PrintBriefObjProp(n, nameof(RuleInstance), RuleInstance);
+
+            sb.PrintBriefObjProp(n, nameof(Value), Value);
+            sb.PrintBriefObjProp(n, nameof(FuzzyLogicNonNumericSequenceValue), FuzzyLogicNonNumericSequenceValue);
+
+            sb.Append(base.PropertiesToBriefString(n));
+            return sb.ToString();
+        }
+
+        public string GetHumanizeDbgString()
+        {
+            return DebugHelperForTriggerCondition.ToString(this);
+        }
+    }
+}

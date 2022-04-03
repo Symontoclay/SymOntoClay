@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _setConditionalTriggerObserver = new LogicConditionalTriggerObserver(context, _storage, trigger.SetCondition);
             _setConditionalTriggerObserver.OnChanged += SetCondition_OnChanged;
 
-            _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(context, _storage, trigger.SetCondition, trigger.SetBindingVariables);
+            _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(context, parent.Name, _storage, trigger.SetCondition, trigger.SetBindingVariables);
 
             if (_trigger.ResetCondition != null)
             {
@@ -80,7 +80,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     resetBindingVariables = trigger.SetBindingVariables;
                 }
 
-                _resetConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(context, _storage, trigger.ResetCondition, resetBindingVariables);
+                _resetConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(context, parent.Name, _storage, trigger.ResetCondition, resetBindingVariables);
             }
 
             //_storage.LogicalStorage.OnChanged += LogicalStorage_OnChanged;
@@ -223,6 +223,13 @@ namespace SymOntoClay.Core.Internal.Instances
         {
 #if DEBUG
             Log("Begin");
+#endif
+
+            var isSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> varList);
+
+#if DEBUG
+            Log($"isSuccsess = {isSuccsess}");
+            Log($"varList.Count = {varList.Count}");
 #endif
 
 #if DEBUG

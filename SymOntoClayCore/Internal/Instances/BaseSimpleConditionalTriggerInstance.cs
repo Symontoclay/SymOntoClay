@@ -2,6 +2,7 @@
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -54,9 +55,6 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly LogicalSearchResolver _searcher;
         private readonly object _lockObj = new object();
         protected readonly IEngineContext _context;
-        //protected readonly IExecutionCoordinator _appInstanceExecutionCoordinator;
-        //protected readonly IExecutionCoordinator _stateExecutionCoordinator;
-        //protected readonly IExecutionCoordinator _actionExecutionCoordinator;
         private readonly IStorage _storage;
         private readonly LocalCodeExecutionContext _localCodeExecutionContext;
         protected BaseInstance _parent;
@@ -274,26 +272,7 @@ namespace SymOntoClay.Core.Internal.Instances
                         //Log($"resultVar = {resultVar}");
 #endif
 
-                        Value value = null;
-
-                        var foundExpression = resultVar.FoundExpression;
-
-                        var kindOfFoundExpression = foundExpression.Kind;
-
-                        switch (kindOfFoundExpression)
-                        {
-                            case KindOfLogicalQueryNode.Entity:
-                            case KindOfLogicalQueryNode.Concept:
-                                value = foundExpression.Name;
-                                break;
-
-                            case KindOfLogicalQueryNode.Value:
-                                value = foundExpression.Value;
-                                break;
-
-                            default:
-                                throw new ArgumentOutOfRangeException(nameof(kindOfFoundExpression), kindOfFoundExpression, null);
-                        }
+                        var value = LogicalQueryNodeHelper.ToValue(resultVar.FoundExpression);
 
 #if DEBUG
                         //Log($"value = {value}");

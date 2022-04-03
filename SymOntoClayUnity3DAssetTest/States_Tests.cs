@@ -1597,11 +1597,7 @@ state Attacking
 
             var wasBeginAttacking = false;
 
-            var totalN = 0;
-
             var npc = instance.CreateAndStartNPC((n, message) => {
-                totalN = n;
-
                 if (message.EndsWith(" Enter"))
                 {
                     enterN++;
@@ -1653,8 +1649,6 @@ state Attacking
             npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
-
-            Assert.AreEqual(totalN, 5);
         }
 
         [Test]
@@ -1726,13 +1720,10 @@ action Kill
 
             instance.WriteFile(text);
 
-            var totalN = 0;
             var patrollingEnterN = 0;
             var idlingEnterN = 0;
 
             var npc = instance.CreateAndStartNPC((n, message) => {
-                totalN = n;
-
                 if(message.EndsWith(" Patrolling Enter"))
                 {
                     patrollingEnterN++;
@@ -1791,8 +1782,6 @@ action Kill
             npc.InsertFact("{: see(I, barrel) :}");
 
             Thread.Sleep(1000);
-
-            Assert.AreEqual(totalN, 9);
         }
     }
 }

@@ -1,60 +1,14 @@
 ﻿app PeaceKeeper
 {
-    set Idling as default state;
-    set Attacking as state;
-
     on Enter =>
     {
-        'Begin' >> @>log;        
+        'Begin' >> @>log;
+        insert {: see(I, #`gun 1`) :};
         'End' >> @>log;
     }
-}
 
-state Idling
-{
-    on Enter
+	on {: see(I, #`gun 1`) :} => 
     {
-        'Begin Idling Enter' >> @>log;
-        'End Idling Enter' >> @>log;
-    }
-}
-
-state Attacking
-{
-    leave on:
-        {: see(I, barrel) :}
-
-    on Enter
-    {
-        'Begin Patrolling Enter' >> @>log;
-
-        Kill();
-
-        'End Patrolling Enter' >> @>log;
-    }
-
-    on Leave
-    {
-        'Leave Attacking' >> @>log;
-    }
-}
-
-action Kill 
-{
-    on Enter =>
-    {
-        'Enter Kill' >> @>log;
-    }
-
-    on Leave
-    {
-        'Leave Kill' >> @>log;
-    }
-
-    op () => 
-    {
-        'Begin Kill' >> @>log;
-        await;
-        'End Kill' >> @>log;
-    }
+	    'D' >> @>log;
+	}
 }

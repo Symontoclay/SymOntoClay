@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         /// <inheritdoc/>
         public Value ExecuteAsync(ProcessInitialInfo processInitialInfo)
         {
-            return ExecuteAsync(processInitialInfo);
+            return ExecuteBatchAsync(new List<ProcessInitialInfo>() { processInitialInfo });
         }
 
         /// <inheritdoc/>
@@ -76,6 +76,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
             //_context.InstancesStorage.PrintProcessesList();
+            //Log("L>>>");
 #endif
 
             var threadExecutor = new AsyncThreadExecutor(_context);

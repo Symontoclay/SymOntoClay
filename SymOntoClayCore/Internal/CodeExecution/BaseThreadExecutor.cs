@@ -160,6 +160,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             try
             {
+#if DEBUG
+                //Log("Begin");
+#endif
+
                 if (_currentCodeFrame == null)
                 {
 #if DEBUG

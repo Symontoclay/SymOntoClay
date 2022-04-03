@@ -65,6 +65,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
 #if DEBUG
             //Log($"_trigger = {_trigger}");
+            //Log($"_trigger.CompiledFunctionBody = {_trigger.CompiledFunctionBody.ToDbgString()}");
 #endif
 
             var processInitialInfo = new ProcessInitialInfo();
@@ -73,6 +74,10 @@ namespace SymOntoClay.Core.Internal.Instances
             processInitialInfo.Metadata = _trigger;
             processInitialInfo.Instance = _parent;
             processInitialInfo.ExecutionCoordinator = _executionCoordinator;
+
+#if DEBUG
+            //Log($"processInitialInfo = {processInitialInfo}");
+#endif
 
             var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo);
         }

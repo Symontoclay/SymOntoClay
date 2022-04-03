@@ -52,8 +52,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
 #if DEBUG
             //Log($"_trigger = {_trigger}");
-            Log($"_trigger.SetCondition = {_trigger.SetCondition?.GetHumanizeDbgString()}");
-            Log($"_trigger.ResetCondition = {_trigger.ResetCondition?.GetHumanizeDbgString()}");
+            //Log($"_trigger.SetCondition = {_trigger.SetCondition?.GetHumanizeDbgString()}");
+            //Log($"_trigger.ResetCondition = {_trigger.ResetCondition?.GetHumanizeDbgString()}");
 #endif
 
             _localCodeExecutionContext = new LocalCodeExecutionContext();
@@ -112,7 +112,7 @@ namespace SymOntoClay.Core.Internal.Instances
         public void Init()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             lock (_lockObj)
@@ -121,14 +121,14 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
         private void SetCondition_OnChanged()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             Task.Run(() => 
@@ -172,14 +172,14 @@ namespace SymOntoClay.Core.Internal.Instances
             });
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
         private void ResetCondition_OnChanged()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             Task.Run(() =>
@@ -223,22 +223,22 @@ namespace SymOntoClay.Core.Internal.Instances
             });
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
         private void ExecuteSet()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             var isSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> varList, ref _setFoundKeys);
 
 #if DEBUG
-            Log($"isSuccsess = {isSuccsess}");
-            Log($"varList.Count = {varList.Count}");
-            Log($"_setFoundKeys.Count = {_setFoundKeys.Count}");
+            //Log($"isSuccsess = {isSuccsess}");
+            //Log($"varList.Count = {varList.Count}");
+            //Log($"_setFoundKeys.Count = {_setFoundKeys.Count}");
 #endif
 
             if(isSuccsess)
@@ -261,15 +261,15 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
         private void ProcessSetResultWithNoItems()
         {
 #if DEBUG
-            Log("Begin");
-            Log($"_isOn = {_isOn}");
+            //Log("Begin");
+            //Log($"_isOn = {_isOn}");
 #endif
 
             if (_isOn)
@@ -288,14 +288,14 @@ namespace SymOntoClay.Core.Internal.Instances
             RunHandler(localCodeExecutionContext);
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
         private void ProcessSetResultWithItems(List<List<Var>> varList)
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             _isOn = true;
@@ -319,32 +319,32 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
         private void ExecuteReset()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
         private void CleansingPreviousSetResults()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             _isOn = false;
             _setFoundKeys.Clear();
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
@@ -368,18 +368,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
             var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo);
         }
-
-        //        /// <inheritdoc/>
-        //        protected override BindingVariables GetBindingVariables()
-        //        {
-        //            return _trigger.BindingVariables;
-        //        }
-
-        //        /// <inheritdoc/>
-        //        protected override void RunHandler(LocalCodeExecutionContext localCodeExecutionContext)
-        //        {
-
-        //        }
 
         /// <inheritdoc/>
         protected override void OnDisposed()

@@ -83,9 +83,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
             Assert.AreEqual(inlineTrigger.KindOfInlineTrigger, KindOfInlineTrigger.SystemEvent);
             Assert.AreEqual(inlineTrigger.KindOfSystemEvent, KindOfSystemEventOfInlineTrigger.Enter);
 
-            Assert.AreEqual(inlineTrigger.Statements.Count, 1);
+            Assert.AreEqual(inlineTrigger.SetStatements.Count, 1);
 
-            var statement = (AstExpressionStatement)inlineTrigger.Statements.Single();
+            var statement = (AstExpressionStatement)inlineTrigger.SetStatements.Single();
 
             Assert.AreNotEqual(statement.Expression, null);
 

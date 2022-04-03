@@ -290,7 +290,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     localCodeExecutionContext.Holder = holder;
 
                     var processInitialInfo = new ProcessInitialInfo();
-                    processInitialInfo.CompiledFunctionBody = targetTrigger.ResultItem.CompiledFunctionBody;
+                    processInitialInfo.CompiledFunctionBody = targetTrigger.ResultItem.SetCompiledFunctionBody;
                     processInitialInfo.LocalContext = localCodeExecutionContext;
                     processInitialInfo.Metadata = targetTrigger.ResultItem;
                     processInitialInfo.Instance = this;

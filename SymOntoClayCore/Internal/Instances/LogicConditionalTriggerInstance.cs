@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors;
 using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Threads;
@@ -62,13 +63,24 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _localCodeExecutionContext.Holder = parent.Name;
 
-            _setConditionalTriggerObserver = new LogicConditionalTriggerObserver(context, _storage, _trigger.SetCondition);
+            _setConditionalTriggerObserver = new LogicConditionalTriggerObserver(context, _storage, trigger.SetCondition);
             _setConditionalTriggerObserver.OnChanged += SetCondition_OnChanged;
+
+            _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(context, _storage, trigger.SetCondition, trigger.SetBindingVariables);
 
             if (_trigger.ResetCondition != null)
             {
-                _resetConditionalTriggerObserver = new LogicConditionalTriggerObserver(context, _storage, _trigger.ResetCondition);
+                _resetConditionalTriggerObserver = new LogicConditionalTriggerObserver(context, _storage, trigger.ResetCondition);
                 _resetConditionalTriggerObserver.OnChanged += ResetCondition_OnChanged;
+
+                var resetBindingVariables = _trigger.ResetBindingVariables;
+
+                if(resetBindingVariables == null)
+                {
+                    resetBindingVariables = trigger.SetBindingVariables;
+                }
+
+                _resetConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(context, _storage, trigger.ResetCondition, resetBindingVariables);
             }
 
             //_storage.LogicalStorage.OnChanged += LogicalStorage_OnChanged;
@@ -82,6 +94,12 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly LocalCodeExecutionContext _localCodeExecutionContext;
         private readonly LogicConditionalTriggerObserver _setConditionalTriggerObserver;
         private readonly LogicConditionalTriggerObserver _resetConditionalTriggerObserver;
+        private readonly LogicConditionalTriggerExecutor _setConditionalTriggerExecutor;
+        private readonly LogicConditionalTriggerExecutor _resetConditionalTriggerExecutor;
+
+        private readonly object _lockObj = new object();
+        private bool _isBusy;
+        private bool _needRepeat;
 
         public void Init()
         {
@@ -89,7 +107,10 @@ namespace SymOntoClay.Core.Internal.Instances
             Log("Begin");
 #endif
 
-            //throw new NotImplementedException();
+            lock (_lockObj)
+            {
+                ExecuteSet();
+            }
 
 #if DEBUG
             Log("End");
@@ -102,12 +123,114 @@ namespace SymOntoClay.Core.Internal.Instances
             Log("Begin");
 #endif
 
+            Task.Run(() => 
+            {
+                try
+                {
+                    lock (_lockObj)
+                    {
+                        if (_isBusy)
+                        {
+                            _needRepeat = true;
+                            return;
+                        }
+
+                        _isBusy = true;
+                        _needRepeat = false;
+                    }
+
+                    ExecuteSet();
+
+                    while (true)
+                    {
+                        lock (_lockObj)
+                        {
+                            if (!_needRepeat)
+                            {
+                                _isBusy = false;
+                                return;
+                            }
+
+                            _needRepeat = false;
+                        }
+
+                        ExecuteSet();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Error(e);
+                }
+            });
+
 #if DEBUG
             Log("End");
 #endif
         }
 
         private void ResetCondition_OnChanged()
+        {
+#if DEBUG
+            Log("Begin");
+#endif
+
+            Task.Run(() =>
+            {
+                try
+                {
+                    lock (_lockObj)
+                    {
+                        if (_isBusy)
+                        {
+                            _needRepeat = true;
+                            return;
+                        }
+
+                        _isBusy = true;
+                        _needRepeat = false;
+                    }
+
+                    ExecuteReset();
+
+                    while (true)
+                    {
+                        lock (_lockObj)
+                        {
+                            if (!_needRepeat)
+                            {
+                                _isBusy = false;
+                                return;
+                            }
+
+                            _needRepeat = false;
+                        }
+
+                        ExecuteReset();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Error(e);
+                }
+            });
+
+#if DEBUG
+            Log("End");
+#endif
+        }
+
+        private void ExecuteSet()
+        {
+#if DEBUG
+            Log("Begin");
+#endif
+
+#if DEBUG
+            Log("End");
+#endif
+        }
+
+        private void ExecuteReset()
         {
 #if DEBUG
             Log("Begin");
@@ -157,6 +280,9 @@ namespace SymOntoClay.Core.Internal.Instances
                 _resetConditionalTriggerObserver.OnChanged -= ResetCondition_OnChanged;
                 _resetConditionalTriggerObserver.Dispose();
             }
+
+            _setConditionalTriggerExecutor.Dispose();
+            _resetConditionalTriggerExecutor?.Dispose();
 
             base.OnDisposed();
         }

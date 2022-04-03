@@ -22,9 +22,11 @@ SOFTWARE.*/
 
 using NLog.LayoutRenderers.Wrappers;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
+using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -40,8 +42,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             WaitForSetCondition,
             GotSetCondition,
             GotSetBindingVariables,
-            WaitForAction,
-            GotAction
+            WaitForSetAction,
+            GotSetAction
         }
 
         public InlineTriggerParser(InternalParserContext context)
@@ -144,11 +146,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Lambda:
-                            _state = State.WaitForAction;
+                            _state = State.WaitForSetAction;
                             break;
 
                         case TokenKind.OpenFigureBracket:
-                            ProcessFunctionBody();
+                            ProcessSetFunctionBody();
                             break;
 
                         case TokenKind.OpenRoundBracket:
@@ -177,11 +179,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Lambda:
-                            _state = State.WaitForAction;
+                            _state = State.WaitForSetAction;
                             break;
 
                         case TokenKind.OpenFigureBracket:
-                            ProcessFunctionBody();
+                            ProcessSetFunctionBody();
                             break;
 
                         default:
@@ -189,11 +191,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.WaitForAction:
+                case State.WaitForSetAction:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.OpenFigureBracket:
-                            ProcessFunctionBody();
+                            ProcessSetFunctionBody();
                             break;
 
                         default:
@@ -201,7 +203,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotAction:
+                case State.GotSetAction:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.CloseFigureBracket:
@@ -237,15 +239,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             }
         }
 
-        private void ProcessFunctionBody()
+        private void ProcessSetFunctionBody()
+        {
+            var resultOfParsing = ParseFunctionBody();
+
+            _inlineTrigger.SetStatements = resultOfParsing.Item1;
+            _inlineTrigger.SetCompiledFunctionBody = resultOfParsing.Item2;
+            _state = State.GotSetAction;
+        }
+
+        private (List<AstStatement>, CompiledFunctionBody) ParseFunctionBody()
         {
             _context.Recovery(_currToken);
             var parser = new FunctionBodyParser(_context);
             parser.Run();
             var statementsList = parser.Result;
-            _inlineTrigger.Statements = statementsList;
-            _inlineTrigger.CompiledFunctionBody = _context.Compiler.Compile(statementsList);
-            _state = State.GotAction;
+
+            return (statementsList, _context.Compiler.Compile(statementsList));
         }
     }
 }

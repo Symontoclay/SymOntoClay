@@ -52,9 +52,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public BindingVariables SetBindingVariables { get; set; } = new BindingVariables();
         public TriggerConditionNode ResetCondition { get; set; }
         public BindingVariables ResetBindingVariables { get; set; } = new BindingVariables();
-        public List<AstStatement> Statements { get; set; } = new List<AstStatement>();
+        public List<AstStatement> SetStatements { get; set; } = new List<AstStatement>();
+        public CompiledFunctionBody SetCompiledFunctionBody { get; set; }
 
-        public CompiledFunctionBody CompiledFunctionBody { get; set; }
+        public List<AstStatement> ResetStatements { get; set; } = new List<AstStatement>();
+        public CompiledFunctionBody ResetCompiledFunctionBody { get; set; }
 
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
@@ -118,9 +120,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.ResetCondition = ResetCondition?.Clone(context);
             result.ResetBindingVariables = ResetBindingVariables.Clone(context);
 
-            result.Statements = Statements.Select(p => p.CloneAstStatement(context)).ToList();
+            result.SetStatements = SetStatements.Select(p => p.CloneAstStatement(context)).ToList();
+            result.SetCompiledFunctionBody = SetCompiledFunctionBody.Clone(context);
 
-            result.CompiledFunctionBody = CompiledFunctionBody.Clone(context);
+            result.ResetStatements = ResetStatements.Select(p => p.CloneAstStatement(context)).ToList();            
+            result.ResetCompiledFunctionBody = ResetCompiledFunctionBody.Clone(context);
+
             result.AppendCodeItem(this, context);
 
             return result;
@@ -131,9 +136,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             base.DiscoverAllAnnotations(result);
 
-            if (!Statements.IsNullOrEmpty())
+            if (!SetStatements.IsNullOrEmpty())
             {
-                foreach (var item in Statements)
+                foreach (var item in SetStatements)
+                {
+                    item.DiscoverAllAnnotations(result);
+                }
+            }
+
+            if (!ResetStatements.IsNullOrEmpty())
+            {
+                foreach (var item in ResetStatements)
                 {
                     item.DiscoverAllAnnotations(result);
                 }
@@ -153,8 +166,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjProp(n, nameof(ResetCondition), ResetCondition);
             sb.PrintObjProp(n, nameof(ResetBindingVariables), ResetBindingVariables);
 
-            sb.PrintObjListProp(n, nameof(Statements), Statements);
-            sb.PrintObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
+            sb.PrintObjListProp(n, nameof(SetStatements), SetStatements);
+            sb.PrintObjProp(n, nameof(SetCompiledFunctionBody), SetCompiledFunctionBody);
+
+            sb.PrintObjListProp(n, nameof(ResetStatements), ResetStatements);
+            sb.PrintObjProp(n, nameof(ResetCompiledFunctionBody), ResetCompiledFunctionBody);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -173,8 +189,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjProp(n, nameof(ResetCondition), ResetCondition);
             sb.PrintShortObjProp(n, nameof(ResetBindingVariables), ResetBindingVariables);
 
-            sb.PrintShortObjListProp(n, nameof(Statements), Statements);
-            sb.PrintShortObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
+            sb.PrintShortObjListProp(n, nameof(SetStatements), SetStatements);
+            sb.PrintShortObjProp(n, nameof(SetCompiledFunctionBody), SetCompiledFunctionBody);
+
+            sb.PrintShortObjListProp(n, nameof(ResetStatements), ResetStatements);
+            sb.PrintShortObjProp(n, nameof(ResetCompiledFunctionBody), ResetCompiledFunctionBody);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -193,8 +212,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjProp(n, nameof(ResetCondition), ResetCondition);
             sb.PrintBriefObjProp(n, nameof(ResetBindingVariables), ResetBindingVariables);
 
-            sb.PrintBriefObjListProp(n, nameof(Statements), Statements);
-            sb.PrintBriefObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
+            sb.PrintBriefObjListProp(n, nameof(SetStatements), SetStatements);
+            sb.PrintBriefObjProp(n, nameof(SetCompiledFunctionBody), SetCompiledFunctionBody);
+
+            sb.PrintBriefObjListProp(n, nameof(ResetStatements), ResetStatements);
+            sb.PrintBriefObjProp(n, nameof(ResetCompiledFunctionBody), ResetCompiledFunctionBody);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

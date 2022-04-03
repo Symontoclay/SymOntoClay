@@ -70,6 +70,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if (_trigger.ResetCondition != null)
             {
+                _hasResetConditions = true;
+
                 _resetConditionalTriggerObserver = new LogicConditionalTriggerObserver(context, _storage, trigger.ResetCondition);
                 _resetConditionalTriggerObserver.OnChanged += ResetCondition_OnChanged;
 
@@ -100,6 +102,12 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly object _lockObj = new object();
         private bool _isBusy;
         private bool _needRepeat;
+
+        private readonly bool _hasResetConditions;
+
+        private bool _isOn;
+
+        private List<string> _setFoundKeys = new List<string>();
 
         public void Init()
         {
@@ -225,12 +233,90 @@ namespace SymOntoClay.Core.Internal.Instances
             Log("Begin");
 #endif
 
-            var isSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> varList);
+            var isSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> varList, ref _setFoundKeys);
 
 #if DEBUG
             Log($"isSuccsess = {isSuccsess}");
             Log($"varList.Count = {varList.Count}");
+            Log($"_setFoundKeys.Count = {_setFoundKeys.Count}");
 #endif
+
+            if(isSuccsess)
+            {
+                if(varList.Any())
+                {
+                    ProcessSetResultWithItems(varList);
+                }
+                else
+                {                    
+                    ProcessSetResultWithNoItems();
+                }
+            }
+            else
+            {
+                if(!_hasResetConditions)
+                {
+                    CleansingPreviousSetResults();
+                }
+            }
+
+#if DEBUG
+            Log("End");
+#endif
+        }
+
+        private void ProcessSetResultWithNoItems()
+        {
+#if DEBUG
+            Log("Begin");
+            Log($"_isOn = {_isOn}");
+#endif
+
+            if (_isOn)
+            {
+                return;
+            }
+
+            _isOn = true;
+
+            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
+            var storage = new LocalStorage(localStorageSettings);
+            localCodeExecutionContext.Storage = storage;
+            localCodeExecutionContext.Holder = _parent.Name;
+
+            RunHandler(localCodeExecutionContext);
+
+#if DEBUG
+            Log("End");
+#endif
+        }
+
+        private void ProcessSetResultWithItems(List<List<Var>> varList)
+        {
+#if DEBUG
+            Log("Begin");
+#endif
+
+            _isOn = true;
+
+            foreach(var targetVarList in varList)
+            {
+                var localCodeExecutionContext = new LocalCodeExecutionContext();
+                var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
+                var storage = new LocalStorage(localStorageSettings);
+                localCodeExecutionContext.Storage = storage;
+                localCodeExecutionContext.Holder = _parent.Name;
+
+                var varStorage = storage.VarStorage;
+
+                foreach(var varItem in targetVarList)
+                {
+                    varStorage.Append(varItem);
+                }
+
+                RunHandler(localCodeExecutionContext);
+            }
 
 #if DEBUG
             Log("End");
@@ -248,6 +334,41 @@ namespace SymOntoClay.Core.Internal.Instances
 #endif
         }
 
+        private void CleansingPreviousSetResults()
+        {
+#if DEBUG
+            Log("Begin");
+#endif
+
+            _isOn = false;
+            _setFoundKeys.Clear();
+
+#if DEBUG
+            Log("End");
+#endif
+        }
+
+        private void RunHandler(LocalCodeExecutionContext localCodeExecutionContext)
+        {
+#if DEBUG
+            //Log($"_trigger = {_trigger}");
+            //Log($"_trigger.CompiledFunctionBody = {_trigger.CompiledFunctionBody.ToDbgString()}");
+#endif
+
+            var processInitialInfo = new ProcessInitialInfo();
+            processInitialInfo.CompiledFunctionBody = _trigger.SetCompiledFunctionBody;
+            processInitialInfo.LocalContext = localCodeExecutionContext;
+            processInitialInfo.Metadata = _trigger;
+            processInitialInfo.Instance = _parent;
+            processInitialInfo.ExecutionCoordinator = _executionCoordinator;
+
+#if DEBUG
+            //Log($"processInitialInfo = {processInitialInfo}");
+#endif
+
+            var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo);
+        }
+
         //        /// <inheritdoc/>
         //        protected override BindingVariables GetBindingVariables()
         //        {
@@ -257,23 +378,7 @@ namespace SymOntoClay.Core.Internal.Instances
         //        /// <inheritdoc/>
         //        protected override void RunHandler(LocalCodeExecutionContext localCodeExecutionContext)
         //        {
-        //#if DEBUG
-        //            //Log($"_trigger = {_trigger}");
-        //            //Log($"_trigger.CompiledFunctionBody = {_trigger.CompiledFunctionBody.ToDbgString()}");
-        //#endif
 
-        //            var processInitialInfo = new ProcessInitialInfo();
-        //            processInitialInfo.CompiledFunctionBody = _trigger.CompiledFunctionBody;
-        //            processInitialInfo.LocalContext = localCodeExecutionContext;
-        //            processInitialInfo.Metadata = _trigger;
-        //            processInitialInfo.Instance = _parent;
-        //            processInitialInfo.ExecutionCoordinator = _executionCoordinator;
-
-        //#if DEBUG
-        //            //Log($"processInitialInfo = {processInitialInfo}");
-        //#endif
-
-        //            var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo);
         //        }
 
         /// <inheritdoc/>

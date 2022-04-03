@@ -218,7 +218,7 @@ namespace SymOntoClay.Core.Internal.Instances
 #endif
 
             var usedKeys = new List<string>();
-            var keysForAdding = new List<string>();
+            //var keysForAdding = new List<string>();
 
             var bindingVariables = GetBindingVariables();
 
@@ -238,8 +238,8 @@ namespace SymOntoClay.Core.Internal.Instances
                     continue;
                 }
 
-                keysForAdding.Add(keyForTrigger);
-                _foundKeys.Add(keyForTrigger);
+                //keysForAdding.Add(keyForTrigger);
+                //_foundKeys.Add(keyForTrigger);
 
 #if DEBUG
                 //Log("Next");

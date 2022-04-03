@@ -4944,10 +4944,34 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.GetBindingVariables">
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.RunHandler(SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ProcessInfo.Status">
@@ -5541,6 +5565,12 @@
             <summary>
             Represents symbol `-∞`.
             </summary>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.TriggerConditionParser.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.TriggerConditionParser.OnRun">
+            <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.TryStatementParser.OnEnter">
             <inheritdoc/>

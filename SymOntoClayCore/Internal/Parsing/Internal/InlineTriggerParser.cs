@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using NLog.LayoutRenderers.Wrappers;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -125,10 +126,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                 _context.Recovery(_currToken);
 
-                                var parser = new LogicalQueryParser(_context);
+                                var parser = new TriggerConditionParser(_context);
                                 parser.Run();
 
-                                _inlineTrigger.Condition = parser.Result;
+                                _inlineTrigger.SetCondition = parser.Result;
 
                                 _state = State.GotSetCondition;
                             }
@@ -161,7 +162,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 //Log($"parser.Result = {parser.Result.WriteListToString()}");
 #endif
 
-                                _inlineTrigger.BindingVariables = new BindingVariables(parser.Result);
+                                _inlineTrigger.SetBindingVariables = new BindingVariables(parser.Result);
 
                                 _state = State.GotSetBindingVariables;
                             }

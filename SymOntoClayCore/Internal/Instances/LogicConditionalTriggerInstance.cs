@@ -38,48 +38,155 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class LogicConditionalTriggerInstance : BaseSimpleConditionalTriggerInstance
+    public class LogicConditionalTriggerInstance : BaseComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public LogicConditionalTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage)
-            : base(trigger.Condition, parent, context, parentStorage)
+            : base(context.Logger)
         {
             _executionCoordinator = parent.ExecutionCoordinator;
+            _context = context;
+            _parent = parent;
             _trigger = trigger;
 
 #if DEBUG
             //Log($"_trigger = {_trigger}");
 #endif
+
+            _localCodeExecutionContext = new LocalCodeExecutionContext();
+            var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
+            _storage = new LocalStorage(localStorageSettings);
+            _localCodeExecutionContext.Storage = _storage;
+
+            _localCodeExecutionContext.Holder = parent.Name;
+
+            _storage.LogicalStorage.OnChanged += LogicalStorage_OnChanged;
         }
 
         private IExecutionCoordinator _executionCoordinator;
+        private readonly IEngineContext _context;
+        private BaseInstance _parent;
         private InlineTrigger _trigger;
+        private readonly IStorage _storage;
+        private readonly LocalCodeExecutionContext _localCodeExecutionContext;
+
+        public void Init()
+        {
+#if DEBUG
+            Log("Begin");
+#endif
+
+            //throw new NotImplementedException();
+
+#if DEBUG
+            Log("End");
+#endif
+        }
+
+        private void LogicalStorage_OnChanged()
+        {
+#if DEBUG
+            Log("Begin");
+#endif
+
+#if DEBUG
+            Log("End");
+#endif
+        }
+
+        //        /// <inheritdoc/>
+        //        protected override BindingVariables GetBindingVariables()
+        //        {
+        //            return _trigger.BindingVariables;
+        //        }
+
+        //        /// <inheritdoc/>
+        //        protected override void RunHandler(LocalCodeExecutionContext localCodeExecutionContext)
+        //        {
+        //#if DEBUG
+        //            //Log($"_trigger = {_trigger}");
+        //            //Log($"_trigger.CompiledFunctionBody = {_trigger.CompiledFunctionBody.ToDbgString()}");
+        //#endif
+
+        //            var processInitialInfo = new ProcessInitialInfo();
+        //            processInitialInfo.CompiledFunctionBody = _trigger.CompiledFunctionBody;
+        //            processInitialInfo.LocalContext = localCodeExecutionContext;
+        //            processInitialInfo.Metadata = _trigger;
+        //            processInitialInfo.Instance = _parent;
+        //            processInitialInfo.ExecutionCoordinator = _executionCoordinator;
+
+        //#if DEBUG
+        //            //Log($"processInitialInfo = {processInitialInfo}");
+        //#endif
+
+        //            var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo);
+        //        }
 
         /// <inheritdoc/>
-        protected override BindingVariables GetBindingVariables()
+        protected override void OnDisposed()
         {
-            return _trigger.BindingVariables;
+            _storage.LogicalStorage.OnChanged -= LogicalStorage_OnChanged;
+
+            base.OnDisposed();
         }
 
         /// <inheritdoc/>
-        protected override void RunHandler(LocalCodeExecutionContext localCodeExecutionContext)
+        public override string ToString()
         {
-#if DEBUG
-            //Log($"_trigger = {_trigger}");
-            //Log($"_trigger.CompiledFunctionBody = {_trigger.CompiledFunctionBody.ToDbgString()}");
-#endif
+            return ToString(0u);
+        }
 
-            var processInitialInfo = new ProcessInitialInfo();
-            processInitialInfo.CompiledFunctionBody = _trigger.CompiledFunctionBody;
-            processInitialInfo.LocalContext = localCodeExecutionContext;
-            processInitialInfo.Metadata = _trigger;
-            processInitialInfo.Instance = _parent;
-            processInitialInfo.ExecutionCoordinator = _executionCoordinator;
+        /// <inheritdoc/>
+        public string ToString(uint n)
+        {
+            return this.GetDefaultToStringInformation(n);
+        }
 
-#if DEBUG
-            //Log($"processInitialInfo = {processInitialInfo}");
-#endif
+        /// <inheritdoc/>
+        string IObjectToString.PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+            return sb.ToString();
+        }
 
-            var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo);
+        /// <inheritdoc/>
+        public string ToShortString()
+        {
+            return ToShortString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToShortString(uint n)
+        {
+            return this.GetDefaultToShortStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToShortString.PropertiesToShortString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToBriefString()
+        {
+            return ToBriefString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToBriefString(uint n)
+        {
+            return this.GetDefaultToBriefStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToBriefString.PropertiesToBriefString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+            return sb.ToString();
         }
     }
 }

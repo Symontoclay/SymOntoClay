@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public abstract class BaseTriggerInstance : BaseComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public abstract class BaseSimpleConditionalTriggerInstance : BaseComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        protected BaseTriggerInstance(RuleInstance condition, BaseInstance parent, IEngineContext context, IStorage parentStorage)
+        protected BaseSimpleConditionalTriggerInstance(RuleInstance condition, BaseInstance parent, IEngineContext context, IStorage parentStorage)
             : base(context.Logger)
         {
             _context = context;
@@ -49,7 +49,6 @@ namespace SymOntoClay.Core.Internal.Instances
 #if DEBUG
             //Log($"searchOptions = {searchOptions}");
 #endif
-
         }
 
         private readonly LogicalSearchResolver _searcher;

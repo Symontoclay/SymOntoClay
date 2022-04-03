@@ -10,7 +10,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class StateActivator : BaseTriggerInstance
+    public class StateActivator : BaseSimpleConditionalTriggerInstance
     {
         public StateActivator(ActivationInfoOfStateDef activationInfoOfState, AppInstance parent, IEngineContext context, IStorage parentStorage)
             : base(activationInfoOfState.ActivatingConditions.Condition, parent, context, parentStorage)

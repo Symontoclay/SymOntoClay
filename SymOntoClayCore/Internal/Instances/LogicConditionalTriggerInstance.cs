@@ -38,7 +38,7 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class LogicConditionalTriggerInstance : BaseTriggerInstance
+    public class LogicConditionalTriggerInstance : BaseSimpleConditionalTriggerInstance
     {
         public LogicConditionalTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage)
             : base(trigger.Condition, parent, context, parentStorage)

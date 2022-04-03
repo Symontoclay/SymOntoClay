@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class StateDeactivator : BaseTriggerInstance
+    public class StateDeactivator : BaseSimpleConditionalTriggerInstance
     {
         public StateDeactivator(RuleInstance condition, BaseInstance parent, IEngineContext context, IStorage parentStorage)
             : base(condition, parent, context, parentStorage)

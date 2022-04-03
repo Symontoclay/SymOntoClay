@@ -14,10 +14,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Init
         }
 
-        public TriggerConditionParser(InternalParserContext context)
+        public TriggerConditionParser(InternalParserContext context, bool setCondition)
             : base(context)
         {
+            _setCondition = setCondition;
         }
+
+        private readonly bool _setCondition;
 
         private State _state = State.Init;
 

@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper;
@@ -61,7 +62,16 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _localCodeExecutionContext.Holder = parent.Name;
 
-            _storage.LogicalStorage.OnChanged += LogicalStorage_OnChanged;
+            _setConditionalTriggerObserver = new LogicConditionalTriggerObserver(context, _storage, _trigger.SetCondition);
+            _setConditionalTriggerObserver.OnChanged += SetCondition_OnChanged;
+
+            if (_trigger.ResetCondition != null)
+            {
+                _resetConditionalTriggerObserver = new LogicConditionalTriggerObserver(context, _storage, _trigger.ResetCondition);
+                _resetConditionalTriggerObserver.OnChanged += ResetCondition_OnChanged;
+            }
+
+            //_storage.LogicalStorage.OnChanged += LogicalStorage_OnChanged;
         }
 
         private IExecutionCoordinator _executionCoordinator;
@@ -70,6 +80,8 @@ namespace SymOntoClay.Core.Internal.Instances
         private InlineTrigger _trigger;
         private readonly IStorage _storage;
         private readonly LocalCodeExecutionContext _localCodeExecutionContext;
+        private readonly LogicConditionalTriggerObserver _setConditionalTriggerObserver;
+        private readonly LogicConditionalTriggerObserver _resetConditionalTriggerObserver;
 
         public void Init()
         {
@@ -84,7 +96,18 @@ namespace SymOntoClay.Core.Internal.Instances
 #endif
         }
 
-        private void LogicalStorage_OnChanged()
+        private void SetCondition_OnChanged()
+        {
+#if DEBUG
+            Log("Begin");
+#endif
+
+#if DEBUG
+            Log("End");
+#endif
+        }
+
+        private void ResetCondition_OnChanged()
         {
 #if DEBUG
             Log("Begin");
@@ -126,7 +149,14 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
-            _storage.LogicalStorage.OnChanged -= LogicalStorage_OnChanged;
+            _setConditionalTriggerObserver.OnChanged -= SetCondition_OnChanged;
+            _setConditionalTriggerObserver.Dispose();
+
+            if(_resetConditionalTriggerObserver != null)
+            {
+                _resetConditionalTriggerObserver.OnChanged -= ResetCondition_OnChanged;
+                _resetConditionalTriggerObserver.Dispose();
+            }
 
             base.OnDisposed();
         }

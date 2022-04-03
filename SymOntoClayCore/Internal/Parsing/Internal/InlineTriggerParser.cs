@@ -126,7 +126,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                 _context.Recovery(_currToken);
 
-                                var parser = new TriggerConditionParser(_context);
+                                var parser = new TriggerConditionParser(_context, true);
                                 parser.Run();
 
                                 _inlineTrigger.SetCondition = parser.Result;

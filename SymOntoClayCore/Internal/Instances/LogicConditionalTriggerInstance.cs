@@ -50,6 +50,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
 #if DEBUG
             //Log($"_trigger = {_trigger}");
+            Log($"_trigger.SetCondition = {_trigger.SetCondition?.GetHumanizeDbgString()}");
+            Log($"_trigger.ResetCondition = {_trigger.ResetCondition?.GetHumanizeDbgString()}");
 #endif
 
             _localCodeExecutionContext = new LocalCodeExecutionContext();

@@ -36,9 +36,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private enum State
         {
             Init,
-            WaitForCondition,
-            GotCondition,
-            GotBindingVariables,
+            WaitForSetCondition,
+            GotSetCondition,
+            GotSetBindingVariables,
             WaitForAction,
             GotAction
         }
@@ -83,7 +83,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             switch(_currToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.On:
-                                    _state = State.WaitForCondition;
+                                    _state = State.WaitForSetCondition;
                                     break;
 
                                 default:
@@ -96,7 +96,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.WaitForCondition:
+                case State.WaitForSetCondition:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
@@ -105,13 +105,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 case KeyWordTokenKind.Enter:
                                     _inlineTrigger.KindOfInlineTrigger = KindOfInlineTrigger.SystemEvent;
                                     _inlineTrigger.KindOfSystemEvent = KindOfSystemEventOfInlineTrigger.Enter;
-                                    _state = State.GotCondition;
+                                    _state = State.GotSetCondition;
                                     break;
 
                                 case KeyWordTokenKind.Leave:
                                     _inlineTrigger.KindOfInlineTrigger = KindOfInlineTrigger.SystemEvent;
                                     _inlineTrigger.KindOfSystemEvent = KindOfSystemEventOfInlineTrigger.Leave;
-                                    _state = State.GotCondition;
+                                    _state = State.GotSetCondition;
                                     break;
 
                                 default:
@@ -130,7 +130,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                 _inlineTrigger.Condition = parser.Result;
 
-                                _state = State.GotCondition;
+                                _state = State.GotSetCondition;
                             }
                             break;
 
@@ -139,7 +139,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotCondition:
+                case State.GotSetCondition:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Lambda:
@@ -163,7 +163,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                 _inlineTrigger.BindingVariables = new BindingVariables(parser.Result);
 
-                                _state = State.GotBindingVariables;
+                                _state = State.GotSetBindingVariables;
                             }
                             break;
 
@@ -172,7 +172,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotBindingVariables:
+                case State.GotSetBindingVariables:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Lambda:

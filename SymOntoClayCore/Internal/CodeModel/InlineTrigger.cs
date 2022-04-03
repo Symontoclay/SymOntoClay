@@ -31,6 +31,7 @@ using System.Text;
 using System.Linq;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
+using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
@@ -47,8 +48,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public KindOfInlineTrigger KindOfInlineTrigger { get; set; } = KindOfInlineTrigger.Unknown;
         public KindOfSystemEventOfInlineTrigger KindOfSystemEvent { get; set; } = KindOfSystemEventOfInlineTrigger.Unknown;
-        public RuleInstance Condition { get; set; }
-        public BindingVariables BindingVariables { get; set; } = new BindingVariables();
+        public TriggerConditionNode SetCondition { get; set; }
+        public BindingVariables SetBindingVariables { get; set; } = new BindingVariables();
+        public TriggerConditionNode ResetCondition { get; set; }
+        public BindingVariables ResetBindingVariables { get; set; } = new BindingVariables();
         public List<AstStatement> Statements { get; set; } = new List<AstStatement>();
 
         public CompiledFunctionBody CompiledFunctionBody { get; set; }
@@ -58,11 +61,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var result =  base.CalculateLongHashCode(options) ^ (ulong)Math.Abs(KindOfInlineTrigger.GetHashCode()) ^ (ulong)Math.Abs(KindOfSystemEvent.GetHashCode());
 
-            if(Condition != null)
+            if(SetCondition != null)
             {
-                Condition.CheckDirty(options);
+                SetCondition.CheckDirty(options);
 
-                result ^= Condition.GetLongHashCode(options);
+                result ^= SetCondition.GetLongHashCode(options);
+            }
+
+            if (ResetCondition != null)
+            {
+                ResetCondition.CheckDirty(options);
+
+                result ^= ResetCondition.GetLongHashCode(options);
             }
 
             return result;
@@ -101,8 +111,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             result.KindOfInlineTrigger = KindOfInlineTrigger;
             result.KindOfSystemEvent = KindOfSystemEvent;
-            result.Condition = Condition?.Clone(context);
-            result.BindingVariables = BindingVariables.Clone(context);
+
+            result.SetCondition = SetCondition?.Clone(context);
+            result.SetBindingVariables = SetBindingVariables.Clone(context);
+
+            result.ResetCondition = ResetCondition?.Clone(context);
+            result.ResetBindingVariables = ResetBindingVariables.Clone(context);
+
             result.Statements = Statements.Select(p => p.CloneAstStatement(context)).ToList();
 
             result.CompiledFunctionBody = CompiledFunctionBody.Clone(context);
@@ -132,8 +147,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(KindOfInlineTrigger)} = {KindOfInlineTrigger}");
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
-            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
-            sb.PrintObjProp(n, nameof(BindingVariables), BindingVariables);
+
+            sb.PrintBriefObjProp(n, nameof(SetCondition), SetCondition);
+            sb.PrintObjProp(n, nameof(SetBindingVariables), SetBindingVariables);
+            sb.PrintBriefObjProp(n, nameof(ResetCondition), ResetCondition);
+            sb.PrintObjProp(n, nameof(ResetBindingVariables), ResetBindingVariables);
+
             sb.PrintObjListProp(n, nameof(Statements), Statements);
             sb.PrintObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
@@ -148,8 +167,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(KindOfInlineTrigger)} = {KindOfInlineTrigger}");
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
-            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
-            sb.PrintShortObjProp(n, nameof(BindingVariables), BindingVariables);
+
+            sb.PrintBriefObjProp(n, nameof(SetCondition), SetCondition);
+            sb.PrintShortObjProp(n, nameof(SetBindingVariables), SetBindingVariables);
+            sb.PrintBriefObjProp(n, nameof(ResetCondition), ResetCondition);
+            sb.PrintShortObjProp(n, nameof(ResetBindingVariables), ResetBindingVariables);
+
             sb.PrintShortObjListProp(n, nameof(Statements), Statements);
             sb.PrintShortObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
@@ -164,8 +187,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(KindOfInlineTrigger)} = {KindOfInlineTrigger}");
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
-            sb.PrintBriefObjProp(n, nameof(Condition), Condition);
-            sb.PrintBriefObjProp(n, nameof(BindingVariables), BindingVariables);
+
+            sb.PrintBriefObjProp(n, nameof(SetCondition), SetCondition);
+            sb.PrintBriefObjProp(n, nameof(SetBindingVariables), SetBindingVariables);
+            sb.PrintBriefObjProp(n, nameof(ResetCondition), ResetCondition);
+            sb.PrintBriefObjProp(n, nameof(ResetBindingVariables), ResetBindingVariables);
+
             sb.PrintBriefObjListProp(n, nameof(Statements), Statements);
             sb.PrintBriefObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 

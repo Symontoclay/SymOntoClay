@@ -87,10 +87,22 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                 return false;
             }
 
-            if(searchResult.Items.Any() && _bindingVariables.Any())
+            if(searchResult.Items.Any() && _bindingVariables.Any())??????
             {
                 foreach (var foundResultItem in searchResult.Items)
                 {
+                    var keyForTrigger = foundResultItem.KeyForTrigger;
+
+                    usedKeys.Add(keyForTrigger);
+
+                    if (_foundKeys.Contains(keyForTrigger))
+                    {
+                        continue;
+                    }
+
+                    keysForAdding.Add(keyForTrigger);
+                    _foundKeys.Add(keyForTrigger);
+
                     var resultVarsList = foundResultItem.ResultOfVarOfQueryToRelationList;
 
 #if DEBUG

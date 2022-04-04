@@ -1047,7 +1047,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
                         }
 
-                        
+                        if (string.Compare(content, "down", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Down;
+                            break;
+                        }
                     }
                     break;
 

@@ -42,6 +42,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             WaitForSetCondition,
             GotSetCondition,
             GotSetBindingVariables,
+            GotDown,
+            WaitForResetCondition,
+            GotResetCondition,
             WaitForSetAction,
             GotSetAction
         }
@@ -72,8 +75,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -170,12 +173,77 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Down:
+                                    if(_inlineTrigger.KindOfInlineTrigger == KindOfInlineTrigger.LogicConditional)
+                                    {
+                                        _state = State.GotDown;
+                                        break;
+                                    }
+                                    throw new UnexpectedTokenException(_currToken);
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
                     break;
 
                 case State.GotSetBindingVariables:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Lambda:
+                            _state = State.WaitForSetAction;
+                            break;
+
+                        case TokenKind.OpenFigureBracket:
+                            ProcessSetFunctionBody();
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotDown:
+                    switch (_currToken.KeyWordTokenKind)
+                    {
+                        case KeyWordTokenKind.On:
+                            _state = State.WaitForResetCondition;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForResetCondition:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenFactBracket:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var parser = new TriggerConditionParser(_context, true);
+                                parser.Run();
+
+                                _inlineTrigger.ResetCondition = parser.Result;
+
+                                _state = State.GotResetCondition;
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotResetCondition:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Lambda:

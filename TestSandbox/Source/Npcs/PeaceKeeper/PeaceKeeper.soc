@@ -3,11 +3,10 @@
     on Enter =>
     {
         'Begin' >> @>log;
-        insert {: see(I, #`gun 1`) :};
         'End' >> @>log;
     }
 
-	on {: see(I, #`gun 1`) :} => 
+	on {: see(I, #a) :} down on {: see(I, barrel) :} => 
     {
 	    'D' >> @>log;
 	}

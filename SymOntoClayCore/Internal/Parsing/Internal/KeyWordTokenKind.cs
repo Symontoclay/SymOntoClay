@@ -78,6 +78,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         State,
         States,
         As,
-        Default
+        Default,
+        Down
     }
 }

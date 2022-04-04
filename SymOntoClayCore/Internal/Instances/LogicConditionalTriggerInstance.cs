@@ -64,16 +64,17 @@ namespace SymOntoClay.Core.Internal.Instances
             _localCodeExecutionContext.Holder = parent.Name;
 
             _setConditionalTriggerObserver = new LogicConditionalTriggerObserver(context, _storage, trigger.SetCondition);
-            _setConditionalTriggerObserver.OnChanged += SetCondition_OnChanged;
+            _setConditionalTriggerObserver.OnChanged += Observer_OnChanged;
 
             _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(context, parent.Name, _storage, trigger.SetCondition, trigger.SetBindingVariables);
 
             if (_trigger.ResetCondition != null)
             {
                 _hasResetConditions = true;
+                _hasResetHandler = trigger.ResetCompiledFunctionBody != null;
 
                 _resetConditionalTriggerObserver = new LogicConditionalTriggerObserver(context, _storage, trigger.ResetCondition);
-                _resetConditionalTriggerObserver.OnChanged += ResetCondition_OnChanged;
+                _resetConditionalTriggerObserver.OnChanged += Observer_OnChanged;
 
                 var resetBindingVariables = _trigger.ResetBindingVariables;
 
@@ -84,8 +85,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 _resetConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(context, parent.Name, _storage, trigger.ResetCondition, resetBindingVariables);
             }
-
-            //_storage.LogicalStorage.OnChanged += LogicalStorage_OnChanged;
         }
 
         private IExecutionCoordinator _executionCoordinator;
@@ -99,17 +98,14 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly LogicConditionalTriggerExecutor _setConditionalTriggerExecutor;
         private readonly LogicConditionalTriggerExecutor _resetConditionalTriggerExecutor;
 
-        private readonly object _setLockObj = new object();
-        private bool _setIsBusy;
-        private bool _setNeedRepeat;
-        private bool _setIsOn;
+        private readonly object _lockObj = new object();
+        private bool _isBusy;
+        private bool _needRepeat;
 
-        private readonly object _resetLockObj = new object();
-        private bool _resetIsBusy;
-        private bool _resetNeedRepeat;
-        private bool _resetIsOn;
+        private bool _isOn;
 
-        private readonly bool _hasResetConditions;        
+        private readonly bool _hasResetConditions;
+        private readonly bool _hasResetHandler;
 
         private List<string> _setFoundKeys = new List<string>();
         private List<string> _resetFoundKeys = new List<string>();
@@ -117,117 +113,54 @@ namespace SymOntoClay.Core.Internal.Instances
         public void Init()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
-            lock (_setLockObj)
-            {
-                ExecuteSet();
-            }
+            Observer_OnChanged();
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
-        private void SetCondition_OnChanged()
+        private void Observer_OnChanged()
         {
-#if DEBUG
-            Log("Begin");
-#endif
-
-            Task.Run(() => 
-            {
-                try
-                {
-                    lock (_setLockObj)
-                    {
-                        if (_setIsBusy)
-                        {
-                            _setNeedRepeat = true;
-                            return;
-                        }
-
-                        _setIsBusy = true;
-                        _setNeedRepeat = false;
-                    }
-
-                    ExecuteSet();
-
-                    while (true)
-                    {
-                        lock (_setLockObj)
-                        {
-                            if (!_setNeedRepeat)
-                            {
-                                _setIsBusy = false;
-                                return;
-                            }
-
-                            _setNeedRepeat = false;
-                        }
-
-                        ExecuteSet();
-                    }
-                }
-                catch (Exception e)
-                {
-                    Error(e);
-                }
-            });
-
-#if DEBUG
-            Log("End");
-#endif
-        }
-
-        private void ResetCondition_OnChanged()
-        {
-#if DEBUG
-            Log("Begin");
-#endif
-
             Task.Run(() =>
             {
-                try
-                {
-                    lock (_resetLockObj)
-                    {
 #if DEBUG
-                        Log($"_resetIsBusy = {_resetIsBusy}");
-                        Log($"_resetNeedRepeat = {_resetNeedRepeat}");
+                //Log("Begin");
 #endif
 
-                        if (_resetIsBusy)
+                try
+                {
+                    lock (_lockObj)
+                    {
+                        if (_isBusy)
                         {
-                            _resetNeedRepeat = true;
+                            _needRepeat = true;
                             return;
                         }
 
-                        _resetIsBusy = true;
-                        _resetNeedRepeat = false;
+                        _isBusy = true;
+                        _needRepeat = false;
                     }
 
-#if DEBUG
-                    Log("NEXT");
-#endif
-
-                    ExecuteReset();
+                    DoSearch();
 
                     while (true)
                     {
-                        lock (_resetLockObj)
+                        lock (_lockObj)
                         {
-                            if (!_resetNeedRepeat)
+                            if (!_needRepeat)
                             {
-                                _resetIsBusy = false;
+                                _isBusy = false;
                                 return;
                             }
 
-                            _resetNeedRepeat = false;
+                            _needRepeat = false;
                         }
 
-                        ExecuteReset();
+                        DoSearch();
                     }
                 }
                 catch (Exception e)
@@ -237,63 +170,105 @@ namespace SymOntoClay.Core.Internal.Instances
             });
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
-        private void ExecuteSet()
+        private void DoSearch()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
-
-            var isSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> varList, ref _setFoundKeys);
 
 #if DEBUG
-            Log($"isSuccsess = {isSuccsess}");
-            Log($"varList.Count = {varList.Count}");
-            Log($"_setFoundKeys.Count = {_setFoundKeys.Count}");
+            //Log($"_isOn = {_isOn}");
 #endif
 
-            if(isSuccsess)
+            var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList, ref _setFoundKeys);
+
+#if DEBUG
+            //Log($"isSetSuccsess = {isSetSuccsess}");
+            //Log($"setVarList.Count = {setVarList.Count}");
+            //Log($"_setFoundKeys.Count = {_setFoundKeys.Count}");
+#endif
+
+            if (isSetSuccsess)
             {
-                if (varList.Any())
+                _resetFoundKeys.Clear();
+
+                if (setVarList.Any())
                 {
-                    ProcessSetResultWithItems(varList);
+                    ProcessSetResultWithItems(setVarList);
                 }
                 else
-                {                    
+                {
                     ProcessSetResultWithNoItems();
                 }
             }
             else
             {
-                CleansingPreviousSetResults();
+                if (_hasResetConditions)
+                {
+                    if(_isOn)
+                    {
+                        var isResetSuccsess = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList, ref _resetFoundKeys);
+
+#if DEBUG
+                        //Log($"isResetSuccsess = {isResetSuccsess}");
+                        //Log($"resetVarList.Count = {resetVarList.Count}");
+                        //Log($"_resetFoundKeys.Count = {_resetFoundKeys.Count}");
+#endif
+
+                        if (isResetSuccsess)
+                        {
+                            _isOn = false;
+
+                            if(_hasResetHandler)
+                            {
+                                if (resetVarList.Any())
+                                {
+                                    ProcessResetResultWithItems(resetVarList);
+                                }
+                                else
+                                {
+                                    ProcessResetResultWithNoItems();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            CleansingPreviousResetResults();
+                        }
+                    }
+                }
+                else
+                {
+                    CleansingPreviousSetResults();
+                }                
             }
 
 #if DEBUG
-            Log($"_setIsOn = {_setIsOn}");
-            Log($"_resetIsOn = {_resetIsOn}");
+            //Log($"_isOn (after) = {_isOn}");
 #endif
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
         private void ProcessSetResultWithNoItems()
         {
 #if DEBUG
-            Log("Begin");
-            Log($"_setIsOn = {_setIsOn}");
+            //Log("Begin");
+            //Log($"_isOn = {_isOn}");
 #endif
 
-            if (_setIsOn)
+            if (_isOn)
             {
                 return;
             }
 
-            _setIsOn = true;
+            _isOn = true;
 
             var localCodeExecutionContext = new LocalCodeExecutionContext();
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
@@ -301,22 +276,22 @@ namespace SymOntoClay.Core.Internal.Instances
             localCodeExecutionContext.Storage = storage;
             localCodeExecutionContext.Holder = _parent.Name;
 
-            RunHandler(localCodeExecutionContext);
+            RunSetHandler(localCodeExecutionContext);
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
         private void ProcessSetResultWithItems(List<List<Var>> varList)
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
-            _setIsOn = true;
+            _isOn = true;
 
-            foreach(var targetVarList in varList)
+            foreach (var targetVarList in varList)
             {
                 var localCodeExecutionContext = new LocalCodeExecutionContext();
                 var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
@@ -326,120 +301,95 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 var varStorage = storage.VarStorage;
 
-                foreach(var varItem in targetVarList)
+                foreach (var varItem in targetVarList)
                 {
                     varStorage.Append(varItem);
                 }
 
-                RunHandler(localCodeExecutionContext);
+                RunSetHandler(localCodeExecutionContext);
             }
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
         private void CleansingPreviousSetResults()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
-            _setIsOn = false;
+            _isOn = false;
             _setFoundKeys.Clear();
 
 #if DEBUG
-            Log("End");
-#endif
-        }
-
-        private void ExecuteReset()
-        {
-#if DEBUG
-            Log("Begin");
-#endif
-
-            var isSuccsess = _resetConditionalTriggerExecutor.Run(out List<List<Var>> varList, ref _resetFoundKeys);
-
-#if DEBUG
-            Log($"isSuccsess = {isSuccsess}");
-            Log($"varList.Count = {varList.Count}");
-            Log($"_resetFoundKeys.Count = {_resetFoundKeys.Count}");
-#endif
-
-            if (isSuccsess)
-            {
-                if (varList.Any())
-                {
-                    ProcessResetResultWithItems(varList);
-                }
-                else
-                {
-                    ProcessResetResultWithNoItems();
-                }
-            }
-            else
-            {
-                CleansingPreviousResetResults();
-            }
-
-#if DEBUG
-            Log($"_setIsOn = {_setIsOn}");
-            Log($"_resetIsOn = {_resetIsOn}");
-#endif
-
-#if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
         private void ProcessResetResultWithNoItems()
         {
 #if DEBUG
-            Log("Begin");
-            Log($"_resetIsOn = {_resetIsOn}");
+            //Log("Begin");
 #endif
 
-            if (_resetIsOn)
-            {
-                return;
-            }
+            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
+            var storage = new LocalStorage(localStorageSettings);
+            localCodeExecutionContext.Storage = storage;
+            localCodeExecutionContext.Holder = _parent.Name;
 
-            _resetIsOn = true;
+            RunResetHandler(localCodeExecutionContext);
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
         private void ProcessResetResultWithItems(List<List<Var>> varList)
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
-            _resetIsOn = true;
+            foreach (var targetVarList in varList)
+            {
+                var localCodeExecutionContext = new LocalCodeExecutionContext();
+                var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
+                var storage = new LocalStorage(localStorageSettings);
+                localCodeExecutionContext.Storage = storage;
+                localCodeExecutionContext.Holder = _parent.Name;
+
+                var varStorage = storage.VarStorage;
+
+                foreach (var varItem in targetVarList)
+                {
+                    varStorage.Append(varItem);
+                }
+
+                RunResetHandler(localCodeExecutionContext);
+            }
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
         private void CleansingPreviousResetResults()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
-            _resetIsOn = false;
             _resetFoundKeys.Clear();
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
-        private void RunHandler(LocalCodeExecutionContext localCodeExecutionContext)
+        private void RunSetHandler(LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"_trigger = {_trigger}");
@@ -460,15 +410,36 @@ namespace SymOntoClay.Core.Internal.Instances
             var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo);
         }
 
+        private void RunResetHandler(LocalCodeExecutionContext localCodeExecutionContext)
+        {
+#if DEBUG
+            //Log($"_trigger = {_trigger}");
+            //Log($"_trigger.CompiledFunctionBody = {_trigger.CompiledFunctionBody.ToDbgString()}");
+#endif
+
+            var processInitialInfo = new ProcessInitialInfo();
+            processInitialInfo.CompiledFunctionBody = _trigger.ResetCompiledFunctionBody;
+            processInitialInfo.LocalContext = localCodeExecutionContext;
+            processInitialInfo.Metadata = _trigger;
+            processInitialInfo.Instance = _parent;
+            processInitialInfo.ExecutionCoordinator = _executionCoordinator;
+
+#if DEBUG
+            //Log($"processInitialInfo = {processInitialInfo}");
+#endif
+
+            var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo);
+        }
+
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
-            _setConditionalTriggerObserver.OnChanged -= SetCondition_OnChanged;
+            _setConditionalTriggerObserver.OnChanged -= Observer_OnChanged;
             _setConditionalTriggerObserver.Dispose();
 
             if(_resetConditionalTriggerObserver != null)
             {
-                _resetConditionalTriggerObserver.OnChanged -= ResetCondition_OnChanged;
+                _resetConditionalTriggerObserver.OnChanged -= Observer_OnChanged;
                 _resetConditionalTriggerObserver.Dispose();
             }
 

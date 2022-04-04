@@ -70,7 +70,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             lock (_lockObj)
             {
-                DoSearch();
+                LogicalStorage_OnChanged();
             }
         }
 

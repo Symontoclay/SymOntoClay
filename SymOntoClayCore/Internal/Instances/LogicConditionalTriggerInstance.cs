@@ -102,14 +102,14 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly object _setLockObj = new object();
         private bool _setIsBusy;
         private bool _setNeedRepeat;
+        private bool _setIsOn;
 
         private readonly object _resetLockObj = new object();
         private bool _resetIsBusy;
         private bool _resetNeedRepeat;
+        private bool _resetIsOn;
 
-        private readonly bool _hasResetConditions;
-
-        private bool _isOn;
+        private readonly bool _hasResetConditions;        
 
         private List<string> _setFoundKeys = new List<string>();
         private List<string> _resetFoundKeys = new List<string>();
@@ -257,8 +257,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if(isSuccsess)
             {
-                _resetFoundKeys.Clear();
-
                 if (varList.Any())
                 {
                     ProcessSetResultWithItems(varList);
@@ -270,11 +268,13 @@ namespace SymOntoClay.Core.Internal.Instances
             }
             else
             {
-                if(!_hasResetConditions)
-                {
-                    CleansingPreviousSetResults();
-                }
+                CleansingPreviousSetResults();
             }
+
+#if DEBUG
+            Log($"_setIsOn = {_setIsOn}");
+            Log($"_resetIsOn = {_resetIsOn}");
+#endif
 
 #if DEBUG
             Log("End");
@@ -285,15 +285,15 @@ namespace SymOntoClay.Core.Internal.Instances
         {
 #if DEBUG
             Log("Begin");
-            Log($"_isOn = {_isOn}");
+            Log($"_setIsOn = {_setIsOn}");
 #endif
 
-            if (_isOn)
+            if (_setIsOn)
             {
                 return;
             }
 
-            _isOn = true;
+            _setIsOn = true;
 
             var localCodeExecutionContext = new LocalCodeExecutionContext();
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
@@ -314,7 +314,7 @@ namespace SymOntoClay.Core.Internal.Instances
             Log("Begin");
 #endif
 
-            _isOn = true;
+            _setIsOn = true;
 
             foreach(var targetVarList in varList)
             {
@@ -339,6 +339,20 @@ namespace SymOntoClay.Core.Internal.Instances
 #endif
         }
 
+        private void CleansingPreviousSetResults()
+        {
+#if DEBUG
+            Log("Begin");
+#endif
+
+            _setIsOn = false;
+            _setFoundKeys.Clear();
+
+#if DEBUG
+            Log("End");
+#endif
+        }
+
         private void ExecuteReset()
         {
 #if DEBUG
@@ -353,19 +367,72 @@ namespace SymOntoClay.Core.Internal.Instances
             Log($"_resetFoundKeys.Count = {_resetFoundKeys.Count}");
 #endif
 
+            if (isSuccsess)
+            {
+                if (varList.Any())
+                {
+                    ProcessResetResultWithItems(varList);
+                }
+                else
+                {
+                    ProcessResetResultWithNoItems();
+                }
+            }
+            else
+            {
+                CleansingPreviousResetResults();
+            }
+
+#if DEBUG
+            Log($"_setIsOn = {_setIsOn}");
+            Log($"_resetIsOn = {_resetIsOn}");
+#endif
+
 #if DEBUG
             Log("End");
 #endif
         }
 
-        private void CleansingPreviousSetResults()
+        private void ProcessResetResultWithNoItems()
+        {
+#if DEBUG
+            Log("Begin");
+            Log($"_resetIsOn = {_resetIsOn}");
+#endif
+
+            if (_resetIsOn)
+            {
+                return;
+            }
+
+            _resetIsOn = true;
+
+#if DEBUG
+            Log("End");
+#endif
+        }
+
+        private void ProcessResetResultWithItems(List<List<Var>> varList)
         {
 #if DEBUG
             Log("Begin");
 #endif
 
-            _isOn = false;
-            _setFoundKeys.Clear();
+            _resetIsOn = true;
+
+#if DEBUG
+            Log("End");
+#endif
+        }
+
+        private void CleansingPreviousResetResults()
+        {
+#if DEBUG
+            Log("Begin");
+#endif
+
+            _resetIsOn = false;
+            _resetFoundKeys.Clear();
 
 #if DEBUG
             Log("End");

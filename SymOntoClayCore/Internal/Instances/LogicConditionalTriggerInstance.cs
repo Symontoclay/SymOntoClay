@@ -52,8 +52,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
 #if DEBUG
             //Log($"_trigger = {_trigger}");
-            //Log($"_trigger.SetCondition = {_trigger.SetCondition?.GetHumanizeDbgString()}");
-            //Log($"_trigger.ResetCondition = {_trigger.ResetCondition?.GetHumanizeDbgString()}");
+            Log($"_trigger.SetCondition = {_trigger.SetCondition?.GetHumanizeDbgString()}");
+            Log($"_trigger.ResetCondition = {_trigger.ResetCondition?.GetHumanizeDbgString()}");
 #endif
 
             _localCodeExecutionContext = new LocalCodeExecutionContext();
@@ -99,67 +99,72 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly LogicConditionalTriggerExecutor _setConditionalTriggerExecutor;
         private readonly LogicConditionalTriggerExecutor _resetConditionalTriggerExecutor;
 
-        private readonly object _lockObj = new object();
-        private bool _isBusy;
-        private bool _needRepeat;
+        private readonly object _setLockObj = new object();
+        private bool _setIsBusy;
+        private bool _setNeedRepeat;
+
+        private readonly object _resetLockObj = new object();
+        private bool _resetIsBusy;
+        private bool _resetNeedRepeat;
 
         private readonly bool _hasResetConditions;
 
         private bool _isOn;
 
         private List<string> _setFoundKeys = new List<string>();
+        private List<string> _resetFoundKeys = new List<string>();
 
         public void Init()
         {
 #if DEBUG
-            //Log("Begin");
+            Log("Begin");
 #endif
 
-            lock (_lockObj)
+            lock (_setLockObj)
             {
                 ExecuteSet();
             }
 
 #if DEBUG
-            //Log("End");
+            Log("End");
 #endif
         }
 
         private void SetCondition_OnChanged()
         {
 #if DEBUG
-            //Log("Begin");
+            Log("Begin");
 #endif
 
             Task.Run(() => 
             {
                 try
                 {
-                    lock (_lockObj)
+                    lock (_setLockObj)
                     {
-                        if (_isBusy)
+                        if (_setIsBusy)
                         {
-                            _needRepeat = true;
+                            _setNeedRepeat = true;
                             return;
                         }
 
-                        _isBusy = true;
-                        _needRepeat = false;
+                        _setIsBusy = true;
+                        _setNeedRepeat = false;
                     }
 
                     ExecuteSet();
 
                     while (true)
                     {
-                        lock (_lockObj)
+                        lock (_setLockObj)
                         {
-                            if (!_needRepeat)
+                            if (!_setNeedRepeat)
                             {
-                                _isBusy = false;
+                                _setIsBusy = false;
                                 return;
                             }
 
-                            _needRepeat = false;
+                            _setNeedRepeat = false;
                         }
 
                         ExecuteSet();
@@ -172,45 +177,54 @@ namespace SymOntoClay.Core.Internal.Instances
             });
 
 #if DEBUG
-            //Log("End");
+            Log("End");
 #endif
         }
 
         private void ResetCondition_OnChanged()
         {
 #if DEBUG
-            //Log("Begin");
+            Log("Begin");
 #endif
 
             Task.Run(() =>
             {
                 try
                 {
-                    lock (_lockObj)
+                    lock (_resetLockObj)
                     {
-                        if (_isBusy)
+#if DEBUG
+                        Log($"_resetIsBusy = {_resetIsBusy}");
+                        Log($"_resetNeedRepeat = {_resetNeedRepeat}");
+#endif
+
+                        if (_resetIsBusy)
                         {
-                            _needRepeat = true;
+                            _resetNeedRepeat = true;
                             return;
                         }
 
-                        _isBusy = true;
-                        _needRepeat = false;
+                        _resetIsBusy = true;
+                        _resetNeedRepeat = false;
                     }
+
+#if DEBUG
+                    Log("NEXT");
+#endif
 
                     ExecuteReset();
 
                     while (true)
                     {
-                        lock (_lockObj)
+                        lock (_resetLockObj)
                         {
-                            if (!_needRepeat)
+                            if (!_resetNeedRepeat)
                             {
-                                _isBusy = false;
+                                _resetIsBusy = false;
                                 return;
                             }
 
-                            _needRepeat = false;
+                            _resetNeedRepeat = false;
                         }
 
                         ExecuteReset();
@@ -223,27 +237,29 @@ namespace SymOntoClay.Core.Internal.Instances
             });
 
 #if DEBUG
-            //Log("End");
+            Log("End");
 #endif
         }
 
         private void ExecuteSet()
         {
 #if DEBUG
-            //Log("Begin");
+            Log("Begin");
 #endif
 
             var isSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> varList, ref _setFoundKeys);
 
 #if DEBUG
-            //Log($"isSuccsess = {isSuccsess}");
-            //Log($"varList.Count = {varList.Count}");
-            //Log($"_setFoundKeys.Count = {_setFoundKeys.Count}");
+            Log($"isSuccsess = {isSuccsess}");
+            Log($"varList.Count = {varList.Count}");
+            Log($"_setFoundKeys.Count = {_setFoundKeys.Count}");
 #endif
 
             if(isSuccsess)
             {
-                if(varList.Any())
+                _resetFoundKeys.Clear();
+
+                if (varList.Any())
                 {
                     ProcessSetResultWithItems(varList);
                 }
@@ -261,15 +277,15 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            //Log("End");
+            Log("End");
 #endif
         }
 
         private void ProcessSetResultWithNoItems()
         {
 #if DEBUG
-            //Log("Begin");
-            //Log($"_isOn = {_isOn}");
+            Log("Begin");
+            Log($"_isOn = {_isOn}");
 #endif
 
             if (_isOn)
@@ -288,14 +304,14 @@ namespace SymOntoClay.Core.Internal.Instances
             RunHandler(localCodeExecutionContext);
 
 #if DEBUG
-            //Log("End");
+            Log("End");
 #endif
         }
 
         private void ProcessSetResultWithItems(List<List<Var>> varList)
         {
 #if DEBUG
-            //Log("Begin");
+            Log("Begin");
 #endif
 
             _isOn = true;
@@ -319,32 +335,40 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            //Log("End");
+            Log("End");
 #endif
         }
 
         private void ExecuteReset()
         {
 #if DEBUG
-            //Log("Begin");
+            Log("Begin");
+#endif
+
+            var isSuccsess = _resetConditionalTriggerExecutor.Run(out List<List<Var>> varList, ref _resetFoundKeys);
+
+#if DEBUG
+            Log($"isSuccsess = {isSuccsess}");
+            Log($"varList.Count = {varList.Count}");
+            Log($"_resetFoundKeys.Count = {_resetFoundKeys.Count}");
 #endif
 
 #if DEBUG
-            //Log("End");
+            Log("End");
 #endif
         }
 
         private void CleansingPreviousSetResults()
         {
 #if DEBUG
-            //Log("Begin");
+            Log("Begin");
 #endif
 
             _isOn = false;
             _setFoundKeys.Clear();
 
 #if DEBUG
-            //Log("End");
+            Log("End");
 #endif
         }
 

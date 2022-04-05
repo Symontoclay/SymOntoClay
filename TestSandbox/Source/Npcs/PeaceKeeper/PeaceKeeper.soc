@@ -8,6 +8,10 @@
 
 	on {: see(I, #a) :} down on {: see(I, barrel) :} => 
     {
-	    'D' >> @>log;
+	    'S' >> @>log;
 	}
+    else
+    {
+        'R' >> @>log;
+    }
 }

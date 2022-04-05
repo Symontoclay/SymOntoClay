@@ -53,9 +53,9 @@ namespace SymOntoClay.Core.Internal.Instances
 #if DEBUG
             //_trigger.DoubleConditionsStrategy = DoubleConditionsStrategy.PriorReset;
             //Log($"_trigger = {_trigger}");
-            Log($"_trigger.SetCondition = {_trigger.SetCondition?.GetHumanizeDbgString()}");
-            Log($"_trigger.ResetCondition = {_trigger.ResetCondition?.GetHumanizeDbgString()}");
-            Log($"_trigger.DoubleConditionsStrategy = {_trigger.DoubleConditionsStrategy}");
+            //Log($"_trigger.SetCondition = {_trigger.SetCondition?.GetHumanizeDbgString()}");
+            //Log($"_trigger.ResetCondition = {_trigger.ResetCondition?.GetHumanizeDbgString()}");
+            //Log($"_trigger.DoubleConditionsStrategy = {_trigger.DoubleConditionsStrategy}");
 #endif
 
             _localCodeExecutionContext = new LocalCodeExecutionContext();
@@ -183,7 +183,7 @@ namespace SymOntoClay.Core.Internal.Instances
 #endif
 
 #if DEBUG
-            Log($"_isOn = {_isOn}");
+            //Log($"_isOn = {_isOn}");
 #endif
 
             if (_hasResetConditions)
@@ -212,7 +212,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Log($"_isOn (after) = {_isOn}");
+            //Log($"_isOn (after) = {_isOn}");
 #endif
 
 #if DEBUG
@@ -223,7 +223,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private void DoSearchWithEqualConditions()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             DoSearchWithNoResetCondition();
@@ -231,14 +231,14 @@ namespace SymOntoClay.Core.Internal.Instances
             RunResetCondition();
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
         private void DoSearchWithPriorSetCondition()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList, ref _setFoundKeys);
@@ -268,22 +268,22 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
         private void DoSearchWithPriorResetCondition()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             var isResetSuccsess = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList, ref _resetFoundKeys);
 
 #if DEBUG
-            Log($"isResetSuccsess = {isResetSuccsess}");
-            Log($"resetVarList.Count = {resetVarList.Count}");
-            Log($"_resetFoundKeys.Count = {_resetFoundKeys.Count}");
+            //Log($"isResetSuccsess = {isResetSuccsess}");
+            //Log($"resetVarList.Count = {resetVarList.Count}");
+            //Log($"_resetFoundKeys.Count = {_resetFoundKeys.Count}");
 #endif
 
             if(isResetSuccsess)
@@ -311,9 +311,9 @@ namespace SymOntoClay.Core.Internal.Instances
                     var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList, ref _setFoundKeys);
 
 #if DEBUG
-                    Log($"isSetSuccsess = {isSetSuccsess}");
-                    Log($"setVarList.Count = {setVarList.Count}");
-                    Log($"_setFoundKeys.Count = {_setFoundKeys.Count}");
+                    //Log($"isSetSuccsess = {isSetSuccsess}");
+                    //Log($"setVarList.Count = {setVarList.Count}");
+                    //Log($"_setFoundKeys.Count = {_setFoundKeys.Count}");
 #endif
 
                     if(isSetSuccsess)
@@ -335,14 +335,14 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
         private void RunResetCondition()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             if (!_isOn)
@@ -381,14 +381,14 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 
         private void DoSearchWithNoResetCondition()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList, ref _setFoundKeys);
@@ -418,7 +418,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 

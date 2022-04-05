@@ -51,7 +51,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _trigger = trigger;
 
 #if DEBUG
-            _trigger.DoubleConditionsStrategy = DoubleConditionsStrategy.Equal;
+            //_trigger.DoubleConditionsStrategy = DoubleConditionsStrategy.PriorReset;
             //Log($"_trigger = {_trigger}");
             Log($"_trigger.SetCondition = {_trigger.SetCondition?.GetHumanizeDbgString()}");
             Log($"_trigger.ResetCondition = {_trigger.ResetCondition?.GetHumanizeDbgString()}");
@@ -198,6 +198,10 @@ namespace SymOntoClay.Core.Internal.Instances
                         DoSearchWithPriorSetCondition();
                         break;
 
+                    case DoubleConditionsStrategy.PriorReset:
+                        DoSearchWithPriorResetCondition();
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(_trigger.DoubleConditionsStrategy), _trigger.DoubleConditionsStrategy, null);
                 }
@@ -268,6 +272,73 @@ namespace SymOntoClay.Core.Internal.Instances
 #endif
         }
 
+        private void DoSearchWithPriorResetCondition()
+        {
+#if DEBUG
+            Log("Begin");
+#endif
+
+            var isResetSuccsess = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList, ref _resetFoundKeys);
+
+#if DEBUG
+            Log($"isResetSuccsess = {isResetSuccsess}");
+            Log($"resetVarList.Count = {resetVarList.Count}");
+            Log($"_resetFoundKeys.Count = {_resetFoundKeys.Count}");
+#endif
+
+            if(isResetSuccsess)
+            {
+                _isOn = false;
+
+                _setFoundKeys.Clear();
+
+                if (_hasResetHandler)
+                {
+                    if (resetVarList.Any())
+                    {
+                        ProcessResetResultWithItems(resetVarList);
+                    }
+                    else
+                    {
+                        ProcessResetResultWithNoItems();
+                    }
+                }
+            }
+            else
+            {
+                if(!_isOn)
+                {
+                    var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList, ref _setFoundKeys);
+
+#if DEBUG
+                    Log($"isSetSuccsess = {isSetSuccsess}");
+                    Log($"setVarList.Count = {setVarList.Count}");
+                    Log($"_setFoundKeys.Count = {_setFoundKeys.Count}");
+#endif
+
+                    if(isSetSuccsess)
+                    {
+                        _isOn = true;
+
+                        _resetFoundKeys.Clear();
+
+                        if (setVarList.Any())
+                        {
+                            ProcessSetResultWithItems(setVarList);
+                        }
+                        else
+                        {
+                            ProcessSetResultWithNoItems();
+                        }
+                    }
+                }
+            }
+
+#if DEBUG
+            Log("End");
+#endif
+        }
+
         private void RunResetCondition()
         {
 #if DEBUG
@@ -290,6 +361,7 @@ namespace SymOntoClay.Core.Internal.Instances
             if (isResetSuccsess)
             {
                 _isOn = false;
+                _setFoundKeys.Clear();
 
                 if (_hasResetHandler)
                 {

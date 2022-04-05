@@ -58,6 +58,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public List<AstStatement> ResetStatements { get; set; } = new List<AstStatement>();
         public CompiledFunctionBody ResetCompiledFunctionBody { get; set; }
 
+        public DoubleConditionsStrategy DoubleConditionsStrategy { get; set; } = DoubleConditionsStrategy.PriorSet;
+
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
@@ -126,6 +128,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.ResetStatements = ResetStatements.Select(p => p.CloneAstStatement(context)).ToList();            
             result.ResetCompiledFunctionBody = ResetCompiledFunctionBody.Clone(context);
 
+            result.DoubleConditionsStrategy = DoubleConditionsStrategy;
+
             result.AppendCodeItem(this, context);
 
             return result;
@@ -172,6 +176,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjListProp(n, nameof(ResetStatements), ResetStatements);
             sb.PrintObjProp(n, nameof(ResetCompiledFunctionBody), ResetCompiledFunctionBody);
 
+            sb.AppendLine($"{spaces}{nameof(DoubleConditionsStrategy)} = {DoubleConditionsStrategy}");
+
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -195,6 +201,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjListProp(n, nameof(ResetStatements), ResetStatements);
             sb.PrintShortObjProp(n, nameof(ResetCompiledFunctionBody), ResetCompiledFunctionBody);
 
+            sb.AppendLine($"{spaces}{nameof(DoubleConditionsStrategy)} = {DoubleConditionsStrategy}");
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -217,6 +225,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintBriefObjListProp(n, nameof(ResetStatements), ResetStatements);
             sb.PrintBriefObjProp(n, nameof(ResetCompiledFunctionBody), ResetCompiledFunctionBody);
+
+            sb.AppendLine($"{spaces}{nameof(DoubleConditionsStrategy)} = {DoubleConditionsStrategy}");
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

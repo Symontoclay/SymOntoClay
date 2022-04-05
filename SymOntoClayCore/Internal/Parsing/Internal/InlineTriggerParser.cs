@@ -46,7 +46,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             WaitForResetCondition,
             GotResetCondition,
             WaitForSetAction,
-            GotSetAction
+            GotSetAction,
+            WaitForResetAction,
+            GotResetAction
         }
 
         public InlineTriggerParser(InternalParserContext context)
@@ -272,24 +274,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case State.GotSetAction:
+                    if (IsTerminator())
+                    {
+                        _context.Recovery(_currToken);
+                        Exit();
+                        break;
+                    }
+
                     switch (_currToken.TokenKind)
                     {
-                        case TokenKind.CloseFigureBracket:
-                            _context.Recovery(_currToken);
-                            Exit();
-                            break;
-
                         case TokenKind.Word:
                             switch(_currToken.KeyWordTokenKind)
                             {
-                                case KeyWordTokenKind.On:
-                                case KeyWordTokenKind.Fun:
-                                case KeyWordTokenKind.Operator:
-                                case KeyWordTokenKind.Public:
-                                case KeyWordTokenKind.Protected:
-                                case KeyWordTokenKind.Private:
-                                    _context.Recovery(_currToken);
-                                    Exit();
+                                case KeyWordTokenKind.Else:
+                                    _state = State.WaitForResetAction;
                                     break;
 
                                 default:
@@ -302,8 +300,61 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
+                case State.WaitForResetAction:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenFigureBracket:
+                            ProcessResetFunctionBody();
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotResetAction:
+                    if(IsTerminator())
+                    {
+                        _context.Recovery(_currToken);
+                        Exit();
+                        break;
+                    }
+
+                    switch (_currToken.TokenKind)
+                    {
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
+            }
+        }
+
+        private bool IsTerminator()
+        {
+            switch (_currToken.TokenKind)
+            {
+                case TokenKind.CloseFigureBracket:
+                    return true;
+
+                case TokenKind.Word:
+                    switch(_currToken.KeyWordTokenKind)
+                    {
+                        case KeyWordTokenKind.On:
+                        case KeyWordTokenKind.Fun:
+                        case KeyWordTokenKind.Operator:
+                        case KeyWordTokenKind.Public:
+                        case KeyWordTokenKind.Protected:
+                        case KeyWordTokenKind.Private:
+                            return true;
+
+                        default:
+                            return false;
+                    }
+
+                default:
+                    return false;
             }
         }
 
@@ -314,6 +365,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _inlineTrigger.SetStatements = resultOfParsing.Item1;
             _inlineTrigger.SetCompiledFunctionBody = resultOfParsing.Item2;
             _state = State.GotSetAction;
+        }
+
+        private void ProcessResetFunctionBody()
+        {
+            var resultOfParsing = ParseFunctionBody();
+
+            _inlineTrigger.ResetStatements = resultOfParsing.Item1;
+            _inlineTrigger.ResetCompiledFunctionBody = resultOfParsing.Item2;
+            _state = State.GotResetAction;
         }
 
         private (List<AstStatement>, CompiledFunctionBody) ParseFunctionBody()

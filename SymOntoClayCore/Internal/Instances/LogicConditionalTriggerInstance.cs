@@ -52,6 +52,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
 #if DEBUG
             //_trigger.DoubleConditionsStrategy = DoubleConditionsStrategy.PriorReset;
+            _trigger.DoubleConditionsStrategy = DoubleConditionsStrategy.Equal;
             //Log($"_trigger = {_trigger}");
             //Log($"_trigger.SetCondition = {_trigger.SetCondition?.GetHumanizeDbgString()}");
             //Log($"_trigger.ResetCondition = {_trigger.ResetCondition?.GetHumanizeDbgString()}");
@@ -226,9 +227,57 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log("Begin");
 #endif
 
-            DoSearchWithNoResetCondition();
+            var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList, ref _setFoundKeys);
 
-            RunResetCondition();
+#if DEBUG
+            //Log($"isSetSuccsess = {isSetSuccsess}");
+            //Log($"setVarList.Count = {setVarList.Count}");
+            //Log($"_setFoundKeys.Count = {_setFoundKeys.Count}");
+#endif
+
+            if (isSetSuccsess)
+            {
+                _resetFoundKeys.Clear();
+
+                if (setVarList.Any())
+                {
+                    ProcessSetResultWithItems(setVarList);
+                }
+                else
+                {
+                    ProcessSetResultWithNoItems();
+                }
+            }
+
+            var isResetSuccsess = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList, ref _resetFoundKeys);
+
+#if DEBUG
+            //Log($"isResetSuccsess = {isResetSuccsess}");
+            //Log($"resetVarList.Count = {resetVarList.Count}");
+            //Log($"_resetFoundKeys.Count = {_resetFoundKeys.Count}");
+#endif
+
+            if (isResetSuccsess)
+            {
+                _setFoundKeys.Clear();
+
+                if (_hasResetHandler)
+                {
+                    if (resetVarList.Any())
+                    {
+                        ProcessResetResultWithItems(resetVarList);
+                    }
+                    else
+                    {
+                        ProcessResetResultWithNoItems();
+                    }
+                }
+                else
+                {
+                    _isOn = false;
+                    _resetFoundKeys.Clear();
+                }
+            }
 
 #if DEBUG
             //Log("End");
@@ -288,8 +337,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if(isResetSuccsess)
             {
-                _isOn = false;
-
                 _setFoundKeys.Clear();
 
                 if (_hasResetHandler)
@@ -318,8 +365,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     if(isSetSuccsess)
                     {
-                        _isOn = true;
-
                         _resetFoundKeys.Clear();
 
                         if (setVarList.Any())
@@ -345,10 +390,10 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log("Begin");
 #endif
 
-            if (!_isOn)
-            {
-                return;
-            }
+            //if (!_isOn)
+            //{
+            //    return;
+            //}
 
             var isResetSuccsess = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList, ref _resetFoundKeys);
 
@@ -360,7 +405,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if (isResetSuccsess)
             {
-                _isOn = false;
                 _setFoundKeys.Clear();
 
                 if (_hasResetHandler)
@@ -500,6 +544,13 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log("Begin");
 #endif
 
+            if(!_isOn)
+            {
+                return;
+            }
+
+            _isOn = false;
+
             var localCodeExecutionContext = new LocalCodeExecutionContext();
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
             var storage = new LocalStorage(localStorageSettings);
@@ -518,6 +569,8 @@ namespace SymOntoClay.Core.Internal.Instances
 #if DEBUG
             //Log("Begin");
 #endif
+
+            _isOn = false;
 
             foreach (var targetVarList in varList)
             {

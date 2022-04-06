@@ -52,7 +52,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
 #if DEBUG
             //_trigger.DoubleConditionsStrategy = DoubleConditionsStrategy.PriorReset;
-            _trigger.DoubleConditionsStrategy = DoubleConditionsStrategy.Equal;
+            //_trigger.DoubleConditionsStrategy = DoubleConditionsStrategy.Equal;
             //Log($"_trigger = {_trigger}");
             //Log($"_trigger.SetCondition = {_trigger.SetCondition?.GetHumanizeDbgString()}");
             //Log($"_trigger.ResetCondition = {_trigger.ResetCondition?.GetHumanizeDbgString()}");
@@ -71,10 +71,11 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(context, parent.Name, _storage, trigger.SetCondition, trigger.SetBindingVariables);
 
+            _hasResetHandler = trigger.ResetCompiledFunctionBody != null;
+
             if (_trigger.ResetCondition != null)
             {
                 _hasResetConditions = true;
-                _hasResetHandler = trigger.ResetCompiledFunctionBody != null;
 
                 _resetConditionalTriggerObserver = new LogicConditionalTriggerObserver(context, _storage, trigger.ResetCondition);
                 _resetConditionalTriggerObserver.OnChanged += Observer_OnChanged;
@@ -458,6 +459,15 @@ namespace SymOntoClay.Core.Internal.Instances
             }
             else
             {
+#if DEBUG
+                //Log($"_hasResetHandler = {_hasResetHandler}");
+#endif
+
+                if (_hasResetHandler)
+                {
+                    ProcessResetResultWithNoItems();
+                }
+
                 CleansingPreviousSetResults();
             }
 

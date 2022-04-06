@@ -6,7 +6,7 @@
         'End' >> @>log;
     }
 
-	on {: see(I, #a) :} down on {: see(I, barrel) :} => 
+	on {: see(I, #a) :} => 
     {
 	    'S' >> @>log;
 	}

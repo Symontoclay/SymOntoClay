@@ -1329,7 +1329,6 @@ action Go
             _logger.Log("End");
         }
 
-
         private static void TstMonoBehaviourTestingHandler()
         {
             _logger.Log("Begin");

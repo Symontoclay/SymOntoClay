@@ -71,15 +71,15 @@ namespace TestSandbox.Handlers
 
             _npc.RemoveFact(factId);
 
-            //Thread.Sleep(100);
+            Thread.Sleep(100);
 
-            //_logger.Log("|=|=|=|=|=|=|");
+            _logger.Log("|=|=|=|=|=|=|");
 
-            //_npc.Logger.LogChannel("|=|=|=|=|=|=|");
+            _npc.Logger.LogChannel("|=|=|=|=|=|=|");
 
             //_npc.InsertFact("{: see(I, #a) :}");
 
-            //_npc.InsertFact("{: see(I, barrel) :}");
+            _npc.InsertFact("{: see(I, barrel) :}");
 
             Thread.Sleep(50000);
             //Thread.Sleep(500000);

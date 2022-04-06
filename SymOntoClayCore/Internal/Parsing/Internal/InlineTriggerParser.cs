@@ -45,6 +45,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotDown,
             WaitForResetCondition,
             GotResetCondition,
+            WaitForDoubleConditionsStrategy,
+            WaitForFinishingDoubleConditionsStrategy,
+            GotDoubleConditionsStrategy,
             WaitForSetAction,
             GotSetAction,
             WaitForResetAction,
@@ -77,8 +80,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -246,6 +249,59 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case State.GotResetCondition:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Lambda:
+                            _state = State.WaitForSetAction;
+                            break;
+
+                        case TokenKind.OpenFigureBracket:
+                            ProcessSetFunctionBody();
+                            break;
+
+                        case TokenKind.OpenRoundBracket:
+                            _state = State.WaitForDoubleConditionsStrategy;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForDoubleConditionsStrategy:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Set:
+                                    _inlineTrigger.DoubleConditionsStrategy = DoubleConditionsStrategy.PriorSet;
+                                    _state = State.WaitForFinishingDoubleConditionsStrategy;
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForFinishingDoubleConditionsStrategy:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.CloseRoundBracket:
+                            _state = State.GotDoubleConditionsStrategy;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotDoubleConditionsStrategy:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Lambda:

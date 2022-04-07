@@ -104,3 +104,33 @@ namespace TestSandbox.Handlers
         }
     }
 }
+/*
+             var factId = _npc.InsertFact("{: see(I, #a) :}");
+
+            //_npc.PushSoundFact(60, "act(M16, shoot)");
+
+            //var factId = _npc.InsertFact("{: see(I, #a) :}");
+            //_npc.InsertFact("{: see(I, #a) :}");
+            //_npc.InsertFact("{: barrel (#a) :}");
+            //_npc.InsertFact("distance(I, #a, 14.71526)");
+            //_npc.InsertFact("{: see(I, enemy) :}");
+
+            Thread.Sleep(100);
+            _npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
+            _logger.Log("|-|-|-|-|-|-|-|-|-|-|-|-|");
+
+            _npc.InsertFact("{: see(I, barrel) :}");
+
+            //_npc.RemoveFact(factId);
+
+            Thread.Sleep(100);
+
+            _logger.Log("|=|=|=|=|=|=|");
+
+            _npc.Logger.LogChannel("|=|=|=|=|=|=|");
+
+            _npc.RemoveFact(factId);
+            _npc.InsertFact("{: see(I, #a) :}");
+
+            //_npc.InsertFact("{: see(I, barrel) :}");
+ */

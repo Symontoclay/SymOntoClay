@@ -985,21 +985,21 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     case 6:
                         {
                             var targetValue = message == "S" || message == "R";
-                            Assert.AreEqual(true, message);
+                            Assert.AreEqual(true, targetValue);
                         }
                         break;
 
                     case 7:
                         {
                             var targetValue = message == "S" || message == "R";
-                            Assert.AreEqual(true, message);
+                            Assert.AreEqual(true, targetValue);
                         }
                         break;
 
                     case 8:
                         {
                             var targetValue = message == "S" || message == "R";
-                            Assert.AreEqual(true, message);
+                            Assert.AreEqual(true, targetValue);
                         }
                         break;
 
@@ -1008,7 +1008,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }
             });
 
+            Thread.Sleep(100);
 
+            npc.Logger.LogChannel("|||||||||||||");
+
+            npc.InsertFact("{: see(I, #a) :}");
+
+            Thread.Sleep(100);
+
+            npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
+
+            npc.InsertFact("{: see(I, barrel) :}");
+
+            Thread.Sleep(1000);
         }
     }
 }

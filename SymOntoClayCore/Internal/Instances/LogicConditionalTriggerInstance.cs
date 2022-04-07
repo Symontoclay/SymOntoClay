@@ -66,7 +66,9 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _localCodeExecutionContext.Holder = parent.Name;
 
-            _setConditionalTriggerObserver = new LogicConditionalTriggerObserver(context, _storage, trigger.SetCondition);
+            _triggerConditionNodeObserverContext = new TriggerConditionNodeObserverContext(context, _storage);
+
+            _setConditionalTriggerObserver = new LogicConditionalTriggerObserver(_triggerConditionNodeObserverContext, trigger.SetCondition);
             _setConditionalTriggerObserver.OnChanged += Observer_OnChanged;
 
             _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(context, parent.Name, _storage, trigger.SetCondition, trigger.SetBindingVariables);
@@ -77,7 +79,7 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 _hasResetConditions = true;
 
-                _resetConditionalTriggerObserver = new LogicConditionalTriggerObserver(context, _storage, trigger.ResetCondition);
+                _resetConditionalTriggerObserver = new LogicConditionalTriggerObserver(_triggerConditionNodeObserverContext, trigger.ResetCondition);
                 _resetConditionalTriggerObserver.OnChanged += Observer_OnChanged;
 
                 var resetBindingVariables = _trigger.ResetBindingVariables;
@@ -90,6 +92,8 @@ namespace SymOntoClay.Core.Internal.Instances
                 _resetConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(context, parent.Name, _storage, trigger.ResetCondition, resetBindingVariables);
             }
         }
+
+        private readonly TriggerConditionNodeObserverContext _triggerConditionNodeObserverContext;
 
         private IExecutionCoordinator _executionCoordinator;
         private readonly IEngineContext _context;

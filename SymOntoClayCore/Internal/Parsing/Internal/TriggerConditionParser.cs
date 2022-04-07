@@ -11,7 +11,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
     {
         private enum State
         {
-            Init
+            Init,
+            GotDurationMark
         }
 
         public TriggerConditionParser(InternalParserContext context, bool setCondition)
@@ -40,6 +41,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
+#if DEBUG
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
+            //Log($"Result = {Result}");            
+#endif
+
             switch (_state)
             {
                 case State.Init:
@@ -48,6 +55,43 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.OpenFactBracket:
                             Result = ParseFact();
                             Exit();
+                            break;
+
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Duration:
+                                    _state = State.GotDurationMark;
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotDurationMark:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Number:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var parser = new NumberParser(_context);
+                                parser.Run();
+
+#if DEBUG
+                                Log($"parser.Result = {parser.Result}");
+#endif
+
+                                Result = CreateDuration(parser.Result);
+
+                                Exit();
+                            }
                             break;
 
                         default:
@@ -69,6 +113,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             var conditionNode = new TriggerConditionNode() { Kind = KindOfTriggerConditionNode.Fact };
             conditionNode.RuleInstance = parser.Result;
+
+            return conditionNode;
+        }
+
+        private TriggerConditionNode CreateDuration(Value value)
+        {
+            var conditionNode = new TriggerConditionNode() { Kind = KindOfTriggerConditionNode.Duration };
+            conditionNode.Value = value;
 
             return conditionNode;
         }

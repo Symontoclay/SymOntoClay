@@ -7,21 +7,21 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
     public static class TriggerConditionNodeObserversCreator
     {
-        public static List<BaseTriggerConditionNodeObserver> CreateObservers(IEngineContext context, IStorage storage, TriggerConditionNode condition)
+        public static List<BaseTriggerConditionNodeObserver> CreateObservers(TriggerConditionNodeObserverContext context, TriggerConditionNode condition)
         {
             var result = new List<BaseTriggerConditionNodeObserver>();
 
-            CreateObservers(result, context, storage, condition);
+            CreateObservers(result, context, condition);
 
             return result;
         }
 
-        private static void CreateObservers(List<BaseTriggerConditionNodeObserver> result, IEngineContext context, IStorage storage, TriggerConditionNode condition)
+        private static void CreateObservers(List<BaseTriggerConditionNodeObserver> result, TriggerConditionNodeObserverContext context, TriggerConditionNode condition)
         {
             switch (condition.Kind)
             {
                 case KindOfTriggerConditionNode.Fact:
-                    result.Add(new FactTriggerConditionNodeObserver(context.Logger, storage));
+                    result.Add(new FactTriggerConditionNodeObserver(context.EngineContext.Logger, context.Storage));
                     break;
 
                 default:

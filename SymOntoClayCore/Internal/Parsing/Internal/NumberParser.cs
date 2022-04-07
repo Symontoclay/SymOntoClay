@@ -121,6 +121,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Comma:
                         case TokenKind.Semicolon:
                         case TokenKind.CloseRoundBracket:
+                        case TokenKind.OpenRoundBracket:
                         case TokenKind.CloseFactBracket:
                         case TokenKind.Plus:
                         case TokenKind.Minus:

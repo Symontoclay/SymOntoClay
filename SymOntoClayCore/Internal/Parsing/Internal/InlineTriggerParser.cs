@@ -80,8 +80,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -188,6 +188,19 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         break;
                                     }
                                     throw new UnexpectedTokenException(_currToken);
+
+                                case KeyWordTokenKind.Duration:
+                                    {
+                                        _context.Recovery(_currToken);
+
+                                        var parser = new TriggerConditionParser(_context, true);
+                                        parser.Run();
+
+                                        _inlineTrigger.ResetCondition = parser.Result;
+
+                                        _state = State.GotResetCondition;
+                                    }
+                                    break;
 
                                 default:
                                     throw new UnexpectedTokenException(_currToken);

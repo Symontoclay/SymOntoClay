@@ -9,10 +9,10 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
     public class LogicConditionalTriggerObserver : BaseComponent
     {
-        public LogicConditionalTriggerObserver(IEngineContext context, IStorage storage, TriggerConditionNode condition)
-            : base(context.Logger)
+        public LogicConditionalTriggerObserver(TriggerConditionNodeObserverContext context, TriggerConditionNode condition)
+            : base(context.EngineContext.Logger)
         {
-            _observersList = TriggerConditionNodeObserversCreator.CreateObservers(context, storage, condition);
+            _observersList = TriggerConditionNodeObserversCreator.CreateObservers(context, condition);
 
             foreach (var observer in _observersList)
             {

@@ -284,6 +284,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case TokenKind.Assign:
+                            _inlineTrigger.DoubleConditionsStrategy = DoubleConditionsStrategy.Equal;
+                            _state = State.WaitForFinishingDoubleConditionsStrategy;
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

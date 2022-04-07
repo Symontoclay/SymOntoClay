@@ -69,13 +69,13 @@ namespace TestSandbox.Handlers
             _npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
             _logger.Log("|-|-|-|-|-|-|-|-|-|-|-|-|");
 
-            _npc.RemoveFact(factId);
+            //_npc.RemoveFact(factId);
 
-            Thread.Sleep(100);
+            //Thread.Sleep(100);
 
-            _logger.Log("|=|=|=|=|=|=|");
+            //_logger.Log("|=|=|=|=|=|=|");
 
-            _npc.Logger.LogChannel("|=|=|=|=|=|=|");
+            //_npc.Logger.LogChannel("|=|=|=|=|=|=|");
 
             //_npc.InsertFact("{: see(I, #a) :}");
 

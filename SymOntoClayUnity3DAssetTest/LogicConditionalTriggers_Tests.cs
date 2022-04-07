@@ -932,5 +932,83 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case9_d()
+        {
+            using var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        'End' >> @>log;
+    }
+
+	on {: see(I, #a) :} down on {: see(I, barrel) :} (=) => 
+    {
+	    'S' >> @>log;
+	}
+    else
+    {
+        'R' >> @>log;
+    }
+}";
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual("Begin", message);
+                        break;
+
+                    case 2:
+                        Assert.AreEqual("End", message);
+                        break;
+
+                    case 3:
+                        Assert.AreEqual("|||||||||||||", message);
+                        break;
+
+                    case 4:
+                        Assert.AreEqual("S", message);
+                        break;
+
+                    case 5:
+                        Assert.AreEqual("|-|-|-|-|-|-|-|-|-|-|-|-|", message);
+                        break;
+
+                    case 6:
+                        {
+                            var targetValue = message == "S" || message == "R";
+                            Assert.AreEqual(true, message);
+                        }
+                        break;
+
+                    case 7:
+                        {
+                            var targetValue = message == "S" || message == "R";
+                            Assert.AreEqual(true, message);
+                        }
+                        break;
+
+                    case 8:
+                        {
+                            var targetValue = message == "S" || message == "R";
+                            Assert.AreEqual(true, message);
+                        }
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+
+        }
     }
 }

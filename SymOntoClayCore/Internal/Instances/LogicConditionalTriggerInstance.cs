@@ -55,10 +55,10 @@ namespace SymOntoClay.Core.Internal.Instances
             //_trigger.DoubleConditionsStrategy = DoubleConditionsStrategy.PriorReset;
             //_trigger.DoubleConditionsStrategy = DoubleConditionsStrategy.Equal;
             //Log($"_trigger = {_trigger}");
-            //Log($"_trigger.SetCondition = {_trigger.SetCondition?.GetHumanizeDbgString()}");
-            //Log($"_trigger.ResetCondition = {_trigger.ResetCondition?.GetHumanizeDbgString()}");
+            Log($"_trigger.SetCondition = {_trigger.SetCondition?.GetHumanizeDbgString()}");
+            Log($"_trigger.ResetCondition = {_trigger.ResetCondition?.GetHumanizeDbgString()}");
             //Log($"_trigger.DoubleConditionsStrategy = {_trigger.DoubleConditionsStrategy}");
-            Log($"_dateTimeProvider.CurrentTiks = {_dateTimeProvider.CurrentTiks}");
+            //Log($"_dateTimeProvider.CurrentTiks = {_dateTimeProvider.CurrentTiks}");
 #endif
 
             _localCodeExecutionContext = new LocalCodeExecutionContext();
@@ -73,7 +73,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _setConditionalTriggerObserver = new LogicConditionalTriggerObserver(_triggerConditionNodeObserverContext, trigger.SetCondition);
             _setConditionalTriggerObserver.OnChanged += Observer_OnChanged;
 
-            _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(context, parent.Name, _storage, trigger.SetCondition, trigger.SetBindingVariables);
+            _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext, parent.Name, trigger.SetCondition, trigger.SetBindingVariables);
 
             _hasResetHandler = trigger.ResetCompiledFunctionBody != null;
 
@@ -91,7 +91,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     resetBindingVariables = trigger.SetBindingVariables;
                 }
 
-                _resetConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(context, parent.Name, _storage, trigger.ResetCondition, resetBindingVariables);
+                _resetConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext, parent.Name, trigger.ResetCondition, resetBindingVariables);
             }
         }
 
@@ -224,6 +224,21 @@ namespace SymOntoClay.Core.Internal.Instances
 #if DEBUG
             Log($"_isOn (after) = {_isOn}");
 #endif
+
+            if(_isOn)
+            {
+                if(!_triggerConditionNodeObserverContext.SetSeconds.HasValue)
+                {
+                    _triggerConditionNodeObserverContext.SetSeconds = Convert.ToInt64(_dateTimeProvider.CurrentTiks * _dateTimeProvider.SecondsMultiplicator);
+                }
+            }
+            else
+            {
+                if(_triggerConditionNodeObserverContext.SetSeconds.HasValue)
+                {
+                    _triggerConditionNodeObserverContext.SetSeconds = null;
+                }
+            }
 
 #if DEBUG
             Log("End");

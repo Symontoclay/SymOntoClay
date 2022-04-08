@@ -16,7 +16,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         public IEngineContext EngineContext { get; private set; }
         public IStorage Storage { get; private set; }
 
-        public long? OnTicks { get; set; }
+        public long? SetSeconds { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -36,7 +36,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(OnTicks)} = {OnTicks}");
+            sb.AppendLine($"{spaces}{nameof(SetSeconds)} = {SetSeconds}");
 
             return sb.ToString();
         }
@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(OnTicks)} = {OnTicks}");
+            sb.AppendLine($"{spaces}{nameof(SetSeconds)} = {SetSeconds}");
 
             return sb.ToString();
         }
@@ -82,7 +82,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(OnTicks)} = {OnTicks}");
+            sb.AppendLine($"{spaces}{nameof(SetSeconds)} = {SetSeconds}");
 
             return sb.ToString();
         }

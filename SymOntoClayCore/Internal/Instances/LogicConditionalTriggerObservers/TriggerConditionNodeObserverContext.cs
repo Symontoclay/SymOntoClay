@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,14 +8,16 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
     public class TriggerConditionNodeObserverContext: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public TriggerConditionNodeObserverContext(IEngineContext engineContext, IStorage storage)
+        public TriggerConditionNodeObserverContext(IEngineContext engineContext, IStorage storage, StrongIdentifierValue holder)
         {
             EngineContext = engineContext;
             Storage = storage;
+            Holder = holder;
         }
 
         public IEngineContext EngineContext { get; private set; }
         public IStorage Storage { get; private set; }
+        public StrongIdentifierValue Holder { get; private set; }
 
         public long? SetSeconds { get; set; }
 
@@ -36,6 +39,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintObjProp(n, nameof(Holder), Holder);
             sb.AppendLine($"{spaces}{nameof(SetSeconds)} = {SetSeconds}");
 
             return sb.ToString();
@@ -59,6 +63,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintShortObjProp(n, nameof(Holder), Holder);
             sb.AppendLine($"{spaces}{nameof(SetSeconds)} = {SetSeconds}");
 
             return sb.ToString();
@@ -82,6 +87,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintBriefObjProp(n, nameof(Holder), Holder);
             sb.AppendLine($"{spaces}{nameof(SetSeconds)} = {SetSeconds}");
 
             return sb.ToString();

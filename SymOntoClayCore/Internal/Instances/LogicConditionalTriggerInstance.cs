@@ -68,12 +68,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _localCodeExecutionContext.Holder = parent.Name;
 
-            _triggerConditionNodeObserverContext = new TriggerConditionNodeObserverContext(context, _storage);
+            _triggerConditionNodeObserverContext = new TriggerConditionNodeObserverContext(context, _storage, parent.Name);
 
             _setConditionalTriggerObserver = new LogicConditionalTriggerObserver(_triggerConditionNodeObserverContext, trigger.SetCondition);
             _setConditionalTriggerObserver.OnChanged += Observer_OnChanged;
 
-            _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext, parent.Name, trigger.SetCondition, trigger.SetBindingVariables);
+            _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext,  trigger.SetCondition, trigger.SetBindingVariables);
 
             _hasResetHandler = trigger.ResetCompiledFunctionBody != null;
 
@@ -91,7 +91,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     resetBindingVariables = trigger.SetBindingVariables;
                 }
 
-                _resetConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext, parent.Name, trigger.ResetCondition, resetBindingVariables);
+                _resetConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext, trigger.ResetCondition, resetBindingVariables);
             }
         }
 
@@ -117,9 +117,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private readonly bool _hasResetConditions;
         private readonly bool _hasResetHandler;
-
-        private List<string> _setFoundKeys = new List<string>();
-        private List<string> _resetFoundKeys = new List<string>();
 
         public void Init()
         {
@@ -251,7 +248,7 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log("Begin");
 #endif
 
-            var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList, ref _setFoundKeys);
+            var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
 
 #if DEBUG
             //Log($"isSetSuccsess = {isSetSuccsess}");
@@ -261,8 +258,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if (isSetSuccsess)
             {
-                _resetFoundKeys.Clear();
-
                 if (setVarList.Any())
                 {
                     ProcessSetResultWithItems(setVarList);
@@ -273,7 +268,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
             }
 
-            var isResetSuccsess = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList, ref _resetFoundKeys);
+            var isResetSuccsess = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList);
 
 #if DEBUG
             //Log($"isResetSuccsess = {isResetSuccsess}");
@@ -283,8 +278,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if (isResetSuccsess)
             {
-                _setFoundKeys.Clear();
-
                 if (_hasResetHandler)
                 {
                     if (resetVarList.Any())
@@ -299,7 +292,6 @@ namespace SymOntoClay.Core.Internal.Instances
                 else
                 {
                     _isOn = false;
-                    _resetFoundKeys.Clear();
                 }
             }
 
@@ -314,7 +306,7 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log("Begin");
 #endif
 
-            var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList, ref _setFoundKeys);
+            var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
 
 #if DEBUG
             //Log($"isSetSuccsess = {isSetSuccsess}");
@@ -324,8 +316,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if (isSetSuccsess)
             {
-                _resetFoundKeys.Clear();
-
                 if (setVarList.Any())
                 {
                     ProcessSetResultWithItems(setVarList);
@@ -351,7 +341,7 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log("Begin");
 #endif
 
-            var isResetSuccsess = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList, ref _resetFoundKeys);
+            var isResetSuccsess = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList);
 
 #if DEBUG
             //Log($"isResetSuccsess = {isResetSuccsess}");
@@ -361,8 +351,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if(isResetSuccsess)
             {
-                _setFoundKeys.Clear();
-
                 if (_hasResetHandler)
                 {
                     if (resetVarList.Any())
@@ -379,7 +367,7 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 if(!_isOn)
                 {
-                    var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList, ref _setFoundKeys);
+                    var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
 
 #if DEBUG
                     //Log($"isSetSuccsess = {isSetSuccsess}");
@@ -389,8 +377,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     if(isSetSuccsess)
                     {
-                        _resetFoundKeys.Clear();
-
                         if (setVarList.Any())
                         {
                             ProcessSetResultWithItems(setVarList);
@@ -419,7 +405,7 @@ namespace SymOntoClay.Core.Internal.Instances
             //    return;
             //}
 
-            var isResetSuccsess = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList, ref _resetFoundKeys);
+            var isResetSuccsess = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList);
 
 #if DEBUG
             //Log($"isResetSuccsess = {isResetSuccsess}");
@@ -429,8 +415,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if (isResetSuccsess)
             {
-                _setFoundKeys.Clear();
-
                 if (_hasResetHandler)
                 {
                     if (resetVarList.Any())
@@ -442,10 +426,6 @@ namespace SymOntoClay.Core.Internal.Instances
                         ProcessResetResultWithNoItems();
                     }
                 }
-            }
-            else
-            {
-                CleansingPreviousResetResults();
             }
 
 #if DEBUG
@@ -459,7 +439,7 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log("Begin");
 #endif
 
-            var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList, ref _setFoundKeys);
+            var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
 
 #if DEBUG
             //Log($"isSetSuccsess = {isSetSuccsess}");
@@ -469,8 +449,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if (isSetSuccsess)
             {
-                _resetFoundKeys.Clear();
-
                 if (setVarList.Any())
                 {
                     ProcessSetResultWithItems(setVarList);
@@ -491,7 +469,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     ProcessResetResultWithNoItems();
                 }
 
-                CleansingPreviousSetResults();
+                _isOn = false;
             }
 
 #if DEBUG
@@ -557,20 +535,6 @@ namespace SymOntoClay.Core.Internal.Instances
 #endif
         }
 
-        private void CleansingPreviousSetResults()
-        {
-#if DEBUG
-            //Log("Begin");
-#endif
-
-            _isOn = false;
-            _setFoundKeys.Clear();
-
-#if DEBUG
-            //Log("End");
-#endif
-        }
-
         private void ProcessResetResultWithNoItems()
         {
 #if DEBUG
@@ -622,19 +586,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 RunResetHandler(localCodeExecutionContext);
             }
-
-#if DEBUG
-            //Log("End");
-#endif
-        }
-
-        private void CleansingPreviousResetResults()
-        {
-#if DEBUG
-            //Log("Begin");
-#endif
-
-            _resetFoundKeys.Clear();
 
 #if DEBUG
             //Log("End");

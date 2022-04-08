@@ -253,6 +253,12 @@
         <member name="M:SymOntoClay.Core.Internal.BaseComponent.Dispose">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.BaseCoreContext.SymOntoClay#Core#Internal#IBaseCoreContext#Compiler">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.BaseCoreContext.DateTimeProvider">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.BaseLoggedComponent.Log(System.String)">
             <inheritdoc/>
         </member>
@@ -4972,6 +4978,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers.DurationTriggerConditionNodeObserver.OnDisposed">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers.FactTriggerConditionNodeObserver.OnDisposed">

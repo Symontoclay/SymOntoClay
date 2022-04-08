@@ -32,5 +32,6 @@ namespace SymOntoClay.Core.Internal
     {
         IEntityLogger Logger { get; }
         ICompiler Compiler { get; }
+        IDateTimeProvider DateTimeProvider { get; }
     }
 }

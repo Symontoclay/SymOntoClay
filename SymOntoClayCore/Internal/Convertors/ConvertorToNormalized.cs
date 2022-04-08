@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Convertors
     public static class ConvertorToNormalized
     {
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static RuleInstance Convert(RuleInstance source, CheckDirtyOptions options)

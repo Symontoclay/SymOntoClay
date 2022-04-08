@@ -49,6 +49,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
         private readonly IActivePeriodicObject _activeObject;
         private long _ticks = 0;
 
+        /// <inheritdoc/>
+        public float SecondsMultiplicator => 0.1F;
+
+        /// <inheritdoc/>
+        public float MillisecondsMultiplicator => 100;
+
         public void LoadFromSourceCode()
         {
             lock(_lockObj)

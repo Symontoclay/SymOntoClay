@@ -16,6 +16,8 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         public IEngineContext EngineContext { get; private set; }
         public IStorage Storage { get; private set; }
 
+        public long? OnTicks { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -33,6 +35,9 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(OnTicks)} = {OnTicks}");
+
             return sb.ToString();
         }
 
@@ -53,6 +58,9 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(OnTicks)} = {OnTicks}");
+
             return sb.ToString();
         }
 
@@ -73,6 +81,9 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(OnTicks)} = {OnTicks}");
+
             return sb.ToString();
         }
     }

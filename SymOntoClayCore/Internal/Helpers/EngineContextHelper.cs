@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CommonNames;
 using SymOntoClay.Core.Internal.Compiling;
@@ -35,6 +36,10 @@ namespace SymOntoClay.Core.Internal.Helpers
 {
     public static class EngineContextHelper
     {
+#if DEBUG
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         public static EngineContext CreateAndInitContext(EngineSettings settings)
         {
             var context = new EngineContext(settings.Logger);
@@ -109,10 +114,17 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.DataResolversFactory = new DataResolversFactory(context);
 
             context.ActivePeriodicObjectContext = new ActivePeriodicObjectContext(settings.SyncContext);
+
         }
 
         private static void BaseInitBaseCoreContext(BaseCoreContext context, BaseCoreSettings settings)
         {
+#if DEBUG
+            //_gbcLogger.Info($"context = {context}");
+            //_gbcLogger.Info($"settings.DateTimeProvider != null = {settings.DateTimeProvider != null}");
+#endif
+
+            context.DateTimeProvider = settings.DateTimeProvider;
         }
     }
 }

@@ -37,6 +37,10 @@ namespace SymOntoClay.Core.Internal
 
         public Compiler Compiler { get; set; }
 
+        /// <inheritdoc/>
         ICompiler IBaseCoreContext.Compiler => Compiler;
+
+        /// <inheritdoc/>
+        public IDateTimeProvider DateTimeProvider { get; set; }
     }
 }

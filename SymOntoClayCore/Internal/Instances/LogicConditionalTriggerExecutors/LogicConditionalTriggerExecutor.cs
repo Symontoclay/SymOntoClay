@@ -54,9 +54,21 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                 case KindOfTriggerConditionNode.Fact:
                     return RunFact(condition, varList, ref foundKeys);
 
+                case KindOfTriggerConditionNode.Duration:
+                    return RunDuration(condition);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
+        }
+
+        private bool RunDuration(TriggerConditionNode condition)
+        {
+#if DEBUG
+            Log($"condition = {condition}");
+#endif
+
+            return true;
         }
 
         private bool RunFact(TriggerConditionNode condition, List<List<Var>> varList, ref List<string> foundKeys)

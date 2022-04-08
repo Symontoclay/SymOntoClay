@@ -719,6 +719,12 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.ResolveIfNeeds">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.SecondsMultiplicator">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.MillisecondsMultiplicator">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.CurrentTiks">
             <inheritdoc/>
         </member>

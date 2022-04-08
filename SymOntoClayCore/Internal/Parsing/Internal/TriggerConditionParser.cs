@@ -42,8 +42,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_currToken = {_currToken}");
+            //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -85,7 +85,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 parser.Run();
 
 #if DEBUG
-                                Log($"parser.Result = {parser.Result}");
+                                //Log($"parser.Result = {parser.Result}");
 #endif
 
                                 Result = CreateDuration(parser.Result);

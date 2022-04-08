@@ -55,8 +55,8 @@ namespace SymOntoClay.Core.Internal.Instances
             //_trigger.DoubleConditionsStrategy = DoubleConditionsStrategy.PriorReset;
             //_trigger.DoubleConditionsStrategy = DoubleConditionsStrategy.Equal;
             //Log($"_trigger = {_trigger}");
-            Log($"_trigger.SetCondition = {_trigger.SetCondition?.GetHumanizeDbgString()}");
-            Log($"_trigger.ResetCondition = {_trigger.ResetCondition?.GetHumanizeDbgString()}");
+            //Log($"_trigger.SetCondition = {_trigger.SetCondition?.GetHumanizeDbgString()}");
+            //Log($"_trigger.ResetCondition = {_trigger.ResetCondition?.GetHumanizeDbgString()}");
             //Log($"_trigger.DoubleConditionsStrategy = {_trigger.DoubleConditionsStrategy}");
             //Log($"_dateTimeProvider.CurrentTiks = {_dateTimeProvider.CurrentTiks}");
 #endif
@@ -185,12 +185,12 @@ namespace SymOntoClay.Core.Internal.Instances
         private void DoSearch()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
 #if DEBUG
-            Log($"_dateTimeProvider.CurrentTiks = {_dateTimeProvider.CurrentTiks}");
-            Log($"_isOn = {_isOn}");
+            //Log($"_dateTimeProvider.CurrentTiks = {_dateTimeProvider.CurrentTiks}");
+            //Log($"_isOn = {_isOn}");
 #endif
 
             if (_hasResetConditions)
@@ -219,7 +219,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Log($"_isOn (after) = {_isOn}");
+            //Log($"_isOn (after) = {_isOn}");
 #endif
 
             if(_isOn)
@@ -238,7 +238,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 

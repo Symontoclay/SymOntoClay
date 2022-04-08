@@ -54,9 +54,9 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             var secondsNow = _dateTimeProvider.CurrentTiks * _dateTimeProvider.SecondsMultiplicator;
 
 #if DEBUG
-            Log($"_context.SetSeconds = {_context.SetSeconds}");
-            Log($"_dateTimeProvider.CurrentTiks = {_dateTimeProvider.CurrentTiks}");
-            Log($"secondsNow = {secondsNow}");
+            //Log($"_context.SetSeconds = {_context.SetSeconds}");
+            //Log($"_dateTimeProvider.CurrentTiks = {_dateTimeProvider.CurrentTiks}");
+            //Log($"secondsNow = {secondsNow}");
 #endif
 
             if(secondsNow > _context.SetSeconds + _targetDuration)

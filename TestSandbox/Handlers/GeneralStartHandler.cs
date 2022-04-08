@@ -49,7 +49,7 @@ namespace TestSandbox.Handlers
 
             _world.Start();
 
-            Thread.Sleep(2000);
+            Thread.Sleep(100);
 
             _logger.Log("|||||||||||||");
 
@@ -65,10 +65,10 @@ namespace TestSandbox.Handlers
             //_npc.InsertFact("distance(I, #a, 14.71526)");
             //_npc.InsertFact("{: see(I, enemy) :}");
 
-            //Thread.Sleep(2000);
+            Thread.Sleep(100);
 
-            //_npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
-            //_logger.Log("|-|-|-|-|-|-|-|-|-|-|-|-|");
+            _npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
+            _logger.Log("|-|-|-|-|-|-|-|-|-|-|-|-|");
 
             //_npc.InsertFact("{: see(I, barrel) :}");
 

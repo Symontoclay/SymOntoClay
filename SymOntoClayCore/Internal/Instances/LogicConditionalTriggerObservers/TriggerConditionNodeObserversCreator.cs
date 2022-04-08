@@ -24,6 +24,10 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
                     result.Add(new FactTriggerConditionNodeObserver(context.EngineContext.Logger, context.Storage));
                     break;
 
+                case KindOfTriggerConditionNode.Duration:
+                    result.Add(new DurationTriggerConditionNodeObserver(context, condition));
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(condition.Kind), condition.Kind, null);
             }

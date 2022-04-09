@@ -19,7 +19,11 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         {
             _toSystemBoolResolver = context.EngineContext.DataResolversFactory.GetToSystemBoolResolver();
 
-            _node = TriggerConditionNodeExecutorsCreator.CreateExecutors(context, bindingVariables, condition);
+            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            localCodeExecutionContext.Storage = context.Storage;
+            localCodeExecutionContext.Holder = context.Holder;
+
+            _node = TriggerConditionNodeExecutorsCreator.CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition);
         }
 
         private ToSystemBoolResolver _toSystemBoolResolver;
@@ -27,7 +31,9 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 
         public bool Run(out List<List<Var>> varList)
         {
-            return _toSystemBoolResolver.Resolve(_node.Run(out varList));
+            varList = new List<List<Var>>();
+
+            return _toSystemBoolResolver.Resolve(_node.Run(varList));
         }
     }
 }

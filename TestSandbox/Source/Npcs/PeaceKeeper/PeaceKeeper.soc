@@ -6,7 +6,7 @@
         'End' >> @>log;
     }
 
-    var @a;
+    var @a = 15;
 
 	on {: see(I, #a) :} duration 1 (down) => 
     {

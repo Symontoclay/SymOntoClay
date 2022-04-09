@@ -42,6 +42,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private readonly InheritanceResolver _inheritanceResolver;
 
+        public Operator GetOperator(KindOfOperator kindOfOperator, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return GetOperator(kindOfOperator, localCodeExecutionContext, _defaultOptions);
+        }
+
         public Operator GetOperator(KindOfOperator kindOfOperator, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
@@ -119,5 +124,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             return result;
         }
+
+        private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
     }
 }

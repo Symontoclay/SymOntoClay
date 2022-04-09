@@ -129,6 +129,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
+        public Value GetVarValue(StrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return GetVarValue(varName, localCodeExecutionContext, _defaultOptions);
+        }
+
         public Value GetVarValue(StrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG

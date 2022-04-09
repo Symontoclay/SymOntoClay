@@ -1,5 +1,7 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
 using System;
 using System.Collections.Generic;
@@ -12,23 +14,26 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private enum State
         {
             Init,
-            GotInitOpenRoundBracket,
             GotDurationMark
         }
 
-        public TriggerConditionParser(InternalParserContext context, bool setCondition)
+        public TriggerConditionParser(InternalParserContext context, bool closeByRoundBracket = false)
             : base(context)
         {
-            _setCondition = setCondition;
+            _closeByRoundBracket = closeByRoundBracket;
         }
-
-        private readonly bool _setCondition;
 
         private State _state = State.Init;
 
         public TriggerConditionNode Result { get; private set; }
 
         private IntermediateAstNodePoint _nodePoint = new IntermediateAstNodePoint();
+
+        private bool _closeByRoundBracket;
+
+        private bool _hasSomething;
+        private TriggerConditionNode _lastIsOperator;
+        private TriggerConditionNode _lastBinaryOperator;
 
         /// <inheritdoc/>
         protected override void OnFinish()
@@ -65,23 +70,32 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     _state = State.GotDurationMark;
                                     break;
 
+                                case KeyWordTokenKind.Is:
+                                    ProcessIsOperator();
+                                    break;
+
                                 default:
                                     throw new UnexpectedTokenException(_currToken);
                             }
                             break;
 
-                        case TokenKind.OpenRoundBracket:
-                            _state = State.GotInitOpenRoundBracket;
+                        case TokenKind.Var:
+                            ProcessVar();
                             break;
 
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
-                    }
-                    break;
+                        case TokenKind.Number:
+                            ProcessNumber();
+                            break;
 
-                case State.GotInitOpenRoundBracket:
-                    switch (_currToken.TokenKind)
-                    {
+                        case TokenKind.CloseRoundBracket:
+                            if(_closeByRoundBracket)
+                            {
+                                _context.Recovery(_currToken);
+                                Exit();
+                                break;
+                            }
+                            throw new UnexpectedTokenException(_currToken);
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -136,6 +150,61 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             conditionNode.Value = value;
 
             return conditionNode;
+        }
+
+        private void ProcessVar()
+        {
+            _lastBinaryOperator = null;
+            _lastIsOperator = null;
+            _hasSomething = true;
+
+            var value = NameHelper.CreateName(_currToken.Content);
+
+            var node = new TriggerConditionNode() { Kind = KindOfTriggerConditionNode.Var };
+
+            node.Name = value;
+
+            var intermediateNode = new IntermediateAstNode(node);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+        }
+
+        private void ProcessNumber()
+        {
+            _lastBinaryOperator = null;
+            _lastIsOperator = null;
+            _hasSomething = true;
+
+            _context.Recovery(_currToken);
+            var parser = new NumberParser(_context);
+            parser.Run();
+
+            var node = new TriggerConditionNode() { Kind = KindOfTriggerConditionNode.Value };
+            node.Value = parser.Result;
+
+            var intermediateNode = new IntermediateAstNode(node);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+        }
+
+        private void ProcessIsOperator()
+        {
+            if(!_hasSomething)
+            {
+                throw new UnexpectedTokenException(_currToken);
+            }
+
+            var node = new TriggerConditionNode() { Kind = KindOfTriggerConditionNode.BinaryOperator };
+            node.KindOfOperator = KindOfOperator.Is;
+
+            _lastIsOperator = node;
+            _lastBinaryOperator = node;
+
+            var priority = OperatorsHelper.GetPriority(node.KindOfOperator);
+
+            var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.BinaryOperator, priority);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
         }
     }
 }

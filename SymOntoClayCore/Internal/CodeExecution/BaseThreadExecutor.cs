@@ -274,7 +274,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             //Log($"varName = {varName}");
 #endif
 
-                            var targetValue = _varsResolver.GetVarValue(varName, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                            var targetValue = _varsResolver.GetVarValue(varName, _currentCodeFrame.LocalContext);
 
 #if DEBUG
                             //Log($"targetValue = {targetValue}");
@@ -401,7 +401,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             //Log($"kindOfOperator = {kindOfOperator}");
 #endif
 
-                            var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                            var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, _currentCodeFrame.LocalContext);
 
 #if DEBUG
                             //Log($"operatorInfo (1) = {operatorInfo}");

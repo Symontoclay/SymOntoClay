@@ -12,21 +12,16 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 {
     public class FactTriggerConditionNodeExecutor: BaseTriggerConditionNodeExecutor
     {
-        public FactTriggerConditionNodeExecutor(IEngineContext engineContext, IStorage storage, StrongIdentifierValue holder, TriggerConditionNode condition, BindingVariables bindingVariables)
+        public FactTriggerConditionNodeExecutor(IEngineContext engineContext, LocalCodeExecutionContext localCodeExecutionContext, TriggerConditionNode condition, BindingVariables bindingVariables)
             : base(engineContext.Logger)
         {
             _engineContext = engineContext;
 
-            _storage = storage;
             _bindingVariables = bindingVariables;
 
             var dataResolversFactory = _engineContext.DataResolversFactory;
 
             _searcher = dataResolversFactory.GetLogicalSearchResolver();
-
-            var localCodeExecutionContext = new LocalCodeExecutionContext();
-            localCodeExecutionContext.Storage = _storage;
-            localCodeExecutionContext.Holder = holder;
 
             _searchOptions = new LogicalSearchOptions();
             _searchOptions.QueryExpression = condition.RuleInstance;
@@ -34,7 +29,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         }
 
         private readonly IEngineContext _engineContext;
-        private readonly IStorage _storage;
         private readonly BindingVariables _bindingVariables;
 
         private readonly LogicalSearchOptions _searchOptions;
@@ -43,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         private List<string> _foundKeys = new List<string>();
 
         /// <inheritdoc/>
-        protected override Value OnRunRun(List<List<Var>> varList)
+        public override Value Run(List<List<Var>> varList)
         {
             var searchResult = _searcher.Run(_searchOptions);
 

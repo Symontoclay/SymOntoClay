@@ -30,7 +30,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         private readonly int _targetDuration;
 
         /// <inheritdoc/>
-        protected override Value OnRunRun(List<List<Var>> varList)
+        public override Value Run(List<List<Var>> varList)
         {
             if (!_context.SetSeconds.HasValue)
             {

@@ -13,14 +13,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         {
         }
 
-        public Value Run(out List<List<Var>> varList)
-        {
-            varList = new List<List<Var>>();
-
-            return OnRunRun(varList);
-        }
-
-        protected abstract Value OnRunRun(List<List<Var>> varList);
+        public abstract Value Run(List<List<Var>> varList);
 
         public BaseTriggerConditionNodeExecutor Left { get; set; }
         public BaseTriggerConditionNodeExecutor Right { get; set; }

@@ -28,6 +28,18 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
                     result.Add(new DurationTriggerConditionNodeObserver(context, condition));
                     break;
 
+                case KindOfTriggerConditionNode.Var:
+                    result.Add(new VarTriggerConditionNodeObserver(context.EngineContext.Logger, context.Storage));
+                    break;
+
+                case KindOfTriggerConditionNode.Value:
+                    break;
+
+                case KindOfTriggerConditionNode.BinaryOperator:
+                    CreateObservers(result, context, condition.Left);
+                    CreateObservers(result, context, condition.Right);
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(condition.Kind), condition.Kind, null);
             }

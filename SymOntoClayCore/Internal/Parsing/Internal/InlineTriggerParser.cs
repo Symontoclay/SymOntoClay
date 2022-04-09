@@ -40,10 +40,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             Init,
             WaitForSetCondition,
+            WaitForCloseRoundBracketOfSetCondition,
             GotSetCondition,
             GotSetBindingVariables,
             GotDown,
             WaitForResetCondition,
+            WaitForCloseRoundBracketOfResetCondition,
             GotResetCondition,
             WaitForDoubleConditionsStrategy,
             WaitForFinishingDoubleConditionsStrategy,
@@ -130,20 +132,44 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
-                        case TokenKind.OpenFactBracket:
-                        case TokenKind.OpenRoundBracket:
-                        {
+                        case TokenKind.OpenFactBracket:                        
+                            {
                                 _inlineTrigger.KindOfInlineTrigger = KindOfInlineTrigger.LogicConditional;
 
                                 _context.Recovery(_currToken);
 
-                                var parser = new TriggerConditionParser(_context, true);
+                                var parser = new TriggerConditionParser(_context);
                                 parser.Run();
 
                                 _inlineTrigger.SetCondition = parser.Result;
 
                                 _state = State.GotSetCondition;
                             }
+                            break;
+
+                        case TokenKind.OpenRoundBracket:
+                            {
+                                _inlineTrigger.KindOfInlineTrigger = KindOfInlineTrigger.LogicConditional;
+
+                                var parser = new TriggerConditionParser(_context, true);
+                                parser.Run();
+
+                                _inlineTrigger.SetCondition = parser.Result;
+
+                                _state = State.WaitForCloseRoundBracketOfSetCondition;
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForCloseRoundBracketOfSetCondition:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.CloseRoundBracket:
+                            _state = State.GotSetCondition;
                             break;
 
                         default:
@@ -194,7 +220,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     {
                                         _context.Recovery(_currToken);
 
-                                        var parser = new TriggerConditionParser(_context, true);
+                                        var parser = new TriggerConditionParser(_context);
                                         parser.Run();
 
                                         _inlineTrigger.ResetCondition = parser.Result;
@@ -244,18 +270,40 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.WaitForResetCondition:
                     switch (_currToken.TokenKind)
                     {
-                        case TokenKind.OpenFactBracket:
-                        case TokenKind.OpenRoundBracket:
+                        case TokenKind.OpenFactBracket:                        
                             {
                                 _context.Recovery(_currToken);
 
-                                var parser = new TriggerConditionParser(_context, true);
+                                var parser = new TriggerConditionParser(_context);
                                 parser.Run();
 
                                 _inlineTrigger.ResetCondition = parser.Result;
 
                                 _state = State.GotResetCondition;
                             }
+                            break;
+
+                        case TokenKind.OpenRoundBracket:
+                            {
+                                var parser = new TriggerConditionParser(_context, true);
+                                parser.Run();
+
+                                _inlineTrigger.ResetCondition = parser.Result;
+
+                                _state = State.WaitForCloseRoundBracketOfResetCondition;
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForCloseRoundBracketOfResetCondition:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.CloseRoundBracket:
+                            _state = State.GotResetCondition;
                             break;
 
                         default:

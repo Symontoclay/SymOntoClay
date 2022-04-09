@@ -43,14 +43,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
-        private InheritanceResolver _inheritanceResolver;
-        private FuzzyLogicResolver _fuzzyLogicResolver;
-        private NumberValueLinearResolver _numberValueLinearResolver;
-        private VarsResolver _varsResolver;
+        private readonly InheritanceResolver _inheritanceResolver;
+        private readonly FuzzyLogicResolver _fuzzyLogicResolver;
+        private readonly NumberValueLinearResolver _numberValueLinearResolver;
+        private readonly VarsResolver _varsResolver;
 
         public LogicalSearchResolver(IMainStorageContext context)
             : base(context)
         {
+            var dataResolversFactory = context.DataResolversFactory;
+
+            _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
+            _fuzzyLogicResolver = dataResolversFactory.GetFuzzyLogicResolver();
+            _numberValueLinearResolver = dataResolversFactory.GetNumberValueLinearResolver();
+            _varsResolver = dataResolversFactory.GetVarsResolver();
         }
 
         public bool IsTruth(LogicalSearchOptions options)
@@ -69,16 +75,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
             //Log($"options = {options}");
 #endif
-
-            if(_inheritanceResolver == null)
-            {
-                var dataResolversFactory = _context.DataResolversFactory;
-
-                _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
-                _fuzzyLogicResolver = dataResolversFactory.GetFuzzyLogicResolver();
-                _numberValueLinearResolver = dataResolversFactory.GetNumberValueLinearResolver();
-                _varsResolver = dataResolversFactory.GetVarsResolver();
-            }
 
             var optionsOfFillExecutingCard = new OptionsOfFillExecutingCard();
             optionsOfFillExecutingCard.EntityIdOnly = options.EntityIdOnly;

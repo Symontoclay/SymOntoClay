@@ -40,6 +40,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public MethodsResolver(IMainStorageContext context)
             : base(context)
         {
+            _inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
         }
         #endregion
 
@@ -97,6 +98,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         #endregion
 
         #region private fields
+        private readonly InheritanceResolver _inheritanceResolver;
+
         private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
 
         private static readonly StrongIdentifierValue _fuzzyTypeIdentifier = NameHelper.CreateName(StandardNamesConstants.FuzzyTypeName);
@@ -126,12 +129,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //}
 #endif
 
-            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
-
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
             //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
@@ -190,12 +191,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //}
 #endif
 
-            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
-
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
             //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
@@ -267,12 +266,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //}
 #endif
 
-            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
-
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
             //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
@@ -341,12 +338,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //}
 #endif
 
-            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
-
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
             //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
@@ -405,12 +400,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //}
 #endif
 
-            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
-
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
             //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
@@ -482,12 +475,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //}
 #endif
 
-            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
-
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
             //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
@@ -686,8 +677,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
 #endif
 
-            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
-
             var result = new List<uint>();
 
             var countOfUsedParameters = 0;
@@ -710,7 +699,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     //Log($"parameterValue = {parameterValue}");
 #endif
 
-                    var distance = inheritanceResolver.GetDistance(argument.TypesList, parameterValue, localCodeExecutionContext, options);
+                    var distance = _inheritanceResolver.GetDistance(argument.TypesList, parameterValue, localCodeExecutionContext, options);
 
 #if DEBUG
                     //Log($"distance = {distance}");
@@ -779,8 +768,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<uint> IsFit(IExecutable function, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
-
             var positionedParametersEnumerator = positionedParameters.GetEnumerator();
 
             var result = new List<uint>();
@@ -809,7 +796,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //Log($"parameterItem = {parameterItem}");
 #endif
 
-                var distance = inheritanceResolver.GetDistance(argument.TypesList, parameterItem, localCodeExecutionContext, options);
+                var distance = _inheritanceResolver.GetDistance(argument.TypesList, parameterItem, localCodeExecutionContext, options);
 
 #if DEBUG
                 //Log($"distance = {distance}");
@@ -982,8 +969,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 return;
             }
-
-            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
 
             foreach (var function in source)
             {

@@ -36,7 +36,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public ChannelsResolver(IMainStorageContext context)
             : base(context)
         {
+            _inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
         }
+
+        private readonly InheritanceResolver _inheritanceResolver;
 
         public Channel GetChannel(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
@@ -56,12 +59,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //}
 #endif
 
-            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
-
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
             //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");

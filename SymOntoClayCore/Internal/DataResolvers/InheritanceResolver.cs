@@ -39,7 +39,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public InheritanceResolver(IMainStorageContext context)
             : base(context)
         {
+            _logicalValueLinearResolver = context.DataResolversFactory.GetLogicalValueLinearResolver();
         }
+
+        private readonly LogicalValueLinearResolver _logicalValueLinearResolver;
 
         public const uint SelfDistance = 0u;
         public const uint TopTypeDistance = uint.MaxValue;
@@ -238,8 +241,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return;
             }
 
-            var logicalValueLinearResolver = _context.DataResolversFactory.GetLogicalValueLinearResolver();
-
             foreach (var filteredItem in filteredList)
             {
                 var targetItem = filteredItem.ResultItem;
@@ -248,7 +249,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //Log($"targetItem = {targetItem}");
 #endif
 
-                var resolvedRankValue = logicalValueLinearResolver.Resolve(targetItem.Rank, localCodeExecutionContext, ResolverOptions.GetDefaultOptions(), true);
+                var resolvedRankValue = _logicalValueLinearResolver.Resolve(targetItem.Rank, localCodeExecutionContext, ResolverOptions.GetDefaultOptions(), true);
 
 #if DEBUG
                 //Log($"resolvedRankValue = {resolvedRankValue}");

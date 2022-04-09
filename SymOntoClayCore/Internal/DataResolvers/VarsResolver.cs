@@ -37,7 +37,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public VarsResolver(IMainStorageContext context)
             : base(context)
         {
+            _inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
         }
+
+        private readonly InheritanceResolver _inheritanceResolver;
 
         public void SetVarValue(StrongIdentifierValue varName, Value value, LocalCodeExecutionContext localCodeExecutionContext)
         {
@@ -93,9 +96,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return;
             }
 
-            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
-
-            var isFit = inheritanceResolver.IsFit(varItem.TypesList, value, localCodeExecutionContext, options);
+            var isFit = _inheritanceResolver.IsFit(varItem.TypesList, value, localCodeExecutionContext, options);
 
 #if DEBUG
             //Log($"isFit = {isFit}");
@@ -218,12 +219,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //}
 #endif
 
-            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
-
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
             //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");

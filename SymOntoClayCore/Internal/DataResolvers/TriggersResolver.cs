@@ -36,7 +36,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public TriggersResolver(IMainStorageContext context)
             : base(context)
         {
+            _inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
         }
+
+        private readonly InheritanceResolver _inheritanceResolver;
 
         public List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> ResolveLogicConditionalTriggersList(StrongIdentifierValue holder, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
@@ -52,12 +55,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //}
 #endif
 
-            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
-
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(holder, localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(holder, localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
             //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
@@ -92,12 +93,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //}
 #endif
 
-            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
-
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(holder, localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(holder, localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
             //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");

@@ -13,7 +13,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public CodeItemDirectivesResolver(IMainStorageContext context)
             : base(context)
         {
+            _inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
         }
+
+        private readonly InheritanceResolver _inheritanceResolver;
 
         public List<CodeItemDirective> Resolve(LocalCodeExecutionContext localCodeExecutionContext)
         {
@@ -22,12 +25,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public List<CodeItemDirective> Resolve(LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
-
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
             //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");

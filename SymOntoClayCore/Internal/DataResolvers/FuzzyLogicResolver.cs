@@ -37,10 +37,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public FuzzyLogicResolver(IMainStorageContext context)
             : base(context)
         {
+            _inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
             _toSystemBoolResolver = _context.DataResolversFactory.GetToSystemBoolResolver();
         }
 
-        private ToSystemBoolResolver _toSystemBoolResolver;
+        private readonly ToSystemBoolResolver _toSystemBoolResolver;
+        private readonly InheritanceResolver _inheritanceResolver;
 
         private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
 
@@ -282,8 +284,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //}
 #endif
 
-            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
-
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
@@ -297,7 +297,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 optionsForInheritanceResolver.AddSelf = false;
             }
 
-            var weightedInheritanceItems = inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
             //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");

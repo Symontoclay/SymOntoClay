@@ -12,6 +12,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private enum State
         {
             Init,
+            GotInitOpenRoundBracket,
             GotDurationMark
         }
 
@@ -42,8 +43,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -69,6 +70,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case TokenKind.OpenRoundBracket:
+                            _state = State.GotInitOpenRoundBracket;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotInitOpenRoundBracket:
+                    switch (_currToken.TokenKind)
+                    {
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

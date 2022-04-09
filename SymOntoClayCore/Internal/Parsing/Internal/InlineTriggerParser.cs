@@ -80,8 +80,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -131,7 +131,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.OpenFactBracket:
-                            {
+                        case TokenKind.OpenRoundBracket:
+                        {
                                 _inlineTrigger.KindOfInlineTrigger = KindOfInlineTrigger.LogicConditional;
 
                                 _context.Recovery(_currToken);
@@ -244,6 +245,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.OpenFactBracket:
+                        case TokenKind.OpenRoundBracket:
                             {
                                 _context.Recovery(_currToken);
 
@@ -426,6 +428,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case KeyWordTokenKind.Public:
                         case KeyWordTokenKind.Protected:
                         case KeyWordTokenKind.Private:
+                        case KeyWordTokenKind.Var:
                             return true;
 
                         default:

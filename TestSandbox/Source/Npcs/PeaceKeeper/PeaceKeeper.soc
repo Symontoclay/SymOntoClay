@@ -6,12 +6,16 @@
         'End' >> @>log;
     }
 
+    var @a;
+
 	on {: see(I, #a) :} duration 1 (down) => 
     {
 	    'S' >> @>log;
+        @a = 5;
 	}
-    else
+
+    on (@a is 5)
     {
-        'R' >> @>log;
+        'D' >> @>log;
     }
 }

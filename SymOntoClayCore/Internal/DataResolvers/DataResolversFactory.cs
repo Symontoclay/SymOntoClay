@@ -26,7 +26,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
 {
-    public class DataResolversFactory: BaseLoggedComponent, IDataResolversFactory
+    public class DataResolversFactory : BaseLoggedComponent, IDataResolversFactory
     {
         public DataResolversFactory(IMainStorageContext context)
             : base(context.Logger)
@@ -35,28 +35,55 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         private readonly IMainStorageContext _context;
-        private readonly object _lockObj = new object();
-
+        
         private ChannelsResolver _channelsResolver;
+        private readonly object _channelsResolverLockObj = new object();
+
         private InheritanceResolver _inheritanceResolver;
+        private readonly object _inheritanceResolverLockObj = new object();
+
         private LogicalValueLinearResolver _logicalValueLinearResolver;
+        private readonly object _logicalValueLinearResolverLockObj = new object();
+
         private OperatorsResolver _operatorsResolver;
+        private readonly object _operatorsResolverLockObj = new object();
+
         private NumberValueLinearResolver _numberValueLinearResolver;
+        private readonly object _numberValueLinearResolverLockObj = new object();
+
         private StrongIdentifierLinearResolver _strongIdentifierLinearResolver;
+        private readonly object _strongIdentifierLinearResolverLockObj = new object();
+
         private TriggersResolver _triggersResolver;
+        private readonly object _triggersResolverLockObj = new object();
+
         private VarsResolver _varsResolver;
+        private readonly object _varsResolverLockObj = new object();
+
         private LogicalSearchResolver _logicalSearchResolver;
+        private readonly object _logicalSearchResolverLockObj = new object();
+
         private FuzzyLogicResolver _fuzzyLogicResolver;
+        private readonly object _fuzzyLogicResolverLockObj = new object();
+
         private MethodsResolver _methodsResolver;
+        private readonly object _methodsResolverLockObj = new object();
+
         private CodeItemDirectivesResolver _codeItemDirectivesResolver;
+        private readonly object _codeItemDirectivesResolverLockObj = new object();
+
         private StatesResolver _statesResolver;
+        private readonly object _statesResolverLockObj = new object();
+
+        private ToSystemBoolResolver _toSystemBoolResolver;
+        private readonly object _toSystemBoolResolverLockObj = new object();
 
         /// <inheritdoc/>
         public ChannelsResolver GetChannelsResolver()
         {
-            lock(_lockObj)
+            lock (_channelsResolverLockObj)
             {
-                if(_channelsResolver == null)
+                if (_channelsResolver == null)
                 {
                     _channelsResolver = new ChannelsResolver(_context);
                 }
@@ -68,9 +95,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         /// <inheritdoc/>
         public InheritanceResolver GetInheritanceResolver()
         {
-            lock (_lockObj)
+            lock (_inheritanceResolverLockObj)
             {
-                if(_inheritanceResolver == null)
+                if (_inheritanceResolver == null)
                 {
                     _inheritanceResolver = new InheritanceResolver(_context);
                 }
@@ -82,7 +109,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         /// <inheritdoc/>
         public LogicalValueLinearResolver GetLogicalValueLinearResolver()
         {
-            lock (_lockObj)
+            lock (_logicalValueLinearResolverLockObj)
             {
                 if (_logicalValueLinearResolver == null)
                 {
@@ -96,7 +123,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         /// <inheritdoc/>
         public OperatorsResolver GetOperatorsResolver()
         {
-            lock (_lockObj)
+            lock (_operatorsResolverLockObj)
             {
                 if (_operatorsResolver == null)
                 {
@@ -110,9 +137,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         /// <inheritdoc/>
         public NumberValueLinearResolver GetNumberValueLinearResolver()
         {
-            lock (_lockObj)
+            lock (_numberValueLinearResolverLockObj)
             {
-                if(_numberValueLinearResolver == null)
+                if (_numberValueLinearResolver == null)
                 {
                     _numberValueLinearResolver = new NumberValueLinearResolver(_context);
                 }
@@ -124,7 +151,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         /// <inheritdoc/>
         public StrongIdentifierLinearResolver GetStrongIdentifierLinearResolver()
         {
-            lock (_lockObj)
+            lock (_strongIdentifierLinearResolverLockObj)
             {
                 if (_strongIdentifierLinearResolver == null)
                 {
@@ -134,13 +161,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return _strongIdentifierLinearResolver;
             }
         }
-            
+
         /// <inheritdoc/>
         public TriggersResolver GetTriggersResolver()
         {
-            lock(_lockObj)
+            lock (_triggersResolverLockObj)
             {
-                if(_triggersResolver == null)
+                if (_triggersResolver == null)
                 {
                     _triggersResolver = new TriggersResolver(_context);
                 }
@@ -152,9 +179,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         /// <inheritdoc/>
         public VarsResolver GetVarsResolver()
         {
-            lock (_lockObj)
+            lock (_varsResolverLockObj)
             {
-                if(_varsResolver == null)
+                if (_varsResolver == null)
                 {
                     _varsResolver = new VarsResolver(_context);
                 }
@@ -166,9 +193,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         /// <inheritdoc/>
         public LogicalSearchResolver GetLogicalSearchResolver()
         {
-            lock (_lockObj)
+            lock (_logicalSearchResolverLockObj)
             {
-                if(_logicalSearchResolver == null)
+                if (_logicalSearchResolver == null)
                 {
                     _logicalSearchResolver = new LogicalSearchResolver(_context);
                 }
@@ -180,7 +207,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         /// <inheritdoc/>
         public FuzzyLogicResolver GetFuzzyLogicResolver()
         {
-            lock (_lockObj)
+            lock (_fuzzyLogicResolverLockObj)
             {
                 if (_fuzzyLogicResolver == null)
                 {
@@ -194,7 +221,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         /// <inheritdoc/>
         public MethodsResolver GetMethodsResolver()
         {
-            lock (_lockObj)
+            lock (_methodsResolverLockObj)
             {
                 if (_methodsResolver == null)
                 {
@@ -208,9 +235,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         /// <inheritdoc/>
         public CodeItemDirectivesResolver GetCodeItemDirectivesResolver()
         {
-            lock (_lockObj)
+            lock (_codeItemDirectivesResolverLockObj)
             {
-                if(_codeItemDirectivesResolver == null)
+                if (_codeItemDirectivesResolver == null)
                 {
                     _codeItemDirectivesResolver = new CodeItemDirectivesResolver(_context);
                 }
@@ -222,7 +249,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         /// <inheritdoc/>
         public StatesResolver GetStatesResolver()
         {
-            lock (_lockObj)
+            lock (_statesResolverLockObj)
             {
                 if (_statesResolver == null)
                 {
@@ -230,6 +257,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 return _statesResolver;
+            }
+        }
+
+        /// <inheritdoc/>
+        public ToSystemBoolResolver GetToSystemBoolResolver()
+        {
+            lock (_toSystemBoolResolverLockObj)
+            {
+                if (_toSystemBoolResolver == null)
+                {
+                    _toSystemBoolResolver = new ToSystemBoolResolver(_context.Logger);
+                }
+
+                return _toSystemBoolResolver;
             }
         }
     }

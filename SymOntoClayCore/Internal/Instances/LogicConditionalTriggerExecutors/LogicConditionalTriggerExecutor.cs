@@ -17,14 +17,17 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         public LogicConditionalTriggerExecutor(TriggerConditionNodeObserverContext context, TriggerConditionNode condition, BindingVariables bindingVariables)
             : base(context.EngineContext.Logger)
         {
+            _toSystemBoolResolver = context.EngineContext.DataResolversFactory.GetToSystemBoolResolver();
+
             _node = TriggerConditionNodeExecutorsCreator.CreateExecutors(context, bindingVariables, condition);
         }
 
+        private ToSystemBoolResolver _toSystemBoolResolver;
         private readonly BaseTriggerConditionNodeExecutor _node;
 
         public bool Run(out List<List<Var>> varList)
         {
-            return _node.Run(out varList);
+            return _toSystemBoolResolver.Resolve(_node.Run(out varList));
         }
     }
 }

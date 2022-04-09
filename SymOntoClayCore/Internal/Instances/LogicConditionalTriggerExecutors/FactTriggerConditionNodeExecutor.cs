@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         private List<string> _foundKeys = new List<string>();
 
         /// <inheritdoc/>
-        protected override bool OnRunRun(List<List<Var>> varList)
+        protected override Value OnRunRun(List<List<Var>> varList)
         {
             var searchResult = _searcher.Run(_searchOptions);
 
@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             {
                 _foundKeys.Clear();
 
-                return false;
+                return LogicalValue.FalseValue;
             }
 
             if (searchResult.Items.Any())
@@ -133,7 +133,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                 _foundKeys = usedKeys;
             }
 
-            return true;
+            return LogicalValue.TrueValue;
         }
     }
 }

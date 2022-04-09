@@ -30,11 +30,11 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         private readonly int _targetDuration;
 
         /// <inheritdoc/>
-        protected override bool OnRunRun(List<List<Var>> varList)
+        protected override Value OnRunRun(List<List<Var>> varList)
         {
             if (!_context.SetSeconds.HasValue)
             {
-                return false;
+                return LogicalValue.FalseValue;
             }
 
             var secondsNow = _dateTimeProvider.CurrentTiks * _dateTimeProvider.SecondsMultiplicator;
@@ -47,10 +47,10 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 
             if (secondsNow > _context.SetSeconds + _targetDuration)
             {
-                return true;
+                return LogicalValue.TrueValue;
             }
 
-            return false;
+            return LogicalValue.FalseValue;
         }
     }
 }

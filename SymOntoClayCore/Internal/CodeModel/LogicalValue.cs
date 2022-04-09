@@ -35,8 +35,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class LogicalValue: Value
     {
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
+
+        public static LogicalValue NullValue = new LogicalValue(null);
+        public static LogicalValue TrueValue = new LogicalValue(true);
+        public static LogicalValue FalseValue = new LogicalValue(false);
+
+        static LogicalValue()
+        {
+            NullValue.CheckDirty();
+            TrueValue.CheckDirty();
+            FalseValue.CheckDirty();
+        }
 
         public LogicalValue(bool systemBool)
             : this(systemBool ? 1: 0)
@@ -81,7 +92,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             if(!left.SystemValue.HasValue || !right.SystemValue.HasValue)
             {
-                return new LogicalValue(null);
+                return NullValue;
             }
 
             return new LogicalValue(SystemFuzzyLogicOperators.Or(left.SystemValue.Value, right.SystemValue.Value));
@@ -91,7 +102,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             if (!left.SystemValue.HasValue || !right.SystemValue.HasValue)
             {
-                return new LogicalValue(null);
+                return NullValue;
             }
 
             return new LogicalValue(SystemFuzzyLogicOperators.And(left.SystemValue.Value, right.SystemValue.Value));

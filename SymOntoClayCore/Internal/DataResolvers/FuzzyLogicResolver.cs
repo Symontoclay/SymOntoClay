@@ -37,9 +37,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public FuzzyLogicResolver(IMainStorageContext context)
             : base(context)
         {
+            _toSystemBoolResolver = _context.DataResolversFactory.GetToSystemBoolResolver();
         }
 
-        private readonly double _truthThreshold = 0.75;
+        private ToSystemBoolResolver _toSystemBoolResolver;
+
         private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
 
         public NumberValue Resolve(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
@@ -216,7 +218,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private bool FuzzyNumericValueToSystemBool(double fuzzyValue)
         {
-            return fuzzyValue >= _truthThreshold;
+            return _toSystemBoolResolver.Resolve(fuzzyValue);
         }
 
         private List<FuzzyLogicOperator> GetFuzzyLogicOperators(LinguisticVariable linguisticVariable, IEnumerable<StrongIdentifierValue> operatorsIdentifiers)

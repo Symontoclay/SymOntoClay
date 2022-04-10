@@ -5209,9 +5209,6 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.CallingFunctionInTriggerConditionParser.OnEnter">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.CallingFunctionInTriggerConditionParser.OnFinish">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.CallingFunctionInTriggerConditionParser.OnRun">
             <inheritdoc/>
         </member>

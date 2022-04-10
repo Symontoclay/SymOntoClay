@@ -22,7 +22,7 @@
         @b = 1;
 	}
 
-    on (SomeFun(1, 2))
+    on (SomeFun(@param1: 1, @param2: 2))
     {
         'D' >> @>log;
     }

@@ -99,6 +99,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessNumber();
                             break;
 
+                        case TokenKind.OpenRoundBracket:
+                            ProcessCallingFunction();
+                            break;
+
                         case TokenKind.CloseRoundBracket:
                             if(_terminators.Any(p => p == TokenKind.CloseRoundBracket))
                             {
@@ -108,9 +112,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             throw new UnexpectedTokenException(_currToken);
 
-                        case TokenKind.OpenRoundBracket:
-                            ProcessCallingFunction();
-                            break;
+                        case TokenKind.Colon:
+                            if (_terminators.Any(p => p == TokenKind.Colon))
+                            {
+                                _context.Recovery(_currToken);
+                                Exit();
+                                break;
+                            }
+                            throw new UnexpectedTokenException(_currToken);
 
                         default:
                             throw new UnexpectedTokenException(_currToken);

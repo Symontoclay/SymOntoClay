@@ -2,6 +2,7 @@
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
@@ -122,6 +123,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             Exit();
                             break;
 
+                        case TokenKind.Colon:
+                            Result.IsNamedParameters = true;
+
+                            var prevParam = Result.ParamsList.First();
+
+#if DEBUG
+                            //Log($"prevParam = {prevParam}");
+#endif
+
+                            if(prevParam.Kind == KindOfTriggerConditionNode.Var)
+                            {
+                                prevParam.Kind = KindOfTriggerConditionNode.Concept;
+                            }
+
+                            _state = State.WaitForValueOfNamedMainParameter;
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -130,6 +148,28 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.WaitForValueOfNamedMainParameter:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.Number:
+                        case TokenKind.Identifier:
+                        case TokenKind.Word:
+                        case TokenKind.String:
+                        case TokenKind.Var:
+                        case TokenKind.EntityCondition:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var parser = new TriggerConditionParser(_context, TokenKind.CloseRoundBracket, TokenKind.Colon, TokenKind.Comma);
+                                parser.Run();
+
+#if DEBUG
+                                //Log($"parser.Result = {parser.Result}");
+#endif
+
+                                Result.ParamsList.Add(parser.Result);
+
+                                _state = State.GotValueOfNamedMainParameter;
+                            }
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -138,6 +178,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotValueOfNamedMainParameter:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.CloseRoundBracket:
+                            Exit();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

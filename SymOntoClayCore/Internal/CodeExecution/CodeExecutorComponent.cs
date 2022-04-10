@@ -242,17 +242,33 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private Dictionary<StrongIdentifierValue, Value> TakeNamedParameters(List<Value> rawParamsList)
         {
+#if DEBUG
+            //Log($"rawParamsList = {rawParamsList.WriteListToString()}");
+#endif
+
             var result = new Dictionary<StrongIdentifierValue, Value>();
 
             var enumerator = rawParamsList.GetEnumerator();
 
             while (enumerator.MoveNext())
             {
+#if DEBUG
+                //Log($"enumerator.Current = {enumerator.Current}");
+#endif
+
                 var name = enumerator.Current.AsStrongIdentifierValue;
+
+#if DEBUG
+                //Log($"name = {name}");
+#endif
 
                 enumerator.MoveNext();
 
                 var value = enumerator.Current;
+
+#if DEBUG
+                //Log($"value = {value}");
+#endif
 
                 result[name] = value;
             }

@@ -5,6 +5,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
@@ -17,10 +18,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotDurationMark
         }
 
-        public TriggerConditionParser(InternalParserContext context, bool closeByRoundBracket = false)
+        public TriggerConditionParser(InternalParserContext context, params TokenKind[] terminators)
             : base(context)
         {
-            _closeByRoundBracket = closeByRoundBracket;
+            _terminators = terminators;
         }
 
         private State _state = State.Init;
@@ -29,7 +30,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private IntermediateAstNodePoint _nodePoint = new IntermediateAstNodePoint();
 
-        private bool _closeByRoundBracket;
+        private readonly TokenKind[] _terminators;
 
         private bool _hasSomething;
         private TriggerConditionNode _lastIsOperator;
@@ -99,7 +100,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.CloseRoundBracket:
-                            if(_closeByRoundBracket)
+                            if(_terminators.Any(p => p == TokenKind.CloseRoundBracket))
                             {
                                 _context.Recovery(_currToken);
                                 Exit();

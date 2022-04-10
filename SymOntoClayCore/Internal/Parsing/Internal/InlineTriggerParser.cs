@@ -151,7 +151,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             {
                                 _inlineTrigger.KindOfInlineTrigger = KindOfInlineTrigger.LogicConditional;
 
-                                var parser = new TriggerConditionParser(_context, true);
+                                var parser = new TriggerConditionParser(_context, TokenKind.CloseRoundBracket);
                                 parser.Run();
 
                                 _inlineTrigger.SetCondition = parser.Result;
@@ -285,7 +285,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.OpenRoundBracket:
                             {
-                                var parser = new TriggerConditionParser(_context, true);
+                                var parser = new TriggerConditionParser(_context, TokenKind.CloseRoundBracket);
                                 parser.Run();
 
                                 _inlineTrigger.ResetCondition = parser.Result;

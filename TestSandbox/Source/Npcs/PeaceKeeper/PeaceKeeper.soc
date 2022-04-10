@@ -6,7 +6,7 @@
         'End' >> @>log;
     }
 
-    fun SomeFun()
+    fun SomeFun(@param1)
     {
         //'Begin SomeFun' >> @>log;
         return @b;
@@ -22,7 +22,7 @@
         @b = 1;
 	}
 
-    on (SomeFun())
+    on (SomeFun(1))
     {
         'D' >> @>log;
     }

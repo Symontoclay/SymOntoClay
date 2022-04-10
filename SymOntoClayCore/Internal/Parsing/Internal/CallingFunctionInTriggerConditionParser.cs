@@ -32,10 +32,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            Result = new TriggerConditionNode() 
-            { 
-                Kind = KindOfTriggerConditionNode.UnaryOperator, 
-                KindOfOperator = KindOfOperator.CallFunction 
+            Result = new TriggerConditionNode()
+            {
+                Kind = KindOfTriggerConditionNode.UnaryOperator,
+                KindOfOperator = KindOfOperator.CallFunction,
+                ParamsList = new List<TriggerConditionNode>()
             };
         }
 
@@ -87,6 +88,28 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             Exit();
                             break;
 
+                        case TokenKind.Number:
+                        case TokenKind.Identifier:
+                        case TokenKind.Word:
+                        case TokenKind.String:
+                        case TokenKind.Var:
+                        case TokenKind.EntityCondition:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var parser = new TriggerConditionParser(_context, TokenKind.CloseRoundBracket, TokenKind.Colon, TokenKind.Comma);
+                                parser.Run();
+
+#if DEBUG
+                                //Log($"parser.Result = {parser.Result}");
+#endif
+
+                                Result.ParamsList.Add(parser.Result);
+
+                                _state = State.GotPositionedMainParameter;
+                            }
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -95,6 +118,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotPositionedMainParameter:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.CloseRoundBracket:
+                            Exit();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

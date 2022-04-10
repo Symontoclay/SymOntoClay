@@ -31,5 +31,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     {
         Value ExecuteBatchAsync(List<ProcessInitialInfo> processInitialInfoList);
         Value ExecuteAsync(ProcessInitialInfo processInitialInfo);
+        Value CallExecutableSync(IExecutable executable, List<Value> positionedParameters, LocalCodeExecutionContext parentLocalCodeExecutionContext);
     }
 }

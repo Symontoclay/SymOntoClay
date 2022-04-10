@@ -295,6 +295,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.ExecuteBatchAsync(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.CallExecutableSync(SymOntoClay.Core.Internal.CodeExecution.IExecutable,System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrame.ToString">
             <inheritdoc/>
         </member>
@@ -5034,6 +5037,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers.TriggerConditionNodeObserverContext.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers.VarTriggerConditionNodeObserver.OnDisposed">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ProcessInfo.Status">
             <inheritdoc/>
         </member>
@@ -6436,6 +6442,12 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.Storage">
+            <inheritdoc/>
+        </member>
+        <member name="E:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.OnChanged">
+            <inheritdoc/>
+        </member>
+        <member name="E:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.OnChangedWithKeys">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.SetSystemValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">

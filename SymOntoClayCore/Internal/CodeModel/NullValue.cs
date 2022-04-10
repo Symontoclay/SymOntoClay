@@ -32,6 +32,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class NullValue : Value
     {
+        public static readonly NullValue Instance = new NullValue();
+
+        static NullValue()
+        {
+            Instance.CheckDirty();
+        }
+
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.NullValue;
 

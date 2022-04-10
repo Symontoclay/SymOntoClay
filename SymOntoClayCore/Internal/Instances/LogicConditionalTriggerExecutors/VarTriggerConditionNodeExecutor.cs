@@ -21,7 +21,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             _varsResolver = engineContext.DataResolversFactory.GetVarsResolver();
 
 #if DEBUG
-            Log($"_varName = {_varName}");
+            //Log($"_varName = {_varName}");
 #endif
         }
 

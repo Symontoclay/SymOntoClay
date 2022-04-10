@@ -38,9 +38,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
-        public static LogicalValue NullValue = new LogicalValue(null);
-        public static LogicalValue TrueValue = new LogicalValue(true);
-        public static LogicalValue FalseValue = new LogicalValue(false);
+        public static readonly LogicalValue NullValue = new LogicalValue(null);
+        public static readonly LogicalValue TrueValue = new LogicalValue(true);
+        public static readonly LogicalValue FalseValue = new LogicalValue(false);
 
         static LogicalValue()
         {

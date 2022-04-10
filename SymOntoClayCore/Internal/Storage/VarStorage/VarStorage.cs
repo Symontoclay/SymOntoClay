@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using Newtonsoft.Json;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
@@ -27,6 +28,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Storage.VarStorage
 {
@@ -37,6 +39,16 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
         {
             _kind = kind;
             _realStorageContext = realStorageContext;
+
+            _parentVarStoragesList = realStorageContext.Parents.Select(p => p.VarStorage).ToList();
+
+            foreach (var parentStorage in _parentVarStoragesList)
+            {
+                parentStorage.OnChangedWithKeys += VarStorage_OnChangedWithKeys;
+            }
+
+            realStorageContext.OnAddParentStorage += RealStorageContext_OnAddParentStorage;
+            realStorageContext.OnRemoveParentStorage += RealStorageContext_OnRemoveParentStorage;
         }
 
         private readonly object _lockObj = new object();
@@ -50,6 +62,14 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
 
         /// <inheritdoc/>
         public IStorage Storage => _realStorageContext.Storage;
+
+        /// <inheritdoc/>
+        public event Action OnChanged;
+
+        /// <inheritdoc/>
+        public event Action<StrongIdentifierValue> OnChangedWithKeys;
+
+        private List<IVarStorage> _parentVarStoragesList = new List<IVarStorage>();
 
         private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<Var>>> _variablesDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<Var>>>();
         private readonly Dictionary<StrongIdentifierValue, Var> _localVariablesDict = new Dictionary<StrongIdentifierValue, Var>();
@@ -107,6 +127,8 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
             {
                 AnnotatedItemHelper.CheckAndFillUpHolder(varItem, _realStorageContext.MainStorageContext.CommonNamesStorage);
             }
+
+            varItem.OnChanged += VarItem_OnChanged;
 
             varItem.CheckDirty();
 
@@ -224,20 +246,76 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
                 if (_localVariablesDict.ContainsKey(varName))
                 {
                     _localVariablesDict[varName].Value = value;
+                    return;
                 }
 
                 var varItem = new Var();
                 varItem.Name = varName;
-                varItem.Value = value;
+                
                 varItem.TypeOfAccess = TypeOfAccess.Local;
 
                 NAppendVar(varItem);
+
+                varItem.Value = value;
             }
+        }
+
+        private void VarItem_OnChanged(StrongIdentifierValue name)
+        {
+#if DEBUG
+            Log($"name = {name}");
+#endif
+            EmitOnChanged(name);
+        }
+
+        protected void EmitOnChanged(StrongIdentifierValue varName)
+        {
+#if DEBUG
+            Log($"varName = {varName}");
+#endif
+
+            Task.Run(() => {
+                OnChanged?.Invoke();
+            });
+
+            Task.Run(() => {
+                OnChangedWithKeys?.Invoke(varName);
+            });
+        }
+
+        private void VarStorage_OnChangedWithKeys(StrongIdentifierValue varName)
+        {
+#if DEBUG
+            Log($"varName = {varName}");
+#endif
+
+            EmitOnChanged(varName);
+        }
+
+        private void RealStorageContext_OnRemoveParentStorage(IStorage storage)
+        {
+            var varStroage = storage.VarStorage;
+            varStroage.OnChangedWithKeys -= VarStorage_OnChangedWithKeys;
+
+            _parentVarStoragesList.Remove(varStroage);
+        }
+
+        private void RealStorageContext_OnAddParentStorage(IStorage storage)
+        {
+            var varStroage = storage.VarStorage;
+            varStroage.OnChangedWithKeys += VarStorage_OnChangedWithKeys;
+
+            _parentVarStoragesList.Add(varStroage);
         }
 
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
+            foreach (var parentStorage in _parentVarStoragesList)
+            {
+                parentStorage.OnChangedWithKeys -= VarStorage_OnChangedWithKeys;
+            }
+
             _systemVariables.Clear();
             _variablesDict.Clear();
             _localVariablesDict.Clear();

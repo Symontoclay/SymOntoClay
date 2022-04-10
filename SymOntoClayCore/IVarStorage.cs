@@ -38,5 +38,8 @@ namespace SymOntoClay.Core
         Var GetLocalVarDirectly(StrongIdentifierValue name);
 
         void SetValue(StrongIdentifierValue varName, Value value);
+
+        event Action OnChanged;
+        event Action<StrongIdentifierValue> OnChangedWithKeys;
     }
 }

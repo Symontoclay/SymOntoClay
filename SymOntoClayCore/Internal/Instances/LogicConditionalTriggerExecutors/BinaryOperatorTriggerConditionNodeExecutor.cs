@@ -29,11 +29,14 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             _localCodeExecutionContext = localCodeExecutionContext;
 
             _operatorsResolver = engineContext.DataResolversFactory.GetOperatorsResolver();
+
+            _codeExecutor = engineContext.CodeExecutor;
         }
 
         private readonly KindOfOperator _kindOfOperator;
         private readonly LocalCodeExecutionContext _localCodeExecutionContext;
         private readonly OperatorsResolver _operatorsResolver;
+        private readonly ICodeExecutorComponent _codeExecutor;
 
         /// <inheritdoc/>
         public override Value Run(List<List<Var>> varList)
@@ -52,12 +55,19 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             var paramsList = new List<Value>();
             paramsList.Add(Left.Run(varList));
             paramsList.Add(Right.Run(varList));
+            paramsList.Add(NullValue.Instance);
 
 #if DEBUG
             Log($"paramsList = {paramsList.WriteListToString()}");
 #endif
 
-            throw new NotImplementedException();
+            var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, _localCodeExecutionContext);
+
+#if DEBUG
+            Log($"operatorInfo = {operatorInfo}");
+#endif
+
+            return _codeExecutor.CallExecutableSync(operatorInfo, paramsList, _localCodeExecutionContext);
         }
     }
 }

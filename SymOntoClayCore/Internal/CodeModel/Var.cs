@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
@@ -34,8 +35,41 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.Var;
 
-        public Value Value { get; set; } = new NullValue();
+        public Value Value 
+        { 
+            get
+            {
+                lock(_lockObj)
+                {
+                    return _value;
+                }
+            }
+
+            set
+            {
+                lock (_lockObj)
+                {
+                    if(_value == value)
+                    {
+                        return;
+                    }
+
+                    _value = value;
+
+                    Task.Run(() => {
+                        OnChanged?.Invoke(Name);
+                    });
+                }
+            }
+        }
+
+        private Value _value = new NullValue();
+
         public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
+
+        public event Action<StrongIdentifierValue> OnChanged;
+
+        private readonly object _lockObj = new object();
 
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> cloneContext)

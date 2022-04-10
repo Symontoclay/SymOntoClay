@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,6 +32,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     {
         Value ExecuteBatchAsync(List<ProcessInitialInfo> processInitialInfoList);
         Value ExecuteAsync(ProcessInitialInfo processInitialInfo);
+        Value CallOperator(KindOfOperator kindOfOperator, List<Value> paramsList, LocalCodeExecutionContext parentLocalCodeExecutionContext);
         Value CallExecutableSync(IExecutable executable, List<Value> positionedParameters, LocalCodeExecutionContext parentLocalCodeExecutionContext);
+        Value CallFunctionSync(Value caller, KindOfFunctionParameters kindOfParameters, List<Value> parameters, LocalCodeExecutionContext parentLocalCodeExecutionContext);
     }
 }

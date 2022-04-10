@@ -14,6 +14,11 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
     {
         public static BaseTriggerConditionNodeExecutor CreateExecutors(TriggerConditionNodeObserverContext context, LocalCodeExecutionContext localCodeExecutionContext, BindingVariables bindingVariables, TriggerConditionNode condition)
         {
+            return CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition, true);
+        }
+
+        public static BaseTriggerConditionNodeExecutor CreateExecutors(TriggerConditionNodeObserverContext context, LocalCodeExecutionContext localCodeExecutionContext, BindingVariables bindingVariables, TriggerConditionNode condition, bool conceptAsTriggerName)
+        {
             switch(condition.Kind)
             {
                 case KindOfTriggerConditionNode.Fact:
@@ -25,8 +30,8 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                 case KindOfTriggerConditionNode.BinaryOperator:
                     {
                         var result = new BinaryOperatorTriggerConditionNodeExecutor(context.EngineContext, localCodeExecutionContext, condition);
-                        result.Left = CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition.Left);
-                        result.Right = CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition.Right);
+                        result.Left = CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition.Left, conceptAsTriggerName);
+                        result.Right = CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition.Right, conceptAsTriggerName);
                         return result;
                     }
 
@@ -44,13 +49,15 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 
                                 foreach (var param in condition.ParamsList)
                                 {
-                                    paramsList.Add(CreateExecutors(context, localCodeExecutionContext, bindingVariables, param));
+                                    paramsList.Add(CreateExecutors(context, localCodeExecutionContext, bindingVariables, param, false));
                                 }
                             }
+
+                            result.Left = CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition.Left, false);
                         }
                         else
                         {
-                            result.Left = CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition.Left);
+                            result.Left = CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition.Left, conceptAsTriggerName);
                         }
                         
                         return result;
@@ -61,6 +68,13 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 
                 case KindOfTriggerConditionNode.Value:
                     return new ValueTriggerConditionNodeExecutor(context.EngineContext.Logger, condition);
+
+                case KindOfTriggerConditionNode.Concept:
+                    if(conceptAsTriggerName)
+                    {
+                        return new TriggerNameTriggerConditionNodeExecutor(context.EngineContext, localCodeExecutionContext, condition);
+                    }
+                    return new ConceptTriggerConditionNodeExecutor(context.EngineContext.Logger, condition);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(condition.Kind), condition.Kind, null);

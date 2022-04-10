@@ -64,13 +64,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             //Log($"paramsList = {paramsList.WriteListToString()}");
 #endif
 
-            var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, _localCodeExecutionContext);
-
-#if DEBUG
-            //Log($"operatorInfo = {operatorInfo}");
-#endif
-
-            return _codeExecutor.CallExecutableSync(operatorInfo, paramsList, _localCodeExecutionContext);
+            return _codeExecutor.CallOperator(kindOfOperator, paramsList, _localCodeExecutionContext);
         }
     }
 }

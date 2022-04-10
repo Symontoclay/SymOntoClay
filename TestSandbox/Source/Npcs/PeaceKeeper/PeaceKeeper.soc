@@ -8,17 +8,17 @@
 
     fun SomeFun()
     {
-        'Begin SomeFun' >> @>log;
+        //'Begin SomeFun' >> @>log;
         return @b;
     }
 
     var @b;
-    var @a = 15;
+    //var @a = 15;
 
 	on {: see(I, #a) :} duration 1 (down) => 
     {
 	    'S' >> @>log;
-        @a = 5;
+        //@a = 5;
         @b = 1;
 	}
 

@@ -61,18 +61,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
                 case KindOfTriggerConditionNode.Duration:
                     return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.StubWeight ^ Value.GetLongHashCode(options);
 
-                case KindOfTriggerConditionNode.CallFunction:
-                    {
-                        var result = base.CalculateLongHashCode(options) ^ LongHashCodeWeights.BaseFunctionWeight ^ Name.GetLongHashCode(options);
-
-                        foreach (var param in ParamsList)
-                        {
-                            result ^= LongHashCodeWeights.BaseParamWeight ^ param.GetLongHashCode(options);
-                        }
-
-                        return result;
-                    }
-
                 case KindOfTriggerConditionNode.Group:
                     return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.GroupWeight ^ Left.GetLongHashCode(options);
 

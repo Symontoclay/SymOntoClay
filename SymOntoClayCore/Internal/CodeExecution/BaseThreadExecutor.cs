@@ -97,6 +97,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private ErrorValue _currentError;
         private bool _isCanceled;
 
+        public Value ExternalReturn { get; private set; }
+
         protected IActivePeriodicObject _activeObject { get; private set; }
 
         public void SetCodeFrame(CodeFrame codeFrame, bool setAsRunning = true)
@@ -633,7 +635,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             GoBackToPrevCodeFrame(ActionExecutionStatus.Complete);
 
-                            _currentCodeFrame.ValuesStack.Push(new NullValue());
+                            var currentValue = NullValue.Instance;
+
+                            if (_currentCodeFrame == null)
+                            {
+                                ExternalReturn = currentValue;
+                            }
+                            else
+                            {
+                                _currentCodeFrame.ValuesStack.Push(currentValue);
+                            }                               
 
 #if DEBUG
                             //_instancesStorage.PrintProcessesList();
@@ -660,7 +671,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             GoBackToPrevCodeFrame(ActionExecutionStatus.Complete);
 
-                            _currentCodeFrame.ValuesStack.Push(currentValue);
+                            if(_currentCodeFrame == null)
+                            {
+                                ExternalReturn = currentValue;
+                            }
+                            else
+                            {
+                                _currentCodeFrame.ValuesStack.Push(currentValue);
+                            }
 
 #if DEBUG
                             //_instancesStorage.PrintProcessesList();
@@ -1090,10 +1108,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return result;
         }
 
-        private void CallFunction(KindOfFunctionParameters kindOfparameters, int parametersCount, bool isSync)
+        private void CallFunction(KindOfFunctionParameters kindOfParameters, int parametersCount, bool isSync)
         {
 #if DEBUG
-            //Log($"kindOfparameters = {kindOfparameters}");
+            //Log($"kindOfParameters = {kindOfParameters}");
             //Log($"parametersCount = {parametersCount}");
             //Log($"isSync = {isSync}");
 #endif
@@ -1117,7 +1135,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             Dictionary<StrongIdentifierValue, Value> namedParameters = null;
             List<Value> positionedParameters = null;
 
-            switch (kindOfparameters)
+            switch (kindOfParameters)
             {
                 case KindOfFunctionParameters.NoParameters:
                     break;
@@ -1131,7 +1149,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfparameters), kindOfparameters, null);
+                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
             }
 
 #if DEBUG
@@ -1143,13 +1161,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (caller.IsPointRefValue)
             {
-                CallPointRefValue(caller.AsPointRefValue, kindOfparameters, namedParameters, positionedParameters, isSync);
+                CallPointRefValue(caller.AsPointRefValue, kindOfParameters, namedParameters, positionedParameters, isSync);
                 return;
             }
 
             if(caller.IsStrongIdentifierValue)
             {
-                CallStrongIdentifierValue(caller.AsStrongIdentifierValue, kindOfparameters, namedParameters, positionedParameters, isSync);
+                CallStrongIdentifierValue(caller.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, isSync);
                 return;
             }
 

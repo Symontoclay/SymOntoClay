@@ -1,8 +1,11 @@
-﻿using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
+﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.DebugHelpers
@@ -45,9 +48,6 @@ namespace SymOntoClay.Core.DebugHelpers
                 case KindOfTriggerConditionNode.Duration:
                     return DurationToString(source);
 
-                case KindOfTriggerConditionNode.CallFunction:
-                    return CallFunctionToString(source);
-
                 default:
                     throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, null);
             }
@@ -75,6 +75,11 @@ namespace SymOntoClay.Core.DebugHelpers
 
         private static string UnaryOperatorToString(TriggerConditionNode source)
         {
+            if(source.KindOfOperator == KindOfOperator.CallFunction)
+            {
+                return CallFunctionToString(source);
+            }
+
             return $" {OperatorsHelper.GetSymbol(source.KindOfOperator)} {ToString(source.Left)}";
         }
 
@@ -107,12 +112,24 @@ namespace SymOntoClay.Core.DebugHelpers
         {
             var resultParamsList = new List<string>();
 
-            foreach (var param in source.ParamsList)
+            var sourceParamsList = source.ParamsList;
+
+            if (!sourceParamsList.IsNullOrEmpty())
             {
-                resultParamsList.Add(ToString(param));
+                if (source.IsNamedParameters)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    foreach (var param in sourceParamsList)
+                    {
+                        resultParamsList.Add(ToString(param));
+                    }
+                }
             }
 
-            return $"{source.Name.NameValue} ({string.Join(",", resultParamsList)})";
+            return $"{ToString(source.Left)} ({string.Join(",", resultParamsList)})";
         }
     }
 }

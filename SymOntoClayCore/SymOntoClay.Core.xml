@@ -295,7 +295,13 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.ExecuteBatchAsync(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.CallOperator(SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.KindOfOperator,System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.CallExecutableSync(SymOntoClay.Core.Internal.CodeExecution.IExecutable,System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.CallFunctionSync(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrame.ToString">
@@ -4959,10 +4965,16 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.BinaryOperatorTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.ConceptTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.DurationTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.FactTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.TriggerNameTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.UnaryOperatorTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}})">

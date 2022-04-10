@@ -22,6 +22,8 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution.Helpers;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -36,9 +38,17 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             : base(context.Logger)
         {
             _context = context;
+
+            var dataResolversFactory = context.DataResolversFactory;
+
+            _operatorsResolver = dataResolversFactory.GetOperatorsResolver();
+            _methodsResolver = dataResolversFactory.GetMethodsResolver();
         }
 
         private readonly IEngineContext _context;
+
+        private readonly OperatorsResolver _operatorsResolver;
+        private readonly MethodsResolver _methodsResolver;
 
         /// <inheritdoc/>
         public Value ExecuteAsync(ProcessInitialInfo processInitialInfo)
@@ -87,6 +97,18 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         /// <inheritdoc/>
+        public Value CallOperator(KindOfOperator kindOfOperator, List<Value> paramsList, LocalCodeExecutionContext parentLocalCodeExecutionContext)
+        {
+            var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, parentLocalCodeExecutionContext);
+
+#if DEBUG
+            //Log($"operatorInfo = {operatorInfo}");
+#endif
+
+            return CallExecutableSync(operatorInfo, paramsList, parentLocalCodeExecutionContext);
+        }
+
+        /// <inheritdoc/>
         public Value CallExecutableSync(IExecutable executable, List<Value> positionedParameters, LocalCodeExecutionContext parentLocalCodeExecutionContext)
         {
             return CallExecutable(executable, KindOfFunctionParameters.PositionedParameters, null, positionedParameters, true, parentLocalCodeExecutionContext);
@@ -132,7 +154,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var newCodeFrame = CodeFrameHelper.ConvertExecutableToCodeFrame(executable, kindOfParameters, namedParameters, positionedParameters, parentLocalCodeExecutionContext, _context);
 
 #if DEBUG
-                //Log($"newCodeFrame = {newCodeFrame}");
+                //Log($"newCodeFrame = {newCodeFrame.ToDbgString()}");
 #endif
 
                 _context.InstancesStorage.AppendProcessInfo(newCodeFrame.ProcessInfo);
@@ -145,9 +167,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
                     newCodeFrame.ExecutionCoordinator = coordinator;
 
-                    //SetCodeFrame(newCodeFrame);
+                    var threadExecutor = new SyncThreadExecutor(_context);
+                    threadExecutor.SetCodeFrame(newCodeFrame);
 
-                    throw new NotImplementedException();
+                    threadExecutor.Start();
+
+                    return threadExecutor.ExternalReturn;
                 }
                 else
                 {
@@ -159,6 +184,139 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     return task;
                 }
             }
+        }
+
+        /// <inheritdoc/>
+        public Value CallFunctionSync(Value caller, KindOfFunctionParameters kindOfParameters, List<Value> parameters, LocalCodeExecutionContext parentLocalCodeExecutionContext)
+        {
+            return CallFunction(caller, kindOfParameters, parameters, parentLocalCodeExecutionContext, true);
+        }
+
+        private Value CallFunction(Value caller, KindOfFunctionParameters kindOfParameters, List<Value> parameters, LocalCodeExecutionContext parentLocalCodeExecutionContext, bool isSync)
+        {
+#if DEBUG
+            //Log($"kindOfparameters = {kindOfParameters}");
+            //Log($"isSync = {isSync}");
+            //Log($"parameters = {parameters.WriteListToString()}");
+#endif
+
+            Dictionary<StrongIdentifierValue, Value> namedParameters = null;
+            List<Value> positionedParameters = null;
+
+            switch (kindOfParameters)
+            {
+                case KindOfFunctionParameters.NoParameters:
+                    break;
+
+                case KindOfFunctionParameters.NamedParameters:
+                    namedParameters = TakeNamedParameters(parameters);
+                    break;
+
+                case KindOfFunctionParameters.PositionedParameters:
+                    positionedParameters = parameters;
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+            }
+
+#if DEBUG
+            //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+            //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
+            //Log($"caller.IsPointRefValue = {caller.IsPointRefValue}");
+            //Log($"caller.IsStrongIdentifierValue = {caller.IsStrongIdentifierValue}");
+#endif
+
+            if (caller.IsPointRefValue)
+            {
+                return CallPointRefValue(caller.AsPointRefValue, kindOfParameters, namedParameters, positionedParameters, isSync);
+            }
+
+            if (caller.IsStrongIdentifierValue)
+            {
+                return CallStrongIdentifierValue(caller.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, isSync, parentLocalCodeExecutionContext);
+            }
+
+            throw new NotImplementedException();
+        }
+
+        private Dictionary<StrongIdentifierValue, Value> TakeNamedParameters(List<Value> rawParamsList)
+        {
+            var result = new Dictionary<StrongIdentifierValue, Value>();
+
+            var enumerator = rawParamsList.GetEnumerator();
+
+            while (enumerator.MoveNext())
+            {
+                var name = enumerator.Current.AsStrongIdentifierValue;
+
+                enumerator.MoveNext();
+
+                var value = enumerator.Current;
+
+                result[name] = value;
+            }
+
+            return result;
+        }
+
+        private Value CallPointRefValue(PointRefValue caller,
+            KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
+            bool isSync)
+        {
+#if DEBUG
+            //Log($"caller.LeftOperand = {caller.LeftOperand}");
+#endif
+
+            if (caller.LeftOperand.IsHostValue)
+            {
+                throw new NotImplementedException();
+            }
+
+            throw new NotImplementedException();
+        }
+
+        private Value CallStrongIdentifierValue(StrongIdentifierValue methodName,
+            KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
+            bool isSync, LocalCodeExecutionContext parentLocalCodeExecutionContext)
+        {
+#if DEBUG
+            //Log($"methodName = {methodName}");
+            //Log($"kindOfParameters = {kindOfParameters}");
+            //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
+            //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+            //Log($"isSync = {isSync}");
+#endif
+            IExecutable method = null;
+
+            switch (kindOfParameters)
+            {
+                case KindOfFunctionParameters.NoParameters:
+                    method = _methodsResolver.Resolve(methodName, parentLocalCodeExecutionContext);
+                    break;
+
+                case KindOfFunctionParameters.NamedParameters:
+                    method = _methodsResolver.Resolve(methodName, namedParameters, parentLocalCodeExecutionContext);
+                    break;
+
+                case KindOfFunctionParameters.PositionedParameters:
+                    method = _methodsResolver.Resolve(methodName, positionedParameters, parentLocalCodeExecutionContext);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+            }
+
+#if DEBUG
+            //Log($"method = {method}");
+#endif
+
+            if (method == null)
+            {
+                throw new Exception($"Method '{methodName.NameValue}' is not found.");
+            }
+
+            return CallExecutable(method, kindOfParameters, namedParameters, positionedParameters, isSync, parentLocalCodeExecutionContext);
         }
     }
 }

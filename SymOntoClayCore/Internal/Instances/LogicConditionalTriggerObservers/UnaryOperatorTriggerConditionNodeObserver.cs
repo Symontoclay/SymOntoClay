@@ -16,7 +16,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             _kindOfOperator = condition.KindOfOperator;
 
 #if DEBUG
-            Log($"_kindOfOperator = {_kindOfOperator}");
+            //Log($"_kindOfOperator = {_kindOfOperator}");
 #endif
 
             if (_kindOfOperator == KindOfOperator.CallFunction)

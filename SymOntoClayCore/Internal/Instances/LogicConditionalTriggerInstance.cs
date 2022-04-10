@@ -444,7 +444,6 @@ namespace SymOntoClay.Core.Internal.Instances
 #if DEBUG
             //Log($"isSetSuccsess = {isSetSuccsess}");
             //Log($"setVarList.Count = {setVarList.Count}");
-            //Log($"_setFoundKeys.Count = {_setFoundKeys.Count}");
 #endif
 
             if (isSetSuccsess)

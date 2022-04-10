@@ -29,7 +29,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
                     break;
 
                 case KindOfTriggerConditionNode.Var:
-                    result.Add(new VarTriggerConditionNodeObserver(context.EngineContext.Logger, context.Storage));
+                    result.Add(new VarTriggerConditionNodeObserver(context.EngineContext.Logger, context.Storage, condition));
                     break;
 
                 case KindOfTriggerConditionNode.Value:

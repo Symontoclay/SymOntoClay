@@ -121,6 +121,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             throw new UnexpectedTokenException(_currToken);
 
+                        case TokenKind.Comma:
+                            if (_terminators.Any(p => p == TokenKind.Comma))
+                            {
+                                _context.Recovery(_currToken);
+                                Exit();
+                                break;
+                            }
+                            throw new UnexpectedTokenException(_currToken);
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

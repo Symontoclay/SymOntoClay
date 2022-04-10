@@ -140,6 +140,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _state = State.WaitForValueOfNamedMainParameter;
                             break;
 
+                        case TokenKind.Comma:
+                            _state = State.GotComma;
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -190,6 +194,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotComma:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.Number:
+                        case TokenKind.Word:
+                        case TokenKind.EntityCondition:
+                        case TokenKind.Var:
+                        case TokenKind.String:
+                            _context.Recovery(_currToken);
+                            _state = State.WaitForMainParameter;
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

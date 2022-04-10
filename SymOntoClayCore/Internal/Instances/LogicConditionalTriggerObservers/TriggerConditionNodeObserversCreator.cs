@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
+﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,6 +39,15 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
                 case KindOfTriggerConditionNode.BinaryOperator:
                     CreateObservers(result, context, condition.Left);
                     CreateObservers(result, context, condition.Right);
+                    break;
+
+                case KindOfTriggerConditionNode.UnaryOperator:
+                    result.Add(new UnaryOperatorTriggerConditionNodeObserver(context.EngineContext.Logger, context.Storage, condition));
+
+                    if(condition.KindOfOperator != KindOfOperator.CallFunction)
+                    {
+                        CreateObservers(result, context, condition.Left);
+                    }
                     break;
 
                 default:

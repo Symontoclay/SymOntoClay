@@ -14,8 +14,5 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         }
 
         public abstract Value Run(List<List<Var>> varList);
-
-        public BaseTriggerConditionNodeExecutor Left { get; set; }
-        public BaseTriggerConditionNodeExecutor Right { get; set; }
     }
 }

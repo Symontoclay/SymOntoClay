@@ -3,27 +3,26 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 using SymOntoClay.Core.Internal.DataResolvers;
-using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers;
-using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 {
-    public class BinaryOperatorTriggerConditionNodeExecutor : BaseTriggerConditionNodeExecutor
+    public class UnaryOperatorTriggerConditionNodeExecutor : BaseTriggerConditionNodeExecutor
     {
-        public BinaryOperatorTriggerConditionNodeExecutor(IEngineContext engineContext, LocalCodeExecutionContext localCodeExecutionContext, TriggerConditionNode condition)
+        public UnaryOperatorTriggerConditionNodeExecutor(IEngineContext engineContext, LocalCodeExecutionContext localCodeExecutionContext, TriggerConditionNode condition)
             : base(engineContext.Logger)
         {
 #if DEBUG
-            //Log($"condition = {condition}");
+            Log($"condition = {condition}");
 #endif
 
             _kindOfOperator = condition.KindOfOperator;
 
 #if DEBUG
-            //Log($"_kindOfOperator = {_kindOfOperator}");
+            Log($"_kindOfOperator = {_kindOfOperator}");
 #endif
 
             _localCodeExecutionContext = localCodeExecutionContext;
@@ -39,32 +38,44 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         private readonly ICodeExecutorComponent _codeExecutor;
 
         public BaseTriggerConditionNodeExecutor Left { get; set; }
-        public BaseTriggerConditionNodeExecutor Right { get; set; }
+        public List<BaseTriggerConditionNodeExecutor> ParamsList { get; set; }
 
         /// <inheritdoc/>
         public override Value Run(List<List<Var>> varList)
         {
-            var kindOfOperator = _kindOfOperator;
-
-            if (kindOfOperator == KindOfOperator.IsNot)
-            {
-                kindOfOperator = KindOfOperator.Is;
-            }
-
 #if DEBUG
-            //Log($"kindOfOperator = {kindOfOperator}");
+            Log($"_kindOfOperator = {_kindOfOperator}");
 #endif
 
+            if(_kindOfOperator == KindOfOperator.CallFunction)
+            {
+                return RunCallFunction(varList);
+            }
+
+            return RunUnaryOperator(varList);
+        }
+
+        private Value RunCallFunction(List<List<Var>> varList)
+        {
+            if(ParamsList.IsNullOrEmpty())
+            {
+
+            }
+
+            throw new NotImplementedException();
+        }
+
+        private Value RunUnaryOperator(List<List<Var>> varList)
+        {
             var paramsList = new List<Value>();
             paramsList.Add(Left.Run(varList));
-            paramsList.Add(Right.Run(varList));
             paramsList.Add(NullValue.Instance);
 
 #if DEBUG
             //Log($"paramsList = {paramsList.WriteListToString()}");
 #endif
 
-            var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, _localCodeExecutionContext);
+            var operatorInfo = _operatorsResolver.GetOperator(_kindOfOperator, _localCodeExecutionContext);
 
 #if DEBUG
             //Log($"operatorInfo = {operatorInfo}");

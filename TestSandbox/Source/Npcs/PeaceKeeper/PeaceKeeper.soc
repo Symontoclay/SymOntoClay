@@ -6,15 +6,23 @@
         'End' >> @>log;
     }
 
+    fun SomeFun()
+    {
+        'Begin SomeFun' >> @>log;
+        return @b;
+    }
+
+    var @b;
     var @a = 15;
 
 	on {: see(I, #a) :} duration 1 (down) => 
     {
 	    'S' >> @>log;
         @a = 5;
+        @b = 1;
 	}
 
-    on (@a is 5)
+    on (SomeFun())
     {
         'D' >> @>log;
     }

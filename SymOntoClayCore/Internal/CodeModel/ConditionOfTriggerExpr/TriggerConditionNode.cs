@@ -17,6 +17,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
         public StrongIdentifierValue Name { get; set; }
         public TriggerConditionNode Left { get; set; }
         public TriggerConditionNode Right { get; set; }
+        public bool IsNamedParameters { get; set; }
         public IList<TriggerConditionNode> ParamsList { get; set; }
         public RuleInstance RuleInstance { get; set; }
         public Value Value { get; set; }
@@ -121,6 +122,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
             result.Name = Name?.Clone(context);
             result.Left = Left?.Clone(context);
             result.Right = Right?.Clone(context);
+            result.IsNamedParameters = IsNamedParameters;
             result.ParamsList = ParamsList?.Select(p => p.Clone(context)).ToList();
             result.RuleInstance = RuleInstance?.Clone(context);
             result.Value = Value?.CloneValue(context);
@@ -151,6 +153,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
 
             sb.PrintObjProp(n, nameof(Left), Left);
             sb.PrintObjProp(n, nameof(Right), Right);
+
+            sb.AppendLine($"{spaces}{nameof(IsNamedParameters)} = {IsNamedParameters}");
+
             sb.PrintObjListProp(n, nameof(ParamsList), ParamsList);
 
             sb.PrintObjProp(n, nameof(RuleInstance), RuleInstance);
@@ -174,6 +179,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
 
             sb.PrintShortObjProp(n, nameof(Left), Left);
             sb.PrintShortObjProp(n, nameof(Right), Right);
+
+            sb.AppendLine($"{spaces}{nameof(IsNamedParameters)} = {IsNamedParameters}");
+
             sb.PrintShortObjListProp(n, nameof(ParamsList), ParamsList);
 
             sb.PrintShortObjProp(n, nameof(RuleInstance), RuleInstance);
@@ -197,6 +205,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
 
             sb.PrintExisting(n, nameof(Left), Left);
             sb.PrintExisting(n, nameof(Right), Right);
+
+            sb.AppendLine($"{spaces}{nameof(IsNamedParameters)} = {IsNamedParameters}");
+
             sb.PrintExistingList(n, nameof(ParamsList), ParamsList);
 
             sb.PrintBriefObjProp(n, nameof(RuleInstance), RuleInstance);

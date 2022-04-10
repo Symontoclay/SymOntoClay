@@ -443,7 +443,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             var kindOfOperator = currentCommand.KindOfOperator;
 
-                            var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                            var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, _currentCodeFrame.LocalContext);
 
 #if DEBUG
                             //Log($"operatorInfo (2)= {operatorInfo}");

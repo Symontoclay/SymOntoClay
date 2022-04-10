@@ -86,12 +86,25 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     }
                                     break;
 
+                                case KeyWordTokenKind.Not:
+                                    ProcessNot();
+                                    break;
+
+                                case KeyWordTokenKind.Null:
+                                    ProcessNullToken();
+                                    break;
+
                                 default:
                                     throw new UnexpectedTokenException(_currToken);
                             }
                             break;
 
+                        case TokenKind.Identifier:
+                            ProcessConceptLeaf();
+                            break;
+
                         case TokenKind.Var:
+                        case TokenKind.SystemVar:
                             ProcessVar();
                             break;
 
@@ -99,8 +112,48 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessNumber();
                             break;
 
+                        case TokenKind.String:
+                            ProcessStringToken();
+                            break;
+
                         case TokenKind.OpenRoundBracket:
-                            ProcessCallingFunction();
+                            ProcessRoundBrackets();                            
+                            break;
+
+                        case TokenKind.Plus:
+                            ProcessAddition();
+                            break;
+
+                        case TokenKind.Minus:
+                            ProcessMinus();
+                            break;
+
+                        case TokenKind.Multiplication:
+                            ProcessMultiplication();
+                            break;
+
+                        case TokenKind.Division:
+                            ProcessDivision();
+                            break;
+
+                        case TokenKind.Point:
+                            ProcessPoint();
+                            break;
+
+                        case TokenKind.EntityCondition:
+                            ProcessEntityCondition();
+                            break;
+
+                        case TokenKind.Or:
+                            ProcessOr();
+                            break;
+
+                        case TokenKind.And:
+                            ProcessAnd();
+                            break;
+
+                        case TokenKind.Not:
+                            ProcessNotOperator();
                             break;
 
                         case TokenKind.CloseRoundBracket:
@@ -203,6 +256,25 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
         }
 
+        private void ProcessNullToken()
+        {
+            _lastBinaryOperator = null;
+            _lastIsOperator = null;
+            _hasSomething = true;
+
+            _context.Recovery(_currToken);
+
+            var parser = new NullParser(_context);
+            parser.Run();
+
+            var node = new TriggerConditionNode() { Kind = KindOfTriggerConditionNode.Value };
+            node.Value = parser.Result;
+
+            var intermediateNode = new IntermediateAstNode(node);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+        }
+
         private void ProcessNumber()
         {
             _lastBinaryOperator = null;
@@ -211,6 +283,41 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             _context.Recovery(_currToken);
             var parser = new NumberParser(_context);
+            parser.Run();
+
+            var node = new TriggerConditionNode() { Kind = KindOfTriggerConditionNode.Value };
+            node.Value = parser.Result;
+
+            var intermediateNode = new IntermediateAstNode(node);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+        }
+
+        private void ProcessStringToken()
+        {
+            _lastBinaryOperator = null;
+            _lastIsOperator = null;
+            _hasSomething = true;
+
+            var value = new StringValue(_currToken.Content);
+
+            var node = new TriggerConditionNode() { Kind = KindOfTriggerConditionNode.Value };
+            node.Value = value;
+
+            var intermediateNode = new IntermediateAstNode(node);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+        }
+
+        private void ProcessEntityCondition()
+        {
+            _lastBinaryOperator = null;
+            _lastIsOperator = null;
+            _hasSomething = true;
+
+            _context.Recovery(_currToken);
+
+            var parser = new ConditionalEntityParser(_context);
             parser.Run();
 
             var node = new TriggerConditionNode() { Kind = KindOfTriggerConditionNode.Value };
@@ -260,6 +367,19 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             }
         }
 
+        private void ProcessRoundBrackets()
+        {
+            if (_lastBinaryOperator == null)
+            {
+                ProcessCallingFunction();
+                return;
+            }
+
+            ProcessGroup();
+        }
+
+
+
         private void ProcessCallingFunction()
         {
             _lastBinaryOperator = null;
@@ -302,6 +422,52 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var priority = OperatorsHelper.GetPriority(node.KindOfOperator);
 
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.BinaryOperator, priority);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+        }
+
+        private void ProcessNot()
+        {
+#if DEBUG
+            //Log($"_lastIsOperator = {_lastIsOperator}");
+#endif
+
+            if (_lastIsOperator == null)
+            {
+                ProcessNotOperator();
+                return;
+            }
+
+            if (_lastIsOperator.KindOfOperator == KindOfOperator.Is)
+            {
+                _lastIsOperator.KindOfOperator = KindOfOperator.IsNot;
+                _lastIsOperator = null;
+                return;
+            }
+
+            throw new UnexpectedTokenException(_currToken);
+        }
+
+        private void ProcessNotOperator()
+        {
+            ProcessUsualUnaryOperator(KindOfOperator.Not);
+        }
+
+        private void ProcessUsualUnaryOperator(KindOfOperator kindOfOperator)
+        {
+            _lastBinaryOperator = null;
+            _lastIsOperator = null;
+
+            var node = new TriggerConditionNode() { Kind = KindOfTriggerConditionNode.UnaryOperator };
+            node.KindOfOperator = kindOfOperator;
+
+            var priority = OperatorsHelper.GetPriority(kindOfOperator);
+
+#if DEBUG
+            //Log($"priority = {priority}");
+#endif
+
+            var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.UnaryOperator, priority);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
         }

@@ -23,7 +23,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             _kindOfOperator = condition.KindOfOperator;
 
 #if DEBUG
-            Log($"_kindOfOperator = {_kindOfOperator}");
+            //Log($"_kindOfOperator = {_kindOfOperator}");
 #endif
 
             _localCodeExecutionContext = localCodeExecutionContext;
@@ -49,7 +49,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             }
 
 #if DEBUG
-            Log($"kindOfOperator = {kindOfOperator}");
+            //Log($"kindOfOperator = {kindOfOperator}");
 #endif
 
             var paramsList = new List<Value>();
@@ -58,13 +58,13 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             paramsList.Add(NullValue.Instance);
 
 #if DEBUG
-            Log($"paramsList = {paramsList.WriteListToString()}");
+            //Log($"paramsList = {paramsList.WriteListToString()}");
 #endif
 
             var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, _localCodeExecutionContext);
 
 #if DEBUG
-            Log($"operatorInfo = {operatorInfo}");
+            //Log($"operatorInfo = {operatorInfo}");
 #endif
 
             return _codeExecutor.CallExecutableSync(operatorInfo, paramsList, _localCodeExecutionContext);

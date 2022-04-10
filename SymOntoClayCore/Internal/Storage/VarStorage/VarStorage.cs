@@ -263,7 +263,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
         private void VarItem_OnChanged(StrongIdentifierValue name)
         {
 #if DEBUG
-            Log($"name = {name}");
+            //Log($"name = {name}");
 #endif
             EmitOnChanged(name);
         }
@@ -271,7 +271,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
         protected void EmitOnChanged(StrongIdentifierValue varName)
         {
 #if DEBUG
-            Log($"varName = {varName}");
+            //Log($"varName = {varName}");
 #endif
 
             Task.Run(() => {
@@ -286,7 +286,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
         private void VarStorage_OnChangedWithKeys(StrongIdentifierValue varName)
         {
 #if DEBUG
-            Log($"varName = {varName}");
+            //Log($"varName = {varName}");
 #endif
 
             EmitOnChanged(varName);

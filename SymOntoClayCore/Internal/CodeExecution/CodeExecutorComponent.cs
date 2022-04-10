@@ -102,9 +102,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var coordinator = executable.TryActivate(_context);
 
 #if DEBUG
-            Log($"executable.IsSystemDefined = {executable.IsSystemDefined}");
-            Log($"coordinator != null = {coordinator != null}");
-            Log($"isSync = {isSync}");
+            //Log($"executable.IsSystemDefined = {executable.IsSystemDefined}");
+            //Log($"coordinator != null = {coordinator != null}");
+            //Log($"isSync = {isSync}");
 #endif
 
             if (executable.IsSystemDefined)
@@ -122,7 +122,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
 
 #if DEBUG
-                Log($"result = {result}");
+                //Log($"result = {result}");
 #endif
 
                 return result;
@@ -132,13 +132,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var newCodeFrame = CodeFrameHelper.ConvertExecutableToCodeFrame(executable, kindOfParameters, namedParameters, positionedParameters, parentLocalCodeExecutionContext, _context);
 
 #if DEBUG
-                Log($"newCodeFrame = {newCodeFrame}");
+                //Log($"newCodeFrame = {newCodeFrame}");
 #endif
 
                 _context.InstancesStorage.AppendProcessInfo(newCodeFrame.ProcessInfo);
 
 #if DEBUG
-                Log($"isSync = {isSync}");
+                //Log($"isSync = {isSync}");
 #endif
 
                 if (isSync)

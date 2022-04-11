@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.DebugHelpers;
+﻿using NLog;
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
@@ -12,6 +13,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
 {
     public class TriggerConditionNode : AnnotatedItem, IAstNode
     {
+#if DEBUG
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         public KindOfTriggerConditionNode Kind { get; set; } = KindOfTriggerConditionNode.Unknown;
         public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
         public StrongIdentifierValue Name { get; set; }

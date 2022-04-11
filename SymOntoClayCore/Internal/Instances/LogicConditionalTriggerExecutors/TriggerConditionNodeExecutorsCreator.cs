@@ -76,6 +76,13 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                     }
                     return new ConceptTriggerConditionNodeExecutor(context.EngineContext.Logger, condition);
 
+                case KindOfTriggerConditionNode.Group:
+                    {
+                        var result = new GroupTriggerConditionNodeExecutor(context.EngineContext.Logger);
+                        result.Left = CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition.Left, conceptAsTriggerName);
+                        return result;
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(condition.Kind), condition.Kind, null);
             }

@@ -22,7 +22,7 @@
         @b = 1;
 	}
 
-    on (SomeFun(@param1: 1, @param2: 2))
+    on (2 * (3 + 2) > 5)
     {
         'D' >> @>log;
     }

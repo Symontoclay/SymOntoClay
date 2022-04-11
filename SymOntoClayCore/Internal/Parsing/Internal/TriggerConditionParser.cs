@@ -39,7 +39,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
+            //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -208,7 +208,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var oldHasSomething = _hasSomething;
 
 #if DEBUG
-            Log($"oldHasSomething = {oldHasSomething}");
+            //Log($"oldHasSomething = {oldHasSomething}");
 #endif
 
             _lastBinaryOperator = null;
@@ -238,7 +238,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var oldHasSomething = _hasSomething;
 
 #if DEBUG
-            Log($"oldHasSomething = {oldHasSomething}");
+            //Log($"oldHasSomething = {oldHasSomething}");
 #endif
 
             _lastBinaryOperator = null;

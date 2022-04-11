@@ -12,19 +12,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
     public class TriggerConditionParser : BaseInternalParser
     {
-        private enum State
-        {
-            Init,
-            GotDurationMark
-        }
-
         public TriggerConditionParser(InternalParserContext context, params TokenKind[] terminators)
             : base(context)
         {
             _terminators = terminators;
         }
-
-        private State _state = State.Init;
 
         public TriggerConditionNode Result { get; private set; }
 
@@ -35,207 +27,194 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private bool _hasSomething;
         private TriggerConditionNode _lastIsOperator;
         private TriggerConditionNode _lastBinaryOperator;
+        private bool _hasSingleFactOrDuration;
 
         /// <inheritdoc/>
         protected override void OnFinish()
         {
-            if(Result == null)
-            {
-                Result = _nodePoint.BuildExpr<TriggerConditionNode>();
-            }
+            Result = _nodePoint.BuildExpr<TriggerConditionNode>();
         }
 
         /// <inheritdoc/>
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
-            switch (_state)
+            switch (_currToken.TokenKind)
             {
-                case State.Init:
-                    switch (_currToken.TokenKind)
+                case TokenKind.OpenFactBracket:
+                    ProcessFact();
+                    break;
+
+                case TokenKind.Word:
+                    switch (_currToken.KeyWordTokenKind)
                     {
-                        case TokenKind.OpenFactBracket:
-                            Result = ParseFact();
-                            Exit();
-                            break;
-
-                        case TokenKind.Word:
-                            switch(_currToken.KeyWordTokenKind)
-                            {
-                                case KeyWordTokenKind.Unknown:
-                                    ProcessConceptLeaf();
-                                    break;
-
-                                case KeyWordTokenKind.Duration:
-                                    _state = State.GotDurationMark;
-                                    break;
-
-                                case KeyWordTokenKind.Is:
-                                    if (AstNodesLinker.CanBeLeafNow(_nodePoint))
-                                    {
-                                        ProcessConceptLeaf();
-                                    }
-                                    else
-                                    {
-                                        ProcessIsOperator();
-                                    }
-                                    break;
-
-                                case KeyWordTokenKind.Not:
-                                    ProcessNot();
-                                    break;
-
-                                case KeyWordTokenKind.Null:
-                                    ProcessNullToken();
-                                    break;
-
-                                default:
-                                    throw new UnexpectedTokenException(_currToken);
-                            }
-                            break;
-
-                        case TokenKind.Identifier:
+                        case KeyWordTokenKind.Unknown:
                             ProcessConceptLeaf();
                             break;
 
-                        case TokenKind.Var:
-                        case TokenKind.SystemVar:
-                            ProcessVar();
-                            break;
-
-                        case TokenKind.Number:
-                            ProcessNumber();
-                            break;
-
-                        case TokenKind.String:
-                            ProcessStringToken();
-                            break;
-
-                        case TokenKind.OpenRoundBracket:
-                            ProcessRoundBrackets();                            
-                            break;
-
-                        case TokenKind.Plus:
-                            ProcessAddition();
-                            break;
-
-                        case TokenKind.Minus:
-                            ProcessMinus();
-                            break;
-
-                        case TokenKind.Multiplication:
-                            ProcessMultiplication();
-                            break;
-
-                        case TokenKind.Division:
-                            ProcessDivision();
-                            break;
-
-                        case TokenKind.Point:
-                            ProcessPoint();
-                            break;
-
-                        case TokenKind.EntityCondition:
-                            ProcessEntityCondition();
-                            break;
-
-                        case TokenKind.More:
-                            ProcessMore();
-                            break;
-
-                        case TokenKind.MoreOrEqual:
-                            ProcessMoreOrEqual();
-                            break;
-
-                        case TokenKind.Less:
-                            ProcessLess();
-                            break;
-
-                        case TokenKind.LessOrEqual:
-                            ProcessLessOrEqual();
-                            break;
-
-                        case TokenKind.Or:
-                            ProcessOr();
-                            break;
-
-                        case TokenKind.And:
-                            ProcessAnd();
-                            break;
-
-                        case TokenKind.Not:
-                            ProcessNotOperator();
-                            break;
-
-                        case TokenKind.CloseRoundBracket:
-                            if(_terminators.Any(p => p == TokenKind.CloseRoundBracket))
+                        case KeyWordTokenKind.Duration:
+                            if (_hasSingleFactOrDuration)
                             {
                                 _context.Recovery(_currToken);
                                 Exit();
                                 break;
                             }
-                            throw new UnexpectedTokenException(_currToken);
 
-                        case TokenKind.Colon:
-                            if (_terminators.Any(p => p == TokenKind.Colon))
-                            {
-                                _context.Recovery(_currToken);
-                                Exit();
-                                break;
-                            }
-                            throw new UnexpectedTokenException(_currToken);
+                            ProcessDuration();
+                            break;
 
-                        case TokenKind.Comma:
-                            if (_terminators.Any(p => p == TokenKind.Comma))
+                        case KeyWordTokenKind.Is:
+                            if (AstNodesLinker.CanBeLeafNow(_nodePoint))
                             {
-                                _context.Recovery(_currToken);
-                                Exit();
-                                break;
+                                ProcessConceptLeaf();
                             }
-                            throw new UnexpectedTokenException(_currToken);
+                            else
+                            {
+                                ProcessIsOperator();
+                            }
+                            break;
+
+                        case KeyWordTokenKind.Not:
+                            ProcessNot();
+                            break;
+
+                        case KeyWordTokenKind.Null:
+                            ProcessNullToken();
+                            break;
 
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
                     break;
 
-                case State.GotDurationMark:
-                    switch (_currToken.TokenKind)
+                case TokenKind.Identifier:
+                    ProcessConceptLeaf();
+                    break;
+
+                case TokenKind.Var:
+                case TokenKind.SystemVar:
+                    ProcessVar();
+                    break;
+
+                case TokenKind.Number:
+                    ProcessNumber();
+                    break;
+
+                case TokenKind.String:
+                    ProcessStringToken();
+                    break;
+
+                case TokenKind.OpenRoundBracket:
+                    if (_hasSingleFactOrDuration)
                     {
-                        case TokenKind.Number:
-                            {
-                                _context.Recovery(_currToken);
-
-                                var parser = new NumberParser(_context);
-                                parser.Run();
-
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-#endif
-
-                                Result = CreateDuration(parser.Result);
-
-                                Exit();
-                            }
-                            break;
-
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
+                        _context.Recovery(_currToken);
+                        Exit();
+                        break;
                     }
+
+                    ProcessRoundBrackets();
                     break;
+
+                case TokenKind.Plus:
+                    ProcessAddition();
+                    break;
+
+                case TokenKind.Minus:
+                    ProcessMinus();
+                    break;
+
+                case TokenKind.Multiplication:
+                    ProcessMultiplication();
+                    break;
+
+                case TokenKind.Division:
+                    ProcessDivision();
+                    break;
+
+                case TokenKind.Point:
+                    ProcessPoint();
+                    break;
+
+                case TokenKind.EntityCondition:
+                    ProcessEntityCondition();
+                    break;
+
+                case TokenKind.More:
+                    ProcessMore();
+                    break;
+
+                case TokenKind.MoreOrEqual:
+                    ProcessMoreOrEqual();
+                    break;
+
+                case TokenKind.Less:
+                    ProcessLess();
+                    break;
+
+                case TokenKind.LessOrEqual:
+                    ProcessLessOrEqual();
+                    break;
+
+                case TokenKind.Or:
+                    ProcessOr();
+                    break;
+
+                case TokenKind.And:
+                    ProcessAnd();
+                    break;
+
+                case TokenKind.Not:
+                    ProcessNotOperator();
+                    break;
+
+                case TokenKind.CloseRoundBracket:
+                    if (_terminators.Any(p => p == TokenKind.CloseRoundBracket))
+                    {
+                        _context.Recovery(_currToken);
+                        Exit();
+                        break;
+                    }
+                    throw new UnexpectedTokenException(_currToken);
+
+                case TokenKind.Colon:
+                    if (_terminators.Any(p => p == TokenKind.Colon))
+                    {
+                        _context.Recovery(_currToken);
+                        Exit();
+                        break;
+                    }
+                    throw new UnexpectedTokenException(_currToken);
+
+                case TokenKind.Comma:
+                    if (_terminators.Any(p => p == TokenKind.Comma))
+                    {
+                        _context.Recovery(_currToken);
+                        Exit();
+                        break;
+                    }
+                    throw new UnexpectedTokenException(_currToken);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
+                    throw new UnexpectedTokenException(_currToken);
             }
         }
 
-        private TriggerConditionNode ParseFact()
+        private void ProcessFact()
         {
+            var oldHasSomething = _hasSomething;
+
+#if DEBUG
+            Log($"oldHasSomething = {oldHasSomething}");
+#endif
+
+            _lastBinaryOperator = null;
+            _lastIsOperator = null;
+            _hasSomething = true;
+
             _context.Recovery(_currToken);
 
             var parser = new LogicalQueryParser(_context);
@@ -244,15 +223,41 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var conditionNode = new TriggerConditionNode() { Kind = KindOfTriggerConditionNode.Fact };
             conditionNode.RuleInstance = parser.Result;
 
-            return conditionNode;
+            var intermediateNode = new IntermediateAstNode(conditionNode);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+            if(!oldHasSomething)
+            {
+                _hasSingleFactOrDuration = true;
+            }
         }
 
-        private TriggerConditionNode CreateDuration(Value value)
+        private void ProcessDuration()
         {
-            var conditionNode = new TriggerConditionNode() { Kind = KindOfTriggerConditionNode.Duration };
-            conditionNode.Value = value;
+            var oldHasSomething = _hasSomething;
 
-            return conditionNode;
+#if DEBUG
+            Log($"oldHasSomething = {oldHasSomething}");
+#endif
+
+            _lastBinaryOperator = null;
+            _lastIsOperator = null;
+            _hasSomething = true;
+
+            _context.Recovery(_currToken);
+
+            var parser = new TriggerConditionDurationParser(_context, _terminators);
+            parser.Run();
+
+            var intermediateNode = new IntermediateAstNode(parser.Result);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+            if (!oldHasSomething)
+            {
+                _hasSingleFactOrDuration = true;
+            }
         }
 
         private void ProcessVar()

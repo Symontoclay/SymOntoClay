@@ -5659,6 +5659,9 @@
             Represents symbol `-∞`.
             </summary>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.TriggerConditionDurationParser.OnRun">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.TriggerConditionParser.OnFinish">
             <inheritdoc/>
         </member>

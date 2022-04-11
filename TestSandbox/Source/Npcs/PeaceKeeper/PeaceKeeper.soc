@@ -6,23 +6,14 @@
         'End' >> @>log;
     }
 
-    fun SomeFun(@param1, @param2)
-    {
-        //'Begin SomeFun' >> @>log;
-        return @b;
-    }
-
-    var @b;
     var @a = 15;
 
-	on {: see(I, #a) :} duration 1 (down) => 
+	on {: see(I, #a) :} duration 1 (down) as `trigger 1` => 
     {
 	    'S' >> @>log;
-        //@a = 5;
-        @b = 1;
 	}
 
-    on (2 * (3 + 2) > 5)
+    on (`trigger 1` & @a is 15)
     {
         'D' >> @>log;
     }

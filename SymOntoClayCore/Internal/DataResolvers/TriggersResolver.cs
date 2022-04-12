@@ -192,7 +192,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public INamedTriggerInstance ResolveNamedTriggerInstance(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"name = {name}");
+            //Log($"name = {name}");
 #endif
 
             var storage = localCodeExecutionContext.Storage;
@@ -210,7 +210,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var rawList = GetNamedTriggerInstanceRawList(name, storagesList);
 
 #if DEBUG
-            Log($"rawList.Count = {rawList.Count}");
+            //Log($"rawList.Count = {rawList.Count}");
 #endif
 
             if(!rawList.Any())

@@ -246,7 +246,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"namedTriggerInstance.NamesList = {namedTriggerInstance.NamesList.WriteListToString()}");
+                //Log($"namedTriggerInstance.NamesList = {namedTriggerInstance.NamesList.WriteListToString()}");
 #endif
 
                 var namesList = namedTriggerInstance.NamesList;
@@ -268,7 +268,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                 foreach(var name in namesList)
                 {
 #if DEBUG
-                    Log($"name = {name}");
+                    //Log($"name = {name}");
 #endif
 
                     if(_namedTriggerInstancesDict.ContainsKey(name))
@@ -299,7 +299,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"namedTriggerInstance.NamesList = {namedTriggerInstance.NamesList.WriteListToString()}");
+                //Log($"namedTriggerInstance.NamesList = {namedTriggerInstance.NamesList.WriteListToString()}");
 #endif
 
                 var namesList = namedTriggerInstance.NamesList;
@@ -321,7 +321,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                 foreach (var name in namesList)
                 {
 #if DEBUG
-                    Log($"name = {name}");
+                    //Log($"name = {name}");
 #endif
 
                     var targetList = _namedTriggerInstancesDict[name];
@@ -342,7 +342,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"name = {name}");
+                //Log($"name = {name}");
 #endif
 
                 if(_namedTriggerInstancesDict.ContainsKey(name))

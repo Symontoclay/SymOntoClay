@@ -211,12 +211,12 @@ namespace SymOntoClay.Core.Internal.Instances
         private void DoSearch()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
 #if DEBUG
             //Log($"_dateTimeProvider.CurrentTiks = {_dateTimeProvider.CurrentTiks}");
-            Log($"_isOn = {_isOn}");
+            //Log($"_isOn = {_isOn}");
 #endif
 
             var oldIsOn = _isOn;
@@ -247,7 +247,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Log($"_isOn (after) = {_isOn}");
+            //Log($"_isOn (after) = {_isOn}");
 #endif
 
             if(_isOn)
@@ -273,7 +273,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Log("End");
+            //Log("End");
 #endif
         }
 

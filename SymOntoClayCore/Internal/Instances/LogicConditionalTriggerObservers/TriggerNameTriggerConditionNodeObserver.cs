@@ -15,7 +15,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             _triggerName = condition.Name;
 
 #if DEBUG
-            Log($"_triggerName = {_triggerName}");
+            //Log($"_triggerName = {_triggerName}");
 #endif
 
             storage.TriggersStorage.OnNamedTriggerInstanceChangedWithKeys += TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
@@ -28,8 +28,8 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         private void TriggersStorage_OnNamedTriggerInstanceChangedWithKeys(IList<StrongIdentifierValue> namesList)
         {
 #if DEBUG
-            Log($"namesList = {namesList.WriteListToString()}");
-            Log($"_triggerName = {_triggerName}");
+            //Log($"namesList = {namesList.WriteListToString()}");
+            //Log($"_triggerName = {_triggerName}");
 #endif
 
             if(namesList.Contains(_triggerName))

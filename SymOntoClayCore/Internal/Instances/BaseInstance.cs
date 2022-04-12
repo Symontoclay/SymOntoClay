@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.Instances
             : base(context.Logger)
         {
 #if DEBUG
-            Log($"parentStorage = {parentStorage}");
+            //Log($"parentStorage = {parentStorage}");
 #endif
 
             _codeItem = codeItem;

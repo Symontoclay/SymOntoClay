@@ -17,7 +17,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             _triggerName = condition.Name;
 
 #if DEBUG
-            Log($"_triggerName = {_triggerName}");
+            //Log($"_triggerName = {_triggerName}");
 #endif
 
             _localCodeExecutionContext = localCodeExecutionContext;
@@ -33,13 +33,13 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         public override Value Run(List<List<Var>> varList)
         {
 #if DEBUG
-            Log($"_triggerName = {_triggerName}");
+            //Log($"_triggerName = {_triggerName}");
 #endif
 
             var namedTriggerInstance = _triggersResolver.ResolveNamedTriggerInstance(_triggerName, _localCodeExecutionContext);
 
 #if DEBUG
-            Log($"namedTriggerInstance.NamesList = {namedTriggerInstance.NamesList.WriteListToString()}");
+            //Log($"namedTriggerInstance.NamesList = {namedTriggerInstance.NamesList.WriteListToString()}");
 #endif
 
             if(namedTriggerInstance == null)
@@ -48,7 +48,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             }
 
 #if DEBUG
-            Log($"namedTriggerInstance.IsOn = {namedTriggerInstance.IsOn}");           
+            //Log($"namedTriggerInstance.IsOn = {namedTriggerInstance.IsOn}");           
 #endif
 
             if(namedTriggerInstance.IsOn)

@@ -50,6 +50,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             WaitForDoubleConditionsStrategy,
             WaitForFinishingDoubleConditionsStrategy,
             GotDoubleConditionsStrategy,
+            WaitForName,
+            GotName,
+            GotAlias,
             WaitForSetAction,
             GotSetAction,
             WaitForResetAction,
@@ -82,8 +85,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -375,6 +378,64 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case State.GotDoubleConditionsStrategy:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Lambda:
+                            _state = State.WaitForSetAction;
+                            break;
+
+                        case TokenKind.OpenFigureBracket:
+                            ProcessSetFunctionBody();
+                            break;
+
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.As:
+                                    _state = State.WaitForName;
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForName:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                        case TokenKind.Identifier:
+                            Result.Name = NameHelper.CreateName(_currToken.Content);
+                            _state = State.GotName;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotName:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Lambda:
+                            _state = State.WaitForSetAction;
+                            break;
+
+                        case TokenKind.OpenFigureBracket:
+                            ProcessSetFunctionBody();
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotAlias:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Lambda:

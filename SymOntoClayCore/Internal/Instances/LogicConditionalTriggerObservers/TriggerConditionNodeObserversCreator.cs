@@ -54,6 +54,10 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
                     CreateObservers(result, context, condition.Left);
                     break;
 
+                case KindOfTriggerConditionNode.Concept:
+                    result.Add(new TriggerNameTriggerConditionNodeObserver(context.EngineContext.Logger, context.Storage, condition));
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(condition.Kind), condition.Kind, null);
             }

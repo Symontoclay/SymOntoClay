@@ -13,7 +13,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             : base(logger)
         {
             _varName = condition.Name;
-
+            
 #if DEBUG
             //Log($"_varName = {_varName}");
 #endif

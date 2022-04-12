@@ -12,8 +12,14 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         public TriggerNameTriggerConditionNodeExecutor(IEngineContext engineContext, LocalCodeExecutionContext localCodeExecutionContext, TriggerConditionNode condition)
             : base(engineContext.Logger)
         {
-            throw new NotImplementedException();
+            _triggerName = condition.Name;
+
+#if DEBUG
+            Log($"_triggerName = {_triggerName}");
+#endif
         }
+
+        private readonly StrongIdentifierValue _triggerName;
 
         /// <inheritdoc/>
         public override Value Run(List<List<Var>> varList)

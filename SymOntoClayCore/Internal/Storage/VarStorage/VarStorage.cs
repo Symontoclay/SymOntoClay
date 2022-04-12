@@ -71,8 +71,10 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
 
         private List<IVarStorage> _parentVarStoragesList = new List<IVarStorage>();
 
-        private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<Var>>> _variablesDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<Var>>>();
-        private readonly Dictionary<StrongIdentifierValue, Var> _localVariablesDict = new Dictionary<StrongIdentifierValue, Var>();
+        private Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<Var>>> _variablesDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<Var>>>();
+        private Dictionary<StrongIdentifierValue, Var> _localVariablesDict = new Dictionary<StrongIdentifierValue, Var>();
+
+        private List<Var> _allVariablesList = new List<Var>();
 
         private Dictionary<StrongIdentifierValue, Value> _systemVariables = new Dictionary<StrongIdentifierValue, Value>();
         
@@ -123,6 +125,13 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
             //Log($"varItem = {varItem}");
 #endif
 
+            if(_allVariablesList.Contains(varItem))
+            {
+                return;
+            }
+
+            _allVariablesList.Add(varItem);
+
             if (varItem.TypeOfAccess != TypeOfAccess.Local)
             {
                 AnnotatedItemHelper.CheckAndFillUpHolder(varItem, _realStorageContext.MainStorageContext.CommonNamesStorage);
@@ -153,13 +162,19 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
             {
                 dict = new Dictionary<StrongIdentifierValue, List<Var>>();
                 _variablesDict[holder] = dict;
-            }
+            }            
 
             if (dict.ContainsKey(name))
             {
                 var targetList = dict[name];
 
-                StorageHelper.RemoveSameItems(targetList, varItem);
+                var varsForRemoving = StorageHelper.RemoveSameItems(targetList, varItem);
+
+                foreach(var varItemForRemoving in varsForRemoving)
+                {
+                    varItemForRemoving.OnChanged -= VarItem_OnChanged;
+                    _allVariablesList.Remove(varItemForRemoving);
+                }
 
                 targetList.Add(varItem);
             }
@@ -294,10 +309,10 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
 
         private void RealStorageContext_OnRemoveParentStorage(IStorage storage)
         {
-            var varStroage = storage.VarStorage;
-            varStroage.OnChangedWithKeys -= VarStorage_OnChangedWithKeys;
+            var varStorage = storage.VarStorage;
+            varStorage.OnChangedWithKeys -= VarStorage_OnChangedWithKeys;
 
-            _parentVarStoragesList.Remove(varStroage);
+            _parentVarStoragesList.Remove(varStorage);
         }
 
         private void RealStorageContext_OnAddParentStorage(IStorage storage)
@@ -316,6 +331,12 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
                 parentStorage.OnChangedWithKeys -= VarStorage_OnChangedWithKeys;
             }
 
+            foreach(var varItem in _allVariablesList)
+            {
+                varItem.OnChanged -= VarItem_OnChanged;
+            }
+
+            _allVariablesList.Clear();
             _systemVariables.Clear();
             _variablesDict.Clear();
             _localVariablesDict.Clear();

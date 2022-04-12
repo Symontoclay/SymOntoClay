@@ -4989,6 +4989,15 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.VarTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}})">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.NamesList">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.IsOn">
+            <inheritdoc/>
+        </member>
+        <member name="E:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.OnChanged">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.OnDisposed">
             <inheritdoc/>
         </member>
@@ -6463,6 +6472,18 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStorage.TriggersStorage.GetLogicConditionalTriggersDirectly(System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStorage.TriggersStorage.Append(SymOntoClay.Core.INamedTriggerInstance)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStorage.TriggersStorage.Remove(SymOntoClay.Core.INamedTriggerInstance)">
+            <inheritdoc/>
+        </member>
+        <member name="E:SymOntoClay.Core.Internal.Storage.TriggersStorage.TriggersStorage.OnNamedTriggerInstanceChanged">
+            <inheritdoc/>
+        </member>
+        <member name="E:SymOntoClay.Core.Internal.Storage.TriggersStorage.TriggersStorage.OnNamedTriggerInstanceChangedWithKeys">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStorage.TriggersStorage.OnDisposed">

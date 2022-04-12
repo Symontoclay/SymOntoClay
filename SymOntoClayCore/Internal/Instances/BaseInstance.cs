@@ -39,10 +39,16 @@ namespace SymOntoClay.Core.Internal.Instances
         protected BaseInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, IStorageFactory storageFactory, List<Var> varList)
             : base(context.Logger)
         {
+#if DEBUG
+            Log($"parentStorage = {parentStorage}");
+#endif
+
             _codeItem = codeItem;
 
             Name = codeItem.Name;
             _context = context;
+
+            _globalTriggersStorage = context.Storage.GlobalStorage.TriggersStorage;
 
             _executionCoordinator = new ExecutionCoordinator(this);
             _executionCoordinator.OnFinished += ExecutionCoordinator_OnFinished;
@@ -80,6 +86,7 @@ namespace SymOntoClay.Core.Internal.Instances
         public StrongIdentifierValue Name { get; private set; }
 
         protected readonly IEngineContext _context;
+        private readonly ITriggersStorage _globalTriggersStorage;
         protected readonly IStorage _storage;
         protected readonly LocalCodeExecutionContext _localCodeExecutionContext;
         private readonly TriggersResolver _triggersResolver;
@@ -141,6 +148,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     var triggerInstanceInfo = new LogicConditionalTriggerInstance(targetTrigger.ResultItem, this, _context, _storage);
                     _logicConditionalTriggersList.Add(triggerInstanceInfo);
+
+                    _globalTriggersStorage.Append(triggerInstanceInfo);
 
                     Task.Run(() => { triggerInstanceInfo.Init(); });                    
                 }
@@ -389,6 +398,8 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             foreach (var triggerInstanceInfo in _logicConditionalTriggersList)
             {
+                _globalTriggersStorage.Remove(triggerInstanceInfo);
+
                 triggerInstanceInfo.Dispose();
             }
 

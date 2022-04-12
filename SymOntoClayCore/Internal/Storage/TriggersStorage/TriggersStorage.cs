@@ -24,11 +24,13 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
 {
@@ -39,6 +41,16 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
         {
             _kind = kind;
             _realStorageContext = realStorageContext;
+
+            _parentTriggersStoragesList = realStorageContext.Parents.Select(p => p.TriggersStorage).ToList();
+
+            foreach (var parentStorage in _parentTriggersStoragesList)
+            {
+                parentStorage.OnNamedTriggerInstanceChangedWithKeys += TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
+            }
+
+            realStorageContext.OnAddParentStorage += RealStorageContext_OnAddParentStorage;
+            realStorageContext.OnRemoveParentStorage += RealStorageContext_OnRemoveParentStorage;
         }
 
         private readonly object _lockObj = new object();
@@ -53,9 +65,14 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
         /// <inheritdoc/>
         public IStorage Storage => _realStorageContext.Storage;
 
-        private readonly Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<StrongIdentifierValue, List<InlineTrigger>>> _nonIndexedSystemEventsInfo = new Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<StrongIdentifierValue, List<InlineTrigger>>>();
+        private List<ITriggersStorage> _parentTriggersStoragesList = new List<ITriggersStorage>();
 
-        private readonly Dictionary<StrongIdentifierValue, List<InlineTrigger>> _nonIndexedLogicConditionalsInfo = new Dictionary<StrongIdentifierValue, List<InlineTrigger>>();
+        private Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<StrongIdentifierValue, List<InlineTrigger>>> _nonIndexedSystemEventsInfo = new Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<StrongIdentifierValue, List<InlineTrigger>>>();
+
+        private Dictionary<StrongIdentifierValue, List<InlineTrigger>> _nonIndexedLogicConditionalsInfo = new Dictionary<StrongIdentifierValue, List<InlineTrigger>>();
+
+        private List<INamedTriggerInstance> _namedTriggerInstancesList = new List<INamedTriggerInstance>();
+        private Dictionary<StrongIdentifierValue, List<INamedTriggerInstance>> _namedTriggerInstancesDict = new Dictionary<StrongIdentifierValue, List<INamedTriggerInstance>>();
 
         /// <inheritdoc/>
         public void Append(InlineTrigger inlineTrigger)
@@ -191,7 +208,11 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
         /// <inheritdoc/>
         public IList<WeightedInheritanceResultItem<InlineTrigger>> GetLogicConditionalTriggersDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-            var result = new List<WeightedInheritanceResultItem<InlineTrigger>>();
+            lock (_lockObj)
+            {
+
+            }
+                var result = new List<WeightedInheritanceResultItem<InlineTrigger>>();
 
             foreach (var weightedInheritanceItem in weightedInheritanceItems)
             {
@@ -220,8 +241,125 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
         }
 
         /// <inheritdoc/>
+        public void Append(INamedTriggerInstance namedTriggerInstance)
+        {
+            lock (_lockObj)
+            {
+#if DEBUG
+                Log($"namedTriggerInstance.NamesList = {namedTriggerInstance.NamesList.WriteListToString()}");
+#endif
+
+                var namesList = namedTriggerInstance.NamesList;
+
+                if (namesList.IsNullOrEmpty())
+                {
+                    return;
+                }
+
+                if(_namedTriggerInstancesList.Contains(namedTriggerInstance))
+                {
+                    return;
+                }
+
+                _namedTriggerInstancesList.Add(namedTriggerInstance);
+
+                namedTriggerInstance.OnChanged += NamedTriggerInstance_OnChanged;
+
+                foreach(var name in namesList)
+                {
+#if DEBUG
+                    Log($"name = {name}");
+#endif
+
+                    var 
+
+                    _namedTriggerInstancesDict
+                }
+
+                //throw new NotImplementedException();
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Remove(INamedTriggerInstance namedTriggerInstance)
+        {
+            lock (_lockObj)
+            {
+#if DEBUG
+                Log($"namedTriggerInstance.NamesList = {namedTriggerInstance.NamesList.WriteListToString()}");
+#endif
+
+                //throw new NotImplementedException();
+            }
+        }
+
+        /// <inheritdoc/>
+        public event Action OnNamedTriggerInstanceChanged;
+
+        /// <inheritdoc/>
+        public event Action<IList<StrongIdentifierValue>> OnNamedTriggerInstanceChangedWithKeys;
+
+        private void NamedTriggerInstance_OnChanged(IList<StrongIdentifierValue> namesList)
+        {
+#if DEBUG
+            //Log($"namesList = {namesList.WriteListToString()}");
+#endif
+            EmitOnChanged(namesList);
+        }
+
+        protected void EmitOnChanged(IList<StrongIdentifierValue> namesList)
+        {
+#if DEBUG
+            //Log($"namesList = {namesList.WriteListToString()}");
+#endif
+
+            Task.Run(() => {
+                OnNamedTriggerInstanceChanged?.Invoke();
+            });
+
+            Task.Run(() => {
+                OnNamedTriggerInstanceChangedWithKeys?.Invoke(namesList);
+            });
+        }
+
+        private void TriggersStorage_OnNamedTriggerInstanceChangedWithKeys(IList<StrongIdentifierValue> namesList)
+        {
+#if DEBUG
+            //Log($"varName = {varName}");
+#endif
+
+            EmitOnChanged(namesList);
+        }
+
+        private void RealStorageContext_OnRemoveParentStorage(IStorage storage)
+        {
+            var triggersStorage = storage.TriggersStorage;
+            triggersStorage.OnNamedTriggerInstanceChangedWithKeys -= TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
+
+            _parentTriggersStoragesList.Remove(triggersStorage);
+        }
+
+        private void RealStorageContext_OnAddParentStorage(IStorage storage)
+        {
+            var triggersStorage = storage.TriggersStorage;
+            triggersStorage.OnNamedTriggerInstanceChangedWithKeys += TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
+
+            _parentTriggersStoragesList.Add(triggersStorage);
+        }
+
+        /// <inheritdoc/>
         protected override void OnDisposed()
         {
+            foreach (var parentStorage in _parentTriggersStoragesList)
+            {
+                parentStorage.OnNamedTriggerInstanceChangedWithKeys -= TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
+            }
+
+            foreach (var item in _namedTriggerInstancesList)
+            {
+                item.OnChanged += NamedTriggerInstance_OnChanged;
+            }
+
             _nonIndexedSystemEventsInfo.Clear();
             _nonIndexedLogicConditionalsInfo.Clear();
 

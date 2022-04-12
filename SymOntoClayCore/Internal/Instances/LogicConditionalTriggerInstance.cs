@@ -31,6 +31,7 @@ using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,7 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class LogicConditionalTriggerInstance : BaseComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class LogicConditionalTriggerInstance : BaseComponent, INamedTriggerInstance, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public LogicConditionalTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage)
             : base(context.Logger)
@@ -49,6 +50,8 @@ namespace SymOntoClay.Core.Internal.Instances
             _context = context;
             _parent = parent;
             _trigger = trigger;
+            _namesList = trigger.NamesList;
+            _hasNames = !_namesList.IsNullOrEmpty();
             _dateTimeProvider = _context.DateTimeProvider;
 
 #if DEBUG
@@ -98,10 +101,12 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly TriggerConditionNodeObserverContext _triggerConditionNodeObserverContext;
         private readonly IDateTimeProvider _dateTimeProvider;
 
-        private IExecutionCoordinator _executionCoordinator;
+        private readonly IExecutionCoordinator _executionCoordinator;
         private readonly IEngineContext _context;
-        private BaseInstance _parent;
-        private InlineTrigger _trigger;
+        private readonly BaseInstance _parent;
+        private readonly InlineTrigger _trigger;
+        private readonly IList<StrongIdentifierValue> _namesList;
+        private readonly bool _hasNames;
         private readonly IStorage _storage;
         private readonly LocalCodeExecutionContext _localCodeExecutionContext;
         private readonly LogicConditionalTriggerObserver _setConditionalTriggerObserver;
@@ -117,6 +122,15 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private readonly bool _hasResetConditions;
         private readonly bool _hasResetHandler;
+
+        /// <inheritdoc/>
+        public IList<StrongIdentifierValue> NamesList => _namesList;
+
+        /// <inheritdoc/>
+        public bool IsOn => _isOn;
+
+        /// <inheritdoc/>
+        public event Action<IList<StrongIdentifierValue>> OnChanged;
 
         public void Init()
         {
@@ -193,6 +207,8 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log($"_isOn = {_isOn}");
 #endif
 
+            var oldIsOn = _isOn;
+
             if (_hasResetConditions)
             {
                 switch(_trigger.DoubleConditionsStrategy)
@@ -235,6 +251,13 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     _triggerConditionNodeObserverContext.SetSeconds = null;
                 }
+            }
+
+            if(_hasNames && oldIsOn != _isOn)
+            {
+                Task.Run(() => {
+                    OnChanged?.Invoke(_namesList);
+                });
             }
 
 #if DEBUG

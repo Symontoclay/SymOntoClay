@@ -39,5 +39,7 @@ namespace SymOntoClay.Core
 
         event Action OnNamedTriggerInstanceChanged;
         event Action<IList<StrongIdentifierValue>> OnNamedTriggerInstanceChangedWithKeys;
+
+        IList<INamedTriggerInstance> GetNamedTriggerInstancesDirectly(StrongIdentifierValue name);
     }
 }

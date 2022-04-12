@@ -232,6 +232,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     }
                                     break;
 
+                                case KeyWordTokenKind.As:
+                                    _state = State.WaitForName;
+                                    break;
+
                                 default:
                                     throw new UnexpectedTokenException(_currToken);
                             }

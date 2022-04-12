@@ -8,7 +8,7 @@
 
     var @a = 15;
 
-	on {: see(I, #a) :} duration 1 (down) as `trigger 1` => 
+	on {: see(I, #a) :} as `trigger 1` => 
     {
 	    'S' >> @>log;
 	}

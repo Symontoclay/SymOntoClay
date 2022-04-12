@@ -4995,6 +4995,12 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.IsOn">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.GetLongHashCode">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.GetLongConditionalHashCode">
+            <inheritdoc/>
+        </member>
         <member name="E:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.OnChanged">
             <inheritdoc/>
         </member>
@@ -5062,6 +5068,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers.TriggerConditionNodeObserverContext.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers.TriggerNameTriggerConditionNodeObserver.OnDisposed">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers.UnaryOperatorTriggerConditionNodeObserver.OnDisposed">
@@ -6478,6 +6487,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStorage.TriggersStorage.Remove(SymOntoClay.Core.INamedTriggerInstance)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStorage.TriggersStorage.GetNamedTriggerInstancesDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="E:SymOntoClay.Core.Internal.Storage.TriggersStorage.TriggersStorage.OnNamedTriggerInstanceChanged">

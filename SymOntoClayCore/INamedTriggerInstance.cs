@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SymOntoClay.Core
 {
-    public interface INamedTriggerInstance
+    public interface INamedTriggerInstance: IObjectWithLongHashCodes
     {
         IList<StrongIdentifierValue> NamesList { get; }
         bool IsOn { get; }

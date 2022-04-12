@@ -271,12 +271,25 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                     Log($"name = {name}");
 #endif
 
-                    var 
+                    if(_namedTriggerInstancesDict.ContainsKey(name))
+                    {
+                        var targetList = _namedTriggerInstancesDict[name];
 
-                    _namedTriggerInstancesDict
+                        var itemsForRemoving = StorageHelper.RemoveSameItems(targetList, namedTriggerInstance);
+
+                        foreach (var itemForRemoving in itemsForRemoving)
+                        {
+                            itemForRemoving.OnChanged -= NamedTriggerInstance_OnChanged;
+                            _namedTriggerInstancesList.Remove(itemForRemoving);
+                        }
+
+                        targetList.Add(namedTriggerInstance);
+                    }
+                    else
+                    {
+                        _namedTriggerInstancesDict[name] = new List<INamedTriggerInstance> { namedTriggerInstance };
+                    }
                 }
-
-                //throw new NotImplementedException();
             }
         }
 
@@ -289,7 +302,55 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                 Log($"namedTriggerInstance.NamesList = {namedTriggerInstance.NamesList.WriteListToString()}");
 #endif
 
-                //throw new NotImplementedException();
+                var namesList = namedTriggerInstance.NamesList;
+
+                if (namesList.IsNullOrEmpty())
+                {
+                    return;
+                }
+
+                if (!_namedTriggerInstancesList.Contains(namedTriggerInstance))
+                {
+                    return;
+                }
+
+                _namedTriggerInstancesList.Remove(namedTriggerInstance);
+
+                namedTriggerInstance.OnChanged -= NamedTriggerInstance_OnChanged;
+
+                foreach (var name in namesList)
+                {
+#if DEBUG
+                    Log($"name = {name}");
+#endif
+
+                    var targetList = _namedTriggerInstancesDict[name];
+
+                    targetList.Remove(namedTriggerInstance);
+
+                    if(!targetList.Any())
+                    {
+                        _namedTriggerInstancesDict.Remove(name);
+                    }
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public IList<INamedTriggerInstance> GetNamedTriggerInstancesDirectly(StrongIdentifierValue name)
+        {
+            lock (_lockObj)
+            {
+#if DEBUG
+                Log($"name = {name}");
+#endif
+
+                if(_namedTriggerInstancesDict.ContainsKey(name))
+                {
+                    return _namedTriggerInstancesDict[name];
+                }
+
+                return null;
             }
         }
 

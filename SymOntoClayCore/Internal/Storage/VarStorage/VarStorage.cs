@@ -168,12 +168,12 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
             {
                 var targetList = dict[name];
 
-                var varsForRemoving = StorageHelper.RemoveSameItems(targetList, varItem);
+                var itemsForRemoving = StorageHelper.RemoveSameItems(targetList, varItem);
 
-                foreach(var varItemForRemoving in varsForRemoving)
+                foreach(var itemForRemoving in itemsForRemoving)
                 {
-                    varItemForRemoving.OnChanged -= VarItem_OnChanged;
-                    _allVariablesList.Remove(varItemForRemoving);
+                    itemForRemoving.OnChanged -= VarItem_OnChanged;
+                    _allVariablesList.Remove(itemForRemoving);
                 }
 
                 targetList.Add(varItem);

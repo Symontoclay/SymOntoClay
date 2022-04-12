@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -182,5 +183,73 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             return result;
         }
+
+        public INamedTriggerInstance ResolveNamedTriggerInstance(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return ResolveNamedTriggerInstance(name, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public INamedTriggerInstance ResolveNamedTriggerInstance(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+#if DEBUG
+            Log($"name = {name}");
+#endif
+
+            var storage = localCodeExecutionContext.Storage;
+
+            var storagesList = GetStoragesList(storage);
+
+#if DEBUG
+            //Log($"storagesList.Count = {storagesList.Count}");
+            //foreach (var tmpStorage in storagesList)
+            //{
+            //    Log($"tmpStorage.Key = {tmpStorage.Key}; tmpStorage.Value.Kind = '{tmpStorage.Value.Kind}'");
+            //}
+#endif
+
+            var rawList = GetNamedTriggerInstanceRawList(name, storagesList);
+
+#if DEBUG
+            Log($"rawList.Count = {rawList.Count}");
+#endif
+
+            if(!rawList.Any())
+            {
+                return null;
+            }
+
+            if(rawList.Count == 1)
+            {
+                return rawList.SingleOrDefault();
+            }
+
+            throw new NotImplementedException();
+        }
+
+        private List<INamedTriggerInstance> GetNamedTriggerInstanceRawList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList)
+        {
+            if (!storagesList.Any())
+            {
+                return new List<INamedTriggerInstance>();
+            }
+
+            var result = new List<INamedTriggerInstance>();
+
+            foreach (var storageItem in storagesList)
+            {
+                var itemsList = storageItem.Storage.TriggersStorage.GetNamedTriggerInstancesDirectly(name);
+
+                if (itemsList.IsNullOrEmpty())
+                {
+                    continue;
+                }
+
+                result.AddRange(itemsList);
+            }
+
+            return result;
+        }
+
+        private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
     }
 }

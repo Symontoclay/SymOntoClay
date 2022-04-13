@@ -561,6 +561,142 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
         [Test]
         [Parallelizable]
+        public void Case7_a()
+        {
+            var text = @"app PeaceKeeper
+{
+    fun a(@param_1)
+    {
+        '`a` (1) has been called!' >> @>log;
+        @param_1 >> @>log;
+    }
+
+    fun a(@param_1, @param_2)
+    {
+        '`a` (2) has been called!' >> @>log;
+        @param_1 >> @>log;
+        @param_2 >> @>log;
+    }
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        @param_1 = 12;
+
+        a(@param_1);
+        a(@param_1: 3, @param_2: 'Hi');
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "`a` (1) has been called!");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "12");
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(message, "`a` (2) has been called!");
+                            break;
+
+                        case 5:
+                            Assert.AreEqual(message, "3");
+                            break;
+
+                        case 6:
+                            Assert.AreEqual(message, "Hi");
+                            break;
+
+                        case 7:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case7_b()
+        {
+            var text = @"app PeaceKeeper
+{
+    fun a(@param_1)
+    {
+        '`a` (1) has been called!' >> @>log;
+        @param_1 >> @>log;
+    }
+
+    fun a(@param_1, @param_2)
+    {
+        '`a` (2) has been called!' >> @>log;
+        @param_1 >> @>log;
+        @param_2 >> @>log;
+    }
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        @param_1 = 12;
+
+        a(@param_1);
+        a(param_1: 3, param_2: 'Hi');
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "`a` (1) has been called!");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "12");
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(message, "`a` (2) has been called!");
+                            break;
+
+                        case 5:
+                            Assert.AreEqual(message, "3");
+                            break;
+
+                        case 6:
+                            Assert.AreEqual(message, "Hi");
+                            break;
+
+                        case 7:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
         public void Case8_a()
         {
             var text = @"app PeaceKeeper

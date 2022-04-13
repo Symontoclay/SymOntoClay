@@ -36,9 +36,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Init,
             WaitForMainParameter,
             GotPositionedMainParameter,
+            GotCommaInPositionedMainParameter,
+            WaitForNameOfNamedMainParameter,
+            GotNameOfNamedMainParameter,
             WaitForValueOfNamedMainParameter,
             GotValueOfNamedMainParameter,
-            GotComma
+            GotCommaInNamedMainParameter
         }
         
         public CallingFunctionExpressionParser(InternalParserContext context)
@@ -232,7 +235,60 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.Comma:
-                            _state = State.GotComma;
+                            _state = State.GotCommaInPositionedMainParameter;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotCommaInPositionedMainParameter:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Number:
+                        case TokenKind.Word:
+                        case TokenKind.EntityCondition:
+                        case TokenKind.Var:
+                        case TokenKind.String:
+                            _context.Recovery(_currToken);
+                            _state = State.WaitForMainParameter;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForNameOfNamedMainParameter:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Var:
+                        case TokenKind.Identifier:
+                        case TokenKind.Word:
+                            {
+                                _currentParameter = new CallingParameter();
+                                Result.Parameters.Add(_currentParameter);
+
+                                var node = new ConstValueAstExpression();
+                                node.Value = NameHelper.CreateName(_currToken.Content);
+
+                                _currentParameter.Name = node;
+
+                                _state = State.GotNameOfNamedMainParameter;
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotNameOfNamedMainParameter:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Colon:
+                            _state = State.WaitForValueOfNamedMainParameter;
                             break;
 
                         default:
@@ -312,21 +368,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             Exit();
                             break;
 
+                        case TokenKind.Comma:
+                            _state = State.GotCommaInNamedMainParameter;
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
                     break;
 
-                case State.GotComma:
+                case State.GotCommaInNamedMainParameter:
                     switch (_currToken.TokenKind)
                     {
-                        case TokenKind.Number:
-                        case TokenKind.Word:
-                        case TokenKind.EntityCondition:
                         case TokenKind.Var:
-                        case TokenKind.String:
+                        case TokenKind.Identifier:
+                        case TokenKind.Word:
                             _context.Recovery(_currToken);
-                            _state = State.WaitForMainParameter;
+                            _state = State.WaitForNameOfNamedMainParameter;
                             break;
 
                         default:

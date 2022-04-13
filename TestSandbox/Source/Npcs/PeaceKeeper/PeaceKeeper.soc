@@ -1,20 +1,25 @@
 ﻿app PeaceKeeper
 {
+    fun a(@param_1)
+    {
+        '`a` (1) has been called!' >> @>log;
+        @param_1 >> @>log;
+    }
+
+    fun a(@param_1, @param_2)
+    {
+        '`a` (2) has been called!' >> @>log;
+        @param_1 >> @>log;
+        @param_2 >> @>log;
+    }
+
     on Enter =>
     {
         'Begin' >> @>log;
+        @param_1 = 12;
+
+        a(@param_1);
+        a(@param_1: 3, @param_2: 'Hi');
         'End' >> @>log;
     }
 
-    var @a = 15;
-
-	on {: see(I, #a) :} as `trigger 1` alias `Alarm trigger` => 
-    {
-	    'S' >> @>log;
-	}
-
-    on (`Alarm trigger` & @a is 15)
-    {
-        'D' >> @>log;
-    }
-}

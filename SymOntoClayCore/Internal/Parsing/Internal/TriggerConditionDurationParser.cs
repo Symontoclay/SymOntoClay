@@ -13,17 +13,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotDurationMark
         }
 
-        public TriggerConditionDurationParser(InternalParserContext context, params TokenKind[] terminators)
+        public TriggerConditionDurationParser(InternalParserContext context)
             : base(context)
         {
-            _terminators = terminators;
         }
 
         private State _state = State.Init;
 
         public TriggerConditionNode Result { get; private set; }
-
-        private readonly TokenKind[] _terminators;
 
         /// <inheritdoc/>
         protected override void OnRun()

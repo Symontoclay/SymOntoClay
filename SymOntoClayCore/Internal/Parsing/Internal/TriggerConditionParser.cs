@@ -12,17 +12,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
     public class TriggerConditionParser : BaseInternalParser
     {
-        public TriggerConditionParser(InternalParserContext context, params TokenKind[] terminators)
-            : base(context)
+        public TriggerConditionParser(InternalParserContext context, params TerminationToken[] terminators)
+            : base(context, terminators)
         {
-            _terminators = terminators;
         }
 
         public TriggerConditionNode Result { get; private set; }
 
         private IntermediateAstNodePoint _nodePoint = new IntermediateAstNodePoint();
-
-        private readonly TokenKind[] _terminators;
 
         private bool _hasSomething;
         private TriggerConditionNode _lastIsOperator;
@@ -181,33 +178,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     ProcessNotOperator();
                     break;
 
-                case TokenKind.CloseRoundBracket:
-                    if (_terminators.Any(p => p == TokenKind.CloseRoundBracket))
-                    {
-                        _context.Recovery(_currToken);
-                        Exit();
-                        break;
-                    }
-                    throw new UnexpectedTokenException(_currToken);
-
-                case TokenKind.Colon:
-                    if (_terminators.Any(p => p == TokenKind.Colon))
-                    {
-                        _context.Recovery(_currToken);
-                        Exit();
-                        break;
-                    }
-                    throw new UnexpectedTokenException(_currToken);
-
-                case TokenKind.Comma:
-                    if (_terminators.Any(p => p == TokenKind.Comma))
-                    {
-                        _context.Recovery(_currToken);
-                        Exit();
-                        break;
-                    }
-                    throw new UnexpectedTokenException(_currToken);
-
                 default:
                     throw new UnexpectedTokenException(_currToken);
             }
@@ -257,7 +227,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             _context.Recovery(_currToken);
 
-            var parser = new TriggerConditionDurationParser(_context, _terminators);
+            var parser = new TriggerConditionDurationParser(_context);
             parser.Run();
 
             var intermediateNode = new IntermediateAstNode(parser.Result);

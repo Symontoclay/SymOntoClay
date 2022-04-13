@@ -8,5 +8,5 @@
 
     var @a = 15;
 
-	on {: see(I, #a) :} duration 2 => {: pet(I, cat) :}
+	on {: see(I, #a) :} duration 1 => {: pet(I, cat) :}, {: pet(I, dog) :}, {: {son($x, $y)} -> { male($x) & parent($y, $x) } :}
 }

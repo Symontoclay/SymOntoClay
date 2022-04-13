@@ -1802,5 +1802,106 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
         }
+
+
+        [Test]
+        [Parallelizable]
+        public void Case14()
+        {
+            using var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        'End' >> @>log;
+    }
+
+    var @a = 15;
+
+	on {: see(I, #a) :} duration 1 => {: pet(I, cat) :}
+}";
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual("Begin", message);
+                        break;
+
+                    case 2:
+                        Assert.AreEqual("End", message);
+                        break;
+
+                    case 3:
+                        Assert.AreEqual("|||||||||||||", message);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+            Thread.Sleep(100);
+
+            npc.Logger.LogChannel("|||||||||||||");
+
+            var factId = npc.InsertFact("{: see(I, #a) :}");
+
+            Thread.Sleep(1000);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case14_a()
+        {
+            using var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        'End' >> @>log;
+    }
+
+    var @a = 15;
+
+	on {: see(I, #a) :} duration 1 => {: pet(I, cat) :}, {: pet(I, dog) :}, {: {son($x, $y)} -> { male($x) & parent($y, $x) } :}
+}";
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual("Begin", message);
+                        break;
+
+                    case 2:
+                        Assert.AreEqual("End", message);
+                        break;
+
+                    case 3:
+                        Assert.AreEqual("|||||||||||||", message);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+            Thread.Sleep(100);
+
+            npc.Logger.LogChannel("|||||||||||||");
+
+            var factId = npc.InsertFact("{: see(I, #a) :}");
+
+            Thread.Sleep(1000);
+        }
     }
 }

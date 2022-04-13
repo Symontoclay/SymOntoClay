@@ -586,13 +586,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }
             });
 
-            Thread.Sleep(500);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|||||||||||||");
 
             var factId = npc.InsertFact("{: see(I, #a) :}");
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
 
@@ -663,19 +663,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }
             });
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|||||||||||||");
 
             var factId = npc.InsertFact("{: see(I, #a) :}");
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
 
             npc.RemoveFact(factId);
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|=|=|=|=|=|=|");
 
@@ -746,19 +746,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }
             });
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|||||||||||||");
 
             var factId = npc.InsertFact("{: see(I, #a) :}");
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
 
             npc.InsertFact("{: see(I, barrel) :}");
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|=|=|=|=|=|=|");
 
@@ -829,19 +829,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }
             });
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|||||||||||||");
 
             var factId = npc.InsertFact("{: see(I, #a) :}");
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
 
             npc.RemoveFact(factId);
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|=|=|=|=|=|=|");
 
@@ -912,19 +912,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }
             });
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|||||||||||||");
 
             var factId = npc.InsertFact("{: see(I, #a) :}");
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
 
             npc.InsertFact("{: see(I, barrel) :}");
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|=|=|=|=|=|=|");
 
@@ -1008,13 +1008,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }
             });
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|||||||||||||");
 
             npc.InsertFact("{: see(I, #a) :}");
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
 
@@ -1085,19 +1085,19 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }
             });
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|||||||||||||");
 
             var factId = npc.InsertFact("{: see(I, #a) :}");
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
 
             npc.InsertFact("{: see(I, barrel) :}");
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|=|=|=|=|=|=|");
 
@@ -1115,12 +1115,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var text = @"app PeaceKeeper
 {
-    on Enter =>
-    {
-        'Begin' >> @>log;
-        'End' >> @>log;
-    }
-
 	on {: see(I, #a) :} duration 1 (down) => 
     {
 	    'S' >> @>log;
@@ -1137,26 +1131,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual("Begin", message);
-                        break;
-
-                    case 2:
-                        Assert.AreEqual("End", message);
-                        break;
-
-                    case 3:
-                        Assert.AreEqual("|||||||||||||", message);
-                        break;
-
-                    case 4:
                         Assert.AreEqual("S", message);
                         break;
 
-                    case 5:
-                        Assert.AreEqual("|-|-|-|-|-|-|-|-|-|-|-|-|", message);
-                        break;
-
-                    case 6:
+                    case 2:
                         Assert.AreEqual("R", message);
                         break;
 
@@ -1165,15 +1143,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }
             });
 
-            Thread.Sleep(100);
-
-            npc.Logger.LogChannel("|||||||||||||");
+            Thread.Sleep(1000);
 
             var factId = npc.InsertFact("{: see(I, #a) :}");
-
-            Thread.Sleep(100);
-
-            npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
 
             Thread.Sleep(3000);
         }
@@ -1186,12 +1158,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var text = @"app PeaceKeeper
 {
-    on Enter =>
-    {
-        'Begin' >> @>log;
-        'End' >> @>log;
-    }
-
     var @a = 15;
 
 	on {: see(I, #a) :} duration 1 (down) => 
@@ -1212,22 +1178,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual("Begin", message);
-                        break;
-
-                    case 2:
-                        Assert.AreEqual("End", message);
-                        break;
-
-                    case 3:
-                        Assert.AreEqual("|||||||||||||", message);
-                        break;
-
-                    case 4:
                         Assert.AreEqual("S", message);
                         break;
 
-                    case 5:
+                    case 2:
                         Assert.AreEqual("D", message);
                         break;
 
@@ -1236,9 +1190,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }
             });
 
-            Thread.Sleep(100);
-
-            npc.Logger.LogChannel("|||||||||||||");
+            Thread.Sleep(1000);
 
             var factId = npc.InsertFact("{: see(I, #a) :}");
 
@@ -1308,7 +1260,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }
             });
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|||||||||||||");
 
@@ -1380,7 +1332,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }
             });
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|||||||||||||");
 
@@ -1452,7 +1404,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }
             });
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|||||||||||||");
 
@@ -1524,7 +1476,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }
             });
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|||||||||||||");
 
@@ -1596,7 +1548,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }
             });
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|||||||||||||");
 
@@ -1662,7 +1614,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }
             });
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|||||||||||||");
 
@@ -1728,7 +1680,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }
             });
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|||||||||||||");
 
@@ -1794,7 +1746,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }
             });
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|||||||||||||");
 
@@ -1845,7 +1797,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }
             });
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|||||||||||||");
 
@@ -1895,7 +1847,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }
             });
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             npc.Logger.LogChannel("|||||||||||||");
 

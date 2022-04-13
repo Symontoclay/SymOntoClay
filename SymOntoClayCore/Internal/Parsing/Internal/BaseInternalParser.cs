@@ -51,7 +51,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         protected readonly InternalParserContext _context;
         private IEntityLogger _logger;
-        private readonly TerminationToken[] _terminationTokens;
+        protected readonly TerminationToken[] _terminationTokens;
         private readonly bool _hasTerminationTokens;
 
         public void Run()
@@ -287,12 +287,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected AstExpression ProcessCondition()
         {
             _context.Recovery(_currToken);
-            var parser = new CodeExpressionStatementParser(_context);
+            var parser = new CodeExpressionStatementParser(_context, TokenKind.CloseRoundBracket);
             parser.Run();
 
 #if DEBUG
             //Log($"parser.Result = {parser.Result}");
 #endif
+
+            var nextToken = _context.GetToken();
+
+#if DEBUG
+            //Log($"nextToken = {nextToken}");
+#endif
+
+            if (nextToken.TokenKind != TokenKind.CloseRoundBracket)
+            {
+                throw new UnexpectedTokenException(nextToken);
+            }
 
             return parser.Result.Expression;
         }

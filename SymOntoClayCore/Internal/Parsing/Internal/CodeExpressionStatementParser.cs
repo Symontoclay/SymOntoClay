@@ -27,21 +27,15 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
     public class CodeExpressionStatementParser: BaseInternalParser
     {
-        private enum State
-        {
-            Init,
-            GotName,
-            GotCallLogicalQueryOperator
-        }
-
-        public CodeExpressionStatementParser(InternalParserContext context)
-            : base(context)
+        public CodeExpressionStatementParser(InternalParserContext context, params TerminationToken[] terminators)
+            : base(context, terminators)
         {
         }
 
@@ -51,11 +45,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Result = new AstExpressionStatement();
         }
 
-        private State _state = State.Init;
         public AstExpressionStatement Result { get; private set; }
 
         private IntermediateAstNodePoint _nodePoint = new IntermediateAstNodePoint();
 
+        private bool _hasSomething;
         private BinaryOperatorAstExpression _lastIsOperator;
         private BinaryOperatorAstExpression _lastBinaryOperator;
 
@@ -63,211 +57,124 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
             //Log($"_currToken = {_currToken}");
             //Log($"_nodePoint = {_nodePoint}");
 #endif
 
-            switch (_state)
+            switch (_currToken.TokenKind)
             {
-                case State.Init:
-                    switch (_currToken.TokenKind)
-                    {
-                        case TokenKind.Number:
-                            ProcessNumberToken();
-                            break;
-
-                        case TokenKind.String:
-                            ProcessStringToken();
-                            break;
-
-                        case TokenKind.Word:
-                            ProcessWordToken();
-                            break;
-
-                        case TokenKind.Identifier:
-                            ProcessConceptLeaf();
-                            break;
-
-                        case TokenKind.Var:
-                        case TokenKind.SystemVar:
-                            ProcessVar();
-                            break;
-
-                        case TokenKind.LeftRightStream:
-                            ProcessLeftRightStream();
-                            break;
-
-                        case TokenKind.Plus:
-                            ProcessAddition();
-                            break;
-
-                        case TokenKind.Minus:
-                            ProcessMinus();
-                            break;
-
-                        case TokenKind.Multiplication:
-                            ProcessMultiplication();
-                            break;
-
-                        case TokenKind.Division:
-                            ProcessDivision();
-                            break;
-
-                        case TokenKind.Point:
-                            ProcessPoint();
-                            break;
-
-                        case TokenKind.Channel:
-                            ProcessChannel();
-                            break;
-
-                        case TokenKind.Semicolon:
-                            Exit();
-                            break;
-
-                        case TokenKind.QuestionMark:
-                            _context.Recovery(_currToken);
-                            ProcessLogicalQueryOperator();
-                            break;
-
-                        case TokenKind.EntityCondition:
-                            ProcessEntityCondition();
-                            break;
-
-                        case TokenKind.OpenFactBracket:
-                            ProcessRuleOrFact();
-                            _state = State.GotName;
-                            break;
-
-                        case TokenKind.OpenRoundBracket:
-                            ProcessGroup();
-                            break;
-
-                        case TokenKind.CloseRoundBracket:
-                            Exit();
-                            break;
-
-                        case TokenKind.Or:
-                            ProcessOr();
-                            break;
-
-                        case TokenKind.And:
-                            ProcessAnd();
-                            break;
-
-                        case TokenKind.Not:
-                            ProcessNotOperator();
-                            break;
-
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
-                    }
+                case TokenKind.Number:
+                    ProcessNumberToken();
                     break;
 
-                case State.GotName:
-                    switch (_currToken.TokenKind)
-                    {
-                        case TokenKind.Word:
-                            switch(_currToken.KeyWordTokenKind)
-                            {
-                                case KeyWordTokenKind.Is:
-                                    ProcessIsOperator();
-                                    break;
-
-                                default:
-                                    throw new UnexpectedTokenException(_currToken);
-                            }
-                            break;
-
-                        case TokenKind.LeftRightStream:
-                            ProcessLeftRightStream();
-                            break;
-
-                        case TokenKind.Plus:
-                            ProcessAddition();
-                            break;
-
-                        case TokenKind.Minus:
-                            ProcessMinus();
-                            break;
-
-                        case TokenKind.Multiplication:
-                            ProcessMultiplication();
-                            break;
-
-                        case TokenKind.Division:
-                            ProcessDivision();
-                            break;
-
-                        case TokenKind.Point:
-                            ProcessPoint();
-                            break;
-
-                        case TokenKind.OpenRoundBracket:
-                        case TokenKind.AsyncMarker:
-                            ProcessCallingFunction();
-                            break;
-
-                        case TokenKind.Assign:
-                            ProcessAssign();
-                            break;
-
-                        case TokenKind.More:
-                            ProcessMore();
-                            break;
-
-                        case TokenKind.MoreOrEqual:
-                            ProcessMoreOrEqual();
-                            break;
-
-                        case TokenKind.Less:
-                            ProcessLess();
-                            break;
-
-                        case TokenKind.LessOrEqual:
-                            ProcessLessOrEqual();
-                            break;
-
-                        case TokenKind.Var:
-                        case TokenKind.SystemVar:
-                            ProcessVar();
-                            break;
-
-                        case TokenKind.Semicolon:
-                        case TokenKind.CloseRoundBracket:
-                            Exit();
-                            break;
-
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
-                    }
+                case TokenKind.String:
+                    ProcessStringToken();
                     break;
 
-                case State.GotCallLogicalQueryOperator:
-                    switch (_currToken.TokenKind)
-                    {
-                        case TokenKind.OpenFactBracket:
-                            ProcessRuleOrFact();
-                            _state = State.Init;
-                            break;
-
-                        case TokenKind.LeftRightStream:
-                            ProcessLeftRightStream();
-                            _state = State.Init;
-                            break;
-
-                        case TokenKind.Semicolon:
-                            Exit();
-                            break;
-
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
-                    }
+                case TokenKind.Word:
+                    ProcessWordToken();
                     break;
+
+                case TokenKind.Identifier:
+                    ProcessConceptLeaf();
+                    break;
+
+                case TokenKind.Var:
+                case TokenKind.SystemVar:
+                    ProcessVar();
+                    break;
+
+                case TokenKind.LeftRightStream:
+                    ProcessLeftRightStream();
+                    break;
+
+                case TokenKind.Plus:
+                    ProcessAddition();
+                    break;
+
+                case TokenKind.Minus:
+                    ProcessMinus();
+                    break;
+
+                case TokenKind.Multiplication:
+                    ProcessMultiplication();
+                    break;
+
+                case TokenKind.Division:
+                    ProcessDivision();
+                    break;
+
+                case TokenKind.Or:
+                    ProcessOr();
+                    break;
+
+                case TokenKind.And:
+                    ProcessAnd();
+                    break;
+
+                case TokenKind.Not:
+                    ProcessNotOperator();
+                    break;
+
+                case TokenKind.More:
+                    ProcessMore();
+                    break;
+
+                case TokenKind.MoreOrEqual:
+                    ProcessMoreOrEqual();
+                    break;
+
+                case TokenKind.Less:
+                    ProcessLess();
+                    break;
+
+                case TokenKind.LessOrEqual:
+                    ProcessLessOrEqual();
+                    break;
+
+                case TokenKind.Assign:
+                    ProcessAssign();
+                    break;
+
+                case TokenKind.Point:
+                    ProcessPoint();
+                    break;
+
+                case TokenKind.Channel:
+                    ProcessChannel();
+                    break;
+
+                case TokenKind.QuestionMark:
+                    _context.Recovery(_currToken);
+                    ProcessLogicalQueryOperator();
+                    break;
+
+                case TokenKind.EntityCondition:
+                    ProcessEntityCondition();
+                    break;
+
+                case TokenKind.OpenFactBracket:
+                    ProcessRuleOrFact();
+                    break;
+
+                case TokenKind.OpenRoundBracket:
+                    ProcessRoundBrackets();
+                    break;
+
+                case TokenKind.AsyncMarker:
+                    ProcessCallingFunction();
+                    break;
+
+                case TokenKind.Semicolon:
+                    if(!_terminationTokens.Any() || _terminationTokens.Any(p => p.Equals(_currToken)))
+                    {
+                        Exit();
+                        break;
+                    }
+                    throw new UnexpectedTokenException(_currToken);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
+                    throw new UnexpectedTokenException(_currToken);
             }
         }
 
@@ -275,6 +182,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _lastBinaryOperator = null;
             _lastIsOperator = null;
+            _hasSomething = true;
 
             _context.Recovery(_currToken);
 
@@ -300,6 +208,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _lastBinaryOperator = null;
             _lastIsOperator = null;
+            _hasSomething = true;
 
             _context.Recovery(_currToken);
             var parser = new NumberParser(_context);
@@ -317,6 +226,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _lastBinaryOperator = null;
             _lastIsOperator = null;
+            _hasSomething = true;
 
             _context.Recovery(_currToken);
 
@@ -339,6 +249,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _lastBinaryOperator = null;
             _lastIsOperator = null;
+            _hasSomething = true;
 
             var node = new ConstValueAstExpression();
             var value = new StringValue(_currToken.Content);
@@ -354,6 +265,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _lastBinaryOperator = null;
             _lastIsOperator = null;
+            _hasSomething = true;
 
             _context.Recovery(_currToken);
 
@@ -435,6 +347,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _lastBinaryOperator = null;
             _lastIsOperator = null;
+            _hasSomething = true;
 
             //_context.Recovery(_currToken);
             var parser = new LogicalQueryOperationParser(_context);
@@ -465,14 +378,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var valueIntermediateNode = new IntermediateAstNode(valueNode);
 
             AstNodesLinker.SetNode(valueIntermediateNode, _nodePoint);
-
-            _state = State.GotCallLogicalQueryOperator;
         }
 
         private void ProcessVarDecl()
         {
             _lastBinaryOperator = null;
             _lastIsOperator = null;
+            _hasSomething = true;
 
             _context.Recovery(_currToken);
 
@@ -486,14 +398,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var intermediateNode = new IntermediateAstNode(parser.Result);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
-
-            _state = State.GotName;
         }
 
         private void ProcessVar()
         {
             _lastBinaryOperator = null;
             _lastIsOperator = null;
+            _hasSomething = true;
 
             var value = NameHelper.CreateName(_currToken.Content);
 
@@ -503,21 +414,44 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var intermediateNode = new IntermediateAstNode(node);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+        }
 
-            _state = State.GotName;
+        private void ProcessRoundBrackets()
+        {
+            var currentNode = _nodePoint.CurrentNode;
+
+            if (currentNode == null || currentNode.Kind == KindOfIntermediateAstNode.UnaryOperator || currentNode.Kind == KindOfIntermediateAstNode.BinaryOperator)
+            {
+                ProcessGroup();
+                return;
+            }
+
+            ProcessCallingFunction();
         }
 
         private void ProcessGroup()
         {
             _lastBinaryOperator = null;
             _lastIsOperator = null;
+            _hasSomething = true;
 
-            var parser = new CodeExpressionStatementParser(_context);
+            var parser = new CodeExpressionStatementParser(_context, TokenKind.CloseRoundBracket);
             parser.Run();
 
 #if DEBUG
             //Log($"parser.Result = {parser.Result}");
 #endif
+
+            var nextToken = _context.GetToken();
+
+#if DEBUG
+            //Log($"nextToken = {nextToken}");
+#endif
+
+            if (nextToken.TokenKind != TokenKind.CloseRoundBracket)
+            {
+                throw new UnexpectedTokenException(nextToken);
+            }
 
             var groupExpression = new GroupAstExpression();
             groupExpression.Expression = parser.Result.Expression;
@@ -525,14 +459,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var intermediateNode = new IntermediateAstNode(groupExpression);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
-
-            _state = State.GotName;
         }
 
         private void ProcessConceptLeaf()
         {
             _lastBinaryOperator = null;
             _lastIsOperator = null;
+            _hasSomething = true;
 
             var value = NameHelper.CreateName(_currToken.Content);
 
@@ -550,8 +483,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         var intermediateNode = new IntermediateAstNode(node);
 
                         AstNodesLinker.SetNode(intermediateNode, _nodePoint);
-
-                        _state = State.GotName;
                     }
                     break;
 
@@ -659,8 +590,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.BinaryOperator, priority);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
-
-            _state = State.Init;
         }
 
         private void ProcessIsOperator()
@@ -676,8 +605,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.BinaryOperator, priority);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
-
-            _state = State.Init;
         }
 
         private void ProcessNotOperator()
@@ -702,8 +629,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.UnaryOperator, priority);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
-
-            _state = State.Init;
         }
 
         private void ProcessNot()
@@ -772,8 +697,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.UnaryOperator, priority);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
-
-            _state = State.Init;
         }
 
         /// <inheritdoc/>

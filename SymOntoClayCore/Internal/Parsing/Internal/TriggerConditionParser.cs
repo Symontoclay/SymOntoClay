@@ -16,7 +16,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             : base(context, terminators)
         {
         }
-
+        
         public TriggerConditionNode Result { get; private set; }
 
         private IntermediateAstNodePoint _nodePoint = new IntermediateAstNodePoint();
@@ -179,6 +179,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case TokenKind.Lambda:
+                case TokenKind.OpenFigureBracket:
                     _context.Recovery(_currToken);
                     Exit();
                     break;

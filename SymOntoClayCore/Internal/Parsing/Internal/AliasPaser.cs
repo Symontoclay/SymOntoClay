@@ -37,8 +37,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotComma
         }
 
-        public AliasPaser(InternalParserContext context)
-            : base(context)
+        public AliasPaser(InternalParserContext context, params TerminationToken[] terminators)
+            : base(context, terminators)
         {
         }
 

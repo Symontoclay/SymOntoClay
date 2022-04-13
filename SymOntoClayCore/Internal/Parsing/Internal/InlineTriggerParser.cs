@@ -434,6 +434,27 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessSetFunctionBody();
                             break;
 
+                        case TokenKind.Word:
+                            switch (_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Alias:
+                                    {
+                                        _context.Recovery(_currToken);
+
+                                        var parser = new AliasPaser(_context, TokenKind.Lambda, TokenKind.OpenFigureBracket);
+                                        parser.Run();
+
+                                        Result.AddAliasRange(parser.Result);
+
+                                        _state = State.GotAlias;
+                                    }
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

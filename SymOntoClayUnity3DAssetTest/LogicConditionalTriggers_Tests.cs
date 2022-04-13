@@ -1670,5 +1670,137 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case13()
+        {
+            using var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        'End' >> @>log;
+    }
+
+    var @a = 15;
+
+	on {: see(I, #a) :} as `trigger 1` alias `Alarm trigger` => 
+    {
+	    'S' >> @>log;
+	}
+
+    on (`Alarm trigger` & @a is 15)
+    {
+        'D' >> @>log;
+    }
+}";
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual("Begin", message);
+                        break;
+
+                    case 2:
+                        Assert.AreEqual("End", message);
+                        break;
+
+                    case 3:
+                        Assert.AreEqual("|||||||||||||", message);
+                        break;
+
+                    case 4:
+                        Assert.AreEqual("S", message);
+                        break;
+
+                    case 5:
+                        Assert.AreEqual("D", message);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+            Thread.Sleep(100);
+
+            npc.Logger.LogChannel("|||||||||||||");
+
+            var factId = npc.InsertFact("{: see(I, #a) :}");
+
+            Thread.Sleep(1000);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case13_a()
+        {
+            using var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        'End' >> @>log;
+    }
+
+    var @a = 15;
+
+	on {: see(I, #a) :} as `trigger 1` alias `Alarm trigger`, trigger_5 => 
+    {
+	    'S' >> @>log;
+	}
+
+    on (trigger_5 & @a is 15)
+    {
+        'D' >> @>log;
+    }
+}";
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual("Begin", message);
+                        break;
+
+                    case 2:
+                        Assert.AreEqual("End", message);
+                        break;
+
+                    case 3:
+                        Assert.AreEqual("|||||||||||||", message);
+                        break;
+
+                    case 4:
+                        Assert.AreEqual("S", message);
+                        break;
+
+                    case 5:
+                        Assert.AreEqual("D", message);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+            Thread.Sleep(100);
+
+            npc.Logger.LogChannel("|||||||||||||");
+
+            var factId = npc.InsertFact("{: see(I, #a) :}");
+
+            Thread.Sleep(1000);
+        }
     }
 }

@@ -25,9 +25,11 @@ using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
@@ -35,13 +37,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
     public abstract class BaseInternalParser
     {
         protected BaseInternalParser(InternalParserContext context)
+            : this(context, null)
+        {
+        }
+
+        protected BaseInternalParser(InternalParserContext context, TerminationToken[] terminationTokens)
         {
             _context = context;
             _logger = context.Logger;
+            _terminationTokens = terminationTokens;
+            _hasTerminationTokens = !terminationTokens.IsNullOrEmpty();
         }
 
         protected readonly InternalParserContext _context;
         private IEntityLogger _logger;
+        private readonly TerminationToken[] _terminationTokens;
+        private readonly bool _hasTerminationTokens;
 
         public void Run()
         {
@@ -49,6 +60,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             while ((_currToken = _context.GetToken()) != null)
             {
+                if(_hasTerminationTokens)
+                {
+                    var terminationToken = _terminationTokens.FirstOrDefault(p => p.Equals(_currToken));
+
+                    if(terminationToken != null)
+                    {
+                        if(terminationToken.NeedRecovery)
+                        {
+                            _context.Recovery(_currToken);
+                        }
+
+                        OnFinish();
+                        return;
+                    }
+                }
+
                 OnRun();
 
                 if (_isExited)

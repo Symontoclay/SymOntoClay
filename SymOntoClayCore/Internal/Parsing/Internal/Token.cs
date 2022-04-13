@@ -64,14 +64,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         public string ToDebugString()
         {
-            var tmpSb = new StringBuilder($"`{TokenKind}`({Line}, {Pos})");
+            var sb = new StringBuilder($"`{TokenKind}`");
+
+            if(KeyWordTokenKind != KeyWordTokenKind.Unknown)
+            {
+                sb.Append($"[`{KeyWordTokenKind}`]");
+            }
+
+            sb.Append($"({Line}, {Pos})");
 
             if (!string.IsNullOrWhiteSpace(Content))
             {
-                tmpSb.Append($": `{Content}`");
+                sb.Append($": `{Content}`");
             }
 
-            return tmpSb.ToString();
+            return sb.ToString();
         }
     }
 }

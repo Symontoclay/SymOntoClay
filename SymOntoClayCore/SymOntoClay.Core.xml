@@ -5548,6 +5548,21 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.StatePaser.OnRun">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.TerminationToken.Equals(SymOntoClay.Core.Internal.Parsing.Internal.TerminationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.TerminationToken.Equals(SymOntoClay.Core.Internal.Parsing.Internal.Token)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.TerminationToken.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.TerminationToken.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.TerminationToken.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.Token.ToString">
             <inheritdoc/>
         </member>

@@ -32,13 +32,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
     public class BaseObjectParser : BaseInternalParser
     {
         protected BaseObjectParser(InternalParserContext context, KindOfCodeEntity kindOfCodeEntity)
-            : base(context)
+            : this(context, kindOfCodeEntity, null)
+        {
+        }
+
+        protected BaseObjectParser(InternalParserContext context, KindOfCodeEntity kindOfCodeEntity, TerminationToken[] terminationTokens)
+            : base(context, terminationTokens)
         {
             _kindOfCodeEntity = kindOfCodeEntity;
         }
 
         protected BaseObjectParser(InternalParserContext context, CodeItem codeItem)
-            : base(context)
+            : this(context, codeItem, null)
+        {
+        }
+
+        protected BaseObjectParser(InternalParserContext context, CodeItem codeItem, TerminationToken[] terminationTokens)
+            : base(context, terminationTokens)
         {
             _inAccessibilityAreas = true;
             Result = codeItem;

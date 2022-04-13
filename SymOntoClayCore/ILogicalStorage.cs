@@ -34,7 +34,10 @@ namespace SymOntoClay.Core
     {
         void Append(RuleInstance ruleInstance);
         void Append(RuleInstance ruleInstance, bool isPrimary);
+        void Append(IList<RuleInstance> ruleInstancesList);
+
         void Remove(RuleInstance ruleInstance);
+        void Remove(IList<RuleInstance> ruleInstancesList);
         void RemoveById(string id);
 
         event Action OnChanged;

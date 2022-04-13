@@ -128,29 +128,52 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         {
             lock (_lockObj)
             {
-                ruleInstance.CheckDirty();
-
-                var annotationsList = ruleInstance.GetAllAnnotations();
-
-#if DEBUG
-                //_gbcLogger.Info($"ruleInstance = {ruleInstance}");
-                ////_gbcLogger.Info($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
-                //Log($"annotationsList = {annotationsList.WriteListToString()}");
-#endif
-
-                foreach (var annotationRuleInstance in annotationsList)
-                {
-                    NAppend(annotationRuleInstance, false);
-                }
-
-                NAppend(ruleInstance, isPrimary);
-
-                //var indexedRuleInstance = ruleInstance.GetIndexed(_mainStorageContext);
-
-                var usedKeysList = ruleInstance.Normalized.UsedKeysList.Concat(annotationsList.SelectMany(p => p.UsedKeysList)).Distinct().ToList();
+                var usedKeysList = NAppendAndReturnUsedKeysList(ruleInstance, isPrimary);
 
                 EmitOnChanged(usedKeysList);
             }
+        }
+
+        /// <inheritdoc/>
+        public void Append(IList<RuleInstance> ruleInstancesList)
+        {
+            lock (_lockObj)
+            {
+                var usedKeysList = new List<StrongIdentifierValue>();
+
+                foreach(var item in ruleInstancesList)
+                {
+                    usedKeysList.AddRange(NAppendAndReturnUsedKeysList(item, true));
+                }
+
+                usedKeysList = usedKeysList.Distinct().ToList();
+
+                EmitOnChanged(usedKeysList);
+            }
+        }
+
+        private IList<StrongIdentifierValue> NAppendAndReturnUsedKeysList(RuleInstance ruleInstance, bool isPrimary)
+        {
+            ruleInstance.CheckDirty();
+
+            var annotationsList = ruleInstance.GetAllAnnotations();
+
+#if DEBUG
+            //_gbcLogger.Info($"ruleInstance = {ruleInstance}");
+            ////_gbcLogger.Info($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+            //Log($"annotationsList = {annotationsList.WriteListToString()}");
+#endif
+
+            foreach (var annotationRuleInstance in annotationsList)
+            {
+                NAppend(annotationRuleInstance, false);
+            }
+
+            NAppend(ruleInstance, isPrimary);
+
+            //var indexedRuleInstance = ruleInstance.GetIndexed(_mainStorageContext);
+
+            return ruleInstance.Normalized.UsedKeysList.Concat(annotationsList.SelectMany(p => p.UsedKeysList)).Distinct().ToList();
         }
 
         private void NAppend(RuleInstance ruleInstance, bool isPrimary)
@@ -335,6 +358,29 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         }
 
         /// <inheritdoc/>
+        public void Remove(IList<RuleInstance> ruleInstancesList)
+        {
+            lock (_lockObj)
+            {
+                var usedKeysList = new List<StrongIdentifierValue>();
+
+                foreach(var item in ruleInstancesList)
+                {
+                    var tmpUsedKeysList = NRemoveAndReturnUsedKeysList(item);
+
+                    if(tmpUsedKeysList != null)
+                    {
+                        usedKeysList.AddRange(tmpUsedKeysList);
+                    }
+                }
+
+                usedKeysList = usedKeysList.Distinct().ToList();
+
+                EmitOnChanged(usedKeysList);
+            }
+        }
+
+        /// <inheritdoc/>
         public void RemoveById(string id)
         {
             lock (_lockObj)
@@ -366,9 +412,19 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             //Log($"ruleInstance = {ruleInstance}");
 #endif
 
+            var usedKeysList = NRemoveAndReturnUsedKeysList(ruleInstance);
+
+            if(usedKeysList != null)
+            {
+                EmitOnChanged(usedKeysList);
+            }            
+        }
+
+        private List<StrongIdentifierValue> NRemoveAndReturnUsedKeysList(RuleInstance ruleInstance)
+        {
             if (!_ruleInstancesList.Contains(ruleInstance))
             {
-                return;
+                return null;
             }
 
             _ruleInstancesList.Remove(ruleInstance);
@@ -389,7 +445,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             _commonPersistIndexedLogicalData.NRemoveIndexedRuleInstanceFromIndexData(ruleInstance.Normalized);
 
-            EmitOnChanged(ruleInstance.UsedKeysList);
+            return ruleInstance.UsedKeysList;
         }
 
         /// <inheritdoc/>

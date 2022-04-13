@@ -58,6 +58,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public List<AstStatement> ResetStatements { get; set; } = new List<AstStatement>();
         public CompiledFunctionBody ResetCompiledFunctionBody { get; set; }
 
+        public List<RuleInstance> RuleInstancesList { get; set; } = new List<RuleInstance>();
+
         public DoubleConditionsStrategy DoubleConditionsStrategy { get; set; } = DoubleConditionsStrategy.PriorSet;
 
         public void AddAliasRange(List<StrongIdentifierValue> aliasList)
@@ -95,6 +97,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 ResetCondition.CheckDirty(options);
 
                 result ^= ResetCondition.GetLongHashCode(options);
+            }
+
+            if(!RuleInstancesList.IsNullOrEmpty())
+            {
+                foreach(var item in RuleInstancesList)
+                {
+                    item.CheckDirty(options);
+                }
             }
 
             return result;
@@ -145,6 +155,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             result.ResetStatements = ResetStatements.Select(p => p.CloneAstStatement(context)).ToList();            
             result.ResetCompiledFunctionBody = ResetCompiledFunctionBody.Clone(context);
+
+            result.RuleInstancesList = RuleInstancesList?.Select(p => p.Clone(context)).ToList();
 
             result.DoubleConditionsStrategy = DoubleConditionsStrategy;
 
@@ -199,6 +211,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjListProp(n, nameof(ResetStatements), ResetStatements);
             sb.PrintObjProp(n, nameof(ResetCompiledFunctionBody), ResetCompiledFunctionBody);
 
+            sb.PrintObjListProp(n, nameof(RuleInstancesList), RuleInstancesList);            
+
             sb.AppendLine($"{spaces}{nameof(DoubleConditionsStrategy)} = {DoubleConditionsStrategy}");            
 
             sb.Append(base.PropertiesToString(n));
@@ -226,6 +240,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjListProp(n, nameof(ResetStatements), ResetStatements);
             sb.PrintShortObjProp(n, nameof(ResetCompiledFunctionBody), ResetCompiledFunctionBody);
 
+            sb.PrintShortObjListProp(n, nameof(RuleInstancesList), RuleInstancesList);
+
             sb.AppendLine($"{spaces}{nameof(DoubleConditionsStrategy)} = {DoubleConditionsStrategy}");
 
             sb.Append(base.PropertiesToShortString(n));
@@ -252,6 +268,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintBriefObjListProp(n, nameof(ResetStatements), ResetStatements);
             sb.PrintBriefObjProp(n, nameof(ResetCompiledFunctionBody), ResetCompiledFunctionBody);
+
+            sb.PrintExistingList(n, nameof(RuleInstancesList), RuleInstancesList);
 
             sb.AppendLine($"{spaces}{nameof(DoubleConditionsStrategy)} = {DoubleConditionsStrategy}");
 

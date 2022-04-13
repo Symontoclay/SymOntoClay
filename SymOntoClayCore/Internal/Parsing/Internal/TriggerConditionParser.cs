@@ -178,6 +178,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     ProcessNotOperator();
                     break;
 
+                case TokenKind.Lambda:
+                    _context.Recovery(_currToken);
+                    Exit();
+                    break;
+
                 default:
                     throw new UnexpectedTokenException(_currToken);
             }

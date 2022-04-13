@@ -8,13 +8,5 @@
 
     var @a = 15;
 
-	on {: see(I, #a) :} as `trigger 1` alias `Alarm trigger`, trigger_5 => 
-    {
-	    'S' >> @>log;
-	}
-
-    on (trigger_5 & @a is 15)
-    {
-        'D' >> @>log;
-    }
+	on {: see(I, #a) :} duration 2 => {: pet(I, cat) :}
 }

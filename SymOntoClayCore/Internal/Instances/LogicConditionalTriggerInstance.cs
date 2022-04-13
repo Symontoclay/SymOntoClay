@@ -48,6 +48,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             _executionCoordinator = parent.ExecutionCoordinator;
             _context = context;
+            _globalLogicalStorage = context.Storage.GlobalStorage.LogicalStorage;
             _parent = parent;
             _trigger = trigger;
             _namesList = trigger.NamesList;
@@ -76,6 +77,17 @@ namespace SymOntoClay.Core.Internal.Instances
             _setConditionalTriggerObserver = new LogicConditionalTriggerObserver(_triggerConditionNodeObserverContext, trigger.SetCondition);
             _setConditionalTriggerObserver.OnChanged += Observer_OnChanged;
 
+            _ruleInstancesList = _trigger.RuleInstancesList;
+
+            _hasRuleInstancesList = !_ruleInstancesList.IsNullOrEmpty();
+
+            var setBindingVariables = trigger.SetBindingVariables;
+
+            if(_hasRuleInstancesList)
+            {
+                setBindingVariables = new BindingVariables();
+            }
+
             _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext,  trigger.SetCondition, trigger.SetBindingVariables);
 
             _hasResetHandler = trigger.ResetCompiledFunctionBody != null;
@@ -94,6 +106,11 @@ namespace SymOntoClay.Core.Internal.Instances
                     resetBindingVariables = trigger.SetBindingVariables;
                 }
 
+                if (_hasRuleInstancesList)
+                {
+                    resetBindingVariables = new BindingVariables();
+                }
+
                 _resetConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext, trigger.ResetCondition, resetBindingVariables);
             }
         }
@@ -103,10 +120,13 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private readonly IExecutionCoordinator _executionCoordinator;
         private readonly IEngineContext _context;
+        private readonly ILogicalStorage _globalLogicalStorage;
         private readonly BaseInstance _parent;
         private readonly InlineTrigger _trigger;
         private readonly IList<StrongIdentifierValue> _namesList;
         private readonly bool _hasNames;
+        private readonly List<RuleInstance> _ruleInstancesList;
+        private readonly bool _hasRuleInstancesList;
         private readonly IStorage _storage;
         private readonly LocalCodeExecutionContext _localCodeExecutionContext;
         private readonly LogicConditionalTriggerObserver _setConditionalTriggerObserver;
@@ -262,6 +282,18 @@ namespace SymOntoClay.Core.Internal.Instances
                 if(_triggerConditionNodeObserverContext.SetSeconds.HasValue)
                 {
                     _triggerConditionNodeObserverContext.SetSeconds = null;
+                }
+            }
+
+            if(_hasRuleInstancesList && oldIsOn != _isOn)
+            {
+                if(_isOn)
+                {
+                    _globalLogicalStorage.Append(_ruleInstancesList);
+                }
+                else
+                {
+                    _globalLogicalStorage.Remove(_ruleInstancesList);
                 }
             }
 
@@ -525,6 +557,11 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _isOn = true;
 
+            if(_hasRuleInstancesList)
+            {
+                return;
+            }
+
             var localCodeExecutionContext = new LocalCodeExecutionContext();
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
             var storage = new LocalStorage(localStorageSettings);
@@ -545,6 +582,11 @@ namespace SymOntoClay.Core.Internal.Instances
 #endif
 
             _isOn = true;
+
+            if (_hasRuleInstancesList)
+            {
+                return;
+            }
 
             foreach (var targetVarList in varList)
             {
@@ -582,6 +624,11 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _isOn = false;
 
+            if (_hasRuleInstancesList)
+            {
+                return;
+            }
+
             var localCodeExecutionContext = new LocalCodeExecutionContext();
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
             var storage = new LocalStorage(localStorageSettings);
@@ -602,6 +649,11 @@ namespace SymOntoClay.Core.Internal.Instances
 #endif
 
             _isOn = false;
+
+            if (_hasRuleInstancesList)
+            {
+                return;
+            }
 
             foreach (var targetVarList in varList)
             {

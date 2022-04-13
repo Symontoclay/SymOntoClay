@@ -121,6 +121,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
+        public void Append(IList<RuleInstance> ruleInstancesList)
+        {
+            throw new NotImplementedException();
+        }
+
 #if DEBUG
         /// <inheritdoc/>
         public void DbgPrintFactsAndRules()
@@ -234,6 +240,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
         /// <inheritdoc/>
         public void Remove(RuleInstance ruleInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void Remove(IList<RuleInstance> ruleInstancesList)
         {
             throw new NotImplementedException();
         }

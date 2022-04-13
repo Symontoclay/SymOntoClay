@@ -483,6 +483,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessSetFunctionBody();
                             break;
 
+                        case TokenKind.OpenFactBracket:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var parser = new InlineTriggerActiveRuleContentParser(_context);
+                                parser.Run();
+
+#if DEBUG
+                                //Log($"parser.Result = {parser.Result.WriteListToString()}");
+#endif
+
+                                _inlineTrigger.RuleInstancesList = parser.Result;
+
+                                Exit();
+                            }
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

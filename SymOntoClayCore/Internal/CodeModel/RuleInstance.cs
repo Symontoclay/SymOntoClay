@@ -511,7 +511,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         void ILogicalStorage.Append(RuleInstance ruleInstance, bool isPrimary) => throw new NotImplementedException();
 
         /// <inheritdoc/>
+        void ILogicalStorage.Append(IList<RuleInstance> ruleInstancesList) => throw new NotImplementedException();
+
+        /// <inheritdoc/>
         void ILogicalStorage.Remove(RuleInstance ruleInstance) => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        void ILogicalStorage.Remove(IList<RuleInstance> ruleInstancesList) => throw new NotImplementedException();
 
         /// <inheritdoc/>
         void ILogicalStorage.RemoveById(string id) => throw new NotImplementedException();

@@ -135,6 +135,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.MoreOrEqual:
                         case TokenKind.Less:
                         case TokenKind.LessOrEqual:
+                        case TokenKind.Lambda:
                             _context.Recovery(_currToken);
                             Exit();
                             break;

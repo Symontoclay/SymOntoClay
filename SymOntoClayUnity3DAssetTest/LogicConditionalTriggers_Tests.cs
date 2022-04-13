@@ -536,12 +536,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var text = @"app PeaceKeeper
 {
-    on Enter =>
-    {
-        'Begin' >> @>log;
-        'End' >> @>log;
-    }
-
 	on {: see(I, #a) :} => 
     {
 	    'S' >> @>log;
@@ -558,26 +552,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual("Begin", message);
-                        break;
-
-                    case 2:
-                        Assert.AreEqual("End", message);
-                        break;
-
-                    case 3:
-                        Assert.AreEqual("|||||||||||||", message);
-                        break;
-
-                    case 4:
                         Assert.AreEqual("S", message);
                         break;
 
-                    case 5:
-                        Assert.AreEqual("|-|-|-|-|-|-|-|-|-|-|-|-|", message);
-                        break;
-
-                    case 6:
+                    case 2:
                         Assert.AreEqual("R", message);
                         break;
 
@@ -588,13 +566,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            npc.Logger.LogChannel("|||||||||||||");
-
             var factId = npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
-
-            npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
 
             npc.RemoveFact(factId);
 
@@ -609,12 +583,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var text = @"app PeaceKeeper
 {
-    on Enter =>
-    {
-        'Begin' >> @>log;
-        'End' >> @>log;
-    }
-
 	on {: see(I, #a) :} down on {: see(I, barrel) :} => 
     {
 	    'S' >> @>log;
@@ -631,30 +599,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual("Begin", message);
-                        break;
-
-                    case 2:
-                        Assert.AreEqual("End", message);
-                        break;
-
-                    case 3:
-                        Assert.AreEqual("|||||||||||||", message);
-                        break;
-
-                    case 4:
                         Assert.AreEqual("S", message);
                         break;
 
-                    case 5:
-                        Assert.AreEqual("|-|-|-|-|-|-|-|-|-|-|-|-|", message);
-                        break;
-
-                    case 6:
-                        Assert.AreEqual("|=|=|=|=|=|=|", message);
-                        break;
-
-                    case 7:
+                    case 2:
                         Assert.AreEqual("R", message);
                         break;
 
@@ -665,19 +613,14 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            npc.Logger.LogChannel("|||||||||||||");
 
             var factId = npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
 
-            npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
-
             npc.RemoveFact(factId);
 
             Thread.Sleep(1000);
-
-            npc.Logger.LogChannel("|=|=|=|=|=|=|");
 
             npc.InsertFact("{: see(I, barrel) :}");
 
@@ -692,12 +635,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var text = @"app PeaceKeeper
 {
-    on Enter =>
-    {
-        'Begin' >> @>log;
-        'End' >> @>log;
-    }
-
 	on {: see(I, #a) :} down on {: see(I, barrel) :} => 
     {
 	    'S' >> @>log;
@@ -714,30 +651,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual("Begin", message);
-                        break;
-
-                    case 2:
-                        Assert.AreEqual("End", message);
-                        break;
-
-                    case 3:
-                        Assert.AreEqual("|||||||||||||", message);
-                        break;
-
-                    case 4:
                         Assert.AreEqual("S", message);
                         break;
 
-                    case 5:
-                        Assert.AreEqual("|-|-|-|-|-|-|-|-|-|-|-|-|", message);
-                        break;
-
-                    case 6:
-                        Assert.AreEqual("|=|=|=|=|=|=|", message);
-                        break;
-
-                    case 7:
+                    case 2:
                         Assert.AreEqual("R", message);
                         break;
 
@@ -748,19 +665,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            npc.Logger.LogChannel("|||||||||||||");
-
             var factId = npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
 
-            npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
-
             npc.InsertFact("{: see(I, barrel) :}");
 
             Thread.Sleep(1000);
-
-            npc.Logger.LogChannel("|=|=|=|=|=|=|");
 
             npc.RemoveFact(factId);
 
@@ -775,12 +686,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var text = @"app PeaceKeeper
 {
-    on Enter =>
-    {
-        'Begin' >> @>log;
-        'End' >> @>log;
-    }
-
 	on {: see(I, #a) :} down on {: see(I, barrel) :} (set) => 
     {
 	    'S' >> @>log;
@@ -797,30 +702,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual("Begin", message);
-                        break;
-
-                    case 2:
-                        Assert.AreEqual("End", message);
-                        break;
-
-                    case 3:
-                        Assert.AreEqual("|||||||||||||", message);
-                        break;
-
-                    case 4:
                         Assert.AreEqual("S", message);
                         break;
 
-                    case 5:
-                        Assert.AreEqual("|-|-|-|-|-|-|-|-|-|-|-|-|", message);
-                        break;
-
-                    case 6:
-                        Assert.AreEqual("|=|=|=|=|=|=|", message);
-                        break;
-
-                    case 7:
+                    case 2:
                         Assert.AreEqual("R", message);
                         break;
 
@@ -831,19 +716,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            npc.Logger.LogChannel("|||||||||||||");
-
             var factId = npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
 
-            npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
-
             npc.RemoveFact(factId);
 
             Thread.Sleep(1000);
-
-            npc.Logger.LogChannel("|=|=|=|=|=|=|");
 
             npc.InsertFact("{: see(I, barrel) :}");
 
@@ -858,12 +737,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var text = @"app PeaceKeeper
 {
-    on Enter =>
-    {
-        'Begin' >> @>log;
-        'End' >> @>log;
-    }
-
 	on {: see(I, #a) :} down on {: see(I, barrel) :} (set) => 
     {
 	    'S' >> @>log;
@@ -880,30 +753,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual("Begin", message);
-                        break;
-
-                    case 2:
-                        Assert.AreEqual("End", message);
-                        break;
-
-                    case 3:
-                        Assert.AreEqual("|||||||||||||", message);
-                        break;
-
-                    case 4:
                         Assert.AreEqual("S", message);
                         break;
 
-                    case 5:
-                        Assert.AreEqual("|-|-|-|-|-|-|-|-|-|-|-|-|", message);
-                        break;
-
-                    case 6:
-                        Assert.AreEqual("|=|=|=|=|=|=|", message);
-                        break;
-
-                    case 7:
+                    case 2:
                         Assert.AreEqual("R", message);
                         break;
 
@@ -914,19 +767,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            npc.Logger.LogChannel("|||||||||||||");
-
             var factId = npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
 
-            npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
-
             npc.InsertFact("{: see(I, barrel) :}");
 
             Thread.Sleep(1000);
-
-            npc.Logger.LogChannel("|=|=|=|=|=|=|");
 
             npc.RemoveFact(factId);
 
@@ -941,12 +788,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var text = @"app PeaceKeeper
 {
-    on Enter =>
-    {
-        'Begin' >> @>log;
-        'End' >> @>log;
-    }
-
 	on {: see(I, #a) :} down on {: see(I, barrel) :} (=) => 
     {
 	    'S' >> @>log;
@@ -963,40 +804,24 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual("Begin", message);
-                        break;
-
-                    case 2:
-                        Assert.AreEqual("End", message);
-                        break;
-
-                    case 3:
-                        Assert.AreEqual("|||||||||||||", message);
-                        break;
-
-                    case 4:
                         Assert.AreEqual("S", message);
                         break;
 
-                    case 5:
-                        Assert.AreEqual("|-|-|-|-|-|-|-|-|-|-|-|-|", message);
-                        break;
-
-                    case 6:
+                    case 2:
                         {
                             var targetValue = message == "S" || message == "R";
                             Assert.AreEqual(true, targetValue);
                         }
                         break;
 
-                    case 7:
+                    case 3:
                         {
                             var targetValue = message == "S" || message == "R";
                             Assert.AreEqual(true, targetValue);
                         }
                         break;
 
-                    case 8:
+                    case 4:
                         {
                             var targetValue = message == "S" || message == "R";
                             Assert.AreEqual(true, targetValue);
@@ -1010,13 +835,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            npc.Logger.LogChannel("|||||||||||||");
-
             npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
-
-            npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
 
             npc.InsertFact("{: see(I, barrel) :}");
 
@@ -1031,12 +852,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var text = @"app PeaceKeeper
 {
-    on Enter =>
-    {
-        'Begin' >> @>log;
-        'End' >> @>log;
-    }
-
 	on {: see(I, #a) :} down on {: see(I, barrel) :} (down) => 
     {
 	    'S' >> @>log;
@@ -1053,31 +868,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual("Begin", message);
-                        break;
-
-                    case 2:
-                        Assert.AreEqual("End", message);
-                        break;
-
-                    case 3:
-                        Assert.AreEqual("|||||||||||||", message);
-                        break;
-
-                    case 4:
                         Assert.AreEqual("S", message);
                         break;
 
-                    case 5:
-                        Assert.AreEqual("|-|-|-|-|-|-|-|-|-|-|-|-|", message);
-                        break;
-
-                    case 6:
+                    case 2:
                         Assert.AreEqual("R", message);
-                        break;
-
-                    case 7:
-                        Assert.AreEqual("|=|=|=|=|=|=|", message);
                         break;
 
                     default:
@@ -1087,19 +882,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            npc.Logger.LogChannel("|||||||||||||");
-
             var factId = npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
 
-            npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
-
             npc.InsertFact("{: see(I, barrel) :}");
 
             Thread.Sleep(1000);
-
-            npc.Logger.LogChannel("|=|=|=|=|=|=|");
 
             npc.RemoveFact(factId);
             npc.InsertFact("{: see(I, #a) :}");
@@ -1205,12 +994,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var text = @"app PeaceKeeper
 {
-    on Enter =>
-    {
-        'Begin' >> @>log;
-        'End' >> @>log;
-    }
-
     fun SomeFun()
     {
         return @b;
@@ -1236,22 +1019,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual("Begin", message);
-                        break;
-
-                    case 2:
-                        Assert.AreEqual("End", message);
-                        break;
-
-                    case 3:
-                        Assert.AreEqual("|||||||||||||", message);
-                        break;
-
-                    case 4:
                         Assert.AreEqual("S", message);
                         break;
 
-                    case 5:
+                    case 2:
                         Assert.AreEqual("D", message);
                         break;
 
@@ -1261,8 +1032,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             });
 
             Thread.Sleep(1000);
-
-            npc.Logger.LogChannel("|||||||||||||");
 
             var factId = npc.InsertFact("{: see(I, #a) :}");
 
@@ -1277,12 +1046,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var text = @"app PeaceKeeper
 {
-    on Enter =>
-    {
-        'Begin' >> @>log;
-        'End' >> @>log;
-    }
-
     fun SomeFun(@param1)
     {
         return @b;
@@ -1308,22 +1071,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual("Begin", message);
-                        break;
-
-                    case 2:
-                        Assert.AreEqual("End", message);
-                        break;
-
-                    case 3:
-                        Assert.AreEqual("|||||||||||||", message);
-                        break;
-
-                    case 4:
                         Assert.AreEqual("S", message);
                         break;
 
-                    case 5:
+                    case 2:
                         Assert.AreEqual("D", message);
                         break;
 
@@ -1333,8 +1084,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             });
 
             Thread.Sleep(1000);
-
-            npc.Logger.LogChannel("|||||||||||||");
 
             var factId = npc.InsertFact("{: see(I, #a) :}");
 
@@ -1349,12 +1098,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var text = @"app PeaceKeeper
 {
-    on Enter =>
-    {
-        'Begin' >> @>log;
-        'End' >> @>log;
-    }
-
     fun SomeFun(@param1)
     {
         return @b;
@@ -1380,22 +1123,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual("Begin", message);
-                        break;
-
-                    case 2:
-                        Assert.AreEqual("End", message);
-                        break;
-
-                    case 3:
-                        Assert.AreEqual("|||||||||||||", message);
-                        break;
-
-                    case 4:
                         Assert.AreEqual("S", message);
                         break;
 
-                    case 5:
+                    case 2:
                         Assert.AreEqual("D", message);
                         break;
 
@@ -1405,8 +1136,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             });
 
             Thread.Sleep(1000);
-
-            npc.Logger.LogChannel("|||||||||||||");
 
             var factId = npc.InsertFact("{: see(I, #a) :}");
 
@@ -1421,12 +1150,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var text = @"app PeaceKeeper
 {
-    on Enter =>
-    {
-        'Begin' >> @>log;
-        'End' >> @>log;
-    }
-
     fun SomeFun(@param1, @param2)
     {
         return @b;
@@ -1452,22 +1175,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual("Begin", message);
-                        break;
-
-                    case 2:
-                        Assert.AreEqual("End", message);
-                        break;
-
-                    case 3:
-                        Assert.AreEqual("|||||||||||||", message);
-                        break;
-
-                    case 4:
                         Assert.AreEqual("S", message);
                         break;
 
-                    case 5:
+                    case 2:
                         Assert.AreEqual("D", message);
                         break;
 
@@ -1477,8 +1188,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             });
 
             Thread.Sleep(1000);
-
-            npc.Logger.LogChannel("|||||||||||||");
 
             var factId = npc.InsertFact("{: see(I, #a) :}");
 
@@ -1493,12 +1202,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var text = @"app PeaceKeeper
 {
-    on Enter =>
-    {
-        'Begin' >> @>log;
-        'End' >> @>log;
-    }
-
     fun SomeFun(@param1, @param2)
     {
         return @b;
@@ -1524,22 +1227,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual("Begin", message);
-                        break;
-
-                    case 2:
-                        Assert.AreEqual("End", message);
-                        break;
-
-                    case 3:
-                        Assert.AreEqual("|||||||||||||", message);
-                        break;
-
-                    case 4:
                         Assert.AreEqual("S", message);
                         break;
 
-                    case 5:
+                    case 2:
                         Assert.AreEqual("D", message);
                         break;
 
@@ -1549,8 +1240,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             });
 
             Thread.Sleep(1000);
-
-            npc.Logger.LogChannel("|||||||||||||");
 
             var factId = npc.InsertFact("{: see(I, #a) :}");
 
@@ -1565,12 +1254,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var text = @"app PeaceKeeper
 {
-    on Enter =>
-    {
-        'Begin' >> @>log;
-        'End' >> @>log;
-    }
-
     var @a = 15;
 
 	on {: see(I, #a) :} as `trigger 1` => 
@@ -1590,22 +1273,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual("Begin", message);
-                        break;
-
-                    case 2:
-                        Assert.AreEqual("End", message);
-                        break;
-
-                    case 3:
-                        Assert.AreEqual("|||||||||||||", message);
-                        break;
-
-                    case 4:
                         Assert.AreEqual("S", message);
                         break;
 
-                    case 5:
+                    case 2:
                         Assert.AreEqual("D", message);
                         break;
 
@@ -1615,8 +1286,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             });
 
             Thread.Sleep(1000);
-
-            npc.Logger.LogChannel("|||||||||||||");
 
             var factId = npc.InsertFact("{: see(I, #a) :}");
 
@@ -1631,12 +1300,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var text = @"app PeaceKeeper
 {
-    on Enter =>
-    {
-        'Begin' >> @>log;
-        'End' >> @>log;
-    }
-
     var @a = 15;
 
 	on {: see(I, #a) :} as `trigger 1` alias `Alarm trigger` => 
@@ -1656,18 +1319,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual("Begin", message);
-                        break;
-
-                    case 2:
-                        Assert.AreEqual("End", message);
-                        break;
-
-                    case 3:
-                        Assert.AreEqual("|||||||||||||", message);
-                        break;
-
-                    case 4:
                         Assert.AreEqual("S", message);
                         break;
 
@@ -1682,8 +1333,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            npc.Logger.LogChannel("|||||||||||||");
-
             var factId = npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
@@ -1697,12 +1346,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var text = @"app PeaceKeeper
 {
-    on Enter =>
-    {
-        'Begin' >> @>log;
-        'End' >> @>log;
-    }
-
     var @a = 15;
 
 	on {: see(I, #a) :} as `trigger 1` alias `Alarm trigger`, trigger_5 => 
@@ -1722,22 +1365,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual("Begin", message);
-                        break;
-
-                    case 2:
-                        Assert.AreEqual("End", message);
-                        break;
-
-                    case 3:
-                        Assert.AreEqual("|||||||||||||", message);
-                        break;
-
-                    case 4:
                         Assert.AreEqual("S", message);
                         break;
 
-                    case 5:
+                    case 2:
                         Assert.AreEqual("D", message);
                         break;
 
@@ -1747,8 +1378,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             });
 
             Thread.Sleep(1000);
-
-            npc.Logger.LogChannel("|||||||||||||");
 
             var factId = npc.InsertFact("{: see(I, #a) :}");
 
@@ -1788,18 +1417,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                         Assert.AreEqual("End", message);
                         break;
 
-                    case 3:
-                        Assert.AreEqual("|||||||||||||", message);
-                        break;
-
                     default:
                         throw new ArgumentOutOfRangeException(nameof(n), n, null);
                 }
             });
 
             Thread.Sleep(1000);
-
-            npc.Logger.LogChannel("|||||||||||||");
 
             var factId = npc.InsertFact("{: see(I, #a) :}");
 
@@ -1838,18 +1461,12 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                         Assert.AreEqual("End", message);
                         break;
 
-                    case 3:
-                        Assert.AreEqual("|||||||||||||", message);
-                        break;
-
                     default:
                         throw new ArgumentOutOfRangeException(nameof(n), n, null);
                 }
             });
 
             Thread.Sleep(1000);
-
-            npc.Logger.LogChannel("|||||||||||||");
 
             var factId = npc.InsertFact("{: see(I, #a) :}");
 

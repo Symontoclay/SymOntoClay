@@ -77,6 +77,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            TstNLPHandler();
             //TstTriggerConditionNodeHandler();
             //TstSoundBus();
             //TstNavigationHandler();
@@ -122,10 +123,20 @@ namespace TestSandbox
             //TstParsing();
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstNLPHandler()
+        {
+            _logger.Log("Begin");
+
+            var handler = new NLPHandler();
+            handler.Run();
+
+            _logger.Log("End");
         }
 
         private static void TstTriggerConditionNodeHandler()

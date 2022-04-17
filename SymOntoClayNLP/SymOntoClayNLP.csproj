@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>SymOntoClay.NLP</AssemblyName>
+    <RootNamespace>SymOntoClay.NLP</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
+    <ProjectReference Include="..\SymOntoClayCore\SymOntoClayCore.csproj" />
+  </ItemGroup>
+
+</Project>

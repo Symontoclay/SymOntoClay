@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30413.136
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClayCore", "SymOntoClayCore\SymOntoClayCore.csproj", "{4669EB72-5812-451C-8ED2-DA4AF2EEE277}"
 EndProject
@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClayProjectFiles", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClayDefaultCLIEnvironment", "SymOntoClayDefaultCLIEnvironment\SymOntoClayDefaultCLIEnvironment.csproj", "{19173425-5C60-4E70-9221-73AC38F6F6E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymOntoClaySoundBuses", "SymOntoClaySoundBuses\SymOntoClaySoundBuses.csproj", "{473E55C2-BE0F-4898-BA47-B55337D9169C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClaySoundBuses", "SymOntoClaySoundBuses\SymOntoClaySoundBuses.csproj", "{473E55C2-BE0F-4898-BA47-B55337D9169C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymOntoClayNLP", "SymOntoClayNLP\SymOntoClayNLP.csproj", "{EEA26A93-F726-461F-881B-A22507A99CA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{473E55C2-BE0F-4898-BA47-B55337D9169C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{473E55C2-BE0F-4898-BA47-B55337D9169C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{473E55C2-BE0F-4898-BA47-B55337D9169C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEA26A93-F726-461F-881B-A22507A99CA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEA26A93-F726-461F-881B-A22507A99CA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEA26A93-F726-461F-881B-A22507A99CA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEA26A93-F726-461F-881B-A22507A99CA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

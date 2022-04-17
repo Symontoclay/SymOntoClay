@@ -1,5 +1,7 @@
-﻿using SymOntoClay.Core.Internal;
+﻿using SymOntoClay.Core;
+using SymOntoClay.Core.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP;
 using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
@@ -15,21 +17,34 @@ namespace TestSandbox.Handlers
     {
         public NLPHandler()
         {
-            var context = TstEngineContextHelper.CreateAndInitContext();
+            _engineContext = TstEngineContextHelper.CreateAndInitContext().EngineContext;
 
-            _engineContext = context.EngineContext;
-            _worldContext = context.WorldContext;
+            _converter = new NLPConverter(_engineContext);
         }
 
         private readonly EngineContext _engineContext;
-        private readonly WorldContext _worldContext;
+        private readonly INLPConverter _converter;
         private static readonly IEntityLogger _logger = new LoggerImpementation();
 
         public void Run()
         {
             _logger.Log("Begin");
 
+            Case1();
+
             _logger.Log("End");
+        }
+
+        private void Case1()
+        {
+            var result = _converter.Convert("I like my cat.");
+
+            _logger.Log($"result.Count = {result.Count}");
+
+            foreach(var item in result)
+            {
+                _logger.Log($"item = {item.ToHumanizedString()}");
+            }
         }
     }
 }

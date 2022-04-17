@@ -28,7 +28,7 @@ using System;
 
 namespace SymOntoClay.Core.Internal
 {
-    public class EngineContext : MainStorageContext, IEngineContext
+    public class EngineContext : MainStorageContext, IEngineContext, INLPContext
     {
         public EngineContext(IEntityLogger logger)
             : base(logger)

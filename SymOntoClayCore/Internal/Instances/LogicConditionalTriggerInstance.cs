@@ -103,7 +103,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 if(resetBindingVariables == null)
                 {
-                    resetBindingVariables = trigger.SetBindingVariables;
+                    resetBindingVariables = new BindingVariables();
                 }
 
                 if (_hasRuleInstancesList)

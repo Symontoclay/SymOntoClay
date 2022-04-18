@@ -8,10 +8,6 @@ namespace SymOntoClay.NLP.Internal
 {
     public class ATNStringLexer
     {
-#if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         private enum State
         {
             Init,
@@ -38,18 +34,6 @@ namespace SymOntoClay.NLP.Internal
             {
                 var ch = _items.Dequeue();
                 var nextChar = PeekNextChar();
-
-#if DEBUG
-                _gbcLogger.Info($"ch = '{ch}'");
-                _gbcLogger.Info($"char.IsLetter(ch) = {char.IsLetter(ch)}");
-                _gbcLogger.Info($"char.IsDigit(ch) = {char.IsDigit(ch)}");
-                _gbcLogger.Info($"char.IsLetterOrDigit(ch) = {char.IsLetterOrDigit(ch)}");
-                _gbcLogger.Info($"IsRawLetter(ch) = {IsRawLetter(ch)}");
-                _gbcLogger.Info($"_state = {_state}");
-                _gbcLogger.Info($"_currentPos = {_currentPos}");
-                _gbcLogger.Info($"_currentLine = {_currentLine}");
-                _gbcLogger.Info($"nextChar = '{nextChar}'");
-#endif
 
                 _currentPos++;
 
@@ -125,10 +109,6 @@ namespace SymOntoClay.NLP.Internal
                                 break;
                             }
 
-#if DEBUG
-                            _gbcLogger.Info($"buffer = {buffer}");
-#endif
-
                             _state = State.Init;
 
                             return (buffer.ToString(), _currentLine, bufferPos);
@@ -137,8 +117,6 @@ namespace SymOntoClay.NLP.Internal
                     default:
                         throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
                 }
-
-                //throw new NotImplementedException();
             }
 
             return (null, 0, 0);

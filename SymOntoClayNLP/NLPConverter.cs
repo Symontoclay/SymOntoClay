@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.Internal;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,6 +23,13 @@ namespace SymOntoClay.NLP
         {
 #if DEBUG
             _logger.Log($"text = {text}");
+            var lexer = new ATNStringLexer(text);
+            (string, int, int) item;
+
+            while((item = lexer.GetItem()).Item1 != null)
+            {
+                _logger.Log($"item = {item}");
+            }
 #endif
 
             throw new NotImplementedException();

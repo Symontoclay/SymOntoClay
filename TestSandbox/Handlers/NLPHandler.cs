@@ -37,7 +37,7 @@ namespace TestSandbox.Handlers
 
         private void Case1()
         {
-            var result = _converter.Convert("I like my cat.");
+            var result = _converter.Convert("I like my cat.()!.?,...:;-1234567890 M1$nrg, #erty3, @maror, 3%");
 
             _logger.Log($"result.Count = {result.Count}");
 

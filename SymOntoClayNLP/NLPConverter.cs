@@ -34,7 +34,7 @@ namespace SymOntoClay.NLP
                 _logger.Log($"item = {item}");
             }
 
-            ATNTextToken token = null;
+            ATNToken token = null;
 
             var lexer_2 = new ATNLexer(text, _wordsDict);
             while((token = lexer_2.GetToken()) != null)

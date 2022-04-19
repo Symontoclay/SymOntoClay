@@ -1,12 +1,18 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.CommonDict;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.NLP.Internal
 {
-    public class ATNTextToken : IObjectToString
+    public class ATNToken : IObjectToString
     {
+        public KindOfATNToken Kind { get; set; } = KindOfATNToken.Unknown;
+        public int Pos { get; set; }
+        public int Line { get; set; }
+        public IList<WordFrame> WordFrames { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -24,6 +30,12 @@ namespace SymOntoClay.NLP.Internal
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(Pos)} = {Pos}");
+            sb.AppendLine($"{spaces}{nameof(Line)} = {Line}");
+            sb.PrintObjListProp(n, nameof(WordFrames), WordFrames);
+
             return sb.ToString();
         }
     }

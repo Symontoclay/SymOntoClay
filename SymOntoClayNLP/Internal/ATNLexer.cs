@@ -25,15 +25,59 @@ namespace SymOntoClay.NLP.Internal
         private Queue<(string, int, int)> _recoveredSourceItems = new Queue<(string, int, int)> ();
         private Dictionary<string, List<string>> _transformsDict = new Dictionary<string, List<string>>();
 
-        public ATNTextToken GetToken()
+        public ATNToken GetToken()
         {
+            var item = GetSourceItem();
+
 #if DEBUG
-            (string, int, int) item;
-            while ((item = GetSourceItem()).Item1 != null)
-            {
-                _gbcLogger.Info($"item = {item}");
-            }
+            _gbcLogger.Info($"item = {item}");
 #endif
+
+            var result = new ATNToken()
+            {
+                Line = item.Item2,
+                Pos = item.Item3
+            };
+
+            var strItem = item.Item1;
+
+#if DEBUG
+            _gbcLogger.Info($"strItem = {strItem}");
+#endif
+
+            switch (strItem)
+            {
+                case "(":
+                case ")":
+                case ",":
+                case ":":
+                case ";":
+                case "-":
+                case ".":
+                case "!":
+                case "?":
+                case "\"":
+                    throw new NotImplementedException();
+
+                default:
+                    {
+                        if(strItem.All(p => char.IsLetter(p)))
+                        {
+                            result.Kind = KindOfATNToken.Word;
+
+                            result.WordFrames = _wordsDict.GetWordFrames(strItem);
+
+#if DEBUG
+                            _gbcLogger.Info($"result = {result}");
+#endif
+
+                            return result;
+                        }
+
+                        throw new NotImplementedException();
+                    }
+                    break;
+            }
 
             throw new NotImplementedException();
         }

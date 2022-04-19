@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TestSandbox.Helpers;
+using TestSandbox.NLP;
 using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.Handlers
@@ -19,7 +20,9 @@ namespace TestSandbox.Handlers
         {
             _engineContext = TstEngineContextHelper.CreateAndInitContext().EngineContext;
 
-            _converter = new NLPConverter(_engineContext);
+            var wordsDict = new TstSimpleWordsDict();
+
+            _converter = new NLPConverter(_engineContext, wordsDict);
         }
 
         private readonly EngineContext _engineContext;

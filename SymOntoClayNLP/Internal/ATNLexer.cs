@@ -1,4 +1,5 @@
 ﻿using NLog;
+using SymOntoClay.NLP.CommonDict;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +13,19 @@ namespace SymOntoClay.NLP.Internal
         private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
-        public ATNLexer(string text)
+        public ATNLexer(string text, IWordsDict wordsDict)
         {
+            _wordsDict = wordsDict;
             _lexer = new ATNStringLexer(text);
             InitTransformsDict();
         }
 
         private ATNStringLexer _lexer;
+        private IWordsDict _wordsDict;
         private Queue<(string, int, int)> _recoveredSourceItems = new Queue<(string, int, int)> ();
         private Dictionary<string, List<string>> _transformsDict = new Dictionary<string, List<string>>();
 
-        public void GetToken()
+        public ATNTextToken GetToken()
         {
 #if DEBUG
             (string, int, int) item;

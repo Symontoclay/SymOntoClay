@@ -9,9 +9,10 @@ namespace SymOntoClay.NLP.Internal
     public class ATNToken : IObjectToString
     {
         public KindOfATNToken Kind { get; set; } = KindOfATNToken.Unknown;
+        public string Content { get; set; } = string.Empty;
         public int Pos { get; set; }
         public int Line { get; set; }
-        public IList<WordFrame> WordFrames { get; set; }
+        public IList<BaseGrammaticalWordFrame> WordFrames { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -32,6 +33,7 @@ namespace SymOntoClay.NLP.Internal
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(Content)} = {Content}");
             sb.AppendLine($"{spaces}{nameof(Pos)} = {Pos}");
             sb.AppendLine($"{spaces}{nameof(Line)} = {Line}");
             sb.PrintObjListProp(n, nameof(WordFrames), WordFrames);

@@ -4,8 +4,11 @@ using System.Text;
 
 namespace SymOntoClay.NLP.CommonDict
 {
-    public interface IWordsDict
+    public enum GrammaticalNumberOfWord
     {
-        IList<BaseGrammaticalWordFrame> GetWordFrames(string word);
+        Neuter,
+        Singular,
+        Plural,
+        PluralOrSingular
     }
 }

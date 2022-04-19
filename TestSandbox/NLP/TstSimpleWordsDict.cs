@@ -14,7 +14,7 @@ namespace TestSandbox.NLP
         private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
-        public IList<WordFrame> GetWordFrames(string word)
+        public IList<BaseGrammaticalWordFrame> GetWordFrames(string word)
         {
 #if DEBUG
             _gbcLogger.Info($"word = {word}");

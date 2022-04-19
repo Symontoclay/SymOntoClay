@@ -4,8 +4,10 @@ using System.Text;
 
 namespace SymOntoClay.NLP.CommonDict
 {
-    public interface IWordsDict
+    public enum GrammaticalGender
     {
-        IList<BaseGrammaticalWordFrame> GetWordFrames(string word);
+        Masculine,
+        Feminine,
+        Neuter
     }
 }

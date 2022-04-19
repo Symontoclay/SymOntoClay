@@ -30,6 +30,9 @@ namespace SymOntoClay.NLP
             {
                 _logger.Log($"item = {item}");
             }
+
+            var lexer_2 = new ATNLexer(text);
+            lexer_2.GetToken();
 #endif
 
             throw new NotImplementedException();

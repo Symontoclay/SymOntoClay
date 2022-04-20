@@ -32,6 +32,7 @@ namespace SymOntoClay.NLP.CommonDict
         public virtual bool IsNumeral => false;
         public virtual NumeralGrammaticalWordFrame AsNumeral => null;
 
+        public string Word { get; set; }
         public string RootWord { get; set; }
         public IList<string> LogicalMeaning { get; set; }
         public IList<string> FullLogicalMeaning { get; set; }
@@ -44,6 +45,7 @@ namespace SymOntoClay.NLP.CommonDict
 
         protected void FillAsBaseGrammaticalWordFrame(BaseGrammaticalWordFrame item)
         {
+            item.Word = Word;
             item.RootWord = RootWord;
             item.LogicalMeaning = LogicalMeaning?.ToList();
             item.FullLogicalMeaning = FullLogicalMeaning?.ToList();
@@ -78,6 +80,7 @@ namespace SymOntoClay.NLP.CommonDict
             var nextNextNextNSpaces = DisplayHelper.Spaces(nextNextNextN);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(PartOfSpeech)} = {PartOfSpeech}");
+            sb.AppendLine($"{spaces}{nameof(Word)} = {Word}");
             sb.AppendLine($"{spaces}{nameof(RootWord)} = {RootWord}");
 
             if (LogicalMeaning == null)

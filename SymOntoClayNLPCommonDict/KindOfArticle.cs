@@ -4,10 +4,11 @@ using System.Text;
 
 namespace SymOntoClay.NLP.CommonDict
 {
-    public enum GrammaticalNumberOfWord
+    public enum KindOfArticle
     {
-        Neuter,
-        Singular,
-        Plural
+        Unknown,
+        Definite,
+        Indefinite,
+        Negative
     }
 }

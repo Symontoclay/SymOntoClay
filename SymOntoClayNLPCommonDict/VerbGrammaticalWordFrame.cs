@@ -1,0 +1,108 @@
+﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace SymOntoClay.NLP.CommonDict
+{
+    public class VerbGrammaticalWordFrame : BaseGrammaticalWordFrame
+    {
+        public override GrammaticalPartOfSpeech PartOfSpeech => GrammaticalPartOfSpeech.Verb;
+        public override bool IsVerb => true;
+        public override VerbGrammaticalWordFrame AsVerb => this;
+        public VerbType VerbType { get; set; } = VerbType.BaseForm;
+        public GrammaticalNumberOfWord Number { get; set; } = GrammaticalNumberOfWord.Neuter;
+        public GrammaticalPerson Person { get; set; } = GrammaticalPerson.Neuter;
+        public GrammaticalTenses Tense { get; set; } = GrammaticalTenses.All;
+        public bool IsModal { get; set; }
+        public bool IsFormOfToBe { get; set; }
+        public bool IsFormOfToHave { get; set; }
+        public bool IsFormOfToDo { get; set; }
+        public bool MayHaveGerundOrInfinitiveAfterSelf { get; set; }
+
+        public override BaseGrammaticalWordFrame Fork()
+        {
+            var result = new VerbGrammaticalWordFrame();
+            FillAsBaseGrammaticalWordFrame(result);
+            result.VerbType = VerbType;
+            result.Number = Number;
+            result.Person = Person;
+            result.Tense = Tense;
+            result.IsModal = IsModal;
+            result.IsFormOfToBe = IsFormOfToBe;
+            result.IsFormOfToHave = IsFormOfToHave;
+            result.IsFormOfToDo = IsFormOfToDo;
+            result.MayHaveGerundOrInfinitiveAfterSelf = MayHaveGerundOrInfinitiveAfterSelf;
+            return result;
+        }
+
+        public override string PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var nextN = n + 4;
+            var sb = new StringBuilder();
+            sb.Append(base.PropertiesToString(n));
+            sb.AppendLine($"{spaces}{nameof(VerbType)} = {VerbType}");
+            sb.AppendLine($"{spaces}{nameof(Number)} = {Number}");
+            sb.AppendLine($"{spaces}{nameof(Person)} = {Person}");
+            sb.AppendLine($"{spaces}{nameof(Tense)} = {Tense}");
+            sb.AppendLine($"{spaces}{nameof(IsModal)} = {IsModal}");
+            sb.AppendLine($"{spaces}{nameof(IsFormOfToBe)} = {IsFormOfToBe}");
+            sb.AppendLine($"{spaces}{nameof(IsFormOfToHave)} = {IsFormOfToHave}");
+            sb.AppendLine($"{spaces}{nameof(IsFormOfToDo)} = {IsFormOfToDo}");
+            sb.AppendLine($"{spaces}{nameof(MayHaveGerundOrInfinitiveAfterSelf)} = {MayHaveGerundOrInfinitiveAfterSelf}");
+            return sb.ToString();
+        }
+
+        public override int GetHashCode()
+        {
+            var result = GetHashCodeOfBaseFrame();
+            result ^= VerbType.GetHashCode() ^ Number.GetHashCode() ^ Person.GetHashCode() ^ Tense.GetHashCode() ^ IsModal.GetHashCode();
+            result ^= IsFormOfToBe.GetHashCode() ^ IsFormOfToHave.GetHashCode() ^ IsFormOfToDo.GetHashCode() ^ MayHaveGerundOrInfinitiveAfterSelf.GetHashCode();
+            return result;
+        }
+
+        public static bool NEquals(VerbGrammaticalWordFrame left, VerbGrammaticalWordFrame right)
+        {
+            if (ReferenceEquals(left, right))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
+            {
+                return false;
+            }
+
+            return left.GetHashCode() == right.GetHashCode();
+        }
+    }
+
+    public class ComparerOfVerbGrammaticalWordFrame : IEqualityComparer<VerbGrammaticalWordFrame>
+    {
+        bool IEqualityComparer<VerbGrammaticalWordFrame>.Equals(VerbGrammaticalWordFrame left, VerbGrammaticalWordFrame right)
+        {
+            if (ReferenceEquals(left, right))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
+            {
+                return false;
+            }
+
+            return VerbGrammaticalWordFrame.NEquals(left, right);
+        }
+
+        int IEqualityComparer<VerbGrammaticalWordFrame>.GetHashCode(VerbGrammaticalWordFrame obj)
+        {
+            if (ReferenceEquals(obj, null))
+            {
+                return 0;
+            }
+
+            return obj.GetHashCode();
+        }
+    }
+}

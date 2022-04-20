@@ -4,10 +4,10 @@ using System.Text;
 
 namespace SymOntoClay.NLP.CommonDict
 {
-    public enum GrammaticalNumberOfWord
+    public enum GrammaticalComparison
     {
-        Neuter,
-        Singular,
-        Plural
+        None,
+        Comparative,
+        Superlative
     }
 }

@@ -33,31 +33,65 @@ namespace SymOntoClay.NLP.Internal
             _gbcLogger.Info($"item = {item}");
 #endif
 
-            var result = new ATNToken()
-            {
-                Line = item.Item2,
-                Pos = item.Item3
-            };
-
             var strItem = item.Item1;
 
 #if DEBUG
             _gbcLogger.Info($"strItem = {strItem}");
 #endif
 
+            if(strItem == null)
+            {
+                return null;
+            }
+
+            var result = new ATNToken()
+            {
+                Content = strItem,
+                Line = item.Item2,
+                Pos = item.Item3
+            };
+
             switch (strItem)
             {
                 case "(":
+                    result.Kind = KindOfATNToken.OpenRoundBracket;
+                    break;
+
                 case ")":
+                    result.Kind = KindOfATNToken.CloseRoundBracket;
+                    break;
+
                 case ",":
+                    result.Kind = KindOfATNToken.Comma;
+                    break;
+
                 case ":":
+                    result.Kind = KindOfATNToken.Colon;
+                    break;
+
                 case ";":
+                    result.Kind = KindOfATNToken.Semicolon;
+                    break;
+
                 case "-":
+                    result.Kind = KindOfATNToken.Dash;
+                    break;
+
                 case ".":
+                    result.Kind = KindOfATNToken.Point;
+                    break;
+
                 case "!":
+                    result.Kind = KindOfATNToken.ExclamationMark;
+                    break;
+
                 case "?":
+                    result.Kind = KindOfATNToken.QuestionMark;
+                    break;
+
                 case "\"":
-                    throw new NotImplementedException();
+                    result.Kind = KindOfATNToken.DoubleQuotationMark;
+                    break;
 
                 default:
                     {
@@ -74,12 +108,28 @@ namespace SymOntoClay.NLP.Internal
                             return result;
                         }
 
-                        throw new NotImplementedException();
+                        if(strItem.All(p => char.IsDigit(p)))
+                        {
+                            result.Kind = KindOfATNToken.Number;
+
+#if DEBUG
+                            _gbcLogger.Info($"result = {result}");
+#endif
+
+                            return result;
+                        }
+
+                        result.Kind = KindOfATNToken.Word;
+
+#if DEBUG
+                        _gbcLogger.Info($"result = {result}");
+#endif
+
+                        return result;
                     }
-                    break;
             }
 
-            throw new NotImplementedException();
+            return result;
         }
 
         private (string, int, int) GetSourceItem()

@@ -44,6 +44,8 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// <inheritdoc/>
         string IObjectToDbgString.PropertiesToDbgString(uint n)
         {
+            throw new NotImplementedException();
+
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             return sb.ToString();

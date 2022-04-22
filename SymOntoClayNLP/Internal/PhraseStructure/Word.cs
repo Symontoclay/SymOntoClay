@@ -5,9 +5,7 @@ using System.Text;
 
 namespace SymOntoClay.NLP.Internal.PhraseStructure
 {
-    //https://en.wikipedia.org/wiki/Adpositional_phrase
-    //PP
-    public class PreOrPostpositionalPhrase : IObjectToString, IObjectToDbgString
+    public class Word : IObjectToString, IObjectToDbgString
     {
         /// <inheritdoc/>
         public override string ToString()

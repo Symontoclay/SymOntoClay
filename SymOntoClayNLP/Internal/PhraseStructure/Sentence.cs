@@ -8,6 +8,9 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
     //https://en.wikipedia.org/wiki/Phrase_structure_grammar
     public class Sentence : IObjectToString, IObjectToDbgString
     {
+        public NounPhrase Subject { get; set; }
+        public VerbPhrase Predicate { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -25,6 +28,10 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintObjProp(n, nameof(Subject), Subject);
+            sb.PrintObjProp(n, nameof(Predicate), Predicate);
+
             return sb.ToString();
         }
 
@@ -43,6 +50,8 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// <inheritdoc/>
         string IObjectToDbgString.PropertiesToDbgString(uint n)
         {
+            throw new NotImplementedException();
+
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             return sb.ToString();

@@ -18,41 +18,57 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// <inheritdoc/>
         public override NounPhrase AsNounPhrase => this;
 
-        public Word Noun { get; set; }
-
         /// <summary>
-        /// Such as "the", "this", "my", "some", "Jane's"
+        /// Noun or NounPhrase which is root of the phrase.
         /// </summary>
-        public BaseSentenceItem Determiner { get; set; }
+        public BaseSentenceItem N { get; set; }
 
         /// <summary>
+        /// Determiner
+        /// Such as "the", "this", "my", "some", "Jane's"
         /// [the guy with a hat]'s dog
         /// [the girl who was laughing]'s scarf
         /// </summary>
-        public BaseSentenceItem DeterminerPhrase { get; set; }
+        public BaseSentenceItem D { get; set; }
 
         /// <summary>
-        ///  such as "large", "beautiful", "sweeter"
-        /// </summary>
-        public Word Adjective { get; set; }
-
-        /// <summary>
+        /// such as "large", "beautiful", "sweeter"
         ///  such as "extremely large", "hard as nails", "made of wood", "sitting on the step"
         /// </summary>
-        public BaseSentenceItem AdjectivePhrase { get; set; }
+        public BaseSentenceItem AP { get; set; }
 
         /// <summary>
         /// https://en.wikipedia.org/wiki/Noun_adjunct
         /// "college" in "a college student"
         /// </summary>
-        public Word NounAdjunct { get; set; }
-
-        public BaseSentenceItem NounAdjunctPhrase { get; set; }
+        public BaseSentenceItem NounAdjunct { get; set; }
 
         /// <summary>
         /// such as "in the drawing room", "of his aunt"
         /// </summary>
-        public PreOrPostpositionalPhrase PreOrPostpositionalPhrase { get; set; }
+        public BaseSentenceItem PP { get; set; }
+
+        /// <summary>
+        /// such as "(over) there" in the noun phrase "the man (over) there"
+        /// </summary>
+        public BaseSentenceItem AdvP { get; set; }
+
+        /// <summary>
+        /// https://en.wikipedia.org/wiki/Relative_clause
+        /// such as "which we noticed"
+        /// </summary>
+        public BaseSentenceItem RelativeClauses { get; set; }
+
+        /// <summary>
+        /// https://en.wikipedia.org/wiki/Clause
+        /// other clauses serving as complements to the noun, such as "that God exists" in the noun phrase "the belief that God exists"
+        /// </summary>
+        public BaseSentenceItem OtherClauses { get; set; }
+
+        /// <summary>
+        /// infinitive phrases, such as "to sing well" and "to beat" in the noun phrases "a desire to sing well" and "the man to beat"
+        /// </summary>
+        public BaseSentenceItem InfinitivePhrases { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -60,14 +76,15 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(Noun), Noun);
-            sb.PrintObjProp(n, nameof(Determiner), Determiner);
-            sb.PrintObjProp(n, nameof(DeterminerPhrase), DeterminerPhrase);
-            sb.PrintObjProp(n, nameof(Adjective), Adjective);
-            sb.PrintObjProp(n, nameof(AdjectivePhrase), AdjectivePhrase);
+            sb.PrintObjProp(n, nameof(N), N);
+            sb.PrintObjProp(n, nameof(D), D);
+            sb.PrintObjProp(n, nameof(AP), AP);
             sb.PrintObjProp(n, nameof(NounAdjunct), NounAdjunct);
-            sb.PrintObjProp(n, nameof(NounAdjunctPhrase), NounAdjunctPhrase);
-            sb.PrintObjProp(n, nameof(PreOrPostpositionalPhrase), PreOrPostpositionalPhrase);
+            sb.PrintObjProp(n, nameof(PP), PP);
+            sb.PrintObjProp(n, nameof(AdvP), AdvP);            
+            sb.PrintObjProp(n, nameof(RelativeClauses), RelativeClauses);
+            sb.PrintObjProp(n, nameof(OtherClauses), OtherClauses);
+            sb.PrintObjProp(n, nameof(InfinitivePhrases), InfinitivePhrases);
 
             //sb.PrintObjProp(n, nameof(), );
 

@@ -18,11 +18,42 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// <inheritdoc/>
         public override NounPhrase AsNounPhrase => this;
 
+        public Word Noun { get; set; }
+
+        /// <summary>
+        /// Such as "the", "this", "my", "some", "Jane's"
+        /// </summary>
+        public BaseSentenceItem Determiner { get; set; }
+
+        /// <summary>
+        /// [the guy with a hat]'s dog
+        /// [the girl who was laughing]'s scarf
+        /// </summary>
+        public BaseSentenceItem DeterminerPhrase { get; set; }
+
+        /// <summary>
+        ///  such as "large", "beautiful", "sweeter"
+        /// </summary>
+        public Word Adjective { get; set; }
+
+        /// <summary>
+        ///  such as "extremely large", "hard as nails", "made of wood", "sitting on the step"
+        /// </summary>
+        public BaseSentenceItem AdjectivePhrase { get; set; }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintObjProp(n, nameof(Noun), Noun);
+            sb.PrintObjProp(n, nameof(Determiner), Determiner);
+            sb.PrintObjProp(n, nameof(DeterminerPhrase), DeterminerPhrase);
+            sb.PrintObjProp(n, nameof(Adjective), Adjective);
+            sb.PrintObjProp(n, nameof(AdjectivePhrase), AdjectivePhrase);
+
+            //sb.PrintObjProp(n, nameof(), );
 
             sb.Append(base.PropertiesToString(n));
 

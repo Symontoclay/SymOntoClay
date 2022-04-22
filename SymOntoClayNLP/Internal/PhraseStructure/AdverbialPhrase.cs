@@ -5,30 +5,15 @@ using System.Text;
 
 namespace SymOntoClay.NLP.Internal.PhraseStructure
 {
-    //https://en.wikipedia.org/wiki/Phrase_structure_grammar
-    //https://en.wikipedia.org/wiki/Phrase_structure_rules
-    public class Sentence : BaseSentenceItem
+    //https://en.wikipedia.org/wiki/Adverbial_phrase
+    //AdvP
+    public class AdverbialPhrase: BaseSentenceItem
     {
-        /// <inheritdoc/>
-        public override KindOfSentenceItem KindOfSentenceItem => KindOfSentenceItem.Sentence;
-
-        /// <inheritdoc/>
-        public override bool IsSentence => true;
-
-        /// <inheritdoc/>
-        public override Sentence AsSentence => this;
-
-        public NounPhrase Subject { get; set; }
-        public VerbPhrase Predicate { get; set; }
-
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-
-            sb.PrintObjProp(n, nameof(Subject), Subject);
-            sb.PrintObjProp(n, nameof(Predicate), Predicate);
 
             sb.Append(base.PropertiesToString(n));
 

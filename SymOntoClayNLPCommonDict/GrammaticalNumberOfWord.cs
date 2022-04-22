@@ -8,6 +8,7 @@ namespace SymOntoClay.NLP.CommonDict
     {
         Neuter,
         Singular,
-        Plural
+        Plural,
+        PluralOrSingular
     }
 }

@@ -2,7 +2,7 @@
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP.CommonDict;
-using SymOntoClay.NLP.Internal;
+using SymOntoClay.NLP.Internal.ATN;
 using System;
 using System.Collections.Generic;
 using System.Text;

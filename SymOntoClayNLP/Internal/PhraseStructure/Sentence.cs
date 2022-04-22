@@ -6,25 +6,22 @@ using System.Text;
 namespace SymOntoClay.NLP.Internal.PhraseStructure
 {
     //https://en.wikipedia.org/wiki/Phrase_structure_grammar
-    public class Sentence : IObjectToString, IObjectToDbgString
+    public class Sentence : BaseSentenceItem
     {
+        /// <inheritdoc/>
+        public override KindOfSentenceItem KindOfSentenceItem => KindOfSentenceItem.Sentence;
+
+        /// <inheritdoc/>
+        public override bool IsSentence => true;
+
+        /// <inheritdoc/>
+        public override Sentence AsSentence => this;
+
         public NounPhrase Subject { get; set; }
         public VerbPhrase Predicate { get; set; }
 
         /// <inheritdoc/>
-        public override string ToString()
-        {
-            return ToString(0u);
-        }
-
-        /// <inheritdoc/>
-        public string ToString(uint n)
-        {
-            return this.GetDefaultToStringInformation(n);
-        }
-
-        /// <inheritdoc/>
-        string IObjectToString.PropertiesToString(uint n)
+        protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
@@ -32,28 +29,21 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             sb.PrintObjProp(n, nameof(Subject), Subject);
             sb.PrintObjProp(n, nameof(Predicate), Predicate);
 
+            sb.Append(base.PropertiesToString(n));
+
             return sb.ToString();
         }
 
         /// <inheritdoc/>
-        public string ToDbgString()
-        {
-            return ToDbgString(0u);
-        }
-
-        /// <inheritdoc/>
-        public string ToDbgString(uint n)
-        {
-            return this.GetDefaultToDbgStringInformation(n);
-        }
-
-        /// <inheritdoc/>
-        string IObjectToDbgString.PropertiesToDbgString(uint n)
+        protected override string PropertiesToDbgString(uint n)
         {
             throw new NotImplementedException();
 
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.Append(base.PropertiesToDbgString(n));
+
             return sb.ToString();
         }
     }

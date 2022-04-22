@@ -7,47 +7,38 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 {
     //https://en.wikipedia.org/wiki/Adjective_phrase
     //AP
-    public class AdjectivePhrase : IObjectToString, IObjectToDbgString
+    public class AdjectivePhrase : BaseSentenceItem
     {
         /// <inheritdoc/>
-        public override string ToString()
-        {
-            return ToString(0u);
-        }
+        public override KindOfSentenceItem KindOfSentenceItem => KindOfSentenceItem.AdjectivePhrase;
 
         /// <inheritdoc/>
-        public string ToString(uint n)
-        {
-            return this.GetDefaultToStringInformation(n);
-        }
+        public override bool IsAdjectivePhrase => true;
 
         /// <inheritdoc/>
-        string IObjectToString.PropertiesToString(uint n)
+        public override AdjectivePhrase AsAdjectivePhrase => this;
+
+        /// <inheritdoc/>
+        protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.Append(base.PropertiesToString(n));
+
             return sb.ToString();
         }
 
         /// <inheritdoc/>
-        public string ToDbgString()
-        {
-            return ToDbgString(0u);
-        }
-
-        /// <inheritdoc/>
-        public string ToDbgString(uint n)
-        {
-            return this.GetDefaultToDbgStringInformation(n);
-        }
-
-        /// <inheritdoc/>
-        string IObjectToDbgString.PropertiesToDbgString(uint n)
+        protected override string PropertiesToDbgString(uint n)
         {
             throw new NotImplementedException();
 
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.Append(base.PropertiesToDbgString(n));
+
             return sb.ToString();
         }
     }

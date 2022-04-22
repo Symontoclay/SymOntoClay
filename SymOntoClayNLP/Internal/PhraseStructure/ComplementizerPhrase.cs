@@ -5,20 +5,11 @@ using System.Text;
 
 namespace SymOntoClay.NLP.Internal.PhraseStructure
 {
-    //https://en.wikipedia.org/wiki/Verb_phrase
-    //VP
-    // see also https://theclassicjournal.uga.edu/index.php/2020/10/29/under-the-surface/
-    public class VerbPhrase : BaseSentenceItem
+    //https://theclassicjournal.uga.edu/index.php/2020/10/29/under-the-surface/
+    //CP
+    //It is "she is a teacher" in sentence "I know she is a teacher".
+    public class ComplementizerPhrase : BaseSentenceItem
     {
-        /// <inheritdoc/>
-        public override KindOfSentenceItem KindOfSentenceItem => KindOfSentenceItem.VerbPhrase;
-
-        /// <inheritdoc/>
-        public override bool IsVerbPhrase => true;
-
-        /// <inheritdoc/>
-        public override VerbPhrase AsVerbPhrase => this;
-
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {

@@ -5,18 +5,17 @@ using System.Text;
 
 namespace SymOntoClay.NLP.Internal.PhraseStructure
 {
-    //https://en.wikipedia.org/wiki/Adverbial_phrase
-    //AdvP
-    public class AdverbialPhrase: BaseSentenceItem
+    //ConjP
+    public class ConjunctionPhrase : BaseSentenceItem
     {
         /// <inheritdoc/>
-        public override KindOfSentenceItem KindOfSentenceItem => KindOfSentenceItem.AdverbialPhrase;
+        public override KindOfSentenceItem KindOfSentenceItem => KindOfSentenceItem.ConjunctionPhrase;
 
         /// <inheritdoc/>
-        public override bool IsAdverbialPhrase => true;
+        public override bool IsConjunctionPhrase => true;
 
         /// <inheritdoc/>
-        public override AdverbialPhrase AsAdverbialPhrase => this;
+        public override ConjunctionPhrase AsConjunctionPhrase => this;
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

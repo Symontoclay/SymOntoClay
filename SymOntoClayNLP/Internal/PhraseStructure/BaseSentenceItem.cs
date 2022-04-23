@@ -24,6 +24,18 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         public virtual bool IsPreOrPostpositionalPhrase => false;
         public virtual PreOrPostpositionalPhrase AsPreOrPostpositionalPhrase => null;
 
+        public virtual bool IsAdverbialPhrase => false;
+        public virtual AdverbialPhrase AsAdverbialPhrase => null;
+
+        public virtual bool IsComplementizerPhrase => false;
+        public virtual ComplementizerPhrase AsComplementizerPhrase => null;
+
+        public virtual bool IsQuantifierPhrase => false;
+        public virtual QuantifierPhrase AsQuantifierPhrase => null;
+
+        public virtual bool IsConjunctionPhrase => false;
+        public virtual ConjunctionPhrase AsConjunctionPhrase => null;
+
         public virtual bool IsWord => false;
         public virtual Word AsWord => null;
 

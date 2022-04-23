@@ -11,6 +11,12 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
     public class ComplementizerPhrase : BaseSentenceItem
     {
         /// <inheritdoc/>
+        public override KindOfSentenceItem KindOfSentenceItem => KindOfSentenceItem.ComplementizerPhrase;
+
+        public override bool IsComplementizerPhrase => true;
+        public override ComplementizerPhrase AsComplementizerPhrase => this;
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
@@ -35,3 +41,4 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         }
     }
 }
+

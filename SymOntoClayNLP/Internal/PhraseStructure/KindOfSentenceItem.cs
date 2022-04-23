@@ -23,6 +23,22 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// PP
         /// </summary>
         PreOrPostpositionalPhrase,
+        /// <summary>
+        /// AdvP
+        /// </summary>
+        AdverbialPhrase,
+        /// <summary>
+        /// CP
+        /// </summary>
+        ComplementizerPhrase,
+        /// <summary>
+        /// QP
+        /// </summary>
+        QuantifierPhrase,
+        /// <summary>
+        /// ConjP
+        /// </summary>
+        ConjunctionPhrase,
         Word
     }
 }

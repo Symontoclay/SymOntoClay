@@ -24,6 +24,8 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            //sb.PrintObjProp(n, nameof(), );
+
             sb.Append(base.PropertiesToString(n));
 
             return sb.ToString();

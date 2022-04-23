@@ -5,8 +5,11 @@ using System.Text;
 
 namespace SymOntoClay.NLP.Internal.PhraseStructure
 {
-    //https://en.wikipedia.org/wiki/Phrase_structure_grammar
-    //https://en.wikipedia.org/wiki/Phrase_structure_rules
+    /// <summary>
+    /// https://en.wikipedia.org/wiki/Phrase_structure_grammar
+    /// https://en.wikipedia.org/wiki/Phrase_structure_rules
+    /// https://en.wikipedia.org/wiki/Phrase
+    /// </summary>
     public class Sentence : BaseSentenceItem
     {
         /// <inheritdoc/>

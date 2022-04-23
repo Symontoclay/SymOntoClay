@@ -5,8 +5,10 @@ using System.Text;
 
 namespace SymOntoClay.NLP.Internal.PhraseStructure
 {
-    //https://en.wikipedia.org/wiki/Noun_phrase
-    //NP
+    /// <summary>
+    /// https://en.wikipedia.org/wiki/Noun_phrase
+    /// NP
+    /// </summary>
     public class NounPhrase: BaseSentenceItem
     {
         /// <inheritdoc/>
@@ -19,7 +21,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         public override NounPhrase AsNounPhrase => this;
 
         /// <summary>
-        /// Noun or NounPhrase which is root of the phrase.
+        /// Noun, NounPhrase, ConjunctionPhrase, QuantifierPhrase which is root of the phrase.
         /// </summary>
         public BaseSentenceItem N { get; set; }
 
@@ -32,6 +34,11 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         public BaseSentenceItem D { get; set; }
 
         /// <summary>
+        /// "many" in "many very happy girls"
+        /// </summary>
+        public BaseSentenceItem QP { get; set; }
+
+        /// <summary>
         /// such as "large", "beautiful", "sweeter"
         ///  such as "extremely large", "hard as nails", "made of wood", "sitting on the step"
         /// </summary>
@@ -42,6 +49,8 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// "college" in "a college student"
         /// </summary>
         public BaseSentenceItem NounAdjunct { get; set; }
+
+
 
         /// <summary>
         /// such as "in the drawing room", "of his aunt"
@@ -78,8 +87,9 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
             sb.PrintObjProp(n, nameof(N), N);
             sb.PrintObjProp(n, nameof(D), D);
+            sb.PrintObjProp(n, nameof(QP), QP);
             sb.PrintObjProp(n, nameof(AP), AP);
-            sb.PrintObjProp(n, nameof(NounAdjunct), NounAdjunct);
+            sb.PrintObjProp(n, nameof(NounAdjunct), NounAdjunct);           
             sb.PrintObjProp(n, nameof(PP), PP);
             sb.PrintObjProp(n, nameof(AdvP), AdvP);            
             sb.PrintObjProp(n, nameof(RelativeClauses), RelativeClauses);

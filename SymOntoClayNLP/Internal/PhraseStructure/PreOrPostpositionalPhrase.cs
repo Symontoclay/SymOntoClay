@@ -18,11 +18,38 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// <inheritdoc/>
         public override PreOrPostpositionalPhrase AsPreOrPostpositionalPhrase => this;
 
+        /// <summary>
+        /// The root word of the phrase: "with" in "with them".
+        /// Or "from" in "from now on".
+        /// </summary>
+        public BaseSentenceItem P { get; set; }
+
+        /// <summary>
+        /// "on" in "from now on".
+        /// </summary>
+        public BaseSentenceItem P2 { get; set; }
+
+        /// <summary>
+        /// "now" in "from now on".
+        /// </summary>
+        public BaseSentenceItem Adv { get; set; }
+
+        /// <summary>
+        /// "them" in "with them"
+        /// "two years" in "two years ago"
+        /// </summary>
+        public BaseSentenceItem NP { get; set; }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintObjProp(n, nameof(P), P);
+            sb.PrintObjProp(n, nameof(P2), P2);
+            sb.PrintObjProp(n, nameof(Adv), Adv);
+            sb.PrintObjProp(n, nameof(NP), NP);
 
             //sb.PrintObjProp(n, nameof(), );
 

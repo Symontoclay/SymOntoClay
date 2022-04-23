@@ -18,11 +18,30 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// <inheritdoc/>
         public override AdverbialPhrase AsAdverbialPhrase => this;
 
+        /// <summary>
+        /// The root adverbial of the phrase.
+        /// </summary>
+        public BaseSentenceItem Adv { get; set; }
+
+        /// <summary>
+        /// "quickly" in "very quickly"
+        /// </summary>
+        public BaseSentenceItem AdvP { get; set; }
+
+        /// <summary>
+        /// "beautiful" in "very beautiful"
+        /// </summary>
+        public BaseSentenceItem AP { get; set; }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintObjProp(n, nameof(Adv), Adv);
+            sb.PrintObjProp(n, nameof(AdvP), AdvP);
+            sb.PrintObjProp(n, nameof(AP), AP);
 
             //sb.PrintObjProp(n, nameof(), );
 

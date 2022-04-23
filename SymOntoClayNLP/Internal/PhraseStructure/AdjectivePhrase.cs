@@ -18,11 +18,32 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// <inheritdoc/>
         public override AdjectivePhrase AsAdjectivePhrase => this;
 
+        /// <summary>
+        /// "very" in "very big"
+        /// </summary>
+        public BaseSentenceItem AdvP { get; set; }
+
+        /// <summary>
+        /// The root ajective of the phrase.
+        /// </summary>
+        public Word A { get; set; }
+
+        /// <summary>
+        /// "of It" in "proud of It"
+        /// </summary>
+        public BaseSentenceItem PP { get; set; }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintObjProp(n, nameof(AdvP), AdvP);
+            sb.PrintObjProp(n, nameof(A), A);
+            sb.PrintObjProp(n, nameof(PP), PP);
+
+            //sb.PrintObjProp(n, nameof(), );
 
             sb.Append(base.PropertiesToString(n));
 

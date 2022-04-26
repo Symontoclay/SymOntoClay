@@ -50,7 +50,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// <summary>
         /// "to school" in "I go to school tomorrow"
         /// </summary>
-        public PreOrPostpositionalPhrase PP { get; set; }
+        public List<PreOrPostpositionalPhrase> PP { get; set; }
 
         /// <summary>
         /// "that she is a teacher" in "I know that she is a teacher"
@@ -68,7 +68,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             sb.PrintObjProp(n, nameof(VP), VP);
             sb.AppendLine($"{spaces}{nameof(Negation)} = {Negation}");
             sb.PrintObjProp(n, nameof(Object), Object);
-            sb.PrintObjProp(n, nameof(PP), PP);
+            sb.PrintObjListProp(n, nameof(PP), PP);
             sb.PrintObjProp(n, nameof(CP), CP);
 
             //sb.PrintObjProp(n, nameof(), );

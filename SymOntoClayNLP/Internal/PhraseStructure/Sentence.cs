@@ -21,6 +21,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// <inheritdoc/>
         public override Sentence AsSentence => this;
 
+        public BaseSentenceItem Condition { get; set; }
         public NounPhrase Subject { get; set; }
         public VerbPhrase Predicate { get; set; }
 
@@ -30,8 +31,11 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintObjProp(n, nameof(Condition), Condition);
             sb.PrintObjProp(n, nameof(Subject), Subject);
             sb.PrintObjProp(n, nameof(Predicate), Predicate);
+
+            //sb.PrintObjProp(n, nameof(), );
 
             sb.Append(base.PropertiesToString(n));
 

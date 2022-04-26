@@ -47,7 +47,15 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// </summary>
         public BaseSentenceItem Object { get; set; }
 
+        /// <summary>
+        /// "to school" in "I go to school tomorrow"
+        /// </summary>
         public PreOrPostpositionalPhrase PP { get; set; }
+
+        /// <summary>
+        /// "that she is a teacher" in "I know that she is a teacher"
+        /// </summary>
+        public BaseSentenceItem CP { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -61,6 +69,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             sb.AppendLine($"{spaces}{nameof(Negation)} = {Negation}");
             sb.PrintObjProp(n, nameof(Object), Object);
             sb.PrintObjProp(n, nameof(PP), PP);
+            sb.PrintObjProp(n, nameof(CP), CP);
 
             //sb.PrintObjProp(n, nameof(), );
 

@@ -39,6 +39,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// ConjP
         /// </summary>
         ConjunctionPhrase,
+        ListPhrase,
         Word
     }
 }

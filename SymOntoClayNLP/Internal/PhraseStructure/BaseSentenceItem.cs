@@ -36,6 +36,9 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         public virtual bool IsConjunctionPhrase => false;
         public virtual ConjunctionPhrase AsConjunctionPhrase => null;
 
+        public virtual bool IsListPhrase => false;
+        public virtual ListPhrase AsListPhrase => null;
+
         public virtual bool IsWord => false;
         public virtual Word AsWord => null;
 

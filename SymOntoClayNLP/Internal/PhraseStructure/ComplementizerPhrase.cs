@@ -16,11 +16,26 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         public override bool IsComplementizerPhrase => true;
         public override ComplementizerPhrase AsComplementizerPhrase => this;
 
+        /// <summary>
+        /// Complementizer. It is a word which connect sentence to previous sentence.
+        /// "that" in "I know that she is a teacher".
+        /// </summary>
+        public BaseSentenceItem C { get; set; }
+
+        /// <summary>
+        /// A sentence which is connected to previous sentence.
+        /// "she is a teacher" in "I know that she is a teacher".
+        /// </summary>
+        public BaseSentenceItem S { get; set; }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintObjProp(n, nameof(C), C);
+            sb.PrintObjProp(n, nameof(S), S);
 
             //sb.PrintObjProp(n, nameof(), );
 

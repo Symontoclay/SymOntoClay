@@ -7,6 +7,13 @@ namespace SymOntoClay.NLP.Internal.ATN
 {
     public abstract class BaseParser
     {
+        protected BaseParser(ParserContext context)
+        {
+            _context = context;
+        }
+
+        protected ParserContext _context;
+
         protected virtual void OnEnter()
         {
             throw new NotImplementedException();

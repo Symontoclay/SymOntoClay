@@ -21,11 +21,25 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// <inheritdoc/>
         public override QuantifierPhrase AsQuantifierPhrase => this;
 
+        /// <summary>
+        /// The root word of the sentence.
+        /// "many" in "very many"
+        /// </summary>
+        public BaseSentenceItem Q { get; set; }
+
+        /// <summary>
+        /// "very" in "very many"
+        /// </summary>
+        public BaseSentenceItem Adv { get; set; }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintObjProp(n, nameof(Q), Q);
+            sb.PrintObjProp(n, nameof(Adv), Adv);
 
             //sb.PrintObjProp(n, nameof(), );
 

@@ -50,7 +50,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// </summary>
         public BaseSentenceItem NounAdjunct { get; set; }
 
-
+        public bool HasPossesiveMark { get; set; }
 
         /// <summary>
         /// such as "in the drawing room", "of his aunt"
@@ -89,7 +89,8 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             sb.PrintObjProp(n, nameof(D), D);
             sb.PrintObjProp(n, nameof(QP), QP);
             sb.PrintObjProp(n, nameof(AP), AP);
-            sb.PrintObjProp(n, nameof(NounAdjunct), NounAdjunct);           
+            sb.PrintObjProp(n, nameof(NounAdjunct), NounAdjunct);
+            sb.AppendLine($"{spaces}{nameof(HasPossesiveMark)} = {HasPossesiveMark}");
             sb.PrintObjProp(n, nameof(PP), PP);
             sb.PrintObjProp(n, nameof(AdvP), AdvP);            
             sb.PrintObjProp(n, nameof(RelativeClauses), RelativeClauses);

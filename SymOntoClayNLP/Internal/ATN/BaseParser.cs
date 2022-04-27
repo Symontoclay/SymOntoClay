@@ -7,36 +7,37 @@ namespace SymOntoClay.NLP.Internal.ATN
 {
     public abstract class BaseParser
     {
-        protected BaseParser(ParserContext context)
+        public void SetContext(ParserContext context)
         {
             _context = context;
         }
 
         protected ParserContext _context;
 
-        protected virtual void OnEnter()
+        public abstract void SetStateAsInt32(int state);
+
+        private ExpectedBehaviorOfParser _expectedBehavior = ExpectedBehaviorOfParser.WaitForCurrToken;
+
+        public ExpectedBehaviorOfParser ExpectedBehavior => _expectedBehavior;
+
+        public virtual void OnEnter()
         {
-            throw new NotImplementedException();
         }
 
-        protected virtual void OnRun()
+        public virtual void OnRun(ATNToken token)
         {
-            throw new NotImplementedException();
         }
 
-        protected virtual void OnVariant(ConcreteATNToken concreteATNToken)
+        public virtual void OnVariant(ConcreteATNToken concreteATNToken)
         {
-            throw new NotImplementedException();
         }
 
-        protected virtual void OnReceiveReturn(BaseSentenceItem phrase)
+        public virtual void OnReceiveReturn(BaseSentenceItem phrase)
         {
-            throw new NotImplementedException();
         }
 
-        protected virtual void OnFinish()
+        public virtual void OnFinish()
         {
-            throw new NotImplementedException();
         }
     }
 }

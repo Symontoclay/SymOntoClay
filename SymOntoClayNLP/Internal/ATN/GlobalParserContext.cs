@@ -1,12 +1,71 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core;
+using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.CommonDict;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.NLP.Internal.ATN
 {
     public class GlobalParserContext : IObjectToString
     {
+        public GlobalParserContext(INLPContext context, IWordsDict wordsDict, string text)
+        {
+            _logger = context.Logger;
+
+            AddContext(new ParserContext(this, context, wordsDict, text));
+        }
+
+        private readonly IEntityLogger _logger;
+        private readonly List<ParserContext> parserContexts = new List<ParserContext>();
+
+        public void Run()
+        {
+#if DEBUG
+            var n = 1;
+#endif
+
+            while (true)
+            {
+                var itemsList = parserContexts.Where(p => p.IsActive).ToList();
+
+                if(!itemsList.Any())
+                {
+                    break;
+                }
+
+                foreach(var item in itemsList)
+                {
+                    item.Run();
+                }
+#if DEBUG
+                n++;
+
+                _logger.Log($"n = {n}");
+
+                if (n > 10)
+                {
+                    break;
+                }
+#endif
+            }
+        }
+
+        public void AddContext(ParserContext parserContext)
+        {
+#if DEBUG
+            _logger.Log($"parserContext = {parserContext}");
+#endif
+
+            if(parserContexts.Contains(parserContext))
+            {
+                return;
+            }
+
+            parserContexts.Add(parserContext);
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {

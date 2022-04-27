@@ -11,9 +11,11 @@ namespace SymOntoClay.NLP.Internal.ATN
             Init
         }
 
-        public SentenceParser(ParserContext context)
-            : base(context)
+        public override void SetStateAsInt32(int state)
         {
+            _state = (State)state;
         }
+
+        private State _state;
     }
 }

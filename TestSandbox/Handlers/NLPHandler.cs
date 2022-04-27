@@ -2,6 +2,7 @@
 using SymOntoClay.Core.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP;
+using SymOntoClay.NLP.Internal.ATN;
 using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
@@ -33,9 +34,32 @@ namespace TestSandbox.Handlers
         {
             _logger.Log("Begin");
 
-            Case1();
+            Case2();
+            //Case1();
 
             _logger.Log("End");
+        }
+
+        private void Case2()
+        {
+            var wordsDict = new TstSimpleWordsDict();
+
+            var text = "I like my cat.";
+
+            var globalContext = new GlobalParserContext(_engineContext, wordsDict, text);
+
+            globalContext.Run();
+
+            //var parser = new ATNParser(_engineContext, wordsDict);
+
+            //var result = parser.Run(text);
+
+            //_logger.Log($"result.Count = {result.Count}");
+
+            //foreach (var item in result)
+            //{
+            //    _logger.Log($"item = {item}");
+            //}
         }
 
         private void Case1()

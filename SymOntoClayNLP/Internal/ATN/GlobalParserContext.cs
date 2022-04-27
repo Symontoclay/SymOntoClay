@@ -19,6 +19,7 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         private readonly IEntityLogger _logger;
         private readonly List<ParserContext> parserContexts = new List<ParserContext>();
+        private readonly List<WholeTextParsingResult> _resultsList = new List<WholeTextParsingResult>();
 
         public void Run()
         {
@@ -66,6 +67,27 @@ namespace SymOntoClay.NLP.Internal.ATN
             parserContexts.Add(parserContext);
         }
 
+        public void RemoveContext(ParserContext parserContext)
+        {
+#if DEBUG
+            _logger.Log($"parserContext = {parserContext}");
+#endif
+
+            if (parserContexts.Contains(parserContext))
+            {
+                parserContexts.Remove(parserContext);
+            }
+        }
+
+        public void AddResult(WholeTextParsingResult result)
+        {
+#if DEBUG
+            _logger.Log($"result = {result}");
+#endif
+
+            _resultsList.Add(result);
+        }
+        
         /// <inheritdoc/>
         public override string ToString()
         {

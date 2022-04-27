@@ -1,4 +1,5 @@
-﻿using SymOntoClay.NLP.Internal.PhraseStructure;
+﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.Internal.PhraseStructure;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,15 +11,26 @@ namespace SymOntoClay.NLP.Internal.ATN
         public void SetContext(ParserContext context)
         {
             _context = context;
+            _logger = context.Logger;
         }
 
         protected ParserContext _context;
+        protected IEntityLogger _logger;
 
         public abstract void SetStateAsInt32(int state);
 
         private ExpectedBehaviorOfParser _expectedBehavior = ExpectedBehaviorOfParser.WaitForCurrToken;
 
         public ExpectedBehaviorOfParser ExpectedBehavior => _expectedBehavior;
+
+        protected void SetParser(params IParsingDirective[] directives)
+        {
+#if DEBUG
+            _logger.Log($"directives = {directives.WriteListToString()}");
+#endif
+
+            throw new NotImplementedException();
+        }
 
         public virtual void OnEnter()
         {

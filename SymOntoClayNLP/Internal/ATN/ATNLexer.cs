@@ -99,7 +99,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                         {
                             result.Kind = KindOfATNToken.Word;
 
-                            result.WordFrames = _wordsDict.GetWordFrames(strItem);
+                            result.WordFrames = _wordsDict.GetWordFrames(strItem.ToLower());
 
 #if DEBUG
                             _gbcLogger.Info($"result = {result}");

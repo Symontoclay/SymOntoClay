@@ -7,6 +7,11 @@ namespace SymOntoClay.NLP.Internal.ATN
 {
     public class WholeTextParsingResult : IObjectToString
     {
+        public bool IsSuccess { get; set; }
+        public int CountSteps { get; set; }
+        public List<ParsingResult> Results { get; set; } = new List<ParsingResult>();
+        public Exception Error { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -24,6 +29,12 @@ namespace SymOntoClay.NLP.Internal.ATN
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
+            sb.AppendLine($"{spaces}{nameof(CountSteps)} = {CountSteps}");
+            sb.PrintObjListProp(n, nameof(Results), Results);
+            sb.AppendLine($"{spaces}{nameof(Error)} = {Error}");
+
             return sb.ToString();
         }
     }

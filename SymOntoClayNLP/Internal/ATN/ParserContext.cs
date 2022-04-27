@@ -29,6 +29,8 @@ namespace SymOntoClay.NLP.Internal.ATN
         private readonly IEntityLogger _logger;
         private bool _isActive = true;
 
+        public IEntityLogger Logger => _logger;
+
         public void SetParser(params IParsingDirective[] directives)
         {
 #if DEBUG
@@ -66,45 +68,65 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         private ATNToken _currentToken;
 
+        private WholeTextParsingResult _result = new WholeTextParsingResult();
+
         public void Run()
         {
 #if DEBUG
             _logger.Log($"Begin");
 #endif
 
-            var expectedBehavior = _currentParser.ExpectedBehavior;
-
-#if DEBUG
-            _logger.Log($"expectedBehavior = {expectedBehavior}");
-#endif
-
-            switch (expectedBehavior)
+            try
             {
-                case ExpectedBehaviorOfParser.WaitForCurrToken:
-                    {
-                        _currentToken = _lexer.GetToken();
+                var expectedBehavior = _currentParser.ExpectedBehavior;
 
 #if DEBUG
-                        _logger.Log($"_currentToken = {_currentToken}");
+                _logger.Log($"expectedBehavior = {expectedBehavior}");
 #endif
-                        if(_currentToken == null)
+
+                switch (expectedBehavior)
+                {
+                    case ExpectedBehaviorOfParser.WaitForCurrToken:
                         {
-                            throw new NotImplementedException();
+                            _currentToken = _lexer.GetToken();
+
+#if DEBUG
+                            _logger.Log($"_currentToken = {_currentToken}");
+#endif
+                            if (_currentToken == null)
+                            {
+                                _currentParser.OnFinish();
+
+                                NExit();
+                                break;
+                            }
+
+                            _currentParser.OnRun(_currentToken);
                         }
+                        break;
 
-                        _currentParser.OnRun(_currentToken);
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(expectedBehavior), expectedBehavior, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                _result.Error = ex;
 
-                        throw new NotImplementedException();
-                    }
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(expectedBehavior), expectedBehavior, null);
+                NExit();
             }
 
 #if DEBUG
             _logger.Log($"End");
 #endif
+        }
+
+        private void NExit()
+        {
+            _isActive = false;
+
+            _globalContext.AddResult(_result);
+            _globalContext.RemoveContext(this);
         }
 
         /// <inheritdoc/>

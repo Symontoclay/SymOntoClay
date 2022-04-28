@@ -11,11 +11,9 @@ namespace SymOntoClay.NLP.Internal.ATN
         public void SetContext(ParserContext context)
         {
             _context = context;
-            _logger = context.Logger;
         }
 
         protected ParserContext _context;
-        protected IEntityLogger _logger;
 
         public abstract void SetStateAsInt32(int state);
 
@@ -23,12 +21,28 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         public ExpectedBehaviorOfParser ExpectedBehavior => _expectedBehavior;
 
+        [MethodForLoggingSupport]
+        protected void Log(string message)
+        {
+            _context.Log(message);
+        }
+
         protected void SetParser(params IParsingDirective[] directives)
         {
 #if DEBUG
-            _logger.Log($"directives = {directives.WriteListToString()}");
+            Log($"directives = {directives.WriteListToString()}");
 #endif
 
+            throw new NotImplementedException();
+        }
+
+        protected void ExitNode()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void ExitSentence()
+        {
             throw new NotImplementedException();
         }
 

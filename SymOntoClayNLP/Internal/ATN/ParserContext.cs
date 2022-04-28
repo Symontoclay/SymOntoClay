@@ -18,8 +18,6 @@ namespace SymOntoClay.NLP.Internal.ATN
             _lexer = new ATNLexer(text, wordsDict);
 
             _parsers = new Stack<BaseParser>();
-
-            SetParser(new ParsingDirective<SentenceParser, SentenceParser.State>(SentenceParser.State.Init));
         }
 
         private GlobalParserContext _globalContext;
@@ -28,8 +26,18 @@ namespace SymOntoClay.NLP.Internal.ATN
         private BaseParser _currentParser;
         private readonly IEntityLogger _logger;
         private bool _isActive = true;
+        private List<string> _logMessages = new List<string>();
 
-        public IEntityLogger Logger => _logger;
+        private int _globalCounter = 0;
+        private int _sentenceCounter = 0;
+
+        [MethodForLoggingSupport]
+        public void Log(string message)
+        {
+            _logMessages.Add(message);
+
+            _logger.Log(message);
+        }
 
         public void SetParser(params IParsingDirective[] directives)
         {
@@ -78,6 +86,12 @@ namespace SymOntoClay.NLP.Internal.ATN
 
             try
             {
+                if(_currentParser == null && _lexer.HasToken())
+                {
+                    SetParser(new ParsingDirective<SentenceParser, SentenceParser.State>(SentenceParser.State.Init));
+                    return;
+                }
+
                 var expectedBehavior = _currentParser.ExpectedBehavior;
 
 #if DEBUG
@@ -93,6 +107,7 @@ namespace SymOntoClay.NLP.Internal.ATN
 #if DEBUG
                             _logger.Log($"_currentToken = {_currentToken}");
 #endif
+                            
                             if (_currentToken == null)
                             {
                                 _currentParser.OnFinish();
@@ -100,6 +115,14 @@ namespace SymOntoClay.NLP.Internal.ATN
                                 NExit();
                                 break;
                             }
+
+                            _globalCounter++;
+                            _sentenceCounter++;
+
+#if DEBUG
+                            _logger.Log($"_globalCounter = {_globalCounter}");
+                            _logger.Log($"_sentenceCounter = {_sentenceCounter}");
+#endif
 
                             _currentParser.OnRun(_currentToken);
                         }
@@ -124,6 +147,8 @@ namespace SymOntoClay.NLP.Internal.ATN
         private void NExit()
         {
             _isActive = false;
+
+            _result.CountSteps = _globalCounter;
 
             _globalContext.AddResult(_result);
             _globalContext.RemoveContext(this);

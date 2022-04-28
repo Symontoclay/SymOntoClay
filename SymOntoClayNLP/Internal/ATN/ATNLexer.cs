@@ -25,8 +25,34 @@ namespace SymOntoClay.NLP.Internal.ATN
         private Queue<(string, int, int)> _recoveredSourceItems = new Queue<(string, int, int)> ();
         private Dictionary<string, List<string>> _transformsDict = new Dictionary<string, List<string>>();
 
+        private Queue<ATNToken> _recoveriesTokens = new Queue<ATNToken>();
+
+        public bool HasToken()
+        {
+            if(_recoveriesTokens.Any())
+            {
+                return true;
+            }
+
+            var currToken = GetToken();
+
+            if(currToken == null)
+            {
+                return false;
+            }
+
+            Recovery(currToken);
+
+            return true;
+        }
+
         public ATNToken GetToken()
         {
+            if (_recoveriesTokens.Count > 0)
+            {
+                return _recoveriesTokens.Dequeue();
+            }
+
             var item = GetSourceItem();
 
 #if DEBUG
@@ -167,6 +193,11 @@ namespace SymOntoClay.NLP.Internal.ATN
             }
 
             return item;
+        }
+
+        public void Recovery(ATNToken token)
+        {
+            _recoveriesTokens.Enqueue(token);
         }
 
         private void InitTransformsDict()

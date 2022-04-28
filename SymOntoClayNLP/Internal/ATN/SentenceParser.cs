@@ -23,21 +23,21 @@ namespace SymOntoClay.NLP.Internal.ATN
         public override void OnRun(ATNToken token)
         {
 #if DEBUG
-            _logger.Log($"_state = {_state}");
-            _logger.Log($"token = {token}");
+            Log($"_state = {_state}");
+            Log($"token = {token}");
 #endif
 
-            switch (_state)
-            {
-                case State.Init:
-                    {
-                        throw new NotImplementedException();
-                    }
-                    break;
+            //switch (_state)
+            //{
+            //    case State.Init:
+            //        {
+            //            throw new NotImplementedException();
+            //        }
+            //        break;
 
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
-            }
+            //    default:
+            //        throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
+            //}
         }
     }
 }

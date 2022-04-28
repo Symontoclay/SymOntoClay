@@ -35,10 +35,13 @@ namespace SymOntoClay.NLP.Internal.ATN
         public KindOfParsingDirective KindOfParsingDirective { get; private set; }
         private S _state;
 
+        public int State => Convert.ToInt32(_state);
+
         public bool RecoveryCurrToken { get; private set; }
 
         public ConcreteATNToken ConcreteATNToken { get; private set; }
 
+        /// <inheritdoc/>
         public BaseParser CreateParser(ParserContext parserContext)
         {
             var parser = new T();
@@ -47,6 +50,9 @@ namespace SymOntoClay.NLP.Internal.ATN
 
             return parser;
         }
+
+        /// <inheritdoc/>
+        public Type ParserType => typeof(T);
 
         /// <inheritdoc/>
         public override string ToString()

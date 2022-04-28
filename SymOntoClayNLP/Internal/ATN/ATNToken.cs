@@ -40,5 +40,19 @@ namespace SymOntoClay.NLP.Internal.ATN
 
             return sb.ToString();
         }
+
+        public string ToDebugString()
+        {
+            var sb = new StringBuilder($"`{Kind}`");
+
+            sb.Append($"({Line}, {Pos})");
+
+            if (!string.IsNullOrWhiteSpace(Content))
+            {
+                sb.Append($": `{Content}`");
+            }
+
+            return sb.ToString();
+        }
     }
 }

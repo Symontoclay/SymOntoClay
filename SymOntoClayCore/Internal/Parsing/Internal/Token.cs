@@ -61,7 +61,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             sb.AppendLine($"{spaces}{nameof(Line)} = {Line}");
             return sb.ToString();
         }
-
+        
         public string ToDebugString()
         {
             var sb = new StringBuilder($"`{TokenKind}`");

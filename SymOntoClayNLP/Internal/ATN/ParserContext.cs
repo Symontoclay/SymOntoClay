@@ -61,6 +61,40 @@ namespace SymOntoClay.NLP.Internal.ATN
                 return;
             }
 
+            if(directives.Length == 1)
+            {
+                var targetDirective = directives.Single();
+
+#if DEBUG
+                _logger.Log($"targetDirective.ParserType?.FullName = {targetDirective.ParserType?.FullName}");
+                _logger.Log($"_currentParser.GetType().FullName = {_currentParser.GetType().FullName}");
+#endif
+
+                if(targetDirective.ParserType == _currentParser.GetType())
+                {
+                    _currentParser.SetStateAsInt32(targetDirective.State);
+
+                    var kindOfParsingDirective = targetDirective.KindOfParsingDirective;
+
+                    switch (kindOfParsingDirective)
+                    {
+                        case KindOfParsingDirective.RunVariant:
+                            _currentParser.ExpectedBehavior = ExpectedBehaviorOfParser.WaitForVariant;
+                            _concreteATNToken = targetDirective.ConcreteATNToken;
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(kindOfParsingDirective), kindOfParsingDirective, null);
+                    }
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+
+                return;
+            }
+
             throw new NotImplementedException();
         }
 
@@ -75,6 +109,7 @@ namespace SymOntoClay.NLP.Internal.ATN
         public bool IsActive => _isActive;
 
         private ATNToken _currentToken;
+        private ConcreteATNToken _concreteATNToken;
 
         private WholeTextParsingResult _result = new WholeTextParsingResult();
 
@@ -128,12 +163,30 @@ namespace SymOntoClay.NLP.Internal.ATN
                         }
                         break;
 
+                    case ExpectedBehaviorOfParser.WaitForVariant:
+                        {
+                            _currentParser.OnVariant(_concreteATNToken);
+                            _concreteATNToken = null;
+                        }
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(expectedBehavior), expectedBehavior, null);
                 }
             }
+            catch (FailStepInPhraseException e)
+            {
+                Log(e.ToString());
+
+                _result.IsSuccess = false;
+
+                NExit();
+            }
             catch (Exception ex)
             {
+                Log(ex.ToString());
+
+                _result.IsSuccess = false;
                 _result.Error = ex;
 
                 NExit();

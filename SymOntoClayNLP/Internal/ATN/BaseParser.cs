@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.PhraseStructure;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,7 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         public abstract void SetStateAsInt32(int state);
 
-        private ExpectedBehaviorOfParser _expectedBehavior = ExpectedBehaviorOfParser.WaitForCurrToken;
-
-        public ExpectedBehaviorOfParser ExpectedBehavior => _expectedBehavior;
+        public ExpectedBehaviorOfParser ExpectedBehavior { get; set; } = ExpectedBehaviorOfParser.WaitForCurrToken;
 
         [MethodForLoggingSupport]
         protected void Log(string message)
@@ -29,11 +28,7 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         protected void SetParser(params IParsingDirective[] directives)
         {
-#if DEBUG
-            Log($"directives = {directives.WriteListToString()}");
-#endif
-
-            throw new NotImplementedException();
+            _context.SetParser(directives);
         }
 
         protected void ExitNode()
@@ -64,6 +59,23 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         public virtual void OnFinish()
         {
+        }
+
+        protected ConcreteATNToken ConvertToConcreteATNToken(ATNToken token, BaseGrammaticalWordFrame wordFrame)
+        {
+#if DEBUG
+            Log($"token = {token}");
+            Log($"wordFrame = {wordFrame}");
+#endif
+
+            return new ConcreteATNToken()
+            {
+                 Kind = token.Kind,
+                 Content = token.Content,
+                 Pos = token.Pos,
+                 Line = token.Line,
+                 WordFrame = wordFrame
+            };
         }
     }
 }

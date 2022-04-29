@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP.CommonDict;
+using SymOntoClay.NLP.Internal.ATN.ParsingDirectives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +57,8 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                 var parser = targetDirective.CreateParser(this);
 
+                parser.SetStateAsInt32(targetDirective.State.Value);
+
                 SetParser(parser);
 
                 return;
@@ -72,7 +75,7 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                 if(targetDirective.ParserType == _currentParser.GetType())
                 {
-                    _currentParser.SetStateAsInt32(targetDirective.State);
+                    _currentParser.SetStateAsInt32(targetDirective.State.Value);
 
                     var kindOfParsingDirective = targetDirective.KindOfParsingDirective;
 
@@ -89,7 +92,35 @@ namespace SymOntoClay.NLP.Internal.ATN
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    var kindOfParsingDirective = targetDirective.KindOfParsingDirective;
+
+#if DEBUG
+                    _logger.Log($"kindOfParsingDirective = {kindOfParsingDirective}");
+#endif
+
+                    switch (kindOfParsingDirective)
+                    {
+                        case KindOfParsingDirective.RunChild:
+                            {
+                                _currentParser.StateAfterRunChild = targetDirective.StateAfterRunChild;
+                                _currentParser.ExpectedBehavior = ExpectedBehaviorOfParser.WaitForReceiveReturn;
+
+#if DEBUG
+                                _logger.Log($"targetDirective.ConcreteATNToken = {targetDirective.ConcreteATNToken}");
+#endif
+                                _lexer.Recovery(ConvertToATNToken(targetDirective.ConcreteATNToken));
+
+                                var parser = targetDirective.CreateParser(this);
+
+                                parser.SetStateAsInt32(targetDirective.State.Value);
+
+                                SetParser(parser);
+                            }
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(kindOfParsingDirective), kindOfParsingDirective, null);
+                    }
                 }
 
                 return;
@@ -123,7 +154,7 @@ namespace SymOntoClay.NLP.Internal.ATN
             {
                 if(_currentParser == null && _lexer.HasToken())
                 {
-                    SetParser(new ParsingDirective<SentenceParser, SentenceParser.State>(SentenceParser.State.Init));
+                    SetParser(new RunCurrTokenDirective<SentenceParser>(SentenceParser.State.Init));
                     return;
                 }
 
@@ -205,6 +236,25 @@ namespace SymOntoClay.NLP.Internal.ATN
 
             _globalContext.AddResult(_result);
             _globalContext.RemoveContext(this);
+        }
+
+        private ATNToken ConvertToATNToken(ConcreteATNToken token)
+        {
+#if DEBUG
+            _logger.Log($"token = {token}");
+#endif
+
+            return new ATNToken()
+            {
+                Kind = token.Kind,
+                Content = token.Content,
+                Pos = token.Pos,
+                Line = token.Line,
+                WordFrames = new List<BaseGrammaticalWordFrame>
+                {
+                    token.WordFrame
+                }
+            };
         }
 
         /// <inheritdoc/>

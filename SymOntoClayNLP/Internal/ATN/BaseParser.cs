@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP.CommonDict;
+using SymOntoClay.NLP.Internal.ATN.ParsingDirectives;
 using SymOntoClay.NLP.Internal.PhraseStructure;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace SymOntoClay.NLP.Internal.ATN
         public abstract void SetStateAsInt32(int state);
 
         public ExpectedBehaviorOfParser ExpectedBehavior { get; set; } = ExpectedBehaviorOfParser.WaitForCurrToken;
+
+        public int? StateAfterRunChild { get; set; }
 
         [MethodForLoggingSupport]
         protected void Log(string message)
@@ -49,7 +52,7 @@ namespace SymOntoClay.NLP.Internal.ATN
         {
         }
 
-        public virtual void OnVariant(ConcreteATNToken concreteATNToken)
+        public virtual void OnVariant(ConcreteATNToken token)
         {
         }
 
@@ -75,6 +78,20 @@ namespace SymOntoClay.NLP.Internal.ATN
                  Pos = token.Pos,
                  Line = token.Line,
                  WordFrame = wordFrame
+            };
+        }
+
+        protected Word ConvertToWord(ConcreteATNToken token)
+        {
+#if DEBUG
+            Log($"token = {token}");
+#endif
+
+            return new Word()
+            {
+                IsNumber = token.Kind == KindOfATNToken.Number,
+                Content = token.Content,
+                WordFrame = token.WordFrame
             };
         }
     }

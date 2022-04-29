@@ -1,52 +1,53 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.Internal.PhraseStructure;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.NLP.Internal.ATN
+namespace SymOntoClay.NLP.Internal.ATN.ParsingDirectives
 {
-    public class ParsingDirective<T, S>: IParsingDirective
+    public class ParsingDirective<T>: IParsingDirective
         where T: BaseParser, new()
     {
-        public ParsingDirective(S state)
-            : this(KindOfParsingDirective.RunCurrToken, state, false)
-        {
-        }
-
-        public ParsingDirective(S state, bool recoveryCurrToken)
-            : this(KindOfParsingDirective.RunCurrToken, state, recoveryCurrToken)
-        {
-        }
-
-        public ParsingDirective(KindOfParsingDirective kindOfParsingDirective, S state, bool recoveryCurrToken)
+        public ParsingDirective(KindOfParsingDirective kindOfParsingDirective, object state, object stateAfterRunChild, ConcreteATNToken concreteATNToken, BaseSentenceItem phrase)
         {
             KindOfParsingDirective = kindOfParsingDirective;
-            _state = state;
-            RecoveryCurrToken = recoveryCurrToken;
-        }
 
-        public ParsingDirective(S state, ConcreteATNToken concreteATNToken)
-        {
-            KindOfParsingDirective = KindOfParsingDirective.RunVariant;
-            _state = state;
+            if(state != null)
+            {
+                State = Convert.ToInt32(state);
+            }            
+
+            if(stateAfterRunChild != null)
+            {
+                StateAfterRunChild = Convert.ToInt32(stateAfterRunChild);
+            }
+
             ConcreteATNToken = concreteATNToken;
+            Phrase = phrase;
         }
 
+        /// <inheritdoc/>
         public KindOfParsingDirective KindOfParsingDirective { get; private set; }
-        private S _state;
 
-        public int State => Convert.ToInt32(_state);
+        /// <inheritdoc/>
+        public int? State { get; private set; }
 
-        public bool RecoveryCurrToken { get; private set; }
+        /// <inheritdoc/>
+        public int? StateAfterRunChild { get; private set; }
 
+        /// <inheritdoc/>
         public ConcreteATNToken ConcreteATNToken { get; private set; }
+
+        /// <inheritdoc/>
+        public BaseSentenceItem Phrase { get; private set; }
 
         /// <inheritdoc/>
         public BaseParser CreateParser(ParserContext parserContext)
         {
             var parser = new T();
             parser.SetContext(parserContext);
-            parser.SetStateAsInt32(Convert.ToInt32(_state));
+            parser.SetStateAsInt32(State.Value);
 
             return parser;
         }
@@ -74,9 +75,10 @@ namespace SymOntoClay.NLP.Internal.ATN
 
             sb.AppendLine($"{spaces}{nameof(KindOfParsingDirective)} = {KindOfParsingDirective}");
             sb.AppendLine($"{spaces}Parser = {typeof(T).FullName}");
-            sb.AppendLine($"{spaces}State = {_state}");
-            sb.AppendLine($"{spaces}{nameof(RecoveryCurrToken)} = {RecoveryCurrToken}");
+            sb.AppendLine($"{spaces}{nameof(State)} = {State}");
+            sb.AppendLine($"{spaces}{nameof(StateAfterRunChild)} = {StateAfterRunChild}");
             sb.PrintObjProp(n, nameof(ConcreteATNToken), ConcreteATNToken);
+            sb.PrintObjProp(n, nameof(Phrase), Phrase);
 
             return sb.ToString();
         }

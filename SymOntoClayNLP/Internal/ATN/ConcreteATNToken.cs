@@ -14,6 +14,20 @@ namespace SymOntoClay.NLP.Internal.ATN
         public int Line { get; set; }
         public BaseGrammaticalWordFrame WordFrame { get; set; }
 
+        public string ToDebugString()
+        {
+            var sb = new StringBuilder($"`{Kind}`");
+
+            sb.Append($"({Line}, {Pos})");
+
+            if (!string.IsNullOrWhiteSpace(Content))
+            {
+                sb.Append($": `{Content}`");
+            }
+
+            return sb.ToString();
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {

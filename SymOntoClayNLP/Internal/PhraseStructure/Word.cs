@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.CommonDict;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,11 +17,20 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// <inheritdoc/>
         public override Word AsWord => this;
 
+        public bool IsNumber { get; set; }
+        public string Content { get; set; } = string.Empty;
+
+        public BaseGrammaticalWordFrame WordFrame { get; set; }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(IsNumber)} = {IsNumber}");
+            sb.AppendLine($"{spaces}{nameof(Content)} = {Content}");
+            sb.PrintObjProp(n, nameof(WordFrame), WordFrame);
 
             sb.Append(base.PropertiesToString(n));
 

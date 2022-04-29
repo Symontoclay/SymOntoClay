@@ -5407,6 +5407,16 @@ namespace TestSandbox.NLP
             AddGrammaticalWordFrame(word, new NounGrammaticalWordFrame()
             {
             });
+
+            word = "like";
+            AddGrammaticalWordFrame(word, new VerbGrammaticalWordFrame()
+            {
+                Tense = GrammaticalTenses.Present,
+                LogicalMeaning = new List<string>()
+                {
+                    "act"
+                }
+            });
         }
 
         private void DefineUsualAdjectives()

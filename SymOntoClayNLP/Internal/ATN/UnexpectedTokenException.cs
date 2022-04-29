@@ -10,5 +10,10 @@ namespace SymOntoClay.NLP.Internal.ATN
             : base($"Unexpected token {token.ToDebugString()}.")
         {
         }
+
+        public UnExpectedTokenException(ConcreteATNToken token)
+            : base($"Unexpected token {token.ToDebugString()}.")
+        {
+        }
     }
 }

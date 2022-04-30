@@ -14,6 +14,8 @@ namespace SymOntoClay.NLP.Internal.ATN
         public enum State
         {
             Init,
+            WaitForD,
+            GotD,
             WaitForN,
             GotN
         }
@@ -74,7 +76,61 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                                         SetParser(new RunVariantDirective<NounPhraseParser>(State.WaitForN, ConvertToConcreteATNToken(token, item)));
                                     }
-                                }                                
+                                }
+
+                                var articlesList = wordFramesList.Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Article);
+
+                                if (articlesList.Any())
+                                {
+                                    wasProcessed = true;
+
+
+                                    foreach (var item in articlesList)
+                                    {
+#if DEBUG
+                                        Log($"item = {item}");
+#endif
+
+                                        SetParser(new RunVariantDirective<NounPhraseParser>(State.WaitForD, ConvertToConcreteATNToken(token, item))); ;
+                                    }
+                                }
+
+                                if (!wasProcessed)
+                                {
+                                    throw new UnExpectedTokenException(token);
+                                }
+                            }
+                            break;
+
+                        default:
+                            throw new UnExpectedTokenException(token);
+                    }
+                    break;
+
+                case State.GotD:
+                    switch (token.Kind)
+                    {
+                        case KindOfATNToken.Word:
+                            {
+                                var wasProcessed = false;
+
+                                var wordFramesList = token.WordFrames;
+
+                                var nounsList = wordFramesList.Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Noun);
+
+                                if(nounsList.Any())
+                                {
+                                    wasProcessed = true;
+
+                                    foreach(var item in nounsList)
+                                    {
+#if DEBUG
+                                        Log($"item = {item}");
+#endif
+
+                                        SetParser(new RunVariantDirective<NounPhraseParser>(State.WaitForN, ConvertToConcreteATNToken(token, item)));
+                                    }
+                                }
 
                                 if (!wasProcessed)
                                 {
@@ -122,7 +178,11 @@ namespace SymOntoClay.NLP.Internal.ATN
                             }
                             break;
 
-                            default:
+                        case KindOfATNToken.Point:
+                            SetParser(new ReturnToParentDirective(_nounPhrase));
+                            break;
+
+                        default:
                                 throw new UnExpectedTokenException(token);
                     }
                     break;
@@ -142,9 +202,27 @@ namespace SymOntoClay.NLP.Internal.ATN
 
             switch (_state)
             {
+                case State.WaitForD:
+                    {
+                        _nounPhrase.D = ConvertToWord(token);
+
+#if DEBUG
+                        Log($"_nounPhrase.ToDbgString() = {_nounPhrase.ToDbgString()}");
+#endif
+
+                        _state = State.GotD;
+
+                        ExpectedBehavior = ExpectedBehaviorOfParser.WaitForCurrToken;
+                    }
+                    break;
+
                 case State.WaitForN:
                     {
                         _nounPhrase.N = ConvertToWord(token);
+
+#if DEBUG
+                        Log($"_nounPhrase.ToDbgString() = {_nounPhrase.ToDbgString()}");
+#endif
 
                         _state = State.GotN;
 

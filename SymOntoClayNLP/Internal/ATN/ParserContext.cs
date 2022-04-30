@@ -128,8 +128,10 @@ namespace SymOntoClay.NLP.Internal.ATN
 #if DEBUG
                                 _logger.Log($"targetDirective.ConcreteATNToken = {targetDirective.ConcreteATNToken}");
 #endif
-
-                                _lexer.Recovery(ConvertToATNToken(targetDirective.ConcreteATNToken));
+                                if(targetDirective.ConcreteATNToken != null)
+                                {
+                                    _lexer.Recovery(ConvertToATNToken(targetDirective.ConcreteATNToken));
+                                }
 
                                 SetPrevParser();
 

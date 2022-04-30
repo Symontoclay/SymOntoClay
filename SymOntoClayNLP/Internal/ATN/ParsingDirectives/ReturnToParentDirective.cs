@@ -11,5 +11,10 @@ namespace SymOntoClay.NLP.Internal.ATN.ParsingDirectives
             : base(KindOfParsingDirective.ReturnToParent, null, null, concreteATNToken, phrase)
         {
         }
+
+        public ReturnToParentDirective(BaseSentenceItem phrase)
+            : base(KindOfParsingDirective.ReturnToParent, null, null, null, phrase)
+        {
+        }
     }
 }

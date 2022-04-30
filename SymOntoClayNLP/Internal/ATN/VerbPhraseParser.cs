@@ -172,20 +172,40 @@ namespace SymOntoClay.NLP.Internal.ATN
         {
 #if DEBUG
             Log($"_state = {_state}");
-            Log($"phrase = {phrase}");
+            Log($"phrase = {phrase.ToDbgString()}");
 #endif
 
             switch (_state)
             {
                 case State.GotSubject:
                     {
-                        throw new NotImplementedException();
+                        _verbPhrase.Object = phrase;
+
+#if DEBUG
+                        Log($"_verbPhrase = {_verbPhrase.ToDbgString()}");
+                        Log($"ExpectedBehavior = {ExpectedBehavior}");
+#endif
+                        ExpectedBehavior = ExpectedBehaviorOfParser.WaitForCurrToken;
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
+        }
+
+        /// <inheritdoc/>
+        public override void OnEmptyLexer()
+        {
+#if DEBUG
+            Log($"Begin");
+#endif
+
+            SetParser(new ReturnToParentDirective(_verbPhrase));
+
+#if DEBUG
+            Log($"End");
+#endif
         }
     }
 }

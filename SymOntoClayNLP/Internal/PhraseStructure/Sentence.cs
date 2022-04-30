@@ -66,7 +66,8 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
             if (Predicate != null)
             {
-                throw new NotImplementedException();
+                sb.AppendLine($"{nextNspaces}Predicate:");
+                sb.Append(Predicate.ToDbgString(nextNextN));
             }
 
             return sb.ToString();

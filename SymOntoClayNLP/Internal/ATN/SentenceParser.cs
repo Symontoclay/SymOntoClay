@@ -223,6 +223,19 @@ namespace SymOntoClay.NLP.Internal.ATN
                     }
                     break;
 
+                case State.GotPredicate:
+                    {
+                        _sentence.Predicate = phrase;
+
+#if DEBUG
+                        Log($"_sentence = {_sentence.ToDbgString()}");
+                        Log($"ExpectedBehavior = {ExpectedBehavior}");
+#endif
+
+                        throw new NotImplementedException();
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }

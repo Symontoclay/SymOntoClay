@@ -123,7 +123,8 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
             if (D != null)
             {
-                throw new NotImplementedException();
+                sb.AppendLine($"{nextNspaces}D:");
+                sb.Append(D.ToDbgString(nextNextN));
             }
 
             if (QP != null)

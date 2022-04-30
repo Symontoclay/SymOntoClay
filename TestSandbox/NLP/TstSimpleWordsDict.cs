@@ -4550,6 +4550,17 @@ namespace TestSandbox.NLP
                 }
             });
 
+            word = "cat";
+            AddGrammaticalWordFrame(word, new NounGrammaticalWordFrame()
+            {
+                Number = GrammaticalNumberOfWord.Singular,
+                IsCountable = true,
+                LogicalMeaning = new List<string>()
+                {
+                    "animate"
+                }
+            });
+
             word = "waypoint";
             AddGrammaticalWordFrame(word, new NounGrammaticalWordFrame()
             {

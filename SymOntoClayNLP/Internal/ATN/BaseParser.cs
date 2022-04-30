@@ -60,8 +60,9 @@ namespace SymOntoClay.NLP.Internal.ATN
         {
         }
 
-        public virtual void OnFinish()
+        public virtual void OnEmptyLexer()
         {
+            throw new NotImplementedException();
         }
 
         protected ConcreteATNToken ConvertToConcreteATNToken(ATNToken token, BaseGrammaticalWordFrame wordFrame)

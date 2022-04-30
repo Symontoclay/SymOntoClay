@@ -40,13 +40,18 @@ namespace SymOntoClay.NLP.Internal.ATN
             _logger.Log(message);
         }
 
+        private bool IsNotParsers()
+        {
+            return !_parsers.Any() && _currentParser == null;
+        }
+
         public void SetParser(params IParsingDirective[] directives)
         {
 #if DEBUG
             _logger.Log($"directives = {directives.WriteListToString()}");
 #endif
 
-            if(!_parsers.Any())
+            if(IsNotParsers())
             {
                 if(directives.Length != 1)
                 {
@@ -118,6 +123,31 @@ namespace SymOntoClay.NLP.Internal.ATN
                             }
                             break;
 
+                        case KindOfParsingDirective.ReturnToParent:
+                            {
+#if DEBUG
+                                _logger.Log($"targetDirective.ConcreteATNToken = {targetDirective.ConcreteATNToken}");
+#endif
+
+                                _lexer.Recovery(ConvertToATNToken(targetDirective.ConcreteATNToken));
+
+                                SetPrevParser();
+
+#if DEBUG
+                                _logger.Log($"_currentParser.StateAfterRunChild = {_currentParser.StateAfterRunChild}");
+#endif
+
+                                if (_currentParser.StateAfterRunChild.HasValue)
+                                {
+                                    _currentParser.SetStateAsInt32(_currentParser.StateAfterRunChild.Value);
+
+                                    _currentParser.StateAfterRunChild = null;
+                                }
+
+                                _currentParser.OnReceiveReturn(targetDirective.Phrase);
+                            }
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(kindOfParsingDirective), kindOfParsingDirective, null);
                     }
@@ -131,10 +161,27 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         private void SetParser(BaseParser parser)
         {
+#if DEBUG
+            _logger.Log($"Begin");
+#endif
+
+            if (_currentParser != null)
+            {
+                _parsers.Push(_currentParser);
+            }
+
             _currentParser = parser;
-            _parsers.Push(parser);
 
             _currentParser.OnEnter();
+
+#if DEBUG
+            _logger.Log($"End");
+#endif
+        }
+
+        private void SetPrevParser()
+        {
+            _currentParser = _parsers.Pop();
         }
 
         public bool IsActive => _isActive;
@@ -176,7 +223,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                             
                             if (_currentToken == null)
                             {
-                                _currentParser.OnFinish();
+                                _currentParser.OnEmptyLexer();
 
                                 NExit();
                                 break;

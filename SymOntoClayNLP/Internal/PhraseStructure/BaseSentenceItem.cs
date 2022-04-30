@@ -85,13 +85,6 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             return PropertiesToDbgString(n);
         }
 
-        protected virtual string PropertiesToDbgString(uint n)
-        {
-            throw new NotImplementedException();
-
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
-            return sb.ToString();
-        }
+        protected abstract string PropertiesToDbgString(uint n);
     }
 }

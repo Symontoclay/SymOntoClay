@@ -22,8 +22,8 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         public override Sentence AsSentence => this;
 
         public BaseSentenceItem Condition { get; set; }
-        public NounPhrase Subject { get; set; }
-        public VerbPhrase Predicate { get; set; }
+        public BaseSentenceItem Subject { get; set; }
+        public BaseSentenceItem Predicate { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -45,12 +45,29 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// <inheritdoc/>
         protected override string PropertiesToDbgString(uint n)
         {
-            throw new NotImplementedException();
-
             var spaces = DisplayHelper.Spaces(n);
+            var nextN = n + 4;
+            var nextNspaces = DisplayHelper.Spaces(nextN);
+            var nextNextN = nextN + 4;
             var sb = new StringBuilder();
 
-            sb.Append(base.PropertiesToDbgString(n));
+            sb.AppendLine($"{spaces}S");
+
+            if(Condition != null)
+            {
+                throw new NotImplementedException();
+            }
+
+            if (Subject != null)
+            {
+                sb.AppendLine($"{nextNspaces}Subject:");
+                sb.Append(Subject.ToDbgString(nextNextN));
+            }
+
+            if (Predicate != null)
+            {
+                throw new NotImplementedException();
+            }
 
             return sb.ToString();
         }

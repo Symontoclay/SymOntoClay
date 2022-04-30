@@ -89,33 +89,41 @@ namespace SymOntoClay.NLP.Internal.ATN
                     break;
 
                 case State.GotN:
+                    switch (token.Kind)
                     {
-                        var wasProcessed = false;
-
-                        var wordFramesList = token.WordFrames;
-
-                        var subject = _nounPhrase.N.AsWord.WordFrame;
-
-                        var verbsList = wordFramesList.Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Verb).Select(p => p.AsVerb).Where(p => CorrespondsHelper.SubjectAndVerb(subject, p));
-
-                        if(verbsList.Any())
-                        {
-                            wasProcessed = true;
-
-                            foreach(var item in verbsList)
+                        case KindOfATNToken.Word:
                             {
+                                var wasProcessed = false;
+
+                                var wordFramesList = token.WordFrames;
+
+                                var subject = _nounPhrase.N.AsWord.WordFrame;
+
+                                var verbsList = wordFramesList.Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Verb).Select(p => p.AsVerb).Where(p => CorrespondsHelper.SubjectAndVerb(subject, p));
+
+                                if (verbsList.Any())
+                                {
+                                    wasProcessed = true;
+
+                                    foreach (var item in verbsList)
+                                    {
 #if DEBUG
-                                Log($"item = {item}");
+                                        Log($"item = {item}");
 #endif
 
-                                SetParser(new ReturnToParentDirective(_nounPhrase, ConvertToConcreteATNToken(token, item)));
-                            }
-                        }                        
+                                        SetParser(new ReturnToParentDirective(_nounPhrase, ConvertToConcreteATNToken(token, item)));
+                                    }
+                                }
 
-                        if (!wasProcessed)
-                        {
-                            throw new UnExpectedTokenException(token);
-                        }
+                                if (!wasProcessed)
+                                {
+                                    throw new UnExpectedTokenException(token);
+                                }
+                            }
+                            break;
+
+                            default:
+                                throw new UnExpectedTokenException(token);
                     }
                     break;
 
@@ -159,20 +167,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 #endif
 
             throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override void OnFinish()
-        {
-#if DEBUG
-            Log($"Begin");
-#endif
-
-            throw new NotImplementedException();
-
-#if DEBUG
-            Log($"End");
-#endif
         }
     }
 }

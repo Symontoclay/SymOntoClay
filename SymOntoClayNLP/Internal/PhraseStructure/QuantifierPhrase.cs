@@ -56,8 +56,6 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.Append(base.PropertiesToDbgString(n));
-
             return sb.ToString();
         }
     }

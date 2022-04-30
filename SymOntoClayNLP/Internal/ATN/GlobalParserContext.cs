@@ -47,7 +47,7 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                 if (n > 10)
                 {
-                    break;
+                    //break;
                 }
 #endif
             }

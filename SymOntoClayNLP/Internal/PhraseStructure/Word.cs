@@ -40,12 +40,10 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// <inheritdoc/>
         protected override string PropertiesToDbgString(uint n)
         {
-            throw new NotImplementedException();
-
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.Append(base.PropertiesToDbgString(n));
+            sb.AppendLine($"{spaces}{Content}");
 
             return sb.ToString();
         }

@@ -81,10 +81,49 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// <inheritdoc/>
         protected override string PropertiesToDbgString(uint n)
         {
-            throw new NotImplementedException();
-
             var spaces = DisplayHelper.Spaces(n);
+            var nextN = n + 4;
+            var nextNspaces = DisplayHelper.Spaces(nextN);
+            var nextNextN = nextN + 4;
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}VP");
+
+            if(Intrusion != null)
+            {
+                throw new NotImplementedException();
+            }
+
+            if (V != null)
+            {
+                sb.AppendLine($"{nextNspaces}V:");
+                sb.Append(V.ToDbgString(nextNextN));
+            }
+
+            if (VP != null)
+            {
+                throw new NotImplementedException();
+            }
+
+            if (Negation)
+            {
+                throw new NotImplementedException();
+            }
+
+            if (Object != null)
+            {
+                throw new NotImplementedException();
+            }
+
+            if (PP != null)
+            {
+                throw new NotImplementedException();
+            }
+
+            if (CP != null)
+            {
+                throw new NotImplementedException();
+            }
 
             return sb.ToString();
         }

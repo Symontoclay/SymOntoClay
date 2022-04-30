@@ -13,8 +13,10 @@ namespace SymOntoClay.NLP.Internal.ATN
         public enum State
         {
             Init,
-            ProcessV,
-            GotV
+            WaitForV,
+            GotV,
+            WaitForSubject,
+            GotSubject
         }
 
         public override void SetStateAsInt32(int state)
@@ -71,7 +73,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                                         Log($"item = {item}");
 #endif
 
-                                        SetParser(new RunVariantDirective<VerbPhraseParser>(State.ProcessV, ConvertToConcreteATNToken(token, item)));
+                                        SetParser(new RunVariantDirective<VerbPhraseParser>(State.WaitForV, ConvertToConcreteATNToken(token, item)));
                                     }
                                 }
 
@@ -92,7 +94,31 @@ namespace SymOntoClay.NLP.Internal.ATN
                     {
                         case KindOfATNToken.Word:
                             {
-                                throw new NotImplementedException();
+                                var wasProcessed = false;
+
+                                var wordFramesList = token.WordFrames;
+
+                                var articlesList = wordFramesList.Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Article);
+
+                                if(articlesList.Any())
+                                {
+                                    wasProcessed = true;
+
+
+                                    foreach (var item in articlesList)
+                                    {
+#if DEBUG
+                                        Log($"item = {item}");
+#endif
+
+                                        SetParser(new RunVariantDirective<VerbPhraseParser>(State.WaitForSubject, ConvertToConcreteATNToken(token, item)));
+                                    }
+                                }                                
+
+                                if (!wasProcessed)
+                                {
+                                    throw new UnExpectedTokenException(token);
+                                }
                             }
                             break;
 
@@ -116,13 +142,23 @@ namespace SymOntoClay.NLP.Internal.ATN
 
             switch (_state)
             {
-                case State.ProcessV:
+                case State.WaitForV:
                     {
                         _verbPhrase.V = ConvertToWord(token);
+
+#if DEBUG
+                        Log($"_verbPhrase = {_verbPhrase.ToDbgString()}");
+#endif
 
                         _state = State.GotV;
 
                         ExpectedBehavior = ExpectedBehaviorOfParser.WaitForCurrToken;
+                    }
+                    break;
+
+                case State.WaitForSubject:
+                    {
+                        SetParser(new RunChildDirective<NounPhraseParser>(NounPhraseParser.State.Init, State.GotSubject, token));
                     }
                     break;
 
@@ -141,6 +177,12 @@ namespace SymOntoClay.NLP.Internal.ATN
 
             switch (_state)
             {
+                case State.GotSubject:
+                    {
+                        throw new NotImplementedException();
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }

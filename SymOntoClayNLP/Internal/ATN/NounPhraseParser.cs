@@ -14,7 +14,7 @@ namespace SymOntoClay.NLP.Internal.ATN
         public enum State
         {
             Init,
-            ProcessN,
+            WaitForN,
             GotN
         }
 
@@ -72,7 +72,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                                         Log($"item = {item}");
 #endif
 
-                                        SetParser(new RunVariantDirective<NounPhraseParser>(State.ProcessN, ConvertToConcreteATNToken(token, item)));
+                                        SetParser(new RunVariantDirective<NounPhraseParser>(State.WaitForN, ConvertToConcreteATNToken(token, item)));
                                     }
                                 }                                
 
@@ -142,7 +142,7 @@ namespace SymOntoClay.NLP.Internal.ATN
 
             switch (_state)
             {
-                case State.ProcessN:
+                case State.WaitForN:
                     {
                         _nounPhrase.N = ConvertToWord(token);
 

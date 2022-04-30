@@ -46,6 +46,10 @@ namespace TestSandbox.Handlers
 
             var text = "I like my cat.";
 
+#if DEBUG
+            _logger.Log($"text = {text}");
+#endif
+
             //var globalContext = new GlobalParserContext(_engineContext, wordsDict, text);
 
             //globalContext.Run();

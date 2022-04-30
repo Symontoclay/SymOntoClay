@@ -12,7 +12,7 @@ namespace TestSandbox.NLP
     public class TstSimpleWordsDict: IWordsDict
     {
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public TstSimpleWordsDict()
@@ -29,8 +29,8 @@ namespace TestSandbox.NLP
         public IList<BaseGrammaticalWordFrame> GetWordFrames(string word)
         {
 #if DEBUG
-            _gbcLogger.Info($"word = {word}");
-            _gbcLogger.Info($"_wordFramesDict.ContainsKey(word) = {_wordFramesDict.ContainsKey(word)}");
+            //_gbcLogger.Info($"word = {word}");
+            //_gbcLogger.Info($"_wordFramesDict.ContainsKey(word) = {_wordFramesDict.ContainsKey(word)}");
 #endif
 
             if (_wordFramesDict.ContainsKey(word))

@@ -44,7 +44,7 @@ namespace SymOntoClay.NLP.Internal.ATN
 #if DEBUG
                 n++;
 
-                _logger.Log($"n = {n}");
+                //_logger.Log($"n = {n}");
 
                 if (n > 10)
                 {
@@ -57,7 +57,7 @@ namespace SymOntoClay.NLP.Internal.ATN
         public void AddContext(ParserContext parserContext)
         {
 #if DEBUG
-            _logger.Log($"parserContext = {parserContext}");
+            //_logger.Log($"parserContext = {parserContext}");
 #endif
 
             if(parserContexts.Contains(parserContext))
@@ -71,7 +71,7 @@ namespace SymOntoClay.NLP.Internal.ATN
         public void RemoveContext(ParserContext parserContext)
         {
 #if DEBUG
-            _logger.Log($"parserContext = {parserContext}");
+            //_logger.Log($"parserContext = {parserContext}");
 #endif
 
             if (parserContexts.Contains(parserContext))
@@ -83,7 +83,7 @@ namespace SymOntoClay.NLP.Internal.ATN
         public void AddResult(WholeTextParsingResult result)
         {
 #if DEBUG
-            _logger.Log($"result = {result}");
+            //_logger.Log($"result = {result}");
 #endif
 
             _resultsList.Add(result);

@@ -43,7 +43,7 @@ namespace TestSandbox.Helpers
 {
     public static class TstEngineContextHelper
     {
-        private static readonly IEntityLogger _logger = new LoggerImpementation();
+        //private static readonly IEntityLogger _logger = new LoggerImpementation();
 
         public static TstComplexContext CreateAndInitContext()
         {
@@ -51,11 +51,11 @@ namespace TestSandbox.Helpers
 
             var appName = AppDomain.CurrentDomain.FriendlyName;
 
-            _logger.Log($"appName = {appName}");
+            //_logger.Log($"appName = {appName}");
 
             var supportBasePath = Path.Combine(Environment.GetEnvironmentVariable("APPDATA"), "SymOntoClay", appName);
 
-            _logger.Log($"supportBasePath = {supportBasePath}");
+            //_logger.Log($"supportBasePath = {supportBasePath}");
 
             var result = new TstComplexContext();
 
@@ -83,7 +83,7 @@ namespace TestSandbox.Helpers
 
             worldSettings.InvokerInMainThread = invokingInMainThread;
 
-            _logger.Log($"worldSettings = {worldSettings}");
+            //_logger.Log($"worldSettings = {worldSettings}");
 
             var worldContext = new WorldContext();
             worldContext.SetSettings(worldSettings);
@@ -94,7 +94,7 @@ namespace TestSandbox.Helpers
             npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Apps\PeaceKeeper\PeaceKeeper.sobj");
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
 
-            _logger.Log($"npcSettings = {npcSettings}");
+            //_logger.Log($"npcSettings = {npcSettings}");
 
             var entityLogger = new LoggerImpementation();
 
@@ -128,7 +128,7 @@ namespace TestSandbox.Helpers
             coreEngineSettings.HostSupport = new TstHostSupportComponent(npcSettings.PlatformSupport);
 
 #if DEBUG
-            _logger.Log($"coreEngineSettings = {coreEngineSettings}");
+            //_logger.Log($"coreEngineSettings = {coreEngineSettings}");
 #endif
 
 #if DEBUG

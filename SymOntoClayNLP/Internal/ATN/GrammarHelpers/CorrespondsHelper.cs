@@ -10,14 +10,14 @@ namespace SymOntoClay.NLP.Internal.ATN.GrammarHelpers
     public static class CorrespondsHelper
     {
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static bool SubjectAndVerb(BaseGrammaticalWordFrame subject, VerbGrammaticalWordFrame verb)
         {
 #if DEBUG
-            _gbcLogger.Info($"subject = {subject}");
-            _gbcLogger.Info($"verb = {verb}");
+            //_gbcLogger.Info($"subject = {subject}");
+            //_gbcLogger.Info($"verb = {verb}");
 #endif
 
             switch(subject.PartOfSpeech)
@@ -33,8 +33,8 @@ namespace SymOntoClay.NLP.Internal.ATN.GrammarHelpers
         private static bool PronounSubjectAndVerb(PronounGrammaticalWordFrame subject, VerbGrammaticalWordFrame verb)
         {
 #if DEBUG
-            _gbcLogger.Info($"subject = {subject}");
-            _gbcLogger.Info($"verb = {verb}");
+            //_gbcLogger.Info($"subject = {subject}");
+            //_gbcLogger.Info($"verb = {verb}");
 #endif
 
             if(subject.Person == GrammaticalPerson.First)

@@ -34,13 +34,13 @@ namespace SymOntoClay.NLP.Internal.ATN
         public override void OnEnter()
         {
 #if DEBUG
-            Log($"Begin");
+            //Log($"Begin");
 #endif
 
             _sentence = new Sentence();
 
 #if DEBUG
-            Log($"End");
+            //Log($"End");
 #endif
         }
 
@@ -48,8 +48,8 @@ namespace SymOntoClay.NLP.Internal.ATN
         public override void OnRun(ATNToken token)
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"token = {token}");
+            //Log($"_state = {_state}");
+            //Log($"token = {token}");
 #endif
 
             switch (_state)
@@ -66,7 +66,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                                 var nounWordFramesList = wordFramesList.Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Noun);
 
 #if DEBUG
-                                Log($"nounWordFramesList = {nounWordFramesList.WriteListToString()}");
+                                //Log($"nounWordFramesList = {nounWordFramesList.WriteListToString()}");
 #endif
 
                                 if(nounWordFramesList.Any())
@@ -76,7 +76,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                                     foreach(var nounWordFrame in nounWordFramesList)
                                     {
 #if DEBUG
-                                        Log($"nounWordFrame = {nounWordFrame}");
+                                        //Log($"nounWordFrame = {nounWordFrame}");
 #endif
 
                                         SetParser(new RunVariantDirective<SentenceParser>(State.WaitForSubject, ConvertToConcreteATNToken(token, nounWordFrame)));
@@ -86,7 +86,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                                 var pronounWordFramesList = wordFramesList.Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Pronoun);
 
 #if DEBUG
-                                Log($"pronounWordFramesList = {pronounWordFramesList.WriteListToString()}");
+                                //Log($"pronounWordFramesList = {pronounWordFramesList.WriteListToString()}");
 #endif
 
                                 if(pronounWordFramesList.Any())
@@ -96,7 +96,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                                     foreach (var pronounWordFrame in pronounWordFramesList)
                                     {
 #if DEBUG
-                                        Log($"pronounWordFrame = {pronounWordFrame}");
+                                        //Log($"pronounWordFrame = {pronounWordFrame}");
 #endif
 
                                         SetParser(new RunVariantDirective<SentenceParser>(State.WaitForSubject, ConvertToConcreteATNToken(token, pronounWordFrame)));
@@ -133,7 +133,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                                     foreach(var item in verbsList)
                                     {
 #if DEBUG
-                                        Log($"item = {item}");
+                                        //Log($"item = {item}");
 #endif
 
                                         SetParser(new RunVariantDirective<SentenceParser>(State.WaitForPredicate, ConvertToConcreteATNToken(token, item)));
@@ -161,8 +161,8 @@ namespace SymOntoClay.NLP.Internal.ATN
         public override void OnVariant(ConcreteATNToken token)
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"token = {token}");
+            //Log($"_state = {_state}");
+            //Log($"token = {token}");
 #endif
 
             switch (_state)
@@ -205,8 +205,8 @@ namespace SymOntoClay.NLP.Internal.ATN
         public override void OnReceiveReturn(BaseSentenceItem phrase)
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"phrase = {phrase.ToDbgString()}");
+            //Log($"_state = {_state}");
+            //Log($"phrase = {phrase.ToDbgString()}");
 #endif
 
             switch (_state)
@@ -216,8 +216,8 @@ namespace SymOntoClay.NLP.Internal.ATN
                         _sentence.Subject = phrase;
 
 #if DEBUG
-                        Log($"_sentence = {_sentence.ToDbgString()}");
-                        Log($"ExpectedBehavior = {ExpectedBehavior}");
+                        //Log($"_sentence = {_sentence.ToDbgString()}");
+                        //Log($"ExpectedBehavior = {ExpectedBehavior}");
 #endif
                         ExpectedBehavior = ExpectedBehaviorOfParser.WaitForCurrToken;
                     }
@@ -228,8 +228,8 @@ namespace SymOntoClay.NLP.Internal.ATN
                         _sentence.Predicate = phrase;
 
 #if DEBUG
-                        Log($"_sentence = {_sentence.ToDbgString()}");
-                        Log($"ExpectedBehavior = {ExpectedBehavior}");
+                        //Log($"_sentence = {_sentence.ToDbgString()}");
+                        //Log($"ExpectedBehavior = {ExpectedBehavior}");
 #endif
 
                         SetParser(new ReturnToParentDirective(_sentence));

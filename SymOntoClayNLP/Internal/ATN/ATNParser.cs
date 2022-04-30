@@ -24,7 +24,7 @@ namespace SymOntoClay.NLP.Internal.ATN
         public List<BaseSentenceItem> Run(string text)
         {
 #if DEBUG
-            _logger.Log($"text = {text}");
+            //_logger.Log($"text = {text}");
 #endif
 
             var globalContext = new GlobalParserContext(_context, _wordsDict, text);

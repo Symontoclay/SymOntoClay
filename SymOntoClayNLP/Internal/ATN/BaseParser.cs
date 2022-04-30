@@ -68,8 +68,8 @@ namespace SymOntoClay.NLP.Internal.ATN
         protected ConcreteATNToken ConvertToConcreteATNToken(ATNToken token, BaseGrammaticalWordFrame wordFrame)
         {
 #if DEBUG
-            Log($"token = {token}");
-            Log($"wordFrame = {wordFrame}");
+            //Log($"token = {token}");
+            //Log($"wordFrame = {wordFrame}");
 #endif
 
             return new ConcreteATNToken()
@@ -85,7 +85,7 @@ namespace SymOntoClay.NLP.Internal.ATN
         protected Word ConvertToWord(ConcreteATNToken token)
         {
 #if DEBUG
-            Log($"token = {token}");
+            //Log($"token = {token}");
 #endif
 
             return new Word()

@@ -10,7 +10,7 @@ namespace SymOntoClay.NLP.Internal.ATN
     public class ATNLexer
     {
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public ATNLexer(string text, IWordsDict wordsDict)
@@ -56,13 +56,13 @@ namespace SymOntoClay.NLP.Internal.ATN
             var item = GetSourceItem();
 
 #if DEBUG
-            _gbcLogger.Info($"item = {item}");
+            //_gbcLogger.Info($"item = {item}");
 #endif
 
             var strItem = item.Item1;
 
 #if DEBUG
-            _gbcLogger.Info($"strItem = {strItem}");
+            //_gbcLogger.Info($"strItem = {strItem}");
 #endif
 
             if(strItem == null)
@@ -128,7 +128,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                             result.WordFrames = _wordsDict.GetWordFrames(strItem.ToLower());
 
 #if DEBUG
-                            _gbcLogger.Info($"result = {result}");
+                            //_gbcLogger.Info($"result = {result}");
 #endif
 
                             return result;
@@ -139,7 +139,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                             result.Kind = KindOfATNToken.Number;
 
 #if DEBUG
-                            _gbcLogger.Info($"result = {result}");
+                            //_gbcLogger.Info($"result = {result}");
 #endif
 
                             return result;
@@ -148,7 +148,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                         result.Kind = KindOfATNToken.Word;
 
 #if DEBUG
-                        _gbcLogger.Info($"result = {result}");
+                        //_gbcLogger.Info($"result = {result}");
 #endif
 
                         return result;

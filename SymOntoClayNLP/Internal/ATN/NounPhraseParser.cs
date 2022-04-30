@@ -33,13 +33,13 @@ namespace SymOntoClay.NLP.Internal.ATN
         public override void OnEnter()
         {
 #if DEBUG
-            Log($"Begin");
+            //Log($"Begin");
 #endif
 
             _nounPhrase = new NounPhrase();
 
 #if DEBUG
-            Log($"End");
+            //Log($"End");
 #endif
         }
 
@@ -47,8 +47,8 @@ namespace SymOntoClay.NLP.Internal.ATN
         public override void OnRun(ATNToken token)
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"token = {token}");
+            //Log($"_state = {_state}");
+            //Log($"token = {token}");
 #endif
 
             switch (_state)
@@ -71,7 +71,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                                     foreach(var item in subjectsPronounsList)
                                     {
 #if DEBUG
-                                        Log($"item = {item}");
+                                        //Log($"item = {item}");
 #endif
 
                                         SetParser(new RunVariantDirective<NounPhraseParser>(State.WaitForN, ConvertToConcreteATNToken(token, item)));
@@ -88,7 +88,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                                     foreach (var item in articlesList)
                                     {
 #if DEBUG
-                                        Log($"item = {item}");
+                                        //Log($"item = {item}");
 #endif
 
                                         SetParser(new RunVariantDirective<NounPhraseParser>(State.WaitForD, ConvertToConcreteATNToken(token, item))); ;
@@ -125,7 +125,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                                     foreach(var item in nounsList)
                                     {
 #if DEBUG
-                                        Log($"item = {item}");
+                                        //Log($"item = {item}");
 #endif
 
                                         SetParser(new RunVariantDirective<NounPhraseParser>(State.WaitForN, ConvertToConcreteATNToken(token, item)));
@@ -164,7 +164,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                                     foreach (var item in verbsList)
                                     {
 #if DEBUG
-                                        Log($"item = {item}");
+                                        //Log($"item = {item}");
 #endif
 
                                         SetParser(new ReturnToParentDirective(_nounPhrase, ConvertToConcreteATNToken(token, item)));
@@ -196,8 +196,8 @@ namespace SymOntoClay.NLP.Internal.ATN
         public override void OnVariant(ConcreteATNToken token)
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"token = {token}");
+            //Log($"_state = {_state}");
+            //Log($"token = {token}");
 #endif
 
             switch (_state)
@@ -207,7 +207,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                         _nounPhrase.D = ConvertToWord(token);
 
 #if DEBUG
-                        Log($"_nounPhrase.ToDbgString() = {_nounPhrase.ToDbgString()}");
+                        //Log($"_nounPhrase.ToDbgString() = {_nounPhrase.ToDbgString()}");
 #endif
 
                         _state = State.GotD;
@@ -221,7 +221,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                         _nounPhrase.N = ConvertToWord(token);
 
 #if DEBUG
-                        Log($"_nounPhrase.ToDbgString() = {_nounPhrase.ToDbgString()}");
+                        //Log($"_nounPhrase.ToDbgString() = {_nounPhrase.ToDbgString()}");
 #endif
 
                         _state = State.GotN;
@@ -240,8 +240,8 @@ namespace SymOntoClay.NLP.Internal.ATN
         public override void OnReceiveReturn(BaseSentenceItem phrase)
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"phrase = {phrase}");
+            //Log($"_state = {_state}");
+            //Log($"phrase = {phrase}");
 #endif
 
             throw new NotImplementedException();

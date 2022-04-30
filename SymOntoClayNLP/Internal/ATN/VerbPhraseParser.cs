@@ -32,13 +32,13 @@ namespace SymOntoClay.NLP.Internal.ATN
         public override void OnEnter()
         {
 #if DEBUG
-            Log($"Begin");
+            //Log($"Begin");
 #endif
 
             _verbPhrase = new VerbPhrase();
 
 #if DEBUG
-            Log($"End");
+            //Log($"End");
 #endif
         }
 
@@ -46,8 +46,8 @@ namespace SymOntoClay.NLP.Internal.ATN
         public override void OnRun(ATNToken token)
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"token = {token}");
+            //Log($"_state = {_state}");
+            //Log($"token = {token}");
 #endif
 
             switch (_state)
@@ -70,7 +70,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                                     foreach (var item in verbsList)
                                     {
 #if DEBUG
-                                        Log($"item = {item}");
+                                        //Log($"item = {item}");
 #endif
 
                                         SetParser(new RunVariantDirective<VerbPhraseParser>(State.WaitForV, ConvertToConcreteATNToken(token, item)));
@@ -108,7 +108,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                                     foreach (var item in articlesList)
                                     {
 #if DEBUG
-                                        Log($"item = {item}");
+                                        //Log($"item = {item}");
 #endif
 
                                         SetParser(new RunVariantDirective<VerbPhraseParser>(State.WaitForSubject, ConvertToConcreteATNToken(token, item)));
@@ -136,8 +136,8 @@ namespace SymOntoClay.NLP.Internal.ATN
         public override void OnVariant(ConcreteATNToken token)
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"token = {token}");
+            //Log($"_state = {_state}");
+            //Log($"token = {token}");
 #endif
 
             switch (_state)
@@ -147,7 +147,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                         _verbPhrase.V = ConvertToWord(token);
 
 #if DEBUG
-                        Log($"_verbPhrase = {_verbPhrase.ToDbgString()}");
+                        //Log($"_verbPhrase = {_verbPhrase.ToDbgString()}");
 #endif
 
                         _state = State.GotV;
@@ -171,8 +171,8 @@ namespace SymOntoClay.NLP.Internal.ATN
         public override void OnReceiveReturn(BaseSentenceItem phrase)
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"phrase = {phrase.ToDbgString()}");
+            //Log($"_state = {_state}");
+            //Log($"phrase = {phrase.ToDbgString()}");
 #endif
 
             switch (_state)
@@ -182,8 +182,8 @@ namespace SymOntoClay.NLP.Internal.ATN
                         _verbPhrase.Object = phrase;
 
 #if DEBUG
-                        Log($"_verbPhrase = {_verbPhrase.ToDbgString()}");
-                        Log($"ExpectedBehavior = {ExpectedBehavior}");
+                        //Log($"_verbPhrase = {_verbPhrase.ToDbgString()}");
+                        //Log($"ExpectedBehavior = {ExpectedBehavior}");
 #endif
                         ExpectedBehavior = ExpectedBehaviorOfParser.WaitForCurrToken;
                     }
@@ -198,13 +198,13 @@ namespace SymOntoClay.NLP.Internal.ATN
         public override void OnEmptyLexer()
         {
 #if DEBUG
-            Log($"Begin");
+            //Log($"Begin");
 #endif
 
             SetParser(new ReturnToParentDirective(_verbPhrase));
 
 #if DEBUG
-            Log($"End");
+            //Log($"End");
 #endif
         }
     }

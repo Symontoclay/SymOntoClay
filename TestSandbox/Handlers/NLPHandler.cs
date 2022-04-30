@@ -46,20 +46,20 @@ namespace TestSandbox.Handlers
 
             var text = "I like my cat.";
 
-            var globalContext = new GlobalParserContext(_engineContext, wordsDict, text);
+            //var globalContext = new GlobalParserContext(_engineContext, wordsDict, text);
 
-            globalContext.Run();
+            //globalContext.Run();
 
-            //var parser = new ATNParser(_engineContext, wordsDict);
+            var parser = new ATNParser(_engineContext, wordsDict);
 
-            //var result = parser.Run(text);
+            var result = parser.Run(text);
 
-            //_logger.Log($"result.Count = {result.Count}");
+            _logger.Log($"result.Count = {result.Count}");
 
-            //foreach (var item in result)
-            //{
-            //    _logger.Log($"item = {item}");
-            //}
+            foreach (var item in result)
+            {
+                _logger.Log($"item = {item.ToDbgString()}");
+            }
         }
 
         private void Case1()

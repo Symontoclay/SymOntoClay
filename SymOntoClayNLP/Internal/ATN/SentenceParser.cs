@@ -232,7 +232,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                         Log($"ExpectedBehavior = {ExpectedBehavior}");
 #endif
 
-                        throw new NotImplementedException();
+                        SetParser(new ReturnToParentDirective(_sentence));
                     }
                     break;
 

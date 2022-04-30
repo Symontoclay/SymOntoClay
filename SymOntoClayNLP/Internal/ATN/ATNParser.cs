@@ -31,7 +31,7 @@ namespace SymOntoClay.NLP.Internal.ATN
 
             globalContext.Run();
 
-            throw new NotImplementedException();
+            return globalContext.GetPhrases();
         }
     }
 }

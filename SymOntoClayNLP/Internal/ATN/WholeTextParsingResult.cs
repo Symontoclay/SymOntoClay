@@ -7,7 +7,7 @@ namespace SymOntoClay.NLP.Internal.ATN
 {
     public class WholeTextParsingResult : IObjectToString
     {
-        public bool IsSuccess { get; set; }
+        public bool IsSuccess { get; set; } = true;
         public int CountSteps { get; set; }
         public List<ParsingResult> Results { get; set; } = new List<ParsingResult>();
         public Exception Error { get; set; }

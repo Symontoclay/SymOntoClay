@@ -10,7 +10,7 @@ namespace SymOntoClay.NLP.Internal.ATN
     {
         public bool IsSuccess { get; set; }
         public int CountSteps { get; set; }
-        public BaseSentenceItem Result { get; set; }
+        public BaseSentenceItem Phrase { get; set; }
         public Exception Error { get; set; }
 
         /// <inheritdoc/>
@@ -33,7 +33,7 @@ namespace SymOntoClay.NLP.Internal.ATN
 
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.AppendLine($"{spaces}{nameof(CountSteps)} = {CountSteps}");
-            sb.PrintObjProp(n, nameof(Result), Result);
+            sb.PrintObjProp(n, nameof(Phrase), Phrase);
             sb.AppendLine($"{spaces}{nameof(Error)} = {Error}");
 
             return sb.ToString();

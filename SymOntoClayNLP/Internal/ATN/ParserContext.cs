@@ -135,18 +135,39 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                                 SetPrevParser();
 
+                                if(_currentParser == null)
+                                {
+                                    var result = new ParsingResult()
+                                    {
+                                        IsSuccess = true,
+                                        CountSteps = _sentenceCounter,
+                                        Phrase = targetDirective.Phrase
+                                    };
+
+                                    _sentenceCounter = 0;
+
 #if DEBUG
-                                _logger.Log($"_currentParser.StateAfterRunChild = {_currentParser.StateAfterRunChild}");
+                                    _logger.Log($"result = {result}");
+                                    _logger.Log($"result.Phrase = {result.Phrase.ToDbgString()}");
 #endif
 
-                                if (_currentParser.StateAfterRunChild.HasValue)
-                                {
-                                    _currentParser.SetStateAsInt32(_currentParser.StateAfterRunChild.Value);
-
-                                    _currentParser.StateAfterRunChild = null;
+                                    _result.Results.Add(result);
                                 }
+                                else
+                                {
+#if DEBUG
+                                    _logger.Log($"_currentParser.StateAfterRunChild = {_currentParser.StateAfterRunChild}");
+#endif
 
-                                _currentParser.OnReceiveReturn(targetDirective.Phrase);
+                                    if (_currentParser.StateAfterRunChild.HasValue)
+                                    {
+                                        _currentParser.SetStateAsInt32(_currentParser.StateAfterRunChild.Value);
+
+                                        _currentParser.StateAfterRunChild = null;
+                                    }
+
+                                    _currentParser.OnReceiveReturn(targetDirective.Phrase);
+                                }
                             }
                             break;
 
@@ -183,7 +204,22 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         private void SetPrevParser()
         {
+#if DEBUG
+            _logger.Log($"Begin");
+            _logger.Log($"_parsers.Count = {_parsers.Count}");
+#endif
+
+            if (!_parsers.Any())
+            {
+                _currentParser = null;
+                return;
+            }
+
             _currentParser = _parsers.Pop();
+
+#if DEBUG
+            _logger.Log($"End");
+#endif
         }
 
         public bool IsActive => _isActive;
@@ -279,12 +315,20 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         private void NExit()
         {
+#if DEBUG
+            Log($"Begin");
+#endif
+
             _isActive = false;
 
             _result.CountSteps = _globalCounter;
 
             _globalContext.AddResult(_result);
             _globalContext.RemoveContext(this);
+
+#if DEBUG
+            _logger.Log($"End");
+#endif
         }
 
         private ATNToken ConvertToATNToken(ConcreteATNToken token)

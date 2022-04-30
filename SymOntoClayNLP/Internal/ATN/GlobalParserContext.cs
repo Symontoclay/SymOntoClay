@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP.CommonDict;
+using SymOntoClay.NLP.Internal.PhraseStructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,6 +89,11 @@ namespace SymOntoClay.NLP.Internal.ATN
             _resultsList.Add(result);
         }
         
+        public List<BaseSentenceItem> GetPhrases()
+        {
+            return _resultsList.Where(p => p.IsSuccess).FirstOrDefault().Results.Select(p => p.Phrase).ToList();
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {

@@ -1,0 +1,8 @@
+﻿dark
+blue
+black
+bright
+green
+yellow
+red
+white

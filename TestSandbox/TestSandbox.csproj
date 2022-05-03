@@ -11,6 +11,7 @@
     <None Remove="Handlers\GeneralStartHandler.cs~RF41e95b2a.TMP" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DictionaryGenerator\DictionaryGenerator.csproj" />
     <ProjectReference Include="..\SymOntoClayCLI\SymOntoClayCLI.csproj" />
     <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
     <ProjectReference Include="..\SymOntoClayCore\SymOntoClayCore.csproj" />
@@ -23,7 +24,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="NLog" Version="4.7.0" />
+    <PackageReference Include="NLog" Version="4.7.9" />
   </ItemGroup>
   <ItemGroup>
     <None Update="NLog.config">

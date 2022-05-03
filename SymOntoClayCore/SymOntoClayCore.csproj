@@ -17,6 +17,9 @@
     <DefineConstants>TRACE;IMAGINE_WORKING</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
   </ItemGroup>
   <ItemGroup>

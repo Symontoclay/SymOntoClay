@@ -10,7 +10,7 @@ namespace DictionaryGenerator
 {
     public class WordsDictJSONSerializationEngine
     {
-        private DataContractJsonSerializer mJSONSerializer = new DataContractJsonSerializer(typeof(WordsDictData), new List<Type> {
+        private DataContractJsonSerializer mJSONSerializer = new DataContractJsonSerializer(typeof(Dictionary<string, List<BaseGrammaticalWordFrame>>), new List<Type> {
                 typeof(PronounGrammaticalWordFrame),
                 typeof(AdjectiveGrammaticalWordFrame),
                 typeof(AdverbGrammaticalWordFrame),
@@ -24,7 +24,7 @@ namespace DictionaryGenerator
                 typeof(VerbGrammaticalWordFrame)
     });
 
-        public void SaveToFile(WordsDictData item, string fileName)
+        public void SaveToFile(Dictionary<string, List<BaseGrammaticalWordFrame>> item, string fileName)
         {
             if (item == null)
             {
@@ -41,14 +41,12 @@ namespace DictionaryGenerator
                 File.Delete(fileName);
             }
 
-            using (var fs = File.OpenWrite(fileName))
-            {
-                mJSONSerializer.WriteObject(fs, item);
-                fs.Flush();
-            }
+            using var fs = File.OpenWrite(fileName);
+            mJSONSerializer.WriteObject(fs, item);
+            fs.Flush();
         }
 
-        public WordsDictData LoadFromFile(string fileName)
+        public Dictionary<string, List<BaseGrammaticalWordFrame>>? LoadFromFile(string fileName)
         {
             if (string.IsNullOrWhiteSpace(fileName))
             {
@@ -57,7 +55,7 @@ namespace DictionaryGenerator
 
             using (var fs = File.OpenRead(fileName))
             {
-                return (WordsDictData)mJSONSerializer.ReadObject(fs);
+                return (Dictionary<string, List<BaseGrammaticalWordFrame>>?)mJSONSerializer.ReadObject(fs);
             }
         }
     }

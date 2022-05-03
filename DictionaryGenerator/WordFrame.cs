@@ -11,22 +11,7 @@ namespace DictionaryGenerator
     public class WordFrame : IObjectToString
     {
         public string Word { get; set; }
-        public IList<BaseGrammaticalWordFrame> GrammaticalWordFrames { get; set; }
-
-        public WordFrame Fork()
-        {
-            var result = new WordFrame();
-            result.Word = Word;
-            if (GrammaticalWordFrames == null)
-            {
-                result.GrammaticalWordFrames = null;
-            }
-            else
-            {
-                result.GrammaticalWordFrames = GrammaticalWordFrames.Select(p => p.Fork()).Distinct(new ComparerOfBaseGrammaticalWordFrame()).ToList();
-            }
-            return result;
-        }
+        public List<BaseGrammaticalWordFrame> GrammaticalWordFrames { get; set; }
 
         public override string ToString()
         {
@@ -44,23 +29,7 @@ namespace DictionaryGenerator
             var nextN = n + 4;
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(Word)} = {Word}");
-            if (GrammaticalWordFrames == null)
-            {
-                sb.AppendLine($"{spaces}{nameof(GrammaticalWordFrames)} = null");
-            }
-            else
-            {
-                sb.AppendLine($"{spaces}Begin {nameof(GrammaticalWordFrames)}");
-                foreach (var grammaticalWordFrame in GrammaticalWordFrames)
-                {
-#if DEBUG
-                    //LogInstance.Log($"grammaticalWordFrame == null = {grammaticalWordFrame == null}");
-#endif
-
-                    sb.Append(grammaticalWordFrame.ToString(nextN));
-                }
-                sb.AppendLine($"{spaces}End {nameof(GrammaticalWordFrames)}");
-            }
+            sb.PrintObjListProp(n, nameof(GrammaticalWordFrames), GrammaticalWordFrames);
             return sb.ToString();
         }
     }

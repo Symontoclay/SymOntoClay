@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace DictionaryGenerator
 {
-    public class WordsDictData : IObjectToString
+    public class InternalWordsDictData : IObjectToString
     {
         public IDictionary<string, WordFrame> WordsDict { get; set; }
-        //public IList<string> NamesList { get; set; }
 
         public override string ToString()
         {

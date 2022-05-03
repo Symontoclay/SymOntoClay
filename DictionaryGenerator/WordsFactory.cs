@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System.Text.RegularExpressions;
 
 namespace DictionaryGenerator
@@ -69,8 +70,8 @@ namespace DictionaryGenerator
 
         private int mTotalCount;
 
-        private WordsDictData mWordsDictData;
-        private WordsDictData mWordsDictDataOfName;
+        private InternalWordsDictData mWordsDictData;
+        private InternalWordsDictData mWordsDictDataOfName;
 
         private List<string> mTargetWordsList;
 
@@ -159,11 +160,11 @@ namespace DictionaryGenerator
 
             mWordSplitter = new WordSplitter(mRootNounDict, mRootVerbsDict, mRootAdjsDict, mRootAdvsDict);
 
-            mWordsDictData = new WordsDictData();
+            mWordsDictData = new InternalWordsDictData();
             mWordsDictData.WordsDict = new Dictionary<string, WordFrame>();
             //mWordsDictData.NamesList = new List<string>();
 
-            mWordsDictDataOfName = new WordsDictData();
+            mWordsDictDataOfName = new InternalWordsDictData();
             mWordsDictDataOfName.WordsDict = new Dictionary<string, WordFrame>();
             //mWordsDictDataOfName.NamesList = new List<string>();
 
@@ -232,21 +233,33 @@ namespace DictionaryGenerator
                 }
             }
 
-            SimpleSaveDict(mNameOfMainDict, mWordsDictData);
-            SimpleSaveDict(mNameOfNamesDict, mWordsDictDataOfName);
+            SetUpWordInGrammaticalFrame(mWordsDictData);
+            SetUpWordInGrammaticalFrame(mWordsDictDataOfName);
+
+            var wordsDictDataToExport = ConvertToDictionary(mWordsDictData);
+            var wordsDictDataOfNameToExport = ConvertToDictionary(mWordsDictDataOfName);
+
+            SimpleSaveDict(mNameOfMainDict, wordsDictDataToExport);
+            SimpleSaveDict(mNameOfNamesDict, wordsDictDataOfNameToExport);
 
 #if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"Run mTotalCount = {mTotalCount}");
-            NLog.LogManager.GetCurrentClassLogger().Info($"Run mWordsDictData.WordsDict.Count = {mWordsDictData.WordsDict.Count}");
-            //NLog.LogManager.GetCurrentClassLogger().Info($"Run mWordsDictData = {mWordsDictData}");
-            NLog.LogManager.GetCurrentClassLogger().Info($"Run mWordsDictDataOfName.WordsDict.Count = {mWordsDictDataOfName.WordsDict.Count}");
-            //NLog.LogManager.GetCurrentClassLogger().Info($"Run mWordsDictDataOfName = {mWordsDictDataOfName}");
+            //_logger.Info($"Run mTotalCount = {mTotalCount}");
+            _logger.Info($"Run mWordsDictData.WordsDict.Count = {mWordsDictData.WordsDict.Count}");
+            //_logger.Info($"Run mWordsDictData = {mWordsDictData}");
+            _logger.Info($"Run mWordsDictDataOfName.WordsDict.Count = {mWordsDictDataOfName.WordsDict.Count}");
+            //_logger.Info($"Run mWordsDictDataOfName = {mWordsDictDataOfName}");
 
-            var tmpWordFrame = mWordsDictData.WordsDict["ought"];
-            NLog.LogManager.GetCurrentClassLogger().Info($"Run tmpWordFrame = {tmpWordFrame}");
+            var tmpWordFrame = wordsDictDataToExport["ought"];
+            _logger.Info($"Run tmpWordFrame = {tmpWordFrame.WriteListToString()}");
+            //WordsDictData
+            tmpWordFrame = wordsDictDataToExport["go"];
+            _logger.Info($"Run tmpWordFrame = {tmpWordFrame.WriteListToString()}");
+
+            tmpWordFrame = wordsDictDataToExport["went"];
+            _logger.Info($"Run tmpWordFrame = {tmpWordFrame.WriteListToString()}");
 
             //tmpWordFrame = mWordsDictDataOfName.WordsDict["Tim"];
-            //NLog.LogManager.GetCurrentClassLogger().Info($"Run tmpWordFrame = {tmpWordFrame}");
+            //_logger.Info($"Run tmpWordFrame = {tmpWordFrame}");
 #endif
         }
 
@@ -322,12 +335,40 @@ namespace DictionaryGenerator
             }
         }
 
-        private void SimpleSaveDict(string localPath, WordsDictData dict)
+        private void SetUpWordInGrammaticalFrame(InternalWordsDictData dict)
+        {
+            var wordsDict = dict.WordsDict;
+
+            foreach(var item in wordsDict)
+            {
+                var wordFrame = item.Value;
+
+                var word = wordFrame.Word;
+
+#if DEBUG
+                //_logger.Info($"SimpleSaveDict word = {word}");
+#endif
+
+                var grammaticalWordFrames = wordFrame.GrammaticalWordFrames;
+
+                foreach(var grammaticalWordFrame in grammaticalWordFrames)
+                {
+                    grammaticalWordFrame.Word = word;
+                }
+            }
+        }
+
+        private Dictionary<string, List<BaseGrammaticalWordFrame>> ConvertToDictionary(InternalWordsDictData dict)
+        {
+            return dict.WordsDict.ToDictionary(p => p.Key, p => p.Value.GrammaticalWordFrames);
+        }
+
+        private void SimpleSaveDict(string localPath, Dictionary<string, List<BaseGrammaticalWordFrame>> dict)
         {
             var rootPath = AppDomain.CurrentDomain.BaseDirectory;
 
 #if DEBUG
-            NLog.LogManager.GetCurrentClassLogger().Info($"SimpleSaveDict rootPath = {rootPath}");
+            _logger.Info($"SimpleSaveDict rootPath = {rootPath}");
 #endif
 
             var fullPath = Path.Combine(rootPath, localPath);

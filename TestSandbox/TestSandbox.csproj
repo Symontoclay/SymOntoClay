@@ -15,6 +15,7 @@
     <ProjectReference Include="..\SymOntoClayCLI\SymOntoClayCLI.csproj" />
     <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
     <ProjectReference Include="..\SymOntoClayCore\SymOntoClayCore.csproj" />
+    <ProjectReference Include="..\SymOntoClayNLPBinaryDict\SymOntoClayNLPBinaryDict.csproj" />
     <ProjectReference Include="..\SymOntoClayNLPCommonDict\SymOntoClayNLPCommonDict.csproj" />
     <ProjectReference Include="..\SymOntoClayNLP\SymOntoClayNLP.csproj" />
     <ProjectReference Include="..\SymOntoClayProjectFiles\SymOntoClayProjectFiles.csproj" />
@@ -25,6 +26,7 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="NLog" Version="4.7.9" />
+    <PackageReference Include="System.CodeDom" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
     <None Update="NLog.config">

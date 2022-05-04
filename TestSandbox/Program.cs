@@ -65,6 +65,7 @@ using TestSandbox.SoundBusHandler;
 using SymOntoClay.UnityAsset.Core.Tests;
 using System.Numerics;
 using DictionaryGenerator;
+using SymOntoClay.NLP.CommonDict.Implementations;
 
 namespace TestSandbox
 {
@@ -78,7 +79,8 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-            TSTWordsFactory();
+            TstGenerateDllDict();
+            //TSTWordsFactory();
             //TstNLPHandler();
             //TstTriggerConditionNodeHandler();
             //TstSoundBus();
@@ -129,6 +131,16 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstGenerateDllDict()
+        {
+            _logger.Log("Begin");
+
+            var handler = new GenerateDllDictHandler();
+            handler.Run();
+
+            _logger.Log("Begin");
         }
 
         private static void TSTWordsFactory()

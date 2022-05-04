@@ -10,6 +10,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System.Text.RegularExpressions;
+using SymOntoClay.NLP.CommonDict.Implementations;
 
 namespace DictionaryGenerator
 {

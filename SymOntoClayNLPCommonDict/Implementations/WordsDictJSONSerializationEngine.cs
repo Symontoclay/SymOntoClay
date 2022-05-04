@@ -1,16 +1,14 @@
-﻿using SymOntoClay.NLP.CommonDict;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace DictionaryGenerator
+namespace SymOntoClay.NLP.CommonDict.Implementations
 {
     public class WordsDictJSONSerializationEngine
     {
-        private DataContractJsonSerializer mJSONSerializer = new DataContractJsonSerializer(typeof(Dictionary<string, List<BaseGrammaticalWordFrame>>), new List<Type> {
+        private DataContractJsonSerializer _jsonSerializer = new DataContractJsonSerializer(typeof(Dictionary<string, List<BaseGrammaticalWordFrame>>), new List<Type> {
                 typeof(PronounGrammaticalWordFrame),
                 typeof(AdjectiveGrammaticalWordFrame),
                 typeof(AdverbGrammaticalWordFrame),
@@ -41,12 +39,14 @@ namespace DictionaryGenerator
                 File.Delete(fileName);
             }
 
-            using var fs = File.OpenWrite(fileName);
-            mJSONSerializer.WriteObject(fs, item);
-            fs.Flush();
+            using (var fs = File.OpenWrite(fileName))
+            {
+                _jsonSerializer.WriteObject(fs, item);
+                fs.Flush();
+            }
         }
 
-        public Dictionary<string, List<BaseGrammaticalWordFrame>>? LoadFromFile(string fileName)
+        public Dictionary<string, List<BaseGrammaticalWordFrame>> LoadFromFile(string fileName)
         {
             if (string.IsNullOrWhiteSpace(fileName))
             {
@@ -55,7 +55,7 @@ namespace DictionaryGenerator
 
             using (var fs = File.OpenRead(fileName))
             {
-                return (Dictionary<string, List<BaseGrammaticalWordFrame>>?)mJSONSerializer.ReadObject(fs);
+                return (Dictionary<string, List<BaseGrammaticalWordFrame>>)_jsonSerializer.ReadObject(fs);
             }
         }
     }

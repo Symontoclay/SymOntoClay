@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using DictionaryGenerator;
+using NLog;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.CommonDict.Implementations;
 using System;
@@ -25,30 +26,44 @@ namespace TestSandbox.Handlers
 
             _logger.Info($"outputFileName = {outputFileName}");
 
-            var targetUnit = new CodeCompileUnit();
+            var dict = GetJsonDict();
+            //var fullDict = GetJsonDict();
 
-            var targetNamespace = new CodeNamespace("CodeDOMSample");
-            targetNamespace.Imports.Add(new CodeNamespaceImport("System"));
-            var targetClass = new CodeTypeDeclaration("CodeDOMCreatedClass");
-            targetClass.IsClass = true;
-            targetClass.TypeAttributes = TypeAttributes.Public | TypeAttributes.Sealed;
-            targetNamespace.Types.Add(targetClass);
-            targetUnit.Namespaces.Add(targetNamespace);
+            //var toFrame = fullDict["to"];
 
-            targetClass.BaseTypes.Add("IWordsDict");
+            //var dict = fullDict.Take(1000).ToDictionary(p => p.Key, p => p.Value);
 
-            var provider = CodeDomProvider.CreateProvider("CSharp");
-            var options = new CodeGeneratorOptions();
-            options.BracingStyle = "C";
-            using (StreamWriter sourceWriter = new StreamWriter(outputFileName))
-            {
-                provider.GenerateCodeFromCompileUnit(
-                    targetUnit, sourceWriter, options);
-            }
+            //dict["to"] = toFrame;
 
-            //var dict = GetJsonDict();
+            //dict["i"].Single().ConditionalLogicalMeaning = toFrame.Single().ConditionalLogicalMeaning;
 
-            //_logger.Info($"dict.Count = {dict.Count}");
+            _logger.Info($"dict.Count = {dict.Count}");
+
+            var generator = new CSharpDictionaryGenerator(outputFileName, "MyTmpDict", dict);
+            generator.Run();
+
+            //var targetUnit = new CodeCompileUnit();
+
+            //var targetNamespace = new CodeNamespace("CodeDOMSample");
+            //targetNamespace.Imports.Add(new CodeNamespaceImport("System"));
+            //var targetClass = new CodeTypeDeclaration("CodeDOMCreatedClass");
+            //targetClass.IsClass = true;
+            //targetClass.TypeAttributes = TypeAttributes.Public | TypeAttributes.Sealed;
+            //targetNamespace.Types.Add(targetClass);
+            //targetUnit.Namespaces.Add(targetNamespace);
+
+            //targetClass.BaseTypes.Add("IWordsDict");
+
+            //var provider = CodeDomProvider.CreateProvider("CSharp");
+            //var options = new CodeGeneratorOptions();
+            //options.BracingStyle = "C";
+            //using (StreamWriter sourceWriter = new StreamWriter(outputFileName))
+            //{
+            //    provider.GenerateCodeFromCompileUnit(
+            //        targetUnit, sourceWriter, options);
+            //}
+
+
 
             _logger.Info("End");
         }

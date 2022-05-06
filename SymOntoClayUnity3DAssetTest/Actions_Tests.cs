@@ -99,6 +99,7 @@ action Go
                     case 6:
                         Assert.AreEqual(message, "End");
                         break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(n), n, null);
                 }

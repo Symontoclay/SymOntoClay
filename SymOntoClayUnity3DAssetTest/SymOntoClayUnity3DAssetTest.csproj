@@ -21,6 +21,8 @@
     <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
     <ProjectReference Include="..\SymOntoClayCore\SymOntoClayCore.csproj" />
     <ProjectReference Include="..\SymOntoClayDefaultCLIEnvironment\SymOntoClayDefaultCLIEnvironment.csproj" />
+    <ProjectReference Include="..\SymOntoClayNLPCommonDict\SymOntoClayNLPCommonDict.csproj" />
+    <ProjectReference Include="..\SymOntoClayNLP\SymOntoClayNLP.csproj" />
     <ProjectReference Include="..\SymOntoClayProjectFiles\SymOntoClayProjectFiles.csproj" />
     <ProjectReference Include="..\SymOntoClaySoundBuses\SymOntoClaySoundBuses.csproj" />
     <ProjectReference Include="..\SymOntoClayUnityAssetCore\SymOntoClayUnityAssetCore.csproj" />

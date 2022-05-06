@@ -44,8 +44,9 @@ namespace TestSandbox.Handlers
         {
             _logger.Log("Begin");
 
-            Case2();
+            //Case2();
             //Case1();
+            Case0();
 
             _logger.Log("End");
         }
@@ -85,6 +86,24 @@ namespace TestSandbox.Handlers
             foreach(var item in result)
             {
                 _logger.Log($"item = {item.ToHumanizedString()}");
+            }
+        }
+
+        private void Case0()
+        {
+            var text = "I like my cat.()!.?,...:;-1234567890 M1$nrg, #erty3, @maror, 3% can't \"";
+
+            var lexer = new ATNStringLexer(text);
+            (string, int, int) item;
+
+            var n = 0;
+
+            while ((item = lexer.GetItem()).Item1 != null)
+            {
+                n++;
+
+                _logger.Log($"n = {n}");
+                _logger.Log($"item = {item}");
             }
         }
     }

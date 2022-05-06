@@ -16,10 +16,13 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         public ATNStringLexer(string text)
         {
-            _items = new Queue<char>(text.Replace("’", "'").Replace("`", "'").ToList());
+            _itemsList = new List<char>(text.Replace("’", "'").Replace("`", "'").ToList());
+
+            _items = new Queue<char>(_itemsList);
         }
 
         private Queue<char> _items;
+        private List<char> _itemsList;
         private int _currentPos;
         private int _currentLine = 1;
 
@@ -37,7 +40,7 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                 _currentPos++;
 
-                switch(_state)
+                switch (_state)
                 {
                     case State.Init:
                         {
@@ -67,12 +70,38 @@ namespace SymOntoClay.NLP.Internal.ATN
                                 case ',':
                                 case ':':
                                 case ';':
-                                case '-':
-                                case '.':
+                                case '-':                                
                                 case '!':
                                 case '?':
                                 case '"':
                                     return (ch.ToString(), _currentLine, _currentPos);
+
+                                case '.':
+                                    if(nextChar != '.')
+                                    {
+                                        return (ch.ToString(), _currentLine, _currentPos);
+                                    }
+
+                                    {
+                                        var pos = _currentPos - 1;
+
+                                        var item1 = Forecast(pos);
+                                        var item2 = Forecast(pos + 1);
+                                        var item3 = Forecast(pos + 2);
+
+                                        if (item1 == '.' && item2 == '.' && item3 == '.')
+                                        {
+                                            var targetPos = _currentPos;
+
+                                            _currentPos += 2;
+                                            _items.Dequeue();
+                                            _items.Dequeue();
+
+                                            return ("...", _currentLine, targetPos);
+                                        }
+
+                                        return (ch.ToString(), _currentLine, _currentPos);
+                                    }
 
                                 default:
                                     {
@@ -120,6 +149,16 @@ namespace SymOntoClay.NLP.Internal.ATN
             }
 
             return (null, 0, 0);
+        }
+
+        private char? Forecast(int pos)
+        {
+            if(pos >= _itemsList.Count)
+            {
+                return null;
+            }
+
+            return _itemsList[pos];
         }
 
         private bool IsRawLetter(char? ch)

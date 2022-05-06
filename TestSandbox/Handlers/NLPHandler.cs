@@ -2,10 +2,13 @@
 using SymOntoClay.Core.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP;
+using SymOntoClay.NLP.CommonDict;
+using SymOntoClay.NLP.Dicts;
 using SymOntoClay.NLP.Internal.ATN;
 using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,13 +24,20 @@ namespace TestSandbox.Handlers
         {
             _engineContext = TstEngineContextHelper.CreateAndInitContext().EngineContext;
 
-            var wordsDict = new TstSimpleWordsDict();
+            var mainDictPath = Path.Combine(Directory.GetCurrentDirectory(), "Dicts", "BigMainDictionary.dict");
 
-            _converter = new NLPConverter(_engineContext, wordsDict);
+#if DEBUG
+            _logger.Log($"mainDictPath = {mainDictPath}");
+#endif
+
+            _wordsDict = new JsonDictionary(mainDictPath);
+
+            _converter = new NLPConverter(_engineContext, _wordsDict);
         }
 
         private readonly EngineContext _engineContext;
         private readonly INLPConverter _converter;
+        private readonly IWordsDict _wordsDict;
         private static readonly IEntityLogger _logger = new LoggerImpementation();
 
         public void Run()
@@ -42,7 +52,7 @@ namespace TestSandbox.Handlers
 
         private void Case2()
         {
-            var wordsDict = new TstSimpleWordsDict();
+            //var wordsDict = new TstSimpleWordsDict();
 
             var text = "I like my cat.";
 
@@ -54,7 +64,7 @@ namespace TestSandbox.Handlers
 
             //globalContext.Run();
 
-            var parser = new ATNParser(_engineContext, wordsDict);
+            var parser = new ATNParser(_engineContext, _wordsDict);
 
             var result = parser.Run(text);
 

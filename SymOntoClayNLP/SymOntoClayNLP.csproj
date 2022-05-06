@@ -12,4 +12,13 @@
     <ProjectReference Include="..\SymOntoClayNLPCommonDict\SymOntoClayNLPCommonDict.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Dicts\BigCommonNamesDictionary.dict">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Dicts\BigMainDictionary.dict">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

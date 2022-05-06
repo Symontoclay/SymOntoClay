@@ -79,9 +79,9 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-            TstGenerateDllDict();
+            //TstGenerateDllDict();
             //TSTWordsFactory();
-            //TstNLPHandler();
+            TstNLPHandler();
             //TstTriggerConditionNodeHandler();
             //TstSoundBus();
             //TstNavigationHandler();

@@ -50,6 +50,11 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// </summary>
         public BaseSentenceItem NounAdjunct { get; set; }
 
+        /// <summary>
+        /// Represents "not"
+        /// </summary>
+        public Word Negation { get; set; }
+
         public bool HasPossesiveMark { get; set; }
 
         /// <summary>
@@ -90,6 +95,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             sb.PrintObjProp(n, nameof(QP), QP);
             sb.PrintObjProp(n, nameof(AP), AP);
             sb.PrintObjProp(n, nameof(NounAdjunct), NounAdjunct);
+            sb.PrintObjProp(n, nameof(Negation), Negation);
             sb.AppendLine($"{spaces}{nameof(HasPossesiveMark)} = {HasPossesiveMark}");
             sb.PrintObjListProp(n, nameof(PP), PP);
             sb.PrintObjProp(n, nameof(AdvP), AdvP);            
@@ -138,6 +144,11 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             }
 
             if (NounAdjunct != null)
+            {
+                throw new NotImplementedException();
+            }
+
+            if (Negation != null)
             {
                 throw new NotImplementedException();
             }

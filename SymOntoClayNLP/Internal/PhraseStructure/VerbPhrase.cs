@@ -34,7 +34,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// <summary>
         /// Represents "not"
         /// </summary>
-        public bool Negation { get; set; }
+        public Word Negation { get; set; }
 
         /// <summary>
         /// Particle which modifies main verb.
@@ -66,7 +66,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             sb.PrintObjProp(n, nameof(Intrusion), Intrusion);
             sb.PrintObjProp(n, nameof(V), V);
             sb.PrintObjProp(n, nameof(VP), VP);
-            sb.AppendLine($"{spaces}{nameof(Negation)} = {Negation}");
+            sb.PrintObjProp(n, nameof(Negation), Negation);
             sb.PrintObjProp(n, nameof(Object), Object);
             sb.PrintObjListProp(n, nameof(PP), PP);
             sb.PrintObjProp(n, nameof(CP), CP);
@@ -105,7 +105,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
                 throw new NotImplementedException();
             }
 
-            if (Negation)
+            if (Negation != null)
             {
                 throw new NotImplementedException();
             }

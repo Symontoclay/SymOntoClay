@@ -11,11 +11,11 @@ namespace SymOntoClay.NLP.Internal.ATN
 {
     public class GlobalParserContext : IObjectToString
     {
-        public GlobalParserContext(INLPContext context, IWordsDict wordsDict, string text)
+        public GlobalParserContext(IEntityLogger logger, IWordsDict wordsDict, string text)
         {
-            _logger = context.Logger;
+            _logger = logger;
 
-            AddContext(new ParserContext(this, context, wordsDict, text));
+            AddContext(new ParserContext(this, logger, wordsDict, text));
         }
 
         private readonly IEntityLogger _logger;

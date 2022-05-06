@@ -10,14 +10,12 @@ namespace SymOntoClay.NLP.Internal.ATN
 {
     public class ATNParser
     {
-        public ATNParser(INLPContext context, IWordsDict wordsDict)
+        public ATNParser(IEntityLogger logger, IWordsDict wordsDict)
         {
-            _context = context;
             _wordsDict = wordsDict;
-            _logger = context.Logger;
+            _logger = logger;
         }
 
-        private readonly INLPContext _context;
         private readonly IWordsDict _wordsDict;
         private readonly IEntityLogger _logger;
 
@@ -27,7 +25,7 @@ namespace SymOntoClay.NLP.Internal.ATN
             //_logger.Log($"text = {text}");
 #endif
 
-            var globalContext = new GlobalParserContext(_context, _wordsDict, text);
+            var globalContext = new GlobalParserContext(_logger, _wordsDict, text);
 
             globalContext.Run();
 

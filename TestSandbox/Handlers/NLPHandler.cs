@@ -44,9 +44,9 @@ namespace TestSandbox.Handlers
         {
             _logger.Log("Begin");
 
-            //Case2();
+            Case2();
             //Case1();
-            Case0();
+            //Case0();
 
             _logger.Log("End");
         }
@@ -65,7 +65,7 @@ namespace TestSandbox.Handlers
 
             //globalContext.Run();
 
-            var parser = new ATNParser(_engineContext, _wordsDict);
+            var parser = new ATNParser(_engineContext.Logger, _wordsDict);
 
             var result = parser.Run(text);
 
@@ -73,7 +73,7 @@ namespace TestSandbox.Handlers
 
             foreach (var item in result)
             {
-                _logger.Log($"item = {item.ToDbgString()}");
+                _logger.Log($"item = '{item.ToDbgString()}'");
             }
         }
 

@@ -11,9 +11,9 @@ namespace SymOntoClay.NLP.Internal.ATN
 {
     public class ParserContext : IObjectToString
     {
-        public ParserContext(GlobalParserContext globalContext, INLPContext context, IWordsDict wordsDict, string text)
+        public ParserContext(GlobalParserContext globalContext, IEntityLogger logger, IWordsDict wordsDict, string text)
         {
-            _logger = context.Logger;
+            _logger = logger;
             _globalContext = globalContext;
 
             _lexer = new ATNLexer(text, wordsDict);

@@ -67,6 +67,8 @@ namespace TestSandbox.Handlers
 
             var parser = new ATNParser(_engineContext.Logger, _wordsDict);
 
+            var compactizer = new PhraseCompactizer(_engineContext.Logger, _wordsDict);
+
             var result = parser.Run(text);
 
             _logger.Log($"result.Count = {result.Count}");
@@ -74,6 +76,10 @@ namespace TestSandbox.Handlers
             foreach (var item in result)
             {
                 _logger.Log($"item = '{item.ToDbgString()}'");
+
+                compactizer.Run(item);
+
+                _logger.Log($"item (after) = '{item.ToDbgString()}'");
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.CommonDict;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -79,62 +80,74 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             var nextNextN = nextN + 4;
             var sb = new StringBuilder();
 
-            if(Mood != GrammaticalMood.Undefined)
+            var sbMark = new StringBuilder();
+
+            if(Mood != GrammaticalMood.Undefined || IsQuestion || IsNegation || Aspect != GrammaticalAspect.Undefined ||
+                Tense != GrammaticalTenses.Undefined || Voice != GrammaticalVoice.Undefined || AbilityModality != AbilityModality.Undefined ||
+                PermissionModality != PermissionModality.Undefined || ObligationModality != ObligationModality.Undefined ||
+                ProbabilityModality != ProbabilityModality.Undefined || ConditionalModality != ConditionalModality.Undefined)
             {
-                throw new NotImplementedException();
+                sbMark.Append(":(");
+
+                if (Mood != GrammaticalMood.Undefined)
+                {
+                    sbMark.Append(Mood);
+                }
+
+                if (IsQuestion)
+                {
+                    sbMark.Append($";{IsQuestion}");
+                }
+
+                if (IsNegation)
+                {
+                    sbMark.Append($";{IsNegation}");
+                }
+
+                if (Aspect != GrammaticalAspect.Undefined)
+                {
+                    sbMark.Append($";{Aspect}");
+                }
+
+                if (Tense != GrammaticalTenses.Undefined)
+                {
+                    sbMark.Append($";{Tense}");
+                }
+
+                if (Voice != GrammaticalVoice.Undefined)
+                {
+                    sbMark.Append($";{Voice}");
+                }
+
+                if (AbilityModality != AbilityModality.Undefined)
+                {
+                    sbMark.Append($";{AbilityModality}");
+                }
+
+                if (PermissionModality != PermissionModality.Undefined)
+                {
+                    sbMark.Append($";{PermissionModality}");
+                }
+
+                if (ObligationModality != ObligationModality.Undefined)
+                {
+                    sbMark.Append($";{ObligationModality}");
+                }
+
+                if (ProbabilityModality != ProbabilityModality.Undefined)
+                {
+                    sbMark.Append($";{ProbabilityModality}");
+                }
+
+                if (ConditionalModality != ConditionalModality.Undefined)
+                {
+                    sbMark.Append($";{ConditionalModality}");
+                }
+
+                sbMark.Append(")");
             }
 
-            if(IsQuestion)
-            {
-                throw new NotImplementedException();
-            }
-
-            if (IsNegation)
-            {
-                throw new NotImplementedException();
-            }
-
-            if (Aspect != GrammaticalAspect.Undefined)
-            {
-                throw new NotImplementedException();
-            }
-
-            if (Tense != GrammaticalTenses.Undefined)
-            {
-                throw new NotImplementedException();
-            }
-
-            if (Voice != GrammaticalVoice.Undefined)
-            {
-                throw new NotImplementedException();
-            }
-
-            if (AbilityModality != AbilityModality.Undefined)
-            {
-                throw new NotImplementedException();
-            }
-
-            if (PermissionModality != PermissionModality.Undefined)
-            {
-                throw new NotImplementedException();
-            }
-
-            if (ObligationModality != ObligationModality.Undefined)
-            {
-                throw new NotImplementedException();
-            }
-
-            if (ProbabilityModality != ProbabilityModality.Undefined)
-            {
-                throw new NotImplementedException();
-            }
-
-            if (ConditionalModality != ConditionalModality.Undefined)
-            {
-                throw new NotImplementedException();
-            }
-
-            sb.AppendLine($"{spaces}S");
+            sb.AppendLine($"{spaces}S{sbMark}");
 
             if(Condition != null)
             {

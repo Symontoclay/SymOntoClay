@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.CommonDict;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -105,47 +106,59 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             var nextNextN = nextN + 4;
             var sb = new StringBuilder();
 
-            if(Aspect != GrammaticalAspect.Undefined)
+            var sbMark = new StringBuilder();
+
+            if (Aspect != GrammaticalAspect.Undefined ||
+                Tense != GrammaticalTenses.Undefined || Voice != GrammaticalVoice.Undefined || AbilityModality != AbilityModality.Undefined ||
+                PermissionModality != PermissionModality.Undefined || ObligationModality != ObligationModality.Undefined ||
+                ProbabilityModality != ProbabilityModality.Undefined || ConditionalModality != ConditionalModality.Undefined)
             {
-                throw new NotImplementedException();
+                sbMark.Append(":(");
+
+                if (Aspect != GrammaticalAspect.Undefined)
+                {
+                    sbMark.Append($"{Aspect}");
+                }
+
+                if (Tense != GrammaticalTenses.Undefined)
+                {
+                    sbMark.Append($";{Tense}");
+                }
+
+                if (Voice != GrammaticalVoice.Undefined)
+                {
+                    sbMark.Append($";{Voice}");
+                }
+
+                if (AbilityModality != AbilityModality.Undefined)
+                {
+                    sbMark.Append($";{AbilityModality}");
+                }
+
+                if (PermissionModality != PermissionModality.Undefined)
+                {
+                    sbMark.Append($";{PermissionModality}");
+                }
+
+                if (ObligationModality != ObligationModality.Undefined)
+                {
+                    sbMark.Append($";{ObligationModality}");
+                }
+
+                if (ProbabilityModality != ProbabilityModality.Undefined)
+                {
+                    sbMark.Append($";{ProbabilityModality}");
+                }
+
+                if (ConditionalModality != ConditionalModality.Undefined)
+                {
+                    sbMark.Append($";{ConditionalModality}");
+                }
+
+                sbMark.Append(")");
             }
 
-            if (Tense != GrammaticalTenses.Undefined)
-            {
-                throw new NotImplementedException();
-            }
-
-            if (Voice != GrammaticalVoice.Undefined)
-            {
-                throw new NotImplementedException();
-            }
-
-            if (AbilityModality != AbilityModality.Undefined)
-            {
-                throw new NotImplementedException();
-            }
-
-            if (PermissionModality != PermissionModality.Undefined)
-            {
-                throw new NotImplementedException();
-            }
-
-            if (ObligationModality != ObligationModality.Undefined)
-            {
-                throw new NotImplementedException();
-            }
-
-            if (ProbabilityModality != ProbabilityModality.Undefined)
-            {
-                throw new NotImplementedException();
-            }
-
-            if (ConditionalModality != ConditionalModality.Undefined)
-            {
-                throw new NotImplementedException();
-            }
-
-            sb.AppendLine($"{spaces}VP");
+            sb.AppendLine($"{spaces}VP{sbMark}");
 
             if(Intrusion != null)
             {

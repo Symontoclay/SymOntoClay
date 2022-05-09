@@ -22,9 +22,10 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// <inheritdoc/>
         public override Sentence AsSentence => this;
 
+        public BaseSentenceItem VocativePhrase { get; set; }
         public BaseSentenceItem Condition { get; set; }
         public BaseSentenceItem Subject { get; set; }
-        public BaseSentenceItem Predicate { get; set; }
+        public BaseSentenceItem Predicate { get; set; }        
 
         public GrammaticalMood Mood { get; set; } = GrammaticalMood.Undefined;
 
@@ -46,9 +47,10 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintObjProp(n, nameof(VocativePhrase), VocativePhrase);
             sb.PrintObjProp(n, nameof(Condition), Condition);
             sb.PrintObjProp(n, nameof(Subject), Subject);
-            sb.PrintObjProp(n, nameof(Predicate), Predicate);
+            sb.PrintObjProp(n, nameof(Predicate), Predicate);            
 
             //sb.PrintObjProp(n, nameof(), );
 
@@ -149,7 +151,13 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
             sb.AppendLine($"{spaces}S{sbMark}");
 
-            if(Condition != null)
+            if (VocativePhrase != null)
+            {
+                sb.AppendLine($"{nextNspaces}Vocative:");
+                sb.Append(VocativePhrase.ToDbgString(nextNextN));
+            }
+
+            if (Condition != null)
             {
                 throw new NotImplementedException();
             }

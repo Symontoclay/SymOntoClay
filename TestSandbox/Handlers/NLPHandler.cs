@@ -69,6 +69,8 @@ namespace TestSandbox.Handlers
 
             var compactizer = new PhraseCompactizer(_engineContext.Logger, _wordsDict);
 
+            var converterToPlainSentences = new ConverterToPlainSentences(_engineContext.Logger);
+
             var result = parser.Run(text);
 
             _logger.Log($"result.Count = {result.Count}");
@@ -80,6 +82,15 @@ namespace TestSandbox.Handlers
                 compactizer.Run(item);
 
                 _logger.Log($"item (after) = '{item.ToDbgString()}'");
+
+                var plainSentencesList = converterToPlainSentences.Run(item);
+
+                _logger.Log($"plainSentencesList.Count = {plainSentencesList.Count}");
+
+                foreach(var plainSentence in plainSentencesList)
+                {
+                    _logger.Log($"plainSentence = '{plainSentence.ToDbgString()}'");
+                }
             }
         }
 

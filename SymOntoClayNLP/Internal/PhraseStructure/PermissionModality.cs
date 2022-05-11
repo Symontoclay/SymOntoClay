@@ -7,7 +7,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
     public enum PermissionModality
     {
         Undefined,
-        Not,
+        None,
         May,
         BeAllowedTo,
         BePermittedTo

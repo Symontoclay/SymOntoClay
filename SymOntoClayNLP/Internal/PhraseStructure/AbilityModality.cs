@@ -7,7 +7,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
     public enum AbilityModality
     {
         Undefined,
-        Not,
+        None,
         Can,
         Could,
         BeAbleTo

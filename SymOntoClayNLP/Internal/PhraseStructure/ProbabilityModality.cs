@@ -7,7 +7,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
     public enum ProbabilityModality
     {
         Undefined,
-        Not,
+        None,
         Might
     }
 }

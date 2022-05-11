@@ -7,7 +7,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
     public enum ObligationModality
     {
         Undefined,
-        Not,
+        None,
         Must,
         HaveTo,
         BeTo,

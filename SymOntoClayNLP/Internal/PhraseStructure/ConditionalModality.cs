@@ -7,7 +7,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
     public enum ConditionalModality
     {
         Undefined,
-        Not,
+        None,
         Would,
         Could,
         Should,

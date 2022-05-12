@@ -6,6 +6,9 @@ using System.Text;
 
 namespace SymOntoClay.NLP.Internal.Dot
 {
+    /// <summary>
+    /// You can see it by http://magjac.com/graphviz-visual-editor/.
+    /// </summary>
     public class DotConverter
     {
         public static string ConvertToString(ICGNode node)

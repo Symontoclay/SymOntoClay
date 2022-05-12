@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP.Internal.CG;
 using SymOntoClay.NLP.Internal.PhraseStructure;
 using System;
@@ -75,8 +76,9 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             verbAndObjectsMixRolesStorage.Assing(_verbsRolesStorage);
 
 #if DEBUG
-            //LogInstance.Log($"objectsRolesStorage = {objectsRolesStorage}");
-            //LogInstance.Log($"verbAndObjectsMix = {verbAndObjectsMixRolesStorage}");
+            Context.Logger.Log($"_objectsRolesStorage = {_objectsRolesStorage}");
+            Context.Logger.Log($"verbAndObjectsMix = {verbAndObjectsMixRolesStorage}");
+            Context.Logger.Log($"_verbFullLogicalMeaning = {_verbFullLogicalMeaning.WritePODListToString()}");
 #endif
 
             if (_verbFullLogicalMeaning.Contains("event") || _verbFullLogicalMeaning.Contains("state"))
@@ -88,7 +90,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
                     foreach (var entityConcept in entitiesList)
                     {
 #if DEBUG
-                        //LogInstance.Log($"entityConcept = {entityConcept}");
+                        Context.Logger.Log($"entityConcept = {entityConcept}");
 #endif
 
                         CreateObjectRelation(_concept, entityConcept);

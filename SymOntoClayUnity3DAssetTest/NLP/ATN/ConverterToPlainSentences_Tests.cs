@@ -41,22 +41,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP.ATN
 
             compactizer.Run(item);            
 
-            Assert.AreEqual(@"S:(Indicative;Simple;Present;Active)
-    Subject:
-        NP
-            N:
-                I
-    Predicate:
-        VP:(Simple;Present;Active)
-            V:
-                like
-            Object:
-                NP
-                    N:
-                        cat
-                    D:
-                        my", item.ToDbgString().Trim());
-
             var converterToPlainSentences = new ConverterToPlainSentences(_logger);
 
             var plainSentencesList = converterToPlainSentences.Run(item);

@@ -276,7 +276,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
         private void CreateDeterminerMark(ConceptCGNode concept, Word determiner)
         {
             var relationName = CGGramamaticalNamesOfRelations.DeterminerName;
-            var determinerConceptName = GetName(determiner);
+            var determinerConceptName = determiner.Content;//GetName(determiner);
 
             if (Context.RelationStorage.ContainsRelation(concept.Name, determinerConceptName, relationName))
             {

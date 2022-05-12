@@ -5,6 +5,7 @@ using SymOntoClay.NLP;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Dicts;
 using SymOntoClay.NLP.Internal.ATN;
+using SymOntoClay.NLP.Internal.ConvertingCGToInternal;
 using SymOntoClay.NLP.Internal.Dot;
 using SymOntoClay.NLP.Internal.PhraseToCGParsing;
 using SymOntoClay.UnityAsset.Core.Internal;
@@ -75,6 +76,8 @@ namespace TestSandbox.Handlers
 
             var semanticAnalyzer = new SemanticAnalyzer(_engineContext.Logger, _wordsDict);
 
+            var convertorCGToInternal = new ConvertorCGToInternal(_engineContext.Logger);
+
             var result = parser.Run(text);
 
             _logger.Log($"result.Count = {result.Count}");
@@ -100,6 +103,12 @@ namespace TestSandbox.Handlers
                     var conceptualGraphDbgStr = DotConverter.ConvertToString(conceptualGraph);
 
                     _logger.Log($"conceptualGraphDbgStr = '{conceptualGraphDbgStr}'");
+
+                    var internalCG = convertorCGToInternal.Convert(conceptualGraph);
+
+                    var dotStr = DotConverter.ConvertToString(internalCG);
+
+                    _logger.Log($"dotStr = '{dotStr}'");
                 }
             }
         }

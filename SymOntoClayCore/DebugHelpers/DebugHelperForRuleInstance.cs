@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
@@ -34,6 +35,10 @@ namespace SymOntoClay.Core.DebugHelpers
     public static class DebugHelperForRuleInstance
     {
         private static readonly CultureInfo _cultureInfo = new CultureInfo("en-GB");
+
+#if DEBUG
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
 
         public static string ToString(RuleInstance source)
         {
@@ -116,6 +121,11 @@ namespace SymOntoClay.Core.DebugHelpers
 
         public static string ToString(LogicalQueryNode expr)
         {
+            if(expr == null)
+            {
+                return string.Empty;
+            }
+
             switch (expr.Kind)
             {
                 case KindOfLogicalQueryNode.UnaryOperator:
@@ -227,13 +237,21 @@ namespace SymOntoClay.Core.DebugHelpers
 
         private static string RelationToString(LogicalQueryNode expr)
         {
+#if DEBUG
+        _gbcLogger.Info($"expr.Name.NameValue = {expr.Name.NameValue}");
+#endif
+
             var sb = new StringBuilder();
 
             sb.Append($"{expr.Name.NameValue}(");
 
             var resultParamsList = new List<string>();
 
-            foreach(var param in expr.ParamsList)
+#if DEBUG
+            _gbcLogger.Info($"expr.ParamsList.Count = {expr.ParamsList.Count}");
+#endif
+
+            foreach (var param in expr.ParamsList)
             {
                 resultParamsList.Add(ToString(param));
             }

@@ -340,9 +340,19 @@ namespace SymOntoClay.Core.DebugHelpers
                 case KindOfValue.WaypointValue:
                     return WaypointValueToString(value);
 
+                case KindOfValue.ConditionalEntitySourceValue:
+                    return ConditionalEntitySourceValueToString(value);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(value.KindOfValue), value.KindOfValue, null);
             }
+        }
+
+        private static string ConditionalEntitySourceValueToString(Value value)
+        {
+            var sb = new StringBuilder(value.ToDbgString());
+            sb.Append(AnnotatedItemToString(value));
+            return sb.ToString();
         }
 
         private static string WaypointValueToString(Value value)

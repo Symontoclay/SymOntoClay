@@ -241,8 +241,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
                     resultPrimaryRolesDict.Add(logicalMeaning, _concept);
                 }
             }
-
-
         }
 
         private void ProcessDAsBaseSentenceItem(BaseSentenceItem sentenceItem, ResultOfNodeOfSemanticAnalyzer result)
@@ -276,7 +274,22 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
         private void CreateDeterminerMark(ConceptCGNode concept, Word determiner)
         {
             var relationName = CGGramamaticalNamesOfRelations.DeterminerName;
-            var determinerConceptName = determiner.Content;//GetName(determiner);
+
+            if (IsPossesDeterminer(determiner))
+            {
+                CreatePossessMark(concept, determiner);
+                return;
+            }
+
+#if DEBUG
+            Context.Logger.Log($"relationName = {relationName}");
+#endif
+
+            var determinerConceptName = GetName(determiner);
+
+#if DEBUG
+            Context.Logger.Log($"determinerConceptName = {determinerConceptName}");
+#endif
 
             if (Context.RelationStorage.ContainsRelation(concept.Name, determinerConceptName, relationName))
             {
@@ -299,6 +312,63 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             Context.RelationStorage.AddRelation(concept.Name, determinerConceptName, relationName);
 
             MarkAsEntityCondition(determinerRelation);
+        }
+
+        private void CreatePossessMark(ConceptCGNode concept, Word determiner)
+        {
+            var relationName = SpecialNamesOfRelations.PossessName;
+
+#if DEBUG
+            Context.Logger.Log($"relationName = {relationName}");
+#endif
+
+            var determinerConceptName = GetName(determiner);
+
+#if DEBUG
+            Context.Logger.Log($"determinerConceptName = {determinerConceptName}");
+#endif
+
+            if (Context.RelationStorage.ContainsRelation(determinerConceptName, concept.Name, relationName))
+            {
+                return;
+            }
+
+            var conceptualGraph = Context.ConceptualGraph;
+
+            var determinerConcept = new ConceptCGNode();
+            determinerConcept.Parent = conceptualGraph;
+            determinerConcept.Name = determinerConceptName;
+
+            var determinerRelation = new RelationCGNode();
+            determinerRelation.Parent = conceptualGraph;
+            determinerRelation.Name = relationName;
+
+            determinerConcept.AddOutputNode(determinerRelation);
+            determinerRelation.AddOutputNode(concept);
+
+            Context.RelationStorage.AddRelation(determinerConceptName, concept.Name, relationName);
+
+            MarkAsEntityCondition(determinerRelation);
+
+            //throw new NotImplementedException();
+        }
+
+        public bool IsPossesDeterminer(Word determiner)
+        {
+            switch(determiner.Content)
+            {
+                case "my":
+                case "our":
+                case "your":
+                case "his":
+                case "her":
+                case "its":
+                case "their":
+                    return true;
+
+                default:
+                    return false;
+            }
         }
     }
 }

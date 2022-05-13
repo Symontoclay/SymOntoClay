@@ -159,8 +159,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             var annotationsList = ruleInstance.GetAllAnnotations();
 
 #if DEBUG
-            //_gbcLogger.Info($"ruleInstance = {ruleInstance}");
-            ////_gbcLogger.Info($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+            //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+            //Log($"ruleInstance = {ruleInstance}");            
             //Log($"annotationsList = {annotationsList.WriteListToString()}");
 #endif
 

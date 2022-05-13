@@ -6,9 +6,11 @@ using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Dicts;
 using SymOntoClay.NLP.Internal.ATN;
 using SymOntoClay.NLP.Internal.ConvertingCGToInternal;
+using SymOntoClay.NLP.Internal.ConvertingInternalCGToFact;
 using SymOntoClay.NLP.Internal.Dot;
 using SymOntoClay.NLP.Internal.PhraseToCGParsing;
 using SymOntoClay.UnityAsset.Core.Internal;
+using SymOntoClay.UnityAsset.Core.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -78,6 +80,8 @@ namespace TestSandbox.Handlers
 
             var convertorCGToInternal = new ConvertorCGToInternal(_engineContext.Logger);
 
+            var converterInternalCGToFact = new ConverterInternalCGToFact(_engineContext.Logger);
+
             var result = parser.Run(text);
 
             _logger.Log($"result.Count = {result.Count}");
@@ -104,11 +108,22 @@ namespace TestSandbox.Handlers
 
                     _logger.Log($"conceptualGraphDbgStr = '{conceptualGraphDbgStr}'");
 
+                    //_logger.Log($"conceptualGraphDbgStr.DeepTrim() = '{conceptualGraphDbgStr.DeepTrim()}'");
+
                     var internalCG = convertorCGToInternal.Convert(conceptualGraph);
 
                     var dotStr = DotConverter.ConvertToString(internalCG);
 
                     _logger.Log($"dotStr = '{dotStr}'");
+
+                    var ruleInstancesList = converterInternalCGToFact.ConvertConceptualGraph(internalCG);
+
+                    _logger.Log($"ruleInstancesList.Count = {ruleInstancesList.Count}");
+
+                    foreach (var ruleInstance in ruleInstancesList)
+                    {
+                        _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString()}");
+                    }
                 }
             }
         }

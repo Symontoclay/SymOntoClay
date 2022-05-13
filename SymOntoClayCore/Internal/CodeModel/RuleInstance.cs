@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public IList<SecondaryRulePart> SecondaryParts { get; set; } = new List<SecondaryRulePart>();
         
         public List<StrongIdentifierValue> UsedKeysList { get; set; }
-
+        
         public RuleInstance Original { get; set; }
         public RuleInstance Normalized { get; set; }
 

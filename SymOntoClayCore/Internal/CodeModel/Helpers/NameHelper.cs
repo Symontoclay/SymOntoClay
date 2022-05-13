@@ -35,6 +35,11 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             return $"#{Guid.NewGuid():D}";
         }
 
+        public static string GetNewRuleOrFactNameString()
+        {
+            return $"#^{Guid.NewGuid():D}";
+        }
+
         public static string ConvertNameToId(string source)
         {
             if(string.IsNullOrWhiteSpace(source))
@@ -57,7 +62,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 
         public static StrongIdentifierValue CreateRuleOrFactName()
         {
-            return CreateEntityName();
+            var text = GetNewRuleOrFactNameString();
+            return CreateName(text);
         }
 
         public static StrongIdentifierValue CreateEntityName()
@@ -103,6 +109,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             else if (text.StartsWith("##"))
             {
                 name.KindOfName = KindOfName.EntityRefByConcept;
+            }
+            else if (text.StartsWith("#^"))
+            {
+                name.KindOfName = KindOfName.RuleOrFact;
             }
             else if (text.StartsWith("@"))
             {

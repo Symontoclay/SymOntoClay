@@ -334,5 +334,48 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case8()
+        {
+            var text = @"app PeaceKeeper
+{
+    {: like(i, #@{: >: { cat($_) & possess(i, $_) } :}) :}
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+
+        select {: like(i, $x) :} >> @>log;
+
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = #@{:"), true);
+                            Assert.AreEqual(message.Contains(">: { cat($_) & possess(i,$_) } :}"), true);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

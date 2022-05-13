@@ -12,6 +12,7 @@ namespace SymOntoClay.NLP.Internal
         public const string AgentRelationName = "agent";
         public const string ActionRelationName = "action";
         public const string AdresatRelationName = "adresat";
+        public const string PossessName = "possess";
         public const string CommandRelationName = "command";
     }
 }

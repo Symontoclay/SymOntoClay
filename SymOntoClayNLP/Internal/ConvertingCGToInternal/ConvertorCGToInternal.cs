@@ -503,7 +503,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
             var entityCondition = new InternalConceptualGraph();
             entityCondition.Parent = parent;
             entityCondition.KindOfGraphOrConcept = KindOfInternalGraphOrConceptNode.EntityCondition;
-            var entityConditionName = NameHelper.CreateEntityName().NameValue;
+            var entityConditionName = NameHelper.CreateRuleOrFactName().NameValue;
             entityCondition.Name = entityConditionName;
 
             var entityConditionsDict = context.EntityConditionsDict;

@@ -71,9 +71,9 @@ n_3[shape=ellipse,label=""object""];
 n_4[shape=ellipse,label=""experiencer""];
 n_5[shape=ellipse,label=""state""];
 subgraph cluster_2{
-n_7[shape=box,label=""cat""];
-n_8[shape=box,label=""my""];
-n_6[shape=ellipse,label=""determiner""];
+n_7[shape=box,label=""i""];
+n_8[shape=box,label=""cat""];
+n_6[shape=ellipse,label=""possess""];
 n_6 -> n_8;
 n_7 -> n_6;
 }
@@ -84,7 +84,7 @@ n_2 -> n_3;
 n_3 -> n_6[lhead=cluster_2];
 n_4 -> n_1;
 n_5 -> n_2;
-}", dotStr.Trim());
+}".DeepTrim(), dotStr.DeepTrim());
         }
     }
 }

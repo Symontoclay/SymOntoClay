@@ -31,6 +31,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         Unknown,
         Concept,
         Entity,
+        RuleOrFact,
         EntityCondition,
         AnonymousEntityCondition,
         EntityRefByConcept,

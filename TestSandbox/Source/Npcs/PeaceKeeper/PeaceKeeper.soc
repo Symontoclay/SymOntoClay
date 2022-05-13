@@ -1,25 +1,13 @@
 ﻿app PeaceKeeper
 {
-    fun a(@param_1)
-    {
-        '`a` (1) has been called!' >> @>log;
-        @param_1 >> @>log;
-    }
-
-    fun a(@param_1, @param_2)
-    {
-        '`a` (2) has been called!' >> @>log;
-        @param_1 >> @>log;
-        @param_2 >> @>log;
-    }
+    {: like(i, #@{: >: { cat($_) & possess(i, $_) } :}) :}
 
     on Enter =>
     {
         'Begin' >> @>log;
-        @param_1 = 12;
 
-        a(@param_1);
-        a(@param_1: 3, @param_2: 'Hi');
+        select {: like(i, $x) :} >> @>log;
+
         'End' >> @>log;
     }
-
+}

@@ -22,7 +22,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
         public ResultOfNodeOfSemanticAnalyzer Run()
         {
 #if DEBUG
-            Context.Logger.Log($"_sentence = {_sentence.ToDbgString()}");
+            //Context.Logger.Log($"_sentence = {_sentence.ToDbgString()}");
 #endif
 
             var result = new ResultOfNodeOfSemanticAnalyzer();
@@ -39,10 +39,10 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             if (_sentence.VocativePhrase != null)
             {
 #if DEBUG
-                Context.Logger.Log($"_sentence.VocativePhrase = {_sentence.VocativePhrase}");
+                //Context.Logger.Log($"_sentence.VocativePhrase = {_sentence.VocativePhrase}");
 #endif
 
-                var vocativeNode = new NounPhraseNodeOfSemanticAnalyzer(Context, _sentence, _sentence.VocativePhrase.AsNounPhrase);
+                var vocativeNode = new NounPhraseNodeOfSemanticAnalyzer(Context, _sentence.VocativePhrase.AsNounPhrase);
                 var vocativeResult = vocativeNode.Run();
 
 #if DEBUG
@@ -65,35 +65,35 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             var subject = _sentence.Subject.AsNounPhrase;
 
 #if DEBUG
-            Context.Logger.Log($"subject = {subject}");
+            //Context.Logger.Log($"subject = {subject}");
 #endif
 
             ResultOfNodeOfSemanticAnalyzer subjectResult = null;
 
             if (subject != null)
             {
-                var subjectNode = new NounPhraseNodeOfSemanticAnalyzer(Context, _sentence, subject);
+                var subjectNode = new NounPhraseNodeOfSemanticAnalyzer(Context, subject);
                 subjectResult = subjectNode.Run();
 
 #if DEBUG
-                Context.Logger.Log($"subjectResult = {subjectResult}");
+                //Context.Logger.Log($"subjectResult = {subjectResult}");
 #endif
             }
 
             var rootVerb = _sentence.Predicate.AsVerbPhrase;
 
 #if DEBUG
-            Context.Logger.Log($"rootVerb = {rootVerb}");
+            //Context.Logger.Log($"rootVerb = {rootVerb}");
 #endif
 
             ResultOfNodeOfSemanticAnalyzer verbResult = null;
 
             if (rootVerb != null)
             {
-                var verbNode = new VerbPhraseNodeOfSemanticAnalyzer(Context, _sentence, rootVerb);
+                var verbNode = new VerbPhraseNodeOfSemanticAnalyzer(Context, rootVerb);
                 verbResult = verbNode.Run();
 #if DEBUG
-                Context.Logger.Log($"verbResult = {verbResult}");
+                //Context.Logger.Log($"verbResult = {verbResult}");
 #endif
 
                 if (_sentence.Mood == GrammaticalMood.Imperative)
@@ -156,7 +156,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             var aspectName = GrammaticalElementsHelper.GetAspectName(_sentence.Aspect);
 
 #if DEBUG
-            Context.Logger.Log($"aspectName = {aspectName}");
+            //Context.Logger.Log($"aspectName = {aspectName}");
 #endif
 
             if (!string.IsNullOrWhiteSpace(aspectName))
@@ -176,7 +176,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             var tenseName = GrammaticalElementsHelper.GetTenseName(_sentence.Tense);
 
 #if DEBUG
-            Context.Logger.Log($"tenseName = {tenseName}");
+            //Context.Logger.Log($"tenseName = {tenseName}");
 #endif 
 
             if (!string.IsNullOrWhiteSpace(tenseName))
@@ -196,7 +196,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             var voiceName = GrammaticalElementsHelper.GetVoiceName(_sentence.Voice);
 
 #if DEBUG
-            Context.Logger.Log($"voiceName = {voiceName}");
+            //Context.Logger.Log($"voiceName = {voiceName}");
 #endif
             if (!string.IsNullOrWhiteSpace(voiceName))
             {
@@ -215,7 +215,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             var moodName = GrammaticalElementsHelper.GetMoodName(_sentence.Mood);
 
 #if DEBUG
-            Context.Logger.Log($"moodName = {moodName}");
+            //Context.Logger.Log($"moodName = {moodName}");
 #endif
 
             if (!string.IsNullOrWhiteSpace(moodName))
@@ -235,7 +235,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             var abilityModalityName = GrammaticalElementsHelper.GetAbilityModalityName(_sentence.AbilityModality);
 
 #if DEBUG
-            Context.Logger.Log($"abilityModalityName = {abilityModalityName}");
+            //Context.Logger.Log($"abilityModalityName = {abilityModalityName}");
 #endif
 
             if (!string.IsNullOrWhiteSpace(abilityModalityName))
@@ -255,7 +255,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             var permissionModalityName = GrammaticalElementsHelper.GetPermissionModalityName(_sentence.PermissionModality);
 
 #if DEBUG
-            Context.Logger.Log($"permissionModalityName = {permissionModalityName}");
+            //Context.Logger.Log($"permissionModalityName = {permissionModalityName}");
 #endif
 
             if (!string.IsNullOrWhiteSpace(permissionModalityName))
@@ -275,7 +275,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             var obligationModalityName = GrammaticalElementsHelper.GetObligationModalityName(_sentence.ObligationModality);
 
 #if DEBUG
-            Context.Logger.Log($"obligationModalityName = {obligationModalityName}");
+            //Context.Logger.Log($"obligationModalityName = {obligationModalityName}");
 #endif
 
             if (!string.IsNullOrWhiteSpace(obligationModalityName))
@@ -295,7 +295,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             var probabilityModalityName = GrammaticalElementsHelper.GetProbabilityModalityName(_sentence.ProbabilityModality);
 
 #if DEBUG
-            Context.Logger.Log($"probabilityModalityName = {probabilityModalityName}");
+            //Context.Logger.Log($"probabilityModalityName = {probabilityModalityName}");
 #endif
 
             if (!string.IsNullOrWhiteSpace(probabilityModalityName))
@@ -315,7 +315,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             var conditionalModalityName = GrammaticalElementsHelper.GetConditionalModalityName(_sentence.ConditionalModality);
 
 #if DEBUG
-            Context.Logger.Log($"conditionalModalityName = {conditionalModalityName}");
+            //Context.Logger.Log($"conditionalModalityName = {conditionalModalityName}");
 #endif
 
             if (!string.IsNullOrWhiteSpace(conditionalModalityName))
@@ -393,8 +393,8 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
         private void CreateExperiencerRelation(ConceptCGNode verbConcept, ConceptCGNode nounConcept)
         {
 #if DEBUG
-            Context.Logger.Log($"verbConcept = {verbConcept}");
-            Context.Logger.Log($"nounConcept = {nounConcept}");
+            //Context.Logger.Log($"verbConcept = {verbConcept}");
+            //Context.Logger.Log($"nounConcept = {nounConcept}");
 #endif
 
             var relationName = SpecialNamesOfRelations.ExperiencerRelationName;

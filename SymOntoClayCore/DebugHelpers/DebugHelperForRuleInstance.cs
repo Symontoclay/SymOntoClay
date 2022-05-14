@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.DebugHelpers
         private static readonly CultureInfo _cultureInfo = new CultureInfo("en-GB");
 
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static string ToString(RuleInstance source)
@@ -79,7 +79,7 @@ namespace SymOntoClay.Core.DebugHelpers
             var sb = new StringBuilder();
             sb.Append(" >: { ");
 
-            sb.Append(ToString(primaryRulePart.Expression));
+            sb.Append(ToString(primaryRulePart?.Expression));
 
             sb.Append(" }");
             sb.Append(AnnotatedItemToString(primaryRulePart));
@@ -121,7 +121,7 @@ namespace SymOntoClay.Core.DebugHelpers
 
         public static string ToString(LogicalQueryNode expr)
         {
-            if(expr == null)
+            if (expr == null)
             {
                 return string.Empty;
             }
@@ -237,19 +237,11 @@ namespace SymOntoClay.Core.DebugHelpers
 
         private static string RelationToString(LogicalQueryNode expr)
         {
-#if DEBUG
-        _gbcLogger.Info($"expr.Name.NameValue = {expr.Name.NameValue}");
-#endif
-
             var sb = new StringBuilder();
 
             sb.Append($"{expr.Name.NameValue}(");
 
             var resultParamsList = new List<string>();
-
-#if DEBUG
-            _gbcLogger.Info($"expr.ParamsList.Count = {expr.ParamsList.Count}");
-#endif
 
             foreach (var param in expr.ParamsList)
             {
@@ -285,6 +277,11 @@ namespace SymOntoClay.Core.DebugHelpers
 
         public static string AnnotatedItemToString(AnnotatedItem source)
         {
+            if(source == null)
+            {
+                return string.Empty;
+            }
+
             var sb = new StringBuilder();
 
             if (source.HasModalitiesOrSections)

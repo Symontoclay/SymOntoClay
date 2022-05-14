@@ -10,21 +10,19 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 {
     public class NounPhraseNodeOfSemanticAnalyzer: BaseNodeOfSemanticAnalyzer
     {
-        public NounPhraseNodeOfSemanticAnalyzer(ContextOfSemanticAnalyzer context, Sentence sentence, NounPhrase nounPhrase)
+        public NounPhraseNodeOfSemanticAnalyzer(ContextOfSemanticAnalyzer context, NounPhrase nounPhrase)
             : base(context)
         {
-            _sentence = sentence;
             _nounPhrase = nounPhrase;
         }
 
-        private Sentence _sentence;
         private NounPhrase _nounPhrase;
         private ConceptCGNode _concept;
 
         public ResultOfNodeOfSemanticAnalyzer Run()
         {
 #if DEBUG
-            Context.Logger.Log($"_nounPhrase = {_nounPhrase}");
+            //Context.Logger.Log($"_nounPhrase = {_nounPhrase}");
 #endif
 
             var result = new ResultOfNodeOfSemanticAnalyzer();            
@@ -159,8 +157,8 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             //            }
 
 #if DEBUG
-            Context.Logger.Log($"PrimaryRolesDict = {PrimaryRolesDict}");
-            Context.Logger.Log("End");
+            //Context.Logger.Log($"PrimaryRolesDict = {PrimaryRolesDict}");
+            //Context.Logger.Log("End");
 #endif
 
             return result;
@@ -171,7 +169,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             var kindOfSentenceItem = sentenceItem.KindOfSentenceItem;
 
 #if DEBUG
-            Context.Logger.Log($"kindOfSentenceItem = {kindOfSentenceItem}");
+            //Context.Logger.Log($"kindOfSentenceItem = {kindOfSentenceItem}");
 #endif
 
             switch (kindOfSentenceItem)
@@ -188,7 +186,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
         private void ProcessNAsWord(Word word, ResultOfNodeOfSemanticAnalyzer result)
         {
 #if DEBUG
-            Context.Logger.Log($"word = {word}");
+            //Context.Logger.Log($"word = {word}");
 #endif
 
             var conceptualGraph = Context.ConceptualGraph;
@@ -234,7 +232,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
                 foreach (var logicalMeaning in nounFullLogicalMeaning)
                 {
 #if DEBUG
-                    Context.Logger.Log($"logicalMeaning = {logicalMeaning}");
+                    //Context.Logger.Log($"logicalMeaning = {logicalMeaning}");
 #endif
 
                     PrimaryRolesDict.Add(logicalMeaning, _concept);
@@ -248,7 +246,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             var kindOfSentenceItem = sentenceItem.KindOfSentenceItem;
 
 #if DEBUG
-            Context.Logger.Log($"kindOfSentenceItem = {kindOfSentenceItem}");
+            //Context.Logger.Log($"kindOfSentenceItem = {kindOfSentenceItem}");
 #endif
 
             switch (kindOfSentenceItem)
@@ -265,7 +263,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
         private void ProcessDAsWord(Word word, ResultOfNodeOfSemanticAnalyzer result)
         {
 #if DEBUG
-            Context.Logger.Log($"word = {word}");
+            //Context.Logger.Log($"word = {word}");
 #endif
 
             CreateDeterminerMark(_concept, word);
@@ -282,13 +280,13 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             }
 
 #if DEBUG
-            Context.Logger.Log($"relationName = {relationName}");
+            //Context.Logger.Log($"relationName = {relationName}");
 #endif
 
             var determinerConceptName = GetName(determiner);
 
 #if DEBUG
-            Context.Logger.Log($"determinerConceptName = {determinerConceptName}");
+            //Context.Logger.Log($"determinerConceptName = {determinerConceptName}");
 #endif
 
             if (Context.RelationStorage.ContainsRelation(concept.Name, determinerConceptName, relationName))
@@ -319,13 +317,13 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             var relationName = SpecialNamesOfRelations.PossessName;
 
 #if DEBUG
-            Context.Logger.Log($"relationName = {relationName}");
+            //Context.Logger.Log($"relationName = {relationName}");
 #endif
 
             var determinerConceptName = GetName(determiner);
 
 #if DEBUG
-            Context.Logger.Log($"determinerConceptName = {determinerConceptName}");
+            //Context.Logger.Log($"determinerConceptName = {determinerConceptName}");
 #endif
 
             if (Context.RelationStorage.ContainsRelation(determinerConceptName, concept.Name, relationName))

@@ -122,6 +122,7 @@ namespace TestSandbox.Handlers
 
                     foreach (var ruleInstance in ruleInstancesList)
                     {
+                        _logger.Log($"ruleInstance.KindOfRuleInstance = {ruleInstance.KindOfRuleInstance}");
                         _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString()}");
                     }
                 }

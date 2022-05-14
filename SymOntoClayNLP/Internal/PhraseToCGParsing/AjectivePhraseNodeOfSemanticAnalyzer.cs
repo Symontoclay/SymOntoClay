@@ -8,14 +8,12 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 {
     public class AjectivePhraseNodeOfSemanticAnalyzer : BaseNodeOfSemanticAnalyzer
     {
-        public AjectivePhraseNodeOfSemanticAnalyzer(ContextOfSemanticAnalyzer context, Sentence sentence, AdjectivePhrase adjectivePhrase)
+        public AjectivePhraseNodeOfSemanticAnalyzer(ContextOfSemanticAnalyzer context, AdjectivePhrase adjectivePhrase)
             : base(context)
         {
-            _sentence = sentence;
             _adjectivePhrase = adjectivePhrase;
         }
 
-        private Sentence _sentence;
         private AdjectivePhrase _adjectivePhrase;
         private ConceptCGNode _concept;
 

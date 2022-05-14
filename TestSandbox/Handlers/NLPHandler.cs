@@ -112,6 +112,8 @@ namespace TestSandbox.Handlers
 
                     var internalCG = convertorCGToInternal.Convert(conceptualGraph);
 
+                    _logger.Log($"internalCG = {internalCG}");
+
                     var dotStr = DotConverter.ConvertToString(internalCG);
 
                     _logger.Log($"dotStr = '{dotStr}'");

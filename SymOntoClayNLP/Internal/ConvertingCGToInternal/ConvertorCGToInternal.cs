@@ -254,7 +254,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
             var parent = concept.Parent;
 
 #if DEBUG
-            //LogInstance.Log($"objectRelationsList.Count = {objectRelationsList.Count}");
+            _logger.Log($"objectRelationsList.Count = {objectRelationsList.Count}");
 #endif
 
             if (objectRelationsList.Count == 0)
@@ -497,7 +497,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
         private void CreateEntityCondition(InternalConceptualGraph parent, List<BaseCGNode> sourceItems, ContextOfConvertingCGToInternal context)
         {
 #if DEBUG
-            //LogInstance.Log($"sourceItems.Count = {sourceItems.Count}");
+            _logger.Log($"sourceItems.Count = {sourceItems.Count}");
 #endif
 
             var entityCondition = new InternalConceptualGraph();
@@ -1245,7 +1245,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
         private InternalConceptCGNode ConvertConcept(ConceptCGNode source, InternalConceptualGraph targetParent, ContextOfConvertingCGToInternal context)
         {
 #if DEBUG
-            //LogInstance.Log($"source = {source}");
+            //_logger.Log($"source = {source}");
+            //_logger.Log($"targetParent == null = {targetParent == null}");
 #endif
 
             if (context.ConceptsDict.ContainsKey(source))
@@ -1271,13 +1272,26 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
             FillName(source, result, context);
 
+            if(!source.InputNodes.IsNullOrEmpty() && source.InputNodes.Any(p => p.Name == SpecialNamesOfRelations.ObjectRelationName))
+            {
+                result.IsRootConceptOfEntitiCondition = true;
+            }
+
+#if DEBUG
+            //if(source.Name == "cat")
+            //{
+            //    _logger.Log($"result = {result}");
+            //}
+#endif
+
             return result;
         }
 
         private InternalRelationCGNode ConvertRelation(RelationCGNode source, InternalConceptualGraph targetParent, ContextOfConvertingCGToInternal context)
         {
 #if DEBUG
-            //LogInstance.Log($"source = {source}");
+            //_logger.Log($"source = {source}");
+            //_logger.Log($"targetParent == null = {targetParent == null}");
 #endif
 
             if (context.RelationsDict.ContainsKey(source))

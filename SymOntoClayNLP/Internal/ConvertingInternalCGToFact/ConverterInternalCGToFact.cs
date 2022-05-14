@@ -463,50 +463,101 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
                 _logger.Log($"initRelation = {initRelation}");
 #endif
 
-                var inputNode = initRelation.Inputs.Where(p => p.IsGraphOrConceptNode).Select(p => p.AsGraphOrConceptNode).FirstOrDefault();
+                var inputNodesList = initRelation.Inputs.Where(p => p.IsConceptNode).Select(p => p.AsConceptNode).ToList();
 
-#if DEBUG
-                _logger.Log($"inputNode = {inputNode}");
-#endif
+                var outputNodesList = initRelation.Outputs.Where(p => p.IsConceptNode).Select(p => p.AsConceptNode).ToList();
 
-                var kindOfInputNode = inputNode.KindOfGraphOrConcept;
+                var allNodesList = inputNodesList.Concat(outputNodesList);
 
-#if DEBUG
-                _logger.Log($"kindOfInputNode = {kindOfInputNode}");
-#endif
-
-                switch (kindOfInputNode)
+                foreach(var inputNode in allNodesList)
                 {
-                    case KindOfInternalGraphOrConceptNode.Concept:
-                        {
-                            var conceptName = inputNode.Name;
-
 #if DEBUG
-                            _logger.Log($"conceptName = {conceptName}");
+                    _logger.Log($"inputNode = {inputNode}");
 #endif
 
-                            //if(conceptName == "_someone")
-                            //{
-                            //    break;
-                            //}
+                    var conceptName = inputNode.Name;
 
-                            if (/*conceptName != "i" ||*/ !conceptsNamesDict.ContainsKey(conceptName))
-                            {
-                                n++;
+#if DEBUG
+                    _logger.Log($"conceptName = {conceptName}");
+#endif
 
-                                var varName = $"$X{n}";
-                                conceptsNamesDict[conceptName] = varName;
+                    //if(conceptName == "_someone")
+                    //{
+                    //    break;
+                    //}
 
-                                //var varQuant_1 = new VarExpressionNode();
-                                //varQuant_1.Quantifier = KindOfQuantifier.Existential;
-                                //varQuant_1.Name = varName;
-                                //variablesQuantification.Items.Add(varQuant_1);
-                            }
+                    if (conceptName != "i" && !conceptsNamesDict.ContainsKey(conceptName))
+                    {
+                        var varName = string.Empty;
+
+                        if (inputNode.IsRootConceptOfEntitiCondition)
+                        {
+                            varName = "$_";
                         }
-                        break;
+                        else
+                        {
+                            n++;
 
-                    default: throw new ArgumentOutOfRangeException(nameof(kindOfInputNode), kindOfInputNode, null);
+                            varName = $"$X{n}";
+                        }
+
+                        conceptsNamesDict[conceptName] = varName;
+
+#if DEBUG
+                        _logger.Log($"varName = {varName}");
+#endif
+
+                        //var varQuant_1 = new VarExpressionNode();
+                        //varQuant_1.Quantifier = KindOfQuantifier.Existential;
+                        //varQuant_1.Name = varName;
+                        //variablesQuantification.Items.Add(varQuant_1);
+                    }
                 }
+
+                //                var inputNode = initRelation.Inputs.Where(p => p.IsGraphOrConceptNode).Select(p => p.AsGraphOrConceptNode).FirstOrDefault();
+
+                //#if DEBUG
+                //                _logger.Log($"inputNode = {inputNode}");
+                //#endif
+
+                //                var kindOfInputNode = inputNode.KindOfGraphOrConcept;
+
+                //#if DEBUG
+                //                _logger.Log($"kindOfInputNode = {kindOfInputNode}");
+                //#endif
+
+                //                switch (kindOfInputNode)
+                //                {
+                //                    case KindOfInternalGraphOrConceptNode.Concept:
+                //                        {
+                //                            var conceptName = inputNode.Name;
+
+                //#if DEBUG
+                //                            _logger.Log($"conceptName = {conceptName}");
+                //#endif
+
+                //                            //if(conceptName == "_someone")
+                //                            //{
+                //                            //    break;
+                //                            //}
+
+                //                            if (/*conceptName != "i" ||*/ !conceptsNamesDict.ContainsKey(conceptName))
+                //                            {
+                //                                n++;
+
+                //                                var varName = $"$X{n}";
+                //                                conceptsNamesDict[conceptName] = varName;
+
+                //                                //var varQuant_1 = new VarExpressionNode();
+                //                                //varQuant_1.Quantifier = KindOfQuantifier.Existential;
+                //                                //varQuant_1.Name = varName;
+                //                                //variablesQuantification.Items.Add(varQuant_1);
+                //                            }
+                //                        }
+                //                        break;
+
+                //                    default: throw new ArgumentOutOfRangeException(nameof(kindOfInputNode), kindOfInputNode, null);
+                //                }
             }
 
             foreach (var initRelation in initRelationsList)

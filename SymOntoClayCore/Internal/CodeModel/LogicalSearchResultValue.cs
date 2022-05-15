@@ -131,9 +131,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override string ToHumanizedString()
+        public override string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
         {
-            return DebugHelperForLogicalSearchResult.ToString(LogicalSearchResult);
+            return DebugHelperForLogicalSearchResult.ToString(LogicalSearchResult, options);
         }
     }
 }

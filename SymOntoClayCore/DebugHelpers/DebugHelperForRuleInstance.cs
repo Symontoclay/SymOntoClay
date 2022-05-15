@@ -161,12 +161,12 @@ namespace SymOntoClay.Core.DebugHelpers
             }
         }
 
-        private static string GroupToString(LogicalQueryNode expr)
+        private static string GroupToString(LogicalQueryNode expr, HumanizedOptions options)
         {
             return $"({ToString(expr.Left, options)})";
         }
 
-        private static string UnaryOperatorToString(LogicalQueryNode expr)
+        private static string UnaryOperatorToString(LogicalQueryNode expr, HumanizedOptions options)
         {
             var mark = string.Empty;
 
@@ -188,7 +188,7 @@ namespace SymOntoClay.Core.DebugHelpers
             return sb.ToString();
         }
 
-        private static string BinaryOperatorToString(LogicalQueryNode expr)
+        private static string BinaryOperatorToString(LogicalQueryNode expr, HumanizedOptions options)
         {
             var mark = string.Empty;
 
@@ -238,7 +238,7 @@ namespace SymOntoClay.Core.DebugHelpers
             return sb.ToString();
         }
 
-        private static string RelationToString(LogicalQueryNode expr)
+        private static string RelationToString(LogicalQueryNode expr, HumanizedOptions options)
         {
             var sb = new StringBuilder();
 
@@ -259,7 +259,7 @@ namespace SymOntoClay.Core.DebugHelpers
             return sb.ToString();
         }
 
-        private static string ConceptToString(LogicalQueryNode expr)
+        private static string ConceptToString(LogicalQueryNode expr, HumanizedOptions options)
         {
             var sb = new StringBuilder();
             sb.Append(expr.Name.NameValue);
@@ -267,7 +267,7 @@ namespace SymOntoClay.Core.DebugHelpers
             return sb.ToString();
         }
 
-        private static string ValueToString(LogicalQueryNode expr)
+        private static string ValueToString(LogicalQueryNode expr, HumanizedOptions options)
         {
             var sb = new StringBuilder();
             var value = expr.Value;
@@ -280,7 +280,7 @@ namespace SymOntoClay.Core.DebugHelpers
 
         public static string AnnotatedItemToString(AnnotatedItem source, HumanizedOptions options = HumanizedOptions.ShowAll)
         {
-            if(source == null)
+            if(source == null || options == HumanizedOptions.ShowOnlyMainContent)
             {
                 return string.Empty;
             }
@@ -303,12 +303,12 @@ namespace SymOntoClay.Core.DebugHelpers
             return sb.ToString();
         }
 
-        private static string WhereSectionToString(IList<Value> source)
+        private static string WhereSectionToString(IList<Value> source, HumanizedOptions options)
         {
             return PrintModalityOrSection("where:", source, options);
         }
 
-        private static string PrintModalityOrSection(string mark, IList<Value> source)
+        private static string PrintModalityOrSection(string mark, IList<Value> source, HumanizedOptions options)
         {
             var sb = new StringBuilder(mark);
 
@@ -366,28 +366,28 @@ namespace SymOntoClay.Core.DebugHelpers
             }
         }
 
-        private static string ConditionalEntitySourceValueToString(Value value)
+        private static string ConditionalEntitySourceValueToString(Value value, HumanizedOptions options)
+        {
+            var sb = new StringBuilder(value.ToHumanizedString(options));
+            sb.Append(AnnotatedItemToString(value, options));
+            return sb.ToString();
+        }
+
+        private static string WaypointValueToString(Value value, HumanizedOptions options)
         {
             var sb = new StringBuilder(value.ToDbgString());
             sb.Append(AnnotatedItemToString(value, options));
             return sb.ToString();
         }
 
-        private static string WaypointValueToString(Value value)
-        {
-            var sb = new StringBuilder(value.ToDbgString());
-            sb.Append(AnnotatedItemToString(value, options));
-            return sb.ToString();
-        }
-
-        private static string NullValueToString(Value value)
+        private static string NullValueToString(Value value, HumanizedOptions options)
         {
             var sb = new StringBuilder("NULL");
             sb.Append(AnnotatedItemToString(value, options));
             return sb.ToString();
         }
 
-        private static string NumberValueToString(NumberValue value)
+        private static string NumberValueToString(NumberValue value, HumanizedOptions options)
         {
             var systemValue = value.SystemValue;
 
@@ -395,7 +395,7 @@ namespace SymOntoClay.Core.DebugHelpers
 
             if (systemValue.HasValue)
             {
-                sb.Append(systemValue.Value.ToString(_cultureInfo, options));
+                sb.Append(systemValue.Value.ToString(_cultureInfo));
             }
             else
             {
@@ -406,7 +406,7 @@ namespace SymOntoClay.Core.DebugHelpers
             return sb.ToString();
         }
 
-        private static string LogicalValueToString(LogicalValue value)
+        private static string LogicalValueToString(LogicalValue value, HumanizedOptions options)
         {
             var systemValue = value.SystemValue;
 
@@ -414,7 +414,7 @@ namespace SymOntoClay.Core.DebugHelpers
 
             if(systemValue.HasValue)
             {
-                sb.Append(systemValue.Value.ToString(_cultureInfo, optionss));
+                sb.Append(systemValue.Value.ToString(_cultureInfo));
             }
             else
             {
@@ -425,14 +425,14 @@ namespace SymOntoClay.Core.DebugHelpers
             return sb.ToString();
         }
 
-        private static string FuzzyLogicNonNumericSequenceValueToString(FuzzyLogicNonNumericSequenceValue value)
+        private static string FuzzyLogicNonNumericSequenceValueToString(FuzzyLogicNonNumericSequenceValue value, HumanizedOptions options)
         {
             var sb = new StringBuilder(value.DebugView);
-            sb.Append(AnnotatedItemToString(valuev));
+            sb.Append(AnnotatedItemToString(value, options));
             return sb.ToString();
         }
 
-        private static string StrongIdentifierValueToString(StrongIdentifierValue value)
+        private static string StrongIdentifierValueToString(StrongIdentifierValue value, HumanizedOptions options)
         {
             var sb = new StringBuilder(value.NameValue);
             sb.Append(AnnotatedItemToString(value, options));

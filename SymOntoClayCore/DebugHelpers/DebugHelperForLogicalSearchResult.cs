@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.DebugHelpers
     {
         private static readonly CultureInfo _cultureInfo = new CultureInfo("en-GB");
 
-        public static string ToString(LogicalSearchResult source)
+        public static string ToString(LogicalSearchResult source, HumanizedOptions options = HumanizedOptions.ShowAll)
         {
             if (!source.IsSuccess)
             {
@@ -54,7 +54,7 @@ namespace SymOntoClay.Core.DebugHelpers
                     var varName = resultOfVarOfQueryToRelation.NameOfVar;
                     var foundNode = resultOfVarOfQueryToRelation.FoundExpression;
 
-                    varItemsStrList.Add($" {varName.NameValue} = {DebugHelperForRuleInstance.ToString(foundNode)}");
+                    varItemsStrList.Add($" {varName.NameValue} = {DebugHelperForRuleInstance.ToString(foundNode, options)}");
                 }
 
                 sb.AppendLine(string.Join(";", varItemsStrList).Trim());

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -168,7 +169,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override string ToHumanizedString()
+        public override string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
         {
             var sb = new StringBuilder();
 
@@ -198,7 +199,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         {
                             var val = Target.AsRuleInstanceValue;
 
-                            sb.Append(val.GetDefaultToDbgStringInformation(0u));
+                            sb.Append(val.ToHumanizedString(options));
                         }
                         break;
 

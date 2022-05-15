@@ -619,7 +619,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionPtr.IsSystemDefined">
@@ -836,7 +836,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.App.Kind">
@@ -1789,7 +1789,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntitySourceValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntitySourceValue.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntitySourceValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.InstanceId">
@@ -1864,7 +1864,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
         <member name="F:SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr.KindOfTriggerConditionNode.Entity">
@@ -1989,7 +1989,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ErrorValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ErrorValue.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ErrorValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Field.Kind">
@@ -2187,7 +2187,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicNonNumericSequenceValue.KindOfValue">
@@ -2242,7 +2242,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicNonNumericSequenceValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicNonNumericSequenceValue.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicNonNumericSequenceValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicNonNumericValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -2337,7 +2337,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.HostValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.HostValue.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.HostValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.InheritanceItem.SuperName">
@@ -2477,7 +2477,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
         <member name="F:SymOntoClay.Core.Internal.CodeModel.KindOfLogicalQueryNode.Entity">
@@ -2707,7 +2707,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryOperationValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryOperationValue.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryOperationValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.KindOfValue">
@@ -2746,7 +2746,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalSearchResultValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalValue.KindOfValue">
@@ -2788,7 +2788,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.MutuallyExclusiveStatesSet.Kind">
@@ -2883,7 +2883,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NullValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.NullValue.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.NullValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NumberValue.KindOfValue">
@@ -2941,7 +2941,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Operator.Kind">
@@ -3044,7 +3044,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart.GetNextPartsList">
@@ -3164,7 +3164,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeValue.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.Kind">
@@ -3391,7 +3391,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.SecondaryRulePart.GetNextPartsList">
@@ -3546,7 +3546,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StringValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.StringValue.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StringValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.KindOfValue">
@@ -3610,7 +3610,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.TaskValue.KindOfValue">
@@ -3649,7 +3649,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
         <member name="F:SymOntoClay.Core.Internal.CodeModel.TypeOfAccess.Local">
@@ -3754,7 +3754,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointSourceValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointSourceValue.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointSourceValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.WaypointValue.KindOfValue">
@@ -3799,7 +3799,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointValue.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointValue.ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.World.Kind">

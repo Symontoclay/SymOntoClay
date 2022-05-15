@@ -597,7 +597,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override string ToHumanizedString()
+        public override string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
         {
             var sb = new StringBuilder();
 
@@ -612,7 +612,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             if (Expression == null)
             {
-                sb.Append(DebugHelperForRuleInstance.ToString(LogicalQuery));
+                sb.Append(DebugHelperForRuleInstance.ToString(LogicalQuery, options));
             }
             else
             {

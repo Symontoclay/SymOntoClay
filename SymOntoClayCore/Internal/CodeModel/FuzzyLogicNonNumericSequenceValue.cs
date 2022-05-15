@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -213,7 +214,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override string ToHumanizedString()
+        public override string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
         {
             return $"`{_debugView}`";
         }

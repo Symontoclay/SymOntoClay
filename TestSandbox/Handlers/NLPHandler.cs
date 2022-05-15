@@ -38,7 +38,7 @@ namespace TestSandbox.Handlers
 
             _wordsDict = new JsonDictionary(mainDictPath);
 
-            _converter = new NLPConverter(_engineContext, _wordsDict);
+            _converter = new NLPConverter(_logger, _wordsDict);
         }
 
         private readonly EngineContext _engineContext;
@@ -50,11 +50,31 @@ namespace TestSandbox.Handlers
         {
             _logger.Log("Begin");
 
-            Case2();
+            Case3();
+            //Case2();
             //Case1();
             //Case0();
 
             _logger.Log("End");
+        }
+
+        private void Case3()
+        {
+            var text = "I like my cat.";
+
+#if DEBUG
+            _logger.Log($"text = {text}");
+#endif
+
+            var ruleInstancesList = _converter.Convert(text);
+
+            _logger.Log($"ruleInstancesList.Count = {ruleInstancesList.Count}");
+
+            foreach (var ruleInstance in ruleInstancesList)
+            {
+                _logger.Log($"ruleInstance.KindOfRuleInstance = {ruleInstance.KindOfRuleInstance}");
+                _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
+            }
         }
 
         private void Case2()

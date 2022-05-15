@@ -3,6 +3,9 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.ATN;
+using SymOntoClay.NLP.Internal.ConvertingCGToInternal;
+using SymOntoClay.NLP.Internal.ConvertingInternalCGToFact;
+using SymOntoClay.NLP.Internal.PhraseToCGParsing;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,39 +14,52 @@ namespace SymOntoClay.NLP
 {
     public class NLPConverter: INLPConverter
     {
-        public NLPConverter(INLPContext context, IWordsDict wordsDict)
+        public NLPConverter(IEntityLogger logger, IWordsDict wordsDict)
         {
-            _context = context;
             _wordsDict = wordsDict;
-            _logger = context.Logger;
+            _logger = logger;
         }
 
-        private readonly INLPContext _context;
         private readonly IWordsDict _wordsDict;
         private readonly IEntityLogger _logger;
 
         public IList<RuleInstance> Convert(string text)
         {
-#if DEBUG
-            _logger.Log($"text = {text}");
-            var lexer = new ATNStringLexer(text);
-            (string, int, int) item;
+            var result = new List<RuleInstance>();
 
-            while((item = lexer.GetItem()).Item1 != null)
+            var parser = new ATNParser(_logger, _wordsDict);
+
+            var compactizer = new PhraseCompactizer(_logger, _wordsDict);
+
+            var converterToPlainSentences = new ConverterToPlainSentences(_logger);
+
+            var semanticAnalyzer = new SemanticAnalyzer(_logger, _wordsDict);
+
+            var convertorCGToInternal = new ConvertorCGToInternal(_logger);
+
+            var converterInternalCGToFact = new ConverterInternalCGToFact(_logger);
+
+            var sentenceItemsList = parser.Run(text);
+
+            foreach (var item in sentenceItemsList)
             {
-                _logger.Log($"item = {item}");
+                compactizer.Run(item);
+
+                var plainSentencesList = converterToPlainSentences.Run(item);
+
+                foreach (var plainSentence in plainSentencesList)
+                {
+                    var conceptualGraph = semanticAnalyzer.Run(plainSentence);
+
+                    var internalCG = convertorCGToInternal.Convert(conceptualGraph);
+
+                    var ruleInstancesList = converterInternalCGToFact.ConvertConceptualGraph(internalCG);
+
+                    result.AddRange(ruleInstancesList);
+                }
             }
 
-            ATNToken token = null;
-
-            var lexer_2 = new ATNLexer(text, _wordsDict);
-            while((token = lexer_2.GetToken()) != null)
-            {
-                _logger.Log($"token = {token}");
-            }
-#endif
-
-            throw new NotImplementedException();
+            return result;
         }
     }
 }

@@ -407,9 +407,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return $"{spaces}{ToHumanizedString()}";
         }
 
-        public string ToHumanizedString()
+        public string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
         {
-            return DebugHelperForRuleInstance.ToString(this);
+            return DebugHelperForRuleInstance.ToString(this, options);
         }
 
         #region IStorage

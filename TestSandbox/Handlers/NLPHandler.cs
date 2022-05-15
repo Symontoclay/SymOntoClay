@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core;
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP;
@@ -125,7 +126,7 @@ namespace TestSandbox.Handlers
                     foreach (var ruleInstance in ruleInstancesList)
                     {
                         _logger.Log($"ruleInstance.KindOfRuleInstance = {ruleInstance.KindOfRuleInstance}");
-                        _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString()}");
+                        _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
                     }
                 }
             }

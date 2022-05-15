@@ -40,17 +40,20 @@ namespace SymOntoClay.Core.DebugHelpers
         //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
-        public static string ToString(RuleInstance source)
+        public static string ToString(RuleInstance source, HumanizedOptions options = HumanizedOptions.ShowAll)
         {
             var sb = new StringBuilder();
             sb.Append("{:");
 
-            if(source.Name != null)
+            if(options == HumanizedOptions.ShowAll)
             {
-                sb.Append($" {source.Name.NameValue}");
+                if (source.Name != null)
+                {
+                    sb.Append($" {source.Name.NameValue}");
+                }
             }
 
-            sb.Append(ToString(source.PrimaryPart));
+            sb.Append(ToString(source.PrimaryPart, options));
 
             if(!source.SecondaryParts.IsNullOrEmpty())
             {
@@ -69,7 +72,7 @@ namespace SymOntoClay.Core.DebugHelpers
             }
 
             sb.Append(" :}");
-            sb.Append(AnnotatedItemToString(source));
+            sb.Append(AnnotatedItemToString(source, options));
 
             return sb.ToString();
         }
@@ -79,10 +82,10 @@ namespace SymOntoClay.Core.DebugHelpers
             var sb = new StringBuilder();
             sb.Append(" >: { ");
 
-            sb.Append(ToString(primaryRulePart?.Expression));
+            sb.Append(ToString(primaryRulePart?.Expression, options));
 
             sb.Append(" }");
-            sb.Append(AnnotatedItemToString(primaryRulePart));
+            sb.Append(AnnotatedItemToString(primaryRulePart, options));
 
             return sb.ToString();
         }
@@ -93,14 +96,14 @@ namespace SymOntoClay.Core.DebugHelpers
 
             if (b != null)
             {
-                return ToString(b);
+                return ToString(b, options);
             }
 
             var c = baseRulePart as SecondaryRulePart;
 
             if (c != null)
             {
-                return ToString(c);
+                return ToString(c, options);
             }
 
             return string.Empty;
@@ -111,10 +114,10 @@ namespace SymOntoClay.Core.DebugHelpers
             var sb = new StringBuilder();
             sb.Append(" { ");
 
-            sb.Append(ToString(rulePart.Expression));
+            sb.Append(ToString(rulePart.Expression, options));
 
             sb.Append(" }");
-            sb.Append(AnnotatedItemToString(rulePart));
+            sb.Append(AnnotatedItemToString(rulePart, options));
 
             return sb.ToString();
         }
@@ -129,29 +132,29 @@ namespace SymOntoClay.Core.DebugHelpers
             switch (expr.Kind)
             {
                 case KindOfLogicalQueryNode.UnaryOperator:
-                    return UnaryOperatorToString(expr);
+                    return UnaryOperatorToString(expr, options);
 
                 case KindOfLogicalQueryNode.BinaryOperator:
-                    return BinaryOperatorToString(expr);
+                    return BinaryOperatorToString(expr, options);
 
                 case KindOfLogicalQueryNode.Relation:
-                    return RelationToString(expr);
+                    return RelationToString(expr, options);
 
                 case KindOfLogicalQueryNode.Group:
-                    return GroupToString(expr);
+                    return GroupToString(expr, options);
 
                 case KindOfLogicalQueryNode.Concept:
                 case KindOfLogicalQueryNode.QuestionVar:
                 case KindOfLogicalQueryNode.Entity:
                 case KindOfLogicalQueryNode.LogicalVar:
                 case KindOfLogicalQueryNode.Var:
-                    return ConceptToString(expr);
+                    return ConceptToString(expr, options);
 
                 case KindOfLogicalQueryNode.Value:
-                    return ValueToString(expr);
+                    return ValueToString(expr, options);
 
                 case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
-                    return FuzzyLogicNonNumericSequenceValueToString(expr.FuzzyLogicNonNumericSequenceValue);
+                    return FuzzyLogicNonNumericSequenceValueToString(expr.FuzzyLogicNonNumericSequenceValue, options);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(expr.Kind), expr.Kind, null);
@@ -160,7 +163,7 @@ namespace SymOntoClay.Core.DebugHelpers
 
         private static string GroupToString(LogicalQueryNode expr)
         {
-            return $"({ToString(expr.Left)})";
+            return $"({ToString(expr.Left, options)})";
         }
 
         private static string UnaryOperatorToString(LogicalQueryNode expr)
@@ -179,8 +182,8 @@ namespace SymOntoClay.Core.DebugHelpers
 
             var sb = new StringBuilder();            
             sb.Append($" {mark} ");
-            sb.Append(AnnotatedItemToString(expr));
-            sb.Append(ToString(expr.Left));
+            sb.Append(AnnotatedItemToString(expr, options));
+            sb.Append(ToString(expr.Left, options));
 
             return sb.ToString();
         }

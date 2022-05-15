@@ -24,7 +24,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
         public IList<RuleInstance> ConvertConceptualGraph(InternalConceptualGraph source)
         {
 #if DEBUG
-            _logger.Log($"source = {source}");
+            //_logger.Log($"source = {source}");
 #endif
 
             var context = new ContextOfConvertingInternalCGToFact();
@@ -37,7 +37,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             PreliminaryCreation(source, context);
 
 #if DEBUG
-            _logger.Log($"context.RuleInstancesDict.Count = {context.RuleInstancesDict.Count}");
+            //_logger.Log($"context.RuleInstancesDict.Count = {context.RuleInstancesDict.Count}");
 #endif
 
             foreach (var ruleInstancesDictKVPItem in context.RuleInstancesDict)
@@ -55,7 +55,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
         private void PreliminaryCreation(InternalConceptualGraph source, ContextOfConvertingInternalCGToFact context)
         {
 #if DEBUG
-            _logger.Log($"source = {source}");
+            //_logger.Log($"source = {source}");
 #endif
 
             if (context.RuleInstancesDict.ContainsKey(source))

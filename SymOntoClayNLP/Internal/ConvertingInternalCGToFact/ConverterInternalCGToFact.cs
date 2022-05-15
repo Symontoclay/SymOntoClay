@@ -655,6 +655,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
 
                             var varNode = new InternalConceptCGNode();
                             varNode.KindOfGraphOrConcept = KindOfInternalGraphOrConceptNode.Variable;
+                            varNode.Parent = conceptNode.Parent;
                             varNode.Name = varName;
 
                             processedInRelationsConceptsList.Add(conceptName);

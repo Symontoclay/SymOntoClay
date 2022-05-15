@@ -93,11 +93,11 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             var graphsChildrenList = source.Children.Where(p => p.IsConceptualGraph).Select(p => p.AsConceptualGraph).ToList();
 
 #if DEBUG
-            _logger.Log($"graphsChildrenList.Count = {graphsChildrenList.Count}");
+            //_logger.Log($"graphsChildrenList.Count = {graphsChildrenList.Count}");
 #endif
 
 #if DEBUG
-            _logger.Log($"context.RuleInstancesDict.Count (1) = {context.RuleInstancesDict.Count}");
+            //_logger.Log($"context.RuleInstancesDict.Count (1) = {context.RuleInstancesDict.Count}");
 #endif
 
             foreach (var graphsChild in graphsChildrenList)
@@ -106,18 +106,18 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             }
 
 #if DEBUG
-            _logger.Log($"context.RuleInstancesDict.Count (2) = {context.RuleInstancesDict.Count}");
-            _logger.Log($"context.RuleInstancesDict.Keys.Select(p => p.Name) = {context.RuleInstancesDict.Keys.Select(p => p.Name).ToList().WritePODListToString()}");
+            //_logger.Log($"context.RuleInstancesDict.Count (2) = {context.RuleInstancesDict.Count}");
+            //_logger.Log($"context.RuleInstancesDict.Keys.Select(p => p.Name) = {context.RuleInstancesDict.Keys.Select(p => p.Name).ToList().WritePODListToString()}");
 #endif
         }
 
         private void FillRuleInstances(InternalConceptualGraph source, RuleInstance dest, ContextOfConvertingInternalCGToFact context)
         {
 #if DEBUG
-            _logger.Log($"source = {source}");
-            _logger.Log($"dest = {dest}");
-            var dotStr = DotConverter.ConvertToString(source);
-            _logger.Log($"dotStr (5) = {dotStr}");
+            //_logger.Log($"source = {source}");
+            //_logger.Log($"dest = {dest}");
+            //var dotStr = DotConverter.ConvertToString(source);
+            //_logger.Log($"dotStr (5) = {dotStr}");
 #endif
 
             var contextForSingleRuleInstance = new ContextForSingleRuleInstanceOfConvertingInternalCGToFact();
@@ -135,7 +135,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             var kindOfGraphOrConcept = source.KindOfGraphOrConcept;
 
 #if DEBUG
-            _logger.Log($"kindOfGraphOrConcept = {kindOfGraphOrConcept}");
+            //_logger.Log($"kindOfGraphOrConcept = {kindOfGraphOrConcept}");
 #endif
 
             switch (kindOfGraphOrConcept)
@@ -152,16 +152,16 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             }
 
 #if DEBUG
-            dotStr = DotConverter.ConvertToString(source);
-            _logger.Log($"dotStr (6) = {dotStr}");
+            //dotStr = DotConverter.ConvertToString(source);
+            //_logger.Log($"dotStr (6) = {dotStr}");
 #endif
 
             var expression = CreateExpressionByWholeGraph(source, context, dest, contextForSingleRuleInstance);
 
 #if DEBUG
-            _logger.Log($"expression = {expression}");
-            var debugStr = DebugHelperForRuleInstance.ToString(expression);
-            _logger.Log($"debugStr = {debugStr}");
+            //_logger.Log($"expression = {expression}");
+            //var debugStr = DebugHelperForRuleInstance.ToString(expression);
+            //_logger.Log($"debugStr = {debugStr}");
 #endif
 
             //throw new NotImplementedException();
@@ -199,10 +199,10 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             //            }
 
 #if DEBUG
-            _logger.Log($"End source = {source}");
-            dotStr = DotConverter.ConvertToString(source);
-            _logger.Log($"dotStr (~~) = {dotStr}");
-            _logger.Log($"End dest = {dest}");
+            //_logger.Log($"End source = {source}");
+            //dotStr = DotConverter.ConvertToString(source);
+            //_logger.Log($"dotStr (~~) = {dotStr}");
+            //_logger.Log($"End dest = {dest}");
 #endif
         }
 
@@ -346,14 +346,14 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             var firstConceptsList = relation.Inputs.Where(p => p.IsGraphOrConceptNode).Select(p => p.AsGraphOrConceptNode).ToList();
 
 #if DEBUG
-            _logger.Log($"kindOfSpecialRelation = {kindOfSpecialRelation}");
-            _logger.Log($"firstConceptsList.Count = {firstConceptsList.Count}");
+            //_logger.Log($"kindOfSpecialRelation = {kindOfSpecialRelation}");
+            //_logger.Log($"firstConceptsList.Count = {firstConceptsList.Count}");
 #endif
 
             var outputNode = relation.Outputs.Where(p => p.IsGraphOrConceptNode).Select(p => p.AsGraphOrConceptNode).FirstOrDefault();
 
 #if DEBUG
-            _logger.Log($"outputNode = {outputNode}");
+            //_logger.Log($"outputNode = {outputNode}");
 #endif
 
             context.AddRelationAsAnnotation(outputNode, relation);
@@ -366,13 +366,13 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             var objectRelationsList = outputNode.Outputs.Where(p => p.IsRelationNode && p.Name == SpecialNamesOfRelations.ObjectRelationName).Select(p => p.AsRelationNode).ToList();
 
 #if DEBUG
-            _logger.Log($"objectRelationsList.Count = {objectRelationsList.Count}");
+            //_logger.Log($"objectRelationsList.Count = {objectRelationsList.Count}");
 #endif
 
             var hasAnotherRelations = outputNode.Outputs.Any(p => p.IsRelationNode && p.Name != SpecialNamesOfRelations.ObjectRelationName && p.Name != SpecialNamesOfRelations.ExperiencerRelationName);
 
 #if DEBUG
-            _logger.Log($"hasAnotherRelations = {hasAnotherRelations}");
+            //_logger.Log($"hasAnotherRelations = {hasAnotherRelations}");
 #endif
 
             var linkedVarName = string.Empty;
@@ -383,7 +383,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
                 source.MaxVarCount++;
                 var n = source.MaxVarCount;
 #if DEBUG
-                _logger.Log($"n = {n}");
+                //_logger.Log($"n = {n}");
 #endif
 
                 linkedVarName = $"$X{n}";
@@ -394,25 +394,25 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             foreach (var firstConcept in firstConceptsList)
             {
 #if DEBUG
-                _logger.Log($"firstConcept = {firstConcept}");
+                //_logger.Log($"firstConcept = {firstConcept}");
 #endif
 
                 foreach (var objectRelation in objectRelationsList)
                 {
 #if DEBUG
-                    _logger.Log($"objectRelation = {objectRelation}");
+                    //_logger.Log($"objectRelation = {objectRelation}");
 #endif
 
                     var objectsConceptsList = objectRelation.Outputs.Where(p => p.IsGraphOrConceptNode).Select(p => p.AsGraphOrConceptNode).ToList();
 
 #if DEBUG
-                    _logger.Log($"objectsConceptsList.Count = {objectsConceptsList.Count}");
+                    //_logger.Log($"objectsConceptsList.Count = {objectsConceptsList.Count}");
 #endif
 
                     foreach (var objectConcept in objectsConceptsList)
                     {
 #if DEBUG
-                        _logger.Log($"objectConcept = {objectConcept}");
+                        //_logger.Log($"objectConcept = {objectConcept}");
 #endif
 
                         var resultRelation = new InternalRelationCGNode();
@@ -430,8 +430,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             }
 
 #if DEBUG
-            var dotStr = DotConverter.ConvertToString(source);
-            _logger.Log($"dotStr (4) = {dotStr}");
+            //var dotStr = DotConverter.ConvertToString(source);
+            //_logger.Log($"dotStr (4) = {dotStr}");
             //throw new NotImplementedException();
 #endif
         }
@@ -439,8 +439,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
         private void PrepareForEntityConditionExpression(InternalConceptualGraph source, RuleInstance dest, ContextOfConvertingInternalCGToFact context)
         {
 #if DEBUG
-            var dotStr = DotConverter.ConvertToString(source);
-            _logger.Log($"dotStr = {dotStr}");
+            //var dotStr = DotConverter.ConvertToString(source);
+            //_logger.Log($"dotStr = {dotStr}");
             //throw new NotImplementedException();
 #endif
 
@@ -452,7 +452,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             var initRelationsList = source.Children.Where(p => p.IsRelationNode).Select(p => p.AsRelationNode).ToList();
 
 #if DEBUG
-            _logger.Log($"initRelationsList.Count = {initRelationsList.Count}");
+            //_logger.Log($"initRelationsList.Count = {initRelationsList.Count}");
 #endif
 
             var n = 0;
@@ -460,7 +460,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             foreach (var initRelation in initRelationsList)
             {
 #if DEBUG
-                _logger.Log($"initRelation = {initRelation}");
+                //_logger.Log($"initRelation = {initRelation}");
 #endif
 
                 var inputNodesList = initRelation.Inputs.Where(p => p.IsConceptNode).Select(p => p.AsConceptNode).ToList();
@@ -472,13 +472,13 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
                 foreach(var inputNode in allNodesList)
                 {
 #if DEBUG
-                    _logger.Log($"inputNode = {inputNode}");
+                    //_logger.Log($"inputNode = {inputNode}");
 #endif
 
                     var conceptName = inputNode.Name;
 
 #if DEBUG
-                    _logger.Log($"conceptName = {conceptName}");
+                    //_logger.Log($"conceptName = {conceptName}");
 #endif
 
                     //if(conceptName == "_someone")
@@ -504,7 +504,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
                         conceptsNamesDict[conceptName] = varName;
 
 #if DEBUG
-                        _logger.Log($"varName = {varName}");
+                        //_logger.Log($"varName = {varName}");
 #endif
 
                         //var varQuant_1 = new VarExpressionNode();
@@ -563,19 +563,19 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             foreach (var initRelation in initRelationsList)
             {
 #if DEBUG
-                _logger.Log($"initRelation = {initRelation}");
+                //_logger.Log($"initRelation = {initRelation}");
 #endif
 
                 var inputNode = initRelation.Inputs.Where(p => p.IsGraphOrConceptNode).Select(p => p.AsGraphOrConceptNode).FirstOrDefault();
 
 #if DEBUG
-                _logger.Log($"inputNode = {inputNode}");
+                //_logger.Log($"inputNode = {inputNode}");
 #endif
 
                 var outputNode = initRelation.Outputs.Where(p => p.IsGraphOrConceptNode).Select(p => p.AsGraphOrConceptNode).FirstOrDefault();
 
 #if DEBUG
-                _logger.Log($"outputNode = {outputNode}");
+                //_logger.Log($"outputNode = {outputNode}");
 #endif
 
                 PrepareRealtionForEntityConditionExpression(inputNode, initRelation, true, conceptsNamesDict, ref processedInRelationsConceptsList, context);
@@ -585,13 +585,13 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             }
 
 #if DEBUG
-            _logger.Log($"processedInRelationsConceptsList.Count = {processedInRelationsConceptsList.Count}");
+            //_logger.Log($"processedInRelationsConceptsList.Count = {processedInRelationsConceptsList.Count}");
 #endif
 
             foreach (var processedInRelationsConcept in processedInRelationsConceptsList)
             {
 #if DEBUG
-                _logger.Log($"processedInRelationsConcept = {processedInRelationsConcept}");
+                //_logger.Log($"processedInRelationsConcept = {processedInRelationsConcept}");
 #endif
 
                 //if(processedInRelationsConcept == "i")
@@ -602,7 +602,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
                 var varName = conceptsNamesDict[processedInRelationsConcept];
 
 #if DEBUG
-                _logger.Log($"varName = {varName}");
+                //_logger.Log($"varName = {varName}");
 #endif
 
                 var realtionForClass = new InternalRelationCGNode();
@@ -616,7 +616,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
                 realtionForClass.AddInputNode(varNode);
 
 #if DEBUG
-                _logger.Log($"realtionForClass = {realtionForClass}");
+                //_logger.Log($"realtionForClass = {realtionForClass}");
 #endif
             }
 
@@ -626,9 +626,9 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
         private void PrepareRealtionForEntityConditionExpression(BaseInternalConceptCGNode conceptNode, InternalRelationCGNode relation, bool isInputNode, Dictionary<string, string> conceptsNamesDict, ref List<string> processedInRelationsConceptsList, ContextOfConvertingInternalCGToFact context)
         {
 #if DEBUG
-            _logger.Log($"conceptNode = {conceptNode}");
-            _logger.Log($"relation = {relation}");
-            _logger.Log($"isInputNode = {isInputNode}");
+            //_logger.Log($"conceptNode = {conceptNode}");
+            //_logger.Log($"relation = {relation}");
+            //_logger.Log($"isInputNode = {isInputNode}");
 #endif
 
             var kindOfInputNode = conceptNode.KindOfGraphOrConcept;
@@ -640,9 +640,9 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
                         var conceptName = conceptNode.Name;
 
 #if DEBUG
-                        _logger.Log($"conceptName = {conceptName}");
-                        _logger.Log($"conceptsNamesDict.Count = {conceptsNamesDict.Count}");
-                        _logger.Log($"conceptsNamesDict.Keys = {conceptsNamesDict.Keys.ToList().WritePODListToString()}");
+                        //_logger.Log($"conceptName = {conceptName}");
+                        //_logger.Log($"conceptsNamesDict.Count = {conceptsNamesDict.Count}");
+                        //_logger.Log($"conceptsNamesDict.Keys = {conceptsNamesDict.Keys.ToList().WritePODListToString()}");
 #endif
 
                         if (conceptsNamesDict.ContainsKey(conceptName))
@@ -650,7 +650,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
                             var varName = conceptsNamesDict[conceptName];
 
 #if DEBUG
-                            _logger.Log($"varName = {varName}");
+                            //_logger.Log($"varName = {varName}");
 #endif
 
                             var varNode = new InternalConceptCGNode();
@@ -683,10 +683,10 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             var relationsList = source.Children.Where(p => p.IsRelationNode).Select(p => p.AsRelationNode).ToList();
 
 #if DEBUG
-            if(ruleInstance.KindOfRuleInstance == KindOfRuleInstance.EntityCondition)
-            {
-                _logger.Log($"relationsList.Count = {relationsList.Count}");
-            }            
+            //if(ruleInstance.KindOfRuleInstance == KindOfRuleInstance.EntityCondition)
+            //{
+            //    _logger.Log($"relationsList.Count = {relationsList.Count}");
+            //}            
 #endif
 
             if (relationsList.Count == 0)
@@ -747,19 +747,19 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
         private LogicalQueryNode CreateExpressionByRelation(InternalRelationCGNode relation, InternalConceptualGraph internalConceptualGraph, RuleInstance ruleInstance, ContextOfConvertingInternalCGToFact context, ContextForSingleRuleInstanceOfConvertingInternalCGToFact contextForSingleRuleInstance)
         {
 #if DEBUG
-            if (ruleInstance.KindOfRuleInstance == KindOfRuleInstance.EntityCondition)
-            {
-                _logger.Log($"relation (!) = {relation}");
-            }            
+            //if (ruleInstance.KindOfRuleInstance == KindOfRuleInstance.EntityCondition)
+            //{
+            //    _logger.Log($"relation (!) = {relation}");
+            //}            
 #endif
 
             var linkedVarName = internalConceptualGraph.GetVarNameForRelation(relation.Name);
 
 #if DEBUG
-            if (ruleInstance.KindOfRuleInstance == KindOfRuleInstance.EntityCondition)
-            {
-                _logger.Log($"linkedVarName = {linkedVarName}");
-            }            
+            //if (ruleInstance.KindOfRuleInstance == KindOfRuleInstance.EntityCondition)
+            //{
+            //    _logger.Log($"linkedVarName = {linkedVarName}");
+            //}            
 #endif
 
             var relationExpr = new LogicalQueryNode() { Kind = KindOfLogicalQueryNode.Relation };
@@ -769,10 +769,10 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             var inputNode = relation.Inputs.Where(p => p.IsGraphOrConceptNode).Select(p => p.AsGraphOrConceptNode).FirstOrDefault();
 
 #if DEBUG
-            if (ruleInstance.KindOfRuleInstance == KindOfRuleInstance.EntityCondition)
-            {
-                _logger.Log($"inputNode = {inputNode}");
-            }            
+            //if (ruleInstance.KindOfRuleInstance == KindOfRuleInstance.EntityCondition)
+            //{
+            //    _logger.Log($"inputNode = {inputNode}");
+            //}            
 #endif
             if (inputNode != null)
             {
@@ -784,10 +784,10 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             var outputNode = relation.Outputs.Where(p => p.IsGraphOrConceptNode).Select(p => p.AsGraphOrConceptNode).FirstOrDefault();
 
 #if DEBUG
-            if (ruleInstance.KindOfRuleInstance == KindOfRuleInstance.EntityCondition)
-            {
-                _logger.Log($"outputNode = {outputNode}");
-            }            
+            //if (ruleInstance.KindOfRuleInstance == KindOfRuleInstance.EntityCondition)
+            //{
+            //    _logger.Log($"outputNode = {outputNode}");
+            //}            
 #endif
 
             if (outputNode != null)
@@ -836,12 +836,12 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
 
 
 
-#if DEBUG
-            if (ruleInstance.KindOfRuleInstance == KindOfRuleInstance.EntityCondition)
-            {
-                _logger.Log($"relationExpr = {relationExpr}");
-            }            
-#endif
+//#if DEBUG
+//            if (ruleInstance.KindOfRuleInstance == KindOfRuleInstance.EntityCondition)
+//            {
+//                _logger.Log($"relationExpr = {relationExpr}");
+//            }            
+//#endif
 
             //throw new NotImplementedException();
             return relationExpr;
@@ -902,11 +902,11 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
         private LogicalQueryNode CreateExpressionByGraphOrConceptNode(BaseInternalConceptCGNode graphOrConcept, InternalConceptualGraph internalConceptualGraph, RuleInstance ruleInstance, ContextOfConvertingInternalCGToFact context, ContextForSingleRuleInstanceOfConvertingInternalCGToFact contextForSingleRuleInstance)
         {
 #if DEBUG
-            if (ruleInstance.KindOfRuleInstance == KindOfRuleInstance.EntityCondition)
-            {
-                _logger.Log($"graphOrConcept = {graphOrConcept}");
-                _logger.Log($"graphOrConcept.GetType().FullName = {graphOrConcept.GetType().FullName}");
-            }
+            //if (ruleInstance.KindOfRuleInstance == KindOfRuleInstance.EntityCondition)
+            //{
+            //    _logger.Log($"graphOrConcept = {graphOrConcept}");
+            //    _logger.Log($"graphOrConcept.GetType().FullName = {graphOrConcept.GetType().FullName}");
+            //}
 #endif
 
             var kindOfGraphOrConcept = graphOrConcept.KindOfGraphOrConcept;
@@ -918,10 +918,10 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
                         var linkedVarName = internalConceptualGraph.GetVarNameForRelation(graphOrConcept.Name);
 
 #if DEBUG
-                        if (ruleInstance.KindOfRuleInstance == KindOfRuleInstance.EntityCondition)
-                        {
-                            _logger.Log($"linkedVarName = {linkedVarName}");
-                        }                       
+                        //if (ruleInstance.KindOfRuleInstance == KindOfRuleInstance.EntityCondition)
+                        //{
+                        //    _logger.Log($"linkedVarName = {linkedVarName}");
+                        //}                       
 #endif
 
                         var conceptExpression = new LogicalQueryNode() { Kind = KindOfLogicalQueryNode.Concept };
@@ -943,13 +943,13 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
                         var futureEntityName = graphOrConcept.Name;
 
 #if DEBUG
-                        _logger.Log($"futureEntityName = {futureEntityName}");
-                        var dotStr = DotConverter.ConvertToString(internalConceptualGraph);
-                        _logger.Log($"dotStr = '{dotStr}'");
-                        dotStr = DotConverter.ConvertToString(graphOrConcept);
-                        _logger.Log($"dotStr (~1) = '{dotStr}'");
-                        _logger.Log($"graphOrConcept.IsConceptualGraph = {graphOrConcept.IsConceptualGraph}");
-                        _logger.Log($"graphOrConcept.AsConceptualGraph = {graphOrConcept.AsConceptualGraph}");
+                        //_logger.Log($"futureEntityName = {futureEntityName}");
+                        //var dotStr = DotConverter.ConvertToString(internalConceptualGraph);
+                        //_logger.Log($"dotStr = '{dotStr}'");
+                        //dotStr = DotConverter.ConvertToString(graphOrConcept);
+                        //_logger.Log($"dotStr (~1) = '{dotStr}'");
+                        //_logger.Log($"graphOrConcept.IsConceptualGraph = {graphOrConcept.IsConceptualGraph}");
+                        //_logger.Log($"graphOrConcept.AsConceptualGraph = {graphOrConcept.AsConceptualGraph}");
 #endif
 
                         if(!graphOrConcept.IsConceptualGraph)
@@ -960,11 +960,11 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
                         var targetRuleInstance = context.RuleInstancesDict[graphOrConcept.AsConceptualGraph];
 
 #if DEBUG
-                        _logger.Log($"context.RuleInstancesDict.Count = {context.RuleInstancesDict.Count}");
-                        _logger.Log($"context.RuleInstancesDict.Keys = {context.RuleInstancesDict.Keys.Select(p => p.Name).WritePODListToString()}");
+                        //_logger.Log($"context.RuleInstancesDict.Count = {context.RuleInstancesDict.Count}");
+                        //_logger.Log($"context.RuleInstancesDict.Keys = {context.RuleInstancesDict.Keys.Select(p => p.Name).WritePODListToString()}");
 
-                        var debugStr = DebugHelperForRuleInstance.ToString(targetRuleInstance);
-                        _logger.Log($"debugStr = {debugStr}");
+                        //var debugStr = DebugHelperForRuleInstance.ToString(targetRuleInstance);
+                        //_logger.Log($"debugStr = {debugStr}");
 #endif
 
                         var entityCondition = new ConditionalEntitySourceValue(targetRuleInstance, NameHelper.CreateName("#@"));

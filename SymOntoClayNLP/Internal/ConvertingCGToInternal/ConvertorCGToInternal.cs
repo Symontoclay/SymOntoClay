@@ -254,7 +254,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
             var parent = concept.Parent;
 
 #if DEBUG
-            _logger.Log($"objectRelationsList.Count = {objectRelationsList.Count}");
+            //_logger.Log($"objectRelationsList.Count = {objectRelationsList.Count}");
 #endif
 
             if (objectRelationsList.Count == 0)
@@ -497,7 +497,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
         private void CreateEntityCondition(InternalConceptualGraph parent, List<BaseCGNode> sourceItems, ContextOfConvertingCGToInternal context)
         {
 #if DEBUG
-            _logger.Log($"sourceItems.Count = {sourceItems.Count}");
+            //_logger.Log($"sourceItems.Count = {sourceItems.Count}");
 #endif
 
             var entityCondition = new InternalConceptualGraph();

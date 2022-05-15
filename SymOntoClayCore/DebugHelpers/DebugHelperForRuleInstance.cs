@@ -77,7 +77,7 @@ namespace SymOntoClay.Core.DebugHelpers
             return sb.ToString();
         }
 
-        public static string ToString(PrimaryRulePart primaryRulePart)
+        public static string ToString(PrimaryRulePart primaryRulePart, HumanizedOptions options = HumanizedOptions.ShowAll)
         {
             var sb = new StringBuilder();
             sb.Append(" >: { ");
@@ -90,7 +90,7 @@ namespace SymOntoClay.Core.DebugHelpers
             return sb.ToString();
         }
 
-        public static string BaseRulePartToString(BaseRulePart baseRulePart)
+        public static string BaseRulePartToString(BaseRulePart baseRulePart, HumanizedOptions options = HumanizedOptions.ShowAll)
         {
             var b = baseRulePart as PrimaryRulePart;
 
@@ -109,7 +109,7 @@ namespace SymOntoClay.Core.DebugHelpers
             return string.Empty;
         }
 
-        public static string ToString(SecondaryRulePart rulePart)
+        public static string ToString(SecondaryRulePart rulePart, HumanizedOptions options = HumanizedOptions.ShowAll)
         {
             var sb = new StringBuilder();
             sb.Append(" { ");
@@ -122,7 +122,7 @@ namespace SymOntoClay.Core.DebugHelpers
             return sb.ToString();
         }
 
-        public static string ToString(LogicalQueryNode expr)
+        public static string ToString(LogicalQueryNode expr, HumanizedOptions options = HumanizedOptions.ShowAll)
         {
             if (expr == null)
             {
@@ -230,10 +230,10 @@ namespace SymOntoClay.Core.DebugHelpers
             }
 
             var sb = new StringBuilder();
-            sb.Append(ToString(expr.Left));
+            sb.Append(ToString(expr.Left, options));
             sb.Append($" {mark} ");
-            sb.Append(AnnotatedItemToString(expr));
-            sb.Append(ToString(expr.Right));
+            sb.Append(AnnotatedItemToString(expr, options));
+            sb.Append(ToString(expr.Right, options));
 
             return sb.ToString();
         }
@@ -248,13 +248,13 @@ namespace SymOntoClay.Core.DebugHelpers
 
             foreach (var param in expr.ParamsList)
             {
-                resultParamsList.Add(ToString(param));
+                resultParamsList.Add(ToString(param, options));
             }
 
             sb.Append(string.Join(",", resultParamsList));
 
             sb.Append(")");
-            sb.Append(AnnotatedItemToString(expr));
+            sb.Append(AnnotatedItemToString(expr, options));
 
             return sb.ToString();
         }
@@ -263,7 +263,7 @@ namespace SymOntoClay.Core.DebugHelpers
         {
             var sb = new StringBuilder();
             sb.Append(expr.Name.NameValue);
-            sb.Append(AnnotatedItemToString(expr));
+            sb.Append(AnnotatedItemToString(expr, options));
             return sb.ToString();
         }
 
@@ -272,13 +272,13 @@ namespace SymOntoClay.Core.DebugHelpers
             var sb = new StringBuilder();
             var value = expr.Value;
 
-            sb.Append(ToString(value));
-            sb.Append(AnnotatedItemToString(expr));
+            sb.Append(ToString(value, options));
+            sb.Append(AnnotatedItemToString(expr, options));
 
             return sb.ToString();
         }
 
-        public static string AnnotatedItemToString(AnnotatedItem source)
+        public static string AnnotatedItemToString(AnnotatedItem source, HumanizedOptions options = HumanizedOptions.ShowAll)
         {
             if(source == null)
             {
@@ -294,7 +294,7 @@ namespace SymOntoClay.Core.DebugHelpers
                 if(!source.WhereSection.IsNullOrEmpty())
                 {
                     sb.Append(" ");
-                    sb.Append(WhereSectionToString(source.WhereSection));
+                    sb.Append(WhereSectionToString(source.WhereSection, options));
                 }
 
                 sb.Append(" :|");
@@ -305,7 +305,7 @@ namespace SymOntoClay.Core.DebugHelpers
 
         private static string WhereSectionToString(IList<Value> source)
         {
-            return PrintModalityOrSection("where:", source);
+            return PrintModalityOrSection("where:", source, options);
         }
 
         private static string PrintModalityOrSection(string mark, IList<Value> source)
@@ -316,7 +316,7 @@ namespace SymOntoClay.Core.DebugHelpers
 
             if (source.Count == 1)
             {
-                sb.Append($" {ToString(source.First())} ");
+                sb.Append($" {ToString(source.First(), options)} ");
             }
             else
             {
@@ -324,7 +324,7 @@ namespace SymOntoClay.Core.DebugHelpers
 
                 foreach (var item in source)
                 {
-                    list.Add($"{{ {ToString(item)} }}");
+                    list.Add($"{{ {ToString(item, options)} }}");
                 }
 
                 sb.Append(string.Join(",", list));
@@ -335,31 +335,31 @@ namespace SymOntoClay.Core.DebugHelpers
             return sb.ToString();
         }
 
-        public static string ToString(Value value)
+        public static string ToString(Value value, HumanizedOptions options = HumanizedOptions.ShowAll)
         {
             switch(value.KindOfValue)
             {
                 case KindOfValue.NullValue:
-                    return NullValueToString(value);
+                    return NullValueToString(value, options);
 
                 case KindOfValue.LogicalValue:
-                    return LogicalValueToString(value.AsLogicalValue);
+                    return LogicalValueToString(value.AsLogicalValue, options);
 
                 case KindOfValue.NumberValue:
-                    return NumberValueToString(value.AsNumberValue);
+                    return NumberValueToString(value.AsNumberValue, options);
 
                 case KindOfValue.FuzzyLogicNonNumericSequenceValue:
-                    return FuzzyLogicNonNumericSequenceValueToString(value.AsFuzzyLogicNonNumericSequenceValue);
+                    return FuzzyLogicNonNumericSequenceValueToString(value.AsFuzzyLogicNonNumericSequenceValue, options);
 
                 case KindOfValue.StrongIdentifierValue:
-                    return StrongIdentifierValueToString(value.AsStrongIdentifierValue);
+                    return StrongIdentifierValueToString(value.AsStrongIdentifierValue, options);
 
                 case KindOfValue.WaypointSourceValue:
                 case KindOfValue.WaypointValue:
-                    return WaypointValueToString(value);
+                    return WaypointValueToString(value, options);
 
                 case KindOfValue.ConditionalEntitySourceValue:
-                    return ConditionalEntitySourceValueToString(value);
+                    return ConditionalEntitySourceValueToString(value, options);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(value.KindOfValue), value.KindOfValue, null);
@@ -369,21 +369,21 @@ namespace SymOntoClay.Core.DebugHelpers
         private static string ConditionalEntitySourceValueToString(Value value)
         {
             var sb = new StringBuilder(value.ToDbgString());
-            sb.Append(AnnotatedItemToString(value));
+            sb.Append(AnnotatedItemToString(value, options));
             return sb.ToString();
         }
 
         private static string WaypointValueToString(Value value)
         {
             var sb = new StringBuilder(value.ToDbgString());
-            sb.Append(AnnotatedItemToString(value));
+            sb.Append(AnnotatedItemToString(value, options));
             return sb.ToString();
         }
 
         private static string NullValueToString(Value value)
         {
             var sb = new StringBuilder("NULL");
-            sb.Append(AnnotatedItemToString(value));
+            sb.Append(AnnotatedItemToString(value, options));
             return sb.ToString();
         }
 
@@ -395,14 +395,14 @@ namespace SymOntoClay.Core.DebugHelpers
 
             if (systemValue.HasValue)
             {
-                sb.Append(systemValue.Value.ToString(_cultureInfo));
+                sb.Append(systemValue.Value.ToString(_cultureInfo, options));
             }
             else
             {
                 sb.Append("NULL");
             }
 
-            sb.Append(AnnotatedItemToString(value));
+            sb.Append(AnnotatedItemToString(value, options));
             return sb.ToString();
         }
 
@@ -414,28 +414,28 @@ namespace SymOntoClay.Core.DebugHelpers
 
             if(systemValue.HasValue)
             {
-                sb.Append(systemValue.Value.ToString(_cultureInfo));
+                sb.Append(systemValue.Value.ToString(_cultureInfo, optionss));
             }
             else
             {
                 sb.Append("NULL");
             }
 
-            sb.Append(AnnotatedItemToString(value));
+            sb.Append(AnnotatedItemToString(value, options));
             return sb.ToString();
         }
 
         private static string FuzzyLogicNonNumericSequenceValueToString(FuzzyLogicNonNumericSequenceValue value)
         {
             var sb = new StringBuilder(value.DebugView);
-            sb.Append(AnnotatedItemToString(value));
+            sb.Append(AnnotatedItemToString(valuev));
             return sb.ToString();
         }
 
         private static string StrongIdentifierValueToString(StrongIdentifierValue value)
         {
             var sb = new StringBuilder(value.NameValue);
-            sb.Append(AnnotatedItemToString(value));
+            sb.Append(AnnotatedItemToString(value, options));
             return sb.ToString();
         }
     }

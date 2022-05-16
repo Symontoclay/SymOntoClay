@@ -1,12 +1,13 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP.Internal.CG;
+using SymOntoClay.NLP.Internal.PhraseToCGParsing;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
+namespace SymOntoClay.NLP.Internal.ConvertingFactToCG
 {
-    public class ResultOfNodeOfSemanticAnalyzer : IObjectToString
+    public class ResultOfNode : IObjectToString
     {
         public ConceptCGNode RootConcept { get; set; }
         public RolesStorageOfSemanticAnalyzer PrimaryRolesDict { get; set; } = new RolesStorageOfSemanticAnalyzer();

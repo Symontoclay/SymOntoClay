@@ -8,6 +8,7 @@ using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Dicts;
 using SymOntoClay.NLP.Internal.ATN;
 using SymOntoClay.NLP.Internal.ConvertingCGToInternal;
+using SymOntoClay.NLP.Internal.ConvertingFactToCG;
 using SymOntoClay.NLP.Internal.ConvertingInternalCGToFact;
 using SymOntoClay.NLP.Internal.Dot;
 using SymOntoClay.NLP.Internal.PhraseToCGParsing;
@@ -51,13 +52,31 @@ namespace TestSandbox.Handlers
         {
             _logger.Log("Begin");
 
-            Case4();
+            Case5();
+            //Case4();
             //Case3();
             //Case2();
             //Case1();
             //Case0();
 
             _logger.Log("End");
+        }
+
+        private void Case5()
+        {
+            var factStr = "{: >: { like(i,#@{: >: { possess(i,$_) & cat($_) } :}) } :}";
+
+            var ruleInstance = Parse(factStr);
+
+            _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
+
+            var converterFactToCG = new ConverterFactToCG(_logger);
+
+            var cg = converterFactToCG.Convert(ruleInstance, _engineContext.Storage.GlobalStorage);
+
+            var dotStr = DotConverter.ConvertToString(cg);
+
+            _logger.Log($"dotStr = '{dotStr}'");
         }
 
         private void Case4()

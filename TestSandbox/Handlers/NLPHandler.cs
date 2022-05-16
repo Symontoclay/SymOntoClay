@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.Core;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP;
 using SymOntoClay.NLP.CommonDict;
@@ -50,12 +51,31 @@ namespace TestSandbox.Handlers
         {
             _logger.Log("Begin");
 
-            Case3();
+            Case4();
+            //Case3();
             //Case2();
             //Case1();
             //Case0();
 
             _logger.Log("End");
+        }
+
+        private void Case4()
+        {
+            var factStr = "{: >: { like(i,#@{: >: { possess(i,$_) & cat($_) } :}) } :}";
+
+            var ruleInstance = Parse(factStr);
+
+            _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
+
+            var text = _converter.Convert(ruleInstance, _engineContext.Storage.GlobalStorage);
+
+            _logger.Log($"text = {text}");
+        }
+
+        private RuleInstance Parse(string text)
+        {
+            return _engineContext.Parser.ParseRuleInstance(text);
         }
 
         private void Case3()

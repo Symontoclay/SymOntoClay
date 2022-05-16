@@ -23,6 +23,7 @@ namespace SymOntoClay.NLP
         private readonly IWordsDict _wordsDict;
         private readonly IEntityLogger _logger;
 
+        /// <inheritdoc/>
         public IList<RuleInstance> Convert(string text)
         {
             var result = new List<RuleInstance>();
@@ -60,6 +61,12 @@ namespace SymOntoClay.NLP
             }
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        public string Convert(RuleInstance fact, IStorage storage)
+        {
+            throw new NotImplementedException();
         }
     }
 }

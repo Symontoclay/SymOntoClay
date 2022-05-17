@@ -34,29 +34,18 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 {
-    public class InheritanceStorage: BaseComponent, IInheritanceStorage
+    public class InheritanceStorage: BaseSpecificStorage, IInheritanceStorage
     {
         public InheritanceStorage(KindOfStorage kind, RealStorageContext realStorageContext)
-            : base(realStorageContext.MainStorageContext.Logger)
+            : base(kind, realStorageContext)
         {
-            _kind = kind;
-            _realStorageContext = realStorageContext;
             _inheritancePublicFactsReplicator = realStorageContext.InheritancePublicFactsReplicator;
         }
 
         private readonly object _lockObj = new object();
         private readonly object _factsIdRegistryLockObj = new object();
 
-        private readonly KindOfStorage _kind;
-
-        /// <inheritdoc/>
-        public KindOfStorage Kind => _kind;
-
-        private readonly RealStorageContext _realStorageContext;
         private IInheritancePublicFactsReplicator _inheritancePublicFactsReplicator;
-
-        /// <inheritdoc/>
-        public IStorage Storage => _realStorageContext.Storage;
 
         private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<InheritanceItem>>> _nonIndexedInfo = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<InheritanceItem>>>();
         private readonly Dictionary<InheritanceItem, string> _factsIdRegistry = new Dictionary<InheritanceItem, string>();

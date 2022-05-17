@@ -32,14 +32,11 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Storage.VarStorage
 {
-    public class VarStorage: BaseComponent, IVarStorage
+    public class VarStorage: BaseSpecificStorage, IVarStorage
     {
         public VarStorage(KindOfStorage kind, RealStorageContext realStorageContext)
-            : base(realStorageContext.MainStorageContext.Logger)
+            : base(kind, realStorageContext)
         {
-            _kind = kind;
-            _realStorageContext = realStorageContext;
-
             _parentVarStoragesList = realStorageContext.Parents.Select(p => p.VarStorage).ToList();
 
             foreach (var parentStorage in _parentVarStoragesList)
@@ -52,16 +49,6 @@ namespace SymOntoClay.Core.Internal.Storage.VarStorage
         }
 
         private readonly object _lockObj = new object();
-
-        private readonly KindOfStorage _kind;
-
-        /// <inheritdoc/>
-        public KindOfStorage Kind => _kind;
-
-        private readonly RealStorageContext _realStorageContext;
-
-        /// <inheritdoc/>
-        public IStorage Storage => _realStorageContext.Storage;
 
         /// <inheritdoc/>
         public event Action OnChanged;

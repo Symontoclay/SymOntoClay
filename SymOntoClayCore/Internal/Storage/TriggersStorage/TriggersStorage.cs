@@ -34,14 +34,11 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
 {
-    public class TriggersStorage: BaseComponent, ITriggersStorage
+    public class TriggersStorage: BaseSpecificStorage, ITriggersStorage
     {
         public TriggersStorage(KindOfStorage kind, RealStorageContext realStorageContext)
-            : base(realStorageContext.MainStorageContext.Logger)
+            : base(kind, realStorageContext)
         {
-            _kind = kind;
-            _realStorageContext = realStorageContext;
-
             _parentTriggersStoragesList = realStorageContext.Parents.Select(p => p.TriggersStorage).ToList();
 
             foreach (var parentStorage in _parentTriggersStoragesList)
@@ -54,16 +51,6 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
         }
 
         private readonly object _lockObj = new object();
-
-        private readonly KindOfStorage _kind;
-
-        /// <inheritdoc/>
-        public KindOfStorage Kind => _kind;
-
-        private readonly RealStorageContext _realStorageContext;
-
-        /// <inheritdoc/>
-        public IStorage Storage => _realStorageContext.Storage;
 
         private List<ITriggersStorage> _parentTriggersStoragesList = new List<ITriggersStorage>();
 

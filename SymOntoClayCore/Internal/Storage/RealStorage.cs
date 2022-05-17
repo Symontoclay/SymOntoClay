@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage.FuzzyLogic;
+using SymOntoClay.Core.Internal.Storage.RelationStoraging;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -61,6 +62,7 @@ namespace SymOntoClay.Core.Internal.Storage
             }
 
             _realStorageContext.LogicalStorage = new LogicalStorage.LogicalStorage(_kind, _realStorageContext);
+            _realStorageContext.RelationsStorage = new RelationsStorage(_kind, _realStorageContext);
             _realStorageContext.MethodsStorage = new MethodsStorage.MethodsStorage(_kind, _realStorageContext);
             _realStorageContext.ActionsStorage = new ActionsStorage.ActionsStorage(_kind, _realStorageContext);
             _realStorageContext.StatesStorage = new StatesStorage.StatesStorage(_kind, _realStorageContext);
@@ -84,6 +86,9 @@ namespace SymOntoClay.Core.Internal.Storage
 
         /// <inheritdoc/>
         public ILogicalStorage LogicalStorage => _realStorageContext.LogicalStorage;
+
+        /// <inheritdoc/>
+        public IRelationsStorage RelationsStorage => _realStorageContext.RelationsStorage;
 
         /// <inheritdoc/>
         public IMethodsStorage MethodsStorage => _realStorageContext.MethodsStorage;

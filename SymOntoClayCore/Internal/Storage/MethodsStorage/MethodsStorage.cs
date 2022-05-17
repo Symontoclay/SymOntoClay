@@ -31,28 +31,16 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 
 namespace SymOntoClay.Core.Internal.Storage.MethodsStorage
 {
-    public class MethodsStorage: BaseComponent, IMethodsStorage
+    public class MethodsStorage: BaseSpecificStorage, IMethodsStorage
     {
         public MethodsStorage(KindOfStorage kind, RealStorageContext realStorageContext)
-            : base(realStorageContext.MainStorageContext.Logger)
+            : base(kind, realStorageContext)
         {
-            _kind = kind;
-            _realStorageContext = realStorageContext;
         }
 
         private readonly object _lockObj = new object();
         private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, Dictionary<int, List<NamedFunction>>>> _namedFunctionsDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, Dictionary<int, List<NamedFunction>>>>();
         private readonly Dictionary<StrongIdentifierValue, Dictionary<int, List<NamedFunction>>> _localNamedFunctionsDict = new Dictionary<StrongIdentifierValue, Dictionary<int, List<NamedFunction>>>();
-
-        private readonly KindOfStorage _kind;
-
-        /// <inheritdoc/>
-        public KindOfStorage Kind => _kind;
-
-        private readonly RealStorageContext _realStorageContext;
-
-        /// <inheritdoc/>
-        public IStorage Storage => _realStorageContext.Storage;
 
         /// <inheritdoc/>
         public void Append(NamedFunction namedFunction)
@@ -238,6 +226,7 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStorage
         protected override void OnDisposed()
         {
             _namedFunctionsDict.Clear();
+            _localNamedFunctionsDict.Clear();
 
             base.OnDisposed();
         }

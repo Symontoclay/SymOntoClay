@@ -32,24 +32,12 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.OperatorsStorage
 {
-    public class OperatorsStorage : BaseComponent, IOperatorsStorage
+    public class OperatorsStorage : BaseSpecificStorage, IOperatorsStorage
     {
         public OperatorsStorage(KindOfStorage kind, RealStorageContext realStorageContext)
-            : base(realStorageContext.MainStorageContext.Logger)
+            : base(kind, realStorageContext)
         {
-            _kind = kind;
-            _realStorageContext = realStorageContext;
         }
-
-        private readonly KindOfStorage _kind;
-
-        /// <inheritdoc/>
-        public KindOfStorage Kind => _kind;
-
-        private readonly RealStorageContext _realStorageContext;
-
-        /// <inheritdoc/>
-        public IStorage Storage => _realStorageContext.Storage;
 
         private readonly object _lockObj = new object();
 

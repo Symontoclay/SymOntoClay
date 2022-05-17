@@ -49,6 +49,9 @@ namespace SymOntoClay.Core.Internal.Storage
         public ILogicalStorage LogicalStorage => _logicalStorage;
 
         /// <inheritdoc/>
+        public IRelationsStorage RelationsStorage => throw new NotImplementedException();
+
+        /// <inheritdoc/>
         public IMethodsStorage MethodsStorage => throw new NotImplementedException();
 
         /// <inheritdoc/>

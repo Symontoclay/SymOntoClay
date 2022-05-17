@@ -8,26 +8,14 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.StatesStorage
 {
-    public class StatesStorage : BaseComponent, IStatesStorage
+    public class StatesStorage : BaseSpecificStorage, IStatesStorage
     {
         public StatesStorage(KindOfStorage kind, RealStorageContext realStorageContext)
-            : base(realStorageContext.MainStorageContext.Logger)
+            : base(kind, realStorageContext)
         {
-            _kind = kind;
-            _realStorageContext = realStorageContext;
         }
 
         private readonly object _lockObj = new object();
-
-        private readonly KindOfStorage _kind;
-
-        /// <inheritdoc/>
-        public KindOfStorage Kind => _kind;
-
-        private readonly RealStorageContext _realStorageContext;
-
-        /// <inheritdoc/>
-        public IStorage Storage => _realStorageContext.Storage;
 
         private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<StateDef>>> _statesDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<StateDef>>>();
         private readonly Dictionary<StateDef, List<ActivationInfoOfStateDef>> _activationInfoDict = new Dictionary<StateDef, List<ActivationInfoOfStateDef>>();

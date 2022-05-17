@@ -26,23 +26,11 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.SynonymsStorage
 {
-    public class SynonymsStorage: BaseComponent, ISynonymsStorage
+    public class SynonymsStorage: BaseSpecificStorage, ISynonymsStorage
     {
         public SynonymsStorage(KindOfStorage kind, RealStorageContext realStorageContext)
-            : base(realStorageContext.MainStorageContext.Logger)
+            : base(kind, realStorageContext)
         {
-            _kind = kind;
-            _realStorageContext = realStorageContext;
         }
-
-        private readonly KindOfStorage _kind;
-
-        /// <inheritdoc/>
-        public KindOfStorage Kind => _kind;
-
-        private readonly RealStorageContext _realStorageContext;
-
-        /// <inheritdoc/>
-        public IStorage Storage => _realStorageContext.Storage;
     }
 }

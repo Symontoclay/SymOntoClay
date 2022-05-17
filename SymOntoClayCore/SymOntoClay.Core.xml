@@ -3167,6 +3167,86 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RelationDescription.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RelationDescription.IsRelationDescription">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RelationDescription.AsRelationDescription">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationDescription.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationDescription.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationDescription.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationDescription.Clone">
+            <summary>
+            Clones the instance and returns cloned instance.
+            </summary>
+            <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationDescription.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            Clones the instance using special context and returns cloned instance.
+            </summary>
+            <param name="context">Special context for providing references continuity.</param>
+            <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationDescription.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationDescription.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationDescription.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationParameterDescription.Clone">
+            <summary>
+            Clones the instance and returns cloned instance.
+            </summary>
+            <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationParameterDescription.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            Clones the instance using special context and returns cloned instance.
+            </summary>
+            <param name="context">Special context for providing references continuity.</param>
+            <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationParameterDescription.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationParameterDescription.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationParameterDescription.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationParameterDescription.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationParameterDescription.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationParameterDescription.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationParameterDescription.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationParameterDescription.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationParameterDescription.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.Kind">
             <inheritdoc/>
         </member>
@@ -3220,6 +3300,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#LogicalStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#RelationsStorage">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#MethodsStorage">
@@ -4055,6 +4138,9 @@
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory.GetToSystemBoolResolver">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory.GetRelationsResolver">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.IDataResolversFactory.GetChannelsResolver">
             <summary>
             Gets instance of Channels resolver.
@@ -4221,6 +4307,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedRelationsResolver.GetRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedVarsResolver.GetVarValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
@@ -5991,12 +6080,6 @@
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.UnaryPlusOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.ActionsStorage.ActionsStorage.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.ActionsStorage.ActionsStorage.Storage">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStorage.ActionsStorage.Append(SymOntoClay.Core.Internal.CodeModel.ActionDef)">
             <inheritdoc/>
         </member>
@@ -6009,10 +6092,10 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.ActionStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.ChannelsStorage.ChannelsStorage.Kind">
+        <member name="P:SymOntoClay.Core.Internal.Storage.BaseSpecificStorage.Kind">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.ChannelsStorage.ChannelsStorage.Storage">
+        <member name="P:SymOntoClay.Core.Internal.Storage.BaseSpecificStorage.Storage">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStorage.ChannelsStorage.Append(SymOntoClay.Core.Internal.CodeModel.Channel)">
@@ -6028,6 +6111,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.LogicalStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.RelationsStorage">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.MethodsStorage">
@@ -6111,12 +6197,6 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.FuzzyLogic.FuzzyLogicStorage.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.FuzzyLogic.FuzzyLogicStorage.Storage">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.FuzzyLogicStorage.Append(SymOntoClay.Core.Internal.CodeModel.LinguisticVariable)">
             <inheritdoc/>
         </member>
@@ -6133,12 +6213,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritancePublicFactsReplicator.ProcessChangeInheritance(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.InheritanceStorage.InheritanceStorage.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.InheritanceStorage.InheritanceStorage.Storage">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStorage.InheritanceStorage.SetInheritance(SymOntoClay.Core.Internal.CodeModel.InheritanceItem)">
@@ -6175,12 +6249,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStorage.WorldPublicFactsInheritanceStorage.OnDisposed">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.Storage">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.Append(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
@@ -6267,12 +6335,6 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.WorldPublicFactsLogicalStorage.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.MetadataStorage.MetadataStorage.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.MetadataStorage.MetadataStorage.Storage">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.MetadataStorage.MetadataStorage.Append(SymOntoClay.Core.Internal.CodeModel.CodeItem)">
             <inheritdoc/>
         </member>
@@ -6285,12 +6347,6 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.MetadataStorage.MetadataStorage.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.MethodsStorage.MethodsStorage.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.MethodsStorage.MethodsStorage.Storage">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.MethodsStorage.MethodsStorage.Append(SymOntoClay.Core.Internal.CodeModel.NamedFunction)">
             <inheritdoc/>
         </member>
@@ -6301,12 +6357,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ObjectStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.OperatorsStorage.OperatorsStorage.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.OperatorsStorage.OperatorsStorage.Storage">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.OperatorsStorage.OperatorsStorage.Append(SymOntoClay.Core.Internal.CodeModel.Operator)">
@@ -6322,6 +6372,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.LogicalStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.RelationsStorage">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.MethodsStorage">
@@ -6420,10 +6473,13 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.RealStorageSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.StatesStorage.StatesStorage.Kind">
+        <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.RelationsStorage.Append(SymOntoClay.Core.Internal.CodeModel.RelationDescription)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.StatesStorage.StatesStorage.Storage">
+        <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.RelationsStorage.GetNamedFunctionsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.RelationsStorage.OnDisposed">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StatesStorage.StatesStorage.Append(SymOntoClay.Core.Internal.CodeModel.StateDef)">
@@ -6501,18 +6557,6 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.SynonymsStorage.SynonymsStorage.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.SynonymsStorage.SynonymsStorage.Storage">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.TriggersStorage.TriggersStorage.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.TriggersStorage.TriggersStorage.Storage">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStorage.TriggersStorage.Append(SymOntoClay.Core.Internal.CodeModel.InlineTrigger)">
             <inheritdoc/>
         </member>
@@ -6538,12 +6582,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStorage.TriggersStorage.OnDisposed">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.Kind">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.Storage">
             <inheritdoc/>
         </member>
         <member name="E:SymOntoClay.Core.Internal.Storage.VarStorage.VarStorage.OnChanged">

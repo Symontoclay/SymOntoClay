@@ -28,24 +28,12 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.MetadataStorage
 {
-    public class MetadataStorage: BaseComponent, IMetadataStorage
+    public class MetadataStorage: BaseSpecificStorage, IMetadataStorage
     {
         public MetadataStorage(KindOfStorage kind, RealStorageContext realStorageContext)
-            : base(realStorageContext.MainStorageContext.Logger)
+            : base(kind, realStorageContext)
         {
-            _kind = kind;
-            _realStorageContext = realStorageContext;
         }
-
-        private readonly KindOfStorage _kind;
-
-        /// <inheritdoc/>
-        public KindOfStorage Kind => _kind;
-
-        private readonly RealStorageContext _realStorageContext;
-
-        /// <inheritdoc/>
-        public IStorage Storage => _realStorageContext.Storage;
 
         private readonly object _lockObj = new object();
 

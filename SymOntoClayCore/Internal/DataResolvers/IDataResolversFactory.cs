@@ -107,5 +107,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         StatesResolver GetStatesResolver();
 
         ToSystemBoolResolver GetToSystemBoolResolver();
+
+        RelationsResolver GetRelationsResolver();
     }
 }

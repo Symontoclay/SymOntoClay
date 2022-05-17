@@ -78,6 +78,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private ToSystemBoolResolver _toSystemBoolResolver;
         private readonly object _toSystemBoolResolverLockObj = new object();
 
+        private RelationsResolver _relationsResolver;
+        private readonly object _relationsResolverLockObj = new object();
+
         /// <inheritdoc/>
         public ChannelsResolver GetChannelsResolver()
         {
@@ -271,6 +274,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 return _toSystemBoolResolver;
+            }
+        }
+
+        /// <inheritdoc/>
+        public RelationsResolver GetRelationsResolver()
+        {
+            lock (_relationsResolverLockObj)
+            {
+                if (_relationsResolver == null)
+                {
+                    _relationsResolver = new RelationsResolver(_context);
+                }
+
+                return _relationsResolver;
             }
         }
     }

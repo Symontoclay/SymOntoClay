@@ -34,6 +34,7 @@ namespace SymOntoClay.Core
     {
         KindOfStorage Kind { get; }
         ILogicalStorage LogicalStorage { get; }
+        IRelationsStorage RelationsStorage { get; }
         IMethodsStorage MethodsStorage { get; }
         IActionsStorage ActionsStorage { get; }
         IStatesStorage StatesStorage { get; }

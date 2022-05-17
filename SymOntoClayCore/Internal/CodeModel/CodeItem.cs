@@ -33,8 +33,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public abstract class CodeItem: AnnotatedItem, IMemberAccess, IReadOnlyMemberAccess
     {
         public static readonly TypeOfAccess DefaultTypeOfAccess = TypeOfAccess.Protected;
-
+        
         public abstract KindOfCodeEntity Kind { get;}
+
         public StrongIdentifierValue Name
         { 
             get
@@ -146,6 +147,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public virtual bool IsMutuallyExclusiveStatesSet => false;
         public virtual MutuallyExclusiveStatesSet AsMutuallyExclusiveStatesSet => null;
+
+        public virtual bool IsRelationDescription => false;
+        public virtual RelationDescription AsRelationDescription => null;
 
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)

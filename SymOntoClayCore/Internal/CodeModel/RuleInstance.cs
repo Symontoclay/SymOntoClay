@@ -420,6 +420,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         ILogicalStorage IStorage.LogicalStorage => this;
 
         /// <inheritdoc/>
+        IRelationsStorage IStorage.RelationsStorage => throw new NotImplementedException();
+
+        /// <inheritdoc/>
         IMethodsStorage IStorage.MethodsStorage => throw new NotImplementedException();
 
         /// <inheritdoc/>

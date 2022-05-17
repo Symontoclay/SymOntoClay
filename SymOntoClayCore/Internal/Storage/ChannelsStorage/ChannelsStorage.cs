@@ -31,26 +31,14 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.ChannelsStorage
 {
-    public class ChannelsStorage: BaseComponent, IChannelsStorage
+    public class ChannelsStorage: BaseSpecificStorage, IChannelsStorage
     {
         public ChannelsStorage(KindOfStorage kind, RealStorageContext realStorageContext)
-            : base(realStorageContext.MainStorageContext.Logger)
+            : base(kind, realStorageContext)
         {
-            _kind = kind;
-            _realStorageContext = realStorageContext;
         }
 
         private readonly object _lockObj = new object();
-
-        private readonly KindOfStorage _kind;
-
-        /// <inheritdoc/>
-        public KindOfStorage Kind => _kind;
-
-        private readonly RealStorageContext _realStorageContext;
-
-        /// <inheritdoc/>
-        public IStorage Storage => _realStorageContext.Storage;
 
         private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<Channel>>> _nonIndexedInfo = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<Channel>>>();
 

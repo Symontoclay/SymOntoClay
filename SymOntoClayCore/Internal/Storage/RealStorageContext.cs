@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.Core.Internal.Storage.FuzzyLogic;
+using SymOntoClay.Core.Internal.Storage.RelationStoraging;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,7 @@ namespace SymOntoClay.Core.Internal.Storage
     {
         public IMainStorageContext MainStorageContext { get; set; }
         public LogicalStorage.LogicalStorage LogicalStorage { get; set; }
+        public RelationsStorage RelationsStorage { get; set; }
         public MethodsStorage.MethodsStorage MethodsStorage { get; set; }
         public ActionsStorage.ActionsStorage ActionsStorage { get; set; }
         public StatesStorage.StatesStorage StatesStorage { get; set; }
@@ -65,6 +67,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public void Dispose()
         {
             LogicalStorage.Dispose();
+            RelationsStorage.Dispose();
             MethodsStorage.Dispose();
             ActionsStorage.Dispose();
             StatesStorage.Dispose();

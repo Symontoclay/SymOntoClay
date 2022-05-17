@@ -40,7 +40,7 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 {
-    public class LogicalStorage: BaseComponent, ILogicalStorage
+    public class LogicalStorage: BaseSpecificStorage, ILogicalStorage
     {
 #if DEBUG
         //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
@@ -49,11 +49,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         private const int DEFAULT_INITIAL_TIME = 20;
 
         public LogicalStorage(KindOfStorage kind, RealStorageContext realStorageContext)
-            : base(realStorageContext.MainStorageContext.Logger)
+            : base(kind, realStorageContext)
         {
-            _kind = kind;
-            _realStorageContext = realStorageContext;
-            _mainStorageContext = realStorageContext.MainStorageContext;
             _parentLogicalStoragesList = realStorageContext.Parents.Select(p => p.LogicalStorage).ToList();
 
             _ruleInstancesList = new List<RuleInstance>();
@@ -86,17 +83,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                     throw new ArgumentOutOfRangeException(nameof(kindOfGC), kindOfGC, null);
             }
         }
-
-        private readonly KindOfStorage _kind;
-
-        /// <inheritdoc/>
-        public KindOfStorage Kind => _kind;
-
-        private readonly RealStorageContext _realStorageContext;
-        private readonly IMainStorageContext _mainStorageContext;
-
-        /// <inheritdoc/>
-        public IStorage Storage => _realStorageContext.Storage;
 
         private readonly object _lockObj = new object();
 

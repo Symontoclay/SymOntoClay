@@ -32,28 +32,17 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
 {
-    public class FuzzyLogicStorage : BaseComponent, IFuzzyLogicStorage
+    public class FuzzyLogicStorage : BaseSpecificStorage, IFuzzyLogicStorage
     {
         public FuzzyLogicStorage(KindOfStorage kind, RealStorageContext realStorageContext)
-            : base(realStorageContext.MainStorageContext.Logger)
+            : base(kind, realStorageContext)
         {
-            _kind = kind;
-            _realStorageContext = realStorageContext;
             _commonNamesStorage = realStorageContext.MainStorageContext.CommonNamesStorage;
         }
 
         private readonly object _lockObj = new object();
 
-        private readonly KindOfStorage _kind;
-
-        /// <inheritdoc/>
-        public KindOfStorage Kind => _kind;
-
-        private readonly RealStorageContext _realStorageContext;
         private readonly ICommonNamesStorage _commonNamesStorage;
-
-        /// <inheritdoc/>
-        public IStorage Storage => _realStorageContext.Storage;
 
         private Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<FuzzyLogicNonNumericValue>>> _valuesDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<FuzzyLogicNonNumericValue>>>();
         private Dictionary<StrongIdentifierValue, FuzzyLogicOperator> _defaultOperatorsDict = new Dictionary<StrongIdentifierValue, FuzzyLogicOperator>();

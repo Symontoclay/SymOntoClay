@@ -19,8 +19,34 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToCG
                         return node.Run();
                     }
 
+                case KindOfLogicalQueryNode.Concept:
+                    {
+                        var node = new ConceptNode(expression, context);
+                        return node.Run();
+                    }
+
+                case KindOfLogicalQueryNode.Value:
+                    return Run(expression.Value, context);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+            }
+        }
+
+        private static ResultOfNode Run(Value value, ContextOfConverterFactToCG context)
+        {
+            var kindOfValue = value.KindOfValue;
+
+            switch (kindOfValue)
+            {
+                case KindOfValue.ConditionalEntitySourceValue:
+                    {
+                        var node = new ConditionalEntitySourceValueNode(value.AsConditionalEntitySourceValue, context);
+                        return node.Run();
+                    }
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfValue), kindOfValue, null);
             }
         }
     }

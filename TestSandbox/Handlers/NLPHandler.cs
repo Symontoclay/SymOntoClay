@@ -1,7 +1,10 @@
 ﻿using SymOntoClay.Core;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP;
 using SymOntoClay.NLP.CommonDict;
@@ -41,6 +44,8 @@ namespace TestSandbox.Handlers
             _wordsDict = new JsonDictionary(mainDictPath);
 
             _converter = new NLPConverter(_logger, _wordsDict);
+
+            CreateCommonRelations();
         }
 
         private readonly EngineContext _engineContext;
@@ -64,6 +69,8 @@ namespace TestSandbox.Handlers
 
         private void Case5()
         {
+            var nlpContext = CreateNLPConverterContext();
+
             var factStr = "{: >: { like(i,#@{: >: { possess(i,$_) & cat($_) } :}) } :}";
 
             var ruleInstance = Parse(factStr);
@@ -72,7 +79,7 @@ namespace TestSandbox.Handlers
 
             var converterFactToCG = new ConverterFactToCG(_logger);
 
-            var cg = converterFactToCG.Convert(ruleInstance, _engineContext.Storage.GlobalStorage);
+            var cg = converterFactToCG.Convert(ruleInstance, nlpContext);
 
             var dotStr = DotConverter.ConvertToString(cg);
 
@@ -219,6 +226,72 @@ namespace TestSandbox.Handlers
                 _logger.Log($"n = {n}");
                 _logger.Log($"item = {item}");
             }
+        }
+
+        private void CreateCommonRelations()
+        {
+            var relationName = NameHelper.CreateName("like");
+
+            var relation = new RelationDescription();
+            relation.Name = relationName;
+
+            var argument = new RelationParameterDescription();
+            argument.Name = NameHelper.CreateName("$x1");
+            argument.MeaningRolesList.Add(NameHelper.CreateName("subject"));
+            argument.MeaningRolesList.Add(NameHelper.CreateName("agent"));
+
+            relation.Arguments.Add(argument);
+
+            argument = new RelationParameterDescription();
+            argument.Name = NameHelper.CreateName("$x2");
+            argument.MeaningRolesList.Add(NameHelper.CreateName("object"));
+
+            relation.Arguments.Add(argument);
+
+            var inheritanceItem = new InheritanceItem();
+            relation.InheritanceItems.Add(inheritanceItem);
+            inheritanceItem.SubName = relation.Name;
+            inheritanceItem.SuperName = NameHelper.CreateName("state");
+            inheritanceItem.Rank = LogicalValue.TrueValue;
+
+            //_logger.Log($"relation = {relation}");
+            //_logger.Log($"relation = {relation.ToHumanizedString()}");
+
+            AppendRelationToStorage(relation);
+        }
+
+        private void AppendRelationToStorage(RelationDescription relation)
+        {
+            var globalStorage = _engineContext.Storage.GlobalStorage;
+
+            var inheritanceStorage = globalStorage.InheritanceStorage;
+
+            foreach (var item in relation.InheritanceItems)
+            {
+                inheritanceStorage.SetInheritance(item);
+            }
+
+            globalStorage.RelationsStorage.Append(relation);
+        }
+
+        private INLPConverterContext CreateNLPConverterContext()
+        {
+            var dataResolversFactory = _engineContext.DataResolversFactory;
+
+            var relationsResolver = dataResolversFactory.GetRelationsResolver();
+            var inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
+
+            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            localCodeExecutionContext.Storage = _engineContext.Storage.GlobalStorage;
+            localCodeExecutionContext.Holder = NameHelper.CreateName(_engineContext.Id);
+
+            //_logger.Log($"localCodeExecutionContext = {localCodeExecutionContext}");
+
+            var packedRelationsResolver = new PackedRelationsResolver(relationsResolver, localCodeExecutionContext);
+
+            var packedInheritanceResolver = new PackedInheritanceResolver(inheritanceResolver, localCodeExecutionContext);
+
+            return new NLPConverterContext(packedRelationsResolver, packedInheritanceResolver);
         }
     }
 }

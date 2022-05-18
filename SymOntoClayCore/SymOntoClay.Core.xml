@@ -4309,6 +4309,27 @@
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetInheritanceRank(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetRawInheritanceRank(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetSuperClassesKeysList(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetWeightedInheritanceItems(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.IsFit(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue},SymOntoClay.Core.Internal.CodeModel.Value)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetDistance(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue},SymOntoClay.Core.Internal.CodeModel.Value)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetDistance(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedRelationsResolver.GetRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32)">
             <inheritdoc/>
         </member>

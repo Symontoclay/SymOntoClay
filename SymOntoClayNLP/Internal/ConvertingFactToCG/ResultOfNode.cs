@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP.Internal.CG;
 using SymOntoClay.NLP.Internal.PhraseToCGParsing;
 using System;
@@ -9,9 +10,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToCG
 {
     public class ResultOfNode : IObjectToString
     {
-        public ConceptCGNode RootConcept { get; set; }
-        public RolesStorageOfSemanticAnalyzer PrimaryRolesDict { get; set; } = new RolesStorageOfSemanticAnalyzer();
-        public RolesStorageOfSemanticAnalyzer SecondaryRolesDict { get; set; } = new RolesStorageOfSemanticAnalyzer();
+        public BaseConceptCGNode ConceptCGNode { get; set; }
+        public LogicalQueryNode LogicalQueryNode { get; set; }
 
         public override string ToString()
         {
@@ -28,11 +28,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToCG
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjProp(n, nameof(RootConcept), RootConcept);
-
-            sb.PrintObjProp(n, nameof(PrimaryRolesDict), PrimaryRolesDict);
-
-            sb.PrintObjProp(n, nameof(SecondaryRolesDict), SecondaryRolesDict);
+            sb.PrintBriefObjProp(n, nameof(ConceptCGNode), ConceptCGNode);
+            sb.PrintObjProp(n, nameof(LogicalQueryNode), LogicalQueryNode);
 
             return sb.ToString();
         }

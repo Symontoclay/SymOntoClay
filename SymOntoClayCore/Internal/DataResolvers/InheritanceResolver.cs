@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class InheritanceResolver : BaseResolver
     {
-        private static ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
+        public ResolverOptions DefaultOptions = ResolverOptions.GetDefaultOptions();
 
         public InheritanceResolver(IMainStorageContext context)
             : base(context)
@@ -49,7 +49,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public Value GetInheritanceRank(StrongIdentifierValue subName, StrongIdentifierValue superName, LocalCodeExecutionContext localCodeExecutionContext)
         {
-            return GetInheritanceRank(subName, superName, localCodeExecutionContext, _defaultOptions);
+            return GetInheritanceRank(subName, superName, localCodeExecutionContext, DefaultOptions);
         }
 
         public Value GetInheritanceRank(StrongIdentifierValue subName, StrongIdentifierValue superName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
@@ -60,7 +60,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public float GetRawInheritanceRank(StrongIdentifierValue subName, StrongIdentifierValue superName, LocalCodeExecutionContext localCodeExecutionContext)
         {
-            return GetRawInheritanceRank(subName, superName, localCodeExecutionContext, _defaultOptions);
+            return GetRawInheritanceRank(subName, superName, localCodeExecutionContext, DefaultOptions);
         }
 
         public float GetRawInheritanceRank(StrongIdentifierValue subName, StrongIdentifierValue superName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
@@ -102,7 +102,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public List<StrongIdentifierValue> GetSuperClassesKeysList(StrongIdentifierValue subName, LocalCodeExecutionContext localCodeExecutionContext)
         {
-            return GetWeightedInheritanceItems(subName, localCodeExecutionContext).Select(p => p.SuperName).Where(p => !p.IsEmpty).Distinct().ToList();
+            return GetSuperClassesKeysList(subName, localCodeExecutionContext, DefaultOptions);
+        }
+
+        public List<StrongIdentifierValue> GetSuperClassesKeysList(StrongIdentifierValue subName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            return GetWeightedInheritanceItems(subName, localCodeExecutionContext, options).Select(p => p.SuperName).Where(p => !p.IsEmpty).Distinct().ToList();
         }
 
         public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
@@ -117,7 +122,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(StrongIdentifierValue subName, LocalCodeExecutionContext localCodeExecutionContext)
         {
-            return GetWeightedInheritanceItems(subName, localCodeExecutionContext, _defaultOptions);
+            return GetWeightedInheritanceItems(subName, localCodeExecutionContext, DefaultOptions);
         }
 
         public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(StrongIdentifierValue subName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
@@ -460,7 +465,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public uint? GetDistance(StrongIdentifierValue subName, StrongIdentifierValue superName, LocalCodeExecutionContext localCodeExecutionContext)
         {
-            return GetDistance(subName, superName, localCodeExecutionContext, _defaultOptions);
+            return GetDistance(subName, superName, localCodeExecutionContext, DefaultOptions);
         }
 
         public uint? GetDistance(StrongIdentifierValue subName, StrongIdentifierValue superName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)

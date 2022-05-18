@@ -18,27 +18,24 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToCG
 
         private readonly IEntityLogger _logger;
 
-        public ConceptualGraph Convert(RuleInstance fact, IStorage storage)
+        public ConceptualGraph Convert(RuleInstance fact, INLPConverterContext nlpContext)
         {
             var outerConceptualGraph = new ConceptualGraph();
             var context = new ContextOfConverterFactToCG();
-            context.OuterConceptualGraph = outerConceptualGraph;
+            context.ConceptualGraph = outerConceptualGraph;
             context.Logger = _logger;
-            context.Storage = storage;
+            context.NLPContext = nlpContext;
 
             var factNode = new RuleInstanceNode(fact, context);
-            factNode.Run();
+            var factNodeResult = factNode.Run();
 
-            return outerConceptualGraph;
-        }
-
-        private ConceptualGraph Convert(PrimaryRulePart primaryPart, ContextOfConverterFactToCG context)
-        {
 #if DEBUG
-            _logger.Log($"primaryPart = {DebugHelperForRuleInstance.BaseRulePartToString(primaryPart, HumanizedOptions.ShowOnlyMainContent)}");
+            _logger.Log($"factNodeResult = {factNodeResult}");
 #endif
 
             throw new NotImplementedException();
+
+            return outerConceptualGraph;
         }
     }
 }

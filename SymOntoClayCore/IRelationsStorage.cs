@@ -9,6 +9,6 @@ namespace SymOntoClay.Core
     public interface IRelationsStorage : ISpecificStorage
     {
         void Append(RelationDescription relation);
-        IList<WeightedInheritanceResultItem<RelationDescription>> GetNamedFunctionsDirectly(StrongIdentifierValue name, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems);
+        IList<WeightedInheritanceResultItem<RelationDescription>> GetRelationsDirectly(StrongIdentifierValue name, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems);
     }
 }

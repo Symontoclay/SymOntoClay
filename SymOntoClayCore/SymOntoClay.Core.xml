@@ -6476,7 +6476,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.RelationsStorage.Append(SymOntoClay.Core.Internal.CodeModel.RelationDescription)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.RelationsStorage.GetNamedFunctionsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.RelationsStorage.GetRelationsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.RelationsStorage.OnDisposed">

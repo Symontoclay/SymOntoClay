@@ -24,7 +24,7 @@ namespace SymOntoClay.Core.Internal.Storage.RelationStoraging
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"relation = {relation}");
+                //Log($"relation = {relation}");
 #endif
 
                 if (relation.TypeOfAccess != TypeOfAccess.Local)
@@ -39,13 +39,13 @@ namespace SymOntoClay.Core.Internal.Storage.RelationStoraging
                 var paramsCount = relation.Arguments.Count;
 
 #if DEBUG
-                Log($"paramsCount = {paramsCount}");
+                //Log($"paramsCount = {paramsCount}");
 #endif
 
                 var holder = relation.Holder;
 
 #if DEBUG
-                Log($"holder = {holder}");
+                //Log($"holder = {holder}");
 #endif
 
                 if (_itemsDict.ContainsKey(holder))
@@ -93,13 +93,13 @@ namespace SymOntoClay.Core.Internal.Storage.RelationStoraging
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<RelationDescription>> GetNamedFunctionsDirectly(StrongIdentifierValue name, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<RelationDescription>> GetRelationsDirectly(StrongIdentifierValue name, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"name = {name}");
-                Log($"paramsCount = {paramsCount}");
+                //Log($"name = {name}");
+                //Log($"paramsCount = {paramsCount}");
 #endif
 
                 var result = new List<WeightedInheritanceResultItem<RelationDescription>>();

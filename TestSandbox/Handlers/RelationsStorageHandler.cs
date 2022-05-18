@@ -1,6 +1,8 @@
 ﻿using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -33,8 +35,10 @@ namespace TestSandbox.Handlers
 
         private void Case1()
         {
+            var relationName = NameHelper.CreateName("like");
+
             var relation = new RelationDescription();
-            relation.Name = NameHelper.CreateName("like");
+            relation.Name = relationName;
 
             var argument = new RelationParameterDescription();
             argument.Name = NameHelper.CreateName("$x1");
@@ -71,7 +75,18 @@ namespace TestSandbox.Handlers
 
             var relationsResolver = _engineContext.DataResolversFactory.GetRelationsResolver();
 
+            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            localCodeExecutionContext.Storage = globalStorage;
+            localCodeExecutionContext.Holder = NameHelper.CreateName(_engineContext.Id);
 
+            _logger.Log($"localCodeExecutionContext = {localCodeExecutionContext}");
+
+            var packedRelationsResolver = new PackedRelationsResolver(relationsResolver, localCodeExecutionContext);
+
+            var targetRelation = packedRelationsResolver.GetRelation(relationName, 2);
+
+            _logger.Log($"targetRelation = {targetRelation}");
+            _logger.Log($"targetRelation = {targetRelation?.ToHumanizedString()}");
         }
     }
 }

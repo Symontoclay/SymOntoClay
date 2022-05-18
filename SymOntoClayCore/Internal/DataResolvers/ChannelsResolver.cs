@@ -80,9 +80,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"filteredList = {filteredList.WriteListToString()}");
 #endif
 
-            var targetChannel = ChooseTargetItem(filteredList);
+            var targetItem = ChooseTargetItem(filteredList);
 
-            return targetChannel;
+            return targetItem;
         }
 
         private List<WeightedInheritanceResultItemWithStorageInfo<Channel>> GetRawList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)

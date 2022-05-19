@@ -1,16 +1,16 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.NLP.Internal.CG;
+using SymOntoClay.NLP.Internal.InternalCG;
 using SymOntoClay.NLP.Internal.PhraseToCGParsing;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.NLP.Internal.ConvertingFactToCG
+namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 {
     public class ResultOfNode : IObjectToString
     {
-        public BaseConceptCGNode ConceptCGNode { get; set; }
+        public BaseInternalConceptCGNode ConceptCGNode { get; set; }
         public LogicalQueryNode LogicalQueryNode { get; set; }
 
         public override string ToString()

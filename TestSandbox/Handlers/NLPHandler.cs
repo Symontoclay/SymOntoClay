@@ -11,7 +11,7 @@ using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Dicts;
 using SymOntoClay.NLP.Internal.ATN;
 using SymOntoClay.NLP.Internal.ConvertingCGToInternal;
-using SymOntoClay.NLP.Internal.ConvertingFactToCG;
+using SymOntoClay.NLP.Internal.ConvertingFactToInternalCG;
 using SymOntoClay.NLP.Internal.ConvertingInternalCGToFact;
 using SymOntoClay.NLP.Internal.Dot;
 using SymOntoClay.NLP.Internal.PhraseToCGParsing;
@@ -77,7 +77,7 @@ namespace TestSandbox.Handlers
 
             _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
 
-            var converterFactToCG = new ConverterFactToCG(_logger);
+            var converterFactToCG = new ConverterFactToInternalCG(_logger);
 
             var cg = converterFactToCG.Convert(ruleInstance, nlpContext);
 

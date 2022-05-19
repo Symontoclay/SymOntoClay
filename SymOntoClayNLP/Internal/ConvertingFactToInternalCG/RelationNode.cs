@@ -7,11 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SymOntoClay.NLP.Internal.ConvertingFactToCG
+namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 {
     public class RelationNode
     {
-        public RelationNode(LogicalQueryNode relation, ContextOfConverterFactToCG context)
+        public RelationNode(LogicalQueryNode relation, ContextOfConverterFactToInternalCG context)
         {
             _relation = relation;
             _context = context;
@@ -24,7 +24,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToCG
         }
 
         private readonly LogicalQueryNode _relation;
-        private readonly ContextOfConverterFactToCG _context;
+        private readonly ContextOfConverterFactToInternalCG _context;
         private readonly IPackedRelationsResolver _relationsResolver;
         private readonly IPackedInheritanceResolver _inheritanceResolver;
         private readonly IEntityLogger _logger;

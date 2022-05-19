@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.NLP.Internal.ConvertingFactToCG
+namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 {
     public static class LogicalQueryNodeProcessorFactory
     {
-        public static ResultOfNode Run(LogicalQueryNode expression, ContextOfConverterFactToCG context)
+        public static ResultOfNode Run(LogicalQueryNode expression, ContextOfConverterFactToInternalCG context)
         {
             var kind = expression.Kind;
 
@@ -33,7 +33,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToCG
             }
         }
 
-        private static ResultOfNode Run(Value value, ContextOfConverterFactToCG context)
+        private static ResultOfNode Run(Value value, ContextOfConverterFactToInternalCG context)
         {
             var kindOfValue = value.KindOfValue;
 

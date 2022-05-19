@@ -5,11 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.NLP.Internal.ConvertingFactToCG
+namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 {
     public class RuleInstanceNode
     {
-        public RuleInstanceNode(RuleInstance fact, ContextOfConverterFactToCG context)
+        public RuleInstanceNode(RuleInstance fact, ContextOfConverterFactToInternalCG context)
         {
             _fact = fact;
             _context = context;
@@ -17,7 +17,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToCG
         }
 
         private readonly RuleInstance _fact;
-        private readonly ContextOfConverterFactToCG _context;
+        private readonly ContextOfConverterFactToInternalCG _context;
         private readonly IEntityLogger _logger;
 
         public ResultOfNode Run()

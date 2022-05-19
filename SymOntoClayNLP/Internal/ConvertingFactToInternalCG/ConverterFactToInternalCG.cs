@@ -2,26 +2,26 @@
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.NLP.Internal.CG;
+using SymOntoClay.NLP.Internal.InternalCG;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.NLP.Internal.ConvertingFactToCG
+namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 {
-    public class ConverterFactToCG
+    public class ConverterFactToInternalCG
     {
-        public ConverterFactToCG(IEntityLogger logger)
+        public ConverterFactToInternalCG(IEntityLogger logger)
         {
             _logger = logger;
         }
 
         private readonly IEntityLogger _logger;
 
-        public ConceptualGraph Convert(RuleInstance fact, INLPConverterContext nlpContext)
+        public InternalConceptualGraph Convert(RuleInstance fact, INLPConverterContext nlpContext)
         {
-            var outerConceptualGraph = new ConceptualGraph();
-            var context = new ContextOfConverterFactToCG();
+            var outerConceptualGraph = new InternalConceptualGraph();
+            var context = new ContextOfConverterFactToInternalCG();
             context.ConceptualGraph = outerConceptualGraph;
             context.Logger = _logger;
             context.NLPContext = nlpContext;

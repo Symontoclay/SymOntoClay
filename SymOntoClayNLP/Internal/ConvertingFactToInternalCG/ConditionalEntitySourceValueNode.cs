@@ -1,15 +1,15 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.NLP.Internal.CG;
+using SymOntoClay.NLP.Internal.InternalCG;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.NLP.Internal.ConvertingFactToCG
+namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 {
     public class ConditionalEntitySourceValueNode
     {
-        public ConditionalEntitySourceValueNode(ConditionalEntitySourceValue value, ContextOfConverterFactToCG context)
+        public ConditionalEntitySourceValueNode(ConditionalEntitySourceValue value, ContextOfConverterFactToInternalCG context)
         {
             _value = value;
             _context = context;
@@ -17,7 +17,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToCG
         }
 
         private readonly ConditionalEntitySourceValue _value;
-        private readonly ContextOfConverterFactToCG _context;
+        private readonly ContextOfConverterFactToInternalCG _context;
         private readonly IEntityLogger _logger;
 
         public ResultOfNode Run()
@@ -26,8 +26,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToCG
             _logger.Log($"_value = {_value.ToHumanizedString()}");
 #endif
 
-            var outerConceptualGraph = new ConceptualGraph();
-            var context = new ContextOfConverterFactToCG();
+            var outerConceptualGraph = new InternalConceptualGraph();
+            var context = new ContextOfConverterFactToInternalCG();
             context.ConceptualGraph = outerConceptualGraph;
             context.Logger = _logger;
             context.NLPContext = _context.NLPContext;

@@ -24,10 +24,11 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         public ResultOfNode Run()
         {
 #if DEBUG
-            _logger.Log($"_concept = {DebugHelperForRuleInstance.ToString(_concept, HumanizedOptions.ShowOnlyMainContent)}");
+            _logger.Log($"_concept = {_concept.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
 #endif
 
             var result = new ResultOfNode();
+            result.KindOfResult = KindOfResultOfNode.ProcessConcept;
             result.LogicalQueryNode = _concept;
             result.ConceptCGNode = new InternalConceptCGNode() { Name = _concept.Name.NameValue, Parent = _context.ConceptualGraph };
 

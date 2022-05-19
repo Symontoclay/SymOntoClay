@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.CodeModel;
+﻿using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP.Internal.InternalCG;
 using System;
@@ -23,7 +24,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         public ResultOfNode Run()
         {
 #if DEBUG
-            _logger.Log($"_value = {_value.ToHumanizedString()}");
+            _logger.Log($"_value = {_value.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
 #endif
 
             var outerConceptualGraph = new InternalConceptualGraph();

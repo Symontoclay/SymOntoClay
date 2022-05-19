@@ -2,6 +2,8 @@
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.Internal.Dot;
+using SymOntoClay.NLP.Internal.InternalCG;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,19 +34,33 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         public ResultOfNode Run()
         {
 #if DEBUG
-            _logger.Log($"_relation = {DebugHelperForRuleInstance.ToString(_relation, HumanizedOptions.ShowOnlyMainContent)}");
+            _logger.Log($"_relation = {_relation.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
 #endif
+
+            if(_context.VisitedRelations.ContainsKey(_relation))
+            {
+                return _context.VisitedRelations[_relation];
+            }
 
             var result = new ResultOfNode();
 
-            var relationDescription = _relationsResolver.GetRelation(_relation.Name, _relation.ParamsList.Count);
+            _context.VisitedRelations[_relation] = result;
+
+            var relationName = _relation.Name;
+
+            var relationDescription = _relationsResolver.GetRelation(relationName, _relation.ParamsList.Count);
+
+            if(relationDescription == null)
+            {
+                throw new Exception($"Relation `{_relation.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}` is not described!");
+            }
 
 #if DEBUG
             //_logger.Log($"relationDescription = {relationDescription}");
             _logger.Log($"relationDescription = {relationDescription.ToHumanizedString()}");
 #endif
 
-            var superClassesList = _inheritanceResolver.GetSuperClassesKeysList(_relation.Name);
+            var superClassesList = _inheritanceResolver.GetSuperClassesKeysList(relationName);
 
 #if DEBUG
             _logger.Log($"superClassesList = {superClassesList.WriteListToString()}");
@@ -60,14 +76,32 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             _logger.Log($"isEvent = {isEvent}");
 #endif
 
-            foreach(var param in _relation.ParamsList)
+            result.KindOfResult = KindOfResultOfNode.ProcessRelation;
+
+            var relationConcept = new InternalConceptCGNode() { Name = relationName.NameValue, Parent = _context.ConceptualGraph };
+
+            var n = 0;
+
+            foreach (var param in _relation.ParamsList)
             {
                 var paramResult = LogicalQueryNodeProcessorFactory.Run(param, _context);
 
 #if DEBUG
                 _logger.Log($"paramResult = {paramResult}");
 #endif
+
+                var paramDescription = relationDescription.Arguments[n];
+                n++;
+
+#if DEBUG
+                _logger.Log($"paramDescription = {paramDescription.ToHumanizedString()}");
+#endif
             }
+
+#if DEBUG
+            var dotStr = DotConverter.ConvertToString(_context.ConceptualGraph);
+            _logger.Log($"dotStr = {dotStr}");
+#endif
 
             throw new NotImplementedException();
         }

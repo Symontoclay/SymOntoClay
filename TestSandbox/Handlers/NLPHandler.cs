@@ -230,6 +230,43 @@ namespace TestSandbox.Handlers
 
         private void CreateCommonRelations()
         {
+            CreateLikeRelation();
+            CreatePossessRelation();
+        }
+
+        private void CreatePossessRelation()
+        {
+            var relationName = NameHelper.CreateName("possess");
+
+            var relation = new RelationDescription();
+            relation.Name = relationName;
+
+            var argument = new RelationParameterDescription();
+            argument.Name = NameHelper.CreateName("$x1");
+            argument.MeaningRolesList.Add(NameHelper.CreateName("owner"));
+
+            relation.Arguments.Add(argument);
+
+            argument = new RelationParameterDescription();
+            argument.Name = NameHelper.CreateName("$x2");
+            argument.MeaningRolesList.Add(NameHelper.CreateName("possessions"));
+
+            relation.Arguments.Add(argument);
+
+            var inheritanceItem = new InheritanceItem();
+            relation.InheritanceItems.Add(inheritanceItem);
+            inheritanceItem.SubName = relation.Name;
+            inheritanceItem.SuperName = NameHelper.CreateName("state");
+            inheritanceItem.Rank = LogicalValue.TrueValue;
+
+            //_logger.Log($"relation = {relation}");
+            _logger.Log($"relation = {relation.ToHumanizedString()}");
+
+            AppendRelationToStorage(relation);
+        }
+
+        private void CreateLikeRelation()
+        {
             var relationName = NameHelper.CreateName("like");
 
             var relation = new RelationDescription();
@@ -255,7 +292,7 @@ namespace TestSandbox.Handlers
             inheritanceItem.Rank = LogicalValue.TrueValue;
 
             //_logger.Log($"relation = {relation}");
-            //_logger.Log($"relation = {relation.ToHumanizedString()}");
+            _logger.Log($"relation = {relation.ToHumanizedString()}");
 
             AppendRelationToStorage(relation);
         }

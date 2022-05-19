@@ -28,6 +28,29 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                 case KindOfLogicalQueryNode.Value:
                     return Run(expression.Value, context);
 
+                case KindOfLogicalQueryNode.LogicalVar:
+                    {
+                        var node = new LogicalVarNode(expression, context);
+                        return node.Run();
+                    }
+
+                case KindOfLogicalQueryNode.BinaryOperator:
+                    {
+                        var kindOfOperator = expression.KindOfOperator;
+
+                        switch (kindOfOperator)
+                        {
+                            case KindOfOperatorOfLogicalQueryNode.And:
+                                {
+                                    var node = new BinaryOperatorAndNode(expression, context);
+                                    return node.Run();
+                                }
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, null);
+                        }
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }

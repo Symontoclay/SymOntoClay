@@ -955,9 +955,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return sb.ToString();
         }
 
-        public string GetHumanizeDbgString()
+        public string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
         {
-            return DebugHelperForRuleInstance.ToString(this);
+            return DebugHelperForRuleInstance.ToString(this, options);
         }
     }
 }

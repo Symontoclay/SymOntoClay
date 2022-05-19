@@ -35,6 +35,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             _logger.Log($"primaryPart = {DebugHelperForRuleInstance.BaseRulePartToString(primaryPart, HumanizedOptions.ShowOnlyMainContent)}");
 #endif
 
+            _context.CurrentRulePart = primaryPart;
+
             var exprResult = LogicalQueryNodeProcessorFactory.Run(primaryPart.Expression, _context);
 
 #if DEBUG

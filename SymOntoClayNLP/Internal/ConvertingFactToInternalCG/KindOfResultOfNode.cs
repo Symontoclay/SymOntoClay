@@ -9,6 +9,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         Unknown,
         ProcessRelation,
         ResolveVar,
-        ProcessConcept
+        ProcessConcept,
+        ProcessFact,
+        ProcessConditionalEntity
     }
 }

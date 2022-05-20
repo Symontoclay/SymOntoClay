@@ -24,13 +24,13 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         public ResultOfNode Run()
         {
 #if DEBUG
-            _logger.Log($"_var = {_var.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
+            //_logger.Log($"_var = {_var.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
 #endif
 
             var varName = _var.Name.NameValue;
 
 #if DEBUG
-            _logger.Log($"varName = '{varName}'");
+            //_logger.Log($"varName = '{varName}'");
 #endif
 
             if (_context.VarConceptDict.ContainsKey(varName))
@@ -41,7 +41,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             var conceptName = ResolveConceptName();
 
 #if DEBUG
-            _logger.Log($"conceptName = '{conceptName}'");
+            //_logger.Log($"conceptName = '{conceptName}'");
 #endif
 
             var result = new ResultOfNode();
@@ -54,7 +54,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                 concept.IsRootConceptOfEntitiCondition = true;
             }
 
-            result.ConceptCGNode = concept;
+            result.CGNode = concept;
 
             return result;
         }

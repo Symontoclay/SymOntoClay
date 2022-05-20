@@ -23,16 +23,17 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         public ResultOfNode Run()
         {
             var result = new ResultOfNode();
+            result.KindOfResult = KindOfResultOfNode.ProcessFact;
 
             Convert(_fact.PrimaryPart, result);
 
-            throw new NotImplementedException();
+            return result;
         }
 
         private void Convert(PrimaryRulePart primaryPart, ResultOfNode result)
         {
 #if DEBUG
-            _logger.Log($"primaryPart = {DebugHelperForRuleInstance.BaseRulePartToString(primaryPart, HumanizedOptions.ShowOnlyMainContent)}");
+            //_logger.Log($"primaryPart = {DebugHelperForRuleInstance.BaseRulePartToString(primaryPart, HumanizedOptions.ShowOnlyMainContent)}");
 #endif
 
             _context.CurrentRulePart = primaryPart;
@@ -40,10 +41,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             var exprResult = LogicalQueryNodeProcessorFactory.Run(primaryPart.Expression, _context);
 
 #if DEBUG
-            _logger.Log($"exprResult = {exprResult}");
+            //_logger.Log($"exprResult = {exprResult}");
 #endif
-
-            throw new NotImplementedException();
         }
     }
 }

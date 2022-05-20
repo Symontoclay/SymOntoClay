@@ -79,9 +79,11 @@ namespace TestSandbox.Handlers
 
             var converterFactToCG = new ConverterFactToInternalCG(_logger);
 
-            var cg = converterFactToCG.Convert(ruleInstance, nlpContext);
+            var internalCG = converterFactToCG.Convert(ruleInstance, nlpContext);
 
-            var dotStr = DotConverter.ConvertToString(cg);
+            _logger.Log($"internalCG = {internalCG}");
+
+            var dotStr = DotConverter.ConvertToString(internalCG);
 
             _logger.Log($"dotStr = '{dotStr}'");
         }
@@ -274,8 +276,7 @@ namespace TestSandbox.Handlers
 
             var argument = new RelationParameterDescription();
             argument.Name = NameHelper.CreateName("$x1");
-            argument.MeaningRolesList.Add(NameHelper.CreateName("subject"));
-            argument.MeaningRolesList.Add(NameHelper.CreateName("agent"));
+            argument.MeaningRolesList.Add(NameHelper.CreateName("experiencer"));
 
             relation.Arguments.Add(argument);
 

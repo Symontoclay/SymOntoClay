@@ -4,6 +4,7 @@ using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.ATN;
 using SymOntoClay.NLP.Internal.ConvertingCGToInternal;
 using SymOntoClay.NLP.Internal.Dot;
+using SymOntoClay.NLP.Internal.PhraseStructure;
 using SymOntoClay.NLP.Internal.PhraseToCGParsing;
 using SymOntoClay.UnityAsset.Core.Tests.Helpers;
 using SymOntoClay.UnityAsset.Core.Tests.NLP.ATN;
@@ -60,6 +61,16 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP
             var convertorCGToInternal = new ConvertorCGToInternal(_logger);
 
             var internalCG = convertorCGToInternal.Convert(conceptualGraph);
+
+            Assert.AreEqual(GrammaticalTenses.Present, internalCG.Tense);
+            Assert.AreEqual(GrammaticalAspect.Simple, internalCG.Aspect);
+            Assert.AreEqual(GrammaticalVoice.Active, internalCG.Voice);
+            Assert.AreEqual(GrammaticalMood.Indicative, internalCG.Mood);
+            Assert.AreEqual(AbilityModality.Undefined, internalCG.AbilityModality);
+            Assert.AreEqual(PermissionModality.Undefined, internalCG.PermissionModality);
+            Assert.AreEqual(ObligationModality.Undefined, internalCG.ObligationModality);
+            Assert.AreEqual(ProbabilityModality.Undefined, internalCG.ProbabilityModality);
+            Assert.AreEqual(ConditionalModality.Undefined, internalCG.ConditionalModality);
 
             var dotStr = DotConverter.ConvertToString(internalCG);
 

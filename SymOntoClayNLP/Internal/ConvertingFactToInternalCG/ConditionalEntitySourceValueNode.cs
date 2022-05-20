@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.Internal.Dot;
 using SymOntoClay.NLP.Internal.InternalCG;
 using System;
 using System.Collections.Generic;
@@ -24,10 +25,16 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         public ResultOfNode Run()
         {
 #if DEBUG
-            _logger.Log($"_value = {_value.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
+            //_logger.Log($"_value = {_value.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
 #endif
 
             var outerConceptualGraph = new InternalConceptualGraph();
+
+            if (_context.ConceptualGraph != null)
+            {
+                outerConceptualGraph.Parent = _context.ConceptualGraph;
+            }
+
             var context = new ContextOfConverterFactToInternalCG();
             context.ConceptualGraph = outerConceptualGraph;
             context.Logger = _logger;
@@ -43,13 +50,19 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                 var factNodeResult = factNode.Run();
 
 #if DEBUG
-                _logger.Log($"factNodeResult = {factNodeResult}");
+                //_logger.Log($"factNodeResult = {factNodeResult}");
 #endif
-
-                throw new NotImplementedException();
             }
 
-            throw new NotImplementedException();
+#if DEBUG
+            //var dotStr = DotConverter.ConvertToString(context.ConceptualGraph);
+            //_logger.Log($"dotStr = {dotStr}");
+#endif
+
+            var result = new ResultOfNode() { KindOfResult = KindOfResultOfNode.ProcessConditionalEntity };
+            result.CGNode = outerConceptualGraph;
+
+            return result;
         }
     }
 }

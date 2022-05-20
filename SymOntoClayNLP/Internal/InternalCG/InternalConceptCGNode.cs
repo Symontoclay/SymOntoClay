@@ -11,7 +11,7 @@ namespace SymOntoClay.NLP.Internal.InternalCG
         public override KindOfCGNode Kind => KindOfCGNode.Concept;
         public override bool IsConceptNode => true;
         public override InternalConceptCGNode AsConceptNode => this;
-
+        
         public bool IsRootConceptOfEntitiCondition { get; set; }
 
         public override void Destroy()

@@ -11,7 +11,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
     public class ResultOfNode : IObjectToString
     {
         public KindOfResultOfNode KindOfResult { get; set; } = KindOfResultOfNode.Unknown;
-        public BaseInternalConceptCGNode ConceptCGNode { get; set; }
+        public BaseInternalCGNode CGNode { get; set; }
         public LogicalQueryNode LogicalQueryNode { get; set; }
 
         public override string ToString()
@@ -30,7 +30,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(KindOfResult)} = {KindOfResult}");
-            sb.PrintBriefObjProp(n, nameof(ConceptCGNode), ConceptCGNode);
+            sb.PrintBriefObjProp(n, nameof(CGNode), CGNode);
             sb.PrintObjProp(n, nameof(LogicalQueryNode), LogicalQueryNode);
 
             return sb.ToString();

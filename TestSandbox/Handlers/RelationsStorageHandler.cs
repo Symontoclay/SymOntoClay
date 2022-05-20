@@ -42,8 +42,7 @@ namespace TestSandbox.Handlers
 
             var argument = new RelationParameterDescription();
             argument.Name = NameHelper.CreateName("$x1");
-            argument.MeaningRolesList.Add(NameHelper.CreateName("subject"));
-            argument.MeaningRolesList.Add(NameHelper.CreateName("agent"));
+            argument.MeaningRolesList.Add(NameHelper.CreateName("experiencer"));
 
             relation.Arguments.Add(argument);
 

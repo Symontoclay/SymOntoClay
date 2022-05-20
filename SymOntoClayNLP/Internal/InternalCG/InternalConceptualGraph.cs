@@ -14,11 +14,11 @@ namespace SymOntoClay.NLP.Internal.InternalCG
         public override bool IsConceptualGraph => true;
         public override InternalConceptualGraph AsConceptualGraph => this;
         public override KindOfCGNode Kind => KindOfCGNode.Graph;
+        public KindOfQuestion KindOfQuestion { get; set; } = KindOfQuestion.Undefined;
         public GrammaticalTenses Tense { get; set; } = GrammaticalTenses.Undefined;
         public GrammaticalAspect Aspect { get; set; } = GrammaticalAspect.Undefined;
         public GrammaticalVoice Voice { get; set; } = GrammaticalVoice.Undefined;
         public GrammaticalMood Mood { get; set; } = GrammaticalMood.Undefined;
-        public bool? Conditional { get; set; }
         public AbilityModality AbilityModality { get; set; } = AbilityModality.Undefined;
         public PermissionModality PermissionModality { get; set; } = PermissionModality.Undefined;
         public ObligationModality ObligationModality { get; set; } = ObligationModality.Undefined;
@@ -129,9 +129,9 @@ namespace SymOntoClay.NLP.Internal.InternalCG
             var sb = new StringBuilder();
             sb.Append(base.PropertiesToString(n));
             sb.AppendLine($"{spaces}{nameof(Number)} = {Number}");
+            sb.AppendLine($"{spaces}{nameof(KindOfQuestion)} = {KindOfQuestion}");
             sb.AppendLine($"{spaces}{nameof(Tense)} = {Tense}");
             sb.AppendLine($"{spaces}{nameof(Aspect)} = {Aspect}");
-            sb.AppendLine($"{spaces}{nameof(Conditional)} = {Conditional}");
             sb.AppendLine($"{spaces}{nameof(Voice)} = {Voice}");
             sb.AppendLine($"{spaces}{nameof(AbilityModality)} = {AbilityModality}");
             sb.AppendLine($"{spaces}{nameof(PermissionModality)} = {PermissionModality}");
@@ -162,9 +162,9 @@ namespace SymOntoClay.NLP.Internal.InternalCG
             var nextNSpace = DisplayHelper.Spaces(nextN);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(Number)} = {Number}");
+            sb.AppendLine($"{spaces}{nameof(KindOfQuestion)} = {KindOfQuestion}");
             sb.AppendLine($"{spaces}{nameof(Tense)} = {Tense}");
             sb.AppendLine($"{spaces}{nameof(Aspect)} = {Aspect}");
-            sb.AppendLine($"{spaces}{nameof(Conditional)} = {Conditional}");
             sb.AppendLine($"{spaces}{nameof(Voice)} = {Voice}");
             sb.AppendLine($"{spaces}{nameof(AbilityModality)} = {AbilityModality}");
             sb.AppendLine($"{spaces}{nameof(PermissionModality)} = {PermissionModality}");

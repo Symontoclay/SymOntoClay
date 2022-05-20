@@ -29,7 +29,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
         public GrammaticalMood Mood { get; set; } = GrammaticalMood.Undefined;
 
-        public bool IsQuestion { get; set; }
+        public KindOfQuestion KindOfQuestion { get; set; } = KindOfQuestion.Undefined;
         public bool IsNegation { get; set; }
 
         public GrammaticalAspect Aspect { get; set; } = GrammaticalAspect.Undefined;
@@ -56,7 +56,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
             sb.AppendLine($"{spaces}{nameof(Mood)} = {Mood}");
 
-            sb.AppendLine($"{spaces}{nameof(IsQuestion)} = {IsQuestion}");
+            sb.AppendLine($"{spaces}{nameof(KindOfQuestion)} = {KindOfQuestion}");
             sb.AppendLine($"{spaces}{nameof(IsNegation)} = {IsNegation}");
 
             sb.AppendLine($"{spaces}{nameof(Aspect)} = {Aspect}");
@@ -84,10 +84,10 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
             var sbMark = new StringBuilder();
 
-            if(Mood != GrammaticalMood.Undefined || IsQuestion || IsNegation || Aspect != GrammaticalAspect.Undefined ||
-                Tense != GrammaticalTenses.Undefined || Voice != GrammaticalVoice.Undefined || AbilityModality != AbilityModality.Undefined ||
-                PermissionModality != PermissionModality.Undefined || ObligationModality != ObligationModality.Undefined ||
-                ProbabilityModality != ProbabilityModality.Undefined || ConditionalModality != ConditionalModality.Undefined)
+            if(Mood != GrammaticalMood.Undefined || (KindOfQuestion != KindOfQuestion.Undefined && KindOfQuestion != KindOfQuestion.None) || IsNegation || Aspect != GrammaticalAspect.Undefined ||
+                Tense != GrammaticalTenses.Undefined || Voice != GrammaticalVoice.Undefined || (AbilityModality != AbilityModality.Undefined && AbilityModality != AbilityModality.None) ||
+                (PermissionModality != PermissionModality.Undefined && PermissionModality != PermissionModality.None) || (ObligationModality != ObligationModality.Undefined && ObligationModality != ObligationModality.None) ||
+                (ProbabilityModality != ProbabilityModality.Undefined && ProbabilityModality != ProbabilityModality.None) || (ConditionalModality != ConditionalModality.Undefined && ConditionalModality != ConditionalModality.None))
             {
                 sbMark.Append(":(");
 
@@ -96,9 +96,9 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
                     sbMark.Append(Mood);
                 }
 
-                if (IsQuestion)
+                if (KindOfQuestion != KindOfQuestion.Undefined && KindOfQuestion != KindOfQuestion.None)
                 {
-                    sbMark.Append($";{IsQuestion}");
+                    sbMark.Append($";{KindOfQuestion}");
                 }
 
                 if (IsNegation)
@@ -121,27 +121,27 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
                     sbMark.Append($";{Voice}");
                 }
 
-                if (AbilityModality != AbilityModality.Undefined)
+                if (AbilityModality != AbilityModality.Undefined && AbilityModality != AbilityModality.None)
                 {
                     sbMark.Append($";{AbilityModality}");
                 }
 
-                if (PermissionModality != PermissionModality.Undefined)
+                if (PermissionModality != PermissionModality.Undefined && PermissionModality != PermissionModality.None)
                 {
                     sbMark.Append($";{PermissionModality}");
                 }
 
-                if (ObligationModality != ObligationModality.Undefined)
+                if (ObligationModality != ObligationModality.Undefined && ObligationModality != ObligationModality.None)
                 {
                     sbMark.Append($";{ObligationModality}");
                 }
 
-                if (ProbabilityModality != ProbabilityModality.Undefined)
+                if (ProbabilityModality != ProbabilityModality.Undefined && ProbabilityModality != ProbabilityModality.None)
                 {
                     sbMark.Append($";{ProbabilityModality}");
                 }
 
-                if (ConditionalModality != ConditionalModality.Undefined)
+                if (ConditionalModality != ConditionalModality.Undefined && ConditionalModality != ConditionalModality.None)
                 {
                     sbMark.Append($";{ConditionalModality}");
                 }

@@ -62,15 +62,17 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP
 
             var internalCG = convertorCGToInternal.Convert(conceptualGraph);
 
+            Assert.AreEqual(false, internalCG.IsNegation);
+            Assert.AreEqual(KindOfQuestion.None, internalCG.KindOfQuestion);
             Assert.AreEqual(GrammaticalTenses.Present, internalCG.Tense);
             Assert.AreEqual(GrammaticalAspect.Simple, internalCG.Aspect);
             Assert.AreEqual(GrammaticalVoice.Active, internalCG.Voice);
             Assert.AreEqual(GrammaticalMood.Indicative, internalCG.Mood);
-            Assert.AreEqual(AbilityModality.Undefined, internalCG.AbilityModality);
-            Assert.AreEqual(PermissionModality.Undefined, internalCG.PermissionModality);
-            Assert.AreEqual(ObligationModality.Undefined, internalCG.ObligationModality);
-            Assert.AreEqual(ProbabilityModality.Undefined, internalCG.ProbabilityModality);
-            Assert.AreEqual(ConditionalModality.Undefined, internalCG.ConditionalModality);
+            Assert.AreEqual(AbilityModality.None, internalCG.AbilityModality);
+            Assert.AreEqual(PermissionModality.None, internalCG.PermissionModality);
+            Assert.AreEqual(ObligationModality.None, internalCG.ObligationModality);
+            Assert.AreEqual(ProbabilityModality.None, internalCG.ProbabilityModality);
+            Assert.AreEqual(ConditionalModality.None, internalCG.ConditionalModality);
 
             var dotStr = DotConverter.ConvertToString(internalCG);
 

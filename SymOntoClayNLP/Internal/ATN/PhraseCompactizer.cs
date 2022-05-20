@@ -118,14 +118,47 @@ namespace SymOntoClay.NLP.Internal.ATN
                     throw new ArgumentOutOfRangeException(nameof(verbChainState), verbChainState, null);
             }
 
+            sentence.IsNegation = targetVerbPhrase.Negation != null;
+
+            sentence.KindOfQuestion = KindOfQuestion.None;//tmp
+
             sentence.Aspect = targetVerbPhrase.Aspect;
             sentence.Tense = targetVerbPhrase.Tense;
             sentence.Voice = targetVerbPhrase.Voice;
             sentence.AbilityModality = targetVerbPhrase.AbilityModality;
+
+            if(sentence.AbilityModality == AbilityModality.Undefined)
+            {
+                sentence.AbilityModality = AbilityModality.None;
+            }
+
             sentence.PermissionModality = targetVerbPhrase.PermissionModality;
+
+            if(sentence.PermissionModality == PermissionModality.Undefined)
+            {
+                sentence.PermissionModality = PermissionModality.None;
+            }
+
             sentence.ObligationModality = targetVerbPhrase.ObligationModality;
+
+            if(sentence.ObligationModality == ObligationModality.Undefined)
+            {
+                sentence.ObligationModality = ObligationModality.None;
+            }
+
             sentence.ProbabilityModality = targetVerbPhrase.ProbabilityModality;
+
+            if(sentence.ProbabilityModality == ProbabilityModality.Undefined)
+            {
+                sentence.ProbabilityModality = ProbabilityModality.None;
+            }
+
             sentence.ConditionalModality = targetVerbPhrase.ConditionalModality;
+
+            if(sentence.ConditionalModality == ConditionalModality.Undefined)
+            {
+                sentence.ConditionalModality = ConditionalModality.None;
+            }
 
             if (sentence.Subject == null)
             {

@@ -6,6 +6,7 @@ namespace SymOntoClay.NLP.Internal
 {
     public static class CGGramamaticalNamesOfRelations
     {
+        public const string KindOfQuestionName = "__kind_of_question";
         public const string AspectName = "__aspect";
         public const string TenseName = "__tense";
         public const string VoiceName = "__voice";

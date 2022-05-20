@@ -7,6 +7,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
     public enum KindOfGrammaticalRelation
     {
         Undefined,
+        KindOfQuestion,
         Aspect,
         Tense,
         Voice,

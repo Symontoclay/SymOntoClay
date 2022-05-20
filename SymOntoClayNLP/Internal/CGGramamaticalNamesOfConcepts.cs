@@ -6,6 +6,11 @@ namespace SymOntoClay.NLP.Internal
 {
     public static class CGGramamaticalNamesOfConcepts
     {
+        public const string KindOfQuestion_General = "general";
+        public const string KindOfQuestion_Subject = "subject";
+        public const string KindOfQuestion_Special = "special";
+        public const string KindOfQuestion_Tag = "tag";
+
         public const string GrammaticalAspect_Simple = "simple";
         public const string GrammaticalAspect_Continuous = "continuous";
         public const string GrammaticalAspect_Perfect = "perfect";

@@ -153,6 +153,26 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             var conceptualGraph = Context.ConceptualGraph;
             var outerConceptualGraph = Context.OuterConceptualGraph;
 
+            var kindOfQuestionName = GrammaticalElementsHelper.GetKindOfQuestionName(_sentence.KindOfQuestion);
+
+#if DEBUG
+            //Context.Logger.Log($"kindOfQuestionName = {kindOfQuestionName}");
+#endif
+
+            if(!string.IsNullOrWhiteSpace(kindOfQuestionName))
+            {
+                var grammarConcept = new ConceptCGNode();
+                grammarConcept.Parent = outerConceptualGraph;
+                grammarConcept.Name = kindOfQuestionName;
+
+                var grammarRelation = new RelationCGNode();
+                grammarRelation.Parent = outerConceptualGraph;
+                grammarRelation.Name = CGGramamaticalNamesOfRelations.KindOfQuestionName;
+
+                conceptualGraph.AddOutputNode(grammarRelation);
+                grammarRelation.AddOutputNode(grammarConcept);
+            }
+
             var aspectName = GrammaticalElementsHelper.GetAspectName(_sentence.Aspect);
 
 #if DEBUG

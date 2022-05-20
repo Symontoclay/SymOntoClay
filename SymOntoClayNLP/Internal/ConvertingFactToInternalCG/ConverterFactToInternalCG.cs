@@ -35,10 +35,17 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             //_logger.Log($"factNodeResult = {factNodeResult}");
 #endif
 
-            outerConceptualGraph.Tense = GrammaticalTenses.Present;
-            outerConceptualGraph.Aspect = GrammaticalAspect.Simple;
-            outerConceptualGraph.Voice = GrammaticalVoice.Active;
-            outerConceptualGraph.Mood = GrammaticalMood.Indicative;
+            outerConceptualGraph.KindOfQuestion = KindOfQuestion.None;//tmp
+            outerConceptualGraph.Tense = GrammaticalTenses.Present;//tmp
+            outerConceptualGraph.Aspect = GrammaticalAspect.Simple;//tmp
+            outerConceptualGraph.Voice = GrammaticalVoice.Active;//tmp
+            outerConceptualGraph.Mood = GrammaticalMood.Indicative;//tmp
+
+            outerConceptualGraph.AbilityModality = AbilityModality.None;//tmp
+            outerConceptualGraph.PermissionModality = PermissionModality.None;//tmp
+            outerConceptualGraph.ObligationModality = ObligationModality.None;//tmp
+            outerConceptualGraph.ProbabilityModality = ProbabilityModality.None;//tmp
+            outerConceptualGraph.ConditionalModality = ConditionalModality.None;//tmp
 
 #if DEBUG
             //_logger.Log($"outerConceptualGraph = {outerConceptualGraph}");

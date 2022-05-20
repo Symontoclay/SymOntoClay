@@ -109,9 +109,9 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             var sbMark = new StringBuilder();
 
             if (Aspect != GrammaticalAspect.Undefined ||
-                Tense != GrammaticalTenses.Undefined || Voice != GrammaticalVoice.Undefined || AbilityModality != AbilityModality.Undefined ||
-                PermissionModality != PermissionModality.Undefined || ObligationModality != ObligationModality.Undefined ||
-                ProbabilityModality != ProbabilityModality.Undefined || ConditionalModality != ConditionalModality.Undefined)
+                Tense != GrammaticalTenses.Undefined || Voice != GrammaticalVoice.Undefined || (AbilityModality != AbilityModality.Undefined && AbilityModality != AbilityModality.None) ||
+                (PermissionModality != PermissionModality.Undefined && PermissionModality != PermissionModality.None) || (ObligationModality != ObligationModality.Undefined && ObligationModality != ObligationModality.None) ||
+                (ProbabilityModality != ProbabilityModality.Undefined && ProbabilityModality != ProbabilityModality.None) || (ConditionalModality != ConditionalModality.Undefined && ConditionalModality != ConditionalModality.None))
             {
                 sbMark.Append(":(");
 
@@ -130,27 +130,27 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
                     sbMark.Append($";{Voice}");
                 }
 
-                if (AbilityModality != AbilityModality.Undefined)
+                if (AbilityModality != AbilityModality.Undefined && AbilityModality != AbilityModality.None)
                 {
                     sbMark.Append($";{AbilityModality}");
                 }
 
-                if (PermissionModality != PermissionModality.Undefined)
+                if (PermissionModality != PermissionModality.Undefined && PermissionModality != PermissionModality.None)
                 {
                     sbMark.Append($";{PermissionModality}");
                 }
 
-                if (ObligationModality != ObligationModality.Undefined)
+                if (ObligationModality != ObligationModality.Undefined && ObligationModality != ObligationModality.None)
                 {
                     sbMark.Append($";{ObligationModality}");
                 }
 
-                if (ProbabilityModality != ProbabilityModality.Undefined)
+                if (ProbabilityModality != ProbabilityModality.Undefined && ProbabilityModality != ProbabilityModality.None)
                 {
                     sbMark.Append($";{ProbabilityModality}");
                 }
 
-                if (ConditionalModality != ConditionalModality.Undefined)
+                if (ConditionalModality != ConditionalModality.Undefined && ConditionalModality != ConditionalModality.None)
                 {
                     sbMark.Append($";{ConditionalModality}");
                 }

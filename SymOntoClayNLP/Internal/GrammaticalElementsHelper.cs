@@ -8,7 +8,68 @@ using System.Text;
 namespace SymOntoClay.NLP.Internal
 {
     public static class GrammaticalElementsHelper
-    {
+    {       
+        public static string GetKindOfQuestionName(KindOfQuestion kindOfQuestion)
+        {
+            switch (kindOfQuestion)
+            {
+                case KindOfQuestion.Undefined:
+                    return string.Empty;
+
+                case KindOfQuestion.None:
+                    return string.Empty;
+
+                case KindOfQuestion.General:
+                    return CGGramamaticalNamesOfConcepts.KindOfQuestion_General;
+
+                case KindOfQuestion.Subject:
+                    return CGGramamaticalNamesOfConcepts.KindOfQuestion_Subject;
+
+                case KindOfQuestion.Special:
+                    return CGGramamaticalNamesOfConcepts.KindOfQuestion_Special;
+
+                case KindOfQuestion.Tag:
+                    return CGGramamaticalNamesOfConcepts.KindOfQuestion_Tag;
+
+                default: throw new ArgumentOutOfRangeException(nameof(kindOfQuestion), kindOfQuestion, null);
+            }
+        }
+
+        public static KindOfQuestion GetKindOfQuestionFromName(string kindOfQuestionName)
+        {
+            if (string.IsNullOrWhiteSpace(kindOfQuestionName))
+            {
+                return KindOfQuestion.None;
+            }
+
+            if (kindOfQuestionName == CGGramamaticalNamesOfConcepts.KindOfModal_None)
+            {
+                return KindOfQuestion.None;
+            }
+
+            if (kindOfQuestionName == CGGramamaticalNamesOfConcepts.KindOfQuestion_General)
+            {
+                return KindOfQuestion.General;
+            }
+
+            if (kindOfQuestionName == CGGramamaticalNamesOfConcepts.KindOfQuestion_Subject)
+            {
+                return KindOfQuestion.Subject;
+            }
+
+            if (kindOfQuestionName == CGGramamaticalNamesOfConcepts.KindOfQuestion_Special)
+            {
+                return KindOfQuestion.Special;
+            }
+
+            if (kindOfQuestionName == CGGramamaticalNamesOfConcepts.KindOfQuestion_Tag)
+            {
+                return KindOfQuestion.Tag;
+            }
+
+            return KindOfQuestion.Undefined;
+        }
+
         public static string GetAspectName(GrammaticalAspect aspect)
         {
             switch (aspect)
@@ -253,7 +314,7 @@ namespace SymOntoClay.NLP.Internal
                     return string.Empty;
 
                 case AbilityModality.None:
-                    return CGGramamaticalNamesOfConcepts.KindOfModal_None;
+                    return string.Empty;
 
                 case AbilityModality.Can:
                     return CGGramamaticalNamesOfConcepts.KindOfModal_Can;
@@ -273,7 +334,7 @@ namespace SymOntoClay.NLP.Internal
         {
             if (string.IsNullOrWhiteSpace(modalName))
             {
-                return AbilityModality.Undefined;
+                return AbilityModality.None;
             }
 
             if (modalName == CGGramamaticalNamesOfConcepts.KindOfModal_None)
@@ -307,7 +368,7 @@ namespace SymOntoClay.NLP.Internal
                     return string.Empty;
 
                 case PermissionModality.None:
-                    return CGGramamaticalNamesOfConcepts.KindOfModal_None;
+                    return string.Empty;
 
                 case PermissionModality.May:
                     return CGGramamaticalNamesOfConcepts.KindOfModal_May;
@@ -326,7 +387,7 @@ namespace SymOntoClay.NLP.Internal
         {
             if (string.IsNullOrWhiteSpace(modalName))
             {
-                return PermissionModality.Undefined;
+                return PermissionModality.None;
             }
 
             if (modalName == CGGramamaticalNamesOfConcepts.KindOfModal_None)
@@ -360,7 +421,7 @@ namespace SymOntoClay.NLP.Internal
                     return string.Empty;
 
                 case ObligationModality.None:
-                    return CGGramamaticalNamesOfConcepts.KindOfModal_None;
+                    return string.Empty;
 
                 case ObligationModality.Must:
                     return CGGramamaticalNamesOfConcepts.KindOfModal_Must;
@@ -394,7 +455,7 @@ namespace SymOntoClay.NLP.Internal
         {
             if (string.IsNullOrWhiteSpace(modalName))
             {
-                return ObligationModality.Undefined;
+                return ObligationModality.None;
             }
 
             if (modalName == CGGramamaticalNamesOfConcepts.KindOfModal_None)
@@ -453,7 +514,7 @@ namespace SymOntoClay.NLP.Internal
                     return string.Empty;
 
                 case ProbabilityModality.None:
-                    return CGGramamaticalNamesOfConcepts.KindOfModal_None;
+                    return string.Empty;
 
                 case ProbabilityModality.Might:
                     return CGGramamaticalNamesOfConcepts.KindOfModal_Might;
@@ -466,7 +527,7 @@ namespace SymOntoClay.NLP.Internal
         {
             if (string.IsNullOrWhiteSpace(modalName))
             {
-                return ProbabilityModality.Undefined;
+                return ProbabilityModality.None;
             }
 
             if (modalName == CGGramamaticalNamesOfConcepts.KindOfModal_None)
@@ -490,7 +551,7 @@ namespace SymOntoClay.NLP.Internal
                     return string.Empty;
 
                 case ConditionalModality.None:
-                    return CGGramamaticalNamesOfConcepts.KindOfModal_None;
+                    return string.Empty;
 
                 case ConditionalModality.Would:
                     return CGGramamaticalNamesOfConcepts.KindOfModal_Would;
@@ -512,7 +573,7 @@ namespace SymOntoClay.NLP.Internal
         {
             if (string.IsNullOrWhiteSpace(modalName))
             {
-                return ConditionalModality.Undefined;
+                return ConditionalModality.None;
             }
 
             if (modalName == CGGramamaticalNamesOfConcepts.KindOfModal_None)
@@ -548,6 +609,11 @@ namespace SymOntoClay.NLP.Internal
             if (string.IsNullOrWhiteSpace(relationName))
             {
                 return KindOfGrammaticalRelation.Undefined;
+            }
+
+            if(relationName == CGGramamaticalNamesOfRelations.KindOfQuestionName)
+            {
+                return KindOfGrammaticalRelation.KindOfQuestion;
             }
 
             if (relationName == CGGramamaticalNamesOfRelations.AspectName)

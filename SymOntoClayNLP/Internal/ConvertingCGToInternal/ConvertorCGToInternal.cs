@@ -1073,7 +1073,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                             var modal = GrammaticalElementsHelper.GetAbilityModalityFromName(outputNodeOfTheRelation.Name);
 
 #if DEBUG
-                            //LogInstance.Log($"modal = {modal}");
+                            _logger.Log($"modal = {modal}");
 #endif
 
                             if (modal == AbilityModality.Undefined)
@@ -1239,6 +1239,40 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                     default: throw new ArgumentOutOfRangeException(nameof(kindOfGrammaticalRelation), kindOfGrammaticalRelation, null);
                 }
+            }
+
+#if DEBUG
+            //_logger.Log($"result = {result}");
+#endif
+
+            if(result.KindOfQuestion == KindOfQuestion.Undefined)
+            {
+                result.KindOfQuestion = KindOfQuestion.None;
+            }
+
+            if(result.AbilityModality == AbilityModality.Undefined)
+            {
+                result.AbilityModality = AbilityModality.None;
+            }
+
+            if (result.PermissionModality == PermissionModality.Undefined)
+            {
+                result.PermissionModality = PermissionModality.None;
+            }
+
+            if (result.ObligationModality == ObligationModality.Undefined)
+            {
+                result.ObligationModality = ObligationModality.None;
+            }
+
+            if (result.ProbabilityModality == ProbabilityModality.Undefined)
+            {
+                result.ProbabilityModality = ProbabilityModality.None;
+            }
+
+            if (result.ConditionalModality == ConditionalModality.Undefined)
+            {
+                result.ConditionalModality = ConditionalModality.None;
             }
         }
 

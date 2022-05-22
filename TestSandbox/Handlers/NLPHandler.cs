@@ -13,6 +13,7 @@ using SymOntoClay.NLP.Internal.ATN;
 using SymOntoClay.NLP.Internal.ConvertingCGToInternal;
 using SymOntoClay.NLP.Internal.ConvertingFactToInternalCG;
 using SymOntoClay.NLP.Internal.ConvertingInternalCGToFact;
+using SymOntoClay.NLP.Internal.ConvertingInternalCGToText;
 using SymOntoClay.NLP.Internal.Dot;
 using SymOntoClay.NLP.Internal.PhraseToCGParsing;
 using SymOntoClay.UnityAsset.Core.Internal;
@@ -86,6 +87,12 @@ namespace TestSandbox.Handlers
             var dotStr = DotConverter.ConvertToString(internalCG);
 
             _logger.Log($"dotStr = '{dotStr}'");
+
+            var converterInternalCGToText = new ConverterInternalCGToText(_logger, _wordsDict);
+
+            var text = converterInternalCGToText.Convert(internalCG, nlpContext);
+
+            _logger.Log($"text = '{text}'");
         }
 
         private void Case4()

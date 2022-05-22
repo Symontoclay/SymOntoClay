@@ -13,7 +13,11 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToText
         public IEntityLogger Logger { get; set; }
         public INLPConverterContext NLPContext { get; set; }
         public IWordsDict WordsDict { get; set; }
+
         public KindOfQuestion KindOfQuestion { get; set; } = KindOfQuestion.Undefined;
+
+        public bool IsNegation { get; set; }
+
         public GrammaticalTenses Tense { get; set; } = GrammaticalTenses.Undefined;
         public GrammaticalAspect Aspect { get; set; } = GrammaticalAspect.Undefined;
         public GrammaticalVoice Voice { get; set; } = GrammaticalVoice.Undefined;
@@ -43,6 +47,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToText
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(KindOfQuestion)} = {KindOfQuestion}");
+            sb.AppendLine($"{spaces}{nameof(IsNegation)} = {IsNegation}");
             sb.AppendLine($"{spaces}{nameof(Tense)} = {Tense}");
             sb.AppendLine($"{spaces}{nameof(Aspect)} = {Aspect}");
             sb.AppendLine($"{spaces}{nameof(Voice)} = {Voice}");

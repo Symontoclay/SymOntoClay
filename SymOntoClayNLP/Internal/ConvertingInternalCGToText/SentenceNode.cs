@@ -46,61 +46,75 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToText
             }
         }
 
-        private ResultOfNode ProcessIndicativeMood()
+        private KeyConceptsOfSentenceNode GetKeyConcepts()
         {
             var statesList = _source.Children.Where(p => p.Kind == KindOfCGNode.Relation && p.Name == SpecialNamesOfRelations.StateRelationName).Select(p => p.AsRelationNode).ToList();
 
             if (statesList.Any())
             {
-                return ProcessIndicativeState(statesList);
+                if (statesList.Count > 1)
+                {
+                    throw new NotImplementedException();
+                }
+
+                var stateRelation = statesList.First();
+
+#if DEBUG
+                _logger.Log($"stateRelation = {stateRelation}");
+#endif
+
+                if (stateRelation.Inputs.Count != 1)
+                {
+                    throw new NotImplementedException();
+                }
+
+                if (stateRelation.Outputs.Count != 1)
+                {
+                    throw new NotImplementedException();
+                }
+
+                var subjectConcept = stateRelation.Inputs.First();
+
+#if DEBUG
+                _logger.Log($"subjectConcept = {subjectConcept}");
+#endif
+
+                var stateConcept = stateRelation.Outputs.First();
+
+#if DEBUG
+                _logger.Log($"stateConcept = {stateConcept}");
+#endif
+
+                var disabledRelations = new List<string>() { "experiencer", "state" };
+
+                return new KeyConceptsOfSentenceNode()
+                { 
+                    SubjectConcept = subjectConcept.AsGraphOrConceptNode,
+                    DisabledSubjectRelations = disabledRelations,
+                    VerbConcept = stateConcept.AsConceptNode,
+                    DisabledVerbRelations = disabledRelations
+                };
             }
 
             throw new NotImplementedException();
         }
 
-        private ResultOfNode ProcessIndicativeState(List<InternalRelationCGNode> statesList)
+        private ResultOfNode ProcessIndicativeMood()
         {
-            if(statesList.Count > 1)
-            {
-                throw new NotImplementedException();
-            }
-
-            var stateRelation = statesList.First();
+            var keyConcepts = GetKeyConcepts();
 
 #if DEBUG
-            _logger.Log($"stateRelation = {stateRelation}");
+            _logger.Log($"keyConcepts = {keyConcepts}");
 #endif
 
-            if(stateRelation.Inputs.Count != 1)
-            {
-                throw new NotImplementedException();
-            }
-
-            if(stateRelation.Outputs.Count != 1)
-            {
-                throw new NotImplementedException();
-            }
-
-            var subjectConcept = stateRelation.Inputs.First();
-
-#if DEBUG
-            _logger.Log($"subjectConcept = {subjectConcept}");
-#endif
-
-            var subjectNode = new NounNode(subjectConcept.AsGraphOrConceptNode, new List<string>() { "experiencer", "state" }, _context);
+            var subjectNode = new NounNode(keyConcepts.SubjectConcept, keyConcepts.DisabledSubjectRelations, _context);
             var subjectResult = subjectNode.Run();
 
 #if DEBUG
             _logger.Log($"subjectResult = {subjectResult}");
 #endif
 
-            var stateConcept = stateRelation.Outputs.First();
-
-#if DEBUG
-            _logger.Log($"stateConcept = {stateConcept}");
-#endif
-
-            var verbNode = new VerbNode(stateConcept.AsConceptNode, new List<string>() { "experiencer", "state" }, subjectResult.RootWord, _context);
+            var verbNode = new VerbNode(keyConcepts.VerbConcept, keyConcepts.DisabledVerbRelations, subjectResult.RootWord, _context);
 
             var verbResult = verbNode.Run();
 

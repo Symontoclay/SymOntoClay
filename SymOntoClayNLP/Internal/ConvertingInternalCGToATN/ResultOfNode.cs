@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToText
+namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
 {
     public class ResultOfNode : IObjectToString
     {

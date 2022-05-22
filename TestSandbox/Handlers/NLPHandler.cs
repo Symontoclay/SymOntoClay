@@ -13,7 +13,7 @@ using SymOntoClay.NLP.Internal.ATN;
 using SymOntoClay.NLP.Internal.ConvertingCGToInternal;
 using SymOntoClay.NLP.Internal.ConvertingFactToInternalCG;
 using SymOntoClay.NLP.Internal.ConvertingInternalCGToFact;
-using SymOntoClay.NLP.Internal.ConvertingInternalCGToText;
+using SymOntoClay.NLP.Internal.ConvertingInternalCGToATN;
 using SymOntoClay.NLP.Internal.Dot;
 using SymOntoClay.NLP.Internal.PhraseToCGParsing;
 using SymOntoClay.UnityAsset.Core.Internal;

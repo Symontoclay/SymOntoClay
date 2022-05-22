@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToText
+namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
 {
     public class ConditionalEntityNode
     {

@@ -12,14 +12,14 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
 {
     public class VerbNode
     {
-        public VerbNode(InternalConceptCGNode source, List<string> disabledRelations, string rootSubject, ContextOfConvertingInternalCGToText context)
+        public VerbNode(InternalConceptCGNode source, List<string> disabledRelations, BaseSentenceItem subject, ContextOfConvertingInternalCGToText context)
         {
             _context = context;
             _wordsDict = context.WordsDict;
             _logger = context.Logger;
             _source = source;
             _disabledRelations = disabledRelations;
-            _rootSubject = rootSubject;
+            _subject = subject;
         }
 
         private readonly ContextOfConvertingInternalCGToText _context;
@@ -28,7 +28,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
 
         private readonly InternalConceptCGNode _source;
         private readonly List<string> _disabledRelations;
-        private readonly string _rootSubject;
+        private readonly BaseSentenceItem _subject;
 
         public ResultOfNode Run()
         {
@@ -40,7 +40,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
 
             var sb = new StringBuilder();
 
-            var verbText = GetVerbText();
+            var verbText = GetVerb();
 
 #if DEBUG
             _logger.Log($"verbText = '{verbText}'");
@@ -67,35 +67,35 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
             throw new NotImplementedException();
         }
 
-        private string GetVerbText()
+        private (VerbPhrase, VerbPhrase) GetVerb()
         {
             var voice = _context.Voice;
 
             switch (voice)
             {
                 case GrammaticalVoice.Active:
-                    return GetVerbTextForActiveVoice();
+                    return GetVerbForActiveVoice();
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(voice), voice, null);
             }
         }
 
-        private string GetVerbTextForActiveVoice()
+        private (VerbPhrase, VerbPhrase) GetVerbForActiveVoice()
         {
             var aspect = _context.Aspect;
 
             switch (aspect)
             {
                 case GrammaticalAspect.Simple:
-                    return GetVerbTextForSimpleAspectOfActiveVoice();
+                    return GetVerbForSimpleAspectOfActiveVoice();
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(aspect), aspect, null);
             }
         }
 
-        private string GetVerbTextForSimpleAspectOfActiveVoice()
+        private (VerbPhrase, VerbPhrase) GetVerbForSimpleAspectOfActiveVoice()
         {
             var verbName = _source.Name;
 
@@ -124,23 +124,29 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
             throw new NotImplementedException();
         }
 
-        private string GetTargetPresentSimpleVerbForm(string verb)
+        private (VerbPhrase, VerbPhrase) GetTargetPresentSimpleVerbForm(string verb)
         {
 #if DEBUG
             _logger.Log($"verb = '{verb}'");
-            _logger.Log($"_rootSubject = '{_rootSubject}'");
+            _logger.Log($"_subject = '{_subject}'");
 #endif
 
-            var wordFramesList = _wordsDict.GetWordFrames(_rootSubject);
+            var subjectWordFrame = _subject.RootWordFrame;
 
-            if (wordFramesList.Any(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Noun) || 
-                wordFramesList.Any(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Pronoun && p.AsPronoun.Number == GrammaticalNumberOfWord.Singular && p.AsPronoun.Person == GrammaticalPerson.Third && p.AsPronoun.Case == CaseOfPersonalPronoun.Subject))
+            if ((subjectWordFrame.PartOfSpeech == GrammaticalPartOfSpeech.Noun) ||
+                (subjectWordFrame.PartOfSpeech == GrammaticalPartOfSpeech.Pronoun && subjectWordFrame.AsPronoun.Number == GrammaticalNumberOfWord.Singular && subjectWordFrame.AsPronoun.Person == GrammaticalPerson.Third && subjectWordFrame.AsPronoun.Case == CaseOfPersonalPronoun.Subject))
             {
                 //like -> likes
                 throw new NotImplementedException();
             }
 
-            return verb;
+            throw new NotImplementedException();
+
+            //var wordFramesList = _wordsDict.GetWordFrames(_subject);
+
+
+
+            //return verb;
         }
 
         private string GetObjectText(ResultOfNode result)
@@ -170,7 +176,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
             _logger.Log($"objectConcept = {objectConcept}");
 #endif
 
-            var objectNode = new NounNode(objectConcept.AsGraphOrConceptNode, new List<string>() { "object" }, _context);
+            var objectNode = new NounNode(objectConcept.AsGraphOrConceptNode, new List<string>() { "object" }, RoleOfNoun.Object, _context);
 
             var objectResult = objectNode.Run();
 

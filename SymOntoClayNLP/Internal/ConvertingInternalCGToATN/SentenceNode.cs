@@ -107,14 +107,14 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
             _logger.Log($"keyConcepts = {keyConcepts}");
 #endif
 
-            var subjectNode = new NounNode(keyConcepts.SubjectConcept, keyConcepts.DisabledSubjectRelations, _context);
+            var subjectNode = new NounNode(keyConcepts.SubjectConcept, keyConcepts.DisabledSubjectRelations, RoleOfNoun.Subject, _context);
             var subjectResult = subjectNode.Run();
 
 #if DEBUG
             _logger.Log($"subjectResult = {subjectResult}");
 #endif
 
-            var verbNode = new VerbNode(keyConcepts.VerbConcept, keyConcepts.DisabledVerbRelations, subjectResult.RootWord, _context);
+            var verbNode = new VerbNode(keyConcepts.VerbConcept, keyConcepts.DisabledVerbRelations, subjectResult.SentenceItem, _context);
 
             var verbResult = verbNode.Run();
 

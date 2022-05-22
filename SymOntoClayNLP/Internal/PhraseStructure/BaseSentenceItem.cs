@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.CommonDict;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -41,6 +42,8 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
         public virtual bool IsWord => false;
         public virtual Word AsWord => null;
+
+        public abstract BaseGrammaticalWordFrame RootWordFrame { get; }
 
         /// <inheritdoc/>
         public override string ToString()

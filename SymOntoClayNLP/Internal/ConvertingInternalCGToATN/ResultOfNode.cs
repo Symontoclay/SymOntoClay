@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.Internal.PhraseStructure;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,8 +8,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
 {
     public class ResultOfNode : IObjectToString
     {
-        public string MainText { get; set; } = string.Empty;
-        public string RootWord { get; set; } = string.Empty;
+        public BaseSentenceItem SentenceItem { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -28,8 +28,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(MainText)} = {MainText}");
-            sb.AppendLine($"{spaces}{nameof(RootWord)} = {RootWord}");
+            sb.PrintObjProp(n, nameof(SentenceItem), SentenceItem);
 
             return sb.ToString();
         }

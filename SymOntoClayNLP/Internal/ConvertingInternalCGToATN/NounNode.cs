@@ -1,7 +1,9 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.CG;
 using SymOntoClay.NLP.Internal.Dot;
 using SymOntoClay.NLP.Internal.InternalCG;
+using SymOntoClay.NLP.Internal.PhraseStructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,19 +13,23 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
 {
     public class NounNode
     {
-        public NounNode(BaseInternalConceptCGNode source, List<string> disabledRelations, ContextOfConvertingInternalCGToText context)
+        public NounNode(BaseInternalConceptCGNode source, List<string> disabledRelations, RoleOfNoun roleOfNoun, ContextOfConvertingInternalCGToText context)
         {
             _context = context;
+            _wordsDict = context.WordsDict;
             _logger = context.Logger;
             _source = source;
             _disabledRelations = disabledRelations;
+            _roleOfNoun = roleOfNoun;
         }
 
         private readonly ContextOfConvertingInternalCGToText _context;
+        private readonly IWordsDict _wordsDict;
         private readonly IEntityLogger _logger;
 
         private readonly BaseInternalConceptCGNode _source;
         private readonly List<string> _disabledRelations;
+        private readonly RoleOfNoun _roleOfNoun;
 
         public ResultOfNode Run()
         {
@@ -62,11 +68,49 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
             _logger.Log($"conceptName = '{conceptName}'");
 #endif
 
-            return new ResultOfNode() 
-            { 
-                MainText = conceptName, 
-                RootWord = conceptName 
-            };
+            var wordFramesList = _wordsDict.GetWordFrames(conceptName);
+
+#if DEBUG
+            _logger.Log($"wordFramesList = {wordFramesList.WriteListToString()}");
+#endif
+
+            switch(_roleOfNoun)
+            {
+                case RoleOfNoun.Subject:
+                    {
+                        var pronounsList = wordFramesList.Where(p => p.IsPronoun).Select(p => p.AsPronoun).Where(p => p.Case == CaseOfPersonalPronoun.Subject).ToList();
+
+                        if(pronounsList.Any())
+                        {
+#if DEBUG
+                            _logger.Log($"pronounsList = {pronounsList.WriteListToString()}");
+#endif
+
+                            var nounPhrase = new NounPhrase();
+
+                            var word = new Word();
+                            nounPhrase.N = word;
+
+                            word.Content = conceptName;
+
+                            word.WordFrame = pronounsList.Single();
+
+#if DEBUG
+                            _logger.Log($"nounPhrase = {nounPhrase}");
+#endif
+
+                            return new ResultOfNode()
+                            {
+                                SentenceItem = nounPhrase
+                            };
+                        }
+
+                        throw new NotImplementedException();
+                    }
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(_roleOfNoun), _roleOfNoun, null);
+            }
         }
 
         private ResultOfNode ProcessConditionalEntity()

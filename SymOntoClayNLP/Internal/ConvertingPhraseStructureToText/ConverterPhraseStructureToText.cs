@@ -22,7 +22,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
             RunBaseSentenceItem(sentenceItem, sb);
 
 #if DEBUG
-            _logger.Log($"sb = '{sb}'");
+            //_logger.Log($"sb = '{sb}'");
 #endif
 
             sb[0] = char.ToUpper(sb[0]);
@@ -30,7 +30,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
             sb.Append(".");
 
 #if DEBUG
-            _logger.Log($"sb (2) = '{sb}'");
+            //_logger.Log($"sb (2) = '{sb}'");
 #endif
 
             return sb.ToString();
@@ -41,7 +41,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
             var kindOfSentenceItem = sentenceItem.KindOfSentenceItem;
 
 #if DEBUG
-            _logger.Log($"kindOfSentenceItem = {kindOfSentenceItem}");
+            //_logger.Log($"kindOfSentenceItem = {kindOfSentenceItem}");
 #endif
 
             switch(kindOfSentenceItem)
@@ -70,7 +70,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
         private void RunSentence(Sentence sentence, StringBuilder sb)
         {
 #if DEBUG
-            _logger.Log($"sentence = {sentence.ToDbgString()}");
+            //_logger.Log($"sentence = {sentence.ToDbgString()}");
 #endif
 
             if(sentence.VocativePhrase != null)
@@ -89,7 +89,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
             }
 
 #if DEBUG
-            _logger.Log($"sb = '{sb}'");
+            //_logger.Log($"sb = '{sb}'");
 #endif
 
             if (sentence.Predicate != null)
@@ -98,14 +98,14 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
             }
 
 #if DEBUG
-            _logger.Log($"sb = '{sb}'");
+            //_logger.Log($"sb = '{sb}'");
 #endif
         }
 
         private void RunVerbPhrase(VerbPhrase verbPhrase, StringBuilder sb)
         {
 #if DEBUG
-            _logger.Log($"verbPhrase = {verbPhrase.ToDbgString()}");
+            //_logger.Log($"verbPhrase = {verbPhrase.ToDbgString()}");
 #endif
 
             if(verbPhrase.Intrusion != null)
@@ -119,7 +119,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
             }
 
 #if DEBUG
-            _logger.Log($"sb = '{sb}'");
+            //_logger.Log($"sb = '{sb}'");
 #endif
 
             if (verbPhrase.VP != null)
@@ -148,14 +148,14 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
             }
 
 #if DEBUG
-            _logger.Log($"sb = '{sb}'");
+            //_logger.Log($"sb = '{sb}'");
 #endif
         }
 
         private void RunNounPhrase(NounPhrase nounPhrase, StringBuilder sb)
         {
 #if DEBUG
-            _logger.Log($"nounPhrase = {nounPhrase.ToDbgString()}");
+            //_logger.Log($"nounPhrase = {nounPhrase.ToDbgString()}");
 #endif
 
             if (nounPhrase.D != null)
@@ -164,7 +164,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
             }
 
 #if DEBUG
-            _logger.Log($"sb = '{sb}'");
+            //_logger.Log($"sb = '{sb}'");
 #endif
 
             if (nounPhrase.N != null)
@@ -173,7 +173,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
             }
 
 #if DEBUG
-            _logger.Log($"sb = '{sb}'");
+            //_logger.Log($"sb = '{sb}'");
 #endif
 
             if (nounPhrase.QP != null)
@@ -227,15 +227,15 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
             }
 
 #if DEBUG
-            _logger.Log($"sb = '{sb}'");
+            //_logger.Log($"sb = '{sb}'");
 #endif
         }
 
         private void RunWord(Word word, StringBuilder sb)
         {
 #if DEBUG
-            _logger.Log($"word = {word.ToDbgString()}");
-            _logger.Log($"sb.Length = {sb.Length}");
+            //_logger.Log($"word = {word.ToDbgString()}");
+            //_logger.Log($"sb.Length = {sb.Length}");
 #endif
 
             if (sb.Length > 0)
@@ -246,7 +246,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
             sb.Append(word.Content);
 
 #if DEBUG
-            _logger.Log($"sb = '{sb}'");
+            //_logger.Log($"sb = '{sb}'");
 #endif
         }
     }

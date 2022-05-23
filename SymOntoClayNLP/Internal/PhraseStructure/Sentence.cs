@@ -53,7 +53,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             sb.PrintObjProp(n, nameof(VocativePhrase), VocativePhrase);
             sb.PrintObjProp(n, nameof(Condition), Condition);
             sb.PrintObjProp(n, nameof(Subject), Subject);
-            sb.PrintObjProp(n, nameof(Predicate), Predicate);            
+            sb.PrintObjProp(n, nameof(Predicate), Predicate);
 
             //sb.PrintObjProp(n, nameof(), );
 

@@ -61,7 +61,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// <summary>
         /// such as "in the drawing room", "of his aunt"
         /// </summary>
-        public List<BaseSentenceItem> PP { get; set; }
+        public BaseSentenceItem PP { get; set; }
 
         /// <summary>
         /// such as "(over) there" in the noun phrase "the man (over) there"
@@ -101,7 +101,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             sb.PrintObjProp(n, nameof(NounAdjunct), NounAdjunct);
             sb.PrintObjProp(n, nameof(Negation), Negation);
             sb.AppendLine($"{spaces}{nameof(HasPossesiveMark)} = {HasPossesiveMark}");
-            sb.PrintObjListProp(n, nameof(PP), PP);
+            sb.PrintObjProp(n, nameof(PP), PP);
             sb.PrintObjProp(n, nameof(AdvP), AdvP);            
             sb.PrintObjProp(n, nameof(RelativeClauses), RelativeClauses);
             sb.PrintObjProp(n, nameof(OtherClauses), OtherClauses);

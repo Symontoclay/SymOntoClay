@@ -2,6 +2,7 @@
 using SymOntoClay.NLP.CommonDict.Implementations;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.NLP.Dicts
@@ -12,16 +13,29 @@ namespace SymOntoClay.NLP.Dicts
         {
             var serializer = new WordsDictJSONSerializationEngine();
 
-            _wordFramesDict = serializer.LoadFromFile(fileName);
+            _wordFramesByWordDict = serializer.LoadFromFile(fileName);
+            var tmpList = _wordFramesByWordDict.SelectMany(p => p.Value.ToList());
+            _wordFramesByByRootWordDict = tmpList.GroupBy(p => p.RootWord).ToDictionary(p => p.Key, p => p.ToList());
         }
 
-        private readonly Dictionary<string, List<BaseGrammaticalWordFrame>> _wordFramesDict;
+        private readonly Dictionary<string, List<BaseGrammaticalWordFrame>> _wordFramesByWordDict;
+        private readonly Dictionary<string, List<BaseGrammaticalWordFrame>> _wordFramesByByRootWordDict;
 
-        public IList<BaseGrammaticalWordFrame> GetWordFrames(string word)
+        public IList<BaseGrammaticalWordFrame> GetWordFramesByWord(string word)
         {
-            if (_wordFramesDict.ContainsKey(word))
+            if (_wordFramesByWordDict.ContainsKey(word))
             {
-                return _wordFramesDict[word];
+                return _wordFramesByWordDict[word];
+            }
+
+            return null;
+        }
+
+        public IList<BaseGrammaticalWordFrame> GetWordFramesByRootWord(string word)
+        {
+            if (_wordFramesByByRootWordDict.ContainsKey(word))
+            {
+                return _wordFramesByByRootWordDict[word];
             }
 
             return null;

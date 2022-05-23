@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.CommonDict;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,6 +28,9 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// "she is a teacher" in "I know that she is a teacher".
         /// </summary>
         public BaseSentenceItem S { get; set; }
+
+        /// <inheritdoc/>
+        public override BaseGrammaticalWordFrame RootWordFrame => C.RootWordFrame;
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

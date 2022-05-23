@@ -2,16 +2,16 @@
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.InternalCG;
+using SymOntoClay.NLP.Internal.PhraseStructure;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
+namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 {
     public class ContextOfConditionalEntityNode
     {
-        public string RootWord { get; set; } = string.Empty;
+        public NounPhrase NounPhrase { get; set; }
         public InternalConceptCGNode RootConcept { get; set; }
-        public List<InternalRelationCGNode> VisitedRelations { get; set; } = new List<InternalRelationCGNode>();
     }
 }

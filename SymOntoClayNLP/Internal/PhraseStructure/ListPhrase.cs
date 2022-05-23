@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.CommonDict;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,6 +18,9 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         public override ListPhrase AsListPhrase => this;
 
         public List<BaseSentenceItem> Items { get; set; } = new List<BaseSentenceItem>();
+
+        /// <inheritdoc/>
+        public override BaseGrammaticalWordFrame RootWordFrame => throw new NotImplementedException();
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

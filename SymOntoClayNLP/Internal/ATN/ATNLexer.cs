@@ -125,7 +125,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                         {
                             result.Kind = KindOfATNToken.Word;
 
-                            result.WordFrames = _wordsDict.GetWordFrames(strItem.ToLower());
+                            result.WordFrames = _wordsDict.GetWordFramesByWord(strItem.ToLower());
 
 #if DEBUG
                             //_gbcLogger.Info($"result = {result}");

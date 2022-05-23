@@ -8,11 +8,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
+namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 {
     public class SentenceNode
     {
-        public SentenceNode(InternalConceptualGraph source, ContextOfConvertingInternalCGToText context)
+        public SentenceNode(InternalConceptualGraph source, ContextOfConvertingInternalCGToPhraseStructure context)
         {
             _context = context;
             _logger = context.Logger;
@@ -23,7 +23,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
         {
         }
 
-        private readonly ContextOfConvertingInternalCGToText _context;
+        private readonly ContextOfConvertingInternalCGToPhraseStructure _context;
         private readonly IEntityLogger _logger;
         private readonly InternalConceptualGraph _source;
 
@@ -107,7 +107,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
             _logger.Log($"keyConcepts = {keyConcepts}");
 #endif
 
-            var subjectNode = new NounNode(keyConcepts.SubjectConcept, keyConcepts.DisabledSubjectRelations, RoleOfNoun.Subject, _context);
+            var subjectNode = new NounNode(keyConcepts.SubjectConcept, keyConcepts.DisabledSubjectRelations, RoleOfNoun.Subject, _context.Logger, _context.WordsDict, _context.NLPContext, _context.VisitedRelations);
             var subjectResult = subjectNode.Run();
 
 #if DEBUG
@@ -122,7 +122,24 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
             _logger.Log($"verbResult = {verbResult}");
 #endif
 
-            throw new NotImplementedException();
+#if DEBUG
+            _logger.Log($"subjectResult.SentenceItem = {subjectResult.SentenceItem.ToDbgString()}");
+            _logger.Log($"verbResult.SentenceItem = {verbResult.SentenceItem.ToDbgString()}");
+#endif
+
+            var sentence = new Sentence();
+            sentence.Subject = subjectResult.SentenceItem;
+            sentence.Predicate = verbResult.SentenceItem;
+
+#if DEBUG
+            _logger.Log($"sentence = {sentence}");
+            _logger.Log($"sentence = {sentence.ToDbgString()}");
+#endif
+
+            return new ResultOfNode()
+            {
+                SentenceItem = sentence
+            };
         }
     }
 }

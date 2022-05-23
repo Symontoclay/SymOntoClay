@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.CG;
 using SymOntoClay.NLP.Internal.Dot;
@@ -9,27 +10,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
+namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 {
     public class NounNode
     {
-        public NounNode(BaseInternalConceptCGNode source, List<string> disabledRelations, RoleOfNoun roleOfNoun, ContextOfConvertingInternalCGToText context)
+        public NounNode(BaseInternalConceptCGNode source, List<string> disabledRelations, RoleOfNoun roleOfNoun, IEntityLogger logger, IWordsDict wordsDict,
+            INLPConverterContext nlpContext, List<InternalRelationCGNode> visitedRelations)
         {
-            _context = context;
-            _wordsDict = context.WordsDict;
-            _logger = context.Logger;
+            _wordsDict = wordsDict;
+            _logger = logger;
+            _nlpContext = nlpContext;
             _source = source;
             _disabledRelations = disabledRelations;
             _roleOfNoun = roleOfNoun;
+            _visitedRelations = visitedRelations;
         }
 
-        private readonly ContextOfConvertingInternalCGToText _context;
         private readonly IWordsDict _wordsDict;
         private readonly IEntityLogger _logger;
+        private readonly INLPConverterContext _nlpContext;
 
         private readonly BaseInternalConceptCGNode _source;
         private readonly List<string> _disabledRelations;
         private readonly RoleOfNoun _roleOfNoun;
+        private readonly List<InternalRelationCGNode> _visitedRelations;
 
         public ResultOfNode Run()
         {
@@ -68,49 +72,26 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
             _logger.Log($"conceptName = '{conceptName}'");
 #endif
 
-            var wordFramesList = _wordsDict.GetWordFrames(conceptName);
+            var nounWordNode = new NounWordNode(conceptName, _roleOfNoun, _logger, _wordsDict);
 
-#if DEBUG
-            _logger.Log($"wordFramesList = {wordFramesList.WriteListToString()}");
-#endif
-
-            switch(_roleOfNoun)
+            if(_roleOfNoun == RoleOfNoun.PossessDeterminer)
             {
-                case RoleOfNoun.Subject:
-                    {
-                        var pronounsList = wordFramesList.Where(p => p.IsPronoun).Select(p => p.AsPronoun).Where(p => p.Case == CaseOfPersonalPronoun.Subject).ToList();
-
-                        if(pronounsList.Any())
-                        {
-#if DEBUG
-                            _logger.Log($"pronounsList = {pronounsList.WriteListToString()}");
-#endif
-
-                            var nounPhrase = new NounPhrase();
-
-                            var word = new Word();
-                            nounPhrase.N = word;
-
-                            word.Content = conceptName;
-
-                            word.WordFrame = pronounsList.Single();
-
-#if DEBUG
-                            _logger.Log($"nounPhrase = {nounPhrase}");
-#endif
-
-                            return new ResultOfNode()
-                            {
-                                SentenceItem = nounPhrase
-                            };
-                        }
-
-                        throw new NotImplementedException();
-                    }
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(_roleOfNoun), _roleOfNoun, null);
+                return new ResultOfNode()
+                {
+                    SentenceItem = nounWordNode.GetWord()
+                };
             }
+
+            var nounPhrase = nounWordNode.GetNounPhrase();
+
+#if DEBUG
+            _logger.Log($"nounPhrase = {nounPhrase}");
+#endif
+
+            return new ResultOfNode()
+            {
+                SentenceItem = nounPhrase
+            };
         }
 
         private ResultOfNode ProcessConditionalEntity()
@@ -120,14 +101,14 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
             _logger.Log($"dotStr = '{dotStr}'");
 #endif
 
-            var conditionalEntityNode = new ConditionalEntityNode(_source.AsConceptualGraph, _logger, _context.WordsDict, _context.NLPContext);
+            var conditionalEntityNode = new ConditionalEntityNode(_source.AsConceptualGraph, _logger, _wordsDict, _nlpContext, _visitedRelations);
             var conditionalEntityNodeResult = conditionalEntityNode.Run();
 
 #if DEBUG
             _logger.Log($"conditionalEntityNodeResult = {conditionalEntityNodeResult}");
 #endif
 
-            throw new NotImplementedException();
+            return conditionalEntityNodeResult;
         }
     }
 }

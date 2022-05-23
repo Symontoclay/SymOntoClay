@@ -8,11 +8,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
+namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 {
     public class VerbNode
     {
-        public VerbNode(InternalConceptCGNode source, List<string> disabledRelations, BaseSentenceItem subject, ContextOfConvertingInternalCGToText context)
+        public VerbNode(InternalConceptCGNode source, List<string> disabledRelations, BaseSentenceItem subject, ContextOfConvertingInternalCGToPhraseStructure context)
         {
             _context = context;
             _wordsDict = context.WordsDict;
@@ -22,7 +22,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
             _subject = subject;
         }
 
-        private readonly ContextOfConvertingInternalCGToText _context;
+        private readonly ContextOfConvertingInternalCGToPhraseStructure _context;
         private readonly IWordsDict _wordsDict;
         private readonly IEntityLogger _logger;
 
@@ -38,33 +38,31 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
 
             var result = new ResultOfNode();
 
-            var sb = new StringBuilder();
-
-            var verbText = GetVerb();
+            var verbs = GetVerb();
 
 #if DEBUG
-            _logger.Log($"verbText = '{verbText}'");
+            _logger.Log($"verbs = {verbs}");
 #endif
 
-            sb.Append(verbText);
-
-            var objectText = GetObjectText(result);
+            var objectPhrase = GetObjectPhrase(result);
 
 #if DEBUG
-            _logger.Log($"objectText = '{objectText}'");
+            _logger.Log($"objectPhrase = {objectPhrase}");
 #endif
 
-            if(!string.IsNullOrWhiteSpace(objectText))
+            if(objectPhrase != null)
             {
-                sb.Append(" ");
-                sb.Append(objectText);
+                verbs.Item2.Object = objectPhrase;
             }
 
 #if DEBUG
-            _logger.Log($"sb = '{sb}'");
+            _logger.Log($"verbs.Item1.ToDbgString() = {verbs.Item1.ToDbgString()}");
 #endif
 
-            throw new NotImplementedException();
+            return new ResultOfNode()
+            {
+                SentenceItem = verbs.Item1
+            };
         }
 
         private (VerbPhrase, VerbPhrase) GetVerb()
@@ -140,18 +138,36 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
                 throw new NotImplementedException();
             }
 
-            throw new NotImplementedException();
+            var verbsList = _wordsDict.GetWordFramesByWord(verb).Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Verb);
 
-            //var wordFramesList = _wordsDict.GetWordFrames(_subject);
+#if DEBUG
+            _logger.Log($"verbsList = {verbsList.WriteListToString()}");
+#endif
 
+            var verbPhrase = new VerbPhrase();
 
+            var word = new Word();
+            verbPhrase.V = word;
 
-            //return verb;
+            word.Content = verb;
+
+            word.WordFrame = verbsList.Single();
+
+#if DEBUG
+            _logger.Log($"verbPhrase = {verbPhrase}");
+#endif
+
+            return (verbPhrase, verbPhrase);
         }
 
-        private string GetObjectText(ResultOfNode result)
+        private BaseSentenceItem GetObjectPhrase(ResultOfNode result)
         {
             var objectRelationsList = _source.Outputs.Where(p => p.Kind == KindOfCGNode.Relation && p.Name == SpecialNamesOfRelations.ObjectRelationName).Select(p => p.AsRelationNode).ToList();
+
+            if(!objectRelationsList.Any())
+            {
+                return null;
+            }
 
             if (objectRelationsList.Count > 1)
             {
@@ -164,7 +180,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
             _logger.Log($"objectRelation = {objectRelation}");
 #endif
 
-
             if (objectRelation.Outputs.Count != 1)
             {
                 throw new NotImplementedException();
@@ -176,15 +191,16 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
             _logger.Log($"objectConcept = {objectConcept}");
 #endif
 
-            var objectNode = new NounNode(objectConcept.AsGraphOrConceptNode, new List<string>() { "object" }, RoleOfNoun.Object, _context);
+            var objectNode = new NounNode(objectConcept.AsGraphOrConceptNode, new List<string>() { "object" }, RoleOfNoun.Object, _logger, _wordsDict, _context.NLPContext, _context.VisitedRelations);
 
             var objectResult = objectNode.Run();
 
 #if DEBUG
             _logger.Log($"objectResult = {objectResult}");
+            _logger.Log($"objectResult.SentenceItem = {objectResult.SentenceItem.ToDbgString()}");
 #endif
 
-            throw new NotImplementedException();
+            return objectResult.SentenceItem;
         }
     }
 }

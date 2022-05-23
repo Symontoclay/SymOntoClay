@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.NLP.CommonDict;
+using System;
 using System.Collections.Generic;
 
 namespace SymOntoClay.NLP.BinaryDict
@@ -20,7 +21,7 @@ namespace SymOntoClay.NLP.BinaryDict
 
         private Dictionary<string, List<BaseGrammaticalWordFrame>> _wordFramesDict;
 
-        public IList<BaseGrammaticalWordFrame> GetWordFrames(string word)
+        public IList<BaseGrammaticalWordFrame> GetWordFramesByWord(string word)
         {
             if(_wordFramesDict.ContainsKey(word))
             {
@@ -28,6 +29,11 @@ namespace SymOntoClay.NLP.BinaryDict
             }
 
             return null;
+        }
+
+        public IList<BaseGrammaticalWordFrame> GetWordFramesByRootWord(string word)
+        {
+            throw new NotImplementedException();
         }
     }
 }

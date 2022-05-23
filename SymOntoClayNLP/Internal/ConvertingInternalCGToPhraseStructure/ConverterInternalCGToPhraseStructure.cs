@@ -3,16 +3,17 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.CG;
 using SymOntoClay.NLP.Internal.InternalCG;
+using SymOntoClay.NLP.Internal.PhraseStructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
+namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 {
-    public class ConverterInternalCGToText
+    public class ConverterInternalCGToPhraseStructure
     {
-        public ConverterInternalCGToText(IEntityLogger logger, IWordsDict wordsDict)
+        public ConverterInternalCGToPhraseStructure(IEntityLogger logger, IWordsDict wordsDict)
         {
             _wordsDict = wordsDict;
             _logger = logger;
@@ -21,9 +22,9 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
         private readonly IWordsDict _wordsDict;
         private readonly IEntityLogger _logger;
 
-        public string Convert(InternalConceptualGraph source, INLPConverterContext nlpContext)
+        public BaseSentenceItem Convert(InternalConceptualGraph source, INLPConverterContext nlpContext)
         {
-            var context = new ContextOfConvertingInternalCGToText();
+            var context = new ContextOfConvertingInternalCGToPhraseStructure();
             context.Logger = _logger;
             context.WordsDict = _wordsDict;
             context.NLPContext = nlpContext;
@@ -47,7 +48,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToATN
             _logger.Log($"nodeResult = {nodeResult}");
 #endif            
 
-            throw new NotImplementedException();
+            return nodeResult.SentenceItem;
         }
     }
 }

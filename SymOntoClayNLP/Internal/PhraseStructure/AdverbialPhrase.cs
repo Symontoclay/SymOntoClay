@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.CommonDict;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -32,6 +33,9 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// "beautiful" in "very beautiful"
         /// </summary>
         public BaseSentenceItem AP { get; set; }
+
+        /// <inheritdoc/>
+        public override BaseGrammaticalWordFrame RootWordFrame => Adv.RootWordFrame;
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

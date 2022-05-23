@@ -23,6 +23,9 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         public BaseGrammaticalWordFrame WordFrame { get; set; }
 
         /// <inheritdoc/>
+        public override BaseGrammaticalWordFrame RootWordFrame => WordFrame;
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

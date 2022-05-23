@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.CommonDict;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -41,6 +42,9 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// "dog" in "cat and dog"
         /// </summary>
         public BaseSentenceItem Right { get; set; }
+
+        /// <inheritdoc/>
+        public override BaseGrammaticalWordFrame RootWordFrame => Conj.RootWordFrame;
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

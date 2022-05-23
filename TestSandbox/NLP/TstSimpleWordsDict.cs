@@ -26,7 +26,7 @@ namespace TestSandbox.NLP
             _wordFramesDict = _wordFramesList.GroupBy(x => x.Word).ToDictionary(p => p.Key, p => p.ToList());
         }
 
-        public IList<BaseGrammaticalWordFrame> GetWordFrames(string word)
+        public IList<BaseGrammaticalWordFrame> GetWordFramesByWord(string word)
         {
 #if DEBUG
             //_gbcLogger.Info($"word = {word}");
@@ -39,6 +39,11 @@ namespace TestSandbox.NLP
             }
 
             return null;
+        }
+
+        public IList<BaseGrammaticalWordFrame> GetWordFramesByRootWord(string word)
+        {
+            throw new NotImplementedException();
         }
 
         private Dictionary<string, List<string>> mTmpMeaningsDict = new Dictionary<string, List<string>>();

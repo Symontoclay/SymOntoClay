@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.CommonDict;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,6 +32,9 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// "very" in "very many"
         /// </summary>
         public BaseSentenceItem Adv { get; set; }
+
+        /// <inheritdoc/>
+        public override BaseGrammaticalWordFrame RootWordFrame => Q.RootWordFrame;
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

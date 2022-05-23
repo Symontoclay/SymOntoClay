@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.CommonDict;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -83,6 +84,9 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// infinitive phrases, such as "to sing well" and "to beat" in the noun phrases "a desire to sing well" and "the man to beat"
         /// </summary>
         public BaseSentenceItem InfinitivePhrases { get; set; }
+
+        /// <inheritdoc/>
+        public override BaseGrammaticalWordFrame RootWordFrame => N.RootWordFrame;
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

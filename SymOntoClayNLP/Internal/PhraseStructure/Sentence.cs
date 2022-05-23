@@ -42,6 +42,9 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         public ConditionalModality ConditionalModality { get; set; } = ConditionalModality.Undefined;
 
         /// <inheritdoc/>
+        public override BaseGrammaticalWordFrame RootWordFrame => throw new NotImplementedException();
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.CommonDict;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -39,6 +40,9 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// "two years" in "two years ago"
         /// </summary>
         public BaseSentenceItem NP { get; set; }
+
+        /// <inheritdoc/>
+        public override BaseGrammaticalWordFrame RootWordFrame => P.RootWordFrame;
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

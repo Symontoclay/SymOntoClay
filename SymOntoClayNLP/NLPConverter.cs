@@ -4,7 +4,10 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.ATN;
 using SymOntoClay.NLP.Internal.ConvertingCGToInternal;
+using SymOntoClay.NLP.Internal.ConvertingFactToInternalCG;
 using SymOntoClay.NLP.Internal.ConvertingInternalCGToFact;
+using SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure;
+using SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText;
 using SymOntoClay.NLP.Internal.PhraseToCGParsing;
 using System;
 using System.Collections.Generic;
@@ -64,9 +67,21 @@ namespace SymOntoClay.NLP
         }
 
         /// <inheritdoc/>
-        public string Convert(RuleInstance fact, IStorage storage)
+        public string Convert(RuleInstance fact, INLPConverterContext nlpContext)
         {
-            throw new NotImplementedException();
+            var converterFactToCG = new ConverterFactToInternalCG(_logger);
+
+            var internalCG = converterFactToCG.Convert(fact, nlpContext);
+
+            var converterInternalCGToPhraseStructure = new ConverterInternalCGToPhraseStructure(_logger, _wordsDict);
+
+            var sentenceItem = converterInternalCGToPhraseStructure.Convert(internalCG, nlpContext);
+
+            var converterPhraseStructureToText = new ConverterPhraseStructureToText(_logger);
+
+            var text = converterPhraseStructureToText.Convert(sentenceItem);
+
+            return text;
         }
     }
 }

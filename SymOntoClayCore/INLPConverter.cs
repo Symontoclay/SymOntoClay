@@ -8,6 +8,6 @@ namespace SymOntoClay.Core
     public interface INLPConverter
     {
         IList<RuleInstance> Convert(string text);
-        string Convert(RuleInstance fact, IStorage storage);
+        string Convert(RuleInstance fact, INLPConverterContext nlpContext);
     }
 }

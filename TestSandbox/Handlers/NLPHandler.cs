@@ -59,8 +59,8 @@ namespace TestSandbox.Handlers
         {
             _logger.Log("Begin");
 
-            Case5();
-            //Case4();
+            //Case5();
+            Case4();
             //Case3();
             //Case2();
             //Case1();
@@ -105,15 +105,17 @@ namespace TestSandbox.Handlers
 
         private void Case4()
         {
+            var nlpContext = CreateNLPConverterContext();
+
             var factStr = "{: >: { like(i,#@{: >: { possess(i,$_) & cat($_) } :}) } :}";
 
             var ruleInstance = Parse(factStr);
 
             _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
 
-            var text = _converter.Convert(ruleInstance, _engineContext.Storage.GlobalStorage);
+            var text = _converter.Convert(ruleInstance, nlpContext);
 
-            _logger.Log($"text = {text}");
+            _logger.Log($"text = '{text}'");
         }
 
         private RuleInstance Parse(string text)

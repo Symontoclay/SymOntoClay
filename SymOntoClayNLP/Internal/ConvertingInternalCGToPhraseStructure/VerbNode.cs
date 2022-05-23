@@ -31,7 +31,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
         public ResultOfNode Run()
         {
 #if DEBUG
-            _logger.Log($"_source = {_source}");
+            //_logger.Log($"_source = {_source}");
 #endif
 
             var result = new ResultOfNode();
@@ -39,13 +39,13 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var verbs = GetVerb();
 
 #if DEBUG
-            _logger.Log($"verbs = {verbs}");
+            //_logger.Log($"verbs = {verbs}");
 #endif
 
             var objectPhrase = GetObjectPhrase(result);
 
 #if DEBUG
-            _logger.Log($"objectPhrase = {objectPhrase}");
+            //_logger.Log($"objectPhrase = {objectPhrase}");
 #endif
 
             if(objectPhrase != null)
@@ -54,7 +54,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             }
 
 #if DEBUG
-            _logger.Log($"verbs.Item1.ToDbgString() = {verbs.Item1.ToDbgString()}");
+            //_logger.Log($"verbs.Item1.ToDbgString() = {verbs.Item1.ToDbgString()}");
 #endif
 
             return new ResultOfNode()
@@ -96,7 +96,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var verbName = _source.Name;
 
 #if DEBUG
-            _logger.Log($"verbName = '{verbName}'");
+            //_logger.Log($"verbName = '{verbName}'");
 #endif
 
             var tense = _context.Tense;
@@ -123,8 +123,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
         private (VerbPhrase, VerbPhrase) GetTargetPresentSimpleVerbForm(string verb)
         {
 #if DEBUG
-            _logger.Log($"verb = '{verb}'");
-            _logger.Log($"_subject = '{_subject}'");
+            //_logger.Log($"verb = '{verb}'");
+            //_logger.Log($"_subject = '{_subject}'");
 #endif
 
             var subjectWordFrame = _subject.RootWordFrame;
@@ -139,7 +139,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var verbsList = _wordsDict.GetWordFramesByWord(verb).Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Verb);
 
 #if DEBUG
-            _logger.Log($"verbsList = {verbsList.WriteListToString()}");
+            //_logger.Log($"verbsList = {verbsList.WriteListToString()}");
 #endif
 
             var verbPhrase = new VerbPhrase();
@@ -152,7 +152,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             word.WordFrame = verbsList.Single();
 
 #if DEBUG
-            _logger.Log($"verbPhrase = {verbPhrase}");
+            //_logger.Log($"verbPhrase = {verbPhrase}");
 #endif
 
             return (verbPhrase, verbPhrase);
@@ -175,7 +175,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var objectRelation = objectRelationsList.First();
 
 #if DEBUG
-            _logger.Log($"objectRelation = {objectRelation}");
+            //_logger.Log($"objectRelation = {objectRelation}");
 #endif
 
             _context.VisitedRelations.Add(objectRelation);
@@ -188,7 +188,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var objectConcept = objectRelation.Outputs.First();
 
 #if DEBUG
-            _logger.Log($"objectConcept = {objectConcept}");
+            //_logger.Log($"objectConcept = {objectConcept}");
 #endif
 
             var objectNode = new NounNode(objectConcept.AsGraphOrConceptNode, RoleOfNoun.Object, _context);
@@ -196,8 +196,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var objectResult = objectNode.Run();
 
 #if DEBUG
-            _logger.Log($"objectResult = {objectResult}");
-            _logger.Log($"objectResult.SentenceItem = {objectResult.SentenceItem.ToDbgString()}");
+            //_logger.Log($"objectResult = {objectResult}");
+            //_logger.Log($"objectResult.SentenceItem = {objectResult.SentenceItem.ToDbgString()}");
 #endif
 
             return objectResult.SentenceItem;

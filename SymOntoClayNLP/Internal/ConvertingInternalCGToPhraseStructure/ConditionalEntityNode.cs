@@ -38,8 +38,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             ProcessAnotherRelations(context);
 
 #if DEBUG
-            _logger.Log($"context.NounPhrase = {context.NounPhrase}");
-            _logger.Log($"context.NounPhrase = {context.NounPhrase.ToDbgString()}");
+            //_logger.Log($"context.NounPhrase = {context.NounPhrase}");
+            //_logger.Log($"context.NounPhrase = {context.NounPhrase.ToDbgString()}");
 #endif
 
             return new ResultOfNode()
@@ -53,7 +53,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var rootConcept = _source.Children.Where(p => p.IsConceptNode).Select(p => p.AsConceptNode).First(p => p.IsRootConceptOfEntitiCondition);
 
 #if DEBUG
-            _logger.Log($"rootConcept = {rootConcept}");
+            //_logger.Log($"rootConcept = {rootConcept}");
 #endif
 
             context.RootConcept = rootConcept;
@@ -69,7 +69,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var nounPhrase = nounWordNode.GetNounPhrase();
 
 #if DEBUG
-            _logger.Log($"nounPhrase = {nounPhrase}");
+            //_logger.Log($"nounPhrase = {nounPhrase}");
 #endif
 
             context.NounPhrase = nounPhrase;
@@ -80,13 +80,13 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var inputRelationsList = targetConcept.Inputs.Select(p => p.AsRelationNode).ToList();
 
 #if DEBUG
-            _logger.Log($"inputRelationsList = {inputRelationsList.WriteListToString()}");
+            //_logger.Log($"inputRelationsList = {inputRelationsList.WriteListToString()}");
 #endif
 
             foreach(var inputRelation in inputRelationsList)
             {
 #if DEBUG
-                _logger.Log($"inputRelation = {inputRelation}");
+                //_logger.Log($"inputRelation = {inputRelation}");
 #endif
 
                 if(_visitedRelations.Contains(inputRelation))
@@ -99,7 +99,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                 var relationName = inputRelation.Name;
 
 #if DEBUG
-                _logger.Log($"relationName = '{relationName}'");
+                //_logger.Log($"relationName = '{relationName}'");
 #endif
 
                 switch(relationName)
@@ -109,7 +109,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                             var ownerConcept = inputRelation.Inputs.Select(p => p.AsGraphOrConceptNode).Single();
 
 #if DEBUG
-                            _logger.Log($"ownerConcept = {ownerConcept}");
+                            //_logger.Log($"ownerConcept = {ownerConcept}");
 #endif
 
                             var nounNode = new NounNode(ownerConcept, RoleOfNoun.PossessDeterminer, _baseContext);
@@ -117,7 +117,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                             var nounNodeResult = nounNode.Run();
 
 #if DEBUG
-                            _logger.Log($"nounNodeResult = {nounNodeResult}");
+                            //_logger.Log($"nounNodeResult = {nounNodeResult}");
 #endif
 
                             targetNounPhrase.D = nounNodeResult.SentenceItem;
@@ -130,7 +130,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             }
 
 #if DEBUG
-            _logger.Log($"targetNounPhrase = {targetNounPhrase.ToDbgString()}");
+            //_logger.Log($"targetNounPhrase = {targetNounPhrase.ToDbgString()}");
 #endif
         }
 

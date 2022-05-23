@@ -45,7 +45,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var nodeResult = sentenceNode.Run();
 
 #if DEBUG
-            _logger.Log($"nodeResult = {nodeResult}");
+            //_logger.Log($"nodeResult = {nodeResult}");
 #endif            
 
             return nodeResult.SentenceItem;

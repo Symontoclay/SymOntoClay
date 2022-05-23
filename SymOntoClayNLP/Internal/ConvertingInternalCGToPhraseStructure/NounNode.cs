@@ -37,13 +37,13 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
         public ResultOfNode Run()
         {
 #if DEBUG
-            _logger.Log($"_source = {_source}");
+            //_logger.Log($"_source = {_source}");
 #endif
 
             var kind = _source.Kind;
 
 #if DEBUG
-            _logger.Log($"kind = {kind}");
+            //_logger.Log($"kind = {kind}");
 #endif
 
             switch(kind)
@@ -68,7 +68,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var conceptName = _source.Name;
 
 #if DEBUG
-            _logger.Log($"conceptName = '{conceptName}'");
+            //_logger.Log($"conceptName = '{conceptName}'");
 #endif
 
             var nounWordNode = new NounWordNode(conceptName, _roleOfNoun, _logger, _wordsDict);
@@ -84,7 +84,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var nounPhrase = nounWordNode.GetNounPhrase();
 
 #if DEBUG
-            _logger.Log($"nounPhrase = {nounPhrase}");
+            //_logger.Log($"nounPhrase = {nounPhrase}");
 #endif
 
             return new ResultOfNode()
@@ -96,15 +96,15 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
         private ResultOfNode ProcessConditionalEntity()
         {
 #if DEBUG
-            var dotStr = DotConverter.ConvertToString(_source);
-            _logger.Log($"dotStr = '{dotStr}'");
+            //var dotStr = DotConverter.ConvertToString(_source);
+            //_logger.Log($"dotStr = '{dotStr}'");
 #endif
 
             var conditionalEntityNode = new ConditionalEntityNode(_source.AsConceptualGraph, _baseContext);
             var conditionalEntityNodeResult = conditionalEntityNode.Run();
 
 #if DEBUG
-            _logger.Log($"conditionalEntityNodeResult = {conditionalEntityNodeResult}");
+            //_logger.Log($"conditionalEntityNodeResult = {conditionalEntityNodeResult}");
 #endif
 
             return conditionalEntityNodeResult;

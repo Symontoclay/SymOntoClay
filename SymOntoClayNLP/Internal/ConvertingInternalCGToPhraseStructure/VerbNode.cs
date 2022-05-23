@@ -12,13 +12,12 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 {
     public class VerbNode
     {
-        public VerbNode(InternalConceptCGNode source, List<string> disabledRelations, BaseSentenceItem subject, ContextOfConvertingInternalCGToPhraseStructure context)
+        public VerbNode(InternalConceptCGNode source, BaseSentenceItem subject, ContextOfConvertingInternalCGToPhraseStructure context)
         {
             _context = context;
             _wordsDict = context.WordsDict;
             _logger = context.Logger;
             _source = source;
-            _disabledRelations = disabledRelations;
             _subject = subject;
         }
 
@@ -27,7 +26,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
         private readonly IEntityLogger _logger;
 
         private readonly InternalConceptCGNode _source;
-        private readonly List<string> _disabledRelations;
         private readonly BaseSentenceItem _subject;
 
         public ResultOfNode Run()
@@ -180,6 +178,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             _logger.Log($"objectRelation = {objectRelation}");
 #endif
 
+            _context.VisitedRelations.Add(objectRelation);
+
             if (objectRelation.Outputs.Count != 1)
             {
                 throw new NotImplementedException();
@@ -191,7 +191,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             _logger.Log($"objectConcept = {objectConcept}");
 #endif
 
-            var objectNode = new NounNode(objectConcept.AsGraphOrConceptNode, new List<string>() { "object" }, RoleOfNoun.Object, _logger, _wordsDict, _context.NLPContext, _context.VisitedRelations);
+            var objectNode = new NounNode(objectConcept.AsGraphOrConceptNode, RoleOfNoun.Object, _context);
 
             var objectResult = objectNode.Run();
 

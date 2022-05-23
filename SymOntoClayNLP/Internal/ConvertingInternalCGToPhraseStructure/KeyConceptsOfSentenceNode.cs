@@ -9,9 +9,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
     public class KeyConceptsOfSentenceNode : IObjectToString
     {
         public BaseInternalConceptCGNode SubjectConcept { get; set; }
-        public List<string> DisabledSubjectRelations { get; set; }
         public InternalConceptCGNode VerbConcept { get; set; }
-        public List<string> DisabledVerbRelations { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -32,9 +30,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var sb = new StringBuilder();
 
             sb.PrintObjProp(n, nameof(SubjectConcept), SubjectConcept);
-            sb.PrintPODList(n, nameof(DisabledSubjectRelations), DisabledSubjectRelations);
             sb.PrintObjProp(n, nameof(VerbConcept), VerbConcept);
-            sb.PrintPODList(n, nameof(DisabledVerbRelations), DisabledVerbRelations);
 
             return sb.ToString();
         }

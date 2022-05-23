@@ -12,15 +12,17 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 {
     public class ConditionalEntityNode
     {
-        public ConditionalEntityNode(InternalConceptualGraph source, IEntityLogger logger, IWordsDict wordsDict, INLPConverterContext nlpContext, List<InternalRelationCGNode> visitedRelations)
+        public ConditionalEntityNode(InternalConceptualGraph source, BaseContextOfConvertingInternalCGToPhraseStructure baseContext)
         {
+            _baseContext = baseContext;
             _source = source;
-            _logger = logger;
-            _wordsDict = wordsDict;
-            _nlpContext = nlpContext;
-            _visitedRelations = visitedRelations;
+            _logger = baseContext.Logger;
+            _wordsDict = baseContext.WordsDict;
+            _nlpContext = baseContext.NLPContext;
+            _visitedRelations = baseContext.VisitedRelations;
         }
 
+        private readonly BaseContextOfConvertingInternalCGToPhraseStructure _baseContext;
         private readonly InternalConceptualGraph _source;
         private readonly IEntityLogger _logger;
         private readonly IWordsDict _wordsDict;
@@ -110,7 +112,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                             _logger.Log($"ownerConcept = {ownerConcept}");
 #endif
 
-                            var nounNode = new NounNode(ownerConcept, new List<string>() { "possess" }, RoleOfNoun.PossessDeterminer, _logger, _wordsDict, _nlpContext, _visitedRelations);
+                            var nounNode = new NounNode(ownerConcept, RoleOfNoun.PossessDeterminer, _baseContext);
 
                             var nounNodeResult = nounNode.Run();
 

@@ -14,24 +14,23 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 {
     public class NounNode
     {
-        public NounNode(BaseInternalConceptCGNode source, List<string> disabledRelations, RoleOfNoun roleOfNoun, IEntityLogger logger, IWordsDict wordsDict,
-            INLPConverterContext nlpContext, List<InternalRelationCGNode> visitedRelations)
+        public NounNode(BaseInternalConceptCGNode source, RoleOfNoun roleOfNoun, BaseContextOfConvertingInternalCGToPhraseStructure baseContext)
         {
-            _wordsDict = wordsDict;
-            _logger = logger;
-            _nlpContext = nlpContext;
+            _baseContext = baseContext;
+            _wordsDict = baseContext.WordsDict;
+            _logger = baseContext.Logger;
+            _nlpContext = baseContext.NLPContext;
             _source = source;
-            _disabledRelations = disabledRelations;
             _roleOfNoun = roleOfNoun;
-            _visitedRelations = visitedRelations;
+            _visitedRelations = baseContext.VisitedRelations;
         }
 
+        private readonly BaseContextOfConvertingInternalCGToPhraseStructure _baseContext;
         private readonly IWordsDict _wordsDict;
         private readonly IEntityLogger _logger;
         private readonly INLPConverterContext _nlpContext;
 
         private readonly BaseInternalConceptCGNode _source;
-        private readonly List<string> _disabledRelations;
         private readonly RoleOfNoun _roleOfNoun;
         private readonly List<InternalRelationCGNode> _visitedRelations;
 
@@ -101,7 +100,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             _logger.Log($"dotStr = '{dotStr}'");
 #endif
 
-            var conditionalEntityNode = new ConditionalEntityNode(_source.AsConceptualGraph, _logger, _wordsDict, _nlpContext, _visitedRelations);
+            var conditionalEntityNode = new ConditionalEntityNode(_source.AsConceptualGraph, _baseContext);
             var conditionalEntityNodeResult = conditionalEntityNode.Run();
 
 #if DEBUG

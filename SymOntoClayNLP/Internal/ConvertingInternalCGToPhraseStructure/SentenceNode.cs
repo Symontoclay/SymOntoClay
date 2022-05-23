@@ -63,6 +63,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                 _logger.Log($"stateRelation = {stateRelation}");
 #endif
 
+                _context.VisitedRelations.Add(stateRelation);
+
                 if (stateRelation.Inputs.Count != 1)
                 {
                     throw new NotImplementedException();
@@ -79,20 +81,24 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                 _logger.Log($"subjectConcept = {subjectConcept}");
 #endif
 
+                var experiencerRelation = subjectConcept.Inputs.Where(p => p.Name == SpecialNamesOfRelations.ExperiencerRelationName).Select(p => p.AsRelationNode).Single();
+
+#if DEBUG
+                _logger.Log($"experiencerRelation = {experiencerRelation}");
+#endif
+
+                _context.VisitedRelations.Add(experiencerRelation);
+
                 var stateConcept = stateRelation.Outputs.First();
 
 #if DEBUG
                 _logger.Log($"stateConcept = {stateConcept}");
 #endif
 
-                var disabledRelations = new List<string>() { "experiencer", "state" };
-
                 return new KeyConceptsOfSentenceNode()
                 { 
                     SubjectConcept = subjectConcept.AsGraphOrConceptNode,
-                    DisabledSubjectRelations = disabledRelations,
-                    VerbConcept = stateConcept.AsConceptNode,
-                    DisabledVerbRelations = disabledRelations
+                    VerbConcept = stateConcept.AsConceptNode
                 };
             }
 
@@ -107,14 +113,14 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             _logger.Log($"keyConcepts = {keyConcepts}");
 #endif
 
-            var subjectNode = new NounNode(keyConcepts.SubjectConcept, keyConcepts.DisabledSubjectRelations, RoleOfNoun.Subject, _context.Logger, _context.WordsDict, _context.NLPContext, _context.VisitedRelations);
+            var subjectNode = new NounNode(keyConcepts.SubjectConcept, RoleOfNoun.Subject, _context);
             var subjectResult = subjectNode.Run();
 
 #if DEBUG
             _logger.Log($"subjectResult = {subjectResult}");
 #endif
 
-            var verbNode = new VerbNode(keyConcepts.VerbConcept, keyConcepts.DisabledVerbRelations, subjectResult.SentenceItem, _context);
+            var verbNode = new VerbNode(keyConcepts.VerbConcept, subjectResult.SentenceItem, _context);
 
             var verbResult = verbNode.Run();
 

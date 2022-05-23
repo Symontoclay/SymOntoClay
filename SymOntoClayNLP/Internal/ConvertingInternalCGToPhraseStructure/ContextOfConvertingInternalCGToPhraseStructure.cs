@@ -9,13 +9,8 @@ using System.Text;
 
 namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 {
-    public class ContextOfConvertingInternalCGToPhraseStructure : IObjectToString
+    public class ContextOfConvertingInternalCGToPhraseStructure: BaseContextOfConvertingInternalCGToPhraseStructure, IObjectToString
     {
-        public IEntityLogger Logger { get; set; }
-        public INLPConverterContext NLPContext { get; set; }
-        public IWordsDict WordsDict { get; set; }
-        public List<InternalRelationCGNode> VisitedRelations { get; set; } = new List<InternalRelationCGNode>();
-
         public KindOfQuestion KindOfQuestion { get; set; } = KindOfQuestion.Undefined;
 
         public bool IsNegation { get; set; }

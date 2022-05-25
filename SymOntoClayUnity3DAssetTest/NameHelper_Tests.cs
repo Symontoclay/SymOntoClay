@@ -134,10 +134,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var name = NameHelper.CreateRuleOrFactName();
 
+            Assert.AreEqual(true, name.NameValue.StartsWith("#^"));
             Assert.AreEqual(name.IsEmpty, false);
             Assert.AreNotEqual(name.NameValue, string.Empty);
             Assert.AreNotEqual(name.NormalizedNameValue, string.Empty);
-            Assert.AreEqual(name.KindOfName, KindOfName.Entity);
+            Assert.AreEqual(name.KindOfName, KindOfName.RuleOrFact);
         }
 
         [Test]

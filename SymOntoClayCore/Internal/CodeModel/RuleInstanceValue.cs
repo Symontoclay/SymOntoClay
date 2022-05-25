@@ -54,7 +54,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override IList<Value> WhereSection { get => RuleInstance.WhereSection; set => RuleInstance.WhereSection = value; }
 
         /// <inheritdoc/>
-        public override IList<RuleInstance> Annotations { get => RuleInstance.Annotations; set => RuleInstance.Annotations = value; }
+        public override IList<Annotation> Annotations { get => RuleInstance.Annotations; set => RuleInstance.Annotations = value; }
 
         private List<StrongIdentifierValue> _builtInSuperTypes;
 
@@ -62,7 +62,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => _builtInSuperTypes;
 
         /// <inheritdoc/>
-        public override void DiscoverAllAnnotations(IList<RuleInstance> result)
+        public override void DiscoverAllAnnotations(IList<Annotation> result)
         {
             RuleInstance.DiscoverAllAnnotations(result);
         }
@@ -98,9 +98,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override void CalculateLongConditionalHashCode(CheckDirtyOptions options)
+        protected override ulong CalculateLongConditionalHashCode(CheckDirtyOptions options)
         {
             RuleInstance.CheckDirty(options);
+
+            return 0u;
         }
 
         /// <inheritdoc/>

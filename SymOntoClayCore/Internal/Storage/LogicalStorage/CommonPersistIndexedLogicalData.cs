@@ -300,11 +300,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             //foreach (var tmpItem in IndexedRulePartsOfFactsDict)
             //{
             //    Log($"tmpItem.Key = {tmpItem.Key}");
-            //    foreach(var a in tmpItem.Value)
+            //    foreach (var a in tmpItem.Value)
             //    {
             //        var dbgStr = DebugHelperForRuleInstance.BaseRulePartToString(a);
             //        Log($"dbgStr = {dbgStr}");
-            //    }                
+            //    }
             //}
 #endif
 

@@ -188,6 +188,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 foreach (var dataSourcesSettings in dataSourcesSettingsOrderedByPriorityAndUseProductionsList)
                 {
+#if DEBUG
+                    //_gbcLogger.Info($"dataSourcesSettings.Storage.Kind = {dataSourcesSettings.Storage.Kind}");
+                    //_gbcLogger.Info($"dataSourcesSettings.UseProductions = {dataSourcesSettings.UseProductions}");
+#endif
+
                     var indexedRulePartWithOneRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name, context, localCodeExecutionContext);
 
                     if (indexedRulePartWithOneRelationsList == null)

@@ -87,66 +87,157 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
             var sbMark = new StringBuilder();
 
-            if(Mood != GrammaticalMood.Undefined || (KindOfQuestion != KindOfQuestion.Undefined && KindOfQuestion != KindOfQuestion.None) || IsNegation || Aspect != GrammaticalAspect.Undefined ||
-                Tense != GrammaticalTenses.Undefined || Voice != GrammaticalVoice.Undefined || (AbilityModality != AbilityModality.Undefined && AbilityModality != AbilityModality.None) ||
+            if((Mood != GrammaticalMood.Undefined && Mood != GrammaticalMood.Indicative) || (KindOfQuestion != KindOfQuestion.Undefined && KindOfQuestion != KindOfQuestion.None) || IsNegation ||
+                (Aspect != GrammaticalAspect.Undefined && Aspect != GrammaticalAspect.Simple) || (Tense != GrammaticalTenses.Undefined && Tense != GrammaticalTenses.Present) || 
+                (Voice != GrammaticalVoice.Undefined && Voice != GrammaticalVoice.Active) || (AbilityModality != AbilityModality.Undefined && AbilityModality != AbilityModality.None) ||
                 (PermissionModality != PermissionModality.Undefined && PermissionModality != PermissionModality.None) || (ObligationModality != ObligationModality.Undefined && ObligationModality != ObligationModality.None) ||
                 (ProbabilityModality != ProbabilityModality.Undefined && ProbabilityModality != ProbabilityModality.None) || (ConditionalModality != ConditionalModality.Undefined && ConditionalModality != ConditionalModality.None))
             {
                 sbMark.Append(":(");
 
-                if (Mood != GrammaticalMood.Undefined)
+                var hasMarkItem = false;
+
+                if (Mood != GrammaticalMood.Undefined && Mood != GrammaticalMood.Indicative)
                 {
+                    hasMarkItem = true;
+
                     sbMark.Append(Mood);
                 }
 
                 if (KindOfQuestion != KindOfQuestion.Undefined && KindOfQuestion != KindOfQuestion.None)
                 {
-                    sbMark.Append($";{KindOfQuestion}");
+                    if(hasMarkItem)
+                    {
+                        sbMark.Append(";");
+                    }
+                    else
+                    {
+                        hasMarkItem = true;
+                    }
+
+                    sbMark.Append($"{KindOfQuestion}");
                 }
 
                 if (IsNegation)
                 {
-                    sbMark.Append($";{IsNegation}");
+                    if (hasMarkItem)
+                    {
+                        sbMark.Append(";");
+                    }
+                    else
+                    {
+                        hasMarkItem = true;
+                    }
+
+                    sbMark.Append($"{IsNegation}");
                 }
 
-                if (Aspect != GrammaticalAspect.Undefined)
+                if (Aspect != GrammaticalAspect.Undefined && Aspect != GrammaticalAspect.Simple)
                 {
-                    sbMark.Append($";{Aspect}");
+                    if (hasMarkItem)
+                    {
+                        sbMark.Append(";");
+                    }
+                    else
+                    {
+                        hasMarkItem = true;
+                    }
+
+                    sbMark.Append($"{Aspect}");
                 }
 
-                if (Tense != GrammaticalTenses.Undefined)
+                if (Tense != GrammaticalTenses.Undefined && Tense != GrammaticalTenses.Present)
                 {
-                    sbMark.Append($";{Tense}");
+                    if (hasMarkItem)
+                    {
+                        sbMark.Append(";");
+                    }
+                    else
+                    {
+                        hasMarkItem = true;
+                    }
+
+                    sbMark.Append($"{Tense}");
                 }
 
-                if (Voice != GrammaticalVoice.Undefined)
+                if (Voice != GrammaticalVoice.Undefined && Voice != GrammaticalVoice.Active)
                 {
-                    sbMark.Append($";{Voice}");
+                    if (hasMarkItem)
+                    {
+                        sbMark.Append(";");
+                    }
+                    else
+                    {
+                        hasMarkItem = true;
+                    }
+
+                    sbMark.Append($"{Voice}");
                 }
 
                 if (AbilityModality != AbilityModality.Undefined && AbilityModality != AbilityModality.None)
                 {
-                    sbMark.Append($";{AbilityModality}");
+                    if (hasMarkItem)
+                    {
+                        sbMark.Append(";");
+                    }
+                    else
+                    {
+                        hasMarkItem = true;
+                    }
+
+                    sbMark.Append($"{AbilityModality}");
                 }
 
                 if (PermissionModality != PermissionModality.Undefined && PermissionModality != PermissionModality.None)
                 {
-                    sbMark.Append($";{PermissionModality}");
+                    if (hasMarkItem)
+                    {
+                        sbMark.Append(";");
+                    }
+                    else
+                    {
+                        hasMarkItem = true;
+                    }
+
+                    sbMark.Append($"{PermissionModality}");
                 }
 
                 if (ObligationModality != ObligationModality.Undefined && ObligationModality != ObligationModality.None)
                 {
-                    sbMark.Append($";{ObligationModality}");
+                    if (hasMarkItem)
+                    {
+                        sbMark.Append(";");
+                    }
+                    else
+                    {
+                        hasMarkItem = true;
+                    }
+
+                    sbMark.Append($"{ObligationModality}");
                 }
 
                 if (ProbabilityModality != ProbabilityModality.Undefined && ProbabilityModality != ProbabilityModality.None)
                 {
-                    sbMark.Append($";{ProbabilityModality}");
+                    if (hasMarkItem)
+                    {
+                        sbMark.Append(";");
+                    }
+                    else
+                    {
+                        hasMarkItem = true;
+                    }
+
+                    sbMark.Append($"{ProbabilityModality}");
                 }
 
                 if (ConditionalModality != ConditionalModality.Undefined && ConditionalModality != ConditionalModality.None)
                 {
-                    sbMark.Append($";{ConditionalModality}");
+                    if (hasMarkItem)
+                    {
+                        sbMark.Append(";");
+                    }
+
+                    sbMark.Append($"{ConditionalModality}");
                 }
 
                 sbMark.Append(")");

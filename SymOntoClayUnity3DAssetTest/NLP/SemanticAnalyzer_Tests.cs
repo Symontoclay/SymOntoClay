@@ -60,43 +60,27 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP
 
             Assert.AreEqual(@"digraph cluster_1{
 compound=true;
-n_1[shape=box,label=""simple""];
-n_3[shape=box,label=""present""];
-n_5[shape=box,label=""active""];
-n_7[shape=box,label=""indicative""];
-n_2[shape=ellipse,label=""__aspect""];
-n_4[shape=ellipse,label=""__tense""];
-n_6[shape=ellipse,label=""__voice""];
-n_8[shape=ellipse,label=""__mood""];
 subgraph cluster_2{
-n_9[shape=box,label=""i""];
-n_10[shape=box,label=""like""];
-n_11[shape=box,label=""cat""];
-n_12[shape=box,label=""i""];
-n_13[shape=ellipse,label=""possess""];
-n_14[shape=ellipse,label=""__entity_condition""];
-n_15[shape=ellipse,label=""object""];
-n_16[shape=ellipse,label=""experiencer""];
-n_17[shape=ellipse,label=""state""];
-n_9 -> n_17;
-n_10 -> n_15;
-n_10 -> n_16;
-n_12 -> n_13;
-n_13 -> n_11;
-n_14 -> n_13;
-n_15 -> n_11;
-n_16 -> n_9;
-n_17 -> n_10;
+n_1[shape=box,label=""i""];
+n_2[shape=box,label=""like""];
+n_3[shape=box,label=""cat""];
+n_4[shape=box,label=""i""];
+n_5[shape=ellipse,label=""possess""];
+n_6[shape=ellipse,label=""__entity_condition""];
+n_7[shape=ellipse,label=""object""];
+n_8[shape=ellipse,label=""experiencer""];
+n_9[shape=ellipse,label=""state""];
+n_1 -> n_9;
+n_2 -> n_7;
+n_2 -> n_8;
+n_4 -> n_5;
+n_5 -> n_3;
+n_6 -> n_5;
+n_7 -> n_3;
+n_8 -> n_1;
+n_9 -> n_2;
 }
 
-n_9 -> n_2[ltail=cluster_2,];
-n_9 -> n_4[ltail=cluster_2,];
-n_9 -> n_6[ltail=cluster_2,];
-n_9 -> n_8[ltail=cluster_2,];
-n_2 -> n_1;
-n_4 -> n_3;
-n_6 -> n_5;
-n_8 -> n_7;
 }".DeepTrim(), conceptualGraphDbgStr.DeepTrim());
         }
     }

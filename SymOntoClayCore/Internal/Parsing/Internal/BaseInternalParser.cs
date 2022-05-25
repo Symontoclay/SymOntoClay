@@ -54,13 +54,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected readonly TerminationToken[] _terminationTokens;
         private readonly bool _hasTerminationTokens;
 
+        protected virtual bool ShouldBeUsedTerminationToken() => true;
+
         public void Run()
         {
             OnEnter();
 
             while ((_currToken = _context.GetToken()) != null)
             {
-                if(_hasTerminationTokens)
+                if(_hasTerminationTokens && ShouldBeUsedTerminationToken())
                 {
                     var terminationToken = _terminationTokens.FirstOrDefault(p => p.Equals(_currToken));
 
@@ -437,6 +439,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             DefaultSettingsOfCodeEntityHelper.SetUpState(result, CurrentDefaultSetings);
 
             FillUpCodeItem(result);
+
+            return result;
+        }
+
+        protected RelationDescription CreateRelationDescription()
+        {
+            var result = new RelationDescription();
+            DefaultSettingsOfCodeEntityHelper.SetUpAnnotatedItem(result, CurrentDefaultSetings);
+
+            FillUpCodeItem(result);
+
+            if (result.ParentCodeEntity != null)
+            {
+                result.Holder = result.ParentCodeEntity.Name;
+            }
 
             return result;
         }

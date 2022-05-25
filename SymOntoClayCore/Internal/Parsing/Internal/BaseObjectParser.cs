@@ -132,6 +132,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
         }
 
+        protected void ProcessInheritance()
+        {
+            _context.Recovery(_currToken);
+            var parser = new InheritanceParser(_context, Result.Name, TokenKind.OpenFigureBracket);
+            parser.Run();
+            Result.InheritanceItems.AddRange(parser.Result);
+        }
+
         protected void ProcessGeneralContent()
         {
 #if DEBUG
@@ -311,6 +319,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     default:
                                         throw new UnexpectedTokenException(_currToken);
                                 }
+                            }
+                            break;
+
+                        case KeyWordTokenKind.Relation:
+                            {
+                                _context.Recovery(_currToken);
+                                var parser = new RelationDescriptionParser(_context);
+                                parser.Run();
+                                Result.SubItems.Add(parser.Result);
                             }
                             break;
 

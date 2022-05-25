@@ -78,7 +78,7 @@ namespace SymOntoClay.NLP.Internal
                     return string.Empty;
 
                 case GrammaticalAspect.Simple:
-                    return CGGramamaticalNamesOfConcepts.GrammaticalAspect_Simple;
+                    return string.Empty;
 
                 case GrammaticalAspect.Continuous:
                     return CGGramamaticalNamesOfConcepts.GrammaticalAspect_Continuous;
@@ -97,7 +97,7 @@ namespace SymOntoClay.NLP.Internal
         {
             if (string.IsNullOrWhiteSpace(aspectName))
             {
-                return GrammaticalAspect.Undefined;
+                return GrammaticalAspect.Simple;
             }
 
             if (aspectName == CGGramamaticalNamesOfConcepts.GrammaticalAspect_Simple)
@@ -134,7 +134,7 @@ namespace SymOntoClay.NLP.Internal
                     return CGGramamaticalNamesOfConcepts.GrammaticalTenses_All;
 
                 case GrammaticalTenses.Present:
-                    return CGGramamaticalNamesOfConcepts.GrammaticalTenses_Present;
+                    return string.Empty;
 
                 case GrammaticalTenses.Past:
                     return CGGramamaticalNamesOfConcepts.GrammaticalTenses_Past;
@@ -153,7 +153,7 @@ namespace SymOntoClay.NLP.Internal
         {
             if (string.IsNullOrWhiteSpace(tenseName))
             {
-                return GrammaticalTenses.Undefined;
+                return GrammaticalTenses.Present;
             }
 
             if (tenseName == CGGramamaticalNamesOfConcepts.GrammaticalTenses_All)
@@ -192,7 +192,7 @@ namespace SymOntoClay.NLP.Internal
                     return string.Empty;
 
                 case GrammaticalVoice.Active:
-                    return CGGramamaticalNamesOfConcepts.GrammaticalVoice_Active;
+                    return string.Empty;
 
                 case GrammaticalVoice.Passive:
                     return CGGramamaticalNamesOfConcepts.GrammaticalVoice_Passive;
@@ -205,7 +205,7 @@ namespace SymOntoClay.NLP.Internal
         {
             if (string.IsNullOrWhiteSpace(voiceName))
             {
-                return GrammaticalVoice.Undefined;
+                return GrammaticalVoice.Active;
             }
 
             if (voiceName == CGGramamaticalNamesOfConcepts.GrammaticalVoice_Active)
@@ -229,7 +229,7 @@ namespace SymOntoClay.NLP.Internal
                     return string.Empty;
 
                 case GrammaticalMood.Indicative:
-                    return CGGramamaticalNamesOfConcepts.GrammaticalMood_Indicative;
+                    return string.Empty;
 
                 case GrammaticalMood.Subjunctive:
                     return CGGramamaticalNamesOfConcepts.GrammaticalMood_Subjunctive;
@@ -260,7 +260,7 @@ namespace SymOntoClay.NLP.Internal
         {
             if (string.IsNullOrWhiteSpace(moodName))
             {
-                return GrammaticalMood.Undefined;
+                return GrammaticalMood.Indicative;
             }
 
             if (moodName == CGGramamaticalNamesOfConcepts.GrammaticalMood_Indicative)

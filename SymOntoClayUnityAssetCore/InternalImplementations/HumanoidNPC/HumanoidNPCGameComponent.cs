@@ -51,7 +51,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 var internalContext = new HumanoidNPCGameComponentContext();
 
                 _allowPublicPosition = settings.AllowPublicPosition;
-
+                
                 internalContext.IdForFacts = settings.IdForFacts;
                 internalContext.SelfInstanceId = settings.InstanceId;
 
@@ -83,6 +83,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 coreEngineSettings.SyncContext = worldContext.SyncContext;
                 
                 coreEngineSettings.ModulesStorage = worldContext.ModulesStorage;
+                coreEngineSettings.ParentStorage = worldContext.StandaloneStorage;
                 coreEngineSettings.LogicQueryParseAndCache = worldContext.LogicQueryParseAndCache;
                 coreEngineSettings.TmpDir = tmpDir;
                 coreEngineSettings.HostListener = this;

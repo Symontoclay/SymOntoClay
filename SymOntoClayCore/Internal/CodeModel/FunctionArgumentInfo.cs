@@ -83,7 +83,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 {
                     item.CheckDirty(options);
                 }
-            }                
+            }
 
             DefaultValue?.CheckDirty(options);
 
@@ -100,7 +100,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return result;
         }
 
-        public void DiscoverAllAnnotations(IList<RuleInstance> result)
+        public void DiscoverAllAnnotations(IList<Annotation> result)
         {
             Name?.DiscoverAllAnnotations(result);
 

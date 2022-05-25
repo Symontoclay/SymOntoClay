@@ -30,6 +30,7 @@ namespace SymOntoClay.Core
     public class StandaloneStorageSettings: BaseStorageSettings
     {
         public bool IsWorld { get; set; }
+        public IList<string> AdditionalSourceCodePaths { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -38,6 +39,7 @@ namespace SymOntoClay.Core
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(IsWorld)} = {IsWorld}");
+            sb.PrintPODList(n, nameof(AdditionalSourceCodePaths), AdditionalSourceCodePaths);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();

@@ -32,7 +32,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class AnnotatedItem : IAnnotatedItem, IObjectWithLongHashCodes, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, ISymOntoClayDisposable
+    public abstract class AnnotatedItem : ItemWithLongHashCodes, IAnnotatedItem, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, ISymOntoClayDisposable
     {
         /// <summary>
         /// It is 'Clauses section' in the documentation.
@@ -47,59 +47,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public bool HasConditionalSections => !WhereSection.IsNullOrEmpty();
 
-        private bool _isDirty = true;
-
-        public void CheckDirty(CheckDirtyOptions options = null)
-        {
-            if (_isDirty)
-            {
-                CalculateLongHashCodes(options);
-                _isDirty = false;
-            }
-        }
-
-        private ulong? _longConditionalHashCode;
-
-        public ulong GetLongConditionalHashCode()
-        {
-            return GetLongConditionalHashCode(null);
-        }
-
-        public virtual ulong GetLongConditionalHashCode(CheckDirtyOptions options)
-        {
-            if(!_longConditionalHashCode.HasValue)
-            {
-                CalculateLongHashCodes(options);
-            }
-
-            return _longConditionalHashCode.Value;
-        }
-
-        private ulong? _longHashCode;
-
-        public ulong GetLongHashCode()
-        {
-            return GetLongHashCode(null);
-        }
-
-        public virtual ulong GetLongHashCode(CheckDirtyOptions options)
-        {
-            if(!_longHashCode.HasValue)
-            {
-                CalculateLongHashCodes(options);
-            }
-
-            return _longHashCode.Value;
-        }
-
-        public virtual void CalculateLongHashCodes(CheckDirtyOptions options)
-        {
-            _longHashCode = CalculateLongHashCode(options);
-            CalculateLongConditionalHashCode(options);
-            _isDirty = false;
-        }
-
-        protected virtual void CalculateLongConditionalHashCode(CheckDirtyOptions options)
+        /// <inheritdoc/>
+        protected override ulong CalculateLongConditionalHashCode(CheckDirtyOptions options)
         {
             ulong result = 0;
 
@@ -111,10 +60,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 }
             }
 
-            _longConditionalHashCode = result;
+            return result;
         }
 
-        protected virtual ulong CalculateLongHashCode(CheckDirtyOptions options)
+        /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
             ulong result = 0;
 
@@ -137,7 +87,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return result;
         }
 
-        public virtual IList<RuleInstance> Annotations { get; set; }
+        /// <inheritdoc/>
+        public virtual IList<Annotation> Annotations { get; set; }
 
         /// <summary>
         /// Clones the instance and returns cloned instance.
@@ -184,7 +135,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
             else
             {
-                Annotations = new List<RuleInstance>();
+                Annotations = new List<Annotation>();
 
                 foreach(var annotation in source.Annotations)
                 {
@@ -193,14 +144,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
         }
 
-        public IList<RuleInstance> GetAllAnnotations()
+        public IList<Annotation> GetAllAnnotations()
         {
-            var result = new List<RuleInstance>();
+            var result = new List<Annotation>();
             DiscoverAllAnnotations(result);
             return result.Distinct().ToList();
         }
 
-        public virtual void DiscoverAllAnnotations(IList<RuleInstance> result)
+        public virtual void DiscoverAllAnnotations(IList<Annotation> result)
         {
             if (!Annotations.IsNullOrEmpty())
             {

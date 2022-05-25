@@ -41,7 +41,7 @@ namespace TestSandbox.Handlers
 
         protected IWorld _world;
         protected IHumanoidNPC _npc;
-
+        
         protected void CreateNPC(object hostListener)
         {
             var appName = AppDomain.CurrentDomain.FriendlyName;
@@ -65,6 +65,8 @@ namespace TestSandbox.Handlers
 
             settings.ImagesRootDir = Path.Combine(supportBasePath, "Images");
 
+            settings.BuiltInStandardLibraryDir = DefaultPaths.GetBuiltInStandardLibraryDir();
+
             settings.TmpDir = Path.Combine(Environment.GetEnvironmentVariable("TMP"), "SymOntoClay", appName);
 
             settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\World\World.world");
@@ -82,7 +84,7 @@ namespace TestSandbox.Handlers
                 EnableRemoteConnection = true
             };
 
-            //_logger.Log($"settings = {settings}");
+            _logger.Log($"settings = {settings}");
 
             _world.SetSettings(settings);
 

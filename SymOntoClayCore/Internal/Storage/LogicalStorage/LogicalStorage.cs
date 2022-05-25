@@ -144,13 +144,15 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             var annotationsList = ruleInstance.GetAllAnnotations();
 
+            var annotationRuleInstancesList = annotationsList.Where(p => !p.Facts.IsNullOrEmpty()).SelectMany(p => p.Facts);
+
 #if DEBUG
             //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
             //Log($"ruleInstance = {ruleInstance}");            
             //Log($"annotationsList = {annotationsList.WriteListToString()}");
 #endif
 
-            foreach (var annotationRuleInstance in annotationsList)
+            foreach (var annotationRuleInstance in annotationRuleInstancesList)
             {
                 NAppend(annotationRuleInstance, false);
             }
@@ -159,7 +161,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             //var indexedRuleInstance = ruleInstance.GetIndexed(_mainStorageContext);
 
-            return ruleInstance.Normalized.UsedKeysList.Concat(annotationsList.SelectMany(p => p.UsedKeysList)).Distinct().ToList();
+            return ruleInstance.Normalized.UsedKeysList.Concat(annotationRuleInstancesList.SelectMany(p => p.UsedKeysList)).Distinct().ToList();
         }
 
         private void NAppend(RuleInstance ruleInstance, bool isPrimary)
@@ -167,15 +169,20 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 #if DEBUG
             //if(!DebugHelperForRuleInstance.ToString(ruleInstance).Contains("is"))
             //{
-                //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
-                //Log($"ruleInstance = {ruleInstance}");
-                //Log($"isPrimary = {isPrimary}");
+            //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+            //Log($"ruleInstance = {ruleInstance}");
+            //Log($"isPrimary = {isPrimary}");
             //}
 
             //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
             //Log($"ruleInstance = {ruleInstance}");
             //Log($"isPrimary = {isPrimary}");
 #endif
+
+            if (ruleInstance.TypeOfAccess != TypeOfAccess.Local)
+            {
+                AnnotatedItemHelper.CheckAndFillUpHolder(ruleInstance, _realStorageContext.MainStorageContext.CommonNamesStorage);
+            }
 
             if (_ruleInstancesList.Contains(ruleInstance))
             {
@@ -238,6 +245,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             _lifeTimeCycleById[ruleInstanceId] = DEFAULT_INITIAL_TIME;
 
 #if DEBUG
+            //if(_kind == KindOfStorage.World)
+            //{
+            //    Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+            //    Log($"ruleInstance.Normalized = {DebugHelperForRuleInstance.ToString(ruleInstance.Normalized)}");
+            //}
             //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
             //Log($"ruleInstance.Normalized = {DebugHelperForRuleInstance.ToString(ruleInstance.Normalized)}");
 
@@ -517,11 +529,20 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 #if DEBUG
                 //Log($"name = {name}");
                 //Log($"_kind = {_kind}");
+                //Log($"GetHashCode() = {GetHashCode()}");
+                //if (_kind == KindOfStorage.World)
+                //{
+                //    DbgPrintFactsAndRules();
+                //}
 #endif
 
                 var source = _commonPersistIndexedLogicalData.GetIndexedRulePartOfFactsByKeyOfRelation(name);
 
-                if(source.IsNullOrEmpty())
+#if DEBUG
+                //Log($"source?.Count = {source?.Count}");
+#endif
+
+                if (source.IsNullOrEmpty())
                 {
                     return source;
                 }
@@ -548,10 +569,18 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             {
 #if DEBUG
                 //Log($"name = {name}");
-                //Log($"_kind = {_kind}");                
+                //Log($"_kind = {_kind}");
+                //if (_kind == KindOfStorage.World)
+                //{
+                //    DbgPrintFactsAndRules();
+                //}
 #endif
 
                 var source = _commonPersistIndexedLogicalData.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name);
+
+#if DEBUG
+                //Log($"source?.Count = {source?.Count}");
+#endif
 
                 if (source.IsNullOrEmpty())
                 {

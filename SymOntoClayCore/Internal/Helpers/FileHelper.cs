@@ -62,6 +62,35 @@ namespace SymOntoClay.Core.Internal.Helpers
             return result;
         }
 
+        public static List<ParsedFileInfo> GetParsedFilesFromPaths(IList<string> sourceCodePaths)
+        {
+            var result = new List<ParsedFileInfo>();
+
+            foreach(var path in sourceCodePaths)
+            {
+                var itemsList = GetParsedFilesFromPath(path);
+
+                if(itemsList.Any())
+                {
+                    result.AddRange(itemsList);
+                }
+            }
+
+            return result;
+        }
+
+        public static List<ParsedFileInfo> GetParsedFilesFromPath(string sourceCodePath)
+        {
+            var directory = new DirectoryInfo(sourceCodePath);
+
+            var result = new List<ParsedFileInfo>();
+            var existingFilesList = new List<string>();
+
+            NGetParsedFilesInfoFromDirectory(directory, result, existingFilesList);
+
+            return result;
+        }
+
         private static void NGetParsedFilesInfoFromDirectory(DirectoryInfo directory, List<ParsedFileInfo> result, List<string> existingFilesList)
         {
             var filesList = directory.EnumerateFiles().Where(p => _sourceFileExtensions.Contains(p.Extension) && !existingFilesList.Contains(p.FullName)).Select(p => p.FullName);

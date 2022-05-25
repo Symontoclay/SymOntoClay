@@ -1245,7 +1245,27 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
             //_logger.Log($"result = {result}");
 #endif
 
-            if(result.KindOfQuestion == KindOfQuestion.Undefined)
+            if(result.Tense == GrammaticalTenses.Undefined)
+            {
+                result.Tense = GrammaticalTenses.Present;
+            }
+
+            if (result.Aspect == GrammaticalAspect.Undefined)
+            {
+                result.Aspect = GrammaticalAspect.Simple;
+            }
+
+            if (result.Voice == GrammaticalVoice.Undefined)
+            {
+                result.Voice = GrammaticalVoice.Active;
+            }
+
+            if (result.Mood == GrammaticalMood.Undefined)
+            {
+                result.Mood = GrammaticalMood.Indicative;
+            }
+
+            if (result.KindOfQuestion == KindOfQuestion.Undefined)
             {
                 result.KindOfQuestion = KindOfQuestion.None;
             }

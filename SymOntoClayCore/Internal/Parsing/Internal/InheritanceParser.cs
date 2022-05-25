@@ -40,8 +40,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotFuzzyLogicNonNumericSequenceItem
         }
 
-        public InheritanceParser(InternalParserContext context, StrongIdentifierValue subName)
-            : base(context)
+        public InheritanceParser(InternalParserContext context, StrongIdentifierValue subName, params TerminationToken[] terminationTokens)
+            : base(context, terminationTokens)
         {
             _subName = subName;
         }
@@ -57,6 +57,19 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             Result = new List<InheritanceItem>();
             _currentItem = null;
+        }
+
+        /// <inheritdoc/>
+        protected override bool ShouldBeUsedTerminationToken()
+        {
+            switch(_state)
+            {
+                case State.GotSuperName:
+                    return true;
+
+                default:
+                    return false;
+            }
         }
 
         /// <inheritdoc/>
@@ -116,11 +129,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotSuperName:
                     switch (_currToken.TokenKind)
                     {
-                        case TokenKind.OpenFigureBracket:
-                            _context.Recovery(_currToken);
-                            Exit();
-                            break;
-
                         case TokenKind.Comma:
                             _currentItem = null;
                             _state = State.WaitForItem;

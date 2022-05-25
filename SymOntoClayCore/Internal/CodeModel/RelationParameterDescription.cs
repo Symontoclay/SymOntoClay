@@ -91,7 +91,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return result;
         }
 
-        public void DiscoverAllAnnotations(IList<RuleInstance> result)
+        public void DiscoverAllAnnotations(IList<Annotation> result)
         {
             Name?.DiscoverAllAnnotations(result);
 

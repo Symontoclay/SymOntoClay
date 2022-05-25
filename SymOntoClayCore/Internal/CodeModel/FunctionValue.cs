@@ -97,7 +97,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override IList<Value> WhereSection { get => Function.WhereSection; set => Function.WhereSection = value; }
 
         /// <inheritdoc/>
-        public override IList<RuleInstance> Annotations { get => Function.Annotations; set => Function.Annotations = value; }
+        public override IList<Annotation> Annotations { get => Function.Annotations; set => Function.Annotations = value; }
 
         /// <inheritdoc/>
         public override ulong GetLongConditionalHashCode(CheckDirtyOptions options)
@@ -112,9 +112,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override void CalculateLongConditionalHashCode(CheckDirtyOptions options)
+        protected override ulong CalculateLongConditionalHashCode(CheckDirtyOptions options)
         {
             Function.CheckDirty(options);
+
+            return 0u;
         }
 
         /// <inheritdoc/>
@@ -164,7 +166,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override void DiscoverAllAnnotations(IList<RuleInstance> result)
+        public override void DiscoverAllAnnotations(IList<Annotation> result)
         {
             Function.DiscoverAllAnnotations(result);
         }

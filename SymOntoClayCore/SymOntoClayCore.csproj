@@ -27,4 +27,9 @@
     <PackageReference Include="NLog" Version="4.7.0" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="StandardLibrary\Rules.soc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

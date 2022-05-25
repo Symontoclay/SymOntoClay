@@ -94,14 +94,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             switch (_currToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.Is:
-                                    {
-                                        _context.Recovery(_currToken);
-                                        var parser = new InheritanceParser(_context, Result.Name);
-                                        parser.Run();
-                                        Result.InheritanceItems.AddRange(parser.Result);
-
-                                        _state = State.GotInheritance;
-                                    }
+                                    ProcessInheritance();
+                                    _state = State.GotInheritance;
                                     break;
 
                                 default:

@@ -185,7 +185,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             foreach (var item in source)
             {
 #if DEBUG
-                //Log($"item = {item}");
+                //context.Logger.Log($"item = {item}");
                 //context.Logger.Log($"item.TypeOfAccess = {item.TypeOfAccess}");
                 //context.Logger.Log($"item.Holder = {item.Holder}");
 #endif
@@ -220,7 +220,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var typeOfAccess = item.TypeOfAccess;
 
 #if DEBUG
-            //Log($"typeOfAccess = {typeOfAccess}");
+            //logger.Log($"typeOfAccess = {typeOfAccess}");
             //logger.Log($"holder = {holder}");
 #endif
 
@@ -243,7 +243,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             var distance = inheritanceResolver.GetDistance(holder, item.Holder, localCodeExecutionContext);
 
 #if DEBUG
-                            //Log($"distance = {distance}");
+                            //logger.Log($"distance = {distance}");
 #endif
 
                             if (distance == 1)

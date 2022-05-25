@@ -49,13 +49,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP.ATN
 
             var plainSentence = plainSentencesList[0];
 
-            Assert.AreEqual(@"S:(Indicative;Simple;Present;Active)
+            Assert.AreEqual(@"S
     Subject:
         NP
             N:
                 I
     Predicate:
-        VP:(Simple;Present;Active)
+        VP
             V:
                 like
             Object:

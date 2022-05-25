@@ -71,6 +71,8 @@ namespace SymOntoClay.CLI
 
             settings.ImagesRootDir = targetFiles.ImagesRootDir;
 
+            settings.BuiltInStandardLibraryDir = DefaultPaths.GetBuiltInStandardLibraryDir();
+
             settings.TmpDir = targetFiles.TmpDir;
 
             settings.HostFile = targetFiles.WorldFile;

@@ -124,6 +124,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             {
                                 case KeyWordTokenKind.Is:
                                     ProcessInheritance();
+                                    _state = State.GotInheritance;
                                     break;
 
                                 case KeyWordTokenKind.Alias:
@@ -161,6 +162,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             {
                                 case KeyWordTokenKind.Is:
                                     ProcessInheritance();
+                                    _state = State.GotInheritance;
                                     break;
 
                                 default:
@@ -192,16 +194,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
-        }
-
-        private void ProcessInheritance()
-        {
-            _context.Recovery(_currToken);
-            var parser = new InheritanceParser(_context, Result.Name);
-            parser.Run();
-            Result.InheritanceItems.AddRange(parser.Result);
-
-            _state = State.GotInheritance;
         }
     }
 }

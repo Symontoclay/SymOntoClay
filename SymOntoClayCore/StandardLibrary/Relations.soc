@@ -1,0 +1,2 @@
+﻿rel like ($x1 [:experiencer:], $x2 [:object:]) is state;
+rel possess ($x1 [:owner:], $x2 [:possessions:]) is state;

@@ -49,7 +49,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override void DiscoverAllAnnotations(IList<RuleInstance> result)
+        public override void DiscoverAllAnnotations(IList<Annotation> result)
         {
             base.DiscoverAllAnnotations(result);
 
@@ -146,13 +146,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
         {
             var sb = new StringBuilder($"{Name.NameValue} (");
-            sb.Append(string.Join(",", Arguments.Select(p => p.ToHumanizedString(options))));
+            sb.Append(string.Join(", ", Arguments.Select(p => p.ToHumanizedString(options))));
             sb.Append(")");
 
             if(!InheritanceItems.IsNullOrEmpty())
             {
                 sb.Append(" is ");
-                sb.Append(string.Join(",", InheritanceItems.Select(p => p.ToPartialHumanizedString(options))));
+                sb.Append(string.Join(", ", InheritanceItems.Select(p => p.ToPartialHumanizedString(options))));
             }
 
             return sb.ToString();

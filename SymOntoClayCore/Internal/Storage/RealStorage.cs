@@ -39,6 +39,7 @@ namespace SymOntoClay.Core.Internal.Storage
 #if DEBUG
             //Log($"kind = {kind}");
             //Log($"settings = {settings}");
+            //Log($"settings.ParentsStorages = {settings.ParentsStorages?.Select(p => p.Kind).WritePODListToString()}");
 #endif
 
             _kind = kind;

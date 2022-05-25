@@ -385,6 +385,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 }
                             }
 
+#if DEBUG
+                            //_logger.Log($"_kindOfPrefix = {_kindOfPrefix}");
+#endif
+
                             var nextChar = _items.Peek();
 
 #if DEBUG
@@ -414,6 +418,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                     case KindOfPrefix.Entity:
                                         return CreateToken(TokenKind.Entity, buffer.ToString());
+
+                                    case KindOfPrefix.LogicalVar:
+                                        return CreateToken(TokenKind.LogicalVar, buffer.ToString());
 
                                     default:
                                         throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
@@ -1127,6 +1134,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
+                case TokenKind.OpenSquareBracket:
+                    {
+                        var nextChar = _items.Peek();
+
+                        switch (nextChar)
+                        {
+                            case ':':
+                                _items.Dequeue();
+                                content = "[:";
+                                kind = TokenKind.OpenAnnotationBracket;
+                                break;
+                        }
+                    }
+                    break;
+
                 case TokenKind.Colon:
                     {
                         var nextChar = _items.Peek();
@@ -1137,6 +1159,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _items.Dequeue();
                                 content = ":}";
                                 kind = TokenKind.CloseFactBracket;
+                                break;
+
+                            case ']':
+                                _items.Dequeue();
+                                content = ":]";
+                                kind = TokenKind.CloseAnnotationBracket;
                                 break;
                         }
                     }

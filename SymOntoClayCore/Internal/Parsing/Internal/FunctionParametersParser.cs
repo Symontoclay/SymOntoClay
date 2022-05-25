@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private State _state = State.Init;
 
         public List<FunctionArgumentInfo> Result { get; set; } = new List<FunctionArgumentInfo>();
-        private FunctionArgumentInfo _curentFunctionArgumentInfo;
+        private FunctionArgumentInfo _curentArgumentInfo;
 
         /// <inheritdoc/>
         protected override void OnRun()
@@ -84,10 +84,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.Var:
                             {
-                                _curentFunctionArgumentInfo = new FunctionArgumentInfo();
-                                Result.Add(_curentFunctionArgumentInfo);
+                                _curentArgumentInfo = new FunctionArgumentInfo();
+                                Result.Add(_curentArgumentInfo);
 
-                                _curentFunctionArgumentInfo.Name = ParseName(_currToken.Content);
+                                _curentArgumentInfo.Name = ParseName(_currToken.Content);
 
                                 _state = State.GotParameterName;
                             }
@@ -123,7 +123,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case State.WaitForParameterType:
-                    _curentFunctionArgumentInfo.TypesList = ParseTypesOfParameterOrVar();
+                    _curentArgumentInfo.TypesList = ParseTypesOfParameterOrVar();
                     _state = State.GotParameterType;
                     break;
 
@@ -160,8 +160,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         switch (kindOfValueOnObjDefLevel)
                         {
                             case KindOfValueOnObjDefLevel.ConstLiteral:
-                                _curentFunctionArgumentInfo.DefaultValue = parsingResult.Value;
-                                _curentFunctionArgumentInfo.HasDefaultValue = true;
+                                _curentArgumentInfo.DefaultValue = parsingResult.Value;
+                                _curentArgumentInfo.HasDefaultValue = true;
                                 _state = State.GotDefaultValue;
                                 break;
 

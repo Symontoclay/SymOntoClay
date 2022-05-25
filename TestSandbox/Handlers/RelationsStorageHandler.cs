@@ -28,12 +28,49 @@ namespace TestSandbox.Handlers
         {
             _logger.Log("Begin");
 
-            Case1();
+            CreateCommonRelations();
 
             _logger.Log("End");
         }
 
-        private void Case1()
+        private void CreateCommonRelations()
+        {
+            CreateLikeRelation();
+            CreatePossessRelation();
+        }
+
+        private void CreatePossessRelation()
+        {
+            var relationName = NameHelper.CreateName("possess");
+
+            var relation = new RelationDescription();
+            relation.Name = relationName;
+
+            var argument = new RelationParameterDescription();
+            argument.Name = NameHelper.CreateName("$x1");
+            argument.MeaningRolesList.Add(NameHelper.CreateName("owner"));
+
+            relation.Arguments.Add(argument);
+
+            argument = new RelationParameterDescription();
+            argument.Name = NameHelper.CreateName("$x2");
+            argument.MeaningRolesList.Add(NameHelper.CreateName("possessions"));
+
+            relation.Arguments.Add(argument);
+
+            var inheritanceItem = new InheritanceItem();
+            relation.InheritanceItems.Add(inheritanceItem);
+            inheritanceItem.SubName = relation.Name;
+            inheritanceItem.SuperName = NameHelper.CreateName("state");
+            inheritanceItem.Rank = LogicalValue.TrueValue;
+
+            //_logger.Log($"relation = {relation}");
+            _logger.Log($"relation = {relation.ToHumanizedString()}");
+
+            AppendRelationToStorage(relation);
+        }
+
+        private void CreateLikeRelation()
         {
             var relationName = NameHelper.CreateName("like");
 
@@ -58,9 +95,14 @@ namespace TestSandbox.Handlers
             inheritanceItem.SuperName = NameHelper.CreateName("state");
             inheritanceItem.Rank = LogicalValue.TrueValue;
 
-            _logger.Log($"relation = {relation}");
+            //_logger.Log($"relation = {relation}");
             _logger.Log($"relation = {relation.ToHumanizedString()}");
 
+            AppendRelationToStorage(relation);
+        }
+
+        private void AppendRelationToStorage(RelationDescription relation)
+        {
             var globalStorage = _engineContext.Storage.GlobalStorage;
 
             var inheritanceStorage = globalStorage.InheritanceStorage;
@@ -71,21 +113,6 @@ namespace TestSandbox.Handlers
             }
 
             globalStorage.RelationsStorage.Append(relation);
-
-            var relationsResolver = _engineContext.DataResolversFactory.GetRelationsResolver();
-
-            var localCodeExecutionContext = new LocalCodeExecutionContext();
-            localCodeExecutionContext.Storage = globalStorage;
-            localCodeExecutionContext.Holder = NameHelper.CreateName(_engineContext.Id);
-
-            _logger.Log($"localCodeExecutionContext = {localCodeExecutionContext}");
-
-            var packedRelationsResolver = new PackedRelationsResolver(relationsResolver, localCodeExecutionContext);
-
-            var targetRelation = packedRelationsResolver.GetRelation(relationName, 2);
-
-            _logger.Log($"targetRelation = {targetRelation}");
-            _logger.Log($"targetRelation = {targetRelation?.ToHumanizedString()}");
         }
     }
 }

@@ -381,13 +381,23 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             if (!source.Annotations.IsNullOrEmpty())
             {
-                dest.Annotations = new List<RuleInstance>();
+                dest.Annotations = new List<Annotation>();
 
                 var destAnnotationsList = dest.Annotations;
 
                 foreach (var sourceAnnotation in source.Annotations)
                 {
-                    var destAnnotation = Convert(sourceAnnotation, options, convertingContext);
+                    var destAnnotation = new Annotation();
+
+                    if(!sourceAnnotation.Facts.IsNullOrEmpty())
+                    {
+                        destAnnotation.Facts = new List<RuleInstance>();
+
+                        foreach(var fact in sourceAnnotation.Facts)
+                        {
+                            destAnnotation.Facts.Add(Convert(fact, options, convertingContext));
+                        }
+                    }
 
                     destAnnotationsList.Add(destAnnotation);
                 }

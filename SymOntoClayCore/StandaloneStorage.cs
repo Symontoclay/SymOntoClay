@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.CoreHelper;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -37,10 +38,13 @@ namespace SymOntoClay.Core
         {
             //Log($"settings = {settings}");
 
+            _additionalSourceCodePaths = settings.AdditionalSourceCodePaths;
+
             _context = EngineContextHelper.CreateAndInitMainStorageContext(settings);
         }
-
+        
         private readonly MainStorageContext _context;
+        private readonly IList<string> _additionalSourceCodePaths;
         private IStorageComponent _storageComponent;
         private IStorage _storage;
         private IStorage _publicFactsStorage;
@@ -90,6 +94,11 @@ namespace SymOntoClay.Core
                 }
 
                 EngineContextHelper.LoadFromSourceCode(_context);
+
+                if(!_additionalSourceCodePaths.IsNullOrEmpty())
+                {
+                    _context.LoaderFromSourceCode.LoadFromPaths(_additionalSourceCodePaths);
+                }
 
                 _storageComponent = _context.Storage;
                 _storage = _storageComponent.GlobalStorage;

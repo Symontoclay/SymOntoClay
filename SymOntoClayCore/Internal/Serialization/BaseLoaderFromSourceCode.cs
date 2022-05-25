@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.Helpers;
+using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -62,7 +63,44 @@ namespace SymOntoClay.Core.Internal.Serialization
             //Log($"filesList = {filesList.WriteListToString()}");
 #endif
 
+            ProcessFilesList(filesList, true);
+
+            var instancesStorage = _context.InstancesStorage;
+
+            instancesStorage.ActivateMainEntity();
+
+#if IMAGINE_WORKING
+            //Log("End");
+#else
+            throw new NotImplementedException();
+#endif
+        }
+
+        public virtual void LoadFromPaths(IList<string> sourceCodePaths)
+        {
+#if DEBUG
+            //Log("Begin");
+            //Log($"sourceCodePaths = {sourceCodePaths.WritePODListToString()}");
+#endif
+
+            var filesList = FileHelper.GetParsedFilesFromPaths(sourceCodePaths);
+
+#if DEBUG
+            //Log($"filesList.Count = {filesList.Count}");
+
+            //Log($"filesList = {filesList.WriteListToString()}");
+#endif
+
+            ProcessFilesList(filesList, false);
+        }
+
+        private void ProcessFilesList(List<ParsedFileInfo> filesList, bool detectMainCodeEntity)
+        {
             var globalStorage = _context.Storage.GlobalStorage;
+
+#if DEBUG
+            //Log($"globalStorage.Kind = {globalStorage.Kind}");
+#endif
 
             var parsedFilesList = _context.Parser.Parse(filesList, globalStorage.DefaultSettingsOfCodeEntity);
 
@@ -80,13 +118,18 @@ namespace SymOntoClay.Core.Internal.Serialization
             //Log($"parsedCodeEntitiesList = {parsedCodeEntitiesList.WriteListToString()}");
 #endif
 
-            DetectMainCodeEntity(parsedCodeEntitiesList);
+            if(detectMainCodeEntity)
+            {
+                DetectMainCodeEntity(parsedCodeEntitiesList);
+            }            
 
 #if DEBUG
             //Log($"parsedCodeEntitiesList.Count (2) = {parsedCodeEntitiesList.Count}");
 
             //Log($"parsedCodeEntitiesList (2) = {parsedCodeEntitiesList.WriteListToString()}");
 #endif
+
+            CheckHolderAndTypeOfAccess(parsedCodeEntitiesList);
 
             AddSystemDefinedSettings(parsedCodeEntitiesList);
 
@@ -97,16 +140,6 @@ namespace SymOntoClay.Core.Internal.Serialization
 #endif
 
             SaveItems(parsedCodeEntitiesList);
-
-            var instancesStorage = _context.InstancesStorage;
-
-            instancesStorage.ActivateMainEntity();
-
-#if IMAGINE_WORKING
-            //Log("End");
-#else
-            throw new NotImplementedException();
-#endif
         }
 
         private void DetectMainCodeEntity(List<CodeItem> source)
@@ -162,6 +195,33 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
         }
 
+        private void CheckHolderAndTypeOfAccess(List<CodeItem> source)
+        {
+            foreach (var item in source)
+            {
+                CheckHolderAndTypeOfAccess(item);
+            }
+        }
+
+        private void CheckHolderAndTypeOfAccess(CodeItem codeEntity)
+        {
+            var kind = codeEntity.Kind;
+
+            if (kind == KindOfCodeEntity.App || kind == KindOfCodeEntity.World || kind == KindOfCodeEntity.Class)
+            {
+                return;
+            }
+
+#if DEBUG
+            //Log($"codeEntity = {codeEntity}");
+#endif
+
+            if (codeEntity.Holder == null && codeEntity.TypeOfAccess == TypeOfAccess.Protected)
+            {
+                codeEntity.TypeOfAccess = TypeOfAccess.Public;
+            }
+        }
+
         private void AddSystemDefinedSettings(List<CodeItem> source)
         {
             foreach(var item in source)
@@ -199,6 +259,9 @@ namespace SymOntoClay.Core.Internal.Serialization
                     break;
 
                 case KindOfCodeEntity.InlineTrigger:
+                    break;
+
+                case KindOfCodeEntity.RelationDescription:
                     break;
 
                 case KindOfCodeEntity.RuleOrFact:
@@ -364,6 +427,10 @@ namespace SymOntoClay.Core.Internal.Serialization
                     globalStorage.TriggersStorage.Append(codeItem.AsInlineTrigger);
                     break;
 
+                case KindOfCodeEntity.RelationDescription:
+                    globalStorage.RelationsStorage.Append(codeItem.AsRelationDescription);
+                    break;
+
                 case KindOfCodeEntity.RuleOrFact:
                     {
                         var ruleInstance = codeItem.AsRuleInstance;
@@ -377,8 +444,24 @@ namespace SymOntoClay.Core.Internal.Serialization
                             throw new Exception($"SymOntoClay does not support parameterized rule or facts on object declaration.");
                         }
 
+#if DEBUG
+                        //if (globalStorage.Kind == KindOfStorage.World)
+                        //{
+                        //    Log($"globalStorage.Kind = {globalStorage.Kind}");
+                        //    Log($"globalStorage.LogicalStorage.GetHashCode() = {globalStorage.LogicalStorage.GetHashCode()}");
+                        //    Log($"ruleInstance = {ruleInstance.ToHumanizedString()}");
+                        //}
+#endif
+
                         globalStorage.LogicalStorage.Append(ruleInstance);
-                    }                    
+
+#if DEBUG
+                        //if (globalStorage.Kind == KindOfStorage.World)
+                        //{
+                        //    globalStorage.LogicalStorage.DbgPrintFactsAndRules();
+                        //}
+#endif
+                    }
                     break;
 
                 case KindOfCodeEntity.LinguisticVariable:
@@ -469,6 +552,7 @@ namespace SymOntoClay.Core.Internal.Serialization
                 case KindOfCodeEntity.World:
                 case KindOfCodeEntity.Class:
                 case KindOfCodeEntity.InlineTrigger:
+                case KindOfCodeEntity.RelationDescription:
                 case KindOfCodeEntity.RuleOrFact:
                 case KindOfCodeEntity.LinguisticVariable:
                 case KindOfCodeEntity.Function:

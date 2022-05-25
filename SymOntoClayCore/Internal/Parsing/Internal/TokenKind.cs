@@ -90,6 +90,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// </summary>
         CloseFactBracket,
         /// <summary>
+        /// Represents symbol `[:`.
+        /// </summary>
+        OpenAnnotationBracket,
+        /// <summary>
+        /// Represents symbol `:]`.
+        /// </summary>
+        CloseAnnotationBracket,
+        /// <summary>
         /// Represents symbol `:`.
         /// </summary>
         Colon,

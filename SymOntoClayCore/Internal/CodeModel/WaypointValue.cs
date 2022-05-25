@@ -131,7 +131,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override void DiscoverAllAnnotations(IList<RuleInstance> result)
+        public override void DiscoverAllAnnotations(IList<Annotation> result)
         {
             base.DiscoverAllAnnotations(result);
 

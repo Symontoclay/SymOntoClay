@@ -5,32 +5,30 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public class StatePaser : BaseObjectParser
+    public class RelationDescriptionParser : BaseInternalParser
     {
         private enum State
         {
             Init,
-            GotStateMark,
+            GotRelationDescriptionMark,
             GotName,
-            GotInheritance,
-            ContentStarted
+            GotParameters,
+            GotInheritance
         }
 
-        public StatePaser(InternalParserContext context)
-            : base(context, KindOfCodeEntity.State)
+        public RelationDescriptionParser(InternalParserContext context)
+            : base(context)
         {
         }
 
         private State _state = State.Init;
 
-        private StateDef _stateDef;
+        public RelationDescription Result { get; private set; }
 
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            base.OnEnter();
-
-            _stateDef = Result.AsState;
+            Result = CreateRelationDescription();
         }
 
         /// <inheritdoc/>
@@ -45,10 +43,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             switch (_state)
             {
                 case State.Init:
-                    switch (_currToken.KeyWordTokenKind)
+                    switch (_currToken.TokenKind)
                     {
-                        case KeyWordTokenKind.State:
-                            _state = State.GotStateMark;
+                        case TokenKind.Word:
+                            switch (_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Relation:
+                                    _state = State.GotRelationDescriptionMark;
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
                             break;
 
                         default:
@@ -56,15 +62,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotStateMark:
+                case State.GotRelationDescriptionMark:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
                         case TokenKind.Identifier:
                             var name = ParseName(_currToken.Content);
-
-                            _stateDef.Name = name;
-
+                            Result.Name = name;
                             _state = State.GotName;
                             break;
 
@@ -76,16 +80,39 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotName:
                     switch (_currToken.TokenKind)
                     {
-                        case TokenKind.OpenFigureBracket:
-                            _state = State.ContentStarted;
+                        case TokenKind.OpenRoundBracket:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var parser = new RelationDescriptionParametersParser(_context);
+                                parser.Run();
+
+                                Result.Arguments = parser.Result;
+
+                                _state = State.GotParameters;
+                            }
                             break;
 
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotParameters:
+                    switch (_currToken.TokenKind)
+                    {
                         case TokenKind.Word:
                             switch (_currToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.Is:
-                                    ProcessInheritance();
-                                    _state = State.GotInheritance;
+                                    {
+                                        _context.Recovery(_currToken);
+                                        var parser = new InheritanceParser(_context, Result.Name, TokenKind.Semicolon);
+                                        parser.Run();
+                                        Result.InheritanceItems.AddRange(parser.Result);
+
+                                        _state = State.GotInheritance;
+                                    }
                                     break;
 
                                 default:
@@ -101,17 +128,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotInheritance:
                     switch (_currToken.TokenKind)
                     {
-                        case TokenKind.OpenFigureBracket:
-                            _state = State.ContentStarted;
+                        case TokenKind.Semicolon:
+                            Exit();
                             break;
 
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
-                    break;
-
-                case State.ContentStarted:
-                    ProcessGeneralContent();
                     break;
 
                 default:

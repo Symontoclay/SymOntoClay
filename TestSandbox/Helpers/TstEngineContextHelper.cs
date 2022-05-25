@@ -135,7 +135,7 @@ namespace TestSandbox.Helpers
             //_logger.Log($"Begin worldContext.Start()");
 #endif
 
-            worldContext.Start();
+            //worldContext.Start();
 
             result.WorldContext = worldContext;
 

@@ -41,12 +41,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 
         static AdvancedBehaviorTestEngineInstance()
         {
-            _rootDir = Path.Combine(Environment.GetEnvironmentVariable("TMP"), $"TstTempProjects_{Guid.NewGuid().ToString("D").Replace("-", string.Empty)}");
-
-            if (!Directory.Exists(_rootDir))
-            {
-                Directory.CreateDirectory(_rootDir);
-            }
+            _rootDir = UnityTestEngineContextFactory.CreateRootDir();
         }
 
         private static string _rootDir;
@@ -60,12 +55,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 
         public AdvancedBehaviorTestEngineInstance(string rootDir)
         {
-            _testDir = Path.Combine(rootDir, $"TstDir{Guid.NewGuid().ToString("D").Replace("-", string.Empty)}");
-
-            if (!Directory.Exists(_testDir))
-            {
-                Directory.CreateDirectory(_testDir);
-            }
+            _testDir = UnityTestEngineContextFactory.CreateTestDir(rootDir);
 
             var worldSpaceCreationSettings = new WorldSpaceCreationSettings() { CreateOnlyWorldspace = true, ProjectName = _projectName };
 
@@ -125,44 +115,14 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 
         public void CreateWorld(Action<string> logChannel, Action<string> error, bool enableWriteLnRawLog = false)
         {
-            var supportBasePath = Path.Combine(_testDir, "SysDirs");
-
-            var logDir = Path.Combine(supportBasePath, "NpcLogs");
-
-            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
-
-            _world = new WorldCore();
-
-            var settings = new WorldSettings();
-            settings.EnableAutoloadingConvertors = true;
-
-            settings.SharedModulesDirs = new List<string>() { Path.Combine(_wSpaceDir, "Modules") };
-
-            settings.ImagesRootDir = Path.Combine(supportBasePath, "Images");
-
-            settings.TmpDir = Path.Combine(supportBasePath, "TMP");
-
-            settings.HostFile = Path.Combine(_wSpaceDir, "World/World.world");
-
-            settings.InvokerInMainThread = invokingInMainThread;
-
-            settings.SoundBus = new SimpleSoundBus();
+            var hostFile = Path.Combine(_wSpaceDir, "World/World.world");
 
             var callBackLogger = new CallBackLogger(
                 message => { logChannel(message); },
                 errorMsg => { error(errorMsg); },
                 enableWriteLnRawLog);
 
-            settings.Logging = new LoggingSettings()
-            {
-                LogDir = logDir,
-                RootContractName = "Hi1",
-                PlatformLoggers = new List<IPlatformLogger>() { callBackLogger },
-                Enable = true,
-                EnableRemoteConnection = true
-            };
-
-            _world.SetSettings(settings);
+            _world = UnityTestEngineContextFactory.CreateWorld(_testDir, hostFile, callBackLogger);
         }
 
         public void StartWorld()
@@ -201,40 +161,24 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 
         public IHumanoidNPC CreateNPC()
         {
-            return CreateNPC(_projectName, new object(), new Vector3(10, 10, 10));
+            return CreateNPC(_projectName, UnityTestEngineContextFactory.DefaultPlatformListener, UnityTestEngineContextFactory.DefaultCurrentAbsolutePosition);
         }
 
         public IHumanoidNPC CreateNPC(object platformListener)
         {
-            return CreateNPC(_projectName, platformListener, new Vector3(10, 10, 10));
+            return CreateNPC(_projectName, platformListener, UnityTestEngineContextFactory.DefaultCurrentAbsolutePosition);
         }
 
         public IHumanoidNPC CreateNPC(string npcName, object platformListener)
         {
-            return CreateNPC(npcName, platformListener, new Vector3(10, 10, 10));
+            return CreateNPC(npcName, platformListener, UnityTestEngineContextFactory.DefaultCurrentAbsolutePosition);
         }
 
         public IHumanoidNPC CreateNPC(string npcName, object platformListener, Vector3 currentAbsolutePosition)
         {
-            ILoggedTestHostListener loggedTestHostListener = null;
+            var logicFile = Path.Combine(_wSpaceDir, $"Npcs/{npcName}/{npcName}.sobj");
 
-            if (platformListener != null)
-            {
-                loggedTestHostListener = platformListener as ILoggedTestHostListener;
-            }
-
-            var npcSettings = new HumanoidNPCSettings();
-            npcSettings.Id = $"#{Guid.NewGuid():D}";
-            npcSettings.InstanceId = GetInstanceId();
-            npcSettings.LogicFile = Path.Combine(_wSpaceDir, $"Npcs/{npcName}/{npcName}.sobj");
-            npcSettings.HostListener = platformListener;
-            npcSettings.PlatformSupport = new PlatformSupportCLIStub(currentAbsolutePosition);
-
-            var npc = _world.GetHumanoidNPC(npcSettings);
-
-            loggedTestHostListener?.SetLogger(npc.Logger);
-
-            return npc;
+            return UnityTestEngineContextFactory.CreateHumanoidNPC(_world, logicFile, platformListener, currentAbsolutePosition);
         }
 
         public IHumanoidNPC CreateAndStartNPC(Action<int, string> logChannel)
@@ -288,7 +232,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
             var settings = new GameObjectSettings();
 
             settings.Id = $"#{Guid.NewGuid():D}";
-            settings.InstanceId = GetInstanceId();
+            settings.InstanceId = UnityTestEngineContextFactory.GetInstanceId();
 
             settings.AllowPublicPosition = true;
             settings.UseStaticPosition = currentAbsolutePosition;
@@ -310,19 +254,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 
         private readonly List<string> _createdNPCsDSLProjects = new List<string>();
         private readonly List<string> _createdThingsDSLProjects = new List<string>();
-
-        private object _lockObj = new object();
-
-        private int _currInstanceId;
-
-        private int GetInstanceId()
-        {
-            lock(_lockObj)
-            {
-                _currInstanceId++;
-                return _currInstanceId;
-            }
-        }
 
         private bool _isDisposed;
 

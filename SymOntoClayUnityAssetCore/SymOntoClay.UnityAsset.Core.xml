@@ -1147,6 +1147,12 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.SymOntoClay#UnityAsset#Core#Internal#IWorldCoreGameComponentContext#GetInstanceIdByIdForFacts(System.String)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.IsDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.Dispose">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.Log(System.String)">
             <inheritdoc/>
         </member>

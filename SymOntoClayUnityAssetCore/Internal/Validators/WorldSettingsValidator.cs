@@ -36,12 +36,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Validators
                 throw new ValidationException("World settings can not be null.");
             }
 
-            var sharedModulesDirs = settings.SharedModulesDirs;
+            //var sharedModulesDirs = settings.SharedModulesDirs;
 
-            if (sharedModulesDirs == null || !sharedModulesDirs.Any() || sharedModulesDirs.All(p => string.IsNullOrWhiteSpace(p)))
-            {
-                throw new ValidationException("'SharedModulesDirs' can not be null, empty or contain all null or empty strings.");
-            }
+            //if (sharedModulesDirs == null || !sharedModulesDirs.Any() || sharedModulesDirs.All(p => string.IsNullOrWhiteSpace(p)))
+            //{
+            //    throw new ValidationException("'SharedModulesDirs' can not be null, empty or contain all null or empty strings.");
+            //}
 
             //throw new NotImplementedException();
         }

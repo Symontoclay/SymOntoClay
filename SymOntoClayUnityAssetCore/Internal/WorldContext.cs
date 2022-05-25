@@ -46,7 +46,7 @@ using System.Threading;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
 {
-    public class WorldContext: IWorldCoreContext, IWorldCoreGameComponentContext
+    public class WorldContext: IWorldCoreContext, IWorldCoreGameComponentContext, ISymOntoClayDisposable
     {
         //TODO: fix me!
         public void SetSettings(WorldSettings settings)
@@ -549,6 +549,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private ComponentState _state = ComponentState.Created;
         private readonly object _stateLockObj = new object();
 
+        /// <inheritdoc/>
         public bool IsDisposed
         {
             get
@@ -560,6 +561,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             }
         }
 
+        /// <inheritdoc/>
         public void Dispose()
         {
             lock (_stateLockObj)

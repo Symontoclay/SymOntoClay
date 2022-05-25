@@ -35,6 +35,8 @@ namespace TestSandbox.Handlers
     {
         public NLPHandler()
         {
+            //var tmpContext = UnityTestEngineContextFactory.CreateTestEngineContext();
+
             _engineContext = TstEngineContextHelper.CreateAndInitContext().EngineContext;
 
             var mainDictPath = Path.Combine(Directory.GetCurrentDirectory(), "Dicts", "BigMainDictionary.dict");
@@ -59,10 +61,10 @@ namespace TestSandbox.Handlers
         {
             _logger.Log("Begin");
 
-            //Case5();
+            Case5();
             //Case4();
             //Case3();
-            Case2();
+            //Case2();
             //Case1();
             //Case0();
 
@@ -331,13 +333,16 @@ namespace TestSandbox.Handlers
 
         private INLPConverterContext CreateNLPConverterContext()
         {
-            var dataResolversFactory = _engineContext.DataResolversFactory;
+            var targetContext = _engineContext;
+            //var targetContext = new UnityTestMainStorageContextWithBuiltInStandardLibrary();
+
+            var dataResolversFactory = targetContext.DataResolversFactory;
 
             var relationsResolver = dataResolversFactory.GetRelationsResolver();
             var inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
 
             var localCodeExecutionContext = new LocalCodeExecutionContext();
-            localCodeExecutionContext.Storage = _engineContext.Storage.GlobalStorage;
+            localCodeExecutionContext.Storage = targetContext.Storage.GlobalStorage;
             localCodeExecutionContext.Holder = NameHelper.CreateName(_engineContext.Id);
 
             //_logger.Log($"localCodeExecutionContext = {localCodeExecutionContext}");

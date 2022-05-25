@@ -27,7 +27,7 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 {
-    public class EmptyLogger : IEntityLogger
+    public class EmptyLogger : IEntityLogger, IPlatformLogger
     {
         /// <inheritdoc/>
         public void Error(string message)
@@ -46,6 +46,31 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 
         /// <inheritdoc/>
         public void Warning(string message)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void WriteLn(string message)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void WriteLnRawLogChannel(string message)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void WriteLnRawLog(string message)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void WriteLnRawWarning(string message)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void WriteLnRawError(string message)
         {
         }
     }

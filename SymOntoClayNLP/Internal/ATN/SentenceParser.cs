@@ -48,8 +48,8 @@ namespace SymOntoClay.NLP.Internal.ATN
         public override void OnRun(ATNToken token)
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"token = {token}");
+            Log($"_state = {_state}");
+            Log($"token = {token}");
 #endif
 
             switch (_state)
@@ -103,7 +103,23 @@ namespace SymOntoClay.NLP.Internal.ATN
                                     }
                                 }
 
-                                if(!wasProcessed)
+                                var verbWordFramesList = wordFramesList.Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Verb);
+
+                                if(verbWordFramesList.Any())
+                                {
+                                    wasProcessed = true;
+
+                                    foreach(var verbWordFrame in verbWordFramesList)
+                                    {
+#if DEBUG
+                                        Log($"verbWordFrame = {verbWordFrame}");
+#endif
+
+                                        SetParser(new RunVariantDirective<SentenceParser>(State.WaitForPredicate, ConvertToConcreteATNToken(token, verbWordFrame)));
+                                    }
+                                }
+
+                                if (!wasProcessed)
                                 {
                                     throw new UnExpectedTokenException(token);
                                 }

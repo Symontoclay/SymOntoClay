@@ -57,10 +57,10 @@ namespace TestSandbox.Handlers
         {
             _logger.Log("Begin");
 
-            Case5();
+            //Case5();
             //Case4();
             //Case3();
-            //Case2();
+            Case2();
             //Case1();
             //Case0();
 
@@ -144,7 +144,8 @@ namespace TestSandbox.Handlers
         {
             //var wordsDict = new TstSimpleWordsDict();
 
-            var text = "I like my cat.";
+            //var text = "I like my cat.";
+            var text = "Go to green place";
 
 #if DEBUG
             _logger.Log($"text = {text}");

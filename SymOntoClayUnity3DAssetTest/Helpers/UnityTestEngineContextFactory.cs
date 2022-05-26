@@ -186,6 +186,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
             return new ComplexTestEngineContext(world, npc, baseDir);
         }
 
+        public static ComplexTestEngineContext CreateAndInitTestEngineContext()
+        {
+            var context = CreateTestEngineContext();
+            context.Start();
+            return context;
+        }
+
         public static INLPConverterContext CreateNLPConverterContext(IEngineContext engineContext)
         {
             var dataResolversFactory = engineContext.DataResolversFactory;

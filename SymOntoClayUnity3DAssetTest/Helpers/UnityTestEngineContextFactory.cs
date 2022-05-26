@@ -1,5 +1,9 @@
 ﻿using NLog;
 using SymOntoClay.Core;
+using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClay.SoundBuses;
@@ -18,7 +22,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
     public static class UnityTestEngineContextFactory
     {
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static string CreateRootDir()
@@ -180,6 +184,24 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
             var npc = CreateHumanoidNPC(world, npcSettings);
 
             return new ComplexTestEngineContext(world, npc, baseDir);
+        }
+
+        public static INLPConverterContext CreateNLPConverterContext(IEngineContext engineContext)
+        {
+            var dataResolversFactory = engineContext.DataResolversFactory;
+
+            var relationsResolver = dataResolversFactory.GetRelationsResolver();
+            var inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
+
+            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            localCodeExecutionContext.Storage = engineContext.Storage.GlobalStorage;
+            localCodeExecutionContext.Holder = NameHelper.CreateName(engineContext.Id);
+
+            var packedRelationsResolver = new PackedRelationsResolver(relationsResolver, localCodeExecutionContext);
+
+            var packedInheritanceResolver = new PackedInheritanceResolver(inheritanceResolver, localCodeExecutionContext);
+
+            return new NLPConverterContext(packedRelationsResolver, packedInheritanceResolver);
         }
     }
 }

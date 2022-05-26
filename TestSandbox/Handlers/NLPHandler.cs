@@ -46,8 +46,6 @@ namespace TestSandbox.Handlers
             _wordsDict = new JsonDictionary(mainDictPath);
 
             _converter = new NLPConverter(_logger, _wordsDict);
-
-            //CreateCommonRelations();
         }
 
         private readonly IEngineContext _engineContext;
@@ -71,7 +69,7 @@ namespace TestSandbox.Handlers
 
         private void Case5()
         {
-            var nlpContext = CreateNLPConverterContext();
+            var nlpContext = UnityTestEngineContextFactory.CreateNLPConverterContext(_engineContext);
 
             var factStr = "{: >: { like(i,#@{: >: { possess(i,$_) & cat($_) } :}) } :}";
 
@@ -105,7 +103,7 @@ namespace TestSandbox.Handlers
 
         private void Case4()
         {
-            var nlpContext = CreateNLPConverterContext();
+            var nlpContext = UnityTestEngineContextFactory.CreateNLPConverterContext(_engineContext);
 
             var factStr = "{: >: { like(i,#@{: >: { possess(i,$_) & cat($_) } :}) } :}";
 
@@ -245,114 +243,6 @@ namespace TestSandbox.Handlers
                 _logger.Log($"n = {n}");
                 _logger.Log($"item = {item}");
             }
-        }
-
-        private void CreateCommonRelations()
-        {
-            CreateLikeRelation();
-            CreatePossessRelation();
-        }
-
-        private void CreatePossessRelation()
-        {
-            var relationName = NameHelper.CreateName("possess");
-
-            var relation = new RelationDescription();
-            relation.Name = relationName;
-
-            var argument = new RelationParameterDescription();
-            argument.Name = NameHelper.CreateName("$x1");
-            argument.MeaningRolesList.Add(NameHelper.CreateName("owner"));
-
-            relation.Arguments.Add(argument);
-
-            argument = new RelationParameterDescription();
-            argument.Name = NameHelper.CreateName("$x2");
-            argument.MeaningRolesList.Add(NameHelper.CreateName("possessions"));
-
-            relation.Arguments.Add(argument);
-
-            var inheritanceItem = new InheritanceItem();
-            relation.InheritanceItems.Add(inheritanceItem);
-            inheritanceItem.SubName = relation.Name;
-            inheritanceItem.SuperName = NameHelper.CreateName("state");
-            inheritanceItem.Rank = LogicalValue.TrueValue;
-
-            //_logger.Log($"relation = {relation}");
-            _logger.Log($"relation = {relation.ToHumanizedString()}");
-
-            AppendRelationToStorage(relation);
-        }
-
-        private void CreateLikeRelation()
-        {
-            var relationName = NameHelper.CreateName("like");
-
-            var relation = new RelationDescription();
-            relation.Name = relationName;
-
-            var argument = new RelationParameterDescription();
-            argument.Name = NameHelper.CreateName("$x1");
-            argument.MeaningRolesList.Add(NameHelper.CreateName("experiencer"));
-
-            relation.Arguments.Add(argument);
-
-            argument = new RelationParameterDescription();
-            argument.Name = NameHelper.CreateName("$x2");
-            argument.MeaningRolesList.Add(NameHelper.CreateName("object"));
-
-            relation.Arguments.Add(argument);
-
-            var inheritanceItem = new InheritanceItem();
-            relation.InheritanceItems.Add(inheritanceItem);
-            inheritanceItem.SubName = relation.Name;
-            inheritanceItem.SuperName = NameHelper.CreateName("state");
-            inheritanceItem.Rank = LogicalValue.TrueValue;
-
-            //_logger.Log($"relation = {relation}");
-            _logger.Log($"relation = {relation.ToHumanizedString()}");
-
-            AppendRelationToStorage(relation);
-        }
-
-        private void AppendRelationToStorage(RelationDescription relation)
-        {
-            var globalStorage = _engineContext.Storage.GlobalStorage;
-
-            var inheritanceStorage = globalStorage.InheritanceStorage;
-
-            foreach (var item in relation.InheritanceItems)
-            {
-                inheritanceStorage.SetInheritance(item);
-            }
-
-            globalStorage.RelationsStorage.Append(relation);
-        }
-
-        private INLPConverterContext CreateNLPConverterContext()
-        {
-            //using var tmpContext = UnityTestEngineContextFactory.CreateTestEngineContext();
-            //tmpContext.Start();
-
-            var targetContext = _engineContext;
-            //var targetContext = tmpContext.EngineContext;
-
-            var dataResolversFactory = targetContext.DataResolversFactory;
-
-            var relationsResolver = dataResolversFactory.GetRelationsResolver();
-            var inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
-
-            var localCodeExecutionContext = new LocalCodeExecutionContext();
-            localCodeExecutionContext.Storage = targetContext.Storage.GlobalStorage;
-            localCodeExecutionContext.Holder = NameHelper.CreateName(_engineContext.Id);
-
-            //_logger.Log($"localCodeExecutionContext = {localCodeExecutionContext}");
-
-            var packedRelationsResolver = new PackedRelationsResolver(relationsResolver, localCodeExecutionContext);
-
-            var packedInheritanceResolver = new PackedInheritanceResolver(inheritanceResolver, localCodeExecutionContext);
-
-            return new NLPConverterContext(packedRelationsResolver, packedInheritanceResolver);
         }
     }
 }

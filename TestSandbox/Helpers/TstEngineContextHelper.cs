@@ -66,6 +66,8 @@ namespace TestSandbox.Helpers
 
             worldSettings.SharedModulesDirs = new List<string>() { Path.Combine(Directory.GetCurrentDirectory(), "Source", "Modules") };
 
+            worldSettings.BuiltInStandardLibraryDir = DefaultPaths.GetBuiltInStandardLibraryDir();
+
             worldSettings.ImagesRootDir = Path.Combine(Directory.GetCurrentDirectory(), "Images");
 
             worldSettings.TmpDir = Path.Combine(Environment.GetEnvironmentVariable("TMP"), "SymOntoClay", appName);
@@ -76,7 +78,7 @@ namespace TestSandbox.Helpers
             {
                 LogDir = logDir,
                 RootContractName = "Hi1",
-                PlatformLoggers = new List<IPlatformLogger>() { ConsoleLogger.Instance/*, CommonNLogLogger.Instance */},
+                PlatformLoggers = new List<IPlatformLogger>() { ConsoleLogger.Instance, CommonNLogLogger.Instance },
                 Enable = true,
                 EnableRemoteConnection = true
             };
@@ -135,7 +137,7 @@ namespace TestSandbox.Helpers
             //_logger.Log($"Begin worldContext.Start()");
 #endif
 
-            //worldContext.Start();
+            worldContext.Start();
 
             result.WorldContext = worldContext;
 

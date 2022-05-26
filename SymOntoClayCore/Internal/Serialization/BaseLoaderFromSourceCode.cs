@@ -79,8 +79,8 @@ namespace SymOntoClay.Core.Internal.Serialization
         public virtual void LoadFromPaths(IList<string> sourceCodePaths)
         {
 #if DEBUG
-            //Log("Begin");
-            //Log($"sourceCodePaths = {sourceCodePaths.WritePODListToString()}");
+            Log("Begin");
+            Log($"sourceCodePaths = {sourceCodePaths.WritePODListToString()}");
 #endif
 
             var filesList = FileHelper.GetParsedFilesFromPaths(sourceCodePaths);
@@ -428,6 +428,11 @@ namespace SymOntoClay.Core.Internal.Serialization
                     break;
 
                 case KindOfCodeEntity.RelationDescription:
+#if DEBUG
+                    Log($"globalStorage.Kind = {globalStorage.Kind}");
+                    Log($"codeItem.AsRelationDescription.ToHumanizedString() = {codeItem.AsRelationDescription.ToHumanizedString()}");
+#endif
+
                     globalStorage.RelationsStorage.Append(codeItem.AsRelationDescription);
                     break;
 

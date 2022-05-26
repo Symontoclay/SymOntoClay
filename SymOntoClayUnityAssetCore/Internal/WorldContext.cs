@@ -375,6 +375,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         private void NLoadFromSourceCode()
         {
+#if DEBUG
+            Logger.Log("Begin");
+#endif
+
             ModulesStorage.LoadFromSourceCode();
             StandaloneStorage.LoadFromSourceCode();
             DateTimeProvider.LoadFromSourceCode();

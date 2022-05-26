@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -86,6 +87,11 @@ namespace SymOntoClay.Core
         /// <inheritdoc/>
         public void LoadFromSourceCode()
         {
+#if DEBUG
+            Log("Begin");
+            Log($"_additionalSourceCodePaths = {_additionalSourceCodePaths.WritePODListToString()}");
+#endif
+
             lock (_stateLockObj)
             {
                 if (_state == ComponentState.Disposed)

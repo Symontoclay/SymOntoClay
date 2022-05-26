@@ -35,8 +35,6 @@ namespace TestSandbox.Handlers
     {
         public NLPHandler()
         {
-            //var tmpContext = UnityTestEngineContextFactory.CreateTestEngineContext();
-
             _engineContext = TstEngineContextHelper.CreateAndInitContext().EngineContext;
 
             var mainDictPath = Path.Combine(Directory.GetCurrentDirectory(), "Dicts", "BigMainDictionary.dict");
@@ -49,7 +47,7 @@ namespace TestSandbox.Handlers
 
             _converter = new NLPConverter(_logger, _wordsDict);
 
-            CreateCommonRelations();
+            //CreateCommonRelations();
         }
 
         private readonly EngineContext _engineContext;
@@ -333,8 +331,10 @@ namespace TestSandbox.Handlers
 
         private INLPConverterContext CreateNLPConverterContext()
         {
+            //using var tmpContext = UnityTestEngineContextFactory.CreateTestEngineContext();
+
             var targetContext = _engineContext;
-            //var targetContext = new UnityTestMainStorageContextWithBuiltInStandardLibrary();
+            //var targetContext = tmpContext.EngineContext;
 
             var dataResolversFactory = targetContext.DataResolversFactory;
 

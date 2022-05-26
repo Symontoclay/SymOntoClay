@@ -1,4 +1,7 @@
-﻿using SymOntoClay.DefaultCLIEnvironment;
+﻿using NLog;
+using SymOntoClay.Core;
+using SymOntoClay.Core.Internal.Helpers;
+using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClay.SoundBuses;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.World;
@@ -14,6 +17,10 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 {
     public static class UnityTestEngineContextFactory
     {
+#if DEBUG
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         public static string CreateRootDir()
         {
             var rootDir = Path.Combine(Environment.GetEnvironmentVariable("TMP"), $"TstTempProjects_{Guid.NewGuid().ToString("D").Replace("-", string.Empty)}");
@@ -138,20 +145,70 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 
         public static ComplexTestEngineContext CreateTestEngineContext()
         {
+            var entityLogger = new EmptyLogger();
+
             var testDir = CreateTestDir(CreateRootDir());
 
-            var worldSettings = CreateWorldSettings(testDir, string.Empty, new EmptyLogger());
+            var worldSettings = CreateWorldSettings(testDir, string.Empty, entityLogger);
+
+#if DEBUG
+            //_gbcLogger.Info($"worldSettings = {worldSettings}");
+#endif
 
             var worldContext = new WorldContext();
             worldContext.SetSettings(worldSettings);
 
+            var npcSettings = CreateHumanoidNPCSettings(string.Empty, DefaultPlatformListener, DefaultCurrentAbsolutePosition);
 
+#if DEBUG
+            //_gbcLogger.Info($"npcSettings = {npcSettings}");
+#endif
 
-            //var npc = CreateHumanoidNPC(world, string.Empty, DefaultPlatformListener, DefaultCurrentAbsolutePosition);
+            var worldCoreGameComponentContext = worldContext as IWorldCoreGameComponentContext;
 
-            //return new ComplexTestEngineContext();
+            var coreEngineSettings = new EngineSettings();
+            coreEngineSettings.Id = npcSettings.Id;
+            coreEngineSettings.AppFile = npcSettings.LogicFile;
+            coreEngineSettings.Logger = entityLogger;
+            coreEngineSettings.SyncContext = worldContext.ThreadsComponent;
 
-            throw new NotImplementedException();
+            coreEngineSettings.ModulesStorage = worldContext.ModulesStorage.ModulesStorage;
+            coreEngineSettings.ParentStorage = worldCoreGameComponentContext.StandaloneStorage;
+            //coreEngineSettings.ParentStorage = _hostStorage;
+            coreEngineSettings.TmpDir = testDir;
+            coreEngineSettings.HostSupport = new HostSupportComponentStub(npcSettings.PlatformSupport);
+
+#if DEBUG
+            //_gbcLogger.Info($"coreEngineSettings = {coreEngineSettings}");
+#endif
+
+            var engineContext = EngineContextHelper.CreateAndInitContext(coreEngineSettings);
+
+#if DEBUG
+            //_gbcLogger.Info($"After var engineContext = EngineContextHelper.CreateAndInitContext(coreEngineSettings);");
+#endif
+
+            engineContext.CommonNamesStorage.LoadFromSourceCode();
+
+#if DEBUG
+            //_gbcLogger.Info($"After engineContext.CommonNamesStorage.LoadFromSourceCode();");
+#endif
+
+            engineContext.Storage.LoadFromSourceCode();
+
+#if DEBUG
+            //_gbcLogger.Info($"After engineContext.Storage.LoadFromSourceCode();");
+#endif
+
+            engineContext.StandardLibraryLoader.LoadFromSourceCode();
+
+#if DEBUG
+            //_gbcLogger.Info($"After engineContext.StandardLibraryLoader.LoadFromSourceCode();");
+#endif
+
+            engineContext.InstancesStorage.LoadFromSourceFiles();
+
+            return new ComplexTestEngineContext(worldContext, engineContext, testDir);
         }
     }
 }

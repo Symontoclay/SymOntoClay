@@ -4,6 +4,7 @@ using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.ATN.ParsingDirectives;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -16,6 +17,11 @@ namespace SymOntoClay.NLP.Internal.ATN
             _logger = logger;
             _globalContext = globalContext;
 
+            _contextNum = _globalContext.GetContextNum();
+
+            _dumpToLogDirOnExit = _globalContext.DumpToLogDirOnExit;
+            _logDir = _globalContext.LogDir;
+
             _lexer = new ATNLexer(text, wordsDict);
 
             _parsers = new Stack<BaseParser>();
@@ -26,6 +32,9 @@ namespace SymOntoClay.NLP.Internal.ATN
         private Stack<BaseParser> _parsers;
         private BaseParser _currentParser;
         private readonly IEntityLogger _logger;
+        private readonly bool _dumpToLogDirOnExit;
+        private readonly int _contextNum;
+        private readonly string _logDir;
         private bool _isActive = true;
         private List<string> _logMessages = new List<string>();
 
@@ -325,6 +334,21 @@ namespace SymOntoClay.NLP.Internal.ATN
 
             _globalContext.AddResult(_result);
             _globalContext.RemoveContext(this);
+
+            if(_dumpToLogDirOnExit)
+            {
+                var sb = new StringBuilder();
+
+                sb.AppendLine(_contextNum.ToString());
+                sb.AppendLine();
+
+                foreach(var msg in _logMessages)
+                {
+                    sb.AppendLine(msg);
+                }
+
+                File.WriteAllText(Path.Combine(_logDir, $"{_contextNum}.log"), sb.ToString());
+            }
 
 #if DEBUG
             //_logger.Log($"End");

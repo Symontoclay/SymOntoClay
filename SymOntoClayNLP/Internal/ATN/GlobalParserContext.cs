@@ -4,6 +4,7 @@ using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.PhraseStructure;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -12,15 +13,34 @@ namespace SymOntoClay.NLP.Internal.ATN
     public class GlobalParserContext : IObjectToString
     {
         public GlobalParserContext(IEntityLogger logger, IWordsDict wordsDict, string text)
+            : this(logger, wordsDict, text, false, string.Empty)
+        {
+        }
+
+        public GlobalParserContext(IEntityLogger logger, IWordsDict wordsDict, string text, bool dumpToLogDirOnExit, string logDir)
         {
             _logger = logger;
+
+            DumpToLogDirOnExit = dumpToLogDirOnExit;
+            LogDir = logDir;
 
             AddContext(new ParserContext(this, logger, wordsDict, text));
         }
 
         private readonly IEntityLogger _logger;
+        public readonly bool DumpToLogDirOnExit;
+        public readonly string LogDir;
         private readonly List<ParserContext> parserContexts = new List<ParserContext>();
         private readonly List<WholeTextParsingResult> _resultsList = new List<WholeTextParsingResult>();
+
+        private int _contextNum;
+
+        public int GetContextNum()
+        {
+            _contextNum++;
+
+            return _contextNum;
+        }
 
         public void Run()
         {

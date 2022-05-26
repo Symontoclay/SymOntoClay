@@ -155,6 +155,20 @@ namespace TestSandbox.Handlers
 
             //globalContext.Run();
 
+            var logDir = Path.Combine(Directory.GetCurrentDirectory(), "ATNLogs");
+
+            if (!Directory.Exists(logDir))
+            {
+                Directory.CreateDirectory(logDir);
+            }
+
+            var logSessionDir = Path.Combine(logDir, $"ATN_{DateTime.Now:dd-MM-yyyy_HH-mm-ss}");
+
+            if (!Directory.Exists(logSessionDir))
+            {
+                Directory.CreateDirectory(logSessionDir);
+            }
+
             var parser = new ATNParser(_engineContext.Logger, _wordsDict);
 
             var compactizer = new PhraseCompactizer(_engineContext.Logger, _wordsDict);
@@ -167,7 +181,8 @@ namespace TestSandbox.Handlers
 
             var converterInternalCGToFact = new ConverterInternalCGToFact(_engineContext.Logger);
 
-            var result = parser.Run(text);
+            //var result = parser.Run(text);
+            var result = parser.Run(text, true, logSessionDir);
 
             _logger.Log($"result.Count = {result.Count}");
 

@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core;
+using SymOntoClay.Core.Internal;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal;
@@ -156,6 +157,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         {
             _gameComponent.RemoveFromBackpack(obj);
         }
+
+        /// <inheritdoc/>
+        public IEngineContext EngineContext => _gameComponent.EngineContext;
 
         /// <inheritdoc/>
         public void Die()

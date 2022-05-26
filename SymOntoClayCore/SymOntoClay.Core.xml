@@ -120,6 +120,11 @@
         <member name="M:SymOntoClay.Core.BaseStorageSettings.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Engine.EngineContext">
+            <summary>
+            Gets engine context. Onkly for debugging and testing!
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Engine.LoadFromSourceCode">
             <inheritdoc/>
         </member>

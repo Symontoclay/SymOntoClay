@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core;
+using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport;
@@ -233,6 +234,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         {
             _backpackStorage.RemovePublicFactsStorageOfOtherGameComponent(obj.PublicFactsStorage);
         }
+
+        /// <summary>
+        /// Gets engine context. Onkly for debugging and testing!
+        /// </summary>
+        public IEngineContext EngineContext => _coreEngine.EngineContext;
 
         public void Die()
         {

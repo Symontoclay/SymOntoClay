@@ -21,7 +21,7 @@ namespace TestSandbox.Handlers
             _engineContext = TstEngineContextHelper.CreateAndInitContext().EngineContext;
         }
 
-        private readonly EngineContext _engineContext;
+        private readonly IEngineContext _engineContext;
         private static readonly IEntityLogger _logger = new LoggerImpementation();
 
         public void Run()

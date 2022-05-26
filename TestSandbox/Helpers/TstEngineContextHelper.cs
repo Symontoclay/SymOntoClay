@@ -38,6 +38,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using TestSandbox.CoreHostListener;
 using TestSandbox.PlatformImplementations;
+using SymOntoClay.UnityAsset.Core.Tests.Helpers;
+using SymOntoClay.SoundBuses;
 
 namespace TestSandbox.Helpers
 {
@@ -45,10 +47,8 @@ namespace TestSandbox.Helpers
     {
         //private static readonly IEntityLogger _logger = new LoggerImpementation();
 
-        public static TstComplexContext CreateAndInitContext()
+        public static WorldSettings CreateWorldSettings(bool withAppFiles)
         {
-            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
-
             var appName = AppDomain.CurrentDomain.FriendlyName;
 
             //_logger.Log($"appName = {appName}");
@@ -57,123 +57,92 @@ namespace TestSandbox.Helpers
 
             //_logger.Log($"supportBasePath = {supportBasePath}");
 
-            var result = new TstComplexContext();
+            var logDir = Path.Combine(supportBasePath, "NpcLogs");
 
-            var logDir = Path.Combine(Directory.GetCurrentDirectory(), "NpcLogs");
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
 
-            var worldSettings = new WorldSettings();
-            worldSettings.EnableAutoloadingConvertors = true;
+            var settings = new WorldSettings();
+            settings.EnableAutoloadingConvertors = true;
 
-            worldSettings.SharedModulesDirs = new List<string>() { Path.Combine(Directory.GetCurrentDirectory(), "Source", "Modules") };
+            settings.SharedModulesDirs = new List<string>() { Path.Combine(Directory.GetCurrentDirectory(), "Source", "Modules") };
 
-            worldSettings.BuiltInStandardLibraryDir = DefaultPaths.GetBuiltInStandardLibraryDir();
+            settings.ImagesRootDir = Path.Combine(supportBasePath, "Images");
 
-            worldSettings.ImagesRootDir = Path.Combine(Directory.GetCurrentDirectory(), "Images");
+            settings.BuiltInStandardLibraryDir = DefaultPaths.GetBuiltInStandardLibraryDir();
 
-            worldSettings.TmpDir = Path.Combine(Environment.GetEnvironmentVariable("TMP"), "SymOntoClay", appName);
+            settings.TmpDir = Path.Combine(Environment.GetEnvironmentVariable("TMP"), "SymOntoClay", appName);
 
-            worldSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\World\HelloWorld.world");
+            if(withAppFiles)
+            {
+                settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\World\World.world");
+            }            
 
-            worldSettings.Logging = new LoggingSettings()
+            settings.InvokerInMainThread = invokingInMainThread;
+
+            settings.SoundBus = new SimpleSoundBus();
+
+            settings.Logging = new LoggingSettings()
             {
                 LogDir = logDir,
                 RootContractName = "Hi1",
-                PlatformLoggers = new List<IPlatformLogger>() { ConsoleLogger.Instance, CommonNLogLogger.Instance },
+                PlatformLoggers = new List<IPlatformLogger>() { /*ConsoleLogger.Instance,*/ CommonNLogLogger.Instance },
                 Enable = true,
                 EnableRemoteConnection = true
             };
 
-            worldSettings.InvokerInMainThread = invokingInMainThread;
+            return settings;
+        }
 
-            //_logger.Log($"worldSettings = {worldSettings}");
+        public static HumanoidNPCSettings CreateHumanoidNPCSettings(bool withAppFiles)
+        {
+            return CreateHumanoidNPCSettings(UnityTestEngineContextFactory.DefaultPlatformListener, withAppFiles);
+        }
 
-            var worldContext = new WorldContext();
-            worldContext.SetSettings(worldSettings);
-
+        public static HumanoidNPCSettings CreateHumanoidNPCSettings(object hostListener, bool withAppFiles)
+        {
             var npcSettings = new HumanoidNPCSettings();
             npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
-            //npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
-            npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Apps\PeaceKeeper\PeaceKeeper.sobj");
+            npcSettings.InstanceId = 1;
+            
+            if(withAppFiles)
+            {
+                npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Npcs\PeaceKeeper\PeaceKeeper.sobj");
+            }
+            
+            npcSettings.HostListener = hostListener;
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
+
+            return npcSettings;
+        }
+
+        public static ComplexTestEngineContext CreateContext(bool withAppFiles = true)
+        {
+            return CreateContext(UnityTestEngineContextFactory.DefaultPlatformListener, withAppFiles);
+        }
+
+        public static ComplexTestEngineContext CreateContext(object hostListener, bool withAppFiles = true)
+        {
+            var settings = CreateWorldSettings(withAppFiles);
+
+            //_logger.Log($"settings = {settings}");
+
+            var npcSettings = CreateHumanoidNPCSettings(hostListener, withAppFiles);
 
             //_logger.Log($"npcSettings = {npcSettings}");
 
-            var entityLogger = new LoggerImpementation();
+            return UnityTestEngineContextFactory.CreateTestEngineContext(settings, npcSettings);
+        }
 
-            var tmpDir = Path.Combine(worldSettings.TmpDir, npcSettings.Id);
+        public static ComplexTestEngineContext CreateAndInitContext(bool withAppFiles = false)
+        {
+            var context = CreateContext(withAppFiles);
+            context.Start();
+            return context;
+        }
 
-            Directory.CreateDirectory(worldSettings.TmpDir);
-
-            //var standaloneStorageSettings = new StandaloneStorageSettings();
-            //standaloneStorageSettings.Id = npcSettings.Id;
-            //standaloneStorageSettings.IsWorld = false;
-            //standaloneStorageSettings.AppFile = npcSettings.HostFile;
-            //standaloneStorageSettings.Logger = entityLogger;
-            //standaloneStorageSettings.Dictionary = worldContext.SharedDictionary.Dictionary;
-            //standaloneStorageSettings.ModulesStorage = worldContext.ModulesStorage.ModulesStorage;
-            //standaloneStorageSettings.ParentStorage = worldContext.StandaloneStorage.StandaloneStorage;
-
-#if DEBUG
-            //_logger.Log($"standaloneStorageSettings = {standaloneStorageSettings}");
-#endif
-            //var _hostStorage = new StandaloneStorage(standaloneStorageSettings);
-
-            var coreEngineSettings = new EngineSettings();
-            coreEngineSettings.Id = npcSettings.Id;
-            coreEngineSettings.AppFile = npcSettings.LogicFile;
-            coreEngineSettings.Logger = entityLogger;
-            coreEngineSettings.SyncContext = worldContext.ThreadsComponent;
-            
-            coreEngineSettings.ModulesStorage = worldContext.ModulesStorage.ModulesStorage;
-            //coreEngineSettings.ParentStorage = _hostStorage;
-            coreEngineSettings.TmpDir = tmpDir;
-            coreEngineSettings.HostSupport = new TstHostSupportComponent(npcSettings.PlatformSupport);
-
-#if DEBUG
-            //_logger.Log($"coreEngineSettings = {coreEngineSettings}");
-#endif
-
-#if DEBUG
-            //_logger.Log($"Begin worldContext.Start()");
-#endif
-
-            worldContext.Start();
-
-            result.WorldContext = worldContext;
-
-#if DEBUG
-            //_logger.Log($"After worldContext.Start()");
-#endif
-
-            var context = EngineContextHelper.CreateAndInitContext(coreEngineSettings);
-
-#if DEBUG
-            //_logger.Log($"After var context = EngineContextHelper.CreateAndInitContext(coreEngineSettings);");
-#endif
-
-            context.CommonNamesStorage.LoadFromSourceCode();
-
-#if DEBUG
-            //_logger.Log($"After context.CommonNamesStorage.LoadFromSourceCode();");
-#endif
-
-            context.Storage.LoadFromSourceCode();
-
-#if DEBUG
-            //_logger.Log($"After context.Storage.LoadFromSourceCode();");
-#endif
-
-            context.StandardLibraryLoader.LoadFromSourceCode();
-
-#if DEBUG
-            //_logger.Log($"After context.StandardLibraryLoader.LoadFromSourceCode();");
-#endif
-
-            context.InstancesStorage.LoadFromSourceFiles();
-
-            result.EngineContext = context;
-
-            return result;
+        public static ComplexTestEngineContext CreateAndInitContextWithoutAppFiles()
+        {
+            return CreateAndInitContext(false);
         }
     }
 }

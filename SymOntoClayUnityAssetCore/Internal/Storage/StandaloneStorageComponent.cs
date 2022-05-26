@@ -47,7 +47,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Storage
             standaloneStorageSettings.LogicQueryParseAndCache = coreContext.LogicQueryParseAndCache;
 
 #if DEBUG
-            Log($"standaloneStorageSettings = {standaloneStorageSettings}");
+            //Log($"standaloneStorageSettings = {standaloneStorageSettings}");
 #endif
 
             _standaloneStorage = new StandaloneStorage(standaloneStorageSettings);

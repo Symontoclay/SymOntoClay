@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Parsing.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.UnityAsset.Core.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,8 +40,8 @@ namespace TestSandbox.LogicalDatabase
     public class LogicalDatabaseHandler
     {
         private static readonly IEntityLogger _logger = new LoggerImpementation();
-        private readonly TstComplexContext _genericContext;
-        private readonly EngineContext _context;
+        private readonly ComplexTestEngineContext _genericContext;
+        private readonly IEngineContext _context;
 
         public LogicalDatabaseHandler()
         {

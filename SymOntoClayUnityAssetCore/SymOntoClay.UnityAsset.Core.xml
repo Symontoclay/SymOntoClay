@@ -244,6 +244,11 @@
             </summary>
             <param name="obj">Instance of the game object.</param>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.IHumanoidNPC.EngineContext">
+            <summary>
+            Gets engine context. Onkly for debugging and testing!
+            </summary>
+        </member>
         <member name="T:SymOntoClay.UnityAsset.Core.IManualControlling">
             <summary>
             Represent aspect as manual controlling things by the NPC or Player.
@@ -365,6 +370,11 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.GetPosition">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.EngineContext">
+            <summary>
+            Gets engine context. Onkly for debugging and testing!
+            </summary>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.OnDisposed">
             <inheritdoc/>
         </member>
@@ -417,6 +427,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.RemoveFromBackpack(SymOntoClay.UnityAsset.Core.IGameObject)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.EngineContext">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.Die">
@@ -516,6 +529,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.WorldContext">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.SetSettings(SymOntoClay.UnityAsset.Core.WorldSettings)">
@@ -1338,6 +1354,11 @@
             Deletes image by Id.
             </summary>
             <param name="id">Image id.</param>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.IWorld.WorldContext">
+            <summary>
+            Gets world context. Onkly for debugging and testing!
+            </summary>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.KindOfEndpointParam">
             <summary>

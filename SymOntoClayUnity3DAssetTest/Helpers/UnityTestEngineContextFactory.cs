@@ -45,9 +45,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
             return testDir;
         }
 
-        public static WorldSettings CreateWorldSettings(string testDir, string hostFile, IPlatformLogger platformLogger)
+        public static WorldSettings CreateWorldSettings(string baseDir, string hostFile, IPlatformLogger platformLogger)
         {
-            var supportBasePath = Path.Combine(testDir, "SysDirs");
+            var supportBasePath = Path.Combine(baseDir, "SysDirs");
 
             var logDir = Path.Combine(supportBasePath, "NpcLogs");
 
@@ -83,10 +83,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
             return settings;
         }
 
-        public static IWorld CreateWorld(string testDir, string hostFile, IPlatformLogger platformLogger)
+        public static IWorld CreateWorld(string baseDir, string hostFile, IPlatformLogger platformLogger)
         {
-            var settings = CreateWorldSettings(testDir, hostFile, platformLogger);
+            var settings = CreateWorldSettings(baseDir, hostFile, platformLogger);
 
+            return CreateWorld(settings);
+        }
+
+        public static IWorld CreateWorld(WorldSettings settings)
+        {
             var world = new WorldCore();
             world.SetSettings(settings);
 
@@ -129,9 +134,16 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
         {
             var npcSettings = CreateHumanoidNPCSettings(logicFile, platformListener, currentAbsolutePosition);
 
+            return CreateHumanoidNPC(world, npcSettings);
+        }
+
+        public static IHumanoidNPC CreateHumanoidNPC(IWorld world, HumanoidNPCSettings npcSettings)
+        {
             var npc = world.GetHumanoidNPC(npcSettings);
 
             ILoggedTestHostListener loggedTestHostListener = null;
+
+            var platformListener = npcSettings.HostListener;
 
             if (platformListener != null)
             {
@@ -147,68 +159,27 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
         {
             var entityLogger = new EmptyLogger();
 
-            var testDir = CreateTestDir(CreateRootDir());
+            var baseDir = CreateTestDir(CreateRootDir());
 
-            var worldSettings = CreateWorldSettings(testDir, string.Empty, entityLogger);
-
-#if DEBUG
-            //_gbcLogger.Info($"worldSettings = {worldSettings}");
-#endif
-
-            var worldContext = new WorldContext();
-            worldContext.SetSettings(worldSettings);
+            var worldSettings = CreateWorldSettings(baseDir, string.Empty, entityLogger);
 
             var npcSettings = CreateHumanoidNPCSettings(string.Empty, DefaultPlatformListener, DefaultCurrentAbsolutePosition);
 
-#if DEBUG
-            //_gbcLogger.Info($"npcSettings = {npcSettings}");
-#endif
+            return CreateTestEngineContext(worldSettings, npcSettings);
+        }
 
-            var worldCoreGameComponentContext = worldContext as IWorldCoreGameComponentContext;
+        public static ComplexTestEngineContext CreateTestEngineContext(WorldSettings worldSettings, HumanoidNPCSettings npcSettings)
+        {
+            return CreateTestEngineContext(worldSettings, npcSettings, string.Empty);
+        }
 
-            var coreEngineSettings = new EngineSettings();
-            coreEngineSettings.Id = npcSettings.Id;
-            coreEngineSettings.AppFile = npcSettings.LogicFile;
-            coreEngineSettings.Logger = entityLogger;
-            coreEngineSettings.SyncContext = worldContext.ThreadsComponent;
+        public static ComplexTestEngineContext CreateTestEngineContext(WorldSettings worldSettings, HumanoidNPCSettings npcSettings, string baseDir)
+        {
+            var world = CreateWorld(worldSettings);
 
-            coreEngineSettings.ModulesStorage = worldContext.ModulesStorage.ModulesStorage;
-            coreEngineSettings.ParentStorage = worldCoreGameComponentContext.StandaloneStorage;
-            //coreEngineSettings.ParentStorage = _hostStorage;
-            coreEngineSettings.TmpDir = testDir;
-            coreEngineSettings.HostSupport = new HostSupportComponentStub(npcSettings.PlatformSupport);
+            var npc = CreateHumanoidNPC(world, npcSettings);
 
-#if DEBUG
-            //_gbcLogger.Info($"coreEngineSettings = {coreEngineSettings}");
-#endif
-
-            var engineContext = EngineContextHelper.CreateAndInitContext(coreEngineSettings);
-
-#if DEBUG
-            //_gbcLogger.Info($"After var engineContext = EngineContextHelper.CreateAndInitContext(coreEngineSettings);");
-#endif
-
-            engineContext.CommonNamesStorage.LoadFromSourceCode();
-
-#if DEBUG
-            //_gbcLogger.Info($"After engineContext.CommonNamesStorage.LoadFromSourceCode();");
-#endif
-
-            engineContext.Storage.LoadFromSourceCode();
-
-#if DEBUG
-            //_gbcLogger.Info($"After engineContext.Storage.LoadFromSourceCode();");
-#endif
-
-            engineContext.StandardLibraryLoader.LoadFromSourceCode();
-
-#if DEBUG
-            //_gbcLogger.Info($"After engineContext.StandardLibraryLoader.LoadFromSourceCode();");
-#endif
-
-            engineContext.InstancesStorage.LoadFromSourceFiles();
-
-            return new ComplexTestEngineContext(worldContext, engineContext, testDir);
+            return new ComplexTestEngineContext(world, npc, baseDir);
         }
     }
 }

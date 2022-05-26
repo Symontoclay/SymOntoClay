@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core;
+using SymOntoClay.Core.Internal;
 using SymOntoClay.CoreHelper;
 using System;
 using System.Collections.Generic;
@@ -64,5 +65,10 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         /// <param name="obj">Instance of the game object.</param>
         void RemoveFromBackpack(IGameObject obj);
+
+        /// <summary>
+        /// Gets engine context. Onkly for debugging and testing!
+        /// </summary>
+        IEngineContext EngineContext { get; }
     }
 }

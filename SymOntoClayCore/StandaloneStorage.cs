@@ -88,8 +88,8 @@ namespace SymOntoClay.Core
         public void LoadFromSourceCode()
         {
 #if DEBUG
-            Log("Begin");
-            Log($"_additionalSourceCodePaths = {_additionalSourceCodePaths.WritePODListToString()}");
+            //Log("Begin");
+            //Log($"_additionalSourceCodePaths = {_additionalSourceCodePaths.WritePODListToString()}");
 #endif
 
             lock (_stateLockObj)

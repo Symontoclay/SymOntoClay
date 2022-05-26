@@ -44,6 +44,10 @@ namespace SymOntoClay.UnityAsset.Core.World
         #endregion
 
         #region public members
+        
+        /// <inheritdoc/>
+        public WorldContext WorldContext => _context;
+
         /// <inheritdoc/>
         public void SetSettings(WorldSettings settings)
         {

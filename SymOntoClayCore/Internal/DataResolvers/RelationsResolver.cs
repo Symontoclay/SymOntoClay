@@ -38,11 +38,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var storagesList = GetStoragesList(storage);
 
 #if DEBUG
-            Log($"storagesList.Count = {storagesList.Count}");
-            foreach (var tmpStorage in storagesList)
-            {
-                Log($"tmpStorage.Storage = {tmpStorage.Storage}");
-            }
+            //Log($"storagesList.Count = {storagesList.Count}");
+            //foreach (var tmpStorage in storagesList)
+            //{
+            //    Log($"tmpStorage.Storage = {tmpStorage.Storage}");
+            //}
 #endif
 
             var optionsForInheritanceResolver = options.Clone();

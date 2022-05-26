@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper;
+using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -162,5 +163,10 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         /// <param name="id">Image id.</param>
         void DeleteImage(string id);
+
+        /// <summary>
+        /// Gets world context. Onkly for debugging and testing!
+        /// </summary>
+        WorldContext WorldContext { get; }
     }
 }

@@ -35,7 +35,7 @@ namespace TestSandbox.Handlers
     {
         public NLPHandler()
         {
-            _engineContext = TstEngineContextHelper.CreateAndInitContext().EngineContext;
+            _engineContext = TstEngineContextHelper.CreateAndInitContextWithoutAppFiles().EngineContext;
 
             var mainDictPath = Path.Combine(Directory.GetCurrentDirectory(), "Dicts", "BigMainDictionary.dict");
 
@@ -50,7 +50,7 @@ namespace TestSandbox.Handlers
             //CreateCommonRelations();
         }
 
-        private readonly EngineContext _engineContext;
+        private readonly IEngineContext _engineContext;
         private readonly INLPConverter _converter;
         private readonly IWordsDict _wordsDict;
         private static readonly IEntityLogger _logger = new LoggerImpementation();
@@ -332,6 +332,7 @@ namespace TestSandbox.Handlers
         private INLPConverterContext CreateNLPConverterContext()
         {
             //using var tmpContext = UnityTestEngineContextFactory.CreateTestEngineContext();
+            //tmpContext.Start();
 
             var targetContext = _engineContext;
             //var targetContext = tmpContext.EngineContext;

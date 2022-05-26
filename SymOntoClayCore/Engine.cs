@@ -40,6 +40,11 @@ namespace SymOntoClay.Core
 
         private readonly EngineContext _context;
 
+        /// <summary>
+        /// Gets engine context. Onkly for debugging and testing!
+        /// </summary>
+        public IEngineContext EngineContext => _context;
+
         /// <inheritdoc/>
         public void LoadFromSourceCode()
         {

@@ -12,33 +12,40 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 {
     public class ComplexTestEngineContext: ISymOntoClayDisposable
     {
-        public ComplexTestEngineContext(WorldContext worldContext, EngineContext engineContext, string testDir)
+        public ComplexTestEngineContext(IWorld world, IHumanoidNPC humanoidNPC)
+            : this(world, humanoidNPC, string.Empty)
         {
-            WorldContext = worldContext;
-            EngineContext = engineContext;
-            _testDir = testDir;
         }
 
-        public EngineContext EngineContext { get; private set; }
-        public WorldContext WorldContext { get; private set; }
-        private readonly string _testDir;
+        public ComplexTestEngineContext(IWorld world, IHumanoidNPC humanoidNPC, string baseDir)
+        {
+            World = world;
+            HumanoidNPC = humanoidNPC;
+            _baseDir = baseDir;
+        }
+
+        public IEngineContext EngineContext => HumanoidNPC.EngineContext;
+        public IWorld World { get; private set; }
+        public WorldContext WorldContext => World.WorldContext;
+        public IHumanoidNPC HumanoidNPC { get; private set; }
+        private readonly string _baseDir;
 
         public void Start()
         {
-            WorldContext.Start();
+            World.Start();
         }
 
         /// <inheritdoc/>
-        public bool IsDisposed => WorldContext.IsDisposed;
+        public bool IsDisposed => World.IsDisposed;
 
         /// <inheritdoc/>
         public void Dispose()
         {
-            WorldContext.Dispose();
+            World.Dispose();
 
-            if(!string.IsNullOrWhiteSpace(_testDir) && Directory.Exists(_testDir))
+            if(!string.IsNullOrWhiteSpace(_baseDir) && Directory.Exists(_baseDir))
             {
-                Directory.Delete(_testDir, true);
+                Directory.Delete(_baseDir, true);
             }
         }
     }

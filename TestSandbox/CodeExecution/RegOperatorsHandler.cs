@@ -38,7 +38,7 @@ namespace TestSandbox.CodeExecution
     public class RegOperatorsHandler: IBinaryOperatorHandler
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-        private readonly EngineContext _context;
+        private readonly IEngineContext _context;
 
         public RegOperatorsHandler()
         {

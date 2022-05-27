@@ -36,6 +36,7 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         public abstract void SetStateAsInt32(int state);
         public abstract string GetStateAsString();
+        public abstract string GetPhraseAsString();
 
         public ExpectedBehaviorOfParser ExpectedBehavior { get; set; } = ExpectedBehaviorOfParser.WaitForCurrToken;
 

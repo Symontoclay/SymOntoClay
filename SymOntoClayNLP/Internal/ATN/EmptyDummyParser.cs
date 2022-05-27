@@ -18,6 +18,12 @@ namespace SymOntoClay.NLP.Internal.ATN
         }
 
         /// <inheritdoc/>
+        public override string GetPhraseAsString()
+        {
+            return string.Empty;
+        }
+
+        /// <inheritdoc/>
         public override BaseParser Fork(ParserContext newParserContext)
         {
             var result = new EmptyDummyParser();

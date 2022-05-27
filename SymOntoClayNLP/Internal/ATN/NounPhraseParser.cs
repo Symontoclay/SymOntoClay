@@ -48,6 +48,12 @@ namespace SymOntoClay.NLP.Internal.ATN
         private NounPhrase _nounPhrase;
 
         /// <inheritdoc/>
+        public override string GetPhraseAsString()
+        {
+            return _nounPhrase.ToDbgString();
+        }
+
+        /// <inheritdoc/>
         public override void OnEnter()
         {
 #if DEBUG

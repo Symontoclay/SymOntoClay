@@ -16,7 +16,9 @@ namespace SymOntoClay.NLP.Internal.ATN
             WaitForV,
             GotV,
             WaitForSubject,
-            GotSubject
+            GotSubject,
+            WaitForPP,
+            GotPP
         }
 
         /// <inheritdoc/>
@@ -44,6 +46,12 @@ namespace SymOntoClay.NLP.Internal.ATN
         private State _state;
 
         private VerbPhrase _verbPhrase;
+
+        /// <inheritdoc/>
+        public override string GetPhraseAsString()
+        {
+            return _verbPhrase.ToDbgString();
+        }
 
         /// <inheritdoc/>
         public override void OnEnter()
@@ -132,6 +140,22 @@ namespace SymOntoClay.NLP.Internal.ATN
                                     }
                                 }                                
 
+                                var prepositionsList = wordFramesList.Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Preposition);
+
+                                if(prepositionsList.Any())
+                                {
+                                    wasProcessed = true;
+
+                                    foreach (var item in prepositionsList)
+                                    {
+#if DEBUG
+                                        //Log($"item = {item}");
+#endif
+
+                                        SetParser(new RunVariantDirective<VerbPhraseParser>(State.WaitForPP, ConvertToConcreteATNToken(token, item)));
+                                    }
+                                }
+
                                 if (!wasProcessed)
                                 {
                                     throw new UnExpectedTokenException(token);
@@ -179,6 +203,12 @@ namespace SymOntoClay.NLP.Internal.ATN
                     }
                     break;
 
+                case State.WaitForPP:
+                    {
+                        SetParser(new RunChildDirective<PreOrPostpositionalPhraseParser>(PreOrPostpositionalPhraseParser.State.Init, State.GotPP, token));
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
@@ -203,6 +233,12 @@ namespace SymOntoClay.NLP.Internal.ATN
                         //Log($"ExpectedBehavior = {ExpectedBehavior}");
 #endif
                         ExpectedBehavior = ExpectedBehaviorOfParser.WaitForCurrToken;
+                    }
+                    break;
+
+                case State.GotPP:
+                    {
+                        throw new NotImplementedException();
                     }
                     break;
 

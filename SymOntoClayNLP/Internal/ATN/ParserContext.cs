@@ -300,6 +300,11 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                             _currentParser.OnVariant(_concreteATNToken);
                             _concreteATNToken = null;
+
+                            if (_dumpToLogDirOnExit)
+                            {
+                                LogToInternal(_currentParser.GetPhraseAsString());
+                            }
                         }
                         break;
 
@@ -477,6 +482,11 @@ namespace SymOntoClay.NLP.Internal.ATN
                                 //_logger.Log($"result = {result}");
                                 //_logger.Log($"result.Phrase = {result.Phrase.ToDbgString()}");
 #endif
+
+                                if (_dumpToLogDirOnExit)
+                                {
+                                    throw new NotImplementedException();
+                                }
 
                                 _result.Results.Add(result);
                             }

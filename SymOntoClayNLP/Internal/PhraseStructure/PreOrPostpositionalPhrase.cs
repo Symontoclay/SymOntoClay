@@ -45,6 +45,45 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         public override BaseGrammaticalWordFrame RootWordFrame => P.RootWordFrame;
 
         /// <inheritdoc/>
+        public override BaseSentenceItem CloneBaseSentenceItem(Dictionary<object, object> context)
+        {
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public PreOrPostpositionalPhrase Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public PreOrPostpositionalPhrase Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (PreOrPostpositionalPhrase)context[this];
+            }
+
+            var result = new PreOrPostpositionalPhrase();
+            context[this] = result;
+
+            result.P = P?.CloneBaseSentenceItem(context);
+            result.P2 = P2?.CloneBaseSentenceItem(context);
+            result.Adv = Adv?.CloneBaseSentenceItem(context);
+            result.NP = NP?.CloneBaseSentenceItem(context);
+
+            return result;
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

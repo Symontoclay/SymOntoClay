@@ -20,12 +20,29 @@ namespace SymOntoClay.NLP.Internal.ATN
             InitTransformsDict();
         }
 
+        private ATNLexer(IWordsDict wordsDict)
+        {
+            _wordsDict = wordsDict;
+
+            InitTransformsDict();
+        }
+
         private ATNStringLexer _lexer;
         private IWordsDict _wordsDict;
         private Queue<(string, int, int)> _recoveredSourceItems = new Queue<(string, int, int)> ();
         private Dictionary<string, List<string>> _transformsDict = new Dictionary<string, List<string>>();
 
         private Queue<ATNToken> _recoveriesTokens = new Queue<ATNToken>();
+
+        public ATNLexer Fork()
+        {
+            var newATNLexer = new ATNLexer(_wordsDict);
+            newATNLexer._lexer = _lexer.Fork();
+            newATNLexer._recoveredSourceItems = new Queue<(string, int, int)>(_recoveredSourceItems);
+            newATNLexer._recoveriesTokens = new Queue<ATNToken>(_recoveriesTokens);
+
+            return newATNLexer;
+        }
 
         public bool HasToken()
         {

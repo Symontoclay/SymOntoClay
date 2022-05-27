@@ -20,9 +20,27 @@ namespace SymOntoClay.NLP.Internal.ATN
             GotN
         }
 
+        /// <inheritdoc/>
+        public override BaseParser Fork(ParserContext newParserContext)
+        {
+            var result = new NounPhraseParser();
+            result.FillUpBaseParser(this, newParserContext);
+            result._state = _state;
+            result._nounPhrase = _nounPhrase.Clone();
+
+            return result;
+        }
+
+        /// <inheritdoc/>
         public override void SetStateAsInt32(int state)
         {
             _state = (State)state;
+        }
+
+        /// <inheritdoc/>
+        public override string GetStateAsString()
+        {
+            return _state.ToString();
         }
 
         private State _state;
@@ -61,6 +79,22 @@ namespace SymOntoClay.NLP.Internal.ATN
                                 var wasProcessed = false;
 
                                 var wordFramesList = token.WordFrames;
+
+                                var nounsList = wordFramesList.Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Noun);
+
+                                if(nounsList.Any())
+                                {
+                                    wasProcessed = true;
+
+                                    foreach (var item in nounsList)
+                                    {
+#if DEBUG
+                                        //Log($"item = {item}");
+#endif
+
+                                        SetParser(new RunVariantDirective<NounPhraseParser>(State.WaitForN, ConvertToConcreteATNToken(token, item)));
+                                    }
+                                }
 
                                 var subjectsPronounsList = wordFramesList.Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Pronoun).Select(p => p.AsPronoun).Where(p => p.TypeOfPronoun == TypeOfPronoun.Personal && p.Case == CaseOfPersonalPronoun.Subject);
 

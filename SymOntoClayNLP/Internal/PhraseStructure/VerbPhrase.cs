@@ -2,6 +2,7 @@
 using SymOntoClay.NLP.CommonDict;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.NLP.Internal.PhraseStructure
@@ -69,6 +70,58 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
         /// <inheritdoc/>
         public override BaseGrammaticalWordFrame RootWordFrame => V.RootWordFrame;
+
+        /// <inheritdoc/>
+        public override BaseSentenceItem CloneBaseSentenceItem(Dictionary<object, object> context)
+        {
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public VerbPhrase Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public VerbPhrase Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (VerbPhrase)context[this];
+            }
+
+            var result = new VerbPhrase();
+            context[this] = result;
+
+            result.Intrusion = Intrusion?.CloneBaseSentenceItem(context);
+            result.V = V?.Clone(context);
+            result.VP = VP?.Clone(context);
+            result.Negation = Negation?.Clone(context);
+            result.Particle = Particle?.Clone(context);
+            result.Object = Object?.CloneBaseSentenceItem(context);
+            result.PP = PP?.Select(p => p.Clone(context)).ToList();
+            result.CP = CP?.CloneBaseSentenceItem(context);
+
+            result.Aspect = Aspect;
+            result.Tense = Tense;
+            result.Voice = Voice;
+            result.AbilityModality = AbilityModality;
+            result.PermissionModality = PermissionModality;
+            result.ObligationModality = ObligationModality;
+            result.ProbabilityModality = ProbabilityModality;
+            result.ConditionalModality = ConditionalModality;
+
+            return result;
+        }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

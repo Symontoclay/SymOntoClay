@@ -45,6 +45,59 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         public override BaseGrammaticalWordFrame RootWordFrame => throw new NotImplementedException();
 
         /// <inheritdoc/>
+        public override BaseSentenceItem CloneBaseSentenceItem(Dictionary<object, object> context)
+        {
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public Sentence Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public Sentence Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (Sentence)context[this];
+            }
+
+            var result = new Sentence();
+            context[this] = result;
+
+            result.VocativePhrase = VocativePhrase?.CloneBaseSentenceItem(context);
+            result.Condition = Condition?.CloneBaseSentenceItem(context);
+            result.Subject = Subject?.CloneBaseSentenceItem(context);
+            result.Predicate = Predicate?.CloneBaseSentenceItem(context);
+
+            result.Mood = Mood;
+
+            result.KindOfQuestion = KindOfQuestion;
+            result.IsNegation = IsNegation;
+
+            result.Aspect = Aspect;
+            result.Tense = Tense;
+            result.Voice = Voice;
+            result.AbilityModality = AbilityModality;
+            result.PermissionModality = PermissionModality;
+            result.ObligationModality = ObligationModality;
+            result.ProbabilityModality = ProbabilityModality;
+            result.ConditionalModality = ConditionalModality;
+
+            return result;
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

@@ -21,9 +21,26 @@ namespace SymOntoClay.NLP.Internal.ATN
         }
 
         /// <inheritdoc/>
+        public override BaseParser Fork(ParserContext newParserContext)
+        {
+            var result = new SentenceParser();
+            result.FillUpBaseParser(this, newParserContext);
+            result._state = _state;
+            result._sentence = _sentence.Clone();
+
+            return result;
+        }
+
+        /// <inheritdoc/>
         public override void SetStateAsInt32(int state)
         {
             _state = (State)state;
+        }
+
+        /// <inheritdoc/>
+        public override string GetStateAsString()
+        {
+            return _state.ToString();
         }
 
         private State _state;
@@ -48,8 +65,8 @@ namespace SymOntoClay.NLP.Internal.ATN
         public override void OnRun(ATNToken token)
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"token = {token}");
+            //Log($"_state = {_state}");
+            //Log($"token = {token}");
 #endif
 
             switch (_state)
@@ -105,14 +122,18 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                                 var verbWordFramesList = wordFramesList.Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Verb);
 
-                                if(verbWordFramesList.Any())
+#if DEBUG
+                                //Log($"verbWordFramesList = {verbWordFramesList.WriteListToString()}");
+#endif
+
+                                if (verbWordFramesList.Any())
                                 {
                                     wasProcessed = true;
 
                                     foreach(var verbWordFrame in verbWordFramesList)
                                     {
 #if DEBUG
-                                        Log($"verbWordFrame = {verbWordFrame}");
+                                        //Log($"verbWordFrame = {verbWordFrame}");
 #endif
 
                                         SetParser(new RunVariantDirective<SentenceParser>(State.WaitForPredicate, ConvertToConcreteATNToken(token, verbWordFrame)));

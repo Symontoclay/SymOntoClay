@@ -45,6 +45,14 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
         public abstract BaseGrammaticalWordFrame RootWordFrame { get; }
 
+        public BaseSentenceItem CloneBaseSentenceItem()
+        {
+            var context = new Dictionary<object, object>();
+            return CloneBaseSentenceItem(context);
+        }
+
+        public abstract BaseSentenceItem CloneBaseSentenceItem(Dictionary<object, object> context);
+
         /// <inheritdoc/>
         public override string ToString()
         {

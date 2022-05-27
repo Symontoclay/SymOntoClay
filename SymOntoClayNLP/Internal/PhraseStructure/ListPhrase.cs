@@ -2,6 +2,7 @@
 using SymOntoClay.NLP.CommonDict;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.NLP.Internal.PhraseStructure
@@ -21,6 +22,42 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
         /// <inheritdoc/>
         public override BaseGrammaticalWordFrame RootWordFrame => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        public override BaseSentenceItem CloneBaseSentenceItem(Dictionary<object, object> context)
+        {
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public ListPhrase Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public ListPhrase Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (ListPhrase)context[this];
+            }
+
+            var result = new ListPhrase();
+            context[this] = result;
+
+            result.Items = Items?.Select(p => p?.CloneBaseSentenceItem(context)).ToList();
+
+            return result;
+        }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

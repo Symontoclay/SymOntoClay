@@ -19,9 +19,26 @@ namespace SymOntoClay.NLP.Internal.ATN
             GotSubject
         }
 
+        /// <inheritdoc/>
+        public override BaseParser Fork(ParserContext newParserContext)
+        {
+            var result = new VerbPhraseParser();
+            result.FillUpBaseParser(this, newParserContext);
+            result._state = _state;
+            result._verbPhrase = _verbPhrase.Clone();
+
+            return result;
+        }
+
         public override void SetStateAsInt32(int state)
         {
             _state = (State)state;
+        }
+
+        /// <inheritdoc/>
+        public override string GetStateAsString()
+        {
+            return _state.ToString();
         }
 
         private State _state;

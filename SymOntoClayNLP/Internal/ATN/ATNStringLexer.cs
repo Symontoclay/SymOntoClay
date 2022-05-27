@@ -21,12 +21,28 @@ namespace SymOntoClay.NLP.Internal.ATN
             _items = new Queue<char>(_itemsList);
         }
 
+        private ATNStringLexer()
+        {
+        }
+
         private Queue<char> _items;
         private List<char> _itemsList;
         private int _currentPos;
         private int _currentLine = 1;
 
         private State _state = State.Init;
+
+        public ATNStringLexer Fork()
+        {
+            var newLexer = new ATNStringLexer();
+            newLexer._itemsList = _itemsList.ToList();
+            newLexer._items = new Queue<char>(_items);
+            newLexer._currentPos = _currentPos;
+            newLexer._currentLine = _currentLine;
+            newLexer._state = _state;
+
+            return newLexer;
+        }
 
         public (string, int, int) GetItem()
         {

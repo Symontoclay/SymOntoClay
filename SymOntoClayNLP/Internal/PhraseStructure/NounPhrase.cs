@@ -89,6 +89,56 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         public override BaseGrammaticalWordFrame RootWordFrame => N.RootWordFrame;
 
         /// <inheritdoc/>
+        public override BaseSentenceItem CloneBaseSentenceItem(Dictionary<object, object> context)
+        {
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public NounPhrase Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public NounPhrase Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (NounPhrase)context[this];
+            }
+
+            var result = new NounPhrase();
+            context[this] = result;
+
+            result.N = N?.CloneBaseSentenceItem(context);
+            result.D = D?.CloneBaseSentenceItem(context);
+            result.QP = QP?.CloneBaseSentenceItem(context);
+            result.AP = AP?.CloneBaseSentenceItem(context);
+            result.NounAdjunct = NounAdjunct?.CloneBaseSentenceItem(context);
+
+            result.Negation = Negation?.Clone(context);
+
+            result.HasPossesiveMark = HasPossesiveMark;
+
+            result.PP = PP?.CloneBaseSentenceItem(context);
+            result.AdvP = AdvP?.CloneBaseSentenceItem(context);
+            result.RelativeClauses = RelativeClauses?.CloneBaseSentenceItem(context);
+            result.OtherClauses = OtherClauses?.CloneBaseSentenceItem(context);
+            result.InfinitivePhrases = InfinitivePhrases?.CloneBaseSentenceItem(context);
+
+            return result;
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

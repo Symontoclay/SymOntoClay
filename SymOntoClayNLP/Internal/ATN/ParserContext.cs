@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.ATN.ParsingDirectives;
@@ -25,15 +26,33 @@ namespace SymOntoClay.NLP.Internal.ATN
             _lexer = new ATNLexer(text, wordsDict);
 
             _parsers = new Stack<BaseParser>();
+
+            if(_dumpToLogDirOnExit)
+            {
+                LogToInternal($"text: \"{text}\"");
+            }
         }
 
-        private GlobalParserContext _globalContext;
+        private ParserContext(GlobalParserContext globalContext, IEntityLogger logger, int parentNum)
+        {
+            _globalContext = globalContext;
+            _logger = logger;
+            _parentNum = parentNum;
+
+            _contextNum = _globalContext.GetContextNum();
+
+            _dumpToLogDirOnExit = _globalContext.DumpToLogDirOnExit;
+            _logDir = _globalContext.LogDir;
+        }
+
+        private readonly GlobalParserContext _globalContext;
         private ATNLexer _lexer;
         private Stack<BaseParser> _parsers;
         private BaseParser _currentParser;
         private readonly IEntityLogger _logger;
         private readonly bool _dumpToLogDirOnExit;
         private readonly int _contextNum;
+        private readonly int _parentNum;
         private readonly string _logDir;
         private bool _isActive = true;
         private List<string> _logMessages = new List<string>();
@@ -41,12 +60,58 @@ namespace SymOntoClay.NLP.Internal.ATN
         private int _globalCounter = 0;
         private int _sentenceCounter = 0;
 
+        private ParserContext Fork()
+        {
+#if DEBUG
+            //_logger.Log($"Begin");
+#endif
+
+            var newContext = new ParserContext(_globalContext, _logger, _contextNum);
+            newContext._lexer = _lexer.Fork();
+
+            newContext._parsers = new Stack<BaseParser>(_parsers.Select(p => p.Fork(newContext)).ToList());
+
+            newContext._currentParser = _currentParser.Fork(newContext);
+
+            newContext._logMessages = _logMessages.ToList();
+            newContext._isActive = _isActive;
+            newContext._globalCounter = _globalCounter;
+            newContext._sentenceCounter = _sentenceCounter;
+
+#if DEBUG
+            //_logger.Log($"_currentToken = {_currentToken}");
+#endif
+
+            newContext._currentToken = _currentToken;
+
+#if DEBUG
+            //_logger.Log($"_concreteATNToken = {_concreteATNToken}");
+#endif
+
+            newContext._concreteATNToken = _concreteATNToken;
+
+            _globalContext.AddContext(newContext);
+
+            return newContext;
+        }
+
         [MethodForLoggingSupport]
         public void Log(string message)
         {
-            _logMessages.Add(message);
+            LogToInternal(message);
 
             _logger.Log(message);
+        }
+
+        [MethodForLoggingSupport]
+        private void LogToInternal(string message, bool addEmptyString = true)
+        {
+            _logMessages.Add(message);
+
+            if(addEmptyString)
+            {
+                _logMessages.Add(string.Empty);
+            }
         }
 
         private bool IsNotParsers()
@@ -56,139 +121,12 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         public void SetParser(params IParsingDirective[] directives)
         {
-#if DEBUG
-            //_logger.Log($"directives = {directives.WriteListToString()}");
-#endif
-
-            if(IsNotParsers())
+            if(_parsingDirectives == null)
             {
-                if(directives.Length != 1)
-                {
-                    throw new Exception($"directives.Length != 1. Actual value is {directives.Length}.");
-                }
-
-                var targetDirective = directives.Single();
-
-                var parser = targetDirective.CreateParser(this);
-
-                parser.SetStateAsInt32(targetDirective.State.Value);
-
-                SetParser(parser);
-
-                return;
+                _parsingDirectives = new List<IParsingDirective>();
             }
 
-            if(directives.Length == 1)
-            {
-                var targetDirective = directives.Single();
-
-#if DEBUG
-                //_logger.Log($"targetDirective.ParserType?.FullName = {targetDirective.ParserType?.FullName}");
-                //_logger.Log($"_currentParser.GetType().FullName = {_currentParser.GetType().FullName}");
-#endif
-
-                if(targetDirective.ParserType == _currentParser.GetType())
-                {
-                    _currentParser.SetStateAsInt32(targetDirective.State.Value);
-
-                    var kindOfParsingDirective = targetDirective.KindOfParsingDirective;
-
-                    switch (kindOfParsingDirective)
-                    {
-                        case KindOfParsingDirective.RunVariant:
-                            _currentParser.ExpectedBehavior = ExpectedBehaviorOfParser.WaitForVariant;
-                            _concreteATNToken = targetDirective.ConcreteATNToken;
-                            break;
-
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(kindOfParsingDirective), kindOfParsingDirective, null);
-                    }
-                }
-                else
-                {
-                    var kindOfParsingDirective = targetDirective.KindOfParsingDirective;
-
-#if DEBUG
-                    //_logger.Log($"kindOfParsingDirective = {kindOfParsingDirective}");
-#endif
-
-                    switch (kindOfParsingDirective)
-                    {
-                        case KindOfParsingDirective.RunChild:
-                            {
-                                _currentParser.StateAfterRunChild = targetDirective.StateAfterRunChild;
-                                _currentParser.ExpectedBehavior = ExpectedBehaviorOfParser.WaitForReceiveReturn;
-
-#if DEBUG
-                                //_logger.Log($"targetDirective.ConcreteATNToken = {targetDirective.ConcreteATNToken}");
-#endif
-                                _lexer.Recovery(ConvertToATNToken(targetDirective.ConcreteATNToken));
-
-                                var parser = targetDirective.CreateParser(this);
-
-                                parser.SetStateAsInt32(targetDirective.State.Value);
-
-                                SetParser(parser);
-                            }
-                            break;
-
-                        case KindOfParsingDirective.ReturnToParent:
-                            {
-#if DEBUG
-                                //_logger.Log($"targetDirective.ConcreteATNToken = {targetDirective.ConcreteATNToken}");
-#endif
-                                if(targetDirective.ConcreteATNToken != null)
-                                {
-                                    _lexer.Recovery(ConvertToATNToken(targetDirective.ConcreteATNToken));
-                                }
-
-                                SetPrevParser();
-
-                                if(_currentParser == null)
-                                {
-                                    var result = new ParsingResult()
-                                    {
-                                        IsSuccess = true,
-                                        CountSteps = _sentenceCounter,
-                                        Phrase = targetDirective.Phrase
-                                    };
-
-                                    _sentenceCounter = 0;
-
-#if DEBUG
-                                    //_logger.Log($"result = {result}");
-                                    //_logger.Log($"result.Phrase = {result.Phrase.ToDbgString()}");
-#endif
-
-                                    _result.Results.Add(result);
-                                }
-                                else
-                                {
-#if DEBUG
-                                    //_logger.Log($"_currentParser.StateAfterRunChild = {_currentParser.StateAfterRunChild}");
-#endif
-
-                                    if (_currentParser.StateAfterRunChild.HasValue)
-                                    {
-                                        _currentParser.SetStateAsInt32(_currentParser.StateAfterRunChild.Value);
-
-                                        _currentParser.StateAfterRunChild = null;
-                                    }
-
-                                    _currentParser.OnReceiveReturn(targetDirective.Phrase);
-                                }
-                            }
-                            break;
-
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(kindOfParsingDirective), kindOfParsingDirective, null);
-                    }
-                }
-
-                return;
-            }
-
-            throw new NotImplementedException();
+            _parsingDirectives.AddRange(directives);
         }
 
         private void SetParser(BaseParser parser)
@@ -202,7 +140,30 @@ namespace SymOntoClay.NLP.Internal.ATN
                 _parsers.Push(_currentParser);
             }
 
+            var prevParserName = _currentParser?.GetParserName() ?? string.Empty;
+
             _currentParser = parser;
+
+            if(_dumpToLogDirOnExit)
+            {
+                var logSb = new StringBuilder("Set Parser:");
+
+                if(!string.IsNullOrWhiteSpace(prevParserName))
+                {
+                    logSb.Append(" ");
+                    logSb.Append(prevParserName);
+                    logSb.Append(" ->");
+                }
+
+                var currentParserName = _currentParser.GetParserName();
+
+                logSb.Append(" ");
+                logSb.Append(currentParserName);
+
+                LogToInternal(logSb.ToString());
+
+                LogToInternal($"{currentParserName}: OnEnter");
+            }
 
             _currentParser.OnEnter();
 
@@ -226,6 +187,11 @@ namespace SymOntoClay.NLP.Internal.ATN
 
             _currentParser = _parsers.Pop();
 
+            if (_dumpToLogDirOnExit)
+            {
+                throw new NotImplementedException();
+            }
+
 #if DEBUG
             //_logger.Log($"End");
 #endif
@@ -235,18 +201,25 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         private ATNToken _currentToken;
         private ConcreteATNToken _concreteATNToken;
+        private List<IParsingDirective> _parsingDirectives;
 
         private WholeTextParsingResult _result = new WholeTextParsingResult();
 
         public void Run()
         {
 #if DEBUG
-            //_logger.Log($"Begin");
+            _logger.Log($"Begin");
 #endif
 
             try
             {
-                if(_currentParser == null && _lexer.HasToken())
+                if (!_parsingDirectives.IsNullOrEmpty())
+                {
+                    ProcessParsingDirectives();
+                    return;
+                }
+
+                if (_currentParser == null && _lexer.HasToken())
                 {
                     SetParser(new RunCurrTokenDirective<SentenceParser>(SentenceParser.State.Init));
                     return;
@@ -270,6 +243,11 @@ namespace SymOntoClay.NLP.Internal.ATN
                             
                             if (_currentToken == null)
                             {
+                                if (_dumpToLogDirOnExit)
+                                {
+                                    throw new NotImplementedException();
+                                }
+
                                 _currentParser.OnEmptyLexer();
 
                                 NExit();
@@ -284,12 +262,42 @@ namespace SymOntoClay.NLP.Internal.ATN
                             //_logger.Log($"_sentenceCounter = {_sentenceCounter}");
 #endif
 
+                            if (_dumpToLogDirOnExit)
+                            {
+                                var currentParserName = _currentParser.GetParserName();
+
+                                var logSb = new StringBuilder($"{currentParserName} OnRun: state = ");
+                                logSb.Append(_currentParser.GetStateAsString());
+                                LogToInternal(logSb.ToString());
+
+                                logSb = new StringBuilder($"{currentParserName} OnRun: token = ");
+                                logSb.Append(_currentToken);
+                                LogToInternal(logSb.ToString());
+                            }
+
                             _currentParser.OnRun(_currentToken);
                         }
                         break;
 
                     case ExpectedBehaviorOfParser.WaitForVariant:
                         {
+#if DEBUG
+                            _logger.Log($"_concreteATNToken = {_concreteATNToken}");
+#endif
+
+                            if (_dumpToLogDirOnExit)
+                            {
+                                var currentParserName = _currentParser.GetParserName();
+
+                                var logSb = new StringBuilder($"{currentParserName} OnVariant: state = ");
+                                logSb.Append(_currentParser.GetStateAsString());
+                                LogToInternal(logSb.ToString());
+
+                                logSb = new StringBuilder($"{currentParserName} OnVariant: token = ");
+                                logSb.Append(_concreteATNToken);
+                                LogToInternal(logSb.ToString());
+                            }
+
                             _currentParser.OnVariant(_concreteATNToken);
                             _concreteATNToken = null;
                         }
@@ -322,6 +330,185 @@ namespace SymOntoClay.NLP.Internal.ATN
 #endif
         }
 
+        private void ProcessParsingDirectives()
+        {
+            var directives = _parsingDirectives.ToList();
+
+            _parsingDirectives.Clear();
+
+#if DEBUG
+            _logger.Log($"directives = {directives.WriteListToString()}");
+#endif
+
+            if(directives.Count == 1)
+            {
+                ProcessParsingDirective(directives.Single());
+                return;
+            }
+
+            var directiveForCurrentContext = directives.First();
+
+            directives.Remove(directiveForCurrentContext);
+
+#if DEBUG
+            _logger.Log($"directiveForCurrentContext = {directiveForCurrentContext}");
+            _logger.Log($"directives (2) = {directives.WriteListToString()}");
+#endif
+
+            var newParserContextsList = new List<ParserContext>();
+
+            foreach (var directive in directives)
+            {
+#if DEBUG
+                _logger.Log($"directive = {directive}");
+#endif
+
+                var newParserContext = Fork();
+
+                newParserContext.LogToInternal($"Forked {newParserContext._contextNum} from {_contextNum}");
+
+                newParserContextsList.Add(newParserContext);
+
+                newParserContext.ProcessParsingDirective(directive);
+            }
+
+            if (_dumpToLogDirOnExit && newParserContextsList.Any())
+            {
+                foreach(var newParserContext in newParserContextsList)
+                {
+                    LogToInternal($"Forking {newParserContext._contextNum} from {_contextNum}");
+                }
+            }
+
+            ProcessParsingDirective(directiveForCurrentContext);
+        }
+
+        private void ProcessParsingDirective(IParsingDirective directive)
+        {
+#if DEBUG
+            _logger.Log($"directive = {directive}");
+#endif
+
+            if (IsNotParsers())
+            {
+                var parser = directive.CreateParser(this);
+
+                parser.SetStateAsInt32(directive.State.Value);
+
+                SetParser(parser);
+
+                return;
+            }
+
+#if DEBUG
+            _logger.Log($"directive.ParserType?.FullName = {directive.ParserType?.FullName}");
+            _logger.Log($"_currentParser.GetType().FullName = {_currentParser.GetType().FullName}");
+#endif
+
+            if (directive.ParserType == _currentParser.GetType())
+            {
+                _currentParser.SetStateAsInt32(directive.State.Value);
+
+                var kindOfParsingDirective = directive.KindOfParsingDirective;
+
+                switch (kindOfParsingDirective)
+                {
+                    case KindOfParsingDirective.RunVariant:
+                        _currentParser.ExpectedBehavior = ExpectedBehaviorOfParser.WaitForVariant;
+                        _concreteATNToken = directive.ConcreteATNToken;
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParsingDirective), kindOfParsingDirective, null);
+                }
+            }
+            else
+            {
+                var kindOfParsingDirective = directive.KindOfParsingDirective;
+
+#if DEBUG
+                _logger.Log($"kindOfParsingDirective = {kindOfParsingDirective}");
+#endif
+
+                switch (kindOfParsingDirective)
+                {
+                    case KindOfParsingDirective.RunChild:
+                        {
+                            _currentParser.StateAfterRunChild = directive.StateAfterRunChild;
+                            _currentParser.ExpectedBehavior = ExpectedBehaviorOfParser.WaitForReceiveReturn;
+
+#if DEBUG
+                            //_logger.Log($"directive.ConcreteATNToken = {directive.ConcreteATNToken}");
+#endif
+                            _lexer.Recovery(ConvertToATNToken(directive.ConcreteATNToken));
+
+                            var parser = directive.CreateParser(this);
+
+                            parser.SetStateAsInt32(directive.State.Value);
+
+                            SetParser(parser);
+                        }
+                        break;
+
+                    case KindOfParsingDirective.ReturnToParent:
+                        {
+#if DEBUG
+                            //_logger.Log($"directive.ConcreteATNToken = {directive.ConcreteATNToken}");
+#endif
+                            if (directive.ConcreteATNToken != null)
+                            {
+                                _lexer.Recovery(ConvertToATNToken(directive.ConcreteATNToken));
+                            }
+
+                            SetPrevParser();
+
+                            if (_currentParser == null)
+                            {
+                                var result = new ParsingResult()
+                                {
+                                    IsSuccess = true,
+                                    CountSteps = _sentenceCounter,
+                                    Phrase = directive.Phrase
+                                };
+
+                                _sentenceCounter = 0;
+
+#if DEBUG
+                                //_logger.Log($"result = {result}");
+                                //_logger.Log($"result.Phrase = {result.Phrase.ToDbgString()}");
+#endif
+
+                                _result.Results.Add(result);
+                            }
+                            else
+                            {
+#if DEBUG
+                                //_logger.Log($"_currentParser.StateAfterRunChild = {_currentParser.StateAfterRunChild}");
+#endif
+
+                                if (_currentParser.StateAfterRunChild.HasValue)
+                                {
+                                    _currentParser.SetStateAsInt32(_currentParser.StateAfterRunChild.Value);
+
+                                    _currentParser.StateAfterRunChild = null;
+                                }
+
+                                if (_dumpToLogDirOnExit)
+                                {
+                                    throw new NotImplementedException();
+                                }
+
+                                _currentParser.OnReceiveReturn(directive.Phrase);
+                            }
+                        }
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParsingDirective), kindOfParsingDirective, null);
+                }
+            }
+        }
+
         private void NExit()
         {
 #if DEBUG
@@ -337,9 +524,29 @@ namespace SymOntoClay.NLP.Internal.ATN
 
             if(_dumpToLogDirOnExit)
             {
+                var currentParserName = _currentParser?.GetParserName();
+
+                var logSb = new StringBuilder();
+
+                if(!string.IsNullOrWhiteSpace(currentParserName))
+                {
+                    logSb.Append($"{_currentParser.GetParserName()}: ");
+                }
+
+                logSb.Append("Exit");
+
+                LogToInternal(logSb.ToString());
+
                 var sb = new StringBuilder();
 
-                sb.AppendLine(_contextNum.ToString());
+                sb.Append(_contextNum.ToString());
+
+                if(_parentNum > 0)
+                {
+                    sb.Append($" : {_parentNum}");
+                }
+
+                sb.AppendLine();
                 sb.AppendLine();
 
                 foreach(var msg in _logMessages)

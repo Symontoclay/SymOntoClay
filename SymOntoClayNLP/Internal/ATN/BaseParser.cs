@@ -13,11 +13,29 @@ namespace SymOntoClay.NLP.Internal.ATN
         public void SetContext(ParserContext context)
         {
             _context = context;
+            _parserName = GetType().Name;
+        }
+
+        public abstract BaseParser Fork(ParserContext newParserContext);
+
+        protected void FillUpBaseParser(BaseParser source, ParserContext newParserContext)
+        {
+            _context = newParserContext;
+            _parserName = source._parserName;
+            ExpectedBehavior = source.ExpectedBehavior;
+            StateAfterRunChild = source.StateAfterRunChild;
         }
 
         protected ParserContext _context;
+        private string _parserName;
+
+        public string GetParserName()
+        {
+            return _parserName;
+        }
 
         public abstract void SetStateAsInt32(int state);
+        public abstract string GetStateAsString();
 
         public ExpectedBehaviorOfParser ExpectedBehavior { get; set; } = ExpectedBehaviorOfParser.WaitForCurrToken;
 

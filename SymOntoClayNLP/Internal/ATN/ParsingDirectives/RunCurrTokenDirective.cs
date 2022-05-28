@@ -8,7 +8,7 @@ namespace SymOntoClay.NLP.Internal.ATN.ParsingDirectives
         where T : BaseParser, new()
     {
         public RunCurrTokenDirective(object state)
-            : base(KindOfParsingDirective.RunCurrToken, state, null, null, null)
+            : base(KindOfParsingDirective.RunCurrToken, state, null, null, null, null)
         {
         }
     }

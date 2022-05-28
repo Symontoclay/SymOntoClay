@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SymOntoClay.NLP.Internal.ATN
 {
-    public class ParsingResult : IObjectToString
+    public class ParsingResult : IObjectToString, IObjectToDbgString
     {
         public bool IsSuccess { get; set; }
         public int CountSteps { get; set; }

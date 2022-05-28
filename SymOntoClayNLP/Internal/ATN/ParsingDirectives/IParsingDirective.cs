@@ -13,6 +13,7 @@ namespace SymOntoClay.NLP.Internal.ATN.ParsingDirectives
         int? StateAfterRunChild { get; }
         ConcreteATNToken ConcreteATNToken { get; }
         BaseSentenceItem Phrase { get; }
+        object Role { get; }
 
         BaseParser CreateParser(ParserContext parserContext);
 

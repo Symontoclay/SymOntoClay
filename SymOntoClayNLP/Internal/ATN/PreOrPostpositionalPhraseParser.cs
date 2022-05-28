@@ -14,7 +14,9 @@ namespace SymOntoClay.NLP.Internal.ATN
         {
             Init,
             WaitForP,
-            GotP
+            GotP,
+            WaitForNP,
+            GotNP
         }
 
         /// <inheritdoc/>
@@ -110,6 +112,71 @@ namespace SymOntoClay.NLP.Internal.ATN
                     }
                     break;
 
+                case State.GotP:
+                    switch (token.Kind)
+                    {
+                        case KindOfATNToken.Word:
+                            {
+                                var wasProcessed = false;
+
+                                var wordFramesList = token.WordFrames;
+
+                                var nounWordFramesList = wordFramesList.Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Noun);
+
+#if DEBUG
+                                //Log($"nounWordFramesList = {nounWordFramesList.WriteListToString()}");
+#endif
+
+                                if(nounWordFramesList.Any())
+                                {
+                                    wasProcessed = true;
+
+                                    foreach(var item in nounWordFramesList)
+                                    {
+                                        SetParser(new RunVariantDirective<PreOrPostpositionalPhraseParser>(State.WaitForNP, ConvertToConcreteATNToken(token, item)));
+                                    }
+                                }
+
+                                var pronounWordFramesList = wordFramesList.Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Pronoun);
+
+#if DEBUG
+                                //Log($"pronounWordFramesList = {pronounWordFramesList.WriteListToString()}");
+#endif
+
+                                if (pronounWordFramesList.Any())
+                                {
+                                    wasProcessed = true;
+
+                                    foreach (var item in pronounWordFramesList)
+                                    {
+                                        SetParser(new RunVariantDirective<PreOrPostpositionalPhraseParser>(State.WaitForNP, ConvertToConcreteATNToken(token, item)));
+                                    }
+                                }
+
+                                var adjectiveWordFramesList = wordFramesList.Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Adjective);
+
+                                if (adjectiveWordFramesList.Any())
+                                {
+                                    wasProcessed = true;
+
+                                    foreach (var item in adjectiveWordFramesList)
+                                    {
+                                        SetParser(new RunVariantDirective<PreOrPostpositionalPhraseParser>(State.WaitForNP, ConvertToConcreteATNToken(token, item)));
+                                    }
+                                }
+
+                                if (!wasProcessed)
+                                {
+                                    throw new UnExpectedTokenException(token);
+                                }
+                            }
+                            break;
+
+                        default:
+                            throw new UnExpectedTokenException(token);
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
@@ -139,6 +206,18 @@ namespace SymOntoClay.NLP.Internal.ATN
                     }
                     break;
 
+                case State.WaitForNP:
+                    switch (token.Kind)
+                    {
+                        case KindOfATNToken.Word:
+                            SetParser(new RunChildDirective<NounPhraseParser>(NounPhraseParser.State.Init, State.GotNP, token));
+                            break;
+
+                        default:
+                            throw new UnExpectedTokenException(token);
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
@@ -154,9 +233,23 @@ namespace SymOntoClay.NLP.Internal.ATN
 
             switch (_state)
             {
+                case State.GotNP:
+                    {
+                        _pp.NP = phrase;
+
+                        ExpectedBehavior = ExpectedBehaviorOfParser.WaitForCurrToken;
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
+        }
+
+        /// <inheritdoc/>
+        public override void OnEmptyLexer()
+        {
+            SetParser(new ReturnToParentDirective(_pp));
         }
     }
 }

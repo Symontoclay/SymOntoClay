@@ -52,7 +52,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// <summary>
         /// "to school" in "I go to school tomorrow"
         /// </summary>
-        public List<PreOrPostpositionalPhrase> PP { get; set; }
+        public BaseSentenceItem PP { get; set; }
 
         /// <summary>
         /// "that she is a teacher" in "I know that she is a teacher"
@@ -108,7 +108,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             result.Negation = Negation?.Clone(context);
             result.Particle = Particle?.Clone(context);
             result.Object = Object?.CloneBaseSentenceItem(context);
-            result.PP = PP?.Select(p => p.Clone(context)).ToList();
+            result.PP = PP?.CloneBaseSentenceItem(context);
             result.CP = CP?.CloneBaseSentenceItem(context);
 
             result.Aspect = Aspect;
@@ -134,7 +134,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             sb.PrintObjProp(n, nameof(VP), VP);
             sb.PrintObjProp(n, nameof(Negation), Negation);
             sb.PrintObjProp(n, nameof(Object), Object);
-            sb.PrintObjListProp(n, nameof(PP), PP);
+            sb.PrintObjProp(n, nameof(PP), PP);
             sb.PrintObjProp(n, nameof(CP), CP);
 
             //sb.PrintObjProp(n, nameof(), );
@@ -308,7 +308,8 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
             if (PP != null)
             {
-                throw new NotImplementedException();
+                sb.AppendLine($"{nextNspaces}PP:");
+                sb.Append(PP.ToDbgString(nextNextN));
             }
 
             if (CP != null)

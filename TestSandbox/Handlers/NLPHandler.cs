@@ -145,7 +145,7 @@ namespace TestSandbox.Handlers
             //var wordsDict = new TstSimpleWordsDict();
 
             //var text = "I like my cat.";
-            var text = "Go to green place";
+            var text = "Go to green place!";
 
 #if DEBUG
             _logger.Log($"text = {text}");

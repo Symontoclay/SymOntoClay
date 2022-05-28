@@ -194,7 +194,8 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
             if (AP != null)
             {
-                throw new NotImplementedException();
+                sb.AppendLine($"{nextNspaces}AP:");
+                sb.Append(AP.ToDbgString(nextNextN));
             }
 
             if (NounAdjunct != null)

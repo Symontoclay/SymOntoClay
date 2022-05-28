@@ -8,7 +8,7 @@ namespace SymOntoClay.NLP.Internal.ATN.ParsingDirectives
         where T : BaseParser, new()
     {
         public RunVariantDirective(object state, ConcreteATNToken concreteATNToken)
-            : base(KindOfParsingDirective.RunVariant, state, null, concreteATNToken, null)
+            : base(KindOfParsingDirective.RunVariant, state, null, concreteATNToken, null, null)
         {
         }
     }

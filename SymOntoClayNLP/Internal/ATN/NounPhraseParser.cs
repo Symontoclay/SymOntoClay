@@ -17,7 +17,9 @@ namespace SymOntoClay.NLP.Internal.ATN
             WaitForD,
             GotD,
             WaitForN,
-            GotN
+            GotN,
+            WaitForAP,
+            GotAP
         }
 
         /// <inheritdoc/>
@@ -51,6 +53,18 @@ namespace SymOntoClay.NLP.Internal.ATN
         public override string GetPhraseAsString()
         {
             return _nounPhrase.ToDbgString();
+        }
+
+        public override void SetRole(object role)
+        {
+            _roleOfNounPhrase = (RoleOfNounPhrase)role;
+        }
+
+        private RoleOfNounPhrase _roleOfNounPhrase = RoleOfNounPhrase.Undefined;
+
+        public override string GetRoleAsString()
+        {
+            return _roleOfNounPhrase.ToString();
         }
 
         /// <inheritdoc/>
@@ -135,6 +149,18 @@ namespace SymOntoClay.NLP.Internal.ATN
                                     }
                                 }
 
+                                var adjectiveWordFramesList = wordFramesList.Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Adjective);
+
+                                if (adjectiveWordFramesList.Any())
+                                {
+                                    wasProcessed = true;
+
+                                    foreach (var item in adjectiveWordFramesList)
+                                    {
+                                        SetParser(new RunVariantDirective<NounPhraseParser>(State.WaitForAP, ConvertToConcreteATNToken(token, item)));
+                                    }
+                                }
+
                                 if (!wasProcessed)
                                 {
                                     throw new UnExpectedTokenException(token);
@@ -184,6 +210,43 @@ namespace SymOntoClay.NLP.Internal.ATN
                     }
                     break;
 
+                case State.GotAP:
+                    switch (token.Kind)
+                    {
+                        case KindOfATNToken.Word:
+                            {
+                                var wasProcessed = false;
+
+                                var wordFramesList = token.WordFrames;
+
+                                var nounsList = wordFramesList.Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Noun);
+
+                                if (nounsList.Any())
+                                {
+                                    wasProcessed = true;
+
+                                    foreach (var item in nounsList)
+                                    {
+#if DEBUG
+                                        //Log($"item = {item}");
+#endif
+
+                                        SetParser(new RunVariantDirective<NounPhraseParser>(State.WaitForN, ConvertToConcreteATNToken(token, item)));
+                                    }
+                                }
+
+                                if (!wasProcessed)
+                                {
+                                    throw new UnExpectedTokenException(token);
+                                }
+                            }
+                            break;
+
+                        default:
+                            throw new UnExpectedTokenException(token);
+                    }
+                    break;
+
                 case State.GotN:
                     switch (token.Kind)
                     {
@@ -193,21 +256,28 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                                 var wordFramesList = token.WordFrames;
 
-                                var subject = _nounPhrase.N.AsWord.WordFrame;
-
-                                var verbsList = wordFramesList.Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Verb).Select(p => p.AsVerb).Where(p => CorrespondsHelper.SubjectAndVerb(subject, p));
-
-                                if (verbsList.Any())
-                                {
-                                    wasProcessed = true;
-
-                                    foreach (var item in verbsList)
-                                    {
 #if DEBUG
-                                        //Log($"item = {item}");
+                                //Log($"_roleOfNounPhrase = {_roleOfNounPhrase}");
 #endif
 
-                                        SetParser(new ReturnToParentDirective(_nounPhrase, ConvertToConcreteATNToken(token, item)));
+                                if (_roleOfNounPhrase == RoleOfNounPhrase.Subject)
+                                {
+                                    var subject = _nounPhrase.N.AsWord.WordFrame;
+
+                                    var verbsList = wordFramesList.Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Verb).Select(p => p.AsVerb).Where(p => CorrespondsHelper.SubjectAndVerb(subject, p));
+
+                                    if (verbsList.Any())
+                                    {
+                                        wasProcessed = true;
+
+                                        foreach (var item in verbsList)
+                                        {
+#if DEBUG
+                                            //Log($"item = {item}");
+#endif
+
+                                            SetParser(new ReturnToParentDirective(_nounPhrase, ConvertToConcreteATNToken(token, item)));
+                                        }
                                     }
                                 }
 
@@ -219,11 +289,12 @@ namespace SymOntoClay.NLP.Internal.ATN
                             break;
 
                         case KindOfATNToken.Point:
-                            SetParser(new ReturnToParentDirective(_nounPhrase));
+                        case KindOfATNToken.ExclamationMark:
+                            ReturnToParent(token);
                             break;
 
                         default:
-                                throw new UnExpectedTokenException(token);
+                            throw new UnExpectedTokenException(token);
                     }
                     break;
 
@@ -270,13 +341,22 @@ namespace SymOntoClay.NLP.Internal.ATN
                     }
                     break;
 
+                case State.WaitForAP:
+                    {
+                        _nounPhrase.AP = ConvertToWord(token);
+
+                        _state = State.GotAP;
+
+                        ExpectedBehavior = ExpectedBehaviorOfParser.WaitForCurrToken;
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
         }
 
         /// <inheritdoc/>
-
         public override void OnReceiveReturn(BaseSentenceItem phrase)
         {
 #if DEBUG
@@ -285,6 +365,22 @@ namespace SymOntoClay.NLP.Internal.ATN
 #endif
 
             throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public override void OnEmptyLexer()
+        {
+            ReturnToParent(null);
+        }
+
+        private void ReturnToParent(ATNToken token)
+        {
+            if(_nounPhrase.N == null)
+            {
+                throw new UnExpectedTokenException(token);
+            }
+
+            SetParser(new ReturnToParentDirective(_nounPhrase));
         }
     }
 }

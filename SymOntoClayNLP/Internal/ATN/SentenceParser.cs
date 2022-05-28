@@ -214,9 +214,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                     switch(token.Kind)
                     {
                         case KindOfATNToken.Word:
-                            {
-                                SetParser(new RunChildDirective<NounPhraseParser>(NounPhraseParser.State.Init, State.GotSubject, token));
-                            }
+                            SetParser(new RunChildDirective<NounPhraseParser>(NounPhraseParser.State.Init, State.GotSubject, token, RoleOfNounPhrase.Subject));
                             break;
 
                         default:
@@ -228,9 +226,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                     switch (token.Kind)
                     {
                         case KindOfATNToken.Word:
-                            {
-                                SetParser(new RunChildDirective<VerbPhraseParser>(VerbPhraseParser.State.Init, State.GotPredicate, token));
-                            }
+                            SetParser(new RunChildDirective<VerbPhraseParser>(VerbPhraseParser.State.Init, State.GotPredicate, token));
                             break;
 
                         default:

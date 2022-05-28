@@ -10,20 +10,23 @@ namespace SymOntoClay.NLP.Internal.ATN.GrammarHelpers
     public static class CorrespondsHelper
     {
 #if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static bool SubjectAndVerb(BaseGrammaticalWordFrame subject, VerbGrammaticalWordFrame verb)
         {
 #if DEBUG
-            //_gbcLogger.Info($"subject = {subject}");
-            //_gbcLogger.Info($"verb = {verb}");
+            _gbcLogger.Info($"subject = {subject}");
+            _gbcLogger.Info($"verb = {verb}");
 #endif
 
             switch(subject.PartOfSpeech)
             {
                 case GrammaticalPartOfSpeech.Pronoun:
                     return PronounSubjectAndVerb(subject.AsPronoun, verb);
+
+                case GrammaticalPartOfSpeech.Noun:
+                    return NounSubjectAndVerb(subject.AsNoun, verb);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(subject.PartOfSpeech), subject.PartOfSpeech, null);
@@ -45,6 +48,11 @@ namespace SymOntoClay.NLP.Internal.ATN.GrammarHelpers
                 }
             }
 
+            throw new NotImplementedException();
+        }
+
+        private static bool NounSubjectAndVerb(NounGrammaticalWordFrame subject, VerbGrammaticalWordFrame verb)
+        {
             throw new NotImplementedException();
         }
     }

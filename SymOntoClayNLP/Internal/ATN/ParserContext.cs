@@ -69,7 +69,18 @@ namespace SymOntoClay.NLP.Internal.ATN
             var newContext = new ParserContext(_globalContext, _logger, _contextNum);
             newContext._lexer = _lexer.Fork();
 
-            newContext._parsers = new Stack<BaseParser>(_parsers.Select(p => p.Fork(newContext)).ToList());
+            newContext._parsers = new Stack<BaseParser>(_parsers.Select(p => p.Fork(newContext)).Reverse().ToList());
+
+#if DEBUG
+            _logger.Log($"_parsers = {_parsers.Select(p => p.GetParserName()).WritePODListToString()}");
+            var tmpStack = new Stack<BaseParser>(_parsers.Reverse().ToList());
+            if(tmpStack.Count > 0)
+            {
+                var tmpParser = tmpStack.Pop();
+
+                _logger.Log($"tmpParser.GetParserName() = {tmpParser.GetParserName()}");
+            }
+#endif
 
             newContext._currentParser = _currentParser.Fork(newContext);
 
@@ -182,14 +193,33 @@ namespace SymOntoClay.NLP.Internal.ATN
             if (!_parsers.Any())
             {
                 _currentParser = null;
+
+                if (_dumpToLogDirOnExit)
+                {
+                    LogToInternal("All parsers has been finished");
+                }
+
                 return;
             }
+
+            var prevParserName = _currentParser.GetParserName();
 
             _currentParser = _parsers.Pop();
 
             if (_dumpToLogDirOnExit)
             {
-                throw new NotImplementedException();
+                var logSb = new StringBuilder("Back to prev Parser:");
+
+                logSb.Append(" ");
+                logSb.Append(prevParserName);
+                logSb.Append(" ->");
+
+                var currentParserName = _currentParser.GetParserName();
+
+                logSb.Append(" ");
+                logSb.Append(currentParserName);
+
+                LogToInternal(logSb.ToString());
             }
 
 #if DEBUG
@@ -245,12 +275,10 @@ namespace SymOntoClay.NLP.Internal.ATN
                             {
                                 if (_dumpToLogDirOnExit)
                                 {
-                                    throw new NotImplementedException();
+                                    LogToInternal($"{_currentParser.GetParserName()} OnEmptyLexer");
                                 }
 
                                 _currentParser.OnEmptyLexer();
-
-                                NExit();
                                 break;
                             }
 
@@ -269,6 +297,13 @@ namespace SymOntoClay.NLP.Internal.ATN
                                 var logSb = new StringBuilder($"{currentParserName} OnRun: state = ");
                                 logSb.Append(_currentParser.GetStateAsString());
                                 LogToInternal(logSb.ToString());
+
+                                var roleName = _currentParser.GetRoleAsString();
+
+                                if(!string.IsNullOrWhiteSpace(roleName))
+                                {
+                                    LogToInternal($"{currentParserName} OnRun: role = {roleName}");
+                                }
 
                                 logSb = new StringBuilder($"{currentParserName} OnRun: token = ");
                                 logSb.Append(_currentToken);
@@ -485,6 +520,10 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                                 if (_dumpToLogDirOnExit)
                                 {
+                                    var logSb = new StringBuilder($"Put result = ");
+                                    logSb.Append(result.ToDbgString());
+                                    LogToInternal(logSb.ToString());
+
                                     throw new NotImplementedException();
                                 }
 
@@ -505,10 +544,17 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                                 if (_dumpToLogDirOnExit)
                                 {
-                                    throw new NotImplementedException();
+                                    var logSb = new StringBuilder($"{_currentParser.GetParserName()} OnReceiveReturn: phrase = ");
+                                    logSb.Append(directive.Phrase?.ToDbgString());
+                                    LogToInternal(logSb.ToString());
                                 }
 
                                 _currentParser.OnReceiveReturn(directive.Phrase);
+
+                                if (_dumpToLogDirOnExit)
+                                {
+                                    LogToInternal(_currentParser.GetPhraseAsString());
+                                }
                             }
                         }
                         break;

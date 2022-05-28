@@ -238,7 +238,9 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                 case State.GotPP:
                     {
-                        throw new NotImplementedException();
+                        _verbPhrase.PP = phrase;
+
+                        ExpectedBehavior = ExpectedBehaviorOfParser.WaitForCurrToken;
                     }
                     break;
 

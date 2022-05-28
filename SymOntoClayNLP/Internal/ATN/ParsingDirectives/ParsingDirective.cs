@@ -9,7 +9,7 @@ namespace SymOntoClay.NLP.Internal.ATN.ParsingDirectives
     public class ParsingDirective<T>: IParsingDirective
         where T: BaseParser, new()
     {
-        public ParsingDirective(KindOfParsingDirective kindOfParsingDirective, object state, object stateAfterRunChild, ConcreteATNToken concreteATNToken, BaseSentenceItem phrase)
+        public ParsingDirective(KindOfParsingDirective kindOfParsingDirective, object state, object stateAfterRunChild, ConcreteATNToken concreteATNToken, BaseSentenceItem phrase, object role)
         {
             KindOfParsingDirective = kindOfParsingDirective;
 
@@ -25,6 +25,8 @@ namespace SymOntoClay.NLP.Internal.ATN.ParsingDirectives
 
             ConcreteATNToken = concreteATNToken;
             Phrase = phrase;
+
+            Role = role;
         }
 
         /// <inheritdoc/>
@@ -42,12 +44,19 @@ namespace SymOntoClay.NLP.Internal.ATN.ParsingDirectives
         /// <inheritdoc/>
         public BaseSentenceItem Phrase { get; private set; }
 
+        public object Role { get; private set; }
+
         /// <inheritdoc/>
         public BaseParser CreateParser(ParserContext parserContext)
         {
             var parser = new T();
             parser.SetContext(parserContext);
             parser.SetStateAsInt32(State.Value);
+
+            if (Role != null)
+            {
+                parser.SetRole(Role);
+            }
 
             return parser;
         }
@@ -79,6 +88,7 @@ namespace SymOntoClay.NLP.Internal.ATN.ParsingDirectives
             sb.AppendLine($"{spaces}{nameof(StateAfterRunChild)} = {StateAfterRunChild}");
             sb.PrintObjProp(n, nameof(ConcreteATNToken), ConcreteATNToken);
             sb.PrintObjProp(n, nameof(Phrase), Phrase);
+            sb.AppendLine($"{spaces}{nameof(Role)} = {Role}");
 
             return sb.ToString();
         }

@@ -196,13 +196,13 @@ namespace TestSandbox.Handlers
 
                 _logger.Log($"item (after) = '{item.ToDbgString()}'");
 
-                //var plainSentencesList = converterToPlainSentences.Run(item);
+                var plainSentencesList = converterToPlainSentences.Run(item);
 
-                //_logger.Log($"plainSentencesList.Count = {plainSentencesList.Count}");
+                _logger.Log($"plainSentencesList.Count = {plainSentencesList.Count}");
 
-                //foreach(var plainSentence in plainSentencesList)
-                //{
-                //    _logger.Log($"plainSentence = '{plainSentence.ToDbgString()}'");
+                foreach(var plainSentence in plainSentencesList)
+                {
+                    _logger.Log($"plainSentence = '{plainSentence.ToDbgString()}'");
 
                 //    var conceptualGraph = semanticAnalyzer.Run(plainSentence);
 
@@ -229,7 +229,7 @@ namespace TestSandbox.Handlers
                 //        _logger.Log($"ruleInstance.KindOfRuleInstance = {ruleInstance.KindOfRuleInstance}");
                 //        _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
                 //    }
-                //}
+                }
             }
         }
 

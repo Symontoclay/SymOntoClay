@@ -57,5 +57,40 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP.ATN
                     D:
                         my", item.ToDbgString().Trim());
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case2()
+        {
+            var text = "Go to green place!";
+
+            var parser = new ATNParser(_logger, _wordsDict);
+
+            var result = parser.Run(text);
+
+            Assert.AreEqual(1, result.Count);
+
+            var item = result[0];
+
+            var compactizer = new PhraseCompactizer(_logger, _wordsDict);
+
+            compactizer.Run(item);
+
+            Assert.AreEqual(@"S:(Imperative)
+    Predicate:
+        VP
+            V:
+                Go
+            PP:
+                PP
+                    :P
+                        to
+                    :NP
+                        NP
+                            N:
+                                place
+                            AP:
+                                green", item.ToDbgString().Trim());
+        }
     }
 }

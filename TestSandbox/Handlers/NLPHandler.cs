@@ -192,9 +192,9 @@ namespace TestSandbox.Handlers
             {
                 _logger.Log($"item = '{item.ToDbgString()}'");
 
-                //compactizer.Run(item);
+                compactizer.Run(item);
 
-                //_logger.Log($"item (after) = '{item.ToDbgString()}'");
+                _logger.Log($"item (after) = '{item.ToDbgString()}'");
 
                 //var plainSentencesList = converterToPlainSentences.Run(item);
 

@@ -82,7 +82,7 @@ namespace TestSandbox
             //TstRelationsStorageHandler();
             //TstGenerateDllDict();
             //TSTWordsFactory();
-            TstNLPHandler();
+            TstNLPHandler();//<=NLP
             //TstTriggerConditionNodeHandler();
             //TstSoundBus();
             //TstNavigationHandler();

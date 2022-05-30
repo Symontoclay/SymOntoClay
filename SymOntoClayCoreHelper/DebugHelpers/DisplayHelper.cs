@@ -139,6 +139,23 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             }
         }
 
+        public static void PrintDbgObjProp(this StringBuilder sb, uint n, string propName, IObjectToDbgString obj)
+        {
+            var spaces = Spaces(n);
+            var nextN = n + 4;
+
+            if (obj == null)
+            {
+                sb.AppendLine($"{spaces}{propName} = NULL");
+            }
+            else
+            {
+                sb.AppendLine($"{spaces}Begin {propName}");
+                sb.Append(obj.ToDbgString(nextN));
+                sb.AppendLine($"{spaces}End {propName}");
+            }
+        }
+
         public static void PrintPODValue(this StringBuilder sb, uint n, string value)
         {
             var spaces = Spaces(n);
@@ -285,6 +302,35 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
                     {
                         sb.Append(item.ToBriefString(nextN));
                     }                   
+                }
+                sb.AppendLine($"{spaces}End {propName}");
+            }
+        }
+
+        public static void PrintDbgObjListProp<T>(this StringBuilder sb, uint n, string propName, IEnumerable<T> items)
+            where T : IObjectToDbgString
+        {
+            var spaces = Spaces(n);
+            var nextN = n + 4;
+            var nextNSpaces = Spaces(nextN);
+
+            if (items == null)
+            {
+                sb.AppendLine($"{spaces}{propName} = NULL");
+            }
+            else
+            {
+                sb.AppendLine($"{spaces}Begin {propName}");
+                foreach (var item in items)
+                {
+                    if (item == null)
+                    {
+                        sb.AppendLine($"{nextNSpaces}NULL");
+                    }
+                    else
+                    {
+                        sb.Append(item.ToDbgString(nextN));
+                    }
                 }
                 sb.AppendLine($"{spaces}End {propName}");
             }

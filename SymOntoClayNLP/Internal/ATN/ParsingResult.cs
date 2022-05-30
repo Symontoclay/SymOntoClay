@@ -38,5 +38,31 @@ namespace SymOntoClay.NLP.Internal.ATN
 
             return sb.ToString();
         }
+
+        /// <inheritdoc/>
+        public string ToDbgString()
+        {
+            return ToDbgString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToDbgString(uint n)
+        {
+            return this.GetDefaultToDbgStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToDbgString.PropertiesToDbgString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
+            sb.AppendLine($"{spaces}{nameof(CountSteps)} = {CountSteps}");
+            sb.PrintDbgObjProp(n, nameof(Phrase), Phrase);
+            sb.AppendLine($"{spaces}{nameof(Error)} = {Error}");
+
+            return sb.ToString();
+        }
     }
 }

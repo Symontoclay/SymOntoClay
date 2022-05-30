@@ -45,7 +45,7 @@ namespace SymOntoClay.NLP.Internal.ATN
         public void Run()
         {
 #if DEBUG
-            var n = 1;
+            //var n = 1;
 #endif
 
             while (true)
@@ -62,14 +62,14 @@ namespace SymOntoClay.NLP.Internal.ATN
                     item.Run();
                 }
 #if DEBUG
-                n++;
+                //n++;
 
                 //_logger.Log($"n = {n}");
 
-                if (n > 10)
-                {
+                //if (n > 10)
+                //{
                     //break;
-                }
+                //}
 #endif
             }
         }
@@ -111,6 +111,11 @@ namespace SymOntoClay.NLP.Internal.ATN
         
         public List<BaseSentenceItem> GetPhrases()
         {
+#if DEBUG
+            //_logger.Log($"_resultsList.Count = {_resultsList.Count}");
+            //_logger.Log($"_resultsList.Where(p => p.IsSuccess).Count() = {_resultsList.Where(p => p.IsSuccess).Count()}");
+#endif
+
             return _resultsList.Where(p => p.IsSuccess).FirstOrDefault().Results.Select(p => p.Phrase).ToList();
         }
 

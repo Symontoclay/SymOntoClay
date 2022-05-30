@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SymOntoClay.NLP.Internal.ATN
 {
-    public class WholeTextParsingResult : IObjectToString
+    public class WholeTextParsingResult : IObjectToString, IObjectToDbgString
     {
         public bool IsSuccess { get; set; } = true;
         public int CountSteps { get; set; }
@@ -17,7 +17,7 @@ namespace SymOntoClay.NLP.Internal.ATN
         {
             return ToString(0u);
         }
-
+        
         /// <inheritdoc/>
         public string ToString(uint n)
         {
@@ -33,6 +33,32 @@ namespace SymOntoClay.NLP.Internal.ATN
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.AppendLine($"{spaces}{nameof(CountSteps)} = {CountSteps}");
             sb.PrintObjListProp(n, nameof(Results), Results);
+            sb.AppendLine($"{spaces}{nameof(Error)} = {Error}");
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToDbgString()
+        {
+            return ToDbgString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToDbgString(uint n)
+        {
+            return this.GetDefaultToDbgStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToDbgString.PropertiesToDbgString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
+            sb.AppendLine($"{spaces}{nameof(CountSteps)} = {CountSteps}");
+            sb.PrintDbgObjListProp(n, nameof(Results), Results);
             sb.AppendLine($"{spaces}{nameof(Error)} = {Error}");
 
             return sb.ToString();

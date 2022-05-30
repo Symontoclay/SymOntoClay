@@ -183,8 +183,8 @@ namespace TestSandbox.Handlers
 
             var converterInternalCGToFact = new ConverterInternalCGToFact(_engineContext.Logger);
 
-            //var result = parser.Run(text);
-            var result = parser.Run(text, true, logSessionDir);
+            var result = parser.Run(text);
+            //var result = parser.Run(text, true, logSessionDir);
 
             _logger.Log($"result.Count = {result.Count}");
 
@@ -192,44 +192,44 @@ namespace TestSandbox.Handlers
             {
                 _logger.Log($"item = '{item.ToDbgString()}'");
 
-                compactizer.Run(item);
+                //compactizer.Run(item);
 
-                _logger.Log($"item (after) = '{item.ToDbgString()}'");
+                //_logger.Log($"item (after) = '{item.ToDbgString()}'");
 
-                var plainSentencesList = converterToPlainSentences.Run(item);
+                //var plainSentencesList = converterToPlainSentences.Run(item);
 
-                _logger.Log($"plainSentencesList.Count = {plainSentencesList.Count}");
+                //_logger.Log($"plainSentencesList.Count = {plainSentencesList.Count}");
 
-                foreach(var plainSentence in plainSentencesList)
-                {
-                    _logger.Log($"plainSentence = '{plainSentence.ToDbgString()}'");
+                //foreach(var plainSentence in plainSentencesList)
+                //{
+                //    _logger.Log($"plainSentence = '{plainSentence.ToDbgString()}'");
 
-                    var conceptualGraph = semanticAnalyzer.Run(plainSentence);
+                //    var conceptualGraph = semanticAnalyzer.Run(plainSentence);
 
-                    var conceptualGraphDbgStr = DotConverter.ConvertToString(conceptualGraph);
+                //    var conceptualGraphDbgStr = DotConverter.ConvertToString(conceptualGraph);
 
-                    _logger.Log($"conceptualGraphDbgStr = '{conceptualGraphDbgStr}'");
+                //    _logger.Log($"conceptualGraphDbgStr = '{conceptualGraphDbgStr}'");
 
-                    //_logger.Log($"conceptualGraphDbgStr.DeepTrim() = '{conceptualGraphDbgStr.DeepTrim()}'");
+                //    //_logger.Log($"conceptualGraphDbgStr.DeepTrim() = '{conceptualGraphDbgStr.DeepTrim()}'");
 
-                    var internalCG = convertorCGToInternal.Convert(conceptualGraph);
+                //    var internalCG = convertorCGToInternal.Convert(conceptualGraph);
 
-                    _logger.Log($"internalCG = {internalCG}");
+                //    _logger.Log($"internalCG = {internalCG}");
 
-                    var dotStr = DotConverter.ConvertToString(internalCG);
+                //    var dotStr = DotConverter.ConvertToString(internalCG);
 
-                    _logger.Log($"dotStr = '{dotStr}'");
+                //    _logger.Log($"dotStr = '{dotStr}'");
 
-                    var ruleInstancesList = converterInternalCGToFact.ConvertConceptualGraph(internalCG);
+                //    var ruleInstancesList = converterInternalCGToFact.ConvertConceptualGraph(internalCG);
 
-                    _logger.Log($"ruleInstancesList.Count = {ruleInstancesList.Count}");
+                //    _logger.Log($"ruleInstancesList.Count = {ruleInstancesList.Count}");
 
-                    foreach (var ruleInstance in ruleInstancesList)
-                    {
-                        _logger.Log($"ruleInstance.KindOfRuleInstance = {ruleInstance.KindOfRuleInstance}");
-                        _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
-                    }
-                }
+                //    foreach (var ruleInstance in ruleInstancesList)
+                //    {
+                //        _logger.Log($"ruleInstance.KindOfRuleInstance = {ruleInstance.KindOfRuleInstance}");
+                //        _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
+                //    }
+                //}
             }
         }
 

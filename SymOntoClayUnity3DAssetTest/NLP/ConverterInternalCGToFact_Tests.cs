@@ -75,5 +75,52 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP
 
             Assert.AreEqual(@"{: >: { like(i,#@{: >: { possess(i,$_) & cat($_) } :}) } :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case2()
+        {
+            var text = "Go to green place!";
+
+            var parser = new ATNParser(_logger, _wordsDict);
+
+            var result = parser.Run(text);
+
+            Assert.AreEqual(1, result.Count);
+
+            var item = result[0];
+
+            var compactizer = new PhraseCompactizer(_logger, _wordsDict);
+
+            compactizer.Run(item);
+
+            var converterToPlainSentences = new ConverterToPlainSentences(_logger);
+
+            var plainSentencesList = converterToPlainSentences.Run(item);
+
+            Assert.AreEqual(1, plainSentencesList.Count);
+
+            var plainSentence = plainSentencesList[0];
+
+            var semanticAnalyzer = new SemanticAnalyzer(_logger, _wordsDict);
+
+            var conceptualGraph = semanticAnalyzer.Run(plainSentence);
+
+            var convertorCGToInternal = new ConvertorCGToInternal(_logger);
+
+            var internalCG = convertorCGToInternal.Convert(conceptualGraph);
+
+            var converterInternalCGToFact = new ConverterInternalCGToFact(_logger);
+
+            var ruleInstancesList = converterInternalCGToFact.ConvertConceptualGraph(internalCG);
+
+            Assert.AreEqual(1, ruleInstancesList.Count);
+
+            var ruleInstance = ruleInstancesList[0];
+
+            Assert.AreEqual(KindOfRuleInstance.Fact, ruleInstance.KindOfRuleInstance);
+
+            Assert.AreEqual(@"{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+        }
     }
 }

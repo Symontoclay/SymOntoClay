@@ -800,8 +800,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
 
             if (!string.IsNullOrWhiteSpace(linkedVarName))
             {
-                _logger.Log($"linkedVarName = {linkedVarName}");
-                _logger.Log($"relation.Name = {relation.Name}");
+                //_logger.Log($"linkedVarName = {linkedVarName}");
+                //_logger.Log($"relation.Name = {relation.Name}");
 
 
                 var linkedVarNameValue = NameHelper.CreateName(linkedVarName);

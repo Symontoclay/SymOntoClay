@@ -1326,7 +1326,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
             FillName(source, result, context);
 
-            if(!source.InputNodes.IsNullOrEmpty() && source.InputNodes.Any(p => p.Name == SpecialNamesOfRelations.ObjectRelationName))
+            if(!source.InputNodes.IsNullOrEmpty() && source.InputNodes.Any(p => p.Name == SpecialNamesOfRelations.ObjectRelationName || p.Name == SpecialNamesOfRelations.DirectionRelationName))
             {
                 result.IsRootConceptOfEntitiCondition = true;
             }

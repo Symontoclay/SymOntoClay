@@ -220,15 +220,15 @@ namespace TestSandbox.Handlers
 
                     _logger.Log($"dotStr = '{dotStr}'");
 
-                    //    var ruleInstancesList = converterInternalCGToFact.ConvertConceptualGraph(internalCG);
+                    var ruleInstancesList = converterInternalCGToFact.ConvertConceptualGraph(internalCG);
 
-                    //    _logger.Log($"ruleInstancesList.Count = {ruleInstancesList.Count}");
+                    _logger.Log($"ruleInstancesList.Count = {ruleInstancesList.Count}");
 
-                    //    foreach (var ruleInstance in ruleInstancesList)
-                    //    {
-                    //        _logger.Log($"ruleInstance.KindOfRuleInstance = {ruleInstance.KindOfRuleInstance}");
-                    //        _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
-                    //    }
+                    foreach (var ruleInstance in ruleInstancesList)
+                    {
+                        _logger.Log($"ruleInstance.KindOfRuleInstance = {ruleInstance.KindOfRuleInstance}");
+                        _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
+                    }
                 }
             }
         }

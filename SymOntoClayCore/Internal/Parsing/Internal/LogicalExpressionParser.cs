@@ -725,6 +725,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             {
                 var aliasesDict = _logicalExpressionParserContext.AliasesDict;
 
+                node.LinkedVars = new List<LogicalQueryNode>();
+
                 foreach (var unresolvedAlias in _unresolvedAiases)
                 {
 #if DEBUG
@@ -737,6 +739,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
 
                     aliasesDict[unresolvedAlias] = node;
+
+                    var varNodeForRelation = new LogicalQueryNode() { Kind = KindOfLogicalQueryNode.LogicalVar };
+                    varNodeForRelation.Name = unresolvedAlias;
+
+                    node.LinkedVars = new List<LogicalQueryNode>();
+                    node.LinkedVars.Add(varNodeForRelation);
                 }
 
                 _unresolvedAiases.Clear();

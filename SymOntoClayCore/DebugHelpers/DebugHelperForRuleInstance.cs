@@ -242,6 +242,14 @@ namespace SymOntoClay.Core.DebugHelpers
         {
             var sb = new StringBuilder();
 
+            if (!expr.LinkedVars.IsNullOrEmpty())
+            {
+                foreach (var linkedVar in expr.LinkedVars)
+                {
+                    sb.Append($"{linkedVar.Name.NameValue} = ");
+                }
+            }
+
             sb.Append($"{expr.Name.NameValue}(");
 
             var resultParamsList = new List<string>();

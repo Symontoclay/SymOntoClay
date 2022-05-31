@@ -156,7 +156,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             //_logger.Log($"dotStr (6) = {dotStr}");
 #endif
 
-            var expression = CreateExpressionByWholeGraph(source, context, dest, contextForSingleRuleInstance);
+            var expression = CreateExpressionByWholeGraph(source, context, dest, part, contextForSingleRuleInstance);
 
 #if DEBUG
             //_logger.Log($"expression = {expression}");
@@ -678,7 +678,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             }
         }
 
-        private LogicalQueryNode CreateExpressionByWholeGraph(InternalConceptualGraph source, ContextOfConvertingInternalCGToFact context, RuleInstance ruleInstance, ContextForSingleRuleInstanceOfConvertingInternalCGToFact contextForSingleRuleInstance)
+        private LogicalQueryNode CreateExpressionByWholeGraph(InternalConceptualGraph source, ContextOfConvertingInternalCGToFact context, RuleInstance ruleInstance, BaseRulePart part, ContextForSingleRuleInstanceOfConvertingInternalCGToFact contextForSingleRuleInstance)
         {
             var relationsList = source.Children.Where(p => p.IsRelationNode).Select(p => p.AsRelationNode).ToList();
 
@@ -696,7 +696,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
 
             if (relationsList.Count == 1)
             {
-                return CreateExpressionByRelation(relationsList.Single(), source, ruleInstance, context, contextForSingleRuleInstance);
+                return CreateExpressionByRelation(relationsList.Single(), source, ruleInstance, part, context, contextForSingleRuleInstance);
             }
 
             var result = new LogicalQueryNode {Kind = KindOfLogicalQueryNode.BinaryOperator, KindOfOperator = KindOfOperatorOfLogicalQueryNode.And };
@@ -713,7 +713,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
                 n++;
                 var relation = relationsListEnumerator.Current;
 
-                var relationExpr = CreateExpressionByRelation(relation, source, ruleInstance, context, contextForSingleRuleInstance);
+                var relationExpr = CreateExpressionByRelation(relation, source, ruleInstance, part, context, contextForSingleRuleInstance);
 
 #if DEBUG
                 //LogInstance.Log($"n = {n} relationExpr = {relationExpr}");
@@ -744,7 +744,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             return result;
         }
 
-        private LogicalQueryNode CreateExpressionByRelation(InternalRelationCGNode relation, InternalConceptualGraph internalConceptualGraph, RuleInstance ruleInstance, ContextOfConvertingInternalCGToFact context, ContextForSingleRuleInstanceOfConvertingInternalCGToFact contextForSingleRuleInstance)
+        private LogicalQueryNode CreateExpressionByRelation(InternalRelationCGNode relation, InternalConceptualGraph internalConceptualGraph, RuleInstance ruleInstance, BaseRulePart part, ContextOfConvertingInternalCGToFact context, ContextForSingleRuleInstanceOfConvertingInternalCGToFact contextForSingleRuleInstance)
         {
 #if DEBUG
             //if (ruleInstance.KindOfRuleInstance == KindOfRuleInstance.EntityCondition)
@@ -774,6 +774,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             //    _logger.Log($"inputNode = {inputNode}");
             //}            
 #endif
+
             if (inputNode != null)
             {
                 var inputNodeExpr = CreateExpressionByGraphOrConceptNode(inputNode, internalConceptualGraph, ruleInstance, context, contextForSingleRuleInstance);
@@ -799,20 +800,24 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
 
             if (!string.IsNullOrWhiteSpace(linkedVarName))
             {
-                throw new NotImplementedException();
+                _logger.Log($"linkedVarName = {linkedVarName}");
+                _logger.Log($"relation.Name = {relation.Name}");
 
-                //var varNodeForRelation = new VarExpressionNode();
-                //varNodeForRelation.Quantifier = KindOfQuantifier.Existential;
-                //varNodeForRelation.Name = linkedVarName;
 
-                //relationExpr.LinkedVars = new List<VarExpressionNode>();
-                //relationExpr.LinkedVars.Add(varNodeForRelation);
+                var linkedVarNameValue = NameHelper.CreateName(linkedVarName);
 
-                //var varNodeForQuantification = new VarExpressionNode();
-                //varNodeForQuantification.Quantifier = KindOfQuantifier.Existential;
-                //varNodeForQuantification.Name = linkedVarName;
+                if (part.AliasesDict == null)
+                {
+                    part.AliasesDict = new Dictionary<StrongIdentifierValue, LogicalQueryNode>();
+                }
 
-                //ruleInstance.VariablesQuantification.Items.Add(varNodeForQuantification);
+                part.AliasesDict[NameHelper.CreateName(linkedVarName)] = relationExpr;
+
+                var varNodeForRelation = new LogicalQueryNode() { Kind = KindOfLogicalQueryNode.LogicalVar };
+                varNodeForRelation.Name = linkedVarNameValue;
+
+                relationExpr.LinkedVars = new List<LogicalQueryNode>();
+                relationExpr.LinkedVars.Add(varNodeForRelation);
             }
 
             //var annotionRelationsList = context.GetAnnotationRelations(relation);
@@ -836,12 +841,12 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
 
 
 
-//#if DEBUG
-//            if (ruleInstance.KindOfRuleInstance == KindOfRuleInstance.EntityCondition)
-//            {
-//                _logger.Log($"relationExpr = {relationExpr}");
-//            }            
-//#endif
+            //#if DEBUG
+            //            if (ruleInstance.KindOfRuleInstance == KindOfRuleInstance.EntityCondition)
+            //            {
+            //                _logger.Log($"relationExpr = {relationExpr}");
+            //            }            
+            //#endif
 
             //throw new NotImplementedException();
             return relationExpr;

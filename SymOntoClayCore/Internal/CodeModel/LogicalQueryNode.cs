@@ -48,6 +48,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public LogicalQueryNode Left { get; set; }
         public LogicalQueryNode Right { get; set; }
         public IList<LogicalQueryNode> ParamsList { get; set; }
+        public IList<LogicalQueryNode> LinkedVars { get; set; }
         public Value Value { get; set; }
         public FuzzyLogicNonNumericSequenceValue FuzzyLogicNonNumericSequenceValue { get; set; }
         public bool IsQuestion { get; set; }
@@ -788,6 +789,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.Left = Left?.Clone(context);
             result.Right = Right?.Clone(context);
             result.ParamsList = ParamsList?.Select(p => p.Clone(context)).ToList();
+            result.LinkedVars = LinkedVars?.Select(p => p.Clone(context)).ToList();
             result.Value = Value?.CloneValue(context);
             result.FuzzyLogicNonNumericSequenceValue = FuzzyLogicNonNumericSequenceValue?.Clone(context);
             result.IsQuestion = IsQuestion;
@@ -869,7 +871,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjProp(n, nameof(Left), Left);
             sb.PrintObjProp(n, nameof(Right), Right);
             sb.PrintObjListProp(n, nameof(ParamsList), ParamsList);
-            
+            sb.PrintObjListProp(n, nameof(LinkedVars), LinkedVars);
+
             sb.PrintObjProp(n, nameof(Value), Value);
             sb.PrintObjProp(n, nameof(FuzzyLogicNonNumericSequenceValue), FuzzyLogicNonNumericSequenceValue);
 
@@ -902,6 +905,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjProp(n, nameof(Left), Left);
             sb.PrintShortObjProp(n, nameof(Right), Right);
             sb.PrintShortObjListProp(n, nameof(ParamsList), ParamsList);
+            sb.PrintShortObjListProp(n, nameof(LinkedVars), LinkedVars);
 
             sb.PrintShortObjProp(n, nameof(Value), Value);
             sb.PrintShortObjProp(n, nameof(FuzzyLogicNonNumericSequenceValue), FuzzyLogicNonNumericSequenceValue);
@@ -935,6 +939,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintExisting(n, nameof(Left), Left);
             sb.PrintExisting(n, nameof(Right), Right);
             sb.PrintExistingList(n, nameof(ParamsList), ParamsList);
+            sb.PrintExistingList(n, nameof(LinkedVars), LinkedVars);
 
             sb.PrintBriefObjProp(n, nameof(Value), Value);
             sb.PrintBriefObjProp(n, nameof(FuzzyLogicNonNumericSequenceValue), FuzzyLogicNonNumericSequenceValue);

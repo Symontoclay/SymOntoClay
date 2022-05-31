@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -100,6 +101,25 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             if (_visitedRelations.ContainsKey(relation))
             {
                 return;
+            }
+
+            if(!relation.LinkedVars.IsNullOrEmpty())
+            {
+                foreach(var linkedVar in relation.LinkedVars)
+                {
+#if DEBUG
+                    //_logger.Log($"linkedVar = {linkedVar}");
+#endif
+
+                    if(linkedVar.Name == _name)
+                    {
+                        resolvingContext.FoundItems.Add(new ResultItemOfConceptFromVarResolver()
+                        {
+                            Name = relation.Name,
+                            Relation = relation
+                        });
+                    }
+                }
             }
 
             if (relation.ParamsList.Count == 1)

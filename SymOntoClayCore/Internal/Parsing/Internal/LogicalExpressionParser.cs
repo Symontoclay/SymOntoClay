@@ -401,6 +401,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.Word:
                         case TokenKind.Identifier:
+                        case TokenKind.LogicalVar:
                             ProcessWord();
                             break;
 
@@ -410,14 +411,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.Not:
                             ProcessUnaryOperator(KindOfOperatorOfLogicalQueryNode.Not);
-                            break;
-
-                        case TokenKind.LogicalVar:
-                            {
-                                var value = NameHelper.CreateName(_currToken.Content);
-
-                                ProcessConceptOrQuestionVar(value);
-                            }
                             break;
 
                         case TokenKind.Number:

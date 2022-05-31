@@ -145,18 +145,17 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         {
             var relationName = _relation.Name;
 
+#if DEBUG
+            //_logger.Log($"relationName = {relationName}");
+#endif
+
             var relationDescription = _relationsResolver.GetRelation(relationName, _relation.ParamsList.Count);
 
             if (relationDescription == null)
             {
                 throw new Exception($"Relation `{_relation.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}` is not described!");
             }
-
-            var result = new ResultOfNode();
-            _context.VisitedRelations[_relation] = result;
-            result.LogicalQueryNode = _relation;
-            result.KindOfResult = KindOfResultOfNode.ProcessRelation;
-
+            
 #if DEBUG
             //_logger.Log($"relationDescription = {relationDescription}");
             //_logger.Log($"relationDescription = {relationDescription.ToHumanizedString()}");
@@ -177,6 +176,77 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             //_logger.Log($"isAct = {isAct}");
             //_logger.Log($"isEvent = {isEvent}");
 #endif
+
+            if(isState || isAct || isEvent)
+            {
+                return ProcessStateActOrEventRelation(relationDescription, superClassesList);
+            }
+
+            var result = new ResultOfNode();
+            _context.VisitedRelations[_relation] = result;
+            result.LogicalQueryNode = _relation;
+            result.KindOfResult = KindOfResultOfNode.ProcessRelation;
+
+            var relationRelation = new InternalRelationCGNode { Name = relationName.NameValue, Parent = _context.ConceptualGraph };
+
+            result.CGNode = relationRelation;
+
+            var n = 0;
+
+            foreach (var param in _relation.ParamsList)
+            {
+                var paramResult = LogicalQueryNodeProcessorFactory.Run(param, _context);
+
+#if DEBUG
+                //_logger.Log($"paramResult = {paramResult}");
+#endif
+
+                var paramDescription = relationDescription.Arguments[n];
+                n++;
+
+#if DEBUG
+                //_logger.Log($"paramDescription = {paramDescription.ToHumanizedString()}");
+#endif
+
+                var meaningRolesList = paramDescription.MeaningRolesList.Select(p => p.NormalizedNameValue);
+
+#if DEBUG
+                //_logger.Log($"meaningRolesList = {meaningRolesList.WritePODListToString()}");
+#endif
+
+                if(meaningRolesList.Contains("owner"))
+                {
+                    var targetConcept = paramResult.CGNode.AsGraphOrConceptNode;
+
+                    relationRelation.AddInputNode(targetConcept);
+                }
+                else
+                {
+                    var targetConcept = paramResult.CGNode.AsGraphOrConceptNode;
+                    targetConcept.AddInputNode(relationRelation);
+                }
+            }
+
+#if DEBUG
+            //var dotStr = DotConverter.ConvertToString(_context.ConceptualGraph);
+            //_logger.Log($"dotStr = {dotStr}");
+#endif
+
+            return result;
+        }
+
+        private ResultOfNode ProcessStateActOrEventRelation(RelationDescription relationDescription, IList<StrongIdentifierValue> superClassesList)
+        {
+            var relationName = _relation.Name;
+
+            var isState = superClassesList.Any(p => p.NormalizedNameValue == "state");
+            var isAct = superClassesList.Any(p => p.NormalizedNameValue == "act");
+            var isEvent = superClassesList.Any(p => p.NormalizedNameValue == "event");
+
+            var result = new ResultOfNode();
+            _context.VisitedRelations[_relation] = result;
+            result.LogicalQueryNode = _relation;
+            result.KindOfResult = KindOfResultOfNode.ProcessRelation;
 
             var relationConcept = new InternalConceptCGNode() { Name = relationName.NameValue, Parent = _context.ConceptualGraph };
 
@@ -202,7 +272,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                 var meaningRolesList = paramDescription.MeaningRolesList.Select(p => p.NormalizedNameValue);
 
 #if DEBUG
-                //_logger.Log($"meaningRolesList = {meaningRolesList.WritePODListToString()}");
+                _logger.Log($"meaningRolesList = {meaningRolesList.WritePODListToString()}");
 #endif
 
                 if (isState && meaningRolesList.Contains("experiencer"))
@@ -219,7 +289,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                 }
                 else
                 {
-                    if(meaningRolesList.Contains("object"))
+                    if (meaningRolesList.Contains("object"))
                     {
                         var targetConcept = paramResult.CGNode.AsGraphOrConceptNode;
 
@@ -229,6 +299,11 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                     }
                     else
                     {
+#if DEBUG
+                        //var dotStr_1 = DotConverter.ConvertToString(_context.ConceptualGraph);
+                        //_logger.Log($"dotStr_1 = {dotStr_1}");
+#endif
+
                         throw new NotImplementedException();
                     }
                 }

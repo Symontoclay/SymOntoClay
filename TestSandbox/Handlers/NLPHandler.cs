@@ -57,9 +57,9 @@ namespace TestSandbox.Handlers
         {
             _logger.Log("Begin");
 
-            //Case5();
+            Case5();
             //Case4();
-            Case3();
+            //Case3();
             //Case2();
             //Case1();
             //Case0();
@@ -71,7 +71,8 @@ namespace TestSandbox.Handlers
         {
             var nlpContext = UnityTestEngineContextFactory.CreateNLPConverterContext(_engineContext);
 
-            var factStr = "{: >: { like(i,#@{: >: { possess(i,$_) & cat($_) } :}) } :}";
+            //var factStr = "{: >: { like(i,#@{: >: { possess(i,$_) & cat($_) } :}) } :}";
+            var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } :}";
 
             var ruleInstance = Parse(factStr);
 
@@ -87,18 +88,18 @@ namespace TestSandbox.Handlers
 
             _logger.Log($"dotStr = '{dotStr}'");
 
-            var converterInternalCGToPhraseStructure = new ConverterInternalCGToPhraseStructure(_logger, _wordsDict);
+            //var converterInternalCGToPhraseStructure = new ConverterInternalCGToPhraseStructure(_logger, _wordsDict);
 
-            var sentenceItem = converterInternalCGToPhraseStructure.Convert(internalCG, nlpContext);
+            //var sentenceItem = converterInternalCGToPhraseStructure.Convert(internalCG, nlpContext);
 
-            _logger.Log($"sentenceItem = {sentenceItem}");
-            _logger.Log($"sentenceItem = {sentenceItem.ToDbgString()}");
+            //_logger.Log($"sentenceItem = {sentenceItem}");
+            //_logger.Log($"sentenceItem = {sentenceItem.ToDbgString()}");
 
-            var converterPhraseStructureToText = new ConverterPhraseStructureToText(_logger);
+            //var converterPhraseStructureToText = new ConverterPhraseStructureToText(_logger);
 
-            var text = converterPhraseStructureToText.Convert(sentenceItem);
+            //var text = converterPhraseStructureToText.Convert(sentenceItem);
 
-            _logger.Log($"text = '{text}'");
+            //_logger.Log($"text = '{text}'");
         }
 
         private void Case4()

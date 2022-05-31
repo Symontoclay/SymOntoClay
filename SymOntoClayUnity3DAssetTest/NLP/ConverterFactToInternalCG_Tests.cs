@@ -92,5 +92,50 @@ n_4 -> n_1;
 n_5 -> n_6[lhead=cluster_2];
 }".DeepTrim(), dotStr.DeepTrim());
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case2()
+        {
+            var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } :}";
+
+            var nlpContext = UnityTestEngineContextFactory.CreateNLPConverterContext(_engineContext);
+
+            var ruleInstance = Parse(factStr);
+
+            var converterFactToCG = new ConverterFactToInternalCG(_logger);
+
+            var internalCG = converterFactToCG.Convert(ruleInstance, nlpContext);
+
+            Assert.AreEqual(false, internalCG.IsNegation);
+            Assert.AreEqual(KindOfQuestion.None, internalCG.KindOfQuestion);
+            Assert.AreEqual(GrammaticalTenses.Present, internalCG.Tense);
+            Assert.AreEqual(GrammaticalAspect.Simple, internalCG.Aspect);
+            Assert.AreEqual(GrammaticalVoice.Active, internalCG.Voice);
+            Assert.AreEqual(GrammaticalMood.Imperative, internalCG.Mood);
+            Assert.AreEqual(AbilityModality.None, internalCG.AbilityModality);
+            Assert.AreEqual(PermissionModality.None, internalCG.PermissionModality);
+            Assert.AreEqual(ObligationModality.None, internalCG.ObligationModality);
+            Assert.AreEqual(ProbabilityModality.None, internalCG.ProbabilityModality);
+            Assert.AreEqual(ConditionalModality.None, internalCG.ConditionalModality);
+
+            var dotStr = DotConverter.ConvertToString(internalCG);
+
+            Assert.AreEqual(@"digraph cluster_1{
+compound=true;
+n_2[shape=box,label=""go""];
+n_1[shape=ellipse,label=""direction""];
+subgraph cluster_2{
+n_4[shape=box,label=""place""];
+n_5[shape=box,label=""green""];
+n_3[shape=ellipse,label=""color""];
+n_3 -> n_5;
+n_4 -> n_3;
+}
+
+n_1 -> n_3[lhead=cluster_2];
+n_2 -> n_1;
+}".DeepTrim(), dotStr.DeepTrim());
+        }
     }
 }

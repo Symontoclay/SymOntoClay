@@ -55,6 +55,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
+                        case TokenKind.Identifier:
                             {
                                 Result.MeaningRolesList.Add(ParseName(_currToken.Content));
 

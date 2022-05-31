@@ -7,6 +7,7 @@ using SymOntoClay.NLP.Internal.InternalCG;
 using SymOntoClay.NLP.Internal.PhraseStructure;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
@@ -39,7 +40,15 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             outerConceptualGraph.Tense = GrammaticalTenses.Present;//tmp
             outerConceptualGraph.Aspect = GrammaticalAspect.Simple;//tmp
             outerConceptualGraph.Voice = GrammaticalVoice.Active;//tmp
-            outerConceptualGraph.Mood = GrammaticalMood.Indicative;//tmp
+
+            if(outerConceptualGraph.Children.Where(p => p.IsRelationNode).Any(p => IsSubjectRelation(p.Name)))
+            {
+                outerConceptualGraph.Mood = GrammaticalMood.Indicative;
+            }
+            else
+            {
+                outerConceptualGraph.Mood = GrammaticalMood.Imperative;
+            }
 
             outerConceptualGraph.AbilityModality = AbilityModality.None;//tmp
             outerConceptualGraph.PermissionModality = PermissionModality.None;//tmp
@@ -52,6 +61,19 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 #endif
 
             return outerConceptualGraph;
+        }
+
+        public bool IsSubjectRelation(string name)
+        {
+            switch(name)
+            {
+                case SpecialNamesOfRelations.ExperiencerRelationName:
+                case SpecialNamesOfRelations.AgentRelationName:
+                    return true;              
+
+                default:
+                    return false;
+            }
         }
     }
 }

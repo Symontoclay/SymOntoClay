@@ -2,6 +2,7 @@
 using SymOntoClay.NLP.CommonDict;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.NLP.Internal.PhraseStructure
@@ -12,7 +13,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
         public virtual bool IsSentence => false;
         public virtual Sentence AsSentence => null;
-
+        
         public virtual bool IsNounPhrase => false;
         public virtual NounPhrase AsNounPhrase => null;
 
@@ -44,6 +45,21 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         public virtual Word AsWord => null;
 
         public abstract BaseGrammaticalWordFrame RootWordFrame { get; }
+        public abstract string RootWordAsString { get; }
+
+        public abstract IList<string> GetConditionalLogicalMeaning(string conditionalWord);
+
+        public string GetConditionalLogicalMeaningAsSingleString(string conditionalWord)
+        {
+            var list = GetConditionalLogicalMeaning(conditionalWord);
+
+            if (list.Count > 1)
+            {
+                throw new NotImplementedException();
+            }
+
+            return list.FirstOrDefault();
+        }
 
         public BaseSentenceItem CloneBaseSentenceItem()
         {

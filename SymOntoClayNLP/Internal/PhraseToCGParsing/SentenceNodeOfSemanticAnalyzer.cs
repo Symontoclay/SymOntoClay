@@ -62,16 +62,20 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
                 throw new NotImplementedException();
             }
 
-            var subject = _sentence.Subject.AsNounPhrase;
-
-#if DEBUG
-            //Context.Logger.Log($"subject = {subject}");
-#endif
-
             ResultOfNodeOfSemanticAnalyzer subjectResult = null;
 
-            if (subject != null)
+#if DEBUG
+            //Context.Logger.Log($"_sentence.Subject = {_sentence.Subject}");
+#endif
+
+            if (_sentence.Subject != null)
             {
+                var subject = _sentence.Subject.AsNounPhrase;
+
+#if DEBUG
+                //Context.Logger.Log($"subject = {subject}");
+#endif
+
                 var subjectNode = new NounPhraseNodeOfSemanticAnalyzer(Context, subject);
                 subjectResult = subjectNode.Run();
 

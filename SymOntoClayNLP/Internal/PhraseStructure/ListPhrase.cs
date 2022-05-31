@@ -24,6 +24,15 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         public override BaseGrammaticalWordFrame RootWordFrame => throw new NotImplementedException();
 
         /// <inheritdoc/>
+        public override string RootWordAsString => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        public override IList<string> GetConditionalLogicalMeaning(string conditionalWord)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public override BaseSentenceItem CloneBaseSentenceItem(Dictionary<object, object> context)
         {
             return Clone(context);

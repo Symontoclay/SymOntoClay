@@ -1,4 +1,5 @@
-﻿using SymOntoClay.NLP.CommonDict;
+﻿using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.CommonDict.Implementations;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace SymOntoClay.NLP.Dicts
         private readonly Dictionary<string, List<BaseGrammaticalWordFrame>> _wordFramesByWordDict;
         private readonly Dictionary<string, List<BaseGrammaticalWordFrame>> _wordFramesByByRootWordDict;
 
+        /// <inheritdoc/>
         public IList<BaseGrammaticalWordFrame> GetWordFramesByWord(string word)
         {
             if (_wordFramesByWordDict.ContainsKey(word))
@@ -31,6 +33,7 @@ namespace SymOntoClay.NLP.Dicts
             return null;
         }
 
+        /// <inheritdoc/>
         public IList<BaseGrammaticalWordFrame> GetWordFramesByRootWord(string word)
         {
             if (_wordFramesByByRootWordDict.ContainsKey(word))

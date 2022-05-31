@@ -204,11 +204,11 @@ namespace TestSandbox.Handlers
                 {
                     _logger.Log($"plainSentence = '{plainSentence.ToDbgString()}'");
 
-                //    var conceptualGraph = semanticAnalyzer.Run(plainSentence);
+                    var conceptualGraph = semanticAnalyzer.Run(plainSentence);
 
-                //    var conceptualGraphDbgStr = DotConverter.ConvertToString(conceptualGraph);
+                    var conceptualGraphDbgStr = DotConverter.ConvertToString(conceptualGraph);
 
-                //    _logger.Log($"conceptualGraphDbgStr = '{conceptualGraphDbgStr}'");
+                    _logger.Log($"conceptualGraphDbgStr = '{conceptualGraphDbgStr}'");
 
                 //    //_logger.Log($"conceptualGraphDbgStr.DeepTrim() = '{conceptualGraphDbgStr.DeepTrim()}'");
 

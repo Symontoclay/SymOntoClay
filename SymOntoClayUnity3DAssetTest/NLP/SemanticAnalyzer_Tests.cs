@@ -83,5 +83,64 @@ n_9 -> n_2;
 
 }".DeepTrim(), conceptualGraphDbgStr.DeepTrim());
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case2()
+        {
+            var text = "Go to green place!";
+
+            var parser = new ATNParser(_logger, _wordsDict);
+
+            var result = parser.Run(text);
+
+            Assert.AreEqual(1, result.Count);
+
+            var item = result[0];
+
+            var compactizer = new PhraseCompactizer(_logger, _wordsDict);
+
+            compactizer.Run(item);
+
+            var converterToPlainSentences = new ConverterToPlainSentences(_logger);
+
+            var plainSentencesList = converterToPlainSentences.Run(item);
+
+            Assert.AreEqual(1, plainSentencesList.Count);
+
+            var plainSentence = plainSentencesList[0];
+
+            var semanticAnalyzer = new SemanticAnalyzer(_logger, _wordsDict);
+
+            var conceptualGraph = semanticAnalyzer.Run(plainSentence);
+
+            var conceptualGraphDbgStr = DotConverter.ConvertToString(conceptualGraph);
+
+            Assert.AreEqual(@"digraph cluster_1{
+compound=true;
+n_1[shape=box,label=""imperative""];
+n_2[shape=ellipse,label=""__mood""];
+subgraph cluster_2{
+n_3[shape=box,label=""go""];
+n_5[shape=box,label=""place""];
+n_6[shape=box,label=""green""];
+n_4[shape=ellipse,label=""action""];
+n_7[shape=ellipse,label=""color""];
+n_8[shape=ellipse,label=""__entity_condition""];
+n_9[shape=ellipse,label=""direction""];
+n_10[shape=ellipse,label=""command""];
+n_3 -> n_9;
+n_4 -> n_3;
+n_5 -> n_7;
+n_7 -> n_6;
+n_8 -> n_7;
+n_9 -> n_5;
+n_10 -> n_3;
+}
+
+n_3 -> n_2[ltail=cluster_2,];
+n_2 -> n_1;
+}".DeepTrim(), conceptualGraphDbgStr.DeepTrim());
+        }
     }
 }

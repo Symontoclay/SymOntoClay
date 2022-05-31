@@ -61,7 +61,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
             if (_verbPhrase.PP != null)
             {
-                throw new NotImplementedException();
+                ProcessPPAsBaseSentenceItem(_verbPhrase.PP, result);
             }
 
             if (_verbPhrase.CP != null)
@@ -95,70 +95,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
                     }
                 }
             }
-
-            //            var prepositionalList = _verbPhrase.PrepositionalList;
-
-            //            if (!prepositionalList.IsEmpty())
-            //            {
-            //#if DEBUG
-            //                Context.Logger.Log($"prepositionalList.Count = {prepositionalList.Count}");
-            //#endif
-
-            //                foreach (var prepositional in prepositionalList)
-            //                {
-            //#if DEBUG
-            //                    Context.Logger.Log($"prepositional = {prepositional}");
-            //#endif
-
-            //                    var conditionalLogicalMeaning = GetConditionalLogicalMeaning(prepositional.Preposition.RootWord, verb.RootWord);
-
-            //#if DEBUG
-            //                    Context.Logger.Log($"conditionalLogicalMeaning = {conditionalLogicalMeaning}");
-            //#endif
-            //                    if (!string.IsNullOrWhiteSpace(conditionalLogicalMeaning))
-            //                    {
-            //                        var nounOfPrepositionalList = prepositional.ChildrenNodesList.Select(p => p.AsNounPhrase).Where(p => p != null).ToList();
-
-            //#if DEBUG
-            //                        Context.Logger.Log($"nounOfPrepositionalList.Count = {nounOfPrepositionalList.Count}");
-            //#endif
-
-            //                        foreach (var nounOfPrepositional in nounOfPrepositionalList)
-            //                        {
-            //#if DEBUG
-            //                            Context.Logger.Log($"nounOfPrepositional = {nounOfPrepositional}");
-            //#endif
-
-            //                            var nodeOfNounOfPrepositional = new NounPhraseNodeOfSemanticAnalyzer(Context, _sentence, nounOfPrepositional);
-            //                            var nounOfPrepositionalResult = nodeOfNounOfPrepositional.Run();
-
-            //#if DEBUG
-            //                            Context.Logger.Log($"nounOfPrepositionalResult = {nounOfPrepositionalResult}");
-            //#endif
-
-            //                            var phisobjList = nounOfPrepositionalResult.PrimaryRolesDict.GetByRole("entity");
-
-            //#if DEBUG
-            //                            Context.Logger.Log($"phisobjList.Count = {phisobjList.Count}");
-            //#endif
-
-            //                            foreach (var phisobj in phisobjList)
-            //                            {
-            //#if DEBUG
-            //                                //LogInstance.Log($"phisobj = {phisobj}");
-            //#endif
-
-            //                                var directionRelation = new RelationCGNode();
-            //                                directionRelation.Parent = conceptualGraph;
-            //                                directionRelation.Name = conditionalLogicalMeaning;
-
-            //                                directionRelation.AddInputNode(_concept);
-            //                                directionRelation.AddOutputNode(phisobj);
-            //                            }
-            //                        }
-            //                    }
-            //                }
-            //            }
 
             return result;
         }
@@ -215,7 +151,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             result.RootConcept = _concept;
             _concept.Parent = conceptualGraph;
 
-            _concept.Name = GetName(word);
+            _concept.Name = word.RootWordAsString;
 
             var baseGrammaticalWordFrame = word.WordFrame;
 
@@ -306,6 +242,98 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
             PrimaryRolesDict.Assing(nounResult.PrimaryRolesDict);
             _objectsRolesStorage.Assing(nounResult.PrimaryRolesDict);
+        }
+
+        private void ProcessPPAsBaseSentenceItem(BaseSentenceItem sentenceItem, ResultOfNodeOfSemanticAnalyzer result)
+        {
+            var kindOfSentenceItem = sentenceItem.KindOfSentenceItem;
+
+#if DEBUG
+            //Context.Logger.Log($"kindOfSentenceItem = {kindOfSentenceItem}");
+#endif
+
+            switch (kindOfSentenceItem)
+            {
+                case KindOfSentenceItem.PreOrPostpositionalPhrase:
+                    ProcessPPAsPreOrPostpositionalPhrase(sentenceItem.AsPreOrPostpositionalPhrase, result);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSentenceItem), kindOfSentenceItem, null);
+            }
+        }
+
+        private void ProcessPPAsPreOrPostpositionalPhrase(PreOrPostpositionalPhrase pp, ResultOfNodeOfSemanticAnalyzer result)
+        {
+#if DEBUG
+            //Context.Logger.Log($"pp = {pp}");
+            //Context.Logger.Log($"pp.RootWordAsString = {pp.RootWordAsString}");
+            //Context.Logger.Log($"_verbPhrase.RootWordAsString = {_verbPhrase.RootWordAsString}");
+            //Context.Logger.Log($"pp.GetConditionalLogicalMeaning(_verbPhrase.RootWordAsString) = {pp.GetConditionalLogicalMeaning(_verbPhrase.RootWordAsString).WritePODListToString()}");
+#endif
+
+            var conditionalLogicalMeaning = pp.GetConditionalLogicalMeaningAsSingleString(_verbPhrase.RootWordAsString);
+
+#if DEBUG
+            //Context.Logger.Log($"conditionalLogicalMeaning = {conditionalLogicalMeaning}");
+#endif
+
+            if (string.IsNullOrWhiteSpace(conditionalLogicalMeaning))
+            {
+                throw new NotImplementedException();
+            }
+
+            if(pp.NP == null)
+            {
+                throw new NotImplementedException();
+            }
+
+            var nounOfPrepositionalResult = ProcessNPOfPPAsBaseSentenceItem(pp.NP);
+
+#if DEBUG
+            //Context.Logger.Log($"nounOfPrepositionalResult = {nounOfPrepositionalResult}");
+#endif
+
+            var nounConcept = nounOfPrepositionalResult.RootConcept;
+
+#if DEBUG
+            //Context.Logger.Log($"nounConcept = {nounConcept}");
+#endif
+
+            var ppRelation = new RelationCGNode();
+            ppRelation.Parent = Context.ConceptualGraph;
+            ppRelation.Name = conditionalLogicalMeaning;
+
+            ppRelation.AddInputNode(_concept);
+            ppRelation.AddOutputNode(nounConcept);
+        }
+
+        private ResultOfNodeOfSemanticAnalyzer ProcessNPOfPPAsBaseSentenceItem(BaseSentenceItem sentenceItem)
+        {
+            var kindOfSentenceItem = sentenceItem.KindOfSentenceItem;
+
+#if DEBUG
+            //Context.Logger.Log($"kindOfSentenceItem = {kindOfSentenceItem}");
+#endif
+
+            switch (kindOfSentenceItem)
+            {
+                case KindOfSentenceItem.NounPhrase:
+                    return ProcessNPOfPPAsNounPhrase(sentenceItem.AsNounPhrase);
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSentenceItem), kindOfSentenceItem, null);
+            }
+        }
+
+        private ResultOfNodeOfSemanticAnalyzer ProcessNPOfPPAsNounPhrase(NounPhrase nounPhrase)
+        {
+#if DEBUG
+            //Context.Logger.Log($"nounPhrase = {nounPhrase}");
+#endif
+
+            var nounPhraseNode = new NounPhraseNodeOfSemanticAnalyzer(Context, nounPhrase);
+            return nounPhraseNode.Run();
         }
     }
 }

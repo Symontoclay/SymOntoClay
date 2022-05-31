@@ -4,6 +4,7 @@ using SymOntoClay.NLP.Internal.CG;
 using SymOntoClay.NLP.Internal.PhraseStructure;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
@@ -50,7 +51,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
             if (_nounPhrase.AP != null)
             {
-                throw new NotImplementedException();
+                ProcessAPAsBaseSentenceItem(_nounPhrase.AP, result);
             }
 
             if (_nounPhrase.NounAdjunct != null)
@@ -202,7 +203,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
                 var nameConcept = new ConceptCGNode();
                 nameConcept.Parent = conceptualGraph;
-                nameConcept.Name = GetName(word);
+                nameConcept.Name = word.RootWordAsString;
 
                 var nameRelation = new RelationCGNode();
                 nameRelation.Parent = conceptualGraph;
@@ -220,7 +221,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
                 _concept = new ConceptCGNode();
                 result.RootConcept = _concept;
                 _concept.Parent = conceptualGraph;
-                _concept.Name = GetName(word);
+                _concept.Name = word.RootWordAsString;
             }
 
             var nounFullLogicalMeaning = baseGrammaticalWordFrame.FullLogicalMeaning;
@@ -283,7 +284,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             //Context.Logger.Log($"relationName = {relationName}");
 #endif
 
-            var determinerConceptName = GetName(determiner);
+            var determinerConceptName = determiner.RootWordAsString;
 
 #if DEBUG
             //Context.Logger.Log($"determinerConceptName = {determinerConceptName}");
@@ -320,7 +321,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             //Context.Logger.Log($"relationName = {relationName}");
 #endif
 
-            var determinerConceptName = GetName(determiner);
+            var determinerConceptName = determiner.RootWordAsString;
 
 #if DEBUG
             //Context.Logger.Log($"determinerConceptName = {determinerConceptName}");
@@ -367,6 +368,71 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
                 default:
                     return false;
             }
+        }
+
+        private void ProcessAPAsBaseSentenceItem(BaseSentenceItem sentenceItem, ResultOfNodeOfSemanticAnalyzer result)
+        {
+            var kindOfSentenceItem = sentenceItem.KindOfSentenceItem;
+
+#if DEBUG
+            //Context.Logger.Log($"kindOfSentenceItem = {kindOfSentenceItem}");
+#endif
+
+            switch (kindOfSentenceItem)
+            {
+                case KindOfSentenceItem.Word:
+                    ProcessAPAsWord(sentenceItem.AsWord, result);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSentenceItem), kindOfSentenceItem, null);
+            }
+        }
+
+        private void ProcessAPAsWord(Word word, ResultOfNodeOfSemanticAnalyzer result)
+        {
+#if DEBUG
+            //Context.Logger.Log($"word = {word}");
+#endif
+
+            var role = word.WordFrame.LogicalMeaning.FirstOrDefault();
+
+#if DEBUG
+            //Context.Logger.Log($"role = {role}");
+#endif
+
+            if (string.IsNullOrWhiteSpace(role))
+            {
+                throw new NotImplementedException();
+            }
+
+            var ajectiveConceptName = word.RootWordAsString;
+
+#if DEBUG
+            //Context.Logger.Log($"ajectiveConceptName = {ajectiveConceptName}");
+#endif
+
+            if (Context.RelationStorage.ContainsRelation(ajectiveConceptName, _concept.Name, role))
+            {
+                return;
+            }
+
+            var conceptualGraph = Context.ConceptualGraph;
+
+            var ajectiveConcept = new ConceptCGNode();
+            ajectiveConcept.Parent = conceptualGraph;
+            ajectiveConcept.Name = ajectiveConceptName;
+
+            var ajectiveRelation = new RelationCGNode();
+            ajectiveRelation.Parent = conceptualGraph;
+            ajectiveRelation.Name = role;
+
+            MarkAsEntityCondition(ajectiveRelation);
+
+            ajectiveRelation.AddInputNode(_concept);
+            ajectiveRelation.AddOutputNode(ajectiveConcept);
+
+            Context.RelationStorage.AddRelation(ajectiveConceptName, _concept.Name, role);
         }
     }
 }

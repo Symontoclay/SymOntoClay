@@ -44,5 +44,24 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP
 
             Assert.AreEqual(@"{: >: { like(i,#@{: >: { possess(i,$_) & cat($_) } :}) } :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case2()
+        {
+            var text = "Go to green place!";
+
+            var converter = new NLPConverter(_logger, _wordsDict);
+
+            var ruleInstancesList = converter.Convert(text);
+
+            Assert.AreEqual(1, ruleInstancesList.Count);
+
+            var ruleInstance = ruleInstancesList[0];
+
+            Assert.AreEqual(KindOfRuleInstance.Fact, ruleInstance.KindOfRuleInstance);
+
+            Assert.AreEqual(@"{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+        }
     }
 }

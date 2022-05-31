@@ -59,8 +59,8 @@ namespace TestSandbox.Handlers
 
             //Case5();
             //Case4();
-            //Case3();
-            Case2();
+            Case3();
+            //Case2();
             //Case1();
             //Case0();
 
@@ -123,7 +123,8 @@ namespace TestSandbox.Handlers
 
         private void Case3()
         {
-            var text = "I like my cat.";
+            //var text = "I like my cat.";
+            var text = "Go to green place!";
 
 #if DEBUG
             _logger.Log($"text = {text}");

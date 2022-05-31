@@ -99,5 +99,83 @@ n_4 -> n_1;
 n_5 -> n_2;
 }".DeepTrim(), dotStr.DeepTrim());
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case2()
+        {
+            var text = "Go to green place!";
+
+            var parser = new ATNParser(_logger, _wordsDict);
+
+            var result = parser.Run(text);
+
+            Assert.AreEqual(1, result.Count);
+
+            var item = result[0];
+
+            var compactizer = new PhraseCompactizer(_logger, _wordsDict);
+
+            compactizer.Run(item);
+
+            var converterToPlainSentences = new ConverterToPlainSentences(_logger);
+
+            var plainSentencesList = converterToPlainSentences.Run(item);
+
+            Assert.AreEqual(1, plainSentencesList.Count);
+
+            var plainSentence = plainSentencesList[0];
+
+            var semanticAnalyzer = new SemanticAnalyzer(_logger, _wordsDict);
+
+            var conceptualGraph = semanticAnalyzer.Run(plainSentence);
+
+            var convertorCGToInternal = new ConvertorCGToInternal(_logger);
+
+            var internalCG = convertorCGToInternal.Convert(conceptualGraph);
+
+            Assert.AreEqual(false, internalCG.IsNegation);
+            Assert.AreEqual(KindOfQuestion.None, internalCG.KindOfQuestion);
+            Assert.AreEqual(GrammaticalTenses.Present, internalCG.Tense);
+            Assert.AreEqual(GrammaticalAspect.Simple, internalCG.Aspect);
+            Assert.AreEqual(GrammaticalVoice.Active, internalCG.Voice);
+            Assert.AreEqual(GrammaticalMood.Imperative, internalCG.Mood);
+            Assert.AreEqual(AbilityModality.None, internalCG.AbilityModality);
+            Assert.AreEqual(PermissionModality.None, internalCG.PermissionModality);
+            Assert.AreEqual(ObligationModality.None, internalCG.ObligationModality);
+            Assert.AreEqual(ProbabilityModality.None, internalCG.ProbabilityModality);
+            Assert.AreEqual(ConditionalModality.None, internalCG.ConditionalModality);
+
+            var dotStr = DotConverter.ConvertToString(internalCG);
+
+            Assert.AreEqual(@"digraph cluster_1{
+compound=true;
+n_1[shape=box,label=""go""];
+n_5[shape=box,label=""someone""];
+n_8[shape=box,label=""self""];
+n_2[shape=ellipse,label=""action""];
+n_3[shape=ellipse,label=""direction""];
+n_4[shape=ellipse,label=""command""];
+n_6[shape=ellipse,label=""agent""];
+n_7[shape=ellipse,label=""object""];
+subgraph cluster_2{
+n_10[shape=box,label=""place""];
+n_11[shape=box,label=""green""];
+n_9[shape=ellipse,label=""color""];
+n_9 -> n_11;
+n_10 -> n_9;
+}
+
+n_1 -> n_3;
+n_1 -> n_6;
+n_1 -> n_7;
+n_2 -> n_1;
+n_3 -> n_9[lhead=cluster_2];
+n_4 -> n_1;
+n_5 -> n_2;
+n_6 -> n_5;
+n_7 -> n_8;
+}".DeepTrim(), dotStr.DeepTrim());
+        }
     }
 }

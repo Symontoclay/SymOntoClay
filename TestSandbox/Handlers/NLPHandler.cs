@@ -210,25 +210,25 @@ namespace TestSandbox.Handlers
 
                     _logger.Log($"conceptualGraphDbgStr = '{conceptualGraphDbgStr}'");
 
-                //    //_logger.Log($"conceptualGraphDbgStr.DeepTrim() = '{conceptualGraphDbgStr.DeepTrim()}'");
+                    //_logger.Log($"conceptualGraphDbgStr.DeepTrim() = '{conceptualGraphDbgStr.DeepTrim()}'");
 
-                //    var internalCG = convertorCGToInternal.Convert(conceptualGraph);
+                    var internalCG = convertorCGToInternal.Convert(conceptualGraph);
 
-                //    _logger.Log($"internalCG = {internalCG}");
+                    _logger.Log($"internalCG = {internalCG}");
 
-                //    var dotStr = DotConverter.ConvertToString(internalCG);
+                    var dotStr = DotConverter.ConvertToString(internalCG);
 
-                //    _logger.Log($"dotStr = '{dotStr}'");
+                    _logger.Log($"dotStr = '{dotStr}'");
 
-                //    var ruleInstancesList = converterInternalCGToFact.ConvertConceptualGraph(internalCG);
+                    //    var ruleInstancesList = converterInternalCGToFact.ConvertConceptualGraph(internalCG);
 
-                //    _logger.Log($"ruleInstancesList.Count = {ruleInstancesList.Count}");
+                    //    _logger.Log($"ruleInstancesList.Count = {ruleInstancesList.Count}");
 
-                //    foreach (var ruleInstance in ruleInstancesList)
-                //    {
-                //        _logger.Log($"ruleInstance.KindOfRuleInstance = {ruleInstance.KindOfRuleInstance}");
-                //        _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
-                //    }
+                    //    foreach (var ruleInstance in ruleInstancesList)
+                    //    {
+                    //        _logger.Log($"ruleInstance.KindOfRuleInstance = {ruleInstance.KindOfRuleInstance}");
+                    //        _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
+                    //    }
                 }
             }
         }

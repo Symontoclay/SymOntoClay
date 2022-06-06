@@ -57,7 +57,10 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             result.KindOfResult = KindOfResultOfNode.ResolveVar;
             result.LogicalQueryNode = relation;
 
-            _context.VisitedRelations[relation] = result;
+            if(relation.ParamsList.Count == 1)
+            {
+                _context.VisitedRelations[relation] = result;
+            }            
 
             return resultItem.Name.NameValue;
         }

@@ -34,7 +34,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         public ResultOfNode Run()
         {
 #if DEBUG
-            //_logger.Log($"_relation = {_relation.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
+            _logger.Log($"_relation = {_relation.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
 #endif
 
             if(_context.VisitedRelations.ContainsKey(_relation))
@@ -50,7 +50,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             var relationName = _relation.Name.NormalizedNameValue;
 
 #if DEBUG
-            //_logger.Log($"relationName = '{relationName}'");
+            _logger.Log($"relationName = '{relationName}'");
 #endif
 
             switch (relationName)
@@ -195,6 +195,10 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 
             foreach (var param in _relation.ParamsList)
             {
+#if DEBUG
+                _logger.Log($"param = {param}");
+#endif
+
                 var paramResult = LogicalQueryNodeProcessorFactory.Run(param, _context);
 
 #if DEBUG
@@ -237,11 +241,21 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 
         private ResultOfNode ProcessStateActOrEventRelation(RelationDescription relationDescription, IList<StrongIdentifierValue> superClassesList)
         {
+#if DEBUG
+            //_logger.Log($"_context.ConceptualGraph.Mood = {_context.ConceptualGraph.Mood}");
+#endif
+
             var relationName = _relation.Name;
 
             var isState = superClassesList.Any(p => p.NormalizedNameValue == "state");
             var isAct = superClassesList.Any(p => p.NormalizedNameValue == "act");
             var isEvent = superClassesList.Any(p => p.NormalizedNameValue == "event");
+
+#if DEBUG
+            _logger.Log($"isState = {isState}");
+            _logger.Log($"isAct = {isAct}");
+            _logger.Log($"isEvent = {isEvent}");
+#endif
 
             var result = new ResultOfNode();
             _context.VisitedRelations[_relation] = result;
@@ -299,12 +313,20 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                     }
                     else
                     {
+                        if(isAct && meaningRolesList.Contains("agent"))
+                        {
+                            throw new NotImplementedException();
+                            //someone
+                        }
+                        else
+                        {
 #if DEBUG
-                        //var dotStr_1 = DotConverter.ConvertToString(_context.ConceptualGraph);
-                        //_logger.Log($"dotStr_1 = {dotStr_1}");
+                            //var dotStr_1 = DotConverter.ConvertToString(_context.ConceptualGraph);
+                            //_logger.Log($"dotStr_1 = {dotStr_1}");
 #endif
 
-                        throw new NotImplementedException();
+                            throw new NotImplementedException();
+                        }
                     }
                 }
             }

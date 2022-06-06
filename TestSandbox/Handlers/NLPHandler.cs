@@ -92,7 +92,7 @@ namespace TestSandbox.Handlers
 
             //var sentenceItem = converterInternalCGToPhraseStructure.Convert(internalCG, nlpContext);
 
-            //_logger.Log($"sentenceItem = {sentenceItem}");
+            ////_logger.Log($"sentenceItem = {sentenceItem}");
             //_logger.Log($"sentenceItem = {sentenceItem.ToDbgString()}");
 
             //var converterPhraseStructureToText = new ConverterPhraseStructureToText(_logger);

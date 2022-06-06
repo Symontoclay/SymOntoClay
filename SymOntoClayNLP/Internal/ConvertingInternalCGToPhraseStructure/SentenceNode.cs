@@ -41,6 +41,9 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                 case GrammaticalMood.Indicative:
                     return ProcessIndicativeMood();
 
+                case GrammaticalMood.Imperative:
+                    return ProcessImperativeMood();
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(mood), mood, null);
             }
@@ -146,6 +149,17 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             {
                 SentenceItem = sentence
             };
+        }
+
+        private ResultOfNode ProcessImperativeMood()
+        {
+            var keyConcepts = GetKeyConcepts();
+
+#if DEBUG
+            _logger.Log($"keyConcepts = {keyConcepts}");
+#endif
+
+            throw new NotImplementedException();
         }
     }
 }

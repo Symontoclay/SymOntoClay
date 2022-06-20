@@ -3,9 +3,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>SymOntoClay.NLP.BinaryDict</AssemblyName>
     <RootNamespace>SymOntoClay.NLP.BinaryDict</RootNamespace>
-    <AssemblyVersion>0.3.7</AssemblyVersion>
-    <FileVersion>0.3.7</FileVersion>
-    <Version>0.3.7</Version>
+    <AssemblyVersion>0.4.0</AssemblyVersion>
+    <FileVersion>0.4.0</FileVersion>
+    <Version>0.4.0</Version>
     <Copyright>Copyright (c) 2020 - 2021 Sergiy Tolkachov aka metatypeman</Copyright>
   </PropertyGroup>
   <ItemGroup>

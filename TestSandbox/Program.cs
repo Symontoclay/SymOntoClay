@@ -79,7 +79,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-            TstModalitiesHandler();
+            //TstModalitiesHandler();
             //TstRelationsStorageHandler();
             //TstGenerateDllDict();
             //TSTWordsFactory();
@@ -129,7 +129,7 @@ namespace TestSandbox
             //TstParsing();
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

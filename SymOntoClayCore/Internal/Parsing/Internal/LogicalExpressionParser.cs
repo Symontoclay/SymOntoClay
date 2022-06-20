@@ -619,6 +619,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.Comma:
                         case TokenKind.CloseRoundBracket:
+                        case TokenKind.CloseFactBracket:
+                        case TokenKind.CloseFigureBracket:
+                        case TokenKind.More:
+                        case TokenKind.MoreOrEqual:
+                        case TokenKind.Less:
+                        case TokenKind.LessOrEqual:
                             _context.Recovery(nextToken);
                             ProcessConceptOrQuestionVar(value);
                             break;
@@ -628,8 +634,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _state = State.GotAliasVar;
                             break;
 
+                        case TokenKind.Word:
+                            switch (nextToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Is:
+                                    _context.Recovery(nextToken);
+                                    ProcessConceptOrQuestionVar(value);
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(nextToken);
+                            }
+                            break;
+
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            throw new UnexpectedTokenException(nextToken);
                     }
                     break;
 

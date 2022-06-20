@@ -1,7 +1,10 @@
 ﻿app PeaceKeeper
 {
-	on Enter => {
-	    'Begin' >> @>log;
-		'End' >> @>log;
-	}
+    {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
+    {: distance(I, #Tom, 50) :}
+
+    on Enter =>
+    {
+        select {: distance(#Tom, $x) & $x > 5 :} >> @>log;
+    }
 }

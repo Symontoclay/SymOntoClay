@@ -79,10 +79,11 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            TstModalitiesHandler();
             //TstRelationsStorageHandler();
             //TstGenerateDllDict();
             //TSTWordsFactory();
-            TstNLPHandler();//<=NLP
+            //TstNLPHandler();//<=NLP
             //TstTriggerConditionNodeHandler();
             //TstSoundBus();
             //TstNavigationHandler();
@@ -132,6 +133,16 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstModalitiesHandler()
+        {
+            _logger.Log("Begin");
+
+            var handler = new ModalitiesHandler();
+            handler.Run();
+
+            _logger.Log("Begin");
         }
 
         private static void TstRelationsStorageHandler()

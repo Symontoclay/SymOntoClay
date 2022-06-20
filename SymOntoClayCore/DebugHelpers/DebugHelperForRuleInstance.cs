@@ -71,6 +71,20 @@ namespace SymOntoClay.Core.DebugHelpers
                 }
             }
 
+            if(source.ObligationModality != null && source.ObligationModality.KindOfValue != KindOfValue.NullValue)
+            {
+                sb.Append(" o: ");
+
+                sb.Append(ModalityValueToString(source.ObligationModality, options));
+            }
+
+            if (source.SelfObligationModality != null && source.SelfObligationModality.KindOfValue != KindOfValue.NullValue)
+            {
+                sb.Append(" so: ");
+
+                sb.Append(ModalityValueToString(source.SelfObligationModality, options));
+            }
+
             sb.Append(" :}");
             sb.Append(AnnotatedItemToString(source, options));
 
@@ -445,6 +459,27 @@ namespace SymOntoClay.Core.DebugHelpers
             var sb = new StringBuilder(value.NameValue);
             sb.Append(AnnotatedItemToString(value, options));
             return sb.ToString();
+        }
+
+        public static string ModalityValueToString(Value value, HumanizedOptions options)
+        {
+            switch(value.KindOfValue)
+            {
+                case KindOfValue.LogicalValue:
+                    return LogicalValueToString(value.AsLogicalValue, options);
+
+                case KindOfValue.NumberValue:
+                    return NumberValueToString(value.AsNumberValue, options);
+
+                case KindOfValue.FuzzyLogicNonNumericSequenceValue:
+                    return FuzzyLogicNonNumericSequenceValueToString(value.AsFuzzyLogicNonNumericSequenceValue, options);
+
+                case KindOfValue.StrongIdentifierValue:
+                    return StrongIdentifierValueToString(value.AsStrongIdentifierValue, options);
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(value.KindOfValue), value.KindOfValue, null);
+            }
         }
     }
 }

@@ -64,7 +64,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public KindOfRuleInstance KindOfRuleInstance { get; set; } = KindOfRuleInstance.Undefined;
         public PrimaryRulePart PrimaryPart { get; set; }
         public IList<SecondaryRulePart> SecondaryParts { get; set; } = new List<SecondaryRulePart>();
-        
+
+        [Modality]
+        [ResolveToType(typeof(LogicalValue))]        
+        public Value ObligationModality { get; set; }
+
+        [Modality]
+        [ResolveToType(typeof(LogicalValue))]
+        public Value SelfObligationModality { get; set; }
+
         public List<StrongIdentifierValue> UsedKeysList { get; set; }
         
         public RuleInstance Original { get; set; }
@@ -148,6 +156,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     item.PrepareDirty(this);
                 }
             }
+
+            ObligationModality?.CheckDirty();
+            SelfObligationModality?.CheckDirty();
         }
 
         public void CalculateUsedKeys()
@@ -297,6 +308,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.PrimaryPart = PrimaryPart.Clone(context);
             result.SecondaryParts = SecondaryParts?.Select(p => p.Clone(context)).ToList();
             result.IsParameterized = IsParameterized;
+            result.ObligationModality = ObligationModality;
+            result.SelfObligationModality = SelfObligationModality;
             result.UsedKeysList = UsedKeysList?.ToList();
 
             result.AppendCodeItem(this, context);
@@ -344,6 +357,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjProp(n, nameof(PrimaryPart), PrimaryPart);
             sb.PrintObjListProp(n, nameof(SecondaryParts), SecondaryParts);
 
+            sb.PrintObjProp(n, nameof(ObligationModality), ObligationModality);
+            sb.PrintObjProp(n, nameof(SelfObligationModality), SelfObligationModality);
+
             sb.PrintObjListProp(n, nameof(UsedKeysList), UsedKeysList);
 
             sb.PrintExisting(n, nameof(Original), Original);
@@ -367,6 +383,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjProp(n, nameof(PrimaryPart), PrimaryPart);
             sb.PrintShortObjListProp(n, nameof(SecondaryParts), SecondaryParts);
 
+            sb.PrintShortObjProp(n, nameof(ObligationModality), ObligationModality);
+            sb.PrintShortObjProp(n, nameof(SelfObligationModality), SelfObligationModality);
+
             sb.PrintShortObjListProp(n, nameof(UsedKeysList), UsedKeysList);
 
             sb.PrintExisting(n, nameof(Original), Original);
@@ -389,6 +408,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintExisting(n, nameof(PrimaryPart), PrimaryPart);
             sb.PrintExistingList(n, nameof(SecondaryParts), SecondaryParts);
+
+            sb.PrintExisting(n, nameof(ObligationModality), ObligationModality);
+            sb.PrintExisting(n, nameof(SelfObligationModality), SelfObligationModality);
 
             sb.PrintBriefObjListProp(n, nameof(UsedKeysList), UsedKeysList);
 

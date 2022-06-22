@@ -24,6 +24,7 @@ using SymOntoClay.Core;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.Internal.CG;
 using SymOntoClay.NLP.Internal.Dot;
 using SymOntoClay.NLP.Internal.InternalCG;
 using System;
@@ -33,13 +34,12 @@ using System.Text;
 
 namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 {
-    public class RelationNode
+    public class RelationNode: BaseNode
     {
         public RelationNode(LogicalQueryNode relation, ContextOfConverterFactToInternalCG context)
+            : base(context)
         {
             _relation = relation;
-            _context = context;
-            _logger = context.Logger;
 
             var nlpContext = context.NLPContext;
 
@@ -48,11 +48,10 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         }
 
         private readonly LogicalQueryNode _relation;
-        private readonly ContextOfConverterFactToInternalCG _context;
+        
         private readonly IPackedRelationsResolver _relationsResolver;
         private readonly IPackedInheritanceResolver _inheritanceResolver;
-        private readonly IEntityLogger _logger;
-
+        
         public ResultOfNode Run()
         {
 #if DEBUG
@@ -269,6 +268,10 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 
             var relationName = _relation.Name;
 
+#if DEBUG
+            _logger.Log($"relationName = {relationName}");
+#endif
+
             var isState = superClassesList.Any(p => p.NormalizedNameValue == "state");
             var isAct = superClassesList.Any(p => p.NormalizedNameValue == "act");
             var isEvent = superClassesList.Any(p => p.NormalizedNameValue == "event");
@@ -284,7 +287,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             result.LogicalQueryNode = _relation;
             result.KindOfResult = KindOfResultOfNode.ProcessRelation;
 
-            var relationConcept = new InternalConceptCGNode() { Name = relationName.NameValue, Parent = _context.ConceptualGraph };
+            var relationConcept = CreateOrGetExistingInternalConceptCGNode(relationName.NameValue);
 
             result.CGNode = relationConcept;
 
@@ -335,10 +338,27 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                     }
                     else
                     {
-                        if(isAct && meaningRolesList.Contains("agent"))
+#if DEBUG
+                        var dotStr_1 = DotConverter.ConvertToString(_context.ConceptualGraph);
+                        _logger.Log($"dotStr_1 = {dotStr_1}");
+#endif
+
+                        if (isAct && meaningRolesList.Contains("agent"))
                         {
-                            throw new NotImplementedException();
-                            //someone
+                            var targetConcept = paramResult.CGNode.AsGraphOrConceptNode;
+
+                            var agentRelation = new InternalRelationCGNode() { Name = "agent", Parent = _context.ConceptualGraph };
+                            agentRelation.AddInputNode(relationConcept);
+                            targetConcept.AddInputNode(agentRelation);
+
+                            var actRelation = new InternalRelationCGNode() { Name = "act", Parent = _context.ConceptualGraph };
+                            relationConcept.AddInputNode(actRelation);
+                            actRelation.AddInputNode(targetConcept);
+
+#if DEBUG
+                            dotStr_1 = DotConverter.ConvertToString(_context.ConceptualGraph);
+                            _logger.Log($"dotStr_1 = {dotStr_1}");
+#endif
                         }
                         else
                         {
@@ -354,8 +374,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             }
 
 #if DEBUG
-            //var dotStr = DotConverter.ConvertToString(_context.ConceptualGraph);
-            //_logger.Log($"dotStr = {dotStr}");
+            var dotStr = DotConverter.ConvertToString(_context.ConceptualGraph);
+            _logger.Log($"dotStr = {dotStr}");
 #endif
 
             return result;

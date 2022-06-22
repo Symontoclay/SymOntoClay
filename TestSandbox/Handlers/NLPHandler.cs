@@ -98,6 +98,9 @@ namespace TestSandbox.Handlers
 
             var ruleInstance = Parse(factStr);
 
+            ruleInstance.ObligationModality = LogicalValue.TrueValue;
+            //_logger.Log($"ruleInstance = {ruleInstance}");
+
             _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
 
             var converterFactToCG = new ConverterFactToInternalCG(_logger);
@@ -110,12 +113,12 @@ namespace TestSandbox.Handlers
 
             _logger.Log($"dotStr = '{dotStr}'");
 
-            //var converterInternalCGToPhraseStructure = new ConverterInternalCGToPhraseStructure(_logger, _wordsDict);
+            var converterInternalCGToPhraseStructure = new ConverterInternalCGToPhraseStructure(_logger, _wordsDict);
 
-            //var sentenceItem = converterInternalCGToPhraseStructure.Convert(internalCG, nlpContext);
+            var sentenceItem = converterInternalCGToPhraseStructure.Convert(internalCG, nlpContext);
 
             ////_logger.Log($"sentenceItem = {sentenceItem}");
-            //_logger.Log($"sentenceItem = {sentenceItem.ToDbgString()}");
+            _logger.Log($"sentenceItem = {sentenceItem.ToDbgString()}");
 
             //var converterPhraseStructureToText = new ConverterPhraseStructureToText(_logger);
 

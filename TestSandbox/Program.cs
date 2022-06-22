@@ -83,7 +83,7 @@ namespace TestSandbox
             //TstRelationsStorageHandler();
             //TstGenerateDllDict();
             //TSTWordsFactory();
-            //TstNLPHandler();//<=NLP
+            TstNLPHandler();//<=NLP
             //TstTriggerConditionNodeHandler();
             //TstSoundBus();
             //TstNavigationHandler();
@@ -129,7 +129,7 @@ namespace TestSandbox
             //TstParsing();
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

@@ -63,18 +63,27 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             outerConceptualGraph.Aspect = GrammaticalAspect.Simple;//tmp
             outerConceptualGraph.Voice = GrammaticalVoice.Active;//tmp
 
-            if(outerConceptualGraph.Children.Where(p => p.IsRelationNode).Any(p => IsSubjectRelation(p.Name)))
+            outerConceptualGraph.Mood = GrammaticalMood.Imperative;//tmp
+
+#if DEBUG
+            _logger.Log($"fact.ObligationModality = {fact.ObligationModality}");
+            _logger.Log($"fact.SelfObligationModality = {fact.SelfObligationModality}");
+#endif
+
+            if(fact.ObligationModality != null || fact.ObligationModality.KindOfValue != KindOfValue.NullValue || fact.SelfObligationModality != null || fact.SelfObligationModality.KindOfValue != KindOfValue.NullValue)
             {
-                outerConceptualGraph.Mood = GrammaticalMood.Indicative;
+                outerConceptualGraph.Mood = GrammaticalMood.Imperative;
+                outerConceptualGraph.ObligationModality = ObligationModality.Imperative;
             }
             else
             {
-                outerConceptualGraph.Mood = GrammaticalMood.Imperative;
+                outerConceptualGraph.ObligationModality = ObligationModality.None;
+                outerConceptualGraph.Mood = GrammaticalMood.Indicative;
             }
 
             outerConceptualGraph.AbilityModality = AbilityModality.None;//tmp
             outerConceptualGraph.PermissionModality = PermissionModality.None;//tmp
-            outerConceptualGraph.ObligationModality = ObligationModality.None;//tmp
+            //tmp
             outerConceptualGraph.ProbabilityModality = ProbabilityModality.None;//tmp
             outerConceptualGraph.ConditionalModality = ConditionalModality.None;//tmp
 

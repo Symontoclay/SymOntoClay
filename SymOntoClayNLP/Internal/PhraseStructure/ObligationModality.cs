@@ -30,6 +30,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
     {
         Undefined,
         None,
+        Imperative,
         Must,
         HaveTo,
         BeTo,

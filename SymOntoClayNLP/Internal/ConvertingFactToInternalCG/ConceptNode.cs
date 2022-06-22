@@ -30,18 +30,15 @@ using System.Text;
 
 namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 {
-    public class ConceptNode
+    public class ConceptNode : BaseNode
     {
         public ConceptNode(LogicalQueryNode concept, ContextOfConverterFactToInternalCG context)
+            : base(context)
         {
             _concept = concept;
-            _context = context;
-            _logger = context.Logger;
         }
 
         private readonly LogicalQueryNode _concept;
-        private readonly ContextOfConverterFactToInternalCG _context;
-        private readonly IEntityLogger _logger;
 
         public ResultOfNode Run()
         {
@@ -52,7 +49,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             var result = new ResultOfNode();
             result.KindOfResult = KindOfResultOfNode.ProcessConcept;
             result.LogicalQueryNode = _concept;
-            result.CGNode = new InternalConceptCGNode() { Name = _concept.Name.NameValue, Parent = _context.ConceptualGraph };
+            result.CGNode = CreateOrGetExistingInternalConceptCGNode(_concept.Name.NameValue);
 
             return result;
         }

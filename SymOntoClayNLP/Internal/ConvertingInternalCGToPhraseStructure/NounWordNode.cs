@@ -32,24 +32,26 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 {
     public class NounWordNode
     {
-        public NounWordNode(string word, RoleOfNoun roleOfNoun, IEntityLogger logger, IWordsDict wordsDict)
+        public NounWordNode(string word, RoleOfNoun roleOfNoun, IEntityLogger logger, IWordsDict wordsDict, GrammaticalMood mood)
         {
             _logger = logger;
             _wordsDict = wordsDict;
             _word = word;
             _roleOfNoun = roleOfNoun;
+            _mood = mood;
         }
 
         private readonly IEntityLogger _logger;
         private readonly IWordsDict _wordsDict;
         private readonly string _word;
         private readonly RoleOfNoun _roleOfNoun;
+        private readonly GrammaticalMood _mood;
 
         public Word GetWord()
         {
 #if DEBUG
-            //_logger.Log($"_word = '{_word}'");
-            //_logger.Log($"_roleOfNoun = {_roleOfNoun}");
+            _logger.Log($"_word = '{_word}'");
+            _logger.Log($"_roleOfNoun = {_roleOfNoun}");
 #endif
 
             switch (_roleOfNoun)
@@ -107,6 +109,16 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                         throw new NotImplementedException();
                     }
 
+                case RoleOfNoun.Object:
+                    {
+                        if(_mood == GrammaticalMood.Imperative && _word == "self")
+                        {
+                            return null;
+                        }
+
+                        throw new NotImplementedException();
+                    }
+
                 case RoleOfNoun.PossessDeterminer:
                     {
                         var wordFramesList = _wordsDict.GetWordFramesByRootWord(_word);
@@ -141,6 +153,38 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                         throw new NotImplementedException();
                     }
 
+                case RoleOfNoun.AnotherRole:
+                    {
+                        var wordFramesList = _wordsDict.GetWordFramesByWord(_word);
+
+#if DEBUG
+                        _logger.Log($"wordFramesList = {wordFramesList.WriteListToString()}");
+#endif
+
+                        var nounsList = wordFramesList.Where(p => p.IsNoun).Select(p => p.AsNoun).ToList();
+
+                        if (nounsList.Any())
+                        {
+#if DEBUG
+                            //_logger.Log($"nounsList = {nounsList.WriteListToString()}");
+#endif
+
+                            var result = new Word();
+
+                            result.Content = _word;
+
+                            result.WordFrame = nounsList.Single();
+
+#if DEBUG
+                            //_logger.Log($"result = {result}");
+#endif
+
+                            return result;
+                        }
+
+                        throw new NotImplementedException();
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_roleOfNoun), _roleOfNoun, null);
             }
@@ -151,8 +195,13 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var nounWord = GetWord();
 
 #if DEBUG
-            //_logger.Log($"nounWord = {nounWord}");
+            _logger.Log($"nounWord = {nounWord}");
 #endif
+
+            if(nounWord == null)
+            {
+                return null;
+            }
 
             var nounPhrase = new NounPhrase();
             nounPhrase.N = nounWord;

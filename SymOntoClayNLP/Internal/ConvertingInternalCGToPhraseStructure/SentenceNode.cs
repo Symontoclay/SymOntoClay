@@ -127,6 +127,60 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                 };
             }
 
+            var actionsList = _source.Children.Where(p => p.Kind == KindOfCGNode.Relation && p.Name == SpecialNamesOfRelations.ActionRelationName).Select(p => p.AsRelationNode).ToList();
+
+            if(actionsList.Any())
+            {
+                if (actionsList.Count > 1)
+                {
+                    throw new NotImplementedException();
+                }
+
+                var actionRelation = actionsList.First();
+
+#if DEBUG
+                //_logger.Log($"actionRelation = {actionRelation}");
+#endif
+
+                _context.VisitedRelations.Add(actionRelation);
+
+                if (actionRelation.Inputs.Count != 1)
+                {
+                    throw new NotImplementedException();
+                }
+
+                if (actionRelation.Outputs.Count != 1)
+                {
+                    throw new NotImplementedException();
+                }
+
+                var subjectConcept = actionRelation.Inputs.First();
+
+#if DEBUG
+                //_logger.Log($"subjectConcept = {subjectConcept}");
+#endif
+
+                var agentRelation = subjectConcept.Inputs.Where(p => p.Name == SpecialNamesOfRelations.AgentRelationName).Select(p => p.AsRelationNode).Single();
+
+#if DEBUG
+                //_logger.Log($"agentRelation = {agentRelation}");
+#endif
+
+                _context.VisitedRelations.Add(agentRelation);
+
+                var actionConcept = actionRelation.Outputs.First();
+
+#if DEBUG
+                //_logger.Log($"actionConcept = {actionConcept}");
+#endif
+
+                return new KeyConceptsOfSentenceNode()
+                {
+                    SubjectConcept = subjectConcept.AsGraphOrConceptNode,
+                    VerbConcept = actionConcept.AsConceptNode
+                };
+            }
+
             throw new NotImplementedException();
         }
 
@@ -181,7 +235,26 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             _logger.Log($"keyConcepts = {keyConcepts}");
 #endif
 
-            throw new NotImplementedException();
+            var verbNode = new VerbNode(keyConcepts.VerbConcept, null, _context);
+
+            var verbResult = verbNode.Run();
+
+#if DEBUG
+            _logger.Log($"verbResult = {verbResult}");
+#endif
+
+            var sentence = new Sentence();
+            sentence.Predicate = verbResult.SentenceItem;
+
+#if DEBUG
+            _logger.Log($"sentence = {sentence}");
+            _logger.Log($"sentence = {sentence.ToDbgString()}");
+#endif
+
+            return new ResultOfNode()
+            {
+                SentenceItem = sentence
+            };
         }
     }
 }

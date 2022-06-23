@@ -318,11 +318,11 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                 {
                     var targetConcept = paramResult.CGNode.AsGraphOrConceptNode;
 
-                    var experiencerRelation = new InternalRelationCGNode() { Name = "experiencer", Parent = _context.ConceptualGraph };
+                    var experiencerRelation = new InternalRelationCGNode() { Name = SpecialNamesOfRelations.ExperiencerRelationName, Parent = _context.ConceptualGraph };
                     experiencerRelation.AddInputNode(relationConcept);
                     targetConcept.AddInputNode(experiencerRelation);
 
-                    var stateRelation = new InternalRelationCGNode() { Name = "state", Parent = _context.ConceptualGraph };
+                    var stateRelation = new InternalRelationCGNode() { Name = SpecialNamesOfRelations.StateRelationName, Parent = _context.ConceptualGraph };
                     stateRelation.AddInputNode(targetConcept);
                     relationConcept.AddInputNode(stateRelation);
                 }
@@ -332,7 +332,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                     {
                         var targetConcept = paramResult.CGNode.AsGraphOrConceptNode;
 
-                        var objectRelation = new InternalRelationCGNode() { Name = "object", Parent = _context.ConceptualGraph };
+                        var objectRelation = new InternalRelationCGNode() { Name = SpecialNamesOfRelations.ObjectRelationName, Parent = _context.ConceptualGraph };
                         objectRelation.AddInputNode(relationConcept);
                         targetConcept.AddInputNode(objectRelation);
                     }
@@ -347,11 +347,11 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                         {
                             var targetConcept = paramResult.CGNode.AsGraphOrConceptNode;
 
-                            var agentRelation = new InternalRelationCGNode() { Name = "agent", Parent = _context.ConceptualGraph };
+                            var agentRelation = new InternalRelationCGNode() { Name = SpecialNamesOfRelations.AgentRelationName, Parent = _context.ConceptualGraph };
                             agentRelation.AddInputNode(relationConcept);
                             targetConcept.AddInputNode(agentRelation);
 
-                            var actRelation = new InternalRelationCGNode() { Name = "act", Parent = _context.ConceptualGraph };
+                            var actRelation = new InternalRelationCGNode() { Name = SpecialNamesOfRelations.ActionRelationName, Parent = _context.ConceptualGraph };
                             relationConcept.AddInputNode(actRelation);
                             actRelation.AddInputNode(targetConcept);
 

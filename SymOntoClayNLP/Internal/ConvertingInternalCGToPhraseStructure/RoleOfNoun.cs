@@ -31,6 +31,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
         Unknown,
         Subject,
         Object,
-        PossessDeterminer
+        PossessDeterminer,
+        AnotherRole
     }
 }

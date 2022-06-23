@@ -75,8 +75,14 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                 verbs.Item2.Object = objectPhrase;
             }
 
+            var phrasesOfAnotherRelations = ProcessAnotherRelations();
+
 #if DEBUG
-            //_logger.Log($"verbs.Item1.ToDbgString() = {verbs.Item1.ToDbgString()}");
+            _logger.Log($"phrasesOfAnotherRelations = {phrasesOfAnotherRelations.WritePODListToString()}");
+#endif
+
+#if DEBUG
+            _logger.Log($"verbs.Item1.ToDbgString() = {verbs.Item1.ToDbgString()}");
 #endif
 
             return new ResultOfNode()
@@ -145,17 +151,20 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
         private (VerbPhrase, VerbPhrase) GetTargetPresentSimpleVerbForm(string verb)
         {
 #if DEBUG
-            //_logger.Log($"verb = '{verb}'");
-            //_logger.Log($"_subject = '{_subject}'");
+            _logger.Log($"verb = '{verb}'");
+            _logger.Log($"_subject = '{_subject}'");
 #endif
 
-            var subjectWordFrame = _subject.RootWordFrame;
-
-            if ((subjectWordFrame.PartOfSpeech == GrammaticalPartOfSpeech.Noun) ||
-                (subjectWordFrame.PartOfSpeech == GrammaticalPartOfSpeech.Pronoun && subjectWordFrame.AsPronoun.Number == GrammaticalNumberOfWord.Singular && subjectWordFrame.AsPronoun.Person == GrammaticalPerson.Third && subjectWordFrame.AsPronoun.Case == CaseOfPersonalPronoun.Subject))
+            if(_subject != null)
             {
-                //like -> likes
-                throw new NotImplementedException();
+                var subjectWordFrame = _subject.RootWordFrame;
+
+                if ((subjectWordFrame.PartOfSpeech == GrammaticalPartOfSpeech.Noun) ||
+                    (subjectWordFrame.PartOfSpeech == GrammaticalPartOfSpeech.Pronoun && subjectWordFrame.AsPronoun.Number == GrammaticalNumberOfWord.Singular && subjectWordFrame.AsPronoun.Person == GrammaticalPerson.Third && subjectWordFrame.AsPronoun.Case == CaseOfPersonalPronoun.Subject))
+                {
+                    //like -> likes
+                    throw new NotImplementedException();
+                }
             }
 
             var verbsList = _wordsDict.GetWordFramesByWord(verb).Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Verb);
@@ -223,6 +232,64 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 #endif
 
             return objectResult.SentenceItem;
+        }
+
+        private List<(KindOfVerbPhraseTarget, BaseSentenceItem)> ProcessAnotherRelations()
+        {
+            var anotherRelationsList = _source.Outputs.Where(p => p.Kind == KindOfCGNode.Relation && p.Name != SpecialNamesOfRelations.ObjectRelationName && p.Name != SpecialNamesOfRelations.AgentRelationName && p.Name != SpecialNamesOfRelations.ExperiencerRelationName).Select(p => p.AsRelationNode).ToList();
+
+#if DEBUG
+            _logger.Log($"anotherRelationsList = {anotherRelationsList.WriteListToString()}");
+#endif
+
+            if(!anotherRelationsList.Any())
+            {
+                return new List<(KindOfVerbPhraseTarget, BaseSentenceItem)>();
+            }
+
+            var phrasesList = new List<(KindOfVerbPhraseTarget, BaseSentenceItem)>();
+
+            foreach (var relation in anotherRelationsList)
+            {
+#if DEBUG
+                _logger.Log($"relation = {relation}");
+#endif
+
+                var relationName = relation.Name;
+
+#if DEBUG
+                _logger.Log($"relationName = '{relationName}'");
+#endif
+
+                switch(relationName)
+                {
+                    case "direction":
+                        {
+                            var directionConcept = relation.Outputs.First().AsGraphOrConceptNode;
+
+#if DEBUG
+                            _logger.Log($"directionConcept = {directionConcept}");
+#endif
+
+                            var nounNode = new NounNode(directionConcept, RoleOfNoun.AnotherRole, _context);
+
+                            var nounResult = nounNode.Run();
+
+#if DEBUG
+                            _logger.Log($"nounResult = {nounResult}");
+                            _logger.Log($"nounResult.SentenceItem = {nounResult.SentenceItem.ToDbgString()}");
+#endif
+
+                            throw new NotImplementedException();
+                        }
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(relationName), relationName, null);
+                }
+            }
+
+            throw new NotImplementedException();
         }
     }
 }

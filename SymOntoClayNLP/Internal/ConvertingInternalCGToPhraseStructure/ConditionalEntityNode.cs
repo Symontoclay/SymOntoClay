@@ -87,7 +87,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                 WordsDict = _wordsDict
             };
 
-            var nounWordNode = new NounWordNode(rootConcept.Name, RoleOfNoun.Subject, _logger, _wordsDict);
+            var nounWordNode = new NounWordNode(rootConcept.Name, RoleOfNoun.Subject, _logger, _wordsDict, GrammaticalMood.Undefined);
             var nounPhrase = nounWordNode.GetNounPhrase();
 
 #if DEBUG
@@ -161,12 +161,74 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var anotherRelationsList = _source.Children.Where(p => p.IsRelationNode).Select(p => p.AsRelationNode).Where(p => !_visitedRelations.Contains(p)).ToList();
 
 #if DEBUG
-            //_logger.Log($"anotherRelationsList = {anotherRelationsList.WriteListToString()}");
+            _logger.Log($"anotherRelationsList = {anotherRelationsList.WriteListToString()}");
 #endif
 
             if (!anotherRelationsList.Any())
             {
                 return;
+            }
+
+            foreach(var relation in anotherRelationsList)
+            {
+#if DEBUG
+                _logger.Log($"relation = {relation}");
+#endif
+
+                if (_visitedRelations.Contains(relation))
+                {
+                    continue;
+                }
+
+                _visitedRelations.Add(relation);
+
+                var relationName = relation.Name;
+
+#if DEBUG
+                _logger.Log($"relationName = '{relationName}'");
+#endif
+
+                switch (relationName)
+                {
+                    case "color":
+                        {
+                            var objConcept = relation.Inputs.First().AsGraphOrConceptNode;
+
+#if DEBUG
+                            _logger.Log($"objConcept = {objConcept}");
+#endif
+
+                            var nounNode = new NounNode(objConcept, RoleOfNoun.AnotherRole, _baseContext);
+
+                            var nounResult = nounNode.Run();
+
+#if DEBUG
+                            _logger.Log($"nounResult = {nounResult}");
+                            _logger.Log($"nounResult.SentenceItem = {nounResult.SentenceItem.ToDbgString()}");
+#endif
+
+                            var colorConcept = relation.Outputs.First().AsGraphOrConceptNode;
+
+#if DEBUG
+                            _logger.Log($"colorConcept = {colorConcept}");
+#endif
+
+                            var adjectiveNode = new AdjectiveNode(colorConcept, _baseContext);
+
+                            var adjectiveResult = adjectiveNode.Run();
+
+#if DEBUG
+                            _logger.Log($"adjectiveResult = {adjectiveResult}");
+                            _logger.Log($"adjectiveResult.SentenceItem = {adjectiveResult.SentenceItem.ToDbgString()}");
+#endif
+
+                            throw new NotImplementedException();
+                        }
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(relationName), relationName, null);
+                }
             }
 
             throw new NotImplementedException();

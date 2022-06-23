@@ -90,10 +90,16 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var conceptName = _source.Name;
 
 #if DEBUG
-            //_logger.Log($"conceptName = '{conceptName}'");
+            _logger.Log($"conceptName = '{conceptName}'");
 #endif
 
-            var nounWordNode = new NounWordNode(conceptName, _roleOfNoun, _logger, _wordsDict);
+            var mood = _source.Parent.Mood;
+
+#if DEBUG
+            _logger.Log($"mood = {mood}");
+#endif
+
+            var nounWordNode = new NounWordNode(conceptName, _roleOfNoun, _logger, _wordsDict, mood);
 
             if(_roleOfNoun == RoleOfNoun.PossessDeterminer)
             {
@@ -106,7 +112,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var nounPhrase = nounWordNode.GetNounPhrase();
 
 #if DEBUG
-            //_logger.Log($"nounPhrase = {nounPhrase}");
+            _logger.Log($"nounPhrase = {nounPhrase}");
 #endif
 
             return new ResultOfNode()

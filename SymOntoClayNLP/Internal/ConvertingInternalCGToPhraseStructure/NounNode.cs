@@ -90,13 +90,13 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var conceptName = _source.Name;
 
 #if DEBUG
-            _logger.Log($"conceptName = '{conceptName}'");
+            //_logger.Log($"conceptName = '{conceptName}'");
 #endif
 
             var mood = _source.Parent.Mood;
 
 #if DEBUG
-            _logger.Log($"mood = {mood}");
+            //_logger.Log($"mood = {mood}");
 #endif
 
             var nounWordNode = new NounWordNode(conceptName, _roleOfNoun, _logger, _wordsDict, mood);
@@ -112,7 +112,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var nounPhrase = nounWordNode.GetNounPhrase();
 
 #if DEBUG
-            _logger.Log($"nounPhrase = {nounPhrase}");
+            //_logger.Log($"nounPhrase = {nounPhrase}");
 #endif
 
             return new ResultOfNode()
@@ -128,7 +128,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             //_logger.Log($"dotStr = '{dotStr}'");
 #endif
 
-            var conditionalEntityNode = new ConditionalEntityNode(_source.AsConceptualGraph, _baseContext);
+            var conditionalEntityNode = new ConditionalEntityNode(_source.AsConceptualGraph, _roleOfNoun, _baseContext);
             var conditionalEntityNodeResult = conditionalEntityNode.Run();
 
 #if DEBUG

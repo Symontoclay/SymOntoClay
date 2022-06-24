@@ -120,11 +120,11 @@ namespace TestSandbox.Handlers
             ////_logger.Log($"sentenceItem = {sentenceItem}");
             _logger.Log($"sentenceItem = {sentenceItem.ToDbgString()}");
 
-            //var converterPhraseStructureToText = new ConverterPhraseStructureToText(_logger);
+            var converterPhraseStructureToText = new ConverterPhraseStructureToText(_logger);
 
-            //var text = converterPhraseStructureToText.Convert(sentenceItem);
+            var text = converterPhraseStructureToText.Convert(sentenceItem);
 
-            //_logger.Log($"text = '{text}'");
+            _logger.Log($"text = '{text}'");
         }
 
         private void Case4()

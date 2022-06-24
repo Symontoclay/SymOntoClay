@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP.CommonDict;
+using SymOntoClay.NLP.Internal.CG;
 using SymOntoClay.NLP.Internal.InternalCG;
 using System;
 using System.Collections.Generic;
@@ -31,20 +32,43 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
         public ResultOfNode Run()
         {
 #if DEBUG
-            _logger.Log($"_source = {_source}");
+            //_logger.Log($"_source = {_source}");
 #endif
 
             var kind = _source.Kind;
 
 #if DEBUG
-            _logger.Log($"kind = {kind}");
+            //_logger.Log($"kind = {kind}");
 #endif
 
             switch (kind)
             {
+                case KindOfCGNode.Concept:
+                    return ProcessConcept();
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
+        }
+
+        private ResultOfNode ProcessConcept()
+        {
+            var conceptName = _source.Name;
+
+#if DEBUG
+            //_logger.Log($"conceptName = '{conceptName}'");
+#endif
+
+            var adjectiveWordNode = new AdjectiveWordNode(conceptName, _logger, _wordsDict);
+
+#if DEBUG
+            //_logger.Log($"adjectiveWordNode.GetWord() = {adjectiveWordNode.GetWord()}");
+#endif
+
+            return new ResultOfNode()
+            {
+                SentenceItem = adjectiveWordNode.GetWord()
+            };
         }
     }
 }

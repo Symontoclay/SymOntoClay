@@ -78,11 +78,52 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var phrasesOfAnotherRelations = ProcessAnotherRelations();
 
 #if DEBUG
-            _logger.Log($"phrasesOfAnotherRelations = {phrasesOfAnotherRelations.WritePODListToString()}");
+            //_logger.Log($"phrasesOfAnotherRelations = {phrasesOfAnotherRelations.WritePODListToString()}");
 #endif
 
+            if(phrasesOfAnotherRelations.Any())
+            {
+                var phrasesOfAnotherRelationsDict = phrasesOfAnotherRelations.GroupBy(p => p.Item1).ToDictionary(p => p.Key, p => p.Select(x => x.Item2).ToList());
+
+                var targetVerb = verbs.Item2;
+
+                foreach (var kvpItem in phrasesOfAnotherRelationsDict)
+                {
+                    var target = kvpItem.Key;
+
 #if DEBUG
-            _logger.Log($"verbs.Item1.ToDbgString() = {verbs.Item1.ToDbgString()}");
+                    //_logger.Log($"target = {target}");
+#endif
+
+                    var valuesList = kvpItem.Value;
+
+                    switch (target)
+                    {
+                        case KindOfVerbPhraseTarget.PP:
+                            {
+                                if(valuesList.Count == 1)
+                                {
+                                    var targetPhrase = valuesList.Single().AsPreOrPostpositionalPhrase;
+
+#if DEBUG
+                                    //_logger.Log($"targetPhrase = {targetPhrase}");
+#endif
+
+                                    targetVerb.PP = targetPhrase;
+                                }
+                                break;
+
+                                throw new NotImplementedException();
+                            }
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(target), target, null);
+                    }
+                }
+            }
+
+#if DEBUG
+            //_logger.Log($"verbs.Item1.ToDbgString() = {verbs.Item1.ToDbgString()}");
 #endif
 
             return new ResultOfNode()
@@ -151,8 +192,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
         private (VerbPhrase, VerbPhrase) GetTargetPresentSimpleVerbForm(string verb)
         {
 #if DEBUG
-            _logger.Log($"verb = '{verb}'");
-            _logger.Log($"_subject = '{_subject}'");
+            //_logger.Log($"verb = '{verb}'");
+            //_logger.Log($"_subject = '{_subject}'");
 #endif
 
             if(_subject != null)
@@ -239,7 +280,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var anotherRelationsList = _source.Outputs.Where(p => p.Kind == KindOfCGNode.Relation && p.Name != SpecialNamesOfRelations.ObjectRelationName && p.Name != SpecialNamesOfRelations.AgentRelationName && p.Name != SpecialNamesOfRelations.ExperiencerRelationName).Select(p => p.AsRelationNode).ToList();
 
 #if DEBUG
-            _logger.Log($"anotherRelationsList = {anotherRelationsList.WriteListToString()}");
+            //_logger.Log($"anotherRelationsList = {anotherRelationsList.WriteListToString()}");
 #endif
 
             if(!anotherRelationsList.Any())
@@ -252,13 +293,13 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             foreach (var relation in anotherRelationsList)
             {
 #if DEBUG
-                _logger.Log($"relation = {relation}");
+                //_logger.Log($"relation = {relation}");
 #endif
 
                 var relationName = relation.Name;
 
 #if DEBUG
-                _logger.Log($"relationName = '{relationName}'");
+                //_logger.Log($"relationName = '{relationName}'");
 #endif
 
                 switch(relationName)
@@ -268,7 +309,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                             var directionConcept = relation.Outputs.First().AsGraphOrConceptNode;
 
 #if DEBUG
-                            _logger.Log($"directionConcept = {directionConcept}");
+                            //_logger.Log($"directionConcept = {directionConcept}");
 #endif
 
                             var nounNode = new NounNode(directionConcept, RoleOfNoun.AnotherRole, _context);
@@ -276,11 +317,45 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                             var nounResult = nounNode.Run();
 
 #if DEBUG
-                            _logger.Log($"nounResult = {nounResult}");
-                            _logger.Log($"nounResult.SentenceItem = {nounResult.SentenceItem.ToDbgString()}");
+                            //_logger.Log($"nounResult = {nounResult}");
+                            //_logger.Log($"nounResult.SentenceItem = {nounResult.SentenceItem.ToDbgString()}");
 #endif
 
-                            throw new NotImplementedException();
+                            var nounPhrase = nounResult.SentenceItem.AsNounPhrase;
+
+                            if(nounPhrase == null)
+                            {
+                                throw new ArgumentNullException(nameof(nounPhrase));
+                            }
+
+                            var toWordFramesList = _wordsDict.GetWordFramesByWord("to").Where(p => p.IsPreposition).Select(p => p.AsPreposition);
+
+#if DEBUG
+                            //_logger.Log($"toWordFramesList = {toWordFramesList.WriteListToString()}");
+#endif
+
+                            var toPrepositionWordFrame = toWordFramesList.Single();
+
+#if DEBUG
+                            //_logger.Log($"toPrepositionWordFrame = {toPrepositionWordFrame}");
+#endif
+
+                            var pp = new PreOrPostpositionalPhrase()
+                            {
+                                P = new Word()
+                                {
+                                    Content = "to",
+                                    WordFrame = toPrepositionWordFrame
+                                },
+                                NP = nounPhrase
+                            };
+
+#if DEBUG
+                            //_logger.Log($"pp = {pp}");
+                            //_logger.Log($"pp = {pp.ToDbgString()}");
+#endif
+
+                            phrasesList.Add((KindOfVerbPhraseTarget.PP, pp));
                         }
                         break;
 
@@ -289,7 +364,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                 }
             }
 
-            throw new NotImplementedException();
+            return phrasesList;
         }
     }
 }

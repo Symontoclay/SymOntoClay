@@ -46,7 +46,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         public ResultOfNode Run()
         {
 #if DEBUG
-            _logger.Log($"_operator = {DebugHelperForRuleInstance.ToString(_operator, HumanizedOptions.ShowOnlyMainContent)}");
+            //_logger.Log($"_operator = {DebugHelperForRuleInstance.ToString(_operator, HumanizedOptions.ShowOnlyMainContent)}");
 #endif
 
             var leftResult = LogicalQueryNodeProcessorFactory.Run(_operator.Left, _context);
@@ -54,8 +54,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             var rightResult = LogicalQueryNodeProcessorFactory.Run(_operator.Right, _context);
 
 #if DEBUG
-            _logger.Log($"leftResult = {leftResult}");
-            _logger.Log($"rightResult = {rightResult}");
+            //_logger.Log($"leftResult = {leftResult}");
+            //_logger.Log($"rightResult = {rightResult}");
 #endif
 
             if(leftResult.KindOfResult == KindOfResultOfNode.ResolveVar && rightResult.KindOfResult == KindOfResultOfNode.ResolveVar)
@@ -74,8 +74,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             }
 
 #if DEBUG
-            var dotStr = DotConverter.ConvertToString(_context.ConceptualGraph);
-            _logger.Log($"dotStr = {dotStr}");
+            //var dotStr = DotConverter.ConvertToString(_context.ConceptualGraph);
+            //_logger.Log($"dotStr = {dotStr}");
 #endif
 
             return new ResultOfNode { KindOfResult = KindOfResultOfNode.ProcessAndOperator };

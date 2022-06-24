@@ -50,8 +50,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
         public Word GetWord()
         {
 #if DEBUG
-            _logger.Log($"_word = '{_word}'");
-            _logger.Log($"_roleOfNoun = {_roleOfNoun}");
+            //_logger.Log($"_word = '{_word}'");
+            //_logger.Log($"_roleOfNoun = {_roleOfNoun}");
 #endif
 
             switch (_roleOfNoun)
@@ -158,7 +158,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                         var wordFramesList = _wordsDict.GetWordFramesByWord(_word);
 
 #if DEBUG
-                        _logger.Log($"wordFramesList = {wordFramesList.WriteListToString()}");
+                        //_logger.Log($"wordFramesList = {wordFramesList.WriteListToString()}");
 #endif
 
                         var nounsList = wordFramesList.Where(p => p.IsNoun).Select(p => p.AsNoun).ToList();
@@ -195,7 +195,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var nounWord = GetWord();
 
 #if DEBUG
-            _logger.Log($"nounWord = {nounWord}");
+            //_logger.Log($"nounWord = {nounWord}");
 #endif
 
             if(nounWord == null)

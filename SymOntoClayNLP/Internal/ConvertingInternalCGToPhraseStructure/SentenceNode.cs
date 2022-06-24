@@ -232,7 +232,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var keyConcepts = GetKeyConcepts();
 
 #if DEBUG
-            _logger.Log($"keyConcepts = {keyConcepts}");
+            //_logger.Log($"keyConcepts = {keyConcepts}");
 #endif
 
             var verbNode = new VerbNode(keyConcepts.VerbConcept, null, _context);
@@ -240,15 +240,15 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             var verbResult = verbNode.Run();
 
 #if DEBUG
-            _logger.Log($"verbResult = {verbResult}");
+            //_logger.Log($"verbResult = {verbResult}");
 #endif
 
             var sentence = new Sentence();
             sentence.Predicate = verbResult.SentenceItem;
 
 #if DEBUG
-            _logger.Log($"sentence = {sentence}");
-            _logger.Log($"sentence = {sentence.ToDbgString()}");
+            //_logger.Log($"sentence = {sentence}");
+            //_logger.Log($"sentence = {sentence.ToDbgString()}");
 #endif
 
             return new ResultOfNode()

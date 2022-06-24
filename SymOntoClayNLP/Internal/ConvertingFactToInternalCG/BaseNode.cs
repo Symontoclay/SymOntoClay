@@ -22,13 +22,13 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         protected InternalConceptCGNode CreateOrGetExistingInternalConceptCGNode(string name)
         {
 #if DEBUG
-            _logger.Log($"name = {name}");
+            //_logger.Log($"name = {name}");
 #endif
 
             var result = _context.ConceptualGraph.Children.SingleOrDefault(p => p.Kind == KindOfCGNode.Concept && p.Name == name);
 
 #if DEBUG
-            _logger.Log($"result = {result}");
+            //_logger.Log($"result = {result}");
 #endif
 
             if (result != null)

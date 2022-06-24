@@ -66,8 +66,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             outerConceptualGraph.Mood = GrammaticalMood.Imperative;//tmp
 
 #if DEBUG
-            _logger.Log($"fact.ObligationModality = {fact.ObligationModality}");
-            _logger.Log($"fact.SelfObligationModality = {fact.SelfObligationModality}");
+            //_logger.Log($"fact.ObligationModality = {fact.ObligationModality}");
+            //_logger.Log($"fact.SelfObligationModality = {fact.SelfObligationModality}");
 #endif
 
             if(fact.ObligationModality != null || fact.ObligationModality.KindOfValue != KindOfValue.NullValue || fact.SelfObligationModality != null || fact.SelfObligationModality.KindOfValue != KindOfValue.NullValue)

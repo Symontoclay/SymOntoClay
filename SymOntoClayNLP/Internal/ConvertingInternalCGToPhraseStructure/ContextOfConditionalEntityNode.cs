@@ -35,5 +35,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
     {
         public NounPhrase NounPhrase { get; set; }
         public InternalConceptCGNode RootConcept { get; set; }
+        public Dictionary<BaseInternalCGNode, BaseSentenceItem> PhrasesDict { get; set; } = new Dictionary<BaseInternalCGNode, BaseSentenceItem>();
     }
 }

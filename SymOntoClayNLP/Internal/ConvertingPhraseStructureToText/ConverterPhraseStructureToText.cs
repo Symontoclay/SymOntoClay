@@ -80,6 +80,10 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
                     RunVerbPhrase(sentenceItem.AsVerbPhrase, sb);
                     break;
 
+                case KindOfSentenceItem.PreOrPostpositionalPhrase:
+                    RunPreOrPostpositionalPhrase(sentenceItem.AsPreOrPostpositionalPhrase, sb);
+                    break;
+
                 case KindOfSentenceItem.Word:
                     RunWord(sentenceItem.AsWord, sb);
                     break;
@@ -161,7 +165,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
 
             if (verbPhrase.PP != null)
             {
-                throw new NotImplementedException();
+                RunBaseSentenceItem(verbPhrase.PP, sb);
             }
 
             if (verbPhrase.CP != null)
@@ -189,6 +193,11 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
             //_logger.Log($"sb = '{sb}'");
 #endif
 
+            if (nounPhrase.AP != null)
+            {
+                RunBaseSentenceItem(nounPhrase.AP, sb);
+            }
+
             if (nounPhrase.N != null)
             {
                 RunBaseSentenceItem(nounPhrase.N, sb);
@@ -203,10 +212,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
                 throw new NotImplementedException();
             }
 
-            if (nounPhrase.AP != null)
-            {
-                throw new NotImplementedException();
-            }
+
 
             if (nounPhrase.NounAdjunct != null)
             {
@@ -246,6 +252,41 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
             if (nounPhrase.InfinitivePhrases != null)
             {
                 throw new NotImplementedException();
+            }
+
+#if DEBUG
+            //_logger.Log($"sb = '{sb}'");
+#endif
+        }
+
+        private void RunPreOrPostpositionalPhrase(PreOrPostpositionalPhrase preOrPostpositionalPhrase, StringBuilder sb)
+        {
+#if DEBUG
+            //_logger.Log($"preOrPostpositionalPhrase = {preOrPostpositionalPhrase.ToDbgString()}");
+#endif
+
+            if(preOrPostpositionalPhrase.P != null)
+            {
+                RunBaseSentenceItem(preOrPostpositionalPhrase.P, sb);
+            }
+
+#if DEBUG
+            //_logger.Log($"sb = '{sb}'");
+#endif
+
+            if (preOrPostpositionalPhrase.P2 != null)
+            {
+                throw new NotImplementedException();
+            }
+
+            if (preOrPostpositionalPhrase.Adv != null)
+            {
+                throw new NotImplementedException();
+            }
+
+            if (preOrPostpositionalPhrase.NP != null)
+            {
+                RunBaseSentenceItem(preOrPostpositionalPhrase.NP, sb);
             }
 
 #if DEBUG

@@ -236,10 +236,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _context.Recovery(_currToken);
                             _context.Recovery(nextToken);
 
-                            var paser = new TupleOfTypesParser(_context, false);
-                            paser.Run();
+                            var parser = new TupleOfTypesParser(_context, false);
+                            parser.Run();
 
-                            return paser.Result;
+                            return parser.Result;
                         }
 
                         _context.Recovery(nextToken);
@@ -251,10 +251,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         _context.Recovery(_currToken);
 
-                        var paser = new TupleOfTypesParser(_context, true);
-                        paser.Run();
+                        var parser = new TupleOfTypesParser(_context, true);
+                        parser.Run();
 
-                        return paser.Result;
+                        return parser.Result;
                     }
 
                 default:
@@ -321,6 +321,69 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #endif
 
             return parser.Result;
+        }
+
+        protected KindOfRuleInstanceSectionMark GetKindOfRuleInstanceSectionMark()
+        {
+            switch (_currToken.TokenKind)
+            {
+                case TokenKind.PrimaryLogicalPartMark:
+                    return KindOfRuleInstanceSectionMark.PrimaryLogicalPart;
+
+                case TokenKind.LeftRightArrow:
+                    return KindOfRuleInstanceSectionMark.SecondaryRulePart;
+
+                case TokenKind.Word:
+                    {
+                        var wordContent = _currToken.Content.ToLower();
+
+#if DEBUG
+                        //Log($"wordContent = {wordContent}");
+#endif
+                        switch(wordContent)
+                        {
+                            case "o":
+                                {
+                                    var nextToken = _context.GetToken();
+
+#if DEBUG
+                                    //Log($"nextToken = {nextToken}");
+#endif
+
+                                    if(nextToken.TokenKind == TokenKind.Colon)
+                                    {
+                                        return KindOfRuleInstanceSectionMark.ObligationModality;
+                                    }
+
+                                    _context.Recovery(nextToken);
+                                    return KindOfRuleInstanceSectionMark.Unknown;
+                                }
+
+                            case "so":
+                                {
+                                    var nextToken = _context.GetToken();
+
+#if DEBUG
+                                    //Log($"nextToken = {nextToken}");
+#endif
+
+                                    if (nextToken.TokenKind == TokenKind.Colon)
+                                    {
+                                        return KindOfRuleInstanceSectionMark.SelfObligationModality;
+                                    }
+
+                                    _context.Recovery(nextToken);
+                                    return KindOfRuleInstanceSectionMark.Unknown;
+                                }
+
+                            default:
+                                return KindOfRuleInstanceSectionMark.Unknown;
+                        }
+                    }
+
+                default:
+                    return KindOfRuleInstanceSectionMark.Unknown;
+            }
         }
 
         protected void SetCurrentCodeItem(CodeItem codeEntity)

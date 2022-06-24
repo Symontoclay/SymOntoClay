@@ -27,6 +27,7 @@ using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP.Internal.Dot;
 using SymOntoClay.NLP.Internal.InternalCG;
+using SymOntoClay.NLP.Internal.PhraseStructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -141,6 +142,18 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             //var dotStr = DotConverter.ConvertToString(source);
             //_logger.Log($"dotStr (5) = {dotStr}");
 #endif
+
+            if(source.Mood == GrammaticalMood.Imperative)
+            {
+                dest.ObligationModality = LogicalValue.TrueValue;
+            }
+            else
+            {
+                if(source.ObligationModality != ObligationModality.Undefined && source.ObligationModality != ObligationModality.None)
+                {
+                    throw new NotImplementedException();
+                }
+            }
 
             var contextForSingleRuleInstance = new ContextForSingleRuleInstanceOfConvertingInternalCGToFact();
             contextForSingleRuleInstance.CurrentRuleInstance = dest;

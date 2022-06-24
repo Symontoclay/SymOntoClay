@@ -55,11 +55,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             var logicalExpressionParserContext = new LogicalExpressionParserContext(_context);
 
-            var paser = new LogicalExpressionParser(logicalExpressionParserContext, _terminatingTokenKind);
-            paser.Run();
+            var parser = new LogicalExpressionParser(logicalExpressionParserContext, _terminatingTokenKind);
+            parser.Run();
 
 #if DEBUG
-            //Log($"paser.Result = {paser.Result}");
+            //Log($"parser.Result = {parser.Result}");
 #endif
 
             if(logicalExpressionParserContext.AliasesDict.Any())
@@ -71,7 +71,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 _baseRulePart.AliasesDict = new Dictionary<StrongIdentifierValue, LogicalQueryNode>();
             }
 
-            _baseRulePart.Expression = paser.Result;
+            _baseRulePart.Expression = parser.Result;
 
             var nextToken = _context.GetToken();
 

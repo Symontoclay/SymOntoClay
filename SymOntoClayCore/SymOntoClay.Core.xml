@@ -5613,6 +5613,9 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalQueryParser.OnRun">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalValueModalityParser.OnRun">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.MutuallyExclusiveStatesParser.OnEnter">
             <inheritdoc/>
         </member>

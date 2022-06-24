@@ -48,6 +48,23 @@ namespace TestSandbox.Handlers
         {
             _logger.Log("Begin");
 
+            Case2();
+            //Case1();
+
+            _logger.Log("End");
+        }
+
+        private void Case2()
+        {
+            var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :}";
+
+            var fact = _engineContext.Parser.ParseRuleInstance(factStr);
+
+            _logger.Log($"fact = {DebugHelperForRuleInstance.ToString(fact)}");
+        }
+
+        private void Case1()
+        {
             var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } :}";
 
             var fact = _engineContext.Parser.ParseRuleInstance(factStr);
@@ -60,8 +77,6 @@ namespace TestSandbox.Handlers
             //_logger.Log($"fact = {fact}");
 
             _logger.Log($"fact (after) = {DebugHelperForRuleInstance.ToString(fact)}");
-
-            _logger.Log("End");
         }
     }
 }

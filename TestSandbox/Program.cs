@@ -79,11 +79,11 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-            //TstModalitiesHandler();
+            TstModalitiesHandler();
             //TstRelationsStorageHandler();
             //TstGenerateDllDict();
             //TSTWordsFactory();
-            TstNLPHandler();//<=NLP
+            //TstNLPHandler();//<=NLP
             //TstTriggerConditionNodeHandler();
             //TstSoundBus();
             //TstNavigationHandler();

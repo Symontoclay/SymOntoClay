@@ -56,11 +56,12 @@ namespace TestSandbox.Handlers
 
         private void Case2()
         {
-            var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :}";
+            var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } so: 0.5 o: 1  :}";
+            //var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :}";
 
             var fact = _engineContext.Parser.ParseRuleInstance(factStr);
 
-            _logger.Log($"fact = {DebugHelperForRuleInstance.ToString(fact)}");
+            _logger.Log($"fact = '{fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}'");
         }
 
         private void Case1()

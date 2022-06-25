@@ -140,6 +140,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             Exit();
                             break;
 
+                        case TokenKind.Word:
+                            if(_createLogicalValue)
+                            {
+                                _context.Recovery(_currToken);
+                                Exit();
+                                break;
+                            }
+                            throw new UnexpectedTokenException(_currToken);
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -169,11 +178,36 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessCloseSquareBracket();
                             break;
 
-                        case TokenKind.CloseRoundBracket:
                         case TokenKind.Comma:
+                        case TokenKind.Semicolon:
+                        case TokenKind.CloseRoundBracket:
+                        case TokenKind.OpenRoundBracket:
+                        case TokenKind.CloseFactBracket:
+                        case TokenKind.Plus:
+                        case TokenKind.Minus:
+                        case TokenKind.Multiplication:
+                        case TokenKind.Division:
+                        case TokenKind.LeftRightStream:
+                        case TokenKind.Or:
+                        case TokenKind.And:
+                        case TokenKind.Not:
+                        case TokenKind.More:
+                        case TokenKind.MoreOrEqual:
+                        case TokenKind.Less:
+                        case TokenKind.LessOrEqual:
+                        case TokenKind.Lambda:
                             _context.Recovery(_currToken);
                             Exit();
                             break;
+
+                        case TokenKind.Word:
+                            if (_createLogicalValue)
+                            {
+                                _context.Recovery(_currToken);
+                                Exit();
+                                break;
+                            }
+                            throw new UnexpectedTokenException(_currToken);
 
                         default:
                             throw new UnexpectedTokenException(_currToken);

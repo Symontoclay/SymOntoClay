@@ -39,7 +39,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             WaitForPrimaryRulePart,
             GotPrimaryRulePart,
             WaitForSecondaryRulePart,
-            GotSecondaryRulePart
+            GotSecondaryRulePart,
+            GotObligationModality,
+            GotSelfObligationModality
         }
 
         public LogicalQueryParser(InternalParserContext context)
@@ -53,8 +55,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private bool _nameHasBeenParsed;
         private bool _primaryPartHasBeenParsed;
         private bool _secondaryPartHasBeenParsed;
-        private bool _obligationHasBeenParsed;
-        private bool _selfObligationHasBeenParsed;
+        private bool _obligationModalityHasBeenParsed;
+        private bool _selfObligationModalityHasBeenParsed;
 
         /// <inheritdoc/>
         protected override void OnEnter()
@@ -109,13 +111,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_currToken = {_currToken}");
-            Log($"_nameHasBeenParsed = {_nameHasBeenParsed}");
-            Log($"_primaryPartHasBeenParsed = {_primaryPartHasBeenParsed}");
-            Log($"_secondaryPartHasBeenParsed = {_secondaryPartHasBeenParsed}");
-            Log($"_obligationHasBeenParsed = {_obligationHasBeenParsed}");
-            Log($"_selfObligationHasBeenParsed = {_selfObligationHasBeenParsed}");
+            //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
+            //Log($"_nameHasBeenParsed = {_nameHasBeenParsed}");
+            //Log($"_primaryPartHasBeenParsed = {_primaryPartHasBeenParsed}");
+            //Log($"_secondaryPartHasBeenParsed = {_secondaryPartHasBeenParsed}");
+            //Log($"_obligationModalityHasBeenParsed = {_obligationModalityHasBeenParsed}");
+            //Log($"_selfObligationModalityHasBeenParsed = {_selfObligationModalityHasBeenParsed}");
             //Log($"Result = {Result}");
 #endif
 
@@ -142,37 +144,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.Word:
                         case TokenKind.LogicalVar:
-                        {
-                                _context.Recovery(_currToken);
-
-                                var parser = new PrimaryRulePartParser(_context, TokenKind.CloseFactBracket);
-                                parser.Run();
-
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-#endif
-                                parser.Result.Parent = Result;
-                                Result.PrimaryPart = parser.Result;
-
-                                _state = State.GotPrimaryRulePart;
-                            }
+                            ProcessPrimaryRulePart(TokenKind.CloseFactBracket);
                             break;
 
                         case TokenKind.OpenFigureBracket:
-                            {
-                                _context.Recovery(_currToken);
-
-                                var parser = new PrimaryRulePartParser(_context, TokenKind.CloseFigureBracket);
-                                parser.Run();
-
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-#endif
-                                parser.Result.Parent = Result;
-                                Result.PrimaryPart = parser.Result;
-
-                                _state = State.GotPrimaryRulePart;
-                            }
+                            ProcessPrimaryRulePart(TokenKind.CloseFigureBracket);
                             break;
 
                         default:
@@ -184,20 +160,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.OpenFigureBracket:
-                            {
-                                _context.Recovery(_currToken);
-
-                                var parser = new PrimaryRulePartParser(_context, TokenKind.CloseFigureBracket);
-                                parser.Run();
-
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-#endif
-                                parser.Result.Parent = Result;
-                                Result.PrimaryPart = parser.Result;
-
-                                _state = State.GotPrimaryRulePart;
-                            }
+                            ProcessPrimaryRulePart(TokenKind.CloseFigureBracket);
                             break;
 
                         default:
@@ -205,8 +168,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotPrimaryRulePart:
-                    _primaryPartHasBeenParsed = true;
+                case State.GotPrimaryRulePart:                    
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.CloseFactBracket:
@@ -219,32 +181,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.Word:
-                            {
-                                var kindOfRuleInstanceSectionMark = GetKindOfRuleInstanceSectionMark();
-
-#if DEBUG
-                                Log($"kindOfRuleInstanceSectionMark = {kindOfRuleInstanceSectionMark}");
-#endif
-
-                                switch(kindOfRuleInstanceSectionMark)
-                                {
-                                    case KindOfRuleInstanceSectionMark.ObligationModality:
-                                        {
-                                            var parser = new LogicalValueModalityParser(_context);
-                                            parser.Run();
-
-#if DEBUG
-                                            //Log($"parser.Result = {parser.Result}");
-#endif
-
-                                            throw new NotImplementedException();
-                                        }
-                                        break;                                        
-
-                                    default:
-                                        throw new ArgumentOutOfRangeException(nameof(kindOfRuleInstanceSectionMark), kindOfRuleInstanceSectionMark, null);
-                                }
-                            }
+                            ProcessModalities();
                             break;
 
                         default:
@@ -256,27 +193,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.OpenFigureBracket:
-                            {
-                                _context.Recovery(_currToken);
-
-                                var parser = new SecondaryRulePartParser(_context, TokenKind.CloseFigureBracket);
-                                parser.Run();
-
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-#endif
-
-                                if(Result.SecondaryParts == null)
-                                {
-                                    Result.SecondaryParts = new List<SecondaryRulePart>();
-                                }
-
-                                parser.Result.Parent = Result;
-
-                                Result.SecondaryParts.Add(parser.Result);
-
-                                _state = State.GotSecondaryRulePart;
-                            }
+                            ProcessSecondaryRulePart(TokenKind.CloseFigureBracket);
                             break;
 
                         default:
@@ -284,12 +201,47 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotSecondaryRulePart:
-                    _secondaryPartHasBeenParsed = true;
+                case State.GotSecondaryRulePart:                    
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.CloseFactBracket:
                             Exit();
+                            break;
+
+                        case TokenKind.Word:
+                            ProcessModalities();
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotObligationModality:                    
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.CloseFactBracket:
+                            Exit();
+                            break;
+
+                        case TokenKind.Word:
+                            ProcessModalities();
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotSelfObligationModality:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.CloseFactBracket:
+                            Exit();
+                            break;
+
+                        case TokenKind.Word:
+                            ProcessModalities();
                             break;
 
                         default:
@@ -299,6 +251,118 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
+            }
+        }
+
+        private void ProcessPrimaryRulePart(TokenKind terminatingTokenKind)
+        {
+            if(_primaryPartHasBeenParsed)
+            {
+                throw new UnexpectedTokenException(_currToken);
+            }
+
+            _context.Recovery(_currToken);
+
+            var parser = new PrimaryRulePartParser(_context, terminatingTokenKind);
+            parser.Run();
+
+#if DEBUG
+            //Log($"parser.Result = {parser.Result}");
+#endif
+            parser.Result.Parent = Result;
+            Result.PrimaryPart = parser.Result;
+
+            _primaryPartHasBeenParsed = true;
+
+            _state = State.GotPrimaryRulePart;
+        }
+
+        private void ProcessSecondaryRulePart(TokenKind terminatingTokenKind)
+        {
+            if(_secondaryPartHasBeenParsed)
+            {
+                throw new UnexpectedTokenException(_currToken);
+            }
+
+            _context.Recovery(_currToken);
+
+            var parser = new SecondaryRulePartParser(_context, terminatingTokenKind);
+            parser.Run();
+
+#if DEBUG
+            //Log($"parser.Result = {parser.Result}");
+#endif
+
+            if (Result.SecondaryParts == null)
+            {
+                Result.SecondaryParts = new List<SecondaryRulePart>();
+            }
+
+            parser.Result.Parent = Result;
+
+            Result.SecondaryParts.Add(parser.Result);
+
+            _secondaryPartHasBeenParsed = true;
+
+            _state = State.GotSecondaryRulePart;
+        }
+
+        private void ProcessModalities()
+        {
+            var kindOfRuleInstanceSectionMark = GetKindOfRuleInstanceSectionMark();
+
+#if DEBUG
+            //Log($"kindOfRuleInstanceSectionMark = {kindOfRuleInstanceSectionMark}");
+#endif
+
+            switch (kindOfRuleInstanceSectionMark)
+            {
+                case KindOfRuleInstanceSectionMark.ObligationModality:
+                    {
+                        if(_obligationModalityHasBeenParsed)
+                        {
+                            throw new UnexpectedTokenException(_currToken);
+                        }
+
+                        var parser = new LogicalValueModalityParser(_context);
+                        parser.Run();
+
+#if DEBUG
+                        //Log($"parser.Result = {parser.Result}");
+#endif
+
+                        Result.ObligationModality = parser.Result;
+
+                        _obligationModalityHasBeenParsed = true;
+
+                        _state = State.GotObligationModality;
+                    }
+                    break;
+
+                case KindOfRuleInstanceSectionMark.SelfObligationModality:
+                    {
+                        if(_selfObligationModalityHasBeenParsed)
+                        {
+                            throw new UnexpectedTokenException(_currToken);
+                        }
+
+                        var parser = new LogicalValueModalityParser(_context);
+                        parser.Run();
+
+#if DEBUG
+                        //Log($"parser.Result = {parser.Result}");
+#endif
+
+                        Result.SelfObligationModality = parser.Result;
+
+                        _selfObligationModalityHasBeenParsed = true;
+
+                        _state = State.GotSelfObligationModality;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfRuleInstanceSectionMark), kindOfRuleInstanceSectionMark, null);
             }
         }
     }

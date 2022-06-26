@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,8 +16,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public bool IsFit(Value modalityValue, Value queryModalityValue)
         {
 #if DEBUG
-            Log($"modalityValue = {modalityValue}");
-            Log($"queryModalityValue = {queryModalityValue}");
+            //Log($"modalityValue = {modalityValue}");
+            //Log($"queryModalityValue = {queryModalityValue}");
 #endif
 
             if(modalityValue == null)
@@ -27,6 +28,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if(modalityValue.KindOfValue == KindOfValue.NullValue)
             {
                 return false;
+            }
+
+            if((modalityValue.IsNumberValue || modalityValue.IsLogicalValue) && (queryModalityValue.IsNumberValue || queryModalityValue.IsLogicalValue))
+            {
+                var sysValue1 = modalityValue.GetSystemValue();
+                var sysValue2 = queryModalityValue.GetSystemValue();
+
+                return ObjectHelper.IsEquals(sysValue1, sysValue2);
             }
 
             throw new NotImplementedException();

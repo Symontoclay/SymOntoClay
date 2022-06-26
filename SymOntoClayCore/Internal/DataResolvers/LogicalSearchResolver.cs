@@ -3290,20 +3290,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //options.Logger.Log($"sysValue1.Equals(sysValue2) = {sysValue1.Equals(sysValue2)}");
 #endif
 
-                if (sysValue1.Equals(sysValue2))
-                {
-                    return true;
-                }
-
-                if(ObjectHelper.IsNumber(sysValue1) && ObjectHelper.IsNumber(sysValue2))
-                {
-                    if (Convert.ToDouble(sysValue1) == Convert.ToDouble(sysValue2))
-                    {
-                        return true;
-                    }
-                }
-
-                return false;
+                return ObjectHelper.IsEquals(sysValue1, sysValue2);
             }
 
             if ((expressionNode1.IsKeyRef && expressionNode2.Kind == KindOfLogicalQueryNode.Value && (expressionNode2.Value.IsLogicalValue || expressionNode2.Value.IsNumberValue)) || (expressionNode2.IsKeyRef && expressionNode1.Kind == KindOfLogicalQueryNode.Value && (expressionNode1.Value.IsNumberValue || expressionNode1.Value.IsLogicalValue)))

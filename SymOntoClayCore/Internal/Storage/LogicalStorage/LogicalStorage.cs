@@ -517,7 +517,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 //}
 #endif
 
-                return logicalSearchStorageContext.Filter(source);
+                return logicalSearchStorageContext.Filter(source, true);
             }
         }
 
@@ -558,7 +558,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 //Log($"source.Count = {source.Count}");
 #endif
 
-                return logicalSearchStorageContext.Filter(source);
+                return logicalSearchStorageContext.Filter(source, true);
             }
         }
 
@@ -592,7 +592,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 //Log($"_kind = {_kind}");
 #endif
 
-                return logicalSearchStorageContext.Filter(source);
+                return logicalSearchStorageContext.Filter(source, false);
             }
         }
 

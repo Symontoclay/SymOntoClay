@@ -7,6 +7,6 @@ namespace SymOntoClay.Core.Internal
 {
     public interface ILogicalSearchStorageContext
     {
-        IList<T> Filter<T>(IList<T> source) where T : ILogicalSearchItem;
+        IList<T> Filter<T>(IList<T> source, bool enableModalitiesControll) where T : ILogicalSearchItem;
     }
 }

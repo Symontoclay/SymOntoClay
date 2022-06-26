@@ -31,7 +31,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly bool _hasSelfObligationModality;
         private readonly LogicalValueModalityResolver _logicalValueModalityResolver;
 
-        public IList<T> Filter<T>(IList<T> source) 
+        public IList<T> Filter<T>(IList<T> source, bool enableModalitiesControll) 
             where T : ILogicalSearchItem
         {
             if (source.IsNullOrEmpty())
@@ -41,14 +41,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             source = BaseResolver.FilterByTypeOfAccess(source, _mainStorageContext, _localCodeExecutionContext, true);
 
-            if(_hasObligationModality)
+            if(enableModalitiesControll)
             {
-                source = source.Where(p => _logicalValueModalityResolver.IsFit(p.ObligationModality, _obligationModality)).ToList();
-            }
+                if (_hasObligationModality)
+                {
+                    source = source.Where(p => _logicalValueModalityResolver.IsFit(p.ObligationModality, _obligationModality)).ToList();
+                }
 
-            if(_hasSelfObligationModality)
-            {
-                source = source.Where(p => _logicalValueModalityResolver.IsFit(p.SelfObligationModality, _selfObligationModality)).ToList();
+                if (_hasSelfObligationModality)
+                {
+                    source = source.Where(p => _logicalValueModalityResolver.IsFit(p.SelfObligationModality, _selfObligationModality)).ToList();
+                }
             }
 
             return source;

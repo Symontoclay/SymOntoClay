@@ -89,5 +89,23 @@ namespace SymOntoClay.CoreHelper
 
             return false;
         }
+
+        public static bool IsEquals(object value1, object value2)
+        {
+            if (value1.Equals(value2))
+            {
+                return true;
+            }
+
+            if (IsNumber(value1) && IsNumber(value2))
+            {
+                if (Convert.ToDouble(value1) == Convert.ToDouble(value2))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

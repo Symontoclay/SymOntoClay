@@ -76,6 +76,8 @@ namespace SymOntoClay.Core.Internal.Convertors
 
             result.TypeOfAccess = source.TypeOfAccess;
             result.Holder = source.Holder;
+            result.ObligationModality = source.ObligationModality;
+            result.SelfObligationModality = source.SelfObligationModality;
 
 #if DEBUG
             //_gbcLogger.Info($"source.TypeOfAccess = {source.TypeOfAccess}");

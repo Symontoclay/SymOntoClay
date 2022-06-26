@@ -142,7 +142,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 #endif
 
         /// <inheritdoc/>
-        public IList<LogicalQueryNode> GetAllRelations(IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        public IList<LogicalQueryNode> GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext)
         {
             lock (_lockObj)
             {
@@ -150,7 +150,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 foreach(var storage in _logicalStorages)
                 {
-                    var targetRelationsList = storage.GetAllRelations(context, localCodeExecutionContext);
+                    var targetRelationsList = storage.GetAllRelations(logicalSearchStorageContext);
 
                     if (targetRelationsList == null)
                     {
@@ -165,7 +165,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         }
 
         /// <inheritdoc/>
-        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext)
         {
             lock (_lockObj)
             {
@@ -173,7 +173,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 foreach (var storage in _logicalStorages)
                 {
-                    var targetRelationsList = storage.GetIndexedRulePartOfFactsByKeyOfRelation(name, context, localCodeExecutionContext);
+                    var targetRelationsList = storage.GetIndexedRulePartOfFactsByKeyOfRelation(name, logicalSearchStorageContext);
 
                     if (targetRelationsList == null)
                     {
@@ -202,7 +202,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         }
 
         /// <inheritdoc/>
-        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext)
         {
             lock (_lockObj)
             {
@@ -210,7 +210,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 foreach (var storage in _logicalStorages)
                 {
-                    var targetRelationsList = storage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name, context, localCodeExecutionContext);
+                    var targetRelationsList = storage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name, logicalSearchStorageContext);
 
                     if (targetRelationsList == null)
                     {

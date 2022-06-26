@@ -493,7 +493,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         }
 
         /// <inheritdoc/>
-        public IList<LogicalQueryNode> GetAllRelations(IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        public IList<LogicalQueryNode> GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext)
         {
             lock (_lockObj)
             {
@@ -517,12 +517,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 //}
 #endif
 
-                return BaseResolver.FilterByTypeOfAccess(source, context, localCodeExecutionContext, true);
+                return logicalSearchStorageContext.Filter(source);
             }
         }
 
         /// <inheritdoc/>
-        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext)
         {
             lock (_lockObj)
             {
@@ -558,12 +558,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 //Log($"source.Count = {source.Count}");
 #endif
 
-                return BaseResolver.FilterByTypeOfAccess(source, context, localCodeExecutionContext, true);
+                return logicalSearchStorageContext.Filter(source);
             }
         }
 
         /// <inheritdoc/>
-        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext)
         {
             lock (_lockObj)
             {
@@ -592,7 +592,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 //Log($"_kind = {_kind}");
 #endif
 
-                return BaseResolver.FilterByTypeOfAccess(source, context, localCodeExecutionContext, true);
+                return logicalSearchStorageContext.Filter(source);
             }
         }
 

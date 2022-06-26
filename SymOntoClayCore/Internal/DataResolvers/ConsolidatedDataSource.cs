@@ -52,7 +52,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private IList<StorageUsingOptions> _dataSourcesSettingsOrderedByPriorityAndUseProductionsList;
         //private IList<StorageUsingOptions> _dataSourcesSettingsOrderedByPriorityAndUseAdditionalInstances;
 
-        public IList<LogicalQueryNode> AllRelationsForProductions(IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        public IList<LogicalQueryNode> AllRelationsForProductions(ILogicalSearchStorageContext logicalSearchStorageContext)
         {
             lock (_lockObj)
             {
@@ -62,7 +62,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 foreach (var dataSourcesSettings in dataSourcesSettingsOrderedByPriorityAndUseProductionsList)
                 {
-                    var targetRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetAllRelations(context, localCodeExecutionContext);
+                    var targetRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetAllRelations(logicalSearchStorageContext);
 
                     if (targetRelationsList == null)
                     {
@@ -108,7 +108,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue key, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue key, ILogicalSearchStorageContext logicalSearchStorageContext)
         {
             lock (_lockObj)
             {
@@ -122,7 +122,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 foreach (var dataSourcesSettings in dataSourcesSettingsOrderedByPriorityList)
                 {
-                    var indexedRulePartsOfFactsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(key, context, localCodeExecutionContext);
+                    var indexedRulePartsOfFactsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(key, logicalSearchStorageContext);
 
                     if (indexedRulePartsOfFactsList == null)
                     {
@@ -174,7 +174,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext)
         {
             lock (_lockObj)
             {
@@ -193,7 +193,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     //_gbcLogger.Info($"dataSourcesSettings.UseProductions = {dataSourcesSettings.UseProductions}");
 #endif
 
-                    var indexedRulePartWithOneRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name, context, localCodeExecutionContext);
+                    var indexedRulePartWithOneRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name, logicalSearchStorageContext);
 
                     if (indexedRulePartWithOneRelationsList == null)
                     {

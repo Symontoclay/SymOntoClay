@@ -76,21 +76,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"options = {options}");
 #endif
 
-            var optionsOfFillExecutingCard = new OptionsOfFillExecutingCard();
-            optionsOfFillExecutingCard.EntityIdOnly = options.EntityIdOnly;
-            optionsOfFillExecutingCard.UseAccessPolicy = !options.IgnoreAccessPolicy;
-            optionsOfFillExecutingCard.UseInheritance = options.UseInheritance; 
-            optionsOfFillExecutingCard.LocalCodeExecutionContext = options.LocalCodeExecutionContext;
-            optionsOfFillExecutingCard.MainStorageContext = _context;
-
-#if DEBUG
-            optionsOfFillExecutingCard.Logger = Logger;
-#endif
-
-#if DEBUG
-            //Log($"optionsOfFillExecutingCard = {optionsOfFillExecutingCard}");
-#endif
-
             var result = new LogicalSearchResult();
 
 #if DEBUG
@@ -184,6 +169,24 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
 #if DEBUG
             //throw new NotImplementedException();
+#endif
+
+            var logicalSearchStorageContext = new LogicalSearchStorageContext(_context, options.LocalCodeExecutionContext);
+
+            var optionsOfFillExecutingCard = new OptionsOfFillExecutingCard();
+            optionsOfFillExecutingCard.EntityIdOnly = options.EntityIdOnly;
+            optionsOfFillExecutingCard.UseAccessPolicy = !options.IgnoreAccessPolicy;
+            optionsOfFillExecutingCard.UseInheritance = options.UseInheritance;
+            optionsOfFillExecutingCard.LocalCodeExecutionContext = options.LocalCodeExecutionContext;
+            optionsOfFillExecutingCard.MainStorageContext = _context;
+            optionsOfFillExecutingCard.LogicalSearchStorageContext = logicalSearchStorageContext;
+
+#if DEBUG
+            optionsOfFillExecutingCard.Logger = Logger;
+#endif
+
+#if DEBUG
+            //Log($"optionsOfFillExecutingCard = {optionsOfFillExecutingCard}");
 #endif
 
             FillExecutingCard(queryExpression, queryExecutingCard, dataSource, optionsOfFillExecutingCard);
@@ -1540,7 +1543,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //}
 #endif
 
-            var indexedRulePartsOfFactsList = dataSource.GetIndexedRulePartOfFactsByKeyOfRelation(processedExpr.Name, options.MainStorageContext, options.LocalCodeExecutionContext);
+            var indexedRulePartsOfFactsList = dataSource.GetIndexedRulePartOfFactsByKeyOfRelation(processedExpr.Name, options.LogicalSearchStorageContext);
 
 #if DEBUG
             //options.Logger.Log($"indexedRulePartsOfFactsList?.Count = {indexedRulePartsOfFactsList?.Count}");
@@ -1626,7 +1629,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"~~~~~~~~~~~~~~~~~queryExecutingCard = {queryExecutingCard}");
 #endif
 
-            var indexedRulePartWithOneRelationsList = dataSource.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(processedExpr.Name, options.MainStorageContext, options.LocalCodeExecutionContext);
+            var indexedRulePartWithOneRelationsList = dataSource.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(processedExpr.Name, options.LogicalSearchStorageContext);
 
 #if DEBUG
             //options.Logger.Log($"indexedRulePartWithOneRelationsList?.Count = {indexedRulePartWithOneRelationsList?.Count}");
@@ -1722,7 +1725,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"hasAnnotations = {hasAnnotations}");
 #endif
 
-            var targetRelationsList = dataSource.AllRelationsForProductions(options.MainStorageContext, options.LocalCodeExecutionContext);
+            var targetRelationsList = dataSource.AllRelationsForProductions(options.LogicalSearchStorageContext);
 
 #if DEBUG
             //options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");

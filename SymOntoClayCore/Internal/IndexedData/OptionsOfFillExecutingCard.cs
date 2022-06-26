@@ -36,6 +36,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public bool UseInheritance { get; set; }
         public LocalCodeExecutionContext LocalCodeExecutionContext { get; set; }
         public IMainStorageContext MainStorageContext { get; set; }
+        public ILogicalSearchStorageContext LogicalSearchStorageContext { get; set; }
 
 #if DEBUG
         public IEntityLogger Logger { get; set; }

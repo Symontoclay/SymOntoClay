@@ -554,13 +554,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
 
         /// <inheritdoc/>
-        IList<LogicalQueryNode> ILogicalStorage.GetAllRelations(IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        IList<LogicalQueryNode> ILogicalStorage.GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext)
         {
             return _commonPersistIndexedLogicalData.GetAllRelations();
         }
 
         /// <inheritdoc/>
-        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext)
         {
 #if DEBUG
             //LogInstance.Log($"key = {key}");
@@ -570,7 +570,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext)
         {
             return _commonPersistIndexedLogicalData.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name);
         }

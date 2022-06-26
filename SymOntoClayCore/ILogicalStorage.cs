@@ -43,9 +43,9 @@ namespace SymOntoClay.Core
         event Action OnChanged;
         event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
 
-        IList<LogicalQueryNode> GetAllRelations(IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext);
-        IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext);
-        IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext);
+        IList<LogicalQueryNode> GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext);
+        IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext);
+        IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext);
 
 #if DEBUG
         void DbgPrintFactsAndRules();

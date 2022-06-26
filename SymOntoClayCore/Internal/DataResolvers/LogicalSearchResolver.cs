@@ -171,7 +171,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //throw new NotImplementedException();
 #endif
 
-            var logicalSearchStorageContext = new LogicalSearchStorageContext(_context, options.LocalCodeExecutionContext);
+            var logicalSearchStorageContext = new LogicalSearchStorageContext(_context, options.LocalCodeExecutionContext, queryExpression);
 
             var optionsOfFillExecutingCard = new OptionsOfFillExecutingCard();
             optionsOfFillExecutingCard.EntityIdOnly = options.EntityIdOnly;

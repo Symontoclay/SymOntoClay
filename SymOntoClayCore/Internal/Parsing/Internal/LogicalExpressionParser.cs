@@ -347,6 +347,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             throw new UnexpectedTokenException(_currToken);
 
+                        case TokenKind.Word:
+                            if (_isGroup)
+                            {
+                                throw new UnexpectedTokenException(_currToken);
+                            }
+
+                            ProcessModalities();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -866,6 +875,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
 
             _state = State.GotOperator;
+        }
+
+        private void ProcessModalities()
+        {
+            var kindOfRuleInstanceSectionMark = PeekKindOfRuleInstanceSectionMark();
+
+#if DEBUG
+            //Log($"kindOfRuleInstanceSectionMark = {kindOfRuleInstanceSectionMark}");
+#endif
+
+            if(kindOfRuleInstanceSectionMark == KindOfRuleInstanceSectionMark.Unknown)
+            {
+                throw new UnexpectedTokenException(_currToken);
+            }
+
+            _context.Recovery(_currToken);
+            Exit();
         }
     }
 }

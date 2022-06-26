@@ -1,10 +1,10 @@
 ﻿app PeaceKeeper
 {
-    {: >: {distance($x, $y)} -> { distance(I, $x, $y) } :}
-    {: distance(I, #Tom, 50) :}
+	{: male(#Tom) :}
+	{: parent(#Piter, #Tom) :}
+	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
-    on Enter =>
-    {
-        select {: distance(#Tom, $x) & $x > 5 :} >> @>log;
-    }
+	on Enter => {
+	    select {: son($x, $y) :} >> @>log;
+	}
 }

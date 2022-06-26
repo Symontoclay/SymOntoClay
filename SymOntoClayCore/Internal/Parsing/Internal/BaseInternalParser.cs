@@ -386,6 +386,70 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             }
         }
 
+        protected KindOfRuleInstanceSectionMark PeekKindOfRuleInstanceSectionMark()
+        {
+            switch (_currToken.TokenKind)
+            {
+                case TokenKind.PrimaryLogicalPartMark:
+                    return KindOfRuleInstanceSectionMark.PrimaryLogicalPart;
+
+                case TokenKind.LeftRightArrow:
+                    return KindOfRuleInstanceSectionMark.SecondaryRulePart;
+
+                case TokenKind.Word:
+                    {
+                        var wordContent = _currToken.Content.ToLower();
+
+#if DEBUG
+                        //Log($"wordContent = {wordContent}");
+#endif
+                        switch (wordContent)
+                        {
+                            case "o":
+                                {
+                                    var nextToken = _context.GetToken();
+                                    _context.Recovery(nextToken);
+
+#if DEBUG
+                                    //Log($"nextToken = {nextToken}");
+#endif
+
+                                    if (nextToken.TokenKind == TokenKind.Colon)
+                                    {
+                                        return KindOfRuleInstanceSectionMark.ObligationModality;
+                                    }
+
+                                    
+                                    return KindOfRuleInstanceSectionMark.Unknown;
+                                }
+
+                            case "so":
+                                {
+                                    var nextToken = _context.GetToken();
+                                    _context.Recovery(nextToken);
+
+#if DEBUG
+                                    //Log($"nextToken = {nextToken}");
+#endif
+
+                                    if (nextToken.TokenKind == TokenKind.Colon)
+                                    {
+                                        return KindOfRuleInstanceSectionMark.SelfObligationModality;
+                                    }
+
+                                    return KindOfRuleInstanceSectionMark.Unknown;
+                                }
+
+                            default:
+                                return KindOfRuleInstanceSectionMark.Unknown;
+                        }
+                    }
+
+                default:
+                    return KindOfRuleInstanceSectionMark.Unknown;
+            }
+        }
+
         protected void SetCurrentCodeItem(CodeItem codeEntity)
         {
             _context.SetCurrentCodeItem(codeEntity);

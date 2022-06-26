@@ -61,6 +61,17 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
 
         [Test]
         [Parallelizable]
+        public void Case1_b()
+        {
+            var factStr = "{: parent(#Piter, #Tom) o: 1 :}";
+
+            var ruleInstance = Parse(factStr);
+
+            Assert.AreEqual("{: >: { parent(#piter,#tom) } o: 1 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+        }
+
+        [Test]
+        [Parallelizable]
         public void Case2()
         {
             var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } so: 1 :}";

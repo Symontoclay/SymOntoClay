@@ -7,6 +7,7 @@ namespace SymOntoClay.Core.Internal
 {
     public interface ILogicalSearchItem: IReadOnlyMemberAccess
     {
-       
+        Value ObligationModality { get; }
+        Value SelfObligationModality { get; }
     }
 }

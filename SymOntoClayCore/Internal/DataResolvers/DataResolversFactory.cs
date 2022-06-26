@@ -81,6 +81,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private RelationsResolver _relationsResolver;
         private readonly object _relationsResolverLockObj = new object();
 
+        private LogicalValueModalityResolver _logicalValueModalityResolver;
+        private readonly object _logicalValueModalityResolverLockObj = new object();
+
         /// <inheritdoc/>
         public ChannelsResolver GetChannelsResolver()
         {
@@ -288,6 +291,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 return _relationsResolver;
+            }
+        }
+
+        /// <inheritdoc/>
+        public LogicalValueModalityResolver GetLogicalValueModalityResolver()
+        {
+            lock(_logicalValueModalityResolverLockObj)
+            {
+                if (_logicalValueModalityResolver == null)
+                {
+                    _logicalValueModalityResolver = new LogicalValueModalityResolver(_context);
+                }
+
+                return _logicalValueModalityResolver;
             }
         }
     }

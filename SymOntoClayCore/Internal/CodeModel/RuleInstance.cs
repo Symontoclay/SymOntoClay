@@ -67,7 +67,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         [Modality]
         [ResolveToType(typeof(LogicalValue))]        
-        public Value ObligationModality { get; set; }
+        public Value ObligationModality { get; set; }        
 
         [Modality]
         [ResolveToType(typeof(LogicalValue))]

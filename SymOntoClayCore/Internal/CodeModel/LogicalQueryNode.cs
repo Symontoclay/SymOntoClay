@@ -69,6 +69,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public StrongIdentifierValue Holder { get; set; }
 
+        /// <inheritdoc/>
+        public Value ObligationModality => RuleInstance.ObligationModality;
+
+        /// <inheritdoc/>
+        public Value SelfObligationModality => RuleInstance.SelfObligationModality;
+
         //public bool HasQuestionVars
         //{
         //    get

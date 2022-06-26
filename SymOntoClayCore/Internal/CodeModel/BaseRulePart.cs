@@ -82,6 +82,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        public Value ObligationModality => Parent.ObligationModality;
+
+        /// <inheritdoc/>
+        public Value SelfObligationModality => Parent.SelfObligationModality;
+
+        /// <inheritdoc/>
         public override void DiscoverAllAnnotations(IList<Annotation> result)
         {
             base.DiscoverAllAnnotations(result);

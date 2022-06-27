@@ -218,8 +218,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                             break;
                                         }
 
-                                        _context.Recovery(_currToken);
                                         _context.Recovery(nextToken);
+                                        _context.Recovery(_currToken);                                        
                                         _state = State.WaitTerm;
                                     }
                                     break;
@@ -238,8 +238,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                             break;
                                         }
 
-                                        _context.Recovery(_currToken);
                                         _context.Recovery(nextToken);
+                                        _context.Recovery(_currToken);                                        
                                         _state = State.WaitTerm;
                                     }
                                     break;
@@ -277,8 +277,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                             break;
                                         }
 
-                                        _context.Recovery(_currToken);
                                         _context.Recovery(nextToken);
+                                        _context.Recovery(_currToken);                                        
                                         _state = State.WaitTerm;
                                     }
                                     break;

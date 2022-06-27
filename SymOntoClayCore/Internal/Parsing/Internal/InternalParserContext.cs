@@ -54,7 +54,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private IBaseCoreContext _context;
         private Lexer _lexer;
-        private Queue<Token> _recoveriesTokens = new Queue<Token>();
+        private Stack<Token> _recoveriesTokens = new Stack<Token>();
 
         private Stack<CodeItem> _codeItems = new Stack<CodeItem>();
 
@@ -173,7 +173,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 return _lexer.GetToken();
             }
 
-            return _recoveriesTokens.Dequeue();
+            return _recoveriesTokens.Pop();
         }
 
         public void Recovery(Token token)
@@ -182,7 +182,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             //Logger.Log($"token = {token}");
 #endif
 
-            _recoveriesTokens.Enqueue(token);
+            _recoveriesTokens.Push(token);
+
+#if DEBUG
+            //Logger.Log($"_recoveriesTokens = {_recoveriesTokens.ToList().WriteListToString()}");
+#endif
         }
 
         public bool IsEmpty()
@@ -216,11 +220,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             result._context = _context;
             result.NeedCheckDirty = NeedCheckDirty;
             result._lexer = _lexer.Fork();
-            result._recoveriesTokens = new Queue<Token>(_recoveriesTokens.ToList());
+            result._recoveriesTokens = new Stack<Token>(_recoveriesTokens.Reverse().ToList());
             result.CodeFile = CodeFile;
-            result._codeItems = new Stack<CodeItem>(_codeItems.Select(p => p.CloneCodeItem()).ToList());
+            result._codeItems = new Stack<CodeItem>(_codeItems.Select(p => p.CloneCodeItem()).Reverse().ToList());
 
-            result._defaultSettingsOfCodeEntity = new Stack<DefaultSettingsOfCodeEntity>(_defaultSettingsOfCodeEntity.Select(p => p.Clone()).ToList());
+            result._defaultSettingsOfCodeEntity = new Stack<DefaultSettingsOfCodeEntity>(_defaultSettingsOfCodeEntity.Select(p => p.Clone()).Reverse().ToList());
             result._currentDefaultSetings = result._defaultSettingsOfCodeEntity.Peek();
 
             return result;
@@ -229,7 +233,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         public void Assing(InternalParserContext context)
         {
             _lexer.Assing(context._lexer);
-            _recoveriesTokens = new Queue<Token>(context._recoveriesTokens);
+            _recoveriesTokens = new Stack<Token>(context._recoveriesTokens.Reverse());
         }
     }
 }

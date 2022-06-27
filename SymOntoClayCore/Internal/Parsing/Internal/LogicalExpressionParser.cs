@@ -228,7 +228,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #if DEBUG
                                             //if (_currToken.Content == "distance")
                                             //{
-                                                //throw new NotImplementedException();
+                                            //throw new NotImplementedException();
                                             //}
 #endif
 
@@ -236,10 +236,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                             //Log($"nextToken = {nextToken}");
 #endif
 
-                                            _context.Recovery(_currToken);
                                             _context.Recovery(nextToken);
+                                            _context.Recovery(_currToken);                                          
                                             
-
                                             var parser = new LogicalExpressionParser(_logicalExpressionParserContext, terminatingTokenKindList);
                                             parser.Run();
 

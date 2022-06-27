@@ -193,8 +193,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                             Log($"nextToken = {nextToken}");
 #endif
 
-                                            _context.Recovery(_currToken);
                                             _context.Recovery(nextToken);
+                                            _context.Recovery(_currToken);
 
 
                                             var parser = new EntityConditionExpressionParser(_entityConditionExpressionParserContext);

@@ -113,5 +113,49 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
 
             Assert.AreEqual("{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 so: 0.5 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case4()
+        {
+            var factStr = "{: parent(#Piter, #Tom) o: middle :}";
+
+            var ruleInstance = Parse(factStr);
+
+            Assert.AreEqual("{: >: { parent(#piter,#tom) } o: middle :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case4_a()
+        {
+            var factStr = "{: parent(#Piter, #Tom) o: very middle :}";
+
+            var ruleInstance = Parse(factStr);
+
+            Assert.AreEqual("{: >: { parent(#piter,#tom) } o: very middle :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case5()
+        {
+            var factStr = "{: parent(#Piter, #Tom) o: middle so: 0.5 :}";
+
+            var ruleInstance = Parse(factStr);
+
+            Assert.AreEqual("{: >: { parent(#piter,#tom) } o: middle so: 0.5 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case5_a()
+        {
+            var factStr = "{: parent(#Piter, #Tom) o: very middle so: 0.5 :}";
+
+            var ruleInstance = Parse(factStr);
+
+            Assert.AreEqual("{: >: { parent(#piter,#tom) } o: very middle so: 0.5 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+        }
     }
 }

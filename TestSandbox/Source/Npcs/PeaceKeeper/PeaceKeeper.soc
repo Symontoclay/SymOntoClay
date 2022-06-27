@@ -1,10 +1,10 @@
 ﻿app PeaceKeeper
 {
-	{: male(#Tom) o: 1 :}
-	{: parent(#Piter, #Tom) o: 1 :}
+	{: male(#Tom) o: middle :}
+	{: parent(#Piter, #Tom) o: middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
-	    select {: son($x, $y)  o: 1 :} >> @>log;
+	    select {: son($x, $y)  o: middle :} >> @>log;
 	}
 }

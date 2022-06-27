@@ -233,8 +233,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         if (nextToken.TokenKind == TokenKind.Or)
                         {
-                            _context.Recovery(_currToken);
                             _context.Recovery(nextToken);
+                            _context.Recovery(_currToken);                            
 
                             var parser = new TupleOfTypesParser(_context, false);
                             parser.Run();

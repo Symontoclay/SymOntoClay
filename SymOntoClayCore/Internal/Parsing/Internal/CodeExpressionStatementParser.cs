@@ -319,8 +319,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         switch(nextToken.TokenKind)
                         {
                             case TokenKind.OpenFactBracket:
-                                _context.Recovery(_currToken);
                                 _context.Recovery(nextToken);
+                                _context.Recovery(_currToken);                                
                                 ProcessLogicalQueryOperator();
                                 break;
 

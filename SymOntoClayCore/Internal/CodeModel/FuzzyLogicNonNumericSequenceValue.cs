@@ -58,6 +58,32 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public IEnumerable<StrongIdentifierValue> Operators => _operators;
 
         private List<StrongIdentifierValue> _operators = new List<StrongIdentifierValue>();
+
+        public bool Equals(FuzzyLogicNonNumericSequenceValue anotherSequence)
+        {
+            if(NonNumericValue != anotherSequence.NonNumericValue)
+            {
+                return false;
+            }
+
+            var opEnumerator = anotherSequence.Operators.GetEnumerator();
+
+            foreach(var op in _operators)
+            {
+                if(!opEnumerator.MoveNext())
+                {
+                    return false;
+                }
+
+                if(op != opEnumerator.Current)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         private string _debugView = string.Empty;
 
         public string DebugView => _debugView;

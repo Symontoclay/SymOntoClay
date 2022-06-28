@@ -1,7 +1,7 @@
 ﻿app PeaceKeeper
 {
-	{: male(#Tom) o: 0.5 :}
-	{: parent(#Piter, #Tom) o: 0.5 :}
+	{: male(#Tom) o: very middle :}
+	{: parent(#Piter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {

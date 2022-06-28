@@ -180,7 +180,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (value1.IsFuzzyLogicNonNumericSequenceValue && value2.IsFuzzyLogicNonNumericSequenceValue)
             {
-                throw new NotImplementedException();
+                return value1.AsFuzzyLogicNonNumericSequenceValue.Equals(value2.AsFuzzyLogicNonNumericSequenceValue);                
             }
 
             if(value1.IsNumberValue || value1.IsLogicalValue || value2.IsNumberValue || value2.IsLogicalValue)

@@ -38,12 +38,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public FuzzyLogicResolver(IMainStorageContext context)
             : base(context)
         {
-            _inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
-            _toSystemBoolResolver = _context.DataResolversFactory.GetToSystemBoolResolver();
+            var dataResolversFactory = context.DataResolversFactory;
+
+            _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
+            _toSystemBoolResolver = dataResolversFactory.GetToSystemBoolResolver();
+            _numberValueLinearResolver = dataResolversFactory.GetNumberValueLinearResolver();
         }
 
         private readonly ToSystemBoolResolver _toSystemBoolResolver;
         private readonly InheritanceResolver _inheritanceResolver;
+        private readonly NumberValueLinearResolver _numberValueLinearResolver;
 
         private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
 
@@ -139,9 +143,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public bool Equals(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"value1 = {value1}");
-            Log($"value2 = {value2}");
+            //Log($"value1 = {value1}");
+            //Log($"value2 = {value2}");
 #endif
+
+            if(value1 == null && value2 == null)
+            {
+                return true;
+            }
+
+            if (value1.KindOfValue == KindOfValue.NullValue && value2.KindOfValue == KindOfValue.NullValue)
+            {
+                return true;
+            }
 
             if ((value1.IsNumberValue || value1.IsLogicalValue) && (value2.IsNumberValue || value2.IsLogicalValue))
             {
@@ -166,6 +180,59 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (value1.IsFuzzyLogicNonNumericSequenceValue && value2.IsFuzzyLogicNonNumericSequenceValue)
             {
+                throw new NotImplementedException();
+            }
+
+            if(value1.IsNumberValue || value1.IsLogicalValue || value2.IsNumberValue || value2.IsLogicalValue)
+            {
+                if(value1.IsStrongIdentifierValue || value2.IsStrongIdentifierValue)
+                {
+                    StrongIdentifierValue conceptValue = null;
+                    Value numberValue = null;
+
+                    if(value1.IsStrongIdentifierValue)
+                    {
+                        conceptValue = value1.AsStrongIdentifierValue;
+                        numberValue = value2;
+                    }
+                    else
+                    {
+                        conceptValue = value2.AsStrongIdentifierValue;
+                        numberValue = value1;
+                    }
+
+#if DEBUG
+                    //Log($"conceptValue = {conceptValue}");
+                    //Log($"numberValue = {numberValue}");
+#endif
+
+                    return Equals(conceptValue, _numberValueLinearResolver.Resolve(numberValue, localCodeExecutionContext), reason, localCodeExecutionContext);
+                }
+
+                if (value1.IsFuzzyLogicNonNumericSequenceValue || value2.IsFuzzyLogicNonNumericSequenceValue)
+                {
+                    FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence = null;
+                    Value numberValue = null;
+
+                    if(value1.IsFuzzyLogicNonNumericSequenceValue)
+                    {
+                        fuzzyLogicNonNumericSequence = value1.AsFuzzyLogicNonNumericSequenceValue;
+                        numberValue = value2;
+                    }
+                    else
+                    {
+                        fuzzyLogicNonNumericSequence = value2.AsFuzzyLogicNonNumericSequenceValue;
+                        numberValue = value1;
+                    }
+
+#if DEBUG
+                    //Log($"fuzzyLogicNonNumericSequence = {fuzzyLogicNonNumericSequence}");
+                    //Log($"numberValue = {numberValue}");
+#endif
+
+                    return Equals(fuzzyLogicNonNumericSequence, _numberValueLinearResolver.Resolve(numberValue, localCodeExecutionContext), reason, localCodeExecutionContext);
+                }
+
                 throw new NotImplementedException();
             }
 

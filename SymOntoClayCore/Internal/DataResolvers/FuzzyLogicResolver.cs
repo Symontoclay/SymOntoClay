@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -123,6 +124,52 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
 
             return new NumberValue(fuzzyValue);
+        }
+        
+        public bool Equals(Value value1, Value value2, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Equals(value1, value2, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool Equals(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Equals(value1, value2, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool Equals(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+#if DEBUG
+            Log($"value1 = {value1}");
+            Log($"value2 = {value2}");
+#endif
+
+            if ((value1.IsNumberValue || value1.IsLogicalValue) && (value2.IsNumberValue || value2.IsLogicalValue))
+            {
+                var sysValue1 = value1.GetSystemValue();
+                var sysValue2 = value2.GetSystemValue();
+
+                return ObjectHelper.IsEquals(sysValue1, sysValue2);
+            }
+
+            if (value1.IsStrongIdentifierValue && value2.IsStrongIdentifierValue)
+            {
+                var modalityValueStrongIdentifierValue = value1.AsStrongIdentifierValue;
+                var queryModalityStrongIdentifierValue = value2.AsStrongIdentifierValue;
+
+                if (modalityValueStrongIdentifierValue == queryModalityStrongIdentifierValue)
+                {
+                    return true;
+                }
+
+                throw new NotImplementedException();
+            }
+
+            if (value1.IsFuzzyLogicNonNumericSequenceValue && value2.IsFuzzyLogicNonNumericSequenceValue)
+            {
+                throw new NotImplementedException();
+            }
+
+            throw new NotImplementedException();
         }
 
         public bool Equals(StrongIdentifierValue name, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)

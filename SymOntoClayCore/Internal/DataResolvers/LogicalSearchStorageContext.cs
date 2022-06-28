@@ -45,12 +45,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 if (_hasObligationModality)
                 {
-                    source = source.Where(p => _logicalValueModalityResolver.IsFit(p.ObligationModality, _obligationModality)).ToList();
+                    source = source.Where(p => _logicalValueModalityResolver.IsFit(p.ObligationModality, _obligationModality, _localCodeExecutionContext)).ToList();
                 }
 
                 if (_hasSelfObligationModality)
                 {
-                    source = source.Where(p => _logicalValueModalityResolver.IsFit(p.SelfObligationModality, _selfObligationModality)).ToList();
+                    source = source.Where(p => _logicalValueModalityResolver.IsFit(p.SelfObligationModality, _selfObligationModality, _localCodeExecutionContext)).ToList();
                 }
             }
 

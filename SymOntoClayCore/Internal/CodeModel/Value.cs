@@ -99,7 +99,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsConditionalEntityValue => false;
         public virtual ConditionalEntityValue AsConditionalEntityValue => null;
 
-        public virtual bool IsSystemNull { get; }
+        public virtual bool IsLogicalModalityExpressionValue => false;
+        public virtual LogicalModalityExpressionValue AsLogicalModalityExpressionValue => null;
+
+        public virtual bool IsSystemNull => false;
 
         public virtual IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => throw new NotImplementedException();
 

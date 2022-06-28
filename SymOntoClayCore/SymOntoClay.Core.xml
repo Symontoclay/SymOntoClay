@@ -2698,6 +2698,42 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LoggedValue.Error(System.Exception)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionValue.IsLogicalModalityExpressionValue">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionValue.AsLogicalModalityExpressionValue">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionValue.KindOfValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionValue.ToSystemString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionValue.CloneValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionValue.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionValue.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionValue.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.TypeOfAccess">
             <inheritdoc/>
         </member>

@@ -175,7 +175,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return true;
                 }
 
-                throw new NotImplementedException();
+                return false;
             }
 
             if (value1.IsFuzzyLogicNonNumericSequenceValue && value2.IsFuzzyLogicNonNumericSequenceValue)
@@ -234,6 +234,36 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 throw new NotImplementedException();
+            }
+
+            if((value1.IsStrongIdentifierValue || value1.IsFuzzyLogicNonNumericSequenceValue) && (value2.IsStrongIdentifierValue || value2.IsFuzzyLogicNonNumericSequenceValue))
+            {
+                StrongIdentifierValue conceptValue = null;
+                FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence = null;
+
+                if (value1.IsStrongIdentifierValue)
+                {
+                    conceptValue = value1.AsStrongIdentifierValue;
+                    fuzzyLogicNonNumericSequence = value2.AsFuzzyLogicNonNumericSequenceValue;
+                }
+                else
+                {
+                    conceptValue = value2.AsStrongIdentifierValue;
+                    fuzzyLogicNonNumericSequence = value1.AsFuzzyLogicNonNumericSequenceValue;
+                }
+
+#if DEBUG
+                //Log($"fuzzyLogicNonNumericSequence = {fuzzyLogicNonNumericSequence}");
+                //Log($"conceptValue = {conceptValue}");
+#endif
+
+                var conceptNumberValue = Resolve(conceptValue, reason, localCodeExecutionContext, options);
+
+#if DEBUG
+                //Log($"conceptNumberValue = {conceptNumberValue}");
+#endif
+
+                return Equals(fuzzyLogicNonNumericSequence, conceptNumberValue, reason, localCodeExecutionContext);
             }
 
             throw new NotImplementedException();

@@ -167,23 +167,43 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (value1.IsStrongIdentifierValue && value2.IsStrongIdentifierValue)
             {
-                var modalityValueStrongIdentifierValue = value1.AsStrongIdentifierValue;
-                var queryModalityStrongIdentifierValue = value2.AsStrongIdentifierValue;
+                var value1StrongIdentifierValue = value1.AsStrongIdentifierValue;
+                var value2StrongIdentifierValue = value2.AsStrongIdentifierValue;
 
-                if (modalityValueStrongIdentifierValue == queryModalityStrongIdentifierValue)
+                if (value1StrongIdentifierValue == value2StrongIdentifierValue)
                 {
                     return true;
                 }
 
-                return false;
+                var value2NumberValue = Resolve(value2StrongIdentifierValue, reason, localCodeExecutionContext, options);
+
+#if DEBUG
+                //Log($"value2NumberValue = {value2NumberValue}");
+#endif
+
+                return Equals(value1StrongIdentifierValue, value2NumberValue, reason, localCodeExecutionContext);
             }
 
             if (value1.IsFuzzyLogicNonNumericSequenceValue && value2.IsFuzzyLogicNonNumericSequenceValue)
             {
-                return value1.AsFuzzyLogicNonNumericSequenceValue.Equals(value2.AsFuzzyLogicNonNumericSequenceValue);                
+                var value1FuzzyLogicNonNumericSequenceValue = value1.AsFuzzyLogicNonNumericSequenceValue;
+                var value2FuzzyLogicNonNumericSequenceValue = value2.AsFuzzyLogicNonNumericSequenceValue;
+
+                if (value1FuzzyLogicNonNumericSequenceValue.Equals(value2FuzzyLogicNonNumericSequenceValue))
+                {
+                    return true;
+                }
+
+                var value2NumberValue = Resolve(value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext, options);
+
+#if DEBUG
+                //Log($"value2NumberValue = {value2NumberValue}");
+#endif
+
+                return Equals(value1FuzzyLogicNonNumericSequenceValue, value2NumberValue, reason, localCodeExecutionContext);
             }
 
-            if(value1.IsNumberValue || value1.IsLogicalValue || value2.IsNumberValue || value2.IsLogicalValue)
+            if (value1.IsNumberValue || value1.IsLogicalValue || value2.IsNumberValue || value2.IsLogicalValue)
             {
                 if(value1.IsStrongIdentifierValue || value2.IsStrongIdentifierValue)
                 {
@@ -360,6 +380,1290 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
 
             return FuzzyNumericValueToSystemBool(fuzzyValue);
+        }
+
+        public bool More(Value value1, Value value2, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return More(value1, value2, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool More(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return More(value1, value2, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool More(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+#if DEBUG
+            //Log($"value1 = {value1}");
+            //Log($"value2 = {value2}");
+#endif
+
+            if (value1 == null && value2 == null)
+            {
+                return false;
+            }
+
+            if (value1.KindOfValue == KindOfValue.NullValue && value2.KindOfValue == KindOfValue.NullValue)
+            {
+                return false;
+            }
+
+            var numberValueLinearResolver = _numberValueLinearResolver;
+
+            if (numberValueLinearResolver.CanBeResolved(value1) && numberValueLinearResolver.CanBeResolved(value2))
+            {
+                var leftNumberValue = numberValueLinearResolver.Resolve(value1, localCodeExecutionContext);
+                var rightNumberValue = numberValueLinearResolver.Resolve(value2, localCodeExecutionContext);
+
+#if DEBUG
+                //Log($"leftNumberValue = {leftNumberValue}");
+                //Log($"rightNumberValue = {rightNumberValue}");
+#endif
+
+                var leftSystemNullaleValue = leftNumberValue.SystemValue;
+                var rightSystemNullaleValue = rightNumberValue.SystemValue;
+
+#if DEBUG
+                //Log($"leftSystemNullaleValue = {leftSystemNullaleValue}");
+                //Log($"rightSystemNullaleValue = {rightSystemNullaleValue}");
+#endif
+
+                if (leftSystemNullaleValue.HasValue && rightSystemNullaleValue.HasValue)
+                {
+                    return leftSystemNullaleValue.Value > rightSystemNullaleValue.Value;
+                }
+                else
+                {
+                    if (!leftSystemNullaleValue.HasValue && !rightSystemNullaleValue.HasValue)
+                    {
+                        return false;
+                    }
+                }
+
+                return false;
+            }
+
+            if (value1.IsStrongIdentifierValue && value2.IsStrongIdentifierValue)
+            {
+                var value1StrongIdentifierValue = value1.AsStrongIdentifierValue;
+                var value2StrongIdentifierValue = value2.AsStrongIdentifierValue;
+
+                if (value1StrongIdentifierValue == value2StrongIdentifierValue)
+                {
+                    return false;
+                }
+
+                var value2NumberValue = Resolve(value2StrongIdentifierValue, reason, localCodeExecutionContext, options);
+
+#if DEBUG
+                //Log($"value2NumberValue = {value2NumberValue}");
+#endif
+
+                return More(value1StrongIdentifierValue, value2NumberValue, reason, localCodeExecutionContext);
+            }
+
+            if (value1.IsFuzzyLogicNonNumericSequenceValue && value2.IsFuzzyLogicNonNumericSequenceValue)
+            {
+                var value1FuzzyLogicNonNumericSequenceValue = value1.AsFuzzyLogicNonNumericSequenceValue;
+                var value2FuzzyLogicNonNumericSequenceValue = value2.AsFuzzyLogicNonNumericSequenceValue;
+
+                if (value1FuzzyLogicNonNumericSequenceValue.Equals(value2FuzzyLogicNonNumericSequenceValue))
+                {
+                    return false;
+                }
+
+                var value2NumberValue = Resolve(value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext, options);
+
+#if DEBUG
+                //Log($"value2NumberValue = {value2NumberValue}");
+#endif
+
+                return More(value1FuzzyLogicNonNumericSequenceValue, value2NumberValue, reason, localCodeExecutionContext);
+            }
+
+            if (numberValueLinearResolver.CanBeResolved(value1))
+            {
+                var leftNumberValue = numberValueLinearResolver.Resolve(value1, localCodeExecutionContext);
+
+#if DEBUG
+                //Log($"leftNumberValue = {leftNumberValue}");
+#endif
+
+                if (value2.IsStrongIdentifierValue)
+                {
+                    var value2StrongIdentifierValue = value2.AsStrongIdentifierValue;
+
+                    return More(leftNumberValue, value2StrongIdentifierValue, reason, localCodeExecutionContext);
+                }
+
+                if (value2.IsFuzzyLogicNonNumericSequenceValue)
+                {
+                    var value2FuzzyLogicNonNumericSequenceValue = value2.AsFuzzyLogicNonNumericSequenceValue;
+
+                    return More(leftNumberValue, value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext);
+                }
+
+                throw new NotImplementedException();
+            }
+
+            if(numberValueLinearResolver.CanBeResolved(value2))
+            {
+                var rightNumberValue = numberValueLinearResolver.Resolve(value2, localCodeExecutionContext);
+
+#if DEBUG
+                //Log($"rightNumberValue = {rightNumberValue}");
+#endif
+
+                if(value1.IsStrongIdentifierValue)
+                {
+                    var value2StrongIdentifierValue = value2.AsStrongIdentifierValue;
+
+                    return More(value2StrongIdentifierValue, rightNumberValue, localCodeExecutionContext);
+                }
+
+                if(value1.IsFuzzyLogicNonNumericSequenceValue)
+                {
+                    var value2FuzzyLogicNonNumericSequenceValue = value2.AsFuzzyLogicNonNumericSequenceValue;
+
+                    return More(value2FuzzyLogicNonNumericSequenceValue, rightNumberValue, localCodeExecutionContext);
+                }
+
+                throw new NotImplementedException();
+            }
+
+            throw new NotImplementedException();
+        }
+
+        public bool More(StrongIdentifierValue name, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return More(name, value, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool More(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return More(name, value, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool More(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var eqResult = Equals(name, value, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"eqResult = {eqResult}");
+#endif
+            if (eqResult)
+            {
+                return false;
+            }
+
+            var deffuzzificatedValue = Resolve(name, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+#endif
+
+            var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
+
+            if (!systemDeffuzzificatedValue.HasValue)
+            {
+                return false;
+            }
+
+#if DEBUG
+            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+#endif
+
+            return systemDeffuzzificatedValue.Value > value.SystemValue.Value;
+        }
+
+        public bool More(NumberValue value, StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return More(value, name, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool More(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return More(value, name, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool More(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var eqResult = Equals(name, value, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"eqResult = {eqResult}");
+#endif
+            if (eqResult)
+            {
+                return false;
+            }
+
+            var deffuzzificatedValue = Resolve(name, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+#endif
+
+            var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
+
+            if (!systemDeffuzzificatedValue.HasValue)
+            {
+                return false;
+            }
+
+#if DEBUG
+            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+#endif
+
+            return value.SystemValue.Value > systemDeffuzzificatedValue.Value;
+        }
+
+        public bool More(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return More(fuzzyLogicNonNumericSequence, value, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool More(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return More(fuzzyLogicNonNumericSequence, value, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool More(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"eqResult = {eqResult}");
+#endif
+            if (eqResult)
+            {
+                return false;
+            }
+
+            var deffuzzificatedValue = Resolve(fuzzyLogicNonNumericSequence, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+#endif
+
+            var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
+
+            if (!systemDeffuzzificatedValue.HasValue)
+            {
+                return false;
+            }
+
+#if DEBUG
+            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+#endif
+
+            return systemDeffuzzificatedValue.Value > value.SystemValue.Value;
+        }
+
+        public bool More(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return More(value, fuzzyLogicNonNumericSequence, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool More(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return More(value, fuzzyLogicNonNumericSequence, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool More(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"eqResult = {eqResult}");
+#endif
+            if (eqResult)
+            {
+                return false;
+            }
+
+            var deffuzzificatedValue = Resolve(fuzzyLogicNonNumericSequence, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+#endif
+
+            var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
+
+            if (!systemDeffuzzificatedValue.HasValue)
+            {
+                return false;
+            }
+
+#if DEBUG
+            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+#endif
+
+            return value.SystemValue.Value > systemDeffuzzificatedValue.Value;
+        }
+
+        public bool MoreOrEqual(Value value1, Value value2, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return MoreOrEqual(value1, value2, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool MoreOrEqual(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return MoreOrEqual(value1, value2, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool MoreOrEqual(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+#if DEBUG
+            //Log($"value1 = {value1}");
+            //Log($"value2 = {value2}");
+#endif
+
+            if (value1 == null && value2 == null)
+            {
+                return true;
+            }
+
+            if (value1.KindOfValue == KindOfValue.NullValue && value2.KindOfValue == KindOfValue.NullValue)
+            {
+                return true;
+            }
+
+            var numberValueLinearResolver = _numberValueLinearResolver;
+
+            if (numberValueLinearResolver.CanBeResolved(value1) && numberValueLinearResolver.CanBeResolved(value2))
+            {
+                var leftNumberValue = numberValueLinearResolver.Resolve(value1, localCodeExecutionContext);
+                var rightNumberValue = numberValueLinearResolver.Resolve(value2, localCodeExecutionContext);
+
+#if DEBUG
+                //Log($"leftNumberValue = {leftNumberValue}");
+                //Log($"rightNumberValue = {rightNumberValue}");
+#endif
+
+                var leftSystemNullaleValue = leftNumberValue.SystemValue;
+                var rightSystemNullaleValue = rightNumberValue.SystemValue;
+
+#if DEBUG
+                //Log($"leftSystemNullaleValue = {leftSystemNullaleValue}");
+                //Log($"rightSystemNullaleValue = {rightSystemNullaleValue}");
+#endif
+
+                if (leftSystemNullaleValue.HasValue && rightSystemNullaleValue.HasValue)
+                {
+                    return leftSystemNullaleValue.Value >= rightSystemNullaleValue.Value;
+                }
+                else
+                {
+                    if (!leftSystemNullaleValue.HasValue && !rightSystemNullaleValue.HasValue)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            if (value1.IsStrongIdentifierValue && value2.IsStrongIdentifierValue)
+            {
+                var value1StrongIdentifierValue = value1.AsStrongIdentifierValue;
+                var value2StrongIdentifierValue = value2.AsStrongIdentifierValue;
+
+                if (value1StrongIdentifierValue == value2StrongIdentifierValue)
+                {
+                    return true;
+                }
+
+                var value2NumberValue = Resolve(value2StrongIdentifierValue, reason, localCodeExecutionContext, options);
+
+#if DEBUG
+                //Log($"value2NumberValue = {value2NumberValue}");
+#endif
+
+                return MoreOrEqual(value1StrongIdentifierValue, value2NumberValue, reason, localCodeExecutionContext);
+            }
+
+            if (value1.IsFuzzyLogicNonNumericSequenceValue && value2.IsFuzzyLogicNonNumericSequenceValue)
+            {
+                var value1FuzzyLogicNonNumericSequenceValue = value1.AsFuzzyLogicNonNumericSequenceValue;
+                var value2FuzzyLogicNonNumericSequenceValue = value2.AsFuzzyLogicNonNumericSequenceValue;
+
+                if (value1FuzzyLogicNonNumericSequenceValue.Equals(value2FuzzyLogicNonNumericSequenceValue))
+                {
+                    return true;
+                }
+
+                var value2NumberValue = Resolve(value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext, options);
+
+#if DEBUG
+                //Log($"value2NumberValue = {value2NumberValue}");
+#endif
+
+                return MoreOrEqual(value1FuzzyLogicNonNumericSequenceValue, value2NumberValue, reason, localCodeExecutionContext);
+            }
+
+            if (numberValueLinearResolver.CanBeResolved(value1))
+            {
+                var leftNumberValue = numberValueLinearResolver.Resolve(value1, localCodeExecutionContext);
+
+#if DEBUG
+                //Log($"leftNumberValue = {leftNumberValue}");
+#endif
+
+                if (value2.IsStrongIdentifierValue)
+                {
+                    var value2StrongIdentifierValue = value2.AsStrongIdentifierValue;
+
+                    return MoreOrEqual(leftNumberValue, value2StrongIdentifierValue, reason, localCodeExecutionContext);
+                }
+
+                if (value2.IsFuzzyLogicNonNumericSequenceValue)
+                {
+                    var value2FuzzyLogicNonNumericSequenceValue = value2.AsFuzzyLogicNonNumericSequenceValue;
+
+                    return MoreOrEqual(leftNumberValue, value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext);
+                }
+
+                throw new NotImplementedException();
+            }
+
+            if (numberValueLinearResolver.CanBeResolved(value2))
+            {
+                var rightNumberValue = numberValueLinearResolver.Resolve(value2, localCodeExecutionContext);
+
+#if DEBUG
+                //Log($"rightNumberValue = {rightNumberValue}");
+#endif
+
+                if (value1.IsStrongIdentifierValue)
+                {
+                    var value2StrongIdentifierValue = value2.AsStrongIdentifierValue;
+
+                    return MoreOrEqual(value2StrongIdentifierValue, rightNumberValue, localCodeExecutionContext);
+                }
+
+                if (value1.IsFuzzyLogicNonNumericSequenceValue)
+                {
+                    var value2FuzzyLogicNonNumericSequenceValue = value2.AsFuzzyLogicNonNumericSequenceValue;
+
+                    return MoreOrEqual(value2FuzzyLogicNonNumericSequenceValue, rightNumberValue, localCodeExecutionContext);
+                }
+
+                throw new NotImplementedException();
+            }
+
+            throw new NotImplementedException();
+        }
+
+        public bool MoreOrEqual(StrongIdentifierValue name, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return MoreOrEqual(name, value, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool MoreOrEqual(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return MoreOrEqual(name, value, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool MoreOrEqual(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var eqResult = Equals(name, value, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"eqResult = {eqResult}");
+#endif
+            if (eqResult)
+            {
+                return true;
+            }
+
+            var deffuzzificatedValue = Resolve(name, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+#endif
+
+            var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
+
+            if (!systemDeffuzzificatedValue.HasValue)
+            {
+                return false;
+            }
+
+#if DEBUG
+            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+#endif
+
+            return systemDeffuzzificatedValue.Value >= value.SystemValue.Value;
+        }
+
+        public bool MoreOrEqual(NumberValue value, StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return MoreOrEqual(value, name, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool MoreOrEqual(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return MoreOrEqual(value, name, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool MoreOrEqual(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var eqResult = Equals(name, value, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"eqResult = {eqResult}");
+#endif
+            if (eqResult)
+            {
+                return true;
+            }
+
+            var deffuzzificatedValue = Resolve(name, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+#endif
+
+            var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
+
+            if (!systemDeffuzzificatedValue.HasValue)
+            {
+                return false;
+            }
+
+#if DEBUG
+            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+#endif
+
+            return value.SystemValue.Value >= systemDeffuzzificatedValue.Value;
+        }
+
+        public bool MoreOrEqual(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return MoreOrEqual(fuzzyLogicNonNumericSequence, value, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool MoreOrEqual(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return MoreOrEqual(fuzzyLogicNonNumericSequence, value, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool MoreOrEqual(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"eqResult = {eqResult}");
+#endif
+            if (eqResult)
+            {
+                return true;
+            }
+
+            var deffuzzificatedValue = Resolve(fuzzyLogicNonNumericSequence, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+#endif
+
+            var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
+
+            if (!systemDeffuzzificatedValue.HasValue)
+            {
+                return false;
+            }
+
+#if DEBUG
+            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+#endif
+
+            return systemDeffuzzificatedValue.Value >= value.SystemValue.Value;
+        }
+
+        public bool MoreOrEqual(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return MoreOrEqual(value, fuzzyLogicNonNumericSequence, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool MoreOrEqual(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return MoreOrEqual(value, fuzzyLogicNonNumericSequence, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool MoreOrEqual(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"eqResult = {eqResult}");
+#endif
+            if (eqResult)
+            {
+                return true;
+            }
+
+            var deffuzzificatedValue = Resolve(fuzzyLogicNonNumericSequence, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+#endif
+
+            var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
+
+            if (!systemDeffuzzificatedValue.HasValue)
+            {
+                return false;
+            }
+
+#if DEBUG
+            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+#endif
+
+            return value.SystemValue.Value >= systemDeffuzzificatedValue.Value;
+        }
+
+        public bool Less(Value value1, Value value2, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Less(value1, value2, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool Less(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Less(value1, value2, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool Less(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+#if DEBUG
+            //Log($"value1 = {value1}");
+            //Log($"value2 = {value2}");
+#endif
+
+            if (value1 == null && value2 == null)
+            {
+                return false;
+            }
+
+            if (value1.KindOfValue == KindOfValue.NullValue && value2.KindOfValue == KindOfValue.NullValue)
+            {
+                return false;
+            }
+
+            var numberValueLinearResolver = _numberValueLinearResolver;
+
+            if (numberValueLinearResolver.CanBeResolved(value1) && numberValueLinearResolver.CanBeResolved(value2))
+            {
+                var leftNumberValue = numberValueLinearResolver.Resolve(value1, localCodeExecutionContext);
+                var rightNumberValue = numberValueLinearResolver.Resolve(value2, localCodeExecutionContext);
+
+#if DEBUG
+                //Log($"leftNumberValue = {leftNumberValue}");
+                //Log($"rightNumberValue = {rightNumberValue}");
+#endif
+
+                var leftSystemNullaleValue = leftNumberValue.SystemValue;
+                var rightSystemNullaleValue = rightNumberValue.SystemValue;
+
+#if DEBUG
+                //Log($"leftSystemNullaleValue = {leftSystemNullaleValue}");
+                //Log($"rightSystemNullaleValue = {rightSystemNullaleValue}");
+#endif
+
+                if (leftSystemNullaleValue.HasValue && rightSystemNullaleValue.HasValue)
+                {
+                    return leftSystemNullaleValue.Value < rightSystemNullaleValue.Value;
+                }
+                else
+                {
+                    if (!leftSystemNullaleValue.HasValue && !rightSystemNullaleValue.HasValue)
+                    {
+                        return false;
+                    }
+                }
+
+                return false;
+            }
+
+            if (value1.IsStrongIdentifierValue && value2.IsStrongIdentifierValue)
+            {
+                var value1StrongIdentifierValue = value1.AsStrongIdentifierValue;
+                var value2StrongIdentifierValue = value2.AsStrongIdentifierValue;
+
+                if (value1StrongIdentifierValue == value2StrongIdentifierValue)
+                {
+                    return false;
+                }
+
+                var value2NumberValue = Resolve(value2StrongIdentifierValue, reason, localCodeExecutionContext, options);
+
+#if DEBUG
+                //Log($"value2NumberValue = {value2NumberValue}");
+#endif
+
+                return Less(value1StrongIdentifierValue, value2NumberValue, reason, localCodeExecutionContext);
+            }
+
+            if (value1.IsFuzzyLogicNonNumericSequenceValue && value2.IsFuzzyLogicNonNumericSequenceValue)
+            {
+                var value1FuzzyLogicNonNumericSequenceValue = value1.AsFuzzyLogicNonNumericSequenceValue;
+                var value2FuzzyLogicNonNumericSequenceValue = value2.AsFuzzyLogicNonNumericSequenceValue;
+
+                if (value1FuzzyLogicNonNumericSequenceValue.Equals(value2FuzzyLogicNonNumericSequenceValue))
+                {
+                    return false;
+                }
+
+                var value2NumberValue = Resolve(value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext, options);
+
+#if DEBUG
+                //Log($"value2NumberValue = {value2NumberValue}");
+#endif
+
+                return Less(value1FuzzyLogicNonNumericSequenceValue, value2NumberValue, reason, localCodeExecutionContext);
+            }
+
+            if (numberValueLinearResolver.CanBeResolved(value1))
+            {
+                var leftNumberValue = numberValueLinearResolver.Resolve(value1, localCodeExecutionContext);
+
+#if DEBUG
+                //Log($"leftNumberValue = {leftNumberValue}");
+#endif
+
+                if (value2.IsStrongIdentifierValue)
+                {
+                    var value2StrongIdentifierValue = value2.AsStrongIdentifierValue;
+
+                    return Less(leftNumberValue, value2StrongIdentifierValue, reason, localCodeExecutionContext);
+                }
+
+                if (value2.IsFuzzyLogicNonNumericSequenceValue)
+                {
+                    var value2FuzzyLogicNonNumericSequenceValue = value2.AsFuzzyLogicNonNumericSequenceValue;
+
+                    return Less(leftNumberValue, value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext);
+                }
+
+                throw new NotImplementedException();
+            }
+
+            if (numberValueLinearResolver.CanBeResolved(value2))
+            {
+                var rightNumberValue = numberValueLinearResolver.Resolve(value2, localCodeExecutionContext);
+
+#if DEBUG
+                //Log($"rightNumberValue = {rightNumberValue}");
+#endif
+
+                if (value1.IsStrongIdentifierValue)
+                {
+                    var value2StrongIdentifierValue = value2.AsStrongIdentifierValue;
+
+                    return Less(value2StrongIdentifierValue, rightNumberValue, localCodeExecutionContext);
+                }
+
+                if (value1.IsFuzzyLogicNonNumericSequenceValue)
+                {
+                    var value2FuzzyLogicNonNumericSequenceValue = value2.AsFuzzyLogicNonNumericSequenceValue;
+
+                    return Less(value2FuzzyLogicNonNumericSequenceValue, rightNumberValue, localCodeExecutionContext);
+                }
+
+                throw new NotImplementedException();
+            }
+
+            throw new NotImplementedException();
+        }
+
+        public bool Less(StrongIdentifierValue name, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Less(name, value, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool Less(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Less(name, value, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool Less(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var eqResult = Equals(name, value, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"eqResult = {eqResult}");
+#endif
+            if (eqResult)
+            {
+                return false;
+            }
+
+            var deffuzzificatedValue = Resolve(name, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+#endif
+
+            var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
+
+            if (!systemDeffuzzificatedValue.HasValue)
+            {
+                return false;
+            }
+
+#if DEBUG
+            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+#endif
+
+            return systemDeffuzzificatedValue.Value < value.SystemValue.Value;
+        }
+
+        public bool Less(NumberValue value, StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Less(value, name, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool Less(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Less(value, name, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool Less(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var eqResult = Equals(name, value, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"eqResult = {eqResult}");
+#endif
+            if (eqResult)
+            {
+                return false;
+            }
+
+            var deffuzzificatedValue = Resolve(name, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+#endif
+
+            var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
+
+            if (!systemDeffuzzificatedValue.HasValue)
+            {
+                return false;
+            }
+
+#if DEBUG
+            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+#endif
+
+            return value.SystemValue.Value < systemDeffuzzificatedValue.Value;
+        }
+
+        public bool Less(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Less(fuzzyLogicNonNumericSequence, value, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool Less(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Less(fuzzyLogicNonNumericSequence, value, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool Less(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"eqResult = {eqResult}");
+#endif
+            if (eqResult)
+            {
+                return false;
+            }
+
+            var deffuzzificatedValue = Resolve(fuzzyLogicNonNumericSequence, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+#endif
+
+            var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
+
+            if (!systemDeffuzzificatedValue.HasValue)
+            {
+                return false;
+            }
+
+#if DEBUG
+            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+#endif
+
+            return systemDeffuzzificatedValue.Value < value.SystemValue.Value;
+        }
+
+        public bool Less(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Less(value, fuzzyLogicNonNumericSequence, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool Less(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Less(value, fuzzyLogicNonNumericSequence, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool Less(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"eqResult = {eqResult}");
+#endif
+            if (eqResult)
+            {
+                return false;
+            }
+
+            var deffuzzificatedValue = Resolve(fuzzyLogicNonNumericSequence, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+#endif
+
+            var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
+
+            if (!systemDeffuzzificatedValue.HasValue)
+            {
+                return false;
+            }
+
+#if DEBUG
+            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+#endif
+
+            return value.SystemValue.Value < systemDeffuzzificatedValue.Value;
+        }
+
+        public bool LessOrEqual(Value value1, Value value2, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return LessOrEqual(value1, value2, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool LessOrEqual(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return LessOrEqual(value1, value2, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool LessOrEqual(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+#if DEBUG
+            //Log($"value1 = {value1}");
+            //Log($"value2 = {value2}");
+#endif
+
+            if (value1 == null && value2 == null)
+            {
+                return true;
+            }
+
+            if (value1.KindOfValue == KindOfValue.NullValue && value2.KindOfValue == KindOfValue.NullValue)
+            {
+                return true;
+            }
+
+            var numberValueLinearResolver = _numberValueLinearResolver;
+
+            if (numberValueLinearResolver.CanBeResolved(value1) && numberValueLinearResolver.CanBeResolved(value2))
+            {
+                var leftNumberValue = numberValueLinearResolver.Resolve(value1, localCodeExecutionContext);
+                var rightNumberValue = numberValueLinearResolver.Resolve(value2, localCodeExecutionContext);
+
+#if DEBUG
+                //Log($"leftNumberValue = {leftNumberValue}");
+                //Log($"rightNumberValue = {rightNumberValue}");
+#endif
+
+                var leftSystemNullaleValue = leftNumberValue.SystemValue;
+                var rightSystemNullaleValue = rightNumberValue.SystemValue;
+
+#if DEBUG
+                //Log($"leftSystemNullaleValue = {leftSystemNullaleValue}");
+                //Log($"rightSystemNullaleValue = {rightSystemNullaleValue}");
+#endif
+
+                if (leftSystemNullaleValue.HasValue && rightSystemNullaleValue.HasValue)
+                {
+                    return leftSystemNullaleValue.Value <= rightSystemNullaleValue.Value;
+                }
+                else
+                {
+                    if (!leftSystemNullaleValue.HasValue && !rightSystemNullaleValue.HasValue)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            if (value1.IsStrongIdentifierValue && value2.IsStrongIdentifierValue)
+            {
+                var value1StrongIdentifierValue = value1.AsStrongIdentifierValue;
+                var value2StrongIdentifierValue = value2.AsStrongIdentifierValue;
+
+                if (value1StrongIdentifierValue == value2StrongIdentifierValue)
+                {
+                    return true;
+                }
+
+                var value2NumberValue = Resolve(value2StrongIdentifierValue, reason, localCodeExecutionContext, options);
+
+#if DEBUG
+                //Log($"value2NumberValue = {value2NumberValue}");
+#endif
+
+                return LessOrEqual(value1StrongIdentifierValue, value2NumberValue, reason, localCodeExecutionContext);
+            }
+
+            if (value1.IsFuzzyLogicNonNumericSequenceValue && value2.IsFuzzyLogicNonNumericSequenceValue)
+            {
+                var value1FuzzyLogicNonNumericSequenceValue = value1.AsFuzzyLogicNonNumericSequenceValue;
+                var value2FuzzyLogicNonNumericSequenceValue = value2.AsFuzzyLogicNonNumericSequenceValue;
+
+                if (value1FuzzyLogicNonNumericSequenceValue.Equals(value2FuzzyLogicNonNumericSequenceValue))
+                {
+                    return true;
+                }
+
+                var value2NumberValue = Resolve(value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext, options);
+
+#if DEBUG
+                //Log($"value2NumberValue = {value2NumberValue}");
+#endif
+
+                return LessOrEqual(value1FuzzyLogicNonNumericSequenceValue, value2NumberValue, reason, localCodeExecutionContext);
+            }
+
+            if (numberValueLinearResolver.CanBeResolved(value1))
+            {
+                var leftNumberValue = numberValueLinearResolver.Resolve(value1, localCodeExecutionContext);
+
+#if DEBUG
+                //Log($"leftNumberValue = {leftNumberValue}");
+#endif
+
+                if (value2.IsStrongIdentifierValue)
+                {
+                    var value2StrongIdentifierValue = value2.AsStrongIdentifierValue;
+
+                    return LessOrEqual(leftNumberValue, value2StrongIdentifierValue, reason, localCodeExecutionContext);
+                }
+
+                if (value2.IsFuzzyLogicNonNumericSequenceValue)
+                {
+                    var value2FuzzyLogicNonNumericSequenceValue = value2.AsFuzzyLogicNonNumericSequenceValue;
+
+                    return LessOrEqual(leftNumberValue, value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext);
+                }
+
+                throw new NotImplementedException();
+            }
+
+            if (numberValueLinearResolver.CanBeResolved(value2))
+            {
+                var rightNumberValue = numberValueLinearResolver.Resolve(value2, localCodeExecutionContext);
+
+#if DEBUG
+                //Log($"rightNumberValue = {rightNumberValue}");
+#endif
+
+                if (value1.IsStrongIdentifierValue)
+                {
+                    var value2StrongIdentifierValue = value2.AsStrongIdentifierValue;
+
+                    return LessOrEqual(value2StrongIdentifierValue, rightNumberValue, localCodeExecutionContext);
+                }
+
+                if (value1.IsFuzzyLogicNonNumericSequenceValue)
+                {
+                    var value2FuzzyLogicNonNumericSequenceValue = value2.AsFuzzyLogicNonNumericSequenceValue;
+
+                    return LessOrEqual(value2FuzzyLogicNonNumericSequenceValue, rightNumberValue, localCodeExecutionContext);
+                }
+
+                throw new NotImplementedException();
+            }
+
+            throw new NotImplementedException();
+        }
+
+        public bool LessOrEqual(StrongIdentifierValue name, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return LessOrEqual(name, value, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool LessOrEqual(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return LessOrEqual(name, value, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool LessOrEqual(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var eqResult = Equals(name, value, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"eqResult = {eqResult}");
+#endif
+            if (eqResult)
+            {
+                return true;
+            }
+
+            var deffuzzificatedValue = Resolve(name, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+#endif
+
+            var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
+
+            if (!systemDeffuzzificatedValue.HasValue)
+            {
+                return false;
+            }
+
+#if DEBUG
+            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+#endif
+
+            return systemDeffuzzificatedValue.Value <= value.SystemValue.Value;
+        }
+
+        public bool LessOrEqual(NumberValue value, StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return LessOrEqual(value, name, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool LessOrEqual(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return LessOrEqual(value, name, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool LessOrEqual(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var eqResult = Equals(name, value, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"eqResult = {eqResult}");
+#endif
+            if (eqResult)
+            {
+                return true;
+            }
+
+            var deffuzzificatedValue = Resolve(name, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+#endif
+
+            var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
+
+            if (!systemDeffuzzificatedValue.HasValue)
+            {
+                return false;
+            }
+
+#if DEBUG
+            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+#endif
+
+            return value.SystemValue.Value <= systemDeffuzzificatedValue.Value;
+        }
+
+        public bool LessOrEqual(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return LessOrEqual(fuzzyLogicNonNumericSequence, value, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool LessOrEqual(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return LessOrEqual(fuzzyLogicNonNumericSequence, value, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool LessOrEqual(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"eqResult = {eqResult}");
+#endif
+            if (eqResult)
+            {
+                return true;
+            }
+
+            var deffuzzificatedValue = Resolve(fuzzyLogicNonNumericSequence, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+#endif
+
+            var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
+
+            if (!systemDeffuzzificatedValue.HasValue)
+            {
+                return false;
+            }
+
+#if DEBUG
+            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+#endif
+
+            return systemDeffuzzificatedValue.Value <= value.SystemValue.Value;
+        }
+
+        public bool LessOrEqual(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return LessOrEqual(value, fuzzyLogicNonNumericSequence, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool LessOrEqual(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return LessOrEqual(value, fuzzyLogicNonNumericSequence, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool LessOrEqual(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"eqResult = {eqResult}");
+#endif
+            if (eqResult)
+            {
+                return true;
+            }
+
+            var deffuzzificatedValue = Resolve(fuzzyLogicNonNumericSequence, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
+#endif
+
+            var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
+
+            if (!systemDeffuzzificatedValue.HasValue)
+            {
+                return false;
+            }
+
+#if DEBUG
+            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
+#endif
+
+            return value.SystemValue.Value <= systemDeffuzzificatedValue.Value;
         }
 
         private bool FuzzyNumericValueToSystemBool(double fuzzyValue)

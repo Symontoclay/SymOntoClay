@@ -67,6 +67,45 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
+        {
+            var result = base.CalculateLongHashCode(options);
+
+            switch(Kind)
+            {
+                case KindOfLogicalModalityExpressionNode.BlankIdentifier:
+                    break;
+
+                case KindOfLogicalModalityExpressionNode.BinaryOperator:
+                    Left.CheckDirty(options);
+                    Right.CheckDirty(options);
+                    result ^= Left.GetLongHashCode();
+                    result ^= Right.GetLongHashCode();
+                    break;
+
+                case KindOfLogicalModalityExpressionNode.UnaryOperator:
+                    Left.CheckDirty(options);
+                    result ^= Left.GetLongHashCode();
+                    break;
+
+                case KindOfLogicalModalityExpressionNode.Value:
+                    Value.CheckDirty(options);
+                    result ^= Value.GetLongHashCode();
+                    break;
+
+                case KindOfLogicalModalityExpressionNode.Group:
+                    Left.CheckDirty(options);
+                    result ^= Left.GetLongHashCode();
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

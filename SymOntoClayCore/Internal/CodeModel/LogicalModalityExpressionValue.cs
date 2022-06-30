@@ -17,6 +17,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.LogicalModalityExpressionValue;
 
+        public LogicalModalityExpressionNode Expression { get; set; }
+
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
@@ -46,6 +48,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new LogicalModalityExpressionValue();
             cloneContext[this] = result;
 
+            result.Expression = Expression?.Clone(cloneContext);
+
             result.AppendAnnotations(this, cloneContext);
 
             return result;
@@ -57,7 +61,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            throw new NotImplementedException();
+            sb.PrintObjProp(n, nameof(Expression), Expression);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -69,7 +73,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            throw new NotImplementedException();
+            sb.PrintShortObjProp(n, nameof(Expression), Expression);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -81,7 +85,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            throw new NotImplementedException();
+            sb.PrintBriefObjProp(n, nameof(Expression), Expression);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
@@ -92,13 +96,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
 
-            throw new NotImplementedException();
+            return $"{spaces}{Expression.ToHumanizedString()}";
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
         {
-            throw new NotImplementedException();
+            return Expression.ToHumanizedString(options);
         }
     }
 }

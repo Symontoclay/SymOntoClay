@@ -22,8 +22,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public bool IsFit(Value modalityValue, Value queryModalityValue, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            //Log($"modalityValue = {modalityValue}");
-            //Log($"queryModalityValue = {queryModalityValue}");
+            Log($"modalityValue = {modalityValue}");
+            Log($"queryModalityValue = {queryModalityValue}");
 #endif
 
             if(modalityValue == null)
@@ -34,6 +34,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if(modalityValue.KindOfValue == KindOfValue.NullValue)
             {
                 return false;
+            }
+
+            if(queryModalityValue.IsLogicalModalityExpressionValue)
+            {
+                var exprValue = queryModalityValue.AsLogicalModalityExpressionValue;
+
+#if DEBUG
+                Log($"exprValue.Expression = {exprValue.Expression.ToHumanizedString()}");
+#endif
+
+                throw new NotImplementedException();
             }
 
             return _fuzzyLogicResolver.Equals(modalityValue, queryModalityValue, localCodeExecutionContext);

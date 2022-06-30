@@ -1065,6 +1065,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Duration;
                             break;
                         }
+
+                        if (string.Compare(content, "_", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.BlankIdentifier;
+                            break;
+                        }
                     }
                     break;
 

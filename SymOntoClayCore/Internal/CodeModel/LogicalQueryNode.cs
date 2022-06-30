@@ -755,7 +755,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         IAstNode IAstNode.Left { get => Left; set => Left = (LogicalQueryNode)value; }
+
+        /// <inheritdoc/>
         IAstNode IAstNode.Right { get => Right; set => Right = (LogicalQueryNode)value; }
 
         /// <inheritdoc/>

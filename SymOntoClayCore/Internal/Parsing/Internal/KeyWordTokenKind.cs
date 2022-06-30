@@ -80,6 +80,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         As,
         Default,
         Down,
-        Duration
+        Duration,
+        /// <summary>
+        /// Repsesents symbol `_`.
+        /// </summary>
+        BlankIdentifier
     }
 }

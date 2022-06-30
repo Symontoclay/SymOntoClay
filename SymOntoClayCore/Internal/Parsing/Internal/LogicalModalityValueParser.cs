@@ -1,4 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
 using System.Collections.Generic;
@@ -6,15 +8,16 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public class LogicalValueModalityParser : BaseInternalParser
+    public class LogicalModalityValueParser : BaseInternalParser
     {
         private enum State
         {
             Init,
-            GotFuzzyLogicNonNumericSequenceItem
+            GotFuzzyLogicNonNumericSequenceItem,
+            GotExpression
         }
 
-        public LogicalValueModalityParser(InternalParserContext context)
+        public LogicalModalityValueParser(InternalParserContext context)
             : base(context)
         {
         }
@@ -93,6 +96,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case TokenKind.OpenFigureBracket:
+                            {
+                                var parser = new LogicalModalityExpressionParser(_context, TokenKind.CloseFigureBracket);
+                                parser.Run();
+
+#if DEBUG
+                                //Log($"parser.Result = {parser.Result}");
+                                //Log($"parser.Result = {parser.Result.ToHumanizedString()}");
+#endif
+
+                                Result = new LogicalModalityExpressionValue() { Expression = parser.Result };
+
+
+                                _state = State.GotExpression;
+                            }
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -144,6 +164,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             Result = _fuzzyLogicNonNumericSequenceValue;
 
                             _context.Recovery(_currToken);
+                            Exit();
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotExpression:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.CloseFigureBracket:
                             Exit();
                             break;
 

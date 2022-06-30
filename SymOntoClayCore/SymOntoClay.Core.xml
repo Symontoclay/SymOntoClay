@@ -2698,6 +2698,37 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LoggedValue.Error(System.Exception)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionNode.SymOntoClay#Core#Internal#Parsing#Internal#ExprLinking#IAstNode#Left">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionNode.SymOntoClay#Core#Internal#Parsing#Internal#ExprLinking#IAstNode#Right">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionNode.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionNode.Clone">
+            <summary>
+            Clones the instance and returns cloned instance.
+            </summary>
+            <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionNode.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            Clones the instance using special context and returns cloned instance.
+            </summary>
+            <param name="context">Special context for providing references continuity.</param>
+            <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionNode.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionNode.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionNode.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionValue.IsLogicalModalityExpressionValue">
             <inheritdoc/>
         </member>
@@ -2747,6 +2778,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.SymOntoClay#Core#Internal#Parsing#Internal#ExprLinking#IAstNode#Left">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.SymOntoClay#Core#Internal#Parsing#Internal#ExprLinking#IAstNode#Right">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -5620,6 +5657,11 @@
             Default value. Represents nothing.
             </summary>
         </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.KeyWordTokenKind.BlankIdentifier">
+            <summary>
+            Repsesents symbol `_`.
+            </summary>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Parsing.Internal.Lexer.Count">
             <summary>
             Number of remaining characters.
@@ -5646,6 +5688,15 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalExpressionParser.OnRun">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalModalityExpressionParser.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalModalityExpressionParser.OnRun">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalModalityValueParser.OnRun">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalQueryAsCodeEntityParser.OnRun">
             <inheritdoc/>
         </member>
@@ -5662,9 +5713,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalQueryParser.OnRun">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.LogicalValueModalityParser.OnRun">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.MutuallyExclusiveStatesParser.OnEnter">

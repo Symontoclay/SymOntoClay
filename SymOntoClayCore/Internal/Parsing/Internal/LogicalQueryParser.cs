@@ -324,7 +324,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             throw new UnexpectedTokenException(_currToken);
                         }
 
-                        var parser = new LogicalValueModalityParser(_context);
+                        var parser = new LogicalModalityValueParser(_context);
                         parser.Run();
 
 #if DEBUG
@@ -346,7 +346,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             throw new UnexpectedTokenException(_currToken);
                         }
 
-                        var parser = new LogicalValueModalityParser(_context);
+                        var parser = new LogicalModalityValueParser(_context);
                         parser.Run();
 
 #if DEBUG

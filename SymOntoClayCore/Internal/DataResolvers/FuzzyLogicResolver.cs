@@ -395,8 +395,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public bool More(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            //Log($"value1 = {value1}");
-            //Log($"value2 = {value2}");
+            Log($"value1 = {value1}");
+            Log($"value2 = {value2}");
 #endif
 
             if (value1 == null && value2 == null)

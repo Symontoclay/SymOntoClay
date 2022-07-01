@@ -62,6 +62,28 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case KeyWordTokenKind.And:
+                            if (AstNodesLinker.CanBeLeafNow(_nodePoint))
+                            {
+                                ProcessConceptLeaf();
+                            }
+                            else
+                            {
+                                ProcessAnd();
+                            }
+                            break;
+
+                        case KeyWordTokenKind.Or:
+                            if (AstNodesLinker.CanBeLeafNow(_nodePoint))
+                            {
+                                ProcessConceptLeaf();
+                            }
+                            else
+                            {
+                                ProcessOr();
+                            }
+                            break;
+
                         case KeyWordTokenKind.Not:
                             ProcessNot();
                             break;
@@ -142,7 +164,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if (_lastConceptNode != null)
             {
-                throw new NotImplementedException();
+                ProcessFuzzyLogicNonNumericSequence();
+                return;
             }
 
             var value = NameHelper.CreateName(_currToken.Content);
@@ -167,6 +190,43 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
             }
+        }
+
+        private void ProcessFuzzyLogicNonNumericSequence()
+        {
+#if DEBUG
+            //Log($"_lastConceptNode = {_lastConceptNode}");
+#endif
+
+            var concept = NameHelper.CreateName(_currToken.Content);
+
+            var value = _lastConceptNode.Value;
+
+            if(value.IsStrongIdentifierValue)
+            {
+                var name = value.AsStrongIdentifierValue;
+
+                var sequence = new FuzzyLogicNonNumericSequenceValue();
+
+                sequence.AddIdentifier(name);
+                sequence.AddIdentifier(concept);
+
+                _lastConceptNode.Value = sequence;
+
+#if DEBUG
+                //Log($"_lastConceptNode = {_lastConceptNode}");
+#endif
+
+                return;
+            }
+
+            if(value.IsFuzzyLogicNonNumericSequenceValue)
+            {
+                value.AsFuzzyLogicNonNumericSequenceValue.AddIdentifier(concept);
+                return;
+            }
+
+            throw new NotImplementedException();
         }
 
         private void ProcessRoundBrackets()

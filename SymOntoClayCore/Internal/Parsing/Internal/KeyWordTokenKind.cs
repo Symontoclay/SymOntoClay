@@ -46,6 +46,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Leave,
         Set,
         Not,
+        And,
+        Or,
         Select,
         Insert,
         LinguisticVariable,

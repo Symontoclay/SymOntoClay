@@ -99,6 +99,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private bool ProcessBinaryOperator(Value modalityValue, LogicalModalityExpressionNode expressionNode, LocalCodeExecutionContext localCodeExecutionContext)
         {
+#if DEBUG
+            //Log($"expressionNode = {expressionNode.ToHumanizedString()}");
+#endif
+
             switch (expressionNode.KindOfOperator)
             {
                 case KindOfOperator.Is:
@@ -244,6 +248,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private bool ProcessUnaryOperator(Value modalityValue, LogicalModalityExpressionNode expressionNode, LocalCodeExecutionContext localCodeExecutionContext)
         {
+#if DEBUG
+            //Log($"expressionNode = {expressionNode.ToHumanizedString()}");
+#endif
+
             switch (expressionNode.KindOfOperator)
             {
                 case KindOfOperator.Not:

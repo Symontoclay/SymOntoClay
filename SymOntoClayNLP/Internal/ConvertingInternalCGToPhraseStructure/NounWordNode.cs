@@ -116,6 +116,33 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                             return null;
                         }
 
+                        var wordFramesList = _wordsDict.GetWordFramesByWord(_word);
+
+#if DEBUG
+                        //_logger.Log($"wordFramesList = {wordFramesList.WriteListToString()}");
+#endif
+
+                        var nounsList = wordFramesList.Where(p => p.IsNoun).Select(p => p.AsNoun).ToList();
+
+                        if (nounsList.Any())
+                        {
+#if DEBUG
+                            //_logger.Log($"nounsList = {nounsList.WriteListToString()}");
+#endif
+
+                            var result = new Word();
+
+                            result.Content = _word;
+
+                            result.WordFrame = nounsList.Single();
+
+#if DEBUG
+                            //_logger.Log($"result = {result}");
+#endif
+
+                            return result;
+                        }
+
                         throw new NotImplementedException();
                     }
 

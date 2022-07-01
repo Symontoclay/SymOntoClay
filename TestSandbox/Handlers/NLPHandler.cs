@@ -81,8 +81,8 @@ namespace TestSandbox.Handlers
 
             //Case5();
             //Case4();
-            //Case3();
-            Case2();
+            Case3();
+            //Case2();
             //Case1();
             //Case0();
 
@@ -94,11 +94,11 @@ namespace TestSandbox.Handlers
             var nlpContext = UnityTestEngineContextFactory.CreateNLPConverterContext(_engineContext);
 
             //var factStr = "{: >: { like(i,#@{: >: { possess(i,$_) & cat($_) } :}) } :}";
-            var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } :}";
+            var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 0 :}";
 
             var ruleInstance = Parse(factStr);
 
-            ruleInstance.ObligationModality = LogicalValue.TrueValue;
+            //ruleInstance.ObligationModality = LogicalValue.TrueValue;
             //_logger.Log($"ruleInstance = {ruleInstance}");
 
             _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");

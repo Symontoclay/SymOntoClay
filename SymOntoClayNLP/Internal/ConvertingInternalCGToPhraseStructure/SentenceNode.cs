@@ -58,7 +58,11 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 
             var mood = _context.Mood;
 
-            switch(mood)
+#if DEBUG
+            //_logger.Log($"mood = {mood}");
+#endif
+
+            switch (mood)
             {
                 case GrammaticalMood.Indicative:
                     return ProcessIndicativeMood();

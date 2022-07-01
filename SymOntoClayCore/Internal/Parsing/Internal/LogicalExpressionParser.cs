@@ -347,12 +347,26 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             throw new UnexpectedTokenException(_currToken);
 
                         case TokenKind.Word:
-                            if (_isGroup)
+                            switch(_currToken.KeyWordTokenKind)
                             {
-                                throw new UnexpectedTokenException(_currToken);
+                                case KeyWordTokenKind.And:
+                                    ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.And);
+                                    break;
+
+                                case KeyWordTokenKind.Or:
+                                    ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.Or);
+                                    break;
+
+                                default:
+                                    if (_isGroup)
+                                    {
+                                        throw new UnexpectedTokenException(_currToken);
+                                    }
+
+                                    ProcessModalities();
+                                    break;
                             }
 
-                            ProcessModalities();
                             break;
 
                         default:
@@ -368,6 +382,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             {
                                 case KeyWordTokenKind.Is:
                                     ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.Is);
+                                    break;
+
+                                case KeyWordTokenKind.And:
+                                    ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.And);
+                                    break;
+
+                                case KeyWordTokenKind.Or:
+                                    ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.Or);
                                     break;
 
                                 default:
@@ -578,9 +600,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             switch (nextToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.Is:
+                                case KeyWordTokenKind.And:
+                                case KeyWordTokenKind.Or:
                                     _context.Recovery(nextToken);
                                     ProcessConceptOrQuestionVar(value);
-                                    break;
+                                    break;                               
 
                                 default:
 #if DEBUG

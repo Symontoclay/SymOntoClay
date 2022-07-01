@@ -5,6 +5,6 @@
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
-	    select {: son($x, $y)  o: { _ > low } :} >> @>log;
+	    select {: son($x, $y)  o: { _ is very middle } :} >> @>log;
 	}
 }

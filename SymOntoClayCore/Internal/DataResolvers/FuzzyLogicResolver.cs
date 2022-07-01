@@ -395,8 +395,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public bool More(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"value1 = {value1}");
-            Log($"value2 = {value2}");
+            //Log($"value1 = {value1}");
+            //Log($"value2 = {value2}");
 #endif
 
             if (value1 == null && value2 == null)
@@ -474,6 +474,34 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 var value2NumberValue = Resolve(value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext, options);
+
+#if DEBUG
+                //Log($"value2NumberValue = {value2NumberValue}");
+#endif
+
+                return More(value1FuzzyLogicNonNumericSequenceValue, value2NumberValue, reason, localCodeExecutionContext);
+            }
+
+            if(value1.IsStrongIdentifierValue && value2.IsFuzzyLogicNonNumericSequenceValue)
+            {
+                var value1StrongIdentifierValue = value1.AsStrongIdentifierValue;
+                var value2FuzzyLogicNonNumericSequenceValue = value2.AsFuzzyLogicNonNumericSequenceValue;
+
+                var value2NumberValue = Resolve(value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext, options);
+
+#if DEBUG
+                //Log($"value2NumberValue = {value2NumberValue}");
+#endif
+
+                return More(value1StrongIdentifierValue, value2NumberValue, reason, localCodeExecutionContext);
+            }
+
+            if(value1.IsFuzzyLogicNonNumericSequenceValue && value2.IsStrongIdentifierValue)
+            {
+                var value1FuzzyLogicNonNumericSequenceValue = value1.AsFuzzyLogicNonNumericSequenceValue;
+                var value2StrongIdentifierValue = value2.AsStrongIdentifierValue;
+
+                var value2NumberValue = Resolve(value2StrongIdentifierValue, reason, localCodeExecutionContext, options);
 
 #if DEBUG
                 //Log($"value2NumberValue = {value2NumberValue}");
@@ -803,6 +831,34 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return MoreOrEqual(value1FuzzyLogicNonNumericSequenceValue, value2NumberValue, reason, localCodeExecutionContext);
             }
 
+            if (value1.IsStrongIdentifierValue && value2.IsFuzzyLogicNonNumericSequenceValue)
+            {
+                var value1StrongIdentifierValue = value1.AsStrongIdentifierValue;
+                var value2FuzzyLogicNonNumericSequenceValue = value2.AsFuzzyLogicNonNumericSequenceValue;
+
+                var value2NumberValue = Resolve(value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext, options);
+
+#if DEBUG
+                //Log($"value2NumberValue = {value2NumberValue}");
+#endif
+
+                return MoreOrEqual(value1StrongIdentifierValue, value2NumberValue, reason, localCodeExecutionContext);
+            }
+
+            if (value1.IsFuzzyLogicNonNumericSequenceValue && value2.IsStrongIdentifierValue)
+            {
+                var value1FuzzyLogicNonNumericSequenceValue = value1.AsFuzzyLogicNonNumericSequenceValue;
+                var value2StrongIdentifierValue = value2.AsStrongIdentifierValue;
+
+                var value2NumberValue = Resolve(value2StrongIdentifierValue, reason, localCodeExecutionContext, options);
+
+#if DEBUG
+                //Log($"value2NumberValue = {value2NumberValue}");
+#endif
+
+                return MoreOrEqual(value1FuzzyLogicNonNumericSequenceValue, value2NumberValue, reason, localCodeExecutionContext);
+            }
+
             if (numberValueLinearResolver.CanBeResolved(value1))
             {
                 var leftNumberValue = numberValueLinearResolver.Resolve(value1, localCodeExecutionContext);
@@ -1124,6 +1180,34 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return Less(value1FuzzyLogicNonNumericSequenceValue, value2NumberValue, reason, localCodeExecutionContext);
             }
 
+            if (value1.IsStrongIdentifierValue && value2.IsFuzzyLogicNonNumericSequenceValue)
+            {
+                var value1StrongIdentifierValue = value1.AsStrongIdentifierValue;
+                var value2FuzzyLogicNonNumericSequenceValue = value2.AsFuzzyLogicNonNumericSequenceValue;
+
+                var value2NumberValue = Resolve(value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext, options);
+
+#if DEBUG
+                //Log($"value2NumberValue = {value2NumberValue}");
+#endif
+
+                return Less(value1StrongIdentifierValue, value2NumberValue, reason, localCodeExecutionContext);
+            }
+
+            if (value1.IsFuzzyLogicNonNumericSequenceValue && value2.IsStrongIdentifierValue)
+            {
+                var value1FuzzyLogicNonNumericSequenceValue = value1.AsFuzzyLogicNonNumericSequenceValue;
+                var value2StrongIdentifierValue = value2.AsStrongIdentifierValue;
+
+                var value2NumberValue = Resolve(value2StrongIdentifierValue, reason, localCodeExecutionContext, options);
+
+#if DEBUG
+                //Log($"value2NumberValue = {value2NumberValue}");
+#endif
+
+                return Less(value1FuzzyLogicNonNumericSequenceValue, value2NumberValue, reason, localCodeExecutionContext);
+            }
+
             if (numberValueLinearResolver.CanBeResolved(value1))
             {
                 var leftNumberValue = numberValueLinearResolver.Resolve(value1, localCodeExecutionContext);
@@ -1437,6 +1521,34 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 var value2NumberValue = Resolve(value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext, options);
+
+#if DEBUG
+                //Log($"value2NumberValue = {value2NumberValue}");
+#endif
+
+                return LessOrEqual(value1FuzzyLogicNonNumericSequenceValue, value2NumberValue, reason, localCodeExecutionContext);
+            }
+
+            if (value1.IsStrongIdentifierValue && value2.IsFuzzyLogicNonNumericSequenceValue)
+            {
+                var value1StrongIdentifierValue = value1.AsStrongIdentifierValue;
+                var value2FuzzyLogicNonNumericSequenceValue = value2.AsFuzzyLogicNonNumericSequenceValue;
+
+                var value2NumberValue = Resolve(value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext, options);
+
+#if DEBUG
+                //Log($"value2NumberValue = {value2NumberValue}");
+#endif
+
+                return LessOrEqual(value1StrongIdentifierValue, value2NumberValue, reason, localCodeExecutionContext);
+            }
+
+            if (value1.IsFuzzyLogicNonNumericSequenceValue && value2.IsStrongIdentifierValue)
+            {
+                var value1FuzzyLogicNonNumericSequenceValue = value1.AsFuzzyLogicNonNumericSequenceValue;
+                var value2StrongIdentifierValue = value2.AsStrongIdentifierValue;
+
+                var value2NumberValue = Resolve(value2StrongIdentifierValue, reason, localCodeExecutionContext, options);
 
 #if DEBUG
                 //Log($"value2NumberValue = {value2NumberValue}");

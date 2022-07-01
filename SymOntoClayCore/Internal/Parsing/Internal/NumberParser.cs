@@ -183,6 +183,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.CloseRoundBracket:
                         case TokenKind.OpenRoundBracket:
                         case TokenKind.CloseFactBracket:
+                        case TokenKind.CloseFigureBracket:
                         case TokenKind.Plus:
                         case TokenKind.Minus:
                         case TokenKind.Multiplication:

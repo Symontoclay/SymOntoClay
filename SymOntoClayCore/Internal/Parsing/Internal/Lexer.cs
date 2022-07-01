@@ -838,6 +838,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
                         }
 
+                        if (string.Compare(content, "and", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.And;
+                            break;
+                        }
+
+                        if (string.Compare(content, "or", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Or;
+                            break;
+                        }
+
                         if (string.Compare(content, "select", true) == 0)
                         {
                             kindOfKeyWord = KeyWordTokenKind.Select;

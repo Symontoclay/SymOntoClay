@@ -97,6 +97,28 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case KeyWordTokenKind.And:
+                            if (AstNodesLinker.CanBeLeafNow(_nodePoint))
+                            {
+                                ProcessConceptLeaf();
+                            }
+                            else
+                            {
+                                ProcessAnd();
+                            }
+                            break;
+
+                        case KeyWordTokenKind.Or:
+                            if (AstNodesLinker.CanBeLeafNow(_nodePoint))
+                            {
+                                ProcessConceptLeaf();
+                            }
+                            else
+                            {
+                                ProcessOr();
+                            }
+                            break;
+
                         case KeyWordTokenKind.Not:
                             ProcessNot();
                             break;

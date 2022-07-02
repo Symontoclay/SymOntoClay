@@ -16,9 +16,36 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var dataResolversFactory = context.DataResolversFactory;
 
             _fuzzyLogicResolver = dataResolversFactory.GetFuzzyLogicResolver();
+            _toSystemBoolResolver = dataResolversFactory.GetToSystemBoolResolver();
         }
 
         private readonly FuzzyLogicResolver _fuzzyLogicResolver;
+        private readonly ToSystemBoolResolver _toSystemBoolResolver;
+
+        public bool IsHigh(Value modalityValue, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+#if DEBUG
+            //Log($"modalityValue = {modalityValue}");
+#endif
+
+            if(modalityValue == null)
+            {
+                return false;
+            }
+
+            if(modalityValue.KindOfValue == KindOfValue.NullValue)
+            {
+                return false;
+            }
+
+            var numberValue = _fuzzyLogicResolver.Resolve(modalityValue, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"numberValue = {numberValue}");
+#endif
+
+            return _toSystemBoolResolver.Resolve(numberValue);
+        }
 
         public bool IsFit(Value modalityValue, Value queryModalityValue, LocalCodeExecutionContext localCodeExecutionContext)
         {

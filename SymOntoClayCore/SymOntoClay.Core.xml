@@ -4487,6 +4487,9 @@
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetDistance(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedLogicalValueModalityResolver.IsHigh(SymOntoClay.Core.Internal.CodeModel.Value)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedRelationsResolver.GetRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32)">
             <inheritdoc/>
         </member>
@@ -6913,6 +6916,15 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.ModulesStorageSettings.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.NLPConverterContext.RelationsResolver">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.NLPConverterContext.InheritanceResolver">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.NLPConverterContext.LogicalValueModalityResolver">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.RelativeCoordinate.ToString">

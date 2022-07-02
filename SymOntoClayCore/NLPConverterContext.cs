@@ -32,13 +32,20 @@ namespace SymOntoClay.Core
         {
         }
 
-        public NLPConverterContext(IPackedRelationsResolver relationsResolver, IPackedInheritanceResolver inheritanceResolver)
+        public NLPConverterContext(IPackedRelationsResolver relationsResolver, IPackedInheritanceResolver inheritanceResolver, IPackedLogicalValueModalityResolver logicalValueModalityResolver)
         {
             RelationsResolver = relationsResolver;
             InheritanceResolver = inheritanceResolver;
+            LogicalValueModalityResolver = logicalValueModalityResolver;
         }
 
-        public IPackedRelationsResolver RelationsResolver { get; set; }
-        public IPackedInheritanceResolver InheritanceResolver { get; set; }
+        /// <inheritdoc/>
+        public IPackedRelationsResolver RelationsResolver { get; private set; }
+
+        /// <inheritdoc/>
+        public IPackedInheritanceResolver InheritanceResolver { get; private set; }
+
+        /// <inheritdoc/>
+        public IPackedLogicalValueModalityResolver LogicalValueModalityResolver { get; private set; }
     }
 }

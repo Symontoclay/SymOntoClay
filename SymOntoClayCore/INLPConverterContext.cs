@@ -30,5 +30,6 @@ namespace SymOntoClay.Core
     {
         IPackedRelationsResolver RelationsResolver { get; }
         IPackedInheritanceResolver InheritanceResolver { get; }
+        IPackedLogicalValueModalityResolver LogicalValueModalityResolver { get; }
     }
 }

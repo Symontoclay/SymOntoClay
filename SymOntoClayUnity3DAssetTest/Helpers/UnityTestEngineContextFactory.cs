@@ -221,6 +221,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 
             var relationsResolver = dataResolversFactory.GetRelationsResolver();
             var inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
+            var logicalValueModalityResolver = dataResolversFactory.GetLogicalValueModalityResolver();
 
             var localCodeExecutionContext = new LocalCodeExecutionContext();
             localCodeExecutionContext.Storage = engineContext.Storage.GlobalStorage;
@@ -230,7 +231,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
 
             var packedInheritanceResolver = new PackedInheritanceResolver(inheritanceResolver, localCodeExecutionContext);
 
-            return new NLPConverterContext(packedRelationsResolver, packedInheritanceResolver);
+            var packedLogicalValueModalityResolver = new PackedLogicalValueModalityResolver(logicalValueModalityResolver, localCodeExecutionContext);
+
+            return new NLPConverterContext(packedRelationsResolver, packedInheritanceResolver, packedLogicalValueModalityResolver);
         }
     }
 }

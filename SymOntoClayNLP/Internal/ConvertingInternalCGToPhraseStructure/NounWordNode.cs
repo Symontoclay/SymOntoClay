@@ -85,6 +85,27 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                             return result;
                         }
 
+                        pronounsList = wordFramesList.Where(p => p.IsPronoun).Select(p => p.AsPronoun).Where(p => p.Case == CaseOfPersonalPronoun.Undefined).ToList();
+
+                        if (pronounsList.Any())
+                        {
+#if DEBUG
+                            //_logger.Log($"pronounsList = {pronounsList.WriteListToString()}");
+#endif
+
+                            var result = new Word();
+
+                            result.Content = _word;
+
+                            result.WordFrame = pronounsList.Single();
+
+#if DEBUG
+                            //_logger.Log($"result = {result}");
+#endif
+
+                            return result;
+                        }
+
                         var nounsList = wordFramesList.Where(p => p.IsNoun).Select(p => p.AsNoun).ToList();
 
                         if (nounsList.Any())

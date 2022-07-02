@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             : this(relationsResolver, localCodeExecutionContext, relationsResolver.DefaultOptions)
         {
         }
-
+        
         public PackedRelationsResolver(RelationsResolver relationsResolver, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             _relationsResolver = relationsResolver;

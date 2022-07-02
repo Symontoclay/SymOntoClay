@@ -51,6 +51,40 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
 
+        public NumberValue Resolve(Value value, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Resolve(value, null, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public NumberValue Resolve(Value value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Resolve(value, reason, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public NumberValue Resolve(Value value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+#if DEBUG
+            //Log($"value = {value}");
+#endif
+
+            if(_numberValueLinearResolver.CanBeResolved(value))
+            {
+                return _numberValueLinearResolver.Resolve(value, localCodeExecutionContext, options);
+            }
+
+            if(value.IsStrongIdentifierValue)
+            {
+                return Resolve(value.AsStrongIdentifierValue, reason, localCodeExecutionContext, options);
+            }
+
+            if(value.IsFuzzyLogicNonNumericSequenceValue)
+            {
+                return Resolve(value.AsFuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext, options);
+            }
+
+            throw new NotImplementedException();
+        }
+
         public NumberValue Resolve(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(name, null, localCodeExecutionContext, _defaultOptions);

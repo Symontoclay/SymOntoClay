@@ -201,33 +201,58 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                 var subjectWordFrame = _subject.RootWordFrame;
 
                 if ((subjectWordFrame.PartOfSpeech == GrammaticalPartOfSpeech.Noun) ||
-                    (subjectWordFrame.PartOfSpeech == GrammaticalPartOfSpeech.Pronoun && subjectWordFrame.AsPronoun.Number == GrammaticalNumberOfWord.Singular && subjectWordFrame.AsPronoun.Person == GrammaticalPerson.Third && subjectWordFrame.AsPronoun.Case == CaseOfPersonalPronoun.Subject))
+                    (subjectWordFrame.PartOfSpeech == GrammaticalPartOfSpeech.Pronoun && subjectWordFrame.AsPronoun.Number == GrammaticalNumberOfWord.Singular && subjectWordFrame.AsPronoun.Person == GrammaticalPerson.Third && subjectWordFrame.AsPronoun.Case == CaseOfPersonalPronoun.Subject) || 
+                    (subjectWordFrame.PartOfSpeech == GrammaticalPartOfSpeech.Pronoun && subjectWordFrame.AsPronoun.Number == GrammaticalNumberOfWord.Neuter && subjectWordFrame.AsPronoun.Person == GrammaticalPerson.Neuter && subjectWordFrame.AsPronoun.Case == CaseOfPersonalPronoun.Undefined))
                 {
                     //like -> likes
-                    throw new NotImplementedException();
+
+                    var verbsList = _wordsDict.GetWordFramesByRootWord(verb).Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Verb).Select(p => p.AsVerb).Where(p => p.Person == GrammaticalPerson.Third && p.Tense == GrammaticalTenses.Present);
+
+#if DEBUG
+                    //_logger.Log($"verbsList = {verbsList.WriteListToString()}");
+#endif
+
+                    var targetVerbFrame = verbsList.Single();
+
+                    var verbPhrase = new VerbPhrase();
+
+                    var word = new Word();
+                    verbPhrase.V = word;
+
+                    word.Content = targetVerbFrame.Word;
+
+                    word.WordFrame = targetVerbFrame;
+
+#if DEBUG
+                    //_logger.Log($"verbPhrase = {verbPhrase}");
+#endif
+
+                    return (verbPhrase, verbPhrase);
                 }
             }
 
-            var verbsList = _wordsDict.GetWordFramesByWord(verb).Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Verb);
+            {
+                var verbsList = _wordsDict.GetWordFramesByWord(verb).Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Verb);
 
 #if DEBUG
-            //_logger.Log($"verbsList = {verbsList.WriteListToString()}");
+                //_logger.Log($"verbsList = {verbsList.WriteListToString()}");
 #endif
 
-            var verbPhrase = new VerbPhrase();
+                var verbPhrase = new VerbPhrase();
 
-            var word = new Word();
-            verbPhrase.V = word;
+                var word = new Word();
+                verbPhrase.V = word;
 
-            word.Content = verb;
+                word.Content = verb;
 
-            word.WordFrame = verbsList.Single();
+                word.WordFrame = verbsList.Single();
 
 #if DEBUG
-            //_logger.Log($"verbPhrase = {verbPhrase}");
+                //_logger.Log($"verbPhrase = {verbPhrase}");
 #endif
 
-            return (verbPhrase, verbPhrase);
+                return (verbPhrase, verbPhrase);
+            }
         }
 
         private BaseSentenceItem GetObjectPhrase(ResultOfNode result)

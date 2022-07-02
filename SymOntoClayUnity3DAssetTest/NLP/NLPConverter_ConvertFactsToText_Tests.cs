@@ -79,5 +79,39 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP
 
             Assert.AreEqual("I like my cat.", text);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case2()
+        {
+            var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :}";
+
+            var nlpContext = UnityTestEngineContextFactory.CreateNLPConverterContext(_engineContext);
+
+            var ruleInstance = Parse(factStr);
+
+            var converter = new NLPConverter(_logger, _wordsDict);
+
+            var text = converter.Convert(ruleInstance, nlpContext);
+
+            Assert.AreEqual("Go to green place.", text);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case2_a()
+        {
+            var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 0 :}";
+
+            var nlpContext = UnityTestEngineContextFactory.CreateNLPConverterContext(_engineContext);
+
+            var ruleInstance = Parse(factStr);
+
+            var converter = new NLPConverter(_logger, _wordsDict);
+
+            var text = converter.Convert(ruleInstance, nlpContext);
+
+            Assert.AreEqual("Someone goes self to green place.", text);
+        }
     }
 }

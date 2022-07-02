@@ -88,5 +88,55 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP.ATN
 
             Assert.AreEqual("I like my cat.", text);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case2()
+        {
+            var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :}";
+
+            var nlpContext = UnityTestEngineContextFactory.CreateNLPConverterContext(_engineContext);
+
+            var ruleInstance = Parse(factStr);
+
+            var converterFactToCG = new ConverterFactToInternalCG(_logger);
+
+            var internalCG = converterFactToCG.Convert(ruleInstance, nlpContext);
+
+            var converterInternalCGToPhraseStructure = new ConverterInternalCGToPhraseStructure(_logger, _wordsDict);
+
+            var sentenceItem = converterInternalCGToPhraseStructure.Convert(internalCG, nlpContext);
+
+            var converterPhraseStructureToText = new ConverterPhraseStructureToText(_logger);
+
+            var text = converterPhraseStructureToText.Convert(sentenceItem);
+
+            Assert.AreEqual("Go to green place.", text);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case2_a()
+        {
+            var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 0 :}";
+
+            var nlpContext = UnityTestEngineContextFactory.CreateNLPConverterContext(_engineContext);
+
+            var ruleInstance = Parse(factStr);
+
+            var converterFactToCG = new ConverterFactToInternalCG(_logger);
+
+            var internalCG = converterFactToCG.Convert(ruleInstance, nlpContext);
+
+            var converterInternalCGToPhraseStructure = new ConverterInternalCGToPhraseStructure(_logger, _wordsDict);
+
+            var sentenceItem = converterInternalCGToPhraseStructure.Convert(internalCG, nlpContext);
+
+            var converterPhraseStructureToText = new ConverterPhraseStructureToText(_logger);
+
+            var text = converterPhraseStructureToText.Convert(sentenceItem);
+
+            Assert.AreEqual("Someone goes self to green place.", text);
+        }
     }
 }

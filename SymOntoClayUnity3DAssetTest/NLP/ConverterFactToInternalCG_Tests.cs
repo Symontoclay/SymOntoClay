@@ -170,5 +170,61 @@ n_5 -> n_2;
 n_7 -> n_6;
 }".DeepTrim(), dotStr.DeepTrim());
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case2_a()
+        {
+            var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 0 :}";
+
+            var nlpContext = UnityTestEngineContextFactory.CreateNLPConverterContext(_engineContext);
+
+            var ruleInstance = Parse(factStr);
+
+            var converterFactToCG = new ConverterFactToInternalCG(_logger);
+
+            var internalCG = converterFactToCG.Convert(ruleInstance, nlpContext);
+
+            Assert.AreEqual(false, internalCG.IsNegation);
+            Assert.AreEqual(KindOfQuestion.None, internalCG.KindOfQuestion);
+            Assert.AreEqual(GrammaticalTenses.Present, internalCG.Tense);
+            Assert.AreEqual(GrammaticalAspect.Simple, internalCG.Aspect);
+            Assert.AreEqual(GrammaticalVoice.Active, internalCG.Voice);
+            Assert.AreEqual(GrammaticalMood.Indicative, internalCG.Mood);
+            Assert.AreEqual(AbilityModality.None, internalCG.AbilityModality);
+            Assert.AreEqual(PermissionModality.None, internalCG.PermissionModality);
+            Assert.AreEqual(ObligationModality.None, internalCG.ObligationModality);
+            Assert.AreEqual(ProbabilityModality.None, internalCG.ProbabilityModality);
+            Assert.AreEqual(ConditionalModality.None, internalCG.ConditionalModality);
+
+            var dotStr = DotConverter.ConvertToString(internalCG);
+
+            Assert.AreEqual(@"digraph cluster_1{
+compound=true;
+n_2[shape=box,label=""go""];
+n_3[shape=box,label=""someone""];
+n_6[shape=box,label=""self""];
+n_1[shape=ellipse,label=""direction""];
+n_4[shape=ellipse,label=""agent""];
+n_5[shape=ellipse,label=""action""];
+n_7[shape=ellipse,label=""object""];
+subgraph cluster_2{
+n_9[shape=box,label=""place""];
+n_10[shape=box,label=""green""];
+n_8[shape=ellipse,label=""color""];
+n_8 -> n_10;
+n_9 -> n_8;
+}
+
+n_1 -> n_8[lhead=cluster_2];
+n_2 -> n_1;
+n_2 -> n_4;
+n_2 -> n_7;
+n_3 -> n_5;
+n_4 -> n_3;
+n_5 -> n_2;
+n_7 -> n_6;
+}".DeepTrim(), dotStr.DeepTrim());
+        }
     }
 }

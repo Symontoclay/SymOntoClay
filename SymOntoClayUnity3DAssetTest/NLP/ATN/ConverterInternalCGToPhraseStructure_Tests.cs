@@ -97,5 +97,83 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP.ATN
                     D:
                         my", sentenceItem.ToDbgString().Trim());
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case2()
+        {
+            var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :}";
+
+            var nlpContext = UnityTestEngineContextFactory.CreateNLPConverterContext(_engineContext);
+
+            var ruleInstance = Parse(factStr);
+
+            var converterFactToCG = new ConverterFactToInternalCG(_logger);
+
+            var internalCG = converterFactToCG.Convert(ruleInstance, nlpContext);
+
+            var converterInternalCGToPhraseStructure = new ConverterInternalCGToPhraseStructure(_logger, _wordsDict);
+
+            var sentenceItem = converterInternalCGToPhraseStructure.Convert(internalCG, nlpContext);
+
+            Assert.AreEqual(@"S
+    Predicate:
+        VP
+            V:
+                go
+            PP:
+                PP
+                    :P
+                        to
+                    :NP
+                        NP
+                            N:
+                                place
+                            AP:
+                                green", sentenceItem.ToDbgString().Trim());
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case2_a()
+        {
+            var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 0 :}";
+
+            var nlpContext = UnityTestEngineContextFactory.CreateNLPConverterContext(_engineContext);
+
+            var ruleInstance = Parse(factStr);
+
+            var converterFactToCG = new ConverterFactToInternalCG(_logger);
+
+            var internalCG = converterFactToCG.Convert(ruleInstance, nlpContext);
+
+            var converterInternalCGToPhraseStructure = new ConverterInternalCGToPhraseStructure(_logger, _wordsDict);
+
+            var sentenceItem = converterInternalCGToPhraseStructure.Convert(internalCG, nlpContext);
+
+            Assert.AreEqual(@"S
+    Subject:
+        NP
+            N:
+                someone
+    Predicate:
+        VP
+            V:
+                goes
+            Object:
+                NP
+                    N:
+                        self
+            PP:
+                PP
+                    :P
+                        to
+                    :NP
+                        NP
+                            N:
+                                place
+                            AP:
+                                green", sentenceItem.ToDbgString().Trim());
+        }
     }
 }

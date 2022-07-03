@@ -3164,8 +3164,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
 #if DEBUG
             //options.Logger.Log($"(expressionNode1 == null) = {expressionNode1 == null} (expressionNode2 == null) = {expressionNode2 == null}");
-            //options.Logger.Log($"expressionNode1 = {expressionNode1}");
-            //options.Logger.Log($"expressionNode2 = {expressionNode2}");
+            options.Logger.Log($"expressionNode1 = {expressionNode1}");
+            options.Logger.Log($"expressionNode2 = {expressionNode2}");
             //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
             //options.Logger.Log($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1?.Select(p => p.NameValue), Formatting.Indented)}");
             //options.Logger.Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");

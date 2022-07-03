@@ -511,6 +511,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessWord();
                             break;
 
+                        case TokenKind.OpenRoundBracket:
+                            ProcessGroup();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -526,6 +530,35 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var node = new LogicalQueryNode();
             _lastLogicalQueryNode = node;
             node.Kind = KindOfLogicalQueryNode.Group;
+
+            if (_unresolvedAiases.Any())
+            {
+                var aliasesDict = _logicalExpressionParserContext.AliasesDict;
+
+                node.LinkedVars = new List<LogicalQueryNode>();
+
+                foreach (var unresolvedAlias in _unresolvedAiases)
+                {
+#if DEBUG
+                    //Log($"unresolvedAlias = {unresolvedAlias}");
+#endif
+
+                    if (aliasesDict.ContainsKey(unresolvedAlias))
+                    {
+                        throw new Exception($"Variable {unresolvedAlias.NameValue} has been bound multiple time.");
+                    }
+
+                    aliasesDict[unresolvedAlias] = node;
+
+                    var varNodeForRelation = new LogicalQueryNode() { Kind = KindOfLogicalQueryNode.LogicalVar };
+                    varNodeForRelation.Name = unresolvedAlias;
+
+                    node.LinkedVars = new List<LogicalQueryNode>();
+                    node.LinkedVars.Add(varNodeForRelation);
+                }
+
+                _unresolvedAiases.Clear();
+            }
 
             var parser = new LogicalExpressionParser(_logicalExpressionParserContext, true);
             parser.Run();

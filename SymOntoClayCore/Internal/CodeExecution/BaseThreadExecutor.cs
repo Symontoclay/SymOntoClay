@@ -833,7 +833,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #endif
 
                 _currentCodeFrame.CurrentPosition++;
-            }                       
+            }
         }
 
         private float? GetLogicalValueFromCurrentStackValue()

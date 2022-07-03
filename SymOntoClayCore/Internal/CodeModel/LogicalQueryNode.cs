@@ -214,6 +214,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     case KindOfLogicalQueryNode.Value:
                     case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
                     case KindOfLogicalQueryNode.Relation:
+                    case KindOfLogicalQueryNode.Group:
                         {
                             var knownInfo = new QueryExecutingCardAboutKnownInfo();
                             knownInfo.Kind = kindOfParam;
@@ -489,6 +490,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
                             case KindOfLogicalQueryNode.Var:
                                 break;
 
+                            case KindOfLogicalQueryNode.Group:
+                                param.Left.SetHolder(holder);
+                                break;
+
                             default:
                                 throw new ArgumentOutOfRangeException(nameof(kindOfParam), kindOfParam, null);
                         }
@@ -586,6 +591,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
                                 break;
 
                             case KindOfLogicalQueryNode.Var:
+                                break;
+
+                            case KindOfLogicalQueryNode.Group:
+                                param.Left.SetTypeOfAccess(typeOfAccess);
                                 break;
 
                             default:
@@ -859,6 +868,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     break;
 
                 case KindOfLogicalQueryNode.UnaryOperator:
+                case KindOfLogicalQueryNode.Group:
                     Left.DiscoverAllInheritanceRelations(result);
                     break;
 

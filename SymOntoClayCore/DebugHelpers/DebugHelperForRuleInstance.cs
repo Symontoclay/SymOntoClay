@@ -177,7 +177,19 @@ namespace SymOntoClay.Core.DebugHelpers
 
         private static string GroupToString(LogicalQueryNode expr, HumanizedOptions options)
         {
-            return $"({ToString(expr.Left, options)})";
+            var sb = new StringBuilder();
+
+            if (!expr.LinkedVars.IsNullOrEmpty())
+            {
+                foreach (var linkedVar in expr.LinkedVars)
+                {
+                    sb.Append($"{linkedVar.Name.NameValue} = ");
+                }
+            }
+
+            sb.Append($"({ToString(expr.Left, options)})");
+
+            return sb.ToString();
         }
 
         private static string UnaryOperatorToString(LogicalQueryNode expr, HumanizedOptions options)

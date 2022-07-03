@@ -41,11 +41,12 @@ namespace TestSandbox.SoundBusHandler
 
             var bus = new SimpleSoundBus();
 
-            var receiver1 = new TstSoundReceiver(12, new Vector3(10, 10, 10));
+            var receiver1 = new TstSoundReceiver(11, new Vector3(10, 10, 10));
 
             bus.AddReceiver(receiver1);
 
             bus.PushSound(12, 60, new Vector3(1,1,1), "act(M16, shoot)");
+            //bus.PushSound(12, 60, new Vector3(1, 1, 1), "direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self)");
 
             _logger.Info("End");
         }

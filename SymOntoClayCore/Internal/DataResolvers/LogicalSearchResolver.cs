@@ -317,7 +317,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 var queryExecutingCardForFillExecutingCardUsingPostFiltersList = new QueryExecutingCardForIndexedPersistLogicalData();
 
-                FillExecutingCardUsingPostFiltersList(queryExecutingCardForExpression, queryExecutingCardForFillExecutingCardUsingPostFiltersList, options);
+                FillExecutingCardUsingPostFiltersList(queryExecutingCardForExpression, queryExecutingCardForFillExecutingCardUsingPostFiltersList, options, dataSource);
 
                 AppendResults(queryExecutingCardForFillExecutingCardUsingPostFiltersList, queryExecutingCard);
             }
@@ -336,7 +336,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
         }
 
-        private void FillExecutingCardUsingPostFiltersList(QueryExecutingCardForIndexedPersistLogicalData sourceQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData destQueryExecutingCard, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardUsingPostFiltersList(QueryExecutingCardForIndexedPersistLogicalData sourceQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData destQueryExecutingCard, OptionsOfFillExecutingCard options, ConsolidatedDataSource dataSource)
         {
 #if DEBUG
             //options.Logger.Log($"sourceQueryExecutingCard = {sourceQueryExecutingCard}");
@@ -363,7 +363,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 switch (kindOfBinaryOperator)
                 {
                     case KindOfOperatorOfLogicalQueryNode.And:
-                        FillExecutingCardUsingPostFilterListWithAndStrategy(oldTargetSourceQueryExecutingCard, targetSourceQueryExecutingCard, postFilter, options);
+                        FillExecutingCardUsingPostFilterListWithAndStrategy(oldTargetSourceQueryExecutingCard, targetSourceQueryExecutingCard, postFilter, options, dataSource);
 #if DEBUG
                         //options.Logger.Log($"targetSourceQueryExecutingCard = {targetSourceQueryExecutingCard}");
 #endif
@@ -391,7 +391,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
         }
 
-        private void FillExecutingCardUsingPostFilterListWithAndStrategy(QueryExecutingCardForIndexedPersistLogicalData sourceQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData destQueryExecutingCard, PostFilterOfQueryExecutingCardForPersistLogicalData postFilter, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardUsingPostFilterListWithAndStrategy(QueryExecutingCardForIndexedPersistLogicalData sourceQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData destQueryExecutingCard, PostFilterOfQueryExecutingCardForPersistLogicalData postFilter, OptionsOfFillExecutingCard options, ConsolidatedDataSource dataSource)
         {
 #if DEBUG
             //options.Logger.Log($"sourceQueryExecutingCard = {sourceQueryExecutingCard}");
@@ -454,7 +454,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                         var comparisonQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
 
-                        var resultOfComparison = CompareForPostFilter(kindOfOperator, sourceLeftNode, sourceRightNode, options, comparisonQueryExecutingCard);
+                        var resultOfComparison = CompareForPostFilter(kindOfOperator, sourceLeftNode, sourceRightNode, options, comparisonQueryExecutingCard, dataSource);
 
 #if DEBUG
                         //options.Logger.Log($"resultOfComparison = {resultOfComparison}");
@@ -525,11 +525,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                         if (isLeftRight)
                         {
-                            resultOfComparison = CompareForPostFilter(kindOfOperator, sourceNode, nodeOfFilter, options, comparisonQueryExecutingCard);
+                            resultOfComparison = CompareForPostFilter(kindOfOperator, sourceNode, nodeOfFilter, options, comparisonQueryExecutingCard, dataSource);
                         }
                         else
                         {
-                            resultOfComparison = CompareForPostFilter(kindOfOperator, nodeOfFilter, sourceNode, options, comparisonQueryExecutingCard);
+                            resultOfComparison = CompareForPostFilter(kindOfOperator, nodeOfFilter, sourceNode, options, comparisonQueryExecutingCard, dataSource);
                         }
 
 #if DEBUG
@@ -574,15 +574,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
         }
 
-        private bool CompareForPostFilter(KindOfOperatorOfLogicalQueryNode kindOfOperator, LogicalQueryNode leftNode, LogicalQueryNode rightNode, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard)
+        private bool CompareForPostFilter(KindOfOperatorOfLogicalQueryNode kindOfOperator, LogicalQueryNode leftNode, LogicalQueryNode rightNode, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource)
         {
             switch(kindOfOperator)
             {
                 case KindOfOperatorOfLogicalQueryNode.Is:
-                    return CompareForPostFilterByOperatorIs(leftNode, rightNode, options, queryExecutingCard);
+                    return CompareForPostFilterByOperatorIs(leftNode, rightNode, options, queryExecutingCard, dataSource);
 
                 case KindOfOperatorOfLogicalQueryNode.IsNot:
-                    return !CompareForPostFilterByOperatorIs(leftNode, rightNode, options, queryExecutingCard);
+                    return !CompareForPostFilterByOperatorIs(leftNode, rightNode, options, queryExecutingCard, dataSource);
 
                 case KindOfOperatorOfLogicalQueryNode.More:
                 case KindOfOperatorOfLogicalQueryNode.MoreOrEqual:
@@ -595,7 +595,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private bool CompareForPostFilterByOperatorIs(LogicalQueryNode leftNode, LogicalQueryNode rightNode, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard)
+        private bool CompareForPostFilterByOperatorIs(LogicalQueryNode leftNode, LogicalQueryNode rightNode, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource)
         {
 #if DEBUG
             //options.Logger.Log($"leftNode = {leftNode}");
@@ -645,7 +645,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
             }
 
-            return EqualityCompare(leftNode, rightNode, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, queryExecutingCard);
+            return EqualityCompare(leftNode, rightNode, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, queryExecutingCard, dataSource);
         }
 
         private bool CompareForPostFilterByOperatorsMoreOrLess(KindOfOperatorOfLogicalQueryNode kindOfOperator, LogicalQueryNode leftNode, LogicalQueryNode rightNode, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard)
@@ -1992,7 +1992,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             //options.Logger.Log($"rightVal = {rightVal}");
 #endif
 
-                            var resultOfComparison = EqualityCompare(leftVal, rightVal, null, null, null, options, null);
+                            var resultOfComparison = EqualityCompare(leftVal, rightVal, null, null, null, options, null, dataSource);
 
 #if DEBUG
                             //options.Logger.Log($"resultOfComparison = {resultOfComparison}");
@@ -2234,7 +2234,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             var leftVal = leftVarsDict[varName];
                             var rightVal = rightVarsDict[varName];
 
-                            var resultOfComparison = EqualityCompare(leftVal, rightVal, null, null, null, options, null);
+                            var resultOfComparison = EqualityCompare(leftVal, rightVal, null, null, null, options, null, dataSource);
 
                             if(resultOfComparison)
                             {
@@ -2323,7 +2323,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var reasonOfFuzzyLogicResolving = new ReasonOfFuzzyLogicResolving();
                 reasonOfFuzzyLogicResolving.Kind = KindOfReasonOfFuzzyLogicResolving.Inheritance;
 
-                var resultOfComparison = EqualityCompare(leftExpr, rightExpr, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, null);
+                var resultOfComparison = EqualityCompare(leftExpr, rightExpr, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, null, dataSource);
 
 #if DEBUG
                 //options.Logger.Log($"resultOfComparison = {resultOfComparison}");
@@ -2383,7 +2383,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var reasonOfFuzzyLogicResolving = new ReasonOfFuzzyLogicResolving();
                 reasonOfFuzzyLogicResolving.Kind = KindOfReasonOfFuzzyLogicResolving.Inheritance;
 
-                var resultOfComparison = EqualityCompare(leftExpr, rightExpr, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, null);
+                var resultOfComparison = EqualityCompare(leftExpr, rightExpr, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, null, dataSource);
 
 #if DEBUG
                 //options.Logger.Log($"resultOfComparison = {resultOfComparison}");
@@ -2763,7 +2763,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         //options.Logger.Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");
 #endif
 
-                        var resultOfComparison = CompareKnownInfoAndExpressionNode(knownInfo, paramOfTargetRelation, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, comparisonQueryExecutingCard);
+                        var resultOfComparison = CompareKnownInfoAndExpressionNode(knownInfo, paramOfTargetRelation, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, comparisonQueryExecutingCard, dataSource);
 
 #if DEBUG
                         //options.Logger.Log($"resultOfComparison = {resultOfComparison}");
@@ -2896,7 +2896,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 var queryExecutingCardForFillExecutingCardUsingPostFiltersList = new QueryExecutingCardForIndexedPersistLogicalData();
 
-                FillExecutingCardUsingPostFiltersList(leftQueryExecutingCard, queryExecutingCardForFillExecutingCardUsingPostFiltersList, options);
+                FillExecutingCardUsingPostFiltersList(leftQueryExecutingCard, queryExecutingCardForFillExecutingCardUsingPostFiltersList, options, dataSource);
 
                 AppendResults(queryExecutingCardForFillExecutingCardUsingPostFiltersList, queryExecutingCard);
             }
@@ -2917,11 +2917,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //throw new NotImplementedException();
         }
 
-        private bool CompareKnownInfoAndExpressionNode(QueryExecutingCardAboutKnownInfo knownInfo, LogicalQueryNode expressionNode, List<StrongIdentifierValue> additionalKeys_1, List<StrongIdentifierValue> additionalKeys_2, ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard)
+        private bool CompareKnownInfoAndExpressionNode(QueryExecutingCardAboutKnownInfo knownInfo, LogicalQueryNode expressionNode, List<StrongIdentifierValue> additionalKeys_1, List<StrongIdentifierValue> additionalKeys_2, ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource)
         {
             var knownInfoExpression = knownInfo.Expression;
 
-            return EqualityCompare(knownInfoExpression, expressionNode, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, queryExecutingCard);
+            return EqualityCompare(knownInfoExpression, expressionNode, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, queryExecutingCard, dataSource);
         }
 
         private void FillExecutingCardForCallingFromRelationForProduction(BaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
@@ -3160,7 +3160,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
         }
 
-        private bool EqualityCompare(LogicalQueryNode expressionNode1, LogicalQueryNode expressionNode2, List<StrongIdentifierValue> additionalKeys_1, List<StrongIdentifierValue> additionalKeys_2, ReasonOfFuzzyLogicResolving reason, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard)
+        private bool EqualityCompare(LogicalQueryNode expressionNode1, LogicalQueryNode expressionNode2, List<StrongIdentifierValue> additionalKeys_1, List<StrongIdentifierValue> additionalKeys_2, ReasonOfFuzzyLogicResolving reason, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource)
         {
 #if DEBUG
             //options.Logger.Log($"(expressionNode1 == null) = {expressionNode1 == null} (expressionNode2 == null) = {expressionNode2 == null}");
@@ -3402,7 +3402,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     //options.Logger.Log($"?????????????????>>>>>>>>>>queryExecutingCard (after) = {queryExecutingCard}");
 #endif
 
-                    if (!EqualityCompare(param1, param2, null, null, reason, options, queryExecutingCard))
+                    if (!EqualityCompare(param1, param2, null, null, reason, options, queryExecutingCard, dataSource))
                     {
                         return false;
                     }
@@ -3441,13 +3441,40 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //options.Logger.Log($"valueAdditionalKeys = {JsonConvert.SerializeObject(valueAdditionalKeys?.Select(p => p.NameValue), Formatting.Indented)}");
 #endif
 
-                return RecursiveComparisonRelationWithNonRelation(relationNode, valueNode, valueAdditionalKeys, reason, options, queryExecutingCard);
+                return RecursiveComparisonRelationWithNonRelation(relationNode, valueNode, valueAdditionalKeys, reason, options, queryExecutingCard, dataSource);
+            }
+
+            if(expressionNode1.Kind == KindOfLogicalQueryNode.Group || expressionNode2.Kind == KindOfLogicalQueryNode.Group)
+            {
+                LogicalQueryNode groupNode = null;
+
+                if(expressionNode1.Kind == KindOfLogicalQueryNode.Group)
+                {
+                    groupNode = expressionNode1;
+                }
+                else
+                {
+                    groupNode = expressionNode2;
+                }
+
+                var queryExecutingCardForGroup = new QueryExecutingCardForIndexedPersistLogicalData();
+
+                queryExecutingCardForGroup.KnownInfoList = queryExecutingCard.KnownInfoList;
+                FillExecutingCard(groupNode.Left, queryExecutingCardForGroup, dataSource, options);
+
+                //queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForGroup.UsedKeysList);
+
+#if DEBUG
+                options.Logger.Log($"%%^%^ queryExecutingCardForGroup = {queryExecutingCardForGroup}");
+#endif
+
+                throw new NotImplementedException();
             }
 
             throw new NotImplementedException();
         }
 
-        private bool RecursiveComparisonRelationWithNonRelation(LogicalQueryNode relationNode, LogicalQueryNode valueNode, List<StrongIdentifierValue> valueAdditionalKeys, ReasonOfFuzzyLogicResolving reason, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard)
+        private bool RecursiveComparisonRelationWithNonRelation(LogicalQueryNode relationNode, LogicalQueryNode valueNode, List<StrongIdentifierValue> valueAdditionalKeys, ReasonOfFuzzyLogicResolving reason, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource)
         {
 #if DEBUG
             //options.Logger.Log($"relationNode = {relationNode}");
@@ -3465,7 +3492,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if (kindOfParam == KindOfLogicalQueryNode.Relation)
                 {
-                    if (RecursiveComparisonRelationWithNonRelation(param, valueNode, valueAdditionalKeys, reason, options, queryExecutingCard))
+                    if (RecursiveComparisonRelationWithNonRelation(param, valueNode, valueAdditionalKeys, reason, options, queryExecutingCard, dataSource))
                     {
                         return true;
                     }
@@ -3491,7 +3518,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //options.Logger.Log($"additionalKeysOfParam = {JsonConvert.SerializeObject(additionalKeysOfParam?.Select(p => p.NameValue), Formatting.Indented)}");
 #endif
 
-                if(EqualityCompare(valueNode, param, valueAdditionalKeys, additionalKeysOfParam, reason, options, queryExecutingCard))
+                if(EqualityCompare(valueNode, param, valueAdditionalKeys, additionalKeysOfParam, reason, options, queryExecutingCard, dataSource))
                 {
                     return true;
                 }

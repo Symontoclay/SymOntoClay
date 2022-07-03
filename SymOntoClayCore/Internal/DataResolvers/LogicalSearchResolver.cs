@@ -3447,28 +3447,33 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if(expressionNode1.Kind == KindOfLogicalQueryNode.Group || expressionNode2.Kind == KindOfLogicalQueryNode.Group)
             {
                 LogicalQueryNode groupNode = null;
+                LogicalQueryNode logicalQueryNode = null;
 
                 if(expressionNode1.Kind == KindOfLogicalQueryNode.Group)
                 {
                     groupNode = expressionNode1;
+                    logicalQueryNode = expressionNode2;
                 }
                 else
                 {
                     groupNode = expressionNode2;
+                    logicalQueryNode = expressionNode1;
                 }
 
                 var queryExecutingCardForGroup = new QueryExecutingCardForIndexedPersistLogicalData();
 
-                queryExecutingCardForGroup.KnownInfoList = queryExecutingCard.KnownInfoList;
+                queryExecutingCardForGroup.KnownInfoList = queryExecutingCard?.KnownInfoList;
                 FillExecutingCard(groupNode.Left, queryExecutingCardForGroup, dataSource, options);
 
                 //queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForGroup.UsedKeysList);
 
 #if DEBUG
+                options.Logger.Log($"%%^%^ logicalQueryNode = {logicalQueryNode}");
                 options.Logger.Log($"%%^%^ queryExecutingCardForGroup = {queryExecutingCardForGroup}");
 #endif
 
-                throw new NotImplementedException();
+                //throw new NotImplementedException();
+                return true;
             }
 
             throw new NotImplementedException();

@@ -250,8 +250,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             //    Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
             //    Log($"ruleInstance.Normalized = {DebugHelperForRuleInstance.ToString(ruleInstance.Normalized)}");
             //}
-            Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
-            Log($"ruleInstance.Normalized = {DebugHelperForRuleInstance.ToString(ruleInstance.Normalized)}");
+            //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+            //Log($"ruleInstance.Normalized = {DebugHelperForRuleInstance.ToString(ruleInstance.Normalized)}");
 
             //if(!DebugHelperForRuleInstance.ToString(ruleInstance).Contains("is"))
             //{

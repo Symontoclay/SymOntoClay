@@ -1517,7 +1517,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
 #endif
 
-            NFillExecutingCard(processedExpr, queryExecutingCard, dataSource, options);
+            NFillExecutingCardForRelationLogicalQueryNode(processedExpr, queryExecutingCard, dataSource, options);
 
 #if DEBUG
             //options.Logger.Log($"^^^^^^queryExecutingCard = {queryExecutingCard}");
@@ -1530,7 +1530,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
         }
 
-        private void NFillExecutingCard(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void NFillExecutingCardForRelationLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
             //options.Logger.Log($"processedExpr.Name = {processedExpr.Name}");
@@ -1589,6 +1589,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     queryExecutingCardForTargetFact.CountParams = processedExpr.CountParams;
                     queryExecutingCardForTargetFact.VarsInfoList = processedExpr.VarsInfoList;
                     queryExecutingCardForTargetFact.KnownInfoList = targetKnownInfoList;
+                    queryExecutingCardForTargetFact.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+
 
                     FillExecutingCardForCallingFromRelationForFact(indexedRulePartsOfFacts, queryExecutingCardForTargetFact, dataSource, options);
 
@@ -1655,6 +1657,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     queryExecutingCardForTargetRule.CountParams = processedExpr.CountParams;
                     queryExecutingCardForTargetRule.VarsInfoList = processedExpr.VarsInfoList;
                     queryExecutingCardForTargetRule.KnownInfoList = targetKnownInfoList;
+                    queryExecutingCardForTargetRule.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
 
                     FillExecutingCardForCallingFromRelationForProduction(indexedRulePartsOfRule, queryExecutingCardForTargetRule, dataSource, options);
 
@@ -1731,7 +1734,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");
             //foreach (var targetRelation in targetRelationsList)
             //{
-            //    options.Logger.Log($"targetRelation.GetHumanizeDbgString() = {targetRelation.GetHumanizeDbgString()}");
+            //    options.Logger.Log($"targetRelation.ToHumanizedString() = {targetRelation.ToHumanizedString()}");
             //}
 #endif
 
@@ -1856,6 +1859,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var leftQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
 
             leftQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
+            leftQueryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+
             FillExecutingCard(processedExpr.Left, leftQueryExecutingCard, dataSource, options);
 
 #if DEBUG
@@ -1870,6 +1875,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var rightQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
 
             rightQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
+            rightQueryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+
             FillExecutingCard(processedExpr.Right, rightQueryExecutingCard, dataSource, options);
 
 #if DEBUG
@@ -2088,6 +2095,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var leftQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
 
             leftQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
+            leftQueryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+
             FillExecutingCard(processedExpr.Left, leftQueryExecutingCard, dataSource, options);
 
             queryExecutingCard.UsedKeysList.AddRange(leftQueryExecutingCard.UsedKeysList);
@@ -2099,6 +2108,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var rightQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
 
             rightQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
+            rightQueryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+
             FillExecutingCard(processedExpr.Right, rightQueryExecutingCard, dataSource, options);
 
 #if DEBUG
@@ -2617,6 +2628,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var leftQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
 
             leftQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
+            leftQueryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+
             FillExecutingCard(processedExpr.Left, leftQueryExecutingCard, dataSource, options);
 
             queryExecutingCard.UsedKeysList.AddRange(leftQueryExecutingCard.UsedKeysList);
@@ -2654,11 +2667,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
             //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
             //options.Logger.Log($"processedExpr = {processedExpr}");
-            //options.Logger.Log($"DebugHelperForRuleInstance.ToString(processedExpr) = {DebugHelperForRuleInstance.BaseRulePartToString(processedExpr)}");
-            //foreach(var item in queryExecutingCard.KnownInfoList)
-            //{
-            //    options.Logger.Log($"item = {item}");
-            //}
+            options.Logger.Log($"DebugHelperForRuleInstance.ToString(processedExpr) = {DebugHelperForRuleInstance.BaseRulePartToString(processedExpr)}");
+            foreach (var item in queryExecutingCard.KnownInfoList)
+            {
+                options.Logger.Log($"item = {item}");
+            }
 #endif
 
             var targetRelationName = queryExecutingCard.TargetRelation;
@@ -2683,9 +2696,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             foreach (var targetRelation in targetRelationsList)
             {
 #if DEBUG          
-                //options.Logger.Log($"targetRelation = {targetRelation.GetHumanizeDbgString()}");
-                //options.Logger.Log($"targetRelation.CountParams = {targetRelation.CountParams}");
-                //options.Logger.Log($"queryExecutingCard.CountParams = {queryExecutingCard.CountParams}");
+                options.Logger.Log($"targetRelation = {targetRelation.ToHumanizedString()}");
+                options.Logger.Log($"targetRelation.CountParams = {targetRelation.CountParams}");
+                options.Logger.Log($"queryExecutingCard.CountParams = {queryExecutingCard.CountParams}");
 #endif
                 if (targetRelation.CountParams != queryExecutingCard.CountParams)
                 {
@@ -2708,11 +2721,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var comparisonQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
 
                 comparisonQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
+                comparisonQueryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
 
                 foreach (var knownInfo in queryExecutingCard.KnownInfoList)
                 {
 #if DEBUG
-                    //options.Logger.Log($"knownInfo = {knownInfo}");
+                    options.Logger.Log($"knownInfo = {knownInfo}");
 #endif
 
                     List<StrongIdentifierValue> additionalKeys_1 = null;
@@ -2749,7 +2763,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         var paramOfTargetRelation = paramsListOfTargetRelation[position.Value];
 
 #if DEBUG
-                        //options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
+                        options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
 #endif
 
                         List<StrongIdentifierValue> additionalKeys_2 = null;
@@ -2766,7 +2780,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         var resultOfComparison = CompareKnownInfoAndExpressionNode(knownInfo, paramOfTargetRelation, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, comparisonQueryExecutingCard, dataSource);
 
 #if DEBUG
-                        //options.Logger.Log($"resultOfComparison = {resultOfComparison}");
+                        options.Logger.Log($"resultOfComparison = {resultOfComparison}");
 #endif
 
                         if (!resultOfComparison)
@@ -2789,8 +2803,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if (isFit)
                 {
-                    var resultOfQueryToRelation = new ResultOfQueryToRelation();
-
                     var isEntityIdOnly = options.EntityIdOnly;
                     var useAccessPolicy = options.UseAccessPolicy;
 
@@ -2815,57 +2827,184 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     //options.Logger.Log($"queryExecutingCard.VarsInfoList.Count = {queryExecutingCard.VarsInfoList.Count}");
 #endif
 
-                    if (queryExecutingCard.VarsInfoList.Any())
+                    if(queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam)
                     {
-                        foreach (var varItem in queryExecutingCard.VarsInfoList)
+                        var resultOfQueryToRelation = new ResultOfQueryToRelation();
+
+                        foreach (var paramOfTargetRelation in targetRelation.ParamsList)
                         {
 #if DEBUG
-                            //options.Logger.Log($"varItem = {varItem}");
+                            options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
 #endif
 
-                            var paramOfTargetRelation = paramsListOfTargetRelation[varItem.Position];
-
-#if DEBUG
-                            //options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
-#endif
-
-                            if (isEntityIdOnly && !paramOfTargetRelation.IsEntityRef)
+                            if(paramOfTargetRelation.IsExpression)
                             {
-                                continue;
+                                throw new NotImplementedException();
                             }
-
-#if DEBUG
-                            //options.Logger.Log($"NEXT paramOfTargetRelation = {paramOfTargetRelation}");
-                            //options.Logger.Log($"NEXT options.EntityDictionary.GetName(paramOfTargetRelation.AsKeyRef.Key) = {options.EntityDictionary.GetName(paramOfTargetRelation.AsKeyRef.Key)}");
-#endif
-
-                            if (paramOfTargetRelation.IsKeyRef)
+                            else
                             {
-                                usedKeysList.Add(paramOfTargetRelation.Name);
+                                var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
+                                resultOfVarOfQueryToRelation.FoundExpression = paramOfTargetRelation;
+                                resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
                             }
-                            //else
-                            //{
-                            //    throw new NotImplementedException();
-                            //}                            
-
-                            var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
-                            resultOfVarOfQueryToRelation.NameOfVar = varItem.NameOfVar;
-                            resultOfVarOfQueryToRelation.FoundExpression = paramOfTargetRelation;
-                            resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
-                        }
-
-                        if (resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Count != queryExecutingCard.VarsInfoList.Count)
-                        {
-                            continue;
                         }
 
                         queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
-
                         queryExecutingCard.IsSuccess = true;
                     }
                     else
                     {
-                        queryExecutingCard.IsSuccess = true;
+                        if (queryExecutingCard.VarsInfoList.Any())
+                        {
+                            if (DetectExpressionInParamOfRelation(queryExecutingCard.VarsInfoList, paramsListOfTargetRelation))
+                            {
+                                throw new NotImplementedException();
+
+                                var resultCache = new List<List<ResultOfVarOfQueryToRelation>>();
+
+                                foreach (var varItem in queryExecutingCard.VarsInfoList)
+                                {
+#if DEBUG
+                                    options.Logger.Log($"varItem = {varItem}");
+#endif
+
+                                    var resultCacheItem = new List<ResultOfVarOfQueryToRelation>();
+                                    resultCache.Add(resultCacheItem);
+
+                                    var paramOfTargetRelation = paramsListOfTargetRelation[varItem.Position];
+
+#if DEBUG
+                                    //options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
+#endif
+
+                                    if (isEntityIdOnly && !paramOfTargetRelation.IsEntityRef)
+                                    {
+                                        continue;
+                                    }
+
+#if DEBUG
+                                    options.Logger.Log($"NEXT paramOfTargetRelation = {paramOfTargetRelation}");
+                                    //options.Logger.Log($"NEXT options.EntityDictionary.GetName(paramOfTargetRelation.AsKeyRef.Key) = {options.EntityDictionary.GetName(paramOfTargetRelation.AsKeyRef.Key)}");
+#endif
+
+                                    if (paramOfTargetRelation.IsExpression)
+                                    {
+                                        var queryExecutingCardForExprInParameter = new QueryExecutingCardForIndexedPersistLogicalData();
+
+                                        //queryExecutingCardForGroup.KnownInfoList = queryExecutingCard?.KnownInfoList;
+                                        queryExecutingCardForExprInParameter.IsFetchingAllValuesForResolvingExpressionParam = true;
+
+                                        FillExecutingCard(paramOfTargetRelation, queryExecutingCardForExprInParameter, dataSource, options);
+
+                                        queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForExprInParameter.UsedKeysList);
+
+#if DEBUG
+                                        options.Logger.Log($"%22%^%^ paramOfTargetRelation = {paramOfTargetRelation}");
+                                        options.Logger.Log($"%22%^%^ queryExecutingCardForExprInParameter = {queryExecutingCardForExprInParameter}");
+#endif
+
+                                        if(queryExecutingCardForExprInParameter.IsSuccess && queryExecutingCardForExprInParameter.ResultsOfQueryToRelationList.Any())
+                                        {
+                                            foreach(var resultItem in queryExecutingCardForExprInParameter.ResultsOfQueryToRelationList)
+                                            {
+                                                foreach(var resultVarItem in resultItem.ResultOfVarOfQueryToRelationList)
+                                                {
+#if DEBUG
+                                                    options.Logger.Log($"resultVarItem = {resultVarItem}");
+#endif
+
+                                                    var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
+                                                    resultOfVarOfQueryToRelation.NameOfVar = varItem.NameOfVar;
+                                                    resultOfVarOfQueryToRelation.FoundExpression = resultVarItem.FoundExpression;
+                                                    resultCacheItem.Add(resultOfVarOfQueryToRelation);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (paramOfTargetRelation.IsKeyRef)
+                                        {
+                                            usedKeysList.Add(paramOfTargetRelation.Name);
+                                        }
+                                        //else
+                                        //{
+                                        //    throw new NotImplementedException();
+                                        //}                            
+
+                                        var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
+                                        resultOfVarOfQueryToRelation.NameOfVar = varItem.NameOfVar;
+                                        resultOfVarOfQueryToRelation.FoundExpression = paramOfTargetRelation;
+                                        resultCacheItem.Add(resultOfVarOfQueryToRelation);
+                                    }
+                                }
+
+                                
+
+                                throw new NotImplementedException();
+                            }
+                            else
+                            {
+                                var resultOfQueryToRelation = new ResultOfQueryToRelation();
+
+                                foreach (var varItem in queryExecutingCard.VarsInfoList)
+                                {
+#if DEBUG
+                                    options.Logger.Log($"varItem = {varItem}");
+#endif
+
+                                    var paramOfTargetRelation = paramsListOfTargetRelation[varItem.Position];
+
+#if DEBUG
+                                    //options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
+#endif
+
+                                    if (isEntityIdOnly && !paramOfTargetRelation.IsEntityRef)
+                                    {
+                                        continue;
+                                    }
+
+#if DEBUG
+                                    options.Logger.Log($"NEXT paramOfTargetRelation = {paramOfTargetRelation}");
+                                    //options.Logger.Log($"NEXT options.EntityDictionary.GetName(paramOfTargetRelation.AsKeyRef.Key) = {options.EntityDictionary.GetName(paramOfTargetRelation.AsKeyRef.Key)}");
+#endif
+
+                                    if (paramOfTargetRelation.IsExpression)
+                                    {
+                                        throw new NotImplementedException();
+                                    }
+                                    else
+                                    {
+                                        if (paramOfTargetRelation.IsKeyRef)
+                                        {
+                                            usedKeysList.Add(paramOfTargetRelation.Name);
+                                        }
+                                        //else
+                                        //{
+                                        //    throw new NotImplementedException();
+                                        //}                            
+
+                                        var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
+                                        resultOfVarOfQueryToRelation.NameOfVar = varItem.NameOfVar;
+                                        resultOfVarOfQueryToRelation.FoundExpression = paramOfTargetRelation;
+                                        resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
+                                    }
+                                }
+
+                                if (resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Count != queryExecutingCard.VarsInfoList.Count)
+                                {
+                                    continue;
+                                }
+
+                                queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
+
+                                queryExecutingCard.IsSuccess = true;
+                            }
+                        }
+                        else
+                        {
+                            queryExecutingCard.IsSuccess = true;
+                        }
                     }
 
                     queryExecutingCard.UsedKeysList.AddRange(comparisonQueryExecutingCard.UsedKeysList);
@@ -2878,11 +3017,28 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
+        private bool DetectExpressionInParamOfRelation(IList<QueryExecutingCardAboutVar> varsInfoList, IList<LogicalQueryNode> paramsListOfTargetRelation)
+        {
+            foreach (var varItem in varsInfoList)
+            {
+                var paramOfTargetRelation = paramsListOfTargetRelation[varItem.Position];
+
+                if(paramOfTargetRelation.IsExpression)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private void FillExecutingCardForGroupLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             var leftQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
 
             leftQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
+            leftQueryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+
             FillExecutingCard(processedExpr.Left, leftQueryExecutingCard, dataSource, options);
 
             if (!leftQueryExecutingCard.IsSuccess)
@@ -3000,6 +3156,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var queryExecutingCardForNextPart = new QueryExecutingCardForIndexedPersistLogicalData();
                 queryExecutingCardForNextPart.VarsInfoList = targetRelation.VarsInfoList;
                 queryExecutingCardForNextPart.KnownInfoList = targetKnownInfoList;
+                queryExecutingCardForNextPart.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
 
                 FillExecutingCardForCallingFromOtherPart(nextPart, queryExecutingCardForNextPart, dataSource, options);
 
@@ -3130,6 +3287,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var queryExecutingCardForExpression = new QueryExecutingCardForIndexedPersistLogicalData();
 
             queryExecutingCardForExpression.KnownInfoList = queryExecutingCard.KnownInfoList;
+            queryExecutingCardForExpression.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+
             FillExecutingCard(processedExpr.Expression, queryExecutingCardForExpression, dataSource, options);
 
             queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForExpression.UsedKeysList);
@@ -3368,7 +3527,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if (expressionNode1.Kind == KindOfLogicalQueryNode.Relation && expressionNode2.Kind == KindOfLogicalQueryNode.Relation)
             {
 #if DEBUG
-                //options.Logger.Log("Try to compare relations!");
+                options.Logger.Log("Try to compare two relations!");
 #endif
 
                 if (expressionNode1.Name != expressionNode2.Name)
@@ -3415,8 +3574,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 || ((expressionNode2.Kind == KindOfLogicalQueryNode.Entity || expressionNode2.Kind == KindOfLogicalQueryNode.Concept || expressionNode2.Kind == KindOfLogicalQueryNode.Value || expressionNode2.Kind == KindOfLogicalQueryNode.EntityCondition || expressionNode2.Kind == KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence) && expressionNode1.Kind == KindOfLogicalQueryNode.Relation && expressionNode1.VarsInfoList.IsNullOrEmpty()))
             {
 #if DEBUG
-                //options.Logger.Log("Try to compare relation and entity, concept or value!");
+                options.Logger.Log("Try to compare relation and entity, concept or value!");
 #endif
+
+                throw new NotImplementedException();
 
                 LogicalQueryNode relationNode = null;
                 LogicalQueryNode valueNode = null;
@@ -3446,6 +3607,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if(expressionNode1.Kind == KindOfLogicalQueryNode.Group || expressionNode2.Kind == KindOfLogicalQueryNode.Group)
             {
+#if DEBUG
+                options.Logger.Log("Try to compare group and entity, concept or value!");
+#endif
+
+                throw new NotImplementedException();
+
                 LogicalQueryNode groupNode = null;
                 LogicalQueryNode logicalQueryNode = null;
 
@@ -3463,6 +3630,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var queryExecutingCardForGroup = new QueryExecutingCardForIndexedPersistLogicalData();
 
                 queryExecutingCardForGroup.KnownInfoList = queryExecutingCard?.KnownInfoList;
+                queryExecutingCardForGroup.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+
                 FillExecutingCard(groupNode.Left, queryExecutingCardForGroup, dataSource, options);
 
                 //queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForGroup.UsedKeysList);

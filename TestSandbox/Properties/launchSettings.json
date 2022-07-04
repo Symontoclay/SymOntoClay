@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "TestSandbox": {
+      "commandName": "Project"
+    }
+  }
+}

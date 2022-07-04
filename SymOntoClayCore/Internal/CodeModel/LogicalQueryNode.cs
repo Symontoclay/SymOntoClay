@@ -43,6 +43,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 #endif
 
         public KindOfLogicalQueryNode Kind { get; set; } = KindOfLogicalQueryNode.Unknown;
+
+        public bool IsExpression => Kind == KindOfLogicalQueryNode.Relation || Kind == KindOfLogicalQueryNode.Relation || Kind == KindOfLogicalQueryNode.BinaryOperator || Kind == KindOfLogicalQueryNode.UnaryOperator;
+
         public KindOfOperatorOfLogicalQueryNode KindOfOperator { get; set; } = KindOfOperatorOfLogicalQueryNode.Unknown;
         public StrongIdentifierValue Name { get; set; }
         public LogicalQueryNode Left { get; set; }

@@ -31,6 +31,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 {    
     public class QueryExecutingCardForIndexedPersistLogicalData : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
+        public bool IsFetchingAllValuesForResolvingExpressionParam { get; set; }
         public StrongIdentifierValue TargetRelation { get; set; }
         public int CountParams { get; set; }
         public IList<QueryExecutingCardAboutVar> VarsInfoList { get; set; }
@@ -59,6 +60,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(IsFetchingAllValuesForResolvingExpressionParam)} = {IsFetchingAllValuesForResolvingExpressionParam}");
             sb.PrintObjProp(n, nameof(TargetRelation), TargetRelation);
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
             sb.PrintObjListProp(n, nameof(VarsInfoList), VarsInfoList);
@@ -91,6 +93,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(IsFetchingAllValuesForResolvingExpressionParam)} = {IsFetchingAllValuesForResolvingExpressionParam}");
             sb.PrintShortObjProp(n, nameof(TargetRelation), TargetRelation);
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
             sb.PrintShortObjListProp(n, nameof(VarsInfoList), VarsInfoList);
@@ -123,6 +126,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(IsFetchingAllValuesForResolvingExpressionParam)} = {IsFetchingAllValuesForResolvingExpressionParam}");
             sb.PrintBriefObjProp(n, nameof(TargetRelation), TargetRelation);
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
             sb.PrintBriefObjListProp(n, nameof(VarsInfoList), VarsInfoList);

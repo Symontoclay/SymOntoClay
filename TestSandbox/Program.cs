@@ -66,6 +66,7 @@ using SymOntoClay.UnityAsset.Core.Tests;
 using System.Numerics;
 using DictionaryGenerator;
 using SymOntoClay.NLP.CommonDict.Implementations;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 
 namespace TestSandbox
 {
@@ -79,6 +80,8 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            //TstStrCollectionCombination();
+            //TstIntCollectionCombination();
             //TstModalitiesHandler();
             //TstRelationsStorageHandler();
             //TstGenerateDllDict();
@@ -135,6 +138,44 @@ namespace TestSandbox
             //Thread.Sleep(10000);
         }
 
+        private static void TstStrCollectionCombination()
+        {
+            _logger.Log("Begin");
+
+            var source = new List<List<string>>();
+
+            source.Add(new List<string>() { "a", "e" });
+            source.Add(new List<string>() { "h", "j", "L" });
+            source.Add(new List<string>() { "b", "c", "f" });
+
+            _logger.Log($"source = {JsonConvert.SerializeObject(source, Formatting.Indented)}");
+
+            var result = CollectionCombinationHelper.Combine(source);
+
+            _logger.Log($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
+
+            _logger.Log("End");
+        }
+
+        private static void TstIntCollectionCombination()
+        {
+            _logger.Log("Begin");
+
+            var source = new List<List<int>>();
+
+            source.Add(new List<int>() { 1, 5 });
+            source.Add(new List<int>() { 7, 9, 11 });
+            source.Add(new List<int>() { 2, 3, 6 });
+
+            _logger.Log($"source = {JsonConvert.SerializeObject(source, Formatting.Indented)}");
+
+            var result = CollectionCombinationHelper.Combine(source);
+
+            _logger.Log($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
+
+            _logger.Log("End");
+        }
+
         private static void TstModalitiesHandler()
         {
             _logger.Log("Begin");
@@ -142,7 +183,7 @@ namespace TestSandbox
             var handler = new ModalitiesHandler();
             handler.Run();
 
-            _logger.Log("Begin");
+            _logger.Log("End");
         }
 
         private static void TstRelationsStorageHandler()
@@ -152,7 +193,7 @@ namespace TestSandbox
             var handler = new RelationsStorageHandler();
             handler.Run();
 
-            _logger.Log("Begin");
+            _logger.Log("End");
         }
 
         private static void TstGenerateDllDict()
@@ -162,7 +203,7 @@ namespace TestSandbox
             var handler = new GenerateDllDictHandler();
             handler.Run();
 
-            _logger.Log("Begin");
+            _logger.Log("End");
         }
 
         private static void TSTWordsFactory()

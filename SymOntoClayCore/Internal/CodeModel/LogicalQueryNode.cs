@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public KindOfLogicalQueryNode Kind { get; set; } = KindOfLogicalQueryNode.Unknown;
 
-        public bool IsExpression => Kind == KindOfLogicalQueryNode.Relation || Kind == KindOfLogicalQueryNode.Relation || Kind == KindOfLogicalQueryNode.BinaryOperator || Kind == KindOfLogicalQueryNode.UnaryOperator;
+        public bool IsExpression => Kind == KindOfLogicalQueryNode.Relation || Kind == KindOfLogicalQueryNode.Group || Kind == KindOfLogicalQueryNode.BinaryOperator || Kind == KindOfLogicalQueryNode.UnaryOperator;
 
         public KindOfOperatorOfLogicalQueryNode KindOfOperator { get; set; } = KindOfOperatorOfLogicalQueryNode.Unknown;
         public StrongIdentifierValue Name { get; set; }
@@ -54,6 +54,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public IList<LogicalQueryNode> LinkedVars { get; set; }
         public Value Value { get; set; }
         public FuzzyLogicNonNumericSequenceValue FuzzyLogicNonNumericSequenceValue { get; set; }
+        public RuleInstance Fact { get; set; }
+
         public bool IsQuestion { get; set; }
 
         public int CountParams { get; set; }
@@ -159,6 +161,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 case KindOfLogicalQueryNode.LogicalVar:
                     contextOfConvertingExpressionNode.HasVars = true;
                     Name.CheckDirty();
+                    break;
+
+                case KindOfLogicalQueryNode.Fact:
+                    Fact.CheckDirty();
                     break;
 
                 case KindOfLogicalQueryNode.Value:
@@ -317,6 +323,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 case KindOfLogicalQueryNode.StubParam:
                 case KindOfLogicalQueryNode.EntityCondition:
                 case KindOfLogicalQueryNode.EntityRef:
+                case KindOfLogicalQueryNode.Fact:
                     break;
 
                 case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
@@ -507,6 +514,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     Left.SetHolder(holder);
                     break;
 
+                case KindOfLogicalQueryNode.Fact:
+                    Fact.Holder = holder;
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
             }
@@ -608,6 +619,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 case KindOfLogicalQueryNode.Group:
                     Left.SetTypeOfAccess(typeOfAccess);
+                    break;
+
+                case KindOfLogicalQueryNode.Fact:
+                    Fact.TypeOfAccess = typeOfAccess;
                     break;
 
                 default:
@@ -760,6 +775,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 case KindOfLogicalQueryNode.Group:
                     return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.GroupWeight ^ Left.GetLongHashCode(options);
 
+                case KindOfLogicalQueryNode.Fact:
+                    return base.CalculateLongHashCode(options) ^ Fact.GetLongHashCode(options);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
             }
@@ -813,6 +831,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.LinkedVars = LinkedVars?.Select(p => p.Clone(context)).ToList();
             result.Value = Value?.CloneValue(context);
             result.FuzzyLogicNonNumericSequenceValue = FuzzyLogicNonNumericSequenceValue?.Clone(context);
+            result.Fact = Fact?.Clone(context);
             result.IsQuestion = IsQuestion;
             result.TypeOfAccess = TypeOfAccess;
             result.Holder = Holder;
@@ -875,6 +894,20 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     Left.DiscoverAllInheritanceRelations(result);
                     break;
 
+                case KindOfLogicalQueryNode.Fact:
+                    {
+                        var inheritanceRelations = Fact.GetInheritanceRelations();
+
+                        if(inheritanceRelations.Any())
+                        {
+                            foreach(var item in inheritanceRelations)
+                            {
+                                result.Add(item);
+                            }
+                        }
+                    }                    
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Kind), Kind, string.Empty);
             }
@@ -897,6 +930,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintObjProp(n, nameof(Value), Value);
             sb.PrintObjProp(n, nameof(FuzzyLogicNonNumericSequenceValue), FuzzyLogicNonNumericSequenceValue);
+            sb.PrintObjProp(n, nameof(Fact), Fact);
 
             sb.AppendLine($"{spaces}{nameof(IsQuestion)} = {IsQuestion}");
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
@@ -931,6 +965,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintShortObjProp(n, nameof(Value), Value);
             sb.PrintShortObjProp(n, nameof(FuzzyLogicNonNumericSequenceValue), FuzzyLogicNonNumericSequenceValue);
+            sb.PrintShortObjProp(n, nameof(Fact), Fact);
 
             sb.AppendLine($"{spaces}{nameof(IsQuestion)} = {IsQuestion}");
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
@@ -965,6 +1000,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintBriefObjProp(n, nameof(Value), Value);
             sb.PrintBriefObjProp(n, nameof(FuzzyLogicNonNumericSequenceValue), FuzzyLogicNonNumericSequenceValue);
+            sb.PrintBriefObjProp(n, nameof(Fact), Fact);
 
             sb.AppendLine($"{spaces}{nameof(IsQuestion)} = {IsQuestion}");
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");

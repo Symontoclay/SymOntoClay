@@ -3259,5 +3259,98 @@ app PeaceKeeper
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case32()
+        {
+            var text = @"app PeaceKeeper
+{
+    {: gun(M16) :}
+	{: $x = act(M16, shoot) & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :}
+
+	on Enter => {
+	    select {: hear(I, $x) & gun($x) & distance(I, $x, $y) :} >> @>log;
+	}
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$y = 15.588457107543945"), true);
+                            Assert.AreEqual(message.Contains("$x = m16"), true);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case32_a()
+        {
+            var text = @"app PeaceKeeper
+{
+    {: gun(M16) :}
+	{: $x = (act(M16, shoot) & act(M4A1, shoot)) & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :}
+
+	on Enter => {
+	    select {: hear(I, $x) & gun($x) & distance(I, $x, $y) :} >> @>log;
+	}
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$y = 15.588457107543945"), true);
+                            Assert.AreEqual(message.Contains("$x = m16"), true);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case33()
+        {
+            var text = @"app PeaceKeeper
+{
+    {: gun(M16) :}
+	{: $x = {: act(M16, shoot) :} & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :}
+
+	on Enter => {
+	    select {: hear(I, $x) & gun($x) & distance(I, $x, $y) :} >> @>log;
+	}
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$y = 15.588457107543945"), true);
+                            Assert.AreEqual(message.Contains("$x = m16"), true);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

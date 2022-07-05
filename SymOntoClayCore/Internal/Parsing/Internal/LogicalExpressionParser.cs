@@ -511,6 +511,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessWord();
                             break;
 
+                        case TokenKind.OpenFactBracket:
+                            ProcessFact();
+                            break;
+
                         case TokenKind.OpenRoundBracket:
                             ProcessGroup();
                             break;
@@ -574,6 +578,60 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
 
             _state = State.GotPredicate;
+        }
+
+        private void ProcessFact()
+        {
+            _context.Recovery(_currToken);
+
+            var node = new LogicalQueryNode() { Kind = KindOfLogicalQueryNode.Fact };
+            _lastLogicalQueryNode = node;
+
+            if (_unresolvedAiases.Any())
+            {
+                var aliasesDict = _logicalExpressionParserContext.AliasesDict;
+
+                node.LinkedVars = new List<LogicalQueryNode>();
+
+                foreach (var unresolvedAlias in _unresolvedAiases)
+                {
+#if DEBUG
+                    //Log($"unresolvedAlias = {unresolvedAlias}");
+#endif
+
+                    if (aliasesDict.ContainsKey(unresolvedAlias))
+                    {
+                        throw new Exception($"Variable {unresolvedAlias.NameValue} has been bound multiple time.");
+                    }
+
+                    aliasesDict[unresolvedAlias] = node;
+
+                    var varNodeForRelation = new LogicalQueryNode() { Kind = KindOfLogicalQueryNode.LogicalVar };
+                    varNodeForRelation.Name = unresolvedAlias;
+
+                    node.LinkedVars = new List<LogicalQueryNode>();
+                    node.LinkedVars.Add(varNodeForRelation);
+                }
+
+                _unresolvedAiases.Clear();
+            }
+
+            var parser = new LogicalQueryParser(_context);
+            parser.Run();
+
+#if DEBUG
+            //Log($"parser.Result = {parser.Result}");
+            //Log($"parser.Result = {parser.Result.ToHumanizedString()}");
+#endif
+
+            
+            node.Fact = parser.Result;
+
+            var intermediateNode = new IntermediateAstNode(node);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+            _state = State.GotConcept;
         }
 
         private void ProcessWord()

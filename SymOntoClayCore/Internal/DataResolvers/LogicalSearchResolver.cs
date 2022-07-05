@@ -1972,6 +1972,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
 
                     var rightVarsList = rightResultOfQueryToRelation.ResultOfVarOfQueryToRelationList;
+
                     var rightVarsDict = rightVarsList.ToDictionary(p => p.NameOfVar, p => p.FoundExpression);
 
                     var varNamesList = rightVarsList.Select(p => p.NameOfVar).Concat(leftVarNamesList).Distinct();
@@ -2667,11 +2668,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
             //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
             //options.Logger.Log($"processedExpr = {processedExpr}");
-            options.Logger.Log($"DebugHelperForRuleInstance.ToString(processedExpr) = {DebugHelperForRuleInstance.BaseRulePartToString(processedExpr)}");
-            foreach (var item in queryExecutingCard.KnownInfoList)
-            {
-                options.Logger.Log($"item = {item}");
-            }
+            //options.Logger.Log($"DebugHelperForRuleInstance.ToString(processedExpr) = {DebugHelperForRuleInstance.BaseRulePartToString(processedExpr)}");
+            //foreach (var item in queryExecutingCard.KnownInfoList)
+            //{
+            //    options.Logger.Log($"item = {item}");
+            //}
 #endif
 
             var targetRelationName = queryExecutingCard.TargetRelation;
@@ -2696,9 +2697,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             foreach (var targetRelation in targetRelationsList)
             {
 #if DEBUG          
-                options.Logger.Log($"targetRelation = {targetRelation.ToHumanizedString()}");
-                options.Logger.Log($"targetRelation.CountParams = {targetRelation.CountParams}");
-                options.Logger.Log($"queryExecutingCard.CountParams = {queryExecutingCard.CountParams}");
+                //options.Logger.Log($"targetRelation = {targetRelation.ToHumanizedString()}");
+                //options.Logger.Log($"targetRelation.CountParams = {targetRelation.CountParams}");
+                //options.Logger.Log($"queryExecutingCard.CountParams = {queryExecutingCard.CountParams}");
 #endif
                 if (targetRelation.CountParams != queryExecutingCard.CountParams)
                 {
@@ -2726,7 +2727,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 foreach (var knownInfo in queryExecutingCard.KnownInfoList)
                 {
 #if DEBUG
-                    options.Logger.Log($"knownInfo = {knownInfo}");
+                    //options.Logger.Log($"knownInfo = {knownInfo}");
 #endif
 
                     List<StrongIdentifierValue> additionalKeys_1 = null;
@@ -2763,7 +2764,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         var paramOfTargetRelation = paramsListOfTargetRelation[position.Value];
 
 #if DEBUG
-                        options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
+                        //options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
 #endif
 
                         List<StrongIdentifierValue> additionalKeys_2 = null;
@@ -2780,7 +2781,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         var resultOfComparison = CompareKnownInfoAndExpressionNode(knownInfo, paramOfTargetRelation, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, comparisonQueryExecutingCard, dataSource);
 
 #if DEBUG
-                        options.Logger.Log($"resultOfComparison = {resultOfComparison}");
+                        //options.Logger.Log($"resultOfComparison = {resultOfComparison}");
 #endif
 
                         if (!resultOfComparison)
@@ -2834,7 +2835,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         foreach (var paramOfTargetRelation in targetRelation.ParamsList)
                         {
 #if DEBUG
-                            options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
+                            //options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
 #endif
 
                             if(paramOfTargetRelation.IsExpression)
@@ -2844,6 +2845,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             else
                             {
                                 var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
+                                resultOfVarOfQueryToRelation.NameOfVar = NameHelper.CreateLogicalVarName();
                                 resultOfVarOfQueryToRelation.FoundExpression = paramOfTargetRelation;
                                 resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
                             }
@@ -2858,14 +2860,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         {
                             if (DetectExpressionInParamOfRelation(queryExecutingCard.VarsInfoList, paramsListOfTargetRelation))
                             {
-                                throw new NotImplementedException();
-
                                 var resultCache = new List<List<ResultOfVarOfQueryToRelation>>();
 
                                 foreach (var varItem in queryExecutingCard.VarsInfoList)
                                 {
 #if DEBUG
-                                    options.Logger.Log($"varItem = {varItem}");
+                                    //options.Logger.Log($"varItem ($%^) = {varItem}");
 #endif
 
                                     var resultCacheItem = new List<ResultOfVarOfQueryToRelation>();
@@ -2874,7 +2874,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                     var paramOfTargetRelation = paramsListOfTargetRelation[varItem.Position];
 
 #if DEBUG
-                                    //options.Logger.Log($"paramOfTargetRelation = {paramOfTargetRelation}");
+                                    //options.Logger.Log($"paramOfTargetRelation ($%^) = {paramOfTargetRelation}");
 #endif
 
                                     if (isEntityIdOnly && !paramOfTargetRelation.IsEntityRef)
@@ -2883,7 +2883,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                     }
 
 #if DEBUG
-                                    options.Logger.Log($"NEXT paramOfTargetRelation = {paramOfTargetRelation}");
+                                    //options.Logger.Log($"NEXT paramOfTargetRelation = {paramOfTargetRelation}");
                                     //options.Logger.Log($"NEXT options.EntityDictionary.GetName(paramOfTargetRelation.AsKeyRef.Key) = {options.EntityDictionary.GetName(paramOfTargetRelation.AsKeyRef.Key)}");
 #endif
 
@@ -2899,8 +2899,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                         queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForExprInParameter.UsedKeysList);
 
 #if DEBUG
-                                        options.Logger.Log($"%22%^%^ paramOfTargetRelation = {paramOfTargetRelation}");
-                                        options.Logger.Log($"%22%^%^ queryExecutingCardForExprInParameter = {queryExecutingCardForExprInParameter}");
+                                        //options.Logger.Log($"%22%^%^ paramOfTargetRelation = {paramOfTargetRelation}");
+                                        //options.Logger.Log($"%22%^%^ queryExecutingCardForExprInParameter = {queryExecutingCardForExprInParameter}");
 #endif
 
                                         if(queryExecutingCardForExprInParameter.IsSuccess && queryExecutingCardForExprInParameter.ResultsOfQueryToRelationList.Any())
@@ -2910,7 +2910,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                                 foreach(var resultVarItem in resultItem.ResultOfVarOfQueryToRelationList)
                                                 {
 #if DEBUG
-                                                    options.Logger.Log($"resultVarItem = {resultVarItem}");
+                                                    //options.Logger.Log($"resultVarItem = {resultVarItem}");
 #endif
 
                                                     var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
@@ -2939,9 +2939,27 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                     }
                                 }
 
-                                
+                                var linearizedItems = CollectionCombinationHelper.Combine(resultCache);
 
-                                throw new NotImplementedException();
+                                foreach(var linearizedItem in linearizedItems)
+                                {
+#if DEBUG
+                                    //options.Logger.Log($"linearizedItem = {linearizedItem.WriteListToString()}");
+#endif
+
+                                    var resultOfQueryToRelation = new ResultOfQueryToRelation();
+                                    resultOfQueryToRelation.ResultOfVarOfQueryToRelationList = linearizedItem;
+
+                                    queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
+                                }
+
+                                queryExecutingCard.IsSuccess = true;
+
+#if DEBUG
+                                //options.Logger.Log($"/////////////////////////////////////////");
+#endif
+
+                                //throw new NotImplementedException();
                             }
                             else
                             {
@@ -2950,7 +2968,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 foreach (var varItem in queryExecutingCard.VarsInfoList)
                                 {
 #if DEBUG
-                                    options.Logger.Log($"varItem = {varItem}");
+                                    //options.Logger.Log($"varItem = {varItem}");
 #endif
 
                                     var paramOfTargetRelation = paramsListOfTargetRelation[varItem.Position];
@@ -2965,7 +2983,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                     }
 
 #if DEBUG
-                                    options.Logger.Log($"NEXT paramOfTargetRelation = {paramOfTargetRelation}");
+                                    //options.Logger.Log($"NEXT paramOfTargetRelation = {paramOfTargetRelation}");
                                     //options.Logger.Log($"NEXT options.EntityDictionary.GetName(paramOfTargetRelation.AsKeyRef.Key) = {options.EntityDictionary.GetName(paramOfTargetRelation.AsKeyRef.Key)}");
 #endif
 
@@ -3323,8 +3341,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
 #if DEBUG
             //options.Logger.Log($"(expressionNode1 == null) = {expressionNode1 == null} (expressionNode2 == null) = {expressionNode2 == null}");
-            options.Logger.Log($"expressionNode1 = {expressionNode1}");
-            options.Logger.Log($"expressionNode2 = {expressionNode2}");
+            //options.Logger.Log($"expressionNode1 = {expressionNode1}");
+            //options.Logger.Log($"expressionNode2 = {expressionNode2}");
             //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
             //options.Logger.Log($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1?.Select(p => p.NameValue), Formatting.Indented)}");
             //options.Logger.Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");
@@ -3524,181 +3542,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return _fuzzyLogicResolver.Equals(sequenceNode.FuzzyLogicNonNumericSequenceValue, _numberValueLinearResolver.Resolve(value, localCodeExecutionContext), reason, localCodeExecutionContext);
             }
 
-            if (expressionNode1.Kind == KindOfLogicalQueryNode.Relation && expressionNode2.Kind == KindOfLogicalQueryNode.Relation)
-            {
-#if DEBUG
-                options.Logger.Log("Try to compare two relations!");
-#endif
-
-                if (expressionNode1.Name != expressionNode2.Name)
-                {
-                    return false;
-                }
-
-                var paramsList1 = expressionNode1.ParamsList;
-                var paramsList2 = expressionNode2.ParamsList;
-
-                if (paramsList1.Count != paramsList2.Count)
-                {
-                    return false;
-                }
-
-                var paramsList2Enumerator = paramsList2.GetEnumerator();
-
-                foreach (var param1 in paramsList1)
-                {
-                    if (!paramsList2Enumerator.MoveNext())
-                    {
-                        return false;
-                    }
-
-                    var param2 = paramsList2Enumerator.Current;
-
-#if DEBUG
-                    //options.Logger.Log($"param1 = {param1}");
-                    //options.Logger.Log($"param2 = {param2}");
-                    //options.Logger.Log($"EqualityCompare(param1, param2, null, null, reason, options) = {EqualityCompare(param1, param2, null, null, reason, options, queryExecutingCard)}");
-                    //options.Logger.Log($"?????????????????>>>>>>>>>>queryExecutingCard (after) = {queryExecutingCard}");
-#endif
-
-                    if (!EqualityCompare(param1, param2, null, null, reason, options, queryExecutingCard, dataSource))
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-
-            if(((expressionNode1.Kind == KindOfLogicalQueryNode.Entity || expressionNode1.Kind == KindOfLogicalQueryNode.Concept || expressionNode1.Kind == KindOfLogicalQueryNode.Value || expressionNode1.Kind == KindOfLogicalQueryNode.EntityCondition || expressionNode1.Kind == KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence) && expressionNode2.Kind == KindOfLogicalQueryNode.Relation && expressionNode2.VarsInfoList.IsNullOrEmpty()) 
-                || ((expressionNode2.Kind == KindOfLogicalQueryNode.Entity || expressionNode2.Kind == KindOfLogicalQueryNode.Concept || expressionNode2.Kind == KindOfLogicalQueryNode.Value || expressionNode2.Kind == KindOfLogicalQueryNode.EntityCondition || expressionNode2.Kind == KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence) && expressionNode1.Kind == KindOfLogicalQueryNode.Relation && expressionNode1.VarsInfoList.IsNullOrEmpty()))
-            {
-#if DEBUG
-                options.Logger.Log("Try to compare relation and entity, concept or value!");
-#endif
-
-                throw new NotImplementedException();
-
-                LogicalQueryNode relationNode = null;
-                LogicalQueryNode valueNode = null;
-                List<StrongIdentifierValue> valueAdditionalKeys = null;
-
-                if (expressionNode1.Kind == KindOfLogicalQueryNode.Relation)
-                {
-                    relationNode = expressionNode1;
-                    valueNode = expressionNode2;
-                    valueAdditionalKeys = additionalKeys_2;
-                }
-                else
-                {
-                    relationNode = expressionNode2;
-                    valueNode = expressionNode1;
-                    valueAdditionalKeys = additionalKeys_1;
-                }
-
-#if DEBUG
-                //options.Logger.Log($"relationNode = {relationNode}");
-                //options.Logger.Log($"valueNode = {valueNode}");
-                //options.Logger.Log($"valueAdditionalKeys = {JsonConvert.SerializeObject(valueAdditionalKeys?.Select(p => p.NameValue), Formatting.Indented)}");
-#endif
-
-                return RecursiveComparisonRelationWithNonRelation(relationNode, valueNode, valueAdditionalKeys, reason, options, queryExecutingCard, dataSource);
-            }
-
-            if(expressionNode1.Kind == KindOfLogicalQueryNode.Group || expressionNode2.Kind == KindOfLogicalQueryNode.Group)
-            {
-#if DEBUG
-                options.Logger.Log("Try to compare group and entity, concept or value!");
-#endif
-
-                throw new NotImplementedException();
-
-                LogicalQueryNode groupNode = null;
-                LogicalQueryNode logicalQueryNode = null;
-
-                if(expressionNode1.Kind == KindOfLogicalQueryNode.Group)
-                {
-                    groupNode = expressionNode1;
-                    logicalQueryNode = expressionNode2;
-                }
-                else
-                {
-                    groupNode = expressionNode2;
-                    logicalQueryNode = expressionNode1;
-                }
-
-                var queryExecutingCardForGroup = new QueryExecutingCardForIndexedPersistLogicalData();
-
-                queryExecutingCardForGroup.KnownInfoList = queryExecutingCard?.KnownInfoList;
-                queryExecutingCardForGroup.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
-
-                FillExecutingCard(groupNode.Left, queryExecutingCardForGroup, dataSource, options);
-
-                //queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForGroup.UsedKeysList);
-
-#if DEBUG
-                options.Logger.Log($"%%^%^ logicalQueryNode = {logicalQueryNode}");
-                options.Logger.Log($"%%^%^ queryExecutingCardForGroup = {queryExecutingCardForGroup}");
-#endif
-
-                //throw new NotImplementedException();
-                return true;
-            }
-
             throw new NotImplementedException();
-        }
-
-        private bool RecursiveComparisonRelationWithNonRelation(LogicalQueryNode relationNode, LogicalQueryNode valueNode, List<StrongIdentifierValue> valueAdditionalKeys, ReasonOfFuzzyLogicResolving reason, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource)
-        {
-#if DEBUG
-            //options.Logger.Log($"relationNode = {relationNode}");
-            //options.Logger.Log($"valueNode = {valueNode}");
-            //options.Logger.Log($"valueAdditionalKeys = {JsonConvert.SerializeObject(valueAdditionalKeys?.Select(p => p.NameValue), Formatting.Indented)}");
-#endif
-
-            foreach (var param in relationNode.ParamsList)
-            {
-#if DEBUG
-                //options.Logger.Log($"param = {param}");
-#endif
-
-                var kindOfParam = param.Kind;
-
-                if (kindOfParam == KindOfLogicalQueryNode.Relation)
-                {
-                    if (RecursiveComparisonRelationWithNonRelation(param, valueNode, valueAdditionalKeys, reason, options, queryExecutingCard, dataSource))
-                    {
-                        return true;
-                    }
-                }
-
-                List<StrongIdentifierValue> additionalKeysOfParam = null;
-
-                switch (kindOfParam)
-                {
-                    case KindOfLogicalQueryNode.Value:
-                        break;
-
-                    case KindOfLogicalQueryNode.Entity:
-                    case KindOfLogicalQueryNode.Concept:
-                        additionalKeysOfParam = _inheritanceResolver.GetSuperClassesKeysList(param.Name, options.LocalCodeExecutionContext);
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfParam), kindOfParam, null);
-                }
-
-#if DEBUG
-                //options.Logger.Log($"additionalKeysOfParam = {JsonConvert.SerializeObject(additionalKeysOfParam?.Select(p => p.NameValue), Formatting.Indented)}");
-#endif
-
-                if(EqualityCompare(valueNode, param, valueAdditionalKeys, additionalKeysOfParam, reason, options, queryExecutingCard, dataSource))
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
     }
 }

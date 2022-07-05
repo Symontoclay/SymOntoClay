@@ -40,6 +40,11 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             return $"#^{Guid.NewGuid():D}";
         }
 
+        public static string GetNewLogicalVarNameString()
+        {
+            return $"${Guid.NewGuid().ToString("D").Substring(0, 8)}";
+        }
+
         public static string ConvertNameToId(string source)
         {
             if(string.IsNullOrWhiteSpace(source))
@@ -69,6 +74,12 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
         public static StrongIdentifierValue CreateEntityName()
         {
             var text = GetNewEntityNameString();
+            return CreateName(text);
+        }
+
+        public static StrongIdentifierValue CreateLogicalVarName()
+        {
+            var text = GetNewLogicalVarNameString();
             return CreateName(text);
         }
 

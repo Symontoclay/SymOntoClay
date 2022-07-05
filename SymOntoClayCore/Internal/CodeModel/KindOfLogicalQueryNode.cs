@@ -45,6 +45,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         Value,
         Group,
         FuzzyLogicNonNumericSequence,
-        Var
+        Var,
+        Fact
     }
 }

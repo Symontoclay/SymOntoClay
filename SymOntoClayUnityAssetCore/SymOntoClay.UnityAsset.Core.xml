@@ -1001,19 +1001,31 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache.GetLogicRuleOrFact(System.String)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.SymOntoClay#UnityAsset#Core#ISoundReceiver#InstanceId">
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.BaseSoundReceiverComponent.InstanceId">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.SymOntoClay#UnityAsset#Core#ISoundReceiver#Position">
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.BaseSoundReceiverComponent.Position">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.SymOntoClay#UnityAsset#Core#ISoundReceiver#Logger">
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.BaseSoundReceiverComponent.Threshold">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.SymOntoClay#UnityAsset#Core#ISoundReceiver#Threshold">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.BaseSoundReceiverComponent.CallBack(System.Double,System.Double,System.Numerics.Vector3,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.SymOntoClay#UnityAsset#Core#ISoundReceiver#CallBack(System.Double,System.Double,System.Numerics.Vector3,System.String)">
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.Position">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.Threshold">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.CallBack(System.Double,System.Double,System.Numerics.Vector3,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.GetTargetVarName(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.GetDirectionToPosition(System.Numerics.Vector3)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.OnDisposed">

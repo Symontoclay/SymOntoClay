@@ -66,18 +66,23 @@ namespace SymOntoClay.SoundBuses
         public void PushSound(int instanceId, float power, Vector3 position, string query)
         {
 #if DEBUG
-            _logger.Info($"instanceId = {instanceId}");
+            //_logger.Info($"instanceId = {instanceId}");
             //_logger.Info($"power = {power}");
             //_logger.Info($"position = {position}");
             //_logger.Info($"query = {query}");
 #endif
 
+            if (!query.StartsWith("{:"))
+            {
+                query = $"{{: {query} :}}";
+            }
+
             foreach (var receiver in _soundReceivers)
             {
 #if DEBUG
-                _logger.Info($"receiver.InstanceId = {receiver.InstanceId}");
-                _logger.Info($"receiver.Position = {receiver.Position}");
-                _logger.Info($"receiver.Threshold = {receiver.Threshold}");
+                //_logger.Info($"receiver.InstanceId = {receiver.InstanceId}");
+                //_logger.Info($"receiver.Position = {receiver.Position}");
+                //_logger.Info($"receiver.Threshold = {receiver.Threshold}");
 #endif
 
                 if (receiver.InstanceId == instanceId)
@@ -88,13 +93,13 @@ namespace SymOntoClay.SoundBuses
                 var distance = Vector3.Distance(receiver.Position, position);
 
 #if DEBUG
-                _logger.Info($"distance = {distance}");
+                //_logger.Info($"distance = {distance}");
 #endif
 
                 var targetPower = power - 0.04 * distance;
 
 #if DEBUG
-                _logger.Info($"targetPower = {targetPower}");
+                //_logger.Info($"targetPower = {targetPower}");
 #endif
 
                 if (targetPower < receiver.Threshold)

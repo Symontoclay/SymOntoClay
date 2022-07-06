@@ -32,13 +32,13 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
 {
-    public class SoundReceiverComponent : BaseComponent, ISoundReceiver
+    public class SoundReceiverComponent : BaseSoundReceiverComponent
     {
         public SoundReceiverComponent(IEntityLogger logger, int instanceId, HumanoidNPCGameComponentContext internalContext, IWorldCoreGameComponentContext worldContext)
-            : base(logger)
+            : base(logger, instanceId)
         {
             _internalContext = internalContext;
-            _instanceId = instanceId;
+            
             _soundBus = worldContext.SoundBus;
 
             _soundBus?.AddReceiver(this);
@@ -48,19 +48,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         private readonly ISoundBus _soundBus;
         private IHostSupport _hostSupport;
         private Engine _coreEngine;
-        private readonly int _instanceId;
 
         /// <inheritdoc/>
-        int ISoundReceiver.InstanceId => _instanceId;
+        public override Vector3 Position => _hostSupport.GetCurrentAbsolutePosition();
 
         /// <inheritdoc/>
-        Vector3 ISoundReceiver.Position => _hostSupport.GetCurrentAbsolutePosition();
-
-        /// <inheritdoc/>
-        IEntityLogger ISoundReceiver.Logger => Logger;
-
-        /// <inheritdoc/>
-        double ISoundReceiver.Threshold => 0;
+        public override double Threshold => 0;
 
         public void LoadFromSourceCode()
         {
@@ -69,7 +62,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         }
 
         /// <inheritdoc/>
-        void ISoundReceiver.CallBack(double power, double distance, Vector3 position, string query)
+        public override void CallBack(double power, double distance, Vector3 position, string query)
         {
 #if DEBUG
             //Log($"power = {power}");
@@ -86,47 +79,16 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
             _coreEngine.InsertListenedFact(convertedQuery);
         }
 
-        private string ConvertQuery(double power, double distance, Vector3 position, string query)
-        {
-#if DEBUG
-            //Log($"power = {power}");
-            //Log($"distance = {distance}");
-            //Log($"position = {position}");
-            //Log($"query = {query}");
-#endif
-            var varName = GetTargetVarName(query);
-
-#if DEBUG
-            //Log($"varName = {varName}");
-#endif
-
-            var directionToPosition = _hostSupport.GetDirectionToPosition(position);
-
-#if DEBUG
-            //Log($"directionToPosition = {directionToPosition}");
-#endif
-
-            var distanceStr = distance.ToString(CultureInfo.InvariantCulture);
-            var directionStr = directionToPosition.ToString(CultureInfo.InvariantCulture);
-
-            var sb = new StringBuilder();
-
-            sb.Append("{: ");
-            sb.Append(varName);
-            sb.Append(" = ");
-            sb.Append(query);
-            sb.Append($" & hear(I, {varName})");
-            sb.Append($" & distance(I, {varName}, {distanceStr})");
-            sb.Append($" & direction({varName}, {directionStr})");
-            sb.Append($" & point({varName}, #@[{distanceStr}, {directionStr}])");
-            sb.Append(" :}");
-
-            return sb.ToString();
-        }
-
-        private string GetTargetVarName(string query)
+        /// <inheritdoc/>
+        protected override string GetTargetVarName(string query)
         {
             return "$x";
+        }
+
+        /// <inheritdoc/>
+        protected override float GetDirectionToPosition(Vector3 position)
+        {
+            return _hostSupport.GetDirectionToPosition(position);
         }
 
         /// <inheritdoc/>

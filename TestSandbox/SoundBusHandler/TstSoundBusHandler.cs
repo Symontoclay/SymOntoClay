@@ -22,11 +22,13 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.SoundBuses;
+using SymOntoClay.UnityAsset.Core.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TestSandbox.SoundBusHandler
@@ -39,16 +41,41 @@ namespace TestSandbox.SoundBusHandler
         {
             _logger.Info("Begin");
 
+            Case2();
+            //Case1();
+
+            _logger.Info("End");
+        }
+
+        private void Case2()
+        {
+            var bus = new SimpleSoundBus();
+
+            var receiver1 = new TestSoundReceiver(11, new Vector3(10, 10, 10), (double power, double distance, Vector3 position, string query, string convertedQuery) => {
+                _logger.Info($"power = {power}");
+                _logger.Info($"distance = {distance}");
+                _logger.Info($"position = {position}");
+                _logger.Info($"query = {query}");
+                _logger.Info($"convertedQuery = {convertedQuery}");
+            });
+
+            bus.AddReceiver(receiver1);
+
+            bus.PushSound(12, 60, new Vector3(1, 1, 1), "act(M16, shoot)");
+
+            Thread.Sleep(100);
+        }
+
+        private void Case1()
+        {
             var bus = new SimpleSoundBus();
 
             var receiver1 = new TstSoundReceiver(11, new Vector3(10, 10, 10));
 
             bus.AddReceiver(receiver1);
 
-            bus.PushSound(12, 60, new Vector3(1,1,1), "act(M16, shoot)");
+            bus.PushSound(12, 60, new Vector3(1, 1, 1), "act(M16, shoot)");
             //bus.PushSound(12, 60, new Vector3(1, 1, 1), "direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self)");
-
-            _logger.Info("End");
         }
     }
 }

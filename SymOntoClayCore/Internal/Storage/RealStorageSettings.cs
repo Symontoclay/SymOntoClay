@@ -35,6 +35,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get; set; }
         public IInheritancePublicFactsReplicator InheritancePublicFactsReplicator { get; set; }
         public KindOfGC KindOfGC { get; set; } = KindOfGC.None;
+        public bool EnableOnAddingFactEvent { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -58,6 +59,7 @@ namespace SymOntoClay.Core.Internal.Storage
             sb.PrintObjListProp(n, nameof(ParentsStorages), ParentsStorages);
             sb.PrintObjProp(n, nameof(DefaultSettingsOfCodeEntity), DefaultSettingsOfCodeEntity);
             sb.AppendLine($"{spaces}{nameof(KindOfGC)} = {KindOfGC}");
+            sb.AppendLine($"{spaces}{nameof(EnableOnAddingFactEvent)} = {EnableOnAddingFactEvent}");
             return sb.ToString();
         }
     }

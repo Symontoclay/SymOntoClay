@@ -45,7 +45,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         //}
 
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         /// <inheritdoc/>
@@ -552,6 +552,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         public event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
+
+        /// <inheritdoc/>
+        public event Func<RuleInstance, IAddFactOrRuleResult> OnAddingFact;
 
         /// <inheritdoc/>
         IList<LogicalQueryNode> ILogicalStorage.GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext)

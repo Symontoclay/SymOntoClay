@@ -50,6 +50,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public IList<IStorage> Parents { get; set; }
         public IInheritancePublicFactsReplicator InheritancePublicFactsReplicator { get; set; }
         public KindOfGC KindOfGC { get; set; }
+        public bool EnableOnAddingFactEvent { get; set; }
 
         public void EmitOnAddParentStorage(IStorage storage)
         {

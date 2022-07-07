@@ -120,6 +120,7 @@ namespace SymOntoClay.Core.Internal.Storage
                         var listenedFactsStorageSettings = new RealStorageSettings();
                         listenedFactsStorageSettings.MainStorageContext = _context;
                         listenedFactsStorageSettings.KindOfGC = KindOfGC.ByTimeOut;
+                        listenedFactsStorageSettings.EnableOnAddingFactEvent = true;
 
                         _listenedFactsStorage = new RealStorage(KindOfStorage.PerceptedFacts, listenedFactsStorageSettings);
 

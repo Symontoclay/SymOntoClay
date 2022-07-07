@@ -88,7 +88,7 @@ namespace TestSandbox
             //TSTWordsFactory();
             //TstNLPHandler();//<=NLP
             //TstTriggerConditionNodeHandler();
-            TstSoundBus();
+            //TstSoundBus();
             //TstNavigationHandler();
             //TstCreatorExamples();
             //TstLinguisticVariable_Tests();
@@ -132,7 +132,8 @@ namespace TestSandbox
             //TstParsing();
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
-            //TstGeneralStartHandler();//<=
+            TstAddingFactTriggerHandler();
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -1442,6 +1443,16 @@ action Go
             _logger.Log("Begin");
 
             var handler = new SoundStartHandler();
+            handler.Run();
+
+            _logger.Log("End");
+        }
+
+        private static void TstAddingFactTriggerHandler()
+        {
+            _logger.Log("Begin");
+
+            var handler = new AddingFactTriggerHandler();
             handler.Run();
 
             _logger.Log("End");

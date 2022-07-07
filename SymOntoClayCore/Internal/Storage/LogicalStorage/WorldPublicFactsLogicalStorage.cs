@@ -55,6 +55,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         /// <inheritdoc/>
         public event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
 
+        /// <inheritdoc/>
+        public event Func<RuleInstance, IAddFactOrRuleResult> OnAddingFact;
+
         public void AddPublicFactsStorageOfOtherGameComponent(ILogicalStorage storage)
         {
             lock(_lockObj)

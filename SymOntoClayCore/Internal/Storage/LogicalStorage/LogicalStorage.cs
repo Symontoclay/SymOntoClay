@@ -58,6 +58,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             _ruleInstancesDictByHashCode = new Dictionary<ulong, RuleInstance>();
             _ruleInstancesDictById = new Dictionary<string, RuleInstance>();
             _lifeTimeCycleById = new Dictionary<string, int>();
+            _mutablePartsDict = new Dictionary<RuleInstance, MutablePartOfRuleInstance>();
             _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData(realStorageContext.MainStorageContext.Logger);
 
             foreach(var parentStorage in _parentLogicalStoragesList)
@@ -67,6 +68,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             realStorageContext.OnAddParentStorage += RealStorageContext_OnAddParentStorage;
             realStorageContext.OnRemoveParentStorage += RealStorageContext_OnRemoveParentStorage;
+
+            _enableOnAddingFactEvent = realStorageContext.EnableOnAddingFactEvent;
 
             var kindOfGC = realStorageContext.KindOfGC;
 
@@ -91,10 +94,14 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         private Dictionary<ulong, RuleInstance> _ruleInstancesDictByHashCode;
         private Dictionary<string, RuleInstance> _ruleInstancesDictById;
         private Dictionary<string, int> _lifeTimeCycleById;
+        private Dictionary<RuleInstance, MutablePartOfRuleInstance> _mutablePartsDict;
+
         private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData;
         private List<ILogicalStorage> _parentLogicalStoragesList = new List<ILogicalStorage>();
 
         private AsyncActivePeriodicObject _activeObject;
+
+        private readonly bool _enableOnAddingFactEvent;
 
         private void InitGCByTimeOut()
         {
@@ -142,29 +149,32 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         {
             ruleInstance.CheckDirty();
 
-            var annotationsList = ruleInstance.GetAllAnnotations();
+            if (NAppend(ruleInstance, isPrimary))
+            {
+                var annotationsList = ruleInstance.GetAllAnnotations();
 
-            var annotationRuleInstancesList = annotationsList.Where(p => !p.Facts.IsNullOrEmpty()).SelectMany(p => p.Facts);
+                var annotationRuleInstancesList = annotationsList.Where(p => !p.Facts.IsNullOrEmpty()).SelectMany(p => p.Facts);
 
 #if DEBUG
-            //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
-            //Log($"ruleInstance = {ruleInstance}");            
-            //Log($"annotationsList = {annotationsList.WriteListToString()}");
+                //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+                //Log($"ruleInstance = {ruleInstance}");            
+                //Log($"annotationsList = {annotationsList.WriteListToString()}");
 #endif
 
-            foreach (var annotationRuleInstance in annotationRuleInstancesList)
-            {
-                NAppend(annotationRuleInstance, false);
+                foreach (var annotationRuleInstance in annotationRuleInstancesList)
+                {
+                    NAppend(annotationRuleInstance, false);
+                }
+
+                //var indexedRuleInstance = ruleInstance.GetIndexed(_mainStorageContext);
+
+                return ruleInstance.Normalized.UsedKeysList.Concat(annotationRuleInstancesList.SelectMany(p => p.UsedKeysList)).Distinct().ToList();
             }
 
-            NAppend(ruleInstance, isPrimary);
-
-            //var indexedRuleInstance = ruleInstance.GetIndexed(_mainStorageContext);
-
-            return ruleInstance.Normalized.UsedKeysList.Concat(annotationRuleInstancesList.SelectMany(p => p.UsedKeysList)).Distinct().ToList();
+            return new List<StrongIdentifierValue>();
         }
 
-        private void NAppend(RuleInstance ruleInstance, bool isPrimary)
+        private bool NAppend(RuleInstance ruleInstance, bool isPrimary)
         {
 #if DEBUG
             //if(!DebugHelperForRuleInstance.ToString(ruleInstance).Contains("is"))
@@ -174,9 +184,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             //Log($"isPrimary = {isPrimary}");
             //}
 
-            //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+            Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
             //Log($"ruleInstance = {ruleInstance}");
-            //Log($"isPrimary = {isPrimary}");
+            Log($"isPrimary = {isPrimary}");
 #endif
 
             if (ruleInstance.TypeOfAccess != TypeOfAccess.Local)
@@ -188,7 +198,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             {
                 RefreshLifeTime(ruleInstance);
 
-                return;
+                return true;
             }
 
             var ruleInstanceId = ruleInstance.Name.NameValue;
@@ -197,7 +207,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             {
                 RefreshLifeTime(ruleInstanceId);
 
-                return;
+                return true;
             }
 
             //ruleInstance = ruleInstance.Clone();
@@ -222,7 +232,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             {
                 RefreshLifeTime(ruleInstanceName);
 
-                return;
+                return true;
             }
 
             var longHashCode = ruleInstance.GetLongHashCode();
@@ -235,7 +245,43 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             {
                 RefreshLifeTime(longHashCode);
 
-                return;
+                return true;
+            }
+
+            if(_enableOnAddingFactEvent && OnAddingFact != null)
+            {
+                if(isPrimary && ruleInstance.KindOfRuleInstance == KindOfRuleInstance.Fact)
+                {
+                    var approvingRez = OnAddingFact(ruleInstance);
+
+#if DEBUG
+                    Log($"approvingRez = {approvingRez}");
+#endif
+                    
+                    if(approvingRez == null)
+                    {
+                        return false;
+                    }
+
+                    var kindOfResult = approvingRez.KindOfResult;
+
+                    switch(kindOfResult)
+                    {
+                        case KindOfAddFactOrRuleResult.Reject:
+                            return false;
+
+                        case KindOfAddFactOrRuleResult.Accept:
+                            if(approvingRez.MutablePart == null)
+                            {
+                                break;
+                            }
+                            _mutablePartsDict[ruleInstance] = approvingRez.MutablePart;
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);
+                    }
+                }
             }
 
             _ruleInstancesList.Add(ruleInstance);
@@ -337,13 +383,15 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                         inheritanceStorage.SetInheritance(inheritanceItem, false);
                     }
                 }
-            }         
-            
+            }
+
 #if IMAGINE_WORKING
             //Log("End");
 #else
             throw new NotImplementedException();
 #endif
+
+            return true;
         }
 
         /// <inheritdoc/>
@@ -441,6 +489,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             _lifeTimeCycleById.Remove(ruleInstanceId);
 
+            _mutablePartsDict.Remove(ruleInstance);
+
             _commonPersistIndexedLogicalData.NRemoveIndexedRuleInstanceFromIndexData(ruleInstance.Normalized);
 
             return ruleInstance.UsedKeysList;
@@ -451,6 +501,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
         /// <inheritdoc/>
         public event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
+
+        /// <inheritdoc/>
+        public event Func<RuleInstance, IAddFactOrRuleResult> OnAddingFact;
 
         protected void EmitOnChanged(IList<StrongIdentifierValue> usedKeysList)
         {

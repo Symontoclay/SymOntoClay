@@ -15,6 +15,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         public MutablePartOfRuleInstance MutablePart { get; set; }
 
         /// <inheritdoc/>
+        IItemWithModalities IAddFactOrRuleResult.MutablePart => MutablePart;
+
+        /// <inheritdoc/>
         public override string ToString()
         {
             return ToString(0u);

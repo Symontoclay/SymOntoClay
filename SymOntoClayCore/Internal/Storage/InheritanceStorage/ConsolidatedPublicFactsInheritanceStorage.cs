@@ -29,9 +29,9 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage.InheritanceStorage
 {
-    public class WorldPublicFactsInheritanceStorage : BaseComponent, IInheritanceStorage
+    public class ConsolidatedPublicFactsInheritanceStorage : BaseComponent, IInheritanceStorage
     {
-        public WorldPublicFactsInheritanceStorage(ConsolidatedPublicFactsStorage parent, IEntityLogger logger)
+        public ConsolidatedPublicFactsInheritanceStorage(ConsolidatedPublicFactsStorage parent, IEntityLogger logger)
             : base(logger)
         {
             _parent = parent;

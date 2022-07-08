@@ -20,17 +20,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using Newtonsoft.Json;
-using NLog;
 using SymOntoClay.Core.DebugHelpers;
-using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.Core.Internal.DataResolvers;
-using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,11 +48,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             _parentLogicalStoragesList = realStorageContext.Parents.Select(p => p.LogicalStorage).ToList();
 
             _ruleInstancesList = new List<RuleInstance>();
+            _factsList = new List<RuleInstance>();
             _ruleInstancesDict = new Dictionary<StrongIdentifierValue, RuleInstance>();
             _ruleInstancesDictByHashCode = new Dictionary<ulong, RuleInstance>();
             _ruleInstancesDictById = new Dictionary<string, RuleInstance>();
             _lifeTimeCycleById = new Dictionary<string, int>();
-            _mutablePartsDict = new Dictionary<RuleInstance, MutablePartOfRuleInstance>();
+            _mutablePartsDict = new Dictionary<RuleInstance, IItemWithModalities>();
             _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData(realStorageContext.MainStorageContext.Logger);
 
             foreach(var parentStorage in _parentLogicalStoragesList)
@@ -91,11 +86,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         private readonly object _lockObj = new object();
 
         private List<RuleInstance> _ruleInstancesList;
+        private List<RuleInstance> _factsList;
         private Dictionary<StrongIdentifierValue, RuleInstance> _ruleInstancesDict;
         private Dictionary<ulong, RuleInstance> _ruleInstancesDictByHashCode;
         private Dictionary<string, RuleInstance> _ruleInstancesDictById;
         private Dictionary<string, int> _lifeTimeCycleById;
-        private Dictionary<RuleInstance, MutablePartOfRuleInstance> _mutablePartsDict;
+        private Dictionary<RuleInstance, IItemWithModalities> _mutablePartsDict;
 
         private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData;
         private List<ILogicalStorage> _parentLogicalStoragesList = new List<ILogicalStorage>();
@@ -185,9 +181,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             //Log($"isPrimary = {isPrimary}");
             //}
 
-            Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+            //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
             //Log($"ruleInstance = {ruleInstance}");
-            Log($"isPrimary = {isPrimary}");
+            //Log($"isPrimary = {isPrimary}");
 #endif
 
             if (ruleInstance.TypeOfAccess != TypeOfAccess.Local)
@@ -256,7 +252,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                     var approvingRez = OnAddingFact(ruleInstance);
 
 #if DEBUG
-                    Log($"approvingRez = {approvingRez}");
+                    //Log($"approvingRez = {approvingRez}");
 #endif
                     
                     if(approvingRez == null)
@@ -286,6 +282,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             }
 
             _ruleInstancesList.Add(ruleInstance);
+
+            if(ruleInstance.KindOfRuleInstance == KindOfRuleInstance.Fact)
+            {
+                _factsList.Add(ruleInstance);
+            }
+
             _ruleInstancesDict[ruleInstanceName] = ruleInstance;
             _ruleInstancesDictByHashCode[longHashCode] = ruleInstance;
             _ruleInstancesDictById[ruleInstanceId] = ruleInstance;
@@ -476,6 +478,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             _ruleInstancesList.Remove(ruleInstance);
 
+            _factsList.Remove(ruleInstance);
+
             var ruleInstanceName = ruleInstance.Name;
 
             _ruleInstancesDict.Remove(ruleInstanceName);
@@ -560,7 +564,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             {
                 var source = _commonPersistIndexedLogicalData.GetAllRelations();
 
-                if (source.IsNullOrEmpty())
+                if (logicalSearchStorageContext == null || source.IsNullOrEmpty())
                 {
                     return source;
                 }
@@ -578,7 +582,16 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 //}
 #endif
 
-                return logicalSearchStorageContext.Filter(source, true);
+                return logicalSearchStorageContext.Filter(source, true, _mutablePartsDict);
+            }
+        }
+
+        /// <inheritdoc/>
+        public IList<RuleInstance> GetAllOriginFacts()
+        {
+            lock (_lockObj)
+            {
+                return _factsList.ToList();
             }
         }
 
@@ -603,7 +616,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 //Log($"source?.Count = {source?.Count}");
 #endif
 
-                if (source.IsNullOrEmpty())
+                if (logicalSearchStorageContext == null || source.IsNullOrEmpty())
                 {
                     return source;
                 }
@@ -619,7 +632,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 //Log($"source.Count = {source.Count}");
 #endif
 
-                return logicalSearchStorageContext.Filter(source, true);
+                return logicalSearchStorageContext.Filter(source, true, _mutablePartsDict);
             }
         }
 
@@ -643,7 +656,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 //Log($"source?.Count = {source?.Count}");
 #endif
 
-                if (source.IsNullOrEmpty())
+                if (logicalSearchStorageContext == null || source.IsNullOrEmpty())
                 {
                     return source;
                 }

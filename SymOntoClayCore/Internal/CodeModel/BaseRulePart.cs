@@ -38,6 +38,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 #endif
 
         public RuleInstance Parent { get; set; }
+
+        /// <inheritdoc/>
+        RuleInstance ILogicalSearchItem.RuleInstance => Parent;
+
         public bool IsActive { get; set; }
         public LogicalQueryNode Expression { get; set; }
         public Dictionary<StrongIdentifierValue, LogicalQueryNode> AliasesDict { get; set; }

@@ -563,6 +563,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        IList<RuleInstance> ILogicalStorage.GetAllOriginFacts()
+        {
+            if(KindOfRuleInstance == KindOfRuleInstance.Fact)
+            {
+                return new List<RuleInstance>() { this };
+            }
+
+            return new List<RuleInstance>();
+        }
+
+        /// <inheritdoc/>
         IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext)
         {
 #if DEBUG

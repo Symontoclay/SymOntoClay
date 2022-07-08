@@ -46,6 +46,7 @@ namespace SymOntoClay.Core
         event Func<RuleInstance, IAddFactOrRuleResult> OnAddingFact;
 
         IList<LogicalQueryNode> GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext);
+        IList<RuleInstance> GetAllOriginFacts();
         IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext);
         IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext);
 

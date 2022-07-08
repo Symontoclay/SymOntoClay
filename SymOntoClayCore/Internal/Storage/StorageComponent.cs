@@ -53,6 +53,7 @@ namespace SymOntoClay.Core.Internal.Storage
         private RealStorage _selfFactsStorage;
         private RealStorage _perceptedFactsStorage;
         private RealStorage _listenedFactsStorage;
+        private ConsolidatedPublicFactsStorage _visibleFactsStorage;
         private ConsolidatedPublicFactsStorage _worldPublicFactsStorage;
         private InheritancePublicFactsReplicator _inheritancePublicFactsReplicator;
 
@@ -125,6 +126,12 @@ namespace SymOntoClay.Core.Internal.Storage
                         _listenedFactsStorage = new RealStorage(KindOfStorage.PerceptedFacts, listenedFactsStorageSettings);
 
                         parentStoragesList.Add(_listenedFactsStorage);
+
+                        var visibleFactsStorageSettings = new ConsolidatedPublicFactsStorageSettings();
+                        visibleFactsStorageSettings.EnableOnAddingFactEvent = KindOfOnAddingFactEvent.Isolated;
+
+                        _visibleFactsStorage = new ConsolidatedPublicFactsStorage(_context.Logger, visibleFactsStorageSettings);
+                        parentStoragesList.Add(_visibleFactsStorage);
 
                         _worldPublicFactsStorage = new ConsolidatedPublicFactsStorage(_context.Logger);
                     }
@@ -318,12 +325,14 @@ namespace SymOntoClay.Core.Internal.Storage
 
         public void AddVisibleStorage(IStorage storage)
         {
-            _globalStorage.AddParentStorage(storage);
+            //_globalStorage.AddParentStorage(storage);
+            _visibleFactsStorage.AddPublicFactsStorageOfOtherGameComponent(storage);
         }
 
         public void RemoveVisibleStorage(IStorage storage)
         {
-            _globalStorage.RemoveParentStorage(storage);
+            //_globalStorage.RemoveParentStorage(storage);
+            _visibleFactsStorage.RemovePublicFactsStorageOfOtherGameComponent(storage);
         }
 
         /// <inheritdoc/>
@@ -410,6 +419,7 @@ namespace SymOntoClay.Core.Internal.Storage
             _selfFactsStorage.Dispose();
             _perceptedFactsStorage.Dispose();
             _listenedFactsStorage.Dispose();
+            _visibleFactsStorage.Dispose();
             _worldPublicFactsStorage.Dispose();
         }
 
@@ -421,6 +431,7 @@ namespace SymOntoClay.Core.Internal.Storage
             _selfFactsStorage.Dispose();
             _perceptedFactsStorage.Dispose();
             _listenedFactsStorage.Dispose();
+            _visibleFactsStorage.Dispose();
             _worldPublicFactsStorage.Dispose();
 
             base.OnDisposed();

@@ -21,8 +21,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.Core.Internal.Storage.ActionsStorage;
+using SymOntoClay.Core.Internal.Storage.ChannelsStorage;
+using SymOntoClay.Core.Internal.Storage.FuzzyLogic;
 using SymOntoClay.Core.Internal.Storage.InheritanceStorage;
 using SymOntoClay.Core.Internal.Storage.LogicalStorage;
+using SymOntoClay.Core.Internal.Storage.MetadataStorage;
+using SymOntoClay.Core.Internal.Storage.MethodsStorage;
+using SymOntoClay.Core.Internal.Storage.OperatorsStorage;
+using SymOntoClay.Core.Internal.Storage.RelationStoraging;
+using SymOntoClay.Core.Internal.Storage.StatesStorage;
+using SymOntoClay.Core.Internal.Storage.SynonymsStorage;
+using SymOntoClay.Core.Internal.Storage.TriggersStorage;
+using SymOntoClay.Core.Internal.Storage.VarStorage;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -33,14 +44,41 @@ namespace SymOntoClay.Core.Internal.Storage
     public class ConsolidatedPublicFactsStorage: BaseComponent, IStorage
     {
         public ConsolidatedPublicFactsStorage(IEntityLogger logger)
-            : base(logger)
+            : this(logger, new ConsolidatedPublicFactsStorageSettings())
         {
-            _logicalStorage = new WorldPublicFactsLogicalStorage(this, logger);
-            _inheritanceStorage =  new WorldPublicFactsInheritanceStorage(this, logger);
         }
 
-        private WorldPublicFactsLogicalStorage _logicalStorage;
-        private WorldPublicFactsInheritanceStorage _inheritanceStorage;
+        public ConsolidatedPublicFactsStorage(IEntityLogger logger, ConsolidatedPublicFactsStorageSettings settings)
+            : base(logger)
+        {
+            _logicalStorage = new ConsolidatedPublicFactsLogicalStorage(this, logger, settings);
+            _inheritanceStorage =  new ConsolidatedPublicFactsInheritanceStorage(this, logger);
+            _triggersStorage = new EmptyTriggersStorage(this, logger);
+            _varStorage = new EmptyVarStorage(this, logger);
+            _statesStorage = new EmptyStatesStorage(this, logger);
+            _relationsStorage = new EmptyRelationsStorage(this, logger);
+            _methodsStorage = new EmptyMethodsStorage(this, logger);
+            _actionsStorage = new EmptyActionsStorage(this, logger);
+            _synonymsStorage = new EmptySynonymsStorage(this, logger);
+            _operatorsStorage = new EmptyOperatorsStorage(this, logger);
+            _channelsStorage = new EmptyChannelsStorage(this, logger);
+            _metadataStorage = new EmptyMetadataStorage(this, logger);
+            _fuzzyLogicStorage = new EmptyFuzzyLogicStorage(this, logger);
+        }
+
+        private ConsolidatedPublicFactsLogicalStorage _logicalStorage;
+        private ConsolidatedPublicFactsInheritanceStorage _inheritanceStorage;
+        private EmptyTriggersStorage _triggersStorage;
+        private EmptyVarStorage _varStorage;
+        private EmptyStatesStorage _statesStorage;
+        private EmptyRelationsStorage _relationsStorage;
+        private EmptyMethodsStorage _methodsStorage;
+        private EmptyActionsStorage _actionsStorage;
+        private EmptySynonymsStorage _synonymsStorage;
+        private EmptyOperatorsStorage _operatorsStorage;
+        private EmptyChannelsStorage _channelsStorage;
+        private EmptyMetadataStorage _metadataStorage;
+        private EmptyFuzzyLogicStorage _fuzzyLogicStorage;
 
         /// <inheritdoc/>
         public KindOfStorage Kind => KindOfStorage.WorldPublicFacts;
@@ -49,40 +87,40 @@ namespace SymOntoClay.Core.Internal.Storage
         public ILogicalStorage LogicalStorage => _logicalStorage;
 
         /// <inheritdoc/>
-        public IRelationsStorage RelationsStorage => throw new NotImplementedException();
+        public IRelationsStorage RelationsStorage => _relationsStorage;
 
         /// <inheritdoc/>
-        public IMethodsStorage MethodsStorage => throw new NotImplementedException();
+        public IMethodsStorage MethodsStorage => _methodsStorage;
 
         /// <inheritdoc/>
-        public IActionsStorage ActionsStorage => throw new NotImplementedException();
+        public IActionsStorage ActionsStorage => _actionsStorage;
 
         /// <inheritdoc/>
-        IStatesStorage IStorage.StatesStorage => throw new NotImplementedException();
+        IStatesStorage IStorage.StatesStorage => _statesStorage;
 
         /// <inheritdoc/>
-        public ITriggersStorage TriggersStorage => throw new NotImplementedException();
+        public ITriggersStorage TriggersStorage => _triggersStorage;
 
         /// <inheritdoc/>
         public IInheritanceStorage InheritanceStorage => _inheritanceStorage;
 
         /// <inheritdoc/>
-        public ISynonymsStorage SynonymsStorage => throw new NotImplementedException();
+        public ISynonymsStorage SynonymsStorage => _synonymsStorage;
 
         /// <inheritdoc/>
-        public IOperatorsStorage OperatorsStorage => throw new NotImplementedException();
+        public IOperatorsStorage OperatorsStorage => _operatorsStorage;
 
         /// <inheritdoc/>
-        public IChannelsStorage ChannelsStorage => throw new NotImplementedException();
+        public IChannelsStorage ChannelsStorage => _channelsStorage;
 
         /// <inheritdoc/>
-        public IMetadataStorage MetadataStorage => throw new NotImplementedException();
+        public IMetadataStorage MetadataStorage => _metadataStorage;
 
         /// <inheritdoc/>
-        public IVarStorage VarStorage => throw new NotImplementedException();
+        public IVarStorage VarStorage => _varStorage;
 
         /// <inheritdoc/>
-        public IFuzzyLogicStorage FuzzyLogicStorage => throw new NotImplementedException();
+        public IFuzzyLogicStorage FuzzyLogicStorage => _fuzzyLogicStorage;
 
         /// <inheritdoc/>
         public DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -196,6 +234,17 @@ namespace SymOntoClay.Core.Internal.Storage
         {
             _logicalStorage.Dispose();
             _inheritanceStorage.Dispose();
+            _triggersStorage.Dispose();
+            _varStorage.Dispose();
+            _statesStorage.Dispose();
+            _relationsStorage.Dispose();
+            _methodsStorage.Dispose();
+            _actionsStorage.Dispose();
+            _synonymsStorage.Dispose();
+            _operatorsStorage.Dispose();
+            _channelsStorage.Dispose();
+            _metadataStorage.Dispose();
+            _fuzzyLogicStorage.Dispose();
 
             base.OnDisposed();
         }

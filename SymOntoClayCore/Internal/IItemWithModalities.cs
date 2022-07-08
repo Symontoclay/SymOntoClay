@@ -5,8 +5,9 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal
 {
-    public interface ILogicalSearchItem: IReadOnlyMemberAccess, IItemWithModalities
+    public interface IItemWithModalities
     {
-        RuleInstance RuleInstance { get; }
+        Value ObligationModality { get; }
+        Value SelfObligationModality { get; }
     }
 }

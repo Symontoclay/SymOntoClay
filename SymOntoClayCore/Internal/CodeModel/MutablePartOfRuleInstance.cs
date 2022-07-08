@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class MutablePartOfRuleInstance: IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class MutablePartOfRuleInstance: IItemWithModalities, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public RuleInstance Parent { get; set; }
 

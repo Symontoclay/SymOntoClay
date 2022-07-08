@@ -64,6 +64,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             foreach(var parentStorage in _parentLogicalStoragesList)
             {
                 parentStorage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys;
+                parentStorage.OnAddingFact += LogicalStorage_OnAddingFact;
             }
 
             realStorageContext.OnAddParentStorage += RealStorageContext_OnAddParentStorage;
@@ -529,20 +530,27 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             EmitOnChanged(changedKeysList);
         }
 
-        private void RealStorageContext_OnRemoveParentStorage(IStorage storage)
+        private IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance)
         {
-            var logicalStroage = storage.LogicalStorage;
-            logicalStroage.OnChangedWithKeys -= LogicalStorage_OnChangedWithKeys;
-
-            _parentLogicalStoragesList.Remove(logicalStroage);
+            return OnAddingFact?.Invoke(ruleInstance);
         }
 
         private void RealStorageContext_OnAddParentStorage(IStorage storage)
         {
-            var logicalStroage = storage.LogicalStorage;
-            logicalStroage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys;
+            var logicalStorage = storage.LogicalStorage;
+            logicalStorage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys;
+            logicalStorage.OnAddingFact += LogicalStorage_OnAddingFact;
 
-            _parentLogicalStoragesList.Add(logicalStroage);
+            _parentLogicalStoragesList.Add(logicalStorage);
+        }
+
+        private void RealStorageContext_OnRemoveParentStorage(IStorage storage)
+        {
+            var logicalStorage = storage.LogicalStorage;
+            logicalStorage.OnChangedWithKeys -= LogicalStorage_OnChangedWithKeys;
+            logicalStorage.OnAddingFact -= LogicalStorage_OnAddingFact;
+
+            _parentLogicalStoragesList.Remove(logicalStorage);
         }
 
         /// <inheritdoc/>
@@ -756,6 +764,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             foreach (var parentStorage in _parentLogicalStoragesList)
             {
                 parentStorage.OnChangedWithKeys -= LogicalStorage_OnChangedWithKeys;
+                parentStorage.OnAddingFact -= LogicalStorage_OnAddingFact;
             }
 
             _realStorageContext.OnAddParentStorage -= RealStorageContext_OnAddParentStorage;

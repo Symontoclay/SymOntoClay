@@ -41,6 +41,7 @@ namespace SymOntoClay.Core
         Sentence,
         PublicFacts,
         PerceptedFacts,
-        WorldPublicFacts
+        WorldPublicFacts,
+        GlobalVisible
     }
 }

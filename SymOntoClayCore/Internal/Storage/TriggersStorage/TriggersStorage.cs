@@ -54,9 +54,10 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
 
         private List<ITriggersStorage> _parentTriggersStoragesList = new List<ITriggersStorage>();
 
-        private Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<StrongIdentifierValue, List<InlineTrigger>>> _nonIndexedSystemEventsInfo = new Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<StrongIdentifierValue, List<InlineTrigger>>>();
+        private Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<StrongIdentifierValue, List<InlineTrigger>>> _systemEventsInfoDict = new Dictionary<KindOfSystemEventOfInlineTrigger, Dictionary<StrongIdentifierValue, List<InlineTrigger>>>();
 
-        private Dictionary<StrongIdentifierValue, List<InlineTrigger>> _nonIndexedLogicConditionalsInfo = new Dictionary<StrongIdentifierValue, List<InlineTrigger>>();
+        private Dictionary<StrongIdentifierValue, List<InlineTrigger>> _logicConditionalsDict = new Dictionary<StrongIdentifierValue, List<InlineTrigger>>();
+        private Dictionary<StrongIdentifierValue, List<InlineTrigger>> _addFactsDict = new Dictionary<StrongIdentifierValue, List<InlineTrigger>>();
 
         private List<INamedTriggerInstance> _namedTriggerInstancesList = new List<INamedTriggerInstance>();
         private Dictionary<StrongIdentifierValue, List<INamedTriggerInstance>> _namedTriggerInstancesDict = new Dictionary<StrongIdentifierValue, List<INamedTriggerInstance>>();
@@ -88,8 +89,20 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                     AppendLogicConditional(inlineTrigger);
                     break;
 
+                case KindOfInlineTrigger.AddFact:
+                    AppendAddFact(inlineTrigger);
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+            }
+        }
+
+        private void AppendAddFact(InlineTrigger inlineTrigger)
+        {
+            lock (_lockObj)
+            {
+                ProcessAppendTrigger(inlineTrigger, _addFactsDict);
             }
         }
 
@@ -97,31 +110,36 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
         {
             lock (_lockObj)
             {
-                inlineTrigger.CheckDirty();
+                ProcessAppendTrigger(inlineTrigger, _logicConditionalsDict);
+            }
+        }
+
+        private void ProcessAppendTrigger(InlineTrigger inlineTrigger, Dictionary<StrongIdentifierValue, List<InlineTrigger>> dictForStoraging)
+        {
+            inlineTrigger.CheckDirty();
 
 #if DEBUG
-                //Log($"inlineTrigger.Holder = {inlineTrigger.Holder}");
-                //Log($"inlineTrigger.Condition = {DebugHelperForRuleInstance.ToString(inlineTrigger.Condition)}");
+            //Log($"inlineTrigger.Holder = {inlineTrigger.Holder}");
+            //Log($"inlineTrigger.Condition = {DebugHelperForRuleInstance.ToString(inlineTrigger.Condition)}");
 #endif
 
-                if (_nonIndexedLogicConditionalsInfo.ContainsKey(inlineTrigger.Holder))
-                {
-                    var targetList = _nonIndexedLogicConditionalsInfo[inlineTrigger.Holder];
+            if (dictForStoraging.ContainsKey(inlineTrigger.Holder))
+            {
+                var targetList = dictForStoraging[inlineTrigger.Holder];
 
 #if DEBUG
-                    //Log($"_nonIndexedLogicConditionalsInfo[superName].Count = {_nonIndexedLogicConditionalsInfo[inlineTrigger.Holder].Count}");
-                    //Log($"targetList = {targetList.WriteListToString()}");
+                //Log($"dictForStoraging[inlineTrigger.Holder].Count = {dictForStoraging[inlineTrigger.Holder].Count}");
+                //Log($"targetList = {targetList.WriteListToString()}");
 #endif
 
-                    StorageHelper.RemoveSameItems(targetList, inlineTrigger);
+                StorageHelper.RemoveSameItems(targetList, inlineTrigger);
 
-                    targetList.Add(inlineTrigger);
-                }
-                else
-                {
-                    _nonIndexedLogicConditionalsInfo[inlineTrigger.Holder] = new List<InlineTrigger>() { inlineTrigger };
-                }
-            }            
+                targetList.Add(inlineTrigger);
+            }
+            else
+            {
+                dictForStoraging[inlineTrigger.Holder] = new List<InlineTrigger>() { inlineTrigger };
+            }
         }
 
         private void AppendSystemEvent(InlineTrigger inlineTrigger)
@@ -130,9 +148,9 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
             {
                 var kindOfSystemEvent = inlineTrigger.KindOfSystemEvent;
 
-                if (_nonIndexedSystemEventsInfo.ContainsKey(kindOfSystemEvent))
+                if (_systemEventsInfoDict.ContainsKey(kindOfSystemEvent))
                 {
-                    var dict = _nonIndexedSystemEventsInfo[kindOfSystemEvent];
+                    var dict = _systemEventsInfoDict[kindOfSystemEvent];
 
                     if (dict.ContainsKey(inlineTrigger.Holder))
                     {
@@ -154,7 +172,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                 }
                 else
                 {
-                    _nonIndexedSystemEventsInfo[kindOfSystemEvent] = new Dictionary<StrongIdentifierValue, List<InlineTrigger>>() { { inlineTrigger.Holder, new List<InlineTrigger>() { inlineTrigger } } };
+                    _systemEventsInfoDict[kindOfSystemEvent] = new Dictionary<StrongIdentifierValue, List<InlineTrigger>>() { { inlineTrigger.Holder, new List<InlineTrigger>() { inlineTrigger } } };
                 }
             }
         }
@@ -168,9 +186,9 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
 
             lock (_lockObj)
             {
-                if (_nonIndexedSystemEventsInfo.ContainsKey(kindOfSystemEvent))
+                if (_systemEventsInfoDict.ContainsKey(kindOfSystemEvent))
                 {
-                    var dict = _nonIndexedSystemEventsInfo[kindOfSystemEvent];
+                    var dict = _systemEventsInfoDict[kindOfSystemEvent];
 
                     var result = new List<WeightedInheritanceResultItem<InlineTrigger>>();
 
@@ -201,34 +219,33 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
         {
             lock (_lockObj)
             {
-
-            }
                 var result = new List<WeightedInheritanceResultItem<InlineTrigger>>();
 
-            foreach (var weightedInheritanceItem in weightedInheritanceItems)
-            {
-                var targetHolder = weightedInheritanceItem.SuperName;
-
-#if DEBUG
-                //Log($"targetHolder = {targetHolder}");
-#endif
-
-                if (_nonIndexedLogicConditionalsInfo.ContainsKey(targetHolder))
+                foreach (var weightedInheritanceItem in weightedInheritanceItems)
                 {
-                    var targetList = _nonIndexedLogicConditionalsInfo[targetHolder];
+                    var targetHolder = weightedInheritanceItem.SuperName;
 
 #if DEBUG
-                    //Log($"targetList.Count = {targetList.Count}");
+                    //Log($"targetHolder = {targetHolder}");
 #endif
 
-                    foreach (var targetVal in targetList)
+                    if (_logicConditionalsDict.ContainsKey(targetHolder))
                     {
-                        result.Add(new WeightedInheritanceResultItem<InlineTrigger>(targetVal, weightedInheritanceItem));
+                        var targetList = _logicConditionalsDict[targetHolder];
+
+#if DEBUG
+                        //Log($"targetList.Count = {targetList.Count}");
+#endif
+
+                        foreach (var targetVal in targetList)
+                        {
+                            result.Add(new WeightedInheritanceResultItem<InlineTrigger>(targetVal, weightedInheritanceItem));
+                        }
                     }
                 }
-            }
 
-            return result;
+                return result;
+            }
         }
 
         /// <inheritdoc/>
@@ -412,8 +429,8 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
                 item.OnChanged += NamedTriggerInstance_OnChanged;
             }
 
-            _nonIndexedSystemEventsInfo.Clear();
-            _nonIndexedLogicConditionalsInfo.Clear();
+            _systemEventsInfoDict.Clear();
+            _logicConditionalsDict.Clear();
 
             base.OnDisposed();
         }

@@ -219,39 +219,47 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
         {
             lock (_lockObj)
             {
-                var result = new List<WeightedInheritanceResultItem<InlineTrigger>>();
-
-                foreach (var weightedInheritanceItem in weightedInheritanceItems)
-                {
-                    var targetHolder = weightedInheritanceItem.SuperName;
-
-#if DEBUG
-                    //Log($"targetHolder = {targetHolder}");
-#endif
-
-                    if (_logicConditionalsDict.ContainsKey(targetHolder))
-                    {
-                        var targetList = _logicConditionalsDict[targetHolder];
-
-#if DEBUG
-                        //Log($"targetList.Count = {targetList.Count}");
-#endif
-
-                        foreach (var targetVal in targetList)
-                        {
-                            result.Add(new WeightedInheritanceResultItem<InlineTrigger>(targetVal, weightedInheritanceItem));
-                        }
-                    }
-                }
-
-                return result;
+                return GetTriggersDirectly(weightedInheritanceItems, _logicConditionalsDict);
             }
         }
 
         /// <inheritdoc/>
         public IList<WeightedInheritanceResultItem<InlineTrigger>> GetAddFactTriggersDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
+            lock (_lockObj)
+            {
+                return GetTriggersDirectly(weightedInheritanceItems, _addFactsDict);
+            }                
+        }
 
+        private IList<WeightedInheritanceResultItem<InlineTrigger>> GetTriggersDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems, Dictionary<StrongIdentifierValue, List<InlineTrigger>> dictForStoraging)
+        {
+            var result = new List<WeightedInheritanceResultItem<InlineTrigger>>();
+
+            foreach (var weightedInheritanceItem in weightedInheritanceItems)
+            {
+                var targetHolder = weightedInheritanceItem.SuperName;
+
+#if DEBUG
+                //Log($"targetHolder = {targetHolder}");
+#endif
+
+                if (dictForStoraging.ContainsKey(targetHolder))
+                {
+                    var targetList = dictForStoraging[targetHolder];
+
+#if DEBUG
+                    //Log($"targetList.Count = {targetList.Count}");
+#endif
+
+                    foreach (var targetVal in targetList)
+                    {
+                        result.Add(new WeightedInheritanceResultItem<InlineTrigger>(targetVal, weightedInheritanceItem));
+                    }
+                }
+            }
+
+            return result;
         }
 
         /// <inheritdoc/>

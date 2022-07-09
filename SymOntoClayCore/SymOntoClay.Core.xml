@@ -6975,6 +6975,9 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStorage.EmptyTriggersStorage.GetLogicConditionalTriggersDirectly(System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStorage.EmptyTriggersStorage.GetAddFactTriggersDirectly(System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStorage.EmptyTriggersStorage.Append(SymOntoClay.Core.INamedTriggerInstance)">
             <inheritdoc/>
         </member>
@@ -6997,6 +7000,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStorage.TriggersStorage.GetLogicConditionalTriggersDirectly(System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStorage.TriggersStorage.GetAddFactTriggersDirectly(System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStorage.TriggersStorage.Append(SymOntoClay.Core.INamedTriggerInstance)">

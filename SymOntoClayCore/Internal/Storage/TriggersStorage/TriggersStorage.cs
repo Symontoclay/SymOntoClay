@@ -249,6 +249,12 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
         }
 
         /// <inheritdoc/>
+        public IList<WeightedInheritanceResultItem<InlineTrigger>> GetAddFactTriggersDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+
+        }
+
+        /// <inheritdoc/>
         public void Append(INamedTriggerInstance namedTriggerInstance)
         {
             lock (_lockObj)

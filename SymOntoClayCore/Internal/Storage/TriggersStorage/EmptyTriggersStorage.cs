@@ -32,6 +32,12 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
         }
 
         /// <inheritdoc/>
+        public IList<WeightedInheritanceResultItem<InlineTrigger>> GetAddFactTriggersDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+            return new List<WeightedInheritanceResultItem<InlineTrigger>>();
+        }
+
+        /// <inheritdoc/>
         public void Append(INamedTriggerInstance namedTriggerInstance)
         {
         }

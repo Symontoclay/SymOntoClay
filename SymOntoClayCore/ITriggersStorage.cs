@@ -33,7 +33,7 @@ namespace SymOntoClay.Core
         void Append(InlineTrigger inlineTrigger);
         IList<WeightedInheritanceResultItem<InlineTrigger>> GetSystemEventsTriggersDirectly(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IList<WeightedInheritanceItem> weightedInheritanceItems);
         IList<WeightedInheritanceResultItem<InlineTrigger>> GetLogicConditionalTriggersDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems);
-        //IList<WeightedInheritanceResultItem<InlineTrigger>> GetAddFactTriggersDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems);
+        IList<WeightedInheritanceResultItem<InlineTrigger>> GetAddFactTriggersDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems);
 
         void Append(INamedTriggerInstance namedTriggerInstance);
         void Remove(INamedTriggerInstance namedTriggerInstance);

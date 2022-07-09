@@ -1,9 +1,14 @@
 ﻿app PeaceKeeper
 {
     {: gun(M16) :}
-	{: $x = {: act(M16, shoot) :} & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :}
 
 	on Enter => {
-	    select {: hear(I, $x) & gun($x) & distance(I, $x, $y) :} >> @>log;
+	    'Begin' >> @>log;
+		'End' >> @>log;
+	}
+
+	on add fact ($_ >> @x)
+	{
+	    @x >> @>log;
 	}
 }

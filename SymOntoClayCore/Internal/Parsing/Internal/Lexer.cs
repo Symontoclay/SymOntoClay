@@ -1083,6 +1083,24 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.BlankIdentifier;
                             break;
                         }
+
+                        if (string.Compare(content, "add", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Add;
+                            break;
+                        }
+
+                        if (string.Compare(content, "fact", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Fact;
+                            break;
+                        }
+
+                        if (string.Compare(content, "reject", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Reject;
+                            break;
+                        }
                     }
                     break;
 

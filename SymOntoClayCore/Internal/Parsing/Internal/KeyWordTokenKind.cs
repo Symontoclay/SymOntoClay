@@ -86,6 +86,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <summary>
         /// Repsesents symbol `_`.
         /// </summary>
-        BlankIdentifier
+        BlankIdentifier,
+        Add,
+        Fact,
+        Reject
     }
 }

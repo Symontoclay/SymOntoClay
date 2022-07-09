@@ -30,6 +30,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         Unknown,
         LogicConditional,
-        SystemEvent
+        SystemEvent,
+        AddFact
     }
 }

@@ -40,6 +40,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             Init,
             WaitForSetCondition,
+            GotAdd,
+            GotAddFact,
             WaitForCloseRoundBracketOfSetCondition,
             GotSetCondition,
             GotSetBindingVariables,
@@ -85,8 +87,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -130,6 +132,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     _state = State.GotSetCondition;
                                     break;
 
+                                case KeyWordTokenKind.Add:
+                                    _state = State.GotAdd;
+                                    break;
+
                                 default:
                                     throw new UnexpectedTokenException(_currToken);
                             }
@@ -167,6 +173,30 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             throw new UnexpectedTokenException(_currToken);
                     }
                     break;
+
+                case State.GotAdd:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Fact:
+                                    {
+                                        throw new NotImplementedException();
+                                    }
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                    GotAddFact
 
                 case State.WaitForCloseRoundBracketOfSetCondition:
                     switch (_currToken.TokenKind)

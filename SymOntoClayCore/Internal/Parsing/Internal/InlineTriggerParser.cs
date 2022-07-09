@@ -87,8 +87,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_currToken = {_currToken}");
+            //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -181,9 +181,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             switch(_currToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.Fact:
-                                    {
-                                        throw new NotImplementedException();
-                                    }
+                                    _inlineTrigger.KindOfInlineTrigger = KindOfInlineTrigger.AddFact;
+                                    _state = State.GotAddFact;
                                     break;
 
                                 default:
@@ -196,7 +195,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                    GotAddFact
+                case State.GotAddFact:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenRoundBracket:
+                            ProcessBindingVariables();
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
 
                 case State.WaitForCloseRoundBracketOfSetCondition:
                     switch (_currToken.TokenKind)
@@ -222,20 +231,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.OpenRoundBracket:
-                            {
-                                _context.Recovery(_currToken);
-
-                                var parser = new InlineTriggerBindingVariablesParser(_context);
-                                parser.Run();
-
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result.WriteListToString()}");
-#endif
-
-                                _inlineTrigger.SetBindingVariables = new BindingVariables(parser.Result);
-
-                                _state = State.GotSetBindingVariables;
-                            }
+                            ProcessBindingVariables();
                             break;
 
                         case TokenKind.Word:
@@ -619,6 +615,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     return false;
             }
+        }
+
+        private void ProcessBindingVariables()
+        {
+            _context.Recovery(_currToken);
+
+            var parser = new InlineTriggerBindingVariablesParser(_context);
+            parser.Run();
+
+#if DEBUG
+            //Log($"parser.Result = {parser.Result.WriteListToString()}");
+#endif
+
+            _inlineTrigger.SetBindingVariables = new BindingVariables(parser.Result);
+
+            _state = State.GotSetBindingVariables;
         }
 
         private void ProcessSetFunctionBody()

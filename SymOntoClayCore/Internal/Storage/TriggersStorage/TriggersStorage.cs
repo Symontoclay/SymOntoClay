@@ -74,6 +74,10 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStorage
 
             var kind = inlineTrigger.KindOfInlineTrigger;
 
+#if DEBUG
+            Log($"kind = {kind}");
+#endif
+
             switch (kind)
             {
                 case KindOfInlineTrigger.SystemEvent:

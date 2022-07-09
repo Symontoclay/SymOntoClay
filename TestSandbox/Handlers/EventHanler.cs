@@ -11,7 +11,7 @@ namespace TestSandbox.Handlers
     public class EventHanler
     {
         private static readonly IEntityLogger _logger = new LoggerImpementation();
-
+        
         event Func<int, int> OnEv;
 
         public void Run()

@@ -80,7 +80,8 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-            TstEventHanler();
+            TstOnAddingFactEventHanler();
+            //TstEventHanler();
             //TstStrCollectionCombination();
             //TstIntCollectionCombination();
             //TstModalitiesHandler();
@@ -138,6 +139,16 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstOnAddingFactEventHanler()
+        {
+            _logger.Log("Begin");
+
+            var handler = new OnAddingFactEventHanler();
+            handler.Run();
+
+            _logger.Log("End");
         }
 
         private static void TstEventHanler()

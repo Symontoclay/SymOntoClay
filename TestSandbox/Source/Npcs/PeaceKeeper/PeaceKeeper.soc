@@ -9,6 +9,7 @@
 
 	on add fact ($_ >> @x)
 	{
+	    'on add fact ($_ >> @x)' >> @>log;
 	    @x >> @>log;
 	}
 }

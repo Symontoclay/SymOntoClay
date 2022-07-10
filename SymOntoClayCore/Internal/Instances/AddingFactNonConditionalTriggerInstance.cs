@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Storage.LogicalStorage;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -29,13 +30,13 @@ namespace SymOntoClay.Core.Internal.Instances
             if (setBindingVariables != null && setBindingVariables.Any())
             {
 #if DEBUG
-                Log($"setBindingVariables = {setBindingVariables}");
+                //Log($"setBindingVariables = {setBindingVariables}");
 #endif
 
                 var varsList = setBindingVariables.GetTargetsList();
 
 #if DEBUG
-                Log($"varsList = {varsList.WriteListToString()}");
+                //Log($"varsList = {varsList.WriteListToString()}");
 #endif
 
                 if(varsList.Any(p => p != StrongIdentifierValue.LogicalVarBlankIdentifier))
@@ -53,6 +54,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     throw new Exception($"The vars {string.Join(", ", unxpectedVarsList.Select(p => $"`{p.NameValue}`"))} can not be bound in unconditional add fact trigger.");
                 }
+
+                _factBindingVariable = setBindingVariables.GetDest(StrongIdentifierValue.LogicalVarBlankIdentifier);
+
+#if DEBUG
+                //Log($"_factBindingVariable = {_factBindingVariable}");
+#endif
 
                 _hasFactBindingVariable = true;
             }
@@ -75,16 +82,40 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly InlineTrigger _trigger;
 
         private readonly bool _hasFactBindingVariable;
+        private readonly StrongIdentifierValue _factBindingVariable;
 
         private IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance)
         {
 #if DEBUG
-            Log($"ruleInstance = {ruleInstance.ToHumanizedString()}");
+            //Log($"ruleInstance = {ruleInstance.ToHumanizedString()}");
 #endif
+            if(_hasFactBindingVariable)
+            {
+                var storagesList = BaseResolver.GetStoragesList(_localCodeExecutionContext.Storage);
+
+                var targetStorage = storagesList.FirstOrDefault(p => p.Storage.Kind == KindOfStorage.Local);
+
+                var targetVarStorage = targetStorage.Storage.VarStorage;
+
+                targetVarStorage.SetValue(_factBindingVariable, new RuleInstanceValue(ruleInstance));
+            }
+
+            var processInitialInfo = new ProcessInitialInfo();
+            processInitialInfo.CompiledFunctionBody = _trigger.SetCompiledFunctionBody;
+            processInitialInfo.LocalContext = _localCodeExecutionContext;
+            processInitialInfo.Metadata = _trigger;
+            processInitialInfo.Instance = _parent;
+            processInitialInfo.ExecutionCoordinator = _executionCoordinator;
+
+#if DEBUG
+            //Log($"processInitialInfo = {processInitialInfo}");
+#endif
+
+            var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo);
+
             return new AddFactOrRuleResult()
             {
-                KindOfResult = KindOfAddFactOrRuleResult.Accept,
-                MutablePart = new MutablePartOfRuleInstance() { ObligationModality = LogicalValue.TrueValue }
+                KindOfResult = KindOfAddFactOrRuleResult.Accept
             };
         }
 

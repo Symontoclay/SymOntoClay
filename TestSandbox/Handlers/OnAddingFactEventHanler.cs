@@ -1,6 +1,9 @@
 ﻿using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage.LogicalStorage;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Tests.Helpers;
@@ -44,37 +47,15 @@ namespace TestSandbox.Handlers
             var factStr = "{: >: { like(i,#@{: >: { possess(i,$_) & cat($_) } :}) } :}";
             var ruleInstance = Parse(factStr);
 
-            var result = RunDelegate(OnAddingFact, ruleInstance);
+            var fuzzyLogicResolver = _engineContext.DataResolversFactory.GetFuzzyLogicResolver();
+
+            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            localCodeExecutionContext.Storage = _engineContext.Storage.GlobalStorage;
+            localCodeExecutionContext.Holder = NameHelper.CreateName(_engineContext.Id);
+
+            var result = AddingFactHelper.CallEvent(OnAddingFact, ruleInstance, fuzzyLogicResolver, localCodeExecutionContext);
 
             _logger.Log($"result = {result}");
-        }
-
-        private IAddFactOrRuleResult RunDelegate(MulticastDelegate onAddingFactEvent, RuleInstance ruleInstance)
-        {
-            _logger.Log($"onAddingFactEvent.GetInvocationList().Length = {onAddingFactEvent.GetInvocationList().Length}");
-
-            foreach (var item in onAddingFactEvent.GetInvocationList())
-            {
-                var rawResultOfCall = item.DynamicInvoke(ruleInstance);
-
-                //_logger.Log($"rawResultOfCall = {rawResultOfCall}");
-
-                if(rawResultOfCall == null)
-                {
-                    continue;
-                }
-
-                var resultOfCall = (IAddFactOrRuleResult)rawResultOfCall;
-
-                _logger.Log($"resultOfCall = {resultOfCall}");
-
-                if(resultOfCall.KindOfResult == KindOfAddFactOrRuleResult.Reject)
-                {
-                    return resultOfCall;
-                }
-            }
-
-            throw new NotImplementedException();
         }
 
         private IAddFactOrRuleResult Handler1(RuleInstance ruleInstance)

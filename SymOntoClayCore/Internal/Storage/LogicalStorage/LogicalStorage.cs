@@ -21,8 +21,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
@@ -67,6 +69,19 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             _enableOnAddingFactEvent = realStorageContext.EnableOnAddingFactEvent;
 
+            if(_enableOnAddingFactEvent)
+            {
+                var mainStorageContext = realStorageContext.MainStorageContext;
+
+                _fuzzyLogicResolver = mainStorageContext.DataResolversFactory.GetFuzzyLogicResolver();
+
+                var localCodeExecutionContext = new LocalCodeExecutionContext();
+                localCodeExecutionContext.Storage = mainStorageContext.Storage.GlobalStorage;
+                localCodeExecutionContext.Holder = NameHelper.CreateName(mainStorageContext.Id);
+
+                _localCodeExecutionContext = localCodeExecutionContext;
+            }
+
             var kindOfGC = realStorageContext.KindOfGC;
 
             switch(kindOfGC)
@@ -99,6 +114,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         private AsyncActivePeriodicObject _activeObject;
 
         private readonly bool _enableOnAddingFactEvent;
+
+        private readonly FuzzyLogicResolver _fuzzyLogicResolver;
+        private readonly LocalCodeExecutionContext _localCodeExecutionContext;
 
         private void InitGCByTimeOut()
         {
@@ -249,34 +267,32 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             {
                 if(isPrimary && ruleInstance.KindOfRuleInstance == KindOfRuleInstance.Fact)
                 {
-                    var approvingRez = OnAddingFact(ruleInstance);
+                    var approvingRez = AddingFactHelper.CallEvent(OnAddingFact, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext);
 
 #if DEBUG
                     //Log($"approvingRez = {approvingRez}");
 #endif
                     
-                    if(approvingRez == null)
+                    if(approvingRez != null)
                     {
-                        return false;
-                    }
+                        var kindOfResult = approvingRez.KindOfResult;
 
-                    var kindOfResult = approvingRez.KindOfResult;
+                        switch (kindOfResult)
+                        {
+                            case KindOfAddFactOrRuleResult.Reject:
+                                return false;
 
-                    switch(kindOfResult)
-                    {
-                        case KindOfAddFactOrRuleResult.Reject:
-                            return false;
-
-                        case KindOfAddFactOrRuleResult.Accept:
-                            if(approvingRez.MutablePart == null)
-                            {
+                            case KindOfAddFactOrRuleResult.Accept:
+                                if (approvingRez.MutablePart == null)
+                                {
+                                    break;
+                                }
+                                _mutablePartsDict[ruleInstance] = approvingRez.MutablePart;
                                 break;
-                            }
-                            _mutablePartsDict[ruleInstance] = approvingRez.MutablePart;
-                            break;
 
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(kindOfResult), kindOfResult, null);
+                        }
                     }
                 }
             }

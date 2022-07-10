@@ -41,6 +41,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public bool CanBeResolved(Value source)
         {
+            if(source == null)
+            {
+                return true;
+            }
+
             switch (source.KindOfValue)
             {
                 case KindOfValue.NullValue:
@@ -63,6 +68,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
             //Log($"source = {source}");
 #endif
+
+            if(source == null)
+            {
+                return ValueConvertor.ConvertNullValueToNumberValue(NullValue.Instance, _context);
+            }
 
             var sourceKind = source.KindOfValue;
 

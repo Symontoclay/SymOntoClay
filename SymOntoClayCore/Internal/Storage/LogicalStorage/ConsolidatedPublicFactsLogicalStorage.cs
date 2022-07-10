@@ -22,6 +22,8 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -45,6 +47,16 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 _mutablePartsDict = new Dictionary<RuleInstance, IItemWithModalities>();
                 _rejectedFacts = new HashSet<RuleInstance>();
                 _processedOnAddingFacts = new HashSet<RuleInstance>();
+
+                var mainStorageContext = settings.MainStorageContext;
+
+                _fuzzyLogicResolver = mainStorageContext.DataResolversFactory.GetFuzzyLogicResolver();
+
+                var localCodeExecutionContext = new LocalCodeExecutionContext();
+                localCodeExecutionContext.Storage = mainStorageContext.Storage.GlobalStorage;
+                localCodeExecutionContext.Holder = NameHelper.CreateName(mainStorageContext.Id);
+
+                _localCodeExecutionContext = localCodeExecutionContext;
             }
         }
 
@@ -57,6 +69,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         private readonly object _onAddingFactLockObj = new object();
 
         private KindOfOnAddingFactEvent _enableOnAddingFactEvent;
+
+        private readonly FuzzyLogicResolver _fuzzyLogicResolver;
+        private readonly LocalCodeExecutionContext _localCodeExecutionContext;
 
         /// <inheritdoc/>
         public KindOfStorage Kind => KindOfStorage.WorldPublicFacts;
@@ -195,7 +210,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 _processedOnAddingFacts.Add(ruleInstance);
 
-                var approvingRez = OnAddingFact(ruleInstance);
+                var approvingRez = AddingFactHelper.CallEvent(OnAddingFact, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext); ;
 
 #if DEBUG
                 //Log($"approvingRez = {approvingRez}");
@@ -203,8 +218,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 if (approvingRez == null)
                 {
-                    _rejectedFacts.Add(ruleInstance);
-
                     return;
                 }
 

@@ -7,6 +7,7 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class ConsolidatedPublicFactsStorageSettings : IObjectToString
     {
+        public IMainStorageContext MainStorageContext { get; set; }
         public KindOfOnAddingFactEvent EnableOnAddingFactEvent { get; set; } = KindOfOnAddingFactEvent.None;
 
         /// <inheritdoc/>
@@ -27,6 +28,7 @@ namespace SymOntoClay.Core.Internal.Storage
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintExisting(n, nameof(MainStorageContext), MainStorageContext);
             sb.AppendLine($"{spaces}{nameof(EnableOnAddingFactEvent)} = {EnableOnAddingFactEvent}");
 
             return sb.ToString();

@@ -128,6 +128,7 @@ namespace SymOntoClay.Core.Internal.Storage
                         parentStoragesList.Add(_listenedFactsStorage);
 
                         var visibleFactsStorageSettings = new ConsolidatedPublicFactsStorageSettings();
+                        visibleFactsStorageSettings.MainStorageContext = _context;
                         visibleFactsStorageSettings.EnableOnAddingFactEvent = KindOfOnAddingFactEvent.Isolated;
 
                         _visibleFactsStorage = new ConsolidatedPublicFactsStorage(_context.Logger, visibleFactsStorageSettings);

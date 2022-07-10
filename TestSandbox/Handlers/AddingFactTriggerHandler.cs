@@ -34,7 +34,7 @@ namespace TestSandbox.Handlers
             _npc.Logger.LogChannel("|||||||||||||");
 
             //_npc.EngineContext.Storage.ListenedFactsStorage.LogicalStorage.OnAddingFact += LogicalStorage_OnAddingFact;
-            _npc.EngineContext.Storage.GlobalStorage.LogicalStorage.OnAddingFact += LogicalStorage_OnAddingFact;
+            //_npc.EngineContext.Storage.GlobalStorage.LogicalStorage.OnAddingFact += LogicalStorage_OnAddingFact;
 
             Thread.Sleep(100);
 

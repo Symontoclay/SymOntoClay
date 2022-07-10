@@ -34,6 +34,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class StrongIdentifierValue: Value, IEquatable<StrongIdentifierValue>
     {
+        public static readonly StrongIdentifierValue LogicalVarBlankIdentifier = NameHelper.CreateName("$_");
+
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.StrongIdentifierValue;
 

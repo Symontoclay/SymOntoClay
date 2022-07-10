@@ -5091,6 +5091,33 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.AddingFactNonConditionalTriggerInstance.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.AddingFactNonConditionalTriggerInstance.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.AddingFactNonConditionalTriggerInstance.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.AddingFactNonConditionalTriggerInstance.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.AddingFactNonConditionalTriggerInstance.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.AddingFactNonConditionalTriggerInstance.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.AddingFactNonConditionalTriggerInstance.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.AddingFactNonConditionalTriggerInstance.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.AddingFactNonConditionalTriggerInstance.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.AppInstance.KindOfInstance">
             <inheritdoc/>
         </member>

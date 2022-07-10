@@ -84,6 +84,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             throw new NotImplementedException();
         }
 
+        public List<StrongIdentifierValue> GetTargetsList()
+        {
+            return _varsDict.Keys.ToList();
+        }
+
         public List<StrongIdentifierValue> GetDestList()
         {
             return _varsDict.Values.ToList();

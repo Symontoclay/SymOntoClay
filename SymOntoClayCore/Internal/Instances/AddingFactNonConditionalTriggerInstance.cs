@@ -64,12 +64,9 @@ namespace SymOntoClay.Core.Internal.Instances
                 _hasFactBindingVariable = true;
             }
 
-            _localCodeExecutionContext = new LocalCodeExecutionContext();
+            
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
             _storage = new LocalStorage(localStorageSettings);
-            _localCodeExecutionContext.Storage = _storage;
-
-            _localCodeExecutionContext.Holder = parent.Name;
 
             _storage.LogicalStorage.OnAddingFact += LogicalStorage_OnAddingFact;
         }
@@ -77,7 +74,6 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly IExecutionCoordinator _executionCoordinator;
         private readonly IEngineContext _context;
         private readonly IStorage _storage;
-        private readonly LocalCodeExecutionContext _localCodeExecutionContext;
         private readonly BaseInstance _parent;
         private readonly InlineTrigger _trigger;
 
@@ -89,9 +85,25 @@ namespace SymOntoClay.Core.Internal.Instances
 #if DEBUG
             //Log($"ruleInstance = {ruleInstance.ToHumanizedString()}");
 #endif
-            if(_hasFactBindingVariable)
+
+            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            localCodeExecutionContext.Storage = _storage;
+
+            localCodeExecutionContext.Holder = _parent.Name;
+
+            var mutablePart = new MutablePartOfRuleInstance();
+
+            localCodeExecutionContext.Kind = KindOfLocalCodeExecutionContext.AddingFact;
+            localCodeExecutionContext.MutablePart = mutablePart;
+            localCodeExecutionContext.AddedRuleInstance = ruleInstance;
+
+#if DEBUG
+            //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
+#endif
+
+            if (_hasFactBindingVariable)
             {
-                var storagesList = BaseResolver.GetStoragesList(_localCodeExecutionContext.Storage);
+                var storagesList = BaseResolver.GetStoragesList(localCodeExecutionContext.Storage);
 
                 var targetStorage = storagesList.FirstOrDefault(p => p.Storage.Kind == KindOfStorage.Local);
 
@@ -102,7 +114,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             var processInitialInfo = new ProcessInitialInfo();
             processInitialInfo.CompiledFunctionBody = _trigger.SetCompiledFunctionBody;
-            processInitialInfo.LocalContext = _localCodeExecutionContext;
+            processInitialInfo.LocalContext = localCodeExecutionContext;
             processInitialInfo.Metadata = _trigger;
             processInitialInfo.Instance = _parent;
             processInitialInfo.ExecutionCoordinator = _executionCoordinator;
@@ -111,12 +123,33 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log($"processInitialInfo = {processInitialInfo}");
 #endif
 
-            var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo);
+            var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo).AsTaskValue;
 
-            return new AddFactOrRuleResult()
+#if DEBUG
+            //Log($"task = {task}");
+#endif
+
+            task.Wait();
+
+            var result = new AddFactOrRuleResult() { KindOfResult = localCodeExecutionContext.KindOfAddFactResult };
+
+            if(result.KindOfResult == KindOfAddFactOrRuleResult.Accept)
             {
-                KindOfResult = KindOfAddFactOrRuleResult.Accept
-            };
+#if DEBUG
+                //Log($"mutablePart = {mutablePart}");
+#endif
+
+                if(mutablePart.ObligationModality != null || mutablePart.SelfObligationModality != null)
+                {
+                    result.MutablePart = mutablePart;
+                }
+            }
+
+#if DEBUG
+            Log($"result = {result}");
+#endif
+
+            return result;
         }
 
         /// <inheritdoc/>

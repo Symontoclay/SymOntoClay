@@ -90,6 +90,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         CompleteState,
         CompleteStateVal,
         BreakState,
-        BreakStateVal
+        BreakStateVal,
+        Reject
     }
 }

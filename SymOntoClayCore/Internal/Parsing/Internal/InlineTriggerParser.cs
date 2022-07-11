@@ -202,6 +202,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessBindingVariables();
                             break;
 
+                        case TokenKind.OpenFigureBracket:
+                            ProcessSetFunctionBody();
+                            break;
+
+                        case TokenKind.Lambda:
+                            _state = State.WaitForSetAction;
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

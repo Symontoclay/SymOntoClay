@@ -210,7 +210,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 _processedOnAddingFacts.Add(ruleInstance);
 
-                var approvingRez = AddingFactHelper.CallEvent(OnAddingFact, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext); ;
+                var approvingRez = AddingFactHelper.CallEvent(OnAddingFact, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext, Logger);
 
 #if DEBUG
                 //Log($"approvingRez = {approvingRez}");

@@ -165,6 +165,14 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         }
                         break;
 
+                    case KindOfAstStatement.RejectStatement:
+                        {
+                            var node = new AstRejectStatementNode(_context);
+                            node.Run(statement as AstRejectStatement);
+                            AddCommands(node.Result);
+                        }
+                        break;
+
                     default: 
                         throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
                 }

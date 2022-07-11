@@ -267,10 +267,10 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             {
                 if(isPrimary && ruleInstance.KindOfRuleInstance == KindOfRuleInstance.Fact)
                 {
-                    var approvingRez = AddingFactHelper.CallEvent(OnAddingFact, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext);
+                    var approvingRez = AddingFactHelper.CallEvent(OnAddingFact, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext, Logger);
 
 #if DEBUG
-                    //Log($"approvingRez = {approvingRez}");
+                    Log($"approvingRez = {approvingRez}");
 #endif
                     
                     if(approvingRez != null)
@@ -552,7 +552,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
         private IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance)
         {
-            return OnAddingFact?.Invoke(ruleInstance);
+            if(OnAddingFact == null)
+            {
+                return null;
+            }
+
+            return AddingFactHelper.CallEvent(OnAddingFact, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext, Logger);
         }
 
         private void RealStorageContext_OnAddParentStorage(IStorage storage)

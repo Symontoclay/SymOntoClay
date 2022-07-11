@@ -107,7 +107,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                         var resultVarsList = foundResultItem.ResultOfVarOfQueryToRelationList;
 
 #if DEBUG
-                        Log($"resultVarsList.Count = {resultVarsList.Count}");
+                        //Log($"resultVarsList.Count = {resultVarsList.Count}");
 #endif
 
                         if (_bindingVariables.Count != resultVarsList.Count)

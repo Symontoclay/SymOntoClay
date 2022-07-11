@@ -53,7 +53,7 @@ namespace TestSandbox.Handlers
             localCodeExecutionContext.Storage = _engineContext.Storage.GlobalStorage;
             localCodeExecutionContext.Holder = NameHelper.CreateName(_engineContext.Id);
 
-            var result = AddingFactHelper.CallEvent(OnAddingFact, ruleInstance, fuzzyLogicResolver, localCodeExecutionContext);
+            var result = AddingFactHelper.CallEvent(OnAddingFact, ruleInstance, fuzzyLogicResolver, localCodeExecutionContext, _logger);
 
             _logger.Log($"result = {result}");
         }

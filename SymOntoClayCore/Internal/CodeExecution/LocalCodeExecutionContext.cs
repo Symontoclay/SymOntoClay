@@ -33,6 +33,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     {
         public StrongIdentifierValue Holder { get; set; }
         public IStorage Storage { get; set; }
+        public KindOfLocalCodeExecutionContext Kind { get; set; } = KindOfLocalCodeExecutionContext.Usual;
+        public KindOfAddFactOrRuleResult KindOfAddFactResult { get; set; }
+        public MutablePartOfRuleInstance MutablePart { get; set; }
+        public RuleInstance AddedRuleInstance { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -54,6 +58,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
           
             sb.PrintObjProp(n, nameof(Holder), Holder);
             sb.AppendLine($"{spaces}{nameof(Storage)} = {Storage?.Kind}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(KindOfAddFactResult)} = {KindOfAddFactResult}");
+            sb.PrintObjProp(n, nameof(MutablePart), MutablePart);
+            sb.PrintObjProp(n, nameof(AddedRuleInstance), AddedRuleInstance);
 
             return sb.ToString();
         }
@@ -78,6 +86,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             sb.PrintShortObjProp(n, nameof(Holder), Holder);
             sb.AppendLine($"{spaces}{nameof(Storage)} = {Storage?.Kind}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(KindOfAddFactResult)} = {KindOfAddFactResult}");
+            sb.PrintShortObjProp(n, nameof(MutablePart), MutablePart);
+            sb.PrintShortObjProp(n, nameof(AddedRuleInstance), AddedRuleInstance);
 
             return sb.ToString();
         }
@@ -102,6 +114,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
             sb.AppendLine($"{spaces}{nameof(Storage)} = {Storage?.Kind}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(KindOfAddFactResult)} = {KindOfAddFactResult}");
+            sb.PrintBriefObjProp(n, nameof(MutablePart), MutablePart);
+            sb.PrintBriefObjProp(n, nameof(AddedRuleInstance), AddedRuleInstance);
 
             return sb.ToString();
         }

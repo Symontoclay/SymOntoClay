@@ -137,6 +137,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     ProcessRepeatStatement();
                                     break;
 
+                                case KeyWordTokenKind.Reject:
+                                    ProcessRejectStatement();
+                                    break;
+
                                 default:
                                     throw new UnexpectedTokenException(_currToken);
                             }
@@ -252,6 +256,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _context.Recovery(_currToken);
             var parser = new RepeatStatementParser(_context);
+            parser.Run();
+            AddStatement(parser.Result);
+        }
+
+        private void ProcessRejectStatement()
+        {
+            _context.Recovery(_currToken);
+            var parser = new RejectStatementParser(_context);
             parser.Run();
             AddStatement(parser.Result);
         }

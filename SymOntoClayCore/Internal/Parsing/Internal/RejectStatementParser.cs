@@ -1,26 +1,4 @@
-/*MIT License
-
-Copyright (c) 2020 - 2022 Sergiy Tolkachov
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.*/
-
-using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
+﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.Helpers;
 using System;
 using System.Collections.Generic;
@@ -28,29 +6,28 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public class RepeatStatementParser : BaseInternalParser
+    public class RejectStatementParser : BaseInternalParser
     {
         private enum State
         {
             Init,
-            GotMark,
-            GotBody
+            GotMark
         }
 
-        public RepeatStatementParser(InternalParserContext context)
+        public RejectStatementParser(InternalParserContext context)
             : base(context)
         {
         }
-        
+
         private State _state = State.Init;
 
         public AstStatement Result { get; private set; }
-        private AstRepeatStatement _rawStatement;
+        private AstRejectStatement _rawStatement;
 
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            _rawStatement = new AstRepeatStatement();
+            _rawStatement = new AstRejectStatement();
 
             DefaultSettingsOfCodeEntityHelper.SetUpAnnotatedItem(_rawStatement, CurrentDefaultSetings);
         }
@@ -83,7 +60,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Word:
                             switch (_currToken.KeyWordTokenKind)
                             {
-                                case KeyWordTokenKind.Repeat:
+                                case KeyWordTokenKind.Reject:
                                     _state = State.GotMark;
                                     break;
 
@@ -100,25 +77,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotMark:
                     switch (_currToken.TokenKind)
                     {
-                        case TokenKind.OpenFigureBracket:
-                            _rawStatement.Statements = ParseBody();
-                            _state = State.GotBody;
-                            break;
-
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
-                    }
-                    break;
-
-                case State.GotBody:
-                    switch (_currToken.TokenKind)
-                    {
-                        case TokenKind.String:
-                            _context.Recovery(_currToken);
-                            Exit();
-                            break;
-
-                        case TokenKind.CloseFigureBracket:
+                        case TokenKind.Semicolon:
                             Exit();
                             break;
 

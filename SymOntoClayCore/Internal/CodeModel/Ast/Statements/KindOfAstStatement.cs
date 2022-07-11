@@ -44,6 +44,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         ElifStatement,
         WhileStatement,
         ContinueStatement,
-        RepeatStatement
+        RepeatStatement,
+        RejectStatement
     }
 }

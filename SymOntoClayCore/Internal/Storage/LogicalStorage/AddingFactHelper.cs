@@ -1,7 +1,9 @@
-﻿using SymOntoClay.Core.Internal.CodeExecution;
+﻿using NLog;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 {
     public static class AddingFactHelper
     {
-        public static IAddFactOrRuleResult CallEvent(MulticastDelegate onAddingFactEvent, RuleInstance ruleInstance, FuzzyLogicResolver fuzzyLogicResolver, LocalCodeExecutionContext localCodeExecutionContext)
+#if DEBUG
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
+        public static IAddFactOrRuleResult CallEvent(MulticastDelegate onAddingFactEvent, RuleInstance ruleInstance, FuzzyLogicResolver fuzzyLogicResolver, LocalCodeExecutionContext localCodeExecutionContext, IEntityLogger logger)
         {
             var resultsOfCallList = new List<IAddFactOrRuleResult>();
 
@@ -20,28 +26,39 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
             foreach (var item in onAddingFactEvent.GetInvocationList())
             {
-                var rawResultOfCall = item.DynamicInvoke(ruleInstance);
-
-                if (rawResultOfCall == null)
+                try
                 {
-                    continue;
+                    var rawResultOfCall = item.DynamicInvoke(ruleInstance);
+
+#if DEBUG
+                    //_gbcLogger.Info($"rawResultOfCall = {rawResultOfCall}");
+#endif
+
+                    if (rawResultOfCall == null)
+                    {
+                        continue;
+                    }
+
+                    var resultOfCall = (IAddFactOrRuleResult)rawResultOfCall;
+
+                    if (resultOfCall.KindOfResult == KindOfAddFactOrRuleResult.Reject)
+                    {
+                        return resultOfCall;
+                    }
+
+                    resultsOfCallList.Add(resultOfCall);
+
+                    var mutablePart = resultOfCall.MutablePart;
+
+                    if (mutablePart != null)
+                    {
+                        rawObligationsModalitiesList.Add(mutablePart.ObligationModality);
+                        rawSelfObligationsModalitiesList.Add(mutablePart.SelfObligationModality);
+                    }
                 }
-
-                var resultOfCall = (IAddFactOrRuleResult)rawResultOfCall;
-
-                if (resultOfCall.KindOfResult == KindOfAddFactOrRuleResult.Reject)
+                catch(Exception e)
                 {
-                    return resultOfCall;
-                }
-
-                resultsOfCallList.Add(resultOfCall);
-
-                var mutablePart = resultOfCall.MutablePart;
-
-                if (mutablePart != null)
-                {
-                    rawObligationsModalitiesList.Add(mutablePart.ObligationModality);
-                    rawSelfObligationsModalitiesList.Add(mutablePart.SelfObligationModality);
+                    logger.Error(e.ToString());
                 }
             }
 

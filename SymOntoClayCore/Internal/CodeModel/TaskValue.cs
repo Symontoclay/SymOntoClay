@@ -42,14 +42,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.TaskValue;
 
-        public string TaskId { get; set; }
-        public Task SystemTask { get; set; }
-
         /// <inheritdoc/>
         public override bool IsTaskValue => true;
 
         /// <inheritdoc/>
         public override TaskValue AsTaskValue => this;
+
+        public string TaskId { get; set; }
+        public Task SystemTask { get; set; }
+
+        public void Wait()
+        {
+            SystemTask?.Wait();
+        }
 
         /// <inheritdoc/>
         public override object GetSystemValue()

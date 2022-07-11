@@ -790,6 +790,25 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         }
                         break;
 
+                    case OperationCode.Reject:
+                        {
+                            var localExecutionContext = _currentCodeFrame.LocalContext;
+
+#if DEBUG
+                            //Log($"localExecutionContext = {localExecutionContext}");
+#endif
+
+                            if(localExecutionContext.Kind != KindOfLocalCodeExecutionContext.AddingFact)
+                            {
+                                throw new NotSupportedException();
+                            }
+
+                            localExecutionContext.KindOfAddFactResult = KindOfAddFactOrRuleResult.Reject;
+
+                            _currentCodeFrame.CurrentPosition++;
+                        }
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(currentCommand.OperationCode), currentCommand.OperationCode, null);
                 }

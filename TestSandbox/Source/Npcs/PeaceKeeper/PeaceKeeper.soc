@@ -2,14 +2,17 @@
 {
     {: gun(M16) :}
 
-	on Enter => {
-	    'Begin' >> @>log;
-		'End' >> @>log;
-	}
-
 	on add fact ($_ >> @x)
 	{
 	    'on add fact ($_ >> @x)' >> @>log;
 	    @x >> @>log;
+		reject;
 	}
+
+	on {: hear(I, $x) & gun($x) & distance(I, $x, $y) :} ($x >> @x, $y >> @y)
+    {
+        @x >> @>log;
+        @y >> @>log;
+        '!!!M16!!!!' >> @>log;
+    }
 }

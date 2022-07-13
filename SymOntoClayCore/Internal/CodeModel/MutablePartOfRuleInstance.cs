@@ -12,10 +12,41 @@ namespace SymOntoClay.Core.Internal.CodeModel
         [Modality]
         [ResolveToType(typeof(LogicalValue))]
         public Value ObligationModality { get; set; }
-
+        
         [Modality]
         [ResolveToType(typeof(LogicalValue))]
         public Value SelfObligationModality { get; set; }
+
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public MutablePartOfRuleInstance Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public MutablePartOfRuleInstance Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (MutablePartOfRuleInstance)context[this];
+            }
+
+            var result = new MutablePartOfRuleInstance();
+            context[this] = result;
+
+            result.ObligationModality = ObligationModality?.CloneValue(context);
+            result.SelfObligationModality = SelfObligationModality?.CloneValue(context);
+
+            return result;
+        }
 
         /// <inheritdoc/>
         public override string ToString()

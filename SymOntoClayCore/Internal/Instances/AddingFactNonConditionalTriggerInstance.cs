@@ -92,6 +92,7 @@ namespace SymOntoClay.Core.Internal.Instances
             localCodeExecutionContext.Holder = _parent.Name;
 
             var mutablePart = new MutablePartOfRuleInstance();
+            mutablePart.Parent = ruleInstance;
 
             localCodeExecutionContext.Kind = KindOfLocalCodeExecutionContext.AddingFact;
             localCodeExecutionContext.MutablePart = mutablePart;

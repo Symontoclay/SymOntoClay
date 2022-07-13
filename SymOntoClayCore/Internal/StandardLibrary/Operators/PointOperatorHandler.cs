@@ -43,14 +43,42 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         public Value Call(Value leftOperand, Value rightOperand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            //Log($"leftOperand = {leftOperand}");
-            //Log($"rightOperand = {rightOperand}");
+            Log($"leftOperand = {leftOperand}");
+            Log($"rightOperand = {rightOperand}");
             //Log($"annotation = {annotation}");
+            //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
 #endif
 
-            if(leftOperand.IsHostValue && rightOperand.IsStrongIdentifierValue)
+            if (leftOperand.IsHostValue && rightOperand.IsStrongIdentifierValue)
             {
-                return new PointRefValue(leftOperand, rightOperand);
+                var result = new PointRefValue(leftOperand, rightOperand);
+                result.CheckDirty();
+                return result;
+            }
+
+            if (localCodeExecutionContext.Kind == KindOfLocalCodeExecutionContext.AddingFact)
+            {
+                if (leftOperand.IsRuleInstanceValue && rightOperand.IsStrongIdentifierValue)
+                {
+                    var ruleInstance = leftOperand.AsRuleInstanceValue.RuleInstance;
+
+                    if (ruleInstance == localCodeExecutionContext.AddedRuleInstance)
+                    {
+                        var mutablePartValue = new MutablePartOfRuleInstanceValue(localCodeExecutionContext.MutablePart);
+
+#if DEBUG
+                        Log($"mutablePartValue = {mutablePartValue}");
+#endif
+
+                        var result = new PointRefValue(mutablePartValue, rightOperand);
+                        result.CheckDirty();
+                        return result;
+                    }
+
+                    throw new NotImplementedException();
+                }
+
+                throw new NotImplementedException();
             }
 
             throw new NotImplementedException();

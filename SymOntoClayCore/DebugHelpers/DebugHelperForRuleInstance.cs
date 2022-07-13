@@ -40,7 +40,22 @@ namespace SymOntoClay.Core.DebugHelpers
         //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
-        public static string ToString(RuleInstance source, HumanizedOptions options = HumanizedOptions.ShowAll)
+        public static string ToString(RuleInstance source)
+        {
+            return ToString(source, null, HumanizedOptions.ShowAll);
+        }
+
+        public static string ToString(RuleInstance source, HumanizedOptions options)
+        {
+            return ToString(source, null, options);
+        }
+
+        public static string ToString(RuleInstance source, MutablePartOfRuleInstance mutablePartOfRuleInstance)
+        {
+            return ToString(source, mutablePartOfRuleInstance, HumanizedOptions.ShowAll);
+        }
+
+        public static string ToString(RuleInstance source, MutablePartOfRuleInstance mutablePartOfRuleInstance, HumanizedOptions options)
         {
             var sb = new StringBuilder();
             sb.Append("{:");
@@ -77,12 +92,36 @@ namespace SymOntoClay.Core.DebugHelpers
 
                 sb.Append(ModalityValueToString(source.ObligationModality, options));
             }
+            else
+            {
+                if(mutablePartOfRuleInstance != null)
+                {
+                    if(mutablePartOfRuleInstance.ObligationModality != null && mutablePartOfRuleInstance.ObligationModality.KindOfValue != KindOfValue.NullValue)
+                    {
+                        sb.Append(" o: ");
+
+                        sb.Append(ModalityValueToString(mutablePartOfRuleInstance.ObligationModality, options));
+                    }
+                }
+            }
 
             if (source.SelfObligationModality != null && source.SelfObligationModality.KindOfValue != KindOfValue.NullValue)
             {
                 sb.Append(" so: ");
 
                 sb.Append(ModalityValueToString(source.SelfObligationModality, options));
+            }
+            else
+            {
+                if (mutablePartOfRuleInstance != null)
+                {
+                    if (mutablePartOfRuleInstance.SelfObligationModality != null && mutablePartOfRuleInstance.SelfObligationModality.KindOfValue != KindOfValue.NullValue)
+                    {
+                        sb.Append(" so: ");
+
+                        sb.Append(ModalityValueToString(mutablePartOfRuleInstance.SelfObligationModality, options));
+                    }
+                }
             }
 
             sb.Append(" :}");

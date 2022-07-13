@@ -5,14 +5,13 @@
 	on add fact ($_ >> @x)
 	{
 	    'on add fact ($_ >> @x)' >> @>log;
-	    @x >> @>log;
-		reject;
+		@x.so = 1;
 	}
 
-	on {: hear(I, $x) & gun($x) & distance(I, $x, $y) :} ($x >> @x, $y >> @y)
-    {
-        @x >> @>log;
-        @y >> @>log;
-        '!!!M16!!!!' >> @>log;
-    }
+	//on {: hear(I, $x) & gun($x) & distance(I, $x, $y) :} ($x >> @x, $y >> @y)
+    //{
+    //    @x >> @>log;
+    //    @y >> @>log;
+    //    '!!!M16!!!!' >> @>log;
+    //}
 }

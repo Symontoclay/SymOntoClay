@@ -87,6 +87,16 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
 
             op = new Operator
             {
+                KindOfOperator = KindOfOperator.Assign,
+                IsSystemDefined = true,
+                SystemHandler = new BinaryOperatorSystemHandler(new AssignOperatorHandler(_context)),
+                Holder = _context.CommonNamesStorage.DefaultHolder
+            };
+
+            globalOperatorsStorage.Append(op);
+
+            op = new Operator
+            {
                 KindOfOperator = KindOfOperator.CallLogicalQuery,
                 IsSystemDefined = true,
                 SystemHandler = new UnaryOperatorSystemHandler(new CallLogicalQueryOperatorHandler(_context)),

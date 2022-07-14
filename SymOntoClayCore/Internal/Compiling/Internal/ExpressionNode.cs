@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     break;
 
                 case KindOfAstExpression.Var:
-                    CompilePushValFromVar((expression as VarAstExpression).Name);
+                    CompilePushVal((expression as VarAstExpression).Name);
                     break;
 
                 case KindOfAstExpression.CallingFunction:

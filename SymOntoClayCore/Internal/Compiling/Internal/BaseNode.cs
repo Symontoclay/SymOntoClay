@@ -77,7 +77,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                     case KindOfName.SystemVar:
                     case KindOfName.Var:
-                        CompilePushValFromVar(value);
+                        CompilePushVal(value);
                         break;
 
                     default:
@@ -116,15 +116,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         {
             var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.PushVal;
-            command.Value = value;
-
-            AddCommand(command);
-        }
-
-        protected void CompilePushValFromVar(Value value)
-        {
-            var command = new IntermediateScriptCommand();
-            command.OperationCode = OperationCode.PushValFromVar;
             command.Value = value;
 
             AddCommand(command);
@@ -201,8 +192,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     return $"{operationCode}";
 
                 case OperationCode.PushVal:
-                case OperationCode.PushValFromVar:
-                case OperationCode.PushValToVar:
                     return $"{operationCode} {commandItem.Value.ToDbgString()}";
 
                 case OperationCode.CallUnOp:

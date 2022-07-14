@@ -28,10 +28,10 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
-    public class SubOperatorHandler : BaseLoggedComponent, IBinaryOperatorHandler
+    public class SubOperatorHandler : BaseOperatorHandler, IBinaryOperatorHandler
     {
         public SubOperatorHandler(IEngineContext engineContext)
-            : base(engineContext.Logger)
+            : base(engineContext)
         {
         }
 
@@ -42,6 +42,14 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             //Log($"leftOperand = {leftOperand}");
             //Log($"rightOperand = {rightOperand}");
             //Log($"annotation = {annotation}");
+#endif
+
+            leftOperand = TryResolveFromVar(leftOperand, localCodeExecutionContext);
+            rightOperand = TryResolveFromVar(rightOperand, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"leftOperand (after) = {leftOperand}");
+            //Log($"rightOperand (after) = {rightOperand}");
 #endif
 
             if (leftOperand.IsSystemNull || rightOperand.IsSystemNull)

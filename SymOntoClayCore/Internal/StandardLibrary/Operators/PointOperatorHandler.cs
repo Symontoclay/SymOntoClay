@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
@@ -29,24 +30,29 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
-    public class PointOperatorHandler : BaseLoggedComponent, IBinaryOperatorHandler
+    public class PointOperatorHandler : BaseOperatorHandler, IBinaryOperatorHandler
     {
         public PointOperatorHandler(IEngineContext engineContext)
-            : base(engineContext.Logger)
+            : base(engineContext)
         {
-            _engineContext = engineContext;
         }
-
-        private readonly IEngineContext _engineContext;
 
         /// <inheritdoc/>
         public Value Call(Value leftOperand, Value rightOperand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Log($"leftOperand = {leftOperand}");
-            Log($"rightOperand = {rightOperand}");
+            //Log($"leftOperand = {leftOperand}");
+            //Log($"rightOperand = {rightOperand}");
             //Log($"annotation = {annotation}");
             //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
+#endif
+
+            leftOperand = TryResolveFromVar(leftOperand, localCodeExecutionContext);
+            rightOperand = TryResolveFromVar(rightOperand, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"leftOperand (after) = {leftOperand}");
+            //Log($"rightOperand (after) = {rightOperand}");
 #endif
 
             if (leftOperand.IsHostValue && rightOperand.IsStrongIdentifierValue)
@@ -67,7 +73,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                         var mutablePartValue = new MutablePartOfRuleInstanceValue(localCodeExecutionContext.MutablePart);
 
 #if DEBUG
-                        Log($"mutablePartValue = {mutablePartValue}");
+                        //Log($"mutablePartValue = {mutablePartValue}");
 #endif
 
                         var result = new PointRefValue(mutablePartValue, rightOperand);

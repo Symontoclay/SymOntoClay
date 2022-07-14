@@ -63,96 +63,21 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             //Log($"expression = {expression}");
 #endif
 
-            var rightBranch = expression.Right;
+            var rightNode = new ExpressionNode(_context);
+            rightNode.Run(expression.Right);
+            AddCommands(rightNode.Result);
 
-#if DEBUG
-            //Log($"rightBranch = {rightBranch}");
-#endif
+            var leftNode = new ExpressionNode(_context);
+            leftNode.Run(expression.Left);
+            AddCommands(leftNode.Result);
 
-            var kindOfRightBranch = rightBranch.Kind;
+            CompilePushAnnotation(expression);
 
-#if DEBUG
-            //Log($"kindOfRightBranch = {kindOfRightBranch}");
-#endif
+            var command = new IntermediateScriptCommand();
+            command.OperationCode = OperationCode.CallBinOp;
+            command.KindOfOperator = expression.KindOfOperator;
 
-            switch (kindOfRightBranch)
-            {
-                case KindOfAstExpression.ConstValue:
-                    {
-                        var rightNode = new ExpressionNode(_context);
-                        rightNode.Run(rightBranch);
-                        AddCommands(rightNode.Result);
-                    }
-                    break;
-
-                case KindOfAstExpression.Var:
-                    {
-                        var command = new IntermediateScriptCommand();
-                        command.OperationCode = OperationCode.PushValToVar;
-                        command.Value = (rightBranch as VarAstExpression).Name;
-
-                        AddCommand(command);
-                    }
-                    break;
-
-                case KindOfAstExpression.BinaryOperator:
-                    {
-                        var node = new BinaryOperatorNode(_context);
-                        node.Run(rightBranch as BinaryOperatorAstExpression);
-                        AddCommands(node.Result);
-                    }
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfRightBranch), kindOfRightBranch, null);
-            }
-
-            var leftBranch = expression.Left;
-
-#if DEBUG
-            //Log($"leftBranch = {leftBranch}");
-#endif
-
-            var kindOfLeftBranch = leftBranch.Kind;
-
-            switch(kindOfLeftBranch)
-            {
-                case KindOfAstExpression.Var:
-                    {
-                        var command = new IntermediateScriptCommand();
-                        command.OperationCode = OperationCode.PushValToVar;
-                        command.Value = (leftBranch as VarAstExpression).Name;
-
-                        AddCommand(command);
-                    }
-                    break;
-
-                case KindOfAstExpression.VarDecl:
-                    {
-                        var varDeclAstExpression = leftBranch.AsVarDeclAstExpression;
-
-#if DEBUG
-                        //Log($"varDeclAstExpression = {varDeclAstExpression}");
-#endif
-
-                        CompileVarDecl(varDeclAstExpression);
-
-                        var command = new IntermediateScriptCommand();
-                        command.OperationCode = OperationCode.PushValToVar;
-                        command.Value = varDeclAstExpression.Name;
-
-                        AddCommand(command);
-                    }
-                    break;
-
-                default:
-                    {
-                        var rightNode = new ExpressionNode(_context);
-                        rightNode.Run(leftBranch);
-                        AddCommands(rightNode.Result);
-                    }
-                    break;
-            }
+            AddCommand(command);
 
 #if DEBUG
             //throw new NotImplementedException();

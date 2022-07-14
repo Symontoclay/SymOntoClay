@@ -39,12 +39,6 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         PushVal,
 
         /// <summary>
-        /// Pushes a value from a variable into a current stack.
-        /// </summary>
-        PushValFromVar,
-        PushValToVar,
-
-        /// <summary>
         /// Calls an unary operator.
         /// </summary>
         CallUnOp,

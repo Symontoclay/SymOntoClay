@@ -206,7 +206,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 if (!CheckReturnedInfo())
@@ -258,58 +258,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             }
 
                             _currentCodeFrame.ValuesStack.Push(value);
-                            _currentCodeFrame.CurrentPosition++;
-                        }
-                        break;
-
-                    case OperationCode.PushValFromVar:
-                        {
-                            var varName = currentCommand.Value.AsStrongIdentifierValue;
-
-#if DEBUG
-                            //Log($"varName = {varName}");
-#endif
-
-                            var targetValue = _varsResolver.GetVarValue(varName, _currentCodeFrame.LocalContext);
-
-#if DEBUG
-                            //Log($"targetValue = {targetValue}");
-#endif
-
-                            _currentCodeFrame.ValuesStack.Push(targetValue);
-
-#if DEBUG
-                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-#endif
-
-                            _currentCodeFrame.CurrentPosition++;
-                        }
-                        break;
-
-                    case OperationCode.PushValToVar:
-                        {
-                            var varName = currentCommand.Value.AsStrongIdentifierValue;
-
-#if DEBUG
-                            //Log($"varName = {varName}");
-#endif
-
-                            if(varName.KindOfName != KindOfName.Var)
-                            {
-                                throw new NotImplementedException();
-                            }
-
-                            var currentValue = _currentCodeFrame.ValuesStack.Peek();
-
-#if DEBUG
-                            //Log($"currentValue = {currentValue}");
-#endif
-                            _varsResolver.SetVarValue(varName, currentValue, _currentCodeFrame.LocalContext);
-
-#if DEBUG
-                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-#endif
-
                             _currentCodeFrame.CurrentPosition++;
                         }
                         break;

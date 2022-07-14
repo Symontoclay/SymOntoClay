@@ -31,10 +31,10 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
-    public class IsOperatorHandler: BaseLoggedComponent, IBinaryOperatorHandler
+    public class IsOperatorHandler: BaseOperatorHandler, IBinaryOperatorHandler
     {
         public IsOperatorHandler(IEngineContext engineContext)
-            : base(engineContext.Logger)
+            : base(engineContext)
         {
             _engineContext = engineContext;
 
@@ -60,7 +60,15 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             //Log($"annotation = {annotation}");
 #endif
 
-            if(leftOperand.IsSystemNull && rightOperand.IsSystemNull)
+            leftOperand = TryResolveFromVar(leftOperand, localCodeExecutionContext);
+            rightOperand = TryResolveFromVar(rightOperand, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"leftOperand (after) = {leftOperand}");
+            //Log($"rightOperand (after) = {rightOperand}");
+#endif
+
+            if (leftOperand.IsSystemNull && rightOperand.IsSystemNull)
             {
                 return new LogicalValue(1);
             }

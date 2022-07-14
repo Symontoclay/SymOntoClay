@@ -31,10 +31,10 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
-    public class CallLogicalQueryOperatorHandler : BaseLoggedComponent, IUnaryOperatorHandler
+    public class CallLogicalQueryOperatorHandler : BaseOperatorHandler, IUnaryOperatorHandler
     {
         public CallLogicalQueryOperatorHandler(IEngineContext engineContext)
-            : base(engineContext.Logger)
+            : base(engineContext)
         {
             _engineContext = engineContext;
 
@@ -55,7 +55,13 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         /// <inheritdoc/>
         public Value Call(Value operand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
-            if(!operand.IsLogicalQueryOperationValue)
+            operand = TryResolveFromVar(operand, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"operand (after) = {operand}");
+#endif
+
+            if (!operand.IsLogicalQueryOperationValue)
             {
                 throw new NotSupportedException();
             }

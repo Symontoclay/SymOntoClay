@@ -115,6 +115,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public abstract string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll);
 
+        public virtual void SetProperty(StrongIdentifierValue propertyName, Value value)
+        {
+             throw new NotImplementedException();
+        }
+
+        public virtual void SetValue(Value value)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Clones the instance and returns cloned instance.
         /// </summary>

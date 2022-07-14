@@ -31,13 +31,16 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
-    public class LeftRightStreamOperatorHandler: BaseLoggedComponent, IBinaryOperatorHandler
+    public class LeftRightStreamOperatorHandler: BaseOperatorHandler, IBinaryOperatorHandler
     {
         public LeftRightStreamOperatorHandler(IEngineContext engineContext)
-            : base(engineContext.Logger)
+            : base(engineContext)
         {
             _engineContext = engineContext;
-            _channelsResolver = engineContext.DataResolversFactory.GetChannelsResolver();
+
+            var dataResolversFactory = engineContext.DataResolversFactory;
+
+            _channelsResolver = dataResolversFactory.GetChannelsResolver();
         }
 
         private readonly IEngineContext _engineContext;
@@ -50,6 +53,14 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             //Log($"leftOperand = {leftOperand}");
             //Log($"rightOperand = {rightOperand}");
             //Log($"annotation = {annotation}");
+#endif
+
+            leftOperand = TryResolveFromVar(leftOperand, localCodeExecutionContext);
+            rightOperand = TryResolveFromVar(rightOperand, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"leftOperand (after) = {leftOperand}");
+            //Log($"rightOperand (after) = {rightOperand}");
 #endif
 
             Value valueFromSource = null;

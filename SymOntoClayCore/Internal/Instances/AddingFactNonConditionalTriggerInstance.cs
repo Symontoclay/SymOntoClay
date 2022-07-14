@@ -147,7 +147,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Log($"result = {result}");
+            //Log($"result = {result}");
 #endif
 
             return result;

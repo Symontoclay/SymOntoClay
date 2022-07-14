@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.DebugHelpers;
+﻿using NLog;
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -9,6 +10,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class MutablePartOfRuleInstanceValue : Value
     {
+#if DEBUG
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         public MutablePartOfRuleInstanceValue(MutablePartOfRuleInstance mutablePartOfRuleInstance)
         {
             MutablePartOfRuleInstance = mutablePartOfRuleInstance;
@@ -40,6 +45,31 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override string ToSystemString()
         {
             throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public override void SetProperty(StrongIdentifierValue propertyName, Value value)
+        {
+#if DEBUG
+            //_gbcLogger.Info($"propertyName = {propertyName}");
+            //_gbcLogger.Info($"value = {value}");
+#endif
+
+            var propertyNameStr = propertyName.NormalizedNameValue;
+
+            switch(propertyNameStr)
+            {
+                case "o":
+                    MutablePartOfRuleInstance.ObligationModality = value;
+                    break;
+
+                case "so":
+                    MutablePartOfRuleInstance.SelfObligationModality = value;
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(propertyNameStr), propertyNameStr, null);
+            }
         }
 
         /// <inheritdoc/>

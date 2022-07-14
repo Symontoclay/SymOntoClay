@@ -30,10 +30,10 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
-    public class LessOperatorHandler : BaseLoggedComponent, IBinaryOperatorHandler
+    public class LessOperatorHandler : BaseOperatorHandler, IBinaryOperatorHandler
     {
         public LessOperatorHandler(IEngineContext engineContext)
-            : base(engineContext.Logger)
+            : base(engineContext)
         {
             _engineContext = engineContext;
 
@@ -52,6 +52,14 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             //Log($"leftOperand = {leftOperand}");
             //Log($"rightOperand = {rightOperand}");
             //Log($"annotation = {annotation}");
+#endif
+
+            leftOperand = TryResolveFromVar(leftOperand, localCodeExecutionContext);
+            rightOperand = TryResolveFromVar(rightOperand, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"leftOperand (after) = {leftOperand}");
+            //Log($"rightOperand (after) = {rightOperand}");
 #endif
 
             if (leftOperand.IsNullValue || rightOperand.IsNullValue)

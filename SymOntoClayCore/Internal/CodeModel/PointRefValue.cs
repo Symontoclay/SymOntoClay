@@ -63,6 +63,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        public override void SetValue(Value value)
+        {
+            if(RightOperand.IsStrongIdentifierValue)
+            {
+                LeftOperand.SetProperty(RightOperand.AsStrongIdentifierValue, value);
+                return;
+            }
+
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
             var result = base.CalculateLongHashCode(options);

@@ -35,7 +35,6 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly IStorage _storage;
         private readonly BaseInstance _parent;
         private readonly InlineTrigger _trigger;
-        private RuleInstance _condition;
 
         private IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance)
         {

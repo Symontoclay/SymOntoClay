@@ -1,10 +1,22 @@
 ﻿app PeaceKeeper
 {
-    {: gun(M16) :}
+    {: cat(M16) :}
+
+    on Enter => {
+	    'Begin' >> @>log;
+		'End' >> @>log;
+	}
 
     on add fact {: hear(I, $x) & gun($x) :} ($_ >> @x)
 	{
 	    'on add fact ($_ >> @x)' >> @>log;
 		@x.so = 1;
 	}
+
+	on {: hear(I, $x) & gun($x) & distance(I, $x, $y) so: 1 :} ($x >> @x, $y >> @y)
+    {
+        @x >> @>log;
+        @y >> @>log;
+        '!!!M16!!!!' >> @>log;
+    }
 }

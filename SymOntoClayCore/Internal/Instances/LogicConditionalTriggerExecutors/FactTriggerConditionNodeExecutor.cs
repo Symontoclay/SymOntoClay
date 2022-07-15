@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
@@ -41,6 +42,8 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 
             _bindingVariables = bindingVariables;
 
+            _localCodeExecutionContext = localCodeExecutionContext;
+
             var dataResolversFactory = _engineContext.DataResolversFactory;
 
             _searcher = dataResolversFactory.GetLogicalSearchResolver();
@@ -52,6 +55,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 
         private readonly IEngineContext _engineContext;
         private readonly BindingVariables _bindingVariables;
+        private readonly LocalCodeExecutionContext _localCodeExecutionContext;
 
         private readonly LogicalSearchOptions _searchOptions;
         private readonly LogicalSearchResolver _searcher;
@@ -59,18 +63,34 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         private List<string> _foundKeys = new List<string>();
 
         /// <inheritdoc/>
-        public override Value Run(List<List<Var>> varList)
+        public override Value Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
-            var searchResult = _searcher.Run(_searchOptions);
+            LogicalSearchOptions targetLogicalSearchOptions = null;
+
+            if (processedRuleInstance == null)
+            {
+                targetLogicalSearchOptions = _searchOptions;
+            }
+            else
+            {
+                targetLogicalSearchOptions = new LogicalSearchOptions();
+                targetLogicalSearchOptions.QueryExpression = _searchOptions.QueryExpression;
+                targetLogicalSearchOptions.LocalCodeExecutionContext = _localCodeExecutionContext;
+                targetLogicalSearchOptions.TargetStorage = processedRuleInstance;
+            }
+
+#if DEBUG
+            //Log($"targetLogicalSearchOptions = {targetLogicalSearchOptions}");
+#endif
+
+            var searchResult = _searcher.Run(targetLogicalSearchOptions);
 
 #if DEBUG
             //Log($"searchResult = {searchResult}");
-            //Log($"_condition = {DebugHelperForRuleInstance.ToString(_condition)}");
             //Log($"searchResult = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
-            //foreach(var usedKey in searchResult.UsedKeysList)
+            //foreach (var usedKey in searchResult.UsedKeysList)
             //{
             //    Log($"usedKey = {usedKey}");
-            //    Log($"_context.Dictionary.GetName(usedKey) = {_context.Dictionary.GetName(usedKey)}");
             //}
 #endif
 
@@ -110,13 +130,30 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                         //Log($"resultVarsList.Count = {resultVarsList.Count}");
 #endif
 
-                        if (_bindingVariables.Count != resultVarsList.Count)
-                        {
-                            throw new NotImplementedException();
-                        }
-
                         var resultVarList = new List<Var>();
                         varList.Add(resultVarList);
+
+                        if (processedRuleInstance != null)
+                        {
+                            var destVar = _bindingVariables.GetDest(StrongIdentifierValue.LogicalVarBlankIdentifier);
+
+#if DEBUG
+                            //Log($"destVar = {destVar}");
+#endif
+
+                            if(destVar != null)
+                            {
+                                var ruleInstanceValue = new RuleInstanceValue(processedRuleInstance);
+                                ruleInstanceValue.CheckDirty();
+
+                                var varItem = new Var();
+                                varItem.Name = destVar;
+                                varItem.Value = ruleInstanceValue;
+                                varItem.TypeOfAccess = TypeOfAccess.Local;
+
+                                resultVarList.Add(varItem);
+                            }                            
+                        }
 
                         foreach (var resultVar in resultVarsList)
                         {
@@ -135,6 +172,11 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 #if DEBUG
                             //Log($"destVar = {destVar}");
 #endif
+
+                            if(destVar == null)
+                            {
+                                continue;
+                            }
 
                             var varItem = new Var();
                             varItem.Name = destVar;

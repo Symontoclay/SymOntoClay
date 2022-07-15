@@ -31,7 +31,7 @@ namespace SymOntoClay.Core
     {
         public IStorage Storage { get; set; }
         public bool UseFacts { get; set; }
-        public bool UseAdditionalInstances { get; set; }
+        public bool UseInheritanceFacts { get; set; }
         public bool UseProductions { get; set; }
         public int? MaxDeph { get; set; }
         public int Priority { get; set; }
@@ -56,7 +56,7 @@ namespace SymOntoClay.Core
 
             sb.PrintObjProp(n, nameof(Storage), Storage);
             sb.AppendLine($"{spaces}{nameof(UseFacts)} = {UseFacts}");
-            sb.AppendLine($"{spaces}{nameof(UseAdditionalInstances)} = {UseAdditionalInstances}");
+            sb.AppendLine($"{spaces}{nameof(UseInheritanceFacts)} = {UseInheritanceFacts}");
             sb.AppendLine($"{spaces}{nameof(UseProductions)} = {UseProductions}");
             sb.AppendLine($"{spaces}{nameof(MaxDeph)} = {MaxDeph}");
             sb.AppendLine($"{spaces}{nameof(Priority)} = {Priority}");
@@ -84,7 +84,7 @@ namespace SymOntoClay.Core
 
             sb.PrintShortObjProp(n, nameof(Storage), Storage);
             sb.AppendLine($"{spaces}{nameof(UseFacts)} = {UseFacts}");
-            sb.AppendLine($"{spaces}{nameof(UseAdditionalInstances)} = {UseAdditionalInstances}");
+            sb.AppendLine($"{spaces}{nameof(UseInheritanceFacts)} = {UseInheritanceFacts}");
             sb.AppendLine($"{spaces}{nameof(UseProductions)} = {UseProductions}");
             sb.AppendLine($"{spaces}{nameof(MaxDeph)} = {MaxDeph}");
             sb.AppendLine($"{spaces}{nameof(Priority)} = {Priority}");
@@ -112,7 +112,7 @@ namespace SymOntoClay.Core
 
             sb.PrintBriefObjProp(n, nameof(Storage), Storage);
             sb.AppendLine($"{spaces}{nameof(UseFacts)} = {UseFacts}");
-            sb.AppendLine($"{spaces}{nameof(UseAdditionalInstances)} = {UseAdditionalInstances}");
+            sb.AppendLine($"{spaces}{nameof(UseInheritanceFacts)} = {UseInheritanceFacts}");
             sb.AppendLine($"{spaces}{nameof(UseProductions)} = {UseProductions}");
             sb.AppendLine($"{spaces}{nameof(MaxDeph)} = {MaxDeph}");
             sb.AppendLine($"{spaces}{nameof(Priority)} = {Priority}");

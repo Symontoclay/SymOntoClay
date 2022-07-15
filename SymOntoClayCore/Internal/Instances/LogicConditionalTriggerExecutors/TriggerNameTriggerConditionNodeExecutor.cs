@@ -52,7 +52,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         private readonly TriggersResolver _triggersResolver;
 
         /// <inheritdoc/>
-        public override Value Run(List<List<Var>> varList)
+        public override Value Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
 #if DEBUG
             //Log($"_triggerName = {_triggerName}");

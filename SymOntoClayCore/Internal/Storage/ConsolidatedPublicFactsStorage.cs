@@ -172,7 +172,7 @@ namespace SymOntoClay.Core.Internal.Storage
                 Storage = this,
                 UseFacts = true,
                 UseProductions = false,
-                UseAdditionalInstances = false
+                UseInheritanceFacts = false
             };
 
             if (options != null)

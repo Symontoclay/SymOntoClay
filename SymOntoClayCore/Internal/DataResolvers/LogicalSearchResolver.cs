@@ -100,7 +100,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var targetStorageList = GetStoragesList(options.TargetStorage);
 
 #if DEBUG
-                Log($"targetStorageList = {targetStorageList.WriteListToString()}");
+                //Log($"targetStorageList = {targetStorageList.WriteListToString()}");
 #endif
 
                 var maxPriority = targetStorageList.Max(p => p.Priority);
@@ -113,14 +113,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 collectChainOfStoragesOptions.InitialPriority = maxPriority;
                 collectChainOfStoragesOptions.UseFacts = false;
 
+
 #if DEBUG
-                Log($"collectChainOfStoragesOptions = {collectChainOfStoragesOptions}");
+                //Log($"collectChainOfStoragesOptions = {collectChainOfStoragesOptions}");
 #endif
 
                 var additinalStoragesList = GetStoragesList(options.LocalCodeExecutionContext.Storage, collectChainOfStoragesOptions);
 
 #if DEBUG
-                Log($"additinalStoragesList = {additinalStoragesList.WriteListToString()}");
+                //Log($"additinalStoragesList = {additinalStoragesList.WriteListToString()}");
 #endif
 
                 targetStorageList.AddRange(additinalStoragesList);

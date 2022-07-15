@@ -1,133 +1,52 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors;
+using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Storage.LogicalStorage;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class AddingFactConditionalTriggerInstance : BaseComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class AddingFactConditionalTriggerInstance : BaseAddingFactTriggerInstance
     {
         public AddingFactConditionalTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage)
-            : base(context.Logger)
+            : base(trigger, parent, context, parentStorage, true)
         {
-            _executionCoordinator = parent.ExecutionCoordinator;
-            _context = context;
-            _parent = parent;
-            _trigger = trigger;
+            _triggerConditionNodeObserverContext = new TriggerConditionNodeObserverContext(context, _storage, parent.Name);
 
-#if DEBUG
-            //Log($"_trigger = {_trigger}");
-#endif
-
-            var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
-            _storage = new LocalStorage(localStorageSettings);
-
-            _storage.LogicalStorage.OnAddingFact += LogicalStorage_OnAddingFact;
+            _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext, trigger.SetCondition, trigger.SetBindingVariables);
         }
 
-        private readonly IExecutionCoordinator _executionCoordinator;
-        private readonly IEngineContext _context;
-        private readonly IStorage _storage;
-        private readonly BaseInstance _parent;
-        private readonly InlineTrigger _trigger;
+        private readonly TriggerConditionNodeObserverContext _triggerConditionNodeObserverContext;
+        private readonly LogicConditionalTriggerExecutor _setConditionalTriggerExecutor;
 
-        private IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance)
+        /// <inheritdoc/>
+        protected override IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance)
         {
 #if DEBUG
-            Log($"ruleInstance = {ruleInstance.ToHumanizedString()}");
-            Log($"_trigger.SetCondition = {_trigger.SetCondition}");
+            //Log($"ruleInstance = {ruleInstance.ToHumanizedString()}");
+            //Log($"_trigger.SetCondition = {_trigger.SetCondition}");
 #endif
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext();
-            localCodeExecutionContext.Storage = _storage;
+            var isSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> varsList, ruleInstance);
 
-            localCodeExecutionContext.Holder = _parent.Name;
+#if DEBUG
+            //Log($"isSuccsess = {isSuccsess}");
+            //Log($"setVarList.Count = {varsList.Count}");
+#endif
 
-            var mutablePart = new MutablePartOfRuleInstance();
-            mutablePart.Parent = ruleInstance;
+            if(!isSuccsess)
+            {
+                return null;
+            }
 
-            localCodeExecutionContext.Kind = KindOfLocalCodeExecutionContext.AddingFact;
-            localCodeExecutionContext.MutablePart = mutablePart;
-            localCodeExecutionContext.AddedRuleInstance = ruleInstance;
-
-            //var searchOptions = new LogicalSearchOptions();
-            //searchOptions.QueryExpression = _condition;
-            //searchOptions.LocalCodeExecutionContext = localCodeExecutionContext;
-
-            return new AddFactOrRuleResult() { KindOfResult = KindOfAddFactOrRuleResult.Accept };
-        }
-
-        /// <inheritdoc/>
-        protected override void OnDisposed()
-        {
-            _storage.LogicalStorage.OnAddingFact -= LogicalStorage_OnAddingFact;
-
-            base.OnDisposed();
-        }
-
-        /// <inheritdoc/>
-        public override string ToString()
-        {
-            return ToString(0u);
-        }
-
-        /// <inheritdoc/>
-        public string ToString(uint n)
-        {
-            return this.GetDefaultToStringInformation(n);
-        }
-
-        /// <inheritdoc/>
-        string IObjectToString.PropertiesToString(uint n)
-        {
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
-            return sb.ToString();
-        }
-
-        /// <inheritdoc/>
-        public string ToShortString()
-        {
-            return ToShortString(0u);
-        }
-
-        /// <inheritdoc/>
-        public string ToShortString(uint n)
-        {
-            return this.GetDefaultToShortStringInformation(n);
-        }
-
-        /// <inheritdoc/>
-        string IObjectToShortString.PropertiesToShortString(uint n)
-        {
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
-            return sb.ToString();
-        }
-
-        /// <inheritdoc/>
-        public string ToBriefString()
-        {
-            return ToBriefString(0u);
-        }
-
-        /// <inheritdoc/>
-        public string ToBriefString(uint n)
-        {
-            return this.GetDefaultToBriefStringInformation(n);
-        }
-
-        /// <inheritdoc/>
-        string IObjectToBriefString.PropertiesToBriefString(uint n)
-        {
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
-            return sb.ToString();
+            return ProcessAction(varsList, ruleInstance);
         }
     }
 }

@@ -147,17 +147,19 @@ namespace SymOntoClay.Core.Internal.Instances
 
 #if DEBUG
                     //Log($"targetTrigger = {targetTrigger}");
-                    Log($"targetTriggerInfo = {targetTriggerInfo}");
+                    //Log($"targetTriggerInfo = {targetTriggerInfo}");
 #endif
 
                     if(targetTriggerInfo.SetCondition == null)
                     {
                         var triggerInstance = new AddingFactNonConditionalTriggerInstance(targetTriggerInfo, this, _context, _storage);
+                        triggerInstance.Init();
                         _addingFactNonConditionalTriggerInstancesList.Add(triggerInstance);
                     }
                     else
                     {
                         var triggerInstance = new AddingFactConditionalTriggerInstance(targetTriggerInfo, this, _context, _storage);
+                        triggerInstance.Init();
                         _addingFactConditionalTriggerInstancesList.Add(triggerInstance);
                     }
                 }

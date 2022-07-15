@@ -24,6 +24,7 @@ using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
@@ -36,7 +37,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
     public class ConsolidatedDataSource
     {
 #if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public ConsolidatedDataSource(List<StorageUsingOptions> storagesList)
@@ -44,14 +45,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             _dataSourcesSettingsOrderedByPriorityList = storagesList.OrderByDescending(p => p.Priority).ToList();
             _dataSourcesSettingsOrderedByPriorityAndUseFactsList = _dataSourcesSettingsOrderedByPriorityList.Where(p => p.UseFacts).ToList();
             _dataSourcesSettingsOrderedByPriorityAndUseProductionsList = _dataSourcesSettingsOrderedByPriorityList.Where(p => p.UseProductions).ToList();
-            //_dataSourcesSettingsOrderedByPriorityAndUseAdditionalInstances = _dataSourcesSettingsOrderedByPriorityList.Where(p => p.UseAdditionalInstances).ToList();
+            _dataSourcesSettingsOrderedByPriorityAndUseInheritanceFacts = _dataSourcesSettingsOrderedByPriorityList.Where(p => p.UseInheritanceFacts).ToList();
         }
 
         private readonly object _lockObj = new object();
         private IList<StorageUsingOptions> _dataSourcesSettingsOrderedByPriorityList;
         private IList<StorageUsingOptions> _dataSourcesSettingsOrderedByPriorityAndUseFactsList;
         private IList<StorageUsingOptions> _dataSourcesSettingsOrderedByPriorityAndUseProductionsList;
-        //private IList<StorageUsingOptions> _dataSourcesSettingsOrderedByPriorityAndUseAdditionalInstances;
+        private IList<StorageUsingOptions> _dataSourcesSettingsOrderedByPriorityAndUseInheritanceFacts;
+
+        private static StrongIdentifierValue _isRelationName = NameHelper.CreateName("is");
 
         public IList<LogicalQueryNode> AllRelationsForProductions(ILogicalSearchStorageContext logicalSearchStorageContext)
         {
@@ -109,21 +112,30 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue key, ILogicalSearchStorageContext logicalSearchStorageContext)
+        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext)
         {
             lock (_lockObj)
             {
 #if DEBUG
-                //DebugLogger.Instance.Info($"key = {key}");
+                //DebugLogger.Instance.Info($"name = {name}");
 #endif
 
                 var initialResult = new List<BaseRulePart>();
 
-                var dataSourcesSettingsOrderedByPriorityList = _dataSourcesSettingsOrderedByPriorityAndUseFactsList;
+                IList<StorageUsingOptions> targetSourcesList = null;
 
-                foreach (var dataSourcesSettings in dataSourcesSettingsOrderedByPriorityList)
+                if(name == _isRelationName)
                 {
-                    var indexedRulePartsOfFactsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(key, logicalSearchStorageContext);
+                    targetSourcesList = _dataSourcesSettingsOrderedByPriorityAndUseInheritanceFacts;
+                }
+                else
+                {
+                    targetSourcesList = _dataSourcesSettingsOrderedByPriorityAndUseFactsList;
+                }
+
+                foreach (var dataSourcesSettings in targetSourcesList)
+                {
+                    var indexedRulePartsOfFactsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(name, logicalSearchStorageContext);
 
                     if (indexedRulePartsOfFactsList.IsNullOrEmpty())
                     {
@@ -151,30 +163,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     result.Add(kvpItem.Value.First());
                 }
 
-#if DEBUG
-                //var tmpList = initialResult.GroupBy(p => p.GetLongHashCode()).ToDictionary(p => p.Key, p => p.ToList());
-
-                //DebugLogger.Instance.Info($"initialResult.Count = {initialResult.Count}");
-                //DebugLogger.Instance.Info($"result.Count = {result.Count}");
-                //DebugLogger.Instance.Info($"tmpList.Count = {tmpList.Count}");
-
-                //foreach (var tmpKVPItem in tmpList)
-                //{
-                //    DebugLogger.Instance.Info($"tmpKVPItem.Key = {tmpKVPItem.Key}");
-                //    DebugLogger.Instance.Info($"tmpKVPItem.Value.Count = {tmpKVPItem.Value.Count}");
-
-                //    if (tmpKVPItem.Value.Count > 1)
-                //    {
-                //        foreach (var tmpValueItem in tmpKVPItem.Value)
-                //        {
-                //            DebugLogger.Instance.Info(DebugHelperForRuleInstance.BaseRulePartToString(tmpValueItem.OriginRulePart));
-                //        }
-
-                //        throw new NotImplementedException();
-                //    }
-                //}
-#endif
-
                 return result;
             }
         }
@@ -189,9 +177,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 var initialResult = new List<BaseRulePart>();
 
-                var dataSourcesSettingsOrderedByPriorityAndUseProductionsList = _dataSourcesSettingsOrderedByPriorityAndUseProductionsList;
+                IList<StorageUsingOptions> targetSourcesList = null;
 
-                foreach (var dataSourcesSettings in dataSourcesSettingsOrderedByPriorityAndUseProductionsList)
+                if (name == _isRelationName)
+                {
+                    targetSourcesList = _dataSourcesSettingsOrderedByPriorityAndUseInheritanceFacts;
+                }
+                else
+                {
+                    targetSourcesList = _dataSourcesSettingsOrderedByPriorityAndUseProductionsList;
+                }               
+
+                foreach (var dataSourcesSettings in targetSourcesList)
                 {
 #if DEBUG
                     //_gbcLogger.Info($"dataSourcesSettings.Storage.Kind = {dataSourcesSettings.Storage.Kind}");
@@ -221,30 +218,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 {
                     result.Add(kvpItem.Value.First());
                 }
-
-#if DEBUG
-                //var tmpList = initialResult.GroupBy(p => p.GetLongHashCode()).ToDictionary(p => p.Key, p => p.ToList());
-
-                //DebugLogger.Instance.Info($"initialResult.Count = {initialResult.Count}");
-                //DebugLogger.Instance.Info($"result.Count = {result.Count}");
-                //DebugLogger.Instance.Info($"tmpList.Count = {tmpList.Count}");
-
-                //foreach (var tmpKVPItem in tmpList)
-                //{
-                //    DebugLogger.Instance.Info($"tmpKVPItem.Key = {tmpKVPItem.Key}");
-                //    DebugLogger.Instance.Info($"tmpKVPItem.Value.Count = {tmpKVPItem.Value.Count}");
-
-                //    if (tmpKVPItem.Value.Count > 1)
-                //    {
-                //        foreach(var tmpValueItem in tmpKVPItem.Value)
-                //        {
-                //            DebugLogger.Instance.Info(DebugHelperForRuleInstance.BaseRulePartToString(tmpValueItem.OriginRulePart));
-                //        }
-
-                //        throw new NotImplementedException();
-                //    }
-                //}
-#endif
 
                 return result;
             }

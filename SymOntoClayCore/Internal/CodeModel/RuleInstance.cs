@@ -494,7 +494,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 Storage = this,
                 UseFacts = true,
                 UseProductions = true,
-                UseAdditionalInstances = true
+                UseInheritanceFacts = true
             };
 
             if(options != null)

@@ -64,7 +64,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         public BaseTriggerConditionNodeExecutor Right { get; set; }
 
         /// <inheritdoc/>
-        public override Value Run(List<List<Var>> varList)
+        public override Value Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
             var kindOfOperator = _kindOfOperator;
 
@@ -78,8 +78,8 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 #endif
 
             var paramsList = new List<Value>();
-            paramsList.Add(Left.Run(varList));
-            paramsList.Add(Right.Run(varList));
+            paramsList.Add(Left.Run(varList, processedRuleInstance));
+            paramsList.Add(Right.Run(varList, processedRuleInstance));
             paramsList.Add(NullValue.Instance);
 
 #if DEBUG

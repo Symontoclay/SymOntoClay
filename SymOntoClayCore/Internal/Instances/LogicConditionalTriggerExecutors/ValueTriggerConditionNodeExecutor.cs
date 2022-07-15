@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         private readonly Value _value;
 
         /// <inheritdoc/>
-        public override Value Run(List<List<Var>> varList)
+        public override Value Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
             return _value;
         }

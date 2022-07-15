@@ -81,7 +81,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return _varsDict[sourceVarName];
             }
 
-            throw new NotImplementedException();
+            return null;
         }
 
         public List<StrongIdentifierValue> GetTargetsList()

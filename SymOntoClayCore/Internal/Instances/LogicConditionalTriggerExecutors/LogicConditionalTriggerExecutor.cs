@@ -53,9 +53,14 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 
         public bool Run(out List<List<Var>> varList)
         {
+            return Run(out varList, null);
+        }
+
+        public bool Run(out List<List<Var>> varList, RuleInstance processedRuleInstance)
+        {
             varList = new List<List<Var>>();
 
-            return _toSystemBoolResolver.Resolve(_node.Run(varList));
+            return _toSystemBoolResolver.Resolve(_node.Run(varList, processedRuleInstance));
         }
     }
 }

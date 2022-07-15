@@ -53,7 +53,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         private readonly VarsResolver _varsResolver;
 
         /// <inheritdoc/>
-        public override Value Run(List<List<Var>> varList)
+        public override Value Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
             return _varsResolver.GetVarValue(_varName, _localCodeExecutionContext);
         }

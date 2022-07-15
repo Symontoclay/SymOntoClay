@@ -485,5 +485,109 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case4()
+        {
+            using var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{
+    {: gun(M16) :}
+
+    on add fact {: hear(I, $x) & gun($x) :} ($_ >> @x)
+	{
+	    'on add fact ($_ >> @x)' >> @>log;
+		@x.so = 1;
+	}
+
+	on {: hear(I, $x) & gun($x) & distance(I, $x, $y) so: 1 :} ($x >> @x, $y >> @y)
+    {
+        @x >> @>log;
+        @y >> @>log;
+        '!!!M16!!!!' >> @>log;
+    }
+}";
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual("on add fact ($_ >> @x)", message);
+                        break;
+
+                    case 2:
+                        Assert.AreEqual(message, "m16");
+                        break;
+
+                    case 3:
+                        Assert.AreEqual(message, "15.588457107543945");
+                        break;
+
+                    case 4:
+                        Assert.AreEqual(message, "!!!M16!!!!");
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+            Thread.Sleep(1000);
+
+            var factStr = "{: $x = {: act(M16, shoot) :} & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :}";
+            npc.EngineContext.Storage.InsertListenedFact(factStr);
+
+            Thread.Sleep(1000);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case4_a()
+        {
+            var text = @"app PeaceKeeper
+{
+    {: cat(M16) :}
+
+    on Enter => {
+	    'Begin' >> @>log;
+		'End' >> @>log;
+	}
+
+    on add fact {: hear(I, $x) & gun($x) :} ($_ >> @x)
+	{
+	    'on add fact ($_ >> @x)' >> @>log;
+		@x.so = 1;
+	}
+
+	on {: hear(I, $x) & gun($x) & distance(I, $x, $y) so: 1 :} ($x >> @x, $y >> @y)
+    {
+        @x >> @>log;
+        @y >> @>log;
+        '!!!M16!!!!' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

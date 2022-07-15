@@ -80,7 +80,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         public List<BaseTriggerConditionNodeExecutor> ParamsList { get; set; }
 
         /// <inheritdoc/>
-        public override Value Run(List<List<Var>> varList)
+        public override Value Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
 #if DEBUG
             //Log($"_kindOfOperator = {_kindOfOperator}");
@@ -88,15 +88,15 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 
             if(_kindOfOperator == KindOfOperator.CallFunction)
             {
-                return RunCallFunction(varList);
+                return RunCallFunction(varList, processedRuleInstance);
             }
 
-            return RunUnaryOperator(varList);
+            return RunUnaryOperator(varList, processedRuleInstance);
         }
 
-        private Value RunCallFunction(List<List<Var>> varList)
+        private Value RunCallFunction(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
-            var caller = Left.Run(varList);
+            var caller = Left.Run(varList, processedRuleInstance);
 
 #if DEBUG
             //Log($"caller = {caller}");
@@ -108,7 +108,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             {
                 foreach (var paramExecutor in ParamsList)
                 {
-                    paramsList.Add(paramExecutor.Run(varList));
+                    paramsList.Add(paramExecutor.Run(varList, processedRuleInstance));
                 }
             }
 
@@ -119,10 +119,10 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             return _codeExecutor.CallFunctionSync(caller, _kindOfparameters, paramsList, _localCodeExecutionContext);
         }
 
-        private Value RunUnaryOperator(List<List<Var>> varList)
+        private Value RunUnaryOperator(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
             var paramsList = new List<Value>();
-            paramsList.Add(Left.Run(varList));
+            paramsList.Add(Left.Run(varList, processedRuleInstance));
             paramsList.Add(NullValue.Instance);
 
 #if DEBUG

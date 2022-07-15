@@ -21,17 +21,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
         protected Value TryResolveFromVar(Value operand, LocalCodeExecutionContext localCodeExecutionContext)
         {
-            if(operand.IsStrongIdentifierValue)
-            {
-                var identifier = operand.AsStrongIdentifierValue;
-
-                if(identifier.KindOfName == KindOfName.Var || identifier.KindOfName == KindOfName.SystemVar)
-                {
-                    return _varsResolver.GetVarValue(identifier, localCodeExecutionContext);
-                }
-            }
-
-            return operand;
+            return ValueResolvingHelper.TryResolveFromVar(operand, localCodeExecutionContext, _varsResolver);
         }
     }
 }

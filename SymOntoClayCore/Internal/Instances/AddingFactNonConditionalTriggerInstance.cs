@@ -154,6 +154,14 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _storage.LogicalStorage.OnAddingFact -= LogicalStorage_OnAddingFact;
+
+            base.OnDisposed();
+        }
+
+        /// <inheritdoc/>
         public override string ToString()
         {
             return ToString(0u);

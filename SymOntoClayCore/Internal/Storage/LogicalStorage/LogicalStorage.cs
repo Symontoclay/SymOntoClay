@@ -599,7 +599,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 //foreach (var sourceItem in source)
                 //{
                 //    Log($"sourceItem.Name = '{sourceItem.Name.NameValue}'");
-                //    Log($"sourceItem = {sourceItem}");
+                //    Log($"sourceItem = {sourceItem.ToHumanizedString()}");
                 //}
 #endif
 
@@ -650,7 +650,15 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 #if DEBUG
                 //Log($"name = {name}");
                 //Log($"_kind = {_kind}");
+                //Log($"_mutablePartsDict?.Count = {_mutablePartsDict?.Count}");
                 //Log($"source.Count = {source.Count}");
+#endif
+
+#if DEBUG
+                //foreach (var sourceItem in source)
+                //{
+                //    Log($"sourceItem = {sourceItem.ToHumanizedString()}");
+                //}
 #endif
 
                 return logicalSearchStorageContext.Filter(source, true, _mutablePartsDict);

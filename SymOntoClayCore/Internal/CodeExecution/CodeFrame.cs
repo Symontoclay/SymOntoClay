@@ -190,7 +190,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var sb = new StringBuilder();
             if(Instance != null)
             {
-                sb.AppendLine($"{spaces}Instance: {Instance.Name}");
+                sb.AppendLine($"{spaces}Instance: {Instance.Name.NameValue}");
             }
             
             sb.AppendLine($"{spaces}Begin Code");

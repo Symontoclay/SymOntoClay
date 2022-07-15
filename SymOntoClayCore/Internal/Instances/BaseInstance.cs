@@ -93,6 +93,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private InstanceState _instanceState = InstanceState.Created;
         private List<LogicConditionalTriggerInstance> _logicConditionalTriggersList = new List<LogicConditionalTriggerInstance>();
         private List<AddingFactNonConditionalTriggerInstance> _addingFactNonConditionalTriggerInstancesList = new List<AddingFactNonConditionalTriggerInstance>();
+        private List<AddingFactConditionalTriggerInstance> _addingFactConditionalTriggerInstancesList = new List<AddingFactConditionalTriggerInstance>();
 
         protected IExecutionCoordinator _executionCoordinator;
 
@@ -146,7 +147,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
 #if DEBUG
                     //Log($"targetTrigger = {targetTrigger}");
-                    //Log($"targetTriggerInfo = {targetTriggerInfo}");
+                    Log($"targetTriggerInfo = {targetTriggerInfo}");
 #endif
 
                     if(targetTriggerInfo.SetCondition == null)
@@ -156,7 +157,8 @@ namespace SymOntoClay.Core.Internal.Instances
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        var triggerInstance = new AddingFactConditionalTriggerInstance(targetTriggerInfo, this, _context, _storage);
+                        _addingFactConditionalTriggerInstancesList.Add(triggerInstance);
                     }
                 }
             }
@@ -443,6 +445,13 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
             _addingFactNonConditionalTriggerInstancesList.Clear();
+
+            foreach (var triggerInstance in _addingFactConditionalTriggerInstancesList)
+            {
+                triggerInstance.Dispose();
+            }
+
+            _addingFactConditionalTriggerInstancesList.Clear();
 
             foreach (var childInstance in _childInstances)
             {

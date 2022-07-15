@@ -356,6 +356,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case TokenKind.Var:
+                        case TokenKind.SystemVar:
+                            {
+                                var value = NameHelper.CreateName(_currToken.Content);
+
+                                var node = new VarAstExpression();
+                                node.Name = value;
+
+                                _currentParameter.Value = node;
+
+                                _state = State.GotValueOfNamedMainParameter;
+                            }
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

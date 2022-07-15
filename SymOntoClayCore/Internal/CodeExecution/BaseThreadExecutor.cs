@@ -609,7 +609,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
-                            var currentValue = _currentCodeFrame.ValuesStack.Pop();
+                            var currentValue = TryResolveFromVar(_currentCodeFrame.ValuesStack.Pop());
 
 #if DEBUG
                             //Log($"currentValue = {currentValue}");
@@ -771,6 +771,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 
                 throw;
             }
+        }
+
+        private Value TryResolveFromVar(Value operand)
+        {
+#if DEBUG
+            //Log($"operand = {operand}");
+#endif
+
+            return ValueResolvingHelper.TryResolveFromVar(operand, _currentCodeFrame.LocalContext, _varsResolver);
         }
 
         private void JumpToIf(float targetValue, int targetPosition)
@@ -1037,7 +1046,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private List<Value> TakePositionedParameters(int count)
+        private List<Value> TakePositionedParameters(int count, bool resolveValueFromVar = false)
         {
             var result = new List<Value>();
 
@@ -1045,7 +1054,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             for (var i = 0; i < count; i++)
             {
-                result.Add(valueStack.Pop());
+                if(resolveValueFromVar)
+                {
+                    result.Add(TryResolveFromVar(valueStack.Pop()));
+                }
+                else
+                {
+                    result.Add(valueStack.Pop());
+                }                
             }
 
             result.Reverse();
@@ -1053,7 +1069,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return result;
         }
 
-        private Dictionary<StrongIdentifierValue, Value> TakeNamedParameters(int count)
+        private Dictionary<StrongIdentifierValue, Value> TakeNamedParameters(int count, bool resolveValueFromVar = false)
         {
             var rawParamsList = TakePositionedParameters(count * 2);
 
@@ -1068,6 +1084,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 enumerator.MoveNext();
 
                 var value = enumerator.Current;
+
+                if(resolveValueFromVar)
+                {
+                    value = TryResolveFromVar(value);
+                }
 
                 result[name] = value;
             }
@@ -1108,11 +1129,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    namedParameters = TakeNamedParameters(parametersCount);
+                    namedParameters = TakeNamedParameters(parametersCount, true);
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    positionedParameters = TakePositionedParameters(parametersCount);
+                    positionedParameters = TakePositionedParameters(parametersCount, true);
                     break;
 
                 default:
@@ -1121,7 +1142,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-            //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
+            //Log($"namedParameters = {namedParameters?.WriteDict_1_ToString()}");
+            //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
             //Log($"caller.IsPointRefValue = {caller.IsPointRefValue}");
             //Log($"caller.IsStrongIdentifierValue = {caller.IsStrongIdentifierValue}");
 #endif

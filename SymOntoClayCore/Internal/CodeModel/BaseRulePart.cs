@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -233,6 +234,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
+        }
+
+        public string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            return DebugHelperForRuleInstance.BaseRulePartToString(this, options);
         }
     }
 }

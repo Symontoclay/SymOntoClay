@@ -87,8 +87,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -141,7 +141,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
-                        case TokenKind.OpenFactBracket:                        
+                        case TokenKind.OpenFactBracket:
                             {
                                 _inlineTrigger.KindOfInlineTrigger = KindOfInlineTrigger.LogicConditional;
 
@@ -208,6 +208,19 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.Lambda:
                             _state = State.WaitForSetAction;
+                            break;
+
+                        case TokenKind.OpenFactBracket:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var parser = new TriggerConditionParser(_context);
+                                parser.Run();
+
+                                _inlineTrigger.SetCondition = parser.Result;
+
+                                _state = State.GotSetCondition;
+                            }
                             break;
 
                         default:

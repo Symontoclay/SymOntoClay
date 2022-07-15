@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,13 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
 {
-    public class LogicalSearchStorageContext: ILogicalSearchStorageContext
+    public class LogicalSearchStorageContext: BaseLoggedComponent, ILogicalSearchStorageContext
     {
         public LogicalSearchStorageContext(IMainStorageContext mainStorageContext, LocalCodeExecutionContext localCodeExecutionContext, RuleInstance queryExpression)
+            : base(mainStorageContext.Logger)
         {
             _mainStorageContext = mainStorageContext;
+
             _localCodeExecutionContext = localCodeExecutionContext;
 
             _obligationModality = queryExpression.ObligationModality;
@@ -23,7 +26,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             _logicalValueModalityResolver = mainStorageContext.DataResolversFactory.GetLogicalValueModalityResolver();
         }
 
-        private readonly IMainStorageContext _mainStorageContext; 
+        private readonly IMainStorageContext _mainStorageContext;
         private readonly LocalCodeExecutionContext _localCodeExecutionContext;
         private readonly Value _obligationModality;
         private readonly bool _hasObligationModality;
@@ -94,9 +97,21 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private bool IsFit(ILogicalSearchItem item, Value modalityValue, Value queryModalityValue, LocalCodeExecutionContext localCodeExecutionContext, KindOfCheckedModality kindOfCheckedModality, IDictionary<RuleInstance, IItemWithModalities> additionalModalities)
         {
-            if(additionalModalities.ContainsKey(item.RuleInstance))
+#if DEBUG
+            //Log($"item = {item}");
+            //Log($"queryModalityValue = {queryModalityValue}");
+            //Log($"additionalModalities.Count = {additionalModalities.Count}");
+#endif
+
+            var originalRuleInstance = item.RuleInstance.Original;
+
+            if (additionalModalities.ContainsKey(originalRuleInstance))
             {
-                var additionalPart = additionalModalities[item.RuleInstance];
+                var additionalPart = additionalModalities[originalRuleInstance];
+
+#if DEBUG
+                //Log($"additionalPart = {additionalPart}");
+#endif
 
                 Value additionalModalityValue = null;
 

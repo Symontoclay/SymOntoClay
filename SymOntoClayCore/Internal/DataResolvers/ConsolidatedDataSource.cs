@@ -25,6 +25,7 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,7 +65,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 {
                     var targetRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetAllRelations(logicalSearchStorageContext);
 
-                    if (targetRelationsList == null)
+                    if (targetRelationsList.IsNullOrEmpty())
                     {
                         continue;
                     }
@@ -124,13 +125,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 {
                     var indexedRulePartsOfFactsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(key, logicalSearchStorageContext);
 
-                    if (indexedRulePartsOfFactsList == null)
+                    if (indexedRulePartsOfFactsList.IsNullOrEmpty())
                     {
                         continue;
                     }
 
                     initialResult.AddRange(indexedRulePartsOfFactsList);
                 }
+
+#if DEBUG
+                //DebugLogger.Instance.Info($"initialResult = {initialResult.Count}");
+#endif
 
                 if (initialResult.Count <= 1)
                 {
@@ -195,7 +200,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                     var indexedRulePartWithOneRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name, logicalSearchStorageContext);
 
-                    if (indexedRulePartWithOneRelationsList == null)
+                    if (indexedRulePartWithOneRelationsList.IsNullOrEmpty())
                     {
                         continue;
                     }

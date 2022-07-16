@@ -27,7 +27,7 @@ using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Parsing.Internal;
-using SymOntoClay.UnityAsset.Core.Tests.Helpers;
+using SymOntoClay.Core.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

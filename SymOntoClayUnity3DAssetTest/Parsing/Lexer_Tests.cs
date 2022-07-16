@@ -22,8 +22,8 @@ SOFTWARE.*/
 
 using NUnit.Framework;
 using SymOntoClay.Core.Internal.Parsing.Internal;
+using SymOntoClay.Core.Tests.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.UnityAsset.Core.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;

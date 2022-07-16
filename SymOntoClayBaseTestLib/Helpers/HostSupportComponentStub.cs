@@ -20,58 +20,42 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Core;
+using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
+namespace SymOntoClay.Core.Tests.Helpers
 {
-    public class EmptyLogger : IEntityLogger, IPlatformLogger
+    public class HostSupportComponentStub : IHostSupport
     {
-        /// <inheritdoc/>
-        public void Error(string message)
+        public HostSupportComponentStub(IPlatformSupport platformSupport)
         {
+            _platformSupport = platformSupport;
+        }
+
+        private readonly IPlatformSupport _platformSupport;
+
+        /// <inheritdoc/>
+        public Vector3 ConvertFromRelativeToAbsolute(RelativeCoordinate relativeCoordinate)
+        {
+            return _platformSupport.ConvertFromRelativeToAbsolute(relativeCoordinate);
         }
 
         /// <inheritdoc/>
-        public void LogChannel(string message)
+        public Vector3 GetCurrentAbsolutePosition()
         {
+            return _platformSupport.GetCurrentAbsolutePosition();
         }
 
         /// <inheritdoc/>
-        public void Log(string message)
+        public float GetDirectionToPosition(Vector3 position)
         {
-        }
-
-        /// <inheritdoc/>
-        public void Warning(string message)
-        {
-        }
-
-        /// <inheritdoc/>
-        public void WriteLn(string message)
-        {
-        }
-
-        /// <inheritdoc/>
-        public void WriteLnRawLogChannel(string message)
-        {
-        }
-
-        /// <inheritdoc/>
-        public void WriteLnRawLog(string message)
-        {
-        }
-
-        /// <inheritdoc/>
-        public void WriteLnRawWarning(string message)
-        {
-        }
-
-        /// <inheritdoc/>
-        public void WriteLnRawError(string message)
-        {
+            return _platformSupport.GetDirectionToPosition(position);
         }
     }
 }

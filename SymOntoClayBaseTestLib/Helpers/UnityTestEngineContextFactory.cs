@@ -29,6 +29,7 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClay.SoundBuses;
+using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.World;
 using System;
@@ -39,7 +40,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
+namespace SymOntoClay.Core.Tests.Helpers
 {
     public static class UnityTestEngineContextFactory
     {

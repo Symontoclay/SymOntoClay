@@ -30,8 +30,9 @@ using System.Text;
 using System.Numerics;
 using NLog;
 using SymOntoClay.SoundBuses;
+using SymOntoClay.UnityAsset.Core;
 
-namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
+namespace SymOntoClay.Core.Tests.Helpers
 {
     public class AdvancedBehaviorTestEngineInstance : IDisposable
     {

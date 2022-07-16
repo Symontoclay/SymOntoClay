@@ -2,8 +2,8 @@
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Tests.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.UnityAsset.Core.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

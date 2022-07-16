@@ -23,11 +23,11 @@ SOFTWARE.*/
 using NUnit.Framework;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Tests.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.ConvertingFactToInternalCG;
 using SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure;
-using SymOntoClay.UnityAsset.Core.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

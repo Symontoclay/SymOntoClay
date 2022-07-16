@@ -27,7 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
+namespace SymOntoClay.Core.Tests.Helpers
 {
     public class UnityTestMainStorageContext: MainStorageContext
     {

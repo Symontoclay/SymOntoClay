@@ -25,7 +25,7 @@ using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Parsing;
-using SymOntoClay.UnityAsset.Core.Tests.Helpers;
+using SymOntoClay.Core.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;

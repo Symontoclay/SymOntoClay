@@ -30,3 +30,7 @@ SymOntoClayCLI/obj/
 /DictionaryGenerator/obj
 /SymOntoClayNLPBinaryDict/bin
 /SymOntoClayNLPBinaryDict/obj
+/SymOntoClayBaseTestLib/bin
+/SymOntoClayBaseTestLib/obj
+/SymOntoClayHardTests/bin
+/SymOntoClayHardTests/obj

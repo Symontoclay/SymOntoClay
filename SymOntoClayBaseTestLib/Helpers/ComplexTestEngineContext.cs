@@ -20,56 +20,56 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal;
+using SymOntoClay.CoreHelper;
 using SymOntoClay.UnityAsset.Core;
+using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
+namespace SymOntoClay.Core.Tests.Helpers
 {
-    public class CallBackLogger : IPlatformLogger
+    public class ComplexTestEngineContext: ISymOntoClayDisposable
     {
-        public CallBackLogger(Action<string> logChannel, Action<string> error, bool enableWriteLnRawLog = false)
-        {
-            _enableWriteLnRawLog = enableWriteLnRawLog;
-            _logChannel = logChannel;
-            _error = error;
-        }
-
-        private readonly bool _enableWriteLnRawLog;
-        private readonly Action<string> _logChannel;
-        private readonly Action<string> _error;
-
-        /// <inheritdoc/>
-        public void WriteLn(string message)
+        public ComplexTestEngineContext(IWorld world, IHumanoidNPC humanoidNPC)
+            : this(world, humanoidNPC, string.Empty)
         {
         }
 
-        /// <inheritdoc/>
-        public void WriteLnRawLogChannel(string message)
+        public ComplexTestEngineContext(IWorld world, IHumanoidNPC humanoidNPC, string baseDir)
         {
-            _logChannel?.Invoke(message);
+            World = world;
+            HumanoidNPC = humanoidNPC;
+            _baseDir = baseDir;
+        }
+
+        public IEngineContext EngineContext => HumanoidNPC.EngineContext;
+        public IWorld World { get; private set; }
+        public WorldContext WorldContext => World.WorldContext;
+        public IHumanoidNPC HumanoidNPC { get; private set; }
+        private readonly string _baseDir;
+
+        public void Start()
+        {
+            World.Start();
         }
 
         /// <inheritdoc/>
-        public void WriteLnRawLog(string message)
+        public bool IsDisposed => World.IsDisposed;
+
+        /// <inheritdoc/>
+        public void Dispose()
         {
-            if(_enableWriteLnRawLog)
+            World.Dispose();
+
+            if(!string.IsNullOrWhiteSpace(_baseDir) && Directory.Exists(_baseDir))
             {
-                _logChannel?.Invoke(message);
-            }            
-        }
-
-        /// <inheritdoc/>
-        public void WriteLnRawWarning(string message)
-        {
-            _logChannel?.Invoke(message);
-        }
-
-        /// <inheritdoc/>
-        public void WriteLnRawError(string message)
-        {
-            _error?.Invoke(message);
+                Directory.Delete(_baseDir, true);
+            }
         }
     }
 }

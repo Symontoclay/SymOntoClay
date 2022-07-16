@@ -32,7 +32,6 @@ using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.UnityAsset.Core.Tests.Helpers;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Helpers;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
@@ -67,6 +66,7 @@ using System.Numerics;
 using DictionaryGenerator;
 using SymOntoClay.NLP.CommonDict.Implementations;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.Core.Tests.Helpers;
 
 namespace TestSandbox
 {

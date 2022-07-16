@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
+    <ProjectReference Include="..\SymOntoClayCore\SymOntoClayCore.csproj" />
+    <ProjectReference Include="..\SymOntoClayDefaultCLIEnvironment\SymOntoClayDefaultCLIEnvironment.csproj" />
+    <ProjectReference Include="..\SymOntoClayNLPCommonDict\SymOntoClayNLPCommonDict.csproj" />
+    <ProjectReference Include="..\SymOntoClayNLP\SymOntoClayNLP.csproj" />
+    <ProjectReference Include="..\SymOntoClayProjectFiles\SymOntoClayProjectFiles.csproj" />
+    <ProjectReference Include="..\SymOntoClaySoundBuses\SymOntoClaySoundBuses.csproj" />
+    <ProjectReference Include="..\SymOntoClayUnityAssetCore\SymOntoClayUnityAssetCore.csproj" />
+  </ItemGroup>
+
+</Project>

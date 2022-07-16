@@ -22,7 +22,6 @@ SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
-using SymOntoClay.UnityAsset.Core.Tests.Helpers;
 using SymOntoClay.UnityAsset.Core.World;
 using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClayProjectFiles;
@@ -35,6 +34,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TestSandbox.PlatformImplementations;
+using SymOntoClay.Core.Tests.Helpers;
 
 namespace TestSandbox.CreatingExamples
 {

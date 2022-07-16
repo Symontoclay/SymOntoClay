@@ -30,7 +30,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 
-namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
+namespace SymOntoClay.Core.Tests.Helpers
 {
     public class BehaviorTestEngineInstance: IDisposable
     {

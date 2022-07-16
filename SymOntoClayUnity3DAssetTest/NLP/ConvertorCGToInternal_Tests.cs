@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NUnit.Framework;
+using SymOntoClay.Core.Tests.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.ATN;
@@ -28,7 +29,6 @@ using SymOntoClay.NLP.Internal.ConvertingCGToInternal;
 using SymOntoClay.NLP.Internal.Dot;
 using SymOntoClay.NLP.Internal.PhraseStructure;
 using SymOntoClay.NLP.Internal.PhraseToCGParsing;
-using SymOntoClay.UnityAsset.Core.Tests.Helpers;
 using SymOntoClay.UnityAsset.Core.Tests.NLP.ATN;
 using System;
 using System.Collections.Generic;

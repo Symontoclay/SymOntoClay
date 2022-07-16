@@ -20,41 +20,56 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Core;
+using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace SymOntoClay.UnityAsset.Core.Tests.Helpers
+namespace SymOntoClay.Core.Tests.Helpers
 {
-    public class HostSupportComponentStub : IHostSupport
+    public class CallBackLogger : IPlatformLogger
     {
-        public HostSupportComponentStub(IPlatformSupport platformSupport)
+        public CallBackLogger(Action<string> logChannel, Action<string> error, bool enableWriteLnRawLog = false)
         {
-            _platformSupport = platformSupport;
+            _enableWriteLnRawLog = enableWriteLnRawLog;
+            _logChannel = logChannel;
+            _error = error;
         }
 
-        private readonly IPlatformSupport _platformSupport;
+        private readonly bool _enableWriteLnRawLog;
+        private readonly Action<string> _logChannel;
+        private readonly Action<string> _error;
 
         /// <inheritdoc/>
-        public Vector3 ConvertFromRelativeToAbsolute(RelativeCoordinate relativeCoordinate)
+        public void WriteLn(string message)
         {
-            return _platformSupport.ConvertFromRelativeToAbsolute(relativeCoordinate);
-        }
-
-        /// <inheritdoc/>
-        public Vector3 GetCurrentAbsolutePosition()
-        {
-            return _platformSupport.GetCurrentAbsolutePosition();
         }
 
         /// <inheritdoc/>
-        public float GetDirectionToPosition(Vector3 position)
+        public void WriteLnRawLogChannel(string message)
         {
-            return _platformSupport.GetDirectionToPosition(position);
+            _logChannel?.Invoke(message);
+        }
+
+        /// <inheritdoc/>
+        public void WriteLnRawLog(string message)
+        {
+            if(_enableWriteLnRawLog)
+            {
+                _logChannel?.Invoke(message);
+            }            
+        }
+
+        /// <inheritdoc/>
+        public void WriteLnRawWarning(string message)
+        {
+            _logChannel?.Invoke(message);
+        }
+
+        /// <inheritdoc/>
+        public void WriteLnRawError(string message)
+        {
+            _error?.Invoke(message);
         }
     }
 }

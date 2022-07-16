@@ -43,15 +43,15 @@ namespace SymOntoClay.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "m4a1");
+                            Assert.AreEqual("m4a1", message);
                             break;
 
                         case 2:
-                            Assert.AreEqual(message.StartsWith("155.88"), true);
+                            Assert.AreEqual(true, message.StartsWith("155.88"));
                             break;
 
                         case 3:
-                            Assert.AreEqual(message, "!!!M4A1!!!!");
+                            Assert.AreEqual("!!!M4A1!!!!", message);
                             break;
 
                         default:

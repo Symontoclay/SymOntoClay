@@ -10,6 +10,8 @@
     <RootNamespace>SymOntoClay.Core.Tests</RootNamespace>
 
     <AssemblyName>SymOntoClay.Hard.Tests</AssemblyName>
+
+    <EnableNETAnalyzers>False</EnableNETAnalyzers>
   </PropertyGroup>
 
   <ItemGroup>

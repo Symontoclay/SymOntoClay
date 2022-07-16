@@ -9,7 +9,7 @@
 
     <RootNamespace>SymOntoClay.Core.Tests</RootNamespace>
 
-    <AssemblyName>SymOntoClay.Hard.Tests</AssemblyName>
+    <AssemblyName>SymOntoClay.HardTests</AssemblyName>
 
     <EnableNETAnalyzers>False</EnableNETAnalyzers>
   </PropertyGroup>

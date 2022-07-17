@@ -318,15 +318,15 @@ namespace SymOntoClay.Core.Tests
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "m16");
+                        Assert.AreEqual("m16", message);
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "15.588457107543945");
+                        Assert.AreEqual("15.588457107543945", message);
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "!!!M16!!!!");
+                        Assert.AreEqual("!!!M16!!!!", message);
                         break;
 
                     default:
@@ -422,15 +422,15 @@ namespace SymOntoClay.Core.Tests
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "m16");
+                        Assert.AreEqual("m16", message);
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "15.588457107543945");
+                        Assert.AreEqual("15.588457107543945", message);
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "!!!M16!!!!");
+                        Assert.AreEqual("!!!M16!!!!", message);
                         break;
 
                     default:
@@ -467,7 +467,7 @@ namespace SymOntoClay.Core.Tests
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(true, BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -483,7 +483,7 @@ namespace SymOntoClay.Core.Tests
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
 
         [Test]
@@ -520,15 +520,15 @@ namespace SymOntoClay.Core.Tests
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "m16");
+                        Assert.AreEqual("m16", message);
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "15.588457107543945");
+                        Assert.AreEqual("15.588457107543945", message);
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "!!!M16!!!!");
+                        Assert.AreEqual("!!!M16!!!!", message);
                         break;
 
                     default:
@@ -571,7 +571,7 @@ namespace SymOntoClay.Core.Tests
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(true, BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -587,7 +587,7 @@ namespace SymOntoClay.Core.Tests
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
         }
     }
 }

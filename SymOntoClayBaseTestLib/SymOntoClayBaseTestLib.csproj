@@ -1,11 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AssemblyVersion>0.4.0</AssemblyVersion>
+    <FileVersion>0.4.0</FileVersion>
+    <Version>0.4.0</Version>
+    <Copyright>Copyright (c) 2020 - 2021 Sergiy Tolkachov aka metatypeman</Copyright>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
     <ProjectReference Include="..\SymOntoClayCore\SymOntoClayCore.csproj" />
@@ -16,5 +18,4 @@
     <ProjectReference Include="..\SymOntoClaySoundBuses\SymOntoClaySoundBuses.csproj" />
     <ProjectReference Include="..\SymOntoClayUnityAssetCore\SymOntoClayUnityAssetCore.csproj" />
   </ItemGroup>
-
 </Project>

@@ -11,7 +11,7 @@
 
     <AssemblyName>SymOntoClay.HardTests</AssemblyName>
 
-    <EnableNETAnalyzers>False</EnableNETAnalyzers>
+    <EnableNETAnalyzers>True</EnableNETAnalyzers>
   </PropertyGroup>
 
   <ItemGroup>

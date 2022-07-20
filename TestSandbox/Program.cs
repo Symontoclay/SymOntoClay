@@ -109,6 +109,7 @@ namespace TestSandbox
             //TstEnvironmentVariables();
             //TstCLINewHandler();
             //TstCLIRunHandler();
+            TstCLICommandParser();
             //TstLogicalDatabase();//!
             //TstProcessInfoChildren();
             //TstWaitIProcessInfo();
@@ -134,7 +135,7 @@ namespace TestSandbox
             //TstParsing();
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
-            TstAddingFactTriggerHandler();
+            //TstAddingFactTriggerHandler();
             //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
@@ -945,8 +946,6 @@ action Go
 
             _logger.Log($"command = {command}");
 
-
-
             _logger.Log("End");
         }
 
@@ -1021,6 +1020,16 @@ action Go
             instance.Start();
 
             Thread.Sleep(50000);
+
+            _logger.Log("End");
+        }
+
+        private static void TstCLICommandParser()
+        {
+            _logger.Log("Begin");
+
+            var handler = new CLICommandParserHandler();
+            handler.Run();
 
             _logger.Log("End");
         }

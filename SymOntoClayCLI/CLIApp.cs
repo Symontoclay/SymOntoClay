@@ -64,7 +64,7 @@ namespace SymOntoClay.CLI
             if(!command.NoLogo)
             {
                 PrintHeader();
-            }           
+            }
 
             var kindOfComand = command.Kind;
 

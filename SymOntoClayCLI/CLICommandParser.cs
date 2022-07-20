@@ -35,7 +35,7 @@ namespace SymOntoClay.CLI
     public static class CLICommandParser
     {
 #if DEBUG
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static CLICommand Parse(string[] args)

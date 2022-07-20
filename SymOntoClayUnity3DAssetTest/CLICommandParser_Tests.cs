@@ -404,32 +404,89 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(true, command.IsValid);
         }
 
-        /*
-        
-         */
-
-        /*
-            var commandLine = "";
+        [Test]
+        [Parallelizable]
+        public void Case8()
+        {
+            var commandLine = "version";
 
             var args = ParseCommandLine(commandLine);
 
             var command = CLICommandParser.Parse(args);
 
             Assert.IsNotNull(command);
-            Assert.AreEqual(KindOfCLICommand., command.Kind);
-            Assert.AreEqual(KindOfNewCommand., command.KindOfNewCommand);
-            Assert.AreEqual(, command.InputFile);
-            Assert.AreEqual(, command.InputDir);
-            Assert.AreEqual(, command.ProjectName);
-            Assert.AreEqual(, command.NoLogo);
-            Assert.AreEqual(, command.Timeout);
-            Assert.AreEqual(, command.IsValid);
-        */
+            Assert.AreEqual(KindOfCLICommand.Version, command.Kind);
+            Assert.AreEqual(KindOfNewCommand.Unknown, command.KindOfNewCommand);
+            Assert.AreEqual(null, command.InputFile);
+            Assert.AreEqual(null, command.InputDir);
+            Assert.AreEqual(null, command.ProjectName);
+            Assert.AreEqual(false, command.NoLogo);
+            Assert.AreEqual(null, command.Timeout);
+            Assert.AreEqual(true, command.IsValid);
+        }
 
-        /*
+        [Test]
+        [Parallelizable]
+        public void Case8_a()
+        {
+            var commandLine = "v";
+
+            var args = ParseCommandLine(commandLine);
+
+            var command = CLICommandParser.Parse(args);
+
+            Assert.IsNotNull(command);
+            Assert.AreEqual(KindOfCLICommand.Version, command.Kind);
+            Assert.AreEqual(KindOfNewCommand.Unknown, command.KindOfNewCommand);
+            Assert.AreEqual(null, command.InputFile);
+            Assert.AreEqual(null, command.InputDir);
+            Assert.AreEqual(null, command.ProjectName);
+            Assert.AreEqual(false, command.NoLogo);
+            Assert.AreEqual(null, command.Timeout);
+            Assert.AreEqual(true, command.IsValid);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case8_b()
+        {
+            var commandLine = "version -nologo -timeout 10000";
+
+            var args = ParseCommandLine(commandLine);
+
+            var command = CLICommandParser.Parse(args);
+
+            Assert.IsNotNull(command);
+            Assert.AreEqual(KindOfCLICommand.Version, command.Kind);
+            Assert.AreEqual(KindOfNewCommand.Unknown, command.KindOfNewCommand);
+            Assert.AreEqual(null, command.InputFile);
+            Assert.AreEqual(null, command.InputDir);
+            Assert.AreEqual(null, command.ProjectName);
             Assert.AreEqual(true, command.NoLogo);
             Assert.AreEqual(10000, command.Timeout);
-        */
+            Assert.AreEqual(true, command.IsValid);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case8_c()
+        {
+            var commandLine = "v -nologo -timeout 10000";
+
+            var args = ParseCommandLine(commandLine);
+
+            var command = CLICommandParser.Parse(args);
+
+            Assert.IsNotNull(command);
+            Assert.AreEqual(KindOfCLICommand.Version, command.Kind);
+            Assert.AreEqual(KindOfNewCommand.Unknown, command.KindOfNewCommand);
+            Assert.AreEqual(null, command.InputFile);
+            Assert.AreEqual(null, command.InputDir);
+            Assert.AreEqual(null, command.ProjectName);
+            Assert.AreEqual(true, command.NoLogo);
+            Assert.AreEqual(10000, command.Timeout);
+            Assert.AreEqual(true, command.IsValid);
+        }
 
         private string[] ParseCommandLine(string value)
         {

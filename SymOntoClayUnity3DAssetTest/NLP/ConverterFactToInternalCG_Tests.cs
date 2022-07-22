@@ -69,7 +69,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP
         {
             var factStr = "{: >: { like(i,#@{: >: { possess(i,$_) & cat($_) } :}) } :}";
 
-            var nlpContext = UnityTestEngineContextFactory.CreateNLPConverterContext(_engineContext);
+            var nlpContext = _engineContext.GetNLPConverterContext();
 
             var ruleInstance = Parse(factStr);
 
@@ -121,7 +121,7 @@ n_5 -> n_6[lhead=cluster_2];
         {
             var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :}";
 
-            var nlpContext = UnityTestEngineContextFactory.CreateNLPConverterContext(_engineContext);
+            var nlpContext = _engineContext.GetNLPConverterContext();
 
             var ruleInstance = Parse(factStr);
 
@@ -177,7 +177,7 @@ n_7 -> n_6;
         {
             var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 0 :}";
 
-            var nlpContext = UnityTestEngineContextFactory.CreateNLPConverterContext(_engineContext);
+            var nlpContext = _engineContext.GetNLPConverterContext();
 
             var ruleInstance = Parse(factStr);
 

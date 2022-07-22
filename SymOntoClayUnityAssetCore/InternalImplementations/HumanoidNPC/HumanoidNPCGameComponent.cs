@@ -91,6 +91,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 coreEngineSettings.DateTimeProvider = worldContext.DateTimeProvider;
                 coreEngineSettings.HostSupport = _hostSupport;
                 coreEngineSettings.ConditionalEntityHostSupport = _conditionalEntityHostSupportComponent;
+                coreEngineSettings.SoundPublisherProvider = _soundPublisher;
+                coreEngineSettings.NLPConverterFactory = worldContext.NLPConverterFactory;
 
 #if DEBUG
                 //Log($"coreEngineSettings = {coreEngineSettings}");

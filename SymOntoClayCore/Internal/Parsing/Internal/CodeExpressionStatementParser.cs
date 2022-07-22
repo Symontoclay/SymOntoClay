@@ -655,6 +655,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessChannel()
         {
+            if(_nodePoint.CurrentNode.Kind == KindOfIntermediateAstNode.Leaf)
+            {
+                throw new UnexpectedTokenException(_currToken);
+            }
+
             _lastBinaryOperator = null;
             _lastIsOperator = null;
 

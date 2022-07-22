@@ -4740,6 +4740,12 @@
         <member name="M:SymOntoClay.Core.Internal.DefaultSettingsOfCodeEntity.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.EngineContext.GetNLPConverterContext">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.EngineContext.GetNLPConverterContext(SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.EngineContext.Die">
             <inheritdoc/>
         </member>
@@ -6266,10 +6272,19 @@
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.GetLongHashCode">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.Read">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.Read(SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.Write(SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.Write(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.SayChannelHandler.GetLongHashCode">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.SayChannelHandler.Read(SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.SayChannelHandler.Write(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.Kind">

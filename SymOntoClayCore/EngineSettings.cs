@@ -42,6 +42,10 @@ namespace SymOntoClay.Core
 
         public IHostSupport HostSupport { get; set; }
 
+        public ISoundPublisherProvider SoundPublisherProvider { get; set; }
+
+        public INLPConverterFactory NLPConverterFactory { get; set; }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
@@ -54,6 +58,8 @@ namespace SymOntoClay.Core
 
             sb.AppendLine($"{spaces}{nameof(TmpDir)} = {TmpDir}");
             sb.PrintExisting(n, nameof(HostSupport), HostSupport);
+            sb.PrintExisting(n, nameof(SoundPublisherProvider), SoundPublisherProvider);
+            sb.PrintExisting(n, nameof(NLPConverterFactory), NLPConverterFactory);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();

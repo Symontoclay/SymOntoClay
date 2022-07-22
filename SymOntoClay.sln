@@ -40,7 +40,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{13EB4727
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClayBaseTestLib", "SymOntoClayBaseTestLib\SymOntoClayBaseTestLib.csproj", "{B0543335-C7AF-48BD-98AC-B48B10BC76A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymOntoClayHardTests", "SymOntoClayHardTests\SymOntoClayHardTests.csproj", "{A086321E-AB29-4F20-A718-2DA226D56DA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClayHardTests", "SymOntoClayHardTests\SymOntoClayHardTests.csproj", "{A086321E-AB29-4F20-A718-2DA226D56DA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

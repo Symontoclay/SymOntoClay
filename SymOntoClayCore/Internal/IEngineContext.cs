@@ -31,5 +31,10 @@ namespace SymOntoClay.Core.Internal
         IHostSupport HostSupport { get; }
         IHostListener HostListener { get; }
         IConditionalEntityHostSupport ConditionalEntityHostSupport { get; }
+        ISoundPublisherProvider SoundPublisherProvider { get; }
+        INLPConverterFactory NLPConverterFactory { get; }
+
+        INLPConverterContext GetNLPConverterContext();
+        INLPConverterContext GetNLPConverterContext(LocalCodeExecutionContext localCodeExecutionContext);
     }
 }

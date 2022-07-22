@@ -21,12 +21,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
@@ -68,6 +71,48 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             return SystemValue;
         }
+
+        public RuleInstanceValue ToRuleInstanceValue(IEngineContext engineContext)
+        {
+            lock(_toRuleInstanceValueLockObj)
+            {
+                if (_usedSystemValueForRuleInstanceValue == SystemValue)
+                {
+                    return _ruleInstanceValue;
+                }
+
+                _usedSystemValueForRuleInstanceValue = SystemValue;
+
+                var converter = engineContext.NLPConverterFactory?.GetConverter();
+
+                if(converter == null)
+                {
+                    throw new ArgumentNullException(nameof(converter));
+                }
+
+                var factsList = converter.Convert(_usedSystemValueForRuleInstanceValue);
+
+                if(factsList.IsNullOrEmpty())
+                {
+                    return null;
+                }
+
+                if(factsList.Count > 1)
+                {
+                    throw new NotImplementedException();
+                }
+
+                _ruleInstanceValue = new RuleInstanceValue(factsList.Single());
+
+                _ruleInstanceValue.CheckDirty();
+
+                return _ruleInstanceValue;
+            }
+        }
+
+        private readonly object _toRuleInstanceValueLockObj = new object();
+        private RuleInstanceValue _ruleInstanceValue;
+        private string _usedSystemValueForRuleInstanceValue;
 
         /// <inheritdoc/>
         public override string ToSystemString()

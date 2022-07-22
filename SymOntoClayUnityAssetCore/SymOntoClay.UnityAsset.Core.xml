@@ -1013,6 +1013,9 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.BaseSoundReceiverComponent.CallBack(System.Double,System.Double,System.Numerics.Vector3,System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundPublisherComponent.PushSoundFact(System.Single,System.String)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.Position">
             <inheritdoc/>
         </member>

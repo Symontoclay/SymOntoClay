@@ -215,26 +215,5 @@ namespace SymOntoClay.Core.Tests.Helpers
             context.Start();
             return context;
         }
-
-        public static INLPConverterContext CreateNLPConverterContext(IEngineContext engineContext)
-        {
-            var dataResolversFactory = engineContext.DataResolversFactory;
-
-            var relationsResolver = dataResolversFactory.GetRelationsResolver();
-            var inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
-            var logicalValueModalityResolver = dataResolversFactory.GetLogicalValueModalityResolver();
-
-            var localCodeExecutionContext = new LocalCodeExecutionContext();
-            localCodeExecutionContext.Storage = engineContext.Storage.GlobalStorage;
-            localCodeExecutionContext.Holder = NameHelper.CreateName(engineContext.Id);
-
-            var packedRelationsResolver = new PackedRelationsResolver(relationsResolver, localCodeExecutionContext);
-
-            var packedInheritanceResolver = new PackedInheritanceResolver(inheritanceResolver, localCodeExecutionContext);
-
-            var packedLogicalValueModalityResolver = new PackedLogicalValueModalityResolver(logicalValueModalityResolver, localCodeExecutionContext);
-
-            return new NLPConverterContext(packedRelationsResolver, packedInheritanceResolver, packedLogicalValueModalityResolver);
-        }
     }
 }

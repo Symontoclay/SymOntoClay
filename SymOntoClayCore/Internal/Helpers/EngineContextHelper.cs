@@ -50,6 +50,8 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.HostListener = settings.HostListener;
 
             context.ConditionalEntityHostSupport = settings.ConditionalEntityHostSupport;
+            context.SoundPublisherProvider = settings.SoundPublisherProvider;
+            context.NLPConverterFactory = settings.NLPConverterFactory;
 
             context.StandardLibraryLoader = new StandardLibraryLoader(context);
             context.CodeExecutor = new CodeExecutorComponent(context);

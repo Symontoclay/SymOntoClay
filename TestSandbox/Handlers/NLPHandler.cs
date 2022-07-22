@@ -91,7 +91,7 @@ namespace TestSandbox.Handlers
 
         private void Case5()
         {
-            var nlpContext = UnityTestEngineContextFactory.CreateNLPConverterContext(_engineContext);
+            var nlpContext = _engineContext.GetNLPConverterContext();
 
             //var factStr = "{: >: { like(i,#@{: >: { possess(i,$_) & cat($_) } :}) } :}";
             var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 0 :}";
@@ -129,7 +129,7 @@ namespace TestSandbox.Handlers
 
         private void Case4()
         {
-            var nlpContext = UnityTestEngineContextFactory.CreateNLPConverterContext(_engineContext);
+            var nlpContext = _engineContext.GetNLPConverterContext();
 
             var factStr = "{: >: { like(i,#@{: >: { possess(i,$_) & cat($_) } :}) } :}";
 

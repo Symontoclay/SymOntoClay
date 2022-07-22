@@ -107,7 +107,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                     //Log($"channel = {channel}");
 #endif
 
-                    return channel.Handler.Write(valueFromSource);
+                    return channel.Handler.Write(valueFromSource, localCodeExecutionContext);
                 }
                 else
                 {

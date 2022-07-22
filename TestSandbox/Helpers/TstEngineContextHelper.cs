@@ -40,12 +40,13 @@ using TestSandbox.CoreHostListener;
 using TestSandbox.PlatformImplementations;
 using SymOntoClay.SoundBuses;
 using SymOntoClay.Core.Tests.Helpers;
+using SymOntoClay.NLP;
 
 namespace TestSandbox.Helpers
 {
     public static class TstEngineContextHelper
     {
-        //private static readonly IEntityLogger _logger = new LoggerImpementation();
+        private static readonly IEntityLogger _logger = new LoggerImpementation();
 
         public static WorldSettings CreateWorldSettings(bool withAppFiles)
         {
@@ -80,6 +81,24 @@ namespace TestSandbox.Helpers
             settings.InvokerInMainThread = invokingInMainThread;
 
             settings.SoundBus = new SimpleSoundBus();
+
+            var mainDictPath = Path.Combine(Directory.GetCurrentDirectory(), "Dicts", "BigMainDictionary.dict");
+
+#if DEBUG
+            _logger.Log($"mainDictPath = {mainDictPath}");
+#endif
+
+            var nlpConverterProviderSettings = new NLPConverterProviderSettings();
+            nlpConverterProviderSettings.DictsPaths = new List<string>() { mainDictPath };
+            nlpConverterProviderSettings.CreationStrategy = CreationStrategy.Singleton;
+
+#if DEBUG
+            _logger.Log($"settings = {settings}");
+#endif
+
+            var nlpConverterProvider = new NLPConverterProvider(nlpConverterProviderSettings);
+
+            settings.NLPConverterProvider = nlpConverterProvider;
 
             settings.Logging = new LoggingSettings()
             {

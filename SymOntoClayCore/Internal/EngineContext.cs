@@ -21,6 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.StandardLibrary;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -42,7 +44,39 @@ namespace SymOntoClay.Core.Internal
         public IHostListener HostListener { get; set; }
         public IConditionalEntityHostSupport ConditionalEntityHostSupport { get; set; }
 
+        public ISoundPublisherProvider SoundPublisherProvider { get; set; }
+
+        public INLPConverterFactory NLPConverterFactory { get; set; }
+
         ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;
+
+        /// <inheritdoc/>
+        public INLPConverterContext GetNLPConverterContext()
+        {
+            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            localCodeExecutionContext.Storage = Storage.GlobalStorage;
+            localCodeExecutionContext.Holder = NameHelper.CreateName(Id);
+
+            return GetNLPConverterContext(localCodeExecutionContext);
+        }
+
+        /// <inheritdoc/>
+        public INLPConverterContext GetNLPConverterContext(LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            var dataResolversFactory = DataResolversFactory;
+
+            var relationsResolver = dataResolversFactory.GetRelationsResolver();
+            var inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
+            var logicalValueModalityResolver = dataResolversFactory.GetLogicalValueModalityResolver();
+
+            var packedRelationsResolver = new PackedRelationsResolver(relationsResolver, localCodeExecutionContext);
+
+            var packedInheritanceResolver = new PackedInheritanceResolver(inheritanceResolver, localCodeExecutionContext);
+
+            var packedLogicalValueModalityResolver = new PackedLogicalValueModalityResolver(logicalValueModalityResolver, localCodeExecutionContext);
+
+            return new NLPConverterContext(packedRelationsResolver, packedInheritanceResolver, packedLogicalValueModalityResolver);
+        }
 
         /// <inheritdoc/>
         public override void Die()

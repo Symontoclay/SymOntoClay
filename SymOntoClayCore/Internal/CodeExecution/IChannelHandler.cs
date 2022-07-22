@@ -30,8 +30,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface IChannelHandler
     {
-        Value Read();
-        Value Write(Value value);
+        Value Read(LocalCodeExecutionContext localCodeExecutionContext);
+        Value Write(Value value, LocalCodeExecutionContext localCodeExecutionContext);
         ulong GetLongHashCode();
     }
 }

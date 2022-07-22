@@ -57,7 +57,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             CreateLogging(settings);
             CreateComponents(settings);
 
-            if(settings.EnableAutoloadingConvertors)
+            if (settings.EnableAutoloadingConvertors)
             {
                 LoadTypesPlatformTypesConvertors();
             }
@@ -85,6 +85,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         private void CreateComponents(WorldSettings settings)
         {
+            NLPConverterFactory = settings.NLPConverterProvider?.GetFactory(Logger);
+
             ImagesRegistry = new ImagesRegistry(this);
             ThreadsComponent = new ThreadsCoreComponent(this);
             
@@ -159,6 +161,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         IPlatformTypesConvertorsRegistry IWorldCoreContext.PlatformTypesConvertors => PlatformTypesConvertorsRegistry;
         IPlatformTypesConvertorsRegistry IWorldCoreGameComponentContext.PlatformTypesConvertors => PlatformTypesConvertorsRegistry;
 
+        public INLPConverterFactory NLPConverterFactory { get; private set; }
+        INLPConverterFactory IWorldCoreGameComponentContext.NLPConverterFactory => NLPConverterFactory;
+
         /// <inheritdoc/>
         public IInvokerInMainThread InvokerInMainThread { get; private set; }
 
@@ -172,6 +177,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public LogicQueryParseAndCache LogicQueryParseAndCache { get; private set; }
         ILogicQueryParseAndCache IWorldCoreGameComponentContext.LogicQueryParseAndCache => LogicQueryParseAndCache;
         ILogicQueryParseAndCache IWorldCoreContext.LogicQueryParseAndCache => LogicQueryParseAndCache;
+
+
 
         private readonly object _worldComponentsListLockObj = new object();
         private readonly List<IWorldCoreComponent> _worldComponentsList = new List<IWorldCoreComponent>();

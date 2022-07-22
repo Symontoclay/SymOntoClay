@@ -29,7 +29,7 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
 {
-    public class SoundPublisherComponent : BaseComponent
+    public class SoundPublisherComponent : BaseComponent, ISoundPublisherProvider
     {
         public SoundPublisherComponent(IEntityLogger logger, int instanceId, IHostSupport hostSupport, IWorldCoreGameComponentContext worldContext)
             : base(logger)
@@ -43,11 +43,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         private readonly IHostSupport _hostSupport;
         private readonly int _instanceId;
 
+        /// <inheritdoc/>
         public void PushSoundFact(float power, string text)
         {
 #if DEBUG
-            //Log($"power = {power}");
-            //Log($"text = {text}");
+            Log($"power = {power}");
+            Log($"text = {text}");
 #endif
 
             if(_soundBus == null)

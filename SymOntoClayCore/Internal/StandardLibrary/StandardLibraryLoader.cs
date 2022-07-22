@@ -244,6 +244,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
         {
             var globalStorage = _context.Storage.GlobalStorage;
             var globalChannelsStorage = globalStorage.ChannelsStorage;
+            var holder = _context.CommonNamesStorage.DefaultHolder;
 
             var name = NameHelper.CreateName("@>log");
 
@@ -251,7 +252,18 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
             {
                 Name = name,
                 Handler = new LogChannelHandler(_context),
-                Holder = _context.CommonNamesStorage.DefaultHolder
+                Holder = holder
+            };
+
+            globalChannelsStorage.Append(channel);
+
+            name = NameHelper.CreateName("@>say");
+
+            channel = new Channel
+            {
+                Name = name,
+                Handler = new SayChannelHandler(_context),
+                Holder = holder
             };
 
             globalChannelsStorage.Append(channel);

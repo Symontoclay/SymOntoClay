@@ -54,5 +54,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         IDateTimeProvider DateTimeProvider { get; }
         ILogicQueryParseAndCache LogicQueryParseAndCache { get; }
         ISoundBus SoundBus { get; }
+        INLPConverterFactory NLPConverterFactory { get; }
     }
 }

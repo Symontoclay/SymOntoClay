@@ -67,6 +67,7 @@ using DictionaryGenerator;
 using SymOntoClay.NLP.CommonDict.Implementations;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.Core.Tests.Helpers;
+using SymOntoClay.NLP;
 
 namespace TestSandbox
 {
@@ -88,6 +89,7 @@ namespace TestSandbox
             //TstRelationsStorageHandler();
             //TstGenerateDllDict();
             //TSTWordsFactory();
+            //TstNLPConverterProvider();
             //TstNLPHandler();//<=NLP
             //TstTriggerConditionNodeHandler();
             //TstSoundBus();
@@ -109,7 +111,7 @@ namespace TestSandbox
             //TstEnvironmentVariables();
             //TstCLINewHandler();
             //TstCLIRunHandler();
-            TstCLICommandParser();
+            //TstCLICommandParser();
             //TstLogicalDatabase();//!
             //TstProcessInfoChildren();
             //TstWaitIProcessInfo();
@@ -136,7 +138,7 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -236,6 +238,33 @@ namespace TestSandbox
 
             var wordsFactory = new WordsFactory();
             wordsFactory.Run();
+
+            _logger.Log("End");
+        }
+
+        private static void TstNLPConverterProvider()
+        {
+            _logger.Log("Begin");
+
+            var mainDictPath = Path.Combine(Directory.GetCurrentDirectory(), "Dicts", "BigMainDictionary.dict");
+
+#if DEBUG
+            _logger.Log($"mainDictPath = {mainDictPath}");
+#endif
+
+            var settings = new NLPConverterProviderSettings();
+            settings.DictsPaths = new List<string>() { mainDictPath };
+            settings.CreationStrategy = CreationStrategy.Singleton;
+
+#if DEBUG
+            _logger.Log($"settings = {settings}");
+#endif
+
+            var nlpConverterProvider = new NLPConverterProvider(settings);
+
+            var factory = nlpConverterProvider.GetFactory(_logger);
+
+            var converter = factory.GetConverter();
 
             _logger.Log("End");
         }

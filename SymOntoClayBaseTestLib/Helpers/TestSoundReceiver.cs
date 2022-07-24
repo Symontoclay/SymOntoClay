@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.StandardFacts;
 using SymOntoClay.UnityAsset.Core.Internal.SoundPerception;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace SymOntoClay.Core.Tests.Helpers
     public class TestSoundReceiver : BaseSoundReceiverComponent
     {
         public TestSoundReceiver(int instanceId, Vector3 position, Action<double, double, Vector3, string, string> callBack)
-            : base(new EmptyLogger(), instanceId)
+            : base(new EmptyLogger(), instanceId, new StandardFactsBuilder())
         {
             _position = position;
             _callBack = callBack;
@@ -55,12 +56,6 @@ namespace SymOntoClay.Core.Tests.Helpers
             var convertedQuery = ConvertQuery(power, distance, position, query);
 
             _callBack(power, distance, position, query, convertedQuery);
-        }
-
-        /// <inheritdoc/>
-        protected override string GetTargetVarName(string query)
-        {
-            return "$x";
         }
 
         /// <inheritdoc/>

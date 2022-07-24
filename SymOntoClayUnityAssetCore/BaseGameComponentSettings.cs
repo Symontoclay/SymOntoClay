@@ -65,7 +65,7 @@ namespace SymOntoClay.UnityAsset.Core
         private string _idForFacts;
         private void CalculateIdForFacts()
         {
-            _idForFacts = NameHelper.ConvertNameToId(_id);
+            _idForFacts = NameHelper.ShieldString(_id);
         }
         #endregion
 

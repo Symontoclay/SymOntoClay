@@ -21,7 +21,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core;
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -31,10 +33,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
 {
     public class SoundPublisherComponent : BaseComponent, ISoundPublisherProvider
     {
-        public SoundPublisherComponent(IEntityLogger logger, int instanceId, IHostSupport hostSupport, IWorldCoreGameComponentContext worldContext)
+        public SoundPublisherComponent(IEntityLogger logger, int instanceId, string idForFacts, IHostSupport hostSupport, IWorldCoreGameComponentContext worldContext)
             : base(logger)
         {
             _instanceId = instanceId;
+            _idForFacts = idForFacts;
+            _standardFactsBuilder = worldContext.StandardFactsBuilder;
             _soundBus = worldContext.SoundBus;
             _hostSupport = hostSupport;
         }
@@ -42,13 +46,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         private readonly ISoundBus _soundBus;
         private readonly IHostSupport _hostSupport;
         private readonly int _instanceId;
+        private readonly string _idForFacts;
+        private readonly IStandardFactsBuilder _standardFactsBuilder;
 
         /// <inheritdoc/>
-        public void PushSoundFact(float power, string text)
+        public void PushSoundFact(float power, string factStr)
         {
 #if DEBUG
             Log($"power = {power}");
-            Log($"text = {text}");
+            Log($"factStr = {factStr}");
 #endif
 
             if(_soundBus == null)
@@ -61,7 +67,58 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
             //Log($"_hostSupport.GetCurrentAbsolutePosition() = {_hostSupport.GetCurrentAbsolutePosition()}");
 #endif
 
-            _soundBus.PushSound(_instanceId, power, _hostSupport.GetCurrentAbsolutePosition(), text);
+            _soundBus.PushSound(_instanceId, power, _hostSupport.GetCurrentAbsolutePosition(), factStr);
+        }
+
+        /// <inheritdoc/>
+        public void PushSoundFact(float power, RuleInstance fact)
+        {
+#if DEBUG
+            Log($"power = {power}");
+            Log($"fact = {fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
+#endif
+
+            var factStr = fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent);
+
+#if DEBUG
+            Log($"factStr = '{factStr}'");
+#endif
+
+            PushSoundFact(power, factStr);
+        }
+
+        /// <inheritdoc/>
+        public void PushSpeechFact(float power, string factStr)
+        {
+#if DEBUG
+            Log($"power = {power}");
+            Log($"factStr = {factStr}");
+#endif
+
+            factStr = _standardFactsBuilder.BuildSayFactString(_idForFacts, factStr);
+
+#if DEBUG
+            Log($"factStr (after) = '{factStr}'");
+#endif
+
+            PushSoundFact(power, factStr);
+        }
+
+        /// <inheritdoc/>
+        public void PushSpeechFact(float power, RuleInstance fact)
+        {
+#if DEBUG
+            Log($"power = {power}");
+            Log($"fact = {fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
+#endif
+
+            var factStr = fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent);
+
+#if DEBUG
+            Log($"factStr = '{factStr}'");
+#endif
+
+            PushSpeechFact(power, factStr);
         }
     }
 }

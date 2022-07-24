@@ -68,6 +68,7 @@ using SymOntoClay.NLP.CommonDict.Implementations;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.Core.Tests.Helpers;
 using SymOntoClay.NLP;
+using System.Speech.Synthesis;
 
 namespace TestSandbox
 {
@@ -81,6 +82,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            //TstSampleSpeechSynthesis();
             //TstOnAddingFactEventHanler();
             //TstEventHanler();
             //TstStrCollectionCombination();
@@ -142,6 +144,23 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstSampleSpeechSynthesis()
+        {
+            _logger.Log("Begin");
+
+            // Initialize a new instance of the SpeechSynthesizer.  
+            var synth = new SpeechSynthesizer();
+
+            // Configure the audio output.   
+            synth.SetOutputToDefaultAudioDevice();
+
+            // Speak a string.  
+            synth.Speak("This example demonstrates a basic use of Speech Synthesizer");
+            synth.Speak("Go to green place!");
+
+            _logger.Log("End");
         }
 
         private static void TstOnAddingFactEventHanler()

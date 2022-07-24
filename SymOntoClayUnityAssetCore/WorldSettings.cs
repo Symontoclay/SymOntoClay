@@ -69,6 +69,8 @@ namespace SymOntoClay.UnityAsset.Core
 
         public INLPConverterProvider NLPConverterProvider { get; set; }
 
+        public IStandardFactsBuilder StandardFactsBuilder { get; set; }
+
         public bool EnableAutoloadingConvertors { get; set; }
 
         /// <inheritdoc/>
@@ -95,6 +97,7 @@ namespace SymOntoClay.UnityAsset.Core
             sb.PrintExisting(n, nameof(InvokerInMainThread), InvokerInMainThread);
             sb.PrintExisting(n, nameof(SoundBus), SoundBus);
             sb.PrintExisting(n, nameof(NLPConverterProvider), NLPConverterProvider);
+            sb.PrintExisting(n, nameof(StandardFactsBuilder), StandardFactsBuilder);
 
             sb.AppendLine($"{spaces}{nameof(EnableAutoloadingConvertors)} = {EnableAutoloadingConvertors}");
 

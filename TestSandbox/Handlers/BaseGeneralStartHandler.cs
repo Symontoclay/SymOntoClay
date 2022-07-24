@@ -33,6 +33,7 @@ using System.Threading.Tasks;
 using TestSandbox.PlatformImplementations;
 using TestSandbox.SoundBusHandler;
 using TestSandbox.Helpers;
+using SymOntoClayBaseTestLib.Helpers;
 
 namespace TestSandbox.Handlers
 {
@@ -43,9 +44,9 @@ namespace TestSandbox.Handlers
         protected IWorld _world;
         protected IHumanoidNPC _npc;
         
-        protected void CreateNPC(object hostListener)
+        protected void CreateNPC(UnityTestEngineContextFactorySettings factorySettings)
         {
-            var complexContext = TstEngineContextHelper.CreateContext(hostListener);
+            var complexContext = TstEngineContextHelper.CreateContext(factorySettings);
 
             _world = complexContext.World;
             _npc = complexContext.HumanoidNPC;

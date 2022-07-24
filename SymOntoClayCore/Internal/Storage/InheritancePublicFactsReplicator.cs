@@ -118,7 +118,7 @@ namespace SymOntoClay.Core.Internal.Storage
                 var commonNamesStorage = _context.CommonNamesStorage;
 
                 _selfName = commonNamesStorage.SelfName;
-                _selfNameForFacts = NameHelper.ConvertNameToId(_selfName.NameValue);
+                _selfNameForFacts = NameHelper.ShieldString(_selfName.NameValue);
 
                 _logicQueryParseAndCache = _context.LogicQueryParseAndCache;
 

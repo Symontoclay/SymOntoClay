@@ -33,6 +33,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TestSandbox.CoreHostListener;
 using TestSandbox.PlatformImplementations;
+using SymOntoClayBaseTestLib.Helpers;
 
 namespace TestSandbox.Handlers
 {
@@ -46,7 +47,11 @@ namespace TestSandbox.Handlers
 
             var platformListener = new TstPlatformHostListener();
 
-            CreateNPC(platformListener);
+            var factorySettings = new UnityTestEngineContextFactorySettings();
+            factorySettings.HostListener = platformListener;
+            factorySettings.UseDefaultNLPSettings = false;
+
+            CreateNPC(factorySettings);
 
             var platformListener2 = new TstPlatformHostListener();
 

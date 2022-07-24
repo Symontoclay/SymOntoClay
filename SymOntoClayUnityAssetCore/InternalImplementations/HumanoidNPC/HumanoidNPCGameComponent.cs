@@ -71,7 +71,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
                 _conditionalEntityHostSupportComponent = new ConditionalEntityHostSupportComponent(Logger, settings, _visionComponent, _hostSupport, worldContext);
 
-                _soundPublisher = new SoundPublisherComponent(Logger, settings.InstanceId, _hostSupport, worldContext);
+                _soundPublisher = new SoundPublisherComponent(Logger, settings.InstanceId, settings.IdForFacts, _hostSupport, worldContext);
 
                 _soundReceiverComponent = new SoundReceiverComponent(Logger, settings.InstanceId, internalContext, worldContext);
 

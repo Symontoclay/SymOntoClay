@@ -75,6 +75,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             InvokerInMainThread = settings.InvokerInMainThread;
             SoundBus = settings.SoundBus;
+            StandardFactsBuilder = settings.StandardFactsBuilder;
         }
 
         private void CreateLogging(WorldSettings settings)
@@ -163,6 +164,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         public INLPConverterFactory NLPConverterFactory { get; private set; }
         INLPConverterFactory IWorldCoreGameComponentContext.NLPConverterFactory => NLPConverterFactory;
+
+        public IStandardFactsBuilder StandardFactsBuilder { get; private set; }
+        IStandardFactsBuilder IWorldCoreGameComponentContext.StandardFactsBuilder => StandardFactsBuilder;
 
         /// <inheritdoc/>
         public IInvokerInMainThread InvokerInMainThread { get; private set; }

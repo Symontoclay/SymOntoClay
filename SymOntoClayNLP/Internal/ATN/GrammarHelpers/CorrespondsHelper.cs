@@ -38,8 +38,8 @@ namespace SymOntoClay.NLP.Internal.ATN.GrammarHelpers
         public static bool SubjectAndVerb(BaseGrammaticalWordFrame subject, VerbGrammaticalWordFrame verb)
         {
 #if DEBUG
-            _gbcLogger.Info($"subject = {subject}");
-            _gbcLogger.Info($"verb = {verb}");
+            //_gbcLogger.Info($"subject = {subject}");
+            //_gbcLogger.Info($"verb = {verb}");
 #endif
 
             switch(subject.PartOfSpeech)

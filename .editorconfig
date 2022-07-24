@@ -5,3 +5,6 @@ dotnet_diagnostic.CS8618.severity = none
 
 # NUnit2005: Consider using Assert.That(actual, Is.EqualTo(expected)) instead of Assert.AreEqual(expected, actual)
 dotnet_diagnostic.NUnit2005.severity = none
+
+# Default severity for all analyzer diagnostics
+dotnet_analyzer_diagnostic.severity = none

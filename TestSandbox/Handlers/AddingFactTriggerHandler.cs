@@ -24,6 +24,7 @@ using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Storage.LogicalStorage;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClayBaseTestLib.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +46,11 @@ namespace TestSandbox.Handlers
 
             var platformListener = new TstPlatformHostListener();
 
-            CreateNPC(platformListener);
+            var factorySettings = new UnityTestEngineContextFactorySettings();
+            factorySettings.HostListener = platformListener;
+            factorySettings.UseDefaultNLPSettings = false;
+
+            CreateNPC(factorySettings);
 
             _world.Start();
 

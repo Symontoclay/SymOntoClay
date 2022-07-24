@@ -55,5 +55,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         ILogicQueryParseAndCache LogicQueryParseAndCache { get; }
         ISoundBus SoundBus { get; }
         INLPConverterFactory NLPConverterFactory { get; }
+        IStandardFactsBuilder StandardFactsBuilder { get; }
     }
 }

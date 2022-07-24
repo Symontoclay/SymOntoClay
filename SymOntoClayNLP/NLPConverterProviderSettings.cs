@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.NLP.CommonDict;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,7 @@ namespace SymOntoClay.NLP
     public class NLPConverterProviderSettings : IObjectToString
     {
         public IList<string> DictsPaths { get; set; }
+        public IList<IWordsDict> DictsList { get; set; }
         public CreationStrategy CreationStrategy { get; set; } = CreationStrategy.Unknown;
 
         /// <inheritdoc/>
@@ -30,6 +32,7 @@ namespace SymOntoClay.NLP
 
             sb.AppendLine($"{spaces}{nameof(CreationStrategy)} = {CreationStrategy}");
             sb.PrintPODList(n, nameof(DictsPaths), DictsPaths);
+            sb.PrintExistingList(n, nameof(DictsList), DictsList);
 
             return sb.ToString();
         }

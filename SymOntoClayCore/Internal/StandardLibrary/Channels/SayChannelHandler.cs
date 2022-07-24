@@ -39,7 +39,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
         public Value Write(Value value, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Log($"value = {value}");
+            //Log($"value = {value}");
 #endif
 
             var kindOfValue = value.KindOfValue;
@@ -66,34 +66,22 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
         private void ProcessRuleInstanceValue(RuleInstanceValue value)
         {
 #if DEBUG
-            Log($"value = {value}");
+            //Log($"value = {value}");
 #endif
 
-            var factStr = value.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent);
-
-#if DEBUG
-            Log($"factStr = '{factStr}'");
-#endif
-
-            factStr = $"say({_id}, {factStr})";
-
-#if DEBUG
-            Log($"factStr (after) = '{factStr}'");
-#endif
-
-            _soundPublisherProvider?.PushSoundFact(DefaultSoundPower, factStr);
+            _soundPublisherProvider?.PushSpeechFact(DefaultSoundPower, value.RuleInstance);
         }
 
         private void ProcessStringValue(StringValue value)
         {
 #if DEBUG
-            Log($"value = {value}");
+            //Log($"value = {value}");
 #endif
 
             var factValue = value.ToRuleInstanceValue(_engineContext);
 
 #if DEBUG
-            Log($"factValue = {factValue}");
+            //Log($"factValue = {factValue}");
 #endif
 
             ProcessRuleInstanceValue(factValue);

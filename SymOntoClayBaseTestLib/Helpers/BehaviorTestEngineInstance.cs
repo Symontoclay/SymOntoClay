@@ -80,6 +80,7 @@ namespace SymOntoClay.Core.Tests.Helpers
                 error => { throw new Exception(error); },
                 timeoutToEnd);
         }
+
         public static bool Run(string fileContent, Action<string> logChannel, Action<string> error, int timeoutToEnd = DefaultTimeoutToEnd)
         {
             return Run(fileContent, logChannel, error, new object(), timeoutToEnd);

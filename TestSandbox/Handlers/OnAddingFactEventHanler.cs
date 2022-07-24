@@ -28,6 +28,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage.LogicalStorage;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClayBaseTestLib.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +43,10 @@ namespace TestSandbox.Handlers
     {
         public OnAddingFactEventHanler()
         {
-            _engineContext = TstEngineContextHelper.CreateAndInitContextWithoutAppFiles().EngineContext;
+            var factorySettings = new UnityTestEngineContextFactorySettings();
+            factorySettings.UseDefaultAppFiles = false;
+
+            _engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
         }
 
         private static readonly IEntityLogger _logger = new LoggerImpementation();

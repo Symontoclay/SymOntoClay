@@ -23,15 +23,31 @@ namespace SymOntoClay.NLP
             }
 
             var dictsPaths = settings.DictsPaths;
+            var dictsList = settings.DictsList;
 
-            if(dictsPaths.IsNullOrEmpty())
+            if(dictsPaths.IsNullOrEmpty() && dictsList.IsNullOrEmpty())
             {
-                throw new Exception($"Option {nameof(settings.DictsPaths)} can not be null or empty!");
+                throw new Exception($"Option {nameof(settings.DictsPaths)} and {nameof(settings.DictsList)} can not be null or empty! You should set at least one dict in some way.");
             }
 
-            if(dictsPaths.Count == 1)
+            var targetDictsList = new List<IWordsDict>();
+
+            if(!dictsPaths.IsNullOrEmpty())
             {
-                _wordsDict = new JsonDictionary(dictsPaths.Single());
+                foreach(var dictPath in dictsPaths)
+                {
+                    targetDictsList.Add(new JsonDictionary(dictPath));
+                }
+            }
+
+            if(!dictsList.IsNullOrEmpty())
+            {
+                targetDictsList.AddRange(dictsList);
+            }
+
+            if(targetDictsList.Count == 1)
+            {
+                _wordsDict = targetDictsList.Single();
             }
             else
             {

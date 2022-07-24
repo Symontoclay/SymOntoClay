@@ -45,7 +45,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             return $"${Guid.NewGuid().ToString("D").Substring(0, 8)}";
         }
 
-        public static string ConvertNameToId(string source)
+        public static string ShieldString(string source)
         {
             if(string.IsNullOrWhiteSpace(source))
             {

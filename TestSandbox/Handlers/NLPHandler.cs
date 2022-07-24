@@ -41,6 +41,7 @@ using SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText;
 using SymOntoClay.NLP.Internal.Dot;
 using SymOntoClay.NLP.Internal.PhraseToCGParsing;
 using SymOntoClay.UnityAsset.Core.Internal;
+using SymOntoClayBaseTestLib.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -57,7 +58,11 @@ namespace TestSandbox.Handlers
     {
         public NLPHandler()
         {
-            _engineContext = TstEngineContextHelper.CreateAndInitContextWithoutAppFiles().EngineContext;
+            var factorySettings = new UnityTestEngineContextFactorySettings();
+            factorySettings.UseDefaultAppFiles = false;
+            factorySettings.UseDefaultNLPSettings = false;
+
+            _engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
 
             var mainDictPath = Path.Combine(Directory.GetCurrentDirectory(), "Dicts", "BigMainDictionary.dict");
 

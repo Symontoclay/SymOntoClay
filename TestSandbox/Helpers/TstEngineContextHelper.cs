@@ -41,6 +41,9 @@ using TestSandbox.PlatformImplementations;
 using SymOntoClay.SoundBuses;
 using SymOntoClay.Core.Tests.Helpers;
 using SymOntoClay.NLP;
+using SymOntoClay.StandardFacts;
+using SymOntoClayBaseTestLib.Helpers;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 
 namespace TestSandbox.Helpers
 {
@@ -48,7 +51,7 @@ namespace TestSandbox.Helpers
     {
         private static readonly IEntityLogger _logger = new LoggerImpementation();
 
-        public static WorldSettings CreateWorldSettings(bool withAppFiles)
+        public static WorldSettings CreateWorldSettings(UnityTestEngineContextFactorySettings factorySettings)
         {
             var appName = AppDomain.CurrentDomain.FriendlyName;
 
@@ -73,95 +76,153 @@ namespace TestSandbox.Helpers
 
             settings.TmpDir = Path.Combine(Environment.GetEnvironmentVariable("TMP"), "SymOntoClay", appName);
 
-            if(withAppFiles)
+            if(string.IsNullOrWhiteSpace(factorySettings.WorldFile))
             {
-                settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\World\World.world");
-            }            
+                if (factorySettings.UseDefaultAppFiles)
+                {
+                    settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\World\World.world");
+                }
+            }
+            else
+            {
+                settings.HostFile = factorySettings.WorldFile;
+            }
 
             settings.InvokerInMainThread = invokingInMainThread;
 
             settings.SoundBus = new SimpleSoundBus();
 
-            var mainDictPath = Path.Combine(Directory.GetCurrentDirectory(), "Dicts", "BigMainDictionary.dict");
+            if(!factorySettings.DictsPaths.IsNullOrEmpty() || !factorySettings.DictsList.IsNullOrEmpty() || factorySettings.UseDefaultNLPSettings)
+            {
+                var nlpConverterProviderSettings = new NLPConverterProviderSettings();
+
+                if(!factorySettings.DictsPaths.IsNullOrEmpty() || !factorySettings.DictsList.IsNullOrEmpty())
+                {
+                    nlpConverterProviderSettings.DictsPaths = factorySettings.DictsPaths;
+                    nlpConverterProviderSettings.DictsList = factorySettings.DictsList;
+                }
+                else
+                {
+                    if(factorySettings.UseDefaultNLPSettings)
+                    {
+                        var mainDictPath = Path.Combine(Directory.GetCurrentDirectory(), "Dicts", "BigMainDictionary.dict");
 
 #if DEBUG
-            _logger.Log($"mainDictPath = {mainDictPath}");
+                        _logger.Log($"mainDictPath = {mainDictPath}");
 #endif
 
-            var nlpConverterProviderSettings = new NLPConverterProviderSettings();
-            nlpConverterProviderSettings.DictsPaths = new List<string>() { mainDictPath };
-            nlpConverterProviderSettings.CreationStrategy = CreationStrategy.Singleton;
+                        nlpConverterProviderSettings.DictsPaths = new List<string>() { mainDictPath };
+                    }
+                }
+                
+                nlpConverterProviderSettings.CreationStrategy = CreationStrategy.Singleton;
+
+#if DEBUG
+                _logger.Log($"nlpConverterProviderSettings = {nlpConverterProviderSettings}");
+#endif
+
+                var nlpConverterProvider = new NLPConverterProvider(nlpConverterProviderSettings);
+
+                settings.NLPConverterProvider = nlpConverterProvider;
+            }
+
+            settings.StandardFactsBuilder = new StandardFactsBuilder();
+
+            var loggingSettings = new LoggingSettings()
+            {
+                LogDir = logDir,
+                RootContractName = "Hi1",                
+                Enable = true,
+                EnableRemoteConnection = true
+            };
+
+            if(factorySettings.PlatformLogger != null)
+            {
+                loggingSettings.PlatformLoggers = new List<IPlatformLogger>() { factorySettings.PlatformLogger };
+            }
+            else
+            {
+                if(factorySettings.UseDefaultPlatformLogger)
+                {
+                    loggingSettings.PlatformLoggers = new List<IPlatformLogger>() { /*ConsoleLogger.Instance,*/ CommonNLogLogger.Instance };
+                }
+            }
+
+            settings.Logging = loggingSettings;
 
 #if DEBUG
             _logger.Log($"settings = {settings}");
 #endif
 
-            var nlpConverterProvider = new NLPConverterProvider(nlpConverterProviderSettings);
-
-            settings.NLPConverterProvider = nlpConverterProvider;
-
-            settings.Logging = new LoggingSettings()
-            {
-                LogDir = logDir,
-                RootContractName = "Hi1",
-                PlatformLoggers = new List<IPlatformLogger>() { /*ConsoleLogger.Instance,*/ CommonNLogLogger.Instance },
-                Enable = true,
-                EnableRemoteConnection = true
-            };
-
             return settings;
         }
 
-        public static HumanoidNPCSettings CreateHumanoidNPCSettings(bool withAppFiles)
-        {
-            return CreateHumanoidNPCSettings(UnityTestEngineContextFactory.DefaultPlatformListener, withAppFiles);
-        }
-
-        public static HumanoidNPCSettings CreateHumanoidNPCSettings(object hostListener, bool withAppFiles)
+        public static HumanoidNPCSettings CreateHumanoidNPCSettings(UnityTestEngineContextFactorySettings factorySettings)/*object hostListener, bool withAppFiles*/
         {
             var npcSettings = new HumanoidNPCSettings();
             npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
             npcSettings.InstanceId = 1;
             
-            if(withAppFiles)
+            if(string.IsNullOrWhiteSpace(factorySettings.NPCAppFile))
             {
-                npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Npcs\PeaceKeeper\PeaceKeeper.sobj");
+                if (factorySettings.UseDefaultAppFiles)
+                {
+                    npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Npcs\PeaceKeeper\PeaceKeeper.sobj");
+                }
+            }
+            else
+            {
+                npcSettings.LogicFile = factorySettings.NPCAppFile;
+            }
+
+            if(factorySettings.HostListener == null)
+            {
+                if(factorySettings.UseDefaultHostListener)
+                {
+                    npcSettings.HostListener = UnityTestEngineContextFactory.DefaultPlatformListener;
+                }
+            }
+            else
+            {
+                npcSettings.HostListener = factorySettings.HostListener;
             }
             
-            npcSettings.HostListener = hostListener;
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
 
             return npcSettings;
         }
 
-        public static ComplexTestEngineContext CreateContext(bool withAppFiles = true)
+        public static ComplexTestEngineContext CreateContext(UnityTestEngineContextFactorySettings factorySettings)/*object hostListener, bool withAppFiles = true*/
         {
-            return CreateContext(UnityTestEngineContextFactory.DefaultPlatformListener, withAppFiles);
-        }
-
-        public static ComplexTestEngineContext CreateContext(object hostListener, bool withAppFiles = true)
-        {
-            var settings = CreateWorldSettings(withAppFiles);
+            var settings = CreateWorldSettings(factorySettings);
 
             //_logger.Log($"settings = {settings}");
 
-            var npcSettings = CreateHumanoidNPCSettings(hostListener, withAppFiles);
+            var npcSettings = CreateHumanoidNPCSettings(factorySettings);
 
             //_logger.Log($"npcSettings = {npcSettings}");
 
             return UnityTestEngineContextFactory.CreateTestEngineContext(settings, npcSettings);
         }
 
-        public static ComplexTestEngineContext CreateAndInitContext(bool withAppFiles = false)
+        public static ComplexTestEngineContext CreateAndInitContext()
         {
-            var context = CreateContext(withAppFiles);
+            return CreateAndInitContext(new UnityTestEngineContextFactorySettings());
+        }
+
+        public static ComplexTestEngineContext CreateAndInitContext(UnityTestEngineContextFactorySettings factorySettings)/*bool withAppFiles = true*/
+        {
+            var context = CreateContext(factorySettings);
             context.Start();
             return context;
         }
 
-        public static ComplexTestEngineContext CreateAndInitContextWithoutAppFiles()
-        {
-            return CreateAndInitContext(false);
-        }
+        //public static ComplexTestEngineContext CreateAndInitContextWithoutAppFiles()
+        //{
+        //    var factorySettings = new UnityTestEngineContextFactorySettings();
+        //    factorySettings.UseDefaultAppFiles = false;
+
+        //    return CreateAndInitContext(factorySettings);
+        //}
     }
 }

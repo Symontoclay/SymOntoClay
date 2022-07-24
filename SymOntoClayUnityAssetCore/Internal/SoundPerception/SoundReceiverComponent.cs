@@ -35,10 +35,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
     public class SoundReceiverComponent : BaseSoundReceiverComponent
     {
         public SoundReceiverComponent(IEntityLogger logger, int instanceId, HumanoidNPCGameComponentContext internalContext, IWorldCoreGameComponentContext worldContext)
-            : base(logger, instanceId)
+            : base(logger, instanceId, worldContext.StandardFactsBuilder)
         {
             _internalContext = internalContext;
-            
+            _standardFactsBuilder = worldContext.StandardFactsBuilder;
+
             _soundBus = worldContext.SoundBus;
 
             _soundBus?.AddReceiver(this);
@@ -48,6 +49,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         private readonly ISoundBus _soundBus;
         private IHostSupport _hostSupport;
         private Engine _coreEngine;
+        private readonly IStandardFactsBuilder _standardFactsBuilder;
 
         /// <inheritdoc/>
         public override Vector3 Position => _hostSupport.GetCurrentAbsolutePosition();
@@ -77,12 +79,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
 #endif
 
             _coreEngine.InsertListenedFact(convertedQuery);
-        }
-
-        /// <inheritdoc/>
-        protected override string GetTargetVarName(string query)
-        {
-            return "$x";
         }
 
         /// <inheritdoc/>

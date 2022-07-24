@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.StandardFacts;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Internal.SoundPerception;
 using System;
@@ -38,7 +39,7 @@ namespace TestSandbox.SoundBusHandler
     public class TstSoundReceiver: BaseSoundReceiverComponent
     {
         public TstSoundReceiver(int instanceId, Vector3 position)
-            : base(new LoggerImpementation(), instanceId)
+            : base(new LoggerImpementation(), instanceId, new StandardFactsBuilder())
         {
             _position = position;
         }
@@ -59,11 +60,6 @@ namespace TestSandbox.SoundBusHandler
             var convertedQuery = ConvertQuery(power, distance, position, query);
 
             Log($"convertedQuery = {convertedQuery}");
-        }
-
-        protected override string GetTargetVarName(string query)
-        {
-            return "$x";
         }
 
         protected override float GetDirectionToPosition(Vector3 position)

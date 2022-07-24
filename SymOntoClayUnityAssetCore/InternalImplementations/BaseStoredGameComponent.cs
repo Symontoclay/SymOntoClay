@@ -38,7 +38,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             try
             {
                 _hostSupport = new HostSupportComponent(Logger, settings.PlatformSupport, worldContext);
-                _soundPublisher = new SoundPublisherComponent(Logger, settings.InstanceId, _hostSupport, worldContext);
+                _soundPublisher = new SoundPublisherComponent(Logger, settings.InstanceId, settings.IdForFacts, _hostSupport, worldContext);
 
                 var standaloneStorageSettings = new StandaloneStorageSettings();
                 standaloneStorageSettings.Id = settings.Id;

@@ -32,13 +32,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
 {
     public abstract class BaseSoundReceiverComponent : BaseComponent, ISoundReceiver
     {
-        protected BaseSoundReceiverComponent(IEntityLogger logger, int instanceId)
+        protected BaseSoundReceiverComponent(IEntityLogger logger, int instanceId, IStandardFactsBuilder standardFactsBuilder)
             : base(logger)
         {
             _instanceId = instanceId;
+            _standardFactsBuilder = standardFactsBuilder;
         }
 
         private readonly int _instanceId;
+        private readonly IStandardFactsBuilder _standardFactsBuilder;
 
         /// <inheritdoc/>
         public int InstanceId => _instanceId;
@@ -60,11 +62,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
             //Log($"position = {position}");
             //Log($"query = {query}");
 #endif
-            var varName = GetTargetVarName(query);
-
-#if DEBUG
-            //Log($"varName = {varName}");
-#endif
 
             var directionToPosition = GetDirectionToPosition(position);
 
@@ -72,25 +69,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
             //Log($"directionToPosition = {directionToPosition}");
 #endif
 
-            var distanceStr = distance.ToString(CultureInfo.InvariantCulture);
-            var directionStr = directionToPosition.ToString(CultureInfo.InvariantCulture);
-
-            var sb = new StringBuilder();
-
-            sb.Append("{: ");
-            sb.Append(varName);
-            sb.Append(" = ");
-            sb.Append(query);
-            sb.Append($" & hear(I, {varName})");
-            sb.Append($" & distance(I, {varName}, {distanceStr})");
-            sb.Append($" & direction({varName}, {directionStr})");
-            sb.Append($" & point({varName}, #@[{distanceStr}, {directionStr}])");
-            sb.Append(" :}");
-
-            return sb.ToString();
+            return _standardFactsBuilder.BuildSoundFactString(power, distance, directionToPosition, query);
         }
 
-        protected abstract string GetTargetVarName(string query);
         protected abstract float GetDirectionToPosition(Vector3 position);
     }
 }

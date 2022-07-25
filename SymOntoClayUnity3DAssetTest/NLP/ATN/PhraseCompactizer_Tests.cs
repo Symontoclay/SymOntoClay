@@ -25,6 +25,7 @@ using SymOntoClay.Core.Tests.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.ATN;
+using SymOntoClayBaseTestLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;

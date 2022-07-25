@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Tests.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClayBaseTestLib.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +41,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
         public void Setup()
         {
             _logger = new EmptyLogger();
-            _testEngineContext = UnityTestEngineContextFactory.CreateAndInitTestEngineContext();
+            var factorySettings = new UnityTestEngineContextFactorySettings();
+            factorySettings.UseDefaultNLPSettings = false;
+            _testEngineContext = UnityTestEngineContextFactory.CreateAndInitTestEngineContext(factorySettings);
             _engineContext = _testEngineContext.EngineContext;
         }
 

@@ -30,6 +30,7 @@ using SymOntoClay.NLP.Internal.ConvertingFactToInternalCG;
 using SymOntoClay.NLP.Internal.Dot;
 using SymOntoClay.NLP.Internal.PhraseStructure;
 using SymOntoClay.UnityAsset.Core.Tests.NLP.ATN;
+using SymOntoClayBaseTestLib.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +45,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP
         public void Setup()
         {
             _logger = new EmptyLogger();
-            _testEngineContext = UnityTestEngineContextFactory.CreateAndInitTestEngineContext();
+            var factorySettings = new UnityTestEngineContextFactorySettings();
+            factorySettings.UseDefaultNLPSettings = false;
+            _testEngineContext = UnityTestEngineContextFactory.CreateAndInitTestEngineContext(factorySettings);
             _engineContext = _testEngineContext.EngineContext;
         }
 

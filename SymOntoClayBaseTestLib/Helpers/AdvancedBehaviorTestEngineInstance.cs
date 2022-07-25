@@ -31,6 +31,7 @@ using System.Numerics;
 using NLog;
 using SymOntoClay.SoundBuses;
 using SymOntoClay.UnityAsset.Core;
+using SymOntoClayBaseTestLib.Helpers;
 
 namespace SymOntoClay.Core.Tests.Helpers
 {
@@ -50,12 +51,23 @@ namespace SymOntoClay.Core.Tests.Helpers
         public static string RoorDir => _rootDir;
 
         public AdvancedBehaviorTestEngineInstance()
-            : this(RoorDir)
+            : this(RoorDir, false)
         {
         }
 
         public AdvancedBehaviorTestEngineInstance(string rootDir)
+            : this(rootDir, false)
         {
+        }
+
+        public AdvancedBehaviorTestEngineInstance(bool enableNLP)
+            : this(RoorDir, enableNLP)
+        {
+        }
+
+        public AdvancedBehaviorTestEngineInstance(string rootDir, bool enableNLP)
+        {
+            _enableNLP = enableNLP;
             _testDir = UnityTestEngineContextFactory.CreateTestDir(rootDir);
 
             var worldSpaceCreationSettings = new WorldSpaceCreationSettings() { CreateOnlyWorldspace = true, ProjectName = _projectName };
@@ -123,7 +135,13 @@ namespace SymOntoClay.Core.Tests.Helpers
                 errorMsg => { error(errorMsg); },
                 enableWriteLnRawLog);
 
-            _world = UnityTestEngineContextFactory.CreateWorld(_testDir, hostFile, callBackLogger);
+            var factorySettings = new UnityTestEngineContextFactorySettings();
+            factorySettings.UseDefaultNLPSettings = _enableNLP;
+            factorySettings.BaseDir = _testDir;
+            factorySettings.WorldFile = hostFile;
+            factorySettings.PlatformLogger = callBackLogger;
+
+            _world = UnityTestEngineContextFactory.CreateWorld(factorySettings);
         }
 
         public void StartWorld()
@@ -179,7 +197,12 @@ namespace SymOntoClay.Core.Tests.Helpers
         {
             var logicFile = Path.Combine(_wSpaceDir, $"Npcs/{npcName}/{npcName}.sobj");
 
-            return UnityTestEngineContextFactory.CreateHumanoidNPC(_world, logicFile, platformListener, currentAbsolutePosition);
+            var factorySettings = new UnityTestEngineContextFactorySettings();
+            factorySettings.NPCAppFile = logicFile;
+            factorySettings.HostListener = platformListener;
+            factorySettings.CurrentAbsolutePosition = currentAbsolutePosition;
+
+            return UnityTestEngineContextFactory.CreateHumanoidNPC(_world, factorySettings);
         }
 
         public IHumanoidNPC CreateAndStartNPC(Action<int, string> logChannel)
@@ -250,6 +273,7 @@ namespace SymOntoClay.Core.Tests.Helpers
         //private string _defaultRelativeFileName = @"/Npcs/Example/Example.soc";
         private readonly string _projectName = "Example";
         private readonly string _testDir;
+        private readonly bool _enableNLP;
         private readonly string _wSpaceDir;
         private IWorld _world;
 

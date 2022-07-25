@@ -7,6 +7,8 @@
     <FileVersion>0.4.1</FileVersion>
     <Version>0.4.1</Version>
     <Copyright>Copyright (c) 2020 - 2021 Sergiy Tolkachov aka metatypeman</Copyright>
+    <AssemblyName>SymOntoClay.BaseTestLib</AssemblyName>
+    <RootNamespace>SymOntoClay.BaseTestLib</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />

@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel.Helpers
@@ -52,9 +53,76 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 return string.Empty;
             }
 
-            if(source.StartsWith("#"))
+            if (source.StartsWith("@>"))
             {
-                if (source.StartsWith("#`"))
+                var nameSubStr = source.Substring(2);
+
+                if (nameSubStr.All(p => char.IsLetterOrDigit(p)) || nameSubStr.Contains("`"))
+                {
+                    return source;
+                }
+
+                return $"{source.Insert(2, "`")}`";
+            }
+
+            if (source.StartsWith("@@"))
+            {
+                var nameSubStr = source.Substring(2);
+
+                if (nameSubStr.All(p => char.IsLetterOrDigit(p)) || nameSubStr.Contains("`"))
+                {
+                    return source;
+                }
+
+                return $"{source.Insert(2, "`")}`";
+            }
+
+            if (source == "#@")
+            {
+                return source;
+            }
+
+            if (source.StartsWith("#@"))
+            {
+                var nameSubStr = source.Substring(2);
+
+                if (nameSubStr.All(p => char.IsLetterOrDigit(p)) || nameSubStr.Contains("`"))
+                {
+                    return source;
+                }
+
+                return $"{source.Insert(2, "`")}`";
+            }
+
+            if (source.StartsWith("##"))
+            {
+                var nameSubStr = source.Substring(2);
+
+                if (nameSubStr.All(p => char.IsLetterOrDigit(p)) || nameSubStr.Contains("`"))
+                {
+                    return source;
+                }
+
+                return $"{source.Insert(2, "`")}`";
+            }
+
+            if (source.StartsWith("#^"))
+            {
+                var nameSubStr = source.Substring(2);
+
+                if (nameSubStr.All(p => char.IsLetterOrDigit(p)) || nameSubStr.Contains("`"))
+                {
+                    return source;
+                }
+
+                return $"{source.Insert(2, "`")}`";
+            }
+
+            if (source.StartsWith("@"))
+            {
+                var nameSubStr = source.Substring(1);
+
+                if (nameSubStr.All(p => char.IsLetterOrDigit(p)) || nameSubStr.Contains("`"))
                 {
                     return source;
                 }
@@ -62,7 +130,36 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 return $"{source.Insert(1, "`")}`";
             }
 
-            return source;
+            if (source.StartsWith("#"))
+            {
+                var nameSubStr = source.Substring(1);
+
+                if (nameSubStr.All(p => char.IsLetterOrDigit(p)) || nameSubStr.Contains("`"))
+                {
+                    return source;
+                }
+
+                return $"{source.Insert(1, "`")}`";
+            }
+
+            if (source.StartsWith("$"))
+            {
+                var nameSubStr = source.Substring(1);
+
+                if (nameSubStr.All(p => char.IsLetterOrDigit(p)) || nameSubStr.Contains("`"))
+                {
+                    return source;
+                }
+
+                return $"{source.Insert(1, "`")}`";
+            }
+
+            if (source.All(p => char.IsLetterOrDigit(p)) || source.Contains("`"))
+            {
+                return source;
+            }
+
+            return $"`{source}`";
         }
 
         public static StrongIdentifierValue CreateRuleOrFactName()
@@ -138,26 +235,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 name.KindOfName = KindOfName.LogicalVar;
             }
 
-            name.NameValue = text;
-
-            if(text.Contains(" ") && !text.Contains("`"))
-            {
-                var kindOfName = name.KindOfName;
-
-                switch(kindOfName)
-                {
-                    case KindOfName.Concept:
-                        name.NameValue = $"`{name.NameValue}`";
-                        break;
-
-                    case KindOfName.Entity:
-                        name.NameValue = $"#`{name.NameValue.Replace("#", string.Empty)}`";
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
-                }
-            }
+            name.NameValue = ShieldString(text);
 
             name.NormalizedNameValue = NormalizeString(text);
 

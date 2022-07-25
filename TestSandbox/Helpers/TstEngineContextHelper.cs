@@ -216,13 +216,5 @@ namespace TestSandbox.Helpers
             context.Start();
             return context;
         }
-
-        //public static ComplexTestEngineContext CreateAndInitContextWithoutAppFiles()
-        //{
-        //    var factorySettings = new UnityTestEngineContextFactorySettings();
-        //    factorySettings.UseDefaultAppFiles = false;
-
-        //    return CreateAndInitContext(factorySettings);
-        //}
     }
 }

@@ -12,6 +12,8 @@ namespace SymOntoClayBaseTestLib.Helpers
 {
     public class UnityTestEngineContextFactorySettings : IObjectToString
     {
+        public string BaseDir { get; set; }
+        public bool UseDefaultBaseDir { get; set; } = true;
         public string WorldFile { get; set; }
         public string NPCAppFile { get; set; }
         public bool UseDefaultAppFiles { get; set; } = true;
@@ -42,6 +44,9 @@ namespace SymOntoClayBaseTestLib.Helpers
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(BaseDir)} = {BaseDir}");
+            sb.AppendLine($"{spaces}{nameof(UseDefaultBaseDir)} = {UseDefaultBaseDir}");
 
             sb.AppendLine($"{spaces}{nameof(WorldFile)} = {WorldFile}");
             sb.AppendLine($"{spaces}{nameof(NPCAppFile)} = {NPCAppFile}");

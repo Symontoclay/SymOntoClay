@@ -82,6 +82,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            TstShieldString();
             //TstSampleSpeechSynthesis();
             //TstOnAddingFactEventHanler();
             //TstEventHanler();
@@ -140,10 +141,29 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstShieldString()
+        {
+            _logger.Log("Begin");
+
+            var str = "@@self";
+
+            _logger.Log($"str = '{str}'");
+
+            var nameSubStr = str.Substring(2);
+
+            _logger.Log($"nameSubStr = '{nameSubStr}'");
+
+            var name = NameHelper.ShieldString(str);
+
+            _logger.Log($"name = '{name}'");
+
+            _logger.Log("End");
         }
 
         private static void TstSampleSpeechSynthesis()

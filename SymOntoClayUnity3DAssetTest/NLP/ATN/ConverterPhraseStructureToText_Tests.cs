@@ -29,6 +29,8 @@ using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.ConvertingFactToInternalCG;
 using SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure;
 using SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText;
+using SymOntoClayBaseTestLib;
+using SymOntoClayBaseTestLib.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +45,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP.ATN
         public void Setup()
         {
             _logger = new EmptyLogger();
-            _testEngineContext = UnityTestEngineContextFactory.CreateAndInitTestEngineContext();
+            var factorySettings = new UnityTestEngineContextFactorySettings();
+            factorySettings.UseDefaultNLPSettings = false;
+            _testEngineContext = UnityTestEngineContextFactory.CreateAndInitTestEngineContext(factorySettings);
             _engineContext = _testEngineContext.EngineContext;
             _wordsDict = DictionaryInstance.Instance;
         }

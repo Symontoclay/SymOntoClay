@@ -29,9 +29,11 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClay.SoundBuses;
+using SymOntoClay.StandardFacts;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.World;
+using SymOntoClayBaseTestLib.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -39,6 +41,10 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.NLP;
+using SymOntoClay.NLP.CommonDict;
+using SymOntoClayBaseTestLib;
 
 namespace SymOntoClay.Core.Tests.Helpers
 {
@@ -72,8 +78,15 @@ namespace SymOntoClay.Core.Tests.Helpers
             return testDir;
         }
 
-        public static WorldSettings CreateWorldSettings(string baseDir, string hostFile, IPlatformLogger platformLogger)
+        public static WorldSettings CreateWorldSettings(UnityTestEngineContextFactorySettings factorySettings)/*string baseDir, string hostFile, IPlatformLogger platformLogger*/
         {
+            var baseDir = factorySettings.BaseDir;
+
+            if (string.IsNullOrWhiteSpace(baseDir) && factorySettings.UseDefaultBaseDir)
+            {
+                baseDir = CreateTestDir(CreateRootDir());
+            }
+
             var supportBasePath = Path.Combine(baseDir, "SysDirs");
 
             var logDir = Path.Combine(supportBasePath, "NpcLogs");
@@ -89,30 +102,69 @@ namespace SymOntoClay.Core.Tests.Helpers
 
             settings.TmpDir = Path.Combine(supportBasePath, "TMP");
 
-            if (!string.IsNullOrWhiteSpace(hostFile))
+            if (!string.IsNullOrWhiteSpace(factorySettings.WorldFile))
             {
-                settings.HostFile = hostFile;
+                settings.HostFile = factorySettings.WorldFile;
             }
 
             settings.InvokerInMainThread = invokingInMainThread;
 
             settings.SoundBus = new SimpleSoundBus();
 
-            settings.Logging = new LoggingSettings()
+            if (!factorySettings.DictsPaths.IsNullOrEmpty() || !factorySettings.DictsList.IsNullOrEmpty() || factorySettings.UseDefaultNLPSettings)
+            {
+                var nlpConverterProviderSettings = new NLPConverterProviderSettings();
+
+                if (!factorySettings.DictsPaths.IsNullOrEmpty() || !factorySettings.DictsList.IsNullOrEmpty())
+                {
+                    nlpConverterProviderSettings.DictsPaths = factorySettings.DictsPaths;
+                    nlpConverterProviderSettings.DictsList = factorySettings.DictsList;
+                }
+                else
+                {
+                    if (factorySettings.UseDefaultNLPSettings)
+                    {
+                        nlpConverterProviderSettings.DictsList = new List<IWordsDict>() { DictionaryInstance.Instance };
+                    }
+                }
+
+                nlpConverterProviderSettings.CreationStrategy = CreationStrategy.Singleton;
+
+                var nlpConverterProvider = new NLPConverterProvider(nlpConverterProviderSettings);
+
+                settings.NLPConverterProvider = nlpConverterProvider;
+            }
+
+            settings.StandardFactsBuilder = new StandardFactsBuilder();
+
+            var loggingSettings = new LoggingSettings()
             {
                 LogDir = logDir,
-                RootContractName = "Hi1",
-                PlatformLoggers = new List<IPlatformLogger>() { platformLogger },
+                RootContractName = "Hi1",      
                 Enable = true,
                 EnableRemoteConnection = true
             };
 
+            if (factorySettings.PlatformLogger == null)
+            {
+                if(factorySettings.UseDefaultPlatformLogger)
+                {
+                    loggingSettings.PlatformLoggers = new List<IPlatformLogger>() {new EmptyLogger() };
+                }
+            }
+            else 
+            {
+                loggingSettings.PlatformLoggers = new List<IPlatformLogger>() { factorySettings.PlatformLogger };
+            }
+
+            settings.Logging = loggingSettings;
+
             return settings;
         }
 
-        public static IWorld CreateWorld(string baseDir, string hostFile, IPlatformLogger platformLogger)
+        public static IWorld CreateWorld(UnityTestEngineContextFactorySettings factorySettings)/*string baseDir, string hostFile, IPlatformLogger platformLogger*/
         {
-            var settings = CreateWorldSettings(baseDir, hostFile, platformLogger);
+            var settings = CreateWorldSettings(factorySettings);
 
             return CreateWorld(settings);
         }
@@ -140,26 +192,47 @@ namespace SymOntoClay.Core.Tests.Helpers
         public static object DefaultPlatformListener => new object();
         public static Vector3 DefaultCurrentAbsolutePosition => new Vector3(10, 10, 10);
 
-        public static HumanoidNPCSettings CreateHumanoidNPCSettings(string logicFile, object platformListener, Vector3 currentAbsolutePosition)
+        public static HumanoidNPCSettings CreateHumanoidNPCSettings(UnityTestEngineContextFactorySettings factorySettings)/*string logicFile, object platformListener, Vector3 currentAbsolutePosition*/
         {
             var npcSettings = new HumanoidNPCSettings();
             npcSettings.Id = $"#{Guid.NewGuid():D}";
             npcSettings.InstanceId = GetInstanceId();
 
-            if(!string.IsNullOrWhiteSpace(logicFile))
+            if(!string.IsNullOrWhiteSpace(factorySettings.NPCAppFile))
             {
-                npcSettings.LogicFile = logicFile;
+                npcSettings.LogicFile = factorySettings.NPCAppFile;
             }
             
-            npcSettings.HostListener = platformListener;
-            npcSettings.PlatformSupport = new PlatformSupportCLIStub(currentAbsolutePosition);
+            if(factorySettings.PlatformLogger == null)
+            {
+                if(factorySettings.UseDefaultPlatformLogger)
+                {
+                    npcSettings.HostListener = DefaultPlatformListener;
+                }
+            }
+            else
+            {
+                npcSettings.HostListener = factorySettings.PlatformLogger;
+            }            
+
+            if(factorySettings.CurrentAbsolutePosition.HasValue)
+            {
+                npcSettings.PlatformSupport = new PlatformSupportCLIStub(factorySettings.CurrentAbsolutePosition.Value);
+            }
+            else
+            {
+                if (factorySettings.UseDefaultCurrentAbsolutePosition)
+                {
+                    npcSettings.PlatformSupport = new PlatformSupportCLIStub(DefaultCurrentAbsolutePosition);
+                }
+            }
 
             return npcSettings;
         }
 
-        public static IHumanoidNPC CreateHumanoidNPC(IWorld world, string logicFile, object platformListener, Vector3 currentAbsolutePosition)
+        public static IHumanoidNPC CreateHumanoidNPC(IWorld world, UnityTestEngineContextFactorySettings factorySettings)/*IWorld world, string logicFile, object platformListener, Vector3 currentAbsolutePosition*/
         {
-            var npcSettings = CreateHumanoidNPCSettings(logicFile, platformListener, currentAbsolutePosition);
+            var npcSettings = CreateHumanoidNPCSettings(factorySettings);
 
             return CreateHumanoidNPC(world, npcSettings);
         }
@@ -182,15 +255,11 @@ namespace SymOntoClay.Core.Tests.Helpers
             return npc;
         }
 
-        public static ComplexTestEngineContext CreateTestEngineContext()
+        public static ComplexTestEngineContext CreateTestEngineContext(UnityTestEngineContextFactorySettings factorySettings)
         {
-            var entityLogger = new EmptyLogger();
+            var worldSettings = CreateWorldSettings(factorySettings); /*baseDir, string.Empty, entityLogger*/
 
-            var baseDir = CreateTestDir(CreateRootDir());
-
-            var worldSettings = CreateWorldSettings(baseDir, string.Empty, entityLogger);
-
-            var npcSettings = CreateHumanoidNPCSettings(string.Empty, DefaultPlatformListener, DefaultCurrentAbsolutePosition);
+            var npcSettings = CreateHumanoidNPCSettings(factorySettings);/*string.Empty, DefaultPlatformListener, DefaultCurrentAbsolutePosition*/
 
             return CreateTestEngineContext(worldSettings, npcSettings);
         }
@@ -209,9 +278,9 @@ namespace SymOntoClay.Core.Tests.Helpers
             return new ComplexTestEngineContext(world, npc, baseDir);
         }
 
-        public static ComplexTestEngineContext CreateAndInitTestEngineContext()
+        public static ComplexTestEngineContext CreateAndInitTestEngineContext(UnityTestEngineContextFactorySettings factorySettings)
         {
-            var context = CreateTestEngineContext();
+            var context = CreateTestEngineContext(factorySettings);
             context.Start();
             return context;
         }

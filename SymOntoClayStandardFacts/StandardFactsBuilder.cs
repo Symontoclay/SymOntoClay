@@ -1,4 +1,7 @@
-﻿using SymOntoClay.UnityAsset.Core;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -37,6 +40,157 @@ namespace SymOntoClay.StandardFacts
             sb.Append(" :}");
 
             return sb.ToString();
+        }
+
+        public virtual RuleInstance BuildSoundFactInstance(double power, double distance, float directionToPosition, RuleInstance fact)
+        {
+            var result = new RuleInstance();
+            var primaryPart = new PrimaryRulePart();
+            result.PrimaryPart = primaryPart;
+
+            var andOp1 = new LogicalQueryNode() 
+            { 
+                Kind = KindOfLogicalQueryNode.BinaryOperator, 
+                KindOfOperator = KindOfOperatorOfLogicalQueryNode.And 
+            };
+
+            primaryPart.Expression = andOp1;
+
+            var andOp2 = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.BinaryOperator,
+                KindOfOperator = KindOfOperatorOfLogicalQueryNode.And
+            };
+
+            andOp1.Left = andOp2;
+
+            var andOp3 = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.BinaryOperator,
+                KindOfOperator = KindOfOperatorOfLogicalQueryNode.And
+            };
+
+            andOp2.Left = andOp3;
+
+            var andOp4 = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.BinaryOperator,
+                KindOfOperator = KindOfOperatorOfLogicalQueryNode.And
+            };
+
+            andOp3.Left = andOp4;
+
+            var factNode = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Fact
+            };
+
+            factNode.Fact = fact;
+
+            factNode.LinkedVars = new List<LogicalQueryNode>()
+            {
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.LogicalVar,
+                    Name = NameHelper.CreateName("$x")
+                }
+            };
+
+            andOp4.Left = factNode;
+
+            var hearRelation = new LogicalQueryNode() 
+            { 
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = NameHelper.CreateName("hear")
+            };
+
+            andOp4.Right = hearRelation;
+
+            hearRelation.ParamsList = new List<LogicalQueryNode>() { 
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Concept,
+                    Name = NameHelper.CreateName("i")
+                },
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.LogicalVar,
+                    Name = NameHelper.CreateName("$x")
+                }
+            };
+
+            var distanceRelation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = NameHelper.CreateName("distance")
+            };
+
+            andOp3.Right = distanceRelation;
+
+            distanceRelation.ParamsList = new List<LogicalQueryNode>()
+            {
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Concept,
+                    Name = NameHelper.CreateName("i")
+                },
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.LogicalVar,
+                    Name = NameHelper.CreateName("$x")
+                },
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Value,
+                    Value = new NumberValue(distance)
+                }
+            };
+
+            var directionRelation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = NameHelper.CreateName("direction")
+            };
+
+            andOp2.Right = directionRelation;
+
+            directionRelation.ParamsList = new List<LogicalQueryNode>()
+            {
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.LogicalVar,
+                    Name = NameHelper.CreateName("$x")
+                },
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Value,
+                    Value = new NumberValue(directionToPosition)
+                }
+            };
+
+            var pointRelation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = NameHelper.CreateName("point")
+            };
+
+            andOp1.Right = pointRelation;
+
+            pointRelation.ParamsList = new List<LogicalQueryNode>()
+            {
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.LogicalVar,
+                    Name = NameHelper.CreateName("$x")
+                },
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Value,
+                    Value = new WaypointSourceValue(new NumberValue(distance), new NumberValue(directionToPosition), NameHelper.CreateName("#@"))
+                }
+            };
+
+            return result;
         }
 
         protected virtual string GetTargetVarName(string factStr)

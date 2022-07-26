@@ -21,10 +21,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.StandardFacts;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Internal.SoundPerception;
+using SymOntoClayBaseTestLib.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -32,6 +34,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using TestSandbox.Helpers;
 using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.SoundBusHandler
@@ -60,6 +63,32 @@ namespace TestSandbox.SoundBusHandler
             var convertedQuery = ConvertQuery(power, distance, position, query);
 
             Log($"convertedQuery = {convertedQuery}");
+
+            //var factorySettings = new UnityTestEngineContextFactorySettings();
+            //factorySettings.UseDefaultNLPSettings = false;
+            //factorySettings.UseDefaultAppFiles = false;
+
+            //var engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
+
+            //var fact = engineContext.Parser.ParseRuleInstance(convertedQuery);
+
+            //Log($"fact = '{fact.ToHumanizedString()}'");
+            //Log($"fact = {fact}");
+        }
+
+        /// <inheritdoc/>
+        public override void CallBack(double power, double distance, Vector3 position, RuleInstance fact)
+        {
+#if DEBUG
+            Log($"power = {power}");
+            Log($"distance = {distance}");
+            Log($"position = {position}");
+            Log($"fact = {fact.ToHumanizedString()}");
+#endif
+
+            var convertedQuery = ConvertQuery(power, distance, position, fact);
+
+            Log($"convertedQuery = {convertedQuery.ToHumanizedString()}");
         }
 
         protected override float GetDirectionToPosition(Vector3 position)

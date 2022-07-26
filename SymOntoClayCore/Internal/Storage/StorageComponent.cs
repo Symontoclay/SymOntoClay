@@ -245,11 +245,17 @@ namespace SymOntoClay.Core.Internal.Storage
 
             var fact = ParseFact(text);
 
+            return InsertPublicFact(fact);
+        }
+
+        /// <inheritdoc/>
+        public string InsertPublicFact(RuleInstance fact)
+        {
 #if DEBUG
             //Log($"fact = {fact}");
 #endif
 
-            if(fact == null)
+            if (fact == null)
             {
                 return string.Empty;
             }
@@ -387,6 +393,12 @@ namespace SymOntoClay.Core.Internal.Storage
 
             var fact = _parser.ParseRuleInstance(text, false);
 
+            InsertListenedFact(fact);
+        }
+
+        /// <inheritdoc/>
+        public void InsertListenedFact(RuleInstance fact)
+        {
 #if DEBUG
             //Log($"fact = {fact}");
             //Log($"fact = {DebugHelperForRuleInstance.ToString(fact)}");

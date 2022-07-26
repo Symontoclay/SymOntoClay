@@ -31,6 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using SymOntoClay.UnityAsset.Core.InternalImplementations;
+using SymOntoClay.Core.Internal.CodeModel;
 
 namespace SymOntoClay.UnityAsset.Core.World
 {
@@ -164,6 +165,12 @@ namespace SymOntoClay.UnityAsset.Core.World
 
         /// <inheritdoc/>
         public string InsertPublicFact(string text)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public string InsertPublicFact(RuleInstance fact)
         {
             throw new NotImplementedException();
         }

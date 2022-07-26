@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal;
 using System;
@@ -66,6 +67,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
         public string InsertPublicFact(string text)
         {
             return _gameComponent.InsertPublicFact(text);
+        }
+
+        /// <inheritdoc/>
+        public string InsertPublicFact(RuleInstance fact)
+        {
+            return _gameComponent.InsertPublicFact(fact);
         }
 
         /// <inheritdoc/>

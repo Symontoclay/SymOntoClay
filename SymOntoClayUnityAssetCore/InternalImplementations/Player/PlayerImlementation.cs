@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal;
 using System;
@@ -72,6 +73,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         public string InsertPublicFact(string text)
         {
             return _gameComponent.InsertPublicFact(text);
+        }
+
+        /// <inheritdoc/>
+        public string InsertPublicFact(RuleInstance fact)
+        {
+            return _gameComponent.InsertPublicFact(fact);
         }
 
         /// <inheritdoc/>

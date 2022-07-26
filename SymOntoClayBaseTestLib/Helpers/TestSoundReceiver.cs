@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.StandardFacts;
 using SymOntoClay.UnityAsset.Core.Internal.SoundPerception;
 using System;
@@ -40,6 +41,13 @@ namespace SymOntoClay.Core.Tests.Helpers
             _callBack = callBack;
         }
 
+        public TestSoundReceiver(int instanceId, Vector3 position, Action<double, double, Vector3, string, RuleInstance> callBack)
+             : base(new EmptyLogger(), instanceId, new StandardFactsBuilder())
+        {
+            _position = position;
+            _factCallBack = callBack;
+        }
+
         private Vector3 _position;
 
         /// <inheritdoc/>
@@ -49,6 +57,7 @@ namespace SymOntoClay.Core.Tests.Helpers
         public override double Threshold => 0;
 
         private readonly Action<double, double, Vector3, string, string> _callBack;
+        private readonly Action<double, double, Vector3, string, RuleInstance> _factCallBack;
 
         /// <inheritdoc/>
         public override void CallBack(double power, double distance, Vector3 position, string query)
@@ -56,6 +65,12 @@ namespace SymOntoClay.Core.Tests.Helpers
             var convertedQuery = ConvertQuery(power, distance, position, query);
 
             _callBack(power, distance, position, query, convertedQuery);
+        }
+
+        /// <inheritdoc/>
+        public override void CallBack(double power, double distance, Vector3 position, RuleInstance fact)
+        {
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>

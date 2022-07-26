@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.CoreHelper;
@@ -158,6 +159,12 @@ namespace SymOntoClay.Core
         public string InsertPublicFact(string text)
         {
             return _storageComponent.InsertPublicFact(text);
+        }
+
+        /// <inheritdoc/>
+        public string InsertPublicFact(RuleInstance fact)
+        {
+            return _storageComponent.InsertPublicFact(fact);
         }
 
         /// <inheritdoc/>

@@ -23,6 +23,7 @@ SOFTWARE.*/
 using NLog;
 using SymOntoClay.Core.Tests.Helpers;
 using SymOntoClay.SoundBuses;
+using SymOntoClayBaseTestLib.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using TestSandbox.Helpers;
 
 namespace TestSandbox.SoundBusHandler
 {
@@ -41,16 +43,40 @@ namespace TestSandbox.SoundBusHandler
         {
             _logger.Info("Begin");
 
-            Case2();
+            Case3();
+            //Case2();
             //Case1();
 
             _logger.Info("End");
         }
 
+        private void Case3()
+        {
+            var factorySettings = new UnityTestEngineContextFactorySettings();
+            factorySettings.UseDefaultNLPSettings = false;
+            factorySettings.UseDefaultAppFiles = false;
+
+            var engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
+
+            var bus = new SimpleSoundBus();
+
+            var receiver1 = new TstSoundReceiver(11, new Vector3(10, 10, 10));
+            bus.AddReceiver(receiver1);
+
+            var factStr = "{: act(M16, shoot) :}";
+            var fact = engineContext.Parser.ParseRuleInstance(factStr);
+
+            _logger.Info($"fact = '{fact.ToHumanizedString()}'");
+
+            bus.PushSound(12, 60, new Vector3(1, 1, 1), fact);
+
+            Thread.Sleep(1000);
+        }
+
         private void Case2()
         {
             var bus = new SimpleSoundBus();
-
+            
             var receiver1 = new TestSoundReceiver(11, new Vector3(10, 10, 10), (double power, double distance, Vector3 position, string query, string convertedQuery) => {
                 _logger.Info($"power = {power}");
                 _logger.Info($"distance = {distance}");
@@ -76,6 +102,8 @@ namespace TestSandbox.SoundBusHandler
 
             bus.PushSound(12, 60, new Vector3(1, 1, 1), "act(M16, shoot)");
             //bus.PushSound(12, 60, new Vector3(1, 1, 1), "direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self)");
+
+            Thread.Sleep(1000);
         }
     }
 }

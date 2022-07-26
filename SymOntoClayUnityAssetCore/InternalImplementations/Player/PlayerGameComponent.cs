@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
@@ -36,13 +37,16 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         {
         }
 
-        /// <inheritdoc/>
         public string InsertPublicFact(string text)
         {
             return HostStorage.InsertPublicFact(text);
         }
 
-        /// <inheritdoc/>
+        public string InsertPublicFact(RuleInstance fact)
+        {
+            return HostStorage.InsertPublicFact(fact);
+        }
+
         public void RemovePublicFact(string id)
         {
             HostStorage.RemovePublicFact(id);

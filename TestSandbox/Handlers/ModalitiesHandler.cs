@@ -24,6 +24,7 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClayBaseTestLib.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,10 @@ namespace TestSandbox.Handlers
     {
         public ModalitiesHandler()
         {
-            _engineContext = TstEngineContextHelper.CreateAndInitContext().EngineContext;
+            var factorySettings = new UnityTestEngineContextFactorySettings();
+            factorySettings.UseDefaultNLPSettings = false;
+            factorySettings.UseDefaultAppFiles = false;
+            _engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
         }
 
         private readonly IEngineContext _engineContext;

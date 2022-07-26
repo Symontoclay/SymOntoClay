@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
@@ -111,6 +112,58 @@ namespace SymOntoClay.SoundBuses
                     try
                     {
                         receiver.CallBack(targetPower, distance, position, query);
+                    }
+                    catch (Exception e)
+                    {
+                        receiver.Logger.Error(e.ToString());
+                    }
+                });
+            }
+        }
+
+        public void PushSound(int instanceId, float power, Vector3 position, RuleInstance fact)
+        {
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+            _logger.Info($"power = {power}");
+            _logger.Info($"position = {position}");
+            _logger.Info($"fact = {fact.ToHumanizedString()}");
+#endif
+
+            foreach (var receiver in _soundReceivers)
+            {
+#if DEBUG
+                _logger.Info($"receiver.InstanceId = {receiver.InstanceId}");
+                _logger.Info($"receiver.Position = {receiver.Position}");
+                _logger.Info($"receiver.Threshold = {receiver.Threshold}");
+#endif
+
+                if (receiver.InstanceId == instanceId)
+                {
+                    continue;
+                }
+
+                var distance = Vector3.Distance(receiver.Position, position);
+
+#if DEBUG
+                _logger.Info($"distance = {distance}");
+#endif
+
+                var targetPower = power - 0.04 * distance;
+
+#if DEBUG
+                _logger.Info($"targetPower = {targetPower}");
+#endif
+
+                if (targetPower < receiver.Threshold)
+                {
+                    continue;
+                }
+
+                Task.Run(() => {
+                    try
+                    {
+                        receiver.CallBack(targetPower, distance, position, fact.Clone());
                     }
                     catch (Exception e)
                     {

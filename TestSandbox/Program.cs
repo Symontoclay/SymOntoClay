@@ -82,7 +82,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-            TstShieldString();
+            //TstShieldString();
             //TstSampleSpeechSynthesis();
             //TstOnAddingFactEventHanler();
             //TstEventHanler();
@@ -95,7 +95,7 @@ namespace TestSandbox
             //TstNLPConverterProvider();
             //TstNLPHandler();//<=NLP
             //TstTriggerConditionNodeHandler();
-            //TstSoundBus();
+            TstSoundBus();
             //TstNavigationHandler();
             //TstCreatorExamples();
             //TstLinguisticVariable_Tests();

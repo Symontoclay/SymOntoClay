@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Helpers;
 using System;
 
@@ -151,6 +152,11 @@ namespace SymOntoClay.Core
             return _context.Storage.InsertPublicFact(text);
         }
 
+        public string InsertPublicFact(RuleInstance fact)
+        {
+            return _context.Storage.InsertPublicFact(fact);
+        }
+
         public void RemovePublicFact(string id)
         {
             _context.Storage.RemovePublicFact(id);
@@ -191,6 +197,11 @@ namespace SymOntoClay.Core
         public void InsertListenedFact(string text)
         {
             _context.Storage.InsertListenedFact(text);
+        }
+
+        public void InsertListenedFact(RuleInstance fact)
+        {
+            _context.Storage.InsertListenedFact(fact);
         }
 
         public void AddPublicFactsStorageOfOtherGameComponent(IStorage storage)

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -34,6 +35,7 @@ namespace SymOntoClay.UnityAsset.Core
         void RunInMainThread(Action function);
         TResult RunInMainThread<TResult>(Func<TResult> function);
         string InsertPublicFact(string text);
+        string InsertPublicFact(RuleInstance fact);
         void RemovePublicFact(string id);
         void PushSoundFact(float power, string text);
     }

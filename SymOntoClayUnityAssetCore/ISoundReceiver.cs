@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -39,5 +40,6 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         double Threshold { get; }
         void CallBack(double power, double distance, Vector3 position, string query);
+        void CallBack(double power, double distance, Vector3 position, RuleInstance fact);
     }
 }

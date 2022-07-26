@@ -292,12 +292,6 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BaseStoredGameComponent.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectGameComponent.InsertPublicFact(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectGameComponent.RemovePublicFact(System.String)">
-            <inheritdoc/>
-        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectGameComponent.IsWaited">
             <inheritdoc/>
         </member>
@@ -317,6 +311,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.InsertPublicFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.InsertPublicFact(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.RemovePublicFact(System.String)">
@@ -408,6 +405,9 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.InsertPublicFact(System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.InsertPublicFact(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.RemovePublicFact(System.String)">
             <inheritdoc/>
         </member>
@@ -480,6 +480,9 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.InsertPublicFact(System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.InsertPublicFact(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.RemovePublicFact(System.String)">
             <inheritdoc/>
         </member>
@@ -487,12 +490,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.Dispose">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerGameComponent.InsertPublicFact(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerGameComponent.RemovePublicFact(System.String)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerGameComponent.IsWaited">
@@ -517,6 +514,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.InsertPublicFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.InsertPublicFact(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.RemovePublicFact(System.String)">
@@ -565,6 +565,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.InsertPublicFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.InsertPublicFact(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.RemovePublicFact(System.String)">
@@ -1032,6 +1035,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.CallBack(System.Double,System.Double,System.Numerics.Vector3,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.CallBack(System.Double,System.Double,System.Numerics.Vector3,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.SoundReceiverComponent.GetDirectionToPosition(System.Numerics.Vector3)">

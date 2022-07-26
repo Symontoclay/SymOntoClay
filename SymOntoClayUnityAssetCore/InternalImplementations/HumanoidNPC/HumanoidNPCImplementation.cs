@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal;
@@ -117,6 +118,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         public string InsertPublicFact(string text)
         {
             return _gameComponent.InsertPublicFact(text);
+        }
+
+        /// <inheritdoc/>
+        public string InsertPublicFact(RuleInstance fact)
+        {
+            return _gameComponent.InsertPublicFact(fact);
         }
 
         /// <inheritdoc/>

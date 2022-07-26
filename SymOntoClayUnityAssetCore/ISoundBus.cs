@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -32,5 +33,6 @@ namespace SymOntoClay.UnityAsset.Core
         void AddReceiver(ISoundReceiver receiver);
         void RemoveReceiver(ISoundReceiver receiver);
         void PushSound(int instanceId, float power, Vector3 position, string query);
+        void PushSound(int instanceId, float power, Vector3 position, RuleInstance fact);
     }
 }

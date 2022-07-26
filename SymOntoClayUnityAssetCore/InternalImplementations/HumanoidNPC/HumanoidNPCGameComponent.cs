@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport;
@@ -186,6 +187,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         public string InsertPublicFact(string text)
         {
             return _coreEngine.InsertPublicFact(text);
+        }
+
+        public string InsertPublicFact(RuleInstance fact)
+        {
+            return _coreEngine.InsertPublicFact(fact);
         }
 
         public void RemovePublicFact(string id)

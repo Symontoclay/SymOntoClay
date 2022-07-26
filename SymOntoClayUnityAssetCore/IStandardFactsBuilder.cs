@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,5 +9,6 @@ namespace SymOntoClay.UnityAsset.Core
     {
         string BuildSayFactString(string selfId, string factStr);
         string BuildSoundFactString(double power, double distance, float directionToPosition, string factStr);
+        RuleInstance BuildSoundFactInstance(double power, double distance, float directionToPosition, RuleInstance fact);
     }
 }

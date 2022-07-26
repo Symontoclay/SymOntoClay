@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC;
 using System;
@@ -76,6 +77,24 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
 
 #if DEBUG
             //Log($"convertedQuery = {convertedQuery}");
+#endif
+
+            _coreEngine.InsertListenedFact(convertedQuery);
+        }
+
+        /// <inheritdoc/>
+        public override void CallBack(double power, double distance, Vector3 position, RuleInstance fact)
+        {
+#if DEBUG
+            Log($"power = {power}");
+            Log($"distance = {distance}");
+            Log($"position = {position}");
+            Log($"fact = {fact.ToHumanizedString()}");
+#endif
+            var convertedQuery = ConvertQuery(power, distance, position, fact);
+
+#if DEBUG
+            Log($"convertedQuery = {convertedQuery.ToHumanizedString()}");
 #endif
 
             _coreEngine.InsertListenedFact(convertedQuery);

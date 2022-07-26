@@ -7093,6 +7093,9 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertPublicFact(System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertPublicFact(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.RemovePublicFact(System.String)">
             <inheritdoc/>
         </member>
@@ -7109,6 +7112,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertListenedFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertListenedFact(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.AddPublicFactsStorageOfOtherGameComponent(SymOntoClay.Core.IStorage)">
@@ -7346,6 +7352,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.StandaloneStorage.InsertPublicFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.StandaloneStorage.InsertPublicFact(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.StandaloneStorage.RemovePublicFact(System.String)">

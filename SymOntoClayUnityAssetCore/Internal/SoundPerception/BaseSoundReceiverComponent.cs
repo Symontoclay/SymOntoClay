@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -53,6 +54,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
 
         /// <inheritdoc/>
         public abstract void CallBack(double power, double distance, Vector3 position, string query);
+        public abstract void CallBack(double power, double distance, Vector3 position, RuleInstance fact);
 
         protected virtual string ConvertQuery(double power, double distance, Vector3 position, string query)
         {
@@ -70,6 +72,24 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
 #endif
 
             return _standardFactsBuilder.BuildSoundFactString(power, distance, directionToPosition, query);
+        }
+
+        protected virtual RuleInstance ConvertQuery(double power, double distance, Vector3 position, RuleInstance query)
+        {
+#if DEBUG
+            Log($"power = {power}");
+            Log($"distance = {distance}");
+            Log($"position = {position}");
+            Log($"query = {query.ToHumanizedString()}");
+#endif
+
+            var directionToPosition = GetDirectionToPosition(position);
+
+#if DEBUG
+            Log($"directionToPosition = {directionToPosition}");
+#endif
+
+            return _standardFactsBuilder.BuildSoundFactInstance(power, distance, directionToPosition, query);
         }
 
         protected abstract float GetDirectionToPosition(Vector3 position);

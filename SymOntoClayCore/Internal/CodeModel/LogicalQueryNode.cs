@@ -237,6 +237,22 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         }
                         break;
 
+                    case KindOfLogicalQueryNode.Fact:
+                        {
+                            var knownInfo = new QueryExecutingCardAboutKnownInfo();
+                            knownInfo.Kind = kindOfParam;
+                            knownInfo.Expression = param;
+                            knownInfo.Position = i;
+                            knownInfoList.Add(knownInfo);
+
+#if DEBUG
+                            //_gbcLogger.Info($"knownInfo = {knownInfo}");
+#endif
+
+                            param.CheckDirty();
+                        }
+                        break;
+
                     case KindOfLogicalQueryNode.LogicalVar:
                         {
                             var varInfo = new QueryExecutingCardAboutVar();

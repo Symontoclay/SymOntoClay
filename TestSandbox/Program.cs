@@ -82,6 +82,9 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+
+            //TstStandardFactsBuilder();
+            TstStandardFactsBuilderGetTargetVarNameHandler();
             //TstShieldString();
             //TstSampleSpeechSynthesis();
             //TstOnAddingFactEventHanler();
@@ -95,7 +98,7 @@ namespace TestSandbox
             //TstNLPConverterProvider();
             //TstNLPHandler();//<=NLP
             //TstTriggerConditionNodeHandler();
-            TstSoundBus();
+            //TstSoundBus();
             //TstNavigationHandler();
             //TstCreatorExamples();
             //TstLinguisticVariable_Tests();
@@ -146,6 +149,26 @@ namespace TestSandbox
 
             //Thread.Sleep(10000);
         }
+
+        private static void TstStandardFactsBuilder()
+        {
+            _logger.Log("Begin");
+
+            var handler = new StandardFactsBuilderHandler();
+            handler.Run();
+
+            _logger.Log("End");
+        }
+
+        private static void TstStandardFactsBuilderGetTargetVarNameHandler()
+        {
+            _logger.Log("Begin");
+
+            var handler = new StandardFactsBuilderGetTargetVarNameHandler();
+            handler.Run();
+
+            _logger.Log("End");
+        }            
 
         private static void TstShieldString()
         {

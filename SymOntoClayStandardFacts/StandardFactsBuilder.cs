@@ -16,7 +16,49 @@ namespace SymOntoClay.StandardFacts
         /// <inheritdoc/>
         public virtual string BuildSayFactString(string selfId, string factStr)
         {
-            return $"say({selfId}, {factStr})";
+            var sb = new StringBuilder();
+
+            var varName = GetTargetVarName(factStr);
+
+            sb.Append("{: say(");
+            sb.Append(selfId);
+            sb.Append(", ");
+            sb.Append(factStr);
+            sb.Append(") :}");
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public virtual RuleInstance BuildSayFactInstance(string selfId, RuleInstance fact)
+        {
+            var result = new RuleInstance();
+            var primaryPart = new PrimaryRulePart();
+            result.PrimaryPart = primaryPart;
+
+            var sayRelation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = NameHelper.CreateName("say")
+            };
+
+            primaryPart.Expression = sayRelation;
+
+            sayRelation.ParamsList = new List<LogicalQueryNode>()
+            {
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Entity,
+                    Name = NameHelper.CreateName(selfId)
+                },
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Fact,
+                    Fact = fact
+                }
+            };
+
+            return result;
         }
 
         /// <inheritdoc/>

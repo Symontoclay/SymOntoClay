@@ -23,6 +23,7 @@ SOFTWARE.*/
 using NLog;
 using SymOntoClay.Core.Tests.Helpers;
 using SymOntoClay.SoundBuses;
+using SymOntoClay.StandardFacts;
 using SymOntoClayBaseTestLib.Helpers;
 using System;
 using System.Collections.Generic;

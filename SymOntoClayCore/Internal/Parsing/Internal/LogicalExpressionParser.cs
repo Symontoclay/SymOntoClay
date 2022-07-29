@@ -302,6 +302,27 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case TokenKind.OpenFactBracket:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var node = new LogicalQueryNode() { Kind = KindOfLogicalQueryNode.Fact };
+
+                                var parser = new LogicalQueryParser(_context);
+                                parser.Run();
+
+#if DEBUG
+                                //Log($"parser.Result = {parser.Result}");
+                                //Log($"parser.Result = {parser.Result.ToHumanizedString()}");
+#endif
+                                node.Fact = parser.Result;
+
+                                _lastLogicalQueryNode.ParamsList.Add(node);
+
+                                _state = State.GotPredicateParameter;
+                            }
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

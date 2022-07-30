@@ -151,6 +151,19 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessPrimaryRulePart(TokenKind.CloseFigureBracket);
                             break;
 
+                        case TokenKind.Entity:
+                            {
+                                if(_nameHasBeenParsed)
+                                {
+                                    throw new NotImplementedException();
+                                }
+
+                                Result.Name = NameHelper.CreateName(_currToken.Content);
+
+                                _nameHasBeenParsed = true;
+                            }
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

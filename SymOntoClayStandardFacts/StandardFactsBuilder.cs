@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
 using System;
@@ -86,6 +87,8 @@ namespace SymOntoClay.StandardFacts
 
         public virtual RuleInstance BuildSoundFactInstance(double power, double distance, float directionToPosition, RuleInstance fact)
         {
+            var varName = NameHelper.CreateName(GetTargetVarName(fact));
+
             var result = new RuleInstance();
             var primaryPart = new PrimaryRulePart();
             result.PrimaryPart = primaryPart;
@@ -134,7 +137,7 @@ namespace SymOntoClay.StandardFacts
                 new LogicalQueryNode()
                 {
                     Kind = KindOfLogicalQueryNode.LogicalVar,
-                    Name = NameHelper.CreateName("$x")
+                    Name = varName
                 }
             };
 
@@ -157,7 +160,7 @@ namespace SymOntoClay.StandardFacts
                 new LogicalQueryNode()
                 {
                     Kind = KindOfLogicalQueryNode.LogicalVar,
-                    Name = NameHelper.CreateName("$x")
+                    Name = varName
                 }
             };
 
@@ -179,7 +182,7 @@ namespace SymOntoClay.StandardFacts
                 new LogicalQueryNode()
                 {
                     Kind = KindOfLogicalQueryNode.LogicalVar,
-                    Name = NameHelper.CreateName("$x")
+                    Name = varName
                 },
                 new LogicalQueryNode()
                 {
@@ -201,7 +204,7 @@ namespace SymOntoClay.StandardFacts
                 new LogicalQueryNode()
                 {
                     Kind = KindOfLogicalQueryNode.LogicalVar,
-                    Name = NameHelper.CreateName("$x")
+                    Name = varName
                 },
                 new LogicalQueryNode()
                 {
@@ -223,7 +226,7 @@ namespace SymOntoClay.StandardFacts
                 new LogicalQueryNode()
                 {
                     Kind = KindOfLogicalQueryNode.LogicalVar,
-                    Name = NameHelper.CreateName("$x")
+                    Name = varName
                 },
                 new LogicalQueryNode()
                 {
@@ -237,7 +240,12 @@ namespace SymOntoClay.StandardFacts
 
         protected virtual string GetTargetVarName(string factStr)
         {
-            return "$x";
+            return RuleInstanceHelper.GetNewUniqueVarNameWithPrefix("$x", factStr);
+        }
+
+        protected virtual string GetTargetVarName(RuleInstance fact)
+        {
+            return RuleInstanceHelper.GetNewUniqueVarNameWithPrefix("$x", fact);
         }
     }
 }

@@ -41,7 +41,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             InMultiLineComment,
             At,
             Sharp,
-            DollarSign
+            DollarSign,
+            FactIdPrefix
         }
 
         private enum KindOfPrefix
@@ -659,7 +660,51 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             case '`':
                                 _state = State.InIdentifier;
                                 break;
-                                
+
+                            case '^':
+                                buffer.Append(tmpChar);
+                                _state = State.FactIdPrefix;
+                                break;
+
+                            default:
+                                if (char.IsLetterOrDigit(tmpChar) || tmpChar == '_')
+                                {
+                                    buffer.Append(tmpChar);
+
+                                    _kindOfPrefix = KindOfPrefix.Entity;
+                                    _state = State.InIdentifier;
+
+                                    var nextChar = _items.Peek();
+
+                                    if (nextChar == '`')
+                                    {
+                                        _state = State.InIdentifier;
+                                    }
+                                    else
+                                    {
+                                        if (char.IsLetterOrDigit(nextChar) || nextChar == '_')
+                                        {
+                                            _state = State.InWord;
+                                        }
+                                        else
+                                        {
+                                            _state = State.Init;
+                                            return CreateToken(TokenKind.Entity, buffer.ToString());
+                                        }
+                                    }
+                                    break;
+                                }
+                                throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                        }
+                        break;
+
+                    case State.FactIdPrefix:
+                        switch (tmpChar)
+                        {
+                            case '`':
+                                _state = State.InIdentifier;
+                                break;
+
                             default:
                                 if (char.IsLetterOrDigit(tmpChar) || tmpChar == '_')
                                 {

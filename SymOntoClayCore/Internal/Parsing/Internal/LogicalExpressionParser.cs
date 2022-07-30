@@ -355,6 +355,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessBinaryOperator(KindOfOperatorOfLogicalQueryNode.Or);
                             break;
 
+                        case TokenKind.OpenRoundBracket:
+                            ProcessGroup();
+                            break;
+
                         case TokenKind.Comma:
                             _state = State.WaitForPredicateParameter;
                             break;

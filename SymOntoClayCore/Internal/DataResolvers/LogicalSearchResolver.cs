@@ -137,7 +137,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
 #if DEBUG
             //Log($"queryExpression = {queryExpression}");
-            //Log($"DebugHelperForRuleInstance.ToString(queryExpression) = {DebugHelperForRuleInstance.ToString(queryExpression)}");
+            Log($"DebugHelperForRuleInstance.ToString(queryExpression) = {DebugHelperForRuleInstance.ToString(queryExpression)}");
 #endif
 
             if(queryExpression.IsParameterized)
@@ -3542,6 +3542,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 return _fuzzyLogicResolver.Equals(sequenceNode.FuzzyLogicNonNumericSequenceValue, _numberValueLinearResolver.Resolve(value, localCodeExecutionContext), reason, localCodeExecutionContext);
             }
+
+            options.Logger.Log($"expressionNode1 = {expressionNode1}");
+            options.Logger.Log($"expressionNode2 = {expressionNode2}");
 
             throw new NotImplementedException();
         }

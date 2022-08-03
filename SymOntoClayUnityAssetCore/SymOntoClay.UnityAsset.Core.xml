@@ -1246,6 +1246,190 @@
             Gets threshold of audibility in decibels.
             </summary>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildSayFactString(System.String,System.String)">
+            <summary>
+            Builds fact that the NPC says something.
+            </summary>
+            <param name="selfId">Id of the NPC.</param>
+            <param name="factStr">Fact which is said by the NPC.</param>
+            <returns>String that represents built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildSayFactInstance(System.String,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+            <summary>
+            Builds fact that the NPC says something.
+            </summary>
+            <param name="selfId">Id of the NPC.</param>
+            <param name="fact">Fact which is said by the NPC.</param>
+            <returns>Instance of built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildSoundFactString(System.Double,System.Single,System.String)">
+            <summary>
+            Builds fact which represents listening to a sound.
+            </summary>
+            <param name="distance">Distance to sound source.</param>
+            <param name="directionToPosition">Direction to to sound source.</param>
+            <param name="factStr">Fact which represents a sound.</param>
+            <returns>String that represents built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildSoundFactInstance(System.Double,System.Single,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+            <summary>
+            Builds fact which represents listening to a sound.
+            </summary>
+            <param name="distance">Distance to sound source.</param>
+            <param name="directionToPosition">Direction to to sound source.</param>
+            <param name="fact">Fact which represents a sound.</param>
+            <returns>Instance of built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildAliveFactString(System.String)">
+            <summary>
+            Builds fact that the NPC is alive.
+            </summary>
+            <param name="selfId">Id of the NPC.</param>
+            <returns>String that represents built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildAliveFactInstance(System.String)">
+            <summary>
+            Builds fact that the NPC is alive.
+            </summary>
+            <param name="selfId">Id of the NPC.</param>
+            <returns>Instance of built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildDeadFactString(System.String)">
+            <summary>
+            Builds fact that the NPC is dead.
+            </summary>
+            <param name="selfId">Id of the NPC.</param>
+            <returns>String that represents built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildDeadFactInstance(System.String)">
+            <summary>
+            Builds fact that the NPC is dead.
+            </summary>
+            <param name="selfId">Id of the NPC.</param>
+            <returns>Instance of built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildStopFactString(System.String)">
+            <summary>
+            Builds fact that the NPC has stopped itself.
+            </summary>
+            <param name="selfId">Id of the NPC.</param>
+            <returns>String that represents built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildStopFactInstance(System.String)">
+            <summary>
+            Builds fact that the NPC has stopped itself.
+            </summary>
+            <param name="selfId">Id of the NPC.</param>
+            <returns>Instance of built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildWalkFactString(System.String)">
+            <summary>
+            Builds fact that the NPC has started walking.
+            </summary>
+            <param name="selfId">Id of the NPC.</param>
+            <returns>String that represents built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildWalkFactInstance(System.String)">
+            <summary>
+            Builds fact that the NPC has started walking.
+            </summary>
+            <param name="selfId">Id of the NPC.</param>
+            <returns>Instance of built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildWalkSoundFactString">
+            <summary>
+            Builds fact which represents sound of someone's walking.
+            </summary>
+            <returns>String that represents built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildWalkSoundFactInstance">
+            <summary>
+            Builds fact which represents sound of someone's walking.
+            </summary>
+            <returns>Instance of built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildRunFactString(System.String)">
+            <summary>
+            Builds fact that the NPC has started running.
+            </summary>
+            <param name="selfId">Id of the NPC.</param>
+            <returns>String that represents built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildRunFactInstance(System.String)">
+            <summary>
+            Builds fact that the NPC has started running.
+            </summary>
+            <param name="selfId">Id of the NPC.</param>
+            <returns>Instance of built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildRunSoundFactString">
+            <summary>
+            Builds fact which represents sound of someone's running.
+            </summary>
+            <returns>String that represents built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildRunSoundFactInstance">
+            <summary>
+            Builds fact which represents sound of someone's running.
+            </summary>
+            <returns>Instance of built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildHoldFactString(System.String,System.String)">
+            <summary>
+            Builds fact that the NPC holds something in his hands.
+            </summary>
+            <param name="selfId">Id of the NPC.</param>
+            <param name="heldThingId">Id of held thing.</param>
+            <returns>String that represents built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildHoldFactInstance(System.String,System.String)">
+            <summary>
+            Builds fact that the NPC holds something in his hands.
+            </summary>
+            <param name="selfId">Id of the NPC.</param>
+            <param name="heldThingId">Id of held thing.</param>
+            <returns>Instance of built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildShootFactString(System.String)">
+            <summary>
+            Builds fact that the NPC shoots.
+            </summary>
+            <param name="selfId">Id of the NPC.</param>
+            <returns>String that represents built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildShootFactInstance(System.String)">
+            <summary>
+            Builds fact that the NPC shoots.
+            </summary>
+            <param name="selfId">Id of the NPC.</param>
+            <returns>Instance of built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildShootSoundFactString">
+            <summary>
+            Builds fact which represents sound of someone's shooting.
+            </summary>
+            <returns>String that represents built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildShootSoundFactInstance">
+            <summary>
+            Builds fact which represents sound of someone's shooting.
+            </summary>
+            <returns>Instance of built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildReadyForShootFactString(System.String)">
+            <summary>
+            Builds fact that the NPC is ready for shooting.
+            </summary>
+            <param name="selfId">Id of the NPC.</param>
+            <returns>String that represents built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildReadyForShootFactInstance(System.String)">
+            <summary>
+            Builds fact that the NPC is ready for shooting.
+            </summary>
+            <param name="selfId">Id of the NPC.</param>
+            <returns>Instance of built fact.</returns>
+        </member>
         <member name="T:SymOntoClay.UnityAsset.Core.IWorld">
             <summary>
             Represents core of a game world.

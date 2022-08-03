@@ -71,7 +71,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
             //Log($"directionToPosition = {directionToPosition}");
 #endif
 
-            return _standardFactsBuilder.BuildSoundFactString(power, distance, directionToPosition, query);
+            return _standardFactsBuilder.BuildSoundFactString(distance, directionToPosition, query);
         }
 
         protected virtual RuleInstance ConvertQuery(double power, double distance, Vector3 position, RuleInstance query)
@@ -89,7 +89,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
             //Log($"directionToPosition = {directionToPosition}");
 #endif
 
-            return _standardFactsBuilder.BuildSoundFactInstance(power, distance, directionToPosition, query);
+            return _standardFactsBuilder.BuildSoundFactInstance(distance, directionToPosition, query);
         }
 
         protected abstract float GetDirectionToPosition(Vector3 position);

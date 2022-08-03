@@ -83,8 +83,8 @@ namespace TestSandbox
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
 
-            //TstStandardFactsBuilder();
-            TstStandardFactsBuilderGetTargetVarNameHandler();
+            TstStandardFactsBuilder();
+            //TstStandardFactsBuilderGetTargetVarNameHandler();
             //TstShieldString();
             //TstSampleSpeechSynthesis();
             //TstOnAddingFactEventHanler();

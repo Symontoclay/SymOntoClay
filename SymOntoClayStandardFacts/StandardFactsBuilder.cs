@@ -19,8 +19,6 @@ namespace SymOntoClay.StandardFacts
         {
             var sb = new StringBuilder();
 
-            var varName = GetTargetVarName(factStr);
-
             sb.Append("{: say(");
             sb.Append(selfId);
             sb.Append(", ");
@@ -63,7 +61,7 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public virtual string BuildSoundFactString(double power, double distance, float directionToPosition, string factStr)
+        public virtual string BuildSoundFactString(double distance, float directionToPosition, string factStr)
         {
             var varName = GetTargetVarName(factStr);
 
@@ -85,7 +83,8 @@ namespace SymOntoClay.StandardFacts
             return sb.ToString();
         }
 
-        public virtual RuleInstance BuildSoundFactInstance(double power, double distance, float directionToPosition, RuleInstance fact)
+        /// <inheritdoc/>
+        public virtual RuleInstance BuildSoundFactInstance(double distance, float directionToPosition, RuleInstance fact)
         {
             var varName = NameHelper.CreateName(GetTargetVarName(fact));
 
@@ -232,6 +231,474 @@ namespace SymOntoClay.StandardFacts
                 {
                     Kind = KindOfLogicalQueryNode.Value,
                     Value = new WaypointSourceValue(new NumberValue(distance), new NumberValue(directionToPosition), NameHelper.CreateName("#@"))
+                }
+            };
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public virtual string BuildAliveFactString(string selfId)
+        {
+            var sb = new StringBuilder();
+
+            sb.Append("{: state(");
+            sb.Append(selfId);
+            sb.Append(", alive) :}");
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public virtual RuleInstance BuildAliveFactInstance(string selfId)
+        {
+            var result = new RuleInstance();
+            var primaryPart = new PrimaryRulePart();
+            result.PrimaryPart = primaryPart;
+
+            var sayRelation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = NameHelper.CreateName("state")
+            };
+
+            primaryPart.Expression = sayRelation;
+
+            sayRelation.ParamsList = new List<LogicalQueryNode>()
+            {
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Entity,
+                    Name = NameHelper.CreateName(selfId)
+                },
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Concept,
+                    Name = NameHelper.CreateName("alive")
+                }
+            };
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public string BuildDeadFactString(string selfId)
+        {
+            var sb = new StringBuilder();
+
+            sb.Append("{: state(");
+            sb.Append(selfId);
+            sb.Append(", dead) :}");
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public RuleInstance BuildDeadFactInstance(string selfId)
+        {
+            var result = new RuleInstance();
+            var primaryPart = new PrimaryRulePart();
+            result.PrimaryPart = primaryPart;
+
+            var sayRelation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = NameHelper.CreateName("state")
+            };
+
+            primaryPart.Expression = sayRelation;
+
+            sayRelation.ParamsList = new List<LogicalQueryNode>()
+            {
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Entity,
+                    Name = NameHelper.CreateName(selfId)
+                },
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Concept,
+                    Name = NameHelper.CreateName("dead")
+                }
+            };
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public string BuildStopFactString(string selfId)
+        {
+            var sb = new StringBuilder();
+
+            sb.Append("{: act(");
+            sb.Append(selfId);
+            sb.Append(", stop) :}");
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public RuleInstance BuildStopFactInstance(string selfId)
+        {
+            var result = new RuleInstance();
+            var primaryPart = new PrimaryRulePart();
+            result.PrimaryPart = primaryPart;
+
+            var sayRelation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = NameHelper.CreateName("act")
+            };
+
+            primaryPart.Expression = sayRelation;
+
+            sayRelation.ParamsList = new List<LogicalQueryNode>()
+            {
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Entity,
+                    Name = NameHelper.CreateName(selfId)
+                },
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Concept,
+                    Name = NameHelper.CreateName("stop")
+                }
+            };
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public string BuildWalkFactString(string selfId)
+        {
+            var sb = new StringBuilder();
+
+            sb.Append("{: act(");
+            sb.Append(selfId);
+            sb.Append(", walk) :}");
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public RuleInstance BuildWalkFactInstance(string selfId)
+        {
+            var result = new RuleInstance();
+            var primaryPart = new PrimaryRulePart();
+            result.PrimaryPart = primaryPart;
+
+            var sayRelation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = NameHelper.CreateName("act")
+            };
+
+            primaryPart.Expression = sayRelation;
+
+            sayRelation.ParamsList = new List<LogicalQueryNode>()
+            {
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Entity,
+                    Name = NameHelper.CreateName(selfId)
+                },
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Concept,
+                    Name = NameHelper.CreateName("walk")
+                }
+            };
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public string BuildWalkSoundFactString()
+        {
+            return "{: act(someone, walk) :}";
+        }
+
+        /// <inheritdoc/>
+        public RuleInstance BuildWalkSoundFactInstance()
+        {
+            var result = new RuleInstance();
+            var primaryPart = new PrimaryRulePart();
+            result.PrimaryPart = primaryPart;
+
+            var sayRelation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = NameHelper.CreateName("act")
+            };
+
+            primaryPart.Expression = sayRelation;
+
+            sayRelation.ParamsList = new List<LogicalQueryNode>()
+            {
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Concept,
+                    Name = NameHelper.CreateName("someone")
+                },
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Concept,
+                    Name = NameHelper.CreateName("walk")
+                }
+            };
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public string BuildRunFactString(string selfId)
+        {
+            var sb = new StringBuilder();
+
+            sb.Append("{: act(");
+            sb.Append(selfId);
+            sb.Append(", run) :}");
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public RuleInstance BuildRunFactInstance(string selfId)
+        {
+            var result = new RuleInstance();
+            var primaryPart = new PrimaryRulePart();
+            result.PrimaryPart = primaryPart;
+
+            var sayRelation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = NameHelper.CreateName("act")
+            };
+
+            primaryPart.Expression = sayRelation;
+
+            sayRelation.ParamsList = new List<LogicalQueryNode>()
+            {
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Entity,
+                    Name = NameHelper.CreateName(selfId)
+                },
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Concept,
+                    Name = NameHelper.CreateName("run")
+                }
+            };
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public string BuildRunSoundFactString()
+        {
+            return "{: act(someone, run) :}";
+        }
+        
+        /// <inheritdoc/>
+        public RuleInstance BuildRunSoundFactInstance()
+        {
+            var result = new RuleInstance();
+            var primaryPart = new PrimaryRulePart();
+            result.PrimaryPart = primaryPart;
+
+            var sayRelation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = NameHelper.CreateName("act")
+            };
+
+            primaryPart.Expression = sayRelation;
+
+            sayRelation.ParamsList = new List<LogicalQueryNode>()
+            {
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Concept,
+                    Name = NameHelper.CreateName("someone")
+                },
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Concept,
+                    Name = NameHelper.CreateName("run")
+                }
+            };
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public string BuildHoldFactString(string selfId, string heldThingId)
+        {
+            var sb = new StringBuilder();
+
+            sb.Append("{: hold(");
+            sb.Append(selfId);
+            sb.Append(", ");
+            sb.Append(heldThingId);
+            sb.Append(") :}");
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public RuleInstance BuildHoldFactInstance(string selfId, string heldThingId)
+        {
+            var result = new RuleInstance();
+            var primaryPart = new PrimaryRulePart();
+            result.PrimaryPart = primaryPart;
+
+            var sayRelation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = NameHelper.CreateName("hold")
+            };
+
+            primaryPart.Expression = sayRelation;
+
+            sayRelation.ParamsList = new List<LogicalQueryNode>()
+            {
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Entity,
+                    Name = NameHelper.CreateName(selfId)
+                },
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Entity,
+                    Name = NameHelper.CreateName(heldThingId)
+                }
+            };
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public string BuildShootFactString(string selfId)
+        {
+            var sb = new StringBuilder();
+
+            sb.Append("{: act(");
+            sb.Append(selfId);
+            sb.Append(", shoot) :}");
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public RuleInstance BuildShootFactInstance(string selfId)
+        {
+            var result = new RuleInstance();
+            var primaryPart = new PrimaryRulePart();
+            result.PrimaryPart = primaryPart;
+
+            var sayRelation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = NameHelper.CreateName("act")
+            };
+
+            primaryPart.Expression = sayRelation;
+
+            sayRelation.ParamsList = new List<LogicalQueryNode>()
+            {
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Entity,
+                    Name = NameHelper.CreateName(selfId)
+                },
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Concept,
+                    Name = NameHelper.CreateName("shoot")
+                }
+            };
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public string BuildShootSoundFactString()
+        {
+            return "{: act(someone, shoot) :}";
+        }
+
+        /// <inheritdoc/>
+        public RuleInstance BuildShootSoundFactInstance()
+        {
+            var result = new RuleInstance();
+            var primaryPart = new PrimaryRulePart();
+            result.PrimaryPart = primaryPart;
+
+            var sayRelation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = NameHelper.CreateName("act")
+            };
+
+            primaryPart.Expression = sayRelation;
+
+            sayRelation.ParamsList = new List<LogicalQueryNode>()
+            {
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Concept,
+                    Name = NameHelper.CreateName("someone")
+                },
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Concept,
+                    Name = NameHelper.CreateName("shoot")
+                }
+            };
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public string BuildReadyForShootFactString(string selfId)
+        {
+            var sb = new StringBuilder();
+
+            sb.Append("{: ready(");
+            sb.Append(selfId);
+            sb.Append(", shoot) :}");
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public RuleInstance BuildReadyForShootFactInstance(string selfId)
+        {
+            var result = new RuleInstance();
+            var primaryPart = new PrimaryRulePart();
+            result.PrimaryPart = primaryPart;
+
+            var sayRelation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = NameHelper.CreateName("ready")
+            };
+
+            primaryPart.Expression = sayRelation;
+
+            sayRelation.ParamsList = new List<LogicalQueryNode>()
+            {
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Entity,
+                    Name = NameHelper.CreateName(selfId)
+                },
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Concept,
+                    Name = NameHelper.CreateName("shoot")
                 }
             };
 

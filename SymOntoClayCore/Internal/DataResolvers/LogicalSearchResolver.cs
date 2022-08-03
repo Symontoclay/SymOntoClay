@@ -137,7 +137,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
 #if DEBUG
             //Log($"queryExpression = {queryExpression}");
-            Log($"DebugHelperForRuleInstance.ToString(queryExpression) = {DebugHelperForRuleInstance.ToString(queryExpression)}");
+            //Log($"DebugHelperForRuleInstance.ToString(queryExpression) = {DebugHelperForRuleInstance.ToString(queryExpression)}");
 #endif
 
             if(queryExpression.IsParameterized)
@@ -190,6 +190,24 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"optionsOfFillExecutingCard = {optionsOfFillExecutingCard}");
 #endif
 
+#if DEBUG
+            var tmpExplainNode = new LogicalSearchExplainNode()
+            {
+                Kind = KindOfLogicalSearchExplainNode.Root
+            };
+#endif
+
+            var resultExplainNode = new LogicalSearchExplainNode()
+            {
+                Kind = KindOfLogicalSearchExplainNode.Result
+            };
+
+#if DEBUG
+            tmpExplainNode.Result = resultExplainNode;
+#endif
+
+            queryExecutingCard.ParentExplainNode = resultExplainNode;
+
             FillExecutingCard(queryExpression, queryExecutingCard, dataSource, optionsOfFillExecutingCard);
 
 #if DEBUG
@@ -214,6 +232,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //{
             //    Log($"usedKey = {usedKey}");
             //}
+
+            var dotStr = DebugHelperForLogicalSearchExplainNode.ToDot(tmpExplainNode);
+
+            Log($"dotStr = '{dotStr}'");
 #endif
 
             result.UsedKeysList = usedKeysList;
@@ -263,6 +285,35 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log("Begin");
 #endif
 
+            LogicalSearchExplainNode currentNode = null;
+
+            var parentExplainNode = queryExecutingCard.ParentExplainNode;
+
+            if(parentExplainNode != null)
+            {
+                currentNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.RuleInstanceQuery
+                };
+
+                parentExplainNode.Source = currentNode;
+            }
+
+#if DEBUG
+            if(parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+#endif
+
             var queryExecutingCardForPart_1 = new QueryExecutingCardForIndexedPersistLogicalData();
 
             FillExecutingCard(processedExpr.PrimaryPart, queryExecutingCardForPart_1, dataSource, options);
@@ -295,6 +346,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
             //options.Logger.Log($"Begin ~~~~~~ processedExpr = {processedExpr}");
             //options.Logger.Log($"Begin ~~~~~~ processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
+#endif
+
+            var parentExplainNode = queryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
 #endif
 
             var queryExecutingCardForExpression = new QueryExecutingCardForIndexedPersistLogicalData();
@@ -342,6 +410,40 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
             //options.Logger.Log($"sourceQueryExecutingCard = {sourceQueryExecutingCard}");
             //options.Logger.Log($"destQueryExecutingCard = {destQueryExecutingCard}");
+#endif
+
+            var parentExplainNode = sourceQueryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+#endif
+
+            var parentExplainNode_1 = destQueryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode_1 == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
 #endif
 
             var postFiltersList = sourceQueryExecutingCard.PostFiltersList;
@@ -398,6 +500,40 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"sourceQueryExecutingCard = {sourceQueryExecutingCard}");
             //options.Logger.Log($"destQueryExecutingCard = {destQueryExecutingCard}");
             //options.Logger.Log($"postFilter = {postFilter}");
+#endif
+
+            var parentExplainNode = sourceQueryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+#endif
+
+            var parentExplainNode_1 = destQueryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode_1 == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
 #endif
 
             var processedExpr = postFilter.ProcessedExpr;
@@ -603,6 +739,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"rightNode = {rightNode}");
 #endif
 
+            var parentExplainNode = queryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+#endif
+
             List<StrongIdentifierValue> additionalKeys_1 = null;
             List<StrongIdentifierValue> additionalKeys_2 = null;
 
@@ -655,6 +808,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"kindOfOperator = {kindOfOperator}");
             //options.Logger.Log($"leftNode = {leftNode}");
             //options.Logger.Log($"rightNode = {rightNode}");
+#endif
+
+            var parentExplainNode = queryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
 #endif
 
             var localCodeExecutionContext = options.LocalCodeExecutionContext;
@@ -1487,6 +1657,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"processedExpr = {processedExpr}");
 #endif
 
+            var parentExplainNode = queryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+#endif
+
             if (processedExpr.IsQuestion)
             {
                 FillExecutingCardForQuestion(processedExpr, queryExecutingCard, dataSource, options);
@@ -1542,6 +1729,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //    options.Logger.Log($"processedExpr = {processedExpr}");
             //    options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
             //}
+#endif
+
+            var parentExplainNode = queryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
 #endif
 
             var indexedRulePartsOfFactsList = dataSource.GetIndexedRulePartOfFactsByKeyOfRelation(processedExpr.Name, options.LogicalSearchStorageContext);
@@ -1723,6 +1927,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
 #endif
 
+            var parentExplainNode = queryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+#endif
+
             var hasAnnotations = !processedExpr.Annotations.IsNullOrEmpty();
 
 #if DEBUG
@@ -1857,6 +2078,24 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
             //options.Logger.Log("||||||||||||||||||||||||||||||||||||||||||||||||||||");
 #endif
+
+            var parentExplainNode = queryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+#endif
+
             var leftQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
 
             leftQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
@@ -2094,6 +2333,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private void FillExecutingCardForOrOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
+            var parentExplainNode = queryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+#endif
+
             var leftQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
 
             leftQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
@@ -2317,6 +2573,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
 #endif
 
+            var parentExplainNode = queryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+#endif
+
             var leftExpr = processedExpr.Left;
             var rightExpr = processedExpr.Right;
 
@@ -2380,6 +2653,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
 #endif
 
+            var parentExplainNode = queryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+#endif
+
             var leftExpr = processedExpr.Left;
             var rightExpr = processedExpr.Right;
 
@@ -2439,6 +2729,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
 #endif
 
+            var parentExplainNode = queryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+#endif
+
             var leftExpr = processedExpr.Left;
             var rightExpr = processedExpr.Right;
 
@@ -2472,6 +2779,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
             //options.Logger.Log($"processedExpr = {processedExpr}");
             //options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
+#endif
+
+            var parentExplainNode = queryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
 #endif
 
             var leftExpr = processedExpr.Left;
@@ -2509,6 +2833,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
 #endif
 
+            var parentExplainNode = queryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+#endif
+
             var leftExpr = processedExpr.Left;
             var rightExpr = processedExpr.Right;
 
@@ -2542,6 +2883,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
             //options.Logger.Log($"processedExpr = {processedExpr}");
             //options.Logger.Log($"processedExpr.GetHumanizeDbgString() = {processedExpr.GetHumanizeDbgString()}");
+#endif
+
+            var parentExplainNode = queryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
 #endif
 
             var leftExpr = processedExpr.Left;
@@ -2627,6 +2985,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private void FillExecutingCardForNotOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
+            var parentExplainNode = queryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+#endif
+
             var leftQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
 
             leftQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
@@ -2674,6 +3049,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //{
             //    options.Logger.Log($"item = {item}");
             //}
+#endif
+
+            var parentExplainNode = queryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
 #endif
 
             var targetRelationName = queryExecutingCard.TargetRelation;
@@ -3053,6 +3445,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private void FillExecutingCardForGroupLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
+            var parentExplainNode = queryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+#endif
+
             var leftQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
 
             leftQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
@@ -3094,6 +3503,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private bool CompareKnownInfoAndExpressionNode(QueryExecutingCardAboutKnownInfo knownInfo, LogicalQueryNode expressionNode, List<StrongIdentifierValue> additionalKeys_1, List<StrongIdentifierValue> additionalKeys_2, ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource)
         {
+            var parentExplainNode = queryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+#endif
+
             var knownInfoExpression = knownInfo.Expression;
 
             return EqualityCompare(knownInfoExpression, expressionNode, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, queryExecutingCard, dataSource);
@@ -3104,6 +3530,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
             //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
             //options.Logger.Log($"processedExpr = {DebugHelperForRuleInstance.BaseRulePartToString(processedExpr)}");
+#endif
+
+            var parentExplainNode = queryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
 #endif
 
             var targetRelationsList = processedExpr.RelationsDict[queryExecutingCard.TargetRelation];
@@ -3303,6 +3746,24 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log("Begin ^&*^&*");
             //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
 #endif
+
+            var parentExplainNode = queryExecutingCard.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+#endif
+
             var queryExecutingCardForExpression = new QueryExecutingCardForIndexedPersistLogicalData();
 
             queryExecutingCardForExpression.KnownInfoList = queryExecutingCard.KnownInfoList;
@@ -3347,6 +3808,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
             //options.Logger.Log($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1?.Select(p => p.NameValue), Formatting.Indented)}");
             //options.Logger.Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");
+#endif
+
+            var parentExplainNode = queryExecutingCard?.ParentExplainNode;
+
+#if DEBUG
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
 #endif
 
             if (expressionNode1.Kind == KindOfLogicalQueryNode.LogicalVar && (expressionNode2.Kind == KindOfLogicalQueryNode.Concept || expressionNode2.Kind == KindOfLogicalQueryNode.Entity))

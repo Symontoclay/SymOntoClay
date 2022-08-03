@@ -108,7 +108,7 @@ namespace TestSandbox.Helpers
                         var mainDictPath = Path.Combine(Directory.GetCurrentDirectory(), "Dicts", "BigMainDictionary.dict");
 
 #if DEBUG
-                        _logger.Log($"mainDictPath = {mainDictPath}");
+                        //_logger.Log($"mainDictPath = {mainDictPath}");
 #endif
 
                         nlpConverterProviderSettings.DictsPaths = new List<string>() { mainDictPath };
@@ -118,7 +118,7 @@ namespace TestSandbox.Helpers
                 nlpConverterProviderSettings.CreationStrategy = CreationStrategy.Singleton;
 
 #if DEBUG
-                _logger.Log($"nlpConverterProviderSettings = {nlpConverterProviderSettings}");
+                //_logger.Log($"nlpConverterProviderSettings = {nlpConverterProviderSettings}");
 #endif
 
                 var nlpConverterProvider = new NLPConverterProvider(nlpConverterProviderSettings);
@@ -151,7 +151,7 @@ namespace TestSandbox.Helpers
             settings.Logging = loggingSettings;
 
 #if DEBUG
-            _logger.Log($"settings = {settings}");
+            //_logger.Log($"settings = {settings}");
 #endif
 
             return settings;

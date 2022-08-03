@@ -33,106 +33,106 @@ namespace SymOntoClay.NLP.Internal.CG
         public abstract KindOfCGNode Kind { get; }
         public string Name { get; set; }
 
-        private ConceptualGraph mParent;
+        private ConceptualGraph _parent;
 
         public ConceptualGraph Parent
         {
             get
             {
-                return mParent;
+                return _parent;
             }
 
             set
             {
-                if (mParent == value)
+                if (_parent == value)
                 {
                     return;
                 }
 
-                if (mParent != null)
+                if (_parent != null)
                 {
-                    mParent.NRemoveChild(this);
+                    _parent.NRemoveChild(this);
                 }
 
-                mParent = value;
+                _parent = value;
 
-                if (mParent != null)
+                if (_parent != null)
                 {
-                    mParent.NAddChild(this);
+                    _parent.NAddChild(this);
                 }
             }
         }
 
         internal void NSetParent(ConceptualGraph parent)
         {
-            if (mParent != parent)
+            if (_parent != parent)
             {
-                mParent = parent;
+                _parent = parent;
             }
         }
 
         internal void NRemoveParent(ConceptualGraph parent)
         {
-            if (mParent == parent)
+            if (_parent == parent)
             {
-                mParent = null;
+                _parent = null;
             }
         }
 
         public virtual IList<ICGNode> ChildrenNodes => new List<ICGNode>();
 
-        private IList<BaseCGNode> mInputsNodes = new List<BaseCGNode>();
-        private IList<BaseCGNode> mOutputsNodes = new List<BaseCGNode>();
+        private IList<BaseCGNode> _inputsNodes = new List<BaseCGNode>();
+        private IList<BaseCGNode> _outputsNodes = new List<BaseCGNode>();
 
         public IList<BaseCGNode> Inputs
         {
             get
             {
-                return mInputsNodes;
+                return _inputsNodes;
             }
         }
 
-        public IList<ICGNode> InputNodes => mInputsNodes.Cast<ICGNode>().ToList();
+        public IList<ICGNode> InputNodes => _inputsNodes.Cast<ICGNode>().ToList();
 
         public IList<BaseCGNode> Outputs
         {
             get
             {
-                return mOutputsNodes;
+                return _outputsNodes;
             }
         }
 
-        public IList<ICGNode> OutputNodes => mOutputsNodes.Cast<ICGNode>().ToList();
+        public IList<ICGNode> OutputNodes => _outputsNodes.Cast<ICGNode>().ToList();
 
         internal void NAddInputNode(BaseCGNode node)
         {
-            if (!mInputsNodes.Contains(node))
+            if (!_inputsNodes.Contains(node))
             {
-                mInputsNodes.Add(node);
+                _inputsNodes.Add(node);
             }
         }
 
         internal void NRemoveInputNode(BaseCGNode node)
         {
-            if (mInputsNodes.Contains(node))
+            if (_inputsNodes.Contains(node))
             {
-                mInputsNodes.Remove(node);
+                _inputsNodes.Remove(node);
             }
         }
 
         internal void NAddOutputNode(BaseCGNode node)
         {
-            if (!mOutputsNodes.Contains(node))
+            if (!_outputsNodes.Contains(node))
             {
-                mOutputsNodes.Add(node);
+                _outputsNodes.Add(node);
             }
         }
 
         internal void NRemoveOutputNode(BaseCGNode node)
         {
-            if (mOutputsNodes.Contains(node))
+            if (_outputsNodes.Contains(node))
             {
-                mOutputsNodes.Remove(node);
+                _outputsNodes.Remove(node);
             }
         }
 

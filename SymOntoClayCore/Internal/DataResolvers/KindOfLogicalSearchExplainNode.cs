@@ -9,6 +9,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         Unknown,
         Root,
         Result,
-        RuleInstanceQuery
+        RuleInstanceQuery,
+        PrimaryRulePartQuery
     }
 }

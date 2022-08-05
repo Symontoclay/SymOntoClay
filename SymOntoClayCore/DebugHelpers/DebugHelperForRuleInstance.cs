@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace SymOntoClay.Core.DebugHelpers
         private static readonly CultureInfo _cultureInfo = new CultureInfo("en-GB");
 
 #if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static string ToString(RuleInstance source)
@@ -49,7 +50,7 @@ namespace SymOntoClay.Core.DebugHelpers
         {
             return ToString(source, null, options);
         }
-
+        
         public static string ToString(RuleInstance source, MutablePartOfRuleInstance mutablePartOfRuleInstance)
         {
             return ToString(source, mutablePartOfRuleInstance, HumanizedOptions.ShowAll);
@@ -57,10 +58,29 @@ namespace SymOntoClay.Core.DebugHelpers
 
         public static string ToString(RuleInstance source, MutablePartOfRuleInstance mutablePartOfRuleInstance, HumanizedOptions options)
         {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options,
+                MutablePartOfRuleInstance = mutablePartOfRuleInstance
+            };
+
+            return ToString(source, opt);
+        }
+
+        public static string ToString(RuleInstance source, DebugHelperOptions options)
+        {
             var sb = new StringBuilder();
+
+            var isSelected = options.IsHtml && (options.ItemsForSelection?.Any(p => p.Equals(source)) ?? false);
+
+            if (isSelected)
+            {
+                sb.Append("<b>");
+            }
+
             sb.Append("{:");
 
-            if(options == HumanizedOptions.ShowAll)
+            if(options.HumanizedOptions == HumanizedOptions.ShowAll)
             {
                 if (source.Name != null)
                 {
@@ -86,7 +106,9 @@ namespace SymOntoClay.Core.DebugHelpers
                 }
             }
 
-            if(source.ObligationModality != null && source.ObligationModality.KindOfValue != KindOfValue.NullValue)
+            var mutablePartOfRuleInstance = options.MutablePartOfRuleInstance;
+
+            if (source.ObligationModality != null && source.ObligationModality.KindOfValue != KindOfValue.NullValue)
             {
                 sb.Append(" o: ");
 
@@ -94,7 +116,7 @@ namespace SymOntoClay.Core.DebugHelpers
             }
             else
             {
-                if(mutablePartOfRuleInstance != null)
+                if (mutablePartOfRuleInstance != null)
                 {
                     if(mutablePartOfRuleInstance.ObligationModality != null && mutablePartOfRuleInstance.ObligationModality.KindOfValue != KindOfValue.NullValue)
                     {
@@ -127,23 +149,68 @@ namespace SymOntoClay.Core.DebugHelpers
             sb.Append(" :}");
             sb.Append(AnnotatedItemToString(source, options));
 
+            if (isSelected)
+            {
+                sb.Append("</b>");
+            }
+
             return sb.ToString();
         }
 
         public static string ToString(PrimaryRulePart primaryRulePart, HumanizedOptions options = HumanizedOptions.ShowAll)
         {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return ToString(primaryRulePart, opt);
+        }
+
+        public static string ToString(PrimaryRulePart primaryRulePart, DebugHelperOptions options)
+        {
             var sb = new StringBuilder();
-            sb.Append(" >: { ");
+
+            var isSelected = options.IsHtml && (options.ItemsForSelection?.Any(p => p.Equals(primaryRulePart)) ?? false);
+
+            if (isSelected)
+            {
+                sb.Append("<b>");
+            }
+
+            if (options.IsHtml)
+            {
+                sb.Append(StringHelper.ToHtmlCode(" >: { "));
+            }
+            else
+            {
+                sb.Append(" >: { ");
+            }
 
             sb.Append(ToString(primaryRulePart?.Expression, options));
 
             sb.Append(" }");
             sb.Append(AnnotatedItemToString(primaryRulePart, options));
 
+            if (isSelected)
+            {
+                sb.Append("</b>");
+            }
+
             return sb.ToString();
         }
 
         public static string BaseRulePartToString(BaseRulePart baseRulePart, HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return BaseRulePartToString(baseRulePart, opt);
+        }
+
+        public static string BaseRulePartToString(BaseRulePart baseRulePart, DebugHelperOptions options)
         {
             var b = baseRulePart as PrimaryRulePart;
 
@@ -164,7 +231,25 @@ namespace SymOntoClay.Core.DebugHelpers
 
         public static string ToString(SecondaryRulePart rulePart, HumanizedOptions options = HumanizedOptions.ShowAll)
         {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return ToString(rulePart, opt);
+        }
+
+        public static string ToString(SecondaryRulePart rulePart, DebugHelperOptions options)
+        {
             var sb = new StringBuilder();
+
+            var isSelected = options.IsHtml && (options.ItemsForSelection?.Any(p => p.Equals(rulePart)) ?? false);
+
+            if (isSelected)
+            {
+                sb.Append("<b>");
+            }
+
             sb.Append(" { ");
 
             sb.Append(ToString(rulePart.Expression, options));
@@ -172,10 +257,25 @@ namespace SymOntoClay.Core.DebugHelpers
             sb.Append(" }");
             sb.Append(AnnotatedItemToString(rulePart, options));
 
+            if (isSelected)
+            {
+                sb.Append("</b>");
+            }
+
             return sb.ToString();
         }
 
         public static string ToString(LogicalQueryNode expr, HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return ToString(expr, opt);
+        }
+
+        public static string ToString(LogicalQueryNode expr, DebugHelperOptions options)
         {
             if (expr == null)
             {
@@ -217,9 +317,16 @@ namespace SymOntoClay.Core.DebugHelpers
             }
         }
 
-        private static string GroupToString(LogicalQueryNode expr, HumanizedOptions options)
+        private static string GroupToString(LogicalQueryNode expr, DebugHelperOptions options)
         {
             var sb = new StringBuilder();
+
+            var isSelected = options.IsHtml && (options.ItemsForSelection?.Any(p => p.Equals(expr)) ?? false);
+
+            if (isSelected)
+            {
+                sb.Append("<b>");
+            }
 
             if (!expr.LinkedVars.IsNullOrEmpty())
             {
@@ -228,15 +335,27 @@ namespace SymOntoClay.Core.DebugHelpers
                     sb.Append($"{linkedVar.Name.NameValue} = ");
                 }
             }
-
+            
             sb.Append($"({ToString(expr.Left, options)})");
+
+            if (isSelected)
+            {
+                sb.Append("</b>");
+            }
 
             return sb.ToString();
         }
 
-        private static string FactToString(LogicalQueryNode expr, HumanizedOptions options)
+        private static string FactToString(LogicalQueryNode expr, DebugHelperOptions options)
         {
             var sb = new StringBuilder();
+
+            var isSelected = options.IsHtml && (options.ItemsForSelection?.Any(p => p.Equals(expr)) ?? false);
+
+            if(isSelected)
+            {
+                sb.Append("<b>");
+            }
 
             if (!expr.LinkedVars.IsNullOrEmpty())
             {
@@ -248,10 +367,15 @@ namespace SymOntoClay.Core.DebugHelpers
 
             sb.Append(ToString(expr.Fact, options));
 
+            if (isSelected)
+            {
+                sb.Append("</b>");
+            }
+
             return sb.ToString();
         }
 
-        private static string UnaryOperatorToString(LogicalQueryNode expr, HumanizedOptions options)
+        private static string UnaryOperatorToString(LogicalQueryNode expr, DebugHelperOptions options)
         {
             var mark = string.Empty;
 
@@ -265,15 +389,28 @@ namespace SymOntoClay.Core.DebugHelpers
                     throw new ArgumentOutOfRangeException(nameof(expr.KindOfOperator), expr.KindOfOperator, null);
             }
 
-            var sb = new StringBuilder();            
+            var isSelected = options.IsHtml && (options.ItemsForSelection?.Any(p => p.Equals(expr)) ?? false);
+
+            var sb = new StringBuilder();
+
+            if (isSelected)
+            {
+                sb.Append("<b>");
+            }
+                        
             sb.Append($" {mark} ");
             sb.Append(AnnotatedItemToString(expr, options));
             sb.Append(ToString(expr.Left, options));
 
+            if (isSelected)
+            {
+                sb.Append("</b>");
+            }
+
             return sb.ToString();
         }
 
-        private static string BinaryOperatorToString(LogicalQueryNode expr, HumanizedOptions options)
+        private static string BinaryOperatorToString(LogicalQueryNode expr, DebugHelperOptions options)
         {
             var mark = string.Empty;
 
@@ -314,18 +451,43 @@ namespace SymOntoClay.Core.DebugHelpers
                     throw new ArgumentOutOfRangeException(nameof(expr.KindOfOperator), expr.KindOfOperator, null);
             }
 
+            if (options.IsHtml)
+            {
+                mark = StringHelper.ToHtmlCode(mark);
+            }
+
+            var isSelected = options.IsHtml && (options.ItemsForSelection?.Any(p => p.Equals(expr)) ?? false);
+
             var sb = new StringBuilder();
+
+            if (isSelected)
+            {
+                sb.Append("<b>");
+            }
+            
             sb.Append(ToString(expr.Left, options));
             sb.Append($" {mark} ");
             sb.Append(AnnotatedItemToString(expr, options));
             sb.Append(ToString(expr.Right, options));
 
+            if (isSelected)
+            {
+                sb.Append("</b>");
+            }
+
             return sb.ToString();
         }
 
-        private static string RelationToString(LogicalQueryNode expr, HumanizedOptions options)
+        private static string RelationToString(LogicalQueryNode expr, DebugHelperOptions options)
         {
             var sb = new StringBuilder();
+
+            var isSelected = options.IsHtml && (options.ItemsForSelection?.Any(p => p.Equals(expr)) ?? false);
+
+            if (isSelected)
+            {
+                sb.Append("<b>");
+            }
 
             if (!expr.LinkedVars.IsNullOrEmpty())
             {
@@ -349,31 +511,72 @@ namespace SymOntoClay.Core.DebugHelpers
             sb.Append(")");
             sb.Append(AnnotatedItemToString(expr, options));
 
+            if (isSelected)
+            {
+                sb.Append("</b>");
+            }
+
             return sb.ToString();
         }
 
-        private static string ConceptToString(LogicalQueryNode expr, HumanizedOptions options)
+        private static string ConceptToString(LogicalQueryNode expr, DebugHelperOptions options)
         {
             var sb = new StringBuilder();
+
+            var isSelected = options.IsHtml && (options.ItemsForSelection?.Any(p => p.Equals(expr)) ?? false);
+
+            if (isSelected)
+            {
+                sb.Append("<b>");
+            }
+
             sb.Append(expr.Name.NameValue);
             sb.Append(AnnotatedItemToString(expr, options));
+
+            if (isSelected)
+            {
+                sb.Append("</b>");
+            }
+
             return sb.ToString();
         }
 
-        private static string ValueToString(LogicalQueryNode expr, HumanizedOptions options)
+        private static string ValueToString(LogicalQueryNode expr, DebugHelperOptions options)
         {
             var sb = new StringBuilder();
             var value = expr.Value;
 
+            var isSelected = options.IsHtml && (options.ItemsForSelection?.Any(p => p.Equals(expr)) ?? false);
+
+            if (isSelected)
+            {
+                sb.Append("<b>");
+            }
+
             sb.Append(ToString(value, options));
             sb.Append(AnnotatedItemToString(expr, options));
+
+            if (isSelected)
+            {
+                sb.Append("</b>");
+            }
 
             return sb.ToString();
         }
 
         public static string AnnotatedItemToString(AnnotatedItem source, HumanizedOptions options = HumanizedOptions.ShowAll)
         {
-            if(source == null || options == HumanizedOptions.ShowOnlyMainContent)
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return AnnotatedItemToString(source, opt);
+        }
+
+        public static string AnnotatedItemToString(AnnotatedItem source, DebugHelperOptions options)
+        {
+            if(source == null || options.HumanizedOptions == HumanizedOptions.ShowOnlyMainContent)
             {
                 return string.Empty;
             }
@@ -396,12 +599,12 @@ namespace SymOntoClay.Core.DebugHelpers
             return sb.ToString();
         }
 
-        private static string WhereSectionToString(IList<Value> source, HumanizedOptions options)
+        private static string WhereSectionToString(IList<Value> source, DebugHelperOptions options)
         {
             return PrintModalityOrSection("where:", source, options);
         }
 
-        private static string PrintModalityOrSection(string mark, IList<Value> source, HumanizedOptions options)
+        private static string PrintModalityOrSection(string mark, IList<Value> source, DebugHelperOptions options)
         {
             var sb = new StringBuilder(mark);
 
@@ -429,6 +632,16 @@ namespace SymOntoClay.Core.DebugHelpers
         }
 
         public static string ToString(Value value, HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return ToString(value, opt);
+        }
+
+        public static string ToString(Value value, DebugHelperOptions options)
         {
             switch(value.KindOfValue)
             {
@@ -459,28 +672,28 @@ namespace SymOntoClay.Core.DebugHelpers
             }
         }
 
-        private static string ConditionalEntitySourceValueToString(Value value, HumanizedOptions options)
+        private static string ConditionalEntitySourceValueToString(Value value, DebugHelperOptions options)
         {
             var sb = new StringBuilder(value.ToHumanizedString(options));
             sb.Append(AnnotatedItemToString(value, options));
             return sb.ToString();
         }
 
-        private static string WaypointValueToString(Value value, HumanizedOptions options)
+        private static string WaypointValueToString(Value value, DebugHelperOptions options)
         {
-            var sb = new StringBuilder(value.ToDbgString());
+            var sb = new StringBuilder(value.ToHumanizedString(options));
             sb.Append(AnnotatedItemToString(value, options));
             return sb.ToString();
         }
 
-        private static string NullValueToString(Value value, HumanizedOptions options)
+        private static string NullValueToString(Value value, DebugHelperOptions options)
         {
             var sb = new StringBuilder("NULL");
             sb.Append(AnnotatedItemToString(value, options));
             return sb.ToString();
         }
 
-        private static string NumberValueToString(NumberValue value, HumanizedOptions options)
+        private static string NumberValueToString(NumberValue value, DebugHelperOptions options)
         {
             var systemValue = value.SystemValue;
 
@@ -499,7 +712,7 @@ namespace SymOntoClay.Core.DebugHelpers
             return sb.ToString();
         }
 
-        private static string LogicalValueToString(LogicalValue value, HumanizedOptions options)
+        private static string LogicalValueToString(LogicalValue value, DebugHelperOptions options)
         {
             var systemValue = value.SystemValue;
 
@@ -518,21 +731,21 @@ namespace SymOntoClay.Core.DebugHelpers
             return sb.ToString();
         }
 
-        private static string FuzzyLogicNonNumericSequenceValueToString(FuzzyLogicNonNumericSequenceValue value, HumanizedOptions options)
+        private static string FuzzyLogicNonNumericSequenceValueToString(FuzzyLogicNonNumericSequenceValue value, DebugHelperOptions options)
         {
             var sb = new StringBuilder(value.DebugView);
             sb.Append(AnnotatedItemToString(value, options));
             return sb.ToString();
         }
 
-        private static string StrongIdentifierValueToString(StrongIdentifierValue value, HumanizedOptions options)
+        private static string StrongIdentifierValueToString(StrongIdentifierValue value, DebugHelperOptions options)
         {
             var sb = new StringBuilder(value.NameValue);
             sb.Append(AnnotatedItemToString(value, options));
             return sb.ToString();
         }
 
-        public static string ModalityValueToString(Value value, HumanizedOptions options)
+        public static string ModalityValueToString(Value value, DebugHelperOptions options)
         {
             switch(value.KindOfValue)
             {

@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -36,14 +37,38 @@ namespace SymOntoClay.Core.DebugHelpers
 
         public static string ToString(LogicalSearchResult source, HumanizedOptions options = HumanizedOptions.ShowAll)
         {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return ToString(source, opt);
+        }
+        
+        public static string ToString(LogicalSearchResult source, DebugHelperOptions options)
+        {
+            var isHtml = options.IsHtml;
+
             if (!source.IsSuccess)
             {
+                if(isHtml)
+                {
+                    return StringHelper.ToHtmlCode("<no>");
+                }
+
                 return "<no>";
             }
 
             var sb = new StringBuilder();
 
-            sb.AppendLine("<yes>");
+            if(isHtml)
+            {
+                sb.AppendLine(StringHelper.ToHtmlCode("<yes>"));
+            }
+            else
+            {
+                sb.AppendLine("<yes>");
+            }            
 
             foreach (var item in source.Items)
             {

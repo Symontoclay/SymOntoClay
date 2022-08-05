@@ -268,5 +268,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             return NameValue;
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString(DebugHelperOptions options)
+        {
+            return NameValue;
+        }
     }
 }

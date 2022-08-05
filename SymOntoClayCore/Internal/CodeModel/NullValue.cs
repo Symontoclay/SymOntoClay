@@ -111,5 +111,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             return "NULL";
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString(DebugHelperOptions options)
+        {
+            return "NULL";
+        }
     }
 }

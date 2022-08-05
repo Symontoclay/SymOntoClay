@@ -145,5 +145,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             return "Task!!!!";
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString(DebugHelperOptions options)
+        {
+            return "Task!!!!";
+        }
     }
 }

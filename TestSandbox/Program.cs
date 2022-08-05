@@ -69,6 +69,8 @@ using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.Core.Tests.Helpers;
 using SymOntoClay.NLP;
 using System.Speech.Synthesis;
+using SymOntoClayBaseTestLib.Helpers;
+using SymOntoClay.Core.DebugHelpers;
 
 namespace TestSandbox
 {
@@ -82,7 +84,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-
+            //TstFactToHtml();
             //TstStandardFactsBuilder();
             //TstStandardFactsBuilderGetTargetVarNameHandler();
             //TstShieldString();
@@ -148,6 +150,38 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstFactToHtml()
+        {
+            _logger.Log("Begin");
+
+            var factorySettings = new UnityTestEngineContextFactorySettings();
+            factorySettings.UseDefaultNLPSettings = false;
+            factorySettings.UseDefaultAppFiles = false;
+            var engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
+
+            var factStr = "{: $x = {: act(M16, shoot) :} & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :}";
+
+            _logger.Log($"factStr = '{factStr}'");
+
+            var fact = engineContext.Parser.ParseRuleInstance(factStr);
+
+            var targetItemForSelection = fact.PrimaryPart.Expression.Left.Left.Left.Left;
+
+            _logger.Log($"targetItemForSelection = {targetItemForSelection.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
+
+            //_logger.Log($"targetItemForSelection = {targetItemForSelection}");
+
+            var options = new DebugHelperOptions();
+            options.HumanizedOptions = HumanizedOptions.ShowOnlyMainContent;
+            options.IsHtml = true;
+            options.ItemsForSelection = new List<IObjectToString>() { targetItemForSelection };
+
+            _logger.Log($"fact = {DebugHelperForRuleInstance.ToString(fact, options)}");
+            //_logger.Log($"fact = {fact}");
+
+            _logger.Log("End");
         }
 
         private static void TstStandardFactsBuilder()

@@ -1,4 +1,6 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,6 +12,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public KindOfLogicalSearchExplainNode Kind { get; set; } = KindOfLogicalSearchExplainNode.Unknown;
         public LogicalSearchExplainNode Result { get; set; }
         public LogicalSearchExplainNode Source { get; set; }
+        public RuleInstance ProcessedRuleInstance { get; set; }
+        public PrimaryRulePart ProcessedPrimaryRulePart { get; set; }
+        public bool IsSuccess { get; set; }
+        public List<ResultOfQueryToRelation> ResultsOfQueryToRelationList { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -32,6 +38,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.PrintObjProp(n, nameof(Result), Result);
             sb.PrintObjProp(n, nameof(Source), Source);
+            sb.PrintObjProp(n, nameof(ProcessedRuleInstance), ProcessedRuleInstance);
+            sb.PrintObjProp(n, nameof(ProcessedPrimaryRulePart), ProcessedPrimaryRulePart);
+            sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
+            sb.PrintObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
 
             return sb.ToString();
         }
@@ -57,6 +67,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.PrintBriefObjProp(n, nameof(Result), Result);
             sb.PrintBriefObjProp(n, nameof(Source), Source);
+            sb.PrintShortObjProp(n, nameof(ProcessedRuleInstance), ProcessedRuleInstance);
+            sb.PrintShortObjProp(n, nameof(ProcessedPrimaryRulePart), ProcessedPrimaryRulePart);
+            sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
+            sb.PrintShortObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
 
             return sb.ToString();
         }
@@ -80,8 +94,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
-            sb.PrintExisting(n, nameof(Result), Result);
-            sb.PrintExisting(n, nameof(Source), Source);
+            sb.PrintBriefObjProp(n, nameof(Result), Result);
+            sb.PrintBriefObjProp(n, nameof(Source), Source);
+            sb.PrintBriefObjProp(n, nameof(ProcessedRuleInstance), ProcessedRuleInstance);
+            sb.PrintBriefObjProp(n, nameof(ProcessedPrimaryRulePart), ProcessedPrimaryRulePart);
+            sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
+            sb.PrintExistingList(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
 
             return sb.ToString();
         }
@@ -107,6 +125,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.PrintExisting(n, nameof(Result), Result);
             sb.PrintExisting(n, nameof(Source), Source);
+            sb.PrintDbgObjProp(n, nameof(ProcessedRuleInstance), ProcessedRuleInstance);
+            sb.PrintDbgObjProp(n, nameof(ProcessedPrimaryRulePart), ProcessedPrimaryRulePart);
+            sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
+            sb.PrintExistingList(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
 
             return sb.ToString();
         }

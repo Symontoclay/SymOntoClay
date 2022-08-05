@@ -10,12 +10,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
     public class LogicalSearchExplainNode: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
     {
         public KindOfLogicalSearchExplainNode Kind { get; set; } = KindOfLogicalSearchExplainNode.Unknown;
-        public LogicalSearchExplainNode Result { get; set; }
-        public LogicalSearchExplainNode Source { get; set; }
+        public List<LogicalSearchExplainNode> Children { get; set; } = new List<LogicalSearchExplainNode>();
         public RuleInstance ProcessedRuleInstance { get; set; }
         public PrimaryRulePart ProcessedPrimaryRulePart { get; set; }
+        public LogicalQueryNode ProcessedLogicalQueryNode { get; set; }
         public bool IsSuccess { get; set; }
         public List<ResultOfQueryToRelation> ResultsOfQueryToRelationList { get; set; }
+        public IList<BaseRulePart> BaseRulePartList { get; set; }
+        public StrongIdentifierValue Key { get; set; }
+        public ILogicalStorage LogicalStorage { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -36,12 +39,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
-            sb.PrintObjProp(n, nameof(Result), Result);
-            sb.PrintObjProp(n, nameof(Source), Source);
+            sb.PrintObjListProp(n, nameof(Children), Children);
             sb.PrintObjProp(n, nameof(ProcessedRuleInstance), ProcessedRuleInstance);
             sb.PrintObjProp(n, nameof(ProcessedPrimaryRulePart), ProcessedPrimaryRulePart);
+            sb.PrintObjProp(n, nameof(ProcessedLogicalQueryNode), ProcessedLogicalQueryNode);
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.PrintObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
+            sb.PrintObjListProp(n, nameof(BaseRulePartList), BaseRulePartList);
+            sb.PrintObjProp(n, nameof(Key), Key);
+            sb.PrintExisting(n, nameof(LogicalStorage), LogicalStorage);
 
             return sb.ToString();
         }
@@ -65,12 +71,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
-            sb.PrintBriefObjProp(n, nameof(Result), Result);
-            sb.PrintBriefObjProp(n, nameof(Source), Source);
+            sb.PrintBriefObjListProp(n, nameof(Children), Children);
             sb.PrintShortObjProp(n, nameof(ProcessedRuleInstance), ProcessedRuleInstance);
             sb.PrintShortObjProp(n, nameof(ProcessedPrimaryRulePart), ProcessedPrimaryRulePart);
+            sb.PrintShortObjProp(n, nameof(ProcessedLogicalQueryNode), ProcessedLogicalQueryNode);
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.PrintShortObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
+            sb.PrintShortObjListProp(n, nameof(BaseRulePartList), BaseRulePartList);
+            sb.PrintShortObjProp(n, nameof(Key), Key);
+            sb.PrintExisting(n, nameof(LogicalStorage), LogicalStorage);
 
             return sb.ToString();
         }
@@ -94,12 +103,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
-            sb.PrintBriefObjProp(n, nameof(Result), Result);
-            sb.PrintBriefObjProp(n, nameof(Source), Source);
+            sb.PrintExistingList(n, nameof(Children), Children);
             sb.PrintBriefObjProp(n, nameof(ProcessedRuleInstance), ProcessedRuleInstance);
             sb.PrintBriefObjProp(n, nameof(ProcessedPrimaryRulePart), ProcessedPrimaryRulePart);
+            sb.PrintBriefObjProp(n, nameof(ProcessedLogicalQueryNode), ProcessedLogicalQueryNode);
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.PrintExistingList(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
+            sb.PrintExistingList(n, nameof(BaseRulePartList), BaseRulePartList);
+            sb.PrintBriefObjProp(n, nameof(Key), Key);
+            sb.PrintExisting(n, nameof(LogicalStorage), LogicalStorage);
 
             return sb.ToString();
         }
@@ -123,12 +135,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
-            sb.PrintExisting(n, nameof(Result), Result);
-            sb.PrintExisting(n, nameof(Source), Source);
+            sb.PrintExistingList(n, nameof(Children), Children);
             sb.PrintDbgObjProp(n, nameof(ProcessedRuleInstance), ProcessedRuleInstance);
             sb.PrintDbgObjProp(n, nameof(ProcessedPrimaryRulePart), ProcessedPrimaryRulePart);
+            sb.PrintDbgObjProp(n, nameof(ProcessedLogicalQueryNode), ProcessedLogicalQueryNode);
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.PrintExistingList(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
+            sb.PrintExistingList(n, nameof(BaseRulePartList), BaseRulePartList);
+            sb.PrintBriefObjProp(n, nameof(Key), Key);
+            sb.PrintExisting(n, nameof(LogicalStorage), LogicalStorage);
 
             return sb.ToString();
         }

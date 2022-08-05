@@ -617,7 +617,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         }
 
         /// <inheritdoc/>
-        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext)
+        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
         {
             lock (_lockObj)
             {
@@ -631,6 +631,32 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 //}
 #endif
 
+                LogicalSearchExplainNode currentExplainNode = null;
+
+                if (parentExplainNode != null)
+                {
+                    currentExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.LogicalStorage,
+                        LogicalStorage = this
+                    };
+                }
+
+#if DEBUG
+                if (parentExplainNode == null)
+                {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+                }
+                else
+                {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+                }
+#endif
+
                 var source = _commonPersistIndexedLogicalData.GetIndexedRulePartOfFactsByKeyOfRelation(name);
 
 #if DEBUG
@@ -639,12 +665,45 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 if (logicalSearchStorageContext == null || source.IsNullOrEmpty())
                 {
+                    if(parentExplainNode != null)
+                    {
+                        parentExplainNode.Children.Add(currentExplainNode);
+                    }                    
+
                     return source;
                 }
 
                 if(name.NormalizedNameValue == "is")
                 {
+                    if (parentExplainNode != null)
+                    {
+                        parentExplainNode.Children.Add(currentExplainNode);
+                    }
+
                     return source;
+                }
+
+                LogicalSearchExplainNode filteringExplainNode = null;
+
+                if(parentExplainNode != null)
+                {
+                    filteringExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.LogicalStorageFilter
+                    };
+
+                    parentExplainNode.Children.Add(filteringExplainNode);
+
+                    var intermediateResultExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.DataSourceResult
+                    };
+
+                    filteringExplainNode.Children.Add(intermediateResultExplainNode);
+
+                    intermediateResultExplainNode.BaseRulePartList = source;
+
+                    intermediateResultExplainNode.Children.Add(currentExplainNode);
                 }
 
 #if DEBUG

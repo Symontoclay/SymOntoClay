@@ -9,7 +9,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         Unknown,
         Root,
         Result,
+        ResultCollector,
+        DataSourceResult,
+        DataSourceCollector,
+        ConsolidatedDataSource,
+        LogicalStorage,
+        LogicalStorageFilter,
+        ExcludeRejectedFacts,
         RuleInstanceQuery,
-        PrimaryRulePartQuery
+        PrimaryRulePartQuery,
+        RelationQuery,
+        ProcessRelationWithDirectFactsCollector,
+        ProcessRelationWithProductionCollector
     }
 }

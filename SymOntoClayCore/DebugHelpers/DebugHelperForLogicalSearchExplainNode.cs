@@ -68,18 +68,14 @@ namespace SymOntoClay.Core.DebugHelpers
 
             context.Output.AppendLine(nodeBuilder.ToString());
 
-            if (source.Source != null)
+            if(source.Children.Any())
             {
-                ProcessNodeContent(source.Source, context);
+                foreach(var item in source.Children)
+                {
+                    ProcessNodeContent(item, context);
 
-                context.PathsList.Add($"{context.GetNodeName(source.Source)} -> {name};");
-            }
-
-            if(source.Result != null)
-            {
-                ProcessNodeContent(source.Result, context);
-
-                context.PathsList.Add($"{context.GetNodeName(source.Result)} -> {name};");
+                    context.PathsList.Add($"{context.GetNodeName(item)} -> {name};");
+                }
             }
         }
 
@@ -178,6 +174,68 @@ namespace SymOntoClay.Core.DebugHelpers
                         return sb.ToString();
                     }
 
+                case KindOfLogicalSearchExplainNode.ResultCollector:
+                    {
+                        var sb = new StringBuilder();
+
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine("<TR><TD>Results:</TD></TR>");
+                        sb.AppendLine("</TABLE>");
+
+                        return sb.ToString();
+                    }
+
+                case KindOfLogicalSearchExplainNode.DataSourceResult:
+                    {
+                        var sb = new StringBuilder();
+
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+
+                        var baseRulePartList = source.BaseRulePartList;
+
+                        if (baseRulePartList.IsNullOrEmpty())
+                        {
+                            sb.AppendLine("<TR><TD>-</TD></TR>");
+                        }
+                        else
+                        {
+                            if (!baseRulePartList.IsNullOrEmpty())
+                            {
+                                sb.AppendLine("<TR><TD>))))))</TD></TR>");
+                            }
+                            else
+                            {
+                                sb.AppendLine("<TR><TD>-</TD></TR>");
+                            }
+                        }
+                        
+                        sb.AppendLine("</TABLE>");
+
+                        return sb.ToString();
+                    }
+
+                case KindOfLogicalSearchExplainNode.DataSourceCollector:
+                    {
+                        var sb = new StringBuilder();
+
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine("<TR><TD>Data sources:</TD></TR>");
+                        sb.AppendLine("</TABLE>");
+
+                        return sb.ToString();
+                    }
+
+                case KindOfLogicalSearchExplainNode.ConsolidatedDataSource:
+                    {
+                        var sb = new StringBuilder();
+
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine("<TR><TD>Consolidated data sources</TD></TR>");
+                        sb.AppendLine("</TABLE>");
+
+                        return sb.ToString();
+                    }
+
                 case KindOfLogicalSearchExplainNode.RuleInstanceQuery:
                     {
                         var sb = new StringBuilder();
@@ -200,6 +258,46 @@ namespace SymOntoClay.Core.DebugHelpers
                         sb.AppendLine($"<TR><TD>{source.ProcessedPrimaryRulePart.ToHumanizedString(toHumanizedStringOptions)}</TD></TR>");
                         sb.AppendLine($"<TR><TD>{source.ProcessedPrimaryRulePart.Parent.ToHumanizedString(selectProcessedPrimaryRulePartHumanizedStringOptions)}</TD></TR>");
                         sb.AppendLine("</TABLE>");
+                        return sb.ToString();
+                    }
+
+                case KindOfLogicalSearchExplainNode.RelationQuery:
+                    {
+                        var targetProcessedItem = source.ProcessedLogicalQueryNode;
+
+                        var selectProcessedLogicalQueryNodeHumanizedStringOptions = new DebugHelperOptions();
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.HumanizedOptions = HumanizedOptions.ShowAll;
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.IsHtml = true;
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.ItemsForSelection = new List<IObjectToString>() { targetProcessedItem };
+
+
+                        var sb = new StringBuilder();
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine($"<TR><TD>{targetProcessedItem.ToHumanizedString(toHumanizedStringOptions)}</TD></TR>");
+                        sb.AppendLine($"<TR><TD>{targetProcessedItem.RuleInstance.ToHumanizedString(selectProcessedLogicalQueryNodeHumanizedStringOptions)}</TD></TR>");
+                        sb.AppendLine("</TABLE>");
+                        return sb.ToString();
+                    }
+
+                case KindOfLogicalSearchExplainNode.ProcessRelationWithDirectFactsCollector:
+                    {
+                        var sb = new StringBuilder();
+
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine("<TR><TD>Direct facts:</TD></TR>");
+                        sb.AppendLine("</TABLE>");
+
+                        return sb.ToString();
+                    }
+
+                case KindOfLogicalSearchExplainNode.ProcessRelationWithProductionCollector:
+                    {
+                        var sb = new StringBuilder();
+
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine("<TR><TD>Production:</TD></TR>");
+                        sb.AppendLine("</TABLE>");
+
                         return sb.ToString();
                     }
 

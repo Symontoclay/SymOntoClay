@@ -1753,8 +1753,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             LogicalSearchExplainNode currentExplainNode = null;
             LogicalSearchExplainNode directFactsCollectorExplainNode = null;
             LogicalSearchExplainNode directFactsResultsCollectorExplainNode = null;
+
             LogicalSearchExplainNode directFactsDataSourceCollectorExplainNode = null;
             LogicalSearchExplainNode directFactsDataSourceResultExplainNode = null;
+
             LogicalSearchExplainNode productionCollectorExplainNode = null;
             LogicalSearchExplainNode productionResultsCollectorExplainNode = null;
             LogicalSearchExplainNode productionDataSourceCollectorExplainNode = null;

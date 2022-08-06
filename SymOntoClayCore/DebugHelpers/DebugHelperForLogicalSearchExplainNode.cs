@@ -1,4 +1,5 @@
 ﻿using NLog;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -236,6 +237,35 @@ namespace SymOntoClay.Core.DebugHelpers
                         return sb.ToString();
                     }
 
+                case KindOfLogicalSearchExplainNode.LogicalStorage:
+                    {
+                        var sb = new StringBuilder();
+
+                        var ruleInstance = source.LogicalStorage as RuleInstance;
+
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine($"<TR><TD>Logical storage: {source.LogicalStorage?.Kind}</TD></TR>");
+                        if(ruleInstance != null)
+                        {
+                            sb.AppendLine($"<TR><TD>{ruleInstance.ToHumanizedString()}</TD></TR>");
+                        }
+                        sb.AppendLine($"<TR><TD>Key: <b>{source.Key?.NameValue}</b></TD></TR>");
+                        sb.AppendLine("</TABLE>");
+
+                        return sb.ToString();
+                    }
+
+                case KindOfLogicalSearchExplainNode.LogicalStorageFilter:
+                    {
+                        var sb = new StringBuilder();
+
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine("<TR><TD>Logical storage filter</TD></TR>");
+                        sb.AppendLine("</TABLE>");
+
+                        return sb.ToString();
+                    }
+
                 case KindOfLogicalSearchExplainNode.RuleInstanceQuery:
                     {
                         var sb = new StringBuilder();
@@ -302,8 +332,8 @@ namespace SymOntoClay.Core.DebugHelpers
                     }
 
                 default:
-                    //throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
-                    return string.Empty;
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                    //return string.Empty;
             }
 
             /*

@@ -592,6 +592,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 currentExplainNode = new LogicalSearchExplainNode()
                 {
                     Kind = KindOfLogicalSearchExplainNode.LogicalStorage,
+                    Key = name,
                     LogicalStorage = this
                 };
 

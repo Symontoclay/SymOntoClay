@@ -14,6 +14,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public RuleInstance ProcessedRuleInstance { get; set; }
         public PrimaryRulePart ProcessedPrimaryRulePart { get; set; }
         public LogicalQueryNode ProcessedLogicalQueryNode { get; set; }
+        public BaseRulePart ProcessedBaseRulePart { get; set; }
+        public StrongIdentifierValue TargetRelation { get; set; }
+        public List<string> AdditionalInformation { get; set; } = new List<string>();
         public bool IsSuccess { get; set; }
         public List<ResultOfQueryToRelation> ResultsOfQueryToRelationList { get; set; }
         public IList<BaseRulePart> BaseRulePartList { get; set; }
@@ -43,6 +46,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.PrintObjProp(n, nameof(ProcessedRuleInstance), ProcessedRuleInstance);
             sb.PrintObjProp(n, nameof(ProcessedPrimaryRulePart), ProcessedPrimaryRulePart);
             sb.PrintObjProp(n, nameof(ProcessedLogicalQueryNode), ProcessedLogicalQueryNode);
+            sb.PrintObjProp(n, nameof(ProcessedBaseRulePart), ProcessedBaseRulePart);            
+            sb.PrintObjProp(n, nameof(TargetRelation), TargetRelation);
+            sb.PrintPODList(n, nameof(AdditionalInformation), AdditionalInformation);
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.PrintObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
             sb.PrintObjListProp(n, nameof(BaseRulePartList), BaseRulePartList);
@@ -75,6 +81,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.PrintShortObjProp(n, nameof(ProcessedRuleInstance), ProcessedRuleInstance);
             sb.PrintShortObjProp(n, nameof(ProcessedPrimaryRulePart), ProcessedPrimaryRulePart);
             sb.PrintShortObjProp(n, nameof(ProcessedLogicalQueryNode), ProcessedLogicalQueryNode);
+            sb.PrintShortObjProp(n, nameof(ProcessedBaseRulePart), ProcessedBaseRulePart);
+            sb.PrintShortObjProp(n, nameof(TargetRelation), TargetRelation);
+            sb.PrintPODList(n, nameof(AdditionalInformation), AdditionalInformation);
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.PrintShortObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
             sb.PrintShortObjListProp(n, nameof(BaseRulePartList), BaseRulePartList);
@@ -107,6 +116,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.PrintBriefObjProp(n, nameof(ProcessedRuleInstance), ProcessedRuleInstance);
             sb.PrintBriefObjProp(n, nameof(ProcessedPrimaryRulePart), ProcessedPrimaryRulePart);
             sb.PrintBriefObjProp(n, nameof(ProcessedLogicalQueryNode), ProcessedLogicalQueryNode);
+            sb.PrintBriefObjProp(n, nameof(ProcessedBaseRulePart), ProcessedBaseRulePart);
+            sb.PrintBriefObjProp(n, nameof(TargetRelation), TargetRelation);
+            sb.PrintPODList(n, nameof(AdditionalInformation), AdditionalInformation);
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.PrintExistingList(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
             sb.PrintExistingList(n, nameof(BaseRulePartList), BaseRulePartList);
@@ -139,6 +151,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.PrintDbgObjProp(n, nameof(ProcessedRuleInstance), ProcessedRuleInstance);
             sb.PrintDbgObjProp(n, nameof(ProcessedPrimaryRulePart), ProcessedPrimaryRulePart);
             sb.PrintDbgObjProp(n, nameof(ProcessedLogicalQueryNode), ProcessedLogicalQueryNode);
+            sb.PrintDbgObjProp(n, nameof(ProcessedBaseRulePart), ProcessedBaseRulePart);
+            sb.PrintDbgObjProp(n, nameof(TargetRelation), TargetRelation);
+            sb.PrintPODList(n, nameof(AdditionalInformation), AdditionalInformation);
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.PrintExistingList(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
             sb.PrintExistingList(n, nameof(BaseRulePartList), BaseRulePartList);

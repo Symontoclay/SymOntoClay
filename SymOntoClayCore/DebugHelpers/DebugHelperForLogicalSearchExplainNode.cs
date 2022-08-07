@@ -95,6 +95,7 @@ namespace SymOntoClay.Core.DebugHelpers
                         var sb = new StringBuilder();
                         sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
                         sb.AppendLine($"<TR><TD>{source.ProcessedRuleInstance.ToHumanizedString(toHumanizedStringOptions)}</TD></TR>");
+                        PrintAdditionalInformation(source, sb);
                         sb.AppendLine("</TABLE>");
                         return sb.ToString();
                     }
@@ -170,6 +171,7 @@ namespace SymOntoClay.Core.DebugHelpers
                         }
 
                         sb.AppendLine("<TR><TD></TD></TR>");
+                        PrintAdditionalInformation(source, sb);
                         sb.AppendLine("</TABLE>");
 
                         return sb.ToString();
@@ -181,6 +183,7 @@ namespace SymOntoClay.Core.DebugHelpers
 
                         sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
                         sb.AppendLine("<TR><TD>Results:</TD></TR>");
+                        PrintAdditionalInformation(source, sb);
                         sb.AppendLine("</TABLE>");
 
                         return sb.ToString();
@@ -204,9 +207,6 @@ namespace SymOntoClay.Core.DebugHelpers
 
                             if (!baseRulePartList.IsNullOrEmpty())
                             {
-#if DEBUG
-                                _gbcLogger.Info($"baseRulePartList = {baseRulePartList.Select(p => p.ToHumanizedString()).WritePODListToString()}");
-#endif
                                 sb.AppendLine("<TR><TD>");
 
                                 sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"1\">");
@@ -235,7 +235,8 @@ namespace SymOntoClay.Core.DebugHelpers
                                 sb.AppendLine("<TR><TD>-</TD></TR>");
                             }
                         }
-                        
+
+                        PrintAdditionalInformation(source, sb);
                         sb.AppendLine("</TABLE>");
 
                         return sb.ToString();
@@ -247,6 +248,7 @@ namespace SymOntoClay.Core.DebugHelpers
 
                         sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
                         sb.AppendLine("<TR><TD>Data sources:</TD></TR>");
+                        PrintAdditionalInformation(source, sb);
                         sb.AppendLine("</TABLE>");
 
                         return sb.ToString();
@@ -258,6 +260,7 @@ namespace SymOntoClay.Core.DebugHelpers
 
                         sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
                         sb.AppendLine("<TR><TD>Consolidated data sources</TD></TR>");
+                        PrintAdditionalInformation(source, sb);
                         sb.AppendLine("</TABLE>");
 
                         return sb.ToString();
@@ -276,6 +279,7 @@ namespace SymOntoClay.Core.DebugHelpers
                             sb.AppendLine($"<TR><TD>{ruleInstance.ToHumanizedString()}</TD></TR>");
                         }
                         sb.AppendLine($"<TR><TD>Key: <b>{source.Key?.NameValue}</b></TD></TR>");
+                        PrintAdditionalInformation(source, sb);
                         sb.AppendLine("</TABLE>");
 
                         return sb.ToString();
@@ -287,6 +291,7 @@ namespace SymOntoClay.Core.DebugHelpers
 
                         sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
                         sb.AppendLine("<TR><TD>Logical storage filter</TD></TR>");
+                        PrintAdditionalInformation(source, sb);
                         sb.AppendLine("</TABLE>");
 
                         return sb.ToString();
@@ -297,6 +302,7 @@ namespace SymOntoClay.Core.DebugHelpers
                         var sb = new StringBuilder();
                         sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
                         sb.AppendLine($"<TR><TD>{source.ProcessedRuleInstance.ToHumanizedString(toHumanizedStringOptions)}</TD></TR>");
+                        PrintAdditionalInformation(source, sb);
                         sb.AppendLine("</TABLE>");
                         return sb.ToString();
                     }
@@ -313,6 +319,7 @@ namespace SymOntoClay.Core.DebugHelpers
                         sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
                         sb.AppendLine($"<TR><TD>{source.ProcessedPrimaryRulePart.ToHumanizedString(toHumanizedStringOptions)}</TD></TR>");
                         sb.AppendLine($"<TR><TD>{source.ProcessedPrimaryRulePart.Parent.ToHumanizedString(selectProcessedPrimaryRulePartHumanizedStringOptions)}</TD></TR>");
+                        PrintAdditionalInformation(source, sb);
                         sb.AppendLine("</TABLE>");
                         return sb.ToString();
                     }
@@ -329,8 +336,10 @@ namespace SymOntoClay.Core.DebugHelpers
 
                         var sb = new StringBuilder();
                         sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine("<TR><TD>Process relation:</TD></TR>");
                         sb.AppendLine($"<TR><TD>{targetProcessedItem.ToHumanizedString(toHumanizedStringOptions)}</TD></TR>");
                         sb.AppendLine($"<TR><TD>{targetProcessedItem.RuleInstance.ToHumanizedString(selectProcessedLogicalQueryNodeHumanizedStringOptions)}</TD></TR>");
+                        PrintAdditionalInformation(source, sb);
                         sb.AppendLine("</TABLE>");
                         return sb.ToString();
                     }
@@ -341,6 +350,7 @@ namespace SymOntoClay.Core.DebugHelpers
 
                         sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
                         sb.AppendLine("<TR><TD>Direct facts:</TD></TR>");
+                        PrintAdditionalInformation(source, sb);
                         sb.AppendLine("</TABLE>");
 
                         return sb.ToString();
@@ -352,6 +362,29 @@ namespace SymOntoClay.Core.DebugHelpers
 
                         sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
                         sb.AppendLine("<TR><TD>Production:</TD></TR>");
+                        PrintAdditionalInformation(source, sb);
+                        sb.AppendLine("</TABLE>");
+
+                        return sb.ToString();
+                    }
+
+                case KindOfLogicalSearchExplainNode.RelationWithProductionQuery:
+                    {
+                        var targetProcessedItem = source.ProcessedBaseRulePart;
+
+                        var selectProcessedLogicalQueryNodeHumanizedStringOptions = new DebugHelperOptions();
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.HumanizedOptions = HumanizedOptions.ShowAll;
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.IsHtml = true;
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.ItemsForSelection = new List<IObjectToString>() { targetProcessedItem };
+
+                        var sb = new StringBuilder();
+
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine("<TR><TD>Process production:</TD></TR>");
+                        sb.AppendLine($"<TR><TD>{targetProcessedItem.ToHumanizedString(toHumanizedStringOptions)}</TD></TR>");
+                        sb.AppendLine($"<TR><TD>{targetProcessedItem.Parent.ToHumanizedString(selectProcessedLogicalQueryNodeHumanizedStringOptions)}</TD></TR>");
+                        sb.AppendLine($"<TR><TD>Target relation: <b>{source.TargetRelation.NameValue}</b></TD></TR>");
+                        PrintAdditionalInformation(source, sb);
                         sb.AppendLine("</TABLE>");
 
                         return sb.ToString();
@@ -367,6 +400,18 @@ namespace SymOntoClay.Core.DebugHelpers
                         sb.AppendLine("<TR><TD></TD></TR>");
                         sb.AppendLine("</TABLE>");
              */
+        }
+
+        private static void PrintAdditionalInformation(LogicalSearchExplainNode source, StringBuilder sb)
+        {
+            var additionalInformation = source.AdditionalInformation;
+
+            if(additionalInformation.IsNullOrEmpty())
+            {
+                return;
+            }
+
+            throw new NotImplementedException();
         }
     }
 }

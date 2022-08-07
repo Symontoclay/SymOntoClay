@@ -1832,21 +1832,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 productionDataSourceCollectorExplainNode.Children.Add(productionDataSourceResultExplainNode);
             }
 
-#if DEBUG
-            if (parentExplainNode == null)
-            {
-#if DLSR
-                throw new NotImplementedException();
-#endif
-            }
-            else
-            {
-#if DLSR
-                throw new NotImplementedException();
-#endif
-            }
-#endif
-
             var rulePartsOfFactsList = dataSource.GetIndexedRulePartOfFactsByKeyOfRelation(processedExpr.Name, options.LogicalSearchStorageContext, directFactsDataSourceResultExplainNode);
 
             if(directFactsDataSourceResultExplainNode != null)
@@ -3671,14 +3656,47 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if(parentExplainNode != null)
             {
-                //currentExplainNode = new LogicalSearchExplainNode()
-                //{
-                //    Kind = KindOfLogicalSearchExplainNode.PrimaryRulePartQuery
-                //};
+                currentExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.RelationWithProductionQuery
+                };
 
-                //parentExplainNode.Source = currentExplainNode;
+                parentExplainNode.Children.Add(currentExplainNode);
 
-                //currentExplainNode.ProcessedPrimaryRulePart = processedExpr;
+                currentExplainNode.ProcessedBaseRulePart = processedExpr;
+                currentExplainNode.TargetRelation = queryExecutingCard.TargetRelation;
+            }
+
+            var targetRelationsList = processedExpr.RelationsDict[queryExecutingCard.TargetRelation];
+
+#if DEBUG
+            //options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");
+#endif
+
+            if (targetRelationsList.Count != 1)
+            {
+                if(currentExplainNode != null)
+                {
+                    currentExplainNode.AdditionalInformation.Add($"{nameof(targetRelationsList)} should has 1 item instead of {targetRelationsList.Count}");
+                }
+
+                return;
+            }
+
+            var targetRelation = targetRelationsList.First();
+
+#if DEBUG
+            //options.Logger.Log($"targetRelation = {targetRelation}");
+#endif
+
+            if (targetRelation.ParamsList.Count != queryExecutingCard.CountParams)
+            {
+                if (currentExplainNode != null)
+                {
+                    currentExplainNode.AdditionalInformation.Add($"targetRelation.ParamsList.Count != queryExecutingCard.CountParams: {targetRelation.ParamsList.Count} != {queryExecutingCard.CountParams}");
+                }
+
+                return;
             }
 
 #if DEBUG
@@ -3695,28 +3713,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
             }
 #endif
-
-            var targetRelationsList = processedExpr.RelationsDict[queryExecutingCard.TargetRelation];
-
-#if DEBUG
-            //options.Logger.Log($"targetRelationsList.Count = {targetRelationsList.Count}");
-#endif
-
-            if (targetRelationsList.Count != 1)
-            {
-                return;
-            }
-
-            var targetRelation = targetRelationsList.First();
-
-#if DEBUG
-            //options.Logger.Log($"targetRelation = {targetRelation}");
-#endif
-
-            if (targetRelation.ParamsList.Count != queryExecutingCard.CountParams)
-            {
-                return;
-            }
 
             var targetRelationVarsInfoList = targetRelation.VarsInfoList;
 

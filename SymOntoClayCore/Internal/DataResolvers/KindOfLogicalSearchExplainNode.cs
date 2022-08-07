@@ -20,6 +20,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         PrimaryRulePartQuery,
         RelationQuery,
         ProcessRelationWithDirectFactsCollector,
-        ProcessRelationWithProductionCollector
+        ProcessRelationWithProductionCollector,
+        RelationWithProductionQuery
     }
 }

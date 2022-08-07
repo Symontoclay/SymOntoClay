@@ -3726,6 +3726,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var targetRelationVarsInfoDictByPosition = targetRelationVarsInfoList.ToDictionary(p => p.Position, p => p.NameOfVar);
 
+            /*
+                    MergeKnownInfoCollector,
+        MergeKnownInfoResult,
+        RelationWithProductionNextPartsCollector,
+        RelationWithProductionNextPart 
+            */
+
             var mergingResult = QueryExecutingCardAboutKnownInfoHelper.Merge(targetRelation.KnownInfoList, targetRelationVarsInfoList, queryExecutingCard.KnownInfoList, true);
             if (!mergingResult.IsSuccess)
             {

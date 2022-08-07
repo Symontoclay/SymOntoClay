@@ -21,6 +21,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         RelationQuery,
         ProcessRelationWithDirectFactsCollector,
         ProcessRelationWithProductionCollector,
-        RelationWithProductionQuery
+        RelationWithProductionQuery,
+        MergeKnownInfoCollector,
+        MergeKnownInfoResult,
+        RelationWithProductionNextPartsCollector,
+        RelationWithProductionNextPart
     }
 }

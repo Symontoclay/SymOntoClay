@@ -71,14 +71,23 @@ namespace SymOntoClay.Core.DebugHelpers
         {
             var sb = new StringBuilder();
 
-            var isSelected = options.IsHtml && (options.ItemsForSelection?.Any(p => p.Equals(source)) ?? false);
+            var isHtml = options.IsHtml;
+
+            var isSelected = isHtml && (options.ItemsForSelection?.Any(p => p.Equals(source)) ?? false);
 
             if (isSelected)
             {
                 sb.Append("<b>");
             }
 
-            sb.Append("{:");
+            if(isHtml)
+            {
+                sb.Append(StringHelper.ToHtmlCode("{:"));
+            }
+            else
+            {
+                sb.Append("{:");
+            }
 
             if(options.HumanizedOptions == HumanizedOptions.ShowAll)
             {
@@ -92,13 +101,20 @@ namespace SymOntoClay.Core.DebugHelpers
 
             if(!source.SecondaryParts.IsNullOrEmpty())
             {
-                sb.Append(" -> ");
+                if (isHtml)
+                {
+                    sb.Append(StringHelper.ToHtmlCode(" -> "));
+                }
+                else
+                {
+                    sb.Append(" -> ");
+                }
 
                 if(source.SecondaryParts.Count == 1)
                 {
                     var firstSecondaryRulePart = source.SecondaryParts.Single();
 
-                    sb.Append(ToString(firstSecondaryRulePart));
+                    sb.Append(ToString(firstSecondaryRulePart, options));
                 }
                 else
                 {
@@ -146,7 +162,15 @@ namespace SymOntoClay.Core.DebugHelpers
                 }
             }
 
-            sb.Append(" :}");
+            if (isHtml)
+            {
+                sb.Append(StringHelper.ToHtmlCode(" :}"));
+            }
+            else
+            {
+                sb.Append(" :}");
+            }
+            
             sb.Append(AnnotatedItemToString(source, options));
 
             if (isSelected)

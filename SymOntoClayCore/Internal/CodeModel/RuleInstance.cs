@@ -603,8 +603,22 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext)
+        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
         {
+            LogicalSearchExplainNode currentExplainNode = null;
+
+            if (parentExplainNode != null)
+            {
+                currentExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.LogicalStorage,
+                    Key = name,
+                    LogicalStorage = this
+                };
+
+                parentExplainNode.Children.Add(currentExplainNode);
+            }
+
             return _commonPersistIndexedLogicalData.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name);
         }
 

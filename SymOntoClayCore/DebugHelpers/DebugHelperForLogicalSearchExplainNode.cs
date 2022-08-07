@@ -196,13 +196,39 @@ namespace SymOntoClay.Core.DebugHelpers
 
                         if (baseRulePartList.IsNullOrEmpty())
                         {
-                            sb.AppendLine("<TR><TD>-</TD></TR>");
+                            sb.AppendLine("<TR><TD>&#8648;&#10008;</TD></TR>");
                         }
                         else
                         {
+                            sb.AppendLine("<TR><TD>&#8648;&#10004;</TD></TR>");
+
                             if (!baseRulePartList.IsNullOrEmpty())
                             {
-                                sb.AppendLine("<TR><TD>))))))</TD></TR>");
+#if DEBUG
+                                _gbcLogger.Info($"baseRulePartList = {baseRulePartList.Select(p => p.ToHumanizedString()).WritePODListToString()}");
+#endif
+                                sb.AppendLine("<TR><TD>");
+
+                                sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"1\">");
+                                //sb.AppendLine("<TR><TD>Rule part</TD><TD>Parent fact</TD></TR>");
+
+                                foreach(var item in baseRulePartList)
+                                {
+                                    sb.AppendLine("<TR>");
+                                    sb.AppendLine($"<TD>{item.ToHumanizedString(toHumanizedStringOptions)}</TD>");
+
+                                    //var rulePartHumanizedStringOptions = new DebugHelperOptions();
+                                    //rulePartHumanizedStringOptions.HumanizedOptions = HumanizedOptions.ShowAll;
+                                    //rulePartHumanizedStringOptions.IsHtml = true;
+                                    //rulePartHumanizedStringOptions.ItemsForSelection = new List<IObjectToString> { item };
+
+                                    //sb.AppendLine($"<TD>{item.Parent.ToHumanizedString(rulePartHumanizedStringOptions)}</TD>");
+                                    sb.AppendLine("</TR>");
+                                }
+
+                                sb.AppendLine("</TABLE>");
+
+                                sb.AppendLine("</TD></TR>");
                             }
                             else
                             {

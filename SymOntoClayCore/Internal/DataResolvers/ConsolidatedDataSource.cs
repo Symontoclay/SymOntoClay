@@ -133,21 +133,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     parentExplainNode.Children.Add(currentExplainNode);
                 }
 
-#if DEBUG
-                if (parentExplainNode == null)
-                {
-#if DLSR
-                throw new NotImplementedException();
-#endif
-                }
-                else
-                {
-#if DLSR
-                throw new NotImplementedException();
-#endif
-                }
-#endif
-
                 var initialResult = new List<BaseRulePart>();
 
                 IList<StorageUsingOptions> targetSourcesList = null;
@@ -212,13 +197,26 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext)
+        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
         {
             lock (_lockObj)
             {
 #if DEBUG
                 //_gbcLogger.Info($"name = {name}");
 #endif
+
+                LogicalSearchExplainNode currentExplainNode = null;
+
+                if (parentExplainNode != null)
+                {
+                    currentExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.ConsolidatedDataSource,
+                        Key = name
+                    };
+
+                    parentExplainNode.Children.Add(currentExplainNode);
+                }
 
                 var initialResult = new List<BaseRulePart>();
 
@@ -240,14 +238,31 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     //_gbcLogger.Info($"dataSourcesSettings.UseProductions = {dataSourcesSettings.UseProductions}");
 #endif
 
-                    var indexedRulePartWithOneRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name, logicalSearchStorageContext);
+                    LogicalSearchExplainNode localResultExplainNode = null;
 
-                    if (indexedRulePartWithOneRelationsList.IsNullOrEmpty())
+                    if (currentExplainNode != null)
+                    {
+                        localResultExplainNode = new LogicalSearchExplainNode()
+                        {
+                            Kind = KindOfLogicalSearchExplainNode.DataSourceResult
+                        };
+
+                        currentExplainNode.Children.Add(localResultExplainNode);
+                    }
+
+                    var rulePartWithOneRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name, logicalSearchStorageContext, localResultExplainNode);
+
+                    if (localResultExplainNode != null)
+                    {
+                        localResultExplainNode.BaseRulePartList = rulePartWithOneRelationsList;
+                    }
+
+                    if (rulePartWithOneRelationsList.IsNullOrEmpty())
                     {
                         continue;
                     }
 
-                    initialResult.AddRange(indexedRulePartWithOneRelationsList);
+                    initialResult.AddRange(rulePartWithOneRelationsList);
                 }
 
                 if(initialResult.Count <= 1)

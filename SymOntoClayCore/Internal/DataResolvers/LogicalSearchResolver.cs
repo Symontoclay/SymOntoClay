@@ -1751,15 +1751,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
 
             LogicalSearchExplainNode currentExplainNode = null;
+
             LogicalSearchExplainNode directFactsCollectorExplainNode = null;
             LogicalSearchExplainNode directFactsResultsCollectorExplainNode = null;
-
             LogicalSearchExplainNode directFactsDataSourceCollectorExplainNode = null;
             LogicalSearchExplainNode directFactsDataSourceResultExplainNode = null;
 
             LogicalSearchExplainNode productionCollectorExplainNode = null;
             LogicalSearchExplainNode productionResultsCollectorExplainNode = null;
             LogicalSearchExplainNode productionDataSourceCollectorExplainNode = null;
+            LogicalSearchExplainNode productionDataSourceResultExplainNode = null;
 
             var parentExplainNode = queryExecutingCard.ParentExplainNode;
 
@@ -1822,6 +1823,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 };
 
                 productionCollectorExplainNode.Children.Add(productionDataSourceCollectorExplainNode);
+
+                productionDataSourceResultExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.DataSourceResult
+                };
+
+                productionDataSourceCollectorExplainNode.Children.Add(productionDataSourceResultExplainNode);
             }
 
 #if DEBUG
@@ -1944,15 +1952,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"~~~~~~~~~~~~~~~~~queryExecutingCard = {queryExecutingCard}");
 #endif
 
-            var indexedRulePartWithOneRelationsList = dataSource.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(processedExpr.Name, options.LogicalSearchStorageContext);
+            var rulePartWithOneRelationsList = dataSource.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(processedExpr.Name, options.LogicalSearchStorageContext, productionDataSourceResultExplainNode);
 
 #if DEBUG
-            options.Logger.Log($"indexedRulePartWithOneRelationsList?.Count = {indexedRulePartWithOneRelationsList?.Count}");
+            options.Logger.Log($"rulePartWithOneRelationsList?.Count = {rulePartWithOneRelationsList?.Count}");
 #endif
 
-            if (!indexedRulePartWithOneRelationsList.IsNullOrEmpty())
+            if(productionDataSourceResultExplainNode != null)
             {
-                foreach (var indexedRulePartsOfRule in indexedRulePartWithOneRelationsList)
+                productionDataSourceResultExplainNode.BaseRulePartList = rulePartWithOneRelationsList;
+            }
+
+            if (!rulePartWithOneRelationsList.IsNullOrEmpty())
+            {
+                foreach (var indexedRulePartsOfRule in rulePartWithOneRelationsList)
                 {
 #if DEBUG
                     //options.Logger.Log($"processedExpr = {processedExpr}");

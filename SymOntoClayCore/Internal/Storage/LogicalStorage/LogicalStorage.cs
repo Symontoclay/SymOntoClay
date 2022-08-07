@@ -643,21 +643,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                     };
                 }
 
-#if DEBUG
-                if (parentExplainNode == null)
-                {
-#if DLSR
-                throw new NotImplementedException();
-#endif
-                }
-                else
-                {
-#if DLSR
-                throw new NotImplementedException();
-#endif
-                }
-#endif
-
                 var source = _commonPersistIndexedLogicalData.GetIndexedRulePartOfFactsByKeyOfRelation(name);
 
 #if DEBUG
@@ -726,7 +711,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         }
 
         /// <inheritdoc/>
-        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext)
+        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
         {
             lock (_lockObj)
             {
@@ -739,6 +724,18 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 //}
 #endif
 
+                LogicalSearchExplainNode currentExplainNode = null;
+
+                if (parentExplainNode != null)
+                {
+                    currentExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.LogicalStorage,
+                        Key = name,
+                        LogicalStorage = this
+                    };
+                }
+
                 var source = _commonPersistIndexedLogicalData.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name);
 
 #if DEBUG
@@ -747,6 +744,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 if (logicalSearchStorageContext == null || source.IsNullOrEmpty())
                 {
+                    if (parentExplainNode != null)
+                    {
+                        parentExplainNode.Children.Add(currentExplainNode);
+                    }
+
                     return source;
                 }
 
@@ -754,6 +756,29 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 //Log($"name = {name}");
                 //Log($"_kind = {_kind}");
 #endif
+
+                LogicalSearchExplainNode filteringExplainNode = null;
+
+                if (parentExplainNode != null)
+                {
+                    filteringExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.LogicalStorageFilter
+                    };
+
+                    parentExplainNode.Children.Add(filteringExplainNode);
+
+                    var intermediateResultExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.DataSourceResult
+                    };
+
+                    filteringExplainNode.Children.Add(intermediateResultExplainNode);
+
+                    intermediateResultExplainNode.BaseRulePartList = source;
+
+                    intermediateResultExplainNode.Children.Add(currentExplainNode);
+                }
 
                 return logicalSearchStorageContext.Filter(source, false);
             }

@@ -390,6 +390,150 @@ namespace SymOntoClay.Core.DebugHelpers
                         return sb.ToString();
                     }
 
+                case KindOfLogicalSearchExplainNode.MergedKnownInfoCollector:
+                    {
+                        var sb = new StringBuilder();
+
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine("<TR><TD>Merged KnownInfo:</TD></TR>");
+                        PrintAdditionalInformation(source, sb);
+                        sb.AppendLine("</TABLE>");
+
+                        return sb.ToString();
+                    }
+
+                case KindOfLogicalSearchExplainNode.KnownInfoResult:
+                    {
+                        var knownInfoList = source.KnownInfoList;
+                        var varsInfoList = source.VarsInfoList;
+
+                        var sb = new StringBuilder();
+
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine("<TR><TD>");
+                        sb.AppendLine("&#8685;");
+
+                        if (source.IsSuccess)
+                        {
+                            sb.Append("&#10004;");
+                        }
+                        else
+                        {
+                            sb.Append("&#10008;");
+                        }
+
+                        sb.AppendLine("</TD></TR>");
+
+                        if(knownInfoList.IsNullOrEmpty() && varsInfoList.IsNullOrEmpty())
+                        {
+                            sb.AppendLine("<TR><TD>-</TD></TR>");
+                        }
+                        else
+                        {
+                            if(knownInfoList.IsNullOrEmpty())
+                            {
+                                sb.AppendLine("<TR><TD>");
+                                sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"1\">");
+                                sb.AppendLine("<TR><TD>Position</TD><TD>Var name</TD></TR>");
+
+                                foreach(var item in varsInfoList)
+                                {
+                                    sb.AppendLine($"<TR><TD>{item.Position}</TD><TD>{item.NameOfVar.NameValue}</TD></TR>");
+                                }
+
+                                sb.AppendLine("</TABLE>");
+                                sb.AppendLine("</TD></TR>");
+                            }
+                            else
+                            {
+                                throw new NotImplementedException();
+                            }
+                        }
+
+                        PrintAdditionalInformation(source, sb);
+                        sb.AppendLine("</TABLE>");
+
+                        return sb.ToString();
+                    }
+
+                case KindOfLogicalSearchExplainNode.MergeKnownInfoBlock:
+                    {
+                        var sb = new StringBuilder();
+
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine("<TR><TD>&#8625;&#8593; Merge KnownInfo</TD></TR>");
+                        PrintAdditionalInformation(source, sb);
+                        sb.AppendLine("</TABLE>");
+
+                        return sb.ToString();
+                    }
+
+                case KindOfLogicalSearchExplainNode.KnownInfoDataSource:
+                    {
+                        var sb = new StringBuilder();
+
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine("<TR><TD>KnownInfo DataSource</TD></TR>");
+                        sb.AppendLine($"<TR><TD>Storage name: <b>{source.StorageName}</b></TD></TR>");
+                        PrintAdditionalInformation(source, sb);
+                        sb.AppendLine("</TABLE>");
+
+                        return sb.ToString();
+                    }
+
+                case KindOfLogicalSearchExplainNode.RelationWithProductionNextPartsCollector:
+                    {
+                        var sb = new StringBuilder();
+
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine("<TR><TD>Processing next parts:</TD></TR>");
+                        PrintAdditionalInformation(source, sb);
+                        sb.AppendLine("</TABLE>");
+
+                        return sb.ToString();
+                    }
+
+                case KindOfLogicalSearchExplainNode.RelationWithProductionNextPart:
+                    {
+                        var targetProcessedItem = source.ProcessedBaseRulePart;
+
+                        var selectProcessedLogicalQueryNodeHumanizedStringOptions = new DebugHelperOptions();
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.HumanizedOptions = HumanizedOptions.ShowAll;
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.IsHtml = true;
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.ItemsForSelection = new List<IObjectToString>() { targetProcessedItem };
+
+                        var sb = new StringBuilder();
+
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine("<TR><TD>Process next part</TD></TR>");
+                        sb.AppendLine($"<TR><TD>{targetProcessedItem.ToHumanizedString(toHumanizedStringOptions)}</TD></TR>");
+                        sb.AppendLine($"<TR><TD>{targetProcessedItem.Parent.ToHumanizedString(selectProcessedLogicalQueryNodeHumanizedStringOptions)}</TD></TR>");
+                        PrintAdditionalInformation(source, sb);
+                        sb.AppendLine("</TABLE>");
+                        return sb.ToString();
+                    }
+
+                case KindOfLogicalSearchExplainNode.OperatorQuery:
+                    {
+                        var targetProcessedItem = source.ProcessedLogicalQueryNode;
+
+                        var selectProcessedLogicalQueryNodeHumanizedStringOptions = new DebugHelperOptions();
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.HumanizedOptions = HumanizedOptions.ShowAll;
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.IsHtml = true;
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.ItemsForSelection = new List<IObjectToString>() { targetProcessedItem };
+
+                        var sb = new StringBuilder();
+
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine($"<TR><TD>Operator: <b>{source.KindOfOperator}</b></TD></TR>");
+                        sb.AppendLine($"<TR><TD>{targetProcessedItem.ToHumanizedString(toHumanizedStringOptions)}</TD></TR>");
+                        sb.AppendLine($"<TR><TD>{targetProcessedItem.RuleInstance.ToHumanizedString(selectProcessedLogicalQueryNodeHumanizedStringOptions)}</TD></TR>");
+                        PrintAdditionalInformation(source, sb);
+                        sb.AppendLine("</TABLE>");
+
+                        return sb.ToString();
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
                     //return string.Empty;

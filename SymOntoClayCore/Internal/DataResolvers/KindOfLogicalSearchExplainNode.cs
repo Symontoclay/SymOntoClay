@@ -22,9 +22,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         ProcessRelationWithDirectFactsCollector,
         ProcessRelationWithProductionCollector,
         RelationWithProductionQuery,
-        MergeKnownInfoCollector,
-        MergeKnownInfoResult,
+        MergedKnownInfoCollector,
+        KnownInfoResult,
+        MergeKnownInfoBlock,
+        KnownInfoDataSource,
         RelationWithProductionNextPartsCollector,
-        RelationWithProductionNextPart
+        RelationWithProductionNextPart,
+        OperatorQuery
     }
 }

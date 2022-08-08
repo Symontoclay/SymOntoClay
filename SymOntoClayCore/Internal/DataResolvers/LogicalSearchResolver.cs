@@ -1832,15 +1832,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 productionDataSourceCollectorExplainNode.Children.Add(productionDataSourceResultExplainNode);
             }
 
-            var rulePartsOfFactsList = dataSource.GetIndexedRulePartOfFactsByKeyOfRelation(processedExpr.Name, options.LogicalSearchStorageContext, directFactsDataSourceResultExplainNode);
-
-            if(directFactsDataSourceResultExplainNode != null)
-            {
-                directFactsDataSourceResultExplainNode.BaseRulePartList = rulePartsOfFactsList;
-            }
-
 #if DEBUG
-            options.Logger.Log($"rulePartsOfFactsList?.Count = {rulePartsOfFactsList?.Count}");
+            if (parentExplainNode == null)
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
+            else
+            {
+#if DLSR
+                throw new NotImplementedException();
+#endif
+            }
 #endif
 
             var mergingResult = QueryExecutingCardAboutKnownInfoHelper.Merge(processedExpr.KnownInfoList, processedExpr.VarsInfoList, queryExecutingCard.KnownInfoList, false);
@@ -1856,8 +1860,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var targetKnownInfoList = mergingResult.KnownInfoList;
 
-            queryExecutingCard.UsedKeysList.Add(processedExpr.Name);
-
 #if DEBUG
             //options.Logger.Log($"targetKnownInfoList.Count = {targetKnownInfoList.Count}");
             //foreach (var tmpKnownInfo in targetKnownInfoList)
@@ -1869,6 +1871,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //    throw new NotImplementedException();
             //}
 #endif
+
+            var rulePartsOfFactsList = dataSource.GetIndexedRulePartOfFactsByKeyOfRelation(processedExpr.Name, options.LogicalSearchStorageContext, directFactsDataSourceResultExplainNode);
+
+            if(directFactsDataSourceResultExplainNode != null)
+            {
+                directFactsDataSourceResultExplainNode.BaseRulePartList = rulePartsOfFactsList;
+            }
+
+#if DEBUG
+            options.Logger.Log($"rulePartsOfFactsList?.Count = {rulePartsOfFactsList?.Count}");
+#endif
+            queryExecutingCard.UsedKeysList.Add(processedExpr.Name);
 
             if (!rulePartsOfFactsList.IsNullOrEmpty())
             {
@@ -2197,27 +2211,43 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log("||||||||||||||||||||||||||||||||||||||||||||||||||||");
 #endif
 
+            LogicalSearchExplainNode currentExplainNode = null;
+            LogicalSearchExplainNode leftResultExplainNode = null;
+            LogicalSearchExplainNode rightResultExplainNode = null;
+
             var parentExplainNode = queryExecutingCard.ParentExplainNode;
 
-#if DEBUG
-            if (parentExplainNode == null)
+            if(parentExplainNode != null)
             {
-#if DLSR
-                throw new NotImplementedException();
-#endif
+                currentExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.OperatorQuery,
+                    KindOfOperator = KindOfOperatorOfLogicalQueryNode.And,
+                    ProcessedLogicalQueryNode = processedExpr
+                };
+
+                parentExplainNode.Children.Add(currentExplainNode);
+
+                leftResultExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.Result
+                };
+
+                currentExplainNode.Children.Add(leftResultExplainNode);
+
+                rightResultExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.Result
+                };
+
+                currentExplainNode.Children.Add(rightResultExplainNode);
             }
-            else
-            {
-#if DLSR
-                throw new NotImplementedException();
-#endif
-            }
-#endif
 
             var leftQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
 
             leftQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
             leftQueryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+            leftQueryExecutingCard.ParentExplainNode = leftResultExplainNode;
 
             FillExecutingCard(processedExpr.Left, leftQueryExecutingCard, dataSource, options);
 
@@ -2225,8 +2255,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"leftQueryExecutingCard = {leftQueryExecutingCard}");
 #endif
 
+            if (leftResultExplainNode != null)
+            {
+                FillUpResultToExplainNode(queryExecutingCard, leftResultExplainNode);
+            }
+
             if (!leftQueryExecutingCard.IsSuccess)
             {
+                if (leftResultExplainNode != null)
+                {
+                    leftResultExplainNode.AdditionalInformation.Add("!leftQueryExecutingCard.IsSuccess");
+                }
+
                 return;
             }
 
@@ -2234,8 +2274,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             rightQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
             rightQueryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+            rightQueryExecutingCard.ParentExplainNode = rightResultExplainNode;
 
             FillExecutingCard(processedExpr.Right, rightQueryExecutingCard, dataSource, options);
+
+            if (rightResultExplainNode != null)
+            {
+                FillUpResultToExplainNode(queryExecutingCard, rightResultExplainNode);
+            }
 
 #if DEBUG
             //options.Logger.Log("||||||||||||||||||||||||||||||||||||||||||||||||||||~~~~~~~~~~~~");
@@ -2245,6 +2291,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!rightQueryExecutingCard.IsSuccess)
             {
+                if(rightResultExplainNode != null)
+                {
+                    rightResultExplainNode.AdditionalInformation.Add("!rightQueryExecutingCard.IsSuccess");
+                }
+
                 return;
             }
 
@@ -2259,6 +2310,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (leftQueryExecutingCard.IsPostFiltersListOnly && rightQueryExecutingCard.IsPostFiltersListOnly)
             {
+                if(parentExplainNode != null)
+                {
+                    parentExplainNode.AdditionalInformation.Add("It will be processed in post filters: leftQueryExecutingCard.IsPostFiltersListOnly && rightQueryExecutingCard.IsPostFiltersListOnly");
+                }
+
                 queryExecutingCard.IsPostFiltersListOnly = true;
 
                 CopyPostFilters(leftQueryExecutingCard, queryExecutingCard, KindOfOperatorOfLogicalQueryNode.And);
@@ -2269,6 +2325,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!leftQueryExecutingCardResultsOfQueryToRelationList.Any() && !rightQueryExecutingCardResultsOfQueryToRelationList.Any())
             {
+                if (parentExplainNode != null)
+                {
+                    parentExplainNode.AdditionalInformation.Add("It will be processed in post filters: !leftQueryExecutingCardResultsOfQueryToRelationList.Any() && !rightQueryExecutingCardResultsOfQueryToRelationList.Any()");
+                }
+
                 CopyPostFilters(leftQueryExecutingCard, queryExecutingCard, KindOfOperatorOfLogicalQueryNode.And);
                 CopyPostFilters(rightQueryExecutingCard, queryExecutingCard, KindOfOperatorOfLogicalQueryNode.And);
 
@@ -2279,6 +2340,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (leftQueryExecutingCardResultsOfQueryToRelationList.Any() && !rightQueryExecutingCardResultsOfQueryToRelationList.Any())
             {
+                if (parentExplainNode != null)
+                {
+                    parentExplainNode.AdditionalInformation.Add("It will be processed in post filters: leftQueryExecutingCardResultsOfQueryToRelationList.Any() && !rightQueryExecutingCardResultsOfQueryToRelationList.Any()");
+                }
+
                 foreach (var resultOfQueryToRelation in leftQueryExecutingCardResultsOfQueryToRelationList)
                 {
                     resultsOfQueryToRelationList.Add(resultOfQueryToRelation);
@@ -2297,6 +2363,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!leftQueryExecutingCardResultsOfQueryToRelationList.Any() && rightQueryExecutingCardResultsOfQueryToRelationList.Any())
             {
+                if (parentExplainNode != null)
+                {
+                    parentExplainNode.AdditionalInformation.Add("It will be processed in post filters: !leftQueryExecutingCardResultsOfQueryToRelationList.Any() && rightQueryExecutingCardResultsOfQueryToRelationList.Any()");
+                }
+
                 foreach (var resultOfQueryToRelation in rightQueryExecutingCardResultsOfQueryToRelationList)
                 {
                     resultsOfQueryToRelationList.Add(resultOfQueryToRelation);
@@ -3699,47 +3770,112 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return;
             }
 
-#if DEBUG
-            if (parentExplainNode == null)
-            {
-#if DLSR
-                throw new NotImplementedException();
-#endif
-            }
-            else
-            {
-#if DLSR
-                throw new NotImplementedException();
-#endif
-            }
-#endif
-
             var targetRelationVarsInfoList = targetRelation.VarsInfoList;
 
 #if DEBUG
-            //options.Logger.Log($"targetRelationVarsInfoList.Count = {targetRelationVarsInfoList.Count}");
-            //foreach (var varInfo in targetRelationVarsInfoList)
-            //{
-            //    options.Logger.Log($"varInfo = {varInfo}");
-            //}
+            options.Logger.Log($"targetRelationVarsInfoList.Count = {targetRelationVarsInfoList.Count}");
+            foreach (var varInfo in targetRelationVarsInfoList)
+            {
+                options.Logger.Log($"varInfo = {varInfo}");
+            }
 #endif
 
-            var targetRelationVarsInfoDictByPosition = targetRelationVarsInfoList.ToDictionary(p => p.Position, p => p.NameOfVar);
+            LogicalSearchExplainNode mergedKnownInfoCollectorExplainNode = null;
+            LogicalSearchExplainNode mergedKnownInfoResultExplainNode = null;
 
-            /*
-                    MergeKnownInfoCollector,
-        MergeKnownInfoResult,
-        RelationWithProductionNextPartsCollector,
-        RelationWithProductionNextPart 
-            */
+            if (currentExplainNode != null)
+            {
+                mergedKnownInfoCollectorExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.MergedKnownInfoCollector
+                };
+
+                currentExplainNode.Children.Add(mergedKnownInfoCollectorExplainNode);
+
+                mergedKnownInfoResultExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.KnownInfoResult
+                };
+
+                mergedKnownInfoCollectorExplainNode.Children.Add(mergedKnownInfoResultExplainNode);
+
+                var mergeKnownInfoBlockExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.MergeKnownInfoBlock
+                };
+
+                mergedKnownInfoResultExplainNode.Children.Add(mergeKnownInfoBlockExplainNode);
+
+
+                var targetRelationKnownInfoResultExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.KnownInfoResult,
+                    KnownInfoList = targetRelation.KnownInfoList
+                };
+
+                mergeKnownInfoBlockExplainNode.Children.Add(targetRelationKnownInfoResultExplainNode);
+
+                var targetRelationMergeKnownInfoDataSourceExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.KnownInfoDataSource,
+                    StorageName = nameof(targetRelation)
+                };
+
+                targetRelationKnownInfoResultExplainNode.Children.Add(targetRelationMergeKnownInfoDataSourceExplainNode);
+
+                var targetRelationVarsInfoListKnownInfoResultExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.KnownInfoResult,
+                    VarsInfoList = targetRelationVarsInfoList
+                };
+
+                mergeKnownInfoBlockExplainNode.Children.Add(targetRelationVarsInfoListKnownInfoResultExplainNode);
+
+                var targetRelationVarsInfoListKnownInfoDataSourceExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.KnownInfoDataSource,
+                    StorageName = nameof(targetRelationVarsInfoList)
+                };
+
+                targetRelationVarsInfoListKnownInfoResultExplainNode.Children.Add(targetRelationVarsInfoListKnownInfoDataSourceExplainNode);
+
+                var queryExecutingCardKnownInfoResultExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.KnownInfoResult,
+                    KnownInfoList = queryExecutingCard.KnownInfoList
+                };
+
+                mergeKnownInfoBlockExplainNode.Children.Add(queryExecutingCardKnownInfoResultExplainNode);
+
+                var queryExecutingCardKnownInfoDataSourceExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.KnownInfoDataSource,
+                    StorageName = nameof(queryExecutingCard)
+                };
+
+                queryExecutingCardKnownInfoResultExplainNode.Children.Add(queryExecutingCardKnownInfoDataSourceExplainNode);
+            }
+
+            var targetRelationVarsInfoDictByPosition = targetRelationVarsInfoList.ToDictionary(p => p.Position, p => p.NameOfVar);
 
             var mergingResult = QueryExecutingCardAboutKnownInfoHelper.Merge(targetRelation.KnownInfoList, targetRelationVarsInfoList, queryExecutingCard.KnownInfoList, true);
             if (!mergingResult.IsSuccess)
             {
+                if (mergedKnownInfoResultExplainNode != null)
+                {
+                    mergedKnownInfoResultExplainNode.AdditionalInformation.Add("!mergingResult.IsSuccess");
+                }
+
                 return;
             }
 
             var targetKnownInfoList = mergingResult.KnownInfoList;
+
+            if(mergedKnownInfoResultExplainNode != null)
+            {
+                mergedKnownInfoResultExplainNode.IsSuccess = true;
+                mergedKnownInfoResultExplainNode.KnownInfoList = targetKnownInfoList;
+            }
 
 #if DEBUG
             //options.Logger.Log($"########################targetKnownInfoList.Count = {targetKnownInfoList.Count}");
@@ -3753,6 +3889,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //}
 #endif
 
+            LogicalSearchExplainNode relationWithProductionNextPartsCollectorExplainNode = null;
+
+            if (currentExplainNode != null)
+            {
+                relationWithProductionNextPartsCollectorExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.RelationWithProductionNextPartsCollector
+                };
+
+                currentExplainNode.Children.Add(relationWithProductionNextPartsCollectorExplainNode);
+            }
+
             var nextPartsList = processedExpr.GetNextPartsList();
 
 #if DEBUG
@@ -3765,12 +3913,30 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //options.Logger.Log($"nextPart = {DebugHelperForRuleInstance.BaseRulePartToString(nextPart)}");
 #endif
 
+                LogicalSearchExplainNode nextPartLocalResultExplainNode = null;
+
+                if (relationWithProductionNextPartsCollectorExplainNode != null)
+                {
+                    nextPartLocalResultExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.Result
+                    };
+
+                    relationWithProductionNextPartsCollectorExplainNode.Children.Add(nextPartLocalResultExplainNode);
+                }
+
                 var queryExecutingCardForNextPart = new QueryExecutingCardForIndexedPersistLogicalData();
                 queryExecutingCardForNextPart.VarsInfoList = targetRelation.VarsInfoList;
                 queryExecutingCardForNextPart.KnownInfoList = targetKnownInfoList;
                 queryExecutingCardForNextPart.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+                queryExecutingCardForNextPart.ParentExplainNode = nextPartLocalResultExplainNode;
 
                 FillExecutingCardForCallingFromOtherPart(nextPart, queryExecutingCardForNextPart, dataSource, options);
+
+                if(nextPartLocalResultExplainNode != null)
+                {
+                    FillUpResultToExplainNode(queryExecutingCardForNextPart, nextPartLocalResultExplainNode);
+                }
 
                 queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForNextPart.UsedKeysList);
 
@@ -3897,29 +4063,42 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //options.Logger.Log($"queryExecutingCard = {queryExecutingCard}");
 #endif
 
+            LogicalSearchExplainNode currentExplainNode = null;
+            LogicalSearchExplainNode resultExplainNode = null;
+
             var parentExplainNode = queryExecutingCard.ParentExplainNode;
 
-#if DEBUG
-            if (parentExplainNode == null)
+            if(parentExplainNode != null)
             {
-#if DLSR
-                throw new NotImplementedException();
-#endif
+                currentExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.RelationWithProductionNextPart
+                };
+
+                parentExplainNode.Children.Add(currentExplainNode);
+
+                currentExplainNode.ProcessedBaseRulePart = processedExpr;
+
+                resultExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.Result
+                };
+
+                currentExplainNode.Children.Add(resultExplainNode);
             }
-            else
-            {
-#if DLSR
-                throw new NotImplementedException();
-#endif
-            }
-#endif
 
             var queryExecutingCardForExpression = new QueryExecutingCardForIndexedPersistLogicalData();
 
             queryExecutingCardForExpression.KnownInfoList = queryExecutingCard.KnownInfoList;
             queryExecutingCardForExpression.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+            queryExecutingCardForExpression.ParentExplainNode = resultExplainNode;
 
             FillExecutingCard(processedExpr.Expression, queryExecutingCardForExpression, dataSource, options);
+
+            if (resultExplainNode != null)
+            {
+                FillUpResultToExplainNode(queryExecutingCardForExpression, resultExplainNode);
+            }
 
             queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForExpression.UsedKeysList);
 

@@ -446,7 +446,36 @@ namespace SymOntoClay.Core.DebugHelpers
                             }
                             else
                             {
-                                throw new NotImplementedException();
+                                var hasNameOfVars = knownInfoList.Any(p => p.NameOfVar != null);
+
+                                sb.AppendLine("<TR><TD>");
+                                sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"1\">");
+
+                                sb.AppendLine("<TR>");
+
+                                if(hasNameOfVars)
+                                {
+                                    sb.AppendLine("<TD>Var name</TD>");
+                                }
+                                sb.AppendLine("<TD>Position</TD><TD>Expression</TD>");
+                                sb.AppendLine("</TR>");
+
+                                foreach(var item in knownInfoList)
+                                {
+                                    sb.AppendLine("<TR>");
+
+                                    if (hasNameOfVars)
+                                    {
+                                        sb.AppendLine($"<TD>{item.NameOfVar?.NameValue}</TD>");
+                                    }
+
+                                    sb.AppendLine($"<TD>{item.Position}</TD><TD>{item.Expression?.ToHumanizedString(toHumanizedStringOptions)}</TD>");
+
+                                    sb.AppendLine("</TR>");
+                                }
+
+                                sb.AppendLine("</TABLE>");
+                                sb.AppendLine("</TD></TR>");
                             }
                         }
 

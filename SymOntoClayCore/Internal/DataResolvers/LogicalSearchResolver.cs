@@ -1762,6 +1762,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             LogicalSearchExplainNode productionDataSourceCollectorExplainNode = null;
             LogicalSearchExplainNode productionDataSourceResultExplainNode = null;
 
+            LogicalSearchExplainNode mergedKnownInfoCollectorExplainNode = null;
+            LogicalSearchExplainNode mergedKnownInfoResultExplainNode = null;
+
             var parentExplainNode = queryExecutingCard.ParentExplainNode;
 
             if (parentExplainNode != null)
@@ -1830,6 +1833,76 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 };
 
                 productionDataSourceCollectorExplainNode.Children.Add(productionDataSourceResultExplainNode);
+
+                mergedKnownInfoCollectorExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.MergedKnownInfoCollector
+                };
+
+                currentExplainNode.Children.Add(mergedKnownInfoCollectorExplainNode);
+
+                mergedKnownInfoResultExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.KnownInfoResult
+                };
+
+                mergedKnownInfoCollectorExplainNode.Children.Add(mergedKnownInfoResultExplainNode);
+
+                var mergeKnownInfoBlockExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.MergeKnownInfoBlock
+                };
+
+                mergedKnownInfoResultExplainNode.Children.Add(mergeKnownInfoBlockExplainNode);
+
+
+                var targetRelationKnownInfoResultExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.KnownInfoResult,
+                    KnownInfoList = processedExpr.KnownInfoList
+                };
+
+                mergeKnownInfoBlockExplainNode.Children.Add(targetRelationKnownInfoResultExplainNode);
+
+                var targetRelationMergeKnownInfoDataSourceExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.KnownInfoDataSource,
+                    StorageName = nameof(processedExpr)
+                };
+
+                targetRelationKnownInfoResultExplainNode.Children.Add(targetRelationMergeKnownInfoDataSourceExplainNode);
+
+                var targetRelationVarsInfoListKnownInfoResultExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.KnownInfoResult,
+                    VarsInfoList = processedExpr.VarsInfoList
+                };
+
+                mergeKnownInfoBlockExplainNode.Children.Add(targetRelationVarsInfoListKnownInfoResultExplainNode);
+
+                var targetRelationVarsInfoListKnownInfoDataSourceExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.KnownInfoDataSource,
+                    StorageName = nameof(processedExpr)
+                };
+
+                targetRelationVarsInfoListKnownInfoResultExplainNode.Children.Add(targetRelationVarsInfoListKnownInfoDataSourceExplainNode);
+
+                var queryExecutingCardKnownInfoResultExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.KnownInfoResult,
+                    KnownInfoList = queryExecutingCard.KnownInfoList
+                };
+
+                mergeKnownInfoBlockExplainNode.Children.Add(queryExecutingCardKnownInfoResultExplainNode);
+
+                var queryExecutingCardKnownInfoDataSourceExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.KnownInfoDataSource,
+                    StorageName = nameof(queryExecutingCard)
+                };
+
+                queryExecutingCardKnownInfoResultExplainNode.Children.Add(queryExecutingCardKnownInfoDataSourceExplainNode);
             }
 
 #if DEBUG
@@ -1855,10 +1928,21 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!mergingResult.IsSuccess)
             {
+                if (mergedKnownInfoResultExplainNode != null)
+                {
+                    mergedKnownInfoResultExplainNode.AdditionalInformation.Add("!mergingResult.IsSuccess");
+                }
+
                 return;
             }
 
             var targetKnownInfoList = mergingResult.KnownInfoList;
+
+            if (mergedKnownInfoResultExplainNode != null)
+            {
+                mergedKnownInfoResultExplainNode.IsSuccess = true;
+                mergedKnownInfoResultExplainNode.KnownInfoList = targetKnownInfoList;
+            }
 
 #if DEBUG
             //options.Logger.Log($"targetKnownInfoList.Count = {targetKnownInfoList.Count}");

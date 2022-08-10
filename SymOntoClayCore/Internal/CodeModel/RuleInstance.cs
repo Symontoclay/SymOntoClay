@@ -596,7 +596,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     LogicalStorage = this
                 };
 
-                parentExplainNode.Children.Add(currentExplainNode);
+                LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
             }
 
             return _commonPersistIndexedLogicalData.GetIndexedRulePartOfFactsByKeyOfRelation(name);
@@ -616,7 +616,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     LogicalStorage = this
                 };
 
-                parentExplainNode.Children.Add(currentExplainNode);
+                LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
             }
 
             return _commonPersistIndexedLogicalData.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name);

@@ -653,8 +653,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 {
                     if(parentExplainNode != null)
                     {
-                        parentExplainNode.Children.Add(currentExplainNode);
-                    }                    
+                        LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
+                    }
 
                     return source;
                 }
@@ -663,7 +663,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 {
                     if (parentExplainNode != null)
                     {
-                        parentExplainNode.Children.Add(currentExplainNode);
+                        LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
                     }
 
                     return source;
@@ -678,18 +678,18 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                         Kind = KindOfLogicalSearchExplainNode.LogicalStorageFilter
                     };
 
-                    parentExplainNode.Children.Add(filteringExplainNode);
+                    LogicalSearchExplainNode.LinkNodes(parentExplainNode, filteringExplainNode);
 
                     var intermediateResultExplainNode = new LogicalSearchExplainNode()
                     {
                         Kind = KindOfLogicalSearchExplainNode.DataSourceResult
                     };
 
-                    filteringExplainNode.Children.Add(intermediateResultExplainNode);
+                    LogicalSearchExplainNode.LinkNodes(filteringExplainNode, intermediateResultExplainNode);
 
                     intermediateResultExplainNode.BaseRulePartList = source;
 
-                    intermediateResultExplainNode.Children.Add(currentExplainNode);
+                    LogicalSearchExplainNode.LinkNodes(intermediateResultExplainNode, currentExplainNode);
                 }
 
 #if DEBUG
@@ -746,7 +746,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 {
                     if (parentExplainNode != null)
                     {
-                        parentExplainNode.Children.Add(currentExplainNode);
+                        LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
                     }
 
                     return source;
@@ -766,18 +766,18 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                         Kind = KindOfLogicalSearchExplainNode.LogicalStorageFilter
                     };
 
-                    parentExplainNode.Children.Add(filteringExplainNode);
+                    LogicalSearchExplainNode.LinkNodes(parentExplainNode, filteringExplainNode);
 
                     var intermediateResultExplainNode = new LogicalSearchExplainNode()
                     {
                         Kind = KindOfLogicalSearchExplainNode.DataSourceResult
                     };
 
-                    filteringExplainNode.Children.Add(intermediateResultExplainNode);
+                    LogicalSearchExplainNode.LinkNodes(filteringExplainNode, intermediateResultExplainNode);
 
                     intermediateResultExplainNode.BaseRulePartList = source;
 
-                    intermediateResultExplainNode.Children.Add(currentExplainNode);
+                    LogicalSearchExplainNode.LinkNodes(intermediateResultExplainNode, currentExplainNode);
                 }
 
                 return logicalSearchStorageContext.Filter(source, false);

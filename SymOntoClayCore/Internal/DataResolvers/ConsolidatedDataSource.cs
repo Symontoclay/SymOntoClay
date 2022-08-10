@@ -130,7 +130,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         Key = name
                     };
 
-                    parentExplainNode.Children.Add(currentExplainNode);
+                    LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
                 }
 
                 var initialResult = new List<BaseRulePart>();
@@ -157,7 +157,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             Kind = KindOfLogicalSearchExplainNode.DataSourceResult
                         };
 
-                        currentExplainNode.Children.Add(localResultExplainNode);
+                        LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
                     }
 
                     var rulePartsOfFactsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(name, logicalSearchStorageContext, localResultExplainNode);
@@ -215,7 +215,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         Key = name
                     };
 
-                    parentExplainNode.Children.Add(currentExplainNode);
+                    LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
                 }
 
                 var initialResult = new List<BaseRulePart>();
@@ -247,7 +247,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             Kind = KindOfLogicalSearchExplainNode.DataSourceResult
                         };
 
-                        currentExplainNode.Children.Add(localResultExplainNode);
+                        LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
                     }
 
                     var rulePartWithOneRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name, logicalSearchStorageContext, localResultExplainNode);

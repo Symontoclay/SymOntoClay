@@ -405,14 +405,14 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                             if (currentExplainNode != null)
                             {
-                                parentExplainNode.Children.Add(currentExplainNode);
+                                LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
 
                                 localResultExplainNode = new LogicalSearchExplainNode()
                                 {
                                     Kind = KindOfLogicalSearchExplainNode.DataSourceResult
                                 };
 
-                                currentExplainNode.Children.Add(localResultExplainNode);
+                                LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
                             }
 
                             var targetItemsList = storage.GetIndexedRulePartOfFactsByKeyOfRelation(name, logicalSearchStorageContext, localResultExplainNode);
@@ -443,16 +443,16 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                                     Kind = KindOfLogicalSearchExplainNode.LogicalStorageFilter
                                 };
 
-                                parentExplainNode.Children.Add(filteringExplainNode);
+                                LogicalSearchExplainNode.LinkNodes(parentExplainNode, filteringExplainNode);
 
                                 intermediateResultExplainNode = new LogicalSearchExplainNode()
                                 {
                                     Kind = KindOfLogicalSearchExplainNode.DataSourceResult
                                 };
 
-                                filteringExplainNode.Children.Add(intermediateResultExplainNode);
+                                LogicalSearchExplainNode.LinkNodes(filteringExplainNode, intermediateResultExplainNode);
 
-                                intermediateResultExplainNode.Children.Add(currentExplainNode);
+                                LogicalSearchExplainNode.LinkNodes(intermediateResultExplainNode, currentExplainNode);
                             }
 
                             foreach (var storage in _logicalStorages)
@@ -466,7 +466,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                                         Kind = KindOfLogicalSearchExplainNode.DataSourceResult
                                     };
 
-                                    currentExplainNode.Children.Add(localResultExplainNode);
+                                    LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
                                 }
 
                                 var targetItemsList = storage.GetIndexedRulePartOfFactsByKeyOfRelation(name, null, localResultExplainNode);
@@ -544,14 +544,14 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                             if (currentExplainNode != null)
                             {
-                                parentExplainNode.Children.Add(currentExplainNode);
+                                LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
 
                                 localResultExplainNode = new LogicalSearchExplainNode()
                                 {
                                     Kind = KindOfLogicalSearchExplainNode.DataSourceResult
                                 };
 
-                                currentExplainNode.Children.Add(localResultExplainNode);
+                                LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
                             }
 
                             var targetItemsList = storage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name, logicalSearchStorageContext, localResultExplainNode);
@@ -582,16 +582,16 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                                     Kind = KindOfLogicalSearchExplainNode.LogicalStorageFilter
                                 };
 
-                                parentExplainNode.Children.Add(filteringExplainNode);
+                                LogicalSearchExplainNode.LinkNodes(parentExplainNode, filteringExplainNode);
 
                                 intermediateResultExplainNode = new LogicalSearchExplainNode()
                                 {
                                     Kind = KindOfLogicalSearchExplainNode.DataSourceResult
                                 };
 
-                                filteringExplainNode.Children.Add(intermediateResultExplainNode);
+                                LogicalSearchExplainNode.LinkNodes(filteringExplainNode, intermediateResultExplainNode);
 
-                                intermediateResultExplainNode.Children.Add(currentExplainNode);
+                                LogicalSearchExplainNode.LinkNodes(intermediateResultExplainNode, currentExplainNode);
                             }
 
                             foreach (var storage in _logicalStorages)
@@ -605,7 +605,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                                         Kind = KindOfLogicalSearchExplainNode.DataSourceResult
                                     };
 
-                                    currentExplainNode.Children.Add(localResultExplainNode);
+                                    LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
                                 }
 
                                 var targetItemsList = storage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name, null, localResultExplainNode);

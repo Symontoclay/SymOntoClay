@@ -10,6 +10,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
     public class LogicalSearchExplainNode: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
     {
         public KindOfLogicalSearchExplainNode Kind { get; set; } = KindOfLogicalSearchExplainNode.Unknown;
+        public LogicalSearchExplainNode Parent { get; set; }
         public List<LogicalSearchExplainNode> Children { get; set; } = new List<LogicalSearchExplainNode>();
         public RuleInstance ProcessedRuleInstance { get; set; }
         public PrimaryRulePart ProcessedPrimaryRulePart { get; set; }
@@ -27,6 +28,26 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public string StorageName { get; set; }
         public IList<QueryExecutingCardAboutVar> VarsInfoList { get; set; }
         public IList<QueryExecutingCardAboutKnownInfo> KnownInfoList { get; set; }
+
+        //LogicalSearchExplainNode.LinkNodes(,);
+
+        public static void LinkNodes(LogicalSearchExplainNode parent, LogicalSearchExplainNode child)
+        {
+            parent.Children.Add(child);
+            child.Parent = parent;
+        }
+
+        public static void ResetParent(LogicalSearchExplainNode child)
+        {
+            var parent = child.Parent;
+
+            child.Parent = null;
+
+            if(parent != null)
+            {
+                parent.Children.Remove(child);
+            }
+        }
 
         /// <inheritdoc/>
         public override string ToString()

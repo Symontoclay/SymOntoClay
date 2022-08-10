@@ -620,12 +620,12 @@ namespace SymOntoClay.Core.DebugHelpers
                         return sb.ToString();
                     }
 
-                case KindOfLogicalSearchExplainNode.GeneralPostFiltersCollector:
+                case KindOfLogicalSearchExplainNode.PostFilterWithAndStrategy:
                     {
                         var sb = new StringBuilder();
 
                         sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
-                        sb.AppendLine("<TR><TD>Post filters:</TD></TR>");
+                        sb.AppendLine("<TR><TD>PostFilterWithAndStrategy</TD></TR>");
                         sb.AppendLine("</TABLE>");
 
                         return sb.ToString();

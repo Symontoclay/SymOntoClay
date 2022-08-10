@@ -30,7 +30,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         RelationWithProductionNextPart,
         RelationWithDirectFactQuery,
         RelationWithDirectFactQueryProcessTargetRelation,
-        OperatorQuery,
-        GeneralPostFiltersCollector
+        PostFilterWithAndStrategy,
+        OperatorQuery
     }
 }

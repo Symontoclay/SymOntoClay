@@ -18,6 +18,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public StrongIdentifierValue TargetRelation { get; set; }
         public KindOfOperatorOfLogicalQueryNode KindOfOperator { get; set; } = KindOfOperatorOfLogicalQueryNode.Unknown;
         public List<string> AdditionalInformation { get; set; } = new List<string>();
+        public bool IsFit { get; set; }
         public bool IsSuccess { get; set; }
         public List<ResultOfQueryToRelation> ResultsOfQueryToRelationList { get; set; }
         public IList<BaseRulePart> BaseRulePartList { get; set; }
@@ -54,6 +55,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.PrintObjProp(n, nameof(TargetRelation), TargetRelation);
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
             sb.PrintPODList(n, nameof(AdditionalInformation), AdditionalInformation);
+            sb.AppendLine($"{spaces}{nameof(IsFit)} = {IsFit}");
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.PrintObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
             sb.PrintObjListProp(n, nameof(BaseRulePartList), BaseRulePartList);
@@ -93,6 +95,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.PrintShortObjProp(n, nameof(TargetRelation), TargetRelation);
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
             sb.PrintPODList(n, nameof(AdditionalInformation), AdditionalInformation);
+            sb.AppendLine($"{spaces}{nameof(IsFit)} = {IsFit}");
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.PrintShortObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
             sb.PrintShortObjListProp(n, nameof(BaseRulePartList), BaseRulePartList);
@@ -132,6 +135,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.PrintBriefObjProp(n, nameof(TargetRelation), TargetRelation);
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
             sb.PrintPODList(n, nameof(AdditionalInformation), AdditionalInformation);
+            sb.AppendLine($"{spaces}{nameof(IsFit)} = {IsFit}");
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.PrintExistingList(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
             sb.PrintExistingList(n, nameof(BaseRulePartList), BaseRulePartList);
@@ -171,6 +175,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.PrintDbgObjProp(n, nameof(TargetRelation), TargetRelation);
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
             sb.PrintPODList(n, nameof(AdditionalInformation), AdditionalInformation);
+            sb.AppendLine($"{spaces}{nameof(IsFit)} = {IsFit}");
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.PrintExistingList(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
             sb.PrintExistingList(n, nameof(BaseRulePartList), BaseRulePartList);

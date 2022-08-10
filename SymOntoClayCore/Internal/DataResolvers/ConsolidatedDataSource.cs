@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
     public class ConsolidatedDataSource
     {
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public ConsolidatedDataSource(List<StorageUsingOptions> storagesList)
@@ -117,7 +117,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             lock (_lockObj)
             {
 #if DEBUG
-                DebugLogger.Instance.Info($"name = {name}");
+                //DebugLogger.Instance.Info($"name = {name}");
 #endif
 
                 LogicalSearchExplainNode currentExplainNode = null;

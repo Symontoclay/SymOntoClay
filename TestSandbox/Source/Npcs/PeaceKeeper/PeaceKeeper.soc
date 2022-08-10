@@ -1,10 +1,18 @@
-﻿app PeaceKeeper
+﻿linvar age for range (0, 150]
 {
-	{: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
-	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+	constraints:
+		for relation age;
 
-	on Enter => {
-	    select {: son($x, $y) :} >> @>log;
-	}
+	terms:
+        `teenager` = Trapezoid(10, 12, 17, 20);
+}
+
+app PeaceKeeper
+{
+    {: age(#Tom, 50) :}
+
+    on Enter =>
+    {
+        select {: age(#Tom, $x) & $x > `teenager` :} >> @>log;
+    }
 }

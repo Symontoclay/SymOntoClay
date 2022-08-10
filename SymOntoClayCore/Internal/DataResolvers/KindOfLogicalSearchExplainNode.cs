@@ -28,6 +28,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         KnownInfoDataSource,
         RelationWithProductionNextPartsCollector,
         RelationWithProductionNextPart,
-        OperatorQuery
+        RelationWithDirectFactQuery,
+        RelationWithDirectFactQueryProcessTargetRelation,
+        OperatorQuery,
+        GeneralPostFiltersCollector
     }
 }

@@ -1,6 +1,7 @@
 ﻿using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -56,7 +57,7 @@ namespace SymOntoClay.Core.DebugHelpers
             var name = context.GetNodeName(source);
 
 #if DEBUG
-            _gbcLogger.Info($"name = {name}");
+            //_gbcLogger.Info($"name = {name}");
 #endif
 
             //Dot supports html https://graphviz.org/doc/info/shapes.html but the html can not contain '&' and '<>'.
@@ -94,6 +95,7 @@ namespace SymOntoClay.Core.DebugHelpers
                     {
                         var sb = new StringBuilder();
                         sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine("<TR><TD>&#9072;Query:</TD></TR>");
                         sb.AppendLine($"<TR><TD>{source.ProcessedRuleInstance.ToHumanizedString(toHumanizedStringOptions)}</TD></TR>");
                         PrintAdditionalInformation(source, sb);
                         sb.AppendLine("</TABLE>");
@@ -563,6 +565,72 @@ namespace SymOntoClay.Core.DebugHelpers
                         return sb.ToString();
                     }
 
+                case KindOfLogicalSearchExplainNode.RelationWithDirectFactQuery:
+                    {
+                        var targetProcessedItem = source.ProcessedBaseRulePart;
+
+                        var selectProcessedLogicalQueryNodeHumanizedStringOptions = new DebugHelperOptions();
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.HumanizedOptions = HumanizedOptions.ShowAll;
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.IsHtml = true;
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.ItemsForSelection = new List<IObjectToString>() { targetProcessedItem };
+
+                        var sb = new StringBuilder();
+
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine("<TR><TD>Process direct fact:</TD></TR>");
+                        sb.AppendLine($"<TR><TD>{targetProcessedItem.ToHumanizedString(toHumanizedStringOptions)}</TD></TR>");
+                        sb.AppendLine($"<TR><TD>{targetProcessedItem.Parent.ToHumanizedString(selectProcessedLogicalQueryNodeHumanizedStringOptions)}</TD></TR>");
+                        sb.AppendLine($"<TR><TD>Target relation: <b>{source.TargetRelation.NameValue}</b></TD></TR>");
+                        PrintAdditionalInformation(source, sb);
+                        sb.AppendLine("</TABLE>");
+
+                        return sb.ToString();
+                    }
+
+                case KindOfLogicalSearchExplainNode.RelationWithDirectFactQueryProcessTargetRelation:
+                    {
+                        var targetProcessedItem = source.ProcessedLogicalQueryNode;
+
+                        var selectProcessedLogicalQueryNodeHumanizedStringOptions = new DebugHelperOptions();
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.HumanizedOptions = HumanizedOptions.ShowAll;
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.IsHtml = true;
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.ItemsForSelection = new List<IObjectToString>() { targetProcessedItem };
+
+                        var sb = new StringBuilder();
+
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine("<TR><TD>");
+
+                        if (source.IsFit)
+                        {
+                            sb.Append("&#10004;");
+                        }
+                        else
+                        {
+                            sb.Append("&#10008;");
+                        }
+
+                        sb.AppendLine("Target relation:");
+                        sb.AppendLine("</TD></TR>");
+                        sb.AppendLine($"<TR><TD>{targetProcessedItem.ToHumanizedString(toHumanizedStringOptions)}</TD></TR>");
+                        sb.AppendLine($"<TR><TD>{targetProcessedItem.RuleInstance.ToHumanizedString(selectProcessedLogicalQueryNodeHumanizedStringOptions)}</TD></TR>");
+                        PrintAdditionalInformation(source, sb);
+                        sb.AppendLine("</TABLE>");
+
+                        return sb.ToString();
+                    }
+
+                case KindOfLogicalSearchExplainNode.GeneralPostFiltersCollector:
+                    {
+                        var sb = new StringBuilder();
+
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine("<TR><TD>Post filters:</TD></TR>");
+                        sb.AppendLine("</TABLE>");
+
+                        return sb.ToString();
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
                     //return string.Empty;
@@ -584,7 +652,12 @@ namespace SymOntoClay.Core.DebugHelpers
                 return;
             }
 
-            throw new NotImplementedException();
+            sb.AppendLine("<TR><TD>&#9888;Additional information:</TD></TR>");
+
+            foreach(var item in additionalInformation)
+            {
+                sb.AppendLine($"<TR><TD>{StringHelper.ToHtmlCode(item)}</TD></TR>");
+            }
         }
     }
 }

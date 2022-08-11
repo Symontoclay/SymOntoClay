@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.DebugHelpers
         private static readonly CultureInfo _cultureInfo = new CultureInfo("en-GB");
 
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static string ToString(RuleInstance source)
@@ -784,6 +784,9 @@ namespace SymOntoClay.Core.DebugHelpers
 
                 case KindOfValue.StrongIdentifierValue:
                     return StrongIdentifierValueToString(value.AsStrongIdentifierValue, options);
+
+                case KindOfValue.LogicalModalityExpressionValue:
+                    return DebugHelperForLogicalModalityExpression.ToString(value.AsLogicalModalityExpressionValue.Expression, options);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(value.KindOfValue), value.KindOfValue, null);

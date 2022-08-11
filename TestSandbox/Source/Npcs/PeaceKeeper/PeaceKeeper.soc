@@ -1,9 +1,10 @@
 ﻿app PeaceKeeper
 {
-    {: gun(M16) :}
-	{: $x = {: act(M16, shoot) :} & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :}
+	{: male(#Tom) o: very middle :}
+	{: parent(#Piter, #Tom) o: very middle :}
+	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
-	    select {: hear(I, $x) & gun($x) & distance(I, $x, $y) :} >> @>log;
+	    select {: son($x, $y)  o: { _ is middle } :} >> @>log;
 	}
 }

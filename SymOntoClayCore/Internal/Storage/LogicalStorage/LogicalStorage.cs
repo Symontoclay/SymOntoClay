@@ -579,15 +579,54 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         }
 
         /// <inheritdoc/>
-        public IList<LogicalQueryNode> GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext)
+        public IList<LogicalQueryNode> GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
         {
             lock (_lockObj)
             {
+                LogicalSearchExplainNode currentExplainNode = null;
+
+                if (parentExplainNode != null)
+                {
+                    currentExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.LogicalStorage,
+                        LogicalStorage = this
+                    };
+                }
+
                 var source = _commonPersistIndexedLogicalData.GetAllRelations();
 
                 if (logicalSearchStorageContext == null || source.IsNullOrEmpty())
                 {
+                    if (parentExplainNode != null)
+                    {
+                        LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
+                    }
+
                     return source;
+                }
+
+                LogicalSearchExplainNode filteringExplainNode = null;
+
+                if (parentExplainNode != null)
+                {
+                    filteringExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.LogicalStorageFilter
+                    };
+
+                    LogicalSearchExplainNode.LinkNodes(parentExplainNode, filteringExplainNode);
+
+                    var intermediateResultExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.DataSourceResult
+                    };
+
+                    LogicalSearchExplainNode.LinkNodes(filteringExplainNode, intermediateResultExplainNode);
+
+                    intermediateResultExplainNode.RelationsList = source;
+
+                    LogicalSearchExplainNode.LinkNodes(intermediateResultExplainNode, currentExplainNode);
                 }
 
 #if DEBUG

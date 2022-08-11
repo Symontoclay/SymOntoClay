@@ -23,6 +23,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public bool IsSuccess { get; set; }
         public List<ResultOfQueryToRelation> ResultsOfQueryToRelationList { get; set; }
         public IList<BaseRulePart> BaseRulePartList { get; set; }
+        public IList<LogicalQueryNode> RelationsList  { get; set; }
         public StrongIdentifierValue Key { get; set; }
         public ILogicalStorage LogicalStorage { get; set; }
         public string StorageName { get; set; }
@@ -80,6 +81,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.PrintObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
             sb.PrintObjListProp(n, nameof(BaseRulePartList), BaseRulePartList);
+            sb.PrintObjListProp(n, nameof(RelationsList), RelationsList);
             sb.PrintObjProp(n, nameof(Key), Key);
             sb.PrintExisting(n, nameof(LogicalStorage), LogicalStorage);
             sb.AppendLine($"{spaces}{nameof(StorageName)} = {StorageName}");
@@ -120,6 +122,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.PrintShortObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
             sb.PrintShortObjListProp(n, nameof(BaseRulePartList), BaseRulePartList);
+            sb.PrintShortObjListProp(n, nameof(RelationsList), RelationsList);
             sb.PrintShortObjProp(n, nameof(Key), Key);
             sb.PrintExisting(n, nameof(LogicalStorage), LogicalStorage);
             sb.AppendLine($"{spaces}{nameof(StorageName)} = {StorageName}");
@@ -160,6 +163,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.PrintExistingList(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
             sb.PrintExistingList(n, nameof(BaseRulePartList), BaseRulePartList);
+            sb.PrintExistingList(n, nameof(RelationsList), RelationsList);
             sb.PrintBriefObjProp(n, nameof(Key), Key);
             sb.PrintExisting(n, nameof(LogicalStorage), LogicalStorage);
             sb.AppendLine($"{spaces}{nameof(StorageName)} = {StorageName}");
@@ -200,6 +204,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.PrintExistingList(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
             sb.PrintExistingList(n, nameof(BaseRulePartList), BaseRulePartList);
+            sb.PrintExistingList(n, nameof(RelationsList), RelationsList);
             sb.PrintBriefObjProp(n, nameof(Key), Key);
             sb.PrintExisting(n, nameof(LogicalStorage), LogicalStorage);
             sb.AppendLine($"{spaces}{nameof(StorageName)} = {StorageName}");

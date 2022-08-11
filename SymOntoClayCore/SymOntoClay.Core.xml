@@ -3746,7 +3746,7 @@
         <member name="E:SymOntoClay.Core.Internal.CodeModel.RuleInstance.OnAddingFact">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#GetAllRelations(SymOntoClay.Core.Internal.ILogicalSearchStorageContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#GetAllRelations(SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#GetAllOriginFacts">
@@ -6903,7 +6903,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.ConsolidatedPublicFactsLogicalStorage.DbgPrintFactsAndRules">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.ConsolidatedPublicFactsLogicalStorage.GetAllRelations(SymOntoClay.Core.Internal.ILogicalSearchStorageContext)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.ConsolidatedPublicFactsLogicalStorage.GetAllRelations(SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.ConsolidatedPublicFactsLogicalStorage.GetAllOriginFacts">
@@ -6954,7 +6954,7 @@
         <member name="E:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.OnAddingFact">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.GetAllRelations(SymOntoClay.Core.Internal.ILogicalSearchStorageContext)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.GetAllRelations(SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStorage.LogicalStorage.GetAllOriginFacts">

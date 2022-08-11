@@ -1,18 +1,16 @@
-﻿linvar age for range (0, 150]
+﻿app PeaceKeeper
 {
-	constraints:
-		for relation age;
+    {: gun(M4A1) :}
 
-	terms:
-        `teenager` = Trapezoid(10, 12, 17, 20);
-}
-
-app PeaceKeeper
-{
-    {: age(#Tom, 50) :}
-
-    on Enter =>
+    on Enter
     {
-        select {: age(#Tom, $x) & $x > `teenager` :} >> @>log;
+        insert {: $x = act(M4A1, shoot) & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :};
+    }
+
+    on {: hear(I, $x) & gun($x) & distance(I, $x, $y) :} ($x >> @x, $y >> @y)
+    {
+        @x >> @>log;
+        @y >> @>log;
+        '!!!M4A1!!!!' >> @>log;
     }
 }

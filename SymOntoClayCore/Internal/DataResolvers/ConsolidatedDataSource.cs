@@ -56,17 +56,46 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private static StrongIdentifierValue _isRelationName = NameHelper.CreateName("is");
 
-        public IList<LogicalQueryNode> AllRelationsForProductions(ILogicalSearchStorageContext logicalSearchStorageContext)
+        public IList<LogicalQueryNode> AllRelationsForProductions(ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
         {
             lock (_lockObj)
             {
+                LogicalSearchExplainNode currentExplainNode = null;
+
+                if (parentExplainNode != null)
+                {
+                    currentExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.ConsolidatedDataSource
+                    };
+
+                    LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
+                }
+
                 var result = new List<LogicalQueryNode>();
 
                 var dataSourcesSettingsOrderedByPriorityAndUseProductionsList = _dataSourcesSettingsOrderedByPriorityAndUseProductionsList;
 
                 foreach (var dataSourcesSettings in dataSourcesSettingsOrderedByPriorityAndUseProductionsList)
                 {
-                    var targetRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetAllRelations(logicalSearchStorageContext);
+                    LogicalSearchExplainNode localResultExplainNode = null;
+
+                    if (currentExplainNode != null)
+                    {
+                        localResultExplainNode = new LogicalSearchExplainNode()
+                        {
+                            Kind = KindOfLogicalSearchExplainNode.DataSourceResult
+                        };
+
+                        LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
+                    }
+
+                    var targetRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetAllRelations(logicalSearchStorageContext, localResultExplainNode);
+
+                    if (localResultExplainNode != null)
+                    {
+                        localResultExplainNode.RelationsList = targetRelationsList;
+                    }
 
                     if (targetRelationsList.IsNullOrEmpty())
                     {

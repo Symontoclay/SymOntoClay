@@ -149,15 +149,36 @@ namespace SymOntoClay.Core.DebugHelpers
                             {
                                 sb.AppendLine("<TR>");
 
-                                var itemVarDict = item.ResultOfVarOfQueryToRelationList.ToDictionary(p => p.NameOfVar, p => p.FoundExpression);
+#if DEBUG
+                                //_gbcLogger.Info($"item.ResultOfVarOfQueryToRelationList = {item.ResultOfVarOfQueryToRelationList.WriteListToString()}");
+#endif
+
+                                var itemVarDict = item.ResultOfVarOfQueryToRelationList.GroupBy(p => p.NameOfVar).ToDictionary(p => p.Key, p => p.Select(x => x.FoundExpression));
 
                                 foreach (var varItem in varsList)
                                 {
                                     if(itemVarDict.ContainsKey(varItem))
                                     {
-                                        var expr = itemVarDict[varItem];
+                                        var exprList = itemVarDict[varItem];
 
-                                        sb.Append($"<TD>{expr.ToHumanizedString(toHumanizedStringOptions)}</TD>");
+                                        sb.Append("<TD>");
+
+                                        if (exprList.Count() == 1)
+                                        {
+                                            sb.Append(exprList.Single().ToHumanizedString(toHumanizedStringOptions));
+                                        }
+                                        else
+                                        {
+                                            sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"1\">");
+
+                                            foreach (var expr in exprList)
+                                            {
+                                                sb.Append($"<TR><TD>{expr.ToHumanizedString(toHumanizedStringOptions)}</TD></TR>");
+                                            }
+                                            sb.AppendLine("</TABLE>");
+                                        }
+
+                                        sb.Append("</TD>");                                        
 
                                         continue;
                                     }
@@ -198,43 +219,73 @@ namespace SymOntoClay.Core.DebugHelpers
                         sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
 
                         var baseRulePartList = source.BaseRulePartList;
+                        var relationsList = source.RelationsList;
 
-                        if (baseRulePartList.IsNullOrEmpty())
+                        if(baseRulePartList.IsNullOrEmpty() && relationsList.IsNullOrEmpty())
                         {
                             sb.AppendLine("<TR><TD>&#8648;&#10008;</TD></TR>");
                         }
                         else
                         {
-                            sb.AppendLine("<TR><TD>&#8648;&#10004;</TD></TR>");
-
-                            if (!baseRulePartList.IsNullOrEmpty())
+                            if (baseRulePartList.IsNullOrEmpty())
                             {
-                                sb.AppendLine("<TR><TD>");
-
-                                sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"1\">");
-                                //sb.AppendLine("<TR><TD>Rule part</TD><TD>Parent fact</TD></TR>");
-
-                                foreach(var item in baseRulePartList)
+                                if(relationsList.IsNullOrEmpty())
                                 {
-                                    sb.AppendLine("<TR>");
-                                    sb.AppendLine($"<TD>{item.ToHumanizedString(toHumanizedStringOptions)}</TD>");
-
-                                    //var rulePartHumanizedStringOptions = new DebugHelperOptions();
-                                    //rulePartHumanizedStringOptions.HumanizedOptions = HumanizedOptions.ShowAll;
-                                    //rulePartHumanizedStringOptions.IsHtml = true;
-                                    //rulePartHumanizedStringOptions.ItemsForSelection = new List<IObjectToString> { item };
-
-                                    //sb.AppendLine($"<TD>{item.Parent.ToHumanizedString(rulePartHumanizedStringOptions)}</TD>");
-                                    sb.AppendLine("</TR>");
+                                    sb.AppendLine("<TR><TD>&#8648;&#10008;</TD></TR>");
                                 }
+                                else
+                                {
+                                    sb.AppendLine("<TR><TD>&#8648;&#10004;</TD></TR>");
 
-                                sb.AppendLine("</TABLE>");
+                                    sb.AppendLine("<TR><TD>");
 
-                                sb.AppendLine("</TD></TR>");
+                                    sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"1\">");
+
+                                    foreach(var item in relationsList)
+                                    {
+                                        sb.AppendLine("<TR>");
+                                        sb.AppendLine($"<TD>{item.ToHumanizedString(toHumanizedStringOptions)}</TD>");
+                                        sb.AppendLine("</TR>");
+                                    }
+
+                                    sb.AppendLine("</TABLE>");
+
+                                    sb.AppendLine("</TD></TR>");
+                                }                                
                             }
                             else
                             {
-                                sb.AppendLine("<TR><TD>-</TD></TR>");
+                                if (!baseRulePartList.IsNullOrEmpty())
+                                {
+                                    sb.AppendLine("<TR><TD>&#8648;&#10004;</TD></TR>");
+
+                                    sb.AppendLine("<TR><TD>");
+
+                                    sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"1\">");
+                                    //sb.AppendLine("<TR><TD>Rule part</TD><TD>Parent fact</TD></TR>");
+
+                                    foreach (var item in baseRulePartList)
+                                    {
+                                        sb.AppendLine("<TR>");
+                                        sb.AppendLine($"<TD>{item.ToHumanizedString(toHumanizedStringOptions)}</TD>");
+
+                                        //var rulePartHumanizedStringOptions = new DebugHelperOptions();
+                                        //rulePartHumanizedStringOptions.HumanizedOptions = HumanizedOptions.ShowAll;
+                                        //rulePartHumanizedStringOptions.IsHtml = true;
+                                        //rulePartHumanizedStringOptions.ItemsForSelection = new List<IObjectToString> { item };
+
+                                        //sb.AppendLine($"<TD>{item.Parent.ToHumanizedString(rulePartHumanizedStringOptions)}</TD>");
+                                        sb.AppendLine("</TR>");
+                                    }
+
+                                    sb.AppendLine("</TABLE>");
+
+                                    sb.AppendLine("</TD></TR>");
+                                }
+                                else
+                                {
+                                    sb.AppendLine("<TR><TD>-</TD></TR>");
+                                }
                             }
                         }
 
@@ -280,7 +331,14 @@ namespace SymOntoClay.Core.DebugHelpers
                         {
                             sb.AppendLine($"<TR><TD>{ruleInstance.ToHumanizedString()}</TD></TR>");
                         }
-                        sb.AppendLine($"<TR><TD>Key: <b>{source.Key?.NameValue}</b></TD></TR>");
+
+                        var key = source.Key?.NameValue;
+
+                        if (!string.IsNullOrWhiteSpace(key))
+                        {
+                            sb.AppendLine($"<TR><TD>Key: <b>{key}</b></TD></TR>");
+                        }
+                        
                         PrintAdditionalInformation(source, sb);
                         sb.AppendLine("</TABLE>");
 
@@ -339,6 +397,26 @@ namespace SymOntoClay.Core.DebugHelpers
                         var sb = new StringBuilder();
                         sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
                         sb.AppendLine("<TR><TD>Process relation:</TD></TR>");
+                        sb.AppendLine($"<TR><TD>{targetProcessedItem.ToHumanizedString(toHumanizedStringOptions)}</TD></TR>");
+                        sb.AppendLine($"<TR><TD>{targetProcessedItem.RuleInstance.ToHumanizedString(selectProcessedLogicalQueryNodeHumanizedStringOptions)}</TD></TR>");
+                        PrintAdditionalInformation(source, sb);
+                        sb.AppendLine("</TABLE>");
+                        return sb.ToString();
+                    }
+
+                case KindOfLogicalSearchExplainNode.RelationQuestionQuery:
+                    {
+                        var targetProcessedItem = source.ProcessedLogicalQueryNode;
+
+                        var selectProcessedLogicalQueryNodeHumanizedStringOptions = new DebugHelperOptions();
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.HumanizedOptions = HumanizedOptions.ShowAll;
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.IsHtml = true;
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.ItemsForSelection = new List<IObjectToString>() { targetProcessedItem };
+
+
+                        var sb = new StringBuilder();
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine("<TR><TD>Process relation question:</TD></TR>");
                         sb.AppendLine($"<TR><TD>{targetProcessedItem.ToHumanizedString(toHumanizedStringOptions)}</TD></TR>");
                         sb.AppendLine($"<TR><TD>{targetProcessedItem.RuleInstance.ToHumanizedString(selectProcessedLogicalQueryNodeHumanizedStringOptions)}</TD></TR>");
                         PrintAdditionalInformation(source, sb);
@@ -622,10 +700,31 @@ namespace SymOntoClay.Core.DebugHelpers
 
                 case KindOfLogicalSearchExplainNode.PostFilterWithAndStrategy:
                     {
+                        var targetProcessedItem = source.ProcessedLogicalQueryNode;
+
+                        var selectProcessedLogicalQueryNodeHumanizedStringOptions = new DebugHelperOptions();
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.HumanizedOptions = HumanizedOptions.ShowAll;
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.IsHtml = true;
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.ItemsForSelection = new List<IObjectToString>() { targetProcessedItem };
+
                         var sb = new StringBuilder();
 
                         sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
                         sb.AppendLine("<TR><TD>PostFilterWithAndStrategy</TD></TR>");
+                        sb.AppendLine($"<TR><TD>{targetProcessedItem.ToHumanizedString(toHumanizedStringOptions)}</TD></TR>");
+                        sb.AppendLine($"<TR><TD>{targetProcessedItem.RuleInstance.ToHumanizedString(selectProcessedLogicalQueryNodeHumanizedStringOptions)}</TD></TR>");
+                        PrintAdditionalInformation(source, sb);
+                        sb.AppendLine("</TABLE>");
+
+                        return sb.ToString();
+                    }
+
+                case KindOfLogicalSearchExplainNode.FetchingAllValuesForResolvingExpressionParam:
+                    {
+                        var sb = new StringBuilder();
+
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine("<TR><TD>FetchingAllValuesForResolvingExpressionParam</TD></TR>");
                         sb.AppendLine("</TABLE>");
 
                         return sb.ToString();

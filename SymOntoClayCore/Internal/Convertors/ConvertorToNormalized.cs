@@ -48,6 +48,7 @@ namespace SymOntoClay.Core.Internal.Convertors
         {
 #if DEBUG
             //_gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"source = {source.ToHumanizedString()}");
 #endif
 
             if (source == null)
@@ -119,6 +120,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 
 #if DEBUG
             //_gbcLogger.Info($"result = {result}");
+            //_gbcLogger.Info($"result = {result.ToHumanizedString()}");
 #endif
 
             return result;
@@ -304,7 +306,27 @@ namespace SymOntoClay.Core.Internal.Convertors
             result.ParamsList.Add(source.ParamsList[0]);
 
             var superNameNode = new LogicalQueryNode();
-            superNameNode.Kind = KindOfLogicalQueryNode.Concept;
+
+            var kindOfSourceName = source.Name.KindOfName;
+
+#if DEBUG
+            //_gbcLogger.Info($"kindOfSourceName = {kindOfSourceName}");
+#endif
+
+            switch(kindOfSourceName)
+            {
+                case KindOfName.Concept:
+                    superNameNode.Kind = KindOfLogicalQueryNode.Concept;
+                    break;
+
+                case KindOfName.LogicalVar:
+                    superNameNode.Kind = KindOfLogicalQueryNode.LogicalVar;
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSourceName), kindOfSourceName, null);
+            }
+
             superNameNode.Name = source.Name;
 
             result.ParamsList.Add(superNameNode);
@@ -368,6 +390,7 @@ namespace SymOntoClay.Core.Internal.Convertors
 #if DEBUG
             //_gbcLogger.Info("ConvertLogicalQueryNodeInDefaultWay!!!!!");
             //_gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"source = {source.ToHumanizedString()}");
             //_gbcLogger.Info($"(options != null) = {options != null}");
 #endif
 
@@ -405,14 +428,29 @@ namespace SymOntoClay.Core.Internal.Convertors
             {
                 result.Right = ConvertLogicalQueryNode(source.Right, options, convertingContext, aliasesDict, processedRuleInstances);
             }
-            
-            if(!source.ParamsList.IsNullOrEmpty())
+
+            var sourceParamsList = source.ParamsList;
+
+            if (!sourceParamsList.IsNullOrEmpty())
             {
+#if DEBUG
+                //_gbcLogger.Info($"sourceParamsList.Count = {sourceParamsList.Count}");
+#endif
+
                 var destParametersList = new List<LogicalQueryNode>();
 
-                foreach (var param in source.ParamsList)
+                foreach (var param in sourceParamsList)
                 {
                     destParametersList.Add(ConvertLogicalQueryNode(param, options, convertingContext, aliasesDict, processedRuleInstances));
+                }
+
+                if(sourceParamsList.Count == 2 && source.Name.NormalizedNameValue == "is")
+                {
+                    destParametersList.Add(new LogicalQueryNode()
+                    {
+                        Kind = KindOfLogicalQueryNode.Value,
+                        Value = LogicalValue.TrueValue
+                    });
                 }
 
                 result.ParamsList = destParametersList;
@@ -433,6 +471,7 @@ namespace SymOntoClay.Core.Internal.Convertors
             FillAnnotationsModalitiesAndSections(source, result, options, convertingContext);
 
 #if DEBUG
+            //_gbcLogger.Info($"result = {result.ToHumanizedString()}");
             //_gbcLogger.Info($"result = {result}");
 #endif
 

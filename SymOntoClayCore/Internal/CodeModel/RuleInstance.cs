@@ -562,8 +562,21 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public event Func<RuleInstance, IAddFactOrRuleResult> OnAddingFact;
 
         /// <inheritdoc/>
-        IList<LogicalQueryNode> ILogicalStorage.GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext)
+        IList<LogicalQueryNode> ILogicalStorage.GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
         {
+            LogicalSearchExplainNode currentExplainNode = null;
+
+            if (parentExplainNode != null)
+            {
+                currentExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.LogicalStorage,
+                    LogicalStorage = this
+                };
+
+                LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
+            }
+
             return _commonPersistIndexedLogicalData.GetAllRelations();
         }
 

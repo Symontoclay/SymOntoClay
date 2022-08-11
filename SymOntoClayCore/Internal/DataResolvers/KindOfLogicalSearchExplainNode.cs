@@ -19,6 +19,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         RuleInstanceQuery,
         PrimaryRulePartQuery,
         RelationQuery,
+        RelationQuestionQuery,
         ProcessRelationWithDirectFactsCollector,
         ProcessRelationWithProductionCollector,
         RelationWithProductionQuery,
@@ -31,6 +32,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         RelationWithDirectFactQuery,
         RelationWithDirectFactQueryProcessTargetRelation,
         PostFilterWithAndStrategy,
-        OperatorQuery
+        OperatorQuery,
+        FetchingAllValuesForResolvingExpressionParam
     }
 }

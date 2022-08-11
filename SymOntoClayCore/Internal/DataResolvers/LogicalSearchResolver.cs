@@ -3828,32 +3828,48 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private void FillExecutingCardForGroupLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
+            LogicalSearchExplainNode currentExplainNode = null;
+            LogicalSearchExplainNode resultExplainNode = null;
+
             var parentExplainNode = queryExecutingCard.ParentExplainNode;
 
-#if DEBUG
-            if (parentExplainNode == null)
+            if (parentExplainNode != null)
             {
-#if DLSR
-                throw new NotImplementedException();
-#endif
+                currentExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.GroupQuery
+                };
+
+                currentExplainNode.ProcessedLogicalQueryNode = processedExpr;
+
+                resultExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.Result
+                };
+
+                LogicalSearchExplainNode.LinkNodes(currentExplainNode, resultExplainNode);
             }
-            else
-            {
-#if DLSR
-                throw new NotImplementedException();
-#endif
-            }
-#endif
 
             var leftQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
 
             leftQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
             leftQueryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+            leftQueryExecutingCard.ParentExplainNode = resultExplainNode;
 
             FillExecutingCard(processedExpr.Left, leftQueryExecutingCard, dataSource, options);
 
+            if (resultExplainNode != null)
+            {
+                FillUpResultToExplainNode(leftQueryExecutingCard, resultExplainNode);
+            }
+
             if (!leftQueryExecutingCard.IsSuccess)
             {
+                if (parentExplainNode != null)
+                {
+                    LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
+                }
+
                 queryExecutingCard.UsedKeysList.AddRange(leftQueryExecutingCard.UsedKeysList);
 
                 return;
@@ -3862,13 +3878,24 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if (leftQueryExecutingCard.PostFiltersList.Any())
             {
                 var queryExecutingCardForFillExecutingCardUsingPostFiltersList = new QueryExecutingCardForIndexedPersistLogicalData();
+                queryExecutingCardForFillExecutingCardUsingPostFiltersList.ParentExplainNode = parentExplainNode;
 
-                FillExecutingCardUsingPostFiltersList(leftQueryExecutingCard, queryExecutingCardForFillExecutingCardUsingPostFiltersList, options, dataSource);
+                var postFilterNode = FillExecutingCardUsingPostFiltersList(leftQueryExecutingCard, queryExecutingCardForFillExecutingCardUsingPostFiltersList, options, dataSource);
 
                 AppendResults(queryExecutingCardForFillExecutingCardUsingPostFiltersList, queryExecutingCard);
+
+                if (postFilterNode != null)
+                {
+                    LogicalSearchExplainNode.LinkNodes(postFilterNode, currentExplainNode);
+                }
             }
             else
             {
+                if (parentExplainNode != null)
+                {
+                    LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
+                }
+
                 AppendResults(leftQueryExecutingCard, queryExecutingCard);
             }
 

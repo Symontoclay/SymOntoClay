@@ -725,6 +725,28 @@ namespace SymOntoClay.Core.DebugHelpers
 
                         sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
                         sb.AppendLine("<TR><TD>FetchingAllValuesForResolvingExpressionParam</TD></TR>");
+                        PrintAdditionalInformation(source, sb);
+                        sb.AppendLine("</TABLE>");
+
+                        return sb.ToString();
+                    }
+
+                case KindOfLogicalSearchExplainNode.GroupQuery:
+                    {
+                        var targetProcessedItem = source.ProcessedLogicalQueryNode;
+
+                        var selectProcessedLogicalQueryNodeHumanizedStringOptions = new DebugHelperOptions();
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.HumanizedOptions = HumanizedOptions.ShowAll;
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.IsHtml = true;
+                        selectProcessedLogicalQueryNodeHumanizedStringOptions.ItemsForSelection = new List<IObjectToString>() { targetProcessedItem };
+
+                        var sb = new StringBuilder();
+
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine("<TR><TD>Operator: <b>()</b></TD></TR>");
+                        sb.AppendLine($"<TR><TD>{targetProcessedItem.ToHumanizedString(toHumanizedStringOptions)}</TD></TR>");
+                        sb.AppendLine($"<TR><TD>{targetProcessedItem.RuleInstance.ToHumanizedString(selectProcessedLogicalQueryNodeHumanizedStringOptions)}</TD></TR>");
+                        PrintAdditionalInformation(source, sb);
                         sb.AppendLine("</TABLE>");
 
                         return sb.ToString();

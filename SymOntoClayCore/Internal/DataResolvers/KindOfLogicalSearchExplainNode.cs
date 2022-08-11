@@ -33,6 +33,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         RelationWithDirectFactQueryProcessTargetRelation,
         PostFilterWithAndStrategy,
         OperatorQuery,
+        GroupQuery,
         FetchingAllValuesForResolvingExpressionParam
     }
 }

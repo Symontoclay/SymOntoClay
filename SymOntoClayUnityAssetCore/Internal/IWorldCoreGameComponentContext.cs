@@ -56,5 +56,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         ISoundBus SoundBus { get; }
         INLPConverterFactory NLPConverterFactory { get; }
         IStandardFactsBuilder StandardFactsBuilder { get; }
+        KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; }
+        string LogicalSearchExplainDumpDir { get; }
     }
 }

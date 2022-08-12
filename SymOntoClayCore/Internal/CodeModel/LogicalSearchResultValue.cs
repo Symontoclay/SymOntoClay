@@ -135,5 +135,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             return DebugHelperForLogicalSearchResult.ToString(LogicalSearchResult, options);
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString(DebugHelperOptions options)
+        {
+            return DebugHelperForLogicalSearchResult.ToString(LogicalSearchResult, options);
+        }
     }
 }

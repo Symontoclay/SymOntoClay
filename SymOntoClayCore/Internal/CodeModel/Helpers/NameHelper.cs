@@ -142,6 +142,11 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 return $"{source.Insert(1, "`")}`";
             }
 
+            if (source == "$_")
+            {
+                return source;
+            }
+
             if (source.StartsWith("$"))
             {
                 var nameSubStr = source.Substring(1);

@@ -240,5 +240,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             return DebugHelperForRuleInstance.BaseRulePartToString(this, options);
         }
+
+        public string ToHumanizedString(DebugHelperOptions options)
+        {
+            return DebugHelperForRuleInstance.BaseRulePartToString(this, options);
+        }
     }
 }

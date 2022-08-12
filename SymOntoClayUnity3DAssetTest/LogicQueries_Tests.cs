@@ -82,10 +82,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
-                            Assert.AreEqual(message.Contains("<yes>"), false);
-                            Assert.AreEqual(message.Contains("$y = #piter"), false);
-                            Assert.AreEqual(message.Contains("$x = #tom"), false);
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
                         default:
@@ -511,7 +510,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$z = is(#a,barrel)"), true);
+                            Assert.AreEqual(message.Contains("$z = son($x,$y)"), true);
                             Assert.AreEqual(message.Contains("$z = see(i,#a)"), true);
                             break;
 
@@ -543,7 +542,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = cat; $z = animal"), true);
+                            Assert.AreEqual(message.Contains("$x = #a; $z = barrel"), true);
                             break;
 
                         default:

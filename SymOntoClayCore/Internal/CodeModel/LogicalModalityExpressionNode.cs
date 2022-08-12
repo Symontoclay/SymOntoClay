@@ -182,5 +182,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             return DebugHelperForLogicalModalityExpression.ToString(this, options);
         }
+
+        public string ToHumanizedString(DebugHelperOptions options)
+        {
+            return DebugHelperForLogicalModalityExpression.ToString(this, options);
+        }
     }
 }

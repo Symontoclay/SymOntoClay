@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,14 @@ namespace SymOntoClay.Core.DebugHelpers
 
         private static readonly CultureInfo _cultureInfo = new CultureInfo("en-GB");
 
+        private static DebugHelperOptions _defaultOptions = new DebugHelperOptions();
+
         public static string ToString(EntityConditionExpressionNode expr)
+        {
+            return ToString(expr, _defaultOptions);
+        }
+
+        public static string ToString(EntityConditionExpressionNode expr, DebugHelperOptions options)
         {
 #if DEBUG
             //_logger.Info($"expr = {expr}");
@@ -48,34 +56,34 @@ namespace SymOntoClay.Core.DebugHelpers
             switch (expr.Kind)
             {
                 case KindOfLogicalQueryNode.Relation:
-                    return RelationToString(expr);
+                    return RelationToString(expr, options);
 
                 case KindOfLogicalQueryNode.Concept:
                 case KindOfLogicalQueryNode.QuestionVar:
                 case KindOfLogicalQueryNode.Entity:
                 case KindOfLogicalQueryNode.LogicalVar:
-                    return ConceptToString(expr);
+                    return ConceptToString(expr, options);
 
                 case KindOfLogicalQueryNode.Value:
-                    return ValueToString(expr);
+                    return ValueToString(expr, options);
 
                 case KindOfLogicalQueryNode.BinaryOperator:
-                    return BinaryOperatorToString(expr);
+                    return BinaryOperatorToString(expr, options);
 
                 case KindOfLogicalQueryNode.Group:
-                    return GroupToString(expr);
+                    return GroupToString(expr, options);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(expr.Kind), expr.Kind, null);
             }
         }
 
-        private static string GroupToString(EntityConditionExpressionNode expr)
+        private static string GroupToString(EntityConditionExpressionNode expr, DebugHelperOptions options)
         {
             return $"({ToString(expr.Left)})";
         }
 
-        private static string BinaryOperatorToString(EntityConditionExpressionNode expr)
+        private static string BinaryOperatorToString(EntityConditionExpressionNode expr, DebugHelperOptions options)
         {
             var mark = string.Empty;
 
@@ -116,16 +124,21 @@ namespace SymOntoClay.Core.DebugHelpers
                     throw new ArgumentOutOfRangeException(nameof(expr.KindOfOperator), expr.KindOfOperator, null);
             }
 
+            if(options.IsHtml)
+            {
+                mark = StringHelper.ToHtmlCode(mark);
+            }
+
             var sb = new StringBuilder();
             sb.Append(ToString(expr.Left));
             sb.Append($" {mark} ");
-            sb.Append(AnnotatedItemToString(expr));
+            sb.Append(AnnotatedItemToString(expr, options));
             sb.Append(ToString(expr.Right));
 
             return sb.ToString();
         }
 
-        private static string RelationToString(EntityConditionExpressionNode expr)
+        private static string RelationToString(EntityConditionExpressionNode expr, DebugHelperOptions options)
         {
             var sb = new StringBuilder();
 
@@ -135,37 +148,37 @@ namespace SymOntoClay.Core.DebugHelpers
 
             foreach (var param in expr.ParamsList)
             {
-                resultParamsList.Add(ToString(param));
+                resultParamsList.Add(ToString(param, options));
             }
 
             sb.Append(string.Join(",", resultParamsList));
 
             sb.Append(")");
-            sb.Append(AnnotatedItemToString(expr));
+            sb.Append(AnnotatedItemToString(expr, options));
 
             return sb.ToString();
         }
 
-        private static string ConceptToString(EntityConditionExpressionNode expr)
+        private static string ConceptToString(EntityConditionExpressionNode expr, DebugHelperOptions options)
         {
             var sb = new StringBuilder();
             sb.Append(expr.Name.NameValue);
-            sb.Append(AnnotatedItemToString(expr));
+            sb.Append(AnnotatedItemToString(expr, options));
             return sb.ToString();
         }
 
-        private static string ValueToString(EntityConditionExpressionNode expr)
+        private static string ValueToString(EntityConditionExpressionNode expr, DebugHelperOptions options)
         {
             var sb = new StringBuilder();
             var value = expr.Value;
 
-            sb.Append(DebugHelperForRuleInstance.ToString(value));
-            sb.Append(AnnotatedItemToString(expr));
+            sb.Append(DebugHelperForRuleInstance.ToString(value, options));
+            sb.Append(AnnotatedItemToString(expr, options));
 
             return sb.ToString();
         }
 
-        public static string AnnotatedItemToString(AnnotatedItem source)
+        public static string AnnotatedItemToString(AnnotatedItem source, DebugHelperOptions options)
         {
             var sb = new StringBuilder();
 
@@ -176,7 +189,7 @@ namespace SymOntoClay.Core.DebugHelpers
                 if (!source.WhereSection.IsNullOrEmpty())
                 {
                     sb.Append(" ");
-                    sb.Append(WhereSectionToString(source.WhereSection));
+                    sb.Append(WhereSectionToString(source.WhereSection, options));
                 }
 
                 sb.Append(" :|");
@@ -185,12 +198,12 @@ namespace SymOntoClay.Core.DebugHelpers
             return sb.ToString();
         }
 
-        private static string WhereSectionToString(IList<Value> source)
+        private static string WhereSectionToString(IList<Value> source, DebugHelperOptions options)
         {
-            return PrintModalityOrSection("where:", source);
+            return PrintModalityOrSection("where:", source, options);
         }
 
-        private static string PrintModalityOrSection(string mark, IList<Value> source)
+        private static string PrintModalityOrSection(string mark, IList<Value> source, DebugHelperOptions options)
         {
             var sb = new StringBuilder(mark);
 
@@ -198,7 +211,7 @@ namespace SymOntoClay.Core.DebugHelpers
 
             if (source.Count == 1)
             {
-                sb.Append($" {DebugHelperForRuleInstance.ToString(source.First())} ");
+                sb.Append($" {DebugHelperForRuleInstance.ToString(source.First(), options)} ");
             }
             else
             {
@@ -206,7 +219,7 @@ namespace SymOntoClay.Core.DebugHelpers
 
                 foreach (var item in source)
                 {
-                    list.Add($"{{ {DebugHelperForRuleInstance.ToString(item)} }}");
+                    list.Add($"{{ {DebugHelperForRuleInstance.ToString(item, options)} }}");
                 }
 
                 sb.Append(string.Join(",", list));

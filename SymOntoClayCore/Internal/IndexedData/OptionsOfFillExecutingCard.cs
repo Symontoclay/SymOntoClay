@@ -38,10 +38,6 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public IMainStorageContext MainStorageContext { get; set; }
         public ILogicalSearchStorageContext LogicalSearchStorageContext { get; set; }
 
-#if DEBUG
-        public IEntityLogger Logger { get; set; }
-#endif
-
         /// <inheritdoc/>
         public override string ToString()
         {

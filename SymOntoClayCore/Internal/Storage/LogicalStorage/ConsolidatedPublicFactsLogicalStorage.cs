@@ -297,10 +297,21 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 #endif
 
         /// <inheritdoc/>
-        public IList<LogicalQueryNode> GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext)
+        public IList<LogicalQueryNode> GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
         {
             lock (_lockObj)
             {
+                LogicalSearchExplainNode currentExplainNode = null;
+
+                if (parentExplainNode != null)
+                {
+                    currentExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.LogicalStorage,
+                        LogicalStorage = this
+                    };
+                }
+
                 var result = new List<LogicalQueryNode>();
 
                 switch (_enableOnAddingFactEvent)
@@ -309,7 +320,26 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                     case KindOfOnAddingFactEvent.Transparent:
                         foreach (var storage in _logicalStorages)
                         {
-                            var targetItemsList = storage.GetAllRelations(logicalSearchStorageContext);
+                            LogicalSearchExplainNode localResultExplainNode = null;
+
+                            if (currentExplainNode != null)
+                            {
+                                LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
+
+                                localResultExplainNode = new LogicalSearchExplainNode()
+                                {
+                                    Kind = KindOfLogicalSearchExplainNode.DataSourceResult
+                                };
+
+                                LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
+                            }
+
+                            var targetItemsList = storage.GetAllRelations(logicalSearchStorageContext, localResultExplainNode);
+
+                            if (localResultExplainNode != null)
+                            {
+                                localResultExplainNode.RelationsList = targetItemsList;
+                            }
 
                             if (targetItemsList.IsNullOrEmpty())
                             {
@@ -318,34 +348,68 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                             result.AddRange(targetItemsList);
                         }
-                        break;
-
-                    case KindOfOnAddingFactEvent.Isolated:
-                        foreach (var storage in _logicalStorages)
-                        {
-                            var targetItemsList = storage.GetAllRelations(null);
-
-                            if (targetItemsList.IsNullOrEmpty())
-                            {
-                                continue;
-                            }
-
-                            result.AddRange(targetItemsList.Where(p => !_rejectedFacts.Contains(p.RuleInstance)));
-                        }
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(_enableOnAddingFactEvent), _enableOnAddingFactEvent, null);
-                }
-
-                switch (_enableOnAddingFactEvent)
-                {
-                    case KindOfOnAddingFactEvent.None:
-                    case KindOfOnAddingFactEvent.Transparent:
                         return result;
 
                     case KindOfOnAddingFactEvent.Isolated:
-                        return logicalSearchStorageContext.Filter(result, _mutablePartsDict);
+                        {
+                            LogicalSearchExplainNode filteringExplainNode = null;
+                            LogicalSearchExplainNode intermediateResultExplainNode = null;
+
+                            if (parentExplainNode != null)
+                            {
+                                filteringExplainNode = new LogicalSearchExplainNode()
+                                {
+                                    Kind = KindOfLogicalSearchExplainNode.LogicalStorageFilter
+                                };
+
+                                LogicalSearchExplainNode.LinkNodes(parentExplainNode, filteringExplainNode);
+
+                                intermediateResultExplainNode = new LogicalSearchExplainNode()
+                                {
+                                    Kind = KindOfLogicalSearchExplainNode.DataSourceResult
+                                };
+
+                                LogicalSearchExplainNode.LinkNodes(filteringExplainNode, intermediateResultExplainNode);
+
+                                LogicalSearchExplainNode.LinkNodes(intermediateResultExplainNode, currentExplainNode);
+                            }
+
+                            foreach (var storage in _logicalStorages)
+                            {
+                                LogicalSearchExplainNode localResultExplainNode = null;
+
+                                if (currentExplainNode != null)
+                                {
+                                    localResultExplainNode = new LogicalSearchExplainNode()
+                                    {
+                                        Kind = KindOfLogicalSearchExplainNode.DataSourceResult
+                                    };
+
+                                    LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
+                                }
+
+                                var targetItemsList = storage.GetAllRelations(null, localResultExplainNode);
+
+                                if (localResultExplainNode != null)
+                                {
+                                    localResultExplainNode.RelationsList = targetItemsList;
+                                }
+
+                                if (targetItemsList.IsNullOrEmpty())
+                                {
+                                    continue;
+                                }
+
+                                result.AddRange(targetItemsList.Where(p => !_rejectedFacts.Contains(p.RuleInstance)));
+                            }
+
+                            if (intermediateResultExplainNode != null)
+                            {
+                                intermediateResultExplainNode.RelationsList = result;
+                            }
+
+                            return logicalSearchStorageContext.Filter(result, _mutablePartsDict);
+                        }
 
                     default:
                         throw new ArgumentOutOfRangeException(nameof(_enableOnAddingFactEvent), _enableOnAddingFactEvent, null);
@@ -377,10 +441,22 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         }
 
         /// <inheritdoc/>
-        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext)
+        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
         {
             lock (_lockObj)
             {
+                LogicalSearchExplainNode currentExplainNode = null;
+
+                if (parentExplainNode != null)
+                {
+                    currentExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.LogicalStorage,
+                        Key = name,
+                        LogicalStorage = this
+                    };            
+                }
+
                 var initialResult = new List<BaseRulePart>();
 
                 switch (_enableOnAddingFactEvent)
@@ -389,7 +465,26 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                     case KindOfOnAddingFactEvent.Transparent:
                         foreach (var storage in _logicalStorages)
                         {
-                            var targetItemsList = storage.GetIndexedRulePartOfFactsByKeyOfRelation(name, logicalSearchStorageContext);
+                            LogicalSearchExplainNode localResultExplainNode = null;
+
+                            if (currentExplainNode != null)
+                            {
+                                LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
+
+                                localResultExplainNode = new LogicalSearchExplainNode()
+                                {
+                                    Kind = KindOfLogicalSearchExplainNode.DataSourceResult
+                                };
+
+                                LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
+                            }
+
+                            var targetItemsList = storage.GetIndexedRulePartOfFactsByKeyOfRelation(name, logicalSearchStorageContext, localResultExplainNode);
+
+                            if (localResultExplainNode != null)
+                            {
+                                localResultExplainNode.BaseRulePartList = targetItemsList;
+                            }
 
                             if (targetItemsList.IsNullOrEmpty())
                             {
@@ -401,19 +496,65 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                         break;
 
                     case KindOfOnAddingFactEvent.Isolated:
-                        foreach (var storage in _logicalStorages)
                         {
-                            var targetItemsList = storage.GetIndexedRulePartOfFactsByKeyOfRelation(name, null);
+                            LogicalSearchExplainNode filteringExplainNode = null;
+                            LogicalSearchExplainNode intermediateResultExplainNode = null;
 
-                            if (targetItemsList.IsNullOrEmpty())
+                            if(parentExplainNode != null)
                             {
-                                continue;
+                                filteringExplainNode = new LogicalSearchExplainNode()
+                                {
+                                    Kind = KindOfLogicalSearchExplainNode.LogicalStorageFilter
+                                };
+
+                                LogicalSearchExplainNode.LinkNodes(parentExplainNode, filteringExplainNode);
+
+                                intermediateResultExplainNode = new LogicalSearchExplainNode()
+                                {
+                                    Kind = KindOfLogicalSearchExplainNode.DataSourceResult
+                                };
+
+                                LogicalSearchExplainNode.LinkNodes(filteringExplainNode, intermediateResultExplainNode);
+
+                                LogicalSearchExplainNode.LinkNodes(intermediateResultExplainNode, currentExplainNode);
                             }
 
-                            initialResult.AddRange(targetItemsList.Where(p => !_rejectedFacts.Contains(p.Parent)));
-                        }
+                            foreach (var storage in _logicalStorages)
+                            {
+                                LogicalSearchExplainNode localResultExplainNode = null;
 
-                        initialResult = logicalSearchStorageContext.Filter(initialResult, _mutablePartsDict).ToList();
+                                if (currentExplainNode != null)
+                                {
+                                    localResultExplainNode = new LogicalSearchExplainNode()
+                                    {
+                                        Kind = KindOfLogicalSearchExplainNode.DataSourceResult
+                                    };
+
+                                    LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
+                                }
+
+                                var targetItemsList = storage.GetIndexedRulePartOfFactsByKeyOfRelation(name, null, localResultExplainNode);
+
+                                if (localResultExplainNode != null)
+                                {
+                                    localResultExplainNode.BaseRulePartList = targetItemsList;
+                                }
+
+                                if (targetItemsList.IsNullOrEmpty())
+                                {
+                                    continue;
+                                }
+
+                                initialResult.AddRange(targetItemsList.Where(p => !_rejectedFacts.Contains(p.Parent)));
+                            }
+
+                            if(intermediateResultExplainNode != null)
+                            {
+                                intermediateResultExplainNode.BaseRulePartList = initialResult;
+                            }
+
+                            initialResult = logicalSearchStorageContext.Filter(initialResult, _mutablePartsDict).ToList();
+                        }
                         break;
 
                     default:
@@ -439,10 +580,22 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         }
 
         /// <inheritdoc/>
-        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext)
+        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
         {
             lock (_lockObj)
             {
+                LogicalSearchExplainNode currentExplainNode = null;
+
+                if (parentExplainNode != null)
+                {
+                    currentExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.LogicalStorage,
+                        Key = name,
+                        LogicalStorage = this
+                    };
+                }
+
                 var initialResult = new List<BaseRulePart>();
 
                 switch (_enableOnAddingFactEvent)
@@ -451,7 +604,26 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                     case KindOfOnAddingFactEvent.Transparent:
                         foreach (var storage in _logicalStorages)
                         {
-                            var targetItemsList = storage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name, logicalSearchStorageContext);
+                            LogicalSearchExplainNode localResultExplainNode = null;
+
+                            if (currentExplainNode != null)
+                            {
+                                LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
+
+                                localResultExplainNode = new LogicalSearchExplainNode()
+                                {
+                                    Kind = KindOfLogicalSearchExplainNode.DataSourceResult
+                                };
+
+                                LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
+                            }
+
+                            var targetItemsList = storage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name, logicalSearchStorageContext, localResultExplainNode);
+
+                            if (localResultExplainNode != null)
+                            {
+                                localResultExplainNode.BaseRulePartList = targetItemsList;
+                            }
 
                             if (targetItemsList.IsNullOrEmpty())
                             {
@@ -463,19 +635,65 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                         break;
 
                     case KindOfOnAddingFactEvent.Isolated:
-                        foreach (var storage in _logicalStorages)
                         {
-                            var targetItemsList = storage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name, null);
+                            LogicalSearchExplainNode filteringExplainNode = null;
+                            LogicalSearchExplainNode intermediateResultExplainNode = null;
 
-                            if (targetItemsList.IsNullOrEmpty())
+                            if (parentExplainNode != null)
                             {
-                                continue;
+                                filteringExplainNode = new LogicalSearchExplainNode()
+                                {
+                                    Kind = KindOfLogicalSearchExplainNode.LogicalStorageFilter
+                                };
+
+                                LogicalSearchExplainNode.LinkNodes(parentExplainNode, filteringExplainNode);
+
+                                intermediateResultExplainNode = new LogicalSearchExplainNode()
+                                {
+                                    Kind = KindOfLogicalSearchExplainNode.DataSourceResult
+                                };
+
+                                LogicalSearchExplainNode.LinkNodes(filteringExplainNode, intermediateResultExplainNode);
+
+                                LogicalSearchExplainNode.LinkNodes(intermediateResultExplainNode, currentExplainNode);
                             }
 
-                            initialResult.AddRange(targetItemsList.Where(p => !_rejectedFacts.Contains(p.Parent)));
-                        }
+                            foreach (var storage in _logicalStorages)
+                            {
+                                LogicalSearchExplainNode localResultExplainNode = null;
 
-                        initialResult = logicalSearchStorageContext.Filter(initialResult, false).ToList();
+                                if (currentExplainNode != null)
+                                {
+                                    localResultExplainNode = new LogicalSearchExplainNode()
+                                    {
+                                        Kind = KindOfLogicalSearchExplainNode.DataSourceResult
+                                    };
+
+                                    LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
+                                }
+
+                                var targetItemsList = storage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name, null, localResultExplainNode);
+
+                                if (localResultExplainNode != null)
+                                {
+                                    localResultExplainNode.BaseRulePartList = targetItemsList;
+                                }
+
+                                if (targetItemsList.IsNullOrEmpty())
+                                {
+                                    continue;
+                                }
+
+                                initialResult.AddRange(targetItemsList.Where(p => !_rejectedFacts.Contains(p.Parent)));
+                            }
+
+                            if (intermediateResultExplainNode != null)
+                            {
+                                intermediateResultExplainNode.BaseRulePartList = initialResult;
+                            }
+
+                            initialResult = logicalSearchStorageContext.Filter(initialResult, false).ToList();
+                        }
                         break;
 
                     default:

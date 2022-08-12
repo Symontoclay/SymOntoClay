@@ -579,15 +579,54 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         }
 
         /// <inheritdoc/>
-        public IList<LogicalQueryNode> GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext)
+        public IList<LogicalQueryNode> GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
         {
             lock (_lockObj)
             {
+                LogicalSearchExplainNode currentExplainNode = null;
+
+                if (parentExplainNode != null)
+                {
+                    currentExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.LogicalStorage,
+                        LogicalStorage = this
+                    };
+                }
+
                 var source = _commonPersistIndexedLogicalData.GetAllRelations();
 
                 if (logicalSearchStorageContext == null || source.IsNullOrEmpty())
                 {
+                    if (parentExplainNode != null)
+                    {
+                        LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
+                    }
+
                     return source;
+                }
+
+                LogicalSearchExplainNode filteringExplainNode = null;
+
+                if (parentExplainNode != null)
+                {
+                    filteringExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.LogicalStorageFilter
+                    };
+
+                    LogicalSearchExplainNode.LinkNodes(parentExplainNode, filteringExplainNode);
+
+                    var intermediateResultExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.DataSourceResult
+                    };
+
+                    LogicalSearchExplainNode.LinkNodes(filteringExplainNode, intermediateResultExplainNode);
+
+                    intermediateResultExplainNode.RelationsList = source;
+
+                    LogicalSearchExplainNode.LinkNodes(intermediateResultExplainNode, currentExplainNode);
                 }
 
 #if DEBUG
@@ -617,7 +656,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         }
 
         /// <inheritdoc/>
-        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext)
+        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
         {
             lock (_lockObj)
             {
@@ -631,6 +670,18 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 //}
 #endif
 
+                LogicalSearchExplainNode currentExplainNode = null;
+
+                if (parentExplainNode != null)
+                {
+                    currentExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.LogicalStorage,
+                        Key = name,
+                        LogicalStorage = this
+                    };
+                }
+
                 var source = _commonPersistIndexedLogicalData.GetIndexedRulePartOfFactsByKeyOfRelation(name);
 
 #if DEBUG
@@ -639,12 +690,45 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 if (logicalSearchStorageContext == null || source.IsNullOrEmpty())
                 {
+                    if(parentExplainNode != null)
+                    {
+                        LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
+                    }
+
                     return source;
                 }
 
                 if(name.NormalizedNameValue == "is")
                 {
+                    if (parentExplainNode != null)
+                    {
+                        LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
+                    }
+
                     return source;
+                }
+
+                LogicalSearchExplainNode filteringExplainNode = null;
+
+                if(parentExplainNode != null)
+                {
+                    filteringExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.LogicalStorageFilter
+                    };
+
+                    LogicalSearchExplainNode.LinkNodes(parentExplainNode, filteringExplainNode);
+
+                    var intermediateResultExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.DataSourceResult
+                    };
+
+                    LogicalSearchExplainNode.LinkNodes(filteringExplainNode, intermediateResultExplainNode);
+
+                    intermediateResultExplainNode.BaseRulePartList = source;
+
+                    LogicalSearchExplainNode.LinkNodes(intermediateResultExplainNode, currentExplainNode);
                 }
 
 #if DEBUG
@@ -666,7 +750,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         }
 
         /// <inheritdoc/>
-        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext)
+        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
         {
             lock (_lockObj)
             {
@@ -679,6 +763,18 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 //}
 #endif
 
+                LogicalSearchExplainNode currentExplainNode = null;
+
+                if (parentExplainNode != null)
+                {
+                    currentExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.LogicalStorage,
+                        Key = name,
+                        LogicalStorage = this
+                    };
+                }
+
                 var source = _commonPersistIndexedLogicalData.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name);
 
 #if DEBUG
@@ -687,6 +783,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 if (logicalSearchStorageContext == null || source.IsNullOrEmpty())
                 {
+                    if (parentExplainNode != null)
+                    {
+                        LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
+                    }
+
                     return source;
                 }
 
@@ -694,6 +795,29 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                 //Log($"name = {name}");
                 //Log($"_kind = {_kind}");
 #endif
+
+                LogicalSearchExplainNode filteringExplainNode = null;
+
+                if (parentExplainNode != null)
+                {
+                    filteringExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.LogicalStorageFilter
+                    };
+
+                    LogicalSearchExplainNode.LinkNodes(parentExplainNode, filteringExplainNode);
+
+                    var intermediateResultExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.DataSourceResult
+                    };
+
+                    LogicalSearchExplainNode.LinkNodes(filteringExplainNode, intermediateResultExplainNode);
+
+                    intermediateResultExplainNode.BaseRulePartList = source;
+
+                    LogicalSearchExplainNode.LinkNodes(intermediateResultExplainNode, currentExplainNode);
+                }
 
                 return logicalSearchStorageContext.Filter(source, false);
             }

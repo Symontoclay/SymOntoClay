@@ -132,9 +132,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return $"{spaces}{ToHumanizedString()}";
         }
 
-
         /// <inheritdoc/>
         public override string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            return NToHumanizedString();
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString(DebugHelperOptions options)
+        {
+            return NToHumanizedString();
+        }
+
+        private string NToHumanizedString()
         {
             return $"ref: {InstanceInfo.Name.NameValue}";
         }

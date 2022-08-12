@@ -94,6 +94,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 coreEngineSettings.ConditionalEntityHostSupport = _conditionalEntityHostSupportComponent;
                 coreEngineSettings.SoundPublisherProvider = _soundPublisher;
                 coreEngineSettings.NLPConverterFactory = worldContext.NLPConverterFactory;
+                coreEngineSettings.KindOfLogicalSearchExplain = worldContext.KindOfLogicalSearchExplain;
+                coreEngineSettings.LogicalSearchExplainDumpDir = worldContext.LogicalSearchExplainDumpDir;
 
 #if DEBUG
                 //Log($"coreEngineSettings = {coreEngineSettings}");

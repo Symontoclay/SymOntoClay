@@ -1,13 +1,10 @@
 ﻿app PeaceKeeper
 {
-    {: cat(M16) :}
+	{: male(#Tom) o: very middle :}
+	{: parent(#Piter, #Tom) o: very middle :}
+	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
-    on Enter => {
-	    'Begin' >> @>log;
-
-		//{: >: { like(i,#@{: >: { possess(i,$_) & cat($_) } :}) } :} >> @>say;
-		'I like my cat.' >> @>say;
-
-		'End' >> @>log;
+	on Enter => {
+	    select {: son($x, $y)  o: { _ is middle } :} >> @>log;
 	}
 }

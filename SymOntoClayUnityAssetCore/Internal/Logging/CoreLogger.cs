@@ -36,6 +36,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
         private readonly CoreLoggerSettings _settings;
         private readonly LoggerContext _loggerContext = new LoggerContext();
         private readonly IEntityLogger _coreLogger;
+        private readonly string _todaysDir;
 
         public CoreLogger(LoggingSettings settings, IWorldCoreContext coreContext)
         {
@@ -51,15 +52,30 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
                 Directory.CreateDirectory(_settings.LogDir);
 
                 var now = DateTime.Now;
-                var todaysDir = $"{now.Year}_{now.Month:00}_{now.Day:00}_{now.Hour:00}_{now.Minute:00}_{now.Second:00}";
+                _todaysDir = $"{now.Year}_{now.Month:00}_{now.Day:00}_{now.Hour:00}_{now.Minute:00}_{now.Second:00}";
 
-                _settings.LogDir = Path.Combine(_settings.LogDir, todaysDir);
+                _settings.LogDir = Path.Combine(_settings.LogDir, _todaysDir);
 
                 Directory.CreateDirectory(_settings.LogDir);
             }
 
+            if(string.IsNullOrWhiteSpace(settings.LogicalSearchExplainDumpDir))
+            {
+                LogicalSearchExplainDumpDir = _settings.LogDir;
+            }
+            else
+            {
+                Directory.CreateDirectory(settings.LogicalSearchExplainDumpDir);
+
+                LogicalSearchExplainDumpDir = Path.Combine(settings.LogicalSearchExplainDumpDir, _todaysDir);
+
+                Directory.CreateDirectory(LogicalSearchExplainDumpDir);
+            }
+
             _coreLogger = new InternalLogger(_loggerContext, "Core", _settings);
         }
+
+        public string LogicalSearchExplainDumpDir { get; private set; }
 
         /// <summary>
         /// Gets or sets value of enable logging.

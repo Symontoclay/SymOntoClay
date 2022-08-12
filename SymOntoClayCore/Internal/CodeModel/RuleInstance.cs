@@ -434,6 +434,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return DebugHelperForRuleInstance.ToString(this, options);
         }
 
+        public string ToHumanizedString(DebugHelperOptions options)
+        {
+            return DebugHelperForRuleInstance.ToString(this, options);
+        }
+
         #region IStorage
         /// <inheritdoc/>
         KindOfStorage IStorage.Kind => KindOfStorage.Sentence;
@@ -557,8 +562,21 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public event Func<RuleInstance, IAddFactOrRuleResult> OnAddingFact;
 
         /// <inheritdoc/>
-        IList<LogicalQueryNode> ILogicalStorage.GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext)
+        IList<LogicalQueryNode> ILogicalStorage.GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
         {
+            LogicalSearchExplainNode currentExplainNode = null;
+
+            if (parentExplainNode != null)
+            {
+                currentExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.LogicalStorage,
+                    LogicalStorage = this
+                };
+
+                LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
+            }
+
             return _commonPersistIndexedLogicalData.GetAllRelations();
         }
 
@@ -574,18 +592,46 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext)
+        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
         {
 #if DEBUG
             //LogInstance.Log($"key = {key}");
 #endif
 
+            LogicalSearchExplainNode currentExplainNode = null;
+
+            if(parentExplainNode != null)
+            {
+                currentExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.LogicalStorage,
+                    Key = name,
+                    LogicalStorage = this
+                };
+
+                LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
+            }
+
             return _commonPersistIndexedLogicalData.GetIndexedRulePartOfFactsByKeyOfRelation(name);
         }
 
         /// <inheritdoc/>
-        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext)
+        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
         {
+            LogicalSearchExplainNode currentExplainNode = null;
+
+            if (parentExplainNode != null)
+            {
+                currentExplainNode = new LogicalSearchExplainNode()
+                {
+                    Kind = KindOfLogicalSearchExplainNode.LogicalStorage,
+                    Key = name,
+                    LogicalStorage = this
+                };
+
+                LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
+            }
+
             return _commonPersistIndexedLogicalData.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name);
         }
 

@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CommonNames;
 using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Instances;
+using SymOntoClay.Core.Internal.Logging;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.Core.Internal.Storage;
@@ -62,6 +63,8 @@ namespace SymOntoClay.Core.Internal
         public BaseInstancesStorageComponent InstancesStorage { get; set; }
         public BaseLoaderFromSourceCode LoaderFromSourceCode { get; set; }
 
+        public LogicalSearchExplainProvider LogicalSearchExplainProvider { get; set; }
+
         /// <inheritdoc/>
         public ILogicQueryParseAndCache LogicQueryParseAndCache { get; set; }
 
@@ -75,6 +78,8 @@ namespace SymOntoClay.Core.Internal
 
         IActivePeriodicObjectContext IMainStorageContext.ActivePeriodicObjectContext => ActivePeriodicObjectContext;
 
+        ILogicalSearchExplainProvider IMainStorageContext.LogicalSearchExplainProvider => LogicalSearchExplainProvider;
+
         public virtual void Die()
         {
             ActivePeriodicObjectContext.Dispose();
@@ -84,6 +89,7 @@ namespace SymOntoClay.Core.Internal
             CommonNamesStorage.Dispose();
             InstancesStorage.Dispose();
             LoaderFromSourceCode.Dispose();
+            LogicalSearchExplainProvider.Dispose();
         }
 
         /// <inheritdoc/>
@@ -96,6 +102,7 @@ namespace SymOntoClay.Core.Internal
             CommonNamesStorage.Dispose();
             InstancesStorage.Dispose();
             LoaderFromSourceCode.Dispose();
+            LogicalSearchExplainProvider.Dispose();
 
             base.OnDisposed();
         }

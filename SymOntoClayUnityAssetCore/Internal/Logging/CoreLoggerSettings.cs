@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -62,6 +63,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
             sb.AppendLine($"{spaces}{nameof(LogDir)} = {LogDir}");
             var platformLoggersMark = PlatformLoggers == null ? "No" : PlatformLoggers.Any() ? "Yes" : "No";
             sb.AppendLine($"{spaces}{nameof(PlatformLoggers)} = {platformLoggersMark}");
+
             return sb.ToString();
         }
     }

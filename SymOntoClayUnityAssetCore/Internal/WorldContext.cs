@@ -80,8 +80,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         private void CreateLogging(WorldSettings settings)
         {
-            CoreLogger = new CoreLogger(settings.Logging, this);
+            var loggingSettings = settings.Logging;
+
+            CoreLogger = new CoreLogger(loggingSettings, this);
             Logger = CoreLogger.WordCoreLogger;
+
+            KindOfLogicalSearchExplain = loggingSettings.KindOfLogicalSearchExplain;
+            LogicalSearchExplainDumpDir = CoreLogger.LogicalSearchExplainDumpDir;
         }
 
         private void CreateComponents(WorldSettings settings)
@@ -182,7 +187,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         ILogicQueryParseAndCache IWorldCoreGameComponentContext.LogicQueryParseAndCache => LogicQueryParseAndCache;
         ILogicQueryParseAndCache IWorldCoreContext.LogicQueryParseAndCache => LogicQueryParseAndCache;
 
+        public KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; private set; }
+        KindOfLogicalSearchExplain IWorldCoreGameComponentContext.KindOfLogicalSearchExplain => KindOfLogicalSearchExplain;
+        KindOfLogicalSearchExplain IWorldCoreContext.KindOfLogicalSearchExplain => KindOfLogicalSearchExplain;
 
+        public string LogicalSearchExplainDumpDir { get; private set; }
+        string IWorldCoreGameComponentContext.LogicalSearchExplainDumpDir => LogicalSearchExplainDumpDir;
+        string IWorldCoreContext.LogicalSearchExplainDumpDir => LogicalSearchExplainDumpDir;
 
         private readonly object _worldComponentsListLockObj = new object();
         private readonly List<IWorldCoreComponent> _worldComponentsList = new List<IWorldCoreComponent>();

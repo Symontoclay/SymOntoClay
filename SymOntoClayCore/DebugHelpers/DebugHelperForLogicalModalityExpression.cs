@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.CoreHelper;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -39,6 +40,16 @@ namespace SymOntoClay.Core.DebugHelpers
 #endif
 
         public static string ToString(LogicalModalityExpressionNode source, HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return ToString(source, opt);
+        }
+
+        public static string ToString(LogicalModalityExpressionNode source, DebugHelperOptions options)
         {
             switch (source.Kind)
             {
@@ -61,33 +72,47 @@ namespace SymOntoClay.Core.DebugHelpers
                     throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, null);
             }
         }
-
-        private static string BlankIdentifierToString(LogicalModalityExpressionNode source, HumanizedOptions options)
+        
+        private static string BlankIdentifierToString(LogicalModalityExpressionNode source, DebugHelperOptions options)
         {
             return "_";
         }
 
-        private static string BinaryOperatorToString(LogicalModalityExpressionNode source, HumanizedOptions options)
+        private static string BinaryOperatorToString(LogicalModalityExpressionNode source, DebugHelperOptions options)
         {
-            return $"{ToString(source.Left, options)} {OperatorsHelper.GetSymbol(source.KindOfOperator)} {ToString(source.Right, options)}";
+            var mark = OperatorsHelper.GetSymbol(source.KindOfOperator);
+
+            if (options.IsHtml)
+            {
+                mark = StringHelper.ToHtmlCode(mark);
+            }
+
+            return $"{ToString(source.Left, options)} {mark} {ToString(source.Right, options)}";
         }
 
-        private static string UnaryOperatorToString(LogicalModalityExpressionNode source, HumanizedOptions options)
+        private static string UnaryOperatorToString(LogicalModalityExpressionNode source, DebugHelperOptions options)
         {
             if (source.KindOfOperator == KindOfOperator.CallFunction)
             {
                 throw new NotImplementedException();
             }
 
-            return $" {OperatorsHelper.GetSymbol(source.KindOfOperator)} {ToString(source.Left, options)}";
+            var mark = OperatorsHelper.GetSymbol(source.KindOfOperator);
+
+            if (options.IsHtml)
+            {
+                mark = StringHelper.ToHtmlCode(mark);
+            }
+
+            return $" {mark} {ToString(source.Left, options)}";
         }
 
-        private static string ValueToString(LogicalModalityExpressionNode source, HumanizedOptions options)
+        private static string ValueToString(LogicalModalityExpressionNode source, DebugHelperOptions options)
         {
             return DebugHelperForRuleInstance.ToString(source.Value, options);
         }
 
-        private static string GroupToString(LogicalModalityExpressionNode source, HumanizedOptions options)
+        private static string GroupToString(LogicalModalityExpressionNode source, DebugHelperOptions options)
         {
             return $"({ToString(source.Left, options)})";
         }

@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
     public class ConsolidatedDataSource
     {
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public ConsolidatedDataSource(List<StorageUsingOptions> storagesList)
@@ -56,17 +56,46 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private static StrongIdentifierValue _isRelationName = NameHelper.CreateName("is");
 
-        public IList<LogicalQueryNode> AllRelationsForProductions(ILogicalSearchStorageContext logicalSearchStorageContext)
+        public IList<LogicalQueryNode> AllRelationsForProductions(ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
         {
             lock (_lockObj)
             {
+                LogicalSearchExplainNode currentExplainNode = null;
+
+                if (parentExplainNode != null)
+                {
+                    currentExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.ConsolidatedDataSource
+                    };
+
+                    LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
+                }
+
                 var result = new List<LogicalQueryNode>();
 
                 var dataSourcesSettingsOrderedByPriorityAndUseProductionsList = _dataSourcesSettingsOrderedByPriorityAndUseProductionsList;
 
                 foreach (var dataSourcesSettings in dataSourcesSettingsOrderedByPriorityAndUseProductionsList)
                 {
-                    var targetRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetAllRelations(logicalSearchStorageContext);
+                    LogicalSearchExplainNode localResultExplainNode = null;
+
+                    if (currentExplainNode != null)
+                    {
+                        localResultExplainNode = new LogicalSearchExplainNode()
+                        {
+                            Kind = KindOfLogicalSearchExplainNode.DataSourceResult
+                        };
+
+                        LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
+                    }
+
+                    var targetRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetAllRelations(logicalSearchStorageContext, localResultExplainNode);
+
+                    if (localResultExplainNode != null)
+                    {
+                        localResultExplainNode.RelationsList = targetRelationsList;
+                    }
 
                     if (targetRelationsList.IsNullOrEmpty())
                     {
@@ -112,13 +141,26 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext)
+        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
         {
             lock (_lockObj)
             {
 #if DEBUG
                 //DebugLogger.Instance.Info($"name = {name}");
 #endif
+
+                LogicalSearchExplainNode currentExplainNode = null;
+
+                if (parentExplainNode != null)
+                {
+                    currentExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.ConsolidatedDataSource,
+                        Key = name
+                    };
+
+                    LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
+                }
 
                 var initialResult = new List<BaseRulePart>();
 
@@ -135,14 +177,31 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 foreach (var dataSourcesSettings in targetSourcesList)
                 {
-                    var indexedRulePartsOfFactsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(name, logicalSearchStorageContext);
+                    LogicalSearchExplainNode localResultExplainNode = null;
 
-                    if (indexedRulePartsOfFactsList.IsNullOrEmpty())
+                    if (currentExplainNode != null)
+                    {
+                        localResultExplainNode = new LogicalSearchExplainNode()
+                        {
+                            Kind = KindOfLogicalSearchExplainNode.DataSourceResult
+                        };
+
+                        LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
+                    }
+
+                    var rulePartsOfFactsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(name, logicalSearchStorageContext, localResultExplainNode);
+
+                    if(localResultExplainNode != null)
+                    {
+                        localResultExplainNode.BaseRulePartList = rulePartsOfFactsList;
+                    }
+
+                    if (rulePartsOfFactsList.IsNullOrEmpty())
                     {
                         continue;
                     }
 
-                    initialResult.AddRange(indexedRulePartsOfFactsList);
+                    initialResult.AddRange(rulePartsOfFactsList);
                 }
 
 #if DEBUG
@@ -167,13 +226,26 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext)
+        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
         {
             lock (_lockObj)
             {
 #if DEBUG
                 //_gbcLogger.Info($"name = {name}");
 #endif
+
+                LogicalSearchExplainNode currentExplainNode = null;
+
+                if (parentExplainNode != null)
+                {
+                    currentExplainNode = new LogicalSearchExplainNode()
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.ConsolidatedDataSource,
+                        Key = name
+                    };
+
+                    LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
+                }
 
                 var initialResult = new List<BaseRulePart>();
 
@@ -195,14 +267,31 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     //_gbcLogger.Info($"dataSourcesSettings.UseProductions = {dataSourcesSettings.UseProductions}");
 #endif
 
-                    var indexedRulePartWithOneRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name, logicalSearchStorageContext);
+                    LogicalSearchExplainNode localResultExplainNode = null;
 
-                    if (indexedRulePartWithOneRelationsList.IsNullOrEmpty())
+                    if (currentExplainNode != null)
+                    {
+                        localResultExplainNode = new LogicalSearchExplainNode()
+                        {
+                            Kind = KindOfLogicalSearchExplainNode.DataSourceResult
+                        };
+
+                        LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
+                    }
+
+                    var rulePartWithOneRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name, logicalSearchStorageContext, localResultExplainNode);
+
+                    if (localResultExplainNode != null)
+                    {
+                        localResultExplainNode.BaseRulePartList = rulePartWithOneRelationsList;
+                    }
+
+                    if (rulePartWithOneRelationsList.IsNullOrEmpty())
                     {
                         continue;
                     }
 
-                    initialResult.AddRange(indexedRulePartWithOneRelationsList);
+                    initialResult.AddRange(rulePartWithOneRelationsList);
                 }
 
                 if(initialResult.Count <= 1)

@@ -270,5 +270,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             return DebugHelperForEntityConditionExpression.ToString(this);
         }
+
+        public string ToHumanizedString(DebugHelperOptions options)
+        {
+            return DebugHelperForEntityConditionExpression.ToString(this, options);
+        }
     }
 }

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -62,6 +63,9 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         public IList<IPlatformLogger> PlatformLoggers { get; set; }
 
+        public KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; set; } = KindOfLogicalSearchExplain.None;
+        public string LogicalSearchExplainDumpDir { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -85,6 +89,8 @@ namespace SymOntoClay.UnityAsset.Core
             sb.AppendLine($"{spaces}{nameof(Enable)} = {Enable}");
             sb.AppendLine($"{spaces}{nameof(EnableRemoteConnection)} = {EnableRemoteConnection}");
             sb.PrintExistingList(n, nameof(PlatformLoggers), PlatformLoggers);
+            sb.AppendLine($"{spaces}{nameof(KindOfLogicalSearchExplain)} = {KindOfLogicalSearchExplain}");
+            sb.AppendLine($"{spaces}{nameof(LogicalSearchExplainDumpDir)} = {LogicalSearchExplainDumpDir}");
             return sb.ToString();
         }
     }

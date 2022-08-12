@@ -11,10 +11,10 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>SymOntoClay.Core.xml</DocumentationFile>
-    <DefineConstants>TRACE;IMAGINE_WORKING;DLSR</DefineConstants>
+    <DefineConstants>TRACE;IMAGINE_WORKING</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DefineConstants>TRACE;IMAGINE_WORKING;DLSR</DefineConstants>
+    <DefineConstants>TRACE;IMAGINE_WORKING</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />

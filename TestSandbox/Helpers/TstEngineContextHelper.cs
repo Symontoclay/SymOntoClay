@@ -131,9 +131,11 @@ namespace TestSandbox.Helpers
             var loggingSettings = new LoggingSettings()
             {
                 LogDir = logDir,
-                RootContractName = "Hi1",                
+                RootContractName = "Hi1",
                 Enable = true,
-                EnableRemoteConnection = true
+                EnableRemoteConnection = true,
+                KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.DumpAlways,
+                LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory()
             };
 
             if(factorySettings.PlatformLogger != null)

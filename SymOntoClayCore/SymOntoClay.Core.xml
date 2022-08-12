@@ -5721,6 +5721,12 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.OnDisposed">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Logging.LogicalSearchExplainProvider.KindOfLogicalSearchExplain">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Logging.LogicalSearchExplainProvider.DumpToFile(SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.MainStorageContext.Id">
             <summary>
             Gets or sets unique Id.

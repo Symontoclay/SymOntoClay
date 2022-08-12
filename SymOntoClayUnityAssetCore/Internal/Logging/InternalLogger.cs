@@ -38,7 +38,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
         private readonly ILoggerContext _context;
 
 #if DEBUG
-        private NLog.ILogger _dbgNLogger = NLog.LogManager.GetCurrentClassLogger();
+        //private NLog.ILogger _dbgNLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         public InternalLogger(ILoggerContext context, string name, CoreLoggerSettings settings)

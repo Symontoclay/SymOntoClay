@@ -55,6 +55,9 @@ namespace SymOntoClay.Core
 
         public ILogicQueryParseAndCache LogicQueryParseAndCache { get; set; }
 
+        public KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; set; } = KindOfLogicalSearchExplain.None;
+        public string LogicalSearchExplainDumpDir { get; set; }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
@@ -68,6 +71,8 @@ namespace SymOntoClay.Core
             sb.PrintExisting(n, nameof(ModulesStorage), ModulesStorage);
             sb.PrintExisting(n, nameof(ParentStorage), ParentStorage);
             sb.PrintExisting(n, nameof(LogicQueryParseAndCache), LogicQueryParseAndCache);
+            sb.AppendLine($"{spaces}{nameof(KindOfLogicalSearchExplain)} = {KindOfLogicalSearchExplain}");
+            sb.AppendLine($"{spaces}{nameof(LogicalSearchExplainDumpDir)} = {LogicalSearchExplainDumpDir}");
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();

@@ -579,7 +579,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         }
 
         /// <inheritdoc/>
-        public IList<LogicalQueryNode> GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
+        public IList<LogicalQueryNode> GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
         {
             lock (_lockObj)
             {
@@ -587,7 +587,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 if (parentExplainNode != null)
                 {
-                    currentExplainNode = new LogicalSearchExplainNode()
+                    currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                     {
                         Kind = KindOfLogicalSearchExplainNode.LogicalStorage,
                         LogicalStorage = this
@@ -610,14 +610,14 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 if (parentExplainNode != null)
                 {
-                    filteringExplainNode = new LogicalSearchExplainNode()
+                    filteringExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                     {
                         Kind = KindOfLogicalSearchExplainNode.LogicalStorageFilter
                     };
 
                     LogicalSearchExplainNode.LinkNodes(parentExplainNode, filteringExplainNode);
 
-                    var intermediateResultExplainNode = new LogicalSearchExplainNode()
+                    var intermediateResultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                     {
                         Kind = KindOfLogicalSearchExplainNode.DataSourceResult
                     };
@@ -656,7 +656,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         }
 
         /// <inheritdoc/>
-        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
+        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
         {
             lock (_lockObj)
             {
@@ -674,7 +674,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 if (parentExplainNode != null)
                 {
-                    currentExplainNode = new LogicalSearchExplainNode()
+                    currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                     {
                         Kind = KindOfLogicalSearchExplainNode.LogicalStorage,
                         Key = name,
@@ -712,14 +712,14 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 if(parentExplainNode != null)
                 {
-                    filteringExplainNode = new LogicalSearchExplainNode()
+                    filteringExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                     {
                         Kind = KindOfLogicalSearchExplainNode.LogicalStorageFilter
                     };
 
                     LogicalSearchExplainNode.LinkNodes(parentExplainNode, filteringExplainNode);
 
-                    var intermediateResultExplainNode = new LogicalSearchExplainNode()
+                    var intermediateResultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                     {
                         Kind = KindOfLogicalSearchExplainNode.DataSourceResult
                     };
@@ -750,7 +750,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         }
 
         /// <inheritdoc/>
-        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
+        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
         {
             lock (_lockObj)
             {
@@ -767,7 +767,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 if (parentExplainNode != null)
                 {
-                    currentExplainNode = new LogicalSearchExplainNode()
+                    currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                     {
                         Kind = KindOfLogicalSearchExplainNode.LogicalStorage,
                         Key = name,
@@ -800,14 +800,14 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                 if (parentExplainNode != null)
                 {
-                    filteringExplainNode = new LogicalSearchExplainNode()
+                    filteringExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                     {
                         Kind = KindOfLogicalSearchExplainNode.LogicalStorageFilter
                     };
 
                     LogicalSearchExplainNode.LinkNodes(parentExplainNode, filteringExplainNode);
 
-                    var intermediateResultExplainNode = new LogicalSearchExplainNode()
+                    var intermediateResultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                     {
                         Kind = KindOfLogicalSearchExplainNode.DataSourceResult
                     };

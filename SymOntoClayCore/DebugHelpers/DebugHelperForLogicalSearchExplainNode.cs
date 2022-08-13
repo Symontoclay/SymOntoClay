@@ -54,6 +54,10 @@ namespace SymOntoClay.Core.DebugHelpers
             //_gbcLogger.Info($"source = {source}");
 #endif
 
+            var processedNodesList = context.ProcessedNodesList;
+
+            processedNodesList.Add(source);
+
             var name = context.GetNodeName(source);
 
 #if DEBUG
@@ -77,6 +81,21 @@ namespace SymOntoClay.Core.DebugHelpers
                     ProcessNodeContent(item, context);
 
                     context.PathsList.Add($"{context.GetNodeName(item)} -> {name};");
+                }
+            }
+
+            var commonChildren = source.CommonChildren;
+
+            if (!commonChildren.IsNullOrEmpty())
+            {
+                foreach(var item in commonChildren)
+                {
+                    if(processedNodesList.Contains(item))
+                    {
+                        continue;
+                    }
+
+                    ProcessNodeContent(item, context);
                 }
             }
         }

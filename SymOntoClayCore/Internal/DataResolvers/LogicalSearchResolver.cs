@@ -191,14 +191,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if (kindOfLogicalSearchExplain != KindOfLogicalSearchExplain.None)
                 {
-                    rootExplainNode = new LogicalSearchExplainNode()
+                    rootExplainNode = new LogicalSearchExplainNode(null)
                     {
                         Kind = KindOfLogicalSearchExplainNode.Root
                     };
 
+                    rootExplainNode.CommonChildren = new List<LogicalSearchExplainNode>();
+
                     rootExplainNode.ProcessedRuleInstance = options.QueryExpression;
 
-                    resultExplainNode = new LogicalSearchExplainNode()
+                    resultExplainNode = new LogicalSearchExplainNode(rootExplainNode)
                     {
                         Kind = KindOfLogicalSearchExplainNode.Result
                     };
@@ -206,6 +208,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     LogicalSearchExplainNode.LinkNodes(rootExplainNode, resultExplainNode);
                 }
 
+                queryExecutingCard.RootParentExplainNode = rootExplainNode;
                 queryExecutingCard.ParentExplainNode = resultExplainNode;
 
                 FillExecutingCard(queryExpression, queryExecutingCard, dataSource, optionsOfFillExecutingCard);
@@ -321,11 +324,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             LogicalSearchExplainNode currentExplainNode = null;
             LogicalSearchExplainNode resultExplainNode = null;
 
+            var rootParentExplainNode = queryExecutingCard.RootParentExplainNode;
+
             var parentExplainNode = queryExecutingCard.ParentExplainNode;
 
             if(parentExplainNode != null)
             {
-                currentExplainNode = new LogicalSearchExplainNode()
+                currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.RuleInstanceQuery
                 };
@@ -334,7 +339,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 currentExplainNode.ProcessedRuleInstance = processedExpr;
 
-                resultExplainNode = new LogicalSearchExplainNode()
+                resultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.Result
                 };
@@ -343,6 +348,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             var queryExecutingCardForPart_1 = new QueryExecutingCardForIndexedPersistLogicalData();
+            queryExecutingCardForPart_1.RootParentExplainNode = rootParentExplainNode;
             queryExecutingCardForPart_1.ParentExplainNode = resultExplainNode;
 
             FillExecutingCard(processedExpr.PrimaryPart, queryExecutingCardForPart_1, dataSource, options);
@@ -379,18 +385,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             LogicalSearchExplainNode currentExplainNode = null;
             LogicalSearchExplainNode resultExplainNode = null;
 
+            var rootParentExplainNode = queryExecutingCard.RootParentExplainNode;
+
             var parentExplainNode = queryExecutingCard.ParentExplainNode;
 
             if(parentExplainNode != null)
             {
-                currentExplainNode = new LogicalSearchExplainNode()
+                currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.PrimaryRulePartQuery
                 };
 
                 currentExplainNode.ProcessedPrimaryRulePart = processedExpr;
 
-                resultExplainNode = new LogicalSearchExplainNode()
+                resultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.Result
                 };
@@ -399,6 +407,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             var queryExecutingCardForExpression = new QueryExecutingCardForIndexedPersistLogicalData();
+            queryExecutingCardForExpression.RootParentExplainNode = rootParentExplainNode;
             queryExecutingCardForExpression.ParentExplainNode = resultExplainNode;
 
             FillExecutingCard(processedExpr.Expression, queryExecutingCardForExpression, dataSource, options);
@@ -433,6 +442,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if (queryExecutingCardForExpression.PostFiltersList.Any())
             {
                 var queryExecutingCardForFillExecutingCardUsingPostFiltersList = new QueryExecutingCardForIndexedPersistLogicalData();
+                queryExecutingCardForFillExecutingCardUsingPostFiltersList.RootParentExplainNode = rootParentExplainNode;
                 queryExecutingCardForFillExecutingCardUsingPostFiltersList.ParentExplainNode = parentExplainNode;
 
                 var postFilterNode = FillExecutingCardUsingPostFiltersList(queryExecutingCardForExpression, queryExecutingCardForFillExecutingCardUsingPostFiltersList, options, dataSource);
@@ -481,6 +491,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var targetSourceQueryExecutingCard = sourceQueryExecutingCard;
 
             var parentExplainNode = destQueryExecutingCard.ParentExplainNode;
+            var rootParentExplainNode = destQueryExecutingCard.RootParentExplainNode;
             List<(LogicalSearchExplainNode, LogicalSearchExplainNode)> explainNodesList = null;
 
             if(parentExplainNode != null)
@@ -499,6 +510,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var oldTargetSourceQueryExecutingCard = targetSourceQueryExecutingCard;
 
                 targetSourceQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
+                targetSourceQueryExecutingCard.RootParentExplainNode = rootParentExplainNode;
 
                 switch (kindOfBinaryOperator)
                 {
@@ -512,7 +524,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                             if(parentExplainNode != null)
                             {
-                                var resultExplainNode = new LogicalSearchExplainNode()
+                                var resultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                                 {
                                     Kind = KindOfLogicalSearchExplainNode.Result
                                 };
@@ -596,9 +608,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             LogicalSearchExplainNode currentExplainNode = null;
 
+            var rootParentExplainNode = sourceQueryExecutingCard.RootParentExplainNode;
+
             if (sourceQueryExecutingCard.ParentExplainNode != null)
             {
-                currentExplainNode = new LogicalSearchExplainNode()
+                currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.PostFilterWithAndStrategy,
                     ProcessedLogicalQueryNode = processedExpr
@@ -653,6 +667,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
 
                         var comparisonQueryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
+                        comparisonQueryExecutingCard.RootParentExplainNode = rootParentExplainNode;
 
                         var resultOfComparison = CompareForPostFilter(kindOfOperator, sourceLeftNode, sourceRightNode, options, comparisonQueryExecutingCard, dataSource);
 
@@ -1761,11 +1776,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             LogicalSearchExplainNode productionDataSourceCollectorExplainNode = null;
             LogicalSearchExplainNode productionDataSourceResultExplainNode = null;
 
+            var rootParentExplainNode = queryExecutingCard.RootParentExplainNode;
             var parentExplainNode = queryExecutingCard.ParentExplainNode;
 
             if (parentExplainNode != null)
             {
-                currentExplainNode = new LogicalSearchExplainNode()
+                currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.RelationQuery
                 };
@@ -1774,56 +1790,56 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 currentExplainNode.ProcessedLogicalQueryNode = processedExpr;
 
-                directFactsCollectorExplainNode = new LogicalSearchExplainNode()
+                directFactsCollectorExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.ProcessRelationWithDirectFactsCollector
                 };
 
                 LogicalSearchExplainNode.LinkNodes(currentExplainNode, directFactsCollectorExplainNode);
 
-                directFactsResultsCollectorExplainNode = new LogicalSearchExplainNode()
+                directFactsResultsCollectorExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.ResultCollector
                 };
 
                 LogicalSearchExplainNode.LinkNodes(directFactsCollectorExplainNode, directFactsResultsCollectorExplainNode);
 
-                directFactsDataSourceCollectorExplainNode = new LogicalSearchExplainNode()
+                directFactsDataSourceCollectorExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.DataSourceCollector
                 };
 
                 LogicalSearchExplainNode.LinkNodes(directFactsCollectorExplainNode, directFactsDataSourceCollectorExplainNode);
 
-                directFactsDataSourceResultExplainNode = new LogicalSearchExplainNode()
+                directFactsDataSourceResultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.DataSourceResult
                 };
 
                 LogicalSearchExplainNode.LinkNodes(directFactsDataSourceCollectorExplainNode, directFactsDataSourceResultExplainNode);
 
-                productionCollectorExplainNode = new LogicalSearchExplainNode()
+                productionCollectorExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.ProcessRelationWithProductionCollector
                 };
 
                 LogicalSearchExplainNode.LinkNodes(currentExplainNode, productionCollectorExplainNode);
 
-                productionResultsCollectorExplainNode = new LogicalSearchExplainNode()
+                productionResultsCollectorExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.ResultCollector
                 };
 
                 LogicalSearchExplainNode.LinkNodes(productionCollectorExplainNode, productionResultsCollectorExplainNode);
 
-                productionDataSourceCollectorExplainNode = new LogicalSearchExplainNode()
+                productionDataSourceCollectorExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.DataSourceCollector
                 };
 
                 LogicalSearchExplainNode.LinkNodes(productionCollectorExplainNode, productionDataSourceCollectorExplainNode);
 
-                productionDataSourceResultExplainNode = new LogicalSearchExplainNode()
+                productionDataSourceResultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.DataSourceResult
                 };
@@ -1857,7 +1873,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //}
 #endif
 
-            var rulePartsOfFactsList = dataSource.GetIndexedRulePartOfFactsByKeyOfRelation(processedExpr.Name, options.LogicalSearchStorageContext, directFactsDataSourceResultExplainNode);
+            var rulePartsOfFactsList = dataSource.GetIndexedRulePartOfFactsByKeyOfRelation(processedExpr.Name, options.LogicalSearchStorageContext, directFactsDataSourceResultExplainNode, rootParentExplainNode);
 
             if(directFactsDataSourceResultExplainNode != null)
             {
@@ -1882,7 +1898,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                     if (directFactsResultsCollectorExplainNode != null)
                     {
-                        localResultExplainNode = new LogicalSearchExplainNode()
+                        localResultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                         {
                             Kind = KindOfLogicalSearchExplainNode.Result
                         };
@@ -1896,8 +1912,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     queryExecutingCardForTargetFact.VarsInfoList = processedExpr.VarsInfoList;
                     queryExecutingCardForTargetFact.KnownInfoList = targetKnownInfoList;
                     queryExecutingCardForTargetFact.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+                    queryExecutingCardForTargetFact.RootParentExplainNode = rootParentExplainNode;
                     queryExecutingCardForTargetFact.ParentExplainNode = localResultExplainNode;
-
 
                     FillExecutingCardForCallingFromRelationForFact(rulePartsOfFacts, queryExecutingCardForTargetFact, dataSource, options);
 
@@ -1936,7 +1952,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"~~~~~~~~~~~~~~~~~queryExecutingCard = {queryExecutingCard}");
 #endif
 
-            var rulePartWithOneRelationsList = dataSource.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(processedExpr.Name, options.LogicalSearchStorageContext, productionDataSourceResultExplainNode);
+            var rulePartWithOneRelationsList = dataSource.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(processedExpr.Name, options.LogicalSearchStorageContext, productionDataSourceResultExplainNode, rootParentExplainNode);
 
 #if DEBUG
             //Log($"rulePartWithOneRelationsList?.Count = {rulePartWithOneRelationsList?.Count}");
@@ -1961,7 +1977,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                     if(productionResultsCollectorExplainNode != null)
                     {
-                        localResultExplainNode = new LogicalSearchExplainNode()
+                        localResultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                         {
                             Kind = KindOfLogicalSearchExplainNode.Result
                         };
@@ -1981,6 +1997,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     queryExecutingCardForTargetRule.VarsInfoList = processedExpr.VarsInfoList;
                     queryExecutingCardForTargetRule.KnownInfoList = targetKnownInfoList;
                     queryExecutingCardForTargetRule.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+                    queryExecutingCardForTargetRule.RootParentExplainNode = rootParentExplainNode;
                     queryExecutingCardForTargetRule.ParentExplainNode = localResultExplainNode;
 
                     FillExecutingCardForCallingFromRelationForProduction(indexedRulePartsOfRule, queryExecutingCardForTargetRule, dataSource, options);
@@ -2047,11 +2064,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             LogicalSearchExplainNode currentExplainNode = null;
             LogicalSearchExplainNode dataSourceResultExplainNode = null;
 
+            var rootParentExplainNode = queryExecutingCard.RootParentExplainNode;
             var parentExplainNode = queryExecutingCard.ParentExplainNode;
 
             if(parentExplainNode != null)
             {
-                currentExplainNode = new LogicalSearchExplainNode()
+                currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.RelationQuestionQuery,
                     ProcessedLogicalQueryNode = processedExpr
@@ -2059,7 +2077,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
 
-                dataSourceResultExplainNode = new LogicalSearchExplainNode()
+                dataSourceResultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.DataSourceResult
                 };
@@ -2105,7 +2123,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"hasAnnotations = {hasAnnotations}");
 #endif
 
-            var targetRelationsList = dataSource.AllRelationsForProductions(options.LogicalSearchStorageContext, dataSourceResultExplainNode);
+            var targetRelationsList = dataSource.AllRelationsForProductions(options.LogicalSearchStorageContext, dataSourceResultExplainNode, rootParentExplainNode);
 
 #if DEBUG
             //Log($"targetRelationsList.Count = {targetRelationsList.Count}");
@@ -2165,6 +2183,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 comparisonQueryExecutingCard.KnownInfoList = targetKnownInfoList;
                 comparisonQueryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+                comparisonQueryExecutingCard.RootParentExplainNode = rootParentExplainNode;
 
                 var reasonOfFuzzyLogicResolving = new ReasonOfFuzzyLogicResolving();
                 reasonOfFuzzyLogicResolving.Kind = KindOfReasonOfFuzzyLogicResolving.Relation;
@@ -2352,11 +2371,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             LogicalSearchExplainNode leftResultExplainNode = null;
             LogicalSearchExplainNode rightResultExplainNode = null;
 
+            var rootParentExplainNode = queryExecutingCard.RootParentExplainNode;
             var parentExplainNode = queryExecutingCard.ParentExplainNode;
 
             if(parentExplainNode != null)
             {
-                currentExplainNode = new LogicalSearchExplainNode()
+                currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.OperatorQuery,
                     KindOfOperator = KindOfOperatorOfLogicalQueryNode.And,
@@ -2365,14 +2385,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
 
-                leftResultExplainNode = new LogicalSearchExplainNode()
+                leftResultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.Result
                 };
 
                 LogicalSearchExplainNode.LinkNodes(currentExplainNode, leftResultExplainNode);
 
-                rightResultExplainNode = new LogicalSearchExplainNode()
+                rightResultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.Result
                 };
@@ -2384,6 +2404,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             leftQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
             leftQueryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+            leftQueryExecutingCard.RootParentExplainNode = rootParentExplainNode;
             leftQueryExecutingCard.ParentExplainNode = leftResultExplainNode;
 
             FillExecutingCard(processedExpr.Left, leftQueryExecutingCard, dataSource, options);
@@ -2411,6 +2432,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             rightQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
             rightQueryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+            rightQueryExecutingCard.RootParentExplainNode = rootParentExplainNode;
             rightQueryExecutingCard.ParentExplainNode = rightResultExplainNode;
 
             FillExecutingCard(processedExpr.Right, rightQueryExecutingCard, dataSource, options);
@@ -2663,11 +2685,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             LogicalSearchExplainNode leftResultExplainNode = null;
             LogicalSearchExplainNode rightResultExplainNode = null;
 
+            var rootParentExplainNode = queryExecutingCard.RootParentExplainNode;
             var parentExplainNode = queryExecutingCard.ParentExplainNode;
 
             if (parentExplainNode != null)
             {
-                currentExplainNode = new LogicalSearchExplainNode()
+                currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.OperatorQuery,
                     KindOfOperator = KindOfOperatorOfLogicalQueryNode.Or,
@@ -2676,14 +2699,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
 
-                leftResultExplainNode = new LogicalSearchExplainNode()
+                leftResultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.Result
                 };
 
                 LogicalSearchExplainNode.LinkNodes(currentExplainNode, leftResultExplainNode);
 
-                rightResultExplainNode = new LogicalSearchExplainNode()
+                rightResultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.Result
                 };
@@ -2695,6 +2718,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             leftQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
             leftQueryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+            leftQueryExecutingCard.RootParentExplainNode = rootParentExplainNode;
             leftQueryExecutingCard.ParentExplainNode = leftResultExplainNode;
 
             FillExecutingCard(processedExpr.Left, leftQueryExecutingCard, dataSource, options);
@@ -2714,6 +2738,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             rightQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
             rightQueryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+            rightQueryExecutingCard.RootParentExplainNode = rootParentExplainNode;
             rightQueryExecutingCard.ParentExplainNode = rightResultExplainNode;
 
             FillExecutingCard(processedExpr.Right, rightQueryExecutingCard, dataSource, options);
@@ -2953,11 +2978,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             LogicalSearchExplainNode currentExplainNode = null;
 
+            var rootParentExplainNode = queryExecutingCard.RootParentExplainNode;
             var parentExplainNode = queryExecutingCard.ParentExplainNode;
 
             if(parentExplainNode != null)
             {
-                currentExplainNode = new LogicalSearchExplainNode()
+                currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.OperatorQuery,
                     KindOfOperator = KindOfOperatorOfLogicalQueryNode.Is,
@@ -3037,11 +3063,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             LogicalSearchExplainNode currentExplainNode = null;
 
+            var rootParentExplainNode = queryExecutingCard.RootParentExplainNode;
             var parentExplainNode = queryExecutingCard.ParentExplainNode;
 
             if (parentExplainNode != null)
             {
-                currentExplainNode = new LogicalSearchExplainNode()
+                currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.OperatorQuery,
                     KindOfOperator = KindOfOperatorOfLogicalQueryNode.IsNot,
@@ -3117,11 +3144,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             LogicalSearchExplainNode currentExplainNode = null;
 
+            var rootParentExplainNode = queryExecutingCard.RootParentExplainNode;
             var parentExplainNode = queryExecutingCard.ParentExplainNode;
 
             if (parentExplainNode != null)
             {
-                currentExplainNode = new LogicalSearchExplainNode()
+                currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.OperatorQuery,
                     KindOfOperator = KindOfOperatorOfLogicalQueryNode.More,
@@ -3173,11 +3201,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             LogicalSearchExplainNode currentExplainNode = null;
 
+            var rootParentExplainNode = queryExecutingCard.RootParentExplainNode;
             var parentExplainNode = queryExecutingCard.ParentExplainNode;
 
             if (parentExplainNode != null)
             {
-                currentExplainNode = new LogicalSearchExplainNode()
+                currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.OperatorQuery,
                     KindOfOperator = KindOfOperatorOfLogicalQueryNode.MoreOrEqual,
@@ -3229,11 +3258,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             LogicalSearchExplainNode currentExplainNode = null;
 
+            var rootParentExplainNode = queryExecutingCard.RootParentExplainNode;
             var parentExplainNode = queryExecutingCard.ParentExplainNode;
 
             if (parentExplainNode != null)
             {
-                currentExplainNode = new LogicalSearchExplainNode()
+                currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.OperatorQuery,
                     KindOfOperator = KindOfOperatorOfLogicalQueryNode.Less,
@@ -3285,11 +3315,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             LogicalSearchExplainNode currentExplainNode = null;
 
+            var rootParentExplainNode = queryExecutingCard.RootParentExplainNode;
             var parentExplainNode = queryExecutingCard.ParentExplainNode;
 
             if (parentExplainNode != null)
             {
-                currentExplainNode = new LogicalSearchExplainNode()
+                currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.OperatorQuery,
                     KindOfOperator = KindOfOperatorOfLogicalQueryNode.LessOrEqual,
@@ -3390,11 +3421,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             LogicalSearchExplainNode currentExplainNode = null;
             LogicalSearchExplainNode resultExplainNode = null;
 
+            var rootParentExplainNode = queryExecutingCard.RootParentExplainNode;
             var parentExplainNode = queryExecutingCard.ParentExplainNode;
 
             if (parentExplainNode != null)
             {
-                currentExplainNode = new LogicalSearchExplainNode()
+                currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.OperatorQuery,
                     KindOfOperator = KindOfOperatorOfLogicalQueryNode.Not,
@@ -3403,7 +3435,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 currentExplainNode.ProcessedLogicalQueryNode = processedExpr;
 
-                resultExplainNode = new LogicalSearchExplainNode()
+                resultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.Result
                 };
@@ -3415,6 +3447,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             leftQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
             leftQueryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+            leftQueryExecutingCard.RootParentExplainNode = rootParentExplainNode;
             leftQueryExecutingCard.ParentExplainNode = resultExplainNode;
 
             FillExecutingCard(processedExpr.Left, leftQueryExecutingCard, dataSource, options);
@@ -3472,11 +3505,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             LogicalSearchExplainNode currentExplainNode = null;
 
+            var rootParentExplainNode = queryExecutingCard.RootParentExplainNode;
             var parentExplainNode = queryExecutingCard.ParentExplainNode;
 
             if(parentExplainNode != null)
             {
-                currentExplainNode = new LogicalSearchExplainNode()
+                currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.RelationWithDirectFactQuery
                 };
@@ -3518,7 +3552,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if (currentExplainNode != null)
                 {
-                    relationWithDirectFactQueryProcessTargetRelationExplainNode = new LogicalSearchExplainNode()
+                    relationWithDirectFactQueryProcessTargetRelationExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                     {
                         Kind = KindOfLogicalSearchExplainNode.RelationWithDirectFactQueryProcessTargetRelation,
                         ProcessedLogicalQueryNode = targetRelation
@@ -3554,6 +3588,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 comparisonQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
                 comparisonQueryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+                comparisonQueryExecutingCard.RootParentExplainNode = rootParentExplainNode;
 
                 foreach (var knownInfo in queryExecutingCard.KnownInfoList)
                 {
@@ -3730,14 +3765,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                                         if (relationWithDirectFactQueryProcessTargetRelationExplainNode != null)
                                         {
-                                            fetchingAllValuesForResolvingExpressionParamExplainNode = new LogicalSearchExplainNode()
+                                            fetchingAllValuesForResolvingExpressionParamExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                                             {
                                                 Kind = KindOfLogicalSearchExplainNode.FetchingAllValuesForResolvingExpressionParam
                                             };
 
                                             LogicalSearchExplainNode.LinkNodes(relationWithDirectFactQueryProcessTargetRelationExplainNode, fetchingAllValuesForResolvingExpressionParamExplainNode);
 
-                                            fetchingAllValuesForResolvingExpressionParamResultExplainNode = new LogicalSearchExplainNode()
+                                            fetchingAllValuesForResolvingExpressionParamResultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                                             {
                                                 Kind = KindOfLogicalSearchExplainNode.Result
                                             };
@@ -3749,6 +3784,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                                         //queryExecutingCardForGroup.KnownInfoList = queryExecutingCard?.KnownInfoList;
                                         queryExecutingCardForExprInParameter.IsFetchingAllValuesForResolvingExpressionParam = true;
+                                        queryExecutingCardForExprInParameter.RootParentExplainNode = rootParentExplainNode;
                                         queryExecutingCardForExprInParameter.ParentExplainNode = fetchingAllValuesForResolvingExpressionParamResultExplainNode;
 
                                         FillExecutingCard(paramOfTargetRelation, queryExecutingCardForExprInParameter, dataSource, options);
@@ -3917,18 +3953,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             LogicalSearchExplainNode currentExplainNode = null;
             LogicalSearchExplainNode resultExplainNode = null;
 
+            var rootParentExplainNode = queryExecutingCard.RootParentExplainNode;
             var parentExplainNode = queryExecutingCard.ParentExplainNode;
 
             if (parentExplainNode != null)
             {
-                currentExplainNode = new LogicalSearchExplainNode()
+                currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.GroupQuery
                 };
 
                 currentExplainNode.ProcessedLogicalQueryNode = processedExpr;
 
-                resultExplainNode = new LogicalSearchExplainNode()
+                resultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.Result
                 };
@@ -3940,6 +3977,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             leftQueryExecutingCard.KnownInfoList = queryExecutingCard.KnownInfoList;
             leftQueryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+            leftQueryExecutingCard.RootParentExplainNode = rootParentExplainNode;
             leftQueryExecutingCard.ParentExplainNode = resultExplainNode;
 
             FillExecutingCard(processedExpr.Left, leftQueryExecutingCard, dataSource, options);
@@ -3964,6 +4002,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if (leftQueryExecutingCard.PostFiltersList.Any())
             {
                 var queryExecutingCardForFillExecutingCardUsingPostFiltersList = new QueryExecutingCardForIndexedPersistLogicalData();
+                queryExecutingCardForFillExecutingCardUsingPostFiltersList.RootParentExplainNode = rootParentExplainNode;
                 queryExecutingCardForFillExecutingCardUsingPostFiltersList.ParentExplainNode = parentExplainNode;
 
                 var postFilterNode = FillExecutingCardUsingPostFiltersList(leftQueryExecutingCard, queryExecutingCardForFillExecutingCardUsingPostFiltersList, options, dataSource);
@@ -4013,11 +4052,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             LogicalSearchExplainNode currentExplainNode = null;
 
+            var rootParentExplainNode = queryExecutingCard.RootParentExplainNode;
             var parentExplainNode = queryExecutingCard.ParentExplainNode;
 
             if(parentExplainNode != null)
             {
-                currentExplainNode = new LogicalSearchExplainNode()
+                currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.RelationWithProductionQuery
                 };
@@ -4096,7 +4136,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (currentExplainNode != null)
             {
-                relationWithProductionNextPartsCollectorExplainNode = new LogicalSearchExplainNode()
+                relationWithProductionNextPartsCollectorExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.RelationWithProductionNextPartsCollector
                 };
@@ -4120,7 +4160,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if (relationWithProductionNextPartsCollectorExplainNode != null)
                 {
-                    nextPartLocalResultExplainNode = new LogicalSearchExplainNode()
+                    nextPartLocalResultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                     {
                         Kind = KindOfLogicalSearchExplainNode.Result
                     };
@@ -4132,6 +4172,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 queryExecutingCardForNextPart.VarsInfoList = targetRelation.VarsInfoList;
                 queryExecutingCardForNextPart.KnownInfoList = targetKnownInfoList;
                 queryExecutingCardForNextPart.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+                queryExecutingCardForNextPart.RootParentExplainNode = rootParentExplainNode;
                 queryExecutingCardForNextPart.ParentExplainNode = nextPartLocalResultExplainNode;
 
                 FillExecutingCardForCallingFromOtherPart(nextPart, queryExecutingCardForNextPart, dataSource, options);
@@ -4269,11 +4310,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             LogicalSearchExplainNode currentExplainNode = null;
             LogicalSearchExplainNode resultExplainNode = null;
 
+            var rootParentExplainNode = queryExecutingCard.RootParentExplainNode;
             var parentExplainNode = queryExecutingCard.ParentExplainNode;
 
             if(parentExplainNode != null)
             {
-                currentExplainNode = new LogicalSearchExplainNode()
+                currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.RelationWithProductionNextPart
                 };
@@ -4282,7 +4324,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 currentExplainNode.ProcessedBaseRulePart = processedExpr;
 
-                resultExplainNode = new LogicalSearchExplainNode()
+                resultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.Result
                 };
@@ -4294,6 +4336,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             queryExecutingCardForExpression.KnownInfoList = queryExecutingCard.KnownInfoList;
             queryExecutingCardForExpression.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+            queryExecutingCardForExpression.RootParentExplainNode = rootParentExplainNode;
             queryExecutingCardForExpression.ParentExplainNode = resultExplainNode;
 
             FillExecutingCard(processedExpr.Expression, queryExecutingCardForExpression, dataSource, options);
@@ -4341,6 +4384,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1?.Select(p => p.NameValue), Formatting.Indented)}");
             //Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");
 #endif
+
+            throw new NotImplementedException();
 
             if (expressionNode1.Kind == KindOfLogicalQueryNode.LogicalVar && (expressionNode2.Kind == KindOfLogicalQueryNode.Concept || expressionNode2.Kind == KindOfLogicalQueryNode.Entity))
             {

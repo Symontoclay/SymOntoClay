@@ -9,6 +9,8 @@ namespace SymOntoClay.Core.DebugHelpers
     {
         public StringBuilder Output { get; set; } = new StringBuilder();
         private Dictionary<LogicalSearchExplainNode, string> _nodeNamesDict = new Dictionary<LogicalSearchExplainNode, string>();
+        public List<LogicalSearchExplainNode> ProcessedNodesList { get; set; } = new List<LogicalSearchExplainNode>();
+
         public List<string> PathsList { get; set; } = new List<string>();
         private int _currIndex;
 

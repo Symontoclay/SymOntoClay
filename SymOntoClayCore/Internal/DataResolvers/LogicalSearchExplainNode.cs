@@ -9,9 +9,26 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class LogicalSearchExplainNode: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
     {
+        public LogicalSearchExplainNode(LogicalSearchExplainNode rootParent)
+        {
+            RootParent = rootParent;
+
+            if(rootParent != null)
+            {
+                var commonChildren = rootParent.CommonChildren;
+
+                if (!commonChildren.Contains(this))
+                {
+                    commonChildren.Add(this);
+                }
+            }
+        }
+
         public KindOfLogicalSearchExplainNode Kind { get; set; } = KindOfLogicalSearchExplainNode.Unknown;
         public LogicalSearchExplainNode Parent { get; set; }
         public List<LogicalSearchExplainNode> Children { get; set; } = new List<LogicalSearchExplainNode>();
+        public LogicalSearchExplainNode RootParent { get; set; }
+        public List<LogicalSearchExplainNode> CommonChildren { get; set; } = new List<LogicalSearchExplainNode>();
         public RuleInstance ProcessedRuleInstance { get; set; }
         public PrimaryRulePart ProcessedPrimaryRulePart { get; set; }
         public LogicalQueryNode ProcessedLogicalQueryNode { get; set; }
@@ -34,8 +51,25 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public static void LinkNodes(LogicalSearchExplainNode parent, LogicalSearchExplainNode child)
         {
-            parent.Children.Add(child);
+            var parentChildren = parent.Children;
+
+            if (!parentChildren.Contains(child))
+            {
+                parentChildren.Add(child);
+            }
+            
             child.Parent = parent;
+
+            //var commonParent = parent.CommonParent;
+
+            //var commonChildren = commonParent.CommonChildren;
+
+            //child.CommonParent = commonParent;
+
+            //if(!commonChildren.Contains(child))
+            //{
+            //    commonChildren.Add(child);
+            //}
         }
 
         public static void ResetParent(LogicalSearchExplainNode child)

@@ -562,13 +562,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public event Func<RuleInstance, IAddFactOrRuleResult> OnAddingFact;
 
         /// <inheritdoc/>
-        IList<LogicalQueryNode> ILogicalStorage.GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
+        IList<LogicalQueryNode> ILogicalStorage.GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
         {
             LogicalSearchExplainNode currentExplainNode = null;
 
             if (parentExplainNode != null)
             {
-                currentExplainNode = new LogicalSearchExplainNode()
+                currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.LogicalStorage,
                     LogicalStorage = this
@@ -592,7 +592,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
+        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
         {
 #if DEBUG
             //LogInstance.Log($"key = {key}");
@@ -602,7 +602,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             if(parentExplainNode != null)
             {
-                currentExplainNode = new LogicalSearchExplainNode()
+                currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.LogicalStorage,
                     Key = name,
@@ -616,13 +616,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode)
+        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
         {
             LogicalSearchExplainNode currentExplainNode = null;
 
             if (parentExplainNode != null)
             {
-                currentExplainNode = new LogicalSearchExplainNode()
+                currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
                     Kind = KindOfLogicalSearchExplainNode.LogicalStorage,
                     Key = name,

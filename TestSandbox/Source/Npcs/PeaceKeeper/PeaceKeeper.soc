@@ -1,10 +1,8 @@
 ﻿app PeaceKeeper
 {
-	{: male(#Tom) o: very middle :}
-	{: parent(#Piter, #Tom) o: very middle :}
-	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+	{: >: { (act(#player,walk)) & hear(i,(act(#player,walk))) & distance(i,(act(#player,walk)),14.051362991333) & direction((act(#player,walk)),15.83357) & point((act(#player,walk)),#@[14.05136, 15.83357]) } :}
 
 	on Enter => {
-	    select {: son($x, $y)  o: { _ is middle } :} >> @>log;
+	    select {: >: { hear(i,q5) } :} >> @>log;
 	}
 }

@@ -3574,7 +3574,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
                 //Log($"DebugHelperForRuleInstance.ToString(targetRelation) = {DebugHelperForRuleInstance.ToString(targetRelation)}");
                 //Log($"targetRelation = {targetRelation}");
-                //Log($"targetRelation = {targetRelation.GetHumanizeDbgString()}");
+                //Log($"targetRelation = {targetRelation.ToHumanizedString()}");
                 //Log($"targetRelation.Name = {targetRelation.Name}");
 #endif
 
@@ -3755,7 +3755,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
 #if DEBUG
                                     //Log($"NEXT paramOfTargetRelation = {paramOfTargetRelation}");
+                                    //Log($"NEXT paramOfTargetRelation = {paramOfTargetRelation?.ToHumanizedString()}");
                                     //Log($"NEXT options.EntityDictionary.GetName(paramOfTargetRelation.AsKeyRef.Key) = {options.EntityDictionary.GetName(paramOfTargetRelation.AsKeyRef.Key)}");
+                                    //Log($"paramOfTargetRelation.IsExpression = {paramOfTargetRelation.IsExpression}");
 #endif
 
                                     if (paramOfTargetRelation.IsExpression)
@@ -4385,8 +4387,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");
 #endif
 
-            throw new NotImplementedException();
-
             if (expressionNode1.Kind == KindOfLogicalQueryNode.LogicalVar && (expressionNode2.Kind == KindOfLogicalQueryNode.Concept || expressionNode2.Kind == KindOfLogicalQueryNode.Entity))
             {
 #if DEBUG
@@ -4579,6 +4579,57 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 return _fuzzyLogicResolver.Equals(sequenceNode.FuzzyLogicNonNumericSequenceValue, _numberValueLinearResolver.Resolve(value, localCodeExecutionContext), reason, localCodeExecutionContext);
+            }
+
+            if (expressionNode1.Kind == KindOfLogicalQueryNode.Relation && expressionNode2.Kind == KindOfLogicalQueryNode.Relation)
+            {
+#if DEBUG
+                //Log("Try to compare relations!");
+#endif
+
+                if (expressionNode1.Name != expressionNode2.Name)
+                {
+                    return false;
+                }
+
+                var paramsList1 = expressionNode1.ParamsList;
+                var paramsList2 = expressionNode2.ParamsList;
+
+                if (paramsList1.Count != paramsList2.Count)
+                {
+                    return false;
+                }
+
+                var paramsList2Enumerator = paramsList2.GetEnumerator();
+
+                foreach (var param1 in paramsList1)
+                {
+                    if (!paramsList2Enumerator.MoveNext())
+                    {
+                        return false;
+                    }
+
+                    var param2 = paramsList2Enumerator.Current;
+
+#if DEBUG
+                    //Log($"param1 = {param1}");
+                    //Log($"param2 = {param2}");
+                    //Log($"EqualityCompare(param1, param2, null, null, reason, options) = {EqualityCompare(param1, param2, null, null, reason, options, queryExecutingCard)}");
+                    //Log($"?????????????????>>>>>>>>>>queryExecutingCard (after) = {queryExecutingCard}");
+#endif
+
+                    if (!EqualityCompare(param1, param2, null, null, reason, options, queryExecutingCard, dataSource))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            if ((expressionNode1.Kind == KindOfLogicalQueryNode.Group && expressionNode2.Kind != KindOfLogicalQueryNode.Group) || (expressionNode2.Kind == KindOfLogicalQueryNode.Group && expressionNode1.Kind != KindOfLogicalQueryNode.Group))
+            {
+                return false;
             }
 
             Log($"expressionNode1 = {expressionNode1}");

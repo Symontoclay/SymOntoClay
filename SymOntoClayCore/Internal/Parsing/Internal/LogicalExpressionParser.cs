@@ -110,9 +110,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");
             //Log($"_nodePoint = {_nodePoint}");
+            //Log($"_nodePoint = {_nodePoint?.BuildExpr<LogicalQueryNode>()?.ToHumanizedString()}");
 #endif
 
-            if(_terminatingTokenKindList.Contains(_currToken.TokenKind))
+            if (_terminatingTokenKindList.Contains(_currToken.TokenKind))
             {
                 _context.Recovery(_currToken);
                 Exit();
@@ -148,6 +149,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                 _state = State.GotEntity;
                             }
+                            break;
+
+                        case TokenKind.OpenRoundBracket:
+                            ProcessGroup();
                             break;
 
                         default:
@@ -323,6 +328,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case TokenKind.OpenRoundBracket:
+                            {
+                                var node = NProcessGroup();
+
+                                _lastLogicalQueryNode.ParamsList.Add(node);
+
+                                _state = State.GotPredicateParameter;
+                            }
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -369,6 +384,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 Exit();
                                 break;
                             }
+#if DEBUG
+                            Log($"_nodePoint = {_nodePoint?.BuildExpr<LogicalQueryNode>()?.ToHumanizedString()}");
+#endif
                             throw new UnexpectedTokenException(_currToken);
 
                         case TokenKind.Word:
@@ -556,8 +574,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessGroup()
         {
-            var node = new LogicalQueryNode();
+            var node = NProcessGroup();
             _lastLogicalQueryNode = node;
+
+            var intermediateNode = new IntermediateAstNode(node);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+            _state = State.GotPredicate;
+        }
+
+        private LogicalQueryNode NProcessGroup()
+        {
+            var node = new LogicalQueryNode();
+            
             node.Kind = KindOfLogicalQueryNode.Group;
 
             if (_unresolvedAiases.Any())
@@ -598,11 +628,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             node.Left = parser.Result;
 
-            var intermediateNode = new IntermediateAstNode(node);
-
-            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
-
-            _state = State.GotPredicate;
+            return node;
         }
 
         private void ProcessFact()

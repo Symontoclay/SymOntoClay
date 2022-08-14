@@ -142,7 +142,7 @@ namespace SymOntoClay.Core.DebugHelpers
 
                         sb.AppendLine("</TD></TR>");
 
-                        var resultsOfQueryToRelationList = source.ResultsOfQueryToRelationList;
+                        var resultsOfQueryToRelationList = source.ResultsOfQueryToRelationList?.ToList();
 
                         if (resultsOfQueryToRelationList.IsNullOrEmpty())
                         {
@@ -237,8 +237,8 @@ namespace SymOntoClay.Core.DebugHelpers
 
                         sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
 
-                        var baseRulePartList = source.BaseRulePartList;
-                        var relationsList = source.RelationsList;
+                        var baseRulePartList = source.BaseRulePartList?.ToList();
+                        var relationsList = source.RelationsList?.ToList();
 
                         if(baseRulePartList.IsNullOrEmpty() && relationsList.IsNullOrEmpty())
                         {
@@ -503,8 +503,8 @@ namespace SymOntoClay.Core.DebugHelpers
 
                 case KindOfLogicalSearchExplainNode.KnownInfoResult:
                     {
-                        var knownInfoList = source.KnownInfoList;
-                        var varsInfoList = source.VarsInfoList;
+                        var knownInfoList = source.KnownInfoList?.ToList();
+                        var varsInfoList = source.VarsInfoList?.ToList();
 
                         var sb = new StringBuilder();
 

@@ -151,6 +151,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
+        public void PushSoundFact(float power, RuleInstance fact)
+        {
+            _gameComponent.PushSoundFact(power, fact);
+        }
+
+        /// <inheritdoc/>
         public IStorage BackpackStorage => _gameComponent.BackpackStorage;
 
         /// <inheritdoc/>
@@ -167,6 +173,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         /// <inheritdoc/>
         public IEngineContext EngineContext => _gameComponent.EngineContext;
+
+        /// <inheritdoc/>
+        public IStandardFactsBuilder StandardFactsBuilder => _gameComponent.StandardFactsBuilder;
 
         /// <inheritdoc/>
         public void Die()

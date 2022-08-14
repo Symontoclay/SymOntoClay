@@ -216,6 +216,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             _soundPublisher.PushSoundFact(power, text);
         }
 
+        public void PushSoundFact(float power, RuleInstance fact)
+        {
+            _soundPublisher.PushSoundFact(power, fact);
+        }
+
         /// <inheritdoc/>
         public override bool CanBeTakenBy(IEntity subject)
         {

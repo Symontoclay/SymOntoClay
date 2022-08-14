@@ -38,5 +38,7 @@ namespace SymOntoClay.UnityAsset.Core
         string InsertPublicFact(RuleInstance fact);
         void RemovePublicFact(string id);
         void PushSoundFact(float power, string text);
+        void PushSoundFact(float power, RuleInstance fact);
+        IStandardFactsBuilder StandardFactsBuilder { get; }
     }
 }

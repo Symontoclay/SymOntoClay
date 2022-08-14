@@ -37,7 +37,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private readonly IEntityLogger _logger;
         private readonly IInvokerInMainThread _invokerInMainThread;
         private readonly int _instanceId;
-
+        
         protected BaseGameComponent(BaseGameComponentSettings settings, IWorldCoreGameComponentContext worldContext)
         {
             _instanceId = settings.InstanceId;
@@ -48,8 +48,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _worldContext = worldContext;
             _invokerInMainThread = worldContext.InvokerInMainThread;
             _logger = _worldContext.CreateLogger(settings.Id);
+
+            _standardFactsBuilder = worldContext.StandardFactsBuilder;
         }
 
+        private readonly IStandardFactsBuilder _standardFactsBuilder;
         private readonly string _idForFacts;
         private readonly string _id;
 
@@ -77,6 +80,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             var invocableInMainThreadObj = new InvocableInMainThreadObj<TResult>(function, _invokerInMainThread);
             return invocableInMainThreadObj.Run();
         }
+
+        public IStandardFactsBuilder StandardFactsBuilder => _standardFactsBuilder;
 
         /// <inheritdoc/>
         public abstract IStorage PublicFactsStorage { get; }

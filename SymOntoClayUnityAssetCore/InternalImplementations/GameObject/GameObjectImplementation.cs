@@ -88,6 +88,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
         }
 
         /// <inheritdoc/>
+        public void PushSoundFact(float power, RuleInstance fact)
+        {
+            _gameComponent.PushSoundFact(power, fact);
+        }
+
+        /// <inheritdoc/>
         public IStorage PublicFactsStorage => _gameComponent.PublicFactsStorage;
 
         private readonly GameObjectSettings _settings;
@@ -99,6 +105,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
 
         /// <inheritdoc/>
         public IEntityLogger Logger => _gameComponent.Logger;
+
+        /// <inheritdoc/>
+        public IStandardFactsBuilder StandardFactsBuilder => _gameComponent.StandardFactsBuilder;
 
         /// <inheritdoc/>
         public bool IsDisposed => _gameComponent.IsDisposed;

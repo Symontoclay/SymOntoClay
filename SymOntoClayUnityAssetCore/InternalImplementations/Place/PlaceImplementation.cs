@@ -90,6 +90,15 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
         }
 
         /// <inheritdoc/>
+        public void PushSoundFact(float power, RuleInstance fact)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public IStandardFactsBuilder StandardFactsBuilder => throw new NotImplementedException();
+
+        /// <inheritdoc/>
         public void Dispose()
         {
             throw new NotImplementedException();

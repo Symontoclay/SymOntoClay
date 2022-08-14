@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.Internal.HostSupport;
 using SymOntoClay.UnityAsset.Core.Internal.SoundPerception;
@@ -55,9 +56,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 #if DEBUG
                 //Log($"standaloneStorageSettings = {standaloneStorageSettings}");
 #endif
-                HostStorage = new StandaloneStorage(standaloneStorageSettings);
-
-                
+                HostStorage = new StandaloneStorage(standaloneStorageSettings);              
             }
             catch (Exception e)
             {
@@ -97,6 +96,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         public void PushSoundFact(float power, string text)
         {
             _soundPublisher.PushSoundFact(power, text);
+        }
+
+        public void PushSoundFact(float power, RuleInstance fact)
+        {
+            _soundPublisher.PushSoundFact(power, fact);
         }
 
         /// <inheritdoc/>

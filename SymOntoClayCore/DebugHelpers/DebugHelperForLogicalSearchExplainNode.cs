@@ -345,7 +345,8 @@ namespace SymOntoClay.Core.DebugHelpers
                         var ruleInstance = source.LogicalStorage as RuleInstance;
 
                         sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
-                        sb.AppendLine($"<TR><TD>Logical storage: {source.LogicalStorage?.Kind}</TD></TR>");
+
+                        sb.AppendLine($"<TR><TD>Logical storage: {source.LogicalStorage.Kind} ({source.LogicalStorage.GetHashCode()})</TD></TR>");
                         if(ruleInstance != null)
                         {
                             sb.AppendLine($"<TR><TD>{ruleInstance.ToHumanizedString()}</TD></TR>");

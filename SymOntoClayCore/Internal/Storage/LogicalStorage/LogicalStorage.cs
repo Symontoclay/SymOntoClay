@@ -199,7 +199,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             //Log($"isPrimary = {isPrimary}");
             //}
 
-            Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+            Log($"({GetHashCode()}) ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
             //Log($"ruleInstance = {ruleInstance}");
             //Log($"isPrimary = {isPrimary}");
 #endif
@@ -270,7 +270,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                     var approvingRez = AddingFactHelper.CallEvent(OnAddingFact, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext, Logger);
 
 #if DEBUG
-                    Log($"approvingRez = {approvingRez}");
+                    Log($"{GetHashCode()}) approvingRez = {approvingRez}");
 #endif
                     
                     if(approvingRez != null)
@@ -298,7 +298,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             }
 
 #if DEBUG
-            Log($"NEXT ruleInstance = {ruleInstance.ToHumanizedString()}");
+            Log($"{GetHashCode()}) NEXT ruleInstance = {ruleInstance.ToHumanizedString()}");
 #endif
 
             _ruleInstancesList.Add(ruleInstance);
@@ -466,7 +466,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         private void NRemoveById(string id)
         {
 #if DEBUG
-            //Log($"id = {id}");
+            Log($"id = {id}");
 #endif
 
             if (_ruleInstancesDictById.ContainsKey(id))
@@ -914,6 +914,10 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 
                     if (lifeCycle == 0)
                     {
+#if DEBUG
+                        Log($"NEXT item = {item}");
+#endif
+
                         NRemoveById(item.Key);
                     }
                     else

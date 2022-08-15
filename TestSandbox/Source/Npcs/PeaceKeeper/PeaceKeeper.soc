@@ -1,8 +1,8 @@
 ﻿app PeaceKeeper
 {
-	{: >: { (act(#player,walk)) & hear(i,(act(#player,walk))) & distance(i,(act(#player,walk)),14.051362991333) & direction((act(#player,walk)),15.83357) & point((act(#player,walk)),#@[14.05136, 15.83357]) } :}
+	{: >: { (act(q13,shoot)) & hear(i,(act(q13,shoot))) & distance(i,(act(q13,shoot)),4.35098171234131) & direction((act(q13,shoot)),21.56101) & point((act(q13,shoot)),#@[4.350982, 21.56101]) } :}
 
 	on Enter => {
-	    select {: >: { hear(i,q5) } :} >> @>log;
+	    select {: >: { hear(i,q13) } :} >> @>log;
 	}
 }

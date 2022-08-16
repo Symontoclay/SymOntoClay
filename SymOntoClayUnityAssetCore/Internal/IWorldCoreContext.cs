@@ -40,5 +40,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         ILogicQueryParseAndCache LogicQueryParseAndCache { get; }
         KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; }
         string LogicalSearchExplainDumpDir { get; }
+        bool EnableAddingRemovingFactLoggingInStorages { get; }
     }
 }

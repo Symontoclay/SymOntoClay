@@ -135,7 +135,8 @@ namespace TestSandbox.Helpers
                 Enable = true,
                 EnableRemoteConnection = true,
                 KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.DumpIfError,
-                LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory()
+                LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),
+                EnableAddingRemovingFactLoggingInStorages = false
             };
 
             if(factorySettings.PlatformLogger != null)

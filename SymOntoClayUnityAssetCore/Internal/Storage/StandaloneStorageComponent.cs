@@ -48,6 +48,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Storage
 
             standaloneStorageSettings.KindOfLogicalSearchExplain = coreContext.KindOfLogicalSearchExplain;
             standaloneStorageSettings.LogicalSearchExplainDumpDir = coreContext.LogicalSearchExplainDumpDir;
+            standaloneStorageSettings.EnableAddingRemovingFactLoggingInStorages = coreContext.EnableAddingRemovingFactLoggingInStorages;
 
 #if DEBUG
             //Log($"standaloneStorageSettings = {standaloneStorageSettings}");

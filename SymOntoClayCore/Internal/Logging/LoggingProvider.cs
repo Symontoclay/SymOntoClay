@@ -8,14 +8,15 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Logging
 {
-    public class LogicalSearchExplainProvider: BaseComponent, ILogicalSearchExplainProvider
+    public class LoggingProvider: BaseComponent, ILoggingProvider
     {
-        public LogicalSearchExplainProvider(IMainStorageContext context, BaseStorageSettings settings)
+        public LoggingProvider(IMainStorageContext context, BaseStorageSettings settings)
             : base(context.Logger)
         {
             _id = context.Id;
             KindOfLogicalSearchExplain = settings.KindOfLogicalSearchExplain;
             _logicalSearchExplainDumpDir = settings.LogicalSearchExplainDumpDir;
+            EnableAddingRemovingFactLoggingInStorages = settings.EnableAddingRemovingFactLoggingInStorages;
 
 #if DEBUG
             //Log($"_id = {_id}");
@@ -29,6 +30,9 @@ namespace SymOntoClay.Core.Internal.Logging
 
         /// <inheritdoc/>
         public KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; private set; }
+
+        /// <inheritdoc/>
+        public bool EnableAddingRemovingFactLoggingInStorages { get; private set; }
 
         /// <inheritdoc/>
         public string DumpToFile(LogicalSearchExplainNode explainNode)

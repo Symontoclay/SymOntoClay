@@ -118,7 +118,7 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             context.ActivePeriodicObjectContext = new ActivePeriodicObjectContext(settings.SyncContext);
 
-            context.LogicalSearchExplainProvider = new LogicalSearchExplainProvider(context, settings);
+            context.LogicalSearchExplainProvider = new LoggingProvider(context, settings);
         }
 
         private static void BaseInitBaseCoreContext(BaseCoreContext context, BaseCoreSettings settings)

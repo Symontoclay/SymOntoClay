@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
@@ -34,6 +35,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public StrongIdentifierValue NameOfVar { get; set; }
         public int? Position { get; set; }
         public LogicalQueryNode Expression { get; set; }
+        public List<LogicalQueryNode> AdditionalExpressions { get; set; }
 
         public QueryExecutingCardAboutKnownInfo Clone()
         {
@@ -42,6 +44,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             result.NameOfVar = NameOfVar;
             result.Position = Position;
             result.Expression = Expression;
+            result.AdditionalExpressions = AdditionalExpressions?.ToList();
             return result;
         }
 
@@ -69,6 +72,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
 
             sb.PrintObjProp(n, nameof(Expression), Expression);
+            sb.PrintObjListProp(n, nameof(AdditionalExpressions), AdditionalExpressions);
 
             return sb.ToString();
         }
@@ -97,6 +101,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
 
             sb.PrintShortObjProp(n, nameof(Expression), Expression);
+            sb.PrintShortObjListProp(n, nameof(AdditionalExpressions), AdditionalExpressions);
 
             return sb.ToString();
         }
@@ -125,6 +130,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
 
             sb.PrintBriefObjProp(n, nameof(Expression), Expression);
+            sb.PrintBriefObjListProp(n, nameof(AdditionalExpressions), AdditionalExpressions);
 
             return sb.ToString();
         }

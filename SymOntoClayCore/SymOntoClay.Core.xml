@@ -5721,10 +5721,13 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Logging.LogicalSearchExplainProvider.KindOfLogicalSearchExplain">
+        <member name="P:SymOntoClay.Core.Internal.Logging.LoggingProvider.KindOfLogicalSearchExplain">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Logging.LogicalSearchExplainProvider.DumpToFile(SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
+        <member name="P:SymOntoClay.Core.Internal.Logging.LoggingProvider.EnableAddingRemovingFactLoggingInStorages">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Logging.LoggingProvider.DumpToFile(SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.MainStorageContext.Id">

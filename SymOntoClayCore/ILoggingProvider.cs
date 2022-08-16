@@ -5,9 +5,10 @@ using System.Text;
 
 namespace SymOntoClay.Core
 {
-    public interface ILogicalSearchExplainProvider
+    public interface ILoggingProvider
     {
         KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; }
         string DumpToFile(LogicalSearchExplainNode explainNode);
+        bool EnableAddingRemovingFactLoggingInStorages { get; }
     }
 }

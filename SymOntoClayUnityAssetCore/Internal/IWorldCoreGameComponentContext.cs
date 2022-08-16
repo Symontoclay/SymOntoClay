@@ -58,5 +58,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         IStandardFactsBuilder StandardFactsBuilder { get; }
         KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; }
         string LogicalSearchExplainDumpDir { get; }
+        bool EnableAddingRemovingFactLoggingInStorages { get; }
     }
 }

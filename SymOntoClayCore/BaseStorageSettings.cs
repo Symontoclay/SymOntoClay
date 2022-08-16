@@ -57,6 +57,7 @@ namespace SymOntoClay.Core
 
         public KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; set; } = KindOfLogicalSearchExplain.None;
         public string LogicalSearchExplainDumpDir { get; set; }
+        public bool EnableAddingRemovingFactLoggingInStorages { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -73,6 +74,7 @@ namespace SymOntoClay.Core
             sb.PrintExisting(n, nameof(LogicQueryParseAndCache), LogicQueryParseAndCache);
             sb.AppendLine($"{spaces}{nameof(KindOfLogicalSearchExplain)} = {KindOfLogicalSearchExplain}");
             sb.AppendLine($"{spaces}{nameof(LogicalSearchExplainDumpDir)} = {LogicalSearchExplainDumpDir}");
+            sb.AppendLine($"{spaces}{nameof(EnableAddingRemovingFactLoggingInStorages)} = {EnableAddingRemovingFactLoggingInStorages}");
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();

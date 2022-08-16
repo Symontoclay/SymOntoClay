@@ -3381,5 +3381,33 @@ app PeaceKeeper
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case34_a()
+        {
+            var text = @"app PeaceKeeper
+{
+	{: >: { (act(q13,shoot)) & hear(i,(act(q13,shoot))) & distance(i,(act(q13,shoot)),4.35098171234131) & direction((act(q13,shoot)),21.56101) & point((act(q13,shoot)),#@[4.350982, 21.56101]) } :}
+
+	on Enter => {
+	    select {: >: { hear(i,q13) } :} >> @>log;
+	}
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

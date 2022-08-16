@@ -25,6 +25,7 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Convertors;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
@@ -222,8 +223,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     case KindOfLogicalQueryNode.Entity:
                     case KindOfLogicalQueryNode.Value:
                     case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
-                    case KindOfLogicalQueryNode.Relation:
-                    case KindOfLogicalQueryNode.Group:
                         {
                             var knownInfo = new QueryExecutingCardAboutKnownInfo();
                             knownInfo.Kind = kindOfParam;
@@ -277,6 +276,63 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                     case KindOfLogicalQueryNode.Var:
                         contextOfConvertingExpressionNode.IsParameterized = true;
+                        break;
+
+                    case KindOfLogicalQueryNode.Relation:
+                        {
+#if DEBUG
+                            //_gbcLogger.Info($"param = {param.ToHumanizedString()}");
+#endif
+
+                            var additionalKnownInfoExpressions = new List<LogicalQueryNode>();
+                            var varNames = new List<StrongIdentifierValue>();
+
+                            foreach(var node in param.ParamsList)
+                            {
+                                LogicalQueryNodeHelper.FillUpInfoAboutComplexExpression(node, additionalKnownInfoExpressions, varNames);
+                            }
+
+                            if (varNames.Any())
+                            {
+                                throw new NotImplementedException();
+                            }
+
+                            var knownInfo = new QueryExecutingCardAboutKnownInfo();
+                            knownInfo.Kind = kindOfParam;
+                            knownInfo.Expression = param;
+                            knownInfo.AdditionalExpressions = additionalKnownInfoExpressions;
+                            knownInfo.Position = i;
+                            knownInfoList.Add(knownInfo);
+                        }
+                        break;
+
+                    case KindOfLogicalQueryNode.Group: 
+                        {
+#if DEBUG
+                            //_gbcLogger.Info($"param = {param.ToHumanizedString()}");
+#endif
+                            var additionalKnownInfoExpressions = new List<LogicalQueryNode>();
+                            var varNames = new List<StrongIdentifierValue>();
+
+                            LogicalQueryNodeHelper.FillUpInfoAboutComplexExpression(param.Left, additionalKnownInfoExpressions, varNames);
+
+#if DEBUG
+                            //_gbcLogger.Info($"additionalKnownInfoExpressions = {additionalKnownInfoExpressions.Select(p => p.ToHumanizedString()).WritePODListToString()}");
+                            //_gbcLogger.Info($"varNames = {varNames.Select(p => p.NameValue).WritePODListToString()}");
+#endif
+
+                            if(varNames.Any())
+                            {
+                                throw new NotImplementedException();
+                            }
+
+                            var knownInfo = new QueryExecutingCardAboutKnownInfo();
+                            knownInfo.Kind = kindOfParam;
+                            knownInfo.Expression = param;
+                            knownInfo.AdditionalExpressions = additionalKnownInfoExpressions;
+                            knownInfo.Position = i;
+                            knownInfoList.Add(knownInfo);
+                        }
                         break;
 
                     default:

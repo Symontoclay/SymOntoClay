@@ -57,8 +57,10 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             _lifeTimeCycleById = new Dictionary<string, int>();
             _mutablePartsDict = new Dictionary<RuleInstance, IItemWithModalities>();
             _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData(realStorageContext.MainStorageContext.Logger);
+            _loggingProvider = realStorageContext.MainStorageContext.LoggingProvider;
+            _enableAddingRemovingFactLoggingInStorages = _loggingProvider.EnableAddingRemovingFactLoggingInStorages;
 
-            foreach(var parentStorage in _parentLogicalStoragesList)
+            foreach (var parentStorage in _parentLogicalStoragesList)
             {
                 parentStorage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys;
                 parentStorage.OnAddingFact += LogicalStorage_OnAddingFact;
@@ -107,6 +109,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         private Dictionary<string, RuleInstance> _ruleInstancesDictById;
         private Dictionary<string, int> _lifeTimeCycleById;
         private Dictionary<RuleInstance, IItemWithModalities> _mutablePartsDict;
+        private readonly ILoggingProvider _loggingProvider;
+        private readonly bool _enableAddingRemovingFactLoggingInStorages;
 
         private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData;
         private List<ILogicalStorage> _parentLogicalStoragesList = new List<ILogicalStorage>();
@@ -204,6 +208,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             //Log($"isPrimary = {isPrimary}");
 #endif
 
+            if(_enableAddingRemovingFactLoggingInStorages)
+            {
+                Log($"({GetHashCode()}) isPrimary = {isPrimary}; ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+            }
+
             if (ruleInstance.TypeOfAccess != TypeOfAccess.Local)
             {
                 AnnotatedItemHelper.CheckAndFillUpHolder(ruleInstance, _realStorageContext.MainStorageContext.CommonNamesStorage);
@@ -272,8 +281,13 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 #if DEBUG
                     //Log($"({GetHashCode()}) approvingRez = {approvingRez}");
 #endif
-                    
-                    if(approvingRez != null)
+
+                    if(_enableAddingRemovingFactLoggingInStorages)
+                    {
+                        Log($"({GetHashCode()}) approvingRez = {approvingRez}");
+                    }
+
+                    if (approvingRez != null)
                     {
                         var kindOfResult = approvingRez.KindOfResult;
 
@@ -300,6 +314,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 #if DEBUG
             //Log($"({GetHashCode()}) NEXT ruleInstance = {ruleInstance.ToHumanizedString()}");
 #endif
+
+            if(_enableAddingRemovingFactLoggingInStorages)
+            {
+                Log($"({GetHashCode()}) NEXT ruleInstance = {ruleInstance.ToHumanizedString()}");
+            }
 
             _ruleInstancesList.Add(ruleInstance);
 
@@ -466,7 +485,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
         private void NRemoveById(string id)
         {
 #if DEBUG
-            Log($"id = {id}");
+            //Log($"id = {id}");
 #endif
 
             if (_ruleInstancesDictById.ContainsKey(id))
@@ -517,6 +536,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             _mutablePartsDict.Remove(ruleInstance);
 
             _commonPersistIndexedLogicalData.NRemoveIndexedRuleInstanceFromIndexData(ruleInstance.Normalized);
+
+            if(_enableAddingRemovingFactLoggingInStorages)
+            {
+                Log($"({GetHashCode()}) `{ruleInstanceId}` has been removed.");
+            }
 
             return ruleInstance.UsedKeysList;
         }
@@ -890,6 +914,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
 #endif
 
             _lifeTimeCycleById[ruleInstanceId] = DEFAULT_INITIAL_TIME;
+
+            if (_enableAddingRemovingFactLoggingInStorages)
+            {
+                Log($"({GetHashCode()}) Lifetime of `{ruleInstanceId}` has been refreshed to {DEFAULT_INITIAL_TIME}.");
+            }
         }
 
         private bool GCByTimeOutCommandLoop()
@@ -915,8 +944,13 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
                     if (lifeCycle == 0)
                     {
 #if DEBUG
-                        Log($"NEXT item = {item}");
+                        //Log($"NEXT item = {item}");
 #endif
+
+                        if(_enableAddingRemovingFactLoggingInStorages)
+                        {
+                            Log($"({GetHashCode()}) Put for deleting by end of life cycle: `{item}`");
+                        }
 
                         NRemoveById(item.Key);
                     }

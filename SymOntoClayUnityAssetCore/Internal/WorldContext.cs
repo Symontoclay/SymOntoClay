@@ -87,6 +87,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             KindOfLogicalSearchExplain = loggingSettings.KindOfLogicalSearchExplain;
             LogicalSearchExplainDumpDir = CoreLogger.LogicalSearchExplainDumpDir;
+            EnableAddingRemovingFactLoggingInStorages = loggingSettings.EnableAddingRemovingFactLoggingInStorages;
         }
 
         private void CreateComponents(WorldSettings settings)
@@ -190,6 +191,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; private set; }
         KindOfLogicalSearchExplain IWorldCoreGameComponentContext.KindOfLogicalSearchExplain => KindOfLogicalSearchExplain;
         KindOfLogicalSearchExplain IWorldCoreContext.KindOfLogicalSearchExplain => KindOfLogicalSearchExplain;
+
+        public bool EnableAddingRemovingFactLoggingInStorages { get; private set; }
+        bool IWorldCoreGameComponentContext.EnableAddingRemovingFactLoggingInStorages => EnableAddingRemovingFactLoggingInStorages;
+        bool IWorldCoreContext.EnableAddingRemovingFactLoggingInStorages => EnableAddingRemovingFactLoggingInStorages;
 
         public string LogicalSearchExplainDumpDir { get; private set; }
         string IWorldCoreGameComponentContext.LogicalSearchExplainDumpDir => LogicalSearchExplainDumpDir;

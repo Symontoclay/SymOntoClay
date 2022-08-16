@@ -96,6 +96,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 coreEngineSettings.NLPConverterFactory = worldContext.NLPConverterFactory;
                 coreEngineSettings.KindOfLogicalSearchExplain = worldContext.KindOfLogicalSearchExplain;
                 coreEngineSettings.LogicalSearchExplainDumpDir = worldContext.LogicalSearchExplainDumpDir;
+                coreEngineSettings.EnableAddingRemovingFactLoggingInStorages = worldContext.EnableAddingRemovingFactLoggingInStorages;
 
 #if DEBUG
                 //Log($"coreEngineSettings = {coreEngineSettings}");

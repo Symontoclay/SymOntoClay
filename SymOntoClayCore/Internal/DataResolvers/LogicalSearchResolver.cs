@@ -160,8 +160,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             queryExpression = queryExpression.Normalized;
 
-            var logicalSearchExplainProvider = _context.LogicalSearchExplainProvider;
-            var kindOfLogicalSearchExplain = logicalSearchExplainProvider.KindOfLogicalSearchExplain;
+            var loggingProvider = _context.LoggingProvider;
+            var kindOfLogicalSearchExplain = loggingProvider.KindOfLogicalSearchExplain;
 
 #if DEBUG
             //Log($"queryExpression (after) = {queryExpression}");
@@ -259,7 +259,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if(kindOfLogicalSearchExplain == KindOfLogicalSearchExplain.DumpAlways)
                 {
-                    var dumpFileName = logicalSearchExplainProvider.DumpToFile(rootExplainNode);
+                    var dumpFileName = loggingProvider.DumpToFile(rootExplainNode);
 
                     Log($"The explanation of query `{queryExpression.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}` has been dumped into file `{dumpFileName}`.");
                 }
@@ -271,7 +271,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if (kindOfLogicalSearchExplain == KindOfLogicalSearchExplain.DumpIfError || kindOfLogicalSearchExplain == KindOfLogicalSearchExplain.DumpAlways)
                 {
-                    var dumpFileName = logicalSearchExplainProvider.DumpToFile(rootExplainNode);
+                    var dumpFileName = loggingProvider.DumpToFile(rootExplainNode);
 
                     sb.AppendLine($"The explanation has been dumped into file `{dumpFileName}`.");
                 }
@@ -2197,33 +2197,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     //Log($"knownInfo = {knownInfo}");
 #endif
 
-                    List<StrongIdentifierValue> additionalKeys_1 = null;
-
-                    if (useInheritance)
-                    {
-                        var knownInfoKind = knownInfo.Kind;
-
-                        switch (knownInfoKind)
-                        {
-                            case KindOfLogicalQueryNode.Concept:
-                            case KindOfLogicalQueryNode.Entity:
-                                additionalKeys_1 = inheritanceResolver.GetSuperClassesKeysList(knownInfo.Expression.Name, options.LocalCodeExecutionContext);
-                                break;
-
-                            case KindOfLogicalQueryNode.Value:
-                            case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
-                            case KindOfLogicalQueryNode.Relation:
-                                break;
-
-                            default:
-                                throw new ArgumentOutOfRangeException(nameof(knownInfoKind), knownInfoKind, null);
-                        }
-                    }
-
-#if DEBUG
-                    //Log($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1?.Select(p => p.NameValue), Formatting.Indented)}");
-#endif
-
                     var position = knownInfo.Position;
 
                     if (position.HasValue)
@@ -2244,18 +2217,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             break;
                         }
 
-                        List<StrongIdentifierValue> additionalKeys_2 = null;
-
-                        if (useInheritance && paramOfTargetRelation.IsKeyRef)
-                        {
-                            additionalKeys_2 = inheritanceResolver.GetSuperClassesKeysList(paramOfTargetRelation.Name, options.LocalCodeExecutionContext);
-                        }
-
-#if DEBUG
-                        //Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");
-#endif
-
-                        var resultOfComparison = CompareKnownInfoAndExpressionNode(knownInfo, paramOfTargetRelation, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, comparisonQueryExecutingCard, dataSource);
+                        var resultOfComparison = CompareKnownInfoAndParamOfTargetRelation(knownInfo, paramOfTargetRelation, reasonOfFuzzyLogicResolving, options, comparisonQueryExecutingCard, dataSource);
 
 #if DEBUG
                         //Log($"resultOfComparison = {resultOfComparison}");
@@ -3596,33 +3558,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     //Log($"knownInfo = {knownInfo}");
 #endif
 
-                    List<StrongIdentifierValue> additionalKeys_1 = null;
-
-                    if (useInheritance)
-                    {
-                        var knownInfoKind = knownInfo.Kind;
-
-                        switch(knownInfoKind)
-                        {
-                            case KindOfLogicalQueryNode.Concept:
-                            case KindOfLogicalQueryNode.Entity:                            
-                                additionalKeys_1 = inheritanceResolver.GetSuperClassesKeysList(knownInfo.Expression.Name, options.LocalCodeExecutionContext);
-                                break;
-
-                            case KindOfLogicalQueryNode.Value:
-                            case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
-                            case KindOfLogicalQueryNode.Relation:
-                                break;
-
-                            default:
-                                throw new ArgumentOutOfRangeException(nameof(knownInfoKind), knownInfoKind, null);
-                        }
-                    }
-
-#if DEBUG
-                    //Log($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1?.Select(p => p.NameValue), Formatting.Indented)}");
-#endif
-
                     var position = knownInfo.Position;
 
                     if (position.HasValue)
@@ -3633,18 +3568,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         //Log($"paramOfTargetRelation = {paramOfTargetRelation}");
 #endif
 
-                        List<StrongIdentifierValue> additionalKeys_2 = null;
-
-                        if (useInheritance && paramOfTargetRelation.IsKeyRef)
-                        {
-                            additionalKeys_2 = inheritanceResolver.GetSuperClassesKeysList(paramOfTargetRelation.Name, options.LocalCodeExecutionContext);
-                        }
-
-#if DEBUG
-                        //Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");
-#endif
-
-                        var resultOfComparison = CompareKnownInfoAndExpressionNode(knownInfo, paramOfTargetRelation, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, comparisonQueryExecutingCard, dataSource);
+                        var resultOfComparison = CompareKnownInfoAndParamOfTargetRelation(knownInfo, paramOfTargetRelation, reasonOfFuzzyLogicResolving, options, comparisonQueryExecutingCard, dataSource);
 
 #if DEBUG
                         //Log($"resultOfComparison = {resultOfComparison}");
@@ -4038,11 +3962,105 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //throw new NotImplementedException();
         }
 
-        private bool CompareKnownInfoAndExpressionNode(QueryExecutingCardAboutKnownInfo knownInfo, LogicalQueryNode expressionNode, List<StrongIdentifierValue> additionalKeys_1, List<StrongIdentifierValue> additionalKeys_2, ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource)
+        private bool CompareKnownInfoAndParamOfTargetRelation(QueryExecutingCardAboutKnownInfo knownInfo, LogicalQueryNode paramOfTargetRelation, ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource)
         {
-            var knownInfoExpression = knownInfo.Expression;
+            if(CompareKnownInfoAndExpressionNode(knownInfo.Expression, paramOfTargetRelation, reasonOfFuzzyLogicResolving, options, queryExecutingCard, dataSource))
+            {
+                return true;
+            }
 
-            return EqualityCompare(knownInfoExpression, expressionNode, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, queryExecutingCard, dataSource);
+            var additionalKnownInfoExpressions = knownInfo.AdditionalExpressions ?? new List<LogicalQueryNode>();
+
+            var additionalParamOfTargetRelationExpressions = new List<LogicalQueryNode>();
+            var varNames = new List<StrongIdentifierValue>();
+
+            if (paramOfTargetRelation.IsExpression)
+            {
+                LogicalQueryNodeHelper.FillUpInfoAboutComplexExpression(paramOfTargetRelation, additionalParamOfTargetRelationExpressions, varNames);
+            }
+
+#if DEBUG
+            //Log($"additionalKnownInfoExpressions = {additionalKnownInfoExpressions.Select(p => p.ToHumanizedString()).WritePODListToString()}");
+            //Log($"additionalParamOfTargetRelationExpressions = {additionalParamOfTargetRelationExpressions.Select(p => p.ToHumanizedString()).WritePODListToString()}");
+            //Log($"additionalParamOfTargetRelationExpressions = {varNames.Select(p => p.NameValue).WritePODListToString()}");
+#endif
+
+            if (varNames.Any())
+            {
+                throw new NotImplementedException();
+            }
+
+            if (additionalParamOfTargetRelationExpressions.Any() || additionalKnownInfoExpressions.Any())
+            {
+                var knownInfoExpressions = new List<LogicalQueryNode>() { knownInfo.Expression };
+                knownInfoExpressions.AddRange(additionalKnownInfoExpressions);
+
+                var paramOfTargetRelationExpressions = new List<LogicalQueryNode>() { paramOfTargetRelation };
+                paramOfTargetRelationExpressions.AddRange(additionalParamOfTargetRelationExpressions);
+
+                foreach(var knownInfoItem in knownInfoExpressions)
+                {
+                    foreach(var paramOfTargetRelationItem in paramOfTargetRelationExpressions)
+                    {
+#if DEBUG
+                        //Log($"knownInfoItem = {knownInfoItem.ToHumanizedString()}");
+                        //Log($"paramOfTargetRelationItem = {paramOfTargetRelationItem.ToHumanizedString()}");
+#endif
+
+                        if (CompareKnownInfoAndExpressionNode(knownInfoItem, paramOfTargetRelationItem, reasonOfFuzzyLogicResolving, options, queryExecutingCard, dataSource))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private bool CompareKnownInfoAndExpressionNode(LogicalQueryNode knownInfo, LogicalQueryNode expressionNode, ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource)
+        {
+            var useInheritance = options.UseInheritance;
+
+            List<StrongIdentifierValue> additionalKeys_1 = null;
+
+            if (useInheritance)
+            {
+                var knownInfoKind = knownInfo.Kind;
+
+                switch (knownInfoKind)
+                {
+                    case KindOfLogicalQueryNode.Concept:
+                    case KindOfLogicalQueryNode.Entity:
+                        additionalKeys_1 = _inheritanceResolver.GetSuperClassesKeysList(knownInfo.Name, options.LocalCodeExecutionContext);
+                        break;
+
+                    case KindOfLogicalQueryNode.Value:
+                    case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
+                    case KindOfLogicalQueryNode.Relation:
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(knownInfoKind), knownInfoKind, null);
+                }
+            }
+
+#if DEBUG
+            //Log($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1?.Select(p => p.NameValue), Formatting.Indented)}");
+#endif
+
+            List<StrongIdentifierValue> additionalKeys_2 = null;
+
+            if (useInheritance && expressionNode.IsKeyRef)
+            {
+                additionalKeys_2 = _inheritanceResolver.GetSuperClassesKeysList(expressionNode.Name, options.LocalCodeExecutionContext);
+            }
+
+#if DEBUG
+            //Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");
+#endif
+
+            return EqualityCompare(knownInfo, expressionNode, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, queryExecutingCard, dataSource);
         }
 
         private void FillExecutingCardForCallingFromRelationForProduction(BaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
@@ -4628,6 +4646,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             if ((expressionNode1.Kind == KindOfLogicalQueryNode.Group && expressionNode2.Kind != KindOfLogicalQueryNode.Group) || (expressionNode2.Kind == KindOfLogicalQueryNode.Group && expressionNode1.Kind != KindOfLogicalQueryNode.Group))
+            {
+                return false;
+            }
+
+            if ((expressionNode1.Kind == KindOfLogicalQueryNode.Relation && expressionNode2.Kind != KindOfLogicalQueryNode.Relation) || (expressionNode2.Kind == KindOfLogicalQueryNode.Relation && expressionNode1.Kind != KindOfLogicalQueryNode.Relation))
             {
                 return false;
             }

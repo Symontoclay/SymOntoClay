@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,10 @@ namespace SymOntoClay.Core.Internal.Helpers
 {
     public static class LogicalQueryNodeHelper
     {
+#if DEBUG
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         public static Value ToValue(LogicalQueryNode node)
         {
             var kindOfNode = node.Kind;
@@ -44,6 +49,56 @@ namespace SymOntoClay.Core.Internal.Helpers
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfNode), kindOfNode, null);
+            }
+        }
+
+        public static void FillUpInfoAboutComplexExpression(LogicalQueryNode node, List<LogicalQueryNode> additionalKnownInfoExpressions, List<StrongIdentifierValue> varNames)
+        {
+#if DEBUG
+            //_gbcLogger.Info($"node = {node.ToHumanizedString()}");
+#endif
+
+            var kind = node.Kind;
+
+#if DEBUG
+            //_gbcLogger.Info($"kind = {kind}");
+#endif
+
+            switch (kind)
+            {
+                case KindOfLogicalQueryNode.BinaryOperator:
+                    additionalKnownInfoExpressions.Add(node);
+                    FillUpInfoAboutComplexExpression(node.Left, additionalKnownInfoExpressions, varNames);
+                    FillUpInfoAboutComplexExpression(node.Right, additionalKnownInfoExpressions, varNames);
+                    break;
+
+                case KindOfLogicalQueryNode.Group:
+                case KindOfLogicalQueryNode.UnaryOperator:
+                    additionalKnownInfoExpressions.Add(node);
+                    FillUpInfoAboutComplexExpression(node.Left, additionalKnownInfoExpressions, varNames);
+                    break;
+
+                case KindOfLogicalQueryNode.Relation:
+                    {
+                        additionalKnownInfoExpressions.Add(node);
+
+                        foreach (var param in node.ParamsList)
+                        {
+                            FillUpInfoAboutComplexExpression(param, additionalKnownInfoExpressions, varNames);
+                        }
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.Concept:
+                case KindOfLogicalQueryNode.Entity:
+                case KindOfLogicalQueryNode.Value:
+                case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
+                case KindOfLogicalQueryNode.Fact:
+                    additionalKnownInfoExpressions.Add(node);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
         }
     }

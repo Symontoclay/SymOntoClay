@@ -50,6 +50,6 @@ namespace SymOntoClay.Core.Internal
         ILogicQueryParseAndCache LogicQueryParseAndCache { get; }
         IInstancesStorageComponent InstancesStorage { get; }
 
-        ILogicalSearchExplainProvider LogicalSearchExplainProvider { get; }
+        ILoggingProvider LoggingProvider { get; }
     }
 }

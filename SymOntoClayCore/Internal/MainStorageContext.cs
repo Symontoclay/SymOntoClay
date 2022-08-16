@@ -63,7 +63,7 @@ namespace SymOntoClay.Core.Internal
         public BaseInstancesStorageComponent InstancesStorage { get; set; }
         public BaseLoaderFromSourceCode LoaderFromSourceCode { get; set; }
 
-        public LogicalSearchExplainProvider LogicalSearchExplainProvider { get; set; }
+        public LoggingProvider LogicalSearchExplainProvider { get; set; }
 
         /// <inheritdoc/>
         public ILogicQueryParseAndCache LogicQueryParseAndCache { get; set; }
@@ -78,7 +78,7 @@ namespace SymOntoClay.Core.Internal
 
         IActivePeriodicObjectContext IMainStorageContext.ActivePeriodicObjectContext => ActivePeriodicObjectContext;
 
-        ILogicalSearchExplainProvider IMainStorageContext.LogicalSearchExplainProvider => LogicalSearchExplainProvider;
+        ILoggingProvider IMainStorageContext.LoggingProvider => LogicalSearchExplainProvider;
 
         public virtual void Die()
         {

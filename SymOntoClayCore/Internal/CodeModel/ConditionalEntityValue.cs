@@ -202,17 +202,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
             try
             {
 #if DEBUG
-                //Log("Begin");
+                Log("Begin");
 #endif
 
                 _needUpdate = false;
 
 #if DEBUG
-                //Log($"constraints = {JsonConvert.SerializeObject(_constraints?.Select(p => p.ToString()))}");
+                Log($"constraints = {JsonConvert.SerializeObject(_constraints?.Select(p => p.ToString()))}");
 #endif
 
 #if DEBUG
-                //Log($"searchOptions = {searchOptions}");
+                Log($"_searchOptions = {_searchOptions}");
 #endif
 
                 var searchOptions = _searchOptions;
@@ -220,7 +220,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 if (_onceStorage != null)
                 {
 #if DEBUG
-                    //Log("_onceStorage != null");
+                    Log("_onceStorage != null");
+                    _onceStorage.DbgPrintFactsAndRules();
 #endif
 
                     searchOptions = new LogicalSearchOptions();
@@ -232,10 +233,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 var searchResult = _searcher.Run(searchOptions);
 
 #if DEBUG
-                //Log($"searchResult = {searchResult}");
-                //Log($"_condition = {DebugHelperForRuleInstance.ToString(LogicalQuery)}");
-                //Log($"searchResult = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
-                //_worldPublicFactsStorage.DbgPrintFactsAndRules();
+                Log($"searchResult = {searchResult}");
+                Log($"_condition = {DebugHelperForRuleInstance.ToString(LogicalQuery)}");
+                Log($"searchResult = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
+                _worldPublicFactsStorage.DbgPrintFactsAndRules();
 #endif
 
                 if (searchResult.IsSuccess)

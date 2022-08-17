@@ -1276,6 +1276,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return;
             }
 
+#if DEBUG
+            Log($"methodName = {methodName}");
+            Log($"kindOfParameters = {kindOfParameters}");
+            Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
+            Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+            Log($"isSync = {isSync}");
+            Log($"command = {command}");
+            Log($"processCreatingResult = {processCreatingResult}");
+#endif
+
             throw new NotImplementedException();
         }
 

@@ -167,6 +167,16 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             return $"`{source}`";
         }
 
+        public static string UnShieldString(string source)
+        {
+            if (string.IsNullOrWhiteSpace(source))
+            {
+                return string.Empty;
+            }
+
+            return source.Replace("`", string.Empty);
+        }
+
         public static StrongIdentifierValue CreateRuleOrFactName()
         {
             var text = GetNewRuleOrFactNameString();

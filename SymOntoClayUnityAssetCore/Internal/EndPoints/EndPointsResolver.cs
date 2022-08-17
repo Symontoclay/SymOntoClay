@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
 using System;
@@ -45,9 +46,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         {
             var endPointsList = new List<IEndpointInfo>();
 
-            var endPointName = command.Name.NameValue;
+            var endPointName = NameHelper.UnShieldString(command.Name.NameValue);
 
             var paramsCount = command.ParamsCount;
+
+#if DEBUG
+            //Log($"endPointName = {endPointName}");
+            //Log($"paramsCount = {paramsCount}");
+#endif
 
             foreach (var endpointsRegistry in endpointsRegistries.ToList())
             {
@@ -61,12 +67,20 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             endPointsList = endPointsList.Distinct().ToList();
 
+#if DEBUG
+            //Log($"endPointsList = {endPointsList.WriteListToString()}");
+#endif
+
             if (endPointsList == null)
             {
                 return null;
             }
 
             var kindOfCommandParameters = command.KindOfCommandParameters;
+
+#if DEBUG
+            //Log($"kindOfCommandParameters = {kindOfCommandParameters}");
+#endif
 
             switch (kindOfCommandParameters)
             {

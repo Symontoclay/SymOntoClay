@@ -858,14 +858,14 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStorage
             lock (_lockObj)
             {
                 var sb = new StringBuilder();
-                sb.AppendLine($"Begin {_kind} of {_mainStorageContext.Id}");
+                sb.AppendLine($"({GetHashCode()}) Begin {_kind} of {_mainStorageContext.Id}");
 
                 foreach (var ruleInstance in _ruleInstancesList)
                 {
                     sb.AppendLine(DebugHelperForRuleInstance.ToString(ruleInstance));
                 }
 
-                sb.AppendLine($"End {_kind} of {_mainStorageContext.Id}");
+                sb.AppendLine($"({GetHashCode()}) End {_kind} of {_mainStorageContext.Id}");
 
                 Log(sb.ToString());
             }

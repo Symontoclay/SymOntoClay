@@ -243,6 +243,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         public void AddToBackpack(IGameObject obj)
         {
+#if DEBUG
+            Log($"Hi!");
+            obj.PublicFactsStorage.DbgPrintFactsAndRules();
+#endif
+
             _backpackStorage.AddPublicFactsStorageOfOtherGameComponent(obj.PublicFactsStorage);
         }
 

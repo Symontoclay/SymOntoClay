@@ -68,15 +68,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         public override void CallBack(double power, double distance, Vector3 position, string query)
         {
 #if DEBUG
-            Log($"power = {power}");
-            Log($"distance = {distance}");
-            Log($"position = {position}");
-            Log($"query = {query}");
+            //Log($"power = {power}");
+            //Log($"distance = {distance}");
+            //Log($"position = {position}");
+            //Log($"query = {query}");
 #endif
             var convertedQuery = ConvertQuery(power, distance, position, query);
 
 #if DEBUG
-            Log($"convertedQuery = {convertedQuery}");
+            //Log($"convertedQuery = {convertedQuery}");
 #endif
 
             _coreEngine.InsertListenedFact(convertedQuery);
@@ -86,15 +86,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         public override void CallBack(double power, double distance, Vector3 position, RuleInstance fact)
         {
 #if DEBUG
-            Log($"power = {power}");
-            Log($"distance = {distance}");
-            Log($"position = {position}");
-            Log($"fact = {fact.ToHumanizedString()}");
+            //Log($"power = {power}");
+            //Log($"distance = {distance}");
+            //Log($"position = {position}");
+            //Log($"fact = {fact.ToHumanizedString()}");
 #endif
             var convertedQuery = ConvertQuery(power, distance, position, fact);
 
 #if DEBUG
-            Log($"convertedQuery = {convertedQuery.ToHumanizedString()}");
+            //Log($"convertedQuery = {convertedQuery.ToHumanizedString()}");
 #endif
 
             _coreEngine.InsertListenedFact(convertedQuery);

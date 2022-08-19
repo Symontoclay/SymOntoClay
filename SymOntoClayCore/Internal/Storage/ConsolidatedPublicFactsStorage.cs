@@ -66,6 +66,8 @@ namespace SymOntoClay.Core.Internal.Storage
             _fuzzyLogicStorage = new EmptyFuzzyLogicStorage(this, logger);
         }
 
+        private readonly object _lockObj = new object();
+        private readonly List<IStorage> _storages = new List<IStorage>();
         private ConsolidatedPublicFactsLogicalStorage _logicalStorage;
         private ConsolidatedPublicFactsInheritanceStorage _inheritanceStorage;
         private EmptyTriggersStorage _triggersStorage;
@@ -127,14 +129,34 @@ namespace SymOntoClay.Core.Internal.Storage
 
         public void AddPublicFactsStorageOfOtherGameComponent(IStorage storage)
         {
-            _logicalStorage.AddPublicFactsStorageOfOtherGameComponent(storage.LogicalStorage);
-            _inheritanceStorage.AddPublicFactsStorageOfOtherGameComponent(storage.InheritanceStorage);
+            lock(_lockObj)
+            {
+                if (_storages.Contains(storage))
+                {
+                    return;
+                }
+
+                _storages.Add(storage);
+
+                _logicalStorage.AddPublicFactsStorageOfOtherGameComponent(storage.LogicalStorage);
+                _inheritanceStorage.AddPublicFactsStorageOfOtherGameComponent(storage.InheritanceStorage);
+            }
         }
 
         public void RemovePublicFactsStorageOfOtherGameComponent(IStorage storage)
         {
-            _logicalStorage.RemovePublicFactsStorageOfOtherGameComponent(storage.LogicalStorage);
-            _inheritanceStorage.RemovePublicFactsStorageOfOtherGameComponent(storage.InheritanceStorage);
+            lock (_lockObj)
+            {
+                if (!_storages.Contains(storage))
+                {
+                    return;
+                }
+
+                _storages.Remove(storage);
+
+                _logicalStorage.RemovePublicFactsStorageOfOtherGameComponent(storage.LogicalStorage);
+                _inheritanceStorage.RemovePublicFactsStorageOfOtherGameComponent(storage.InheritanceStorage);
+            }
         }
 
         /// <inheritdoc/>
@@ -250,51 +272,84 @@ namespace SymOntoClay.Core.Internal.Storage
         }
 
         /// <inheritdoc/>
-        public string ToString(uint n)
+        public override string ToString()
         {
-            return string.Empty;
+            return ToString(0u);
         }
 
         /// <inheritdoc/>
-        public string PropertiesToString(uint n)
+        public string ToString(uint n)
         {
-            return string.Empty;
+            return this.GetDefaultToStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToString.PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var nextN = n + 4;
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            //sb.AppendLine($"{spaces}Owner = {Owner}");_storages
+
+            sb.PrintObjListProp(n, "Storages", _storages);
+
+            return sb.ToString();
         }
 
         /// <inheritdoc/>
         public string ToShortString()
         {
-            return string.Empty;
+            return ToShortString(0u);
         }
 
         /// <inheritdoc/>
         public string ToShortString(uint n)
         {
-            return string.Empty;
+            return this.GetDefaultToShortStringInformation(n);
         }
 
         /// <inheritdoc/>
         public string PropertiesToShortString(uint n)
         {
-            return string.Empty;
+            var spaces = DisplayHelper.Spaces(n);
+            var nextN = n + 4;
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            //sb.AppendLine($"{spaces}Owner = {Owner}");
+
+            sb.PrintShortObjListProp(n, "Storages", _storages);
+
+            return sb.ToString();
         }
 
         /// <inheritdoc/>
         public string ToBriefString()
         {
-            return string.Empty;
+            return ToBriefString(0u);
         }
 
         /// <inheritdoc/>
         public string ToBriefString(uint n)
         {
-            return string.Empty;
+            return this.GetDefaultToBriefStringInformation(n);
         }
 
         /// <inheritdoc/>
         public string PropertiesToBriefString(uint n)
         {
-            return string.Empty;
+            var spaces = DisplayHelper.Spaces(n);
+            var nextN = n + 4;
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            //sb.AppendLine($"{spaces}Owner = {Owner}");
+
+            sb.PrintBriefObjListProp(n, "Storages", _storages);
+
+            return sb.ToString();
         }
     }
 }

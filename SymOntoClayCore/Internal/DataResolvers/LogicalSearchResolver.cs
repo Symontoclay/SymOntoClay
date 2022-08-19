@@ -100,6 +100,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //Log($"targetStorageList = {targetStorageList.WriteListToString()}");
 #endif
 
+                foreach(var targetStorage in targetStorageList)
+                {
+                    targetStorage.UseFacts = true;
+                    targetStorage.UseInheritanceFacts = true;
+                }
+
                 var maxPriority = targetStorageList.Max(p => p.Priority);
 
 #if DEBUG
@@ -123,7 +129,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 targetStorageList.AddRange(additinalStoragesList);
 
+#if DEBUG
+                //Log($"targetStorageList (NEXT) = {targetStorageList.WriteListToString()}");
+#endif
+
                 dataSource = new ConsolidatedDataSource(targetStorageList);
+
+#if DEBUG
+                //Log($"dataSource = {dataSource}");
+#endif
             }
 
             var queryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();

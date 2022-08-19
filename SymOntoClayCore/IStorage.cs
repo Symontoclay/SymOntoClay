@@ -33,6 +33,7 @@ namespace SymOntoClay.Core
     public interface IStorage : ISymOntoClayDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         KindOfStorage Kind { get; }
+        //string Owner { get; }
         ILogicalStorage LogicalStorage { get; }
         IRelationsStorage RelationsStorage { get; }
         IMethodsStorage MethodsStorage { get; }
@@ -52,6 +53,7 @@ namespace SymOntoClay.Core
         void CollectChainOfStorages(IList<IStorage> result);
         IList<IStorage> GetStorages();
         DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get; set; }
+
 #if DEBUG
         void DbgPrintFactsAndRules();
 #endif

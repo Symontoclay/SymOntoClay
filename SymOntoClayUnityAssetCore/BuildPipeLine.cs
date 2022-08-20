@@ -60,6 +60,26 @@ namespace SymOntoClay.UnityAsset.Core
 #endif
 
             CopySymOntoClaySourceFiles(sourceDir, targetDir);
+
+            CopyNLPDicts(sourceDir, targetDir);
+        }
+
+        private static void CopyNLPDicts(string sourceDir, string targetDir)
+        {
+#if DEBUG
+            //_logger.Info($"sourceDir = {sourceDir}");
+            //_logger.Info($"targetDir = {targetDir}");
+#endif
+
+            var sourceDictsDir = Path.Combine(sourceDir, "SymOntoClay", "Dicts");
+            var targetDictsDir = Path.Combine(targetDir, "SymOntoClay", "Dicts");
+
+#if DEBUG
+            //_logger.Info($"sourceDictsDir = {sourceDictsDir}");
+            //_logger.Info($"targetDictsDir = {targetDictsDir}");
+#endif
+
+            CopyDirectory(sourceDictsDir, sourceDictsDir, targetDictsDir);
         }
 
         private static void CopySymOntoClaySourceFiles(string sourceDir, string targetDir)

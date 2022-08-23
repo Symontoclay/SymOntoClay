@@ -1,8 +1,6 @@
 ﻿app PeaceKeeper
 {
-	{: >: { (act(q13,shoot)) & hear(i,(act(q13,shoot))) & distance(i,(act(q13,shoot)),4.35098171234131) & direction((act(q13,shoot)),21.56101) & point((act(q13,shoot)),#@[4.350982, 21.56101]) } :}
-
 	on Enter => {
-	    select {: >: { hear(i,q13) } :} >> @>log;
+	    exec {: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :};
 	}
 }

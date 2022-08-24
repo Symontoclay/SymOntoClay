@@ -27,7 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.Convertors
+namespace SymOntoClay.Core.Internal.Converters
 {
     public class ContextOfConvertingExpressionNode: IObjectToString, IObjectToShortString, IObjectToBriefString
     {

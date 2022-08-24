@@ -180,6 +180,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessRuleOrFact()
         {
+#if DEBUG
+            //Log($"_nodePoint = {_nodePoint}");
+#endif
+
+            if(_nodePoint.CurrentNode.Kind == KindOfIntermediateAstNode.Leaf)
+            {
+                throw new UnexpectedTokenException(_currToken);
+            }
+
             _lastBinaryOperator = null;
             _lastIsOperator = null;
             _hasSomething = true;

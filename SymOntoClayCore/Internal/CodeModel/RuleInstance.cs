@@ -24,7 +24,7 @@ using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.Core.Internal.Convertors;
+using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Storage.LogicalStorage;
@@ -108,7 +108,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 NPrepareDirty();
 
-                Normalized = ConvertorToNormalized.Convert(this, options);
+                Normalized = ConverterToNormalized.Convert(this, options);
                 Normalized.PrepareDirty(options);
 
 #if DEBUG

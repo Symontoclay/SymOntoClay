@@ -24,6 +24,7 @@ using NLog;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CommonNames;
 using SymOntoClay.Core.Internal.Compiling;
+using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Logging;
@@ -115,6 +116,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.Compiler = new Compiler(context);
             context.CommonNamesStorage = new CommonNamesStorage(context);
             context.DataResolversFactory = new DataResolversFactory(context);
+            context.ConvertersFactory = new ConvertersFactory(context);
 
             context.ActivePeriodicObjectContext = new ActivePeriodicObjectContext(settings.SyncContext);
 

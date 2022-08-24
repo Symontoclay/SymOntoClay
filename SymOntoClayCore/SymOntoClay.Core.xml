@@ -4420,31 +4420,34 @@
         <member name="M:SymOntoClay.Core.Internal.Compiling.Internal.LoopCompilingContext.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Convertors.ContextOfConvertingExpressionNode.ToString">
+        <member name="M:SymOntoClay.Core.Internal.Converters.ContextOfConvertingExpressionNode.ToString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Convertors.ContextOfConvertingExpressionNode.ToString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Converters.ContextOfConvertingExpressionNode.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Convertors.ContextOfConvertingExpressionNode.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Converters.ContextOfConvertingExpressionNode.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Convertors.ContextOfConvertingExpressionNode.ToShortString">
+        <member name="M:SymOntoClay.Core.Internal.Converters.ContextOfConvertingExpressionNode.ToShortString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Convertors.ContextOfConvertingExpressionNode.ToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Converters.ContextOfConvertingExpressionNode.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Convertors.ContextOfConvertingExpressionNode.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Converters.ContextOfConvertingExpressionNode.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Convertors.ContextOfConvertingExpressionNode.ToBriefString">
+        <member name="M:SymOntoClay.Core.Internal.Converters.ContextOfConvertingExpressionNode.ToBriefString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Convertors.ContextOfConvertingExpressionNode.ToBriefString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Converters.ContextOfConvertingExpressionNode.ToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Convertors.ContextOfConvertingExpressionNode.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Converters.ContextOfConvertingExpressionNode.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Converters.ConvertersFactory.GetConverterFactToImperativeCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions.ToString">

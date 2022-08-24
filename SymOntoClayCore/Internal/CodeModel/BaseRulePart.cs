@@ -22,7 +22,7 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.Core.DebugHelpers;
-using SymOntoClay.Core.Internal.Convertors;
+using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;

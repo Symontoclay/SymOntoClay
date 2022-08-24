@@ -134,7 +134,7 @@ namespace TestSandbox.Helpers
                 RootContractName = "Hi1",
                 Enable = true,
                 EnableRemoteConnection = true,
-                KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.DumpIfError,
+                KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.None,
                 LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),
                 EnableAddingRemovingFactLoggingInStorages = false
             };

@@ -84,6 +84,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            TstConvertFactToImperativeCode();
             //TstFactToHtml();
             //TstStandardFactsBuilder();
             //TstStandardFactsBuilderGetTargetVarNameHandler();
@@ -146,10 +147,32 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstConvertFactToImperativeCode()
+        {
+            _logger.Log("Begin");
+
+            var factorySettings = new UnityTestEngineContextFactorySettings();
+            factorySettings.UseDefaultNLPSettings = false;
+            factorySettings.UseDefaultAppFiles = false;
+            var engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
+
+            var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :}";
+
+            _logger.Log($"factStr = '{factStr}'");
+
+            var fact = engineContext.Parser.ParseRuleInstance(factStr);
+
+            var compiledCode = engineContext.ConvertersFactory.GetConverterFactToImperativeCode().Convert(fact);
+
+            _logger.Log($"_currentCodeFrame = {compiledCode.ToDbgString()}");
+
+            _logger.Log("End");
         }
 
         private static void TstFactToHtml()

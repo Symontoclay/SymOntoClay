@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CommonNames;
 using SymOntoClay.Core.Internal.Compiling;
+using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Logging;
@@ -59,6 +60,7 @@ namespace SymOntoClay.Core.Internal
         public StorageComponent Storage { get; set; }
         public Parser Parser { get; set; }
         public DataResolversFactory DataResolversFactory { get; set; }
+        public ConvertersFactory ConvertersFactory { get; set; }
         public CommonNamesStorage CommonNamesStorage { get; set; }
         public BaseInstancesStorageComponent InstancesStorage { get; set; }
         public BaseLoaderFromSourceCode LoaderFromSourceCode { get; set; }
@@ -72,6 +74,7 @@ namespace SymOntoClay.Core.Internal
         IParser IMainStorageContext.Parser => Parser;
         
         IDataResolversFactory IMainStorageContext.DataResolversFactory => DataResolversFactory;
+        IConvertersFactory IMainStorageContext.ConvertersFactory => ConvertersFactory;
         ICommonNamesStorage IMainStorageContext.CommonNamesStorage => CommonNamesStorage;
         ILoaderFromSourceCode IMainStorageContext.LoaderFromSourceCode => LoaderFromSourceCode;
         IInstancesStorageComponent IMainStorageContext.InstancesStorage => InstancesStorage;

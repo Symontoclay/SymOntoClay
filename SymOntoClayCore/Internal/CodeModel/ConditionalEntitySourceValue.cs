@@ -24,7 +24,7 @@ using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.Core.Internal.Convertors;
+using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -105,7 +105,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             if (LogicalQuery == null)
             {
-                LogicalQuery = ConvertorEntityConditionExpressionToRuleInstance.Convert(Expression, options);
+                LogicalQuery = ConverterEntityConditionExpressionToRuleInstance.Convert(Expression, options);
             }
 
             LogicalQuery.CheckDirty(options);

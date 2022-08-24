@@ -25,7 +25,7 @@ using SymOntoClay.Core.Internal.CodeExecution.Helpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.Core.Internal.Convertors;
+using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
@@ -828,10 +828,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     return currentValue.AsLogicalValue.SystemValue;
 
                 case KindOfValue.NumberValue:
-                    return ValueConvertor.ConvertNumberValueToLogicalValue(currentValue.AsNumberValue, _context).SystemValue;
+                    return ValueConverter.ConvertNumberValueToLogicalValue(currentValue.AsNumberValue, _context).SystemValue;
 
                 case KindOfValue.StrongIdentifierValue:
-                    return ValueConvertor.ConvertStrongIdentifierValueToLogicalValue(currentValue.AsStrongIdentifierValue, _context).SystemValue;
+                    return ValueConverter.ConvertStrongIdentifierValueToLogicalValue(currentValue.AsStrongIdentifierValue, _context).SystemValue;
 
                 case KindOfValue.RuleInstanceValue:
                     {

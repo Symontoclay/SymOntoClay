@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -59,17 +60,20 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
                 Directory.CreateDirectory(_settings.LogDir);
             }
 
-            if(string.IsNullOrWhiteSpace(settings.LogicalSearchExplainDumpDir))
+            if(settings.KindOfLogicalSearchExplain != KindOfLogicalSearchExplain.None)
             {
-                LogicalSearchExplainDumpDir = _settings.LogDir;
-            }
-            else
-            {
-                Directory.CreateDirectory(settings.LogicalSearchExplainDumpDir);
+                if (string.IsNullOrWhiteSpace(settings.LogicalSearchExplainDumpDir))
+                {
+                    LogicalSearchExplainDumpDir = _settings.LogDir;
+                }
+                else
+                {
+                    Directory.CreateDirectory(settings.LogicalSearchExplainDumpDir);
 
-                LogicalSearchExplainDumpDir = Path.Combine(settings.LogicalSearchExplainDumpDir, _todaysDir);
+                    LogicalSearchExplainDumpDir = Path.Combine(settings.LogicalSearchExplainDumpDir, _todaysDir);
 
-                Directory.CreateDirectory(LogicalSearchExplainDumpDir);
+                    Directory.CreateDirectory(LogicalSearchExplainDumpDir);
+                }
             }
 
             _coreLogger = new InternalLogger(_loggerContext, "Core", _settings);

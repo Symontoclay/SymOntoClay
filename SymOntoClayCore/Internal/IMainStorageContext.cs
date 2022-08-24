@@ -32,6 +32,7 @@ using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Threads;
+using SymOntoClay.Core.Internal.Converters;
 
 namespace SymOntoClay.Core.Internal
 {
@@ -45,6 +46,7 @@ namespace SymOntoClay.Core.Internal
         IStorageComponent Storage { get; }
         IParser Parser { get; }
         IDataResolversFactory DataResolversFactory { get; }
+        IConvertersFactory ConvertersFactory { get; }
         ICommonNamesStorage CommonNamesStorage { get; }
         ILoaderFromSourceCode LoaderFromSourceCode { get; }
         ILogicQueryParseAndCache LogicQueryParseAndCache { get; }

@@ -22,7 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.Convertors;
+using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.DataResolvers;
 using System;
 using System.Collections.Generic;
@@ -90,7 +90,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                             break;
 
                         case KindOfValue.LogicalValue:
-                            leftNumVal = ValueConvertor.ConvertLogicalValueToNumberValue(leftOperand.AsLogicalValue, _engineContext);
+                            leftNumVal = ValueConverter.ConvertLogicalValueToNumberValue(leftOperand.AsLogicalValue, _engineContext);
                             break;
 
                         default:
@@ -208,7 +208,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                             break;
 
                         case KindOfValue.LogicalValue:
-                            rightNumVal = ValueConvertor.ConvertLogicalValueToNumberValue(rightOperand.AsLogicalValue, _engineContext);
+                            rightNumVal = ValueConverter.ConvertLogicalValueToNumberValue(rightOperand.AsLogicalValue, _engineContext);
                             break;
 
                         default:

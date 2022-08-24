@@ -26,9 +26,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.Convertors
+namespace SymOntoClay.Core.Internal.Converters
 {
-    public static class ValueConvertor
+    public static class ValueConverter
     {
         public static LogicalValue ConvertNullValueToLogicalValue(NullValue source, IMainStorageContext mainStorageContext)
         {

@@ -23,7 +23,7 @@ SOFTWARE.*/
 using NLog.Fluent;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.Convertors;
+using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
@@ -55,13 +55,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             switch(sourceKind)
             {
                 case KindOfValue.NullValue:
-                    return ValueConvertor.ConvertNullValueToLogicalValue(source.AsNullValue, _context);
+                    return ValueConverter.ConvertNullValueToLogicalValue(source.AsNullValue, _context);
 
                 case KindOfValue.LogicalValue:
                     return source.AsLogicalValue;
 
                 case KindOfValue.NumberValue:
-                    return ValueConvertor.ConvertNumberValueToLogicalValue(source.AsNumberValue, _context);
+                    return ValueConverter.ConvertNumberValueToLogicalValue(source.AsNumberValue, _context);
 
                 case KindOfValue.StrongIdentifierValue:
                     {
@@ -72,7 +72,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             reasonOfFuzzyLogicResolving = new ReasonOfFuzzyLogicResolving() { Kind = KindOfReasonOfFuzzyLogicResolving.Inheritance };
                         }
 
-                        return ValueConvertor.ConvertNumberValueToLogicalValue(_context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(source.AsStrongIdentifierValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext, options), _context);
+                        return ValueConverter.ConvertNumberValueToLogicalValue(_context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(source.AsStrongIdentifierValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext, options), _context);
                     }
 
 
@@ -85,7 +85,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             reasonOfFuzzyLogicResolving = new ReasonOfFuzzyLogicResolving() { Kind = KindOfReasonOfFuzzyLogicResolving.Inheritance };
                         }
 
-                        return ValueConvertor.ConvertNumberValueToLogicalValue(_context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(source.AsFuzzyLogicNonNumericSequenceValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext, options), _context);
+                        return ValueConverter.ConvertNumberValueToLogicalValue(_context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(source.AsFuzzyLogicNonNumericSequenceValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext, options), _context);
                     }
 
                 default:

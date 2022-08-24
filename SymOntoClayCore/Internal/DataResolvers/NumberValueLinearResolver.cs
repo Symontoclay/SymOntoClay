@@ -22,7 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.Convertors;
+using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
@@ -71,7 +71,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if(source == null)
             {
-                return ValueConvertor.ConvertNullValueToNumberValue(NullValue.Instance, _context);
+                return ValueConverter.ConvertNullValueToNumberValue(NullValue.Instance, _context);
             }
 
             var sourceKind = source.KindOfValue;
@@ -79,10 +79,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             switch (sourceKind)
             {
                 case KindOfValue.NullValue:
-                    return ValueConvertor.ConvertNullValueToNumberValue(source.AsNullValue, _context);
+                    return ValueConverter.ConvertNullValueToNumberValue(source.AsNullValue, _context);
 
                 case KindOfValue.LogicalValue:
-                    return ValueConvertor.ConvertLogicalValueToNumberValue(source.AsLogicalValue, _context);
+                    return ValueConverter.ConvertLogicalValueToNumberValue(source.AsLogicalValue, _context);
 
                 case KindOfValue.NumberValue:
                     return source.AsNumberValue;

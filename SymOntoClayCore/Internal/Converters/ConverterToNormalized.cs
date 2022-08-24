@@ -29,9 +29,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.Convertors
+namespace SymOntoClay.Core.Internal.Converters
 {
-    public static class ConvertorToNormalized
+    public static class ConverterToNormalized
     {
 #if DEBUG
         //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();

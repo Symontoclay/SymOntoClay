@@ -28,9 +28,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.Convertors
+namespace SymOntoClay.Core.Internal.Converters
 {
-    public static class ConvertorEntityConditionExpressionToRuleInstance
+    public static class ConverterEntityConditionExpressionToRuleInstance
     {
 #if DEBUG
         //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();

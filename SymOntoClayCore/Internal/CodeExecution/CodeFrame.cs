@@ -62,7 +62,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         string IObjectToString.PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + DisplayHelper.IndentationStep;
             var sb = new StringBuilder();
 
             sb.PrintObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
@@ -103,7 +103,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         string IObjectToShortString.PropertiesToShortString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + DisplayHelper.IndentationStep;
             var sb = new StringBuilder();
 
             sb.PrintShortObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
@@ -144,7 +144,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         string IObjectToBriefString.PropertiesToBriefString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + DisplayHelper.IndentationStep;
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
@@ -185,7 +185,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         string IObjectToDbgString.PropertiesToDbgString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + DisplayHelper.IndentationStep;
             var nextNSpaces = DisplayHelper.Spaces(nextN);
             var sb = new StringBuilder();
             if(Instance != null)

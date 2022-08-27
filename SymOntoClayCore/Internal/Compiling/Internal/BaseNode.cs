@@ -133,7 +133,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 #if DEBUG
         public void DbgPrintCommands()
         {
-            var spaces = DisplayHelper.Spaces(4);
+            var spaces = DisplayHelper.Spaces(DisplayHelper.IndentationStep);
 
             var sb = new StringBuilder();
             sb.AppendLine("Begin Code");

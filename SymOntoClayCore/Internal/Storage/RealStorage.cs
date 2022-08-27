@@ -327,7 +327,7 @@ namespace SymOntoClay.Core.Internal.Storage
         string IObjectToString.PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + DisplayHelper.IndentationStep;
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {_kind}");
@@ -351,7 +351,7 @@ namespace SymOntoClay.Core.Internal.Storage
         string IObjectToShortString.PropertiesToShortString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + DisplayHelper.IndentationStep;
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {_kind}");
@@ -375,7 +375,7 @@ namespace SymOntoClay.Core.Internal.Storage
         string IObjectToBriefString.PropertiesToBriefString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + DisplayHelper.IndentationStep;
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {_kind}");

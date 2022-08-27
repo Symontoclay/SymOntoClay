@@ -332,7 +332,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 tmpProcessesInfoList = _processesInfoList.ToList();
             }
 
-            uint n = 4;
+            uint n = DisplayHelper.IndentationStep;
 
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();

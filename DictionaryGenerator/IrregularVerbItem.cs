@@ -44,7 +44,7 @@ namespace DictionaryGenerator
         public string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + DisplayHelper.IndentationStep;
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(RootWord)} = {RootWord}");
             sb.AppendLine($"{spaces}{nameof(PastForm)} = {PastForm}");

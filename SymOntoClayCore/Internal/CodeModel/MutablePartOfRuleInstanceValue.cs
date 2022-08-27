@@ -186,12 +186,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
-        {
-            return DebugHelperForRuleInstance.ToString(MutablePartOfRuleInstance.Parent, MutablePartOfRuleInstance, options);
-        }
-
-        /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
             var opt = options.Clone();

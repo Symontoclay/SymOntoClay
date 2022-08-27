@@ -266,12 +266,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return $"{spaces}{ToHumanizedString()}";
         }
 
-        public string ToHumanizedString()
-        {
-            return DebugHelperForEntityConditionExpression.ToString(this);
-        }
-
-        public string ToHumanizedString(DebugHelperOptions options)
+        /// <inheritdoc/>
+        public override string ToHumanizedString(DebugHelperOptions options)
         {
             return DebugHelperForEntityConditionExpression.ToString(this, options);
         }

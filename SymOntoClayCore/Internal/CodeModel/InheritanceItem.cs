@@ -161,11 +161,29 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return sb.ToString();
         }
 
-        public string ToPartialHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
+        public string ToPartialHumanizedString(DebugHelperOptions options)
         {
             var sb = new StringBuilder();
 
             if(Rank != LogicalValue.TrueValue)
+            {
+                sb.Append($"[{Rank.ToHumanizedString(options)}] ");
+            }
+
+            sb.Append(SuperName.NameValue);
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString(DebugHelperOptions options)
+        {
+            var sb = new StringBuilder();
+
+            sb.Append(SuperName.NameValue);
+            sb.Append(" is ");
+
+            if (Rank != LogicalValue.TrueValue)
             {
                 sb.Append($"[{Rank.ToHumanizedString(options)}] ");
             }

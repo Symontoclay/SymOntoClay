@@ -149,7 +149,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
         public string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + DisplayHelper.IndentationStep;
             var sb = new StringBuilder();
             return sb.ToString();
         }

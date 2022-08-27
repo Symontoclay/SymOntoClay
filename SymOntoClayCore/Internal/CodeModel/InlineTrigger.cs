@@ -32,6 +32,7 @@ using System.Linq;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
+using SymOntoClay.Core.DebugHelpers;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
@@ -275,6 +276,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString(DebugHelperOptions options)
+        {
+            throw new NotImplementedException();
         }
     }
 }

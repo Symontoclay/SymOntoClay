@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.Core.DebugHelpers;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
@@ -257,6 +258,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString(DebugHelperOptions options)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -53,7 +53,7 @@ namespace SymOntoClay.UnityAsset.Core
         string IObjectToString.PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + DisplayHelper.IndentationStep;
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Description)} = {Description}");

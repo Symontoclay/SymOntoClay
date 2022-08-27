@@ -234,7 +234,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
             return sb.ToString();
         }
 
-        public string GetHumanizeDbgString()
+        /// <inheritdoc/>
+        public override string ToHumanizedString(DebugHelperOptions options)
         {
             return DebugHelperForTriggerCondition.ToString(this);
         }

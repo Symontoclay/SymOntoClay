@@ -178,12 +178,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return sb.ToString();
         }
 
-        public string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
-        {
-            return DebugHelperForLogicalModalityExpression.ToString(this, options);
-        }
-
-        public string ToHumanizedString(DebugHelperOptions options)
+        /// <inheritdoc/>
+        public override string ToHumanizedString(DebugHelperOptions options)
         {
             return DebugHelperForLogicalModalityExpression.ToString(this, options);
         }

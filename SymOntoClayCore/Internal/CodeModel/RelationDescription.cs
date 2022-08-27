@@ -165,13 +165,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return sb.ToString();
         }
 
-        public string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
+        /// <inheritdoc/>
+        public override string ToHumanizedString(DebugHelperOptions options)
         {
             var sb = new StringBuilder($"{Name.NameValue} (");
             sb.Append(string.Join(", ", Arguments.Select(p => p.ToHumanizedString(options))));
             sb.Append(")");
 
-            if(!InheritanceItems.IsNullOrEmpty())
+            if (!InheritanceItems.IsNullOrEmpty())
             {
                 sb.Append(" is ");
                 sb.Append(string.Join(", ", InheritanceItems.Select(p => p.ToPartialHumanizedString(options))));

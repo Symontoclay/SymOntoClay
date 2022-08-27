@@ -45,6 +45,10 @@ namespace SymOntoClay.Core.Internal.Compiling
         /// <inheritdoc/>
         public CompiledFunctionBody Compile(List<AstStatement> statements)
         {
+#if DEBUG
+            //Log($"statements = {statements.WriteListToString()}");
+#endif
+
             var node = new CodeBlockNode(_context);
             node.Run(statements, null);
 

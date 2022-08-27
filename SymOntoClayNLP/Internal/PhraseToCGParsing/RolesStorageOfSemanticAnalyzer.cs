@@ -108,9 +108,9 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
         public string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + DisplayHelper.IndentationStep;
             var nextNSpaces = DisplayHelper.Spaces(nextN);
-            var nextNextN = nextN + 4;
+            var nextNextN = nextN + DisplayHelper.IndentationStep;
             var sb = new StringBuilder();
             if (mRolesDict == null)
             {

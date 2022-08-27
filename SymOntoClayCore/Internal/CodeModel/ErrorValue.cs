@@ -168,12 +168,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
-        {
-            return $"ERROR {RuleInstance.ToHumanizedString(options)}";
-        }
-
-        /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
             return $"ERROR {RuleInstance.ToHumanizedString(options)}";

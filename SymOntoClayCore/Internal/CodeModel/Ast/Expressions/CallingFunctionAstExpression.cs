@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
@@ -135,6 +136,35 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
 
             sb.Append(base.PropertiesToBriefString(n));
 
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString(DebugHelperOptions options)
+        {
+            var sb = new StringBuilder();
+
+            if(Left != null)
+            {
+                sb.Append(Left.ToHumanizedString(options));
+            }
+
+            sb.Append("(");
+
+            if(!Parameters.IsNullOrEmpty())
+            {
+                var parametersStrList = new List<string>();
+
+                foreach(var parameter in Parameters)
+                {
+                    parametersStrList.Add(parameter.ToHumanizedString(options));
+                }
+
+                sb.Append(string.Join(", ", parametersStrList));
+            }
+
+            sb.Append(")");
+            
             return sb.ToString();
         }
     }

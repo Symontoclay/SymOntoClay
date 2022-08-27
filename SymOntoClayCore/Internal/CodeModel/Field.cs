@@ -52,7 +52,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// Clones the instance and returns cloned instance.
         /// </summary>
         /// <returns>Cloned instance.</returns>
-        public Field Clone()
+        public new Field Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
@@ -63,7 +63,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// </summary>
         /// <param name="context">Special context for providing references continuity.</param>
         /// <returns>Cloned instance.</returns>
-        public Field Clone(Dictionary<object, object> context)
+        public new Field Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {

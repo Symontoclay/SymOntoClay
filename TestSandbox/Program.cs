@@ -168,7 +168,11 @@ namespace TestSandbox
 
             var fact = engineContext.Parser.ParseRuleInstance(factStr);
 
-            var compiledCode = engineContext.ConvertersFactory.GetConverterFactToImperativeCode().Convert(fact);
+            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            localCodeExecutionContext.Storage = engineContext.Storage.GlobalStorage;
+            localCodeExecutionContext.Holder = NameHelper.CreateName(engineContext.Id);
+
+            var compiledCode = engineContext.ConvertersFactory.GetConverterFactToImperativeCode().Convert(fact, localCodeExecutionContext);
 
             _logger.Log($"_currentCodeFrame = {compiledCode.ToDbgString()}");
 

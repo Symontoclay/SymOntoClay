@@ -136,9 +136,9 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         protected override string PropertiesToDbgString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + DisplayHelper.IndentationStep;
             var nextNspaces = DisplayHelper.Spaces(nextN);
-            var nextNextN = nextN + 4;
+            var nextNextN = nextN + DisplayHelper.IndentationStep;
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}PP");
 

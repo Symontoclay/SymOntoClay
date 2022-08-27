@@ -94,11 +94,11 @@ namespace SymOntoClay.NLP.CommonDict
         public virtual string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + DisplayHelper.IndentationStep;
             var nextNSpaces = DisplayHelper.Spaces(nextN);
-            var nextNextN = nextN + 4;
+            var nextNextN = nextN + DisplayHelper.IndentationStep;
             var nextNextNSpaces = DisplayHelper.Spaces(nextNextN);
-            var nextNextNextN = nextNextN + 4;
+            var nextNextNextN = nextNextN + DisplayHelper.IndentationStep;
             var nextNextNextNSpaces = DisplayHelper.Spaces(nextNextNextN);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(PartOfSpeech)} = {PartOfSpeech}");

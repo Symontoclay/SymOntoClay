@@ -113,9 +113,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public abstract string ToSystemString();
 
-        public abstract string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll);
-        public abstract string ToHumanizedString(DebugHelperOptions options);
-
         public virtual void SetProperty(StrongIdentifierValue propertyName, Value value)
         {
              throw new NotImplementedException();

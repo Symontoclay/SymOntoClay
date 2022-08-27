@@ -149,7 +149,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            var nextN = n + 4;
+            var nextN = n + DisplayHelper.IndentationStep;
             var nextNSpace = DisplayHelper.Spaces(nextN);
 
             sb.PrintBriefObjProp(n, nameof(Parent), Parent);
@@ -172,7 +172,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             else
             {
                 sb.AppendLine($"{spaces}Begin {nameof(RelationsDict)}");
-                var nextNextN = nextN + 4;
+                var nextNextN = nextN + DisplayHelper.IndentationStep;
                 foreach (var relationsKVPItem in RelationsDict)
                 {
                     sb.AppendLine($"{nextNSpace}key of relation = {relationsKVPItem.Key.NameValue}");
@@ -236,12 +236,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return sb.ToString();
         }
 
-        public string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
-        {
-            return DebugHelperForRuleInstance.BaseRulePartToString(this, options);
-        }
-
-        public string ToHumanizedString(DebugHelperOptions options)
+        /// <inheritdoc/>
+        public override string ToHumanizedString(DebugHelperOptions options)
         {
             return DebugHelperForRuleInstance.BaseRulePartToString(this, options);
         }

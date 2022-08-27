@@ -214,12 +214,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
             throw new NotImplementedException();

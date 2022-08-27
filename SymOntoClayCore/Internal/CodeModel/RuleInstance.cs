@@ -429,12 +429,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return $"{spaces}{ToHumanizedString()}";
         }
 
-        public string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
-        {
-            return DebugHelperForRuleInstance.ToString(this, options);
-        }
-
-        public string ToHumanizedString(DebugHelperOptions options)
+        /// <inheritdoc/>
+        public override string ToHumanizedString(DebugHelperOptions options)
         {
             return DebugHelperForRuleInstance.ToString(this, options);
         }

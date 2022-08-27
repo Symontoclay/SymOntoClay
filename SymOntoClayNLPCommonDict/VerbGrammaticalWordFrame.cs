@@ -61,7 +61,7 @@ namespace SymOntoClay.NLP.CommonDict
         public override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + DisplayHelper.IndentationStep;
             var sb = new StringBuilder();
             sb.Append(base.PropertiesToString(n));
             sb.AppendLine($"{spaces}{nameof(VerbType)} = {VerbType}");

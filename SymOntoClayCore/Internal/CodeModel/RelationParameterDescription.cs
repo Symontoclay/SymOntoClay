@@ -30,7 +30,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class RelationParameterDescription: IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class RelationParameterDescription: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToHumanizedString
     {
         public StrongIdentifierValue Name { get; set; }
         public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
@@ -218,7 +218,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return sb.ToString();
         }
 
+        /// <inheritdoc/>
         public string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return ToHumanizedString(opt);
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(DebugHelperOptions options)
         {
             var sb = new StringBuilder(Name.NameValue);
 

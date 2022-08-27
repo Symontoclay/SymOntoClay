@@ -30,6 +30,8 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
 {
     public static class DisplayHelper
     {
+        public const uint IndentationStep = 4u;
+
         public static string Spaces(uint n)
         {
             if (n == 0)
@@ -50,7 +52,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
         public static string GetDefaultToStringInformation(this IObjectToString targetObject, uint n)
         {
             var spaces = Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + IndentationStep;
             var sb = new StringBuilder();
             var nameOfType = targetObject.GetType().FullName;
             sb.AppendLine($"{spaces}Begin {nameOfType}");
@@ -62,7 +64,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
         public static string GetDefaultToShortStringInformation(this IObjectToShortString targetObject, uint n)
         {
             var spaces = Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + IndentationStep;
             var sb = new StringBuilder();
             var nameOfType = targetObject.GetType().FullName;
             sb.AppendLine($"{spaces}Begin {nameOfType}");
@@ -74,7 +76,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
         public static string GetDefaultToBriefStringInformation(this IObjectToBriefString targetObject, uint n)
         {
             var spaces = Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + IndentationStep;
             var sb = new StringBuilder();
             var nameOfType = targetObject.GetType().FullName;
             sb.AppendLine($"{spaces}Begin {nameOfType}");
@@ -91,7 +93,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
         public static void PrintObjProp(this StringBuilder sb, uint n, string propName, IObjectToString obj)
         {
             var spaces = Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + IndentationStep;
 
             if (obj == null)
             {
@@ -108,7 +110,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
         public static void PrintShortObjProp(this StringBuilder sb, uint n, string propName, IObjectToShortString obj)
         {
             var spaces = Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + IndentationStep;
 
             if (obj == null)
             {
@@ -125,7 +127,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
         public static void PrintBriefObjProp(this StringBuilder sb, uint n, string propName, IObjectToBriefString obj)
         {
             var spaces = Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + IndentationStep;
 
             if (obj == null)
             {
@@ -142,7 +144,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
         public static void PrintDbgObjProp(this StringBuilder sb, uint n, string propName, IObjectToDbgString obj)
         {
             var spaces = Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + IndentationStep;
 
             if (obj == null)
             {
@@ -186,7 +188,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
                 return;
             }
 
-            var nextN = n + 4;
+            var nextN = n + IndentationStep;
             var nextNSpaces = Spaces(nextN);
 
             sb.AppendLine($"{spaces}Begin {propName}");
@@ -202,7 +204,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
         public static void PrintPODList<T>(this StringBuilder sb, uint n, string propName, IEnumerable<T> items)
         {
             var spaces = Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + IndentationStep;
             var nextNSpaces = Spaces(nextN);
 
             if (items == null)
@@ -224,7 +226,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             where T : IObjectToString
         {
             var spaces = Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + IndentationStep;
             var nextNSpaces = Spaces(nextN);
 
             if (items == null)
@@ -253,7 +255,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             where T: IObjectToShortString
         {
             var spaces = Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + IndentationStep;
             var nextNSpaces = Spaces(nextN);
 
             if (items == null)
@@ -282,7 +284,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             where T : IObjectToBriefString
         {
             var spaces = Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + IndentationStep;
             var nextNSpaces = Spaces(nextN);
 
             if (items == null)
@@ -311,7 +313,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             where T : IObjectToDbgString
         {
             var spaces = Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + IndentationStep;
             var nextNSpaces = Spaces(nextN);
 
             if (items == null)
@@ -340,7 +342,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             where T : struct
         {
             var spaces = Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + IndentationStep;
             var nextNSpaces = Spaces(nextN);
 
             if (items == null)
@@ -363,11 +365,11 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             where V : IObjectToString
         {
             var spaces = Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + IndentationStep;
             var nextNSpaces = Spaces(nextN);
-            var nextNextN = nextN + 4;
+            var nextNextN = nextN + IndentationStep;
             var nextNextNSpaces = Spaces(nextNextN);
-            var nextNextNextN = nextNextN + 4;
+            var nextNextNextN = nextNextN + IndentationStep;
 
             if (items == null)
             {
@@ -396,11 +398,11 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             where V : IObjectToShortString
         {
             var spaces = Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + IndentationStep;
             var nextNSpaces = Spaces(nextN);
-            var nextNextN = nextN + 4;
+            var nextNextN = nextN + IndentationStep;
             var nextNextNSpaces = Spaces(nextNextN);
-            var nextNextNextN = nextNextN + 4;
+            var nextNextNextN = nextNextN + IndentationStep;
 
             if (items == null)
             {
@@ -429,11 +431,11 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             where V : IObjectToBriefString
         {
             var spaces = Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + IndentationStep;
             var nextNSpaces = Spaces(nextN);
-            var nextNextN = nextN + 4;
+            var nextNextN = nextN + IndentationStep;
             var nextNextNSpaces = Spaces(nextNextN);
-            var nextNextNextN = nextNextN + 4;
+            var nextNextNextN = nextNextN + IndentationStep;
 
             if (items == null)
             {
@@ -462,11 +464,11 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             where V : IObjectToString
         {
             var spaces = Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + IndentationStep;
             var nextNSpaces = Spaces(nextN);
-            var nextNextN = nextN + 4;
+            var nextNextN = nextN + IndentationStep;
             var nextNextNSpaces = Spaces(nextNextN);
-            var nextNextNextN = nextNextN + 4;
+            var nextNextNextN = nextNextN + IndentationStep;
             
             if (items == null)
             {
@@ -493,11 +495,11 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             where V : IObjectToShortString
         {
             var spaces = Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + IndentationStep;
             var nextNSpaces = Spaces(nextN);
-            var nextNextN = nextN + 4;
+            var nextNextN = nextN + IndentationStep;
             var nextNextNSpaces = Spaces(nextNextN);
-            var nextNextNextN = nextNextN + 4;
+            var nextNextNextN = nextNextN + IndentationStep;
 
             if (items == null)
             {
@@ -524,11 +526,11 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             where V : IObjectToBriefString
         {
             var spaces = Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + IndentationStep;
             var nextNSpaces = Spaces(nextN);
-            var nextNextN = nextN + 4;
+            var nextNextN = nextN + IndentationStep;
             var nextNextNSpaces = Spaces(nextNextN);
-            var nextNextNextN = nextNextN + 4;
+            var nextNextNextN = nextNextN + IndentationStep;
 
             if (items == null)
             {
@@ -553,9 +555,9 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
         public static void PrintPODDictProp<K, V>(this StringBuilder sb, uint n, string propName, IDictionary<K, V> items)
         {
             var spaces = Spaces(n);
-            var nextN = n + 4;
+            var nextN = n + IndentationStep;
             var nextNSpaces = Spaces(nextN);
-            var nextNextN = nextN + 4;
+            var nextNextN = nextN + IndentationStep;
             var nextNextNSpaces = Spaces(nextNextN);
 
             if (items == null)
@@ -682,11 +684,11 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
                 return "NULL";
             }
 
-            var nextN = 4u;
+            var nextN = IndentationStep;
             var nextNSpaces = Spaces(nextN);
-            var nextNextN = nextN + 4;
+            var nextNextN = nextN + IndentationStep;
             var nextNextNSpaces = Spaces(nextNextN);
-            var nextNextNextN = nextNextN + 4;
+            var nextNextNextN = nextNextN + IndentationStep;
 
             var sb = new StringBuilder();
             sb.AppendLine("Begin Dictionary");
@@ -719,11 +721,11 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
                 return "NULL";
             }
 
-            var nextN = 4u;
+            var nextN = IndentationStep;
             var nextNSpaces = Spaces(nextN);
-            var nextNextN = nextN + 4;
+            var nextNextN = nextN + IndentationStep;
             var nextNextNSpaces = Spaces(nextNextN);
-            var nextNextNextN = nextNextN + 4;
+            var nextNextNextN = nextNextN + IndentationStep;
 
             var sb = new StringBuilder();
             sb.AppendLine("Begin Dictionary");
@@ -756,11 +758,11 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
                 return "NULL";
             }
 
-            var nextN = 4u;
+            var nextN = IndentationStep;
             var nextNSpaces = Spaces(nextN);
-            var nextNextN = nextN + 4;
+            var nextNextN = nextN + IndentationStep;
             var nextNextNSpaces = Spaces(nextNextN);
-            var nextNextNextN = nextNextN + 4;
+            var nextNextNextN = nextNextN + IndentationStep;
 
             var sb = new StringBuilder();
             sb.AppendLine("Begin Dictionary");
@@ -793,11 +795,11 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
                 return "NULL";
             }
 
-            var nextN = 4u;
+            var nextN = IndentationStep;
             var nextNSpaces = Spaces(nextN);
-            var nextNextN = nextN + 4;
+            var nextNextN = nextN + IndentationStep;
             var nextNextNSpaces = Spaces(nextNextN);
-            var nextNextNextN = nextNextN + 4;
+            var nextNextNextN = nextNextN + IndentationStep;
 
             var sb = new StringBuilder();
             sb.AppendLine("Begin Dictionary");
@@ -828,11 +830,11 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
                 return "NULL";
             }
 
-            var nextN = 4u;
+            var nextN = IndentationStep;
             var nextNSpaces = Spaces(nextN);
-            var nextNextN = nextN + 4;
+            var nextNextN = nextN + IndentationStep;
             var nextNextNSpaces = Spaces(nextNextN);
-            var nextNextNextN = nextNextN + 4;
+            var nextNextNextN = nextNextN + IndentationStep;
 
             var sb = new StringBuilder();
             sb.AppendLine("Begin Dictionary");
@@ -863,11 +865,11 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
                 return "NULL";
             }
 
-            var nextN = 4u;
+            var nextN = IndentationStep;
             var nextNSpaces = Spaces(nextN);
-            var nextNextN = nextN + 4;
+            var nextNextN = nextN + IndentationStep;
             var nextNextNSpaces = Spaces(nextNextN);
-            var nextNextNextN = nextNextN + 4;
+            var nextNextNextN = nextNextN + IndentationStep;
 
             var sb = new StringBuilder();
             sb.AppendLine("Begin Dictionary");

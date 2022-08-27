@@ -52,7 +52,7 @@ namespace TestSandbox.Handlers
             node.Name = NameHelper.CreateName("trigger 1");
 
             _logger.Log($"node = {node}");
-            _logger.Log($"node = {node.GetHumanizeDbgString()}");
+            _logger.Log($"node = {node.ToHumanizedString()}");
         }
     }
 }

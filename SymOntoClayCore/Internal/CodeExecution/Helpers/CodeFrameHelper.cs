@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Storage;
 using System;
@@ -33,6 +34,44 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
 {
     public static class CodeFrameHelper
     {
+        public static CodeFrame ConvertCompiledFunctionBodyToCodeFrame(CompiledFunctionBody compiledFunctionBody, LocalCodeExecutionContext parentLocalCodeExecutionContext, IMainStorageContext context)
+        {
+            var storagesList = parentLocalCodeExecutionContext.Storage.GetStorages();
+
+#if DEBUG
+            //Log($"storagesList.Count = {storagesList.Count}");
+            //foreach(var tmpStorage in storagesList)
+            //{
+            //    Log($"tmpStorage = {tmpStorage}");
+            //}
+#endif
+
+            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            var localStorageSettings = RealStorageSettingsHelper.Create(context, storagesList.ToList(), false);
+
+            var newStorage = new LocalStorage(localStorageSettings);
+
+            localCodeExecutionContext.Storage = newStorage;
+
+            localCodeExecutionContext.Holder = parentLocalCodeExecutionContext.Holder;
+
+            var codeFrame = new CodeFrame();
+            codeFrame.CompiledFunctionBody = compiledFunctionBody;
+            codeFrame.LocalContext = localCodeExecutionContext;
+
+            var processInfo = new ProcessInfo();
+
+            codeFrame.ProcessInfo = processInfo;
+            processInfo.CodeFrame = codeFrame;
+            //codeFrame.Metadata = function.CodeItem;
+
+#if DEBUG
+            //Log($"codeFrame = {codeFrame}");
+#endif
+
+            return codeFrame;
+        }
+
         public static CodeFrame ConvertExecutableToCodeFrame(IExecutable function, KindOfFunctionParameters kindOfParameters,
             Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             LocalCodeExecutionContext parentLocalCodeExecutionContext, IMainStorageContext context)
@@ -42,7 +81,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
             //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
 #endif
-
+            
             var storagesList = parentLocalCodeExecutionContext.Storage.GetStorages();
 
 #if DEBUG

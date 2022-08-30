@@ -41,14 +41,14 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         public void Run(List<AstStatement> statements, LoopCompilingContext loopCompilingContext)
         {
 #if DEBUG
-            Log($"statements = {statements.WriteListToToHumanizedString()}");
+            //Log($"statements = {statements.WriteListToToHumanizedString()}");
             //Log($"statements = {statements.WriteListToString()}");
 #endif
 
             foreach (var statement in statements)
             {
 #if DEBUG
-                Log($"statement = {statement.ToHumanizedString()}");
+                //Log($"statement = {statement.ToHumanizedString()}");
                 //Log($"statement = {statement}");
 #endif
 

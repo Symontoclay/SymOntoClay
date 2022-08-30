@@ -69,6 +69,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _methodsResolver = dataResolversFactory.GetMethodsResolver();
             _logicalSearchResolver = dataResolversFactory.GetLogicalSearchResolver();
             _statesResolver = dataResolversFactory.GetStatesResolver();
+
+            _converterFactToImperativeCode = context.ConvertersFactory.GetConverterFactToImperativeCode();
         }
 
         private readonly IEngineContext _context;
@@ -86,6 +88,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly MethodsResolver _methodsResolver;
         private readonly LogicalSearchResolver _logicalSearchResolver;
         private readonly StatesResolver _statesResolver;
+
+        private readonly ConverterFactToImperativeCode _converterFactToImperativeCode;
 
         private Stack<CodeFrame> _codeFrames = new Stack<CodeFrame>();
         private CodeFrame _currentCodeFrame;
@@ -202,13 +206,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     return true;
                 }
 
-                var currentCommand = compiledFunctionBodyCommands[currentPosition];
-
-#if DEBUG
-                //Log($"currentCommand = {currentCommand}");
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-#endif
-
                 if (!CheckReturnedInfo())
                 {
 #if DEBUG
@@ -217,6 +214,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     return false;
                 }
+
+                var currentCommand = compiledFunctionBodyCommands[currentPosition];
+
+#if DEBUG
+                //Log($"currentCommand = {currentCommand}");
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
 
                 switch (currentCommand.OperationCode)
                 {
@@ -256,6 +260,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                 default:
                                     break;
                             }
+
+#if DEBUG
+                            //Log($"value = {value?.ToHumanizedString()}");
+#endif
 
                             _currentCodeFrame.ValuesStack.Push(value);
                             _currentCodeFrame.CurrentPosition++;
@@ -430,13 +438,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             var currentValue = TryResolveFromVar(_currentCodeFrame.ValuesStack.Pop());
 
 #if DEBUG
-                            Log($"currentValue = {currentValue.ToHumanizedString()}");
+                            //Log($"currentValue = {currentValue.ToHumanizedString()}");
 #endif
 
                             var kindOfCurrentValue = currentValue.KindOfValue;
 
 #if DEBUG
-                            Log($"kindOfCurrentValue = {kindOfCurrentValue}");
+                            //Log($"kindOfCurrentValue = {kindOfCurrentValue}");
 #endif
 
                             switch (kindOfCurrentValue)
@@ -1074,6 +1082,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private List<Value> TakePositionedParameters(int count, bool resolveValueFromVar = false)
         {
+#if DEBUG
+            //Log($"count = {count}");
+            //Log($"resolveValueFromVar = {resolveValueFromVar}");
+#endif
+
             var result = new List<Value>();
 
             var valueStack = _currentCodeFrame.ValuesStack;
@@ -1361,10 +1374,18 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void ExecRuleInstanceValue(RuleInstanceValue ruleInstanceValue)
         {
 #if DEBUG
-            Log($"ruleInstanceValue = {ruleInstanceValue.ToHumanizedString()}");
+            //Log($"ruleInstanceValue = {ruleInstanceValue.ToHumanizedString()}");
 #endif
 
-            throw new NotImplementedException();
+            var compiledCode = _converterFactToImperativeCode.Convert(ruleInstanceValue.RuleInstance, _currentCodeFrame.LocalContext);
+
+#if DEBUG
+            //Log($"compiledCode = {compiledCode.ToDbgString()}");
+#endif
+
+            var codeFrame = CodeFrameHelper.ConvertCompiledFunctionBodyToCodeFrame(compiledCode, _currentCodeFrame.LocalContext, _context);
+
+            ExecuteCodeFrame(codeFrame, null, true);
         }
 
         private void CallOperator(Operator op, List<Value> positionedParameters)
@@ -1426,49 +1447,58 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 //Log($"newCodeFrame = {newCodeFrame}");
 #endif
 
-                _context.InstancesStorage.AppendProcessInfo(newCodeFrame.ProcessInfo);
+                ExecuteCodeFrame(newCodeFrame, coordinator, isSync);
+            }
+        }
 
+        private void ExecuteCodeFrame(CodeFrame codeFrame, IExecutionCoordinator coordinator, bool isSync)
+        {
 #if DEBUG
-                //Log($"isSync = {isSync}");
+            //Log($"codeFrame = {codeFrame}");
 #endif
 
-                if (isSync)
+            _context.InstancesStorage.AppendProcessInfo(codeFrame.ProcessInfo);
+
+#if DEBUG
+            //Log($"isSync = {isSync}");
+#endif
+
+            if (isSync)
+            {
+                if (coordinator != null)
                 {
-                    if(coordinator != null)
+                    var instance = coordinator.Instance;
+
+#if DEBUG
+                    //Log($"instance?.Name = {instance?.Name}");                        
+                    //Log($"_currentInstance?.Name = {_currentInstance?.Name}");
+                    //Log($"coordinator.KindOfInstance = {coordinator.KindOfInstance}");
+#endif
+
+                    if (_currentInstance != null && instance != null)
                     {
-                        var instance = coordinator.Instance;
+                        SetSpecialMarkOfCodeFrame(codeFrame, coordinator);
 
-#if DEBUG
-                        //Log($"instance?.Name = {instance?.Name}");                        
-                        //Log($"_currentInstance?.Name = {_currentInstance?.Name}");
-                        //Log($"coordinator.KindOfInstance = {coordinator.KindOfInstance}");
-#endif
-
-                        if (_currentInstance != null && instance != null)
-                        {
-                            SetSpecialMarkOfCodeFrame(newCodeFrame, coordinator);
-
-                            _currentInstance.AddChildInstance(instance);
-                        }
+                        _currentInstance.AddChildInstance(instance);
                     }
-
-                    _currentCodeFrame.CurrentPosition++;
-
-                    newCodeFrame.ExecutionCoordinator = coordinator;
-
-                    SetCodeFrame(newCodeFrame);
                 }
-                else
-                {
-                    _currentCodeFrame.CurrentPosition++;
 
-                    var threadExecutor = new AsyncThreadExecutor(_context);
-                    threadExecutor.SetCodeFrame(newCodeFrame);
+                _currentCodeFrame.CurrentPosition++;
 
-                    var task = threadExecutor.Start();
+                codeFrame.ExecutionCoordinator = coordinator;
 
-                    _currentCodeFrame.ValuesStack.Push(task);
-                }
+                SetCodeFrame(codeFrame);
+            }
+            else
+            {
+                _currentCodeFrame.CurrentPosition++;
+
+                var threadExecutor = new AsyncThreadExecutor(_context);
+                threadExecutor.SetCodeFrame(codeFrame);
+
+                var task = threadExecutor.Start();
+
+                _currentCodeFrame.ValuesStack.Push(task);
             }
         }
 

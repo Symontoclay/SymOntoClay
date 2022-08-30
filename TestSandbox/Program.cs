@@ -174,7 +174,7 @@ namespace TestSandbox
 
             var compiledCode = engineContext.ConvertersFactory.GetConverterFactToImperativeCode().Convert(fact, localCodeExecutionContext);
 
-            _logger.Log($"_currentCodeFrame = {compiledCode.ToDbgString()}");
+            _logger.Log($"compiledCode = {compiledCode.ToDbgString()}");
 
             _logger.Log("End");
         }

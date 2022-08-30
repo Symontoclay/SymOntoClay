@@ -3,4 +3,10 @@
 	on Enter => {
 	    exec {: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :};
 	}
+
+	fun go(@direction)
+	{
+	    'go!!!!' >> @>log;
+	    @direction >> @>log;
+	}
 }

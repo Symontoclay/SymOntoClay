@@ -1,26 +1,4 @@
-/*MIT License
-
-Copyright (c) 2020 - 2022 Sergiy Tolkachov
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.*/
-
-using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
+﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.Helpers;
 using System;
 using System.Collections.Generic;
@@ -28,27 +6,27 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public class RejectStatementParser : BaseInternalParser
+    public class ExecStatementParser : BaseInternalParser
     {
         private enum State
         {
             Init,
-            GotMark
+            GotExecMark
         }
 
-        public RejectStatementParser(InternalParserContext context)
+        public ExecStatementParser(InternalParserContext context)
             : base(context)
         {
         }
-        
+
         private State _state = State.Init;
 
-        public AstRejectStatement Result { get; private set; }
+        public AstExecStatement Result { get; private set; }
 
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            Result = new AstRejectStatement();
+            Result = new AstExecStatement();
 
             DefaultSettingsOfCodeEntityHelper.SetUpAnnotatedItem(Result, CurrentDefaultSetings);
         }
@@ -57,10 +35,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnFinish()
         {
             Result.CheckDirty();
-
-#if DEBUG
-            //Log($"_rawStatement = {_rawStatement}");
-#endif
         }
 
         /// <inheritdoc/>
@@ -79,8 +53,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Word:
                             switch (_currToken.KeyWordTokenKind)
                             {
-                                case KeyWordTokenKind.Reject:
-                                    _state = State.GotMark;
+                                case KeyWordTokenKind.Exec:
+                                    _state = State.GotExecMark;
                                     break;
 
                                 default:
@@ -93,7 +67,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotMark:
+                case State.GotExecMark:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Semicolon:
@@ -101,7 +75,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(_currToken);
+                            {
+                                _context.Recovery(_currToken);
+                                var parser = new CodeExpressionStatementParser(_context);
+                                parser.Run();
+
+#if DEBUG
+                                //Log($"parser.Result = {parser.Result}");
+#endif
+
+                                Result.Expression = parser.Result.Expression;
+
+                                Exit();
+                            }
+                            break;
                     }
                     break;
 

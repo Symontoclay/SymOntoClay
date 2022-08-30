@@ -43,23 +43,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private State _state = State.Init;
 
-        public AstStatement Result { get; private set; }
-        private AstReturnStatement _rawStatement;
+        public AstReturnStatement Result { get; private set; }
 
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            _rawStatement = new AstReturnStatement();
+            Result = new AstReturnStatement();
 
-            DefaultSettingsOfCodeEntityHelper.SetUpAnnotatedItem(_rawStatement, CurrentDefaultSetings);
+            DefaultSettingsOfCodeEntityHelper.SetUpAnnotatedItem(Result, CurrentDefaultSetings);
         }
 
         /// <inheritdoc/>
         protected override void OnFinish()
         {
-            _rawStatement.CheckDirty();
-
-            Result = _rawStatement;
+            Result.CheckDirty();
         }
 
         /// <inheritdoc/>
@@ -109,7 +106,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 //Log($"parser.Result = {parser.Result}");
 #endif
 
-                                _rawStatement.Expression = parser.Result.Expression;
+                                Result.Expression = parser.Result.Expression;
 
                                 Exit();
                             }

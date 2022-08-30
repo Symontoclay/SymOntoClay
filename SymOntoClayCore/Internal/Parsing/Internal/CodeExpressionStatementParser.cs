@@ -184,7 +184,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             //Log($"_nodePoint = {_nodePoint}");
 #endif
 
-            if(_nodePoint.CurrentNode.Kind == KindOfIntermediateAstNode.Leaf)
+            if(_nodePoint.CurrentNode != null && _nodePoint.CurrentNode.Kind == KindOfIntermediateAstNode.Leaf)
             {
                 throw new UnexpectedTokenException(_currToken);
             }

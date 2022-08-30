@@ -207,6 +207,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.BreakState:
                 case OperationCode.BreakStateVal:
                 case OperationCode.Reject:
+                case OperationCode.Exec:
                     return $"{spaces}{OperationCode}";
 
                 case OperationCode.PushVal:

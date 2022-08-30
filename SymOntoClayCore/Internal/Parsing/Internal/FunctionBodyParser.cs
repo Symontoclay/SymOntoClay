@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
@@ -139,6 +140,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                 case KeyWordTokenKind.Reject:
                                     ProcessRejectStatement();
+                                    break;
+
+                                case KeyWordTokenKind.Exec:
+                                    ProcessExecStatement();
                                     break;
 
                                 default:
@@ -264,6 +269,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _context.Recovery(_currToken);
             var parser = new RejectStatementParser(_context);
+            parser.Run();
+            AddStatement(parser.Result);
+        }
+
+        private void ProcessExecStatement()
+        {
+            _context.Recovery(_currToken);
+            var parser = new ExecStatementParser(_context);
             parser.Run();
             AddStatement(parser.Result);
         }

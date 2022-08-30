@@ -89,6 +89,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         BlankIdentifier,
         Add,
         Fact,
-        Reject
+        Reject,
+        Exec
     }
 }

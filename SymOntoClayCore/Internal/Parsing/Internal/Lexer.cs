@@ -1146,6 +1146,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Reject;
                             break;
                         }
+
+                        if (string.Compare(content, "exec", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Exec;
+                            break;
+                        }
                     }
                     break;
 

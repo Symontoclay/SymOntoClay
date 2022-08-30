@@ -53,6 +53,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         AsyncCall,
         AsyncCall_N,
         AsyncCall_P,
+        Exec,
         ClearStack,
         Return,
         ReturnVal,

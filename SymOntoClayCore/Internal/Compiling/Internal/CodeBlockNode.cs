@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -40,12 +41,14 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         public void Run(List<AstStatement> statements, LoopCompilingContext loopCompilingContext)
         {
 #if DEBUG
+            Log($"statements = {statements.WriteListToToHumanizedString()}");
             //Log($"statements = {statements.WriteListToString()}");
 #endif
 
             foreach (var statement in statements)
             {
 #if DEBUG
+                Log($"statement = {statement.ToHumanizedString()}");
                 //Log($"statement = {statement}");
 #endif
 
@@ -169,6 +172,14 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         {
                             var node = new AstRejectStatementNode(_context);
                             node.Run(statement as AstRejectStatement);
+                            AddCommands(node.Result);
+                        }
+                        break;
+
+                    case KindOfAstStatement.ExecStatement:
+                        {
+                            var node = new AstExecStatementNode(_context);
+                            node.Run(statement as AstExecStatement);
                             AddCommands(node.Result);
                         }
                         break;

@@ -84,7 +84,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-            TstConvertFactToImperativeCode();
+            //TstConvertFactToImperativeCode();
             //TstFactToHtml();
             //TstStandardFactsBuilder();
             //TstStandardFactsBuilderGetTargetVarNameHandler();
@@ -147,7 +147,7 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

@@ -425,6 +425,32 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         CallFunction(KindOfFunctionParameters.NamedParameters, currentCommand.CountParams, false);
                         break;
 
+                    case OperationCode.Exec:
+                        {
+                            var currentValue = TryResolveFromVar(_currentCodeFrame.ValuesStack.Pop());
+
+#if DEBUG
+                            Log($"currentValue = {currentValue.ToHumanizedString()}");
+#endif
+
+                            var kindOfCurrentValue = currentValue.KindOfValue;
+
+#if DEBUG
+                            Log($"kindOfCurrentValue = {kindOfCurrentValue}");
+#endif
+
+                            switch (kindOfCurrentValue)
+                            {
+                                case KindOfValue.RuleInstanceValue:
+                                    ExecRuleInstanceValue(currentValue.AsRuleInstanceValue);
+                                    break;
+
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(kindOfCurrentValue), kindOfCurrentValue, null);
+                            }
+                        }
+                        break;
+
                     case OperationCode.SetInheritance:
                         ProcessSetInheritance();
                         break;
@@ -1330,6 +1356,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
             CallExecutable(method, kindOfParameters, namedParameters, positionedParameters, isSync);
+        }
+
+        private void ExecRuleInstanceValue(RuleInstanceValue ruleInstanceValue)
+        {
+#if DEBUG
+            Log($"ruleInstanceValue = {ruleInstanceValue.ToHumanizedString()}");
+#endif
+
+            throw new NotImplementedException();
         }
 
         private void CallOperator(Operator op, List<Value> positionedParameters)

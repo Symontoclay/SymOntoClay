@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.Converters
 {
@@ -23,11 +24,14 @@ namespace SymOntoClay.Core.Internal.Converters
             _context = context;
             _compiler = context.Compiler;
             _relationsResolver = context.DataResolversFactory.GetRelationsResolver();
+
+            _actName = NameHelper.CreateName("act");
         }
 
         private readonly IMainStorageContext _context;
         private readonly ICompiler _compiler;
         private readonly RelationsResolver _relationsResolver;
+        private readonly StrongIdentifierValue _actName;
 
         public CompiledFunctionBody Convert(RuleInstance ruleInstance, LocalCodeExecutionContext localCodeExecutionContext)
         {
@@ -89,10 +93,10 @@ namespace SymOntoClay.Core.Internal.Converters
             return result;
         }
 
-        private AstStatement ConvertRelation(LogicalQueryNode node, RuleInstance fact, LocalCodeExecutionContext localCodeExecutionContext)
+        private AstStatement ConvertRelation(LogicalQueryNode relation, RuleInstance fact, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Log($"node = {node.ToHumanizedString()}");
+            Log($"relation = {relation.ToHumanizedString()}");
             Log($"fact = {fact.ToHumanizedString()}");
             //Log($"node = {node}");
 #endif
@@ -103,9 +107,11 @@ namespace SymOntoClay.Core.Internal.Converters
 
             var functionNameExpr = new ConstValueAstExpression();
             callExpression.Left = functionNameExpr;
-            functionNameExpr.Value = node.Name;
+            functionNameExpr.Value = relation.Name;
 
-            foreach (var parameter in node.ParamsList)
+            var callExpressionParameters = callExpression.Parameters;
+
+            foreach (var parameter in relation.ParamsList)
             {
 #if DEBUG
                 //Log($"parameter = {parameter.ToHumanizedString()}");
@@ -133,7 +139,7 @@ namespace SymOntoClay.Core.Internal.Converters
                 }
             }
 
-            var linkedVars = node.LinkedVars;
+            var linkedVars = relation.LinkedVars;
 
             if(!linkedVars.IsNullOrEmpty())
             {
@@ -150,36 +156,198 @@ namespace SymOntoClay.Core.Internal.Converters
                     Log($"linkedVarName = {linkedVarName}");
 #endif
 
-                    var relationsList = GetNonActRelationsWithLogicalVarInFirstParameter(linkedVarName, fact, localCodeExecutionContext);
+                    var relationParametersList = GetNonActRelationsWithLogicalVarInFirstParameter(linkedVarName, fact, relation, localCodeExecutionContext);
 
 #if DEBUG
-                    Log($"relationsList = {relationsList.WriteListToToHumanizedString()}");
+                    Log($"relationParametersList = {relationParametersList.WriteListToToHumanizedString()}");
 #endif
-                }
 
-                throw new NotImplementedException();
+                    foreach(var relationParameter in relationParametersList)
+                    {
+#if DEBUG
+                        Log($"relationParameter = {relationParameter.ToHumanizedString()}");
+#endif
+
+                        var secondParameter = relationParameter.ParamsList[1];
+
+#if DEBUG
+                        Log($"secondParameter = {secondParameter.ToHumanizedString()}");
+                        Log($"secondParameter = {secondParameter}");
+#endif
+
+                        var kindOfSecondParameter = secondParameter.Kind;
+
+                        switch(kindOfSecondParameter)
+                        {
+                            case KindOfLogicalQueryNode.Concept:
+                            case KindOfLogicalQueryNode.Entity:
+                                {
+                                    var parameterExpression = new CallingParameter();
+                                    var parameterNameExpression = new ConstValueAstExpression();
+
+                                    parameterExpression.Name = parameterNameExpression;
+                                    parameterNameExpression.Value = relationParameter.Name;
+
+                                    var parameterValueExpression = new ConstValueAstExpression();
+                                    parameterExpression.Value = parameterValueExpression;
+
+                                    parameterValueExpression.Value = secondParameter.Name;
+
+                                    callExpressionParameters.Add(parameterExpression);
+                                }
+                                break;
+
+                            case KindOfLogicalQueryNode.Value:
+                                {
+                                    var parameterExpression = new CallingParameter();
+                                    var parameterNameExpression = new ConstValueAstExpression();
+
+                                    parameterExpression.Name = parameterNameExpression;
+                                    parameterNameExpression.Value = relationParameter.Name;
+
+                                    var parameterValueExpression = new ConstValueAstExpression();
+                                    parameterExpression.Value = parameterValueExpression;
+
+                                    parameterValueExpression.Value = secondParameter.Value;
+
+                                    callExpressionParameters.Add(parameterExpression);
+                                }
+                                break;
+
+                            /*
+                            case KindOfLogicalQueryNode.EntityCondition:
+                            case KindOfLogicalQueryNode.EntityRef:
+                            case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
+                            case KindOfLogicalQueryNode.Fact:
+                             */
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(kindOfSecondParameter), kindOfSecondParameter, null);
+                        }
+                    }
+                }
             }
 
 #if DEBUG
             Log($"statement = {statement.ToHumanizedString()}");
 #endif
 
-            throw new NotImplementedException();
+            return statement;
         }
 
-        private List<LogicalQueryNode> GetNonActRelationsWithLogicalVarInFirstParameter(StrongIdentifierValue variableName, RuleInstance fact, LocalCodeExecutionContext localCodeExecutionContext)
+        private List<LogicalQueryNode> GetNonActRelationsWithLogicalVarInFirstParameter(StrongIdentifierValue variableName, RuleInstance fact, LogicalQueryNode processedAction, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             Log($"variableName = {variableName}");
             Log($"fact = {fact.ToHumanizedString()}");
 #endif
 
-            throw new NotImplementedException();
+            var result = new List<LogicalQueryNode>();
+
+            GetNonActRelationsWithLogicalVarInFirstParameter(variableName, fact.PrimaryPart.Expression, processedAction, result, localCodeExecutionContext);
+
+            return result;
         }
 
-        private void GetNonActRelationsWithLogicalVarInFirstParameter()
+        private void GetNonActRelationsWithLogicalVarInFirstParameter(StrongIdentifierValue variableName, LogicalQueryNode node, LogicalQueryNode processedAction, List<LogicalQueryNode> result, LocalCodeExecutionContext localCodeExecutionContext)
         {
-            d
+#if DEBUG
+            Log($"variableName = {variableName}");
+            Log($"node = {node.ToHumanizedString()}");
+#endif
+
+            var kind = node.Kind;
+
+            switch(kind)
+            {
+                case KindOfLogicalQueryNode.BinaryOperator:
+                    GetNonActRelationsWithLogicalVarInFirstParameter(variableName, node.Left, processedAction, result, localCodeExecutionContext);
+                    GetNonActRelationsWithLogicalVarInFirstParameter(variableName, node.Right, processedAction, result, localCodeExecutionContext);
+                    break;
+
+                case KindOfLogicalQueryNode.UnaryOperator:
+                case KindOfLogicalQueryNode.Group:
+                    GetNonActRelationsWithLogicalVarInFirstParameter(variableName, node.Left, processedAction, result, localCodeExecutionContext);
+                    break;
+
+                case KindOfLogicalQueryNode.Relation:
+                    {
+                        if(node == processedAction)
+                        {
+                            break;
+                        }
+
+                        var paramsList = node.ParamsList;
+
+                        var paramsCount = paramsList.Count;
+
+#if DEBUG
+                        Log($"paramsCount = {paramsCount}");
+#endif
+
+                        var relationInfo = _relationsResolver.GetRelation(node.Name, paramsCount, localCodeExecutionContext);
+
+#if DEBUG
+                        //Log($"relationInfo = {relationInfo}");
+#endif
+
+                        var isAct = relationInfo.InheritanceItems.Any(p => p.SuperName == _actName);
+
+#if DEBUG
+                        Log($"isAct = {isAct}");
+#endif
+
+                        if(isAct)
+                        {
+                            break;
+                        }
+
+                        switch (paramsCount)
+                        {
+                            case 1:
+                                break;
+
+                            case 2:
+                                {
+                                    var firstParam = paramsList[0];
+
+#if DEBUG
+                                    Log($"firstParam = {firstParam}");
+#endif
+
+                                    if(firstParam.Kind == KindOfLogicalQueryNode.LogicalVar && firstParam.Name == variableName)
+                                    {
+                                        result.Add(node);
+                                        break;
+                                    }
+
+                                    foreach(var parameter in paramsList)
+                                    {
+                                        GetNonActRelationsWithLogicalVarInFirstParameter(variableName, parameter, processedAction, result, localCodeExecutionContext);
+                                    }
+                                }
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(paramsCount), paramsCount, null);
+                        }                        
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.Concept:
+                case KindOfLogicalQueryNode.Entity:
+                case KindOfLogicalQueryNode.QuestionVar:
+                case KindOfLogicalQueryNode.Value:
+                case KindOfLogicalQueryNode.StubParam:
+                case KindOfLogicalQueryNode.EntityCondition:
+                case KindOfLogicalQueryNode.EntityRef:
+                case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
+                case KindOfLogicalQueryNode.Fact:
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+            }
         }
 
         private List<LogicalQueryNode> GetSignificantNodesFromFact(RuleInstance fact, LocalCodeExecutionContext localCodeExecutionContext)
@@ -196,8 +364,6 @@ namespace SymOntoClay.Core.Internal.Converters
             //Log($"rootRelationsList = {rootRelationsList.WriteListToToHumanizedString()}");
 #endif
 
-            var actName = NameHelper.CreateName("act");
-
             foreach (var relation in rootRelationsList)
             {
                 var relationInfo = _relationsResolver.GetRelation(relation.Name, relation.ParamsList.Count, localCodeExecutionContext);
@@ -206,7 +372,7 @@ namespace SymOntoClay.Core.Internal.Converters
                 //Log($"relationInfo = {relationInfo}");
 #endif
 
-                var isAct = relationInfo.InheritanceItems.Any(p => p.SuperName == actName);
+                var isAct = relationInfo.InheritanceItems.Any(p => p.SuperName == _actName);
 
 #if DEBUG
                 //Log($"isAct = {isAct}");

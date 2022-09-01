@@ -1195,7 +1195,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if(caller.IsStrongIdentifierValue)
             {
-                CallStrongIdentifierValue(caller.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, isSync);
+                CallStrongIdentifierValue(caller.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, isSync, true);
                 return;
             }
 
@@ -1316,13 +1316,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Log($"methodName = {methodName}");
-            Log($"kindOfParameters = {kindOfParameters}");
-            Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
-            Log($"positionedParameters = {positionedParameters.WriteListToString()}");
-            Log($"isSync = {isSync}");
-            Log($"command = {command}");
-            Log($"processCreatingResult = {processCreatingResult}");
+            //Log($"methodName = {methodName}");
+            //Log($"kindOfParameters = {kindOfParameters}");
+            //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
+            //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+            //Log($"isSync = {isSync}");
+            //Log($"command = {command}");
+            //Log($"processCreatingResult = {processCreatingResult}");
 #endif
 
             throw new NotImplementedException();
@@ -1330,7 +1330,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallStrongIdentifierValue(StrongIdentifierValue methodName,
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
-            bool isSync)
+            bool isSync, bool mayCallHost)
         {
 #if DEBUG
             //Log($"methodName = {methodName}");
@@ -1338,6 +1338,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
             //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
             //Log($"isSync = {isSync}");
+            //Log($"mayCallHost = {mayCallHost}");
 #endif
             IExecutable method = null;
 
@@ -1365,6 +1366,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if(method == null)
             {
+                if(mayCallHost)
+                {
+                    CallHost(methodName, kindOfParameters, namedParameters, positionedParameters, isSync);
+                    return;
+                }
+
                 throw new Exception($"Method '{methodName.NameValue}' is not found.");
             }
 

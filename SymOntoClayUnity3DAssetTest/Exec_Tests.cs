@@ -45,5 +45,36 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case2()
+        {
+            var text = @"app PeaceKeeper
+{
+	on Enter => {
+	    exec {: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :};
+	}
+}";
+
+            var hostListener = new HostMethods_Tests_HostListener();
+
+            BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("GoToImpl_2", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("<0, 0, 0>", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }, hostListener);
+        }
     }
 }

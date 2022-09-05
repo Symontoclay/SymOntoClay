@@ -34,7 +34,7 @@ using SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache;
 using SymOntoClay.UnityAsset.Core.Internal.ModulesStorage;
 using SymOntoClay.UnityAsset.Core.Internal.Storage;
 using SymOntoClay.UnityAsset.Core.Internal.Threads;
-using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
+using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
 using SymOntoClay.UnityAsset.Core.Internal.Validators;
 using System;
 using System.Collections.Generic;
@@ -99,20 +99,20 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             
             ModulesStorage = new ModulesStorageComponent(this);
             StandaloneStorage = new StandaloneStorageComponent(settings, this);
-            PlatformTypesConvertorsRegistry = new PlatformTypesConvertorsRegistry(Logger);
+            PlatformTypesConvertorsRegistry = new PlatformTypesConvertersRegistry(Logger);
             DateTimeProvider = new DateTimeProvider(Logger, ThreadsComponent);
             LogicQueryParseAndCache = new LogicQueryParseAndCache(settings, this);
         }
 
         private void LoadTypesPlatformTypesConvertors()
         {
-            var targetAttributeType = typeof(PlatformTypesConvertorAttribute);
+            var targetAttributeType = typeof(PlatformTypesConverterAttribute);
 
             var typesList = AppDomainTypesEnumerator.GetTypes().Where(p => p.GetCustomAttributesData().Any(x => x.AttributeType == targetAttributeType)).ToList();
 
             foreach (var type in typesList)
             {
-                var convertor = (IPlatformTypesConvertor)Activator.CreateInstance(type);
+                var convertor = (IPlatformTypesConverter)Activator.CreateInstance(type);
 
                 PlatformTypesConvertorsRegistry.AddConvertor(convertor);
             }
@@ -130,7 +130,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             return invocableInMainThreadObj.Run();
         }
 
-        public void AddConvertor(IPlatformTypesConvertor convertor)
+        public void AddConvertor(IPlatformTypesConverter convertor)
         {
             PlatformTypesConvertorsRegistry.AddConvertor(convertor);
         }
@@ -164,9 +164,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         IStandaloneStorage IWorldCoreGameComponentContext.StandaloneStorage => StandaloneStorage.StandaloneStorage;
 
-        public PlatformTypesConvertorsRegistry PlatformTypesConvertorsRegistry { get; private set; }
-        IPlatformTypesConvertorsRegistry IWorldCoreContext.PlatformTypesConvertors => PlatformTypesConvertorsRegistry;
-        IPlatformTypesConvertorsRegistry IWorldCoreGameComponentContext.PlatformTypesConvertors => PlatformTypesConvertorsRegistry;
+        public PlatformTypesConvertersRegistry PlatformTypesConvertorsRegistry { get; private set; }
+        IPlatformTypesConvertersRegistry IWorldCoreContext.PlatformTypesConvertors => PlatformTypesConvertorsRegistry;
+        IPlatformTypesConvertersRegistry IWorldCoreGameComponentContext.PlatformTypesConvertors => PlatformTypesConvertorsRegistry;
 
         public INLPConverterFactory NLPConverterFactory { get; private set; }
         INLPConverterFactory IWorldCoreGameComponentContext.NLPConverterFactory => NLPConverterFactory;

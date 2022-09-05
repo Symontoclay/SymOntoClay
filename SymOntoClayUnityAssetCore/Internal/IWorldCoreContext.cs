@@ -22,7 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
+using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -35,7 +35,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         IEntityLogger Logger { get; }
         
         IModulesStorage ModulesStorage { get; }
-        IPlatformTypesConvertorsRegistry PlatformTypesConvertors { get; }
+        IPlatformTypesConvertersRegistry PlatformTypesConvertors { get; }
         IDateTimeProvider DateTimeProvider { get; }
         ILogicQueryParseAndCache LogicQueryParseAndCache { get; }
         KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; }

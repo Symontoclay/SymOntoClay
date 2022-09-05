@@ -132,7 +132,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         public IProcessCreatingResult CreateProcess(ICommand command)
         {
 #if DEBUG
-            Log($"command = {command}");
+            //Log($"command = {command}");
 #endif
 
             try
@@ -140,7 +140,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 var endPointInfo = _endPointsResolver.GetEndpointInfo(command, _endpointsRegistries);
 
 #if DEBUG
-                Log($"endPointInfo = {endPointInfo}");
+                //Log($"endPointInfo = {endPointInfo}");
 #endif
 
                 if (endPointInfo == null)
@@ -149,6 +149,10 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 }
 
                 var processInfo = _endPointActivator.Activate(endPointInfo, command);
+
+#if DEBUG
+                //Log($"processInfo = {processInfo}");
+#endif
 
                 return new ProcessCreatingResult(processInfo);
             }

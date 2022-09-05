@@ -24,11 +24,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors
+namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 {
-    public interface IPlatformTypesConvertorsRegistry
+    public interface IPlatformTypesConvertersRegistry
     {
-        void AddConvertor(IPlatformTypesConvertor convertor);
+        void AddConvertor(IPlatformTypesConverter convertor);
         bool CanConvert(Type source, Type dest);
         object Convert(Type sourceType, Type destType, object sourceValue);
     }

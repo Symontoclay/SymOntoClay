@@ -24,7 +24,7 @@ using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
-using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
+using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -49,7 +49,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         IModulesStorage ModulesStorage { get; }
         IStandaloneStorage StandaloneStorage { get; }
         string TmpDir { get; }
-        IPlatformTypesConvertorsRegistry PlatformTypesConvertors { get; }
+        IPlatformTypesConvertersRegistry PlatformTypesConvertors { get; }
         IInvokerInMainThread InvokerInMainThread { get; }
         IDateTimeProvider DateTimeProvider { get; }
         ILogicQueryParseAndCache LogicQueryParseAndCache { get; }

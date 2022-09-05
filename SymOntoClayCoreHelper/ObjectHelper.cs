@@ -107,5 +107,28 @@ namespace SymOntoClay.CoreHelper
 
             return false;
         }
+
+        public static List<Type> GetAllBaseTypes(Type type)
+        {
+            var result = new List<Type>();
+
+            result.AddRange(type.GetInterfaces());
+
+            FillUpBaseTypes(type.BaseType, result);
+
+            return result;
+        }
+
+        private static void FillUpBaseTypes(Type type, List<Type> result)
+        {
+            if(type == null)
+            {
+                return;
+            }
+
+            result.Add(type);
+
+            FillUpBaseTypes(type.BaseType, result);
+        }
     }
 }

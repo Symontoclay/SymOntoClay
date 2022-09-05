@@ -29,7 +29,7 @@ using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
-using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors.DefaultConvertors;
+using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors.DefaultConverters;
 using SymOntoClay.DefaultCLIEnvironment;
 using System.Collections.Generic;
 using System.Numerics;

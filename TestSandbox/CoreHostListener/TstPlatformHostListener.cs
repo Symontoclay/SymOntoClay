@@ -72,7 +72,47 @@ namespace TestSandbox.CoreHostListener
             {
                 n++;
 
-                if(n > 1000)
+                if(n > 10/*00*/)
+                {
+                    break;
+                }
+
+                Thread.Sleep(1000);
+
+                _logger.Log($"{name} Hi! n = {n}");
+
+                _logger.Log($"{name} Hi! cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
+
+                cancellationToken.ThrowIfCancellationRequested();
+            }
+
+            //Thread.Sleep(5000);
+
+            _logger.Log($"End {name}");
+        }
+
+        [DebuggerHidden]
+        [BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
+        public void GoToImpl_2(CancellationToken cancellationToken,
+        [EndpointParam("Direction", KindOfEndpointParam.Position)] Vector3 point,
+        float speed = 12)
+        {
+            //var name = NameHelper.GetNewEntityNameString();
+            //var name = string.Empty;
+            var name = GetMethodId();
+
+            _logger.Log($"Begin {name}");
+
+            _logger.Log($"{name} point = {point}");
+            _logger.Log($"{name} speed = {speed}");
+
+            var n = 0;
+
+            while (true)
+            {
+                n++;
+
+                if (n > 10/*00*/)
                 {
                     break;
                 }

@@ -25,7 +25,7 @@ using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
-using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
+using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,14 +38,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
     public class EndPointActivator : BaseLoggedComponent
     {
-        public EndPointActivator(IEntityLogger logger, IPlatformTypesConvertorsRegistry platformTypesConvertorsRegistry, IInvokerInMainThread invokingInMainThread)
+        public EndPointActivator(IEntityLogger logger, IPlatformTypesConvertersRegistry platformTypesConvertorsRegistry, IInvokerInMainThread invokingInMainThread)
             : base(logger)
         {
             _platformTypesConvertorsRegistry = platformTypesConvertorsRegistry;
             _invokingInMainThread = invokingInMainThread;
         }
 
-        private readonly IPlatformTypesConvertorsRegistry _platformTypesConvertorsRegistry;
+        private readonly IPlatformTypesConvertersRegistry _platformTypesConvertorsRegistry;
         private readonly IInvokerInMainThread _invokingInMainThread;
 
         public IProcessInfo Activate(IEndpointInfo endpointInfo, ICommand command)
@@ -91,8 +91,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 catch (TargetInvocationException e)
                 {
 #if DEBUG
-                    //Log($"e = {e}");
-                    //Log($"e.InnerException = {e.InnerException}");
+                    Log($"e = {e}");
+                    Log($"e.InnerException = {e.InnerException}");
 #endif
 
                     if (e.InnerException.GetType() == typeof(OperationCanceledException))
@@ -103,7 +103,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 catch (Exception e)
                 {
 #if DEBUG
-                    //Log($"e = {e}");
+                    Log($"e = {e}");
 #endif
 
                     processInfo.Status = ProcessStatus.Faulted;
@@ -137,8 +137,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 catch (TargetInvocationException e)
                 {
 #if DEBUG
-                    //Log($"e = {e}");
-                    //Log($"e.InnerException = {e.InnerException}");
+                    Log($"e = {e}");
+                    Log($"e.InnerException = {e.InnerException}");
 #endif
 
                     if(e.InnerException.GetType() == typeof(OperationCanceledException))
@@ -149,7 +149,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 catch (Exception e)
                 {
 #if DEBUG
-                    //Log($"e = {e}");
+                    Log($"e = {e}");
 #endif
 
                     processInfo.Status = ProcessStatus.Faulted;

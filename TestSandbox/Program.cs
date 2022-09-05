@@ -84,6 +84,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            //TstGetFullBaseTypesListInCSharpReflection();
             //TstConvertFactToImperativeCode();
             //TstFactToHtml();
             //TstStandardFactsBuilder();
@@ -151,6 +152,40 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstGetFullBaseTypesListInCSharpReflection()
+        {
+            _logger.Log("Begin");
+
+            var source = typeof(ConditionalEntityValue);
+
+            _logger.Log($"source.FullName = {source.FullName}");
+
+            var interfacesList = source.GetInterfaces();
+
+            _logger.Log($"interfacesList.Length = {interfacesList.Length}");
+
+            foreach(var item in interfacesList)
+            {
+                _logger.Log($"item.FullName = {item.FullName}");
+            }
+
+            PrintBaseType(source.BaseType);
+
+            _logger.Log("End");
+        }
+
+        private static void PrintBaseType(Type type)
+        {
+            if(type == null)
+            {
+                return;
+            }
+
+            _logger.Log($"type.FullName = {type.FullName}");
+
+            PrintBaseType(type.BaseType);
         }
 
         private static void TstConvertFactToImperativeCode()
@@ -1323,7 +1358,7 @@ action Go
         {
             _logger.Log("Begin");
 
-            var targetAttributeType = typeof(PlatformTypesConvertorAttribute);
+            var targetAttributeType = typeof(PlatformTypesConverterAttribute);
 
             var typesList = AppDomainTypesEnumerator.GetTypes().Where(p => p.GetCustomAttributesData().Any(x => x.AttributeType == targetAttributeType));
 
@@ -1333,7 +1368,7 @@ action Go
             {
                 _logger.Log($"type.FullName = {type.FullName}");
 
-                var convertor = (IPlatformTypesConvertor)Activator.CreateInstance(type);
+                var convertor = (IPlatformTypesConverter)Activator.CreateInstance(type);
 
                 _logger.Log($"convertor = {convertor}");
             }

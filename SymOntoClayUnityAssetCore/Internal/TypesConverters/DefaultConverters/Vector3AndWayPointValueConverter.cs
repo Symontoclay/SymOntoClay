@@ -24,18 +24,19 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 
-namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors.DefaultConvertors
+namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors.DefaultConverters
 {
-    [PlatformTypesConvertor]
-    public class FloatAndNumberValueConvertor : IPlatformTypesConvertor
+    [PlatformTypesConverter]
+    public class Vector3AndWayPointValueConverter : IPlatformTypesConverter
     {
         /// <inheritdoc/>
-        public Type PlatformType => typeof(float);
+        public Type PlatformType => typeof(Vector3);
 
         /// <inheritdoc/>
-        public Type CoreType => typeof(NumberValue);
+        public Type CoreType => typeof(WaypointValue);
 
         /// <inheritdoc/>
         public bool CanConvertToPlatformType => true;
@@ -52,9 +53,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors.DefaultConvertors
         /// <inheritdoc/>
         public object ConvertToPlatformType(object coreObject, IEntityLogger logger)
         {
-            var targetValue = (NumberValue)coreObject;
+            var targetObject = (WaypointValue)coreObject;
 
-            return (float)(double)targetValue.GetSystemValue();
+            return targetObject.AbcoluteCoordinates;
         }
 
         /// <inheritdoc/>

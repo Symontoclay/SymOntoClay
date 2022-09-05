@@ -64,7 +64,7 @@ namespace SymOntoClay.UnityAsset.Core.World
             }
         }
 
-        public void AddConvertor(IPlatformTypesConvertor convertor)
+        public void AddConvertor(IPlatformTypesConverter convertor)
         {
             lock (_lockObj)
             {
@@ -301,7 +301,7 @@ namespace SymOntoClay.UnityAsset.Core.World
 
         private List<IDeferredInitialized> _deferredInitializedList = new List<IDeferredInitialized>();
 
-        private IPlatformTypesConvertor _deferredPlatformTypesConvertor;
+        private IPlatformTypesConverter _deferredPlatformTypesConvertor;
         #endregion
     }
 }

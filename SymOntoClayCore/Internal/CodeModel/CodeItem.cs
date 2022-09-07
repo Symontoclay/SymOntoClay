@@ -151,6 +151,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsRelationDescription => false;
         public virtual RelationDescription AsRelationDescription => null;
 
+        public virtual bool IsSynonym => false;
+        public virtual Synonym AsSynonym => null;
+
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {

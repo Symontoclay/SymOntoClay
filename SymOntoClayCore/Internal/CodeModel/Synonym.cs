@@ -1,51 +1,28 @@
-/*MIT License
-
-Copyright (c) 2020 - 2022 Sergiy Tolkachov
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.*/
-
-using SymOntoClay.Core.DebugHelpers;
+﻿using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class MutuallyExclusiveStatesSet: CodeItem
+    public class Synonym : CodeItem
     {
-        public MutuallyExclusiveStatesSet()
+        public Synonym()
         {
             TypeOfAccess = DefaultTypeOfAccess;
         }
-        
-        /// <inheritdoc/>
-        public override KindOfCodeEntity Kind => KindOfCodeEntity.MutuallyExclusiveStatesSet;
 
         /// <inheritdoc/>
-        public override bool IsMutuallyExclusiveStatesSet => true;
+        public override KindOfCodeEntity Kind => KindOfCodeEntity.Synonym;
 
         /// <inheritdoc/>
-        public override MutuallyExclusiveStatesSet AsMutuallyExclusiveStatesSet => this;
+        public override bool IsSynonym => true;
 
-        public List<StrongIdentifierValue> StateNames { get; set; } = new List<StrongIdentifierValue>();
+        /// <inheritdoc/>
+        public override Synonym AsSynonym => this;
+
+        public StrongIdentifierValue Object { get; set; }
 
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> cloneContext)
@@ -57,7 +34,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// Clones the instance and returns cloned instance.
         /// </summary>
         /// <returns>Cloned instance.</returns>
-        public MutuallyExclusiveStatesSet Clone()
+        public Synonym Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
@@ -68,17 +45,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// </summary>
         /// <param name="context">Special context for providing references continuity.</param>
         /// <returns>Cloned instance.</returns>
-        public MutuallyExclusiveStatesSet Clone(Dictionary<object, object> context)
+        public Synonym Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {
-                return (MutuallyExclusiveStatesSet)context[this];
+                return (Synonym)context[this];
             }
 
-            var result = new MutuallyExclusiveStatesSet();
+            var result = new Synonym();
             context[this] = result;
 
-            result.StateNames = StateNames.Select(p => p.Clone(context)).ToList();
+            //result.StateNames = StateNames.Select(p => p.Clone(context)).ToList();
 
             result.AppendCodeItem(this, context);
 
@@ -91,7 +68,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjListProp(n, nameof(StateNames), StateNames);
+            sb.PrintObjProp(n, nameof(Object), Object);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -103,7 +80,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjListProp(n, nameof(StateNames), StateNames);
+            sb.PrintShortObjProp(n, nameof(Object), Object);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -115,7 +92,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjListProp(n, nameof(StateNames), StateNames);
+            sb.PrintBriefObjProp(n, nameof(Object), Object);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
@@ -124,7 +101,23 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            return $"states {{ {string.Join(",", StateNames.Select(p => p.NameValue))} }}";
+            var sb = new StringBuilder("synonym");
+
+            if(Name != null)
+            {
+                sb.Append(" ");
+                sb.Append(Name.ToHumanizedString(options));
+            }
+
+            sb.Append(" for");
+
+            if(Object != null)
+            {
+                sb.Append(" ");
+                sb.Append(Object.ToHumanizedString(options));
+            }
+
+            return sb.ToString();
         }
     }
 }

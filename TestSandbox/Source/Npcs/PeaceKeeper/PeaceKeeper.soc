@@ -1,4 +1,6 @@
-﻿app PeaceKeeper
+﻿synonym to for direction;
+
+app PeaceKeeper
 {
 	on Enter => {
 	    exec {: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :};

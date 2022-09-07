@@ -64,10 +64,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             switch (_state)
             {
                 case State.Init:
-                    switch (_currToken.KeyWordTokenKind)
+                    switch (_currToken.TokenKind)
                     {
-                        case KeyWordTokenKind.States:
-                            _state = State.GotStatesMark;
+                        case TokenKind.Word:
+                            switch (_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.States:
+                                    _state = State.GotStatesMark;
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
                             break;
 
                         default:

@@ -44,6 +44,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         Field,
         State,
         MutuallyExclusiveStatesSet,
-        RelationDescription
+        RelationDescription,
+        Synonym
     }
 }

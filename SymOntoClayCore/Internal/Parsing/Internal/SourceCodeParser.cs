@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
+            Log($"_currToken = {_currToken}");
 #endif
 
             switch(_currToken.TokenKind)
@@ -127,6 +127,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             {
                                 _context.Recovery(_currToken);
                                 var parser = new RelationDescriptionParser(_context);
+                                parser.Run();
+                                Result.Add(parser.Result);
+                            }
+                            break;
+
+                        case KeyWordTokenKind.Synonym:
+                            {
+                                _context.Recovery(_currToken);
+                                var parser = new SynonymParser(_context);
                                 parser.Run();
                                 Result.Add(parser.Result);
                             }

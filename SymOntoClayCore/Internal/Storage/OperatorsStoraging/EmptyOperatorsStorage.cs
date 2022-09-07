@@ -20,77 +20,32 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.Parsing.Internal
+namespace SymOntoClay.Core.Internal.Storage.OperatorsStoraging
 {
-    public enum KeyWordTokenKind
+    public class EmptyOperatorsStorage : BaseEmptySpecificStorage, IOperatorsStorage
     {
-        /// <summary>
-        /// Default value. Represents nothing.
-        /// </summary>
-        Unknown,
-        Null,
-        World,
-        App,
-        Class,
-        Action,
-        Fun,
-        Operator,
-        Is,
-        On,
-        Init,
-        Enter,
-        Leave,
-        Set,
-        Not,
-        And,
-        Or,
-        Select,
-        Insert,
-        LinguisticVariable,
-        For,
-        Range,
-        Terms,
-        Constraints,
-        Relation,
-        Inheritance,
-        Error,
-        Try,
-        Catch,
-        Else,
-        Ensure,
-        Where,
-        Await,
-        Complete,
-        Break,
-        Alias,
-        Var,
-        Public,
-        Protected,
-        Private,
-        Return,
-        If,
-        Elif,
-        While,
-        Continue,
-        Repeat,
-        State,
-        States,
-        As,
-        Default,
-        Down,
-        Duration,
-        /// <summary>
-        /// Repsesents symbol `_`.
-        /// </summary>
-        BlankIdentifier,
-        Add,
-        Fact,
-        Reject,
-        Exec,
-        Synonym
+        public EmptyOperatorsStorage(IStorage storage, IEntityLogger logger)
+            : base(storage, logger)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void Append(Operator op)
+        {
+        }
+
+        /// <inheritdoc/>
+        public IList<WeightedInheritanceResultItem<Operator>> GetOperatorsDirectly(KindOfOperator kindOfOperator, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+            return new List<WeightedInheritanceResultItem<Operator>>();
+        }
     }
 }

@@ -22,7 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.Storage.LogicalStorage;
+using SymOntoClay.Core.Internal.Storage.LogicalStoraging;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClayBaseTestLib.Helpers;
 using System;

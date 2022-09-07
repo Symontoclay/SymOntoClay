@@ -20,36 +20,59 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.DataResolvers;
-using SymOntoClay.Core.Internal.Storage;
-using SymOntoClay.Core.Internal.Storage.LogicalStoraging;
+using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.Instances
+namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 {
-    public class AddingFactNonConditionalTriggerInstance: BaseAddingFactTriggerInstance
+    public class EmptyVarStorage : BaseEmptySpecificStorage, IVarStorage
     {
-        public AddingFactNonConditionalTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage)
-            : base(trigger, parent, context, parentStorage, false)
+        public EmptyVarStorage(IStorage storage, IEntityLogger logger)
+            : base(storage, logger)
         {
         }
-
-        private readonly List<List<Var>> EmptyVarsList = new List<List<Var>>();
 
         /// <inheritdoc/>
-        protected override IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance)
+        public void SetSystemValue(StrongIdentifierValue varName, Value value)
         {
-#if DEBUG
-            //Log($"ruleInstance = {ruleInstance.ToHumanizedString()}");
-#endif
-
-            return ProcessAction(EmptyVarsList, ruleInstance);
         }
+
+        /// <inheritdoc/>
+        public Value GetSystemValueDirectly(StrongIdentifierValue varName)
+        {
+            return null;
+        }
+
+        /// <inheritdoc/>
+        public void Append(Var varItem)
+        {
+        }
+
+        /// <inheritdoc/>
+        public IList<WeightedInheritanceResultItem<Var>> GetVarDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+            return new List<WeightedInheritanceResultItem<Var>>();
+        }
+
+        /// <inheritdoc/>
+        public Var GetLocalVarDirectly(StrongIdentifierValue name)
+        {
+            return null;
+        }
+
+        /// <inheritdoc/>
+        public void SetValue(StrongIdentifierValue varName, Value value)
+        {
+        }
+
+        /// <inheritdoc/>
+        public event Action OnChanged;
+
+        /// <inheritdoc/>
+        public event Action<StrongIdentifierValue> OnChangedWithKeys;
     }
 }

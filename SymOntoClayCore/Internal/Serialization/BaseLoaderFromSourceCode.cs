@@ -282,6 +282,9 @@ namespace SymOntoClay.Core.Internal.Serialization
                 case KindOfCodeEntity.MutuallyExclusiveStatesSet:
                     break;
 
+                case KindOfCodeEntity.Synonym:
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(codeEntity.Kind), codeEntity.Kind, null);
             }
@@ -516,6 +519,10 @@ namespace SymOntoClay.Core.Internal.Serialization
                     globalStorage.StatesStorage.Append(codeItem.AsMutuallyExclusiveStatesSet);
                     break;
 
+                case KindOfCodeEntity.Synonym:
+                    globalStorage.SynonymsStorage.Append(codeItem.AsSynonym);
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfEntity), kindOfEntity, null);
             }
@@ -566,6 +573,7 @@ namespace SymOntoClay.Core.Internal.Serialization
                 case KindOfCodeEntity.Operator:
                 case KindOfCodeEntity.Field:
                 case KindOfCodeEntity.MutuallyExclusiveStatesSet:
+                case KindOfCodeEntity.Synonym:
                     if (directives.Any())
                     {
                         throw new Exception($"Directives does not allowed for {kindOfEntity}.");

@@ -24,7 +24,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage;
-using SymOntoClay.Core.Internal.Storage.LogicalStorage;
+using SymOntoClay.Core.Internal.Storage.LogicalStoraging;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;

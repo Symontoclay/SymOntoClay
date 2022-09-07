@@ -21,8 +21,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.Core.Internal.Storage.ActionsStoraging;
+using SymOntoClay.Core.Internal.Storage.ChannelsStoraging;
 using SymOntoClay.Core.Internal.Storage.FuzzyLogic;
+using SymOntoClay.Core.Internal.Storage.InheritanceStoraging;
+using SymOntoClay.Core.Internal.Storage.LogicalStoraging;
+using SymOntoClay.Core.Internal.Storage.MetadataStoraging;
+using SymOntoClay.Core.Internal.Storage.MethodsStoraging;
+using SymOntoClay.Core.Internal.Storage.OperatorsStoraging;
 using SymOntoClay.Core.Internal.Storage.RelationStoraging;
+using SymOntoClay.Core.Internal.Storage.StatesStoraging;
+using SymOntoClay.Core.Internal.Storage.SynonymsStoraging;
+using SymOntoClay.Core.Internal.Storage.TriggersStoraging;
+using SymOntoClay.Core.Internal.Storage.VarStoraging;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -63,18 +74,18 @@ namespace SymOntoClay.Core.Internal.Storage
                 _realStorageContext.Parents = parents;
             }
 
-            _realStorageContext.LogicalStorage = new LogicalStorage.LogicalStorage(_kind, _realStorageContext);
+            _realStorageContext.LogicalStorage = new LogicalStorage(_kind, _realStorageContext);
             _realStorageContext.RelationsStorage = new RelationsStorage(_kind, _realStorageContext);
-            _realStorageContext.MethodsStorage = new MethodsStorage.MethodsStorage(_kind, _realStorageContext);
-            _realStorageContext.ActionsStorage = new ActionsStorage.ActionsStorage(_kind, _realStorageContext);
-            _realStorageContext.StatesStorage = new StatesStorage.StatesStorage(_kind, _realStorageContext);
-            _realStorageContext.TriggersStorage = new TriggersStorage.TriggersStorage(_kind, _realStorageContext);
-            _realStorageContext.InheritanceStorage = new InheritanceStorage.InheritanceStorage(_kind, _realStorageContext);
-            _realStorageContext.SynonymsStorage = new SynonymsStorage.SynonymsStorage(_kind, _realStorageContext);
-            _realStorageContext.OperatorsStorage = new OperatorsStorage.OperatorsStorage(_kind, _realStorageContext);
-            _realStorageContext.ChannelsStorage = new ChannelsStorage.ChannelsStorage(_kind, _realStorageContext);
-            _realStorageContext.MetadataStorage = new MetadataStorage.MetadataStorage(_kind, _realStorageContext);
-            _realStorageContext.VarStorage = new VarStorage.VarStorage(_kind, _realStorageContext);
+            _realStorageContext.MethodsStorage = new MethodsStorage(_kind, _realStorageContext);
+            _realStorageContext.ActionsStorage = new ActionsStorage(_kind, _realStorageContext);
+            _realStorageContext.StatesStorage = new StatesStorage(_kind, _realStorageContext);
+            _realStorageContext.TriggersStorage = new TriggersStorage(_kind, _realStorageContext);
+            _realStorageContext.InheritanceStorage = new InheritanceStorage(_kind, _realStorageContext);
+            _realStorageContext.SynonymsStorage = new SynonymsStorage(_kind, _realStorageContext);
+            _realStorageContext.OperatorsStorage = new OperatorsStorage(_kind, _realStorageContext);
+            _realStorageContext.ChannelsStorage = new ChannelsStorage(_kind, _realStorageContext);
+            _realStorageContext.MetadataStorage = new MetadataStorage(_kind, _realStorageContext);
+            _realStorageContext.VarStorage = new VarStorage(_kind, _realStorageContext);
             _realStorageContext.FuzzyLogicStorage = new FuzzyLogicStorage(_kind, _realStorageContext);
         }
 

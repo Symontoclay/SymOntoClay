@@ -21,8 +21,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.Compiling;
+using SymOntoClay.Core.Internal.Storage.ActionsStoraging;
+using SymOntoClay.Core.Internal.Storage.ChannelsStoraging;
 using SymOntoClay.Core.Internal.Storage.FuzzyLogic;
+using SymOntoClay.Core.Internal.Storage.InheritanceStoraging;
+using SymOntoClay.Core.Internal.Storage.LogicalStoraging;
+using SymOntoClay.Core.Internal.Storage.MetadataStoraging;
+using SymOntoClay.Core.Internal.Storage.MethodsStoraging;
+using SymOntoClay.Core.Internal.Storage.OperatorsStoraging;
 using SymOntoClay.Core.Internal.Storage.RelationStoraging;
+using SymOntoClay.Core.Internal.Storage.StatesStoraging;
+using SymOntoClay.Core.Internal.Storage.SynonymsStoraging;
+using SymOntoClay.Core.Internal.Storage.TriggersStoraging;
+using SymOntoClay.Core.Internal.Storage.VarStoraging;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -33,18 +44,18 @@ namespace SymOntoClay.Core.Internal.Storage
     public class RealStorageContext
     {
         public IMainStorageContext MainStorageContext { get; set; }
-        public LogicalStorage.LogicalStorage LogicalStorage { get; set; }
+        public LogicalStorage LogicalStorage { get; set; }
         public RelationsStorage RelationsStorage { get; set; }
-        public MethodsStorage.MethodsStorage MethodsStorage { get; set; }
-        public ActionsStorage.ActionsStorage ActionsStorage { get; set; }
-        public StatesStorage.StatesStorage StatesStorage { get; set; }
-        public TriggersStorage.TriggersStorage TriggersStorage { get; set; }
-        public InheritanceStorage.InheritanceStorage InheritanceStorage { get; set; }
-        public SynonymsStorage.SynonymsStorage SynonymsStorage { get; set; }
-        public OperatorsStorage.OperatorsStorage OperatorsStorage { get; set; }
-        public ChannelsStorage.ChannelsStorage ChannelsStorage { get; set; }
-        public MetadataStorage.MetadataStorage MetadataStorage { get; set; }
-        public VarStorage.VarStorage VarStorage { get; set; }
+        public MethodsStorage MethodsStorage { get; set; }
+        public ActionsStorage ActionsStorage { get; set; }
+        public StatesStorage StatesStorage { get; set; }
+        public TriggersStorage TriggersStorage { get; set; }
+        public InheritanceStorage InheritanceStorage { get; set; }
+        public SynonymsStorage SynonymsStorage { get; set; }
+        public OperatorsStorage OperatorsStorage { get; set; }
+        public ChannelsStorage ChannelsStorage { get; set; }
+        public MetadataStorage MetadataStorage { get; set; }
+        public VarStorage VarStorage { get; set; }
         public FuzzyLogicStorage FuzzyLogicStorage { get; set; }
         public RealStorage Storage { get; set; }
         public IList<IStorage> Parents { get; set; }

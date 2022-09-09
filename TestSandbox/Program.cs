@@ -84,6 +84,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            TstSynonymsHandler();
             //TstGetFullBaseTypesListInCSharpReflection();
             //TstConvertFactToImperativeCode();
             //TstFactToHtml();
@@ -148,10 +149,20 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstSynonymsHandler()
+        {
+            _logger.Log("Begin");
+
+            var handler = new SynonymsHandler();
+            handler.Run();
+
+            _logger.Log("End");
         }
 
         private static void TstGetFullBaseTypesListInCSharpReflection()

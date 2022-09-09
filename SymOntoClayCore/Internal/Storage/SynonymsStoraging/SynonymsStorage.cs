@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.Storage.SynonymsStoraging
 
         private readonly object _lockObj = new object();
 
-        private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<StrongIdentifierValue>>> _synonymsDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<StrongIdentifierValue>>>();
+        private readonly Dictionary<StrongIdentifierValue, List<StrongIdentifierValue>> _synonymsDict = new Dictionary<StrongIdentifierValue, List<StrongIdentifierValue>>();
 
         /// <inheritdoc/>
         public void Append(Synonym synonym)
@@ -46,51 +46,29 @@ namespace SymOntoClay.Core.Internal.Storage.SynonymsStoraging
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"synonym = {synonym}");
+                //Log($"synonym = {synonym}");
 #endif
-
-                AnnotatedItemHelper.CheckAndFillUpHolder(synonym, _realStorageContext.MainStorageContext.CommonNamesStorage);
 
                 synonym.CheckDirty();
-
-                var holder = synonym.Holder;
-
-#if DEBUG
-                Log($"holder = {holder}");
-#endif
 
                 var name = synonym.Name;
                 var obj = synonym.Object;
 
 #if DEBUG
-                Log($"name = {name}");
-                Log($"obj = {obj}");
+                //Log($"name = {name}");
+                //Log($"obj = {obj}");
 #endif
 
-                if (_synonymsDict.ContainsKey(holder))
-                {
-                    var targetDict = _synonymsDict[holder];
-
-                    AddWord(targetDict, name, obj);
-                    AddWord(targetDict, obj, name);
-                }
-                else
-                {
-                    var targetDict = new Dictionary<StrongIdentifierValue, List<StrongIdentifierValue>>();
-
-                    _synonymsDict[holder] = targetDict;
-
-                    targetDict[name] = new List<StrongIdentifierValue>() { obj };
-                    targetDict[obj] = new List<StrongIdentifierValue>() { name };
-                }
+                AddWord(name, obj);
+                AddWord(obj, name);
             }
         }
 
-        private void AddWord(Dictionary<StrongIdentifierValue, List<StrongIdentifierValue>> targetDict, StrongIdentifierValue name, StrongIdentifierValue obj)
+        private void AddWord(StrongIdentifierValue name, StrongIdentifierValue obj)
         {
-            if(targetDict.ContainsKey(name))
+            if(_synonymsDict.ContainsKey(name))
             {
-                var targetList = targetDict[name];
+                var targetList = _synonymsDict[name];
 
                 if(!targetList.Contains(obj))
                 {
@@ -100,7 +78,7 @@ namespace SymOntoClay.Core.Internal.Storage.SynonymsStoraging
                 return;
             }
 
-            targetDict[name] = new List<StrongIdentifierValue>() { obj };
+            _synonymsDict[name] = new List<StrongIdentifierValue>() { obj };
         }
     }
 }

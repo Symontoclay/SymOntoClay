@@ -4685,6 +4685,9 @@
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory.GetLogicalValueModalityResolver">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory.GetSynonymsResolver">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.IDataResolversFactory.GetChannelsResolver">
             <summary>
             Gets instance of Channels resolver.

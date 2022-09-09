@@ -84,6 +84,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private LogicalValueModalityResolver _logicalValueModalityResolver;
         private readonly object _logicalValueModalityResolverLockObj = new object();
 
+        private SynonymsResolver _synonymsResolver;
+        private readonly object _synonymsResolverLockObj = new object();
+
         /// <inheritdoc/>
         public ChannelsResolver GetChannelsResolver()
         {
@@ -305,6 +308,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 return _logicalValueModalityResolver;
+            }
+        }
+
+        /// <inheritdoc/>
+        public SynonymsResolver GetSynonymsResolver()
+        {
+            lock(_synonymsResolverLockObj)
+            {
+                if(_synonymsResolver == null)
+                {
+                    _synonymsResolver = new SynonymsResolver(_context);
+                }
+
+                return _synonymsResolver;
             }
         }
     }

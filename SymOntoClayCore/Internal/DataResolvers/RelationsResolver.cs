@@ -46,7 +46,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public RelationDescription GetRelation(StrongIdentifierValue name, int paramsCount, LocalCodeExecutionContext localCodeExecutionContext)
         {
             return GetRelation(name, paramsCount, localCodeExecutionContext, DefaultOptions);
-        }        
+        }
 
         public RelationDescription GetRelation(StrongIdentifierValue name, int paramsCount, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {

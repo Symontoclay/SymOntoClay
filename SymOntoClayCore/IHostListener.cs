@@ -28,6 +28,6 @@ namespace SymOntoClay.Core
 {
     public interface IHostListener
     {
-        IProcessCreatingResult CreateProcess(ICommand command);
+        IProcessCreatingResult CreateProcess(ICommand command, IPackedSynonymsResolver synonymsResolver);
     }
 }

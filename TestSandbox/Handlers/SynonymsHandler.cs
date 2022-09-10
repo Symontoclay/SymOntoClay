@@ -34,28 +34,23 @@ namespace TestSandbox.Handlers
             _logger.Log($"synonymsList = {synonymsList.WritePODListToString()}");
         }
 
-        private List<string> GetSynonyms(string word)
+        private List<string> GetSynonyms(string name)
         {
-            _logger.Log($"word = {word}");
+            _logger.Log($"name = {name}");
 
             var result = new List<string>();
 
-            var currentProcessedList = new List<string>() { word };
+            var currentProcessedList = new List<string>() { name };
 
             while(currentProcessedList.Any())
             {
                 var futureProcessedList = new List<string>();
 
-                foreach(var processedItem in currentProcessedList)
+                _logger.Log($"currentProcessedList = {currentProcessedList.WritePODListToString()}");
+
+                foreach (var processedItem in currentProcessedList)
                 {
                     _logger.Log($"processedItem = {processedItem}");
-
-                    if (result.Contains(processedItem))
-                    {
-                        continue;
-                    }                    
-
-                    _logger.Log($"NEXT processedItem = {processedItem}");
 
                     var synonymsList = GetSynonymsDirectly(processedItem);
 
@@ -66,8 +61,21 @@ namespace TestSandbox.Handlers
                         continue;
                     }
 
-                    throw new NotImplementedException();
+                    foreach(var item in synonymsList)
+                    {
+                        _logger.Log($"item = {item}");
+
+                        if (item == name || result.Contains(item))
+                        {
+                            continue;
+                        }
+
+                        result.Add(item);
+                        futureProcessedList.Add(item);
+                    }
                 }
+
+                _logger.Log($"futureProcessedList = {futureProcessedList.WritePODListToString()}");
 
                 currentProcessedList = futureProcessedList;
             }
@@ -75,13 +83,13 @@ namespace TestSandbox.Handlers
             return result;
         }
 
-        private List<string> GetSynonymsDirectly(string word)
+        private List<string> GetSynonymsDirectly(string name)
         {
-            _logger.Log($"word = {word}");
+            _logger.Log($"name = {name}");
 
-            if(_synonymsDict.ContainsKey(word))
+            if(_synonymsDict.ContainsKey(name))
             {
-                return _synonymsDict[word];
+                return _synonymsDict[name];
             }
 
             return null;

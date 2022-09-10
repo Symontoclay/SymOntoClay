@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using SymOntoClay.Core.Tests.Helpers;
+using SymOntoClay.UnityAsset.Core.Tests.HostListeners;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,7 +58,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 	}
 }";
 
-            var hostListener = new HostMethods_Tests_HostListener();
+            var hostListener = new Exec_Tests_HostListener1();
 
             BehaviorTestEngineInstance.Run(text,
                 (n, message) => {

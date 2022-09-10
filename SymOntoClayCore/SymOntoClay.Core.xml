@@ -7453,7 +7453,13 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.SynonymsStoraging.EmptySynonymsStorage.Append(SymOntoClay.Core.Internal.CodeModel.Synonym)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.SynonymsStoraging.EmptySynonymsStorage.GetSynonymsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.SynonymsStoraging.SynonymsStorage.Append(SymOntoClay.Core.Internal.CodeModel.Synonym)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.SynonymsStoraging.SynonymsStorage.GetSynonymsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.Append(SymOntoClay.Core.Internal.CodeModel.InlineTrigger)">

@@ -39,10 +39,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public InheritanceResolver(IMainStorageContext context)
             : base(context)
         {
-            _logicalValueLinearResolver = context.DataResolversFactory.GetLogicalValueLinearResolver();
+            var dataResolversFactory = context.DataResolversFactory;
+
+            _logicalValueLinearResolver = dataResolversFactory.GetLogicalValueLinearResolver();
+            _synonymsResolver = dataResolversFactory.GetSynonymsResolver();
         }
 
         private readonly LogicalValueLinearResolver _logicalValueLinearResolver;
+        private readonly SynonymsResolver _synonymsResolver;
 
         public const uint SelfDistance = 0u;
         public const uint TopTypeDistance = uint.MaxValue;

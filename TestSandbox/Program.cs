@@ -71,6 +71,7 @@ using SymOntoClay.NLP;
 using System.Speech.Synthesis;
 using SymOntoClayBaseTestLib.Helpers;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.UnityAsset.Core.Tests.HostListeners;
 
 namespace TestSandbox
 {
@@ -84,7 +85,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-            TstSynonymsHandler();
+            //TstSynonymsHandler();
             //TstGetFullBaseTypesListInCSharpReflection();
             //TstConvertFactToImperativeCode();
             //TstFactToHtml();
@@ -149,7 +150,7 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

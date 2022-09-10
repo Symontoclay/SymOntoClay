@@ -91,45 +91,45 @@ namespace TestSandbox.CoreHostListener
             _logger.Log($"End {name}");
         }
 
-        [DebuggerHidden]
-        [BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
-        public void GoToImpl_2(CancellationToken cancellationToken,
-        [EndpointParam("Direction", KindOfEndpointParam.Position)] Vector3 point,
-        float speed = 12)
-        {
-            //var name = NameHelper.GetNewEntityNameString();
-            //var name = string.Empty;
-            var name = GetMethodId();
+        //[DebuggerHidden]
+        //[BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
+        //public void GoToImpl_2(CancellationToken cancellationToken,
+        //[EndpointParam("Direction", KindOfEndpointParam.Position)] Vector3 point,
+        //float speed = 12)
+        //{
+        //    //var name = NameHelper.GetNewEntityNameString();
+        //    //var name = string.Empty;
+        //    var name = GetMethodId();
 
-            _logger.Log($"Begin {name}");
+        //    _logger.Log($"Begin {name}");
 
-            _logger.Log($"{name} point = {point}");
-            _logger.Log($"{name} speed = {speed}");
+        //    _logger.Log($"{name} point = {point}");
+        //    _logger.Log($"{name} speed = {speed}");
 
-            var n = 0;
+        //    var n = 0;
 
-            while (true)
-            {
-                n++;
+        //    while (true)
+        //    {
+        //        n++;
 
-                if (n > 10/*00*/)
-                {
-                    break;
-                }
+        //        if (n > 10/*00*/)
+        //        {
+        //            break;
+        //        }
 
-                Thread.Sleep(1000);
+        //        Thread.Sleep(1000);
 
-                _logger.Log($"{name} Hi! n = {n}");
+        //        _logger.Log($"{name} Hi! n = {n}");
 
-                _logger.Log($"{name} Hi! cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
+        //        _logger.Log($"{name} Hi! cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
 
-                cancellationToken.ThrowIfCancellationRequested();
-            }
+        //        cancellationToken.ThrowIfCancellationRequested();
+        //    }
 
-            //Thread.Sleep(5000);
+        //    //Thread.Sleep(5000);
 
-            _logger.Log($"End {name}");
-        }
+        //    _logger.Log($"End {name}");
+        //}
 
         [DebuggerHidden]
         [BipedEndpoint("Take", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]

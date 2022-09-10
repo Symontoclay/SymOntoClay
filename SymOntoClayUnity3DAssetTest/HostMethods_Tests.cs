@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using NUnit.Framework;
 using SymOntoClay.Core.Tests.Helpers;
+using SymOntoClay.UnityAsset.Core.Tests.HostListeners;
 using System;
 using System.Collections.Generic;
 using System.Text;

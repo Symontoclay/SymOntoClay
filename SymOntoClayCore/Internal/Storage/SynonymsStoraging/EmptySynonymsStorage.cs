@@ -39,5 +39,11 @@ namespace SymOntoClay.Core.Internal.Storage.SynonymsStoraging
         public void Append(Synonym synonym)
         {
         }
+
+        /// <inheritdoc/>
+        public IList<StrongIdentifierValue> GetSynonymsDirectly(StrongIdentifierValue name)
+        {
+            return new List<StrongIdentifierValue>();
+        }
     }
 }

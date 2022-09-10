@@ -30,5 +30,7 @@ namespace SymOntoClay.Core
     public interface ISynonymsStorage : ISpecificStorage
     {
         void Append(Synonym synonym);
+
+        IList<StrongIdentifierValue> GetSynonymsDirectly(StrongIdentifierValue name);
     }
 }

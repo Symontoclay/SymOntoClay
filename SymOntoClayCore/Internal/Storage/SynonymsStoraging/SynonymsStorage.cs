@@ -80,5 +80,23 @@ namespace SymOntoClay.Core.Internal.Storage.SynonymsStoraging
 
             _synonymsDict[name] = new List<StrongIdentifierValue>() { obj };
         }
+
+        /// <inheritdoc/>
+        public IList<StrongIdentifierValue> GetSynonymsDirectly(StrongIdentifierValue name)
+        {
+            lock (_lockObj)
+            {
+#if DEBUG
+                Log($"name = {name}");
+#endif
+
+                if (_synonymsDict.ContainsKey(name))
+                {
+                    return _synonymsDict[name];
+                }
+
+                return null;
+            }
+        }
     }
 }

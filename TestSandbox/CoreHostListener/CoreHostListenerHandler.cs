@@ -120,13 +120,13 @@ namespace TestSandbox.CoreHostListener
 
             //----------------------------------
 
-            var endPointInfo = endPointsResolver.GetEndpointInfo(command, endpointsRegistries);
+            var endPointInfo = endPointsResolver.GetEndpointInfo(command, endpointsRegistries, null);
 
             _logger.Log($"endPointInfo = {endPointInfo}");
 
             if(endPointInfo != null)
             {
-                var processInfo = endPointActivator.Activate(endPointInfo, command);
+                var processInfo = endPointActivator.Activate(endPointInfo, command, null);
 
                 _logger.Log($"processInfo = {processInfo}");
 
@@ -146,13 +146,13 @@ namespace TestSandbox.CoreHostListener
             command = new Command();
             command.Name = methodName;
 
-            endPointInfo = endPointsResolver.GetEndpointInfo(command, endpointsRegistries);
+            endPointInfo = endPointsResolver.GetEndpointInfo(command, endpointsRegistries, null);
 
             _logger.Log($"endPointInfo = {endPointInfo}");
 
             if (endPointInfo != null)
             {
-                var processInfo = endPointActivator.Activate(endPointInfo, command);
+                var processInfo = endPointActivator.Activate(endPointInfo, command, null);
 
                 _logger.Log($"processInfo = {processInfo}");
 

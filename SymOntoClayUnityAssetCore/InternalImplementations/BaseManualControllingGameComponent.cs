@@ -129,7 +129,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         }
 
         /// <inheritdoc/>
-        public IProcessCreatingResult CreateProcess(ICommand command)
+        public IProcessCreatingResult CreateProcess(ICommand command, IPackedSynonymsResolver synonymsResolver)
         {
 #if DEBUG
             //Log($"command = {command}");
@@ -137,7 +137,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
             try
             {
-                var endPointInfo = _endPointsResolver.GetEndpointInfo(command, _endpointsRegistries);
+                var endPointInfo = _endPointsResolver.GetEndpointInfo(command, _endpointsRegistries, synonymsResolver);
 
 #if DEBUG
                 Log($"endPointInfo = {endPointInfo}");
@@ -148,7 +148,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                     return new ProcessCreatingResult();
                 }
 
-                var processInfo = _endPointActivator.Activate(endPointInfo, command);
+                var processInfo = _endPointActivator.Activate(endPointInfo, command, synonymsResolver);
 
 #if DEBUG
                 Log($"processInfo = {processInfo}");

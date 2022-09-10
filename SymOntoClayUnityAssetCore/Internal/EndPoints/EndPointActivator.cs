@@ -48,7 +48,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         private readonly IPlatformTypesConvertersRegistry _platformTypesConvertorsRegistry;
         private readonly IInvokerInMainThread _invokingInMainThread;
 
-        public IProcessInfo Activate(IEndpointInfo endpointInfo, ICommand command)
+        public IProcessInfo Activate(IEndpointInfo endpointInfo, ICommand command, IPackedSynonymsResolver synonymsResolver)
         {
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
@@ -164,6 +164,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         {
             var kindOfCommandParameters = command.KindOfCommandParameters;
 
+#if DEBUG
+            Log($"kindOfCommandParameters = {kindOfCommandParameters}");
+#endif
+
             switch (kindOfCommandParameters)
             {
                 case KindOfCommandParameters.NoParameters:
@@ -239,10 +243,18 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             {
                 var argumentName = argumentItem.Key;
 
+#if DEBUG
+                Log($"argumentName = {argumentName}");
+#endif
+
                 var argumentInfo = argumentItem.Value;
 
                 if(commandParamsDict.ContainsKey(argumentName))
                 {
+#if DEBUG
+                    Log("commandParamsDict.ContainsKey(argumentName)");
+#endif
+
                     var targetCommandValue = commandParamsDict[argumentName];
 
                     var targetValue = _platformTypesConvertorsRegistry.Convert(targetCommandValue.GetType(), argumentInfo.ParameterInfo.ParameterType, targetCommandValue);

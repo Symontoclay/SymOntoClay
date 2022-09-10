@@ -15,6 +15,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
         }
 
+        public readonly ResolverOptions DefaultOptions = ResolverOptions.GetDefaultOptions();
+
         public List<StrongIdentifierValue> GetSynonyms(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
@@ -109,7 +111,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 result.AddRange(itemsList);
             }
 
-            throw new NotImplementedException();
+            return result;
         }
     }
 }

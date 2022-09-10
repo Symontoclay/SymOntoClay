@@ -280,7 +280,7 @@
             </summary>
             <returns>List of manual controlled game objects.</returns>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BaseManualControllingGameComponent.CreateProcess(SymOntoClay.Core.ICommand)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.BaseManualControllingGameComponent.CreateProcess(SymOntoClay.Core.ICommand,SymOntoClay.Core.IPackedSynonymsResolver)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.BaseStoredGameComponent.PublicFactsStorage">

@@ -23,6 +23,8 @@ SOFTWARE.*/
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
 using System;
@@ -42,18 +44,20 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         private readonly IPlatformTypesConvertersRegistry _platformTypesConvertorsRegistry;
 
-        public IEndpointInfo GetEndpointInfo(ICommand command, IList<IEndpointsRegistry> endpointsRegistries)
+        public IEndpointInfo GetEndpointInfo(ICommand command, IList<IEndpointsRegistry> endpointsRegistries, IPackedSynonymsResolver synonymsResolver)
         {
             var endPointsList = new List<IEndpointInfo>();
 
             var endPointName = NameHelper.UnShieldString(command.Name.NameValue);
 
             var paramsCount = command.ParamsCount;
-
+            
 #if DEBUG
             Log($"endPointName = {endPointName}");
             Log($"paramsCount = {paramsCount}");
 #endif
+
+            var synonymsList = synonymsResolver?.GetSynonyms(NameHelper.CreateName(endPointName)).Select(p => p.NameValue).ToList();
 
             foreach (var endpointsRegistry in endpointsRegistries.ToList())
             {
@@ -62,7 +66,20 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 if(targetEndPointsList != null)
                 {
                     endPointsList.AddRange(targetEndPointsList);
-                }               
+                }
+
+                if(!synonymsList.IsNullOrEmpty())
+                {
+                    foreach(var synonym in synonymsList)
+                    {
+                        targetEndPointsList = endpointsRegistry.GetEndpointsInfoListDirectly(synonym, paramsCount);
+
+                        if (targetEndPointsList != null)
+                        {
+                            endPointsList.AddRange(targetEndPointsList);
+                        }
+                    }
+                }
             }
 
             endPointsList = endPointsList.Distinct().ToList();
@@ -88,7 +105,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     return endPointsList.SingleOrDefault();
 
                 case KindOfCommandParameters.ParametersByDict:
-                    return NGetEndpointInfoByParametersByDict(endPointsList, command);
+                    return NGetEndpointInfoByParametersByDict(endPointsList, command, synonymsResolver);
 
                 case KindOfCommandParameters.ParametersByList:
                     return NGetEndpointInfoByParametersByList(endPointsList, command);
@@ -165,7 +182,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return resultList.FirstOrDefault();
         }
 
-        private IEndpointInfo NGetEndpointInfoByParametersByDict(IList<IEndpointInfo> endPointsList, ICommand command)
+        private IEndpointInfo NGetEndpointInfoByParametersByDict(IList<IEndpointInfo> endPointsList, ICommand command, IPackedSynonymsResolver synonymsResolver)
         {
             var resultList = new List<IEndpointInfo>();
 
@@ -191,7 +208,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     Log($"commandParamItem.Key = {commandParamItem.Key}");
 #endif
 
-                    if(!isFitEndpoint)
+                    var realParamName = commandParamItem.Key;
+
+                    if (!isFitEndpoint)
                     {
                         continue;
                     }
@@ -202,8 +221,35 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                         Log($"!argumentsDict.ContainsKey(commandParamItem.Key)");
 #endif
 
-                        isFitEndpoint = false;
-                        continue;
+                        var synonymsList = synonymsResolver?.GetSynonyms(NameHelper.CreateName(commandParamItem.Key)).Select(p => p.NameValue).ToList();
+
+#if DEBUG
+                        Log($"synonymsList = {synonymsList.WritePODListToString()}");
+#endif
+
+                        var isSynonymFit = false;
+
+                        if(!synonymsList.IsNullOrEmpty())
+                        {
+                            foreach(var synonym in synonymsList)
+                            {
+                                if(argumentsDict.ContainsKey(synonym))
+                                {
+                                    isSynonymFit = true;
+                                    realParamName = synonym;
+                                }
+                            }
+                        }
+
+#if DEBUG
+                        Log($"isSynonymFit = {isSynonymFit}");
+#endif
+
+                        if(!isSynonymFit)
+                        {
+                            isFitEndpoint = false;
+                            continue;
+                        }
                     }
 
                     var targetCommandValue = commandParamItem.Value;
@@ -212,7 +258,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     Log($"targetCommandValue = {targetCommandValue}");
 #endif
 
-                    var targetArgument = argumentsDict[commandParamItem.Key];
+                    var targetArgument = argumentsDict[realParamName];
 
 #if DEBUG
                     Log($"targetArgument = {targetArgument}");

@@ -233,6 +233,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                         {
                             foreach(var synonym in synonymsList)
                             {
+                                if(isSynonymFit)
+                                {
+                                    continue;
+                                }
+
                                 if(argumentsDict.ContainsKey(synonym))
                                 {
                                     isSynonymFit = true;

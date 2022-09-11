@@ -23,6 +23,8 @@ SOFTWARE.*/
 using Newtonsoft.Json;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
@@ -53,7 +55,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
 
-            var paramsList = MapParams(cancellationToken, endpointInfo, command);
+            var paramsList = MapParams(cancellationToken, endpointInfo, command, synonymsResolver);
 
             Task task = null;
             var processInfo = new PlatformProcessInfo(cancellationTokenSource, endpointInfo.Name, endpointInfo.Devices, endpointInfo.Friends);
@@ -160,7 +162,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return task;
         }
 
-        private object[] MapParams(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command)
+        private object[] MapParams(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IPackedSynonymsResolver synonymsResolver)
         {
             var kindOfCommandParameters = command.KindOfCommandParameters;
 
@@ -174,7 +176,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     return new List<object>() { cancellationToken }.ToArray();
 
                 case KindOfCommandParameters.ParametersByDict:
-                    return MapParamsByParametersByDict(cancellationToken, endpointInfo, command);
+                    return MapParamsByParametersByDict(cancellationToken, endpointInfo, command, synonymsResolver);
 
                 case KindOfCommandParameters.ParametersByList:
                     return MapParamsByParametersByList(cancellationToken, endpointInfo, command);
@@ -231,7 +233,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return resultList.ToArray();
         }
 
-        private object[] MapParamsByParametersByDict(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command)
+        private object[] MapParamsByParametersByDict(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IPackedSynonymsResolver synonymsResolver)
         {
             var commandParamsDict = command.ParamsDict.ToDictionary(p => p.Key.NameValue.ToLower(), p => p.Value);
             var argumentsDict = endpointInfo.Arguments.Where(p => !p.IsSystemDefiend).ToDictionary(p => p.Name, p => p);
@@ -249,12 +251,50 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
                 var argumentInfo = argumentItem.Value;
 
-                if(commandParamsDict.ContainsKey(argumentName))
+                var isBound = false;
+
+                if (commandParamsDict.ContainsKey(argumentName))
                 {
 #if DEBUG
                     Log("commandParamsDict.ContainsKey(argumentName)");
 #endif
 
+                    isBound = true;
+                }
+                else
+                {
+                    var synonymsList = synonymsResolver?.GetSynonyms(NameHelper.CreateName(argumentName)).Select(p => p.NameValue).ToList();
+
+#if DEBUG
+                    Log($"synonymsList = {synonymsList.WritePODListToString()}");
+#endif
+
+
+                    if (!synonymsList.IsNullOrEmpty())
+                    {
+                        foreach (var synonym in synonymsList)
+                        {
+                            if(isBound)
+                            {
+                                continue;
+                            }
+
+                            if (commandParamsDict.ContainsKey(synonym))
+                            {
+                                isBound = true;
+                                argumentName = synonym;
+                            }
+                        }
+                    }
+                }
+
+#if DEBUG
+                Log($"isBound = {isBound}");
+                Log($"argumentName = {argumentName}");
+#endif
+
+                if (isBound)
+                {
                     var targetCommandValue = commandParamsDict[argumentName];
 
                     var targetValue = _platformTypesConvertorsRegistry.Convert(targetCommandValue.GetType(), argumentInfo.ParameterInfo.ParameterType, targetCommandValue);

@@ -167,7 +167,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             var kindOfCommandParameters = command.KindOfCommandParameters;
 
 #if DEBUG
-            Log($"kindOfCommandParameters = {kindOfCommandParameters}");
+            //Log($"kindOfCommandParameters = {kindOfCommandParameters}");
 #endif
 
             switch (kindOfCommandParameters)
@@ -246,7 +246,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 var argumentName = argumentItem.Key;
 
 #if DEBUG
-                Log($"argumentName = {argumentName}");
+                //Log($"argumentName = {argumentName}");
 #endif
 
                 var argumentInfo = argumentItem.Value;
@@ -256,7 +256,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 if (commandParamsDict.ContainsKey(argumentName))
                 {
 #if DEBUG
-                    Log("commandParamsDict.ContainsKey(argumentName)");
+                    //Log("commandParamsDict.ContainsKey(argumentName)");
 #endif
 
                     isBound = true;
@@ -266,9 +266,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     var synonymsList = synonymsResolver?.GetSynonyms(NameHelper.CreateName(argumentName)).Select(p => p.NameValue).ToList();
 
 #if DEBUG
-                    Log($"synonymsList = {synonymsList.WritePODListToString()}");
+                    //Log($"synonymsList = {synonymsList.WritePODListToString()}");
 #endif
-
 
                     if (!synonymsList.IsNullOrEmpty())
                     {
@@ -289,8 +288,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 }
 
 #if DEBUG
-                Log($"isBound = {isBound}");
-                Log($"argumentName = {argumentName}");
+                //Log($"isBound = {isBound}");
+                //Log($"argumentName = {argumentName}");
 #endif
 
                 if (isBound)

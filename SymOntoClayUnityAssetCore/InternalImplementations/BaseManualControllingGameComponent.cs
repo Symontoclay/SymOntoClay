@@ -140,7 +140,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 var endPointInfo = _endPointsResolver.GetEndpointInfo(command, _endpointsRegistries, synonymsResolver);
 
 #if DEBUG
-                Log($"endPointInfo = {endPointInfo}");
+                //Log($"endPointInfo = {endPointInfo}");
 #endif
 
                 if (endPointInfo == null)
@@ -151,7 +151,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 var processInfo = _endPointActivator.Activate(endPointInfo, command, synonymsResolver);
 
 #if DEBUG
-                Log($"processInfo = {processInfo}");
+                //Log($"processInfo = {processInfo}");
 #endif
 
                 return new ProcessCreatingResult(processInfo);

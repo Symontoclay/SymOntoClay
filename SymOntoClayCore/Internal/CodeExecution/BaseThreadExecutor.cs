@@ -1253,7 +1253,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
             //Log($"command = {command}");
-
 #endif
 
             var packedSynonymsResolver = new PackedSynonymsResolver(_context.DataResolversFactory.GetSynonymsResolver(), _currentCodeFrame.LocalContext);
@@ -1261,7 +1260,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var processCreatingResult = _hostListener.CreateProcess(command, packedSynonymsResolver);
 
 #if DEBUG
-            Log($"processCreatingResult = {processCreatingResult}");
+            //Log($"processCreatingResult = {processCreatingResult}");
 #endif
 
             if(processCreatingResult.IsSuccessful)

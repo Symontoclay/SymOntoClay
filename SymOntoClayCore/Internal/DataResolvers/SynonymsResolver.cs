@@ -20,7 +20,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public List<StrongIdentifierValue> GetSynonyms(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Log($"name = {name}");
+            //Log($"name = {name}");
 #endif
 
             var storage = localCodeExecutionContext.Storage;
@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var futureProcessedList = new List<StrongIdentifierValue>();
 
 #if DEBUG
-                Log($"currentProcessedList = {currentProcessedList.WriteListToString()}");
+                //Log($"currentProcessedList = {currentProcessedList.WriteListToString()}");
 #endif
 
                 foreach (var processedItem in currentProcessedList)
@@ -52,7 +52,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     var synonymsList = GetSynonymsDirectly(processedItem, storagesList);
 
 #if DEBUG
-                    Log($"synonymsList = {synonymsList.WriteListToString()}");
+                    //Log($"synonymsList = {synonymsList.WriteListToString()}");
 #endif
 
                     if (synonymsList == null)
@@ -63,7 +63,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     foreach (var item in synonymsList)
                     {
 #if DEBUG
-                        Log($"item = {item}");
+                        //Log($"item = {item}");
 #endif
 
                         if (item == name || result.Contains(item))
@@ -77,7 +77,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
 #if DEBUG
-                Log($"futureProcessedList = {futureProcessedList.WriteListToString()}");
+                //Log($"futureProcessedList = {futureProcessedList.WriteListToString()}");
 #endif
 
                 currentProcessedList = futureProcessedList;
@@ -89,7 +89,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private List<StrongIdentifierValue> GetSynonymsDirectly(StrongIdentifierValue name, List<StorageUsingOptions> storagesList)
         {
 #if DEBUG
-            Log($"name = {name}");
+            //Log($"name = {name}");
 #endif
 
             if (!storagesList.Any())

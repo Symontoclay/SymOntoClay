@@ -87,7 +87,7 @@ namespace SymOntoClay.Core.Internal.Storage.SynonymsStoraging
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"name = {name}");
+                //Log($"name = {name}");
 #endif
 
                 if (_synonymsDict.ContainsKey(name))

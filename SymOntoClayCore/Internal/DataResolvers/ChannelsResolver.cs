@@ -73,7 +73,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
 #endif
 
-            var rawList = GetRawList(name, storagesList, weightedInheritanceItems, localCodeExecutionContext);
+            var rawList = GetRawList(name, storagesList, weightedInheritanceItems);
 
 #if DEBUG
             //Log($"rawList = {rawList.WriteListToString()}");
@@ -90,7 +90,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return targetItem;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<Channel>> GetRawList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems, LocalCodeExecutionContext localCodeExecutionContext)
+        private List<WeightedInheritanceResultItemWithStorageInfo<Channel>> GetRawList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
             //Log($"name = {name}");
@@ -100,19 +100,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if(result.IsNullOrEmpty())
             {
-                result = GetRawListFromSynonyms(name, storagesList, weightedInheritanceItems, localCodeExecutionContext);
+                result = GetRawListFromSynonyms(name, storagesList, weightedInheritanceItems);
             }
 
             return result;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<Channel>> GetRawListFromSynonyms(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems, LocalCodeExecutionContext localCodeExecutionContext)
+        private List<WeightedInheritanceResultItemWithStorageInfo<Channel>> GetRawListFromSynonyms(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-            var synonymsList = _synonymsResolver.GetSynonyms(name, localCodeExecutionContext);
+            var synonymsList = _synonymsResolver.GetSynonyms(name, storagesList);
 
             foreach(var synonym in synonymsList)
             {
-                var rawList = NGetRawList(name, storagesList, weightedInheritanceItems);
+                var rawList = NGetRawList(synonym, storagesList, weightedInheritanceItems);
 
                 if(rawList.IsNullOrEmpty())
                 {

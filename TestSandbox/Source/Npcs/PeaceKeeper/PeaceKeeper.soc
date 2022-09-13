@@ -1,25 +1,16 @@
-﻿synonym `trigger_6` for trigger_5;
+﻿synonym b for a;
 
 app PeaceKeeper
 {
-    var @a = 15;
+    fun a() => 
+    {
+        '`a` has been called!' >> @>log;
+    }
 
     on Enter =>
     {
         'Begin' >> @>log;
-
-        insert {: see(I, #a) :};
-
+        b();
         'End' >> @>log;
-    }
-
-	on {: see(I, #a) :} as `trigger 1` alias `Alarm trigger`, trigger_5 => 
-    {
-	    'S' >> @>log;
-	}
-
-    on (trigger_6 & @a is 15)
-    {
-        'D' >> @>log;
     }
 }

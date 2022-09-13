@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -36,12 +37,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public RelationsResolver(IMainStorageContext context)
             : base(context)
         {
-            _inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
+            var dataResolversFactory = context.DataResolversFactory;
+
+            _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
+            _synonymsResolver = dataResolversFactory.GetSynonymsResolver();
         }
 
         public readonly ResolverOptions DefaultOptions = ResolverOptions.GetDefaultOptions();
 
         private readonly InheritanceResolver _inheritanceResolver;
+        private readonly SynonymsResolver _synonymsResolver;
 
         public RelationDescription GetRelation(StrongIdentifierValue name, int paramsCount, LocalCodeExecutionContext localCodeExecutionContext)
         {
@@ -99,6 +104,37 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         private List<WeightedInheritanceResultItemWithStorageInfo<RelationDescription>> GetRawList(StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+            var result = NGetRawList(name, paramsCount, storagesList, weightedInheritanceItems);
+
+            if (result.IsNullOrEmpty())
+            {
+                result = GetRawListFromSynonyms(name, paramsCount, storagesList, weightedInheritanceItems);
+            }
+
+            return result;
+        }
+
+        private List<WeightedInheritanceResultItemWithStorageInfo<RelationDescription>> GetRawListFromSynonyms(StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+            var synonymsList = _synonymsResolver.GetSynonyms(name, storagesList);
+
+            foreach (var synonym in synonymsList)
+            {
+                var rawList = NGetRawList(synonym, paramsCount, storagesList, weightedInheritanceItems);
+
+                if (rawList.IsNullOrEmpty())
+                {
+                    continue;
+                }
+
+                return rawList;
+            }
+
+            return new List<WeightedInheritanceResultItemWithStorageInfo<RelationDescription>>();
+        }
+
+        private List<WeightedInheritanceResultItemWithStorageInfo<RelationDescription>> NGetRawList(StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
             //Log($"name = {name}");

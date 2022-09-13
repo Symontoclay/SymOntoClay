@@ -259,7 +259,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public INamedTriggerInstance ResolveNamedTriggerInstance(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"name = {name}");
+            //Log($"name = {name}");
 #endif
 
             var storage = localCodeExecutionContext.Storage;
@@ -277,7 +277,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var rawList = GetNamedTriggerInstanceRawList(name, storagesList, localCodeExecutionContext);
 
 #if DEBUG
-            Log($"rawList.Count = {rawList.Count}");
+            //Log($"rawList.Count = {rawList.Count}");
 #endif
 
             if(!rawList.Any())
@@ -310,12 +310,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var synonymsList = _synonymsResolver.GetSynonyms(name, localCodeExecutionContext);
 
 #if DEBUG
-            Log($"synonymsList = {synonymsList.WriteListToString()}");
+            //Log($"synonymsList = {synonymsList.WriteListToString()}");
 #endif
 
             foreach (var synonym in synonymsList)
             {
-                var rawList = NGetNamedTriggerInstanceRawList(name, storagesList);
+                var rawList = NGetNamedTriggerInstanceRawList(synonym, storagesList);
 
                 if (rawList.IsNullOrEmpty())
                 {
@@ -330,6 +330,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<INamedTriggerInstance> NGetNamedTriggerInstanceRawList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList)
         {
+#if DEBUG
+            //Log($"name = {name}");
+#endif
+
             if (!storagesList.Any())
             {
                 return new List<INamedTriggerInstance>();

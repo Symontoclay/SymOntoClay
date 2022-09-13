@@ -40,7 +40,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public MethodsResolver(IMainStorageContext context)
             : base(context)
         {
-            _inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
+            var dataResolversFactory = context.DataResolversFactory;
+
+            _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
+            _synonymsResolver = dataResolversFactory.GetSynonymsResolver();
         }
         #endregion
 
@@ -99,6 +102,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         #region private fields
         private readonly InheritanceResolver _inheritanceResolver;
+        private readonly SynonymsResolver _synonymsResolver;
 
         private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
 
@@ -110,7 +114,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private IExecutable ResolveMethod(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            //Log($"name = {name}");
+            Log($"name = {name}");
 #endif
 
             var storage = localCodeExecutionContext.Storage;
@@ -141,7 +145,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var rawList = GetRawMethodsList(name, 0, storagesList, weightedInheritanceItems);
 
 #if DEBUG
-            //Log($"rawList = {rawList.WriteListToString()}");
+            Log($"rawList = {rawList.WriteListToString()}");
 #endif
 
             if (!rawList.Any())

@@ -1384,6 +1384,53 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Thread.Sleep(1000);
         }
 
+        [Test]
+        [Parallelizable]
+        public void Case13_b()
+        {
+            using var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"synonym `trigger_6` for trigger_5;
+
+app PeaceKeeper
+{
+    var @a = 15;
+
+	on {: see(I, #a) :} as `trigger 1` alias `Alarm trigger`, trigger_5 => 
+    {
+	    'S' >> @>log;
+	}
+
+    on (trigger_6 & @a is 15)
+    {
+        'D' >> @>log;
+    }
+}";
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual("S", message);
+                        break;
+
+                    case 2:
+                        Assert.AreEqual("D", message);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+            Thread.Sleep(1000);
+
+            var factId = npc.InsertFact("{: see(I, #a) :}");
+
+            Thread.Sleep(1000);
+        }
 
         [Test]
         [Parallelizable]

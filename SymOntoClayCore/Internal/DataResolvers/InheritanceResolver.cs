@@ -170,7 +170,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //Log($"resultItem.Key = {resultItem.Key}");
 #endif
 
-                var synonymsList = _synonymsResolver.GetSynonyms(resultItem.Key, localCodeExecutionContext);
+                var synonymsList = _synonymsResolver.GetSynonyms(resultItem.Key, storagesList);
 
 #if DEBUG
                 //Log($"synonymsList = {synonymsList.WriteListToString()}");

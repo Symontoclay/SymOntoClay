@@ -77,7 +77,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
                     break;
 
                 case KindOfTriggerConditionNode.Concept:
-                    result.Add(new TriggerNameTriggerConditionNodeObserver(context.EngineContext.Logger, context.Storage, condition));
+                    result.Add(new TriggerNameTriggerConditionNodeObserver(context.EngineContext, context.Storage, condition));
                     break;
 
                 default:

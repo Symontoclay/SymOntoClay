@@ -25,7 +25,25 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var storage = localCodeExecutionContext.Storage;
 
+            return GetSynonyms(name, storage);
+        }
+
+        public List<StrongIdentifierValue> GetSynonyms(StrongIdentifierValue name, IStorage storage)
+        {
+#if DEBUG
+            //Log($"name = {name}");
+#endif
+
             var storagesList = GetStoragesList(storage);
+
+            return GetSynonyms(name, storagesList);
+        }
+
+        public List<StrongIdentifierValue> GetSynonyms(StrongIdentifierValue name, List<StorageUsingOptions> storagesList)
+        {
+#if DEBUG
+            //Log($"name = {name}");
+#endif
 
 #if DEBUG
             //Log($"storagesList.Count = {storagesList.Count}");

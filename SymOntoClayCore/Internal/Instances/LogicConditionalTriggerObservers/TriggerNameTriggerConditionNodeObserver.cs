@@ -20,43 +20,66 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
+using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
     public class TriggerNameTriggerConditionNodeObserver : BaseTriggerConditionNodeObserver
     {
-        public TriggerNameTriggerConditionNodeObserver(IEntityLogger logger, IStorage storage, TriggerConditionNode condition)
-            : base(logger)
+        public TriggerNameTriggerConditionNodeObserver(IEngineContext engineContext, IStorage storage, TriggerConditionNode condition)
+            : base(engineContext.Logger)
         {
             _triggerName = condition.Name;
-
+            
 #if DEBUG
             //Log($"_triggerName = {_triggerName}");
 #endif
 
-            storage.TriggersStorage.OnNamedTriggerInstanceChangedWithKeys += TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
             _storage = storage;
+            _synonymsResolver = engineContext.DataResolversFactory.GetSynonymsResolver();
+
+            _synonymsList = _synonymsResolver.GetSynonyms(_triggerName, storage);
+
+            storage.TriggersStorage.OnNamedTriggerInstanceChangedWithKeys += TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
         }
 
         private readonly StrongIdentifierValue _triggerName;
+        private readonly List<StrongIdentifierValue> _synonymsList;
         private readonly IStorage _storage;
+        private readonly SynonymsResolver _synonymsResolver;
 
         private void TriggersStorage_OnNamedTriggerInstanceChangedWithKeys(IList<StrongIdentifierValue> namesList)
         {
 #if DEBUG
             //Log($"namesList = {namesList.WriteListToString()}");
             //Log($"_triggerName = {_triggerName}");
+            //Log($"synonymsList = {_synonymsList.WriteListToString()}");
 #endif
 
-            if(namesList.Contains(_triggerName))
+            if (namesList.Contains(_triggerName))
             {
                 EmitOnChanged();
+            }
+            else
+            {
+                if(_synonymsList?.Intersect(namesList).Any() ?? false)
+                {
+#if DEBUG
+                    //Log("_synonymsList?.Intersect(namesList).Any() ?? false");
+#endif
+
+                    EmitOnChanged();
+                }                
             }
         }
 

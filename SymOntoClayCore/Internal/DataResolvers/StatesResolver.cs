@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -36,10 +37,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public StatesResolver(IMainStorageContext context)
             : base(context)
         {
-            _inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
+            var dataResolversFactory = context.DataResolversFactory;
+
+            _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
+            _synonymsResolver = dataResolversFactory.GetSynonymsResolver();
         }
 
         private readonly InheritanceResolver _inheritanceResolver;
+        private readonly SynonymsResolver _synonymsResolver;
 
         public StrongIdentifierValue ResolveDefaultStateName(LocalCodeExecutionContext localCodeExecutionContext)
         {
@@ -273,6 +278,37 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         private List<WeightedInheritanceResultItemWithStorageInfo<StateDef>> GetRawStatesList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+            var result = NGetRawStatesList(name, storagesList, weightedInheritanceItems);
+
+            if (result.IsNullOrEmpty())
+            {
+                result = GetRawStatesListFromSynonyms(name, storagesList, weightedInheritanceItems);
+            }
+
+            return result;
+        }
+
+        private List<WeightedInheritanceResultItemWithStorageInfo<StateDef>> GetRawStatesListFromSynonyms(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+            var synonymsList = _synonymsResolver.GetSynonyms(name, storagesList);
+
+            foreach (var synonym in synonymsList)
+            {
+                var rawList = NGetRawStatesList(synonym, storagesList, weightedInheritanceItems);
+
+                if (rawList.IsNullOrEmpty())
+                {
+                    continue;
+                }
+
+                return rawList;
+            }
+
+            return new List<WeightedInheritanceResultItemWithStorageInfo<StateDef>>();
+        }
+
+        private List<WeightedInheritanceResultItemWithStorageInfo<StateDef>> NGetRawStatesList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
             //Log($"name = {name}");

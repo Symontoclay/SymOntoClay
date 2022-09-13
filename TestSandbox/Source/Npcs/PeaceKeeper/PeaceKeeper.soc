@@ -1,8 +1,25 @@
-﻿synonym to for direction;
+﻿synonym `trigger_6` for trigger_5;
 
 app PeaceKeeper
 {
-	on Enter => {
-	    exec {: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :};
+    var @a = 15;
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+
+        insert {: see(I, #a) :};
+
+        'End' >> @>log;
+    }
+
+	on {: see(I, #a) :} as `trigger 1` alias `Alarm trigger`, trigger_5 => 
+    {
+	    'S' >> @>log;
 	}
+
+    on (trigger_6 & @a is 15)
+    {
+        'D' >> @>log;
+    }
 }

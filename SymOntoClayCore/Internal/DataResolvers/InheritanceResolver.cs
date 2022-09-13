@@ -155,7 +155,75 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            //Log($"rawResult.Count = {rawResult.Count}");
+//            Log($"rawResult.Count = {rawResult.Count}");
+//            foreach (var resultItem in rawResult)
+//            {
+//                Log($"resultItem.Key = {resultItem.Key}");
+//                Log($"resultItem.Value.Rank = {resultItem.Value.Rank}");
+//                Log($"resultItem.Value.Distance = {resultItem.Value.Distance}");
+//            }
+#endif
+
+            foreach (var resultItem in rawResult.ToList())
+            {
+#if DEBUG
+                //Log($"resultItem.Key = {resultItem.Key}");
+#endif
+
+                var synonymsList = _synonymsResolver.GetSynonyms(resultItem.Key, localCodeExecutionContext);
+
+#if DEBUG
+                //Log($"synonymsList = {synonymsList.WriteListToString()}");
+#endif
+
+                if(!synonymsList.IsNullOrEmpty())
+                {
+                    var rank = resultItem.Value.Rank;
+                    var distance = resultItem.Value.Distance;
+
+                    foreach (var synonym in synonymsList)
+                    {
+#if DEBUG
+                        //Log($"synonym = {synonym}");
+#endif
+
+                        if (rawResult.ContainsKey(synonym))
+                        {
+#if DEBUG
+                            //Log("rawResult.ContainsKey(synonym)");
+#endif
+
+                            var existingResultItem = rawResult[synonym];
+
+                            if(existingResultItem.Rank < rank)
+                            {
+                                existingResultItem.Rank = rank;
+                            }
+
+                            if(existingResultItem.Distance < distance)
+                            {
+                                existingResultItem.Distance = distance;
+                            }
+                        }
+                        else
+                        {
+#if DEBUG
+                            //Log("not rawResult.ContainsKey(synonym)");
+#endif
+
+                            var newResultItem = new WeightedInheritanceItem();
+                            newResultItem.Rank = rank;
+                            newResultItem.Distance = distance;
+                            newResultItem.SuperName = synonym;
+
+                            rawResult[synonym] = newResultItem;
+                        }
+                    }
+                }
+            }
+
+#if DEBUG
+            //Log($"rawResult.Count (after) = {rawResult.Count}");
             //foreach (var resultItem in rawResult)
             //{
             //    Log($"resultItem.Key = {resultItem.Key}");

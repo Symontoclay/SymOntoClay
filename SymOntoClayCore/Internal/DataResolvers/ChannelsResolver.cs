@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -36,10 +37,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public ChannelsResolver(IMainStorageContext context)
             : base(context)
         {
-            _inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
+            var dataResolversFactory = context.DataResolversFactory;
+
+            _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
+            _synonymsResolver = dataResolversFactory.GetSynonymsResolver();
         }
 
         private readonly InheritanceResolver _inheritanceResolver;
+        private readonly SynonymsResolver _synonymsResolver;
 
         public Channel GetChannel(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
@@ -68,7 +73,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
 #endif
 
-            var rawList = GetRawList(name, storagesList, weightedInheritanceItems);
+            var rawList = GetRawList(name, storagesList, weightedInheritanceItems, localCodeExecutionContext);
 
 #if DEBUG
             //Log($"rawList = {rawList.WriteListToString()}");
@@ -85,7 +90,42 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return targetItem;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<Channel>> GetRawList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<Channel>> GetRawList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+#if DEBUG
+            //Log($"name = {name}");
+#endif
+
+            var result = NGetRawList(name, storagesList, weightedInheritanceItems);
+
+            if(result.IsNullOrEmpty())
+            {
+                result = GetRawListFromSynonyms(name, storagesList, weightedInheritanceItems, localCodeExecutionContext);
+            }
+
+            return result;
+        }
+
+        private List<WeightedInheritanceResultItemWithStorageInfo<Channel>> GetRawListFromSynonyms(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            var synonymsList = _synonymsResolver.GetSynonyms(name, localCodeExecutionContext);
+
+            foreach(var synonym in synonymsList)
+            {
+                var rawList = NGetRawList(name, storagesList, weightedInheritanceItems);
+
+                if(rawList.IsNullOrEmpty())
+                {
+                    continue;
+                }
+
+                return rawList;
+            }
+
+            return new List<WeightedInheritanceResultItemWithStorageInfo<Channel>>();
+        }
+
+        private List<WeightedInheritanceResultItemWithStorageInfo<Channel>> NGetRawList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
             //Log($"name = {name}");

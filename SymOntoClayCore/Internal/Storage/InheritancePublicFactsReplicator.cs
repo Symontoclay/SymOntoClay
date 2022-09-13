@@ -134,7 +134,7 @@ namespace SymOntoClay.Core.Internal.Storage
             //Log($"_selfNameForFacts = {_selfNameForFacts}");
 #endif
 
-            var weightedInheritanceItemsList = _inheritanceResolver.GetWeightedInheritanceItems(_selfName, _localCodeExecutionContext, _resolverOptions).Where(p => !p.OriginalItem.IsSystemDefined);
+            var weightedInheritanceItemsList = _inheritanceResolver.GetWeightedInheritanceItems(_selfName, _localCodeExecutionContext, _resolverOptions).Where(p => !p.OriginalItem?.IsSystemDefined ?? false);
 
 #if DEBUG
             //Log($"weightedInheritanceItemsList = {weightedInheritanceItemsList.Select(p => p.OriginalItem).WriteListToString()}");
@@ -153,7 +153,7 @@ namespace SymOntoClay.Core.Internal.Storage
                 return;
             }
 
-            var inheritanceItemsDict = weightedInheritanceItemsList.ToDictionary(p => p.SuperName, p => p.OriginalItem);
+            var inheritanceItemsDict = weightedInheritanceItemsList.Where(p => p.OriginalItem != null).ToDictionary(p => p.SuperName, p => p.OriginalItem);
 
             var idsList = weightedInheritanceItemsList.Select(p => p.SuperName).Distinct().ToList();
 

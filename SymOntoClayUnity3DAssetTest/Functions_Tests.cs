@@ -75,9 +75,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case1_a()
         {
-            var text = @"app PeaceKeeper
+            var text = @"synonym b for a;
+
+app PeaceKeeper
 {
-    fun a()
+    fun a() => 
     {
         '`a` has been called!' >> @>log;
     }
@@ -85,7 +87,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     on Enter =>
     {
         'Begin' >> @>log;
-        a();
+        b();
         'End' >> @>log;
     }
 }";
@@ -452,6 +454,54 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     {
         'Begin' >> @>log;
         a(param_1: 1);
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "`a` has been called!");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "1");
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case4_a()
+        {
+            var text = @"synonym param_1 for param_2;
+
+app PeaceKeeper
+{
+    fun a(@param_1)
+    {
+        '`a` has been called!' >> @>log;
+        @param_1 >> @>log;
+    }
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        a(param_2: 1);
         'End' >> @>log;
     }
 }";

@@ -43,11 +43,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
             _toSystemBoolResolver = dataResolversFactory.GetToSystemBoolResolver();
             _numberValueLinearResolver = dataResolversFactory.GetNumberValueLinearResolver();
+            _synonymsResolver = dataResolversFactory.GetSynonymsResolver();
         }
 
         private readonly ToSystemBoolResolver _toSystemBoolResolver;
         private readonly InheritanceResolver _inheritanceResolver;
         private readonly NumberValueLinearResolver _numberValueLinearResolver;
+        private readonly SynonymsResolver _synonymsResolver;
 
         private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
 
@@ -1989,6 +1991,48 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         private List<WeightedInheritanceResultItemWithStorageInfo<FuzzyLogicNonNumericValue>> GetRawList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+#if DEBUG
+            //Log($"name = {name}");
+#endif
+
+            var synonymsList = _synonymsResolver.GetSynonyms(name, storagesList);
+
+#if DEBUG
+            //Log($"synonymsList = {synonymsList.WriteListToString()}");
+#endif
+
+            var result = new List<WeightedInheritanceResultItemWithStorageInfo<FuzzyLogicNonNumericValue>>();
+
+            var itemsList = NGetRawList(name, storagesList, weightedInheritanceItems);
+
+#if DEBUG
+            //Log($"itemsList?.Count = {itemsList?.Count}");
+#endif
+
+            if (!itemsList.IsNullOrEmpty())
+            {
+                result.AddRange(itemsList);
+            }
+
+            foreach (var synonym in synonymsList)
+            {
+                itemsList = NGetRawList(synonym, storagesList, weightedInheritanceItems);
+
+#if DEBUG
+                //Log($"itemsList?.Count = {itemsList?.Count}");
+#endif
+
+                if (!itemsList.IsNullOrEmpty())
+                {
+                    result.AddRange(itemsList);
+                }
+            }
+
+            return result;
+        }
+
+        private List<WeightedInheritanceResultItemWithStorageInfo<FuzzyLogicNonNumericValue>> NGetRawList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
             //Log($"name = {name}");

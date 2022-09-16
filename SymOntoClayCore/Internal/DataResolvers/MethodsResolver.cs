@@ -31,6 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
 {
@@ -114,7 +115,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private IExecutable ResolveMethod(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"name = {name}");
+            //Log($"name = {name}");
 #endif
 
             var storage = localCodeExecutionContext.Storage;
@@ -145,7 +146,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var rawList = GetRawMethodsList(name, 0, storagesList, weightedInheritanceItems);
 
 #if DEBUG
-            Log($"rawList = {rawList.WriteListToString()}");
+            //Log($"rawList = {rawList.WriteListToString()}");
 #endif
 
             if (!rawList.Any())
@@ -586,6 +587,49 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"paramsCount = {paramsCount}");
 #endif
 
+            var synonymsList = _synonymsResolver.GetSynonyms(name, storagesList);
+
+#if DEBUG
+            //Log($"synonymsList = {synonymsList.WriteListToString()}");
+#endif
+
+            var result = new List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>>();
+
+            var itemsList = NGetRawMethodsList(name, paramsCount, storagesList, weightedInheritanceItems);
+
+#if DEBUG
+            //Log($"itemsList?.Count = {itemsList?.Count}");
+#endif
+
+            if(!itemsList.IsNullOrEmpty())
+            {
+                result.AddRange(itemsList);
+            }
+
+            foreach(var synonym in synonymsList)
+            {
+                itemsList = NGetRawMethodsList(synonym, paramsCount, storagesList, weightedInheritanceItems);
+
+#if DEBUG
+                //Log($"itemsList?.Count = {itemsList?.Count}");
+#endif
+
+                if (!itemsList.IsNullOrEmpty())
+                {
+                    result.AddRange(itemsList);
+                }
+            }
+
+            return result;
+        }
+
+        private List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>> NGetRawMethodsList(StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+#if DEBUG
+            //Log($"name = {name}");
+            //Log($"paramsCount = {paramsCount}");
+#endif
+
             if (!storagesList.Any())
             {
                 return new List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>>();
@@ -615,6 +659,49 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         private List<WeightedInheritanceResultItemWithStorageInfo<ActionPtr>> GetRawActionsList(StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+#if DEBUG
+            //Log($"name = {name}");
+            //Log($"paramsCount = {paramsCount}");
+#endif
+
+            var synonymsList = _synonymsResolver.GetSynonyms(name, storagesList);
+
+#if DEBUG
+            //Log($"synonymsList = {synonymsList.WriteListToString()}");
+#endif
+
+            var result = new List<WeightedInheritanceResultItemWithStorageInfo<ActionPtr>>();
+
+            var itemsList = NGetRawActionsList(name, paramsCount, storagesList, weightedInheritanceItems);
+
+#if DEBUG
+            //Log($"itemsList?.Count = {itemsList?.Count}");
+#endif
+
+            if (!itemsList.IsNullOrEmpty())
+            {
+                result.AddRange(itemsList);
+            }
+
+            foreach (var synonym in synonymsList)
+            {
+                itemsList = NGetRawActionsList(synonym, paramsCount, storagesList, weightedInheritanceItems);
+
+#if DEBUG
+                //Log($"itemsList?.Count = {itemsList?.Count}");
+#endif
+
+                if (!itemsList.IsNullOrEmpty())
+                {
+                    result.AddRange(itemsList);
+                }
+            }
+
+            return result;
+        }
+
+        private List<WeightedInheritanceResultItemWithStorageInfo<ActionPtr>> NGetRawActionsList(StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
             //Log($"name = {name}");
@@ -693,15 +780,33 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 var argumentName = argument.Name;
 
-                if (namedParameters.ContainsKey(argumentName))
-                {
-                    countOfUsedParameters++;
+#if DEBUG
+                //Log($"argumentName = {argumentName}");
+#endif
 
-                    var parameterValue = namedParameters[argumentName];
+                var parameterValue = GetParameterValue(argumentName, namedParameters, localCodeExecutionContext);
 
 #if DEBUG
-                    //Log($"parameterValue = {parameterValue}");
+
+                //Log($"parameterValue = {parameterValue}");
 #endif
+
+                if(parameterValue == null)
+                {
+                    if (argument.HasDefaultValue)
+                    {
+                        result.Add(0u);
+
+                        continue;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    countOfUsedParameters++;
 
                     var distance = _inheritanceResolver.GetDistance(argument.TypesList, parameterValue, localCodeExecutionContext, options);
 
@@ -716,19 +821,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                     result.Add(distance.Value);
                 }
-                else
-                {
-                    if (argument.HasDefaultValue)
-                    {
-                        result.Add(0u);
-
-                        continue;
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
             }
 
 #if DEBUG
@@ -742,6 +834,85 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             return result;
+        }
+
+        private Value GetParameterValue(StrongIdentifierValue argumentName, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+#if DEBUG
+            //Log($"argumentName = {argumentName}");
+            //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
+#endif
+
+            if(namedParameters.ContainsKey(argumentName))
+            {
+                return namedParameters[argumentName];
+            }
+
+            var synonymsList = _synonymsResolver.GetSynonyms(argumentName, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"synonymsList = {synonymsList.WriteListToString()}");
+#endif
+
+            foreach(var synonym in synonymsList)
+            {
+#if DEBUG
+                //Log($"synonym = {synonym}");
+#endif
+
+                if (namedParameters.ContainsKey(synonym))
+                {
+                    return namedParameters[synonym];
+                }
+
+                var alternativeSynonym = NameHelper.CreateAlternativeArgumentName(synonym);
+
+#if DEBUG
+                //Log($"alternativeSynonym = {alternativeSynonym}");
+#endif
+
+                if (namedParameters.ContainsKey(alternativeSynonym))
+                {
+                    return namedParameters[alternativeSynonym];
+                }
+            }
+
+            var alternativeArgumentName = NameHelper.CreateAlternativeArgumentName(argumentName);
+
+#if DEBUG
+            //Log($"alternativeArgumentName = {alternativeArgumentName}");
+#endif
+
+            synonymsList = _synonymsResolver.GetSynonyms(alternativeArgumentName, localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"synonymsList = {synonymsList.WriteListToString()}");
+#endif
+
+            foreach (var synonym in synonymsList)
+            {
+#if DEBUG
+                //Log($"synonym = {synonym}");
+#endif
+
+                if (namedParameters.ContainsKey(synonym))
+                {
+                    return namedParameters[synonym];
+                }
+
+                var alternativeSynonym = NameHelper.CreateAlternativeArgumentName(synonym);
+
+#if DEBUG
+                //Log($"alternativeSynonym = {alternativeSynonym}");
+#endif
+
+                if (namedParameters.ContainsKey(alternativeSynonym))
+                {
+                    return namedParameters[alternativeSynonym];
+                }
+            }
+
+            return null;
         }
 
         private List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterByTypeOfParameters<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)

@@ -20,11 +20,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Storage;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +37,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
 {
     public static class CodeFrameHelper
     {
+#if DEBUG
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         public static CodeFrame ConvertCompiledFunctionBodyToCodeFrame(CompiledFunctionBody compiledFunctionBody, LocalCodeExecutionContext parentLocalCodeExecutionContext, IMainStorageContext context)
         {
             var storagesList = parentLocalCodeExecutionContext.Storage.GetStorages();
@@ -113,7 +120,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    FillUpNamedParameters(localCodeExecutionContext, function, namedParameters);
+                    FillUpNamedParameters(localCodeExecutionContext, function, namedParameters, context);
                     break;
 
                 default:
@@ -172,18 +179,20 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             }
         }
 
-        private static void FillUpNamedParameters(LocalCodeExecutionContext localCodeExecutionContext, IExecutable function, Dictionary<StrongIdentifierValue, Value> namedParameters)
+        private static void FillUpNamedParameters(LocalCodeExecutionContext localCodeExecutionContext, IExecutable function, Dictionary<StrongIdentifierValue, Value> namedParameters, IMainStorageContext context)
         {
             var varsStorage = localCodeExecutionContext.Storage.VarStorage;
 
             var usedParameters = new List<StrongIdentifierValue>();
+
+            var synonymsResolver = context.DataResolversFactory.GetSynonymsResolver();
 
             foreach (var namedParameter in namedParameters)
             {
                 var parameterName = namedParameter.Key;
 
 #if DEBUG
-                //Log($"parameterName = {parameterName}");
+                //_gbcLogger.Info($"parameterName = {parameterName}");
 #endif
 
                 var kindOfParameterName = parameterName.KindOfName;
@@ -202,23 +211,29 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
                 }
 
 #if DEBUG
-                //Log($"parameterName (after) = {parameterName}");
+                //_gbcLogger.Info($"parameterName (after) = {parameterName}");
 #endif
 
-                if (function.ContainsArgument(parameterName))
+                parameterName = CheckParameterName(parameterName, function, synonymsResolver, localCodeExecutionContext);
+
+#if DEBUG
+                //_gbcLogger.Info($"parameterName (after 2) = {parameterName}");
+#endif
+
+                if (parameterName == null)
+                {
+                    throw new NotImplementedException();
+                }
+                else
                 {
                     usedParameters.Add(parameterName);
 
                     varsStorage.SetValue(parameterName, namedParameter.Value);
                 }
-                else
-                {
-                    throw new NotImplementedException();
-                }
             }
 
 #if DEBUG
-            //Log($"usedParameters = {usedParameters.WriteListToString()}");
+            //_gbcLogger.Info($"usedParameters = {usedParameters.WriteListToString()}");
 #endif
 
             var argumentsList = function.Arguments;
@@ -247,6 +262,84 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
                     }
                 }
             }
+        }
+
+        private static StrongIdentifierValue CheckParameterName(StrongIdentifierValue parameterName, IExecutable function, SynonymsResolver synonymsResolver, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+#if DEBUG
+            //_gbcLogger.Info($"parameterName = {parameterName}");
+#endif
+
+            if(function.ContainsArgument(parameterName))
+            {
+                return parameterName;
+            }
+
+            var synonymsList = synonymsResolver.GetSynonyms(parameterName, localCodeExecutionContext);
+
+#if DEBUG
+            //_gbcLogger.Info($"synonymsList = {synonymsList.WriteListToString()}");
+#endif
+
+            foreach(var synonym in synonymsList)
+            {
+#if DEBUG
+                //_gbcLogger.Info($"synonym = {synonym}");
+#endif
+
+                if (function.ContainsArgument(synonym))
+                {
+                    return synonym;
+                }
+
+                var alternativeSynonym = NameHelper.CreateAlternativeArgumentName(synonym);
+
+#if DEBUG
+                //_gbcLogger.Info($"alternativeSynonym = {alternativeSynonym}");
+#endif
+
+                if (function.ContainsArgument(alternativeSynonym))
+                {
+                    return alternativeSynonym;
+                }
+            }
+
+            var alternativeParameterName = NameHelper.CreateAlternativeArgumentName(parameterName);
+
+#if DEBUG
+            //_gbcLogger.Info($"alternativeParameterName = {alternativeParameterName}");
+#endif
+
+            synonymsList = synonymsResolver.GetSynonyms(alternativeParameterName, localCodeExecutionContext);
+
+#if DEBUG
+            //_gbcLogger.Info($"synonymsList = {synonymsList.WriteListToString()}");
+#endif
+
+            foreach (var synonym in synonymsList)
+            {
+#if DEBUG
+                //_gbcLogger.Info($"synonym = {synonym}");
+#endif
+
+                if (function.ContainsArgument(synonym))
+                {
+                    return synonym;
+                }
+
+                var alternativeSynonym = NameHelper.CreateAlternativeArgumentName(synonym);
+
+#if DEBUG
+                //_gbcLogger.Info($"alternativeSynonym = {alternativeSynonym}");
+#endif
+
+                if (function.ContainsArgument(alternativeSynonym))
+                {
+                    return alternativeSynonym;
+                }
+            }
+
+            return null;
         }
     }
 }

@@ -57,7 +57,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             {
                 var nameSubStr = source.Substring(2);
 
-                if (nameSubStr.All(p => char.IsLetterOrDigit(p)) || nameSubStr.Contains("`"))
+                if (nameSubStr.All(p => char.IsLetterOrDigit(p) || p == '_') || nameSubStr.Contains("`"))
                 {
                     return source;
                 }
@@ -69,7 +69,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             {
                 var nameSubStr = source.Substring(2);
 
-                if (nameSubStr.All(p => char.IsLetterOrDigit(p)) || nameSubStr.Contains("`"))
+                if (nameSubStr.All(p => char.IsLetterOrDigit(p) || p == '_') || nameSubStr.Contains("`"))
                 {
                     return source;
                 }
@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             {
                 var nameSubStr = source.Substring(2);
 
-                if (nameSubStr.All(p => char.IsLetterOrDigit(p)) || nameSubStr.Contains("`"))
+                if (nameSubStr.All(p => char.IsLetterOrDigit(p) || p == '_') || nameSubStr.Contains("`"))
                 {
                     return source;
                 }
@@ -98,7 +98,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             {
                 var nameSubStr = source.Substring(2);
 
-                if (nameSubStr.All(p => char.IsLetterOrDigit(p)) || nameSubStr.Contains("`"))
+                if (nameSubStr.All(p => char.IsLetterOrDigit(p) || p == '_') || nameSubStr.Contains("`"))
                 {
                     return source;
                 }
@@ -110,7 +110,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             {
                 var nameSubStr = source.Substring(2);
 
-                if (nameSubStr.All(p => char.IsLetterOrDigit(p)) || nameSubStr.Contains("`"))
+                if (nameSubStr.All(p => char.IsLetterOrDigit(p) || p == '_') || nameSubStr.Contains("`"))
                 {
                     return source;
                 }
@@ -122,7 +122,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             {
                 var nameSubStr = source.Substring(1);
 
-                if (nameSubStr.All(p => char.IsLetterOrDigit(p)) || nameSubStr.Contains("`"))
+                if (nameSubStr.All(p => char.IsLetterOrDigit(p) || p == '_') || nameSubStr.Contains("`"))
                 {
                     return source;
                 }
@@ -134,7 +134,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             {
                 var nameSubStr = source.Substring(1);
 
-                if (nameSubStr.All(p => char.IsLetterOrDigit(p)) || nameSubStr.Contains("`"))
+                if (nameSubStr.All(p => char.IsLetterOrDigit(p) || p == '_') || nameSubStr.Contains("`"))
                 {
                     return source;
                 }
@@ -151,7 +151,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
             {
                 var nameSubStr = source.Substring(1);
 
-                if (nameSubStr.All(p => char.IsLetterOrDigit(p)) || nameSubStr.Contains("`"))
+                if (nameSubStr.All(p => char.IsLetterOrDigit(p) || p == '_') || nameSubStr.Contains("`"))
                 {
                     return source;
                 }
@@ -159,7 +159,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 return $"{source.Insert(1, "`")}`";
             }
 
-            if (source.All(p => char.IsLetterOrDigit(p)) || source.Contains("`"))
+            if (source.All(p => char.IsLetterOrDigit(p) || p == '_') || source.Contains("`"))
             {
                 return source;
             }
@@ -260,6 +260,18 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
         public static string NormalizeString(string value)
         {
             return value.ToLower().Replace("`", string.Empty).Trim();
+        }
+
+        public static StrongIdentifierValue CreateAlternativeArgumentName(StrongIdentifierValue argumentName)
+        {
+            var nameValue = argumentName.NameValue;
+
+            if (nameValue.StartsWith("@"))
+            {
+                return CreateName(argumentName.NameValue.Replace("@", string.Empty));
+            }
+
+            return CreateName($"@{nameValue}");
         }
     }
 }

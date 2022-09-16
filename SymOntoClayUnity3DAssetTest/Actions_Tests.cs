@@ -260,6 +260,73 @@ action Go
 
         [Test]
         [Parallelizable]
+        public void Case1_c()
+        {
+            var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"synonym go for walk;
+
+app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+ 
+        walk();
+
+        'End' >> @>log;
+    }
+}
+
+action Go 
+{
+    on Enter =>
+    {
+        'Enter Go' >> @>log;
+    }
+
+    op () => 
+    {
+        'Begin Go' >> @>log;
+        'End Go' >> @>log;
+    }
+}";
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual(message, "Begin");
+                        break;
+
+                    case 2:
+                        Assert.AreEqual(message, "Enter Go");
+                        break;
+
+                    case 3:
+                        Assert.AreEqual(message, "Begin Go");
+                        break;
+
+                    case 4:
+                        Assert.AreEqual(message, "End Go");
+                        break;
+
+                    case 5:
+                        Assert.AreEqual(message, "End");
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+            Thread.Sleep(1000);
+        }
+
+        [Test]
+        [Parallelizable]
         public void Case2()
         {
             var instance = new AdvancedBehaviorTestEngineInstance();

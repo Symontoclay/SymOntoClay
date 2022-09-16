@@ -1,16 +1,27 @@
-﻿synonym b for a;
+﻿synonym go for walk;
 
 app PeaceKeeper
 {
-    fun a() => 
-    {
-        '`a` has been called!' >> @>log;
-    }
-
     on Enter =>
     {
         'Begin' >> @>log;
-        b();
+ 
+        walk();
+
         'End' >> @>log;
+    }
+}
+
+action Go 
+{
+    on Enter =>
+    {
+        'Enter Go' >> @>log;
+    }
+
+    op () => 
+    {
+        'Begin Go' >> @>log;
+        'End Go' >> @>log;
     }
 }

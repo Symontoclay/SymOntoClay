@@ -4518,8 +4518,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
 #if DEBUG
             //Log($"(expressionNode1 == null) = {expressionNode1 == null} (expressionNode2 == null) = {expressionNode2 == null}");
-            //Log($"expressionNode1 = {expressionNode1}");
-            //Log($"expressionNode2 = {expressionNode2}");
+            Log($"expressionNode1 = {expressionNode1}");
+            Log($"expressionNode2 = {expressionNode2}");
             //Log($"queryExecutingCard = {queryExecutingCard}");
             //Log($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1?.Select(p => p.NameValue), Formatting.Indented)}");
             //Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");

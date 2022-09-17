@@ -1,9 +1,10 @@
 ﻿synonym procreator for parent;
+synonym #Tom for #Person123;
 
 app PeaceKeeper
 {
 	{: male(#Tom) :}
-	{: procreator(#Piter, #Tom) :}
+	{: procreator(#Piter, #Person123) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {

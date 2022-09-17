@@ -68,6 +68,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.Word:
                         case TokenKind.Identifier:
+                        case TokenKind.Entity:
                             Result.Name = NameHelper.CreateName(_currToken.Content);
                             _state = State.GotName;
                             break;
@@ -102,6 +103,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.Word:
                         case TokenKind.Identifier:
+                        case TokenKind.Entity:
                             Result.Object = NameHelper.CreateName(_currToken.Content);
                             _state = State.GotObject;
                             break;

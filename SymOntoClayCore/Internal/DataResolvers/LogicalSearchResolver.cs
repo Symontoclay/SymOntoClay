@@ -35,6 +35,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
 {
@@ -44,6 +45,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly FuzzyLogicResolver _fuzzyLogicResolver;
         private readonly NumberValueLinearResolver _numberValueLinearResolver;
         private readonly VarsResolver _varsResolver;
+        private readonly SynonymsResolver _synonymsResolver;
 
         public LogicalSearchResolver(IMainStorageContext context)
             : base(context)
@@ -54,6 +56,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             _fuzzyLogicResolver = dataResolversFactory.GetFuzzyLogicResolver();
             _numberValueLinearResolver = dataResolversFactory.GetNumberValueLinearResolver();
             _varsResolver = dataResolversFactory.GetVarsResolver();
+            _synonymsResolver = dataResolversFactory.GetSynonymsResolver();
         }
 
         public bool IsTruth(LogicalSearchOptions options)
@@ -304,9 +307,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private void AppendResults(QueryExecutingCardForIndexedPersistLogicalData sourceQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData destQueryExecutingCard)
+        private void AppendResults(QueryExecutingCardForIndexedPersistLogicalData sourceQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData destQueryExecutingCard, bool setIsSuccessIfTrue = false)
         {
-            destQueryExecutingCard.IsSuccess = sourceQueryExecutingCard.IsSuccess;
+            if(setIsSuccessIfTrue)
+            {
+                if(sourceQueryExecutingCard.IsSuccess)
+                {
+                    destQueryExecutingCard.IsSuccess = true;
+                }
+            }
+            else
+            {
+                destQueryExecutingCard.IsSuccess = sourceQueryExecutingCard.IsSuccess;
+            }            
 
             CopyResultsOfQueryToRelationList(sourceQueryExecutingCard, destQueryExecutingCard);
 
@@ -1767,9 +1780,102 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private void NFillExecutingCardForRelationLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
+            var relationName = processedExpr.Name;
+
 #if DEBUG
-            //Log($"processedExpr.Name = {processedExpr.Name}");
+            //Log($"relationName = {relationName}");
+            //Log($"processedExpr = {processedExpr}");
             //Log($"DebugHelperForRuleInstance.ToString(processedExpr) = {DebugHelperForRuleInstance.ToString(processedExpr)}");
+#endif
+
+            var queryExecutingCardForExpression = new QueryExecutingCardForIndexedPersistLogicalData();
+            queryExecutingCardForExpression.RootParentExplainNode = queryExecutingCard.RootParentExplainNode;
+            queryExecutingCardForExpression.ParentExplainNode = queryExecutingCard.ParentExplainNode;
+            queryExecutingCardForExpression.KnownInfoList = queryExecutingCard.KnownInfoList;
+
+            NFillExecutingCardForConcreteRelationLogicalQueryNode(processedExpr, queryExecutingCardForExpression, dataSource, options);
+
+#if DEBUG
+            //Log($"queryExecutingCardForExpression = {queryExecutingCardForExpression}");
+#endif
+
+            AppendResults(queryExecutingCardForExpression, queryExecutingCard, true);
+
+            var synonymsList = _synonymsResolver.GetSynonyms(relationName, dataSource.StoragesList);
+
+#if DEBUG
+            //Log($"synonymsList = {synonymsList.WriteListToString()}");
+#endif
+
+            foreach (var synonym in synonymsList)
+            {
+#if DEBUG
+                //Log($"synonym = {synonym}");
+#endif
+
+                queryExecutingCardForExpression = new QueryExecutingCardForIndexedPersistLogicalData();
+                queryExecutingCardForExpression.RootParentExplainNode = queryExecutingCard.RootParentExplainNode;
+                queryExecutingCardForExpression.ParentExplainNode = queryExecutingCard.ParentExplainNode;
+                queryExecutingCardForExpression.KnownInfoList = queryExecutingCard.KnownInfoList;
+
+                var newRelation = processedExpr.Clone();
+                newRelation.Name = synonym;
+
+#if DEBUG
+                //Log($"newRelation = {newRelation}");
+                //Log($"newRelation = {newRelation.ToHumanizedString()}");
+#endif
+
+                NFillExecutingCardForConcreteRelationLogicalQueryNode(newRelation, queryExecutingCardForExpression, dataSource, options);
+
+#if DEBUG
+                //Log($"queryExecutingCardForExpression = {queryExecutingCardForExpression}");
+#endif
+
+                AppendResults(queryExecutingCardForExpression, queryExecutingCard, true);
+            }
+
+            var superClassesList = _inheritanceResolver.GetSuperClassesKeysList(relationName, options.LocalCodeExecutionContext);
+
+#if DEBUG
+            //Log($"superClassesList = {superClassesList.WriteListToString()}");
+#endif
+
+            foreach(var superClass in superClassesList)
+            {
+#if DEBUG
+                //Log($"superClass = {superClass}");
+#endif
+
+                queryExecutingCardForExpression = new QueryExecutingCardForIndexedPersistLogicalData();
+                queryExecutingCardForExpression.RootParentExplainNode = queryExecutingCard.RootParentExplainNode;
+                queryExecutingCardForExpression.ParentExplainNode = queryExecutingCard.ParentExplainNode;
+                queryExecutingCardForExpression.KnownInfoList = queryExecutingCard.KnownInfoList;
+
+                var newRelation = processedExpr.Clone();
+                newRelation.Name = superClass;
+
+#if DEBUG
+                //Log($"newRelation = {newRelation}");
+                //Log($"newRelation = {newRelation.ToHumanizedString()}");
+#endif
+
+                NFillExecutingCardForConcreteRelationLogicalQueryNode(newRelation, queryExecutingCardForExpression, dataSource, options);
+
+#if DEBUG
+                //Log($"queryExecutingCardForExpression = {queryExecutingCardForExpression}");
+#endif
+
+                AppendResults(queryExecutingCardForExpression, queryExecutingCard, true);
+            }
+        }
+
+        private void NFillExecutingCardForConcreteRelationLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        {
+#if DEBUG
+            //Log($"processedExpr.Name = {processedExpr.Name}");            
+            //Log($"DebugHelperForRuleInstance.ToString(processedExpr) = {DebugHelperForRuleInstance.ToString(processedExpr)}");
+            //Log($"processedExpr = {processedExpr}");
 
             //if(processedExpr.Name.NameValue == "is")
             //{

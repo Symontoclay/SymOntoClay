@@ -908,6 +908,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.TypeOfAccess = TypeOfAccess;
             result.Holder = Holder;
 
+            result.CountParams = CountParams;
+            result.VarsInfoList = VarsInfoList;
+            result.KnownInfoList = KnownInfoList;
+            result.RuleInstance = RuleInstance;
+            result.RulePart = RulePart;
+
             result.AppendAnnotations(this, context);
 
             return result;

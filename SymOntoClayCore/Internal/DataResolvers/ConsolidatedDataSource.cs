@@ -42,6 +42,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public ConsolidatedDataSource(List<StorageUsingOptions> storagesList)
         {
+            _storagesList = storagesList;
+
             _dataSourcesSettingsOrderedByPriorityList = storagesList.OrderByDescending(p => p.Priority).ToList();
             _dataSourcesSettingsOrderedByPriorityAndUseFactsList = _dataSourcesSettingsOrderedByPriorityList.Where(p => p.UseFacts).ToList();
             _dataSourcesSettingsOrderedByPriorityAndUseProductionsList = _dataSourcesSettingsOrderedByPriorityList.Where(p => p.UseProductions).ToList();
@@ -49,12 +51,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         private readonly object _lockObj = new object();
-        private IList<StorageUsingOptions> _dataSourcesSettingsOrderedByPriorityList;
-        private IList<StorageUsingOptions> _dataSourcesSettingsOrderedByPriorityAndUseFactsList;
-        private IList<StorageUsingOptions> _dataSourcesSettingsOrderedByPriorityAndUseProductionsList;
-        private IList<StorageUsingOptions> _dataSourcesSettingsOrderedByPriorityAndUseInheritanceFacts;
+        private readonly List<StorageUsingOptions> _storagesList;
+        private readonly IList<StorageUsingOptions> _dataSourcesSettingsOrderedByPriorityList;
+        private readonly IList<StorageUsingOptions> _dataSourcesSettingsOrderedByPriorityAndUseFactsList;
+        private readonly IList<StorageUsingOptions> _dataSourcesSettingsOrderedByPriorityAndUseProductionsList;
+        private readonly IList<StorageUsingOptions> _dataSourcesSettingsOrderedByPriorityAndUseInheritanceFacts;
 
         private static StrongIdentifierValue _isRelationName = NameHelper.CreateName("is");
+
+        public List<StorageUsingOptions> StoragesList => _storagesList;
 
         public IList<LogicalQueryNode> AllRelationsForProductions(ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
         {

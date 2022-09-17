@@ -1,27 +1,12 @@
-﻿synonym go for walk;
+﻿synonym procreator for parent;
 
 app PeaceKeeper
 {
-    on Enter =>
-    {
-        'Begin' >> @>log;
- 
-        walk();
+	{: male(#Tom) :}
+	{: procreator(#Piter, #Tom) :}
+	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
-        'End' >> @>log;
-    }
-}
-
-action Go 
-{
-    on Enter =>
-    {
-        'Enter Go' >> @>log;
-    }
-
-    op () => 
-    {
-        'Begin Go' >> @>log;
-        'End Go' >> @>log;
-    }
+	on Enter => {
+	    select {: son($x, $y) :} >> @>log;
+	}
 }

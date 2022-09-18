@@ -4518,8 +4518,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
 #if DEBUG
             //Log($"(expressionNode1 == null) = {expressionNode1 == null} (expressionNode2 == null) = {expressionNode2 == null}");
-            Log($"expressionNode1 = {expressionNode1}");
-            Log($"expressionNode2 = {expressionNode2}");
+            //Log($"expressionNode1 = {expressionNode1}");
+            //Log($"expressionNode2 = {expressionNode2}");
             //Log($"queryExecutingCard = {queryExecutingCard}");
             //Log($"additionalKeys_1 = {JsonConvert.SerializeObject(additionalKeys_1?.Select(p => p.NameValue), Formatting.Indented)}");
             //Log($"additionalKeys_2 = {JsonConvert.SerializeObject(additionalKeys_2?.Select(p => p.NameValue), Formatting.Indented)}");
@@ -4551,6 +4551,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var key_2 = expressionNode2.Name;
 
 #if DEBUG
+                //Log($"key_1 = {key_1}");
+                //Log($"key_2 = {key_2}");
                 //if((key_1.NameValue == "#cleaned metal barrel" && key_2.NameValue == "mynpc") || (key_1.NameValue == "mynpc" && key_2.NameValue == "#cleaned metal barrel"))
                 //{
                     //Log($"(expressionNode1 == null) = {expressionNode1 == null} (expressionNode2 == null) = {expressionNode2 == null}");
@@ -4628,7 +4630,42 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //    return true;
                 //}
 
-                return false;
+                var localCodeExecutionContext = options.LocalCodeExecutionContext;
+
+                var synonymsList1 = _synonymsResolver.GetSynonyms(key_1, localCodeExecutionContext);
+
+#if DEBUG
+                //Log($"synonymsList1 = {synonymsList1.WriteListToString()}");
+#endif
+
+                if(synonymsList1.Contains(key_2))
+                {
+                    return true;
+                }
+
+                var synonymsList2 = _synonymsResolver.GetSynonyms(key_2, localCodeExecutionContext);
+
+#if DEBUG
+                //Log($"synonymsList2 = {synonymsList2.WriteListToString()}");
+#endif
+
+                if (synonymsList2.Contains(key_1))
+                {
+                    return true;
+                }
+
+                if (synonymsList1.Intersect(synonymsList2).Any())
+                {
+                    return true;
+                }
+
+                var fuzzyResult = _fuzzyLogicResolver.Equals(key_1, key_2, localCodeExecutionContext);
+
+#if DEBUG
+                //Log($"fuzzyResult = {fuzzyResult}");
+#endif
+
+                return fuzzyResult;
             }
 
             if (expressionNode1.Kind == KindOfLogicalQueryNode.Value && expressionNode2.Kind == KindOfLogicalQueryNode.Value)

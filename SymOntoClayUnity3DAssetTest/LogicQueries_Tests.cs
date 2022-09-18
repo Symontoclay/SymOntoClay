@@ -98,6 +98,41 @@ app PeaceKeeper
 
         [Test]
         [Parallelizable]
+        public void Case1_b()
+        {
+            var text = @"synonym procreator for parent;
+synonym #Tom for #Person123;
+
+app PeaceKeeper
+{
+	{: male(#Tom) :}
+	{: procreator(#Piter, #Person123) :}
+	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+
+	on Enter => {
+	    select {: son($x, $y) :} >> @>log;
+	}
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
         public void Case2()
         {
             var text = @"app PeaceKeeper

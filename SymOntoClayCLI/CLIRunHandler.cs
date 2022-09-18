@@ -31,6 +31,8 @@ using System.Text;
 using System.Threading;
 using SymOntoClay.SoundBuses;
 using System.Threading.Tasks;
+using System.Configuration;
+using SymOntoClay.CoreHelper;
 
 namespace SymOntoClay.CLI
 {
@@ -53,6 +55,8 @@ namespace SymOntoClay.CLI
             //_logger.Info($"command = {command}");
 #endif
 
+            var appSettings = ConfigurationManager.AppSettings;
+
             var targetFiles = RunCommandFilesSearcher.Run(command);
 
 #if DEBUG
@@ -71,7 +75,9 @@ namespace SymOntoClay.CLI
 
             settings.ImagesRootDir = targetFiles.ImagesRootDir;
 
-            settings.BuiltInStandardLibraryDir = DefaultPaths.GetBuiltInStandardLibraryDir();
+            var standardLibraryBasePath = appSettings["StandardLibraryPath"];
+
+            settings.BuiltInStandardLibraryDir = EVPath.Normalize(standardLibraryBasePath);
 
             settings.TmpDir = targetFiles.TmpDir;
 

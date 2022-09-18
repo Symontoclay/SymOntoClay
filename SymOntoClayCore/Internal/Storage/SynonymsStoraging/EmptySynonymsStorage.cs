@@ -30,6 +30,11 @@ namespace SymOntoClay.Core.Internal.Storage.SynonymsStoraging
 {
     public class EmptySynonymsStorage : BaseEmptySpecificStorage, ISynonymsStorage
     {
+        public EmptySynonymsStorage(IStorage storage)
+            : this(storage, null)
+        {
+        }
+
         public EmptySynonymsStorage(IStorage storage, IEntityLogger logger)
             : base(storage, logger)
         {

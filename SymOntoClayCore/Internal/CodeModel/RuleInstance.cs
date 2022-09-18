@@ -28,6 +28,7 @@ using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Storage.LogicalStoraging;
+using SymOntoClay.Core.Internal.Storage.SynonymsStoraging;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -453,15 +454,32 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         IStatesStorage IStorage.StatesStorage => throw new NotImplementedException();
-
+        
         /// <inheritdoc/>
         ITriggersStorage IStorage.TriggersStorage => throw new NotImplementedException();
 
         /// <inheritdoc/>
         IInheritanceStorage IStorage.InheritanceStorage => throw new NotImplementedException();
 
+        private ISynonymsStorage _synonymsStorage;
+        private readonly object _synonymsStorageLockObj = new object();
+
         /// <inheritdoc/>
-        ISynonymsStorage IStorage.SynonymsStorage => throw new NotImplementedException();
+        ISynonymsStorage IStorage.SynonymsStorage
+        {
+            get
+            {
+                lock(_synonymsStorageLockObj)
+                {
+                    if(_synonymsStorage == null)
+                    {
+                        _synonymsStorage = new EmptySynonymsStorage(this);
+                    }
+
+                    return _synonymsStorage;
+                }
+            }
+        }
 
         /// <inheritdoc/>
         IOperatorsStorage IStorage.OperatorsStorage => throw new NotImplementedException();

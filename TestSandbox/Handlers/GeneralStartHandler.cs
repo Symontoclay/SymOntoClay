@@ -60,6 +60,11 @@ namespace TestSandbox.Handlers
 
             _npc.Logger.LogChannel("|||||||||||||");
 
+            Thread.Sleep(1000);
+
+            var factStr = "{: $x = {: act(M16, shoot) :} & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :}";
+            _npc.EngineContext.Storage.InsertListenedFact(factStr);
+
             //var factId = _npc.InsertFact("{: see(I, #a) :}");
 
             //_npc.PushSoundFact(60, "act(M16, shoot)");

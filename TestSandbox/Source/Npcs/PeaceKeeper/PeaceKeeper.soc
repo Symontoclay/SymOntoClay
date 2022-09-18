@@ -1,5 +1,21 @@
 ﻿app PeaceKeeper
 {
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        var @a: number = 2;
+        @a >> @>log;
+        var @b: number;
+        @b >> @>log;
+        var @c;
+        @c >> @>log;
+        'End' >> @>log;
+    }
+}
+
+/*
+app PeaceKeeper
+{
     {: gun(M16) :}
 
     on add fact {: hear(I, $x) & gun($x) :} ($_ >> @x)
@@ -15,3 +31,4 @@
         '!!!M16!!!!' >> @>log;
     }
 }
+*/

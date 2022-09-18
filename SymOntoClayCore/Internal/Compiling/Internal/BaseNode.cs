@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public List<IntermediateScriptCommand> Result => _result;
 
-        private readonly List<IntermediateScriptCommand> _result = new List<IntermediateScriptCommand>();
+        protected readonly List<IntermediateScriptCommand> _result = new List<IntermediateScriptCommand>();
 
         protected void AddCommand(IntermediateScriptCommand command)
         {

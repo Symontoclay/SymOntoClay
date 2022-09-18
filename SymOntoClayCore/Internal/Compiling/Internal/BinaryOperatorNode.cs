@@ -25,6 +25,8 @@ using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Compiling.Internal
@@ -39,6 +41,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         public void Run(BinaryOperatorAstExpression expression)
         {
 #if DEBUG
+            //Log($"expression = {expression.ToHumanizedString()}");
             //Log($"expression = {expression}");
 #endif
 
@@ -60,6 +63,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         {
 #if DEBUG
             //Log($"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            //Log($"expression = {expression.ToHumanizedString()}");
             //Log($"expression = {expression}");
 #endif
 
@@ -67,19 +71,84 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             rightNode.Run(expression.Right);
             AddCommands(rightNode.Result);
 
-            var leftNode = new ExpressionNode(_context);
-            leftNode.Run(expression.Left);
-            AddCommands(leftNode.Result);
-
-            CompilePushAnnotation(expression);
-
-            var command = new IntermediateScriptCommand();
-            command.OperationCode = OperationCode.CallBinOp;
-            command.KindOfOperator = expression.KindOfOperator;
-
-            AddCommand(command);
+            RunLeftAssingNode(expression.Left);
 
 #if DEBUG
+            //DbgPrintCommands();
+            //throw new NotImplementedException();
+#endif
+        }
+
+        private void RunLeftAssingNode(AstExpression expression)
+        {
+#if DEBUG
+            //Log($"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            //Log($"expression = {expression.ToHumanizedString()}");
+            //Log($"expression = {expression}");
+#endif
+
+            var kind = expression.Kind;
+
+            switch (kind)
+            {
+                case KindOfAstExpression.Var:
+                    {
+                        var leftNode = new ExpressionNode(_context);
+                        leftNode.Run(expression);
+                        AddCommands(leftNode.Result);
+
+                        CompilePushAnnotation(expression);
+
+                        var command = new IntermediateScriptCommand();
+                        command.OperationCode = OperationCode.CallBinOp;
+                        command.KindOfOperator =  KindOfOperator.Assign;
+
+                        AddCommand(command);
+                    }
+                    break;
+
+                case KindOfAstExpression.BinaryOperator:
+                    {
+                        var binOpExpr = expression as BinaryOperatorAstExpression;
+
+                        var kindOfOperator = binOpExpr.KindOfOperator;
+
+                        switch(kindOfOperator)
+                        {
+                            case KindOfOperator.Assign:
+                                {
+                                    var rightNode = new ExpressionNode(_context);
+                                    rightNode.Run(binOpExpr.Right);
+                                    AddCommands(rightNode.Result);
+
+                                    CompilePushAnnotation(expression);
+
+                                    var command = new IntermediateScriptCommand();
+                                    command.OperationCode = OperationCode.CallBinOp;
+                                    command.KindOfOperator = KindOfOperator.Assign;
+
+                                    AddCommand(command);
+
+#if DEBUG
+                                    //DbgPrintCommands();
+#endif
+
+                                    RunLeftAssingNode(binOpExpr.Left);
+                                }
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, null);
+                        }
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+            }
+
+#if DEBUG
+            //DbgPrintCommands();
             //throw new NotImplementedException();
 #endif
         }

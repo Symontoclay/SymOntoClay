@@ -107,6 +107,30 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     }
                     break;
 
+                case KindOfAstExpression.VarDecl:
+                    {
+                        var varDeclAstExpression = expression.AsVarDeclAstExpression;
+
+#if DEBUG
+                        //Log($"varDeclAstExpression = {varDeclAstExpression.ToHumanizedString()}");
+#endif
+
+                        CompileVarDecl(varDeclAstExpression);
+
+                        CompilePushAnnotation(expression);
+
+                        var command = new IntermediateScriptCommand();
+                        command.OperationCode = OperationCode.CallBinOp;
+                        command.KindOfOperator = KindOfOperator.Assign;
+
+                        AddCommand(command);
+
+#if DEBUG
+                        //DbgPrintCommands();
+#endif
+                    }
+                    break;
+
                 case KindOfAstExpression.BinaryOperator:
                     {
                         var binOpExpr = expression as BinaryOperatorAstExpression;
@@ -138,7 +162,18 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                                 break;
 
                             default:
-                                throw new ArgumentOutOfRangeException(nameof(kindOfOperator), kindOfOperator, null);
+                                {
+                                    RunUsualBinaryOperator(expression as BinaryOperatorAstExpression);
+
+                                    CompilePushAnnotation(expression);
+
+                                    var command = new IntermediateScriptCommand();
+                                    command.OperationCode = OperationCode.CallBinOp;
+                                    command.KindOfOperator = KindOfOperator.Assign;
+
+                                    AddCommand(command);
+                                }                                
+                                break;
                         }
                     }
                     break;

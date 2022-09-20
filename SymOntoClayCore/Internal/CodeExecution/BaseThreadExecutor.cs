@@ -219,7 +219,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -328,7 +328,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
                             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
-
+                            _currentCodeFrame.ValuesStack.Push(varName);
                             _currentCodeFrame.CurrentPosition++;
                         }
                         break;

@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -121,7 +122,29 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            var sb = new StringBuilder("var");
+
+            if(Name != null)
+            {
+                sb.Append(" ");
+                sb.Append(Name.ToHumanizedString(options));
+            }
+
+            if(!TypesList.IsNullOrEmpty())
+            {
+                sb.Append(": ");
+
+                if (TypesList.Count == 1)
+                {
+                    sb.Append(TypesList.Single().ToHumanizedString(options));
+                }
+                else
+                {
+                    sb.Append($"({string.Join("| ", TypesList.Select(p => p.ToHumanizedString(options)))})");
+                }
+            }
+
+            return sb.ToString();
         }
     }
 }

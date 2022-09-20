@@ -283,6 +283,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
             catch (Exception e)
             {
+#if DEBUG
+                Log($"e = {e}");
+#endif
+
                 var sb = new StringBuilder();
                 sb.AppendLine($"Error in query: {queryExpression.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
 
@@ -1786,18 +1790,35 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"relationName = {relationName}");
             //Log($"processedExpr = {processedExpr}");
             //Log($"DebugHelperForRuleInstance.ToString(processedExpr) = {DebugHelperForRuleInstance.ToString(processedExpr)}");
+            //Log($"queryExecutingCard (777) = {queryExecutingCard}");
 #endif
+
+            if (!queryExecutingCard.PostFiltersList.IsNullOrEmpty())
+            {
+                throw new NotImplementedException();
+            }
+            if (queryExecutingCard.IsPostFiltersListOnly)
+            {
+                throw new NotImplementedException();
+            }
 
             var queryExecutingCardForExpression = new QueryExecutingCardForIndexedPersistLogicalData();
             queryExecutingCardForExpression.RootParentExplainNode = queryExecutingCard.RootParentExplainNode;
             queryExecutingCardForExpression.ParentExplainNode = queryExecutingCard.ParentExplainNode;
+            queryExecutingCardForExpression.VarsInfoList = queryExecutingCard.VarsInfoList;
             queryExecutingCardForExpression.KnownInfoList = queryExecutingCard.KnownInfoList;
+            queryExecutingCardForExpression.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
 
             NFillExecutingCardForConcreteRelationLogicalQueryNode(processedExpr, queryExecutingCardForExpression, dataSource, options);
 
-#if DEBUG
-            //Log($"queryExecutingCardForExpression = {queryExecutingCardForExpression}");
-#endif
+            if (!queryExecutingCardForExpression.PostFiltersList.IsNullOrEmpty())
+            {
+                throw new NotImplementedException();
+            }
+            if (queryExecutingCardForExpression.IsPostFiltersListOnly)
+            {
+                throw new NotImplementedException();
+            }
 
             AppendResults(queryExecutingCardForExpression, queryExecutingCard, true);
 
@@ -1816,7 +1837,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 queryExecutingCardForExpression = new QueryExecutingCardForIndexedPersistLogicalData();
                 queryExecutingCardForExpression.RootParentExplainNode = queryExecutingCard.RootParentExplainNode;
                 queryExecutingCardForExpression.ParentExplainNode = queryExecutingCard.ParentExplainNode;
+                queryExecutingCardForExpression.VarsInfoList = queryExecutingCard.VarsInfoList;
                 queryExecutingCardForExpression.KnownInfoList = queryExecutingCard.KnownInfoList;
+                queryExecutingCardForExpression.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
 
                 var newRelation = processedExpr.Clone();
                 newRelation.Name = synonym;
@@ -1832,6 +1855,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //Log($"queryExecutingCardForExpression = {queryExecutingCardForExpression}");
 #endif
 
+                if (!queryExecutingCardForExpression.PostFiltersList.IsNullOrEmpty())
+                {
+                    throw new NotImplementedException();
+                }
+                if (queryExecutingCardForExpression.IsPostFiltersListOnly)
+                {
+                    throw new NotImplementedException();
+                }
+
                 AppendResults(queryExecutingCardForExpression, queryExecutingCard, true);
             }
 
@@ -1841,7 +1873,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"superClassesList = {superClassesList.WriteListToString()}");
 #endif
 
-            foreach(var superClass in superClassesList)
+            foreach (var superClass in superClassesList)
             {
 #if DEBUG
                 //Log($"superClass = {superClass}");
@@ -1850,7 +1882,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 queryExecutingCardForExpression = new QueryExecutingCardForIndexedPersistLogicalData();
                 queryExecutingCardForExpression.RootParentExplainNode = queryExecutingCard.RootParentExplainNode;
                 queryExecutingCardForExpression.ParentExplainNode = queryExecutingCard.ParentExplainNode;
+                queryExecutingCardForExpression.VarsInfoList = queryExecutingCard.VarsInfoList;
                 queryExecutingCardForExpression.KnownInfoList = queryExecutingCard.KnownInfoList;
+                queryExecutingCardForExpression.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
 
                 var newRelation = processedExpr.Clone();
                 newRelation.Name = superClass;
@@ -1866,8 +1900,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //Log($"queryExecutingCardForExpression = {queryExecutingCardForExpression}");
 #endif
 
+                if (!queryExecutingCardForExpression.PostFiltersList.IsNullOrEmpty())
+                {
+                    throw new NotImplementedException();
+                }
+                if (queryExecutingCardForExpression.IsPostFiltersListOnly)
+                {
+                    throw new NotImplementedException();
+                }
+
                 AppendResults(queryExecutingCardForExpression, queryExecutingCard, true);
             }
+
+            //NFillExecutingCardForConcreteRelationLogicalQueryNode(processedExpr, queryExecutingCard, dataSource, options);
         }
 
         private void NFillExecutingCardForConcreteRelationLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)

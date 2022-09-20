@@ -33,7 +33,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class WaypointValue : LoggedValue
+    public class WaypointValue : LoggedValue, INavTarget
     {
         public WaypointValue(float distance, IEngineContext context)
             : this(distance, 0f, new StrongIdentifierValue(), context)
@@ -137,6 +137,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             Name?.DiscoverAllAnnotations(result);
         }
+
+        /// <inheritdoc/>
+        KindOfNavTarget INavTarget.Kind => KindOfNavTarget.ByRelativeCoordinates;
+
+        /// <inheritdoc/>
+        IEntity INavTarget.Entity => null;
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

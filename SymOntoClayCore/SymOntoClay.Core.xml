@@ -2089,6 +2089,21 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.SymOntoClay#Core#INavTarget#Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.SymOntoClay#Core#INavTarget#Distance">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.SymOntoClay#Core#INavTarget#HorizontalAngle">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.SymOntoClay#Core#INavTarget#AbcoluteCoordinates">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.SymOntoClay#Core#INavTarget#Entity">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -4403,6 +4418,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointValue.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.WaypointValue.SymOntoClay#Core#INavTarget#Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.WaypointValue.SymOntoClay#Core#INavTarget#Entity">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.WaypointValue.PropertiesToString(System.UInt32)">

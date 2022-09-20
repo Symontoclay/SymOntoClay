@@ -37,7 +37,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class ConditionalEntityValue : LoggedValue, IEntity
+    public class ConditionalEntityValue : LoggedValue, IEntity, INavTarget
     {
         public ConditionalEntityValue(EntityConditionExpressionNode entityConditionExpression, RuleInstance logicalQuery, StrongIdentifierValue name, IEngineContext context, LocalCodeExecutionContext localContext)
             : base(context.Logger)
@@ -64,7 +64,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             _searchOptions.QueryExpression = logicalQuery;
             _searchOptions.LocalCodeExecutionContext = _localCodeExecutionContext;
         }
-
+     
         public EntityConditionExpressionNode Expression { get; private set; }
         public StrongIdentifierValue Name { get; private set; }
         public RuleInstance LogicalQuery { get; private set; }
@@ -547,6 +547,21 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             Name?.DiscoverAllAnnotations(result);
         }
+
+        /// <inheritdoc/>
+        KindOfNavTarget INavTarget.Kind => KindOfNavTarget.ByEntity;
+
+        /// <inheritdoc/>
+        float INavTarget.Distance => 0f;
+
+        /// <inheritdoc/>
+        float INavTarget.HorizontalAngle => 0f;
+
+        /// <inheritdoc/>
+        Vector3 INavTarget.AbcoluteCoordinates => Vector3.Zero;
+
+        /// <inheritdoc/>
+        IEntity INavTarget.Entity => this;
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

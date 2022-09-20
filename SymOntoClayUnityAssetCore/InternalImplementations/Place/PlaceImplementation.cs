@@ -23,9 +23,12 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal;
+using SymOntoClay.UnityAsset.Core.InternalImplementations.Player;
 using System;
 using System.Collections.Generic;
+using System.Runtime;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
 {
@@ -34,74 +37,78 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
     {
         public PlaceImplementation(PlaceSettings settings, IWorldCoreGameComponentContext context)
         {
-
+            _gameComponent = new PlaceGameComponent(settings, context);
         }
 
         public PlaceImplementation(PlaceSettings settings)
         {
-
+            _settings = settings;
         }
 
         void IDeferredInitialized.Initialize(IWorldCoreGameComponentContext worldContext)
         {
-
+            if (_gameComponent == null)
+            {
+                _gameComponent = new PlaceGameComponent(_settings, worldContext);
+            }
         }
 
-        /// <inheritdoc/>
-        public IEntityLogger Logger => throw new NotImplementedException();
+        private PlaceGameComponent _gameComponent;
+        private readonly PlaceSettings _settings;
 
         /// <inheritdoc/>
-        public bool IsDisposed => throw new NotImplementedException();
+        public IEntityLogger Logger => _gameComponent.Logger;
 
         /// <inheritdoc/>
         public void RunInMainThread(Action function)
         {
-            throw new NotImplementedException();
+            _gameComponent.RunInMainThread(function);
         }
 
         /// <inheritdoc/>
         public TResult RunInMainThread<TResult>(Func<TResult> function)
         {
-            throw new NotImplementedException();
+            return _gameComponent.RunInMainThread(function);
         }
 
         /// <inheritdoc/>
         public string InsertPublicFact(string text)
         {
-            throw new NotImplementedException();
+            return _gameComponent.InsertPublicFact(text);
         }
 
         /// <inheritdoc/>
         public string InsertPublicFact(RuleInstance fact)
         {
-            throw new NotImplementedException();
+            return _gameComponent.InsertPublicFact(fact);
         }
 
         /// <inheritdoc/>
         public void RemovePublicFact(string id)
         {
-            throw new NotImplementedException();
+            _gameComponent.RemovePublicFact(id);
         }
 
         /// <inheritdoc/>
         public void PushSoundFact(float power, string text)
         {
-            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
         public void PushSoundFact(float power, RuleInstance fact)
         {
-            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public IStandardFactsBuilder StandardFactsBuilder => throw new NotImplementedException();
+        public IStandardFactsBuilder StandardFactsBuilder => _gameComponent.StandardFactsBuilder;
+
+        /// <inheritdoc/>
+        public bool IsDisposed => _gameComponent.IsDisposed;
 
         /// <inheritdoc/>
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _gameComponent.Dispose();
         }
     }
 }

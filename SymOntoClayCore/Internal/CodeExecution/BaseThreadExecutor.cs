@@ -848,7 +848,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private float? GetLogicalValueFromCurrentStackValue()
         {
-            var currentValue = _currentCodeFrame.ValuesStack.Pop();
+            var currentValue = TryResolveFromVar(_currentCodeFrame.ValuesStack.Pop());
 
 #if DEBUG
             //Log($"currentValue = {currentValue}");

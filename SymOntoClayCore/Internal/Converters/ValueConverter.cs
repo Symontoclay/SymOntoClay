@@ -30,6 +30,7 @@ namespace SymOntoClay.Core.Internal.Converters
 {
     public static class ValueConverter
     {
+
         public static LogicalValue ConvertNullValueToLogicalValue(NullValue source, IMainStorageContext mainStorageContext)
         {
             var result = new LogicalValue(null);
@@ -51,6 +52,10 @@ namespace SymOntoClay.Core.Internal.Converters
         public static LogicalValue ConvertStrongIdentifierValueToLogicalValue(StrongIdentifierValue source, IMainStorageContext mainStorageContext)
         {
             var normalizedNameValue = source.NormalizedNameValue;
+
+#if DEBUG
+            mainStorageContext.Logger.Log($"normalizedNameValue = {normalizedNameValue}");
+#endif
 
             switch (normalizedNameValue)
             {

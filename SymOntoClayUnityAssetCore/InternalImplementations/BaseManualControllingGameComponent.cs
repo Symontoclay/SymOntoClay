@@ -23,7 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints;
-using SymOntoClay.UnityAsset.Core.Internal.TypesConvertors;
+using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
 using SymOntoClay.UnityAsset.Core.Internal.Validators;
 using System;
 using System.Collections.Generic;

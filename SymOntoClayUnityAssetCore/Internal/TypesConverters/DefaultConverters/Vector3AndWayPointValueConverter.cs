@@ -27,7 +27,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
 
-namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors.DefaultConverters
+namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
 {
     [PlatformTypesConverter]
     public class Vector3AndWayPointValueConverter : IPlatformTypesConverter

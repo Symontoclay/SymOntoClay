@@ -26,7 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.UnityAsset.Core.Internal.TypesConvertors.DefaultConverters
+namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
 {
     [PlatformTypesConverter]
     public class FloatAndNumberValueConverter : IPlatformTypesConverter

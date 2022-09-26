@@ -139,7 +139,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        KindOfNavTarget INavTarget.Kind => KindOfNavTarget.ByRelativeCoordinates;
+        KindOfNavTarget INavTarget.Kind => KindOfNavTarget.ByAbsoluteCoordinates;
 
         /// <inheritdoc/>
         IEntity INavTarget.Entity => null;

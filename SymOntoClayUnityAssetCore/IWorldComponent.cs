@@ -29,11 +29,9 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core
 {
-    public interface IWorldComponent : ISymOntoClayDisposable
+    public interface IWorldComponent : ISymOntoClayDisposable, IExecutorInMainThread
     {
         IEntityLogger Logger { get; }
-        void RunInMainThread(Action function);
-        TResult RunInMainThread<TResult>(Func<TResult> function);
         string InsertPublicFact(string text);
         string InsertPublicFact(RuleInstance fact);
         void RemovePublicFact(string id);

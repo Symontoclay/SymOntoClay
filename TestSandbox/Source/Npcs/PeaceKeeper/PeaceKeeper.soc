@@ -4,12 +4,7 @@
     {
         'Begin' >> @>log;
         
-        @a = 1;
-
-        if(@a)
-        {
-            'Yes!' >> @>log;
-        }
+        @@host.go(to: #@{: >: { color($_,$x1) & place($_) & green($x1) } :});
 
         'End' >> @>log;
     }

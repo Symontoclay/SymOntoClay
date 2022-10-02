@@ -4,7 +4,7 @@
     {
         'Begin' >> @>log;
         
-        @@host.go(to: #@{: >: { color($_,$x1) & place($_) & green($x1) } :});
+        @@host.go(to: #123);
 
         'End' >> @>log;
     }

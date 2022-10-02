@@ -23,6 +23,7 @@ SOFTWARE.*/
 using Newtonsoft.Json;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -50,12 +51,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         private readonly IPlatformTypesConvertersRegistry _platformTypesConvertorsRegistry;
         private readonly IInvokerInMainThread _invokingInMainThread;
 
-        public IProcessInfo Activate(IEndpointInfo endpointInfo, ICommand command, IPackedSynonymsResolver synonymsResolver)
+        public IProcessInfo Activate(IEndpointInfo endpointInfo, ICommand command, IEngineContext context, LocalCodeExecutionContext localContext)
         {
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
 
-            var paramsList = MapParams(cancellationToken, endpointInfo, command, synonymsResolver);
+            var paramsList = MapParams(cancellationToken, endpointInfo, command, context, localContext);
 
             Task task = null;
             var processInfo = new PlatformProcessInfo(cancellationTokenSource, endpointInfo.Name, endpointInfo.Devices, endpointInfo.Friends);
@@ -162,7 +163,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return task;
         }
 
-        private object[] MapParams(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IPackedSynonymsResolver synonymsResolver)
+        private object[] MapParams(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, LocalCodeExecutionContext localContext)
         {
             var kindOfCommandParameters = command.KindOfCommandParameters;
 
@@ -176,17 +177,17 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     return new List<object>() { cancellationToken }.ToArray();
 
                 case KindOfCommandParameters.ParametersByDict:
-                    return MapParamsByParametersByDict(cancellationToken, endpointInfo, command, synonymsResolver);
+                    return MapParamsByParametersByDict(cancellationToken, endpointInfo, command, context, localContext);
 
                 case KindOfCommandParameters.ParametersByList:
-                    return MapParamsByParametersByList(cancellationToken, endpointInfo, command);
+                    return MapParamsByParametersByList(cancellationToken, endpointInfo, command, context, localContext);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfCommandParameters), kindOfCommandParameters, null);
             }
         }
 
-        private object[] MapParamsByParametersByList(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command)
+        private object[] MapParamsByParametersByList(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, LocalCodeExecutionContext localContext)
         {
             var argumentsList = endpointInfo.Arguments.Where(p => !p.IsSystemDefiend);
 
@@ -213,7 +214,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     //Log($"targetCommandValue.GetType().FullName = {targetCommandValue.GetType().FullName}");
                     //Log($"targetCommandValue = {targetCommandValue.ToHumanizedString()}");
 #endif
-                    var targetValue = _platformTypesConvertorsRegistry.Convert(targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType, targetCommandValue);
+                    var targetValue = _platformTypesConvertorsRegistry.Convert(targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType, targetCommandValue, context, localContext);
 
 #if DEBUG
                     //Log($"targetValue = {targetValue}");
@@ -233,10 +234,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return resultList.ToArray();
         }
 
-        private object[] MapParamsByParametersByDict(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IPackedSynonymsResolver synonymsResolver)
+        private object[] MapParamsByParametersByDict(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, LocalCodeExecutionContext localContext)
         {
             var commandParamsDict = command.ParamsDict.ToDictionary(p => p.Key.NameValue.ToLower(), p => p.Value);
             var argumentsDict = endpointInfo.Arguments.Where(p => !p.IsSystemDefiend).ToDictionary(p => p.Name, p => p);
+
+            var synonymsResolver = context.DataResolversFactory.GetSynonymsResolver();
 
             var resultList = new List<object>();
             resultList.Add(cancellationToken);
@@ -263,7 +266,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 }
                 else
                 {
-                    var synonymsList = synonymsResolver?.GetSynonyms(NameHelper.CreateName(argumentName)).Select(p => p.NameValue).ToList();
+                    var synonymsList = synonymsResolver?.GetSynonyms(NameHelper.CreateName(argumentName), localContext).Select(p => p.NameValue).ToList();
 
 #if DEBUG
                     //Log($"synonymsList = {synonymsList.WritePODListToString()}");
@@ -296,7 +299,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 {
                     var targetCommandValue = commandParamsDict[argumentName];
 
-                    var targetValue = _platformTypesConvertorsRegistry.Convert(targetCommandValue.GetType(), argumentInfo.ParameterInfo.ParameterType, targetCommandValue);
+                    var targetValue = _platformTypesConvertorsRegistry.Convert(targetCommandValue.GetType(), argumentInfo.ParameterInfo.ParameterType, targetCommandValue, context, localContext);
 
                     resultList.Add(targetValue);
 

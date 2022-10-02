@@ -20,6 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -33,7 +35,7 @@ namespace SymOntoClay.UnityAsset.Core
         Type CoreType { get; }
         bool CanConvertToPlatformType { get; }
         bool CanConvertToCoreType { get; }
-        object ConvertToPlatformType(object coreObject, IEntityLogger logger);
-        object ConvertToCoreType(object platformObject, IEntityLogger logger);
+        object ConvertToPlatformType(object coreObject, IEngineContext context, LocalCodeExecutionContext localContext);
+        object ConvertToCoreType(object platformObject, IEngineContext context, LocalCodeExecutionContext localContext);
     }
 }

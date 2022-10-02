@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -287,7 +288,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
         }
 
         /// <inheritdoc/>
-        public object Convert(Type sourceType, Type destType, object sourceValue)
+        public object Convert(Type sourceType, Type destType, object sourceValue, IEngineContext context, LocalCodeExecutionContext localContext)
         {
             if (sourceType == _nullValueType)
             {
@@ -302,7 +303,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
                 //Log($"sourceValue = {sourceValue}");
 #endif
 
-                var nConvertResult = NConvert(sourceType, destType, sourceValue);
+                var nConvertResult = NConvert(sourceType, destType, sourceValue, context, localContext);
 
                 if(nConvertResult.Item2)
                 {
@@ -317,7 +318,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
                     //Log($"baseSourceType.FullName = {baseSourceType.FullName}");
 #endif
 
-                    nConvertResult = NConvert(baseSourceType, destType, sourceValue);
+                    nConvertResult = NConvert(baseSourceType, destType, sourceValue, context, localContext);
 
                     if (nConvertResult.Item2)
                     {
@@ -333,7 +334,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
                     //Log($"baseDestType.FullName = {baseDestType.FullName}");
 #endif
 
-                    nConvertResult = NConvert(sourceType, baseDestType, sourceValue);
+                    nConvertResult = NConvert(sourceType, baseDestType, sourceValue, context, localContext);
 
                     if (nConvertResult.Item2)
                     {
@@ -346,7 +347,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
                         //Log($"baseSourceType.FullName (2) = {baseSourceType.FullName}");
 #endif
 
-                        nConvertResult = NConvert(baseSourceType, baseDestType, sourceValue);
+                        nConvertResult = NConvert(baseSourceType, baseDestType, sourceValue, context, localContext);
 
                         if (nConvertResult.Item2)
                         {
@@ -359,7 +360,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
             }
         }
 
-        private (object, bool) NConvert(Type sourceType, Type destType, object sourceValue)
+        private (object, bool) NConvert(Type sourceType, Type destType, object sourceValue, IEngineContext context, LocalCodeExecutionContext localContext)
         {
 #if DEBUG
             //Log($"sourceType.FullName = {sourceType.FullName}");
@@ -377,10 +378,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 
                     if (convertor.CoreType == sourceType)
                     {
-                        return (convertor.ConvertToPlatformType(sourceValue, Logger), true);
+                        return (convertor.ConvertToPlatformType(sourceValue, context, localContext), true);
                     }
 
-                    return (convertor.ConvertToCoreType(sourceValue, Logger), true);
+                    return (convertor.ConvertToCoreType(sourceValue, context, localContext), true);
                 }
             }
 
@@ -390,7 +391,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 
             if (destType.IsGenericType && destType.FullName.StartsWith("System.Nullable"))
             {
-                return NConvert(sourceType, destType.GenericTypeArguments[0], sourceValue);
+                return NConvert(sourceType, destType.GenericTypeArguments[0], sourceValue, context, localContext);
             }
 
             return (sourceValue, false);

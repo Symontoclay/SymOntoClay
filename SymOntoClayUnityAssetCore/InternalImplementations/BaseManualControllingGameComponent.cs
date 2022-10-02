@@ -21,6 +21,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core;
+using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
@@ -129,7 +132,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         }
 
         /// <inheritdoc/>
-        public IProcessCreatingResult CreateProcess(ICommand command, IPackedSynonymsResolver synonymsResolver)
+        public IProcessCreatingResult CreateProcess(ICommand command, IEngineContext context, LocalCodeExecutionContext localContext)
         {
 #if DEBUG
             //Log($"command = {command}");
@@ -137,7 +140,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
             try
             {
-                var endPointInfo = _endPointsResolver.GetEndpointInfo(command, _endpointsRegistries, synonymsResolver);
+                var packedSynonymsResolver = new PackedSynonymsResolver(context.DataResolversFactory.GetSynonymsResolver(), localContext);
+
+                var endPointInfo = _endPointsResolver.GetEndpointInfo(command, _endpointsRegistries, packedSynonymsResolver);
 
 #if DEBUG
                 Log($"endPointInfo = {endPointInfo}");
@@ -148,7 +153,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                     return new ProcessCreatingResult();
                 }
 
-                var processInfo = _endPointActivator.Activate(endPointInfo, command, synonymsResolver);
+                var processInfo = _endPointActivator.Activate(endPointInfo, command, context, localContext);
 
 #if DEBUG
                 //Log($"processInfo = {processInfo}");

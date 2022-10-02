@@ -1,4 +1,6 @@
-﻿using SymOntoClay.Core.Internal.CodeModel;
+﻿using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -22,10 +24,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
         public abstract bool CanConvertToCoreType { get; }
 
         /// <inheritdoc/>
-        public abstract object ConvertToCoreType(object platformObject, IEntityLogger logger);
+        public abstract object ConvertToCoreType(object platformObject, IEngineContext context, LocalCodeExecutionContext localContext);
 
         /// <inheritdoc/>
-        public abstract object ConvertToPlatformType(object coreObject, IEntityLogger logger);
+        public abstract object ConvertToPlatformType(object coreObject, IEngineContext context, LocalCodeExecutionContext localContext);
 
         /// <inheritdoc/>
         public override string ToString()

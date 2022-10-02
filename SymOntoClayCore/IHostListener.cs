@@ -20,6 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -28,6 +30,6 @@ namespace SymOntoClay.Core
 {
     public interface IHostListener
     {
-        IProcessCreatingResult CreateProcess(ICommand command, IPackedSynonymsResolver synonymsResolver);
+        IProcessCreatingResult CreateProcess(ICommand command, IEngineContext context, LocalCodeExecutionContext localContext);
     }
 }

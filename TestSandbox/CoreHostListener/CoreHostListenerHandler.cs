@@ -126,7 +126,7 @@ namespace TestSandbox.CoreHostListener
 
             if(endPointInfo != null)
             {
-                var processInfo = endPointActivator.Activate(endPointInfo, command, null);
+                var processInfo = endPointActivator.Activate(endPointInfo, command, null, null);
 
                 _logger.Log($"processInfo = {processInfo}");
 
@@ -152,7 +152,7 @@ namespace TestSandbox.CoreHostListener
 
             if (endPointInfo != null)
             {
-                var processInfo = endPointActivator.Activate(endPointInfo, command, null);
+                var processInfo = endPointActivator.Activate(endPointInfo, command, null, null);
 
                 _logger.Log($"processInfo = {processInfo}");
 

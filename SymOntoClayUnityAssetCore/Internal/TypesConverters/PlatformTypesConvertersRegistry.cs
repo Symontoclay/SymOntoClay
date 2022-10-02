@@ -26,6 +26,7 @@ using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -112,15 +113,23 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 
                 if (source == _nullValueType && (dest.IsClass || dest.IsInterface || (dest.IsGenericType && dest.FullName.StartsWith("System.Nullable"))))
                 {
+#if DEBUG
+                    //Log($"source == _nullValueType && (dest.IsClass || dest.IsInterface || (dest.IsGenericType && dest.FullName.StartsWith(\"System.Nullable\")))");
+#endif
+
                     return true;
                 }
 
                 if(NCanConvert(source, dest))
                 {
+#if DEBUG
+                    //Log($"NCanConvert(source, dest)");
+#endif
+
                     return true;
                 }
 
-                var baseSourceTypes = ObjectHelper.GetAllBaseTypes(source);
+                var baseSourceTypes = ObjectHelper.GetAllBaseTypes(source).Where(p => !IsTooGeneralType(p)).ToList();
 
                 foreach (var baseSourceType in baseSourceTypes)
                 {
@@ -130,20 +139,29 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 
                     if (NCanConvert(baseSourceType, dest))
                     {
+#if DEBUG
+                        //Log($"NCanConvert(baseSourceType, dest)");
+#endif
+
                         return true;
                     }
                 }
 
-                var baseDestTypes = ObjectHelper.GetAllBaseTypes(dest);
+                var baseDestTypes = ObjectHelper.GetAllBaseTypes(dest).Where(p => !IsTooGeneralType(p)).ToList();
 
                 foreach(var baseDestType in baseDestTypes)
                 {
 #if DEBUG
                     //Log($"baseDestType.FullName = {baseDestType.FullName}");
 #endif
+                        
 
                     if (NCanConvert(source, baseDestType))
                     {
+#if DEBUG
+                        //Log($"NCanConvert(source, baseDestType)");
+#endif
+
                         return true;
                     }
 
@@ -155,6 +173,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 
                         if (NCanConvert(baseSourceType, baseDestType))
                         {
+#if DEBUG
+                            //Log($"NCanConvert(baseSourceType, baseDestType)");
+#endif
+
                             return true;
                         }
                     }
@@ -162,6 +184,76 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 
                 return false;
             }
+        }
+
+        private bool IsTooGeneralType(Type type)
+        {
+            if(type == typeof(object))
+            {
+                return true;
+            }
+
+            if(type == typeof(SymOntoClay.Core.Internal.CodeModel.IObjectWithLongHashCodes))
+            {
+                return true;
+            }
+
+            if (type == typeof(SymOntoClay.Core.Internal.CodeModel.IAnnotatedItem))
+            {
+                return true;
+            }
+
+            if (type == typeof(SymOntoClay.CoreHelper.DebugHelpers.IObjectToString))
+            {
+                return true;
+            }
+
+            if (type == typeof(SymOntoClay.CoreHelper.DebugHelpers.IObjectToShortString))
+            {
+                return true;
+            }
+
+            if (type == typeof(SymOntoClay.CoreHelper.DebugHelpers.IObjectToBriefString))
+            {
+                return true;
+            }
+
+            if (type == typeof(SymOntoClay.CoreHelper.DebugHelpers.IObjectToDbgString))
+            {
+                return true;
+            }
+
+            if (type == typeof(SymOntoClay.Core.DebugHelpers.IObjectToHumanizedString))
+            {
+                return true;
+            }
+
+            if (type == typeof(SymOntoClay.CoreHelper.ISymOntoClayDisposable))
+            {
+                return true;
+            }
+
+            if (type == typeof(System.IDisposable))
+            {
+                return true;
+            }
+
+            if (type == typeof(SymOntoClay.Core.Internal.CodeModel.Value))
+            {
+                return true;
+            }
+
+            if (type == typeof(SymOntoClay.Core.Internal.CodeModel.AnnotatedItem))
+            {
+                return true;
+            }
+
+            if (type == typeof(SymOntoClay.Core.Internal.CodeModel.ItemWithLongHashCodes))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private bool NCanConvert(Type source, Type dest)

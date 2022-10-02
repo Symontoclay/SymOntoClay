@@ -80,8 +80,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
 #if DEBUG
             //Log($"Result = {Result}");
-            Log($"_state = {_state}");
-            Log($"_currToken = {_currToken}");
+            //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
 #endif
 
             switch (_state)
@@ -344,6 +344,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.Word:
                         case TokenKind.Identifier:
+                        case TokenKind.Entity:
                             {
                                 var value = NameHelper.CreateName(_currToken.Content);
 

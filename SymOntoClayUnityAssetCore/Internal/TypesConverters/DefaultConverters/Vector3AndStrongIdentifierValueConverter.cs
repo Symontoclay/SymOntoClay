@@ -37,8 +37,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
             var identifier = (StrongIdentifierValue)coreObject;
 
 #if DEBUG
-            var logger = context.Logger;
-            logger.Log($"identifier = {identifier}");
+            //var logger = context.Logger;
+            //logger.Log($"identifier = {identifier}");
 #endif
 
             var kindOfName = identifier.KindOfName;
@@ -46,22 +46,26 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
             switch(kindOfName)
             {
                 case KindOfName.Entity:
-                    return ConvertEntityToPlatformType(identifier, logger);
+                    return ConvertEntityToPlatformType(identifier, context, localContext);
 
                 case KindOfName.Concept:
-                    return ConvertConceptToPlatformType(identifier, logger);
+                    return ConvertConceptToPlatformType(identifier, context, localContext);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
             }
         }
 
-        private object ConvertEntityToPlatformType(StrongIdentifierValue identifier, IEntityLogger logger)
+        private object ConvertEntityToPlatformType(StrongIdentifierValue identifier, IEngineContext context, LocalCodeExecutionContext localContext)
         {
-            throw new NotImplementedException();
+            var entityValue = new EntityValue(identifier, context, localContext);
+
+            entityValue.Resolve();
+
+            return entityValue.Position;
         }
 
-        private object ConvertConceptToPlatformType(StrongIdentifierValue identifier, IEntityLogger logger)
+        private object ConvertConceptToPlatformType(StrongIdentifierValue concept, IEngineContext context, LocalCodeExecutionContext localContext)
         {
             throw new NotImplementedException();
         }

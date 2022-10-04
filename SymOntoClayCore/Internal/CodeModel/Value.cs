@@ -102,6 +102,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsConditionalEntityValue => false;
         public virtual ConditionalEntityValue AsConditionalEntityValue => null;
 
+        /// <inheritdoc/>
+        public virtual bool IsEntityValue => false;
+        public virtual EntityValue AsEntityValue => null;
+
         public virtual bool IsLogicalModalityExpressionValue => false;
         public virtual LogicalModalityExpressionValue AsLogicalModalityExpressionValue => null;
 

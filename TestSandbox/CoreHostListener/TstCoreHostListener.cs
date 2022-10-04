@@ -21,6 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core;
+using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -33,7 +35,7 @@ namespace TestSandbox.CoreHostListener
     {
         private static readonly IEntityLogger _logger = new LoggerImpementation();
 
-        public IProcessCreatingResult CreateProcess(ICommand command, IPackedSynonymsResolver synonymsResolver)
+        public IProcessCreatingResult CreateProcess(ICommand command, IEngineContext context, LocalCodeExecutionContext localContext)
         {
             _logger.Log($"command = {command}");
 

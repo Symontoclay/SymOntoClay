@@ -145,7 +145,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 var endPointInfo = _endPointsResolver.GetEndpointInfo(command, _endpointsRegistries, packedSynonymsResolver);
 
 #if DEBUG
-                Log($"endPointInfo = {endPointInfo}");
+                //Log($"endPointInfo = {endPointInfo}");
 #endif
 
                 if (endPointInfo == null)

@@ -406,5 +406,37 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 Thread.Sleep(5000);
             }
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case4()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {       
+        @@host.go(to: #123);
+    }
+}";
+
+            var hostListener = new Exec_Tests_HostListener2();
+
+            BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("GoToImpl", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("<0, 0, 0>", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }, hostListener);
+        }
     }
 }

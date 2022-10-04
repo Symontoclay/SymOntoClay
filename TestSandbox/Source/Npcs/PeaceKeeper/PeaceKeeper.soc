@@ -2,10 +2,8 @@
 {
     on Enter =>
     {
-        'Begin' >> @>log;
-        
+        'Begin' >> @>log;        
         @@host.go(to: #123);
-
         'End' >> @>log;
     }
 }

@@ -195,7 +195,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             foreach (var endPointInfo in endPointsList)
             {
 #if DEBUG
-                Log($"endPointInfo = {endPointInfo}");
+                //Log($"endPointInfo = {endPointInfo}");
 #endif
 
                 var argumentsDict = endPointInfo.Arguments.Where(p => !p.IsSystemDefiend).ToDictionary(p => p.Name, p => p);
@@ -205,7 +205,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 foreach (var commandParamItem in commandParamsDict)
                 {
 #if DEBUG
-                    Log($"commandParamItem.Key = {commandParamItem.Key}");
+                    //Log($"commandParamItem.Key = {commandParamItem.Key}");
 #endif
 
                     var realParamName = commandParamItem.Key;
@@ -218,13 +218,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     if (!argumentsDict.ContainsKey(commandParamItem.Key))
                     {
 #if DEBUG
-                        Log($"!argumentsDict.ContainsKey(commandParamItem.Key)");
+                        //Log($"!argumentsDict.ContainsKey(commandParamItem.Key)");
 #endif
 
                         var synonymsList = synonymsResolver?.GetSynonyms(NameHelper.CreateName(commandParamItem.Key)).Select(p => p.NameValue).ToList();
 
 #if DEBUG
-                        Log($"synonymsList = {synonymsList.WritePODListToString()}");
+                        //Log($"synonymsList = {synonymsList.WritePODListToString()}");
 #endif
 
                         var isSynonymFit = false;
@@ -247,7 +247,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                         }
 
 #if DEBUG
-                        Log($"isSynonymFit = {isSynonymFit}");
+                        //Log($"isSynonymFit = {isSynonymFit}");
 #endif
 
                         if(!isSynonymFit)
@@ -260,15 +260,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     var targetCommandValue = commandParamItem.Value;
 
 #if DEBUG
-                    Log($"targetCommandValue = {targetCommandValue}");
+                    //Log($"targetCommandValue = {targetCommandValue}");
 #endif
 
                     var targetArgument = argumentsDict[realParamName];
 
 #if DEBUG
-                    Log($"targetArgument = {targetArgument}");
-                    Log($"targetCommandValue.GetType() = {targetCommandValue.GetType()}");
-                    Log($"targetArgument.ParameterInfo.ParameterType = {targetArgument.ParameterInfo.ParameterType}");
+                    //Log($"targetArgument = {targetArgument}");
+                    //Log($"targetCommandValue.GetType() = {targetCommandValue.GetType()}");
+                    //Log($"targetArgument.ParameterInfo.ParameterType = {targetArgument.ParameterInfo.ParameterType}");
 #endif
 
                     if (!_platformTypesConvertorsRegistry.CanConvert(targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType))
@@ -278,7 +278,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 }
 
 #if DEBUG
-                Log($"isFitEndpoint = {isFitEndpoint}");
+                //Log($"isFitEndpoint = {isFitEndpoint}");
 #endif
 
                 if (!isFitEndpoint)

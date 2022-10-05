@@ -190,7 +190,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #endif
 
 #if DEBUG
-                                            Log($"nextToken = {nextToken}");
+                                            //Log($"nextToken = {nextToken}");
 #endif
 
                                             _context.Recovery(nextToken);

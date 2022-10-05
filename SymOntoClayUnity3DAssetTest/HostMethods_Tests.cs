@@ -438,5 +438,125 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }, hostListener);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case4_a()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {       
+        @@host.go(to: weapon);
+    }
+}";
+
+            var hostListener = new Exec_Tests_HostListener2();
+
+            BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("GoToImpl", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("<0, 0, 0>", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }, hostListener);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case5()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {       
+        @@host.go(to: #123);
+    }
+}";
+
+            var hostListener = new Exec_Tests_HostListener3();
+
+            BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("GoToImpl Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("0", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(string.Empty, message);
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(string.Empty, message);
+                            break;
+
+                        case 5:
+                            Assert.AreEqual("GoToImpl End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }, hostListener);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case5_a()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {       
+        @@host.go(to: weapon);
+    }
+}";
+
+            var hostListener = new Exec_Tests_HostListener3();
+
+            BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("GoToImpl Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("0", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(string.Empty, message);
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(string.Empty, message);
+                            break;
+
+                        case 5:
+                            Assert.AreEqual("GoToImpl End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }, hostListener);
+        }
     }
 }

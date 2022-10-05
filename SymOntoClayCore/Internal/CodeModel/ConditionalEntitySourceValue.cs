@@ -35,6 +35,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class ConditionalEntitySourceValue : Value
     {
+        public ConditionalEntitySourceValue(EntityConditionExpressionNode entityConditionExpression)
+            : this(entityConditionExpression, null)
+        {
+        }
+
         public ConditionalEntitySourceValue(EntityConditionExpressionNode entityConditionExpression, StrongIdentifierValue name)
         {
             Expression = entityConditionExpression;

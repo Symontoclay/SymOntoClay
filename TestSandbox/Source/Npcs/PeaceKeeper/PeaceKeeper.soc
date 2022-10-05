@@ -3,7 +3,7 @@
     on Enter =>
     {
         'Begin' >> @>log;        
-        @@host.go(to: #123);
+        @@host.go3(to: #123);
         'End' >> @>log;
     }
 }

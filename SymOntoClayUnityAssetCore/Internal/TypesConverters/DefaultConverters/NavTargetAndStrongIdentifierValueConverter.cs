@@ -1,21 +1,19 @@
-﻿using SymOntoClay.Core;
-using SymOntoClay.Core.Internal.CodeExecution;
-using SymOntoClay.Core.Internal;
+﻿using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Core.Internal;
+using SymOntoClay.Core;
+using SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Numerics;
 using System.Text;
-using SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Helpers;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
 {
     [PlatformTypesConverter]
-    public class Vector3AndStrongIdentifierValueConverter: BasePlatformTypesConverter
-    {        
+    public class NavTargetAndStrongIdentifierValueConverter : BasePlatformTypesConverter
+    {
         /// <inheritdoc/>
-        public override Type PlatformType => typeof(Vector3);
+        public override Type PlatformType => typeof(INavTarget);
 
         /// <inheritdoc/>
         public override Type CoreType => typeof(StrongIdentifierValue);
@@ -44,7 +42,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
 
             var kindOfName = identifier.KindOfName;
 
-            switch(kindOfName)
+            switch (kindOfName)
             {
                 case KindOfName.Entity:
                     return ConvertEntityToPlatformType(identifier, context, localContext);
@@ -61,7 +59,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
         {
             var entityValue = PlatformTypesConverterHelper.GetResolvedEntityValue(identifier, context, localContext);
 
-            return entityValue.Position;
+            return entityValue;
         }
 
         private object ConvertConceptToPlatformType(StrongIdentifierValue concept, IEngineContext context, LocalCodeExecutionContext localContext)
@@ -73,7 +71,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
 
             var conditionalEntityValue = PlatformTypesConverterHelper.GetResolvedConditionalEntityValue(concept, context, localContext);
 
-            return conditionalEntityValue.Position;
+            return conditionalEntityValue;
         }
     }
 }

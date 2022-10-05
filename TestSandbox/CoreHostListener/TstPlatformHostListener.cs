@@ -51,10 +51,50 @@ namespace TestSandbox.CoreHostListener
             }
         }
 
+        //[DebuggerHidden]
+        //[BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
+        //public void GoToImpl(CancellationToken cancellationToken, 
+        //    [EndpointParam("To", KindOfEndpointParam.Position)] Vector3 point,
+        //    float speed = 12)
+        //{
+        //    //var name = NameHelper.GetNewEntityNameString();
+        //    //var name = string.Empty;
+        //    var name = GetMethodId();
+
+        //    _logger.Log($"Begin {name}");
+
+        //    _logger.Log($"{name} point = {point}");
+        //    _logger.Log($"{name} speed = {speed}");
+
+        //    var n = 0;
+
+        //    while (true)
+        //    {
+        //        n++;
+
+        //        if(n > 10/*00*/)
+        //        {
+        //            break;
+        //        }
+
+        //        Thread.Sleep(1000);
+
+        //        _logger.Log($"{name} Hi! n = {n}");
+
+        //        _logger.Log($"{name} Hi! cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
+
+        //        cancellationToken.ThrowIfCancellationRequested();
+        //    }
+
+        //    //Thread.Sleep(5000);
+
+        //    _logger.Log($"End {name}");
+        //}
+
         [DebuggerHidden]
-        [BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
-        public void GoToImpl(CancellationToken cancellationToken, 
-            [EndpointParam("To", KindOfEndpointParam.Position)] Vector3 point,
+        [BipedEndpoint("Go2", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
+        public void GoToImpl_2(CancellationToken cancellationToken,
+            [EndpointParam("To", KindOfEndpointParam.Position)] IEntity entity,
             float speed = 12)
         {
             //var name = NameHelper.GetNewEntityNameString();
@@ -63,16 +103,64 @@ namespace TestSandbox.CoreHostListener
 
             _logger.Log($"Begin {name}");
 
-            _logger.Log($"{name} point = {point}");
+            _logger.Log($"{name} entity.InstanceId = {entity.InstanceId}");
+            _logger.Log($"{name} entity.Id = {entity.Id}");
+            _logger.Log($"{name} entity.Position = {entity.Position}");
             _logger.Log($"{name} speed = {speed}");
 
             var n = 0;
-            
+
             while (true)
             {
                 n++;
 
-                if(n > 10/*00*/)
+                if (n > 10/*00*/)
+                {
+                    break;
+                }
+
+                Thread.Sleep(1000);
+
+                _logger.Log($"{name} Hi! n = {n}");
+
+                _logger.Log($"{name} Hi! cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
+
+                cancellationToken.ThrowIfCancellationRequested();
+            }
+
+            //Thread.Sleep(5000);
+
+            _logger.Log($"End {name}");
+        }
+
+        [DebuggerHidden]
+        [BipedEndpoint("Go3", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
+        public void GoToImpl_3(CancellationToken cancellationToken,
+            [EndpointParam("To", KindOfEndpointParam.Position)] INavTarget navTarget,
+            float speed = 12)
+        {
+            //var name = NameHelper.GetNewEntityNameString();
+            //var name = string.Empty;
+            var name = GetMethodId();
+
+            _logger.Log($"Begin {name}");
+
+            _logger.Log($"{name} navTarget.Kind = {navTarget.Kind}");
+
+            var entity = navTarget.Entity;
+
+            _logger.Log($"{name} entity.InstanceId = {entity.InstanceId}");
+            _logger.Log($"{name} entity.Id = {entity.Id}");
+            _logger.Log($"{name} entity.Position = {entity.Position}");
+            _logger.Log($"{name} speed = {speed}");
+
+            var n = 0;
+
+            while (true)
+            {
+                n++;
+
+                if (n > 10/*00*/)
                 {
                     break;
                 }

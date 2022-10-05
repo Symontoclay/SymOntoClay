@@ -1150,6 +1150,24 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.BasePlatformTypesConverter.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.EntityAndStrongIdentifierValueConverter.PlatformType">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.EntityAndStrongIdentifierValueConverter.CoreType">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.EntityAndStrongIdentifierValueConverter.CanConvertToPlatformType">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.EntityAndStrongIdentifierValueConverter.CanConvertToCoreType">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.EntityAndStrongIdentifierValueConverter.ConvertToCoreType(System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.EntityAndStrongIdentifierValueConverter.ConvertToPlatformType(System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.FloatAndNumberValueConverter.PlatformType">
             <inheritdoc/>
         </member>
@@ -1166,6 +1184,24 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.FloatAndNumberValueConverter.ConvertToPlatformType(System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.NavTargetAndStrongIdentifierValueConverter.PlatformType">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.NavTargetAndStrongIdentifierValueConverter.CoreType">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.NavTargetAndStrongIdentifierValueConverter.CanConvertToPlatformType">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.NavTargetAndStrongIdentifierValueConverter.CanConvertToCoreType">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.NavTargetAndStrongIdentifierValueConverter.ConvertToCoreType(System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.NavTargetAndStrongIdentifierValueConverter.ConvertToPlatformType(System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndIEntityConverter.PlatformType">

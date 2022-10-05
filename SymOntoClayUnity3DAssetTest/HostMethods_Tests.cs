@@ -558,5 +558,101 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }, hostListener);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case6()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {       
+        @@host.go(to: #123);
+    }
+}";
+
+            var hostListener = new Exec_Tests_HostListener4();
+
+            BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("GoToImpl Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("ByEntity", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("0", message);
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(string.Empty, message);
+                            break;
+
+                        case 5:
+                            Assert.AreEqual(string.Empty, message);
+                            break;
+
+                        case 6:
+                            Assert.AreEqual("GoToImpl End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }, hostListener);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case6_a()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {       
+        @@host.go(to: weapon);
+    }
+}";
+
+            var hostListener = new Exec_Tests_HostListener4();
+
+            BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("GoToImpl Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("ByEntity", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("0", message);
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(string.Empty, message);
+                            break;
+
+                        case 5:
+                            Assert.AreEqual(string.Empty, message);
+                            break;
+
+                        case 6:
+                            Assert.AreEqual("GoToImpl End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }, hostListener);
+        }
     }
 }

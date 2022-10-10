@@ -36,7 +36,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class EntityValue : BaseEntityValue
     {
         public EntityValue(StrongIdentifierValue identifier, IEngineContext context, LocalCodeExecutionContext localContext)
-            : base(context)
+            : base(context, localContext)
         {
             Identifier = identifier;
             _context = context;

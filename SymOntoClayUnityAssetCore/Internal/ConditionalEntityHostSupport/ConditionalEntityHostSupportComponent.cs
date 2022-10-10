@@ -151,5 +151,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport
         public void ResolveIfNeeds()
         {
         }
+
+        /// <inheritdoc/>
+        public IEntity GetNewEntity(string id)
+        {
+            return null;
+        }
     }
 }

@@ -97,5 +97,7 @@ namespace SymOntoClay.Core
         /// If entity has been previously resolved, the method does nothing.
         /// </summary>
         void ResolveIfNeeds();
+
+        IEntity GetNewEntity(string id);
     }
 }

@@ -20,6 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
 using System.Collections.Generic;
@@ -33,12 +35,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class BaseEntityValue: LoggedValue, IEntity, INavTarget
     {
-        protected BaseEntityValue(IEngineContext context)
+        protected BaseEntityValue(IEngineContext context, LocalCodeExecutionContext localContext)
             : base(context.Logger)
         {
+            _context = context;
+            _localContext = localContext;
             _conditionalEntityHostSupport = context.ConditionalEntityHostSupport;
         }
 
+        private IEngineContext _context;
+        private LocalCodeExecutionContext _localContext;
         private IConditionalEntityHostSupport _conditionalEntityHostSupport;
 
         protected virtual void CheckForUpdates()
@@ -134,6 +140,27 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public virtual void Resolve()
         {
+        }
+
+        public virtual IEntity GetNewEntity(string id)
+        {
+            if(string.IsNullOrWhiteSpace(id))
+            {
+                throw new NotImplementedException();
+            }
+
+            var identifier = NameHelper.CreateName(id);
+
+            if (identifier.KindOfName != KindOfName.Entity)
+            {
+                throw new NotImplementedException();
+            }
+
+            var entityValue = new EntityValue(identifier, _context, _localContext);
+
+            entityValue.Resolve();
+
+            return entityValue;
         }
 
         protected bool _needUpdate = true;

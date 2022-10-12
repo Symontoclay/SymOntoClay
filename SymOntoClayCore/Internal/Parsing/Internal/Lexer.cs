@@ -829,6 +829,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
                         }
 
+                        if (string.Compare(content, "actions", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Actions;
+                            break;
+                        }
+
                         if (string.Compare(content, "fun", true) == 0)
                         {
                             kindOfKeyWord = KeyWordTokenKind.Fun;
@@ -1156,6 +1162,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         if (string.Compare(content, "synonym", true) == 0)
                         {
                             kindOfKeyWord = KeyWordTokenKind.Synonym;
+                            break;
+                        }
+
+                        if (string.Compare(content, "idle", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Idle;
                             break;
                         }
                     }

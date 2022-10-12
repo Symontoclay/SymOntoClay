@@ -6176,6 +6176,9 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.FunctionParametersParser.OnRun">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.IdleActionsParser.OnRun">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.IfStatementParser.OnEnter">
             <inheritdoc/>
         </member>

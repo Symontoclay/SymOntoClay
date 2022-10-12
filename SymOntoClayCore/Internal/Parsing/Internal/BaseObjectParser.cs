@@ -143,8 +143,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected void ProcessGeneralContent()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"(_context.CurrentDefaultSetings != null) = {_context.CurrentDefaultSetings != null}");
+            Log($"_currToken = {_currToken}");
+            Log($"(_context.CurrentDefaultSetings != null) = {_context.CurrentDefaultSetings != null}");
 #endif
 
             switch (_currToken.TokenKind)
@@ -328,6 +328,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new RelationDescriptionParser(_context);
                                 parser.Run();
                                 Result.SubItems.Add(parser.Result);
+                            }
+                            break;
+
+                        case KeyWordTokenKind.Idle:
+                            {
+                                _context.Recovery(_currToken);
+                                var parser = new IdleActionsParser(_context);
+                                parser.Run();
+                                //Result.SubItems.Add(parser.Result);
+
+                                throw new NotImplementedException();
                             }
                             break;
 

@@ -37,6 +37,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         App,
         Class,
         Action,
+        Actions,
         Fun,
         Operator,
         Is,
@@ -91,6 +92,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Fact,
         Reject,
         Exec,
-        Synonym
+        Synonym,
+        Idle
     }
 }

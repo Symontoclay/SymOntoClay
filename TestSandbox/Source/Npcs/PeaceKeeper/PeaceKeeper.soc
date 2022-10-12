@@ -1,9 +1,13 @@
 ﻿app PeaceKeeper
 {
-    on Enter =>
+    idle actions
     {
-        'Begin' >> @>log;        
-        @@host.go3(to: #123);
-        'End' >> @>log;
+        go();
+    }
+
+    fun go()
+    {
+        'Begin go()' >> @>log;
+        'End go()' >> @>log;
     }
 }

@@ -121,6 +121,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public List<ActivatingItem> ActivatingConditions { get; private set; } = new List<ActivatingItem>();
         public List<RuleInstance> DeactivatingConditions { get; private set; } = new List<RuleInstance>();
 
+        public List<IdleActionItem> IdleActionItems { get; private set; } = new List<IdleActionItem>();
+
         public virtual bool IsRuleInstance => false;
         public virtual RuleInstance AsRuleInstance => null;
 
@@ -221,6 +223,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             ActivatingConditions = source.ActivatingConditions?.Select(p => p.Clone(cloneContext)).ToList();
             DeactivatingConditions = source.DeactivatingConditions?.Select(p => p.Clone(cloneContext)).ToList();
+            IdleActionItems = source.IdleActionItems?.Select(p => p.Clone(cloneContext)).ToList();
 
             AppendAnnotations(source, cloneContext);
         }
@@ -277,7 +280,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjListProp(n, nameof(Directives), Directives);
             sb.PrintObjListProp(n, nameof(ActivatingConditions), ActivatingConditions); 
             sb.PrintObjListProp(n, nameof(DeactivatingConditions), DeactivatingConditions);
-
+            sb.PrintObjListProp(n, nameof(IdleActionItems), IdleActionItems);
+            
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -305,6 +309,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjListProp(n, nameof(Directives), Directives);
             sb.PrintShortObjListProp(n, nameof(ActivatingConditions), ActivatingConditions);
             sb.PrintShortObjListProp(n, nameof(DeactivatingConditions), DeactivatingConditions);
+            sb.PrintShortObjListProp(n, nameof(IdleActionItems), IdleActionItems);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -325,6 +330,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjListProp(n, nameof(Directives), Directives);
             sb.PrintBriefObjListProp(n, nameof(ActivatingConditions), ActivatingConditions);
             sb.PrintBriefObjListProp(n, nameof(DeactivatingConditions), DeactivatingConditions);
+            sb.PrintBriefObjListProp(n, nameof(IdleActionItems), IdleActionItems);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

@@ -46,7 +46,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         public CompiledFunctionBody CompiledFunctionBody { get; set; }
-
+        
         /// <inheritdoc/>
         public bool IsSystemDefined => false;
 

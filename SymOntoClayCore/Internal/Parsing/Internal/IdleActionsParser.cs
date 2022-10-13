@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,7 +11,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             Init,
             GotIdleMark,
-            GotActionsMark
+            GotActionsMark,
+            WaitForItems,
+            GotItem
         }
 
         public IdleActionsParser(InternalParserContext context)
@@ -19,6 +22,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
 
         private State _state = State.Init;
+
+        public List<IdleActionItem> Result { get; private set; }
+        private IdleActionItem _currentItem;
+
+        /// <inheritdoc/>
+        protected override void OnEnter()
+        {
+            Result = new List<IdleActionItem>();
+            _currentItem = null;
+        }
 
         /// <inheritdoc/>
         protected override void OnRun()
@@ -74,6 +87,46 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotActionsMark:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.OpenFigureBracket:
+                            _state = State.WaitForItems;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForItems:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                            ProcessCodeExpression();
+                            break;
+
+                        case TokenKind.OpenFactBracket:
+                            ProcessFactExpression();
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotItem:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                            ProcessCodeExpression();
+                            break;
+
+                        case TokenKind.OpenFactBracket:
+                            ProcessFactExpression();
+                            break;
+
+                        case TokenKind.CloseFigureBracket:
+                            Exit();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -82,6 +135,37 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
+        }
+
+        private void ProcessCodeExpression()
+        {
+            _context.Recovery(_currToken);
+            var parser = new CodeExpressionStatementParser(_context);
+            parser.Run();
+
+#if DEBUG
+            Log($"parser.Result = {parser.Result}");
+            Log($"parser.Result = {parser.Result.ToHumanizedString()}");
+#endif
+
+            _currentItem = new IdleActionItem();
+            Result.Add(_currentItem);
+
+            _currentItem.Statements.Add(parser.Result);
+
+#if DEBUG
+            Log($"_currentItem = {_currentItem}");
+            Log($"_currentItem = {_currentItem.ToHumanizedString()}");
+#endif
+
+            _currentItem.CompiledFunctionBody = _context.Compiler.Compile(_currentItem.Statements);
+
+            _state = State.GotItem;
+        }
+
+        private void ProcessFactExpression()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             Id = NameHelper.GetNewEntityNameString();
         }
-
+        
         public string Id { get; set; }
 
         public StrongIdentifierValue SubName { get; set; } = new StrongIdentifierValue();

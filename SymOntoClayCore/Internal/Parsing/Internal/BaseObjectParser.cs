@@ -336,9 +336,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _context.Recovery(_currToken);
                                 var parser = new IdleActionsParser(_context);
                                 parser.Run();
-                                //Result.SubItems.Add(parser.Result);
-
-                                throw new NotImplementedException();
+                                Result.IdleActionItems.AddRange(parser.Result);
                             }
                             break;
 

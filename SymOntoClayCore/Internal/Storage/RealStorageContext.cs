@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.Core.Internal.Storage.ActionsStoraging;
 using SymOntoClay.Core.Internal.Storage.ChannelsStoraging;
 using SymOntoClay.Core.Internal.Storage.FuzzyLogic;
+using SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging;
 using SymOntoClay.Core.Internal.Storage.InheritanceStoraging;
 using SymOntoClay.Core.Internal.Storage.LogicalStoraging;
 using SymOntoClay.Core.Internal.Storage.MetadataStoraging;
@@ -57,6 +58,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public MetadataStorage MetadataStorage { get; set; }
         public VarStorage VarStorage { get; set; }
         public FuzzyLogicStorage FuzzyLogicStorage { get; set; }
+        public IdleActionItemsStorage IdleActionItemsStorage { get; set; }
         public RealStorage Storage { get; set; }
         public IList<IStorage> Parents { get; set; }
         public IInheritancePublicFactsReplicator InheritancePublicFactsReplicator { get; set; }
@@ -91,6 +93,7 @@ namespace SymOntoClay.Core.Internal.Storage
             MetadataStorage.Dispose();
             VarStorage.Dispose();
             FuzzyLogicStorage.Dispose();
+            IdleActionItemsStorage.Dispose();
         }
     }
 }

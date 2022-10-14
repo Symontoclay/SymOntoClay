@@ -47,6 +47,7 @@ namespace SymOntoClay.Core
         IMetadataStorage MetadataStorage { get; }
         IVarStorage VarStorage { get; }
         IFuzzyLogicStorage FuzzyLogicStorage { get; }
+        IIdleActionItemsStorage IdleActionItemsStorage { get; }
         void AddParentStorage(IStorage storage);
         void RemoveParentStorage(IStorage storage);
         void CollectChainOfStorages(IList<StorageUsingOptions> result, IList<IStorage> usedStorages, int level, CollectChainOfStoragesOptions options);

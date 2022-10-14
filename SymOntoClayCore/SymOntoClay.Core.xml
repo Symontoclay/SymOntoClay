@@ -3918,6 +3918,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#FuzzyLogicStorage">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#IdleActionItemsStorage">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#AddParentStorage(SymOntoClay.Core.IStorage)">
             <inheritdoc/>
         </member>
@@ -7028,6 +7031,9 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.FuzzyLogicStorage">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.IdleActionItemsStorage">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.DefaultSettingsOfCodeEntity">
             <inheritdoc/>
         </member>
@@ -7113,6 +7119,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.FuzzyLogicStorage.OnDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.EmptyIdleActionItemsStorage.Append(SymOntoClay.Core.Internal.CodeModel.IdleActionItem)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.IdleActionItemsStorage.Append(SymOntoClay.Core.Internal.CodeModel.IdleActionItem)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritancePublicFactsReplicator.ProcessChangeInheritance(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
@@ -7380,6 +7392,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.FuzzyLogicStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.IdleActionItemsStorage">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.AddParentStorage(SymOntoClay.Core.IStorage)">

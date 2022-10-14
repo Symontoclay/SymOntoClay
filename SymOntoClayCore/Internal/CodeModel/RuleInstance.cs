@@ -497,6 +497,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         IFuzzyLogicStorage IStorage.FuzzyLogicStorage => throw new NotImplementedException();
 
         /// <inheritdoc/>
+        IIdleActionItemsStorage IStorage.IdleActionItemsStorage => throw new NotImplementedException();
+
+        /// <inheritdoc/>
         void IStorage.AddParentStorage(IStorage storage) => throw new NotImplementedException();
 
         /// <inheritdoc/>

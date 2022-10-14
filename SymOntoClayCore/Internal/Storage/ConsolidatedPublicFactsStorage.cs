@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage.ActionsStoraging;
 using SymOntoClay.Core.Internal.Storage.ChannelsStoraging;
 using SymOntoClay.Core.Internal.Storage.FuzzyLogic;
+using SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging;
 using SymOntoClay.Core.Internal.Storage.InheritanceStoraging;
 using SymOntoClay.Core.Internal.Storage.LogicalStoraging;
 using SymOntoClay.Core.Internal.Storage.MetadataStoraging;
@@ -64,6 +65,7 @@ namespace SymOntoClay.Core.Internal.Storage
             _channelsStorage = new EmptyChannelsStorage(this, logger);
             _metadataStorage = new EmptyMetadataStorage(this, logger);
             _fuzzyLogicStorage = new EmptyFuzzyLogicStorage(this, logger);
+            _idleActionItemsStorage = new EmptyIdleActionItemsStorage(this, logger);
         }
 
         private readonly object _lockObj = new object();
@@ -81,6 +83,7 @@ namespace SymOntoClay.Core.Internal.Storage
         private EmptyChannelsStorage _channelsStorage;
         private EmptyMetadataStorage _metadataStorage;
         private EmptyFuzzyLogicStorage _fuzzyLogicStorage;
+        private EmptyIdleActionItemsStorage _idleActionItemsStorage;
 
         /// <inheritdoc/>
         public KindOfStorage Kind => KindOfStorage.WorldPublicFacts;
@@ -123,6 +126,9 @@ namespace SymOntoClay.Core.Internal.Storage
 
         /// <inheritdoc/>
         public IFuzzyLogicStorage FuzzyLogicStorage => _fuzzyLogicStorage;
+
+        /// <inheritdoc/>
+        public IIdleActionItemsStorage IdleActionItemsStorage => _idleActionItemsStorage;
 
         /// <inheritdoc/>
         public DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

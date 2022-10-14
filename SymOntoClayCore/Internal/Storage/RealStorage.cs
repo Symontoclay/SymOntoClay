@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage.ActionsStoraging;
 using SymOntoClay.Core.Internal.Storage.ChannelsStoraging;
 using SymOntoClay.Core.Internal.Storage.FuzzyLogic;
+using SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging;
 using SymOntoClay.Core.Internal.Storage.InheritanceStoraging;
 using SymOntoClay.Core.Internal.Storage.LogicalStoraging;
 using SymOntoClay.Core.Internal.Storage.MetadataStoraging;
@@ -87,6 +88,7 @@ namespace SymOntoClay.Core.Internal.Storage
             _realStorageContext.MetadataStorage = new MetadataStorage(_kind, _realStorageContext);
             _realStorageContext.VarStorage = new VarStorage(_kind, _realStorageContext);
             _realStorageContext.FuzzyLogicStorage = new FuzzyLogicStorage(_kind, _realStorageContext);
+            _realStorageContext.IdleActionItemsStorage = new IdleActionItemsStorage(_kind, _realStorageContext);
         }
 
         private readonly KindOfStorage _kind;
@@ -135,6 +137,9 @@ namespace SymOntoClay.Core.Internal.Storage
 
         /// <inheritdoc/>
         public IFuzzyLogicStorage FuzzyLogicStorage => _realStorageContext.FuzzyLogicStorage;
+
+        /// <inheritdoc/>
+        public IIdleActionItemsStorage IdleActionItemsStorage => _realStorageContext.IdleActionItemsStorage;
 
         /// <inheritdoc/>
         public void AddParentStorage(IStorage storage)

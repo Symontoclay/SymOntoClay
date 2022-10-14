@@ -10,8 +10,17 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class IdleActionItem : AnnotatedItem
+    public class IdleActionItem : CodeItem
     {
+        /// <inheritdoc/>
+        public override KindOfCodeEntity Kind => KindOfCodeEntity.IdleActionItem;
+
+        /// <inheritdoc/>
+        public override bool IdleActionItemIs => true;
+        
+        /// <inheritdoc/>
+        public override IdleActionItem AsIdleActionItem => this;
+
         public RuleInstance RuleInstance { get; set; }
         public List<AstStatement> Statements { get; set; } = new List<AstStatement>();
         public CompiledFunctionBody CompiledFunctionBody { get; set; }        
@@ -30,9 +39,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
+        public override CodeItem CloneCodeItem(Dictionary<object, object> cloneContext)
         {
-            return Clone(context);
+            return Clone(cloneContext);
         }
 
         /// <summary>

@@ -2655,10 +2655,19 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.HostValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.IdleActionItem.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.IdleActionItem.IdleActionItemIs">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.IdleActionItem.AsIdleActionItem">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.IdleActionItem.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.IdleActionItem.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.IdleActionItem.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.IdleActionItem.Clone">

@@ -533,14 +533,12 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             if (!idleActionItems.IsNullOrEmpty())
             {
-                foreach(var idleActionItem in idleActionItems)
-                {
-#if DEBUG
-                    Log($"idleActionItem = {idleActionItem.ToHumanizedString()}");
-#endif
-                }
+                var idleActionItemsStorage = globalStorage.IdleActionItemsStorage;
 
-                throw new NotImplementedException();
+                foreach (var idleActionItem in idleActionItems)
+                {
+                    idleActionItemsStorage.Append(idleActionItem);
+                }
             }
 
 #if DEBUG

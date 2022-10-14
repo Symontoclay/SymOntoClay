@@ -68,6 +68,13 @@ namespace SymOntoClay.Core.Internal.Helpers
             SetUpCodeItem(inlineTrigger, defaultSettings, context);
         }
 
+        public static void SetUpIdleActionItem(IdleActionItem idleActionItem, DefaultSettingsOfCodeEntity defaultSettings)
+        {
+            var context = new Dictionary<object, object>();
+
+            SetUpCodeItem(idleActionItem, defaultSettings, context);
+        }
+
         public static void SetUpLinguisticVariable(LinguisticVariable linguisticVariable, DefaultSettingsOfCodeEntity defaultSettings)
         {
             var context = new Dictionary<object, object>();

@@ -527,6 +527,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             {
                 result.Holder = result.ParentCodeEntity.Name;
             }
+            
+            return result;
+        }
+
+        protected IdleActionItem CreateIdleActionItem()
+        {
+            var result = new IdleActionItem();
+            DefaultSettingsOfCodeEntityHelper.SetUpIdleActionItem(result, CurrentDefaultSetings);
+
+            FillUpCodeItem(result);
+
+            if (result.ParentCodeEntity != null)
+            {
+                result.Holder = result.ParentCodeEntity.Name;
+            }
 
             return result;
         }

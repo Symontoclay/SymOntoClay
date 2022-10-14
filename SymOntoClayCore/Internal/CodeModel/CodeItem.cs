@@ -156,6 +156,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsSynonym => false;
         public virtual Synonym AsSynonym => null;
 
+        public virtual bool IdleActionItemIs => false;
+        public virtual IdleActionItem AsIdleActionItem => null;
+
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {

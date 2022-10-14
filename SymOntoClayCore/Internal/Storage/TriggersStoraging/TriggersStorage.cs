@@ -123,12 +123,14 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
             //Log($"inlineTrigger.Condition = {DebugHelperForRuleInstance.ToString(inlineTrigger.Condition)}");
 #endif
 
-            if (dictForStoraging.ContainsKey(inlineTrigger.Holder))
+            var holder = inlineTrigger.Holder;
+
+            if (dictForStoraging.ContainsKey(holder))
             {
-                var targetList = dictForStoraging[inlineTrigger.Holder];
+                var targetList = dictForStoraging[holder];
 
 #if DEBUG
-                //Log($"dictForStoraging[inlineTrigger.Holder].Count = {dictForStoraging[inlineTrigger.Holder].Count}");
+                //Log($"dictForStoraging[inlineTrigger.Holder].Count = {dictForStoraging[holder].Count}");
                 //Log($"targetList = {targetList.WriteListToString()}");
 #endif
 
@@ -138,7 +140,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
             }
             else
             {
-                dictForStoraging[inlineTrigger.Holder] = new List<InlineTrigger>() { inlineTrigger };
+                dictForStoraging[holder] = new List<InlineTrigger>() { inlineTrigger };
             }
         }
 
@@ -148,16 +150,18 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
             {
                 var kindOfSystemEvent = inlineTrigger.KindOfSystemEvent;
 
+                var holder = inlineTrigger.Holder;
+
                 if (_systemEventsInfoDict.ContainsKey(kindOfSystemEvent))
                 {
                     var dict = _systemEventsInfoDict[kindOfSystemEvent];
 
-                    if (dict.ContainsKey(inlineTrigger.Holder))
+                    if (dict.ContainsKey(holder))
                     {
-                        var targetList = dict[inlineTrigger.Holder];
+                        var targetList = dict[holder];
 
 #if DEBUG
-                        //Log($"dict[superName].Count = {dict[inlineTrigger.Holder].Count}");
+                        //Log($"dict[superName].Count = {dict[holder].Count}");
                         //Log($"targetList = {targetList.WriteListToString()}");
 #endif
 
@@ -167,12 +171,12 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
                     }
                     else
                     {
-                        dict[inlineTrigger.Holder] = new List<InlineTrigger>() { inlineTrigger };
+                        dict[holder] = new List<InlineTrigger>() { inlineTrigger };
                     }
                 }
                 else
                 {
-                    _systemEventsInfoDict[kindOfSystemEvent] = new Dictionary<StrongIdentifierValue, List<InlineTrigger>>() { { inlineTrigger.Holder, new List<InlineTrigger>() { inlineTrigger } } };
+                    _systemEventsInfoDict[kindOfSystemEvent] = new Dictionary<StrongIdentifierValue, List<InlineTrigger>>() { { holder, new List<InlineTrigger>() { inlineTrigger } } };
                 }
             }
         }

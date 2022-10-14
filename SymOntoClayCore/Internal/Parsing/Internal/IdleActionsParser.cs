@@ -148,7 +148,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             //Log($"parser.Result = {parser.Result.ToHumanizedString()}");
 #endif
 
-            _currentItem = new IdleActionItem();
+            _currentItem = CreateIdleActionItem();
             Result.Add(_currentItem);
 
             _currentItem.Statements.Add(parser.Result);

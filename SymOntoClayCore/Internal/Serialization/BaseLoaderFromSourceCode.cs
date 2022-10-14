@@ -529,6 +529,20 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             CheckCodeDirectives(codeItem);
 
+            var idleActionItems = codeItem.IdleActionItems;
+
+            if (!idleActionItems.IsNullOrEmpty())
+            {
+                foreach(var idleActionItem in idleActionItems)
+                {
+#if DEBUG
+                    Log($"idleActionItem = {idleActionItem.ToHumanizedString()}");
+#endif
+                }
+
+                throw new NotImplementedException();
+            }
+
 #if DEBUG
             //Log("End");
 #endif

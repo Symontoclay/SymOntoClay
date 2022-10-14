@@ -37,8 +37,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_currToken = {_currToken}");
+            //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -144,8 +144,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             parser.Run();
 
 #if DEBUG
-            Log($"parser.Result = {parser.Result}");
-            Log($"parser.Result = {parser.Result.ToHumanizedString()}");
+            //Log($"parser.Result = {parser.Result}");
+            //Log($"parser.Result = {parser.Result.ToHumanizedString()}");
 #endif
 
             _currentItem = new IdleActionItem();
@@ -154,8 +154,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _currentItem.Statements.Add(parser.Result);
 
 #if DEBUG
-            Log($"_currentItem = {_currentItem}");
-            Log($"_currentItem = {_currentItem.ToHumanizedString()}");
+            //Log($"_currentItem = {_currentItem}");
+            //Log($"_currentItem = {_currentItem.ToHumanizedString()}");
 #endif
 
             _currentItem.CompiledFunctionBody = _context.Compiler.Compile(_currentItem.Statements);

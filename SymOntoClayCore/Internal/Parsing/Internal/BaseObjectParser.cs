@@ -143,8 +143,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected void ProcessGeneralContent()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
-            Log($"(_context.CurrentDefaultSetings != null) = {_context.CurrentDefaultSetings != null}");
+            //Log($"_currToken = {_currToken}");
+            //Log($"(_context.CurrentDefaultSetings != null) = {_context.CurrentDefaultSetings != null}");
 #endif
 
             switch (_currToken.TokenKind)

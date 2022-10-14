@@ -241,7 +241,19 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _processesInfoList.Add(processInfo);
 
+            processInfo.OnFinish += OnFinishProcessWithoutDevicesHandler;
+
             return true;
+        }
+
+        private void OnFinishProcessWithoutDevicesHandler(IProcessInfo sender)
+        {
+            lock (_processLockObj)
+            {
+                _processesInfoList.Remove(sender);
+
+                CheckCountOfActiveProcesses();
+            }
         }
 
         private void NAppendAndTryStartProcessInfoWithoutDevices(IProcessInfo processInfo)
@@ -284,10 +296,19 @@ namespace SymOntoClay.Core.Internal.Instances
                         _processesInfoByDevicesDict.Remove(device);
                     }
                 }
+
+                CheckCountOfActiveProcesses();
             }
 
 #if DEBUG
             //Log("End");
+#endif
+        }
+
+        private void CheckCountOfActiveProcesses()
+        {
+#if DEBUG
+            Log($"Begin");
 #endif
         }
 

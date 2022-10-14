@@ -179,7 +179,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     //Log("_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing; return false;");
 #endif
 
-                    GoBackToPrevCodeFrame();
+                    GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
                     return true;
                 }
 
@@ -202,7 +202,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     //Log($"_currentCodeFrame.ExecutionCoordinator?.ExecutionStatus = {_currentCodeFrame.ExecutionCoordinator?.ExecutionStatus}");
 #endif
 
-                    GoBackToPrevCodeFrame( ActionExecutionStatus.Complete);
+                    GoBackToPrevCodeFrame(ActionExecutionStatus.Complete);
                     return true;
                 }
 
@@ -1033,6 +1033,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"targetActionExecutionStatus = {targetActionExecutionStatus}");
+                //Log($"_currentCodeFrame.ProcessInfo.Status = {_currentCodeFrame.ProcessInfo.Status}");
                 //Log($"specialMark = {specialMark}");
 #endif
 
@@ -1051,6 +1052,32 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     default:
                         throw new ArgumentOutOfRangeException(nameof(specialMark), specialMark, null);
+                }
+            }
+
+            var currentProcessInfo = _currentCodeFrame.ProcessInfo;
+
+            if (currentProcessInfo.Status == ProcessStatus.Running)
+            {
+#if DEBUG
+                //Log("currentProcessInfo.Status == ProcessStatus.Running");
+#endif
+
+                switch(targetActionExecutionStatus)
+                {
+                    case ActionExecutionStatus.Complete:
+                        currentProcessInfo.Status = ProcessStatus.Completed;
+                        break;
+
+                    case ActionExecutionStatus.Broken:
+                    case ActionExecutionStatus.Faulted:
+                        currentProcessInfo.Status = ProcessStatus.Faulted;
+                        break;
+                        
+                    case ActionExecutionStatus.Canceled:
+                    default:
+                        currentProcessInfo.Status = ProcessStatus.Canceled;
+                        break;
                 }
             }
 

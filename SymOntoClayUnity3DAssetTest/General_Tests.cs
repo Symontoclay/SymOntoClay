@@ -40,9 +40,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     {
         'Begin' >> @>log;
         'End' >> @>log;
-        }
     }
-";
+}";
 
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) => {

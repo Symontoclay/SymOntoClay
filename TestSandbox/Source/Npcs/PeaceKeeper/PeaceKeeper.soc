@@ -10,4 +10,10 @@
         'Begin go()' >> @>log;
         'End go()' >> @>log;
     }
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        'End' >> @>log;
+    }
 }

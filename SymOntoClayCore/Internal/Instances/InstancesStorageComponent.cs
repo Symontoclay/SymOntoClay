@@ -334,9 +334,11 @@ namespace SymOntoClay.Core.Internal.Instances
             return _processesInfoByDevicesDict.Count + _processesInfoList.Count; 
         }
 
-        public event Action OnIdle;
+        /// <inheritdoc/>
+        public override event Action OnIdle;
 
-        public int GetCountOfCurrentProcesses()
+        /// <inheritdoc/>
+        public override int GetCountOfCurrentProcesses()
         {
             lock (_processLockObj)
             {

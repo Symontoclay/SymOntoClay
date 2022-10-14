@@ -126,6 +126,15 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
+        public virtual event Action OnIdle;
+
+        /// <inheritdoc/>
+        public virtual int GetCountOfCurrentProcesses()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public virtual void ActivateState(StateDef state)
         {
             throw new NotImplementedException();

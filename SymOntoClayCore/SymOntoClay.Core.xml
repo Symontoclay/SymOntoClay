@@ -5723,6 +5723,12 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.AppendAndTryStartProcessInfo(SymOntoClay.Core.IProcessInfo)">
             <inheritdoc/>
         </member>
+        <member name="E:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.OnIdle">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.GetCountOfCurrentProcesses">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.ActivateState(SymOntoClay.Core.Internal.CodeModel.StateDef)">
             <inheritdoc/>
         </member>
@@ -5826,6 +5832,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.AppendAndTryStartProcessInfo(SymOntoClay.Core.IProcessInfo)">
+            <inheritdoc/>
+        </member>
+        <member name="E:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.OnIdle">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.GetCountOfCurrentProcesses">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.PrintProcessesList">

@@ -310,6 +310,38 @@ namespace SymOntoClay.Core.Internal.Instances
 #if DEBUG
             Log($"Begin");
 #endif
+
+            var count = NGetCountOfCurrentProcesses();
+
+#if DEBUG
+            Log($"count = {count}");
+#endif
+
+            if(count == 0)
+            {
+                try
+                {
+                    OnIdle?.Invoke();
+                }
+                catch
+                {
+                }
+            }
+        }
+
+        private int NGetCountOfCurrentProcesses()
+        {
+            return _processesInfoByDevicesDict.Count + _processesInfoList.Count; 
+        }
+
+        public event Action OnIdle;
+
+        public int GetCountOfCurrentProcesses()
+        {
+            lock (_processLockObj)
+            {
+                return NGetCountOfCurrentProcesses();
+            }
         }
 
         private List<IProcessInfo> NGetConcurrentProcessesInfo(IProcessInfo processInfo)

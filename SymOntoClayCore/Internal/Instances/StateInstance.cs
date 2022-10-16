@@ -31,7 +31,7 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class StateInstance : BaseInstance
+    public class StateInstance : BaseIndependentInstance
     {
         public StateInstance(StateDef codeItem, IEngineContext context, IStorage parentStorage, List<Var> varList)
             : base(codeItem, context, parentStorage, new StateStorageFactory(), varList)

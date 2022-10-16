@@ -113,5 +113,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         LogicalValueModalityResolver GetLogicalValueModalityResolver();
 
         SynonymsResolver GetSynonymsResolver();
+
+        IdleActionsResolver GetIdleActionsResolver();
     }
 }

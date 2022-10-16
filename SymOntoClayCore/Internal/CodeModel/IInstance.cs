@@ -34,11 +34,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         KindOfInstance KindOfInstance { get; }
         StrongIdentifierValue Name { get; }
+        float Priority { get; }
         IExecutionCoordinator ExecutionCoordinator { get; }
         void CancelExecution();
         void AddChildInstance(IInstance instance);
         void RemoveChildInstance(IInstance instance);
         void SetParent(IInstance instance);
         void ResetParent(IInstance instance);
+        IList<IInstance> GetTopIndependentInstances();
+        bool ActivateIdleAction();
     }
 }

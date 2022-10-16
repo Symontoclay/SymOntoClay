@@ -61,7 +61,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var usedStorages = new List<IStorage>();
 
             storage.CollectChainOfStorages(result, usedStorages, n, options);
-
+            
             return result;
         }
 

@@ -87,6 +87,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private SynonymsResolver _synonymsResolver;
         private readonly object _synonymsResolverLockObj = new object();
 
+        private IdleActionsResolver _idleActionsResolver;
+        private readonly object _idleActionsResolverLockObj = new object();
+
         /// <inheritdoc/>
         public ChannelsResolver GetChannelsResolver()
         {
@@ -322,6 +325,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 return _synonymsResolver;
+            }
+        }
+
+        /// <inheritdoc/>
+        public IdleActionsResolver GetIdleActionsResolver()
+        {
+            lock(_idleActionsResolverLockObj)
+            {
+                if(_idleActionsResolver == null)
+                {
+                    _idleActionsResolver = new IdleActionsResolver(_context);
+                }
+
+                return _idleActionsResolver;
             }
         }
     }

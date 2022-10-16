@@ -35,7 +35,7 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class AppInstance : BaseInstance
+    public class AppInstance : BaseIndependentInstance
     {
         public AppInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage)
             : base(codeItem, context, parentStorage, new ObjectStorageFactory(), null)
@@ -49,6 +49,22 @@ namespace SymOntoClay.Core.Internal.Instances
         private StatesResolver _statesResolver;
 
         private StrongIdentifierValue _stateNameForAutomaticStart;
+
+        /// <inheritdoc/>
+        public override IList<IInstance> GetTopIndependentInstances()
+        {
+            var result = new List<IInstance>() { this };
+
+            lock(_stateLockObj)
+            {
+                if(_activeStatesDict.Any())
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            return result;
+        }
 
         /// <inheritdoc/>
         protected override void ApplyCodeDirectives()

@@ -85,6 +85,9 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public StrongIdentifierValue Name { get; private set; }
 
+        /// <inheritdoc/>
+        public virtual float Priority => 0f;
+
         protected readonly IEngineContext _context;
         private readonly ITriggersStorage _globalTriggersStorage;
         protected readonly IStorage _storage;
@@ -192,6 +195,18 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
             _instanceState = InstanceState.Initialized;            
+        }
+
+        /// <inheritdoc/>
+        public virtual IList<IInstance> GetTopIndependentInstances()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public virtual bool ActivateIdleAction()
+        {
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>

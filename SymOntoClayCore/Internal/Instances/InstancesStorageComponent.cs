@@ -173,6 +173,12 @@ namespace SymOntoClay.Core.Internal.Instances
             Log($"rawListOfTopIndependentInstances = {rawListOfTopIndependentInstances.WriteListToString()}");
 #endif
 
+            if(rawListOfTopIndependentInstances.Count == 1)
+            {
+                rawListOfTopIndependentInstances.First().ActivateIdleAction();
+                return;
+            }
+
             throw new NotImplementedException();
         }
 

@@ -39,6 +39,8 @@ namespace SymOntoClay.Core.Internal.Instances
             : base(context)
         {
             _context = context;
+
+            OnIdle += DispatchOnIdle;
         }
 
         private readonly IEngineContext _context;
@@ -117,7 +119,61 @@ namespace SymOntoClay.Core.Internal.Instances
 #if DEBUG
             //Log($"instanceInfo = {instanceInfo}");
 #endif
+
             instanceInfo.Init();
+
+            Task.Run(() => {
+                try
+                {
+                    Thread.Sleep(100);
+
+                    DispatchIdleActions();
+                }
+                catch (Exception e)
+                {
+                    Error(e);
+                }
+            });
+        }
+
+        private void DispatchOnIdle()
+        {
+            Task.Run(() => {
+                try
+                {
+                    DispatchIdleActions();
+                }
+                catch (Exception e)
+                {
+                    Error(e);
+                }
+            });
+        }
+
+        private void DispatchIdleActions()
+        {
+#if DEBUG
+            Log("Begin");
+#endif
+
+            var count = GetCountOfCurrentProcesses();
+
+#if DEBUG
+            Log($"count = {count}");
+#endif
+
+            if(count > 0)
+            {
+                return;
+            }
+
+            var rawListOfTopIndependentInstances = _rootInstanceInfo.GetTopIndependentInstances();
+
+#if DEBUG
+            Log($"rawListOfTopIndependentInstances = {rawListOfTopIndependentInstances.WriteListToString()}");
+#endif
+
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>

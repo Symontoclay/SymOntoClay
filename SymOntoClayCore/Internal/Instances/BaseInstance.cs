@@ -191,8 +191,6 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
             }
 
-            TryRunOneIdleAction();
-
             _instanceState = InstanceState.Initialized;            
         }
 
@@ -374,10 +372,6 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         protected virtual void RunDeactivatorsOfStates()
-        {
-        }
-
-        protected virtual void TryRunOneIdleAction()
         {
         }
 

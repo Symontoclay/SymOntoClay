@@ -52,13 +52,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
-            Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
+            //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
 #endif
 
             var rawList = GetRawIdleActionItemList(storagesList, weightedInheritanceItems);
 
 #if DEBUG
-            Log($"rawList = {rawList.WriteListToString()}");
+            //Log($"rawList = {rawList.WriteListToString()}");
 #endif
 
             if (!rawList.Any())
@@ -69,7 +69,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var filteredList = FilterCodeItems(rawList, localCodeExecutionContext);
 
 #if DEBUG
-            Log($"filteredList = {filteredList.WriteListToString()}");
+            //Log($"filteredList = {filteredList.WriteListToString()}");
 #endif
 
             return filteredList.Select(p => p.ResultItem).ToList();

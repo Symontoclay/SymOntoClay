@@ -12,6 +12,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class IdleActionItem : CodeItem
     {
+        public IdleActionItem()
+        {
+            TypeOfAccess = TypeOfAccess.Public;
+        }
+
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.IdleActionItem;
 

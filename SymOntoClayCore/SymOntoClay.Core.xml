@@ -7163,7 +7163,13 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.EmptyIdleActionItemsStorage.Append(SymOntoClay.Core.Internal.CodeModel.IdleActionItem)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.EmptyIdleActionItemsStorage.GetIdleActionsDirectly(System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.IdleActionItemsStorage.Append(SymOntoClay.Core.Internal.CodeModel.IdleActionItem)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.IdleActionItemsStorage.GetIdleActionsDirectly(System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritancePublicFactsReplicator.ProcessChangeInheritance(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">

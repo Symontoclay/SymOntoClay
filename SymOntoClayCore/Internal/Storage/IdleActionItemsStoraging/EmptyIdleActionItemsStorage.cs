@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,12 @@ namespace SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging
         /// <inheritdoc/>
         public void Append(IdleActionItem item)
         {
+        }
+
+        /// <inheritdoc/>
+        public IList<WeightedInheritanceResultItem<IdleActionItem>> GetIdleActionsDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+            return new List<WeightedInheritanceResultItem<IdleActionItem>>();
         }
     }
 }

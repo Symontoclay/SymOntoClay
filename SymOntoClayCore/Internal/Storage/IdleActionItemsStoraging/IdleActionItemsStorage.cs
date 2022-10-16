@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -45,6 +46,36 @@ namespace SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging
                 {
                     _itemsDict[holder] = new List<IdleActionItem>() { item };
                 }
+            }
+        }
+
+        /// <inheritdoc/>
+        public IList<WeightedInheritanceResultItem<IdleActionItem>> GetIdleActionsDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+            lock(_lockObj)
+            {
+                var result = new List<WeightedInheritanceResultItem<IdleActionItem>>();
+
+                foreach (var weightedInheritanceItem in weightedInheritanceItems)
+                {
+                    var targetHolder = weightedInheritanceItem.SuperName;
+
+#if DEBUG
+                    //Log($"targetHolder = {targetHolder}");
+#endif
+
+                    if(_itemsDict.ContainsKey(targetHolder))
+                    {
+                        var targetList = _itemsDict[targetHolder];
+
+                        foreach(var targetVal in targetList)
+                        {
+                            result.Add(new WeightedInheritanceResultItem<IdleActionItem>(targetVal, weightedInheritanceItem));
+                        }
+                    }
+                }
+
+                return result;
             }
         }
     }

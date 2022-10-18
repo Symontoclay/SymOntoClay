@@ -153,13 +153,13 @@ namespace SymOntoClay.Core.Internal.Instances
         private void DispatchIdleActions()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             var count = GetCountOfCurrentProcesses();
 
 #if DEBUG
-            Log($"count = {count}");
+            //Log($"count = {count}");
 #endif
 
             if(count > 0)
@@ -170,7 +170,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var rawListOfTopIndependentInstances = _rootInstanceInfo.GetTopIndependentInstances();
 
 #if DEBUG
-            Log($"rawListOfTopIndependentInstances = {rawListOfTopIndependentInstances.WriteListToString()}");
+            //Log($"rawListOfTopIndependentInstances = {rawListOfTopIndependentInstances.WriteListToString()}");
 #endif
 
             if(rawListOfTopIndependentInstances.Count == 1)
@@ -370,13 +370,13 @@ namespace SymOntoClay.Core.Internal.Instances
         private void CheckCountOfActiveProcesses()
         {
 #if DEBUG
-            Log($"Begin");
+            //Log($"Begin");
 #endif
 
             var count = NGetCountOfCurrentProcesses();
 
 #if DEBUG
-            Log($"count = {count}");
+            //Log($"count = {count}");
 #endif
 
             if(count == 0)

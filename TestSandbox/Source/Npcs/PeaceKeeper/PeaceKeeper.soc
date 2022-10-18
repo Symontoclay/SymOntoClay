@@ -8,6 +8,9 @@
     fun go()
     {
         'Begin go()' >> @>log;
+
+        wait 1000;
+
         'End go()' >> @>log;
     }
 

@@ -37,6 +37,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         TryStatement,
         CatchStatement,
         AwaitStatement,
+        WaitStatement,
         CompleteStatement,
         BreakStatement,
         ReturnStatement,

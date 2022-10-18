@@ -65,6 +65,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Ensure,
         Where,
         Await,
+        Wait,
         Complete,
         Break,
         Alias,

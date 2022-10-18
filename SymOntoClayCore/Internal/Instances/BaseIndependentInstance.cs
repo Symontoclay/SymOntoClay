@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.CodeModel;
+﻿using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
@@ -24,13 +25,13 @@ namespace SymOntoClay.Core.Internal.Instances
         public override bool ActivateIdleAction()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             var idleActionsList = _idleActionsResolver.Resolve(_localCodeExecutionContext);
 
 #if DEBUG
-            Log($"idleActionsList = {idleActionsList.WriteListToString()}");
+            //Log($"idleActionsList = {idleActionsList.WriteListToString()}");
 #endif
 
             if(idleActionsList.IsNullOrEmpty())
@@ -51,10 +52,28 @@ namespace SymOntoClay.Core.Internal.Instances
         private void ActivateIdleAction(IdleActionItem idleActionItem)
         {
 #if DEBUG
-            Log($"idleActionItem = {idleActionItem}");
+            //Log($"idleActionItem = {idleActionItem}");
 #endif
 
-            throw new NotImplementedException();
+            var localCodeExecutionContext = new LocalCodeExecutionContext();
+
+            var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
+            localCodeExecutionContext.Storage = new LocalStorage(localStorageSettings);
+
+            localCodeExecutionContext.Holder = Name;
+
+            var processInitialInfo = new ProcessInitialInfo();
+            processInitialInfo.CompiledFunctionBody = idleActionItem.CompiledFunctionBody;
+            processInitialInfo.LocalContext = localCodeExecutionContext;
+            processInitialInfo.Metadata = idleActionItem;
+            processInitialInfo.Instance = this;
+            processInitialInfo.ExecutionCoordinator = _executionCoordinator;
+
+            var taskValue = _context.CodeExecutor.ExecuteAsync(processInitialInfo);
+
+#if DEBUG
+            //Log($"taskValue = {taskValue}");
+#endif
         }
     }
 }

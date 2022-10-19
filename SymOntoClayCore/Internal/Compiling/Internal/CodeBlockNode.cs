@@ -96,6 +96,14 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         }
                         break;
 
+                    case KindOfAstStatement.WaitStatement:
+                        {
+                            var node = new AstWaitStatementNode(_context);
+                            node.Run(statement as AstWaitStatement);
+                            AddCommands(node.Result);
+                        }
+                        break;
+
                     case KindOfAstStatement.CompleteStatement:
                         {
                             var node = new AstCompleteStatementNode(_context);

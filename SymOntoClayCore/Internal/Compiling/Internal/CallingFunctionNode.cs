@@ -49,7 +49,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 #if DEBUG
             //Log($"expression = {expression}");
 #endif
-
+            
             var kindOfParameters = KindOfParameters.NoParameters;
 
             var command = new IntermediateScriptCommand();

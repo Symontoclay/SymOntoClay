@@ -225,6 +225,9 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.AsyncCall_P:
                     return $"{spaces}{OperationCode} {CountParams}";
 
+                case OperationCode.Wait:
+                    return $"{spaces}{OperationCode} {CountParams}";
+
                 case OperationCode.SetSEHGroup:
                 case OperationCode.JumpTo:
                 case OperationCode.JumpToIfTrue:

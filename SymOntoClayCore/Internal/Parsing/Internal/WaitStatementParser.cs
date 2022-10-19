@@ -11,7 +11,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private enum State
         {
             Init,
-            GotWaitMark
+            GotWaitMark,
+            GotItem,
+            WaitForItem
         }
 
         public WaitStatementParser(InternalParserContext context)
@@ -44,8 +46,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_currToken = {_currToken}");
+            //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
 #endif
 
             switch (_state)
@@ -70,9 +72,64 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
+                    case State.GotWaitMark:
+                        switch (_currToken.TokenKind)
+                        {
+                            case TokenKind.Number:
+                                ProcessExpresionItem();
+                                break;
+
+                            default:
+                                throw new UnexpectedTokenException(_currToken);
+                        }
+                        break;
+
+                case State.GotItem:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Comma:
+                            _state = State.WaitForItem;
+                            break;
+
+                        case TokenKind.Semicolon:
+                            Exit();
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForItem:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Number:
+                            ProcessExpresionItem();
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
+        }
+
+        private void ProcessExpresionItem()
+        {
+            _context.Recovery(_currToken);
+            var parser = new CodeExpressionStatementParser(_context, TokenKind.Comma, TokenKind.Semicolon);
+            parser.Run();
+
+#if DEBUG
+            //Log($"parser.Result = {parser.Result}");
+#endif
+
+            _rawStatement.Items.Add(parser.Result.Expression);
+
+            _state = State.GotItem;
         }
     }
 }

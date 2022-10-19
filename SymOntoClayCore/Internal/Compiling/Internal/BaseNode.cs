@@ -206,6 +206,9 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case OperationCode.AsyncCall_P:
                     return $"{operationCode} {commandItem.CountParams}";
 
+                case OperationCode.Wait:
+                    return $"{operationCode} {commandItem.CountParams}";
+
                 case OperationCode.SetSEHGroup:
                 case OperationCode.JumpTo:
                 case OperationCode.JumpToIfTrue:

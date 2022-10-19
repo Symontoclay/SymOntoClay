@@ -75,6 +75,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         /// </summary>
         JumpToIfFalse,
         Await,
+        Wait,
         CompleteAction,
         CompleteActionVal,
         BreakAction,

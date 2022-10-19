@@ -9,7 +9,7 @@
     {
         'Begin go()' >> @>log;
 
-        wait 1000;
+        wait 10000;
 
         'End go()' >> @>log;
     }

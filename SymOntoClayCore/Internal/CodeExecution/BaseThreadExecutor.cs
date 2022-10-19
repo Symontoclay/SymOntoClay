@@ -39,6 +39,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
@@ -71,6 +72,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _statesResolver = dataResolversFactory.GetStatesResolver();
 
             _converterFactToImperativeCode = context.ConvertersFactory.GetConverterFactToImperativeCode();
+            _dateTimeProvider = context.DateTimeProvider;
         }
 
         private readonly IEngineContext _context;
@@ -90,6 +92,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly StatesResolver _statesResolver;
 
         private readonly ConverterFactToImperativeCode _converterFactToImperativeCode;
+        private readonly IDateTimeProvider _dateTimeProvider;
 
         private Stack<CodeFrame> _codeFrames = new Stack<CodeFrame>();
         private CodeFrame _currentCodeFrame;
@@ -100,6 +103,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private ErrorValue _currentError;
         private bool _isCanceled;
+
+        private long? _endOfTargetTimeout;
 
         public Value ExternalReturn { get; private set; }
 
@@ -554,6 +559,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         }
                         break;
 
+                    case OperationCode.Wait:
+                        Wait(currentCommand);
+                        break;
+
                     case OperationCode.CompleteAction:
                         {
                             _currentCodeFrame.ExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
@@ -814,6 +823,90 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #endif
 
             return ValueResolvingHelper.TryResolveFromVar(operand, _currentCodeFrame.LocalContext, _varsResolver);
+        }
+
+        private void Wait(ScriptCommand currentCommand)
+        {
+#if DEBUG
+            //Log($"_endOfTargetTimeout = {_endOfTargetTimeout}");
+#endif
+            
+            if(_endOfTargetTimeout.HasValue)
+            {
+                var currentTick = _dateTimeProvider.CurrentTiks;
+
+#if DEBUG
+                //Log($"currentTick = {currentTick}");
+#endif
+
+                var currentMilisecond = currentTick * _dateTimeProvider.MillisecondsMultiplicator;
+
+#if DEBUG
+                //Log($"currentMilisecond = {currentMilisecond}");
+#endif
+
+                if(currentMilisecond >= _endOfTargetTimeout.Value)
+                {
+                    _endOfTargetTimeout = null;
+                    _currentCodeFrame.CurrentPosition++;
+                    return;
+                }
+
+                return;
+            }
+
+            var annotation = _currentCodeFrame.ValuesStack.Pop();
+
+            var positionedParameters = TakePositionedParameters(currentCommand.CountParams, true);
+
+#if DEBUG
+            //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+#endif
+
+            if (positionedParameters.Count == 1)
+            {
+                var firstParameter = positionedParameters[0];
+
+#if DEBUG
+                //Log($"firstParameter = {firstParameter}");
+#endif
+                if (firstParameter.KindOfValue != KindOfValue.TaskValue)
+                {
+#if DEBUG
+                    //Log($"firstParameter = {firstParameter}");
+#endif
+
+                    var timeoutNumVal = _numberValueLinearResolver.Resolve(firstParameter, _currentCodeFrame.LocalContext);
+
+#if DEBUG
+                    //Log($"timeoutNumVal = {timeoutNumVal}");
+#endif
+
+                    var timeoutSystemVal = timeoutNumVal.SystemValue.Value;
+
+#if DEBUG
+                    //Log($"timeoutSystemVal = {timeoutSystemVal}");
+#endif
+
+                    var currentTick = _dateTimeProvider.CurrentTiks;
+
+#if DEBUG
+                    //Log($"currentTick = {currentTick}");
+#endif
+
+                    var currentMilisecond = currentTick * _dateTimeProvider.MillisecondsMultiplicator;
+
+#if DEBUG
+                    //Log($"currentMilisecond = {currentMilisecond}");
+#endif
+
+                    _endOfTargetTimeout = Convert.ToInt32(currentMilisecond + timeoutSystemVal);
+
+                    return;
+                }
+            }
+
+            throw new NotImplementedException();
         }
 
         private void JumpToIf(float targetValue, int targetPosition)

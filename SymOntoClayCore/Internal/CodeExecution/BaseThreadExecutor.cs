@@ -1268,7 +1268,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var annotation = valueStack.Pop();
 
 #if DEBUG
-            //Log($"annotation = {annotation}");
+            Log($"annotation = {annotation}");
             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 

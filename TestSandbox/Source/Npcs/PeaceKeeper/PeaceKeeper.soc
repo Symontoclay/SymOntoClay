@@ -2,17 +2,37 @@
 {
     idle actions
     {
-        go();
+        go()[: timeout=100 :];
+        //go1();
+        //go2();
     }
 
     fun go()
     {
         'Begin go()' >> @>log;
 
-        wait 10000;
+        wait 1000;
 
         'End go()' >> @>log;
     }
+
+    //fun go1()
+    //{
+    //    'Begin go1()' >> @>log;
+
+    //    wait 1000;
+
+    //    'End go1()' >> @>log;
+    //}
+
+    //fun go2()
+    //{
+    //    'Begin go2()' >> @>log;
+
+    //    wait 1000;
+
+    //    'End go2()' >> @>log;
+    //}
 
     on Enter =>
     {

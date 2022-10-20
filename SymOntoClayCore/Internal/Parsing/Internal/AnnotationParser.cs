@@ -33,6 +33,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             Init,
             WaitForItem,
+            GotSettingsKey,
+            WaitForSettingsValue,
             GotItem
         }
 
@@ -43,11 +45,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private State _state = State.Init;
         public Annotation Result { get; private set; } = new Annotation();
+        private StrongIdentifierValue _settingsKey;
 
         /// <inheritdoc/>
         protected override void OnFinish()
         {
             Result.CheckDirty();
+
+#if DEBUG
+            //Log($"Result = {Result}");
+#endif
         }
 
         /// <inheritdoc/>
@@ -56,7 +63,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #if DEBUG
             //Log($"_state = {_state}");
             //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result.WriteListToString()}");            
+            //Log($"Result = {Result}");
 #endif
 
             switch (_state)
@@ -79,6 +86,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Word:
                         case TokenKind.Identifier:
                             {
+                                var nextToken = _context.GetToken();
+                                _context.Recovery(nextToken);
+
+#if DEBUG
+                                //Log($"nextToken = {nextToken}");
+#endif
+
+                                if(nextToken.TokenKind == TokenKind.Assign)
+                                {
+                                    _settingsKey = ParseName(_currToken.Content);
+                                    _state = State.GotSettingsKey;
+                                    break;
+                                }
+
                                 Result.MeaningRolesList.Add(ParseName(_currToken.Content));
 
                                 _state = State.GotItem;
@@ -87,6 +108,33 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         default:
                             throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotSettingsKey:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Assign:
+                            _state = State.WaitForSettingsValue;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForSettingsValue:
+                    {
+                        var parsingResult = ParseValueOnObjDefLevel();
+
+#if DEBUG
+                        //Log($"parsingResult = {parsingResult}");
+#endif
+
+                        Result.SettingsDict[_settingsKey] = parsingResult.Value;
+                        _settingsKey = null;
+
+                        _state = State.GotItem;
                     }
                     break;
 

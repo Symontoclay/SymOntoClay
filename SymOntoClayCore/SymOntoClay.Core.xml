@@ -677,6 +677,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionPtr.Annotations">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.AddAnnotation(SymOntoClay.Core.Internal.CodeModel.Annotation)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
@@ -783,6 +786,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.Annotations">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.AddAnnotation(SymOntoClay.Core.Internal.CodeModel.Annotation)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.CloneAnnotatedItem">
@@ -896,6 +902,12 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.AsAnnotationValue">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.Annotations">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.AddAnnotation(SymOntoClay.Core.Internal.CodeModel.Annotation)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.GetSystemValue">
@@ -2477,6 +2489,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.FunctionValue.Annotations">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.AddAnnotation(SymOntoClay.Core.Internal.CodeModel.Annotation)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.GetLongConditionalHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
             <inheritdoc/>
         </member>
@@ -4039,6 +4054,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.Annotations">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.AddAnnotation(SymOntoClay.Core.Internal.CodeModel.Annotation)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstanceValue.BuiltInSuperTypes">

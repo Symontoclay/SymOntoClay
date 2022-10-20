@@ -28,6 +28,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static System.Collections.Specialized.BitVector32;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
@@ -55,6 +56,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         public override IList<Annotation> Annotations { get => RuleInstance.Annotations; set => RuleInstance.Annotations = value; }
+
+        /// <inheritdoc/>
+        public override void AddAnnotation(Annotation annotation)
+        {
+            RuleInstance.AddAnnotation(annotation);
+        }
 
         private List<StrongIdentifierValue> _builtInSuperTypes;
 

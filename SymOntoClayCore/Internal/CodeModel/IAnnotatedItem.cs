@@ -29,5 +29,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public interface IAnnotatedItem
     {
         IList<Annotation> Annotations { get; }
+        void AddAnnotation(Annotation annotation);
     }
 }

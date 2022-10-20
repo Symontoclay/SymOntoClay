@@ -33,6 +33,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         public List<RuleInstance> Facts { get; set; } = new List<RuleInstance>();
         public List<StrongIdentifierValue> MeaningRolesList { get; set; } = new List<StrongIdentifierValue>();
+        public Dictionary<StrongIdentifierValue, Value> SettingsDict { get; set; } = new Dictionary<StrongIdentifierValue, Value>();
 
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
@@ -47,7 +48,24 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 }
             }
 
-            return 0u;
+            if(!MeaningRolesList.IsNullOrEmpty())
+            {
+                foreach(var item in MeaningRolesList)
+                {
+                    result ^= item.GetLongHashCode();
+                }
+            }
+
+            if(!SettingsDict.IsNullOrEmpty())
+            {
+                foreach(var item in SettingsDict)
+                {
+                    result ^= item.Key.GetLongHashCode();
+                    result ^= item.Value.GetLongHashCode();
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -71,21 +89,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 return (Annotation)context[this];
             }
-
+            
             var result = new Annotation();
             context[this] = result;
 
             result.Facts = Facts?.Select(p => p.Clone(context)).ToList();
             result.MeaningRolesList = MeaningRolesList?.Select(p => p.Clone(context)).ToList();
-
-            //result.IsSource = IsSource;
-            //result.KindOfRuleInstance = KindOfRuleInstance;
-            //result.PrimaryPart = PrimaryPart.Clone(context);
-            //result.SecondaryParts = SecondaryParts?.Select(p => p.Clone(context)).ToList();
-            //result.IsParameterized = IsParameterized;
-            //result.UsedKeysList = UsedKeysList?.ToList();
-
-            //result.AppendCodeItem(this, context);
+            SettingsDict = SettingsDict?.ToDictionary(p => p.Key.Clone(context), p => p.Value.CloneValue(context));
 
             return result;
         }
@@ -115,6 +125,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintObjListProp(n, nameof(Facts), Facts);
             sb.PrintObjListProp(n, nameof(MeaningRolesList), MeaningRolesList);
+            sb.PrintObjDict_1_Prop(n, nameof(SettingsDict), SettingsDict);
 
             return sb.ToString();
         }
@@ -139,6 +150,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintShortObjListProp(n, nameof(Facts), Facts);
             sb.PrintShortObjListProp(n, nameof(MeaningRolesList), MeaningRolesList);
+            sb.PrintShortObjDict_1_Prop(n, nameof(SettingsDict), SettingsDict);
 
             return sb.ToString();
         }
@@ -163,6 +175,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintBriefObjListProp(n, nameof(Facts), Facts);
             sb.PrintBriefObjListProp(n, nameof(MeaningRolesList), MeaningRolesList);
+            sb.PrintBriefObjDict_1_Prop(n, nameof(SettingsDict), SettingsDict);
 
             return sb.ToString();
         }

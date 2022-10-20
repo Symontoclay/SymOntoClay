@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging
                 {
                     var targetList = _itemsDict[holder];
 
-                    StorageHelper.RemoveSameItems(targetList, item);
+                    //StorageHelper.RemoveSameItems(targetList, item);
 
                     targetList.Add(item);
                 }

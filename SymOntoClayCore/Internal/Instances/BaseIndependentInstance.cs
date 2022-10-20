@@ -17,24 +17,27 @@ namespace SymOntoClay.Core.Internal.Instances
             : base(codeItem, context, parentStorage, new StateStorageFactory(), varList)
         {
             _idleActionsResolver = context.DataResolversFactory.GetIdleActionsResolver();
+            _idleActionsRandom = new Random();
         }
 
         private readonly IdleActionsResolver _idleActionsResolver;
+        private readonly Random _idleActionsRandom;
 
         /// <inheritdoc/>
         public override bool ActivateIdleAction()
         {
 #if DEBUG
-            //Log("Begin");
+            Log("Begin");
 #endif
 
             var idleActionsList = _idleActionsResolver.Resolve(_localCodeExecutionContext);
 
 #if DEBUG
+            Log($"idleActionsList.Count = {idleActionsList.Count}");
             //Log($"idleActionsList = {idleActionsList.WriteListToString()}");
 #endif
 
-            if(idleActionsList.IsNullOrEmpty())
+            if (idleActionsList.IsNullOrEmpty())
             {
                 return false;
             }
@@ -46,7 +49,15 @@ namespace SymOntoClay.Core.Internal.Instances
                 return true;
             }
 
-            throw new NotImplementedException();
+            var index = _idleActionsRandom.Next(0, idleActionsList.Count - 1);
+
+#if DEBUG
+            Log($"index = {index}");
+#endif
+
+            ActivateIdleAction(idleActionsList[index]);
+
+            return true;
         }
 
         private void ActivateIdleAction(IdleActionItem idleActionItem)

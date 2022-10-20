@@ -30,6 +30,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static System.Collections.Specialized.BitVector32;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
@@ -98,6 +99,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         public override IList<Annotation> Annotations { get => Function.Annotations; set => Function.Annotations = value; }
+
+        /// <inheritdoc/>
+        public override void AddAnnotation(Annotation annotation)
+        {
+            Function.AddAnnotation(annotation);
+        }
 
         /// <inheritdoc/>
         public override ulong GetLongConditionalHashCode(CheckDirtyOptions options)

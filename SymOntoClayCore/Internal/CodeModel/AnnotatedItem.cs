@@ -90,6 +90,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public virtual IList<Annotation> Annotations { get; set; }
 
+        /// <inheritdoc/>
+        public virtual void AddAnnotation(Annotation annotation)
+        {
+            if(Annotations == null)
+            {
+                Annotations = new List<Annotation>();
+            }
+
+            Annotations.Add(annotation);
+        }
+
         /// <summary>
         /// Clones the instance and returns cloned instance.
         /// </summary>

@@ -48,6 +48,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
 
         private IAstNode _astNode;
 
+        public IAstNode AstNode => _astNode;
+
         public IntermediateAstNode Parent { get; set; }
         public IntermediateAstNode Left { get; set; }
         public IntermediateAstNode Right { get; set; }

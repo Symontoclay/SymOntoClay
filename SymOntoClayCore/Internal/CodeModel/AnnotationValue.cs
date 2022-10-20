@@ -44,6 +44,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override AnnotationValue AsAnnotationValue => this;
 
         /// <inheritdoc/>
+        public override IList<Annotation> Annotations { get => AnnotatedItem.Annotations; set => AnnotatedItem.Annotations = value; }
+
+        /// <inheritdoc/>
+        public override void AddAnnotation(Annotation annotation)
+        {
+            AnnotatedItem.AddAnnotation(annotation);
+        }
+
+        /// <inheritdoc/>
         public override object GetSystemValue()
         {
             return AnnotatedItem;

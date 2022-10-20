@@ -173,9 +173,47 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     throw new UnexpectedTokenException(_currToken);
 
+                case TokenKind.OpenAnnotationBracket:
+                    ProcessAnnotation();
+                    break;
+
                 default:
                     throw new UnexpectedTokenException(_currToken);
             }
+        }
+
+        private void ProcessAnnotation()
+        {
+#if DEBUG
+            //Log($"_nodePoint = {_nodePoint}");
+#endif
+
+            _context.Recovery(_currToken);
+
+            var parser = new AnnotationParser(_context);
+            parser.Run();
+
+#if DEBUG
+            //Log($"parser.Result = {parser.Result}");
+#endif
+
+            var currentAstNode = _nodePoint.CurrentNode.AstNode;
+
+#if DEBUG
+            //Log($"currentAstNode = {currentAstNode}");
+#endif
+
+            var annotatedItem = (AnnotatedItem)currentAstNode;
+
+#if DEBUG
+            //Log($"annotatedItem = {annotatedItem}");
+#endif
+
+            annotatedItem.AddAnnotation(parser.Result);
+
+#if DEBUG
+            //Log($"annotatedItem (after) = {annotatedItem}");
+#endif
         }
 
         private void ProcessRuleOrFact()

@@ -123,6 +123,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.CloseRoundBracket:
                         case TokenKind.OpenRoundBracket:
                         case TokenKind.CloseFactBracket:
+                        case TokenKind.CloseAnnotationBracket:
                         case TokenKind.Plus:
                         case TokenKind.Minus:
                         case TokenKind.Multiplication:
@@ -184,6 +185,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.OpenRoundBracket:
                         case TokenKind.CloseFactBracket:
                         case TokenKind.CloseFigureBracket:
+                        case TokenKind.CloseAnnotationBracket:
                         case TokenKind.Plus:
                         case TokenKind.Minus:
                         case TokenKind.Multiplication:

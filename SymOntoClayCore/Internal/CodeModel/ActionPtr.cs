@@ -104,6 +104,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        public override void AddAnnotation(Annotation annotation)
+        {
+            _action.AddAnnotation(annotation);
+        }
+
+        /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
         {
             return Clone(context);

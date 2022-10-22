@@ -107,6 +107,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        public override IList<RuleInstance> AnnotationFacts => Function.AnnotationFacts;
+
+        /// <inheritdoc/>
+        public override IList<StrongIdentifierValue> MeaningRolesList => Function.MeaningRolesList;
+
+        /// <inheritdoc/>
+        public override Value GetSettings(StrongIdentifierValue key)
+        {
+            return Function.GetSettings(key);
+        }
+
+        /// <inheritdoc/>
         public override ulong GetLongConditionalHashCode(CheckDirtyOptions options)
         {
             return Function.GetLongConditionalHashCode(options);

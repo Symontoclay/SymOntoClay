@@ -53,6 +53,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        public override IList<RuleInstance> AnnotationFacts => AnnotatedItem.AnnotationFacts;
+
+        /// <inheritdoc/>
+        public override IList<StrongIdentifierValue> MeaningRolesList => AnnotatedItem.MeaningRolesList;
+
+        /// <inheritdoc/>
+        public override Value GetSettings(StrongIdentifierValue key)
+        {
+            return AnnotatedItem.GetSettings(key);
+        }
+
+        /// <inheritdoc/>
         public override object GetSystemValue()
         {
             return AnnotatedItem;

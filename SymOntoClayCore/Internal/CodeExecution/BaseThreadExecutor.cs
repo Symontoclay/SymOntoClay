@@ -1268,7 +1268,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var annotation = valueStack.Pop();
 
 #if DEBUG
-            Log($"annotation = {annotation}");
+            //Log($"annotation = {annotation}");
             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
@@ -1309,13 +1309,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (caller.IsPointRefValue)
             {
-                CallPointRefValue(caller.AsPointRefValue, kindOfParameters, namedParameters, positionedParameters, isSync);
+                CallPointRefValue(caller.AsPointRefValue, kindOfParameters, namedParameters, positionedParameters, annotation, isSync);
                 return;
             }
 
             if(caller.IsStrongIdentifierValue)
             {
-                CallStrongIdentifierValue(caller.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, isSync, true);
+                CallStrongIdentifierValue(caller.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotation, isSync, true);
                 return;
             }
 
@@ -1324,7 +1324,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallPointRefValue(PointRefValue caller, 
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, 
-            bool isSync)
+            Value annotation, bool isSync)
         {
 #if DEBUG
             //Log($"caller.LeftOperand = {caller.LeftOperand}");
@@ -1332,7 +1332,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if(caller.LeftOperand.IsHostValue)
             {
-                CallHost(caller.RightOperand.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, isSync);
+                CallHost(caller.RightOperand.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotation, isSync);
                 return;
             }
 
@@ -1341,13 +1341,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallHost(StrongIdentifierValue methodName, 
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
-            bool isSync)
+            Value annotation, bool isSync)
         {
 #if DEBUG
             //Log($"methodName = {methodName}");
             //Log($"kindOfParameters = {kindOfParameters}");
             //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
             //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+            //Log($"annotation = {annotation}");
             //Log($"isSync = {isSync}");
 #endif
 
@@ -1373,6 +1374,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
             //Log($"command = {command}");
+#endif
+
+#if ALARM_ANNOTATION_RERACTORING
+            please add timeout from annotation
 #endif
 
             //var packedSynonymsResolver = new PackedSynonymsResolver(_context.DataResolversFactory.GetSynonymsResolver(), _currentCodeFrame.LocalContext);
@@ -1453,13 +1458,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallStrongIdentifierValue(StrongIdentifierValue methodName,
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
-            bool isSync, bool mayCallHost)
+            Value annotation, bool isSync, bool mayCallHost)
         {
 #if DEBUG
             //Log($"methodName = {methodName}");
             //Log($"kindOfParameters = {kindOfParameters}");
             //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
             //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+            //Log($"annotation = {annotation}");
             //Log($"isSync = {isSync}");
             //Log($"mayCallHost = {mayCallHost}");
 #endif
@@ -1491,14 +1497,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 if(mayCallHost)
                 {
-                    CallHost(methodName, kindOfParameters, namedParameters, positionedParameters, isSync);
+                    CallHost(methodName, kindOfParameters, namedParameters, positionedParameters, annotation, isSync);
                     return;
                 }
 
                 throw new Exception($"Method '{methodName.NameValue}' is not found.");
             }
 
-            CallExecutable(method, kindOfParameters, namedParameters, positionedParameters, isSync);
+            CallExecutable(method, kindOfParameters, namedParameters, positionedParameters, annotation, isSync);
         }
 
         private void ExecRuleInstanceValue(RuleInstanceValue ruleInstanceValue)
@@ -1525,10 +1531,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallExecutable(IExecutable executable, List<Value> positionedParameters)
         {
-            CallExecutable(executable, KindOfFunctionParameters.PositionedParameters, null, positionedParameters, true);
+            CallExecutable(executable, KindOfFunctionParameters.PositionedParameters, null, positionedParameters, null, true);
         }
 
-        private void CallExecutable(IExecutable executable, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, bool isSync)
+        private void CallExecutable(IExecutable executable, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, Value annotation, bool isSync)
         {
             if(executable == null)
             {
@@ -1538,9 +1544,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var coordinator = executable.TryActivate(_context);
 
 #if DEBUG
-            //Log($"executable.IsSystemDefined = {executable.IsSystemDefined}");
-            //Log($"coordinator != null = {coordinator != null}");
-            //Log($"isSync = {isSync}");
+            Log($"executable.IsSystemDefined = {executable.IsSystemDefined}");
+            Log($"coordinator != null = {coordinator != null}");
+            Log($"annotation = {annotation}");
+            Log($"isSync = {isSync}");
+            if(annotation != null)
+            {
+                var tmpTimeout = annotation.GetSettings(NameHelper.CreateName("timeout"));
+                Log($"tmpTimeout = {tmpTimeout}");
+            }
+#endif
+
+#if ALARM_ANNOTATION_RERACTORING
+            please add timeout from annotation
 #endif
 
             if (executable.IsSystemDefined)

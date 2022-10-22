@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper;
@@ -34,6 +35,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class AnnotatedItem : ItemWithLongHashCodes, IAnnotatedItem, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, IObjectToHumanizedString, ISymOntoClayDisposable
     {
+#if DEBUG
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         /// <summary>
         /// It is 'Clauses section' in the documentation.
         /// </summary>
@@ -85,6 +90,89 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
 
             return result;
+        }
+
+        private readonly object _annotationsLockObj = new object();
+        private int? _isAnnotationsCount;
+
+        /// <inheritdoc/>
+        public virtual IList<RuleInstance> AnnotationFacts
+        {
+            get
+            {
+                lock(_annotationsLockObj)
+                {
+                    CheckAnnotationsPrepatation();
+
+                    return _annotationFacts;
+                }                
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual IList<StrongIdentifierValue> MeaningRolesList
+        {
+            get
+            {
+                lock (_annotationsLockObj)
+                {
+                    CheckAnnotationsPrepatation();
+
+                    return _meaningRolesList;
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual Value GetSettings(StrongIdentifierValue key)
+        {
+            lock (_annotationsLockObj)
+            {
+                CheckAnnotationsPrepatation();
+
+                if(_settingsDict.ContainsKey(key))
+                {
+                    return _settingsDict[key];
+                }
+
+                return null;
+            }
+        }
+
+        private List<RuleInstance> _annotationFacts = new List<RuleInstance>();
+        private List<StrongIdentifierValue> _meaningRolesList = new List<StrongIdentifierValue>();
+        private Dictionary<StrongIdentifierValue, Value> _settingsDict = new Dictionary<StrongIdentifierValue, Value>();
+
+        private void CheckAnnotationsPrepatation()
+        {
+            if(_isAnnotationsCount.HasValue && _isAnnotationsCount.Value == Annotations.Count)
+            {
+                return;
+            }
+
+            _annotationFacts = Annotations.Where(p => !p.Facts.IsNullOrEmpty()).SelectMany(p => p.Facts).ToList();
+            _meaningRolesList = Annotations.Where(p => !p.MeaningRolesList.IsNullOrEmpty()).SelectMany(p => p.MeaningRolesList).ToList();
+
+            _settingsDict = new Dictionary<StrongIdentifierValue, Value>();
+
+#if DEBUG
+            //_gbcLogger.Info($"source = {source}");
+#endif
+
+            foreach(var annotation in Annotations)
+            {
+                var settingsDict = annotation.SettingsDict;
+
+                if(settingsDict.IsNullOrEmpty())
+                {
+                    continue;
+                }
+
+                foreach(var item in settingsDict)
+                {
+                    _settingsDict[item.Key] = item.Value;
+                }
+            }
         }
 
         /// <inheritdoc/>

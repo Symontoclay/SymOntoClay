@@ -63,6 +63,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
             RuleInstance.AddAnnotation(annotation);
         }
 
+        /// <inheritdoc/>
+        public override IList<RuleInstance> AnnotationFacts => RuleInstance.AnnotationFacts;
+
+        /// <inheritdoc/>
+        public override IList<StrongIdentifierValue> MeaningRolesList => RuleInstance.MeaningRolesList;
+
+        /// <inheritdoc/>
+        public override Value GetSettings(StrongIdentifierValue key)
+        {
+            return RuleInstance.GetSettings(key);
+        }
+
         private List<StrongIdentifierValue> _builtInSuperTypes;
 
         /// <inheritdoc/>

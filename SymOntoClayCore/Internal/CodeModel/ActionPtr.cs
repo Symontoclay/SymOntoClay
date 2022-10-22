@@ -110,6 +110,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        public override IList<RuleInstance> AnnotationFacts => _action.AnnotationFacts;
+
+        /// <inheritdoc/>
+        public override IList<StrongIdentifierValue> MeaningRolesList => _action.MeaningRolesList;
+
+        /// <inheritdoc/>
+        public override Value GetSettings(StrongIdentifierValue key)
+        {
+            return _action.GetSettings(key);
+        }
+
+        /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
         {
             return Clone(context);

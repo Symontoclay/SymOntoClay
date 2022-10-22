@@ -75,7 +75,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         return ValueConverter.ConvertNumberValueToLogicalValue(_context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(source.AsStrongIdentifierValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext, options), _context);
                     }
 
-
                 case KindOfValue.FuzzyLogicNonNumericSequenceValue:
                     {
                         ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving = null;

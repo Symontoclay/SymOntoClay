@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Converters;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -165,7 +166,33 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessFactExpression()
         {
-            throw new NotImplementedException();
+            _context.Recovery(_currToken);
+
+            var parser = new LogicalQueryParser(_context);
+            parser.Run();
+
+            var ruleInstanceItem = parser.Result;
+
+#if DEBUG
+            //Log($"ruleInstanceItem = {ruleInstanceItem}");
+            //Log($"ruleInstanceItem = {ruleInstanceItem.ToHumanizedString()}");
+#endif
+
+            _currentItem = CreateIdleActionItem();
+            Result.Add(_currentItem);
+
+            _currentItem.RuleInstance = ruleInstanceItem;
+
+            var nextToken = _context.GetToken();
+
+
+
+            if(nextToken.TokenKind != TokenKind.Semicolon)
+            {
+                _context.Recovery(nextToken);
+            }
+
+            _state = State.GotItem;
         }
     }
 }

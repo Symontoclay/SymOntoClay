@@ -71,6 +71,41 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
         [Test]
         [Parallelizable]
+        public void Case1_a()
+        {
+            var text = @"app PeaceKeeper
+{
+	on Enter => {
+	    exec {: >: { direction($x1, #@(place & color = green)) & $x1 = go(someone,self) } o: 1 :};
+	}
+
+	fun go(@direction)
+	{
+	    'go!!!!' >> @>log;
+	    @direction >> @>log;
+	}
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "go!!!!");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "#@(place & color = green)");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
         public void Case2()
         {
             var text = @"app PeaceKeeper

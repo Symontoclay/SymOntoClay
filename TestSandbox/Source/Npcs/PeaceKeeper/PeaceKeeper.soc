@@ -2,37 +2,17 @@
 {
     idle actions
     {
-        go()[: timeout=100 :];
-        //go1();
-        //go2();
+        {: >: { direction($x1,#@(place & color = green)) & $x1 = go(someone,self) } o: 1 :};
     }
 
-    fun go()
+    fun go(@direction)
     {
         'Begin go()' >> @>log;
-
+        @direction >> @>log;
         wait 1000;
 
         'End go()' >> @>log;
     }
-
-    //fun go1()
-    //{
-    //    'Begin go1()' >> @>log;
-
-    //    wait 1000;
-
-    //    'End go1()' >> @>log;
-    //}
-
-    //fun go2()
-    //{
-    //    'Begin go2()' >> @>log;
-
-    //    wait 1000;
-
-    //    'End go2()' >> @>log;
-    //}
 
     on Enter =>
     {
@@ -40,3 +20,4 @@
         'End' >> @>log;
     }
 }
+

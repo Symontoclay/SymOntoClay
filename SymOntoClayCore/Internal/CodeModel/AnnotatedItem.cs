@@ -102,7 +102,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 lock(_annotationsLockObj)
                 {
-                    CheckAnnotationsPrepatation();
+                    CheckAnnotationsPreparation();
 
                     return _annotationFacts;
                 }                
@@ -116,7 +116,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 lock (_annotationsLockObj)
                 {
-                    CheckAnnotationsPrepatation();
+                    CheckAnnotationsPreparation();
 
                     return _meaningRolesList;
                 }
@@ -128,7 +128,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             lock (_annotationsLockObj)
             {
-                CheckAnnotationsPrepatation();
+                CheckAnnotationsPreparation();
 
                 if(_settingsDict.ContainsKey(key))
                 {
@@ -143,34 +143,37 @@ namespace SymOntoClay.Core.Internal.CodeModel
         private List<StrongIdentifierValue> _meaningRolesList = new List<StrongIdentifierValue>();
         private Dictionary<StrongIdentifierValue, Value> _settingsDict = new Dictionary<StrongIdentifierValue, Value>();
 
-        private void CheckAnnotationsPrepatation()
+        private void CheckAnnotationsPreparation()
         {
             if(_isAnnotationsCount.HasValue && _isAnnotationsCount.Value == Annotations.Count)
             {
                 return;
             }
 
-            _annotationFacts = Annotations.Where(p => !p.Facts.IsNullOrEmpty()).SelectMany(p => p.Facts).ToList();
-            _meaningRolesList = Annotations.Where(p => !p.MeaningRolesList.IsNullOrEmpty()).SelectMany(p => p.MeaningRolesList).ToList();
+            if(!Annotations.IsNullOrEmpty())
+            {
+                _annotationFacts = Annotations.Where(p => !p.Facts.IsNullOrEmpty()).SelectMany(p => p.Facts).ToList();
+                _meaningRolesList = Annotations.Where(p => !p.MeaningRolesList.IsNullOrEmpty()).SelectMany(p => p.MeaningRolesList).ToList();
 
-            _settingsDict = new Dictionary<StrongIdentifierValue, Value>();
+                _settingsDict = new Dictionary<StrongIdentifierValue, Value>();
 
 #if DEBUG
-            //_gbcLogger.Info($"source = {source}");
+                //_gbcLogger.Info($"source = {source}");
 #endif
 
-            foreach(var annotation in Annotations)
-            {
-                var settingsDict = annotation.SettingsDict;
-
-                if(settingsDict.IsNullOrEmpty())
+                foreach (var annotation in Annotations)
                 {
-                    continue;
-                }
+                    var settingsDict = annotation.SettingsDict;
 
-                foreach(var item in settingsDict)
-                {
-                    _settingsDict[item.Key] = item.Value;
+                    if (settingsDict.IsNullOrEmpty())
+                    {
+                        continue;
+                    }
+
+                    foreach (var item in settingsDict)
+                    {
+                        _settingsDict[item.Key] = item.Value;
+                    }
                 }
             }
         }

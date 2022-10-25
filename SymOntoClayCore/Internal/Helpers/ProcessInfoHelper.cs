@@ -70,9 +70,15 @@ namespace SymOntoClay.Core.Internal.Helpers
                     var currentTick = dateTimeProvider.CurrentTiks;
                     var currentMilisecond = currentTick * dateTimeProvider.MillisecondsMultiplicator;
 
-#if ALARM_ANNOTATION_RERACTORING
-            please add timeout from annotation
-#endif
+                    if (currentMilisecond >= cancelAfter.Value)
+                    {
+                        foreach (var proc in processes)
+                        {
+                            proc.Cancel();
+                        }
+
+                        return;
+                    }
                 }
 
                 Thread.Sleep(100);

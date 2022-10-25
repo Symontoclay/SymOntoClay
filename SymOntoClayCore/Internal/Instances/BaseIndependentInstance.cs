@@ -74,7 +74,7 @@ namespace SymOntoClay.Core.Internal.Instances
             localCodeExecutionContext.Holder = Name;
 
             var processInitialInfo = new ProcessInitialInfo();
-            processInitialInfo.CompiledFunctionBody = idleActionItem.CompiledFunctionBody;
+            processInitialInfo.CompiledFunctionBody = idleActionItem.GetCompiledFunctionBody(_context, localCodeExecutionContext);
             processInitialInfo.LocalContext = localCodeExecutionContext;
             processInitialInfo.Metadata = idleActionItem;
             processInitialInfo.Instance = this;

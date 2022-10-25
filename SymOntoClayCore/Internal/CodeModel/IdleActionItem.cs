@@ -1,5 +1,7 @@
 ﻿using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
+using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -29,6 +31,22 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public RuleInstance RuleInstance { get; set; }
         public List<AstStatement> Statements { get; set; } = new List<AstStatement>();
         public CompiledFunctionBody CompiledFunctionBody { get; set; }        
+
+        public CompiledFunctionBody GetCompiledFunctionBody(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            if(CompiledFunctionBody != null)
+            {
+                return CompiledFunctionBody;
+            }
+
+            if(RuleInstance != null)
+            {
+                CompiledFunctionBody = context.ConvertersFactory.GetConverterFactToImperativeCode().Convert(RuleInstance, localCodeExecutionContext);
+                return CompiledFunctionBody;
+            }
+
+            throw new NotImplementedException();
+        }
 
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)

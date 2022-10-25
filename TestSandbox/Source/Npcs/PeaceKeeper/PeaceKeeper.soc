@@ -2,7 +2,7 @@
 {
     idle actions
     {
-        {: >: { direction($x1,#@(place & color = green)) & $x1 = go(someone,self) } o: 1 :};
+        {: >: { direction($x1,#@(place & color = green)) & $x1 = go(someone,self) } o: 1 :}/*[: timeout=1000 :]*/;
     }
 
     fun go(@direction)

@@ -38,8 +38,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -128,6 +128,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             Exit();
                             break;
 
+                        case TokenKind.OpenAnnotationBracket:
+                            ProcessAnnotation();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -136,6 +140,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
+        }
+
+        private void ProcessAnnotation()
+        {
+            _context.Recovery(_currToken);
+
+            var parser = new AnnotationParser(_context);
+            parser.Run();
+
+#if DEBUG
+            Log($"parser.Result = {parser.Result}");
+#endif
+
+
+
+            throw new NotImplementedException();
         }
 
         private void ProcessCodeExpression()

@@ -70,6 +70,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _methodsResolver = dataResolversFactory.GetMethodsResolver();
             _logicalSearchResolver = dataResolversFactory.GetLogicalSearchResolver();
             _statesResolver = dataResolversFactory.GetStatesResolver();
+            _annotationsResolver = dataResolversFactory.GetAnnotationsResolver();
 
             _converterFactToImperativeCode = context.ConvertersFactory.GetConverterFactToImperativeCode();
             _dateTimeProvider = context.DateTimeProvider;
@@ -90,6 +91,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly MethodsResolver _methodsResolver;
         private readonly LogicalSearchResolver _logicalSearchResolver;
         private readonly StatesResolver _statesResolver;
+        private readonly AnnotationsResolver _annotationsResolver;
 
         private readonly ConverterFactToImperativeCode _converterFactToImperativeCode;
         private readonly IDateTimeProvider _dateTimeProvider;
@@ -104,7 +106,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private ErrorValue _currentError;
         private bool _isCanceled;
 
-        private long? _endOfTargetTimeout;
+        private long? _endOfTargetDuration;
 
         public Value ExternalReturn { get; private set; }
 
@@ -115,6 +117,25 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
             //Log($"codeFrame = {codeFrame}");
 #endif
+
+            var timeout = codeFrame.TargetDuration;
+
+            if(timeout.HasValue)
+            {
+                var currentTick = _dateTimeProvider.CurrentTiks;
+
+#if DEBUG
+                //Log($"currentTick = {currentTick}");
+#endif
+
+                var currentMilisecond = currentTick * _dateTimeProvider.MillisecondsMultiplicator;
+
+#if DEBUG
+                //Log($"currentMilisecond = {currentMilisecond}");
+#endif
+
+                codeFrame.EndOfTargetDuration = Convert.ToInt64(currentMilisecond + timeout.Value);
+            }
 
             _codeFrames.Push(codeFrame);
             _currentCodeFrame = codeFrame;
@@ -186,6 +207,37 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
                     return true;
+                }
+
+                var endOfTargetDuration = _currentCodeFrame.EndOfTargetDuration;
+
+                if(endOfTargetDuration.HasValue)
+                {
+#if DEBUG
+                    //Log($"endOfTargetDuration = {endOfTargetDuration}");
+#endif
+
+                    var currentTick = _dateTimeProvider.CurrentTiks;
+
+#if DEBUG
+                    //Log($"currentTick = {currentTick}");
+#endif
+
+                    var currentMilisecond = currentTick * _dateTimeProvider.MillisecondsMultiplicator;
+
+#if DEBUG
+                    //Log($"currentMilisecond = {currentMilisecond}");
+#endif
+
+                    if(currentMilisecond >= endOfTargetDuration.Value)
+                    {
+#if DEBUG
+                        //Log($"currentMilisecond >= endOfTargetDuration.Value");
+#endif
+
+                        GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
+                        return true;
+                    }
                 }
 
                 var currentPosition = _currentCodeFrame.CurrentPosition;
@@ -831,7 +883,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"_endOfTargetTimeout = {_endOfTargetTimeout}");
 #endif
             
-            if(_endOfTargetTimeout.HasValue)
+            if(_endOfTargetDuration.HasValue)
             {
                 var currentTick = _dateTimeProvider.CurrentTiks;
 
@@ -845,9 +897,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 //Log($"currentMilisecond = {currentMilisecond}");
 #endif
 
-                if(currentMilisecond >= _endOfTargetTimeout.Value)
+                if(currentMilisecond >= _endOfTargetDuration.Value)
                 {
-                    _endOfTargetTimeout = null;
+                    _endOfTargetDuration = null;
                     _currentCodeFrame.CurrentPosition++;
                     return;
                 }
@@ -900,7 +952,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     //Log($"currentMilisecond = {currentMilisecond}");
 #endif
 
-                    _endOfTargetTimeout = Convert.ToInt32(currentMilisecond + timeoutSystemVal);
+                    _endOfTargetDuration = Convert.ToInt64(currentMilisecond + timeoutSystemVal);
 
                     return;
                 }
@@ -1376,9 +1428,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"command = {command}");
 #endif
 
-#if ALARM_ANNOTATION_RERACTORING
-            please add timeout from annotation
-#endif
+
 
             //var packedSynonymsResolver = new PackedSynonymsResolver(_context.DataResolversFactory.GetSynonymsResolver(), _currentCodeFrame.LocalContext);
 
@@ -1395,6 +1445,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 _instancesStorage.AppendAndTryStartProcessInfo(processInfo);
 
+                var timeout = GetTimeoutFromAnnotation(annotation);
+
+#if DEBUG
+                //Log($"timeout = {timeout}");
+#endif
+
                 if (isSync)
                 {
                     List<IExecutionCoordinator> executionCoordinators = null;
@@ -1404,7 +1460,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         executionCoordinators = new List<IExecutionCoordinator>() { _executionCoordinator };
                     }
 
-                    ProcessInfoHelper.Wait(executionCoordinators, processInfo);
+                    ProcessInfoHelper.Wait(executionCoordinators, timeout, _dateTimeProvider, processInfo);
 
                     //Log($"localExecutionCoordinator = {localExecutionCoordinator}");
 
@@ -1524,6 +1580,34 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             ExecuteCodeFrame(codeFrame, null, true);
         }
 
+        private StrongIdentifierValue _timeoutName = NameHelper.CreateName("timeout");
+
+        private long? GetTimeoutFromAnnotation(Value annotation)
+        {
+            if(annotation == null)
+            {
+                return null;
+            }
+
+            var localContext = _currentCodeFrame.LocalContext;
+
+            var initialValue = _annotationsResolver.GetSettings(annotation, _timeoutName, localContext);
+
+            if(initialValue == null || initialValue.KindOfValue == KindOfValue.NullValue)
+            {
+                return null;
+            }
+
+            var numberValue = _numberValueLinearResolver.Resolve(initialValue, localContext);
+
+            if (numberValue == null || numberValue.KindOfValue == KindOfValue.NullValue)
+            {
+                return null;
+            }
+
+            return Convert.ToInt64(numberValue.SystemValue.Value);
+        }
+
         private void CallOperator(Operator op, List<Value> positionedParameters)
         {
             CallExecutable(op, positionedParameters);
@@ -1543,20 +1627,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var coordinator = executable.TryActivate(_context);
 
-#if DEBUG
-            Log($"executable.IsSystemDefined = {executable.IsSystemDefined}");
-            Log($"coordinator != null = {coordinator != null}");
-            Log($"annotation = {annotation}");
-            Log($"isSync = {isSync}");
-            if(annotation != null)
-            {
-                var tmpTimeout = annotation.GetSettings(NameHelper.CreateName("timeout"));
-                Log($"tmpTimeout = {tmpTimeout}");
-            }
-#endif
+            var timeout = GetTimeoutFromAnnotation(annotation);
 
-#if ALARM_ANNOTATION_RERACTORING
-            please add timeout from annotation
+#if DEBUG
+            //Log($"executable.IsSystemDefined = {executable.IsSystemDefined}");
+            //Log($"coordinator != null = {coordinator != null}");
+            //Log($"annotation = {annotation}");
+            //Log($"timeout = {timeout}");
+            //Log($"isSync = {isSync}");
 #endif
 
             if (executable.IsSystemDefined)
@@ -1588,6 +1666,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             else
             {
                 var newCodeFrame = CodeFrameHelper.ConvertExecutableToCodeFrame(executable, kindOfParameters, namedParameters, positionedParameters, _currentCodeFrame.LocalContext, _context);
+
+                if(timeout.HasValue)
+                {
+                    newCodeFrame.TargetDuration = timeout;
+                }
 
 #if DEBUG
                 //Log($"newCodeFrame = {newCodeFrame}");

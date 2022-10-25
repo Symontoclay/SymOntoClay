@@ -90,6 +90,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private IdleActionsResolver _idleActionsResolver;
         private readonly object _idleActionsResolverLockObj = new object();
 
+        private AnnotationsResolver _annotationsResolver;
+        private readonly object _annotationsResolverLockObj = new object();
+
         /// <inheritdoc/>
         public ChannelsResolver GetChannelsResolver()
         {
@@ -339,6 +342,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 return _idleActionsResolver;
+            }
+        }
+
+        /// <inheritdoc/>
+        public AnnotationsResolver GetAnnotationsResolver()
+        {
+            lock(_annotationsResolverLockObj)
+            {
+                if(_annotationsResolver == null)
+                {
+                    _annotationsResolver = new AnnotationsResolver(_context);
+                }
+
+                return _annotationsResolver;
             }
         }
     }

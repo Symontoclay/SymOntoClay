@@ -48,5 +48,6 @@ namespace SymOntoClay.Core
         IReadOnlyList<IProcessInfo> GetChildrenProcessInfoList { get; }
         void AddChild(IProcessInfo processInfo);
         void RemoveChild(IProcessInfo processInfo);
+        long? EndOfTargetDuration { get; set; }
     }
 }

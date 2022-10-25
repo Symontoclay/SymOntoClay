@@ -45,6 +45,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public IInstance Instance { get; set; }
         public IExecutionCoordinator ExecutionCoordinator { get; set; }
         public SpecialMarkOfCodeFrame SpecialMark { get; set; } = SpecialMarkOfCodeFrame.None;
+        public long? TargetDuration { get; set; }
+        public long? EndOfTargetDuration { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -83,6 +85,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintObjProp(n, nameof(Instance), Instance);
             sb.PrintObjProp(n, nameof(ExecutionCoordinator), ExecutionCoordinator);
             sb.AppendLine($"{spaces}{nameof(SpecialMark)} = {SpecialMark}");
+            sb.AppendLine($"{spaces}{nameof(TargetDuration)} = {TargetDuration}");
+            sb.AppendLine($"{spaces}{nameof(EndOfTargetDuration)} = {EndOfTargetDuration}");
 
             return sb.ToString();
         }
@@ -124,6 +128,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintShortObjProp(n, nameof(Instance), Instance);
             sb.PrintShortObjProp(n, nameof(ExecutionCoordinator), ExecutionCoordinator);
             sb.AppendLine($"{spaces}{nameof(SpecialMark)} = {SpecialMark}");
+            sb.AppendLine($"{spaces}{nameof(TargetDuration)} = {TargetDuration}");
+            sb.AppendLine($"{spaces}{nameof(EndOfTargetDuration)} = {EndOfTargetDuration}");
 
             return sb.ToString();
         }
@@ -165,6 +171,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintBriefObjProp(n, nameof(Instance), Instance);
             sb.PrintBriefObjProp(n, nameof(ExecutionCoordinator), ExecutionCoordinator);
             sb.AppendLine($"{spaces}{nameof(SpecialMark)} = {SpecialMark}");
+            sb.AppendLine($"{spaces}{nameof(TargetDuration)} = {TargetDuration}");
+            sb.AppendLine($"{spaces}{nameof(EndOfTargetDuration)} = {EndOfTargetDuration}");
 
             return sb.ToString();
         }

@@ -35,10 +35,10 @@ namespace SymOntoClay.Core.Internal.Helpers
     {
         public static void Wait(params IProcessInfo[] processes)
         {
-            Wait(null, processes);
+            Wait(null, null, null, processes);
         }
 
-        public static void Wait(List<IExecutionCoordinator> executionCoordinators, params IProcessInfo[] processes)
+        public static void Wait(List<IExecutionCoordinator> executionCoordinators, long? cancelAfter, IDateTimeProvider dateTimeProvider, params IProcessInfo[] processes)
         {
             if(processes.IsNullOrEmpty())
             {
@@ -51,7 +51,7 @@ namespace SymOntoClay.Core.Internal.Helpers
                 {
                     return;
                 }
-
+                
                 if(executionCoordinators != null)
                 {
                     if(executionCoordinators.Any(p => p.ExecutionStatus != ActionExecutionStatus.Executing))
@@ -63,6 +63,16 @@ namespace SymOntoClay.Core.Internal.Helpers
 
                         return;
                     }
+                }
+
+                if(cancelAfter.HasValue)
+                {
+                    var currentTick = dateTimeProvider.CurrentTiks;
+                    var currentMilisecond = currentTick * dateTimeProvider.MillisecondsMultiplicator;
+
+#if ALARM_ANNOTATION_RERACTORING
+            please add timeout from annotation
+#endif
                 }
 
                 Thread.Sleep(100);

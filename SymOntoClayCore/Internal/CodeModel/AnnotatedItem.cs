@@ -223,7 +223,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
             else
             {
-                WhereSection = new List<Value>();
+                if(WhereSection == null)
+                {
+                    WhereSection = new List<Value>();
+                }                
 
                 foreach (var item in source.WhereSection)
                 {
@@ -237,11 +240,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
             else
             {
-                Annotations = new List<Annotation>();
+                if(Annotations == null)
+                {
+                    Annotations = new List<Annotation>();
+                }                
 
                 foreach(var annotation in source.Annotations)
                 {
-                    Annotations.Add(annotation.Clone());
+                    Annotations.Add(annotation.Clone(cloneContext));
                 }
             }
         }

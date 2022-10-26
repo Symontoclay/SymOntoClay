@@ -38,8 +38,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_currToken = {_currToken}");
+            //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -132,6 +132,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessAnnotation();
                             break;
 
+                        case TokenKind.Semicolon:
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -150,12 +153,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             parser.Run();
 
 #if DEBUG
-            Log($"parser.Result = {parser.Result}");
+            //Log($"parser.Result = {parser.Result}");
 #endif
 
-
-
-            throw new NotImplementedException();
+            _currentItem.RuleInstance.AddAnnotation(parser.Result);
         }
 
         private void ProcessCodeExpression()
@@ -202,15 +203,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Result.Add(_currentItem);
 
             _currentItem.RuleInstance = ruleInstanceItem;
-
-            var nextToken = _context.GetToken();
-
-
-
-            if(nextToken.TokenKind != TokenKind.Semicolon)
-            {
-                _context.Recovery(nextToken);
-            }
 
             _state = State.GotItem;
         }

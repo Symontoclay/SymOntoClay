@@ -95,7 +95,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             result.Facts = Facts?.Select(p => p.Clone(context)).ToList();
             result.MeaningRolesList = MeaningRolesList?.Select(p => p.Clone(context)).ToList();
-            SettingsDict = SettingsDict?.ToDictionary(p => p.Key.Clone(context), p => p.Value.CloneValue(context));
+            result.SettingsDict = SettingsDict?.ToDictionary(p => p.Key.Clone(context), p => p.Value.CloneValue(context));
 
             return result;
         }

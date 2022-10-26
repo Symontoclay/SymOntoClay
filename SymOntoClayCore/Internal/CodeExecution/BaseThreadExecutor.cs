@@ -276,7 +276,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -1632,7 +1632,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
             //Log($"executable.IsSystemDefined = {executable.IsSystemDefined}");
             //Log($"coordinator != null = {coordinator != null}");
-            Log($"annotation = {annotation}");
+            //Log($"annotation = {annotation}");
             //Log($"timeout = {timeout}");
             //Log($"isSync = {isSync}");
 #endif

@@ -105,5 +105,30 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case4()
+        {
+            var text = @"app PeaceKeeper
+{
+    idle actions
+    {
+        {: >: { direction($x1,#@(place & color = green)) & $x1 = go(someone,self) } o: 1 :}[: timeout=1000 :];
+    }
+
+    fun go(@direction)
+    {
+        'GO()' >> @>log;
+        wait 10000;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    Assert.AreEqual("GO()", message);
+                }), true);
+        }
     }
 }

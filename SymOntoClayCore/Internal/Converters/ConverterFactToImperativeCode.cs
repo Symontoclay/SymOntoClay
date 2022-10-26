@@ -120,12 +120,14 @@ namespace SymOntoClay.Core.Internal.Converters
 #if DEBUG
             //Log($"relation = {relation.ToHumanizedString()}");
             //Log($"fact = {fact.ToHumanizedString()}");
+            //Log($"fact = {fact}");
             //Log($"node = {node}");
 #endif
 
             var statement = new AstExpressionStatement();
             var callExpression = new CallingFunctionAstExpression();
             statement.Expression = callExpression;
+            callExpression.AppendAnnotations(fact);
 
             var functionNameExpr = new ConstValueAstExpression();
             callExpression.Left = functionNameExpr;
@@ -252,6 +254,7 @@ namespace SymOntoClay.Core.Internal.Converters
 
 #if DEBUG
             //Log($"statement = {statement.ToHumanizedString()}");
+            //Log($"statement = {statement}");
 #endif
 
             return statement;

@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Converters
     public static class ConverterToNormalized
     {
 #if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static RuleInstance Convert(RuleInstance source, CheckDirtyOptions options)
@@ -390,6 +390,7 @@ namespace SymOntoClay.Core.Internal.Converters
 #if DEBUG
             //_gbcLogger.Info("ConvertLogicalQueryNodeInDefaultWay!!!!!");
             //_gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"source.Kind = {source.Kind}");
             //_gbcLogger.Info($"source = {source.ToHumanizedString()}");
             //_gbcLogger.Info($"(options != null) = {options != null}");
 #endif
@@ -418,6 +419,14 @@ namespace SymOntoClay.Core.Internal.Converters
             result.Kind = source.Kind;
             result.KindOfOperator = source.KindOfOperator;
             result.Name = source.Name;
+
+            if(options != null && options.ReplaceConcepts != null && (source.Kind == KindOfLogicalQueryNode.Concept || source.Kind == KindOfLogicalQueryNode.Entity))
+            {
+                if(options.ReplaceConcepts.ContainsKey(source.Name))
+                {
+                    result.Name = options.ReplaceConcepts[source.Name];
+                }                
+            }
 
             if(source.Left != null)
             {

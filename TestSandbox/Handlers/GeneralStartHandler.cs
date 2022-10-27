@@ -74,6 +74,7 @@ namespace TestSandbox.Handlers
             //_npc.InsertFact("{: barrel (#a) :}");
             //_npc.InsertFact("distance(I, #a, 14.71526)");
             //_npc.InsertFact("{: see(I, enemy) :}");
+            _npc.InsertPublicFact("{: color(I, green) :}");
 
             //Thread.Sleep(100);
 

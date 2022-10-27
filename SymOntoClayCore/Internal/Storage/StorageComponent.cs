@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Parsing;
 using System;
 using System.Collections.Generic;
@@ -253,12 +254,27 @@ namespace SymOntoClay.Core.Internal.Storage
         {
 #if DEBUG
             //Log($"fact = {fact}");
+            //Log($"fact = {fact.ToHumanizedString()}");
 #endif
 
             if (fact == null)
             {
                 return string.Empty;
             }
+
+            var checkDirtyOptions = new CheckDirtyOptions()
+            { 
+                ReplaceConcepts = new Dictionary<StrongIdentifierValue, StrongIdentifierValue>() 
+            };
+
+            checkDirtyOptions.ReplaceConcepts[NameHelper.CreateName("I")] = NameHelper.CreateName(_context.Id);
+
+            fact.CalculateLongHashCodes(checkDirtyOptions);
+
+#if DEBUG
+            //Log($"fact.Normalized = {fact.Normalized}");
+            //Log($"fact.Normalized = {fact.Normalized.ToHumanizedString()}");
+#endif
 
             _publicFactsStorage.LogicalStorage.Append(fact);
 

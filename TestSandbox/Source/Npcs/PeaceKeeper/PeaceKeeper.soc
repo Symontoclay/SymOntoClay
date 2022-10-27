@@ -1,22 +1,8 @@
 ﻿app PeaceKeeper
 {
-    idle actions
-    {
-        {: >: { direction($x1,#@(place & color = green)) & $x1 = go(someone,self) } o: 1 :}[: timeout=1000 :];
-    }
-
-    fun go(@direction)
-    {
-        'Begin go()' >> @>log;
-        @direction >> @>log;
-        wait 10000;
-
-        'End go()' >> @>log;
-    }
-
-    /*on Enter =>
+    on Enter =>
     {
         'Begin' >> @>log;
         'End' >> @>log;
-    }*/
+    }
 }

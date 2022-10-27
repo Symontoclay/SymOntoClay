@@ -33,6 +33,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public IEngineContext EngineContext { get; set; }
         public LocalCodeExecutionContext LocalContext { get; set; }
         public bool ConvertWaypointValueFromSource { get; set; }
+        public Dictionary<StrongIdentifierValue, StrongIdentifierValue> ReplaceConcepts { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -55,6 +56,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintExisting(n, nameof(EngineContext), EngineContext);
             sb.PrintExisting(n, nameof(LocalContext), LocalContext);
             sb.AppendLine($"{spaces}{nameof(ConvertWaypointValueFromSource)} = {ConvertWaypointValueFromSource}");
+            sb.PrintObjDict_1_Prop(n, nameof(ReplaceConcepts), ReplaceConcepts);
 
             return sb.ToString();
         }

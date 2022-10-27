@@ -46,7 +46,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         //}
 
 #if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         /// <inheritdoc/>
@@ -103,6 +103,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             if (IsSource)
             {
 #if DEBUG
+                //_gbcLogger.Info($"options = {options}");
                 //_gbcLogger.Info($"(options != null) = {options != null}");
                 //_gbcLogger.Info($"this = {DebugHelperForRuleInstance.ToString(this)}");
 #endif
@@ -206,6 +207,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
+#if DEBUG
+            //_gbcLogger.Info($"options = {options}");
+#endif
+
             PrepareDirty(options);
 
             var result = base.CalculateLongHashCode(options) ^ PrimaryPart.GetLongHashCode(options);

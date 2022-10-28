@@ -65,7 +65,18 @@ namespace SymOntoClay.Core
         public abstract void Start();
 
         /// <inheritdoc/>
-        public abstract void Cancel();
+        public virtual void Cancel()
+        {
+            CancelChildren();
+        }
+
+        protected void CancelChildren()
+        {
+            foreach (var child in _childrenProcessInfoList)
+            {
+                child.Cancel();
+            }
+        }
 
         /// <inheritdoc/>
         public float Priority { get; set; } = PrioritiesOfProcesses.Normal;
@@ -164,10 +175,20 @@ namespace SymOntoClay.Core
 
                 _childrenProcessInfoList.Add(processInfo);
 
+                processInfo.OnFinish += ProcessInfo_OnFinish;
+
                 if(processInfo.ParentProcessInfo != this)
                 {
                     processInfo.ParentProcessInfo = this;
                 }
+            }
+        }
+
+        private void ProcessInfo_OnFinish(IProcessInfo processInfo)
+        {
+            lock (_lockObj)
+            {
+                NRemoveChild(processInfo);
             }
         }
 
@@ -176,17 +197,24 @@ namespace SymOntoClay.Core
         {
             lock (_lockObj)
             {
-                if (!_childrenProcessInfoList.Contains(processInfo))
-                {
-                    return;
-                }
+                NRemoveChild(processInfo);
+            }
+        }
 
-                _childrenProcessInfoList.Remove(processInfo);
+        private void NRemoveChild(IProcessInfo processInfo)
+        {
+            if (!_childrenProcessInfoList.Contains(processInfo))
+            {
+                return;
+            }
 
-                if(processInfo.ParentProcessInfo == this)
-                {
-                    processInfo.ParentProcessInfo = null;
-                }
+            _childrenProcessInfoList.Remove(processInfo);
+
+            processInfo.OnFinish -= ProcessInfo_OnFinish;
+
+            if (processInfo.ParentProcessInfo == this)
+            {
+                processInfo.ParentProcessInfo = null;
             }
         }
 
@@ -214,7 +242,15 @@ namespace SymOntoClay.Core
             OnDisposed();
         }
 
-        protected abstract void OnDisposed();
+        protected virtual void OnDisposed()
+        {
+            foreach(var child in _childrenProcessInfoList)
+            {
+                child.Dispose();
+            }
+
+            _childrenProcessInfoList.Clear();
+        }
 
         /// <inheritdoc/>
         public override string ToString()

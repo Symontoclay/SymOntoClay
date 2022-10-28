@@ -52,10 +52,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Multiplication,
         Division,
         QuestionMark,
+
         /// <summary>
         /// Represents symbol `~`.
         /// </summary>
         AsyncMarker,
+
+        /// <summary>
+        /// Represents symbol `~~`.
+        /// </summary>
+        DoubleAsyncMarker,
+
         /// <summary>
         /// Represents symbol `{`.
         /// </summary>
@@ -65,42 +72,53 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// Represents symbol `}`.
         /// </summary>
         CloseFigureBracket,
+
         /// <summary>
         /// Represents symbol `[`.
         /// </summary>
+        /// 
         OpenSquareBracket,
+
         /// <summary>
         /// Represents symbol `]`.
         /// </summary>
         CloseSquareBracket,
+
         /// <summary>
         /// Represents symbol `(`.
         /// </summary>
         OpenRoundBracket,
+
         /// <summary>
         /// Represents symbol `)`.
         /// </summary>
         CloseRoundBracket,
+
         /// <summary>
         /// Represents symbol `{:`.
         /// </summary>
         OpenFactBracket,
+
         /// <summary>
         /// Represents symbol `:}`.
         /// </summary>
         CloseFactBracket,
+
         /// <summary>
         /// Represents symbol `[:`.
         /// </summary>
         OpenAnnotationBracket,
+
         /// <summary>
         /// Represents symbol `:]`.
         /// </summary>
         CloseAnnotationBracket,
+
         /// <summary>
         /// Represents symbol `:`.
         /// </summary>
         Colon,
+
         /// <summary>
         /// Represents symbol `;`.
         /// </summary>
@@ -123,6 +141,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         MoreOrEqual,
         Less,
         LessOrEqual,
+
         /// <summary>
         /// Represents symbol `&amp;`.
         /// </summary>

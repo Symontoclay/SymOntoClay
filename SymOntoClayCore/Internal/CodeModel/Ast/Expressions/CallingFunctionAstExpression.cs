@@ -45,6 +45,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         public List<CallingParameter> Parameters { get; set; } = new List<CallingParameter>();
 
         public bool IsAsync { get; set; }
+        public bool IsChild { get; set; }
 
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
@@ -68,7 +69,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             result.Parameters = Parameters?.Select(p => p.Clone(context)).ToList();
 
             result.IsAsync = IsAsync;
-
+            result.IsChild = IsChild;
 
             result.AppendAnnotations(this, context);
 
@@ -101,6 +102,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             sb.PrintObjProp(n, nameof(Left), Left);
 
             sb.AppendLine($"{spaces}{IsAsync} = {IsAsync}");
+            sb.AppendLine($"{spaces}{IsChild} = {IsChild}");
 
             sb.Append(base.PropertiesToString(n));
 
@@ -117,6 +119,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             sb.PrintShortObjProp(n, nameof(Left), Left);
 
             sb.AppendLine($"{spaces}{IsAsync} = {IsAsync}");
+            sb.AppendLine($"{spaces}{IsChild} = {IsChild}");
 
             sb.Append(base.PropertiesToShortString(n));
 
@@ -133,6 +136,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             sb.PrintBriefObjProp(n, nameof(Left), Left);
 
             sb.AppendLine($"{spaces}{IsAsync} = {IsAsync}");
+            sb.AppendLine($"{spaces}{IsChild} = {IsChild}");
 
             sb.Append(base.PropertiesToBriefString(n));
 
@@ -147,6 +151,18 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             if(Left != null)
             {
                 sb.Append(Left.ToHumanizedString(options));
+            }
+
+            if(IsAsync)
+            {
+                if(IsChild)
+                {
+                    sb.Append("~");
+                }
+                else
+                {
+                    sb.Append("~~");
+                }                
             }
 
             sb.Append("(");

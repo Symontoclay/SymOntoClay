@@ -169,7 +169,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 return CreateToken(TokenKind.Comma);
 
                             case '~':
-                                return CreateToken(TokenKind.AsyncMarker);
+                                {
+                                    var nextChar = _items.Peek();
+
+#if DEBUG
+                                    //_logger.Log($"nextChar = {nextChar}");
+#endif
+
+                                    switch(nextChar)
+                                    {
+                                        case '~':
+                                            _items.Dequeue();
+                                            return CreateToken(TokenKind.DoubleAsyncMarker);
+                                    }
+
+                                    return CreateToken(TokenKind.AsyncMarker);
+                                }                                
 
                             case '+':
                                 {
@@ -178,12 +193,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #if DEBUG
                                     //_logger.Log($"nextChar = {nextChar}");
 #endif
+
                                     switch(nextChar)
                                     {
                                         case '∞':
                                             _items.Dequeue();
                                             return CreateToken(TokenKind.PositiveInfinity);
                                     }
+
                                     return CreateToken(TokenKind.Plus);
                                 }
 

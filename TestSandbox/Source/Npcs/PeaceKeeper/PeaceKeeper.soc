@@ -1,8 +1,24 @@
 ﻿app PeaceKeeper
 {
+    fun a() => 
+    {
+        '`a` has been called!' >> @>log;
+
+        @a = 10;
+
+        while (@a > 0)
+        {
+            @a >> @>log;
+            @a = @a - 1;
+        }
+
+        'End `a`' >> @>log;
+    }
+
     on Enter =>
     {
         'Begin' >> @>log;
+        a~();
         'End' >> @>log;
     }
 }

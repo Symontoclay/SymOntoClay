@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -32,6 +33,10 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class ProcessInfo: BaseProcessInfo
     {
+#if DEBUG
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         /// <inheritdoc/>
         public override ProcessStatus Status 
         { 
@@ -62,6 +67,7 @@ namespace SymOntoClay.Core.Internal.Instances
                             Task.Run(() => {
                                 OnFinish?.Invoke(this);
                             });
+                            CancelChildren();
                             break;
                     }
                 }
@@ -88,6 +94,13 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public override void Cancel()
         {
+#if DEBUG
+            _gbcLogger.Info($"Cancel Id = {Id}");
+#endif
+
+            Status = ProcessStatus.Canceled;
+
+            base.Cancel();
         }
 
         /// <inheritdoc/>
@@ -102,6 +115,7 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
+            base.OnDisposed();
         }
 
         #region private fields

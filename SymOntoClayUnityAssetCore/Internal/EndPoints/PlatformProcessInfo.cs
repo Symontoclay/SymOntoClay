@@ -87,6 +87,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                             Task.Run(() => {
                                 OnFinish?.Invoke(this);
                             });
+                            CancelChildren();
                             break;
                     }
                 }
@@ -115,7 +116,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 _cancellationTokenSource.Cancel();
                 _status = ProcessStatus.Canceled;
 
-                OnFinish?.Invoke(this);
+                Task.Run(() => {
+                    OnFinish?.Invoke(this);
+                });
+
+                base.Cancel();
             }
         }
 
@@ -149,6 +154,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             {
                 _cancellationTokenSource.Cancel();
             }
+
+            base.OnDisposed();
         }
 
         #region private fields

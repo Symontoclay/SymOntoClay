@@ -162,6 +162,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case TokenKind.AsyncMarker:
+                case TokenKind.DoubleAsyncMarker:
                     ProcessCallingFunction();
                     break;
 

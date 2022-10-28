@@ -6662,6 +6662,11 @@
             Represents symbol `~`.
             </summary>
         </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.DoubleAsyncMarker">
+            <summary>
+            Represents symbol `~~`.
+            </summary>
+        </member>
         <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.OpenFigureBracket">
             <summary>
             Represents symbol `{`.
@@ -6676,6 +6681,7 @@
             <summary>
             Represents symbol `[`.
             </summary>
+            
         </member>
         <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.TokenKind.CloseSquareBracket">
             <summary>

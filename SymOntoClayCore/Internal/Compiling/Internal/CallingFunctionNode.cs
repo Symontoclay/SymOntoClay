@@ -114,22 +114,45 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             if(expression.IsAsync)
             {
-                switch (kindOfParameters)
+                if(expression.IsChild)
                 {
-                    case KindOfParameters.NoParameters:
-                        command.OperationCode = OperationCode.AsyncCall;
-                        break;
+                    switch (kindOfParameters)
+                    {
+                        case KindOfParameters.NoParameters:
+                            command.OperationCode = OperationCode.AsyncChildCall;
+                            break;
 
-                    case KindOfParameters.NamedParameters:
-                        command.OperationCode = OperationCode.AsyncCall_N;
-                        break;
+                        case KindOfParameters.NamedParameters:
+                            command.OperationCode = OperationCode.AsyncChildCall_N;
+                            break;
 
-                    case KindOfParameters.PositionedParameters:
-                        command.OperationCode = OperationCode.AsyncCall_P;
-                        break;
+                        case KindOfParameters.PositionedParameters:
+                            command.OperationCode = OperationCode.AsyncChildCall_P;
+                            break;
 
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                    }
+                }
+                else
+                {
+                    switch (kindOfParameters)
+                    {
+                        case KindOfParameters.NoParameters:
+                            command.OperationCode = OperationCode.AsyncCall;
+                            break;
+
+                        case KindOfParameters.NamedParameters:
+                            command.OperationCode = OperationCode.AsyncCall_N;
+                            break;
+
+                        case KindOfParameters.PositionedParameters:
+                            command.OperationCode = OperationCode.AsyncCall_P;
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                    }
                 }
             }
             else

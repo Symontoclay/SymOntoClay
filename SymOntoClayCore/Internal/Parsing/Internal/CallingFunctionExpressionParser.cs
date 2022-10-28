@@ -79,9 +79,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"Result = {Result}");
             //Log($"_state = {_state}");
             //Log($"_currToken = {_currToken}");
+            //Log($"Result = {Result}");
 #endif
 
             switch (_state)
@@ -95,6 +95,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.AsyncMarker:
                             if(Result.IsAsync)
+                            {
+                                throw new UnexpectedTokenException(_currToken);
+                            }
+                            Result.IsAsync = true;
+                            Result.IsChild = true;
+                            break;
+
+                        case TokenKind.DoubleAsyncMarker:
+                            if (Result.IsAsync)
                             {
                                 throw new UnexpectedTokenException(_currToken);
                             }

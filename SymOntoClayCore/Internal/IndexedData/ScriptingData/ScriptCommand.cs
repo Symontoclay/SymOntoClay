@@ -223,6 +223,9 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.AsyncCall:
                 case OperationCode.AsyncCall_N:
                 case OperationCode.AsyncCall_P:
+                case OperationCode.AsyncChildCall:
+                case OperationCode.AsyncChildCall_N:
+                case OperationCode.AsyncChildCall_P:
                     return $"{spaces}{OperationCode} {CountParams}";
 
                 case OperationCode.Wait:

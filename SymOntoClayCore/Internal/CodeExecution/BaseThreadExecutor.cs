@@ -176,7 +176,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public void Dispose()
         {
 #if DEBUG
-            Log("Dispose()");
+            //Log("Dispose()");
 #endif
 
             _activeObject.Dispose();
@@ -475,19 +475,39 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     case OperationCode.Call:
-                        CallFunction(KindOfFunctionParameters.NoParameters, currentCommand.CountParams, true);
+                        CallFunction(KindOfFunctionParameters.NoParameters, currentCommand.CountParams, SyncOption.Sync);
                         break;
 
                     case OperationCode.Call_P:
-                        CallFunction(KindOfFunctionParameters.PositionedParameters, currentCommand.CountParams, true);
+                        CallFunction(KindOfFunctionParameters.PositionedParameters, currentCommand.CountParams, SyncOption.Sync);
                         break;
 
                     case OperationCode.Call_N:
-                        CallFunction(KindOfFunctionParameters.NamedParameters, currentCommand.CountParams, true);
+                        CallFunction(KindOfFunctionParameters.NamedParameters, currentCommand.CountParams, SyncOption.Sync);
+                        break;
+
+                    case OperationCode.AsyncCall:
+                        CallFunction(KindOfFunctionParameters.NoParameters, currentCommand.CountParams, SyncOption.IndependentAsync);
+                        break;
+
+                    case OperationCode.AsyncCall_P:
+                        CallFunction(KindOfFunctionParameters.PositionedParameters, currentCommand.CountParams, SyncOption.IndependentAsync);
                         break;
 
                     case OperationCode.AsyncCall_N:
-                        CallFunction(KindOfFunctionParameters.NamedParameters, currentCommand.CountParams, false);
+                        CallFunction(KindOfFunctionParameters.NamedParameters, currentCommand.CountParams, SyncOption.IndependentAsync);
+                        break;
+
+                    case OperationCode.AsyncChildCall:
+                        CallFunction(KindOfFunctionParameters.NoParameters, currentCommand.CountParams, SyncOption.ChildAsync);
+                        break;
+
+                    case OperationCode.AsyncChildCall_P:
+                        CallFunction(KindOfFunctionParameters.PositionedParameters, currentCommand.CountParams, SyncOption.ChildAsync);
+                        break;
+
+                    case OperationCode.AsyncChildCall_N:
+                        CallFunction(KindOfFunctionParameters.NamedParameters, currentCommand.CountParams, SyncOption.ChildAsync);
                         break;
 
                     case OperationCode.Exec:
@@ -1307,12 +1327,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return result;
         }
 
-        private void CallFunction(KindOfFunctionParameters kindOfParameters, int parametersCount, bool isSync)
+        private enum SyncOption
+        {
+            Sync,
+            IndependentAsync,
+            ChildAsync
+        }
+        
+        private void CallFunction(KindOfFunctionParameters kindOfParameters, int parametersCount, SyncOption syncOption)
         {
 #if DEBUG
             //Log($"kindOfParameters = {kindOfParameters}");
             //Log($"parametersCount = {parametersCount}");
-            //Log($"isSync = {isSync}");
+            //Log($"syncOption = {syncOption}");
 #endif
 
             var valueStack = _currentCodeFrame.ValuesStack;
@@ -1361,13 +1388,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (caller.IsPointRefValue)
             {
-                CallPointRefValue(caller.AsPointRefValue, kindOfParameters, namedParameters, positionedParameters, annotation, isSync);
+                CallPointRefValue(caller.AsPointRefValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
                 return;
             }
 
             if(caller.IsStrongIdentifierValue)
             {
-                CallStrongIdentifierValue(caller.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotation, isSync, true);
+                CallStrongIdentifierValue(caller.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption, true);
                 return;
             }
 
@@ -1376,7 +1403,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallPointRefValue(PointRefValue caller, 
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, 
-            Value annotation, bool isSync)
+            Value annotation, SyncOption syncOption)
         {
 #if DEBUG
             //Log($"caller.LeftOperand = {caller.LeftOperand}");
@@ -1384,7 +1411,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if(caller.LeftOperand.IsHostValue)
             {
-                CallHost(caller.RightOperand.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotation, isSync);
+                CallHost(caller.RightOperand.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
                 return;
             }
 
@@ -1393,7 +1420,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallHost(StrongIdentifierValue methodName, 
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
-            Value annotation, bool isSync)
+            Value annotation, SyncOption syncOption)
         {
 #if DEBUG
             //Log($"methodName = {methodName}");
@@ -1401,7 +1428,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
             //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
             //Log($"annotation = {annotation}");
-            //Log($"isSync = {isSync}");
+            //Log($"syncOption = {syncOption}");
 #endif
 
             var command = new Command();
@@ -1428,8 +1455,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"command = {command}");
 #endif
 
-
-
             //var packedSynonymsResolver = new PackedSynonymsResolver(_context.DataResolversFactory.GetSynonymsResolver(), _currentCodeFrame.LocalContext);
 
             var processCreatingResult = _hostListener.CreateProcess(command, _context, _currentCodeFrame.LocalContext);
@@ -1451,7 +1476,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 //Log($"timeout = {timeout}");
 #endif
 
-                if (isSync)
+                if (syncOption == SyncOption.Sync)
                 {
                     List<IExecutionCoordinator> executionCoordinators = null;
 
@@ -1493,6 +1518,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             return;
                     }
                 }
+                else
+                {
+                    if(syncOption == SyncOption.ChildAsync)
+                    {
+                        throw new NotImplementedException();
+                    }
+                }
 
                 _currentCodeFrame.CurrentPosition++;
 
@@ -1514,7 +1546,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallStrongIdentifierValue(StrongIdentifierValue methodName,
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
-            Value annotation, bool isSync, bool mayCallHost)
+            Value annotation, SyncOption syncOption, bool mayCallHost)
         {
 #if DEBUG
             //Log($"methodName = {methodName}");
@@ -1522,7 +1554,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
             //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
             //Log($"annotation = {annotation}");
-            //Log($"isSync = {isSync}");
+            //Log($"syncOption = {syncOption}");
             //Log($"mayCallHost = {mayCallHost}");
 #endif
             IExecutable method = null;
@@ -1553,14 +1585,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 if(mayCallHost)
                 {
-                    CallHost(methodName, kindOfParameters, namedParameters, positionedParameters, annotation, isSync);
+                    CallHost(methodName, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
                     return;
                 }
 
                 throw new Exception($"Method '{methodName.NameValue}' is not found.");
             }
 
-            CallExecutable(method, kindOfParameters, namedParameters, positionedParameters, annotation, isSync);
+            CallExecutable(method, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
         }
 
         private void ExecRuleInstanceValue(RuleInstanceValue ruleInstanceValue)
@@ -1577,7 +1609,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var codeFrame = CodeFrameHelper.ConvertCompiledFunctionBodyToCodeFrame(compiledCode, _currentCodeFrame.LocalContext, _context);
 
-            ExecuteCodeFrame(codeFrame, null, true);
+            ExecuteCodeFrame(codeFrame, null, SyncOption.Sync);
         }
 
         private StrongIdentifierValue _timeoutName = NameHelper.CreateName("timeout");
@@ -1615,10 +1647,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallExecutable(IExecutable executable, List<Value> positionedParameters)
         {
-            CallExecutable(executable, KindOfFunctionParameters.PositionedParameters, null, positionedParameters, null, true);
+            CallExecutable(executable, KindOfFunctionParameters.PositionedParameters, null, positionedParameters, null, SyncOption.Sync);
         }
 
-        private void CallExecutable(IExecutable executable, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, Value annotation, bool isSync)
+        private void CallExecutable(IExecutable executable, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, Value annotation, SyncOption syncOption)
         {
             if(executable == null)
             {
@@ -1634,7 +1666,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"coordinator != null = {coordinator != null}");
             //Log($"annotation = {annotation}");
             //Log($"timeout = {timeout}");
-            //Log($"isSync = {isSync}");
+            //Log($"syncOption = {syncOption}");
 #endif
 
             if (executable.IsSystemDefined)
@@ -1676,11 +1708,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 //Log($"newCodeFrame = {newCodeFrame}");
 #endif
 
-                ExecuteCodeFrame(newCodeFrame, coordinator, isSync);
+                ExecuteCodeFrame(newCodeFrame, coordinator, syncOption);
             }
         }
 
-        private void ExecuteCodeFrame(CodeFrame codeFrame, IExecutionCoordinator coordinator, bool isSync)
+        private void ExecuteCodeFrame(CodeFrame codeFrame, IExecutionCoordinator coordinator, SyncOption syncOption)
         {
 #if DEBUG
             //Log($"codeFrame = {codeFrame}");
@@ -1689,10 +1721,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _context.InstancesStorage.AppendProcessInfo(codeFrame.ProcessInfo);
 
 #if DEBUG
-            //Log($"isSync = {isSync}");
+            //Log($"syncOption = {syncOption}");
 #endif
 
-            if (isSync)
+            if (syncOption == SyncOption.Sync)
             {
                 if (coordinator != null)
                 {
@@ -1721,6 +1753,17 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             else
             {
                 _currentCodeFrame.CurrentPosition++;
+
+                if (syncOption == SyncOption.ChildAsync)
+                {
+#if DEBUG
+                    //Log($"codeFrame = {codeFrame}");
+                    Log($"codeFrame.ProcessInfo.Id = {codeFrame.ProcessInfo.Id}");
+                    //Log($"_currentCodeFrame = {_currentCodeFrame}");
+#endif
+
+                    _currentCodeFrame.ProcessInfo.AddChild(codeFrame.ProcessInfo);
+                }
 
                 var threadExecutor = new AsyncThreadExecutor(_context);
                 threadExecutor.SetCodeFrame(codeFrame);

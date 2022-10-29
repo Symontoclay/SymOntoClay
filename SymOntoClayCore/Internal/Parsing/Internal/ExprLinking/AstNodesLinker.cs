@@ -30,7 +30,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
     public static class AstNodesLinker
     {
 #if DEBUG
-        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static void SetNode(IntermediateAstNode node, IntermediateAstNodePoint point)
@@ -188,7 +188,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
 
                         if (oldchildNode != null)
                         {
-                            throw new NotImplementedException();
+#if DEBUG
+                            //_logger.Info($"oldchildNode = {oldchildNode}");
+                            //_logger.Info($"node = {node}");
+#endif
+
+                            if(node.Left != null)
+                            {
+                                throw new NotImplementedException();
+                            }
+
+                            node.Left = oldchildNode;
+
+#if DEBUG
+                            //_logger.Info($"node (after) = {node}");
+#endif
                         }
 
                         node.Parent = possibleCurrentNode;

@@ -33,6 +33,7 @@ using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Threads;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -107,6 +108,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private bool _isCanceled;
 
         private long? _endOfTargetDuration;
+        private List<Task> _waitedTasksList;
 
         public Value ExternalReturn { get; private set; }
 
@@ -203,6 +205,20 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
 #if DEBUG
                     //Log("_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing; return false;");
+#endif
+
+                    GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
+                    return true;
+                }
+
+#if DEBUG
+                //Log($"_currentCodeFrame.ProcessInfo.Status = {_currentCodeFrame.ProcessInfo.Status}");
+#endif
+
+                if(_currentCodeFrame.ProcessInfo.Status == ProcessStatus.Canceled)
+                {
+#if DEBUG
+                    //Log($"_currentCodeFrame.ProcessInfo.Status == ProcessStatus.Canceled");
 #endif
 
                     GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
@@ -927,6 +943,18 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return;
             }
 
+            if(!_waitedTasksList.IsNullOrEmpty())
+            {
+                if(_waitedTasksList.Any(p => p.Status == TaskStatus.Running))
+                {
+                    return;
+                }
+
+                _waitedTasksList = null;
+                _currentCodeFrame.CurrentPosition++;
+                return;
+            }
+
             var annotation = _currentCodeFrame.ValuesStack.Pop();
 
             var positionedParameters = TakePositionedParameters(currentCommand.CountParams, true);
@@ -976,6 +1004,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     return;
                 }
+            }
+
+            if(positionedParameters.Any(p => p.KindOfValue == KindOfValue.TaskValue))
+            {
+                _waitedTasksList = positionedParameters.Where(p => p.IsTaskValue).Select(p => p.AsTaskValue.SystemTask).ToList();
+                return;
             }
 
             throw new NotImplementedException();
@@ -1758,7 +1792,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
 #if DEBUG
                     //Log($"codeFrame = {codeFrame}");
-                    Log($"codeFrame.ProcessInfo.Id = {codeFrame.ProcessInfo.Id}");
+                    //Log($"codeFrame.ProcessInfo.Id = {codeFrame.ProcessInfo.Id}");
                     //Log($"_currentCodeFrame = {_currentCodeFrame}");
 #endif
 

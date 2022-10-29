@@ -76,6 +76,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         switch (_currToken.TokenKind)
                         {
                             case TokenKind.Number:
+                            case TokenKind.Var:
                                 ProcessExpresionItem();
                                 break;
 
@@ -104,6 +105,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Number:
+                        case TokenKind.Var:
                             ProcessExpresionItem();
                             break;
 

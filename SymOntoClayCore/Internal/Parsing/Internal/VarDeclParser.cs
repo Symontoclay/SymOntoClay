@@ -60,7 +60,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 #if DEBUG
             //Log($"_state = {_state}");
             //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");
+            //Log($"Result = {Result.ToHumanizedString()}");
 #endif
 
             switch (_state)
@@ -105,6 +105,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _state = State.WaitForType;
                             break;
 
+                        case TokenKind.Assign:
                         case TokenKind.Semicolon:
                             _context.Recovery(_currToken);
                             Exit();

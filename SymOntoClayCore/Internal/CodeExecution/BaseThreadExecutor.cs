@@ -45,10 +45,10 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
 {
-    public abstract class BaseThreadExecutor: BaseLoggedComponent
+    public abstract class BaseThreadExecutor : BaseLoggedComponent
     {
         protected BaseThreadExecutor(IEngineContext context, IActivePeriodicObject activeObject)
-            :base(context.Logger)
+            : base(context.Logger)
         {
             _context = context;
 
@@ -122,7 +122,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var timeout = codeFrame.TargetDuration;
 
-            if(timeout.HasValue)
+            if (timeout.HasValue)
             {
                 var currentTick = _dateTimeProvider.CurrentTiks;
 
@@ -155,7 +155,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var reverseCodeFramesList = codeFramesList.ToList();
             reverseCodeFramesList.Reverse();
 
-            foreach(var codeFrame in reverseCodeFramesList)
+            foreach (var codeFrame in reverseCodeFramesList)
             {
                 codeFrame.ProcessInfo.Status = ProcessStatus.WaitingToRun;
 
@@ -184,7 +184,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _activeObject.Dispose();
         }
 
-        private bool CommandLoop()
+        private bool CommandLoop(CancellationToken cancellationToken)
         {
             try
             {
@@ -201,6 +201,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     return false;
                 }
 
+#if DEBUG
+                //Log($"cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
+#endif
+
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
+                    return true;
+                }
+
                 if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing)
                 {
 #if DEBUG
@@ -215,7 +225,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 //Log($"_currentCodeFrame.ProcessInfo.Status = {_currentCodeFrame.ProcessInfo.Status}");
 #endif
 
-                if(_currentCodeFrame.ProcessInfo.Status == ProcessStatus.Canceled)
+                if (_currentCodeFrame.ProcessInfo.Status == ProcessStatus.Canceled)
                 {
 #if DEBUG
                     //Log($"_currentCodeFrame.ProcessInfo.Status == ProcessStatus.Canceled");
@@ -227,7 +237,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 var endOfTargetDuration = _currentCodeFrame.EndOfTargetDuration;
 
-                if(endOfTargetDuration.HasValue)
+                if (endOfTargetDuration.HasValue)
                 {
 #if DEBUG
                     //Log($"endOfTargetDuration = {endOfTargetDuration}");
@@ -245,7 +255,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     //Log($"currentMilisecond = {currentMilisecond}");
 #endif
 
-                    if(currentMilisecond >= endOfTargetDuration.Value)
+                    if (currentMilisecond >= endOfTargetDuration.Value)
                     {
 #if DEBUG
                         //Log($"currentMilisecond >= endOfTargetDuration.Value");
@@ -312,7 +322,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             var kindOfValue = value.KindOfValue;
 
-                            switch(kindOfValue)
+                            switch (kindOfValue)
                             {
                                 case KindOfValue.WaypointSourceValue:
                                     {
@@ -361,7 +371,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             var varPtr = new Var();
 
-                            while(typesCount > 0)
+                            while (typesCount > 0)
                             {
                                 var typeName = valueStack.Pop();
 
@@ -369,7 +379,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                 //Log($"typeName = {typeName}");
 #endif
 
-                                if(!typeName.IsStrongIdentifierValue)
+                                if (!typeName.IsStrongIdentifierValue)
                                 {
                                     throw new Exception($"Typename should be StrongIdentifierValue.");
                                 }
@@ -385,7 +395,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             //Log($"varName = {varName}");
 #endif
 
-                            if(!varName.IsStrongIdentifierValue)
+                            if (!varName.IsStrongIdentifierValue)
                             {
                                 throw new Exception($"Varname should be StrongIdentifierValue.");
                             }
@@ -417,7 +427,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             var kindOfOperator = currentCommand.KindOfOperator;
 
-                            if(kindOfOperator == KindOfOperator.IsNot)
+                            if (kindOfOperator == KindOfOperator.IsNot)
                             {
                                 kindOfOperator = KindOfOperator.Is;
                             }
@@ -438,7 +448,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             //Log($"_currentCodeFrame (^) = {_currentCodeFrame.ToDbgString()}");
 #endif
 
-                            if(currentCommand.KindOfOperator == KindOfOperator.IsNot)
+                            if (currentCommand.KindOfOperator == KindOfOperator.IsNot)
                             {
                                 var result = _currentCodeFrame.ValuesStack.Pop();
 
@@ -459,7 +469,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #endif
                             }
 
-                            _currentCodeFrame.CurrentPosition++;
+                            //_currentCodeFrame.CurrentPosition++;
                         }
                         break;
 
@@ -479,14 +489,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
                             //Log($"operatorInfo (2)= {operatorInfo}");
 #endif
-                            
+
                             CallOperator(operatorInfo, paramsList);
 
 #if DEBUG
                             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
-                            _currentCodeFrame.CurrentPosition++;
+                            //_currentCodeFrame.CurrentPosition++;
                         }
                         break;
 
@@ -632,12 +642,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                 break;
                             }
 
-                            if(coordinator.ExecutionStatus == ActionExecutionStatus.Executing)
+                            if (coordinator.ExecutionStatus == ActionExecutionStatus.Executing)
                             {
                                 break;
                             }
 
-                            if(coordinator.ExecutionStatus == ActionExecutionStatus.Broken)
+                            if (coordinator.ExecutionStatus == ActionExecutionStatus.Broken)
                             {
                                 ProcessError(coordinator.RuleInstance);
                                 break;
@@ -723,7 +733,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             else
                             {
                                 _currentCodeFrame.ValuesStack.Push(currentValue);
-                            }                               
+                            }
 
 #if DEBUG
                             //_instancesStorage.PrintProcessesList();
@@ -750,7 +760,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             GoBackToPrevCodeFrame(ActionExecutionStatus.Complete);
 
-                            if(_currentCodeFrame == null)
+                            if (_currentCodeFrame == null)
                             {
                                 ExternalReturn = currentValue;
                             }
@@ -775,7 +785,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             //Log($"currentValue = {currentValue}");
 #endif
 
-                            if(!currentValue.IsStrongIdentifierValue)
+                            if (!currentValue.IsStrongIdentifierValue)
                             {
                                 throw new Exception($"Unexpected value '{currentValue.ToSystemString()}'.");
                             }
@@ -877,7 +887,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             //Log($"localExecutionContext = {localExecutionContext}");
 #endif
 
-                            if(localExecutionContext.Kind != KindOfLocalCodeExecutionContext.AddingFact)
+                            if (localExecutionContext.Kind != KindOfLocalCodeExecutionContext.AddingFact)
                             {
                                 throw new NotSupportedException();
                             }
@@ -899,7 +909,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
                 Error(e);
 #endif
-                
+
                 throw;
             }
         }
@@ -918,8 +928,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
             //Log($"_endOfTargetTimeout = {_endOfTargetTimeout}");
 #endif
-            
-            if(_endOfTargetDuration.HasValue)
+
+            if (_endOfTargetDuration.HasValue)
             {
                 var currentTick = _dateTimeProvider.CurrentTiks;
 
@@ -933,7 +943,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 //Log($"currentMilisecond = {currentMilisecond}");
 #endif
 
-                if(currentMilisecond >= _endOfTargetDuration.Value)
+                if (currentMilisecond >= _endOfTargetDuration.Value)
                 {
                     _endOfTargetDuration = null;
                     _currentCodeFrame.CurrentPosition++;
@@ -943,9 +953,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return;
             }
 
-            if(!_waitedTasksList.IsNullOrEmpty())
+            if (!_waitedTasksList.IsNullOrEmpty())
             {
-                if(_waitedTasksList.Any(p => p.Status == TaskStatus.Running))
+                if (_waitedTasksList.Any(p => p.Status == TaskStatus.Running))
                 {
                     return;
                 }
@@ -1006,7 +1016,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
             }
 
-            if(positionedParameters.Any(p => p.KindOfValue == KindOfValue.TaskValue))
+            if (positionedParameters.Any(p => p.KindOfValue == KindOfValue.TaskValue))
             {
                 _waitedTasksList = positionedParameters.Where(p => p.IsTaskValue).Select(p => p.AsTaskValue.SystemTask).ToList();
                 return;
@@ -1027,7 +1037,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"currLogicValue = {currLogicValue}");
 #endif
 
-            if(currLogicValue == targetValue)
+            if (currLogicValue == targetValue)
             {
 #if DEBUG
                 //Log("currLogicValue == targetValue");
@@ -1055,7 +1065,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var kindOfValue = currentValue.KindOfValue;
 
-            switch(kindOfValue)
+            switch (kindOfValue)
             {
                 case KindOfValue.LogicalValue:
                     return currentValue.AsLogicalValue.SystemValue;
@@ -1081,7 +1091,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         //Log($"result = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
 #endif
 
-                        if(searchResult.IsSuccess)
+                        if (searchResult.IsSuccess)
                         {
                             return 1;
                         }
@@ -1151,7 +1161,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 //Log($"sehItem = {sehItem}");
 #endif
 
-                if(sehItem.Condition != null)
+                if (sehItem.Condition != null)
                 {
                     searchOptions.QueryExpression = sehItem.Condition;
 
@@ -1165,7 +1175,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 //Log("NEXT");
 #endif
 
-                if(sehItem.VariableName != null && !sehItem.VariableName.IsEmpty)
+                if (sehItem.VariableName != null && !sehItem.VariableName.IsEmpty)
                 {
                     _currentVarStorage.SetValue(sehItem.VariableName, _currentError);
                 }
@@ -1226,7 +1236,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void GoBackToPrevCodeFrame(ActionExecutionStatus targetActionExecutionStatus)
         {
-            if(_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
+            if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
             {
                 var specialMark = _currentCodeFrame.SpecialMark;
 
@@ -1242,7 +1252,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     case SpecialMarkOfCodeFrame.MainFrameOfActionInstance:
-                        if(targetActionExecutionStatus == ActionExecutionStatus.None)
+                        if (targetActionExecutionStatus == ActionExecutionStatus.None)
                         {
                             break;
                         }
@@ -1262,7 +1272,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 //Log("currentProcessInfo.Status == ProcessStatus.Running");
 #endif
 
-                switch(targetActionExecutionStatus)
+                switch (targetActionExecutionStatus)
                 {
                     case ActionExecutionStatus.Complete:
                         currentProcessInfo.Status = ProcessStatus.Completed;
@@ -1272,7 +1282,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     case ActionExecutionStatus.Faulted:
                         currentProcessInfo.Status = ProcessStatus.Faulted;
                         break;
-                        
+
                     case ActionExecutionStatus.Canceled:
                     default:
                         currentProcessInfo.Status = ProcessStatus.Canceled;
@@ -1293,8 +1303,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
                 //Log($"_isCanceled = {_isCanceled}");
 #endif
-                
-                if(_isCanceled)
+
+                if (_isCanceled)
                 {
                     _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Canceled;
 
@@ -1319,14 +1329,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             for (var i = 0; i < count; i++)
             {
-                if(resolveValueFromVar)
+                if (resolveValueFromVar)
                 {
                     result.Add(TryResolveFromVar(valueStack.Pop()));
                 }
                 else
                 {
                     result.Add(valueStack.Pop());
-                }                
+                }
             }
 
             result.Reverse();
@@ -1342,7 +1352,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var enumerator = rawParamsList.GetEnumerator();
 
-            while(enumerator.MoveNext())
+            while (enumerator.MoveNext())
             {
                 var name = enumerator.Current.AsStrongIdentifierValue;
 
@@ -1350,7 +1360,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 var value = enumerator.Current;
 
-                if(resolveValueFromVar)
+                if (resolveValueFromVar)
                 {
                     value = TryResolveFromVar(value);
                 }
@@ -1367,7 +1377,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             IndependentAsync,
             ChildAsync
         }
-        
+
         private void CallFunction(KindOfFunctionParameters kindOfParameters, int parametersCount, SyncOption syncOption)
         {
 #if DEBUG
@@ -1426,7 +1436,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return;
             }
 
-            if(caller.IsStrongIdentifierValue)
+            if (caller.IsStrongIdentifierValue)
             {
                 CallStrongIdentifierValue(caller.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption, true);
                 return;
@@ -1435,21 +1445,41 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             throw new NotImplementedException();
         }
 
-        private void CallPointRefValue(PointRefValue caller, 
-            KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, 
+        private void CallPointRefValue(PointRefValue caller,
+            KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             Value annotation, SyncOption syncOption)
         {
+            var callerLeftOperand = caller.LeftOperand;
+            var callerRightOperand = caller.RightOperand;
+
 #if DEBUG
-            //Log($"caller.LeftOperand = {caller.LeftOperand}");
+            //Log($"callerLeftOperand = {callerLeftOperand}");
 #endif
 
-            if(caller.LeftOperand.IsHostValue)
+            if (callerLeftOperand.IsHostValue)
             {
-                CallHost(caller.RightOperand.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
+                CallHost(callerRightOperand.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
                 return;
             }
 
-            throw new NotImplementedException();
+            if(callerLeftOperand.IsStrongIdentifierValue)
+            {
+                throw new NotImplementedException();
+            }
+
+            var methodName = callerRightOperand.AsStrongIdentifierValue;
+
+#if DEBUG
+            //Log($"methodName = {methodName}");
+#endif
+
+            var method = callerLeftOperand.GetMethod(methodName, kindOfParameters, namedParameters, positionedParameters);
+
+#if DEBUG
+            //Log($"method = {method}");
+#endif
+
+            CallExecutable(method, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
         }
 
         private void CallHost(StrongIdentifierValue methodName, 
@@ -1709,8 +1739,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 switch(kindOfParameters)
                 {
+                    case KindOfFunctionParameters.NoParameters:
+                        result = executable.SystemHandler.Call(new List<Value>(), _currentCodeFrame.LocalContext);
+                        break;
+
                     case KindOfFunctionParameters.PositionedParameters:
                         result = executable.SystemHandler.Call(positionedParameters, _currentCodeFrame.LocalContext);
+                        break;
+
+                    case KindOfFunctionParameters.NamedParameters:
+                        result = executable.SystemHandler.Call(namedParameters.ToDictionary(p => p.Key.NameValue, p => p.Value), annotation, _currentCodeFrame.LocalContext);
                         break;
 
                     default:
@@ -1726,6 +1764,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
                 //Log($"_currentCodeFrame (co) = {_currentCodeFrame.ToDbgString()}");
 #endif
+
+                _currentCodeFrame.CurrentPosition++;
 
                 return;
             }

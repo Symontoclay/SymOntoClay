@@ -921,7 +921,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             }
         }
 
-        private bool GCByTimeOutCommandLoop()
+        private bool GCByTimeOutCommandLoop(CancellationToken cancellationToken)
         {
             Thread.Sleep(200);
 

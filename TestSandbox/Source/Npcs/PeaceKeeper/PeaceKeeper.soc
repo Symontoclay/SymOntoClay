@@ -15,29 +15,13 @@
         'End `a`' >> @>log;
     }
 
-    fun b() => 
-    {
-        '`b` has been called!' >> @>log;
-
-        @a = 10;
-
-        while (@a > 0)
-        {
-            @a >> @>log;
-            @a = @a - 1;
-        }
-
-        'End `b`' >> @>log;
-    }
-
     on Enter =>
     {
         'Begin' >> @>log;
 
-        @a = a~();
-        @b = b~();
+        @a = a~~();
 
-        wait @a, @b;
+        @a.cancel();
 
         'End' >> @>log;
     }

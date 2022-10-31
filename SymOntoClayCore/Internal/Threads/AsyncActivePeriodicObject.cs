@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.Threads
 
         /// <inheritdoc/>
         public PeriodicDelegate PeriodicMethod { get; set; }
-
+        
         private volatile bool _isWaited;
 
         /// <inheritdoc/>
@@ -93,6 +93,9 @@ namespace SymOntoClay.Core.Internal.Threads
                 _isExited = false;
                 _isWaited = false;
 
+                var cancellationTokenSource = new CancellationTokenSource();
+                var cancellationToken = cancellationTokenSource.Token;
+
                 var task = new Task(() => {
                     var autoResetEvent = _context.WaitEvent;
 
@@ -110,14 +113,14 @@ namespace SymOntoClay.Core.Internal.Threads
                             return;
                         }
 
-                        if (!PeriodicMethod())
+                        if (!PeriodicMethod(cancellationToken))
                         {
                             return;
                         }
                     }
-                });
+                }, cancellationToken);
 
-                _taskValue = new TaskValue(task);
+                _taskValue = new TaskValue(task, cancellationTokenSource);
 
                 task.Start();
 

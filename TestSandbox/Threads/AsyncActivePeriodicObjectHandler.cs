@@ -122,7 +122,7 @@ namespace TestSandbox.Threads
         private int _n = 0;
         private int _m = 0;
 
-        private bool NRun()
+        private bool NRun(CancellationToken cancellationToken)
         {
             _n++;
 
@@ -136,7 +136,7 @@ namespace TestSandbox.Threads
             return true;
         }
 
-        private bool NRun_2()
+        private bool NRun_2(CancellationToken cancellationToken)
         {
             _m++;
 

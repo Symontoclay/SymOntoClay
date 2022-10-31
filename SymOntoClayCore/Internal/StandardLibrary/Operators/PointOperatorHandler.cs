@@ -55,7 +55,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             //Log($"rightOperand (after) = {rightOperand}");
 #endif
 
-            if (leftOperand.IsHostValue && rightOperand.IsStrongIdentifierValue)
+            if ((leftOperand.IsHostValue || leftOperand.IsTaskValue) && rightOperand.IsStrongIdentifierValue)
             {
                 var result = new PointRefValue(leftOperand, rightOperand);
                 result.CheckDirty();
@@ -86,6 +86,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                 throw new NotImplementedException();
             }
+
+#if DEBUG
+            //Log($"leftOperand (after) = {leftOperand}");
+            //Log($"rightOperand (after) = {rightOperand}");
+#endif
 
             throw new NotImplementedException();
         }

@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.Threads;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace TestSandbox.Threads
 {
@@ -45,7 +46,7 @@ namespace TestSandbox.Threads
 
         private int _n = 0;
 
-        private bool NRun()
+        private bool NRun(CancellationToken cancellationToken)
         {
             _n++;
 

@@ -20,23 +20,33 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel.Handlers;
 using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class TaskValue : Value
     {
-        public TaskValue(Task systemTask)
+#if DEBUG
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
+        public TaskValue(Task systemTask, CancellationTokenSource cancellationTokenSource)
         {
             SystemTask = systemTask;
+            _cancellationTokenSource = cancellationTokenSource;
             TaskId = Guid.NewGuid().ToString("D");
+            _cancellationTokenSourceCancelHandler = new CancellationTokenSourceCancelHandler(cancellationTokenSource);
         }
 
         /// <inheritdoc/>
@@ -50,10 +60,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public string TaskId { get; set; }
         public Task SystemTask { get; set; }
+        private readonly CancellationTokenSource _cancellationTokenSource;
 
         public void Wait()
         {
             SystemTask?.Wait();
+        }
+
+        public void Cancel()
+        {
+            _cancellationTokenSource.Cancel();
         }
 
         /// <inheritdoc/>
@@ -66,6 +82,50 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override string ToSystemString()
         {
             throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public override IExecutable GetMethod(StrongIdentifierValue methodName, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters)
+        {
+            var methodNameStr = methodName.NormalizedNameValue;
+
+#if DEBUG
+            //_gbcLogger.Info($"methodNameStr = {methodNameStr}");
+            //_gbcLogger.Info($"kindOfParameters = {kindOfParameters}");
+#endif
+
+            IExecutable method = null;
+
+            switch (methodNameStr)
+            {
+                case "cancel":
+                    method = GetCancelMethod(kindOfParameters);
+                    break;
+
+            }
+
+            if(method != null)
+            {
+                return method;
+            }
+
+            return base.GetMethod(methodName, kindOfParameters, namedParameters, positionedParameters);
+        }
+
+        private readonly CancellationTokenSourceCancelHandler _cancellationTokenSourceCancelHandler;
+
+        private IExecutable GetCancelMethod(KindOfFunctionParameters kindOfParameters)
+        {
+#if DEBUG
+            //_gbcLogger.Info($"kindOfParameters = {kindOfParameters}");
+#endif
+
+            if(kindOfParameters != KindOfFunctionParameters.NoParameters)
+            {
+                return null;
+            }
+
+            return _cancellationTokenSourceCancelHandler;
         }
 
         /// <inheritdoc/>
@@ -88,7 +148,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return (Value)cloneContext[this];
             }
 
-            var result = new TaskValue(SystemTask);
+            var result = new TaskValue(SystemTask, _cancellationTokenSource);
             cloneContext[this] = result;
 
             result.TaskId = TaskId;

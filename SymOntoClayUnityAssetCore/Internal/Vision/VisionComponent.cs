@@ -106,7 +106,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             }
         }
 
-        private bool CommandLoop()
+        private bool CommandLoop(CancellationToken cancellationToken)
         {
             Thread.Sleep(200);
             

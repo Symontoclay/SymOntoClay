@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Threads
@@ -56,9 +57,12 @@ namespace SymOntoClay.Core.Internal.Threads
         {
             _isActive = true;
 
+            var cancellationTokenSource = new CancellationTokenSource();
+            var cancellationToken = cancellationTokenSource.Token;
+
             while (true)
             {
-                if (!PeriodicMethod())
+                if (!PeriodicMethod(cancellationToken))
                 {
                     _isActive = false;
                     return _taskValue;

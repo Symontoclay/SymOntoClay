@@ -60,7 +60,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
         private readonly int _targetDuration;
 
-        private bool NRun()
+        private bool NRun(CancellationToken cancellationToken)
         {
             Thread.Sleep(100);
 

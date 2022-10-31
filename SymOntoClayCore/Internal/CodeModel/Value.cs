@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -125,6 +126,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual void SetValue(Value value)
         {
             throw new NotImplementedException();
+        }
+
+        public virtual IExecutable GetMethod(StrongIdentifierValue methodName,
+            KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters)
+        {
+            return null;
         }
 
         /// <summary>

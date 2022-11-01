@@ -32,6 +32,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
 {
@@ -81,7 +82,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
 
         public static CodeFrame ConvertExecutableToCodeFrame(IExecutable function, KindOfFunctionParameters kindOfParameters,
             Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
-            LocalCodeExecutionContext parentLocalCodeExecutionContext, IMainStorageContext context)
+            LocalCodeExecutionContext parentLocalCodeExecutionContext, IMainStorageContext context, ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null)
         {
 #if DEBUG
             //Log($"kindOfParameters = {kindOfParameters}");
@@ -129,6 +130,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
 
             localCodeExecutionContext.Holder = parentLocalCodeExecutionContext.Holder;
 
+#if DEBUG
+            _gbcLogger.Info($"additionalSettings = {additionalSettings}");
+#endif
+
             var codeFrame = new CodeFrame();
             codeFrame.CompiledFunctionBody = function.CompiledFunctionBody;
             codeFrame.LocalContext = localCodeExecutionContext;
@@ -137,7 +142,35 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
 
             codeFrame.ProcessInfo = processInfo;
             processInfo.CodeFrame = codeFrame;
+
+#if DEBUG
+            _gbcLogger.Info($"function.CodeItem = {function.CodeItem}");
+#endif
+
             codeFrame.Metadata = function.CodeItem;
+
+            var timeout = additionalSettings?.Timeout;
+
+            if (timeout.HasValue)
+            {
+                codeFrame.TargetDuration = timeout;
+            }
+
+            var priority = additionalSettings?.Priority;
+
+#if DEBUG
+            _gbcLogger.Info($"priority = {priority}");
+#endif
+
+            if (priority.HasValue)
+            {
+                processInfo.Priority = priority.Value;
+            }
+
+
+#if DEBUG
+            _gbcLogger.Info($"processInfo = {processInfo}");
+#endif
 
 #if DEBUG
             //Log($"codeFrame = {codeFrame}");

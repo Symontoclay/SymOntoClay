@@ -19,9 +19,9 @@
     {
         'Begin' >> @>log;
 
-        @a = a~~();
+        @a = a~~()[: priority = 1 :];
 
-        @a.cancel();
+        wait @a;
 
         'End' >> @>log;
     }

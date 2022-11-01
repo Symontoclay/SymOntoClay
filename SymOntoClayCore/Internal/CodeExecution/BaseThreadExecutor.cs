@@ -1677,19 +1677,44 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         private StrongIdentifierValue _timeoutName = NameHelper.CreateName("timeout");
+        private StrongIdentifierValue _priorityName = NameHelper.CreateName("priority");
 
         private long? GetTimeoutFromAnnotation(Value annotation)
         {
-            if(annotation == null)
+            var numberValue = GetSettingsFromAnnotation(annotation, _timeoutName);
+
+            if(numberValue == null)
+            {
+                return null;
+            }
+
+            return Convert.ToInt64(numberValue.SystemValue.Value);
+        }
+
+        private float? GetPriorityFromAnnotation(Value annotation)
+        {
+            var numberValue = GetSettingsFromAnnotation(annotation, _priorityName);
+
+            if (numberValue == null)
+            {
+                return null;
+            }
+
+            return Convert.ToSingle(numberValue.SystemValue.Value);
+        }
+
+        private NumberValue GetSettingsFromAnnotation(Value annotation, StrongIdentifierValue settingName)
+        {
+            if (annotation == null)
             {
                 return null;
             }
 
             var localContext = _currentCodeFrame.LocalContext;
 
-            var initialValue = _annotationsResolver.GetSettings(annotation, _timeoutName, localContext);
+            var initialValue = _annotationsResolver.GetSettings(annotation, settingName, localContext);
 
-            if(initialValue == null || initialValue.KindOfValue == KindOfValue.NullValue)
+            if (initialValue == null || initialValue.KindOfValue == KindOfValue.NullValue)
             {
                 return null;
             }
@@ -1701,7 +1726,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return null;
             }
 
-            return Convert.ToInt64(numberValue.SystemValue.Value);
+            return numberValue;
         }
 
         private void CallOperator(Operator op, List<Value> positionedParameters)
@@ -1724,12 +1749,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var coordinator = executable.TryActivate(_context);
 
             var timeout = GetTimeoutFromAnnotation(annotation);
-
+            var priority = GetPriorityFromAnnotation(annotation);
 #if DEBUG
             //Log($"executable.IsSystemDefined = {executable.IsSystemDefined}");
             //Log($"coordinator != null = {coordinator != null}");
-            //Log($"annotation = {annotation}");
+            Log($"annotation = {annotation}");
             //Log($"timeout = {timeout}");
+            Log($"priority = {priority}");
             //Log($"syncOption = {syncOption}");
 #endif
 
@@ -1771,12 +1797,18 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
             else
             {
-                var newCodeFrame = CodeFrameHelper.ConvertExecutableToCodeFrame(executable, kindOfParameters, namedParameters, positionedParameters, _currentCodeFrame.LocalContext, _context);
+                ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null;
 
-                if(timeout.HasValue)
+                if (timeout.HasValue || priority.HasValue)
                 {
-                    newCodeFrame.TargetDuration = timeout;
+                    additionalSettings = new ConversionExecutableToCodeFrameAdditionalSettings()
+                    {
+                        Timeout = timeout,
+                        Priority = priority
+                    };
                 }
+
+                var newCodeFrame = CodeFrameHelper.ConvertExecutableToCodeFrame(executable, kindOfParameters, namedParameters, positionedParameters, _currentCodeFrame.LocalContext, _context, additionalSettings);
 
 #if DEBUG
                 //Log($"newCodeFrame = {newCodeFrame}");

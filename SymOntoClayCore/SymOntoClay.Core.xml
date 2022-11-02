@@ -6900,6 +6900,9 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.WhileStatementParser.OnRun">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.WithParser.OnRun">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.WorldPaser.OnRun">
             <inheritdoc/>
         </member>

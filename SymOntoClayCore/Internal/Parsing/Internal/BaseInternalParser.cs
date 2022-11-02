@@ -125,6 +125,70 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             return name;
         }
 
+        protected Value ParseValue()
+        {
+            switch (_currToken.TokenKind)
+            {
+                case TokenKind.String:
+                    return new StringValue(_currToken.Content);
+
+                case TokenKind.Number:
+                    {
+                        _context.Recovery(_currToken);
+
+                        var parser = new NumberParser(_context);
+                        parser.Run();
+
+                        return parser.Result;
+                    }
+
+                case TokenKind.Identifier:
+                case TokenKind.Entity:
+                    return ParseName(_currToken.Content);
+
+                case TokenKind.Word:
+                    switch (_currToken.KeyWordTokenKind)
+                    {
+                        case KeyWordTokenKind.Null:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var parser = new NullParser(_context);
+                                parser.Run();
+
+                                return parser.Result;
+                            }
+
+                        default:
+                            return ParseName(_currToken.Content);
+                    }
+
+                case TokenKind.OpenFactBracket:
+                    {
+                        _context.Recovery(_currToken);
+
+                        var parser = new LogicalQueryParser(_context);
+                        parser.Run();
+
+                        var value = new RuleInstanceValue(parser.Result);
+                        return value;
+                    }
+
+                case TokenKind.EntityCondition:
+                    {
+                        _context.Recovery(_currToken);
+
+                        var parser = new ConditionalEntityParser(_context);
+                        parser.Run();
+
+                        return parser.Result;
+                    }
+
+                default:
+                    throw new UnexpectedTokenException(_currToken);
+            }
+        }
+
         protected ResultOfParseValueOnObjDefLevel ParseValueOnObjDefLevel()
         {
             var result = new ResultOfParseValueOnObjDefLevel();
@@ -284,6 +348,28 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     return false;
             }
+        }
+
+        protected bool IsValueToken()
+        {
+            return IsValueToken(_currToken.TokenKind);
+        }
+
+        protected bool IsValueToken(TokenKind tokenKind)
+        {
+            switch(tokenKind)
+            {
+                case TokenKind.Number:
+                case TokenKind.String:
+                case TokenKind.Identifier:
+                case TokenKind.Entity:
+                case TokenKind.Word:
+                case TokenKind.OpenFactBracket:
+                case TokenKind.EntityCondition:
+                    return true;
+            }
+
+            return false;
         }
 
         protected AstExpression ProcessCondition()

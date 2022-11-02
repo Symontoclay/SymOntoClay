@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public static readonly TypeOfAccess DefaultTypeOfAccess = TypeOfAccess.Protected;
         
         public abstract KindOfCodeEntity Kind { get;}
-
+        
         public StrongIdentifierValue Name
         { 
             get
@@ -122,6 +122,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public List<RuleInstance> DeactivatingConditions { get; private set; } = new List<RuleInstance>();
 
         public List<IdleActionItem> IdleActionItems { get; private set; } = new List<IdleActionItem>();
+
+        public Value Priority { get; set; }
 
         public virtual bool IsRuleInstance => false;
         public virtual RuleInstance AsRuleInstance => null;
@@ -228,6 +230,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             DeactivatingConditions = source.DeactivatingConditions?.Select(p => p.Clone(cloneContext)).ToList();
             IdleActionItems = source.IdleActionItems?.Select(p => p.Clone(cloneContext)).ToList();
 
+            Priority = source.Priority?.CloneValue(cloneContext);
+
             AppendAnnotations(source, cloneContext);
         }
 
@@ -284,7 +288,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjListProp(n, nameof(ActivatingConditions), ActivatingConditions); 
             sb.PrintObjListProp(n, nameof(DeactivatingConditions), DeactivatingConditions);
             sb.PrintObjListProp(n, nameof(IdleActionItems), IdleActionItems);
-            
+
+            sb.PrintObjProp(n, nameof(Priority), Priority);
+
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -314,6 +320,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjListProp(n, nameof(DeactivatingConditions), DeactivatingConditions);
             sb.PrintShortObjListProp(n, nameof(IdleActionItems), IdleActionItems);
 
+            sb.PrintShortObjProp(n, nameof(Priority), Priority);
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -334,6 +342,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjListProp(n, nameof(ActivatingConditions), ActivatingConditions);
             sb.PrintBriefObjListProp(n, nameof(DeactivatingConditions), DeactivatingConditions);
             sb.PrintBriefObjListProp(n, nameof(IdleActionItems), IdleActionItems);
+
+            sb.PrintBriefObjProp(n, nameof(Priority), Priority);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

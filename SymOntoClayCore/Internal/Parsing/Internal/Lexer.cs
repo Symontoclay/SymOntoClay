@@ -1193,6 +1193,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Idle;
                             break;
                         }
+
+                        if (string.Compare(content, "with", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.With;
+                            break;
+                        }
                     }
                     break;
 

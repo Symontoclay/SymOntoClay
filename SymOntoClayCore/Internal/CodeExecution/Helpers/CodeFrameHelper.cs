@@ -143,11 +143,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             codeFrame.ProcessInfo = processInfo;
             processInfo.CodeFrame = codeFrame;
 
+            var codeItem = function.CodeItem;
+
 #if DEBUG
-            _gbcLogger.Info($"function.CodeItem = {function.CodeItem}");
+            _gbcLogger.Info($"codeItem = {codeItem}");
 #endif
 
-            codeFrame.Metadata = function.CodeItem;
+            codeFrame.Metadata = codeItem;
 
             var timeout = additionalSettings?.Timeout;
 
@@ -165,6 +167,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             if (priority.HasValue)
             {
                 processInfo.Priority = priority.Value;
+            }
+            else
+            {
+                var codeItemPriority = codeItem.Priority;
+
+                if (codeItemPriority != null)
+                {
+#if DEBUG
+                    _gbcLogger.Info($"codeItemPriority = {codeItemPriority}");
+#endif
+
+                    throw new NotImplementedException();
+                }
             }
 
 

@@ -125,13 +125,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 case State.WaitForSettingsValue:
                     {
-                        var parsingResult = ParseValueOnObjDefLevel();
+                        var value = ParseValue();
 
 #if DEBUG
-                        //Log($"parsingResult = {parsingResult}");
+                        //Log($"value = {value}");
 #endif
 
-                        Result.SettingsDict[_settingsKey] = parsingResult.Value;
+                        Result.SettingsDict[_settingsKey] = value;
                         _settingsKey = null;
 
                         _state = State.GotItem;

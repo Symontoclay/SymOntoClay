@@ -35,6 +35,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotNamedFunctionMark,
             GotName,
             GotParameters,
+            GotWidth,
             WaitForAction,
             GotAction
         }
@@ -142,8 +143,34 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _state = State.WaitForAction;
                             break;
 
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.With:
+                                    ProcessWidth();
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotWidth:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Lambda:
+                            _state = State.WaitForAction;
+                            break;
+
+                        case TokenKind.OpenFigureBracket:
+                            _context.Recovery(_currToken);
+                            _state = State.WaitForAction;
+                            break;
                     }
                     break;
 
@@ -185,6 +212,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
+        }
+
+        private void ProcessWidth()
+        {
+            _context.Recovery(_currToken);
+
+            var parser = new WithParser(_namedFunction, _context, TokenKind.Lambda, TokenKind.OpenFigureBracket);
+            parser.Run();
+
+            _state = State.GotWidth;
         }
     }
 }

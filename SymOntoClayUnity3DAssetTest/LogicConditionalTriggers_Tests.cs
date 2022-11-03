@@ -325,6 +325,71 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
         [Test]
         [Parallelizable]
+        public void Case4_a()
+        {
+            using var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{ 
+    on {: see(I, #a) :} =>
+    {
+        'on Fired in App' >> @>log;
+    }
+
+    on {: see(I, $x) :} ($x >> @x) as `trigger 1` alias `Alarm trigger`, trigger_5 => 
+    {
+        'on Fired $x in App' >> @>log;
+        @x >> @>log;
+    }
+}";
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual(message, "on Fired in App");
+                        break;
+
+                    case 2:
+                        Assert.AreEqual(message, "on Fired $x in App");
+                        break;
+
+                    case 3:
+                        Assert.AreEqual(message, "#a");
+                        break;
+
+                    case 4:
+                        Assert.AreEqual(message, "on Fired $x in App");
+                        break;
+
+                    case 5:
+                        Assert.AreEqual(message, "#b");
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+            Thread.Sleep(1000);
+
+            var factId = npc.InsertFact("{: see(I, #a) :}");
+
+            Thread.Sleep(1000);
+
+            npc.InsertFact("{: see(I, #b) :}");
+
+            Thread.Sleep(1000);
+
+            npc.RemoveFact(factId);
+
+            Thread.Sleep(1000);
+        }
+
+        [Test]
+        [Parallelizable]
         public void Case5()
         {
             using var instance = new AdvancedBehaviorTestEngineInstance();
@@ -934,7 +999,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            var factId = npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(3000);
         }
@@ -981,7 +1046,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            var factId = npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1033,7 +1098,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            var factId = npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1085,7 +1150,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            var factId = npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1137,7 +1202,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            var factId = npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1189,7 +1254,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            var factId = npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1241,7 +1306,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            var factId = npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1287,7 +1352,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            var factId = npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1333,7 +1398,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            var factId = npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1379,7 +1444,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            var factId = npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1427,7 +1492,7 @@ app PeaceKeeper
 
             Thread.Sleep(1000);
 
-            var factId = npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1471,7 +1536,7 @@ app PeaceKeeper
 
             Thread.Sleep(1000);
 
-            var factId = npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1515,7 +1580,229 @@ app PeaceKeeper
 
             Thread.Sleep(1000);
 
-            var factId = npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact("{: see(I, #a) :}");
+
+            Thread.Sleep(1000);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case15()
+        {
+            using var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{
+    on {: see(I, $x) :}($x >> @x) as `trigger 1` with priority 1  => 
+    {
+        'on Fired $x in App' >> @>log;
+        @x >> @>log;
+    }
+}";
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual(message, "on Fired $x in App");
+                        break;
+
+                    case 2:
+                        Assert.AreEqual(message, "#a");
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+            Thread.Sleep(1000);
+
+            npc.InsertFact("{: see(I, #a) :}");
+
+            Thread.Sleep(1000);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case15_a()
+        {
+            using var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{
+    on {: see(I, $x) :}($x >> @x) as `trigger 1` alias `Alarm trigger`, trigger_5 with priority 1  => 
+    {
+        'on Fired $x in App' >> @>log;
+        @x >> @>log;
+    }
+}";
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual(message, "on Fired $x in App");
+                        break;
+
+                    case 2:
+                        Assert.AreEqual(message, "#a");
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+            Thread.Sleep(1000);
+
+            npc.InsertFact("{: see(I, #a) :}");
+
+            Thread.Sleep(1000);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case15_b()
+        {
+            using var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{
+    on {: see(I, $x) :}($x >> @x) with priority 1  => 
+    {
+        'on Fired $x in App' >> @>log;
+        @x >> @>log;
+    }
+}";
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual(message, "on Fired $x in App");
+                        break;
+
+                    case 2:
+                        Assert.AreEqual(message, "#a");
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+            Thread.Sleep(1000);
+
+            npc.InsertFact("{: see(I, #a) :}");
+
+            Thread.Sleep(1000);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case16()
+        {
+            using var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{
+	on {: see(I, #a) :} as `trigger 1` with priority 1 => {
+	     'D' >> @>log;
+	}
+}";
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual(message, "D");
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+            Thread.Sleep(1000);
+
+            npc.InsertFact("{: see(I, #a) :}");
+
+            Thread.Sleep(1000);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case16_a()
+        {
+            using var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{
+	on {: see(I, #a) :} as `trigger 1` alias `Alarm trigger`, trigger_5 with priority 1 => {
+	     'D' >> @>log;
+	}
+}";
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual(message, "D");
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+            Thread.Sleep(1000);
+
+            npc.InsertFact("{: see(I, #a) :}");
+
+            Thread.Sleep(1000);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case16_b()
+        {
+            using var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{
+	on {: see(I, #a) :} with priority 1 => {
+	     'D' >> @>log;
+	}
+}";
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual(message, "D");
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+            Thread.Sleep(1000);
+
+            npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }

@@ -1,28 +1,6 @@
 ﻿app PeaceKeeper
 {
-    fun a() with priority = 1 => 
-    {
-        '`a` has been called!' >> @>log;
-
-        @a = 10;
-
-        while (@a > 0)
-        {
-            @a >> @>log;
-            @a = @a - 1;
-        }
-
-        'End `a`' >> @>log;
-    }
-
-    on Enter =>
-    {
-        'Begin' >> @>log;
-
-        @a = a~~()/*[: priority = 1 :]*/;
-
-        wait @a;
-
-        'End' >> @>log;
-    }
+	on {: see(I, #a) :} with priority 1 => {
+	     'D' >> @>log;
+	}
 }

@@ -128,11 +128,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case KeyWordTokenKind.As:
-                            _context.Recovery(_currToken);
-                            Exit();
-                            break;
-
                         case KeyWordTokenKind.Alias:
+                        case KeyWordTokenKind.With:
                             _context.Recovery(_currToken);
                             Exit();
                             break;

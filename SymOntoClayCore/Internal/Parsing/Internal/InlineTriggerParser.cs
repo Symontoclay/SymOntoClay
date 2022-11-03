@@ -30,6 +30,7 @@ using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
@@ -55,6 +56,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             WaitForName,
             GotName,
             GotAlias,
+            GotWidth,
             WaitForSetAction,
             GotSetAction,
             WaitForResetAction,
@@ -283,6 +285,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     _state = State.WaitForName;
                                     break;
 
+                                case KeyWordTokenKind.With:
+                                    ProcessWidth();
+                                    break;
+
                                 default:
                                     throw new UnexpectedTokenException(_currToken);
                             }
@@ -302,6 +308,26 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.OpenFigureBracket:
                             ProcessSetFunctionBody();
+                            break;
+
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.As:
+                                    _state = State.WaitForName;
+                                    break;
+
+                                case KeyWordTokenKind.Alias:
+                                    ProcessAlias();
+                                    break;
+
+                                case KeyWordTokenKind.With:
+                                    ProcessWidth();
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
                             break;
 
                         default:
@@ -485,16 +511,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             switch (_currToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.Alias:
-                                    {
-                                        _context.Recovery(_currToken);
+                                    ProcessAlias();
+                                    break;
 
-                                        var parser = new AliasPaser(_context, TokenKind.Lambda, TokenKind.OpenFigureBracket);
-                                        parser.Run();
-
-                                        Result.AddAliasRange(parser.Result);
-
-                                        _state = State.GotAlias;
-                                    }
+                                case KeyWordTokenKind.With:
+                                    ProcessWidth();
                                     break;
 
                                 default:
@@ -516,6 +537,50 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.OpenFigureBracket:
                             ProcessSetFunctionBody();
+                            break;
+
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.With:
+                                    ProcessWidth();
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotWidth:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Lambda:
+                            _state = State.WaitForSetAction;
+                            break;
+
+                        case TokenKind.OpenFigureBracket:
+                            ProcessSetFunctionBody();
+                            break;
+
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.As:
+                                    _state = State.WaitForName;
+                                    break;
+
+                                case KeyWordTokenKind.Alias:
+                                    ProcessAlias();
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
                             break;
 
                         default:
@@ -636,6 +701,28 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     return false;
             }
+        }
+
+        private void ProcessAlias()
+        {
+            _context.Recovery(_currToken);
+
+            var parser = new AliasPaser(_context, TokenKind.Lambda, TokenKind.OpenFigureBracket);
+            parser.Run();
+
+            Result.AddAliasRange(parser.Result);
+
+            _state = State.GotAlias;
+        }
+
+        private void ProcessWidth()
+        {
+            _context.Recovery(_currToken);
+
+            var parser = new WithParser(_inlineTrigger, _context, TokenKind.Lambda, TokenKind.OpenFigureBracket, TokenKind.OpenRoundBracket);
+            parser.Run();
+
+            _state = State.GotWidth;
         }
 
         private void ProcessBindingVariables()

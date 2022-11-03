@@ -1753,9 +1753,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
             //Log($"executable.IsSystemDefined = {executable.IsSystemDefined}");
             //Log($"coordinator != null = {coordinator != null}");
-            Log($"annotation = {annotation}");
+            //Log($"annotation = {annotation}");
             //Log($"timeout = {timeout}");
-            Log($"priority = {priority}");
+            //Log($"priority = {priority}");
             //Log($"syncOption = {syncOption}");
 #endif
 

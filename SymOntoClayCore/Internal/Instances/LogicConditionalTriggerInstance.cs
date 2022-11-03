@@ -683,6 +683,7 @@ namespace SymOntoClay.Core.Internal.Instances
 #if DEBUG
             //Log($"_trigger = {_trigger}");
             //Log($"_trigger.CompiledFunctionBody = {_trigger.CompiledFunctionBody.ToDbgString()}");
+            //Log($"_trigger.Priority = {_trigger.Priority}");
 #endif
 
             var processInitialInfo = new ProcessInitialInfo();

@@ -2111,5 +2111,401 @@ app PeaceKeeper
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case16()
+        {
+            var text = @"app PeaceKeeper
+{
+    fun a() => 
+    {
+        '`a` has been called!' >> @>log;
+
+        @a = 10;
+
+        while (@a > 0)
+        {
+            @a >> @>log;
+            @a = @a - 1;
+        }
+
+        'End `a`' >> @>log;
+    }
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+
+        @a = a~~()[: priority = 1 :];
+
+        wait @a;
+
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("`a` has been called!", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("10", message);
+                            break;
+
+                        case 4:
+                            Assert.AreEqual("9", message);
+                            break;
+
+                        case 5:
+                            Assert.AreEqual("8", message);
+                            break;
+
+                        case 6:
+                            Assert.AreEqual("7", message);
+                            break;
+
+                        case 7:
+                            Assert.AreEqual("6", message);
+                            break;
+
+                        case 8:
+                            Assert.AreEqual("5", message);
+                            break;
+
+                        case 9:
+                            Assert.AreEqual("4", message);
+                            break;
+
+                        case 10:
+                            Assert.AreEqual("3", message);
+                            break;
+
+                        case 11:
+                            Assert.AreEqual("2", message);
+                            break;
+
+                        case 12:
+                            Assert.AreEqual("1", message);
+                            break;
+
+                        case 13:
+                            Assert.AreEqual("End `a`", message);
+                            break;
+
+                        case 14:
+                            Assert.AreEqual("End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case16_a()
+        {
+            var text = @"app PeaceKeeper
+{
+    fun a() with priority = 1 => 
+    {
+        '`a` has been called!' >> @>log;
+
+        @a = 10;
+
+        while (@a > 0)
+        {
+            @a >> @>log;
+            @a = @a - 1;
+        }
+
+        'End `a`' >> @>log;
+    }
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+
+        @a = a~~();
+
+        wait @a;
+
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("`a` has been called!", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("10", message);
+                            break;
+
+                        case 4:
+                            Assert.AreEqual("9", message);
+                            break;
+
+                        case 5:
+                            Assert.AreEqual("8", message);
+                            break;
+
+                        case 6:
+                            Assert.AreEqual("7", message);
+                            break;
+
+                        case 7:
+                            Assert.AreEqual("6", message);
+                            break;
+
+                        case 8:
+                            Assert.AreEqual("5", message);
+                            break;
+
+                        case 9:
+                            Assert.AreEqual("4", message);
+                            break;
+
+                        case 10:
+                            Assert.AreEqual("3", message);
+                            break;
+
+                        case 11:
+                            Assert.AreEqual("2", message);
+                            break;
+
+                        case 12:
+                            Assert.AreEqual("1", message);
+                            break;
+
+                        case 13:
+                            Assert.AreEqual("End `a`", message);
+                            break;
+
+                        case 14:
+                            Assert.AreEqual("End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case16_a_1()
+        {
+            var text = @"app PeaceKeeper
+{
+    fun a() with priority = 1 
+    {
+        '`a` has been called!' >> @>log;
+
+        @a = 10;
+
+        while (@a > 0)
+        {
+            @a >> @>log;
+            @a = @a - 1;
+        }
+
+        'End `a`' >> @>log;
+    }
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+
+        @a = a~~();
+
+        wait @a;
+
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("`a` has been called!", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("10", message);
+                            break;
+
+                        case 4:
+                            Assert.AreEqual("9", message);
+                            break;
+
+                        case 5:
+                            Assert.AreEqual("8", message);
+                            break;
+
+                        case 6:
+                            Assert.AreEqual("7", message);
+                            break;
+
+                        case 7:
+                            Assert.AreEqual("6", message);
+                            break;
+
+                        case 8:
+                            Assert.AreEqual("5", message);
+                            break;
+
+                        case 9:
+                            Assert.AreEqual("4", message);
+                            break;
+
+                        case 10:
+                            Assert.AreEqual("3", message);
+                            break;
+
+                        case 11:
+                            Assert.AreEqual("2", message);
+                            break;
+
+                        case 12:
+                            Assert.AreEqual("1", message);
+                            break;
+
+                        case 13:
+                            Assert.AreEqual("End `a`", message);
+                            break;
+
+                        case 14:
+                            Assert.AreEqual("End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case16_a_2()
+        {
+            var text = @"app PeaceKeeper
+{
+    fun a() with priority 1 
+    {
+        '`a` has been called!' >> @>log;
+
+        @a = 10;
+
+        while (@a > 0)
+        {
+            @a >> @>log;
+            @a = @a - 1;
+        }
+
+        'End `a`' >> @>log;
+    }
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+
+        @a = a~~();
+
+        wait @a;
+
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("`a` has been called!", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("10", message);
+                            break;
+
+                        case 4:
+                            Assert.AreEqual("9", message);
+                            break;
+
+                        case 5:
+                            Assert.AreEqual("8", message);
+                            break;
+
+                        case 6:
+                            Assert.AreEqual("7", message);
+                            break;
+
+                        case 7:
+                            Assert.AreEqual("6", message);
+                            break;
+
+                        case 8:
+                            Assert.AreEqual("5", message);
+                            break;
+
+                        case 9:
+                            Assert.AreEqual("4", message);
+                            break;
+
+                        case 10:
+                            Assert.AreEqual("3", message);
+                            break;
+
+                        case 11:
+                            Assert.AreEqual("2", message);
+                            break;
+
+                        case 12:
+                            Assert.AreEqual("1", message);
+                            break;
+
+                        case 13:
+                            Assert.AreEqual("End `a`", message);
+                            break;
+
+                        case 14:
+                            Assert.AreEqual("End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

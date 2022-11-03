@@ -131,7 +131,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             localCodeExecutionContext.Holder = parentLocalCodeExecutionContext.Holder;
 
 #if DEBUG
-            _gbcLogger.Info($"additionalSettings = {additionalSettings}");
+            //_gbcLogger.Info($"additionalSettings = {additionalSettings}");
 #endif
 
             var codeFrame = new CodeFrame();
@@ -146,7 +146,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             var codeItem = function.CodeItem;
 
 #if DEBUG
-            _gbcLogger.Info($"codeItem = {codeItem}");
+            //_gbcLogger.Info($"codeItem = {codeItem}");
 #endif
 
             codeFrame.Metadata = codeItem;
@@ -161,7 +161,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             var priority = additionalSettings?.Priority;
 
 #if DEBUG
-            _gbcLogger.Info($"priority = {priority}");
+            //_gbcLogger.Info($"priority = {priority}");
 #endif
 
             if (priority.HasValue)
@@ -175,16 +175,26 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
                 if (codeItemPriority != null)
                 {
 #if DEBUG
-                    _gbcLogger.Info($"codeItemPriority = {codeItemPriority}");
+                    //_gbcLogger.Info($"codeItemPriority = {codeItemPriority}");
+#endif
+                    var numberValueLinearResolver = context.DataResolversFactory.GetNumberValueLinearResolver();
+
+                    var numberValue = numberValueLinearResolver.Resolve(codeItemPriority, parentLocalCodeExecutionContext);
+
+#if DEBUG
+                    //_gbcLogger.Info($"numberValue = {numberValue}");
 #endif
 
-                    throw new NotImplementedException();
+                    if (!(numberValue == null || numberValue.KindOfValue == KindOfValue.NullValue))
+                    {
+                        processInfo.Priority = Convert.ToSingle(numberValue.SystemValue.Value);
+                    }
                 }
             }
 
 
 #if DEBUG
-            _gbcLogger.Info($"processInfo = {processInfo}");
+            //_gbcLogger.Info($"processInfo = {processInfo}");
 #endif
 
 #if DEBUG

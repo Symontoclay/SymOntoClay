@@ -137,6 +137,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Less:
                         case TokenKind.LessOrEqual:
                         case TokenKind.Lambda:
+                        case TokenKind.OpenFigureBracket:
                             _context.Recovery(_currToken);
                             Exit();
                             break;
@@ -199,6 +200,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Less:
                         case TokenKind.LessOrEqual:
                         case TokenKind.Lambda:
+                        case TokenKind.OpenFigureBracket:
                             _context.Recovery(_currToken);
                             Exit();
                             break;

@@ -43,12 +43,20 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             _operatorsResolver = dataResolversFactory.GetOperatorsResolver();
             _methodsResolver = dataResolversFactory.GetMethodsResolver();
+            _numberValueLinearResolver = dataResolversFactory.GetNumberValueLinearResolver();
+
+            _globalExecutionContext = new LocalCodeExecutionContext();
+            _globalExecutionContext.Storage = context.Storage.GlobalStorage;
+            _globalExecutionContext.Holder = context.CommonNamesStorage.DefaultHolder;
         }
 
         private readonly IEngineContext _context;
 
         private readonly OperatorsResolver _operatorsResolver;
         private readonly MethodsResolver _methodsResolver;
+        private readonly NumberValueLinearResolver _numberValueLinearResolver;
+
+        private readonly LocalCodeExecutionContext _globalExecutionContext;
 
         /// <inheritdoc/>
         public Value ExecuteAsync(ProcessInitialInfo processInitialInfo)
@@ -76,9 +84,35 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 var processInfo = new ProcessInfo();
 
+                var metadata = processInitialInfo.Metadata;
+
                 codeFrame.ProcessInfo = processInfo;
                 processInfo.CodeFrame = codeFrame;
-                codeFrame.Metadata = processInitialInfo.Metadata;
+                codeFrame.Metadata = metadata;
+
+                var codeItemPriority = metadata.Priority;
+
+#if DEBUG
+                //Log($"codeItemPriority = {codeItemPriority}");
+#endif
+
+                if(codeItemPriority != null)
+                {
+                    var numberValue = _numberValueLinearResolver.Resolve(codeItemPriority, _globalExecutionContext);
+
+#if DEBUG
+                    //Log($"numberValue = {numberValue}");
+#endif
+
+                    if (!(numberValue == null || numberValue.KindOfValue == KindOfValue.NullValue))
+                    {
+                        processInfo.Priority = Convert.ToSingle(numberValue.SystemValue.Value);
+                    }
+                }
+
+#if DEBUG
+                //Log($"processInfo = {processInfo}");
+#endif
 
                 _context.InstancesStorage.AppendProcessInfo(processInfo);
 

@@ -72,6 +72,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case State.GotItemName:
+                    if (IsValueToken())
+                    {
+                        ProcessItemValue();
+                        break;
+                    }
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Assign:
@@ -86,34 +91,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.WaitForItemValue:
                     if(IsValueToken())
                     {
-                        var value = ParseValue();
-
-#if DEBUG
-                        //Log($"value = {value}");
-#endif
-
-                        var nameStr = _itemName?.NormalizedNameValue;
-
-#if DEBUG
-                        //Log($"nameStr = {nameStr}");
-#endif
-
-                        if(string.IsNullOrWhiteSpace(nameStr))
-                        {
-                            throw new Exception("Name of setting of code item can not be null or empty.");
-                        }
-
-                        switch(nameStr)
-                        {
-                            case "priority":
-                                _codeItem.Priority = value;
-                                break;
-
-                            default:
-                                throw new Exception($"Unexpected name `{nameStr}` of setting of code item.");
-                        }
-
-                        _state = State.GotItemValue;
+                        ProcessItemValue();
                         break;
                     }
                     throw new UnexpectedTokenException(_currToken);
@@ -129,6 +107,38 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
+        }
+
+        private void ProcessItemValue()
+        {
+            var value = ParseValue();
+
+#if DEBUG
+            //Log($"value = {value}");
+#endif
+
+            var nameStr = _itemName?.NormalizedNameValue;
+
+#if DEBUG
+            //Log($"nameStr = {nameStr}");
+#endif
+
+            if (string.IsNullOrWhiteSpace(nameStr))
+            {
+                throw new Exception("Name of setting of code item can not be null or empty.");
+            }
+
+            switch (nameStr)
+            {
+                case "priority":
+                    _codeItem.Priority = value;
+                    break;
+
+                default:
+                    throw new Exception($"Unexpected name `{nameStr}` of setting of code item.");
+            }
+
+            _state = State.GotItemValue;
         }
     }
 }

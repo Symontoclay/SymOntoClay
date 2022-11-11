@@ -1487,12 +1487,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             Value annotation, SyncOption syncOption)
         {
 #if DEBUG
-            //Log($"methodName = {methodName}");
+            Log($"methodName = {methodName}");
             //Log($"kindOfParameters = {kindOfParameters}");
             //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
             //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
             //Log($"annotation = {annotation}");
-            //Log($"syncOption = {syncOption}");
+            Log($"syncOption = {syncOption}");
 #endif
 
             var command = new Command();
@@ -1524,7 +1524,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var processCreatingResult = _hostListener.CreateProcess(command, _context, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-            //Log($"processCreatingResult = {processCreatingResult}");
+            Log($"processCreatingResult = {processCreatingResult}");
 #endif
 
             if(processCreatingResult.IsSuccessful)

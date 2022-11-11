@@ -1,6 +1,11 @@
-﻿app PeaceKeeper
+﻿app PeaceKeeper is [0.5] exampleClass
 {
-	on {: see(I, #a) :} with priority 1 => {
-	     'D' >> @>log;
+    on Enter => 
+	{
+	    "Begin" >> @>log;
+
+        @@host.`go`~~(to: #@[25, 30]);
+
+	    "End" >> @>log;
 	}
 }

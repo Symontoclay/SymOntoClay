@@ -37,7 +37,7 @@ namespace SymOntoClay.UnityAsset.Core
                     return;
                 }
 
-                _idsList.Contains(id);
+                _idsList.Add(id);
             }
         }
 

@@ -43,6 +43,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
 {
@@ -223,6 +224,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private readonly Dictionary<int, IGameComponent> _gameComponentsDictByInstanceId = new Dictionary<int, IGameComponent>();
         private readonly Dictionary<string, int> _instancesIdDict = new Dictionary<string, int>();
 
+        private readonly List<IGameComponent> _gameComponentsForLateInitializingList = new List<IGameComponent>();
+
         /// <inheritdoc/>
         void IWorldCoreGameComponentContext.AddGameComponent(IGameComponent component)
         {
@@ -239,6 +242,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 _gameComponentsList.Add(component);
                 _gameComponentsDictByInstanceId[instanceId] = component;
                 _instancesIdDict[NameHelper.NormalizeString(component.Id)] = instanceId;
+
+                if(_state == ComponentState.Started)
+                {
+                    if(!_gameComponentsForLateInitializingList.Contains(component))
+                    {
+                        _gameComponentsForLateInitializingList.Add(component);
+                    }
+                }
             }
         }
 
@@ -455,8 +466,29 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             ThreadsComponent.UnLock();
 
             _state = ComponentState.Started;
-        }
 
+            Task.Run(() => { 
+                while(true)
+                {
+                    lock (_gameComponentsListLockObj)
+                    {
+                        if(_gameComponentsForLateInitializingList.Any())
+                        {
+                            foreach(var component in _gameComponentsForLateInitializingList)
+                            {
+                                component.LoadFromSourceCode();
+                                component.BeginStarting();
+                            }
+
+                            _gameComponentsForLateInitializingList.Clear();
+                        }
+                    }
+
+                    Thread.Sleep(1000);
+                }
+            });
+        }
+        
         private void WaitForAllGameComponentsWaiting()
         {
             lock (_gameComponentsListLockObj)

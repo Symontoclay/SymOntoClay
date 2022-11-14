@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using Newtonsoft.Json;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -30,6 +31,7 @@ using System.Diagnostics;
 using System.Numerics;
 using System.Text;
 using System.Threading;
+using System.Xml.Linq;
 using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.CoreHostListener
@@ -51,9 +53,19 @@ namespace TestSandbox.CoreHostListener
             }
         }
 
+        [DebuggerHidden]
+        [BipedEndpoint("*")]
+        public void MagicCall(CancellationToken cancellationToken, bool isNamedParameters,
+            Dictionary<string, object> namedParameters, List<object> positionedParameters)
+        {
+            _logger.Log($"isNamedParameters = {isNamedParameters}");
+            _logger.Log($"namedParameters = {JsonConvert.SerializeObject(namedParameters, Formatting.Indented)}");
+            _logger.Log($"positionedParameters = {JsonConvert.SerializeObject(positionedParameters, Formatting.Indented)}");
+        }
+
         //[DebuggerHidden]
         //[BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
-        //public void GoToImpl(CancellationToken cancellationToken, 
+        //public void GoToImpl(CancellationToken cancellationToken,
         //    [EndpointParam("To", KindOfEndpointParam.Position)] Vector3 point,
         //    float speed = 12)
         //{
@@ -72,7 +84,7 @@ namespace TestSandbox.CoreHostListener
         //    {
         //        n++;
 
-        //        if(n > 10/*00*/)
+        //        if (n > 10/*00*/)
         //        {
         //            break;
         //        }

@@ -30,6 +30,7 @@ namespace SymOntoClay.UnityAsset.Core
 {
     public interface IEndpointInfo: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
+        KindOfEndpointInfo KindOfEndpoint { get; }
         string Name { get; }
         bool NeedMainThread { get; }
         IReadOnlyList<int> Devices { get; }

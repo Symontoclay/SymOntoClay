@@ -1529,8 +1529,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if(processCreatingResult.IsSuccessful)
             {
-                var processInfo = processCreatingResult.Process;
-                processInfo.ParentProcessInfo = _currentCodeFrame.ProcessInfo;
+                var processInfo = processCreatingResult.Process;                
 
                 _instancesStorage.AppendAndTryStartProcessInfo(processInfo);
 
@@ -1542,6 +1541,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (syncOption == SyncOption.Sync)
                 {
+                    processInfo.ParentProcessInfo = _currentCodeFrame.ProcessInfo;
+
                     List<IExecutionCoordinator> executionCoordinators = null;
 
                     if (_executionCoordinator != null)
@@ -1586,7 +1587,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
                     if(syncOption == SyncOption.ChildAsync)
                     {
-                        throw new NotImplementedException();
+                        processInfo.ParentProcessInfo = _currentCodeFrame.ProcessInfo;
                     }
                 }
 
@@ -1621,6 +1622,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"syncOption = {syncOption}");
             //Log($"mayCallHost = {mayCallHost}");
 #endif
+
             IExecutable method = null;
 
             switch(kindOfParameters)

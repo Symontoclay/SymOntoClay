@@ -53,6 +53,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         public IProcessInfo Activate(IEndpointInfo endpointInfo, ICommand command, IEngineContext context, LocalCodeExecutionContext localContext)
         {
+#if DEBUG
+            Log($"endpointInfo = {endpointInfo}");
+#endif
+
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
 

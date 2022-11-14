@@ -27,6 +27,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -41,6 +42,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         private readonly object _lockObj = new object();
         private readonly Dictionary<string, Dictionary<int, List<IEndpointInfo>>> _endPointsDict = new Dictionary<string, Dictionary<int, List<IEndpointInfo>>>();
+        private IEndpointInfo _generallCallEndPoint;
 
         public void AddEndpointsRange(IList<IEndpointInfo> platformEndpointsList)
         {
@@ -56,12 +58,22 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         public void AddEndpoint(IEndpointInfo endpointInfo)
         {
 #if DEBUG
-            //Log($"endpointInfo = {endpointInfo}");
+            Log($"endpointInfo = {endpointInfo}");
+#endif
+
+            if(endpointInfo.KindOfEndpoint == KindOfEndpointInfo.GeneralCall)
+            {
+                _generallCallEndPoint = endpointInfo;
+                return;
+            }
+
+            var endPointName = endpointInfo.Name;
+
+#if DEBUG
+            //Log($"endPointName = {endPointName}");
 #endif
 
             var paramsCountList = GetParamsCountList(endpointInfo);
-
-            var endPointName = endpointInfo.Name;
 
             lock (_lockObj)
             {
@@ -138,8 +150,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             lock (_lockObj)
             {
 #if DEBUG
-                //Log($"endPointName = '{endPointName}'");
-                //Log($"paramsCount = {paramsCount}");
+                Log($"endPointName = '{endPointName}'");
+                Log($"paramsCount = {paramsCount}");
 #endif
 
                 if (_endPointsDict.ContainsKey(endPointName))
@@ -160,6 +172,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     }
                 }
 
+                //return new List<IEndpointInfo> { _generallCallEndPoint };
                 return null;
             }
         }

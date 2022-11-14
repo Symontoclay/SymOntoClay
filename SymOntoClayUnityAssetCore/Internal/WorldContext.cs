@@ -67,7 +67,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             _isInitialized = true;
         }
-
+        
         private void ImplementGeneralSettings(WorldSettings settings)
         {
             _tmpDir = settings.TmpDir;
@@ -447,6 +447,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             }
         }
 
+        private CancellationTokenSource _cancellationTokenSource;
+
         private void NStart()
         {
             ThreadsComponent.Lock();
@@ -467,6 +469,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             _state = ComponentState.Started;
 
+            _cancellationTokenSource = new CancellationTokenSource();
+            var cancellationToken = _cancellationTokenSource.Token;
+
             Task.Run(() => { 
                 while(true)
                 {
@@ -484,9 +489,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                         }
                     }
 
+                    if(_cancellationTokenSource.IsCancellationRequested)
+                    {
+                        break;
+                    }
+
                     Thread.Sleep(1000);
                 }
-            });
+            }, cancellationToken);
         }
         
         private void WaitForAllGameComponentsWaiting()
@@ -508,6 +518,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 {
                     throw new ObjectDisposedException(null);
                 }
+
+                _cancellationTokenSource.Cancel();
 
                 throw new NotImplementedException();
             }
@@ -632,6 +644,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
                 _state = ComponentState.Disposed;
             }
+
+            _cancellationTokenSource?.Cancel();
 
             lock (_gameComponentsListLockObj)
             {

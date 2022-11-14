@@ -863,6 +863,9 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointArgumentInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointInfo.KindOfEndpoint">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointInfo.Name">
             <inheritdoc/>
         </member>

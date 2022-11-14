@@ -46,6 +46,25 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         }
 
         /// <inheritdoc/>
+        public KindOfEndpointInfo KindOfEndpoint
+        {
+            get
+            {
+                if(string.IsNullOrWhiteSpace(Name))
+                {
+                    return KindOfEndpointInfo.Empty;
+                }
+
+                if(Name == "*")
+                {
+                    return KindOfEndpointInfo.GeneralCall;
+                }
+
+                return KindOfEndpointInfo.Usual;
+            }
+        }
+
+        /// <inheritdoc/>
         public string Name { get; set; }
 
         /// <inheritdoc/>
@@ -91,6 +110,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(KindOfEndpoint)} = {KindOfEndpoint}");
             sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
             sb.AppendLine($"{spaces}{nameof(NeedMainThread)} = {NeedMainThread}");
             sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
@@ -118,6 +138,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(KindOfEndpoint)} = {KindOfEndpoint}");
             sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
             sb.AppendLine($"{spaces}{nameof(NeedMainThread)} = {NeedMainThread}");
             sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
@@ -145,6 +166,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(KindOfEndpoint)} = {KindOfEndpoint}");
             sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
             sb.AppendLine($"{spaces}{nameof(NeedMainThread)} = {NeedMainThread}");
             sb.PrintValueTypesListProp(n, nameof(Devices), Devices);

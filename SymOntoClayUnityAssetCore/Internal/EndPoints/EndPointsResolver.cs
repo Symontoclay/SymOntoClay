@@ -74,6 +74,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     {
                         targetEndPointsList = endpointsRegistry.GetEndpointsInfoListDirectly(synonym, paramsCount);
 
+#if DEBUG
+                        Log($"targetEndPointsList?.Count = {targetEndPointsList?.Count}");
+#endif
+
                         if (targetEndPointsList != null)
                         {
                             endPointsList.AddRange(targetEndPointsList);

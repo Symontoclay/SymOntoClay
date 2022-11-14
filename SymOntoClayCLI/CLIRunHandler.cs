@@ -33,6 +33,9 @@ using SymOntoClay.SoundBuses;
 using System.Threading.Tasks;
 using System.Configuration;
 using SymOntoClay.CoreHelper;
+using Newtonsoft.Json;
+using System.Diagnostics;
+using SymOntoClay.CoreHelper.DebugHelpers;
 
 namespace SymOntoClay.CLI
 {
@@ -119,7 +122,9 @@ namespace SymOntoClay.CLI
 
             instance.Start();
 
-            if(command.Timeout.HasValue)
+            _npcLogger = npc.Logger;
+
+            if (command.Timeout.HasValue)
             {
                 var timeoutValue = command.Timeout.Value;
 
@@ -161,45 +166,22 @@ namespace SymOntoClay.CLI
             }
         }
 
+        private IEntityLogger _npcLogger;
+
         public void Dispose()
         {
             world?.Dispose();
         }
 
-        [BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
-        public void GoToImpl(CancellationToken cancellationToken,
-             [EndpointParam("To", KindOfEndpointParam.Position)] Vector3 point,
-             float speed = 12)
+        [DebuggerHidden]
+        [BipedEndpoint("*")]
+        public void GenericCall(CancellationToken cancellationToken, string methodName, bool isNamedParameters,
+            Dictionary<string, object> namedParameters, List<object> positionedParameters)
         {
-            //var name = NameHelper.GetNewEntityNameString();
-            var name = string.Empty;
-
-            //_logger.Log($"Begin {name}");
-
-            //_logger.Log($"{name} point = {point}");
-            //_logger.Log($"{name} speed = {speed}");
-
-            var n = 0;
-
-            while (true)
-            {
-                n++;
-
-                if (n > 10)
-                {
-                    break;
-                }
-
-                Thread.Sleep(1000);
-
-                //_logger.Log($"{name} Hi! n = {n}");
-
-                cancellationToken.ThrowIfCancellationRequested();
-            }
-
-            //Thread.Sleep(5000);
-
-            //_logger.Log($"End {name}");
+            _npcLogger.Log($"methodName = '{methodName}'");
+            _npcLogger.Log($"isNamedParameters = {isNamedParameters}");
+            _npcLogger.Log($"namedParameters = {JsonConvert.SerializeObject(namedParameters, Formatting.Indented)}");
+            _npcLogger.Log($"positionedParameters = {JsonConvert.SerializeObject(positionedParameters, Formatting.Indented)}");
         }
     }
 }

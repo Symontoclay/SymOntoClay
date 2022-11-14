@@ -54,7 +54,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         public IProcessInfo Activate(IEndpointInfo endpointInfo, ICommand command, IEngineContext context, LocalCodeExecutionContext localContext)
         {
 #if DEBUG
-            Log($"endpointInfo = {endpointInfo}");
+            //Log($"endpointInfo = {endpointInfo}");
 #endif
 
             var cancellationTokenSource = new CancellationTokenSource();
@@ -178,6 +178,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             switch (kindOfCommandParameters)
             {
                 case KindOfCommandParameters.NoParameters:
+                    if(endpointInfo.KindOfEndpoint == KindOfEndpointInfo.GenericCall)
+                    {
+                        return new List<object>() { cancellationToken, command.Name.NameValue, false, null, null }.ToArray();
+                    }
+
                     return new List<object>() { cancellationToken }.ToArray();
 
                 case KindOfCommandParameters.ParametersByDict:
@@ -193,6 +198,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         private object[] MapParamsByParametersByList(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, LocalCodeExecutionContext localContext)
         {
+            if(endpointInfo.KindOfEndpoint == KindOfEndpointInfo.GenericCall)
+            {
+                return MapGenericCallParamsByParametersByList(cancellationToken, endpointInfo, command, context, localContext);
+            }
+
             var argumentsList = endpointInfo.Arguments.Where(p => !p.IsSystemDefiend);
 
             var resultList = new List<object>();
@@ -238,8 +248,29 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return resultList.ToArray();
         }
 
+        private object[] MapGenericCallParamsByParametersByList(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, LocalCodeExecutionContext localContext)
+        {
+            var resultList = new List<object>();
+            resultList.Add(cancellationToken);
+            resultList.Add(command.Name.NameValue);
+            resultList.Add(false);
+            resultList.Add(null);
+            resultList.Add(command.ParamsList.Select(p => (object)p).ToList());
+
+#if DEBUG
+            //Log($"resultList = {resultList.WritePODListToString()}");
+#endif
+
+            return resultList.ToArray();
+        }
+
         private object[] MapParamsByParametersByDict(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, LocalCodeExecutionContext localContext)
         {
+            if(endpointInfo.KindOfEndpoint == KindOfEndpointInfo.GenericCall)
+            {
+                return MapGenericCallParamsByParametersByDict(cancellationToken, endpointInfo, command, context, localContext);
+            }
+
             var commandParamsDict = command.ParamsDict.ToDictionary(p => p.Key.NameValue.ToLower(), p => p.Value);
             var argumentsDict = endpointInfo.Arguments.Where(p => !p.IsSystemDefiend).ToDictionary(p => p.Name, p => p);
 
@@ -315,6 +346,22 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     resultList.Add(argumentInfo.DefaultValue);
                 }
             }
+
+            return resultList.ToArray();
+        }
+
+        private object[] MapGenericCallParamsByParametersByDict(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, LocalCodeExecutionContext localContext)
+        {
+            var resultList = new List<object>();
+            resultList.Add(cancellationToken);
+            resultList.Add(command.Name.NameValue);
+            resultList.Add(true);
+            resultList.Add(command.ParamsDict.ToDictionary(p => p.Key.NameValue, p => (object)(p.Value.ToHumanizedString())));
+            resultList.Add(null);
+
+#if DEBUG
+            //Log($"resultList = {resultList.WritePODListToString()}");
+#endif
 
             return resultList.ToArray();
         }

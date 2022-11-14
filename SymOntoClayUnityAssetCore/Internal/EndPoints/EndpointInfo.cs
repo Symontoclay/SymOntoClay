@@ -57,7 +57,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
                 if(Name == "*")
                 {
-                    return KindOfEndpointInfo.GeneralCall;
+                    return KindOfEndpointInfo.GenericCall;
                 }
 
                 return KindOfEndpointInfo.Usual;

@@ -55,9 +55,10 @@ namespace TestSandbox.CoreHostListener
 
         [DebuggerHidden]
         [BipedEndpoint("*")]
-        public void MagicCall(CancellationToken cancellationToken, bool isNamedParameters,
+        public void GenericCall(CancellationToken cancellationToken, string methodName, bool isNamedParameters,
             Dictionary<string, object> namedParameters, List<object> positionedParameters)
         {
+            _logger.Log($"methodName = '{methodName}'");
             _logger.Log($"isNamedParameters = {isNamedParameters}");
             _logger.Log($"namedParameters = {JsonConvert.SerializeObject(namedParameters, Formatting.Indented)}");
             _logger.Log($"positionedParameters = {JsonConvert.SerializeObject(positionedParameters, Formatting.Indented)}");

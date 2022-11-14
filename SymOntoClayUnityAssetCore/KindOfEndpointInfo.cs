@@ -8,6 +8,6 @@ namespace SymOntoClay.UnityAsset.Core
     {
         Empty,
         Usual,
-        GeneralCall
+        GenericCall
     }
 }

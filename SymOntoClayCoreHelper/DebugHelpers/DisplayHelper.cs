@@ -605,6 +605,11 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             {
                 foreach (var item in items)
                 {
+                    if(item == null)
+                    {
+                        sb.AppendLine("NULL");
+                        continue;
+                    }
                     sb.AppendLine(item.ToString());
                 }
             }

@@ -135,7 +135,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         public IProcessCreatingResult CreateProcess(ICommand command, IEngineContext context, LocalCodeExecutionContext localContext)
         {
 #if DEBUG
-            Log($"command = {command}");
+            //Log($"command = {command}");
 #endif
 
             try
@@ -145,7 +145,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 var endPointInfo = _endPointsResolver.GetEndpointInfo(command, _endpointsRegistries, packedSynonymsResolver);
 
 #if DEBUG
-                Log($"endPointInfo = {endPointInfo}");
+                //Log($"endPointInfo = {endPointInfo}");
 #endif
 
                 if (endPointInfo == null)

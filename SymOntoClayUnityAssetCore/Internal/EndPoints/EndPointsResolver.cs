@@ -63,7 +63,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             {
                 var targetEndPointsList = endpointsRegistry.GetEndpointsInfoListDirectly(endPointName, paramsCount);
 
-                if(targetEndPointsList != null)
+#if DEBUG
+                //Log($"targetEndPointsList?.Count = {targetEndPointsList?.Count}");
+#endif
+
+                if (targetEndPointsList != null)
                 {
                     endPointsList.AddRange(targetEndPointsList);
                 }
@@ -75,7 +79,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                         targetEndPointsList = endpointsRegistry.GetEndpointsInfoListDirectly(synonym, paramsCount);
 
 #if DEBUG
-                        Log($"targetEndPointsList?.Count = {targetEndPointsList?.Count}");
+                        //Log($"targetEndPointsList?.Count (2) = {targetEndPointsList?.Count}");
 #endif
 
                         if (targetEndPointsList != null)
@@ -95,6 +99,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             if (endPointsList == null)
             {
                 return null;
+            }
+
+            if(endPointsList.Any(p => p.KindOfEndpoint == KindOfEndpointInfo.GenericCall))
+            {
+                return endPointsList.FirstOrDefault(p => p.KindOfEndpoint == KindOfEndpointInfo.GenericCall);
             }
 
             var kindOfCommandParameters = command.KindOfCommandParameters;

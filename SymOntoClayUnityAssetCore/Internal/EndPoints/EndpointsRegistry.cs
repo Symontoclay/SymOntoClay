@@ -58,10 +58,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         public void AddEndpoint(IEndpointInfo endpointInfo)
         {
 #if DEBUG
-            Log($"endpointInfo = {endpointInfo}");
+            //Log($"endpointInfo = {endpointInfo}");
 #endif
 
-            if(endpointInfo.KindOfEndpoint == KindOfEndpointInfo.GeneralCall)
+            if(endpointInfo.KindOfEndpoint == KindOfEndpointInfo.GenericCall)
             {
                 _generallCallEndPoint = endpointInfo;
                 return;
@@ -150,8 +150,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"endPointName = '{endPointName}'");
-                Log($"paramsCount = {paramsCount}");
+                //Log($"endPointName = '{endPointName}'");
+                //Log($"paramsCount = {paramsCount}");
 #endif
 
                 if (_endPointsDict.ContainsKey(endPointName))
@@ -172,8 +172,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     }
                 }
 
-                //return new List<IEndpointInfo> { _generallCallEndPoint };
-                return null;
+                return new List<IEndpointInfo> { _generallCallEndPoint };
             }
         }
     }

@@ -2,7 +2,8 @@
   "profiles": {
     "SymOntoClayCLI": {
       "commandName": "Project",
-      "commandLineArgs": "help -nologo -timeout 10000"
+      "commandLineArgs": "new -npc Example ",
+      "workingDirectory": "C:\\Users\\sergiy.tolkachov\\Documents\\EnHW"
     }
   }
 }

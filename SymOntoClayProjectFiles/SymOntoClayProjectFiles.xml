@@ -4,6 +4,15 @@
         <name>SymOntoClayProjectFiles</name>
     </assembly>
     <members>
+        <member name="M:SymOntoClayProjectFiles.WorldDirs.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClayProjectFiles.WorldDirs.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClayProjectFiles.WorldDirs.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClayProjectFiles.WorldJsonFile.ToString">
             <inheritdoc/>
         </member>

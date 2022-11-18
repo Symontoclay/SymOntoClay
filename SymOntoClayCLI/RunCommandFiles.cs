@@ -31,7 +31,7 @@ namespace SymOntoClay.CLI
     {
         public string LogicFile { get; set; }
         public string WorldFile { get; set; }
-        public string SharedModulesDir { get; set; }
+        public string SharedLibrariesDir { get; set; }
         public string ImagesRootDir { get; set; }
         public string TmpDir { get; set; }
 
@@ -55,7 +55,7 @@ namespace SymOntoClay.CLI
 
             sb.AppendLine($"{spaces}{nameof(LogicFile)} = {LogicFile}");
             sb.AppendLine($"{spaces}{nameof(WorldFile)} = {WorldFile}");
-            sb.AppendLine($"{spaces}{nameof(SharedModulesDir)} = {SharedModulesDir}");
+            sb.AppendLine($"{spaces}{nameof(SharedLibrariesDir)} = {SharedLibrariesDir}");
             sb.AppendLine($"{spaces}{nameof(ImagesRootDir)} = {ImagesRootDir}");
             sb.AppendLine($"{spaces}{nameof(TmpDir)} = {TmpDir}");
 

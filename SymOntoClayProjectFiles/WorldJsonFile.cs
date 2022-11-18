@@ -31,6 +31,7 @@ namespace SymOntoClayProjectFiles
 {
     public class WorldJsonFile : IObjectToString
     {
+        public WorldDirs Dirs { get; set; }
         public string MainNpc { get; set; }
 
         /// <inheritdoc/>
@@ -51,6 +52,7 @@ namespace SymOntoClayProjectFiles
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintObjProp(n, nameof(Dirs), Dirs);
             sb.AppendLine($"{spaces}{nameof(MainNpc)} = {MainNpc}");
 
             return sb.ToString();

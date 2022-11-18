@@ -69,6 +69,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Source\Modules\" />
+    <Folder Include="Source\SharedLibs\" />
   </ItemGroup>
 </Project>

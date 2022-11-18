@@ -36,6 +36,7 @@ using SymOntoClay.CoreHelper;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using System.Linq;
 
 namespace SymOntoClay.CLI
 {
@@ -74,13 +75,15 @@ namespace SymOntoClay.CLI
             var settings = new WorldSettings();
             settings.EnableAutoloadingConvertors = true;
 
-            settings.SharedModulesDirs = new List<string>() { targetFiles.SharedModulesDir };
+            settings.SharedModulesDirs = new List<string>() { targetFiles.SharedLibrariesDir };
 
             settings.ImagesRootDir = targetFiles.ImagesRootDir;
 
             var standardLibraryBasePath = appSettings["StandardLibraryPath"];
 
-            settings.BuiltInStandardLibraryDir = EVPath.Normalize(standardLibraryBasePath);
+            var socAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(p => p.GetName().Name == "soc");
+
+            settings.BuiltInStandardLibraryDir = Path.Combine(new FileInfo(socAssembly.Location).DirectoryName, standardLibraryBasePath);
 
             settings.TmpDir = targetFiles.TmpDir;
 

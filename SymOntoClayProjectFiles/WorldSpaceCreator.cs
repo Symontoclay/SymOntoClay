@@ -31,6 +31,14 @@ namespace SymOntoClayProjectFiles
 {
     public static class WorldSpaceCreator
     {
+        private static readonly string _defaultLibsDir = "Libs";
+        private static readonly string _defaultNavsDir = "Navs";
+        private static readonly string _defaultNpcsDir = "Npcs";
+        private static readonly string _defaultPlayersDir = "Players";
+        private static readonly string _defaultSharedLibsDir = "SharedLibs";
+        private static readonly string _defaultThingsDir = "Things";
+        private static readonly string _defaultWorldDir = "World";
+
         public static FileInfo CreateWithWSpaceFile(WorldSpaceCreationSettings settings, FileInfo wSpaceFile, Action<string> errorCallBack)
         {
             DirectoryInfo appDir = null;
@@ -40,11 +48,11 @@ namespace SymOntoClayProjectFiles
             switch (kindOfNewCommand)
             {
                 case KindOfNewCommand.NPC:
-                    appDir = wSpaceFile.Directory.GetDirectories().SingleOrDefault(p => p.Name == "Npcs");
+                    appDir = wSpaceFile.Directory.GetDirectories().SingleOrDefault(p => p.Name == _defaultNpcsDir);
                     break;
 
                 case KindOfNewCommand.Thing:
-                    appDir = wSpaceFile.Directory.GetDirectories().SingleOrDefault(p => p.Name == "Things");
+                    appDir = wSpaceFile.Directory.GetDirectories().SingleOrDefault(p => p.Name == _defaultThingsDir);
                     break;
 
                 default:
@@ -76,12 +84,25 @@ namespace SymOntoClayProjectFiles
 
             if (!File.Exists(wSpaceFileName))
             {
-                var wSpaceJsonFile = new WorldJsonFile() { MainNpc = projectName };
+                var wSpaceJsonFile = new WorldJsonFile() 
+                { 
+                    MainNpc = projectName, 
+                    Dirs = new WorldDirs() 
+                    {
+                        Libs = _defaultLibsDir,
+                        Navs = _defaultNavsDir,
+                        Npcs = _defaultNpcsDir,
+                        Players = _defaultPlayersDir,
+                        SharedLibs = _defaultSharedLibsDir,
+                        Things = _defaultThingsDir,
+                        World = _defaultWorldDir
+                    }
+                };
 
                 File.WriteAllText(wSpaceFileName, JsonConvert.SerializeObject(wSpaceJsonFile, Formatting.Indented));
             }
 
-            var worldDirName = Path.Combine(worldSpaceDirName, "World");
+            var worldDirName = Path.Combine(worldSpaceDirName, _defaultWorldDir);
 
             if (!Directory.Exists(worldDirName))
             {
@@ -95,35 +116,49 @@ namespace SymOntoClayProjectFiles
                 File.WriteAllText(worldFileName, "{}");
             }
 
-            var thingDirName = Path.Combine(worldSpaceDirName, "Things");
+            var thingDirName = Path.Combine(worldSpaceDirName, _defaultThingsDir);
 
             if (!Directory.Exists(thingDirName))
             {
                 Directory.CreateDirectory(thingDirName);
             }
 
-            var playerDirName = Path.Combine(worldSpaceDirName, "Players");
+            var playerDirName = Path.Combine(worldSpaceDirName, _defaultPlayersDir);
 
             if (!Directory.Exists(playerDirName))
             {
                 Directory.CreateDirectory(playerDirName);
             }
 
-            var modulesDirName = Path.Combine(worldSpaceDirName, "Modules");
+            var libsDirName = Path.Combine(worldSpaceDirName, _defaultLibsDir);
 
-            if (!Directory.Exists(modulesDirName))
+            if (!Directory.Exists(libsDirName))
             {
-                Directory.CreateDirectory(modulesDirName);
+                Directory.CreateDirectory(libsDirName);
             }
 
-            var npcsDirName = Path.Combine(worldSpaceDirName, "Npcs");
+            var sharedLibsDirName = Path.Combine(worldSpaceDirName, _defaultSharedLibsDir);
+
+            if (!Directory.Exists(sharedLibsDirName))
+            {
+                Directory.CreateDirectory(sharedLibsDirName);
+            }
+
+            var npcsDirName = Path.Combine(worldSpaceDirName, _defaultNpcsDir);
 
             if (!Directory.Exists(npcsDirName))
             {
                 Directory.CreateDirectory(npcsDirName);
             }
 
-            if(!settings.CreateOnlyWorldspace)
+            var navsDirName = Path.Combine(worldSpaceDirName, _defaultNavsDir);
+
+            if (!Directory.Exists(navsDirName))
+            {
+                Directory.CreateDirectory(navsDirName);
+            }
+
+            if (!settings.CreateOnlyWorldspace)
             {
                 var targetDirName = string.Empty;
 
@@ -157,7 +192,7 @@ namespace SymOntoClayProjectFiles
 
             if (Directory.Exists(projectDirName))
             {
-                errorCallBack($"The NPC '{projectName}' already exists!");
+                errorCallBack($"The project '{projectName}' already exists!");
                 return;
             }
             else

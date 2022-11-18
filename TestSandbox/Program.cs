@@ -1180,7 +1180,7 @@ action Go
 
             var settings = new WorldSettings();
 
-            settings.SharedModulesDirs = new List<string>() { targetFiles.SharedModulesDir };
+            settings.SharedModulesDirs = new List<string>() { targetFiles.SharedLibrariesDir };
 
             settings.ImagesRootDir = targetFiles.ImagesRootDir;
 

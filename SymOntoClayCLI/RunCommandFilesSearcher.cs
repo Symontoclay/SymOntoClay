@@ -100,7 +100,7 @@ namespace SymOntoClay.CLI
 
             var mainNPCFileName = $"{mainNpc}.sobj";
 
-            var inputFile = DetectMainFileFllPathForMainNPCOfWorld(wSpaceFile.DirectoryName, mainNPCFileName);
+            var inputFile = DetectMainFileFllPathForMainNPCOfWorld(wSpaceFile.DirectoryName, mainNPCFileName, wSpaceJsonFile.Dirs);
 
 #if DEBUG
             //_logger.Info($"inputFile = {inputFile}");
@@ -111,22 +111,27 @@ namespace SymOntoClay.CLI
                 throw new NotImplementedException();
             }
 
-            return NGetRunCommandFiles(inputFile, wSpaceFile);
+            return NGetRunCommandFiles(inputFile, wSpaceFile, wSpaceJsonFile.Dirs);
         }
 
-        private static string DetectMainFileFllPathForMainNPCOfWorld(string currDirName, string mainNPCFileName)
+        private static string DetectMainFileFllPathForMainNPCOfWorld(string currDirName, string mainNPCFileName, WorldDirs worldDirs)
         {
 #if DEBUG
             //_logger.Info($"currDirName = {currDirName}");
             //_logger.Info($"mainNPCFileName = {mainNPCFileName}");
 #endif
 
-            if(currDirName.EndsWith("World"))
+            if(!string.IsNullOrWhiteSpace(worldDirs.World) && currDirName.EndsWith(worldDirs.World))
             {
                 return string.Empty;
             }
 
-            if (currDirName.EndsWith("Modules"))
+            if (!string.IsNullOrWhiteSpace(worldDirs.SharedLibs) && currDirName.EndsWith(worldDirs.SharedLibs))
+            {
+                return string.Empty;
+            }
+
+            if (!string.IsNullOrWhiteSpace(worldDirs.Libs) && currDirName.EndsWith(worldDirs.Libs))
             {
                 return string.Empty;
             }
@@ -144,7 +149,7 @@ namespace SymOntoClay.CLI
 
             foreach(var subDir in Directory.EnumerateDirectories(currDirName))
             {
-                targetFileName = DetectMainFileFllPathForMainNPCOfWorld(subDir, mainNPCFileName);
+                targetFileName = DetectMainFileFllPathForMainNPCOfWorld(subDir, mainNPCFileName, worldDirs);
 
 #if DEBUG
                 //_logger.Info($"targetFileName (2) = {targetFileName}");
@@ -196,19 +201,26 @@ namespace SymOntoClay.CLI
             //_logger.Info($"wSpaceFile = {wSpaceFile}");
 #endif
 
+            var wSpaceJsonFile = WorldJsonFile.LoadFromFile(wSpaceFile.FullName);
+
+#if DEBUG
+            //_logger.Info($"wSpaceJsonFile = {wSpaceJsonFile}");
+#endif
+
             if (wSpaceFile == null)
             {
                 throw new NotImplementedException();
             }
 
-            return NGetRunCommandFiles(inputFile, wSpaceFile);
+            return NGetRunCommandFiles(inputFile, wSpaceFile, wSpaceJsonFile.Dirs);
         }
 
-        private static RunCommandFiles NGetRunCommandFiles(string inputFile, FileInfo wSpaceFile)
+        private static RunCommandFiles NGetRunCommandFiles(string inputFile, FileInfo wSpaceFile, WorldDirs worldDirs)
         {
 #if DEBUG
             //_logger.Info($"inputFile = {inputFile}");
             //_logger.Info($"wSpaceFile = {wSpaceFile}");
+            //_logger.Info($"worldDirs = {worldDirs}");
 #endif
 
             var result = new RunCommandFiles();
@@ -221,7 +233,7 @@ namespace SymOntoClay.CLI
             //_logger.Info($"baseDir = {baseDir}");
 #endif
 
-            var worldDir = Path.Combine(baseDir, "World");
+            var worldDir = Path.Combine(baseDir, worldDirs.World);
 
 #if DEBUG
             //_logger.Info($"worldDir = {worldDir}");
@@ -237,7 +249,7 @@ namespace SymOntoClay.CLI
 
             result.WorldFile = worldFile.FullName;
 
-            result.SharedModulesDir = Path.Combine(baseDir, "Modules");
+            result.SharedLibrariesDir = Path.Combine(baseDir, worldDirs.SharedLibs);
 
 #if DEBUG
             //_logger.Info($"result.SharedModulesDir = {result.SharedModulesDir}");

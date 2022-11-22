@@ -30,6 +30,9 @@ namespace SymOntoClayProjectFiles
     {
         Unknown,
         NPC,
-        Thing
+        Player,
+        Thing,
+        Nav,
+        Lib
     }
 }

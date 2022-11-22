@@ -69,6 +69,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Source\Libs\" />
+    <Folder Include="Source\Navs\" />
+    <Folder Include="Source\Players\" />
     <Folder Include="Source\SharedLibs\" />
   </ItemGroup>
 </Project>

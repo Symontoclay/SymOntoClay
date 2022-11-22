@@ -51,8 +51,20 @@ namespace SymOntoClayProjectFiles
                     appDir = wSpaceFile.Directory.GetDirectories().SingleOrDefault(p => p.Name == _defaultNpcsDir);
                     break;
 
+                case KindOfNewCommand.Player:
+                    appDir = wSpaceFile.Directory.GetDirectories().SingleOrDefault(p => p.Name == _defaultPlayersDir);
+                    break;
+
                 case KindOfNewCommand.Thing:
                     appDir = wSpaceFile.Directory.GetDirectories().SingleOrDefault(p => p.Name == _defaultThingsDir);
+                    break;
+
+                case KindOfNewCommand.Nav:
+                    appDir = wSpaceFile.Directory.GetDirectories().SingleOrDefault(p => p.Name == _defaultNavsDir);
+                    break;
+
+                case KindOfNewCommand.Lib:
+                    appDir = wSpaceFile.Directory.GetDirectories().SingleOrDefault(p => p.Name == _defaultLibsDir);
                     break;
 
                 default:
@@ -64,7 +76,17 @@ namespace SymOntoClayProjectFiles
                 throw new NotImplementedException();
             }
 
-            CreateProject(settings, appDir.FullName, errorCallBack);
+            switch (kindOfNewCommand)
+            {
+                case KindOfNewCommand.Lib:
+                    CreateLibProject(settings, appDir.FullName, errorCallBack);
+                    break;
+
+                default:
+                    CreateAppProject(settings, appDir.FullName, errorCallBack);
+                    break;
+            }
+            
 
             return wSpaceFile;
         }
@@ -174,17 +196,60 @@ namespace SymOntoClayProjectFiles
                         targetDirName = thingDirName;
                         break;
 
+                    case KindOfNewCommand.Nav: targetDirName = navsDirName; break;
+                    case KindOfNewCommand.Player: targetDirName = playerDirName; break;
+                    case KindOfNewCommand.Lib: targetDirName = libsDirName; break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(kindOfNewCommand), kindOfNewCommand, null);
                 }
 
-                CreateProject(settings, targetDirName, errorCallBack);
+                switch (kindOfNewCommand)
+                {
+                    case KindOfNewCommand.Lib:
+                        CreateLibProject(settings, targetDirName, errorCallBack);
+                        break;
+
+                    default:
+                        CreateAppProject(settings, targetDirName, errorCallBack);
+                        break;
+                }
             }            
 
             return new FileInfo(wSpaceFileName);
         }
 
-        private static void CreateProject(WorldSpaceCreationSettings settings, string npcsDirName, Action<string> errorCallBack)
+        private static void CreateLibProject(WorldSpaceCreationSettings settings, string libDirName, Action<string> errorCallBack)
+        {
+            var projectName = settings.ProjectName;
+
+            var projectDirName = Path.Combine(libDirName, projectName);
+
+            if (Directory.Exists(projectDirName))
+            {
+                errorCallBack($"The project '{projectName}' already exists!");
+                return;
+            }
+            else
+            {
+                Directory.CreateDirectory(projectDirName);
+            }
+
+            var slibFileName = Path.Combine(projectDirName, $"{projectName}.slib");
+
+            File.WriteAllText(slibFileName, "{}");
+
+            var socFileName = Path.Combine(projectDirName, $"{projectName}.soc");
+
+            var sb = new StringBuilder();
+            sb.AppendLine($"lib {projectName}");
+            sb.AppendLine("{");
+            sb.AppendLine("}");
+
+            File.WriteAllText(socFileName, sb.ToString());
+        }
+
+        private static void CreateAppProject(WorldSpaceCreationSettings settings, string npcsDirName, Action<string> errorCallBack)
         {
             var projectName = settings.ProjectName;
 
@@ -200,11 +265,11 @@ namespace SymOntoClayProjectFiles
                 Directory.CreateDirectory(projectDirName);
             }
 
-            var npcFileName = Path.Combine(projectDirName, $"{projectName}.sobj");
+            var sobjFileName = Path.Combine(projectDirName, $"{projectName}.sobj");
 
-            File.WriteAllText(npcFileName, "{}");
+            File.WriteAllText(sobjFileName, "{}");
 
-            var appFileName = Path.Combine(projectDirName, $"{projectName}.soc");
+            var socFileName = Path.Combine(projectDirName, $"{projectName}.soc");
 
             var sb = new StringBuilder();
             sb.AppendLine($"app {projectName}");
@@ -214,7 +279,7 @@ namespace SymOntoClayProjectFiles
             sb.AppendLine("    }");
             sb.AppendLine("}");
 
-            File.WriteAllText(appFileName, sb.ToString());
+            File.WriteAllText(socFileName, sb.ToString());
         }
     }
 }

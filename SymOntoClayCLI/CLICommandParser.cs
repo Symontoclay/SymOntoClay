@@ -181,8 +181,22 @@ namespace SymOntoClay.CLI
                                                 command.KindOfNewCommand = KindOfNewCommand.NPC;
                                                 break;
 
+                                            case "-player":
+                                            case "-p":
+                                                command.KindOfNewCommand = KindOfNewCommand.Player;
+                                                break;
+
                                             case "-thing":
                                                 command.KindOfNewCommand = KindOfNewCommand.Thing;
+                                                break;
+
+                                            case "-nav":
+                                                command.KindOfNewCommand = KindOfNewCommand.Nav;
+                                                break;
+
+                                            case "-lib":
+                                            case "-l":
+                                                command.KindOfNewCommand = KindOfNewCommand.Lib;
                                                 break;
 
                                             default:
@@ -275,7 +289,12 @@ namespace SymOntoClay.CLI
                 case "-w":
                 case "-world":
                 case "-npc":
+                case "-player":
+                case "-p":
                 case "-thing":
+                case "-nav":
+                case "-lib":
+                case "-l":
                     return true;
 
                 default:

@@ -37,22 +37,22 @@ namespace SymOntoClay.UnityAsset.Core
         Head,
 
         /// <summary>
-        /// Represents the right hand  of the NPC or Player.
+        /// Represents the right hand of the NPC or Player.
         /// </summary>
         RightHand,
 
         /// <summary>
-        /// Represents the left hand  of the NPC or Player.
+        /// Represents the left hand of the NPC or Player.
         /// </summary>
         LeftHand,
 
         /// <summary>
-        /// Represents the right  of the NPC or Player.
+        /// Represents the right leg of the NPC or Player.
         /// </summary>
         RightLeg,
 
         /// <summary>
-        /// Represents the left leg  of the NPC or Player.
+        /// Represents the left leg of the NPC or Player.
         /// </summary>
         LeftLeg
     }

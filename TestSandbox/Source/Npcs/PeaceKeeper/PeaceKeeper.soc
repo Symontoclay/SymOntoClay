@@ -1,11 +1,32 @@
-﻿app PeaceKeeper is [0.5] exampleClass
+﻿app PeaceKeeper
 {
-    on Enter => 
-	{
-	    "Begin" >> @>log;
+    fun a() => 
+    {
+        '`a` has been called!' >> @>log;
 
-        @@host.`go`~~(to: #@[25, 30]);
+        wait 10000;
 
-	    "End" >> @>log;
-	}
+        'End `a`' >> @>log;
+    }
+
+    fun b() => 
+    {
+        '`b` has been called!' >> @>log;
+
+        wait 10000;
+
+        'End `b`' >> @>log;
+    }
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+
+        @a = a~~()[: timeout = 1000 :];
+        @b = b~~()[: timeout = 1000 :];
+
+        wait @a, @b;
+
+        'End' >> @>log;
+    }
 }

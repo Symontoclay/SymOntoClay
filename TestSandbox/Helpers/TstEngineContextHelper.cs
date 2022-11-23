@@ -74,8 +74,7 @@ namespace TestSandbox.Helpers
             var worldSpaceFilesSearcherOptions = new WorldSpaceFilesSearcherOptions()
             {
                 InputDir = codeDir,
-                AppName = $@"SymOntoClay\{appName}",
-                BaseTempDir = @"D:/fdsfsdf"
+                AppName = $@"SymOntoClay\{appName}"
             };
 
             var targetFiles = WorldSpaceFilesSearcher.Run(worldSpaceFilesSearcherOptions);
@@ -84,24 +83,34 @@ namespace TestSandbox.Helpers
             _logger.Log($"targetFiles = {targetFiles}");
 #endif 
 
-            throw new NotImplementedException();
-
             var settings = new WorldSettings();
             settings.EnableAutoloadingConvertors = true;
 
-            settings.LibsDirs = new List<string>() { Path.Combine(Directory.GetCurrentDirectory(), "Source", "Modules") };
+            var libsDirs = new List<string>();
 
-            settings.ImagesRootDir = Path.Combine(supportBasePath, "Images");
+            if(!string.IsNullOrWhiteSpace(targetFiles.SharedLibsDir))
+            {
+                libsDirs.Add(targetFiles.SharedLibsDir);
+            }
+
+            if(!string.IsNullOrWhiteSpace(targetFiles.LibsDir))
+            {
+                libsDirs.Add(targetFiles.LibsDir);
+            }
+
+            settings.LibsDirs = libsDirs;
+
+            settings.ImagesRootDir = targetFiles.ImagesRootDir;
 
             settings.BuiltInStandardLibraryDir = DefaultPaths.GetBuiltInStandardLibraryDir();
 
-            settings.TmpDir = Path.Combine(Environment.GetEnvironmentVariable("TMP"), "SymOntoClay", appName);
+            settings.TmpDir = targetFiles.TmpDir;
 
             if(string.IsNullOrWhiteSpace(factorySettings.WorldFile))
             {
                 if (factorySettings.UseDefaultAppFiles)
                 {
-                    settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\World\World.world");
+                    settings.HostFile = targetFiles.WorldFile;
                 }
             }
             else

@@ -45,6 +45,8 @@ namespace SymOntoClay.Core
                     throw new ObjectDisposedException(null);
                 }
 
+                throw new NotImplementedException();
+
 #if IMAGINE_WORKING
                 //Log("Do");
 #else

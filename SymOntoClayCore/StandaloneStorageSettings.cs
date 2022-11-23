@@ -30,6 +30,8 @@ namespace SymOntoClay.Core
     public class StandaloneStorageSettings: BaseStorageSettings
     {
         public bool IsWorld { get; set; }
+
+        [Obsolete("Built in standard library is being moved to LibsDirs", true)]
         public IList<string> AdditionalSourceCodePaths { get; set; }
 
         /// <inheritdoc/>

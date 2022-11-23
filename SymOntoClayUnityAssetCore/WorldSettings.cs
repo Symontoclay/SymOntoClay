@@ -48,7 +48,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         public IList<string> DictionariesDirs { get; set; }
 
-        [Obsolete("Built in standard library is being moved to LibsDirs")]
+        [Obsolete("Built in standard library is being moved to LibsDirs", true)]
         public string BuiltInStandardLibraryDir { get; set; }
 
         public string TmpDir { get; set; }

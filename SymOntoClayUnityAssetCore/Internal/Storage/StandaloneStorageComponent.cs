@@ -42,7 +42,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Storage
             {
                 standaloneStorageSettings.AdditionalSourceCodePaths = new List<string> { settings.BuiltInStandardLibraryDir };
             }          
-
+            
             standaloneStorageSettings.AppFile = settings.HostFile;
             standaloneStorageSettings.LogicQueryParseAndCache = coreContext.LogicQueryParseAndCache;
 

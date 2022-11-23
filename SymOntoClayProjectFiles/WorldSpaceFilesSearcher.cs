@@ -10,7 +10,7 @@ namespace SymOntoClayProjectFiles
     public static class WorldSpaceFilesSearcher
     {
 #if DEBUG
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static WorldSpaceFiles Run(WorldSpaceFilesSearcherOptions options)
@@ -205,8 +205,8 @@ namespace SymOntoClayProjectFiles
             //_logger.Info($"inputFile = {inputFile}");
             //_logger.Info($"wSpaceFile = {wSpaceFile}");
             //_logger.Info($"worldDirs = {worldDirs}");
-            _logger.Info($"appName = {appName}");
-            _logger.Info($"baseTempDir = {baseTempDir}");
+            //_logger.Info($"appName = {appName}");
+            //_logger.Info($"baseTempDir = {baseTempDir}");
 #endif
 
             var result = new WorldSpaceFiles();

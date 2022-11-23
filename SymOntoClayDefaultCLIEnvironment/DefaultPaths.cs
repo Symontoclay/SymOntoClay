@@ -29,6 +29,7 @@ namespace SymOntoClay.DefaultCLIEnvironment
 {
     public static class DefaultPaths
     {
+        [Obsolete("Built in standard library is being moved to LibsDirs", true)]
         public static string GetBuiltInStandardLibraryDir()
         {
             return Path.Combine(Directory.GetCurrentDirectory(), "StandardLibrary");

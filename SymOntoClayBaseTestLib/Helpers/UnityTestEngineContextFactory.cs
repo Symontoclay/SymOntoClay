@@ -96,7 +96,9 @@ namespace SymOntoClay.Core.Tests.Helpers
             var settings = new WorldSettings();
             settings.EnableAutoloadingConvertors = true;
 
-            settings.BuiltInStandardLibraryDir = DefaultPaths.GetBuiltInStandardLibraryDir();
+            throw new NotImplementedException();
+
+            //settings.BuiltInStandardLibraryDir = DefaultPaths.GetBuiltInStandardLibraryDir();
 
             settings.ImagesRootDir = Path.Combine(supportBasePath, "Images");
 

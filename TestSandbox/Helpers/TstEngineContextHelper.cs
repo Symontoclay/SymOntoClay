@@ -102,8 +102,6 @@ namespace TestSandbox.Helpers
 
             settings.ImagesRootDir = targetFiles.ImagesRootDir;
 
-            settings.BuiltInStandardLibraryDir = DefaultPaths.GetBuiltInStandardLibraryDir();
-
             settings.TmpDir = targetFiles.TmpDir;
 
             if(string.IsNullOrWhiteSpace(factorySettings.WorldFile))

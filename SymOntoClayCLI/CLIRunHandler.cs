@@ -83,15 +83,13 @@ namespace SymOntoClay.CLI
             var settings = new WorldSettings();
             settings.EnableAutoloadingConvertors = true;
 
-            settings.LibsDirs = new List<string>() { targetFiles.SharedLibsDir };
+            settings.LibsDirs = new List<string>() { targetFiles.SharedLibsDir, targetFiles.LibsDir };
 
             settings.ImagesRootDir = targetFiles.ImagesRootDir;
 
             var standardLibraryBasePath = appSettings["StandardLibraryPath"];
 
-            var socAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(p => p.GetName().Name == "soc");
-
-            settings.BuiltInStandardLibraryDir = Path.Combine(new FileInfo(socAssembly.Location).DirectoryName, standardLibraryBasePath);
+            //var socAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(p => p.GetName().Name == "soc");//use for NLP Dicts Location
 
             settings.TmpDir = targetFiles.TmpDir;
 

@@ -31,9 +31,6 @@ namespace SymOntoClay.Core
     {
         public bool IsWorld { get; set; }
 
-        [Obsolete("Built in standard library is being moved to LibsDirs", true)]
-        public IList<string> AdditionalSourceCodePaths { get; set; }
-
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
@@ -41,7 +38,6 @@ namespace SymOntoClay.Core
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(IsWorld)} = {IsWorld}");
-            sb.PrintPODList(n, nameof(AdditionalSourceCodePaths), AdditionalSourceCodePaths);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();

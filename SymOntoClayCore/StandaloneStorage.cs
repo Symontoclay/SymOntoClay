@@ -40,8 +40,6 @@ namespace SymOntoClay.Core
         {
             //Log($"settings = {settings}");
 
-            _additionalSourceCodePaths = settings.AdditionalSourceCodePaths;
-
             _context = EngineContextHelper.CreateAndInitMainStorageContext(settings);
         }
         
@@ -103,11 +101,6 @@ namespace SymOntoClay.Core
                 }
 
                 EngineContextHelper.LoadFromSourceCode(_context);
-
-                if(!_additionalSourceCodePaths.IsNullOrEmpty())
-                {
-                    _context.LoaderFromSourceCode.LoadFromPaths(_additionalSourceCodePaths);
-                }
 
                 _storageComponent = _context.Storage;
                 _storage = _storageComponent.GlobalStorage;

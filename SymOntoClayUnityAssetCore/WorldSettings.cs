@@ -48,9 +48,6 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         public IList<string> DictionariesDirs { get; set; }
 
-        [Obsolete("Built in standard library is being moved to LibsDirs", true)]
-        public string BuiltInStandardLibraryDir { get; set; }
-
         public string TmpDir { get; set; }
 
         /// <summary>
@@ -91,7 +88,6 @@ namespace SymOntoClay.UnityAsset.Core
             sb.PrintObjProp(n, nameof(Logging), Logging);
             sb.PrintPODList(n, nameof(LibsDirs), LibsDirs);
             sb.AppendLine($"{spaces}{nameof(ImagesRootDir)} = {ImagesRootDir}");
-            sb.AppendLine($"{spaces}{nameof(BuiltInStandardLibraryDir)} = {BuiltInStandardLibraryDir}");
             sb.PrintPODList(n, nameof(DictionariesDirs), DictionariesDirs);
             sb.AppendLine($"{spaces}{nameof(TmpDir)} = {TmpDir}");
             sb.AppendLine($"{spaces}{nameof(HostFile)} = {HostFile}");

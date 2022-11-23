@@ -9,7 +9,8 @@ namespace SymOntoClayProjectFiles
     {
         public string LogicFile { get; set; }
         public string WorldFile { get; set; }
-        public string SharedLibrariesDir { get; set; }
+        public string SharedLibsDir { get; set; }
+        public string LibsDir { get; set; }
         public string ImagesRootDir { get; set; }
         public string TmpDir { get; set; }
 
@@ -33,7 +34,8 @@ namespace SymOntoClayProjectFiles
 
             sb.AppendLine($"{spaces}{nameof(LogicFile)} = {LogicFile}");
             sb.AppendLine($"{spaces}{nameof(WorldFile)} = {WorldFile}");
-            sb.AppendLine($"{spaces}{nameof(SharedLibrariesDir)} = {SharedLibrariesDir}");
+            sb.AppendLine($"{spaces}{nameof(SharedLibsDir)} = {SharedLibsDir}");
+            sb.AppendLine($"{spaces}{nameof(LibsDir)} = {LibsDir}");
             sb.AppendLine($"{spaces}{nameof(ImagesRootDir)} = {ImagesRootDir}");
             sb.AppendLine($"{spaces}{nameof(TmpDir)} = {TmpDir}");
 

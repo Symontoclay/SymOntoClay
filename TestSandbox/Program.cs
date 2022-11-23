@@ -1186,7 +1186,7 @@ action Go
 
             var settings = new WorldSettings();
 
-            settings.LibsDirs = new List<string>() { targetFiles.SharedLibrariesDir };
+            settings.LibsDirs = new List<string>() { targetFiles.SharedLibsDir };
 
             settings.ImagesRootDir = targetFiles.ImagesRootDir;
 

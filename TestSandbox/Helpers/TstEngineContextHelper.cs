@@ -44,6 +44,8 @@ using SymOntoClay.NLP;
 using SymOntoClay.StandardFacts;
 using SymOntoClayBaseTestLib.Helpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClayProjectFiles;
 
 namespace TestSandbox.Helpers
 {
@@ -55,7 +57,7 @@ namespace TestSandbox.Helpers
         {
             var appName = AppDomain.CurrentDomain.FriendlyName;
 
-            //_logger.Log($"appName = {appName}");
+            _logger.Log($"appName = {appName}");
 
             var supportBasePath = Path.Combine(Environment.GetEnvironmentVariable("APPDATA"), "SymOntoClay", appName);
 
@@ -69,7 +71,20 @@ namespace TestSandbox.Helpers
 
             _logger.Log($"codeDir = {codeDir}");
 
+            var worldSpaceFilesSearcherOptions = new WorldSpaceFilesSearcherOptions()
+            {
+                InputDir = codeDir,
+                AppName = $@"SymOntoClay\{appName}",
+                BaseTempDir = @"D:/fdsfsdf"
+            };
 
+            var targetFiles = WorldSpaceFilesSearcher.Run(worldSpaceFilesSearcherOptions);
+
+#if DEBUG
+            _logger.Log($"targetFiles = {targetFiles}");
+#endif 
+
+            throw new NotImplementedException();
 
             var settings = new WorldSettings();
             settings.EnableAutoloadingConvertors = true;

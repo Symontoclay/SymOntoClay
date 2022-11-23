@@ -65,7 +65,8 @@ namespace SymOntoClay.CLI
             var worldSpaceFilesSearcherOptions = new WorldSpaceFilesSearcherOptions()
             {
                 InputDir = command.InputDir,
-                InputFile = command.InputFile
+                InputFile = command.InputFile,
+                AppName = @"SymOntoClay\CLI"
             };
 
             var targetFiles = WorldSpaceFilesSearcher.Run(worldSpaceFilesSearcherOptions);
@@ -82,7 +83,7 @@ namespace SymOntoClay.CLI
             var settings = new WorldSettings();
             settings.EnableAutoloadingConvertors = true;
 
-            settings.LibsDirs = new List<string>() { targetFiles.SharedLibrariesDir };
+            settings.LibsDirs = new List<string>() { targetFiles.SharedLibsDir };
 
             settings.ImagesRootDir = targetFiles.ImagesRootDir;
 

@@ -9,6 +9,8 @@ namespace SymOntoClayProjectFiles
     {
         public string InputFile { get; set; }
         public string InputDir { get; set; }
+        public string AppName { get; set; }
+        public string BaseTempDir { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -30,6 +32,8 @@ namespace SymOntoClayProjectFiles
 
             sb.AppendLine($"{spaces}{nameof(InputFile)} = {InputFile}");
             sb.AppendLine($"{spaces}{nameof(InputDir)} = {InputDir}");
+            sb.AppendLine($"{spaces}{nameof(AppName)} = {AppName}");
+            sb.AppendLine($"{spaces}{nameof(BaseTempDir)} = {BaseTempDir}");
 
             return sb.ToString();
         }

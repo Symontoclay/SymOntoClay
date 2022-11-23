@@ -37,6 +37,7 @@ using Newtonsoft.Json;
 using System.Diagnostics;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System.Linq;
+using SymOntoClayProjectFiles;
 
 namespace SymOntoClay.CLI
 {
@@ -61,7 +62,13 @@ namespace SymOntoClay.CLI
 
             var appSettings = ConfigurationManager.AppSettings;
 
-            var targetFiles = RunCommandFilesSearcher.Run(command);
+            var worldSpaceFilesSearcherOptions = new WorldSpaceFilesSearcherOptions()
+            {
+                InputDir = command.InputDir,
+                InputFile = command.InputFile
+            };
+
+            var targetFiles = WorldSpaceFilesSearcher.Run(worldSpaceFilesSearcherOptions);
 
 #if DEBUG
             //_logger.Info($"targetFiles = {targetFiles}");
@@ -75,7 +82,7 @@ namespace SymOntoClay.CLI
             var settings = new WorldSettings();
             settings.EnableAutoloadingConvertors = true;
 
-            settings.SharedModulesDirs = new List<string>() { targetFiles.SharedLibrariesDir };
+            settings.LibsDirs = new List<string>() { targetFiles.SharedLibrariesDir };
 
             settings.ImagesRootDir = targetFiles.ImagesRootDir;
 

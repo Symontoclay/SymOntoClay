@@ -59,7 +59,7 @@ namespace TestSandbox.MonoBehaviourTesting
 
             var settings = new WorldSettings();
 
-            settings.SharedModulesDirs = new List<string>() { Path.Combine(Directory.GetCurrentDirectory(), "Source", "Modules") };
+            settings.LibsDirs = new List<string>() { Path.Combine(Directory.GetCurrentDirectory(), "Source", "Modules") };
 
             settings.ImagesRootDir = Path.Combine(supportBasePath, "Images");
 

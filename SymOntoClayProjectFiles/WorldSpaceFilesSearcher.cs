@@ -1,62 +1,38 @@
-/*MIT License
-
-Copyright (c) 2020 - 2022 Sergiy Tolkachov
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.*/
-
-using NLog;
-using SymOntoClayProjectFiles;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace SymOntoClay.CLI
+namespace SymOntoClayProjectFiles
 {
-    public static class RunCommandFilesSearcher
+    public static class WorldSpaceFilesSearcher
     {
 #if DEBUG
         //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
-        public static RunCommandFiles Run(CLICommand command)
+        public static WorldSpaceFiles Run(WorldSpaceFilesSearcherOptions options)
         {
-            if(string.IsNullOrWhiteSpace(command.InputFile))
+            if (string.IsNullOrWhiteSpace(options.InputFile))
             {
-                if(string.IsNullOrWhiteSpace(command.InputDir))
+                if (string.IsNullOrWhiteSpace(options.InputDir))
                 {
                     throw new NotImplementedException();
                 }
                 else
                 {
-                    var inputNpcFile = GetNpcFileNameInCurrentDir(command.InputDir);
+                    var inputNpcFile = GetNpcFileNameInCurrentDir(options.InputDir);
 
 #if DEBUG
                     //_logger.Info($"inputNpcFile = {inputNpcFile}");
 #endif
 
-                    if(string.IsNullOrWhiteSpace(inputNpcFile))
+                    if (string.IsNullOrWhiteSpace(inputNpcFile))
                     {
-                        var wSpaceFile = WFilesSearcher.FindWSpaceFile(command.InputDir);
+                        var wSpaceFile = WFilesSearcher.FindWSpaceFile(options.InputDir);
 
-                        if(wSpaceFile == null)
+                        if (wSpaceFile == null)
                         {
                             throw new NotImplementedException();
                         }
@@ -65,17 +41,17 @@ namespace SymOntoClay.CLI
                     }
                     else
                     {
-                        return GetRunCommandFilesByInputFile(inputNpcFile);
-                    }                    
+                        return GetWorldSpaceFilesByInputFile(inputNpcFile);
+                    }
                 }
             }
             else
             {
-                return GetRunCommandFilesByInputFile(command.InputFile);
+                return GetWorldSpaceFilesByInputFile(options.InputFile);
             }
         }
 
-        private static RunCommandFiles GetRunCommandFilesByWorldFile(FileInfo wSpaceFile)
+        private static WorldSpaceFiles GetRunCommandFilesByWorldFile(FileInfo wSpaceFile)
         {
 #if DEBUG
             //_logger.Info($"wSpaceFile = {wSpaceFile}");
@@ -111,7 +87,7 @@ namespace SymOntoClay.CLI
                 throw new NotImplementedException();
             }
 
-            return NGetRunCommandFiles(inputFile, wSpaceFile, wSpaceJsonFile.Dirs);
+            return NGetWorldSpaceFiles(inputFile, wSpaceFile, wSpaceJsonFile.Dirs);
         }
 
         private static string DetectMainFileFllPathForMainNPCOfWorld(string currDirName, string mainNPCFileName, WorldDirs worldDirs)
@@ -121,7 +97,7 @@ namespace SymOntoClay.CLI
             //_logger.Info($"mainNPCFileName = {mainNPCFileName}");
 #endif
 
-            if(!string.IsNullOrWhiteSpace(worldDirs.World) && currDirName.EndsWith(worldDirs.World))
+            if (!string.IsNullOrWhiteSpace(worldDirs.World) && currDirName.EndsWith(worldDirs.World))
             {
                 return string.Empty;
             }
@@ -142,12 +118,12 @@ namespace SymOntoClay.CLI
             //_logger.Info($"targetFileName = {targetFileName}");
 #endif
 
-            if(!string.IsNullOrWhiteSpace(targetFileName))
+            if (!string.IsNullOrWhiteSpace(targetFileName))
             {
                 return targetFileName;
             }
 
-            foreach(var subDir in Directory.EnumerateDirectories(currDirName))
+            foreach (var subDir in Directory.EnumerateDirectories(currDirName))
             {
                 targetFileName = DetectMainFileFllPathForMainNPCOfWorld(subDir, mainNPCFileName, worldDirs);
 
@@ -179,7 +155,7 @@ namespace SymOntoClay.CLI
                 return string.Empty;
             }
 
-            if(count == 1)
+            if (count == 1)
             {
                 return filesList.Single();
             }
@@ -187,7 +163,7 @@ namespace SymOntoClay.CLI
             throw new NotImplementedException();
         }
 
-        private static RunCommandFiles GetRunCommandFilesByInputFile(string inputFile)
+        private static WorldSpaceFiles GetWorldSpaceFilesByInputFile(string inputFile)
         {
 #if DEBUG
             //_logger.Info($"inputFile = {inputFile}");
@@ -212,10 +188,10 @@ namespace SymOntoClay.CLI
                 throw new NotImplementedException();
             }
 
-            return NGetRunCommandFiles(inputFile, wSpaceFile, wSpaceJsonFile.Dirs);
+            return NGetWorldSpaceFiles(inputFile, wSpaceFile, wSpaceJsonFile.Dirs);
         }
 
-        private static RunCommandFiles NGetRunCommandFiles(string inputFile, FileInfo wSpaceFile, WorldDirs worldDirs)
+        private static WorldSpaceFiles NGetWorldSpaceFiles(string inputFile, FileInfo wSpaceFile, WorldDirs worldDirs)
         {
 #if DEBUG
             //_logger.Info($"inputFile = {inputFile}");
@@ -223,7 +199,7 @@ namespace SymOntoClay.CLI
             //_logger.Info($"worldDirs = {worldDirs}");
 #endif
 
-            var result = new RunCommandFiles();
+            var result = new WorldSpaceFiles();
 
             result.LogicFile = inputFile;
 

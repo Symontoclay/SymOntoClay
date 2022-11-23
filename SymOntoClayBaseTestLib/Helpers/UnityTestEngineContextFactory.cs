@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Tests.Helpers
             {
                 baseDir = CreateTestDir(CreateRootDir());
             }
-
+            
             var supportBasePath = Path.Combine(baseDir, "SysDirs");
 
             var logDir = Path.Combine(supportBasePath, "NpcLogs");

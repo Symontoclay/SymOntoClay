@@ -689,7 +689,7 @@ app PeaceKeeper is [very middle] exampleClass
             var settings = new WorldSettings();
             settings.EnableAutoloadingConvertors = true;
 
-            settings.SharedModulesDirs = new List<string>() { Path.Combine(wSpaceDir, "Modules") };
+            settings.LibsDirs = new List<string>() { Path.Combine(wSpaceDir, "Modules") };
 
             settings.ImagesRootDir = Path.Combine(supportBasePath, "Images");
 
@@ -1168,7 +1168,13 @@ action Go
 
             _logger.Log($"command = {command}");
 
-            var targetFiles = RunCommandFilesSearcher.Run(command);
+            var worldSpaceFilesSearcherOptions = new WorldSpaceFilesSearcherOptions()
+            {
+                InputDir = command.InputDir,
+                InputFile = command.InputFile
+            };
+
+            var targetFiles = WorldSpaceFilesSearcher.Run(worldSpaceFilesSearcherOptions);
 
             _logger.Log($"targetFiles = {targetFiles}");
 
@@ -1180,7 +1186,7 @@ action Go
 
             var settings = new WorldSettings();
 
-            settings.SharedModulesDirs = new List<string>() { targetFiles.SharedLibrariesDir };
+            settings.LibsDirs = new List<string>() { targetFiles.SharedLibrariesDir };
 
             settings.ImagesRootDir = targetFiles.ImagesRootDir;
 

@@ -176,7 +176,7 @@ namespace TestSandbox.CreatingExamples
             var settings = new WorldSettings();
             settings.EnableAutoloadingConvertors = true;
 
-            settings.SharedModulesDirs = new List<string>() { Path.Combine(wSpaceDir, "Modules") };
+            settings.LibsDirs = new List<string>() { Path.Combine(wSpaceDir, "Modules") };
 
             settings.ImagesRootDir = Path.Combine(supportBasePath, "Images");
 

@@ -65,10 +65,16 @@ namespace TestSandbox.Helpers
 
             var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
 
+            var codeDir = Path.Combine(Directory.GetCurrentDirectory(), "Source");
+
+            _logger.Log($"codeDir = {codeDir}");
+
+
+
             var settings = new WorldSettings();
             settings.EnableAutoloadingConvertors = true;
 
-            settings.SharedModulesDirs = new List<string>() { Path.Combine(Directory.GetCurrentDirectory(), "Source", "Modules") };
+            settings.LibsDirs = new List<string>() { Path.Combine(Directory.GetCurrentDirectory(), "Source", "Modules") };
 
             settings.ImagesRootDir = Path.Combine(supportBasePath, "Images");
 
@@ -155,7 +161,7 @@ namespace TestSandbox.Helpers
             settings.Logging = loggingSettings;
 
 #if DEBUG
-            //_logger.Log($"settings = {settings}");
+            _logger.Log($"settings = {settings}");
 #endif
 
             return settings;
@@ -200,11 +206,11 @@ namespace TestSandbox.Helpers
         {
             var settings = CreateWorldSettings(factorySettings);
 
-            //_logger.Log($"settings = {settings}");
+            _logger.Log($"settings = {settings}");
 
             var npcSettings = CreateHumanoidNPCSettings(factorySettings);
 
-            //_logger.Log($"npcSettings = {npcSettings}");
+            _logger.Log($"npcSettings = {npcSettings}");
 
             return UnityTestEngineContextFactory.CreateTestEngineContext(settings, npcSettings);
         }

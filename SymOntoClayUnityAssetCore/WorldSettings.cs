@@ -36,7 +36,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// <summary>
         /// Gets or sets list of file paths for describing places for searching shared modules.
         /// </summary>
-        public IList<string> SharedModulesDirs { get; set; }
+        public IList<string> LibsDirs { get; set; }
 
         /// <summary>
         /// Gets or sets root dir for saving and loading images of executed code.
@@ -48,6 +48,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         public IList<string> DictionariesDirs { get; set; }
 
+        [Obsolete("Built in standard library is being moved to LibsDirs")]
         public string BuiltInStandardLibraryDir { get; set; }
 
         public string TmpDir { get; set; }
@@ -88,7 +89,7 @@ namespace SymOntoClay.UnityAsset.Core
             var sb = new StringBuilder();
 
             sb.PrintObjProp(n, nameof(Logging), Logging);
-            sb.PrintPODList(n, nameof(SharedModulesDirs), SharedModulesDirs);
+            sb.PrintPODList(n, nameof(LibsDirs), LibsDirs);
             sb.AppendLine($"{spaces}{nameof(ImagesRootDir)} = {ImagesRootDir}");
             sb.AppendLine($"{spaces}{nameof(BuiltInStandardLibraryDir)} = {BuiltInStandardLibraryDir}");
             sb.PrintPODList(n, nameof(DictionariesDirs), DictionariesDirs);

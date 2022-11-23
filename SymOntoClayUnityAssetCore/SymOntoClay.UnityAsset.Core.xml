@@ -105,22 +105,22 @@
         </member>
         <member name="F:SymOntoClay.UnityAsset.Core.DeviceOfBiped.RightHand">
             <summary>
-            Represents the right hand  of the NPC or Player.
+            Represents the right hand of the NPC or Player.
             </summary>
         </member>
         <member name="F:SymOntoClay.UnityAsset.Core.DeviceOfBiped.LeftHand">
             <summary>
-            Represents the left hand  of the NPC or Player.
+            Represents the left hand of the NPC or Player.
             </summary>
         </member>
         <member name="F:SymOntoClay.UnityAsset.Core.DeviceOfBiped.RightLeg">
             <summary>
-            Represents the right  of the NPC or Player.
+            Represents the right leg of the NPC or Player.
             </summary>
         </member>
         <member name="F:SymOntoClay.UnityAsset.Core.DeviceOfBiped.LeftLeg">
             <summary>
-            Represents the left leg  of the NPC or Player.
+            Represents the left leg of the NPC or Player.
             </summary>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.EndpointParamAttribute">
@@ -1810,7 +1810,7 @@
             General settings of a game world.
             </summary>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.WorldSettings.SharedModulesDirs">
+        <member name="P:SymOntoClay.UnityAsset.Core.WorldSettings.LibsDirs">
             <summary>
             Gets or sets list of file paths for describing places for searching shared modules.
             </summary>

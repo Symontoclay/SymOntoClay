@@ -98,7 +98,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             ImagesRegistry = new ImagesRegistry(this);
             ThreadsComponent = new ThreadsCoreComponent(this);
             
-            ModulesStorage = new ModulesStorageComponent(this);
+            ModulesStorage = new ModulesStorageComponent(settings, this);
             StandaloneStorage = new StandaloneStorageComponent(settings, this);
             PlatformTypesConvertorsRegistry = new PlatformTypesConvertersRegistry(Logger);
             DateTimeProvider = new DateTimeProvider(Logger, ThreadsComponent);

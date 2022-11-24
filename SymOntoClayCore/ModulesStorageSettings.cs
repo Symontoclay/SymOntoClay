@@ -29,12 +29,16 @@ namespace SymOntoClay.Core
 {
     public class ModulesStorageSettings : BaseCoreSettings
     {
+        public IList<string> LibsDirs { get; set; }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-        
+
+            sb.PrintPODList(n, nameof(LibsDirs), LibsDirs);
+
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }

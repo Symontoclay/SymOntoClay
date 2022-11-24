@@ -33,6 +33,7 @@ namespace SymOntoClay.Core
         public ModulesStorage(ModulesStorageSettings settings)
             : base(settings.Logger)
         {
+            Log($"settings = {settings}");
         }
 
         /// <inheritdoc/>
@@ -45,7 +46,7 @@ namespace SymOntoClay.Core
                     throw new ObjectDisposedException(null);
                 }
 
-                throw new NotImplementedException();
+                //throw new NotImplementedException();
 
 #if IMAGINE_WORKING
                 //Log("Do");

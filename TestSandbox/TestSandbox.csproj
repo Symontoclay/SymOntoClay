@@ -37,6 +37,9 @@
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Source\Libs\TextFile1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Source\SharedLibs\lib1\lib1.slib">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

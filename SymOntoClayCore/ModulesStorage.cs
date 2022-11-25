@@ -23,9 +23,11 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Xml.Linq;
 
@@ -37,9 +39,16 @@ namespace SymOntoClay.Core
             : base(settings.Logger)
         {
             Log($"settings = {settings}");
+
+            _libDirs = settings.LibsDirs;
+
+            _hasLibDirs = !_libDirs.IsNullOrEmpty();
         }
 
         private readonly object _lockObj = new object();
+
+        private readonly IList<string> _libDirs;
+        private readonly bool _hasLibDirs;
 
         private readonly Dictionary<StrongIdentifierValue, IStorage> _storagesDict = new Dictionary<StrongIdentifierValue, IStorage>();
 
@@ -118,6 +127,11 @@ namespace SymOntoClay.Core
 
                 var result = new List<IStorage>();
 
+                if(!_hasLibDirs)
+                {
+                    return result;
+                }
+
                 foreach (var name in namesList)
                 {
 #if DEBUG
@@ -143,6 +157,43 @@ namespace SymOntoClay.Core
 #if DEBUG
             Log($"name = {name}");
 #endif
+
+            var libDirectory = GetLibDirectory(name.NameValue);
+
+#if DEBUG
+            Log($"libDirectory = {libDirectory}");
+#endif
+
+            throw new NotImplementedException();
+        }
+
+        private string GetLibDirectory(string name)
+        {
+#if DEBUG
+            Log($"name = {name}");
+#endif
+
+            name = name.Trim().ToLower();
+
+            foreach (var baseDirName in _libDirs)
+            {
+#if DEBUG
+                Log($"baseDirName = {baseDirName}");
+#endif
+
+                var subDirectories = Directory.EnumerateDirectories(baseDirName);
+
+#if DEBUG
+                Log($"subDirectories = {subDirectories.WritePODListToString()}");
+#endif
+
+                foreach(var subDirectory in subDirectories)
+                {
+#if DEBUG
+                    Log($"subDirectory = {subDirectory}");
+#endif
+                }
+            }
 
             throw new NotImplementedException();
         }

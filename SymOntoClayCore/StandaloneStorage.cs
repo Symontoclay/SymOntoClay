@@ -90,7 +90,6 @@ namespace SymOntoClay.Core
         {
 #if DEBUG
             //Log("Begin");
-            //Log($"_additionalSourceCodePaths = {_additionalSourceCodePaths.WritePODListToString()}");
 #endif
 
             lock (_stateLockObj)

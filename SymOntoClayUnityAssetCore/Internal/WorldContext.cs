@@ -104,7 +104,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             DateTimeProvider = new DateTimeProvider(Logger, ThreadsComponent);
             LogicQueryParseAndCache = new LogicQueryParseAndCache(settings, this);
         }
-
+        
         private void LoadTypesPlatformTypesConvertors()
         {
             var targetAttributeType = typeof(PlatformTypesConverterAttribute);

@@ -21,10 +21,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Linq;
 
 namespace SymOntoClay.Core
 {
@@ -35,6 +38,10 @@ namespace SymOntoClay.Core
         {
             Log($"settings = {settings}");
         }
+
+        private readonly object _lockObj = new object();
+
+        private readonly Dictionary<StrongIdentifierValue, IStorage> _storagesDict = new Dictionary<StrongIdentifierValue, IStorage>();
 
         /// <inheritdoc/>
         public void LoadFromSourceCode()
@@ -90,6 +97,54 @@ namespace SymOntoClay.Core
                 throw new NotImplementedException();
 #endif
             }
+        }
+
+        /// <inheritdoc/>
+        public IList<IStorage> Import(IList<StrongIdentifierValue> namesList)
+        {
+            lock (_stateLockObj)
+            {
+                if (_state == ComponentState.Disposed)
+                {
+                    throw new ObjectDisposedException(null);
+                }
+            }
+
+            lock(_lockObj)
+            {
+#if DEBUG
+                Log($"namesList = {namesList.WriteListToString()}");
+#endif
+
+                var result = new List<IStorage>();
+
+                foreach (var name in namesList)
+                {
+#if DEBUG
+                    Log($"name = {name}");
+#endif
+
+                    if(_storagesDict.ContainsKey(name))
+                    {
+                        result.Add(_storagesDict[name]);
+                    }
+                    else
+                    {
+                        result.Add(LoadLib(name));
+                    }
+                }
+
+                return result;
+            }
+        }
+
+        private IStorage LoadLib(StrongIdentifierValue name)
+        {
+#if DEBUG
+            Log($"name = {name}");
+#endif
+
+            throw new NotImplementedException();
         }
     }
 }

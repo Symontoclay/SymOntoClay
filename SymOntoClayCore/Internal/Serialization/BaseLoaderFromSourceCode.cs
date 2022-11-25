@@ -48,9 +48,10 @@ namespace SymOntoClay.Core.Internal.Serialization
         {
 #if DEBUG
             //Log("Begin");
+            Log($"_context.AppFile = {_context.AppFile}");
 #endif
 
-            if(string.IsNullOrEmpty(_context.AppFile))
+            if (string.IsNullOrEmpty(_context.AppFile))
             {
                 return;
             }
@@ -60,7 +61,7 @@ namespace SymOntoClay.Core.Internal.Serialization
 #if DEBUG
             //Log($"filesList.Count = {filesList.Count}");
 
-            //Log($"filesList = {filesList.WriteListToString()}");
+            Log($"filesList = {filesList.WriteListToString()}");
 #endif
 
             ProcessFilesList(filesList, true);
@@ -418,9 +419,11 @@ namespace SymOntoClay.Core.Internal.Serialization
             switch(kindOfEntity)
             {
                 case KindOfCodeEntity.World:
+                    ProcessImport(codeItem);
                     break;
 
                 case KindOfCodeEntity.App:
+                    ProcessImport(codeItem);
                     break;
 
                 case KindOfCodeEntity.Class:
@@ -595,6 +598,24 @@ namespace SymOntoClay.Core.Internal.Serialization
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfEntity), kindOfEntity, null);
             }
+        }
+
+        private void ProcessImport(CodeItem codeItem)
+        {
+            var importsList = codeItem.ImportsList;
+
+            if (importsList.IsNullOrEmpty())
+            {
+                return;
+            }
+
+            var libsList = _context.ModulesStorage.Import(importsList);
+
+#if DEBUG
+            Log($"libsList.Count = {libsList.Count}");
+#endif
+
+            throw new NotImplementedException();
         }
     }
 }

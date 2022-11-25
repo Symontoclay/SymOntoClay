@@ -6229,6 +6229,9 @@
         <member name="P:SymOntoClay.Core.Internal.MainStorageContext.LogicQueryParseAndCache">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.MainStorageContext.ModulesStorage">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.MainStorageContext.OnDisposed">
             <inheritdoc/>
         </member>
@@ -8013,6 +8016,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.ModulesStorage.SaveToImage(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.ModulesStorage.Import(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.ModulesStorageSettings.PropertiesToString(System.UInt32)">

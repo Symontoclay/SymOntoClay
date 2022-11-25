@@ -51,6 +51,7 @@ namespace SymOntoClay.Core.Internal
         ILoaderFromSourceCode LoaderFromSourceCode { get; }
         ILogicQueryParseAndCache LogicQueryParseAndCache { get; }
         IInstancesStorageComponent InstancesStorage { get; }
+        IModulesStorage ModulesStorage { get; }
 
         ILoggingProvider LoggingProvider { get; }
     }

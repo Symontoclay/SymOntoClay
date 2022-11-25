@@ -21,7 +21,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private State _state = State.Init;
 
-        public Value Result { get; private set; }
+        public StrongIdentifierValue Result { get; private set; }
 
         /// <inheritdoc/>
         protected override void OnRun()

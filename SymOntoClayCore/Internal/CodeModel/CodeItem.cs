@@ -125,6 +125,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public Value Priority { get; set; }
 
+        public List<StrongIdentifierValue> ImportsList { get; private set; } = new List<StrongIdentifierValue>();
+
         public virtual bool IsRuleInstance => false;
         public virtual RuleInstance AsRuleInstance => null;
 
@@ -232,6 +234,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             Priority = source.Priority?.CloneValue(cloneContext);
 
+            ImportsList = source.ImportsList?.Select(p => p.Clone(cloneContext)).ToList();
+
             AppendAnnotations(source, cloneContext);
         }
 
@@ -291,6 +295,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintObjProp(n, nameof(Priority), Priority);
 
+            sb.PrintObjListProp(n, nameof(ImportsList), ImportsList);
+
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -322,6 +328,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintShortObjProp(n, nameof(Priority), Priority);
 
+            sb.PrintShortObjListProp(n, nameof(ImportsList), ImportsList);
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -344,6 +352,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjListProp(n, nameof(IdleActionItems), IdleActionItems);
 
             sb.PrintBriefObjProp(n, nameof(Priority), Priority);
+
+            sb.PrintBriefObjListProp(n, nameof(ImportsList), ImportsList);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

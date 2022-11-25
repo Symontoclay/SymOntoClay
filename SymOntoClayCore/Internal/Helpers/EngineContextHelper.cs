@@ -119,6 +119,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.ConvertersFactory = new ConvertersFactory(context);
 
             context.ActivePeriodicObjectContext = new ActivePeriodicObjectContext(settings.SyncContext);
+            context.ModulesStorage = settings.ModulesStorage;
 
             context.LogicalSearchExplainProvider = new LoggingProvider(context, settings);
         }

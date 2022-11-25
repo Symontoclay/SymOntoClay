@@ -70,6 +70,9 @@ namespace SymOntoClay.Core.Internal
         /// <inheritdoc/>
         public ILogicQueryParseAndCache LogicQueryParseAndCache { get; set; }
 
+        /// <inheritdoc/>
+        public IModulesStorage ModulesStorage { get; set; }
+
         IStorageComponent IMainStorageContext.Storage => Storage;
         IParser IMainStorageContext.Parser => Parser;
         

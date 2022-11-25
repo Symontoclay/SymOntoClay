@@ -2,7 +2,7 @@
   "profiles": {
     "SymOntoClayCLI": {
       "commandName": "Project",
-      "commandLineArgs": "new -npc Example ",
+      "commandLineArgs": "new -lib lib2",
       "workingDirectory": "C:\\Users\\sergiy.tolkachov\\Documents\\EnHW"
     }
   }

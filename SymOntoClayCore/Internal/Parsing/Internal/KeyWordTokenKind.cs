@@ -95,6 +95,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Exec,
         Synonym,
         Idle,
-        With
+        With,
+        Import
     }
 }

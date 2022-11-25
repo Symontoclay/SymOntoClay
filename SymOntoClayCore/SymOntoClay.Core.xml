@@ -6432,6 +6432,9 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.IfStatementParser.OnRun">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.ImportParser.OnRun">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.InheritanceParser.OnEnter">
             <inheritdoc/>
         </member>

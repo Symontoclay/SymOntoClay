@@ -1,0 +1,4 @@
+lib lib1
+{
+    //import 'lib2';
+}

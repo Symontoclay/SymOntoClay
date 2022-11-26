@@ -144,6 +144,8 @@ namespace SymOntoClay.Core
                     return result;
                 }
 
+                plesse make loading requires libs!
+
                 foreach (var name in namesList)
                 {
 #if DEBUG
@@ -156,7 +158,14 @@ namespace SymOntoClay.Core
                     }
                     else
                     {
-                        result.Add(LoadLib(name));
+                        var loadResult = LoadLib(name);
+
+                        result.Add(loadResult.Item1);
+
+                        if(loadResult.Item2.Any())
+                        {
+                            throw new NotImplementedException();
+                        }
                     }
                 }
 
@@ -164,7 +173,7 @@ namespace SymOntoClay.Core
             }
         }
 
-        private IStorage LoadLib(StrongIdentifierValue name)
+        private (IStorage, List<string>) LoadLib(StrongIdentifierValue name)
         {
 #if DEBUG
             Log($"name = {name}");
@@ -204,6 +213,10 @@ namespace SymOntoClay.Core
 #if DEBUG
             Log($"defferedLibsList = {defferedLibsList.WritePODListToString()}");
 #endif
+
+            _storagesDict[name] = storage;
+
+
 
             throw new NotImplementedException();
         }

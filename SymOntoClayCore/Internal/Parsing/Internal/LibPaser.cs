@@ -9,7 +9,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
     {
         private enum State
         {
-            Init
+            Init,
+            GotLib,
+            GotName,
+            GotInheritance,
+            ContentStarted
         }
 
         public LibPaser(InternalParserContext context)
@@ -33,9 +37,68 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.Init:
                     switch(_currToken.KeyWordTokenKind)
                     {
+                        case KeyWordTokenKind.Lib:
+                            _state = State.GotLib;
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
+                    break;
+
+                case State.GotLib:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                        case TokenKind.Identifier:
+                            Result.Name = ParseName(_currToken.Content);
+                            _state = State.GotName;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotName:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenFigureBracket:
+                            _state = State.ContentStarted;
+                            break;
+
+                        case TokenKind.Word:
+                            switch (_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Is:
+                                    ProcessInheritance();
+                                    _state = State.GotInheritance;
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotInheritance:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.OpenFigureBracket:
+                            _state = State.ContentStarted;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.ContentStarted:
+                    ProcessGeneralContent();
                     break;
 
                 default:

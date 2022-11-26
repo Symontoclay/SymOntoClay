@@ -105,10 +105,8 @@ namespace SymOntoClay.Core
                 _storage = _storageComponent.GlobalStorage;
                 _publicFactsStorage = _storageComponent.PublicFactsStorage;
 
-#if IMAGINE_WORKING
+#if DEBUG
                 //Log("End");
-#else
-                throw new NotImplementedException();
 #endif
             }
         }

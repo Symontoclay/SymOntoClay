@@ -28,6 +28,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 
@@ -158,11 +159,29 @@ namespace SymOntoClay.Core
             Log($"name = {name}");
 #endif
 
-            var libDirectory = GetLibDirectory(name.NameValue);
+            var strName = name.NameValue;
+
+            var libDirectory = GetLibDirectory(strName);
 
 #if DEBUG
             Log($"libDirectory = {libDirectory}");
 #endif
+
+            if(string.IsNullOrWhiteSpace(libDirectory))
+            {
+                throw new FileNotFoundException($"Unable to find lib `{strName}`.");
+            }
+
+            var libFileName = GetLibFileName(libDirectory);
+
+#if DEBUG
+            Log($"libFileName = {libFileName}");
+#endif
+
+            if (string.IsNullOrWhiteSpace(libFileName))
+            {
+                throw new FileNotFoundException($"Unable to find lib `{strName}`.");
+            }
 
             throw new NotImplementedException();
         }
@@ -170,7 +189,7 @@ namespace SymOntoClay.Core
         private string GetLibDirectory(string name)
         {
 #if DEBUG
-            Log($"name = {name}");
+            //Log($"name = {name}");
 #endif
 
             name = name.Trim().ToLower();
@@ -178,21 +197,45 @@ namespace SymOntoClay.Core
             foreach (var baseDirName in _libDirs)
             {
 #if DEBUG
-                Log($"baseDirName = {baseDirName}");
+                //Log($"baseDirName = {baseDirName}");
 #endif
 
                 var subDirectories = Directory.EnumerateDirectories(baseDirName);
 
 #if DEBUG
-                Log($"subDirectories = {subDirectories.WritePODListToString()}");
+                //Log($"subDirectories = {subDirectories.WritePODListToString()}");
 #endif
 
                 foreach(var subDirectory in subDirectories)
                 {
 #if DEBUG
-                    Log($"subDirectory = {subDirectory}");
+                    //Log($"subDirectory = {subDirectory}");
 #endif
+
+                    var directoryInfo = new DirectoryInfo(subDirectory);
+
+                    if(directoryInfo.Name.ToLower() == name)
+                    {
+                        return directoryInfo.FullName;
+                    }
                 }
+            }
+
+            return string.Empty;
+        }
+
+        private string GetLibFileName(string directoryName)
+        {
+            var files = Directory.EnumerateFiles(directoryName).Where(p => p.EndsWith(".slib"));
+
+            if(!files.Any())
+            {
+                return string.Empty;
+            }
+
+            if(files.Count() == 1)
+            {
+                return files.First();
             }
 
             throw new NotImplementedException();

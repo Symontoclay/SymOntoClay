@@ -31,6 +31,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         Unknown,
         World,
         App,
+        Lib,
         Class,
         Action,
         Instance,

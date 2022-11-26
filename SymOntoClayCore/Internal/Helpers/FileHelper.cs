@@ -33,25 +33,32 @@ namespace SymOntoClay.Core.Internal.Helpers
 {
     public static class FileHelper
     {
-        private static List<string> _rootExtesions = new List<string>() { ".sobj", ".world" };
+        private static List<string> _rootExtesions = new List<string>() { ".sobj", ".world", ".slib" };
         private static List<string> _sourceFileExtensions = new List<string>() { ".soc" };
 
-        public static List<ParsedFileInfo> GetParsedFilesInfo(string appFileName, string id)
+        public static List<ParsedFileInfo> GetParsedFilesInfo(string projectFileName, string id)
         {
-            var fileInfo = new FileInfo(appFileName);
+            var fileInfo = new FileInfo(projectFileName);
 
             if(!_rootExtesions.Contains(fileInfo.Extension))
             {
-                throw new Exception($"Root file `{appFileName}` of entity `{id}` has invalid extension `{fileInfo.Extension}`.");
+                if(string.IsNullOrWhiteSpace(id))
+                {
+                    throw new Exception($"Root file `{projectFileName}` has invalid extension `{fileInfo.Extension}`.");
+                }
+                else
+                {
+                    throw new Exception($"Root file `{projectFileName}` of entity `{id}` has invalid extension `{fileInfo.Extension}`.");
+                }                
             }
 
             var existingFilesList = new List<string>();
-            existingFilesList.Add(appFileName);
+            existingFilesList.Add(projectFileName);
 
             var result = new List<ParsedFileInfo>();
             result.Add(new ParsedFileInfo()
             {
-                FileName = appFileName,
+                FileName = projectFileName,
                 IsLocator = true
             });
 

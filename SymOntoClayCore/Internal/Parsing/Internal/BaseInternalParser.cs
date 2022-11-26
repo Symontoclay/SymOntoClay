@@ -593,6 +593,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             return result;
         }
 
+        protected Lib CreateLib()
+        {
+            var result = new Lib();
+
+            DefaultSettingsOfCodeEntityHelper.SetUpAnnotatedItem(result, CurrentDefaultSetings);
+
+            FillUpCodeItem(result);
+
+            return result;
+        }
+
         protected InlineTrigger CreateInlineTriggerAndSetAsCurrentCodeItem()
         {
             var result = CreateInlineTrigger();

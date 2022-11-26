@@ -35,6 +35,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Null,
         World,
         App,
+        Lib,
         Class,
         Action,
         Actions,

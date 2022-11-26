@@ -46,7 +46,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             : base(context, KindOfCodeEntity.App)
         {
         }
-
+        
         private State _state = State.Init;
 
         /// <inheritdoc/>

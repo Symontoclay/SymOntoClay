@@ -834,6 +834,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
                         }
 
+                        if (string.Compare(content, "lib", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Lib;
+                            break;
+                        }
+
                         if (string.Compare(content, "class", true) == 0)
                         {
                             kindOfKeyWord = KeyWordTokenKind.Class;

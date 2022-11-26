@@ -97,6 +97,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case KindOfCodeEntity.World:
                     return CreateWorld();
 
+                case KindOfCodeEntity.Lib:
+                    return CreateLib();
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }

@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -45,6 +46,13 @@ namespace SymOntoClay.Core
 
             _hasLibDirs = !_libDirs.IsNullOrEmpty();
         }
+
+        public void Init(IMainStorageContext mainStorageContext)
+        {
+            _projectLoader = new ProjectLoader(mainStorageContext, true);
+        }
+
+        private ProjectLoader _projectLoader;
 
         private readonly object _lockObj = new object();
 

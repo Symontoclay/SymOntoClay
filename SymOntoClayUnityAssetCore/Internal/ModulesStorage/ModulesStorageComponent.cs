@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core;
+using SymOntoClay.Core.Internal;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -42,6 +43,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.ModulesStorage
         }
 
         private readonly SymOntoClay.Core.ModulesStorage _modulesStorage;
+
+        public void Init(IMainStorageContext mainStorageContext)
+        {
+            _modulesStorage.Init(mainStorageContext);
+        }
 
         public SymOntoClay.Core.IModulesStorage ModulesStorage => _modulesStorage;
 

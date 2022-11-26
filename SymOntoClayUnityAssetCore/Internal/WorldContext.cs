@@ -97,9 +97,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             ImagesRegistry = new ImagesRegistry(this);
             ThreadsComponent = new ThreadsCoreComponent(this);
-            
+
             ModulesStorage = new ModulesStorageComponent(settings, this);
             StandaloneStorage = new StandaloneStorageComponent(settings, this);
+            ModulesStorage.Init(StandaloneStorage.StandaloneStorage.Context);
             PlatformTypesConvertorsRegistry = new PlatformTypesConvertersRegistry(Logger);
             DateTimeProvider = new DateTimeProvider(Logger, ThreadsComponent);
             LogicQueryParseAndCache = new LogicQueryParseAndCache(settings, this);

@@ -45,8 +45,9 @@ namespace SymOntoClay.Core
         
         private readonly MainStorageContext _context;
 
-        [Obsolete("Built in standard library is being moved to LibsDirs", true)]
-        private readonly IList<string> _additionalSourceCodePaths;
+        /// <inheritdoc/>
+        public IMainStorageContext Context => _context;
+
         private IStorageComponent _storageComponent;
         private IStorage _storage;
         private IStorage _publicFactsStorage;

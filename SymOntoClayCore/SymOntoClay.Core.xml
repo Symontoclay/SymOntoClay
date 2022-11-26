@@ -8042,6 +8042,9 @@
         <member name="M:SymOntoClay.Core.RelativeCoordinate.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.StandaloneStorage.Context">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.StandaloneStorage.Storage">
             <inheritdoc/>
         </member>

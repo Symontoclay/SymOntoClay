@@ -144,7 +144,7 @@ namespace SymOntoClay.Core
                     return result;
                 }
 
-                plesse make loading requires libs!
+                please make loading requires libs!
 
                 foreach (var name in namesList)
                 {

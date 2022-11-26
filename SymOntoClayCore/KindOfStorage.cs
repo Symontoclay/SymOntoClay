@@ -29,7 +29,7 @@ namespace SymOntoClay.Core
     public enum KindOfStorage
     {
         World,
-        Shared,
+        Lib,
         Host,
         Global,
         Local,

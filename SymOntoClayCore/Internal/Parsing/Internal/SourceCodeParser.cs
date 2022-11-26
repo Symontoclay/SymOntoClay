@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
+            Log($"_currToken = {_currToken}");
 #endif
 
             switch(_currToken.TokenKind)
@@ -140,7 +140,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 Result.Add(parser.Result);
                             }
                             break;
-
+                            
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

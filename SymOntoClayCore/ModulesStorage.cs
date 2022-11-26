@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Serialization;
+using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -50,9 +51,11 @@ namespace SymOntoClay.Core
         public void Init(IMainStorageContext mainStorageContext)
         {
             _projectLoader = new ProjectLoader(mainStorageContext, true);
+            _mainStorageContext = mainStorageContext;
         }
 
         private ProjectLoader _projectLoader;
+        private IMainStorageContext _mainStorageContext;
 
         private readonly object _lockObj = new object();
 
@@ -190,6 +193,17 @@ namespace SymOntoClay.Core
             {
                 throw new FileNotFoundException($"Unable to find lib `{strName}`.");
             }
+
+            var storageSettings = new RealStorageSettings();
+            storageSettings.MainStorageContext = _mainStorageContext;
+
+            var storage = new LibStorage(storageSettings);
+
+            var defferedLibsList = _projectLoader.LoadFromSourceFiles(storage, libFileName);
+
+#if DEBUG
+            Log($"defferedLibsList = {defferedLibsList.WritePODListToString()}");
+#endif
 
             throw new NotImplementedException();
         }

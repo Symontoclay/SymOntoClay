@@ -243,6 +243,9 @@ namespace SymOntoClay.Core.Internal.Serialization
                     AddSystemDefinedSettingsToApp(codeEntity);
                     break;
 
+                case KindOfCodeEntity.Lib:
+                    break;
+
                 case KindOfCodeEntity.Class:
                     AddSystemDefinedSettingsToClass(codeEntity);
                     break;
@@ -420,6 +423,10 @@ namespace SymOntoClay.Core.Internal.Serialization
                     ProcessImport(codeItem, defferedLibsList);
                     break;
 
+                case KindOfCodeEntity.Lib:
+                    ProcessImport(codeItem, defferedLibsList);
+                    break;
+
                 case KindOfCodeEntity.Class:
                     break;
 
@@ -571,6 +578,7 @@ namespace SymOntoClay.Core.Internal.Serialization
                     break;
 
                 case KindOfCodeEntity.World:
+                case KindOfCodeEntity.Lib:
                 case KindOfCodeEntity.Class:
                 case KindOfCodeEntity.InlineTrigger:
                 case KindOfCodeEntity.RelationDescription:

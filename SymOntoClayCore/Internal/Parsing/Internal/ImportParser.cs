@@ -57,6 +57,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotImportMark:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.String:
                         case TokenKind.Word:
                             Result = ParseName(_currToken.Content);
                             _state = State.GotLibName;

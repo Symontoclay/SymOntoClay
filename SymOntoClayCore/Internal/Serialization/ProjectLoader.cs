@@ -416,15 +416,15 @@ namespace SymOntoClay.Core.Internal.Serialization
             switch (kindOfEntity)
             {
                 case KindOfCodeEntity.World:
-                    ProcessImport(codeItem, defferedLibsList);
+                    ProcessImport(codeItem, targetStorage, defferedLibsList);
                     break;
 
                 case KindOfCodeEntity.App:
-                    ProcessImport(codeItem, defferedLibsList);
+                    ProcessImport(codeItem, targetStorage, defferedLibsList);
                     break;
 
                 case KindOfCodeEntity.Lib:
-                    ProcessImport(codeItem, defferedLibsList);
+                    ProcessImport(codeItem, targetStorage, defferedLibsList);
                     break;
 
                 case KindOfCodeEntity.Class:
@@ -602,7 +602,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
         }
 
-        private void ProcessImport(CodeItem codeItem, List<string> defferedLibsList)
+        private void ProcessImport(CodeItem codeItem, IStorage targetStorage, List<string> defferedLibsList)
         {
             var importsList = codeItem.ImportsList;
 
@@ -621,9 +621,30 @@ namespace SymOntoClay.Core.Internal.Serialization
 
 #if DEBUG
             Log($"libsList.Count = {libsList.Count}");
+            Log($"targetStorage.Kind = {targetStorage.Kind}");
 #endif
 
-            throw new NotImplementedException();
+            if(!libsList.Any())
+            {
+                return;
+            }
+
+            var existingStorages = targetStorage.GetStorages();
+
+#if DEBUG
+            Log($"existingStorages.Count = {existingStorages.Count}");
+#endif
+
+            var storagesForAdding = libsList.Except(existingStorages);
+
+#if DEBUG
+            Log($"storagesForAdding.Count() = {storagesForAdding.Count()}");
+#endif
+
+            foreach(var storageForAdding in storagesForAdding)
+            {
+                targetStorage.AddParentStorage(storageForAdding);
+            }
         }
     }
 }

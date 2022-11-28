@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.CoreHelper;
@@ -65,6 +66,7 @@ namespace SymOntoClay.Core
         private readonly bool _hasLibDirs;
 
         private readonly Dictionary<StrongIdentifierValue, IStorage> _storagesDict = new Dictionary<StrongIdentifierValue, IStorage>();
+        private readonly Dictionary<StrongIdentifierValue, List<StrongIdentifierValue>> _dependenciesDict = new Dictionary<StrongIdentifierValue, List<StrongIdentifierValue>>();
 
         /// <inheritdoc/>
         public void LoadFromSourceCode()
@@ -146,7 +148,7 @@ namespace SymOntoClay.Core
                     return result;
                 }
 
-                please make loading requires libs!
+                var loadedLibNames = new List<string>();
 
                 foreach (var name in namesList)
                 {
@@ -154,28 +156,14 @@ namespace SymOntoClay.Core
                     Log($"name = {name}");
 #endif
 
-                    if(_storagesDict.ContainsKey(name))
-                    {
-                        result.Add(_storagesDict[name]);
-                    }
-                    else
-                    {
-                        var loadResult = LoadLib(name);
-
-                        result.Add(loadResult.Item1);
-
-                        if(loadResult.Item2.Any())
-                        {
-                            throw new NotImplementedException();
-                        }
-                    }
+                    NLoadLib(name, result, loadedLibNames);
                 }
 
                 return result;
             }
         }
 
-        private (IStorage, List<string>) LoadLib(StrongIdentifierValue name)
+        private void NLoadLib(StrongIdentifierValue name, List<IStorage> result, List<string> loadedLibNames)
         {
 #if DEBUG
             Log($"name = {name}");
@@ -183,44 +171,80 @@ namespace SymOntoClay.Core
 
             var strName = name.NameValue;
 
-            var libDirectory = GetLibDirectory(strName);
-
 #if DEBUG
-            Log($"libDirectory = {libDirectory}");
+            Log($"strName = {strName}");
 #endif
 
-            if(string.IsNullOrWhiteSpace(libDirectory))
+            if(loadedLibNames.Contains(strName))
             {
-                throw new FileNotFoundException($"Unable to find lib `{strName}`.");
+                return;
             }
 
-            var libFileName = GetLibFileName(libDirectory);
+            loadedLibNames.Add(strName);
 
-#if DEBUG
-            Log($"libFileName = {libFileName}");
-#endif
-
-            if (string.IsNullOrWhiteSpace(libFileName))
+            if (_storagesDict.ContainsKey(name))
             {
-                throw new FileNotFoundException($"Unable to find lib `{strName}`.");
+                result.Add(_storagesDict[name]);
+
+                if(_dependenciesDict.ContainsKey(name))
+                {
+                    var dependenciesList = _dependenciesDict[name];
+
+                    foreach(var dependency in dependenciesList)
+                    {
+                        NLoadLib(dependency, result, loadedLibNames);
+                    }
+                }
             }
-
-            var storageSettings = new RealStorageSettings();
-            storageSettings.MainStorageContext = _mainStorageContext;
-
-            var storage = new LibStorage(storageSettings);
-
-            var defferedLibsList = _projectLoader.LoadFromSourceFiles(storage, libFileName);
+            else
+            {
+                var libDirectory = GetLibDirectory(strName);
 
 #if DEBUG
-            Log($"defferedLibsList = {defferedLibsList.WritePODListToString()}");
+                Log($"libDirectory = {libDirectory}");
 #endif
 
-            _storagesDict[name] = storage;
+                if (string.IsNullOrWhiteSpace(libDirectory))
+                {
+                    throw new FileNotFoundException($"Unable to find lib `{strName}`.");
+                }
 
-            please make loading requires libs!
+                var libFileName = GetLibFileName(libDirectory);
 
-            throw new NotImplementedException();
+#if DEBUG
+                Log($"libFileName = {libFileName}");
+#endif
+
+                if (string.IsNullOrWhiteSpace(libFileName))
+                {
+                    throw new FileNotFoundException($"Unable to find lib `{strName}`.");
+                }
+
+                var storageSettings = new RealStorageSettings();
+                storageSettings.MainStorageContext = _mainStorageContext;
+
+                var storage = new LibStorage(storageSettings);
+
+                var defferedLibsList = _projectLoader.LoadFromSourceFiles(storage, libFileName).Select(p => NameHelper.CreateName(p)).ToList();
+
+#if DEBUG
+                Log($"defferedLibsList = {defferedLibsList.WritePODListToString()}");
+#endif
+
+                _storagesDict[name] = storage;
+
+                result.Add(storage);
+
+                if (defferedLibsList.Any())
+                {
+                    _dependenciesDict[name] = defferedLibsList;
+
+                    foreach (var defferedLib in defferedLibsList)
+                    {
+                        NLoadLib(defferedLib, result, loadedLibNames);
+                    }
+                }                
+            }
         }
 
         private string GetLibDirectory(string name)

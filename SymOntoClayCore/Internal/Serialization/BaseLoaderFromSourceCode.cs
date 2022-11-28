@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.Serialization
         {
 #if DEBUG
             //Log("Begin");
-            Log($"_context.AppFile = {_context.AppFile}");
+            //Log($"_context.AppFile = {_context.AppFile}");
 #endif
 
             if (string.IsNullOrEmpty(_context.AppFile))

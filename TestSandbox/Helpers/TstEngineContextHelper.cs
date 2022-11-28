@@ -57,7 +57,7 @@ namespace TestSandbox.Helpers
         {
             var appName = AppDomain.CurrentDomain.FriendlyName;
 
-            _logger.Log($"appName = {appName}");
+            //_logger.Log($"appName = {appName}");
 
             var supportBasePath = Path.Combine(Environment.GetEnvironmentVariable("APPDATA"), "SymOntoClay", appName);
 
@@ -69,7 +69,7 @@ namespace TestSandbox.Helpers
 
             var codeDir = Path.Combine(Directory.GetCurrentDirectory(), "Source");
 
-            _logger.Log($"codeDir = {codeDir}");
+            //_logger.Log($"codeDir = {codeDir}");
 
             var worldSpaceFilesSearcherOptions = new WorldSpaceFilesSearcherOptions()
             {
@@ -80,7 +80,7 @@ namespace TestSandbox.Helpers
             var targetFiles = WorldSpaceFilesSearcher.Run(worldSpaceFilesSearcherOptions);
 
 #if DEBUG
-            _logger.Log($"targetFiles = {targetFiles}");
+            //_logger.Log($"targetFiles = {targetFiles}");
 #endif 
 
             var settings = new WorldSettings();
@@ -183,7 +183,7 @@ namespace TestSandbox.Helpers
             settings.Logging = loggingSettings;
 
 #if DEBUG
-            _logger.Log($"settings = {settings}");
+            //_logger.Log($"settings = {settings}");
 #endif
 
             return settings;
@@ -228,11 +228,11 @@ namespace TestSandbox.Helpers
         {
             var settings = CreateWorldSettings(factorySettings);
 
-            _logger.Log($"settings = {settings}");
+            //_logger.Log($"settings = {settings}");
 
             var npcSettings = CreateHumanoidNPCSettings(factorySettings);
 
-            _logger.Log($"npcSettings = {npcSettings}");
+            //_logger.Log($"npcSettings = {npcSettings}");
 
             return UnityTestEngineContextFactory.CreateTestEngineContext(settings, npcSettings);
         }

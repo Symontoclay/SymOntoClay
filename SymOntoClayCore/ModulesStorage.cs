@@ -44,7 +44,7 @@ namespace SymOntoClay.Core
         public ModulesStorage(ModulesStorageSettings settings)
             : base(settings.Logger)
         {
-            Log($"settings = {settings}");
+            //Log($"settings = {settings}");
 
             _libDirs = settings.LibsDirs;
 
@@ -138,7 +138,7 @@ namespace SymOntoClay.Core
             lock(_lockObj)
             {
 #if DEBUG
-                Log($"namesList = {namesList.WriteListToString()}");
+                //Log($"namesList = {namesList.WriteListToString()}");
 #endif
 
                 var result = new List<IStorage>();
@@ -153,7 +153,7 @@ namespace SymOntoClay.Core
                 foreach (var name in namesList)
                 {
 #if DEBUG
-                    Log($"name = {name}");
+                    //Log($"name = {name}");
 #endif
 
                     NLoadLib(name, result, loadedLibNames);
@@ -166,13 +166,13 @@ namespace SymOntoClay.Core
         private void NLoadLib(StrongIdentifierValue name, List<IStorage> result, List<string> loadedLibNames)
         {
 #if DEBUG
-            Log($"name = {name}");
+            //Log($"name = {name}");
 #endif
 
             var strName = name.NameValue;
 
 #if DEBUG
-            Log($"strName = {strName}");
+            //Log($"strName = {strName}");
 #endif
 
             if(loadedLibNames.Contains(strName))
@@ -201,7 +201,7 @@ namespace SymOntoClay.Core
                 var libDirectory = GetLibDirectory(strName);
 
 #if DEBUG
-                Log($"libDirectory = {libDirectory}");
+                //Log($"libDirectory = {libDirectory}");
 #endif
 
                 if (string.IsNullOrWhiteSpace(libDirectory))
@@ -212,7 +212,7 @@ namespace SymOntoClay.Core
                 var libFileName = GetLibFileName(libDirectory);
 
 #if DEBUG
-                Log($"libFileName = {libFileName}");
+                //Log($"libFileName = {libFileName}");
 #endif
 
                 if (string.IsNullOrWhiteSpace(libFileName))
@@ -228,7 +228,7 @@ namespace SymOntoClay.Core
                 var defferedLibsList = _projectLoader.LoadFromSourceFiles(storage, libFileName).Select(p => NameHelper.CreateName(p)).ToList();
 
 #if DEBUG
-                Log($"defferedLibsList = {defferedLibsList.WritePODListToString()}");
+                //Log($"defferedLibsList = {defferedLibsList.WritePODListToString()}");
 #endif
 
                 _storagesDict[name] = storage;

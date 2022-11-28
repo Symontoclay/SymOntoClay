@@ -56,8 +56,7 @@ namespace SymOntoClay.Core.Internal.Serialization
 
 #if DEBUG
             //Log($"filesList.Count = {filesList.Count}");
-
-            Log($"filesList = {filesList.WriteListToString()}");
+            //Log($"filesList = {filesList.WriteListToString()}");
 #endif
 
             var defferedLibsList = new List<string>();
@@ -620,8 +619,8 @@ namespace SymOntoClay.Core.Internal.Serialization
             var libsList = _context.ModulesStorage.Import(importsList);
 
 #if DEBUG
-            Log($"libsList.Count = {libsList.Count}");
-            Log($"targetStorage.Kind = {targetStorage.Kind}");
+            //Log($"libsList.Count = {libsList.Count}");
+            //Log($"targetStorage.Kind = {targetStorage.Kind}");
 #endif
 
             if(!libsList.Any())
@@ -632,13 +631,13 @@ namespace SymOntoClay.Core.Internal.Serialization
             var existingStorages = targetStorage.GetStorages();
 
 #if DEBUG
-            Log($"existingStorages.Count = {existingStorages.Count}");
+            //Log($"existingStorages.Count = {existingStorages.Count}");
 #endif
 
             var storagesForAdding = libsList.Except(existingStorages);
 
 #if DEBUG
-            Log($"storagesForAdding.Count() = {storagesForAdding.Count()}");
+            //Log($"storagesForAdding.Count() = {storagesForAdding.Count()}");
 #endif
 
             foreach(var storageForAdding in storagesForAdding)

@@ -1,0 +1,4 @@
+﻿fun a()
+{
+    'a from lib2 has been called' >> @>log;
+}

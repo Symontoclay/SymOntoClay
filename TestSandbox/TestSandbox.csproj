@@ -52,6 +52,9 @@
     <None Update="Source\SharedLibs\lib2\lib2.soc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Source\SharedLibs\lib2\someFile.soc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Source\Things\Barrel\Barrel.sobj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -88,6 +91,5 @@
     <Folder Include="Source\Navs\" />
     <Folder Include="Source\Players\" />
     <Folder Include="Source\SharedLibs\lib1\" />
-    <Folder Include="Source\SharedLibs\lib2\" />
   </ItemGroup>
 </Project>

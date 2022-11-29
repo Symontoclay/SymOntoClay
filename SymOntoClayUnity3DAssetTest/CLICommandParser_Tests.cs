@@ -720,6 +720,48 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Assert.AreEqual(true, command.IsValid);
         }
 
+        [Test]
+        [Parallelizable]
+        public void Case12()
+        {
+            var commandLine = "install stdlib";
+
+            var args = ParseCommandLine(commandLine);
+
+            var command = CLICommandParser.Parse(args);
+
+            Assert.IsNotNull(command);
+            Assert.AreEqual(KindOfCLICommand.Install, command.Kind);
+            Assert.AreEqual(KindOfNewCommand.Unknown, command.KindOfNewCommand);
+            Assert.AreEqual(null, command.InputFile);
+            Assert.AreEqual(true, !string.IsNullOrWhiteSpace(command.InputDir));
+            Assert.AreEqual("stdlib", command.ProjectName);
+            Assert.AreEqual(false, command.NoLogo);
+            Assert.AreEqual(null, command.Timeout);
+            Assert.AreEqual(true, command.IsValid);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case12_a()
+        {
+            var commandLine = "install stdlib -nologo";
+
+            var args = ParseCommandLine(commandLine);
+
+            var command = CLICommandParser.Parse(args);
+
+            Assert.IsNotNull(command);
+            Assert.AreEqual(KindOfCLICommand.Install, command.Kind);
+            Assert.AreEqual(KindOfNewCommand.Unknown, command.KindOfNewCommand);
+            Assert.AreEqual(null, command.InputFile);
+            Assert.AreEqual(true, !string.IsNullOrWhiteSpace(command.InputDir));
+            Assert.AreEqual("stdlib", command.ProjectName);
+            Assert.AreEqual(true, command.NoLogo);
+            Assert.AreEqual(null, command.Timeout);
+            Assert.AreEqual(true, command.IsValid);
+        }
+
         private string[] ParseCommandLine(string value)
         {
             return value.Split(' ');

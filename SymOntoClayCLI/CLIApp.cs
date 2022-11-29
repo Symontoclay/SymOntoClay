@@ -34,7 +34,7 @@ namespace SymOntoClay.CLI
     public class CLIApp : IDisposable
     {
 #if DEBUG
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        //private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public void Run(string[] args)
@@ -124,6 +124,13 @@ namespace SymOntoClay.CLI
                         return;
                     }
 
+                case KindOfCLICommand.Install:
+                    {
+                        var handler = new CLIInstallHandler();
+                        handler.Run(command);
+                        return;
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfComand), kindOfComand, null);
             }
@@ -162,12 +169,19 @@ namespace SymOntoClay.CLI
             ConsoleWrapper.WriteText("new -thing <NPC name> - creates new Thing in new or existing worldspace. For creating NPC in existing worldspace runs command 'new' in worldspace directory.");
             ConsoleWrapper.WriteText("new -world <NPC name> - creates new worldspace.");
             ConsoleWrapper.WriteText("new -w <NPC name> - creates new worldspace.");
+            ConsoleWrapper.WriteText("new -lib <Lib name> - creates new library.");
+            ConsoleWrapper.WriteText("new -l <Lib name> - creates new library.");
+            ConsoleWrapper.WriteText("new -nav <Nav object name> - creates new navigation object.");
+            ConsoleWrapper.WriteText("new -player <Player name> - creates new player.");
+            ConsoleWrapper.WriteText("new -p <Player name> - creates new player.");
+            ConsoleWrapper.WriteText("install <Lib name> - installes library.");
             ConsoleWrapper.WriteText("version - prints current version of SymOntoClay.");
             ConsoleWrapper.WriteText("v - alias of 'version' command.");
             ConsoleWrapper.WriteText("");
             ConsoleWrapper.WriteText("Additional CLI arguments:");
             ConsoleWrapper.WriteText("-nologo - supresses printing header.");
             ConsoleWrapper.WriteText("-timeout <milleseconds> - terminates CLI after <milliseconds>. CLI will return 0.");
+            ConsoleWrapper.WriteText("-nlp - enables NLP (natural language processing).");
         }
 
         public void Dispose()

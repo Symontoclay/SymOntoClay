@@ -1,0 +1,12 @@
+﻿linvar logic for range [0, 1]
+{
+    constraints:
+	    for inheritance;
+
+	terms:
+		minimal = L(0, 0.1);
+		low = Trapezoid(0, 0.05, 0.3, 0.45);
+		middle = Trapezoid(0.3, 0.4, 0.6, 0.7);
+		high = Trapezoid(0.55, 0.7, 0.95, 1);
+		maximal = S(0.9, 1);
+}

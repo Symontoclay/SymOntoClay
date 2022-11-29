@@ -33,6 +33,7 @@ namespace SymOntoClay.CLI
         New,
         NewWorlspace,
         Run,
-        Version
+        Version,
+        Install
     }
 }

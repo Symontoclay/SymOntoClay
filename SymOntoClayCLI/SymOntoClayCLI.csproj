@@ -18,11 +18,21 @@
     <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
     <ProjectReference Include="..\SymOntoClayCore\SymOntoClayCore.csproj" />
     <ProjectReference Include="..\SymOntoClayDefaultCLIEnvironment\SymOntoClayDefaultCLIEnvironment.csproj" />
+    <ProjectReference Include="..\SymOntoClayNLP\SymOntoClayNLP.csproj" />
     <ProjectReference Include="..\SymOntoClayProjectFiles\SymOntoClayProjectFiles.csproj" />
     <ProjectReference Include="..\SymOntoClaySoundBuses\SymOntoClaySoundBuses.csproj" />
     <ProjectReference Include="..\SymOntoClayUnityAssetCore\SymOntoClayUnityAssetCore.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="LibsForInstall\stdlib\LinguisticVariables.soc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="LibsForInstall\stdlib\Relations.soc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="LibsForInstall\stdlib\Rules.soc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

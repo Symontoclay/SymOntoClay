@@ -1,0 +1,5 @@
+﻿rel like ($x1 [: experiencer :], $x2 [: object :]) is state;
+rel possess ($x1 [: owner :], $x2 [: possessions :]) is state;
+rel go ($x1 [: agent :], $x2 [: object :]) is act;
+rel direction ($x1 [: owner :], $x2 [: `property name` :]) is property;
+rel color ($x1 [: owner :], $x2 [: `property name` :]) is property;

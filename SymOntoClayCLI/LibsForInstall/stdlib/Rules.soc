@@ -1,0 +1,1 @@
+﻿{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}

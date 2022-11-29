@@ -37,22 +37,28 @@
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Source\Libs\TextFile1.txt">
+    <None Update="Source\Libs\lib1\lib1.slib">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Source\SharedLibs\lib1\lib1.slib">
+    <None Update="Source\Libs\lib1\lib1.soc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Source\SharedLibs\lib1\lib1.soc">
+    <None Update="Source\Libs\lib2\lib2.slib">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Source\SharedLibs\lib2\lib2.slib">
+    <None Update="Source\Libs\lib2\lib2.soc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Source\SharedLibs\lib2\lib2.soc">
+    <None Update="Source\Libs\lib2\someFile.soc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Source\SharedLibs\lib2\someFile.soc">
+    <None Update="Source\SharedLibs\stdlib\LinguisticVariables.soc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Source\SharedLibs\stdlib\Relations.soc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Source\SharedLibs\stdlib\Rules.soc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Source\Things\Barrel\Barrel.sobj">
@@ -87,9 +93,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Source\Libs\" />
     <Folder Include="Source\Navs\" />
     <Folder Include="Source\Players\" />
-    <Folder Include="Source\SharedLibs\lib1\" />
+    <Folder Include="Source\Libs\lib1\" />
   </ItemGroup>
 </Project>

@@ -38,6 +38,7 @@ using System.Diagnostics;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System.Linq;
 using SymOntoClayProjectFiles;
+using SymOntoClay.NLP;
 
 namespace SymOntoClay.CLI
 {
@@ -59,8 +60,6 @@ namespace SymOntoClay.CLI
 #if DEBUG
             //_logger.Info($"command = {command}");
 #endif
-
-            var appSettings = ConfigurationManager.AppSettings;
 
             var worldSpaceFilesSearcherOptions = new WorldSpaceFilesSearcherOptions()
             {
@@ -87,10 +86,6 @@ namespace SymOntoClay.CLI
 
             settings.ImagesRootDir = targetFiles.ImagesRootDir;
 
-            var standardLibraryBasePath = appSettings["StandardLibraryPath"];
-
-            //var socAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(p => p.GetName().Name == "soc");//use for NLP Dicts Location
-
             settings.TmpDir = targetFiles.TmpDir;
 
             settings.HostFile = targetFiles.WorldFile;
@@ -98,6 +93,41 @@ namespace SymOntoClay.CLI
             settings.InvokerInMainThread = invokingInMainThread;
 
             settings.SoundBus = new SimpleSoundBus();
+
+            if(command.UseNLP)
+            {
+                var nlpConverterProviderSettings = new NLPConverterProviderSettings();
+
+                var socAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(p => p.GetName().Name == "soc").Location;
+
+#if DEBUG
+                //_logger.Info($"socAssembly = {socAssembly}");
+#endif
+
+                var assemblyPath = (new FileInfo(socAssembly)).DirectoryName;
+
+#if DEBUG
+                //_logger.Info($"assemblyPath = {assemblyPath}");
+#endif
+
+                var mainDictPath = Path.Combine(assemblyPath, "Dicts", "BigMainDictionary.dict");
+
+#if DEBUG
+                //_logger.Info($"mainDictPath = {mainDictPath}");
+#endif
+
+                nlpConverterProviderSettings.DictsPaths = new List<string>() { mainDictPath };
+
+                nlpConverterProviderSettings.CreationStrategy = CreationStrategy.Singleton;
+
+#if DEBUG
+                //_logger.Info($"nlpConverterProviderSettings = {nlpConverterProviderSettings}");
+#endif
+
+                var nlpConverterProvider = new NLPConverterProvider(nlpConverterProviderSettings);
+
+                settings.NLPConverterProvider = nlpConverterProvider;
+            }
 
             var logDir = Path.Combine(Environment.GetEnvironmentVariable("APPDATA"), "SymOntoClay", "CLI", "NpcLogs");
 
@@ -153,7 +183,7 @@ namespace SymOntoClay.CLI
 
             while(true)
             {
-                var inputStr = Console.ReadLine();
+                var inputStr = Console.ReadLine().Trim();
 
                 ConsoleWrapper.WriteText(inputStr);
 

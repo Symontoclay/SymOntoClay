@@ -145,7 +145,7 @@ namespace SymOntoClayProjectFiles
                 }
             }
 
-            throw new NotImplementedException();
+            return string.Empty;
         }
 
         private static string GetNpcFileNameInCurrentDir(string inputDir)

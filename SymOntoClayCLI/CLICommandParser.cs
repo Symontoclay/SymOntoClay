@@ -251,6 +251,36 @@ namespace SymOntoClay.CLI
                         }
                         break;
 
+                    case "-nlp":
+                        command.UseNLP = true;
+                        reallyUsedArgs = 1;
+                        break;
+
+                    case "install":
+                        {
+                            if(argsList.Count == 1)
+                            {
+                                throw new Exception(LibNameAbsence);
+                            }
+                            else
+                            {
+                                var secondArg = argsList[1];
+
+#if DEBUG
+                                //_logger.Info($"secondArg = {secondArg}");
+#endif
+
+                                CheckCommandAsUnknown(command);
+
+                                command.Kind = KindOfCLICommand.Install;
+                                command.IsValid = true;
+                                command.ProjectName = secondArg;
+                                command.InputDir = Directory.GetCurrentDirectory();
+                                reallyUsedArgs = 2;
+                            }
+                        }
+                        break;
+                    
                     default:
                         throw new ArgumentOutOfRangeException(nameof(firstArg), firstArg, null);
                 }
@@ -267,7 +297,8 @@ namespace SymOntoClay.CLI
 
         private const string NewPureArgs = $"It is not enough arguments. You should put at least Project name!";
         private const string NewAbsenceProjectName = "ProjectName is absent!";
-        private const string TimeoutAbsenceValue = "You have used -timeout but have not difined the timeout's value in milliseconds!";
+        private const string TimeoutAbsenceValue = "You have used `-timeout` but have not defined the timeout's value in milliseconds!";
+        private const string LibNameAbsence = "You have used `install` but have not defined the name of target library!";
 
         private static bool IsAdditionalOptions(string arg)
         {
@@ -275,6 +306,7 @@ namespace SymOntoClay.CLI
             {
                 case "-nologo":
                 case "-timeout":
+                case "-nlp":
                     return true;
 
                 default:

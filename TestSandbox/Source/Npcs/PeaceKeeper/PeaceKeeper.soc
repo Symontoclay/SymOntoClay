@@ -1,11 +1,10 @@
 ﻿app PeaceKeeper
 {
-    on Enter =>
+    on Enter
     {
         'Begin' >> @>log;
-
-        a();
-
+        @a = #@(barrel);
+        @a >> @>log;
         'End' >> @>log;
     }
 }

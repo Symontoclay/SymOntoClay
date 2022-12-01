@@ -46,6 +46,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         private IEngineContext _context;
         private LocalCodeExecutionContext _localContext;
         private IConditionalEntityHostSupport _conditionalEntityHostSupport;
+        private readonly Random _random = new Random();
 
         protected virtual void CheckForUpdates()
         {
@@ -314,6 +315,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
                             isFit = false;
                             break;
 
+                        case EntityConstraints.Random:
+                            break;
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(constraint), constraint, null);
                     }
@@ -352,7 +356,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return;
             }
 
-            var targetFilteredItem = filteredItemsList.First();
+            FilteredItem targetFilteredItem = default;
+
+            if(_constraints.Any(p => p == EntityConstraints.Random))
+            {
+                var index = _random.Next(filteredItemsList.Count);
+
+                targetFilteredItem = filteredItemsList[index];
+            }
+            else
+            {
+                targetFilteredItem = filteredItemsList.First();
+            }
 
             SetCurrEntity(targetFilteredItem.Id, targetFilteredItem.InstanceId, targetFilteredItem.Position);
         }

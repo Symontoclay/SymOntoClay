@@ -50,6 +50,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
             LogicalQuery = logicalQuery;
             Name = name;
 
+#if DEBUG
+            Log($"logicalQuery = {logicalQuery.ToHumanizedString()}");
+#endif
+
             var dataResolversFactory = context.DataResolversFactory;
 
             _searcher = dataResolversFactory.GetLogicalSearchResolver();

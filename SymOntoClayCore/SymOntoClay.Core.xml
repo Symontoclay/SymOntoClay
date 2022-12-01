@@ -201,6 +201,11 @@
             The nearest entity on game level will be preferred.
             </summary>
         </member>
+        <member name="F:SymOntoClay.Core.EntityConstraints.Random">
+            <summary>
+            A random entity on game level will be preferred.
+            </summary>
+        </member>
         <member name="T:SymOntoClay.Core.IEntity">
             <summary>
             Represents an entity (concrete or conditional).

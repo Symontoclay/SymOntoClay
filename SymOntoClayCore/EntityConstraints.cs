@@ -54,6 +54,11 @@ namespace SymOntoClay.Core
         /// <summary>
         /// The nearest entity on game level will be preferred.
         /// </summary>
-        Nearest
+        Nearest,
+
+        /// <summary>
+        /// A random entity on game level will be preferred.
+        /// </summary>
+        Random
     }
 }

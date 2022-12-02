@@ -120,6 +120,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
 
             convertOptions.DontConvertConceptsToInhRelations = new List<StrongIdentifierValue>() { NameHelper.CreateName("random") };//TODO: make me as a constant.
+            convertOptions.IgnoreStandaloneConceptsInNormalization= true;
 
             if (LogicalQuery == null)
             {

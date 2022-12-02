@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Converters
     public static class ConverterEntityConditionExpressionToRuleInstance
     {
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         private enum AdviceForConversionEntityConditionExpressionToRuleInstance
@@ -330,13 +330,13 @@ namespace SymOntoClay.Core.Internal.Converters
             var name = source.Name;
 
 #if DEBUG
-            _gbcLogger.Info($"name = {name}");
+            //_gbcLogger.Info($"name = {name}");
 #endif
 
             var dontConvertConceptsToInhRelations = options.DontConvertConceptsToInhRelations ?? new List<StrongIdentifierValue>();
 
 #if DEBUG
-            _gbcLogger.Info($"dontConvertConceptsToInhRelations = {dontConvertConceptsToInhRelations.WriteListToString()}");
+            //_gbcLogger.Info($"dontConvertConceptsToInhRelations = {dontConvertConceptsToInhRelations.WriteListToString()}");
 #endif
 
             var result = new LogicalQueryNode();
@@ -349,7 +349,7 @@ namespace SymOntoClay.Core.Internal.Converters
                 result.Kind = KindOfLogicalQueryNode.Concept;
 
 #if DEBUG
-                _gbcLogger.Info($"result = {result}");
+                //_gbcLogger.Info($"result = {result}");
 #endif
 
                 return result;

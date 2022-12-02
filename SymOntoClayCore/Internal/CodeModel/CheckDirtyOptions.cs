@@ -36,6 +36,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public bool ConvertWaypointValueFromSource { get; set; }
         public Dictionary<StrongIdentifierValue, StrongIdentifierValue> ReplaceConcepts { get; set; }
         public List<StrongIdentifierValue> DontConvertConceptsToInhRelations { get; set; }
+        public bool IgnoreStandaloneConceptsInNormalization { get; set; }
 
         /// <summary>
         /// Clones the instance and returns cloned instance.
@@ -67,6 +68,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.ConvertWaypointValueFromSource = ConvertWaypointValueFromSource;
             result.ReplaceConcepts = ReplaceConcepts.ToDictionary(p => p.Key, p => p.Value);
             result.DontConvertConceptsToInhRelations = DontConvertConceptsToInhRelations.ToList();
+            result.IgnoreStandaloneConceptsInNormalization = IgnoreStandaloneConceptsInNormalization;
 
             return result;
         }
@@ -94,6 +96,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(ConvertWaypointValueFromSource)} = {ConvertWaypointValueFromSource}");
             sb.PrintObjDict_1_Prop(n, nameof(ReplaceConcepts), ReplaceConcepts);
             sb.PrintObjListProp(n, nameof(DontConvertConceptsToInhRelations), DontConvertConceptsToInhRelations);
+            sb.AppendLine($"{spaces}{nameof(IgnoreStandaloneConceptsInNormalization)} = {IgnoreStandaloneConceptsInNormalization}");
 
             return sb.ToString();
         }

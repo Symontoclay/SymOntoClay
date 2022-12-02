@@ -217,14 +217,16 @@ namespace SymOntoClay.Core.Internal.Converters
                     switch (source.KindOfOperator)
                     {
                         case KindOfOperatorOfLogicalQueryNode.Is:
-                        case KindOfOperatorOfLogicalQueryNode.IsNot:
-                        case KindOfOperatorOfLogicalQueryNode.And:
+                        case KindOfOperatorOfLogicalQueryNode.IsNot:                        
                         case KindOfOperatorOfLogicalQueryNode.Or:
                         case KindOfOperatorOfLogicalQueryNode.More:
                         case KindOfOperatorOfLogicalQueryNode.MoreOrEqual:
                         case KindOfOperatorOfLogicalQueryNode.Less:
                         case KindOfOperatorOfLogicalQueryNode.LessOrEqual:
                             return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict, processedRuleInstances);
+
+                        case KindOfOperatorOfLogicalQueryNode.And:
+                            return ConvertAndLogicalQueryNode(source, options, convertingContext, aliasesDict, processedRuleInstances);
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(source.KindOfOperator), source.KindOfOperator, null);
@@ -383,6 +385,33 @@ namespace SymOntoClay.Core.Internal.Converters
             convertingContext[source] = groupNode;
 
             return groupNode;
+        }
+
+        private static LogicalQueryNode ConvertAndLogicalQueryNode(LogicalQueryNode source, CheckDirtyOptions options, Dictionary<object, object> convertingContext, Dictionary<StrongIdentifierValue, LogicalQueryNode> aliasesDict, List<RuleInstance> processedRuleInstances)
+        {
+#if DEBUG
+            //_gbcLogger.Info("ConvertAndLogicalQueryNode!!!!!");
+            //_gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"source.Kind = {source.Kind}");
+            //_gbcLogger.Info($"source = {source.ToHumanizedString()}");
+            //_gbcLogger.Info($"(options != null) = {options != null}");
+#endif
+
+            if(!(options?.IgnoreStandaloneConceptsInNormalization ?? false))
+            {
+                return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict, processedRuleInstances);
+            }
+
+#if DEBUG
+            _gbcLogger.Info("ConvertAndLogicalQueryNode NEXT");
+            _gbcLogger.Info($"source = {source}");
+            _gbcLogger.Info($"source = {source.ToHumanizedString()}");
+#endif
+
+            var leftOperand = source.Left;
+            var rightOperand = source.Right;
+
+            throw new NotImplementedException();
         }
 
         private static LogicalQueryNode ConvertLogicalQueryNodeInDefaultWay(LogicalQueryNode source, CheckDirtyOptions options, Dictionary<object, object> convertingContext, Dictionary<StrongIdentifierValue, LogicalQueryNode> aliasesDict, List<RuleInstance> processedRuleInstances)

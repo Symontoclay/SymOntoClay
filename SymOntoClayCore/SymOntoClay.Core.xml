@@ -1992,6 +1992,19 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Channel.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions.Clone">
+            <summary>
+            Clones the instance and returns cloned instance.
+            </summary>
+            <returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            Clones the instance using special context and returns cloned instance.
+            </summary>
+            <param name="context">Special context for providing references continuity.</param>
+            <returns>Cloned instance.</returns>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions.ToString">
             <inheritdoc/>
         </member>

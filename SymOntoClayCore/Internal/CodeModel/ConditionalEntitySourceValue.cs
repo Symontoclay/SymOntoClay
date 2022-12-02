@@ -108,12 +108,25 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.ConditionalEntityTypeName) };
 
-            if (LogicalQuery == null)
+            CheckDirtyOptions convertOptions = null;
+            
+            if(options == null)
             {
-                LogicalQuery = ConverterEntityConditionExpressionToRuleInstance.Convert(Expression, options);
+                convertOptions = new CheckDirtyOptions();
+            }
+            else
+            {
+                convertOptions = options.Clone();
             }
 
-            LogicalQuery.CheckDirty(options);
+            convertOptions.DontConvertConceptsToInhRelations = new List<StrongIdentifierValue>() { NameHelper.CreateName("random") };//TODO: make me as a constant.
+
+            if (LogicalQuery == null)
+            {
+                LogicalQuery = ConverterEntityConditionExpressionToRuleInstance.Convert(Expression, convertOptions);
+            }
+
+            LogicalQuery.CheckDirty(convertOptions);
 
             return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.BaseFunctionWeight ^ (Name?.GetLongHashCode(options) ?? 0) ^ LongHashCodeWeights.BaseParamWeight ^ LogicalQuery.GetLongHashCode(options);
         }

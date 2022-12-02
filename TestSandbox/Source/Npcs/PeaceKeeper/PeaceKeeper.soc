@@ -3,7 +3,7 @@
     on Enter
     {
         'Begin' >> @>log;
-        @a = #@(barrel);
+        @a = #@(barrel & random);
         @a >> @>log;
         'End' >> @>log;
     }

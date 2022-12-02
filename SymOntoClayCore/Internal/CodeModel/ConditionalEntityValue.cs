@@ -51,7 +51,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             Name = name;
 
 #if DEBUG
+            Log($"entityConditionExpression = {entityConditionExpression.ToHumanizedString()}");
             Log($"logicalQuery = {logicalQuery.ToHumanizedString()}");
+            Log($"logicalQuery.Normalized = {logicalQuery.Normalized.ToHumanizedString()}");
 #endif
 
             var dataResolversFactory = context.DataResolversFactory;

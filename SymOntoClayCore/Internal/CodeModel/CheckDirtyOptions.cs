@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
@@ -34,6 +35,41 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public LocalCodeExecutionContext LocalContext { get; set; }
         public bool ConvertWaypointValueFromSource { get; set; }
         public Dictionary<StrongIdentifierValue, StrongIdentifierValue> ReplaceConcepts { get; set; }
+        public List<StrongIdentifierValue> DontConvertConceptsToInhRelations { get; set; }
+
+        /// <summary>
+        /// Clones the instance and returns cloned instance.
+        /// </summary>
+        /// <returns>Cloned instance.</returns>
+        public CheckDirtyOptions Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <summary>
+        /// Clones the instance using special context and returns cloned instance.
+        /// </summary>
+        /// <param name="context">Special context for providing references continuity.</param>
+        /// <returns>Cloned instance.</returns>
+        public CheckDirtyOptions Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (CheckDirtyOptions)context[this];
+            }
+
+            var result = new CheckDirtyOptions();
+            context[this] = result;
+
+            result.EngineContext = EngineContext;
+            result.LocalContext = LocalContext;
+            result.ConvertWaypointValueFromSource = ConvertWaypointValueFromSource;
+            result.ReplaceConcepts = ReplaceConcepts.ToDictionary(p => p.Key, p => p.Value);
+            result.DontConvertConceptsToInhRelations = DontConvertConceptsToInhRelations.ToList();
+
+            return result;
+        }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -57,6 +93,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintExisting(n, nameof(LocalContext), LocalContext);
             sb.AppendLine($"{spaces}{nameof(ConvertWaypointValueFromSource)} = {ConvertWaypointValueFromSource}");
             sb.PrintObjDict_1_Prop(n, nameof(ReplaceConcepts), ReplaceConcepts);
+            sb.PrintObjListProp(n, nameof(DontConvertConceptsToInhRelations), DontConvertConceptsToInhRelations);
 
             return sb.ToString();
         }

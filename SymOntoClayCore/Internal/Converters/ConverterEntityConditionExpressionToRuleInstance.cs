@@ -24,6 +24,7 @@ using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Converters
     public static class ConverterEntityConditionExpressionToRuleInstance
     {
 #if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         private enum AdviceForConversionEntityConditionExpressionToRuleInstance
@@ -326,16 +327,39 @@ namespace SymOntoClay.Core.Internal.Converters
                 return (LogicalQueryNode)convertingContext[source];
             }
 
+            var name = source.Name;
+
+#if DEBUG
+            _gbcLogger.Info($"name = {name}");
+#endif
+
+            var dontConvertConceptsToInhRelations = options.DontConvertConceptsToInhRelations ?? new List<StrongIdentifierValue>();
+
+#if DEBUG
+            _gbcLogger.Info($"dontConvertConceptsToInhRelations = {dontConvertConceptsToInhRelations.WriteListToString()}");
+#endif
+
             var result = new LogicalQueryNode();
             convertingContext[source] = result;
 
+            result.Name = name;
+
+            if (dontConvertConceptsToInhRelations.Contains(name))
+            {
+                result.Kind = KindOfLogicalQueryNode.Concept;
+
+#if DEBUG
+                _gbcLogger.Info($"result = {result}");
+#endif
+
+                return result;
+            }
+
             result.Kind = KindOfLogicalQueryNode.Relation;
-            result.Name = source.Name;
 
             var destParametersList = new List<LogicalQueryNode>();
 
             result.ParamsList = destParametersList;
-
 
             destParametersList.Add(CreateEntitySelfVar());
 

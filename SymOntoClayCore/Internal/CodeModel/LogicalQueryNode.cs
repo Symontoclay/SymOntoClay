@@ -37,7 +37,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class LogicalQueryNode: AnnotatedItem, IAstNode, IMemberAccess, IReadOnlyMemberAccess, ILogicalSearchItem
+    public class LogicalQueryNode: AnnotatedItem, IAstNode, IMemberAccess, IReadOnlyMemberAccess, ILogicalSearchItem, ILogicalQueryNodeParent
     {
 #if DEBUG
         //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
@@ -132,8 +132,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         case KindOfOperatorOfLogicalQueryNode.MoreOrEqual:
                         case KindOfOperatorOfLogicalQueryNode.Less:
                         case KindOfOperatorOfLogicalQueryNode.LessOrEqual:
-                            Left.PrepareDirty(contextOfConvertingExpressionNode, ruleInstance, rulePart);
-                            Right.PrepareDirty(contextOfConvertingExpressionNode, ruleInstance, rulePart);
+                            Left?.PrepareDirty(contextOfConvertingExpressionNode, ruleInstance, rulePart);
+                            Right?.PrepareDirty(contextOfConvertingExpressionNode, ruleInstance, rulePart);
                             break;
 
                         default:
@@ -505,8 +505,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         case KindOfOperatorOfLogicalQueryNode.MoreOrEqual:
                         case KindOfOperatorOfLogicalQueryNode.Less:
                         case KindOfOperatorOfLogicalQueryNode.LessOrEqual:
-                            Left.SetHolder(holder);
-                            Right.SetHolder(holder);
+                            Left?.SetHolder(holder);
+                            Right?.SetHolder(holder);
                             break;
 
                         default:
@@ -612,8 +612,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         case KindOfOperatorOfLogicalQueryNode.MoreOrEqual:
                         case KindOfOperatorOfLogicalQueryNode.Less:
                         case KindOfOperatorOfLogicalQueryNode.LessOrEqual:
-                            Left.SetTypeOfAccess(typeOfAccess);
-                            Right.SetTypeOfAccess(typeOfAccess);
+                            Left?.SetTypeOfAccess(typeOfAccess);
+                            Right?.SetTypeOfAccess(typeOfAccess);
                             break;
 
                         default:
@@ -717,8 +717,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         case KindOfOperatorOfLogicalQueryNode.MoreOrEqual:
                         case KindOfOperatorOfLogicalQueryNode.Less:
                         case KindOfOperatorOfLogicalQueryNode.LessOrEqual:
-                            Left.CalculateUsedKeys(usedKeysList);
-                            Right.CalculateUsedKeys(usedKeysList);
+                            Left?.CalculateUsedKeys(usedKeysList);
+                            Right?.CalculateUsedKeys(usedKeysList);
                             break;
 
                         default:
@@ -794,7 +794,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         case KindOfOperatorOfLogicalQueryNode.MoreOrEqual:
                         case KindOfOperatorOfLogicalQueryNode.Less:
                         case KindOfOperatorOfLogicalQueryNode.LessOrEqual:
-                            return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(KindOfOperator.GetHashCode()) ^ Left.GetLongHashCode(options) ^ Right.GetLongHashCode(options);
+                            return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(KindOfOperator.GetHashCode()) ^ (Left?.GetLongHashCode(options)??0) ^ (Right?.GetLongHashCode(options)??0);
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(KindOfOperator), KindOfOperator, null);

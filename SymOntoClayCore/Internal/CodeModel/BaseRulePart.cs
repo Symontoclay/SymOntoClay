@@ -32,12 +32,12 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class BaseRulePart: AnnotatedItem, IMemberAccess, IReadOnlyMemberAccess, ILogicalSearchItem
+    public abstract class BaseRulePart: AnnotatedItem, IMemberAccess, IReadOnlyMemberAccess, ILogicalSearchItem, ILogicalQueryNodeParent
     {
 #if DEBUG
         //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
-
+        
         public RuleInstance Parent { get; set; }
 
         /// <inheritdoc/>

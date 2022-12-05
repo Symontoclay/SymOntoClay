@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using Newtonsoft.Json.Bson;
 using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
@@ -69,11 +70,23 @@ namespace SymOntoClay.Core.Internal.Converters
 
             result.PrimaryPart = ConvertPrimaryRulePart(source.PrimaryPart, result, options, convertingContext, processedRuleInstances);
 
+            if ((options?.IgnoreStandaloneConceptsInNormalization ?? false))
+            {
+                PackRulePart(result.PrimaryPart);
+            }
+
             if (!source.SecondaryParts.IsNullOrEmpty())
             {
                 foreach (var secondaryPart in source.SecondaryParts)
                 {
-                    result.SecondaryParts.Add(ConvertSecondaryRulePart(secondaryPart, result, options, convertingContext, processedRuleInstances));
+                    var convertedSecondaryPart = ConvertSecondaryRulePart(secondaryPart, result, options, convertingContext, processedRuleInstances);
+
+                    if ((options?.IgnoreStandaloneConceptsInNormalization ?? false))
+                    {
+                        PackRulePart(convertedSecondaryPart);
+                    }
+
+                    result.SecondaryParts.Add(convertedSecondaryPart);
                 }
             }
 
@@ -403,15 +416,30 @@ namespace SymOntoClay.Core.Internal.Converters
             }
 
 #if DEBUG
-            _gbcLogger.Info("ConvertAndLogicalQueryNode NEXT");
-            _gbcLogger.Info($"source = {source}");
-            _gbcLogger.Info($"source = {source.ToHumanizedString()}");
+            //_gbcLogger.Info("ConvertAndLogicalQueryNode NEXT");
+            //_gbcLogger.Info($"source = {source}");
+            //_gbcLogger.Info($"source = {source.ToHumanizedString()}");
 #endif
 
             var leftOperand = source.Left;
             var rightOperand = source.Right;
 
-            throw new NotImplementedException();
+#if DEBUG
+            //_gbcLogger.Info($"leftOperand = {leftOperand}");
+            //_gbcLogger.Info($"rightOperand = {rightOperand}");
+#endif
+
+            if(leftOperand.Kind == KindOfLogicalQueryNode.Concept)
+            {
+                source.Left = null;
+            }
+
+            if(rightOperand.Kind == KindOfLogicalQueryNode.Concept)
+            {
+                source.Right = null;
+            }
+
+            return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict, processedRuleInstances);
         }
 
         private static LogicalQueryNode ConvertLogicalQueryNodeInDefaultWay(LogicalQueryNode source, CheckDirtyOptions options, Dictionary<object, object> convertingContext, Dictionary<StrongIdentifierValue, LogicalQueryNode> aliasesDict, List<RuleInstance> processedRuleInstances)
@@ -555,5 +583,40 @@ namespace SymOntoClay.Core.Internal.Converters
                 }
             }
         }
+
+        private static void PackRulePart(BaseRulePart rulePart)
+        {
+#if DEBUG
+            _gbcLogger.Info($"rulePart = {rulePart.ToHumanizedString()}");
+            //_gbcLogger.Info($"rulePart = {rulePart}");
+#endif
+
+            var parents = new Stack<ILogicalQueryNodeParent>();
+            parents.Push(rulePart);
+
+            PackNode(rulePart.Expression, parents);
+
+            throw new NotImplementedException();
+        }
+
+        private static void PackNode(LogicalQueryNode node, Stack<ILogicalQueryNodeParent> parents)
+        {
+#if DEBUG
+            _gbcLogger.Info($"node = {node.ToHumanizedString()}");
+            //_gbcLogger.Info($"node = {node}");
+#endif
+
+            switch (node.Kind)
+            {
+
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(node.Kind), node.Kind, null);
+            }
+
+            throw new NotImplementedException();
+        }
+
+
     }
 }

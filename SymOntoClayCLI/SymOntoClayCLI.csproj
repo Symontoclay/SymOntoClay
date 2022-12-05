@@ -36,6 +36,9 @@
     <None Update="LibsForInstall\stdlib\stdlib.slib">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="LibsForInstall\stdlib\stdlib.soc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

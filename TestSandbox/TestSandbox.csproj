@@ -64,6 +64,9 @@
     <None Update="Source\SharedLibs\stdlib\stdlib.slib">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Source\SharedLibs\stdlib\stdlib.soc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Source\Things\Barrel\Barrel.sobj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

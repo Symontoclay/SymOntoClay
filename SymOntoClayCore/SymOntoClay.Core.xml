@@ -1866,6 +1866,12 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseRulePart.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseRulePart.Remove(SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseRulePart.Replace(SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode,SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseRulePart.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -3306,6 +3312,12 @@
             <returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.Remove(SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.Replace(SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode,SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.PropertiesToString(System.UInt32)">

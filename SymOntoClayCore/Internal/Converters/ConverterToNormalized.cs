@@ -591,15 +591,25 @@ namespace SymOntoClay.Core.Internal.Converters
             //_gbcLogger.Info($"rulePart = {rulePart}");
 #endif
 
+            while(NPackRulePart(rulePart))
+            {
+            }
+
+#if DEBUG
+            _gbcLogger.Info($"rulePart (after) = {rulePart.ToHumanizedString()}");
+            //_gbcLogger.Info($"rulePart (after) = {rulePart}");
+#endif
+        }
+
+        private static bool NPackRulePart(BaseRulePart rulePart)
+        {
             var parents = new Stack<ILogicalQueryNodeParent>();
             parents.Push(rulePart);
 
-            PackNode(rulePart.Expression, parents);
-
-            throw new NotImplementedException();
+            return PackNode(rulePart.Expression, parents);
         }
 
-        private static void PackNode(LogicalQueryNode node, Stack<ILogicalQueryNodeParent> parents)
+        private static bool PackNode(LogicalQueryNode node, Stack<ILogicalQueryNodeParent> parents)
         {
 #if DEBUG
             _gbcLogger.Info($"node = {node.ToHumanizedString()}");
@@ -608,15 +618,113 @@ namespace SymOntoClay.Core.Internal.Converters
 
             switch (node.Kind)
             {
+                case KindOfLogicalQueryNode.BinaryOperator:
+                    switch (node.KindOfOperator)
+                    {
+                        case KindOfOperatorOfLogicalQueryNode.And:
+                            return PackBinaryOperatorNode(node, parents);
 
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(node.KindOfOperator), node.KindOfOperator, null);
+                    }
+
+                case KindOfLogicalQueryNode.UnaryOperator:
+                    switch (node.KindOfOperator)
+                    {
+                        case KindOfOperatorOfLogicalQueryNode.Not:
+                            return PackUnaryOperatorNode(node, parents);
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(node.KindOfOperator), node.KindOfOperator, null);
+                    }
+
+                case KindOfLogicalQueryNode.Relation:
+                    return PackRelationNode(node, parents);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(node.Kind), node.Kind, null);
+            }
+        }
+
+        private static bool PackBinaryOperatorNode(LogicalQueryNode node, Stack<ILogicalQueryNodeParent> parents)
+        {
+#if DEBUG
+            _gbcLogger.Info($"node = {node.ToHumanizedString()}");
+            //_gbcLogger.Info($"node = {node}");
+#endif
+
+            if(node.Left != null && node.Right != null)
+            {
+                parents.Push(node);
+
+                PackNode(node.Left, parents);
+                PackNode(node.Right, parents);
+
+                parents.Pop();
+
+                return false;
+            }
+
+            var parent = parents.Peek();
+
+            if(node.Left == null && node.Right == null)
+            {
+                parent.Remove(node);
+                return true;
+            }
+
+            if(node.Left == null)
+            {
+                parent.Replace(node, node.Right);
+                return true;
+            }
+
+            if(node.Right == null)
+            {
+                parent.Replace(node, node.Left);
+                return true;
             }
 
             throw new NotImplementedException();
         }
 
+        private static bool PackUnaryOperatorNode(LogicalQueryNode node, Stack<ILogicalQueryNodeParent> parents)
+        {
+#if DEBUG
+            _gbcLogger.Info($"node = {node.ToHumanizedString()}");
+            //_gbcLogger.Info($"node = {node}");
+#endif
 
+            if(node.Left == null)
+            {
+                var parent = parents.Peek();
+
+                parent.Remove(node);
+                return true;
+            }
+
+            parents.Push(node);
+
+            PackNode(node.Left, parents);
+
+            parents.Pop();
+
+            return false;
+        }
+
+        private static bool PackRelationNode(LogicalQueryNode node, Stack<ILogicalQueryNodeParent> parents)
+        {
+#if DEBUG
+            _gbcLogger.Info($"node = {node.ToHumanizedString()}");
+            //_gbcLogger.Info($"node = {node}");
+#endif
+
+            if(!node.ParamsList.Any(p => p == null))
+            {
+                return false;
+            }
+
+            throw new NotImplementedException();
+        }
     }
 }

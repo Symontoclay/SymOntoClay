@@ -29,6 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
@@ -107,6 +108,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return result;
         }
 
+        public IList<StrongIdentifierValue> GetStandaloneConcepts()
+        {
+            var result = new List<StrongIdentifierValue>();
+            Expression.DiscoverAllStandaloneConcepts(result);
+            return result.Distinct().ToList();
+        }
+
         public abstract IList<BaseRulePart> GetNextPartsList();
 
         public void PrepareDirty(RuleInstance ruleInstance)
@@ -142,6 +150,30 @@ namespace SymOntoClay.Core.Internal.CodeModel
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
             return base.CalculateLongHashCode(options) ^ Expression.GetLongHashCode(options);
+        }
+
+        /// <inheritdoc/>
+        public void Remove(LogicalQueryNode node)
+        {
+            if(Expression == node)
+            {
+                Expression = null;
+                return;
+            }
+
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void Replace(LogicalQueryNode oldNode, LogicalQueryNode newNode)
+        {
+            if (Expression == oldNode)
+            {
+                Expression = newNode;
+                return;
+            }
+
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>

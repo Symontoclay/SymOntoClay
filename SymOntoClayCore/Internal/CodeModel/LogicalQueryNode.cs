@@ -34,6 +34,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
@@ -988,6 +989,116 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Kind), Kind, string.Empty);
+            }
+        }
+
+        public void DiscoverAllStandaloneConcepts(List<StrongIdentifierValue> result)
+        {
+            switch(Kind)
+            {
+                case KindOfLogicalQueryNode.BinaryOperator:
+                    {
+                        if(Left.Kind == KindOfLogicalQueryNode.Concept)
+                        {
+                            result.Add(Left.Name);
+                        }
+
+                        if(Right.Kind == KindOfLogicalQueryNode.Concept)
+                        {
+                            result.Add(Right.Name);
+                        }
+
+                        throw new NotImplementedException();
+                    }
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, string.Empty);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Remove(LogicalQueryNode node)
+        {
+            switch (Kind)
+            {
+                case KindOfLogicalQueryNode.BinaryOperator:
+                    if(Left == node)
+                    {
+                        Left = null;
+                    }
+                    if(Right == node)
+                    {
+                        Right= null;
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.UnaryOperator:
+                    if (Left == node)
+                    {
+                        Left = null;
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.Group:
+                    if (Left == node)
+                    {
+                        Left = null;
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.Relation:
+                    if(ParamsList.Contains(node))
+                    {
+                        ParamsList.Remove(node);
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Replace(LogicalQueryNode oldNode, LogicalQueryNode newNode)
+        {
+            switch (Kind)
+            {
+                case KindOfLogicalQueryNode.BinaryOperator:
+                    if (Left == oldNode)
+                    {
+                        Left = newNode;
+                    }
+                    if (Right == oldNode)
+                    {
+                        Right = newNode;
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.UnaryOperator:
+                    if (Left == oldNode)
+                    {
+                        Left = newNode;
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.Group:
+                    if (Left == oldNode)
+                    {
+                        Left = newNode;
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.Relation:
+                    if (ParamsList.Contains(oldNode))
+                    {
+                        var index = ParamsList.IndexOf(oldNode);
+
+                        ParamsList[index] = newNode;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
             }
         }
 

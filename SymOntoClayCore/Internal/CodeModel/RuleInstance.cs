@@ -349,6 +349,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return PrimaryPart.GetInheritanceRelations();
         }
 
+        public IList<StrongIdentifierValue> GetStandaloneConcepts()
+        {
+            if (KindOfRuleInstance != KindOfRuleInstance.Fact)
+            {
+                return new List<StrongIdentifierValue>();
+            }
+
+            return PrimaryPart.GetStandaloneConcepts();
+        }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {

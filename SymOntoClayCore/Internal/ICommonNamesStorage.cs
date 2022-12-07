@@ -47,5 +47,7 @@ namespace SymOntoClay.Core.Internal
         StrongIdentifierValue HostSystemVarName { get; }
 
         StrongIdentifierValue SelfName { get; }
+
+        StrongIdentifierValue RandomConstraintName { get; }
     }
 }

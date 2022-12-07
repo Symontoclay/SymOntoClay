@@ -66,6 +66,9 @@ namespace SymOntoClay.Core.Internal.CommonNames
         /// <inheritdoc/>
         public StrongIdentifierValue SelfName { get; private set; }
 
+        /// <inheritdoc/>
+        public StrongIdentifierValue RandomConstraintName { get; private set; }
+
         public void LoadFromSourceCode()
         {
             WorldName = NameHelper.CreateName(StandardNamesConstants.WorldTypeName);
@@ -85,6 +88,8 @@ namespace SymOntoClay.Core.Internal.CommonNames
             HostSystemVarName = NameHelper.CreateName(StandardNamesConstants.HostSystemVarName);
 
             SelfName = NameHelper.CreateName(_context.Id);
+
+            RandomConstraintName = NameHelper.CreateName(StandardNamesConstants.RandomConstraintName);
         }
     }
 }

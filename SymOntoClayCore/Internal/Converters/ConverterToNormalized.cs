@@ -421,25 +421,27 @@ namespace SymOntoClay.Core.Internal.Converters
             //_gbcLogger.Info($"source = {source.ToHumanizedString()}");
 #endif
 
-            var leftOperand = source.Left;
-            var rightOperand = source.Right;
+            var result = ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict, processedRuleInstances);
+
+            var leftOperand = result.Left;
+            var rightOperand = result.Right;
 
 #if DEBUG
             //_gbcLogger.Info($"leftOperand = {leftOperand}");
             //_gbcLogger.Info($"rightOperand = {rightOperand}");
 #endif
 
-            if(leftOperand.Kind == KindOfLogicalQueryNode.Concept)
+            if (leftOperand.Kind == KindOfLogicalQueryNode.Concept)
             {
-                source.Left = null;
+                result.Left = null;
             }
 
             if(rightOperand.Kind == KindOfLogicalQueryNode.Concept)
             {
-                source.Right = null;
+                result.Right = null;
             }
 
-            return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict, processedRuleInstances);
+            return result;
         }
 
         private static LogicalQueryNode ConvertLogicalQueryNodeInDefaultWay(LogicalQueryNode source, CheckDirtyOptions options, Dictionary<object, object> convertingContext, Dictionary<StrongIdentifierValue, LogicalQueryNode> aliasesDict, List<RuleInstance> processedRuleInstances)
@@ -637,6 +639,9 @@ namespace SymOntoClay.Core.Internal.Converters
                         default:
                             throw new ArgumentOutOfRangeException(nameof(node.KindOfOperator), node.KindOfOperator, null);
                     }
+
+                case KindOfLogicalQueryNode.Group:
+                    return PackUnaryOperatorNode(node, parents);
 
                 case KindOfLogicalQueryNode.Relation:
                     return PackRelationNode(node, parents);

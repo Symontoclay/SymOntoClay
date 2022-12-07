@@ -34,6 +34,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
@@ -54,8 +55,33 @@ namespace SymOntoClay.Core.Internal.CodeModel
             Log($"entityConditionExpression = {entityConditionExpression.ToHumanizedString()}");
             Log($"logicalQuery = {logicalQuery.ToHumanizedString()}");
             Log($"logicalQuery.Normalized = {logicalQuery.Normalized.ToHumanizedString()}");
-            Log($"logicalQuery.GetStandaloneConcepts() = {logicalQuery.GetStandaloneConcepts().WriteListToString()}");
 #endif
+
+            var entityConstraintsConcepts = logicalQuery.GetStandaloneConcepts();
+
+#if DEBUG
+            Log($"entityConstraintsConcepts = {entityConstraintsConcepts.WriteListToString()}");
+#endif
+
+            if(entityConstraintsConcepts.Any())
+            {
+                foreach(var entityConstraintConcept in entityConstraintsConcepts)
+                {
+                    var strVal = entityConstraintConcept.NameValue;
+
+#if DEBUG
+                    Log($"strVal = '{strVal}'");
+#endif
+
+                    switch (strVal)
+                    {
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(strVal), strVal, null);
+                    }
+                }
+
+                throw new NotImplementedException();
+            }
 
             var dataResolversFactory = context.DataResolversFactory;
 

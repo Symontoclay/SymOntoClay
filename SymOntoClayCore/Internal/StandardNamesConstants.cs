@@ -45,6 +45,7 @@ namespace SymOntoClay.Core.Internal
         public const string EntityTypeName = "entity";
         public const string SelfSystemVarName = "@@self";
         public const string HostSystemVarName = "@@host";
+        public const string RandomConstraintName = "random";
         #endregion
     }
 }

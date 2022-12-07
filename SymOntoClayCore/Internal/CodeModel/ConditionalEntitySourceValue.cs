@@ -35,6 +35,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class ConditionalEntitySourceValue : Value
     {
+#if DEBUG
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         public ConditionalEntitySourceValue(EntityConditionExpressionNode entityConditionExpression)
             : this(entityConditionExpression, null)
         {
@@ -44,6 +48,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             Expression = entityConditionExpression;
             Name = name;
+
+            _isLogicalQueryGenerated = true;
 
             CheckName();
         }
@@ -67,6 +73,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public EntityConditionExpressionNode Expression { get; private set; }
         public StrongIdentifierValue Name { get; private set; }
         public RuleInstance LogicalQuery { get; private set; }
+        private bool _isLogicalQueryGenerated;
+        private bool _isLongHashCodeRecalculatedWithEngineContext;
+        private object _recalculatingLongHashCodeWithEngineContextLockObj = new object();
 
         private ConditionalEntitySourceValue()
         {
@@ -83,6 +92,22 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public ConditionalEntityValue ConvertToConditionalEntityValue(IEngineContext context, LocalCodeExecutionContext localContext)
         {
+            lock(_recalculatingLongHashCodeWithEngineContextLockObj)
+            {
+                if (!_isLongHashCodeRecalculatedWithEngineContext)
+                {
+                    _isLongHashCodeRecalculatedWithEngineContext = true;
+
+                    var options = new CheckDirtyOptions()
+                    {
+                        EngineContext= context,
+                        LocalContext= localContext
+                    };
+
+                    CalculateLongHashCode(options);
+                }
+            }
+
             return new ConditionalEntityValue(Expression, LogicalQuery, Name, context, localContext);
         }
 
@@ -108,6 +133,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.ConditionalEntityTypeName) };
 
+#if DEBUG
+            _gbcLogger.Info($"options = {options}");
+            _gbcLogger.Info($"_isLogicalQueryGenerated = {_isLogicalQueryGenerated}");
+#endif
+
             CheckDirtyOptions convertOptions = null;
             
             if(options == null)
@@ -119,10 +149,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 convertOptions = options.Clone();
             }
 
-            convertOptions.DontConvertConceptsToInhRelations = new List<StrongIdentifierValue>() { NameHelper.CreateName("random") };//TODO: make me as a constant.
+            var context = options?.EngineContext;
+
+            if(context != null)
+            {
+                convertOptions.DontConvertConceptsToInhRelations = EntityConstraintsHelper.GetConstraintsList(context, options.LocalContext);
+            }
+            
             convertOptions.IgnoreStandaloneConceptsInNormalization= true;
 
-            if (LogicalQuery == null)
+            if(_isLogicalQueryGenerated)
             {
                 LogicalQuery = ConverterEntityConditionExpressionToRuleInstance.Convert(Expression, convertOptions);
             }

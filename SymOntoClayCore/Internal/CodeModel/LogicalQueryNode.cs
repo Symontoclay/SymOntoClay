@@ -1002,14 +1002,38 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         {
                             result.Add(Left.Name);
                         }
+                        else
+                        {
+                            Left.DiscoverAllStandaloneConcepts(result);
+                        }
 
                         if(Right.Kind == KindOfLogicalQueryNode.Concept)
                         {
                             result.Add(Right.Name);
                         }
-
-                        throw new NotImplementedException();
+                        else
+                        {
+                            Right.DiscoverAllStandaloneConcepts(result);
+                        }
                     }
+                    break;
+
+                case KindOfLogicalQueryNode.Group:
+                case KindOfLogicalQueryNode.UnaryOperator:
+                    {
+                        if (Left.Kind == KindOfLogicalQueryNode.Concept)
+                        {
+                            result.Add(Left.Name);
+                        }
+                        else
+                        {
+                            Left.DiscoverAllStandaloneConcepts(result);
+                        }
+                    }
+                    break;
+
+                case KindOfLogicalQueryNode.Relation:
+                    break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Kind), Kind, string.Empty);

@@ -66,8 +66,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.EngineContext = EngineContext;
             result.LocalContext = LocalContext;
             result.ConvertWaypointValueFromSource = ConvertWaypointValueFromSource;
-            result.ReplaceConcepts = ReplaceConcepts.ToDictionary(p => p.Key, p => p.Value);
-            result.DontConvertConceptsToInhRelations = DontConvertConceptsToInhRelations.ToList();
+            result.ReplaceConcepts = ReplaceConcepts?.ToDictionary(p => p.Key, p => p.Value);
+            result.DontConvertConceptsToInhRelations = DontConvertConceptsToInhRelations?.ToList();
             result.IgnoreStandaloneConceptsInNormalization = IgnoreStandaloneConceptsInNormalization;
 
             return result;

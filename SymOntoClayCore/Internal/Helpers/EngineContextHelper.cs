@@ -30,6 +30,7 @@ using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Logging;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Serialization;
+using SymOntoClay.Core.Internal.Services;
 using SymOntoClay.Core.Internal.StandardLibrary;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Threads;
@@ -71,6 +72,8 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.StandardLibraryLoader.LoadFromSourceCode();
             context.InstancesStorage.LoadFromSourceFiles();
             context.LoaderFromSourceCode.LoadFromSourceFiles();
+
+            context.EntityConstraintsService.Init();
         }
 
         public static void LoadFromSourceCode(MainStorageContext context)
@@ -79,6 +82,8 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.Storage.LoadFromSourceCode();
             context.InstancesStorage.LoadFromSourceFiles();
             context.LoaderFromSourceCode.LoadFromSourceFiles();
+
+            context.EntityConstraintsService.Init();
         }
 
         public static MainStorageContext CreateAndInitMainStorageContext(StandaloneStorageSettings settings)
@@ -122,6 +127,8 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.ModulesStorage = settings.ModulesStorage;
 
             context.LogicalSearchExplainProvider = new LoggingProvider(context, settings);
+
+            context.EntityConstraintsService = new EntityConstraintsService(context);
         }
 
         private static void BaseInitBaseCoreContext(BaseCoreContext context, BaseCoreSettings settings)

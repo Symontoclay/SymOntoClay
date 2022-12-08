@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public LocalCodeExecutionContext LocalContext { get; set; }
         public bool ConvertWaypointValueFromSource { get; set; }
         public Dictionary<StrongIdentifierValue, StrongIdentifierValue> ReplaceConcepts { get; set; }
-        public List<StrongIdentifierValue> DontConvertConceptsToInhRelations { get; set; }
+        public IList<StrongIdentifierValue> DontConvertConceptsToInhRelations { get; set; }
         public bool IgnoreStandaloneConceptsInNormalization { get; set; }
 
         /// <summary>

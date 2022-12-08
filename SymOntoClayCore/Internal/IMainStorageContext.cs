@@ -54,5 +54,7 @@ namespace SymOntoClay.Core.Internal
         IModulesStorage ModulesStorage { get; }
 
         ILoggingProvider LoggingProvider { get; }
+
+        IEntityConstraintsService EntityConstraintsService { get; }
     }
 }

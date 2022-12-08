@@ -52,35 +52,39 @@ namespace SymOntoClay.Core.Internal.CodeModel
             Name = name;
 
 #if DEBUG
-            Log($"entityConditionExpression = {entityConditionExpression.ToHumanizedString()}");
-            Log($"logicalQuery = {logicalQuery.ToHumanizedString()}");
-            Log($"logicalQuery.Normalized = {logicalQuery.Normalized.ToHumanizedString()}");
+            //Log($"entityConditionExpression = {entityConditionExpression.ToHumanizedString()}");
+            //Log($"logicalQuery = {logicalQuery.ToHumanizedString()}");
+            //Log($"logicalQuery.Normalized = {logicalQuery.Normalized.ToHumanizedString()}");
 #endif
 
             var entityConstraintsConcepts = logicalQuery.GetStandaloneConcepts();
 
 #if DEBUG
-            Log($"entityConstraintsConcepts = {entityConstraintsConcepts.WriteListToString()}");
+            //Log($"entityConstraintsConcepts = {entityConstraintsConcepts.WriteListToString()}");
 #endif
 
             if(entityConstraintsConcepts.Any())
             {
-                foreach(var entityConstraintConcept in entityConstraintsConcepts)
-                {
-                    var strVal = entityConstraintConcept.NameValue;
+                var entityConstraintsService = context.EntityConstraintsService;
 
+                var constraintsList = new List<EntityConstraints>();
+
+                foreach (var entityConstraintConcept in entityConstraintsConcepts)
+                {
 #if DEBUG
-                    Log($"strVal = '{strVal}'");
+                    //Log($"entityConstraintConcept = {entityConstraintConcept}");
 #endif
 
-                    switch (strVal)
-                    {
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(strVal), strVal, null);
-                    }
+                    var entityConstraint = entityConstraintsService.ConvertToEntityConstraint(entityConstraintConcept);
+
+#if DEBUG
+                    //Log($"entityConstraint = {entityConstraint}");
+#endif
+
+                    constraintsList.Add(entityConstraint);
                 }
 
-                throw new NotImplementedException();
+                _constraints = constraintsList.Distinct().ToArray();
             }
 
             var dataResolversFactory = context.DataResolversFactory;
@@ -96,7 +100,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             _searchOptions.QueryExpression = logicalQuery;
             _searchOptions.LocalCodeExecutionContext = _localCodeExecutionContext;
         }
-     
+
         public EntityConditionExpressionNode Expression { get; private set; }
         public StrongIdentifierValue Name { get; private set; }
         public RuleInstance LogicalQuery { get; private set; }

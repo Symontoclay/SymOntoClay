@@ -28,6 +28,7 @@ using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Logging;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Serialization;
+using SymOntoClay.Core.Internal.Services;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -67,6 +68,8 @@ namespace SymOntoClay.Core.Internal
 
         public LoggingProvider LogicalSearchExplainProvider { get; set; }
 
+        public EntityConstraintsService EntityConstraintsService { get; set; }
+
         /// <inheritdoc/>
         public ILogicQueryParseAndCache LogicQueryParseAndCache { get; set; }
 
@@ -86,6 +89,8 @@ namespace SymOntoClay.Core.Internal
 
         ILoggingProvider IMainStorageContext.LoggingProvider => LogicalSearchExplainProvider;
 
+        IEntityConstraintsService IMainStorageContext.EntityConstraintsService => EntityConstraintsService;
+
         public virtual void Die()
         {
             ActivePeriodicObjectContext.Dispose();
@@ -96,6 +101,7 @@ namespace SymOntoClay.Core.Internal
             InstancesStorage.Dispose();
             LoaderFromSourceCode.Dispose();
             LogicalSearchExplainProvider.Dispose();
+            EntityConstraintsService.Dispose();
         }
 
         /// <inheritdoc/>
@@ -109,6 +115,7 @@ namespace SymOntoClay.Core.Internal
             InstancesStorage.Dispose();
             LoaderFromSourceCode.Dispose();
             LogicalSearchExplainProvider.Dispose();
+            EntityConstraintsService.Dispose();
 
             base.OnDisposed();
         }

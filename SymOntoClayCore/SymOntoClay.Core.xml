@@ -4807,6 +4807,9 @@
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.RandomConstraintName">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.NearestConstraintName">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstStatement})">
             <inheritdoc/>
         </member>
@@ -6995,6 +6998,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Parser.ParseRuleInstance(System.String,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Services.EntityConstraintsService.GetConstraintsList">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Services.EntityConstraintsService.ConvertToEntityConstraint(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.GetLongHashCode">

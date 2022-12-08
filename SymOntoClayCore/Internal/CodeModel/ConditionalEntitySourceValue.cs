@@ -29,6 +29,7 @@ using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
@@ -36,7 +37,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class ConditionalEntitySourceValue : Value
     {
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public ConditionalEntitySourceValue(EntityConditionExpressionNode entityConditionExpression)
@@ -134,8 +135,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.ConditionalEntityTypeName) };
 
 #if DEBUG
-            _gbcLogger.Info($"options = {options}");
-            _gbcLogger.Info($"_isLogicalQueryGenerated = {_isLogicalQueryGenerated}");
+            //_gbcLogger.Info($"options = {options}");
+            //_gbcLogger.Info($"_isLogicalQueryGenerated = {_isLogicalQueryGenerated}");
 #endif
 
             CheckDirtyOptions convertOptions = null;
@@ -153,9 +154,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             if(context != null)
             {
-                convertOptions.DontConvertConceptsToInhRelations = EntityConstraintsHelper.GetConstraintsList(context, options.LocalContext);
+                convertOptions.DontConvertConceptsToInhRelations = context.EntityConstraintsService.GetConstraintsList();
+
+#if DEBUG
+                //_gbcLogger.Info($"convertOptions.DontConvertConceptsToInhRelations = {convertOptions.DontConvertConceptsToInhRelations.WriteListToString()}");
+#endif
             }
-            
+
             convertOptions.IgnoreStandaloneConceptsInNormalization= true;
 
             if(_isLogicalQueryGenerated)

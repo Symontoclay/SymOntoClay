@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.Converters
     public static class ConverterToNormalized
     {
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static RuleInstance Convert(RuleInstance source, CheckDirtyOptions options)
@@ -589,7 +589,7 @@ namespace SymOntoClay.Core.Internal.Converters
         private static void PackRulePart(BaseRulePart rulePart)
         {
 #if DEBUG
-            _gbcLogger.Info($"rulePart = {rulePart.ToHumanizedString()}");
+            //_gbcLogger.Info($"rulePart = {rulePart.ToHumanizedString()}");
             //_gbcLogger.Info($"rulePart = {rulePart}");
 #endif
 
@@ -598,7 +598,7 @@ namespace SymOntoClay.Core.Internal.Converters
             }
 
 #if DEBUG
-            _gbcLogger.Info($"rulePart (after) = {rulePart.ToHumanizedString()}");
+            //_gbcLogger.Info($"rulePart (after) = {rulePart.ToHumanizedString()}");
             //_gbcLogger.Info($"rulePart (after) = {rulePart}");
 #endif
         }
@@ -614,7 +614,7 @@ namespace SymOntoClay.Core.Internal.Converters
         private static bool PackNode(LogicalQueryNode node, Stack<ILogicalQueryNodeParent> parents)
         {
 #if DEBUG
-            _gbcLogger.Info($"node = {node.ToHumanizedString()}");
+            //_gbcLogger.Info($"node = {node.ToHumanizedString()}");
             //_gbcLogger.Info($"node = {node}");
 #endif
 
@@ -654,7 +654,7 @@ namespace SymOntoClay.Core.Internal.Converters
         private static bool PackBinaryOperatorNode(LogicalQueryNode node, Stack<ILogicalQueryNodeParent> parents)
         {
 #if DEBUG
-            _gbcLogger.Info($"node = {node.ToHumanizedString()}");
+            //_gbcLogger.Info($"node = {node.ToHumanizedString()}");
             //_gbcLogger.Info($"node = {node}");
 #endif
 
@@ -696,7 +696,7 @@ namespace SymOntoClay.Core.Internal.Converters
         private static bool PackUnaryOperatorNode(LogicalQueryNode node, Stack<ILogicalQueryNodeParent> parents)
         {
 #if DEBUG
-            _gbcLogger.Info($"node = {node.ToHumanizedString()}");
+            //_gbcLogger.Info($"node = {node.ToHumanizedString()}");
             //_gbcLogger.Info($"node = {node}");
 #endif
 
@@ -720,7 +720,7 @@ namespace SymOntoClay.Core.Internal.Converters
         private static bool PackRelationNode(LogicalQueryNode node, Stack<ILogicalQueryNodeParent> parents)
         {
 #if DEBUG
-            _gbcLogger.Info($"node = {node.ToHumanizedString()}");
+            //_gbcLogger.Info($"node = {node.ToHumanizedString()}");
             //_gbcLogger.Info($"node = {node}");
 #endif
 

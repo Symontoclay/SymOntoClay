@@ -45,6 +45,7 @@ using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.NLP;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClayBaseTestLib;
+using SymOntoClayProjectFiles;
 
 namespace SymOntoClay.Core.Tests.Helpers
 {
@@ -78,7 +79,7 @@ namespace SymOntoClay.Core.Tests.Helpers
             return testDir;
         }
 
-        public static WorldSettings CreateWorldSettings(UnityTestEngineContextFactorySettings factorySettings)/*string baseDir, string hostFile, IPlatformLogger platformLogger*/
+        public static WorldSettings CreateWorldSettings(UnityTestEngineContextFactorySettings factorySettings)
         {
             var baseDir = factorySettings.BaseDir;
 
@@ -96,17 +97,41 @@ namespace SymOntoClay.Core.Tests.Helpers
             var settings = new WorldSettings();
             settings.EnableAutoloadingConvertors = true;
 
-            throw new NotImplementedException();
-
-            //settings.BuiltInStandardLibraryDir = DefaultPaths.GetBuiltInStandardLibraryDir();
-
             settings.ImagesRootDir = Path.Combine(supportBasePath, "Images");
 
             settings.TmpDir = Path.Combine(supportBasePath, "TMP");
 
             if (!string.IsNullOrWhiteSpace(factorySettings.WorldFile))
             {
-                settings.HostFile = factorySettings.WorldFile;
+                var worldFile = factorySettings.WorldFile;
+
+                settings.HostFile = worldFile;
+
+                var fileInfo = new FileInfo(worldFile);
+
+                var directory = fileInfo.Directory.Parent;
+
+                var worldSpaceFilesSearcherOptions = new WorldSpaceFilesSearcherOptions()
+                {
+                    InputDir = directory.FullName,
+                    AppName = "tst"
+                };
+
+                var targetFiles = WorldSpaceFilesSearcher.Run(worldSpaceFilesSearcherOptions);
+
+                var libsDirs = new List<string>();
+
+                if (!string.IsNullOrWhiteSpace(targetFiles.SharedLibsDir))
+                {
+                    libsDirs.Add(targetFiles.SharedLibsDir);
+                }
+
+                if (!string.IsNullOrWhiteSpace(targetFiles.LibsDir))
+                {
+                    libsDirs.Add(targetFiles.LibsDir);
+                }
+
+                settings.LibsDirs = libsDirs;
             }
 
             settings.InvokerInMainThread = invokingInMainThread;

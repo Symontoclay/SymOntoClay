@@ -27,7 +27,7 @@ using System.Text;
 namespace SymOntoClay.Core
 {
     /// <summary>
-    /// Constraints allow to resolve conditional entity to entity on game level that is the fittest to the method.
+    /// Constraints allow to resolve conditional entity to entity on game level that is the fittest to the situation.
     /// Without any constraints, the conditional entity could be anything on game level.
     /// </summary>
     public enum EntityConstraints

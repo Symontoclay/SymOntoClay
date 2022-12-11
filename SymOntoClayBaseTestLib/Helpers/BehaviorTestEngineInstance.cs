@@ -23,7 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.World;
 using SymOntoClay.DefaultCLIEnvironment;
-using SymOntoClayProjectFiles;
+using SymOntoClay.ProjectFiles;
 using System;
 using System.Collections.Generic;
 using System.IO;

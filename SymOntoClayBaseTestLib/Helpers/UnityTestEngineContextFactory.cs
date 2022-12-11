@@ -45,7 +45,7 @@ using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.NLP;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClayBaseTestLib;
-using SymOntoClayProjectFiles;
+using SymOntoClay.ProjectFiles;
 
 namespace SymOntoClay.Core.Tests.Helpers
 {

@@ -22,7 +22,7 @@ SOFTWARE.*/
 
 using NUnit.Framework;
 using SymOntoClay.CLI;
-using SymOntoClayProjectFiles;
+using SymOntoClay.ProjectFiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;

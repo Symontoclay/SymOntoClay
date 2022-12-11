@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClayProjectFiles
+namespace SymOntoClay.ProjectFiles
 {
     public class WorldDirs : IObjectToString
     {

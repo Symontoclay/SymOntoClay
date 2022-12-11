@@ -37,7 +37,7 @@ using Newtonsoft.Json;
 using System.Diagnostics;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System.Linq;
-using SymOntoClayProjectFiles;
+using SymOntoClay.ProjectFiles;
 using SymOntoClay.NLP;
 
 namespace SymOntoClay.CLI

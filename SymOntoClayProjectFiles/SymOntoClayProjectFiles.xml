@@ -1,70 +1,70 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>SymOntoClayProjectFiles</name>
+        <name>SymOntoClay.ProjectFiles</name>
     </assembly>
     <members>
-        <member name="M:SymOntoClayProjectFiles.WorldDirs.ToString">
+        <member name="M:SymOntoClay.ProjectFiles.WorldDirs.ToString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClayProjectFiles.WorldDirs.ToString(System.UInt32)">
+        <member name="M:SymOntoClay.ProjectFiles.WorldDirs.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClayProjectFiles.WorldDirs.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.ProjectFiles.WorldDirs.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClayProjectFiles.WorldJsonFile.ToString">
+        <member name="M:SymOntoClay.ProjectFiles.WorldJsonFile.ToString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClayProjectFiles.WorldJsonFile.ToString(System.UInt32)">
+        <member name="M:SymOntoClay.ProjectFiles.WorldJsonFile.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClayProjectFiles.WorldJsonFile.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.ProjectFiles.WorldJsonFile.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClayProjectFiles.WorldSpaceCreationSettings.ToString">
+        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceCreationSettings.ToString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClayProjectFiles.WorldSpaceCreationSettings.ToString(System.UInt32)">
+        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceCreationSettings.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClayProjectFiles.WorldSpaceCreationSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceCreationSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClayProjectFiles.WorldSpaceFiles.ToString">
+        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFiles.ToString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClayProjectFiles.WorldSpaceFiles.ToString(System.UInt32)">
+        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFiles.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClayProjectFiles.WorldSpaceFiles.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFiles.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClayProjectFiles.WorldSpaceFiles.ToShortString">
+        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFiles.ToShortString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClayProjectFiles.WorldSpaceFiles.ToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFiles.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClayProjectFiles.WorldSpaceFiles.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFiles.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClayProjectFiles.WorldSpaceFiles.ToBriefString">
+        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFiles.ToBriefString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClayProjectFiles.WorldSpaceFiles.ToBriefString(System.UInt32)">
+        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFiles.ToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClayProjectFiles.WorldSpaceFiles.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFiles.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClayProjectFiles.WorldSpaceFilesSearcherOptions.ToString">
+        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFilesSearcherOptions.ToString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClayProjectFiles.WorldSpaceFilesSearcherOptions.ToString(System.UInt32)">
+        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFilesSearcherOptions.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClayProjectFiles.WorldSpaceFilesSearcherOptions.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFilesSearcherOptions.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
     </members>

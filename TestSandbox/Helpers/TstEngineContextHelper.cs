@@ -45,7 +45,7 @@ using SymOntoClay.StandardFacts;
 using SymOntoClayBaseTestLib.Helpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
-using SymOntoClayProjectFiles;
+using SymOntoClay.ProjectFiles;
 
 namespace TestSandbox.Helpers
 {

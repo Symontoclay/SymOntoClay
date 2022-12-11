@@ -27,7 +27,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace SymOntoClayProjectFiles
+namespace SymOntoClay.ProjectFiles
 {
     public static class WorldSpaceCreator
     {

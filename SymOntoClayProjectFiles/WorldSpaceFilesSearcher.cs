@@ -10,7 +10,7 @@ namespace SymOntoClay.ProjectFiles
     public static class WorldSpaceFilesSearcher
     {
 #if DEBUG
-        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static WorldSpaceFiles Run(WorldSpaceFilesSearcherOptions options)
@@ -45,7 +45,7 @@ namespace SymOntoClay.ProjectFiles
                             throw new NotImplementedException();
                         }
 
-                        return GetRunCommandFilesByWorldFile(wSpaceFile, appName, options.BaseTempDir);
+                        return GetRunCommandFilesByWorldFile(wSpaceFile, appName, options.BaseTempDir, options.SearchMainNpcFile);
                     }
                     else
                     {
@@ -59,10 +59,10 @@ namespace SymOntoClay.ProjectFiles
             }
         }
 
-        private static WorldSpaceFiles GetRunCommandFilesByWorldFile(FileInfo wSpaceFile, string appName, string baseTempDir)
+        private static WorldSpaceFiles GetRunCommandFilesByWorldFile(FileInfo wSpaceFile, string appName, string baseTempDir, bool searchMainNpcFile)
         {
 #if DEBUG
-            //_logger.Info($"wSpaceFile = {wSpaceFile}");
+            _logger.Info($"wSpaceFile = {wSpaceFile}");
 #endif
 
             var wSpaceJsonFile = WorldJsonFile.LoadFromFile(wSpaceFile.FullName);
@@ -71,28 +71,37 @@ namespace SymOntoClay.ProjectFiles
             //_logger.Info($"wSpaceJsonFile = {wSpaceJsonFile}");
 #endif
 
-            var mainNpc = wSpaceJsonFile.MainNpc;
+            var inputFile = string.Empty;
+
+            if (searchMainNpcFile)
+            {
+                var mainNpc = wSpaceJsonFile.MainNpc;
 
 #if DEBUG
-            //_logger.Info($"mainNpc = {mainNpc}");
+                //_logger.Info($"mainNpc = {mainNpc}");
 #endif
 
-            if (string.IsNullOrWhiteSpace(mainNpc))
-            {
-                throw new NotImplementedException();
-            }
+                if (string.IsNullOrWhiteSpace(mainNpc))
+                {
+                    throw new NotImplementedException();
+                }
 
-            var mainNPCFileName = $"{mainNpc}.sobj";
-
-            var inputFile = DetectMainFileFllPathForMainNPCOfWorld(wSpaceFile.DirectoryName, mainNPCFileName, wSpaceJsonFile.Dirs);
+                var mainNPCFileName = $"{mainNpc}.sobj";
 
 #if DEBUG
-            //_logger.Info($"inputFile = {inputFile}");
+                _logger.Info($"wSpaceFile.DirectoryName = {wSpaceFile.DirectoryName}");
 #endif
 
-            if (!File.Exists(inputFile))
-            {
-                throw new NotImplementedException();
+                inputFile = DetectMainFileFllPathForMainNPCOfWorld(wSpaceFile.DirectoryName, mainNPCFileName, wSpaceJsonFile.Dirs);
+
+#if DEBUG
+                _logger.Info($"inputFile = {inputFile}");
+#endif
+
+                if (!File.Exists(inputFile))
+                {
+                    throw new NotImplementedException();
+                }
             }
 
             return NGetWorldSpaceFiles(inputFile, wSpaceFile, wSpaceJsonFile.Dirs, appName, baseTempDir);

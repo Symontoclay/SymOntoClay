@@ -11,6 +11,7 @@ namespace SymOntoClay.ProjectFiles
         public string InputDir { get; set; }
         public string AppName { get; set; }
         public string BaseTempDir { get; set; }
+        public bool SearchMainNpcFile { get; set; } = true;
 
         /// <inheritdoc/>
         public override string ToString()
@@ -34,6 +35,7 @@ namespace SymOntoClay.ProjectFiles
             sb.AppendLine($"{spaces}{nameof(InputDir)} = {InputDir}");
             sb.AppendLine($"{spaces}{nameof(AppName)} = {AppName}");
             sb.AppendLine($"{spaces}{nameof(BaseTempDir)} = {BaseTempDir}");
+            sb.AppendLine($"{spaces}{nameof(SearchMainNpcFile)} = {SearchMainNpcFile}");
 
             return sb.ToString();
         }

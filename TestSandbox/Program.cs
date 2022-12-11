@@ -85,6 +85,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            TstWorldSpaceFilesSearcher();
             //TstSynonymsHandler();
             //TstGetFullBaseTypesListInCSharpReflection();
             //TstConvertFactToImperativeCode();
@@ -150,11 +151,33 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
         }
+
+        private static void TstWorldSpaceFilesSearcher()
+        {
+            _logger.Log("Begin");
+
+            var worldSpaceFilesSearcherOptions = new WorldSpaceFilesSearcherOptions()
+            {
+                InputDir = @"C:\Users\Acer\source\repos\SymOntoClayAsset\Assets\SymOntoClayScripts",
+                AppName = "tst1",
+                SearchMainNpcFile = false
+            };
+
+            var targetFiles = WorldSpaceFilesSearcher.Run(worldSpaceFilesSearcherOptions);
+
+#if DEBUG
+            _logger.Log($"targetFiles = {targetFiles}");
+#endif 
+
+            _logger.Log("End");
+        }
+
+        //
 
         private static void TstSynonymsHandler()
         {

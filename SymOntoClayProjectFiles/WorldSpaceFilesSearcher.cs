@@ -10,7 +10,7 @@ namespace SymOntoClay.ProjectFiles
     public static class WorldSpaceFilesSearcher
     {
 #if DEBUG
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static WorldSpaceFiles Run(WorldSpaceFilesSearcherOptions options)
@@ -62,7 +62,7 @@ namespace SymOntoClay.ProjectFiles
         private static WorldSpaceFiles GetRunCommandFilesByWorldFile(FileInfo wSpaceFile, string appName, string baseTempDir, bool searchMainNpcFile)
         {
 #if DEBUG
-            _logger.Info($"wSpaceFile = {wSpaceFile}");
+            //_logger.Info($"wSpaceFile = {wSpaceFile}");
 #endif
 
             var wSpaceJsonFile = WorldJsonFile.LoadFromFile(wSpaceFile.FullName);
@@ -89,13 +89,13 @@ namespace SymOntoClay.ProjectFiles
                 var mainNPCFileName = $"{mainNpc}.sobj";
 
 #if DEBUG
-                _logger.Info($"wSpaceFile.DirectoryName = {wSpaceFile.DirectoryName}");
+                //_logger.Info($"wSpaceFile.DirectoryName = {wSpaceFile.DirectoryName}");
 #endif
 
                 inputFile = DetectMainFileFllPathForMainNPCOfWorld(wSpaceFile.DirectoryName, mainNPCFileName, wSpaceJsonFile.Dirs);
 
 #if DEBUG
-                _logger.Info($"inputFile = {inputFile}");
+                //_logger.Info($"inputFile = {inputFile}");
 #endif
 
                 if (!File.Exists(inputFile))

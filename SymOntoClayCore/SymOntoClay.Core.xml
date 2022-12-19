@@ -6336,15 +6336,6 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.AwaitStatementParser.OnRun">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.BaseInternalParser.Log(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.BaseInternalParser.Warning(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.BaseInternalParser.Error(System.String)">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.BaseObjectParser.OnEnter">
             <inheritdoc/>
         </member>
@@ -6639,6 +6630,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.OperatorParser.OnRun">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.Predictors.FunctionPredictor.Predict">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.PrimaryRulePartParser.OnEnter">

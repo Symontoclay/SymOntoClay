@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
+using SymOntoClay.Core.Internal.Parsing.Internal.Predictors;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -34,7 +35,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public abstract class BaseInternalParser
+    public abstract class BaseInternalParser: BaseLoggedComponent
     {
         protected BaseInternalParser(InternalParserContext context)
             : this(context, null)
@@ -42,15 +43,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
 
         protected BaseInternalParser(InternalParserContext context, TerminationToken[] terminationTokens)
+            : base(context.Logger)
         {
             _context = context;
-            _logger = context.Logger;
             _terminationTokens = terminationTokens;
             _hasTerminationTokens = !terminationTokens.IsNullOrEmpty();
         }
 
         protected readonly InternalParserContext _context;
-        private IEntityLogger _logger;
         protected readonly TerminationToken[] _terminationTokens;
         private readonly bool _hasTerminationTokens;
 
@@ -374,9 +374,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         protected KeyWordTokenKind PredictKeyWordTokenKind()
         {
+#if DEBUG
+            Log($"_currToken = {_currToken}");
+#endif
 
+            var predictor = new Predictor(_currToken, _context);
 
-            throw new NotImplementedException();
+            return predictor.Predict();
         }
 
         protected AstExpression ProcessCondition()
@@ -783,27 +787,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             codeItem.CodeFile = _context.CodeFile;
 
             codeItem.ParentCodeEntity = CurrentCodeItem;
-        }
-
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
-        protected void Log(string message)
-        {
-            _logger.Log(message);
-        }
-
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
-        protected void Warning(string message)
-        {
-            _logger.Warning(message);
-        }
-
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
-        protected void Error(string message)
-        {
-            _logger.Error(message);
         }
     }
 }

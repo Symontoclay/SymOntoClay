@@ -372,6 +372,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             return false;
         }
 
+        protected KeyWordTokenKind PredictKeyWordTokenKind()
+        {
+
+
+            throw new NotImplementedException();
+        }
+
         protected AstExpression ProcessCondition()
         {
             _context.Recovery(_currToken);

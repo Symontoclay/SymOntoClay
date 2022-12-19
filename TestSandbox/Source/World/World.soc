@@ -1,4 +1,4 @@
 ﻿world Example is Oblivion
 {
-	import lib1;
+	//import lib1;
 }

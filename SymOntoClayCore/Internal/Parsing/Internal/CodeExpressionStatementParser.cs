@@ -57,7 +57,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
+            Log($"_currToken = {_currToken}");
             //Log($"_nodePoint = {_nodePoint}");
 #endif
 
@@ -385,6 +385,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case KeyWordTokenKind.Var:
                     ProcessVarDecl();
                     break;
+
+                case KeyWordTokenKind.Fun:
+                    {
+                        var predictedKeyWordTokenKind = PredictKeyWordTokenKind();
+
+#if DEBUG
+                        Log($"predictedKeyWordTokenKind = {predictedKeyWordTokenKind}");
+#endif
+
+                        throw new NotImplementedException();
+                    }
+                    
 
                 default:
                     throw new UnexpectedTokenException(_currToken);

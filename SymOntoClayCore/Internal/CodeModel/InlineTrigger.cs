@@ -152,10 +152,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.ResetBindingVariables = ResetBindingVariables.Clone(context);
 
             result.SetStatements = SetStatements.Select(p => p.CloneAstStatement(context)).ToList();
-            result.SetCompiledFunctionBody = SetCompiledFunctionBody.Clone(context);
+            result.SetCompiledFunctionBody = SetCompiledFunctionBody?.Clone(context);
 
             result.ResetStatements = ResetStatements.Select(p => p.CloneAstStatement(context)).ToList();            
-            result.ResetCompiledFunctionBody = ResetCompiledFunctionBody.Clone(context);
+            result.ResetCompiledFunctionBody = ResetCompiledFunctionBody?.Clone(context);
 
             result.RuleInstancesList = RuleInstancesList?.Select(p => p.Clone(context)).ToList();
 

@@ -5,16 +5,20 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
 {
-    public abstract class BaseConcretePredictor: BaseLoggedComponent
+    public abstract class BaseConcretePredictor: BaseInternalParser
     {
-        protected BaseConcretePredictor(Token currToken, InternalParserContext context)
-            : base(context.Logger)
+        private static InternalParserContext PrepareContext(Token currToken, InternalParserContext context)
         {
-            _context = context.Fork();
-            _context.Recovery(currToken);
+            var newContext = context.Fork();
+            newContext.Recovery(currToken);
+
+            return newContext;
         }
 
-        private readonly InternalParserContext _context;
+        protected BaseConcretePredictor(Token currToken, InternalParserContext context)
+            : base(PrepareContext(currToken, context))
+        {            
+        }
 
         public abstract KeyWordTokenKind Predict();
     }

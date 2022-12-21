@@ -20,6 +20,25 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
         {            
         }
 
-        public abstract KeyWordTokenKind Predict();
+        public KeyWordTokenKind Result { get; private set; } = KeyWordTokenKind.Unknown;
+
+        protected virtual KeyWordTokenKind DefaultResult { get; set; } = KeyWordTokenKind.Unknown;
+
+        protected void Complete()
+        {
+            Complete(DefaultResult);
+        }
+
+        protected void Complete(KeyWordTokenKind result)
+        {
+            Result = result;
+            Exit();
+        }
+
+        public KeyWordTokenKind Predict()
+        {
+            Run();
+            return Result;
+        }
     }
 }

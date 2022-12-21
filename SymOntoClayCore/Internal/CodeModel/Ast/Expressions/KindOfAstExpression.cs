@@ -36,6 +36,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         UnaryOperator,
         Channel,
         CallingFunction,
-        Group
+        Group,
+        FunctionDecl
     }
 }

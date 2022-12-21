@@ -27,7 +27,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public class NamedFunctionParser : BaseInternalParser
+    public class FunctionDeclParser : BaseInternalParser
     {
         private enum State
         {
@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotAction
         }
         
-        public NamedFunctionParser(InternalParserContext context)
+        public FunctionDeclParser(InternalParserContext context)
             : base(context)
         {
         }
@@ -68,8 +68,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -105,6 +105,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _state = State.GotName;
                             break;
 
+                        case TokenKind.OpenRoundBracket:
+                            ProcessParameters();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -114,16 +118,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.OpenRoundBracket:
-                            {
-                                _context.Recovery(_currToken);
-
-                                var parser = new FunctionParametersParser(_context);
-                                parser.Run();
-
-                                _namedFunction.Arguments = parser.Result;
-
-                                _state = State.GotParameters;
-                            }
+                            ProcessParameters();
                             break;
 
                         default:
@@ -200,6 +195,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.Word:
                         case TokenKind.CloseFigureBracket:
+                        case TokenKind.Semicolon:
                             _context.Recovery(_currToken);
                             Exit();
                             break;
@@ -212,6 +208,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
+        }
+
+        private void ProcessParameters()
+        {
+            _context.Recovery(_currToken);
+
+            var parser = new FunctionParametersParser(_context);
+            parser.Run();
+
+            _namedFunction.Arguments = parser.Result;
+
+            _state = State.GotParameters;
         }
 
         private void ProcessWidth()

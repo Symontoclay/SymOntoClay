@@ -3,7 +3,7 @@
     on Enter
     {
         'Begin' >> @>log;
-        @a = fun() => 1;
+        @a = fun(){return 1;};
         @a() >> @>log;
         'End' >> @>log;
     }

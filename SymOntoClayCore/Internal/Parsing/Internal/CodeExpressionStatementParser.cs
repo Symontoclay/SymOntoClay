@@ -394,9 +394,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         Log($"predictedKeyWordTokenKind = {predictedKeyWordTokenKind}");
 #endif
 
-                        throw new NotImplementedException();
+                        switch(predictedKeyWordTokenKind)
+                        {
+                            case KeyWordTokenKind.Unknown:
+                                ProcessConceptLeaf();
+                                break;
+
+                            case KeyWordTokenKind.Fun:
+                                ProcessFunDecl();
+                                break;
+
+                            default:
+                                throw new UnexpectedTokenException(_currToken);
+                        }
+                        break;
                     }
-                    
 
                 default:
                     throw new UnexpectedTokenException(_currToken);
@@ -438,6 +450,28 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var valueIntermediateNode = new IntermediateAstNode(valueNode);
 
             AstNodesLinker.SetNode(valueIntermediateNode, _nodePoint);
+        }
+
+        private void ProcessFunDecl()
+        {
+            _lastBinaryOperator = null;
+            _lastIsOperator = null;
+            _hasSomething = true;
+
+            _context.Recovery(_currToken);
+
+            var parser = new FunctionDeclParser(_context);
+            parser.Run();
+
+#if DEBUG
+            Log($"parser.Result = {parser.Result}");
+#endif
+
+            var expr = new CodeItemAstExpression() { CodeItem = parser.Result };
+
+            var intermediateNode = new IntermediateAstNode(expr);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
         }
 
         private void ProcessVarDecl()

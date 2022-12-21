@@ -117,7 +117,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case KeyWordTokenKind.Fun:
                             {
                                 _context.Recovery(_currToken);
-                                var parser = new NamedFunctionParser(_context);
+                                var parser = new FunctionDeclParser(_context);
                                 parser.Run();
                                 Result.Add(parser.Result);
                             }

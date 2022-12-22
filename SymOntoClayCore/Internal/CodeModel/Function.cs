@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
@@ -184,6 +185,54 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
             sb.Append(base.PropertiesToBriefString(n));
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToDbgString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            return $"{spaces}'{ToHumanizedString()}'";
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString(DebugHelperOptions options)
+        {
+            var sb = new StringBuilder("fun");
+
+            if(Name != null)
+            {
+                sb.Append($" {Name.NameValue}");
+            }
+
+            sb.Append("(");
+
+            if(!Arguments.IsNullOrEmpty())
+            {
+                var argumentsList = new List<string>();
+
+                foreach(var argument in Arguments)
+                {
+                    argumentsList.Add(argument.ToHumanizedString(options));
+                }
+
+                sb.Append(string.Join(", ", argumentsList));
+            }
+
+            sb.Append(")");
+
+            sb.AppendLine("{");
+
+            if (!Statements.IsNullOrEmpty())
+            {
+                foreach(var statement in Statements)
+                {
+                    sb.AppendLine(statement.ToHumanizedString(options));
+                }
+            }
+
+            sb.AppendLine("}");
+
             return sb.ToString();
         }
     }

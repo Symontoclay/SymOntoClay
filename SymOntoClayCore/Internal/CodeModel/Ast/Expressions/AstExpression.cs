@@ -41,8 +41,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         public virtual bool IsGroupAstExpression => false;
         public virtual GroupAstExpression AsGroupAstExpression => null;
 
-        public virtual bool IsFunctionDeclAstExpression => false;
-        public virtual CodeItemAstExpression AsFunctionDeclAstExpression => null;
+        public virtual bool IsCodeItemAstExpression => false;
+        public virtual CodeItemAstExpression AsCodeItemAstExpression => null;
 
         protected virtual IAstNode NLeft { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         protected virtual IAstNode NRight { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         public void Run(AstExpression expression)
         {
 #if DEBUG
-            Log($"expression = {expression.ToHumanizedString()}");
+            //Log($"expression = {expression.ToHumanizedString()}");
             //Log($"expression = {expression}");
 #endif
 
@@ -86,6 +86,14 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     {
                         var node = new ExpressionNode(_context);
                         node.Run((expression as GroupAstExpression).Expression);
+                        AddCommands(node.Result);
+                    }
+                    break;
+
+                case KindOfAstExpression.CodeItem:
+                    {
+                        var node = new CodeItemNode(_context);
+                        node.Run(expression.AsCodeItemAstExpression);
                         AddCommands(node.Result);
                     }
                     break;

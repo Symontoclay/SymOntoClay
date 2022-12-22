@@ -302,7 +302,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -895,6 +895,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             localExecutionContext.KindOfAddFactResult = KindOfAddFactOrRuleResult.Reject;
 
                             _currentCodeFrame.CurrentPosition++;
+                        }
+                        break;
+
+                    case OperationCode.Instantiate:
+                        {
+                            throw new NotImplementedException();
                         }
                         break;
 

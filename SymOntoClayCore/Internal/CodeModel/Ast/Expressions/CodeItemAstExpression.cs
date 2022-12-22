@@ -11,15 +11,15 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
     public class CodeItemAstExpression : AstExpression
     {
         /// <inheritdoc/>
-        public override KindOfAstExpression Kind => KindOfAstExpression.FunctionDecl;
+        public override KindOfAstExpression Kind => KindOfAstExpression.CodeItem;
 
         /// <inheritdoc/>
-        public override bool IsFunctionDeclAstExpression => true;
+        public override bool IsCodeItemAstExpression => true;
 
         /// <inheritdoc/>
-        public override CodeItemAstExpression AsFunctionDeclAstExpression => this;
+        public override CodeItemAstExpression AsCodeItemAstExpression => this;
 
-        public CodeItemValue CodeItem { get; set; }
+        public CodeItemValue CodeItemValue { get; set; }
 
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var result = new CodeItemAstExpression();
             context[this] = result;
 
-            result.CodeItem = CodeItem.CloneCodeItem(context);
+            result.CodeItemValue = CodeItemValue.Clone(context);
 
             result.AppendAnnotations(this, context);
 
@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         {
             base.DiscoverAllAnnotations(result);
 
-            CodeItem.DiscoverAllAnnotations(result);
+            CodeItemValue.DiscoverAllAnnotations(result);
         }
 
         /// <inheritdoc/>
@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(CodeItem), CodeItem);
+            sb.PrintObjProp(n, nameof(CodeItemValue), CodeItemValue);
 
             sb.Append(base.PropertiesToString(n));
 
@@ -72,7 +72,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjProp(n, nameof(CodeItem), CodeItem);
+            sb.PrintShortObjProp(n, nameof(CodeItemValue), CodeItemValue);
 
             sb.Append(base.PropertiesToShortString(n));
 
@@ -85,7 +85,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjProp(n, nameof(CodeItem), CodeItem);
+            sb.PrintBriefObjProp(n, nameof(CodeItemValue), CodeItemValue);
 
             sb.Append(base.PropertiesToBriefString(n));
 
@@ -95,7 +95,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            return CodeItem?.ToHumanizedString(options);
+            return CodeItemValue?.ToHumanizedString(options);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
             : base(currToken, context)
         {
         }
-
+        
         /// <inheritdoc/>
         protected override KeyWordTokenKind DefaultResult { get; set; } = KeyWordTokenKind.Fun;
 
@@ -33,9 +33,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
-            Log($"_openRoundBracketsCount = {_openRoundBracketsCount}");
-            Log($"_openFigureBracketsCount = {_openFigureBracketsCount}");
+            //Log($"_currToken = {_currToken}");
+            //Log($"_openRoundBracketsCount = {_openRoundBracketsCount}");
+            //Log($"_openFigureBracketsCount = {_openFigureBracketsCount}");
 #endif
 
             switch (_state)

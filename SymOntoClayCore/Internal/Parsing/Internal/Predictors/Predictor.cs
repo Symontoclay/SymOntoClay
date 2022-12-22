@@ -10,7 +10,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
             : base(context.Logger)
         {
 #if DEBUG
-            Log($"currToken = {currToken}");
+            //Log($"currToken = {currToken}");
 #endif
 
             switch(currToken.TokenKind)

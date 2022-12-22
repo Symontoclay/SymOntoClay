@@ -82,11 +82,5 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             return Clone(context);
         }
-
-        /// <inheritdoc/>
-        public override string ToHumanizedString(DebugHelperOptions options)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -307,7 +307,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected KeyWordTokenKind PredictKeyWordTokenKind()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
+            //Log($"_currToken = {_currToken}");
 #endif
 
             var predictor = new Predictor(_currToken, _context);

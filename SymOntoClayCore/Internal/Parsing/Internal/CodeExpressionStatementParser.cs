@@ -57,7 +57,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
+            //Log($"_currToken = {_currToken}");
             //Log($"_nodePoint = {_nodePoint}");
 #endif
 
@@ -391,7 +391,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         var predictedKeyWordTokenKind = PredictKeyWordTokenKind();
 
 #if DEBUG
-                        Log($"predictedKeyWordTokenKind = {predictedKeyWordTokenKind}");
+                        //Log($"predictedKeyWordTokenKind = {predictedKeyWordTokenKind}");
 #endif
 
                         switch(predictedKeyWordTokenKind)
@@ -464,10 +464,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             parser.Run();
 
 #if DEBUG
-            Log($"parser.Result = {parser.Result}");
+            //Log($"parser.Result = {parser.Result}");
 #endif
 
-            var expr = new CodeItemAstExpression() { CodeItem = parser.Result };
+            var value = new CodeItemValue(parser.Result);
+
+            var expr = new CodeItemAstExpression() { CodeItemValue = value };
 
             var intermediateNode = new IntermediateAstNode(expr);
 

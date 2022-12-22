@@ -110,6 +110,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsLogicalModalityExpressionValue => false;
         public virtual LogicalModalityExpressionValue AsLogicalModalityExpressionValue => null;
 
+        public virtual bool IsCodeItemValue => false;
+        public virtual CodeItemValue AsCodeItemValue => null;
+
         public virtual bool IsSystemNull => false;
 
         public virtual IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => throw new NotImplementedException();

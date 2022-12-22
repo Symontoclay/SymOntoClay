@@ -189,6 +189,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case OperationCode.CompleteStateVal:
                 case OperationCode.BreakState:
                 case OperationCode.BreakStateVal:
+                case OperationCode.Instantiate:
                     return $"{operationCode}";
 
                 case OperationCode.PushVal:

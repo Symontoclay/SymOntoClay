@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class LogicConditionalTriggerInstance : BaseComponent, INamedTriggerInstance, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public LogicConditionalTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage)
+        public LogicConditionalTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage, LocalCodeExecutionContext parentCodeExecutionContext)
             : base(context.Logger)
         {
             _executionCoordinator = parent.ExecutionCoordinator;
@@ -65,7 +65,7 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log($"_dateTimeProvider.CurrentTiks = {_dateTimeProvider.CurrentTiks}");
 #endif
 
-            _localCodeExecutionContext = new LocalCodeExecutionContext();
+            _localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
             _storage = new LocalStorage(localStorageSettings);
             _localCodeExecutionContext.Storage = _storage;

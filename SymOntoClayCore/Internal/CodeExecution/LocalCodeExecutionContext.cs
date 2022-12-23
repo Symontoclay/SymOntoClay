@@ -31,6 +31,17 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public class LocalCodeExecutionContext: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
+        public LocalCodeExecutionContext(int a)
+        {
+        }
+
+        public LocalCodeExecutionContext(LocalCodeExecutionContext parent)
+        {
+            Parent = parent;
+        }
+
+        public LocalCodeExecutionContext Parent { get;private set; }
+
         public StrongIdentifierValue Holder { get; set; }
         public IStorage Storage { get; set; }
         public KindOfLocalCodeExecutionContext Kind { get; set; } = KindOfLocalCodeExecutionContext.Usual;
@@ -55,14 +66,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-          
+
+            sb.PrintBriefObjProp(n, nameof(Parent), Parent);
             sb.PrintObjProp(n, nameof(Holder), Holder);
             sb.AppendLine($"{spaces}{nameof(Storage)} = {Storage?.Kind}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfAddFactResult)} = {KindOfAddFactResult}");
             sb.PrintObjProp(n, nameof(MutablePart), MutablePart);
             sb.PrintObjProp(n, nameof(AddedRuleInstance), AddedRuleInstance);
-
+            
             return sb.ToString();
         }
 
@@ -84,6 +96,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintBriefObjProp(n, nameof(Parent), Parent);
             sb.PrintShortObjProp(n, nameof(Holder), Holder);
             sb.AppendLine($"{spaces}{nameof(Storage)} = {Storage?.Kind}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
@@ -112,6 +125,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintExisting(n, nameof(Parent), Parent);
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
             sb.AppendLine($"{spaces}{nameof(Storage)} = {Storage?.Kind}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");

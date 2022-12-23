@@ -35,8 +35,8 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class AddingFactNonConditionalTriggerInstance: BaseAddingFactTriggerInstance
     {
-        public AddingFactNonConditionalTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage)
-            : base(trigger, parent, context, parentStorage, false)
+        public AddingFactNonConditionalTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage, LocalCodeExecutionContext parentCodeExecutionContext)
+            : base(trigger, parent, context, parentStorage, parentCodeExecutionContext, false)
         {
         }
 

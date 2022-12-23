@@ -52,7 +52,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                 _fuzzyLogicResolver = mainStorageContext.DataResolversFactory.GetFuzzyLogicResolver();
 
-                var localCodeExecutionContext = new LocalCodeExecutionContext();
+                var localCodeExecutionContext = new LocalCodeExecutionContext(1);
                 localCodeExecutionContext.Storage = mainStorageContext.Storage.GlobalStorage;
                 localCodeExecutionContext.Holder = NameHelper.CreateName(mainStorageContext.Id);
 

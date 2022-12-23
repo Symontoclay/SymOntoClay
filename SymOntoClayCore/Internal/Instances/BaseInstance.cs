@@ -155,13 +155,13 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     if(targetTriggerInfo.SetCondition == null)
                     {
-                        var triggerInstance = new AddingFactNonConditionalTriggerInstance(targetTriggerInfo, this, _context, _storage);
+                        var triggerInstance = new AddingFactNonConditionalTriggerInstance(targetTriggerInfo, this, _context, _storage, _localCodeExecutionContext);
                         triggerInstance.Init();
                         _addingFactNonConditionalTriggerInstancesList.Add(triggerInstance);
                     }
                     else
                     {
-                        var triggerInstance = new AddingFactConditionalTriggerInstance(targetTriggerInfo, this, _context, _storage);
+                        var triggerInstance = new AddingFactConditionalTriggerInstance(targetTriggerInfo, this, _context, _storage, _localCodeExecutionContext);
                         triggerInstance.Init();
                         _addingFactConditionalTriggerInstancesList.Add(triggerInstance);
                     }
@@ -185,7 +185,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     //Log($"targetTrigger.ResultItem = {targetTrigger.ResultItem}");
 #endif
 
-                    var triggerInstance = new LogicConditionalTriggerInstance(targetTrigger.ResultItem, this, _context, _storage);
+                    var triggerInstance = new LogicConditionalTriggerInstance(targetTrigger.ResultItem, this, _context, _storage, _localCodeExecutionContext);
                     _logicConditionalTriggersList.Add(triggerInstance);
 
                     _globalTriggersStorage.Append(triggerInstance);

@@ -54,7 +54,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             //}
 #endif
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            var localCodeExecutionContext = new LocalCodeExecutionContext(parentLocalCodeExecutionContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(context, storagesList.ToList(), false);
 
             var newStorage = new LocalStorage(localStorageSettings);
@@ -100,7 +100,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             //}
 #endif
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            var localCodeExecutionContext = new LocalCodeExecutionContext(parentLocalCodeExecutionContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(context, storagesList.ToList(), false);
 
             var newStorage = new LocalStorage(localStorageSettings);

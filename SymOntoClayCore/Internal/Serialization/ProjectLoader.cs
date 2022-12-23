@@ -502,7 +502,7 @@ namespace SymOntoClay.Core.Internal.Serialization
                     {
                         var varResolver = _context.DataResolversFactory.GetVarsResolver();
 
-                        var localCodeExecutionContext = new LocalCodeExecutionContext();
+                        var localCodeExecutionContext = new LocalCodeExecutionContext(1);
                         localCodeExecutionContext.Holder = codeItem.Holder;
                         localCodeExecutionContext.Storage = _globalStorage;
 

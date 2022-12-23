@@ -91,7 +91,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             _searcher = dataResolversFactory.GetLogicalSearchResolver();
 
-            _localCodeExecutionContext = new LocalCodeExecutionContext();
+            _localCodeExecutionContext = new LocalCodeExecutionContext(localContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(context, new List<IStorage> { localContext.Storage, _worldPublicFactsStorage });
             _storage = new LocalStorage(localStorageSettings);
             _localCodeExecutionContext.Storage = _storage;

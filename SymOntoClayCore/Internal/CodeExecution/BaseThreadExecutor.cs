@@ -900,7 +900,32 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     case OperationCode.Instantiate:
                         {
-                            throw new NotImplementedException();
+                            var valuesStack = _currentCodeFrame.ValuesStack;
+
+                            var annotationValue = valuesStack.Pop();
+
+#if DEBUG
+                            //Log($"annotationValue = {annotationValue}");
+#endif
+
+                            var prototypeValue = valuesStack.Pop();
+
+#if DEBUG
+                            Log($"prototypeValue = {prototypeValue}");
+#endif
+
+                            if(prototypeValue.IsCodeItemValue)
+                            {
+                                var instanceValue = _context.InstancesStorage.CreateInstance(prototypeValue.AsCodeItemValue.CodeItem, _currentCodeFrame.LocalContext);
+
+#if DEBUG
+                                Log($"instanceValue = {instanceValue}");
+#endif
+
+                                throw new NotImplementedException();
+                            }
+
+                            throw new Exception($"The vaule {prototypeValue.ToHumanizedString()} can not be instantiated.");
                         }
                         break;
 

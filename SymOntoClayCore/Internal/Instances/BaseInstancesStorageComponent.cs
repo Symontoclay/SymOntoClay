@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using System;
 using System.Collections.Generic;
@@ -148,6 +149,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
         /// <inheritdoc/>
         public virtual AppInstance MainEntity => null;
+
+        /// <inheritdoc/>
+        public virtual Value CreateInstance(CodeItem codeItem, LocalCodeExecutionContext executionContext)
+        {
+            throw new NotImplementedException();
+        }
 
 #if DEBUG
         /// <inheritdoc/>

@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             _statesResolver = _context.DataResolversFactory.GetStatesResolver();
         }
-
+        
         /// <inheritdoc/>
         public override KindOfInstance KindOfInstance => KindOfInstance.AppInstance;
 

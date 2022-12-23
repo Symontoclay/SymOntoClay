@@ -14,7 +14,7 @@ namespace SymOntoClay.Core.Internal.Instances
     public abstract class BaseIndependentInstance : BaseInstance
     {
         protected BaseIndependentInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, IStorageFactory storageFactory, List<Var> varList)
-            : base(codeItem, context, parentStorage, new StateStorageFactory(), varList)
+            : base(codeItem, context, parentStorage, storageFactory, varList)
         {
             _idleActionsResolver = context.DataResolversFactory.GetIdleActionsResolver();
             _idleActionsRandom = new Random();

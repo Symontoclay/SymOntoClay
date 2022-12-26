@@ -442,6 +442,9 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public override Value CreateInstance(CodeItem codeItem, LocalCodeExecutionContext executionContext)
         {
+            var instance = new ObjectInstance(codeItem, _context, executionContext.Storage, executionContext);
+            instance.Init();
+
             throw new NotImplementedException();
         }
 

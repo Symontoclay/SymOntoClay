@@ -34,8 +34,8 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class StateActivator : BaseSimpleConditionalTriggerInstance
     {
-        public StateActivator(ActivationInfoOfStateDef activationInfoOfState, AppInstance parent, IEngineContext context, IStorage parentStorage)
-            : base(activationInfoOfState.ActivatingConditions.Condition, parent, context, parentStorage)
+        public StateActivator(ActivationInfoOfStateDef activationInfoOfState, AppInstance parent, IEngineContext context, IStorage parentStorage, LocalCodeExecutionContext parentCodeExecutionContext)
+            : base(activationInfoOfState.ActivatingConditions.Condition, parent, context, parentStorage, parentCodeExecutionContext)
         {
             _stateDef = activationInfoOfState.State;
             _stateName = _stateDef.Name;

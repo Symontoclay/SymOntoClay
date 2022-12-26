@@ -31,7 +31,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public class LocalCodeExecutionContext: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public LocalCodeExecutionContext(int a)
+        public LocalCodeExecutionContext()
         {
         }
 

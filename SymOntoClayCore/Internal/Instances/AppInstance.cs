@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.Instances
     public class AppInstance : BaseIndependentInstance
     {
         public AppInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage)
-            : base(codeItem, context, parentStorage, new ObjectStorageFactory(), null)
+            : base(codeItem, context, parentStorage, null, new ObjectStorageFactory(), null)
         {
             _statesResolver = _context.DataResolversFactory.GetStatesResolver();
         }
@@ -263,7 +263,7 @@ namespace SymOntoClay.Core.Internal.Instances
                         }               
                     }
 
-                    stateInstance = new StateInstance(state, _context, _storage, varList);
+                    stateInstance = new StateInstance(state, _context, _storage, _localCodeExecutionContext, varList);
 
                     _activeStatesDict[stateName] = stateInstance;
 
@@ -345,7 +345,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 //Log($"activatorInfo = {activatorInfo}");
 #endif
 
-                var activatorInstance = new StateActivator(activatorInfo, this, _context, _storage);
+                var activatorInstance = new StateActivator(activatorInfo, this, _context, _storage, _localCodeExecutionContext);
 
                 _stateActivators.Add(activatorInstance);
 

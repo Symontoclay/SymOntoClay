@@ -88,7 +88,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 setBindingVariables = new BindingVariables();
             }
 
-            _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext,  trigger.SetCondition, trigger.SetBindingVariables);
+            _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext,  trigger.SetCondition, trigger.SetBindingVariables, _localCodeExecutionContext);
 
             _hasResetHandler = trigger.ResetCompiledFunctionBody != null;
 
@@ -111,7 +111,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     resetBindingVariables = new BindingVariables();
                 }
 
-                _resetConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext, trigger.ResetCondition, resetBindingVariables);
+                _resetConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext, trigger.ResetCondition, resetBindingVariables, _localCodeExecutionContext);
             }
         }
 
@@ -562,7 +562,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 return;
             }
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
             var storage = new LocalStorage(localStorageSettings);
             localCodeExecutionContext.Storage = storage;
@@ -590,7 +590,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             foreach (var targetVarList in varList)
             {
-                var localCodeExecutionContext = new LocalCodeExecutionContext();
+                var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
                 var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
                 var storage = new LocalStorage(localStorageSettings);
                 localCodeExecutionContext.Storage = storage;
@@ -629,7 +629,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 return;
             }
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
             var storage = new LocalStorage(localStorageSettings);
             localCodeExecutionContext.Storage = storage;
@@ -657,7 +657,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             foreach (var targetVarList in varList)
             {
-                var localCodeExecutionContext = new LocalCodeExecutionContext();
+                var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
                 var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
                 var storage = new LocalStorage(localStorageSettings);
                 localCodeExecutionContext.Storage = storage;

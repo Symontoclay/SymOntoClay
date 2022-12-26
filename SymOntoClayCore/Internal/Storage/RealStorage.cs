@@ -59,6 +59,7 @@ namespace SymOntoClay.Core.Internal.Storage
             _realStorageContext.KindOfGC = settings.KindOfGC;
             _realStorageContext.EnableOnAddingFactEvent = settings.EnableOnAddingFactEvent;
             _realStorageContext.Storage = this;
+            _realStorageContext.ParentCodeExecutionContext = settings.ParentCodeExecutionContext;
             _realStorageContext.MainStorageContext = settings.MainStorageContext;
             _realStorageContext.InheritancePublicFactsReplicator = settings.InheritancePublicFactsReplicator;
 

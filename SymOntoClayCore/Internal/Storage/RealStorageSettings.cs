@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -32,6 +33,7 @@ namespace SymOntoClay.Core.Internal.Storage
     {
         public IMainStorageContext MainStorageContext { get; set; }
         public IList<IStorage> ParentsStorages { get; set; }
+        public LocalCodeExecutionContext ParentCodeExecutionContext { get; set; }
         public DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get; set; }
         public IInheritancePublicFactsReplicator InheritancePublicFactsReplicator { get; set; }
         public KindOfGC KindOfGC { get; set; } = KindOfGC.None;
@@ -56,6 +58,7 @@ namespace SymOntoClay.Core.Internal.Storage
             var nextN = n + DisplayHelper.IndentationStep;
             var sb = new StringBuilder();
             sb.PrintExisting(n, nameof(MainStorageContext), MainStorageContext);
+            sb.PrintExisting(n, nameof(ParentCodeExecutionContext), ParentCodeExecutionContext);
             sb.PrintObjListProp(n, nameof(ParentsStorages), ParentsStorages);
             sb.PrintObjProp(n, nameof(DefaultSettingsOfCodeEntity), DefaultSettingsOfCodeEntity);
             sb.AppendLine($"{spaces}{nameof(KindOfGC)} = {KindOfGC}");

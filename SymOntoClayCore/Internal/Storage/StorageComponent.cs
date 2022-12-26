@@ -192,7 +192,7 @@ namespace SymOntoClay.Core.Internal.Storage
 
             _globalStorage.DefaultSettingsOfCodeEntity = CreateDefaultSettingsOfCodeEntity();
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext(1);
+            var localCodeExecutionContext = new LocalCodeExecutionContext();
             localCodeExecutionContext.Storage = _globalStorage;
 
             _checkDirtyOptions = new CheckDirtyOptions();

@@ -33,8 +33,8 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class StateInstance : BaseIndependentInstance
     {
-        public StateInstance(StateDef codeItem, IEngineContext context, IStorage parentStorage, List<Var> varList)
-            : base(codeItem, context, parentStorage, new StateStorageFactory(), varList)
+        public StateInstance(StateDef codeItem, IEngineContext context, IStorage parentStorage, LocalCodeExecutionContext parentCodeExecutionContext, List<Var> varList)
+            : base(codeItem, context, parentStorage, parentCodeExecutionContext, new StateStorageFactory(), varList)
         {
         }
 
@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 foreach(var clause in _codeItem.DeactivatingConditions)
                 {
-                    var deactivatorInstance = new StateDeactivator(clause, this, _context, _storage);
+                    var deactivatorInstance = new StateDeactivator(clause, this, _context, _storage, _localCodeExecutionContext);
 
                     _stateDeactivators.Add(deactivatorInstance);
 

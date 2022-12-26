@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.Core.Internal.Storage.ActionsStoraging;
 using SymOntoClay.Core.Internal.Storage.ChannelsStoraging;
@@ -60,6 +61,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public FuzzyLogicStorage FuzzyLogicStorage { get; set; }
         public IdleActionItemsStorage IdleActionItemsStorage { get; set; }
         public RealStorage Storage { get; set; }
+        public LocalCodeExecutionContext ParentCodeExecutionContext { get; set; }
         public IList<IStorage> Parents { get; set; }
         public IInheritancePublicFactsReplicator InheritancePublicFactsReplicator { get; set; }
         public KindOfGC KindOfGC { get; set; }

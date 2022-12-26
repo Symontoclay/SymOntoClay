@@ -13,8 +13,8 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public abstract class BaseIndependentInstance : BaseInstance
     {
-        protected BaseIndependentInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, IStorageFactory storageFactory, List<Var> varList)
-            : base(codeItem, context, parentStorage, storageFactory, varList)
+        protected BaseIndependentInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, LocalCodeExecutionContext parentCodeExecutionContext, IStorageFactory storageFactory, List<Var> varList)
+            : base(codeItem, context, parentStorage, parentCodeExecutionContext, storageFactory, varList)
         {
             _idleActionsResolver = context.DataResolversFactory.GetIdleActionsResolver();
             _idleActionsRandom = new Random();
@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log($"idleActionItem = {idleActionItem}");
 #endif
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
 
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
             localCodeExecutionContext.Storage = new LocalStorage(localStorageSettings);

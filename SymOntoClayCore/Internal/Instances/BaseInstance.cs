@@ -36,7 +36,7 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public abstract class BaseInstance : BaseComponent, IInstance, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        protected BaseInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, IStorageFactory storageFactory, List<Var> varList)
+        protected BaseInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, LocalCodeExecutionContext parentCodeExecutionContext, IStorageFactory storageFactory, List<Var> varList)
             : base(context.Logger)
         {
 #if DEBUG
@@ -53,7 +53,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _executionCoordinator = new ExecutionCoordinator(this);
             _executionCoordinator.OnFinished += ExecutionCoordinator_OnFinished;
 
-            _localCodeExecutionContext = new LocalCodeExecutionContext();
+            _localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
             _storage = storageFactory.CreateStorage(localStorageSettings);
 
@@ -342,7 +342,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 foreach (var targetTrigger in targetSystemEventsTriggersList)
                 {
-                    var localCodeExecutionContext = new LocalCodeExecutionContext();
+                    var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
 
                     var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
                     localCodeExecutionContext.Storage = new LocalStorage(localStorageSettings);

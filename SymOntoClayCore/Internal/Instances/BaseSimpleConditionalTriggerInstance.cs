@@ -36,7 +36,7 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public abstract class BaseSimpleConditionalTriggerInstance : BaseComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        protected BaseSimpleConditionalTriggerInstance(RuleInstance condition, BaseInstance parent, IEngineContext context, IStorage parentStorage)
+        protected BaseSimpleConditionalTriggerInstance(RuleInstance condition, BaseInstance parent, IEngineContext context, IStorage parentStorage, LocalCodeExecutionContext parentCodeExecutionContext)
             : base(context.Logger)
         {
             _context = context;
@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _searcher = dataResolversFactory.GetLogicalSearchResolver();
 
-            _localCodeExecutionContext = new LocalCodeExecutionContext();
+            _localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
             _storage = new LocalStorage(localStorageSettings);
             _localCodeExecutionContext.Storage = _storage;
@@ -224,7 +224,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _isOn = true;
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext();
+            var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
             var storage = new LocalStorage(localStorageSettings);
             localCodeExecutionContext.Storage = storage;
@@ -267,7 +267,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 //Log("Next");
 #endif
 
-                var localCodeExecutionContext = new LocalCodeExecutionContext();
+                var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
                 var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
                 var storage = new LocalStorage(localStorageSettings);
                 localCodeExecutionContext.Storage = storage;

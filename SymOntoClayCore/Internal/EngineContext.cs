@@ -53,7 +53,7 @@ namespace SymOntoClay.Core.Internal
         /// <inheritdoc/>
         public INLPConverterContext GetNLPConverterContext()
         {
-            var localCodeExecutionContext = new LocalCodeExecutionContext(1);
+            var localCodeExecutionContext = new LocalCodeExecutionContext();
             localCodeExecutionContext.Storage = Storage.GlobalStorage;
             localCodeExecutionContext.Holder = NameHelper.CreateName(Id);
 

@@ -30,8 +30,8 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class StateDeactivator : BaseSimpleConditionalTriggerInstance
     {
-        public StateDeactivator(RuleInstance condition, BaseInstance parent, IEngineContext context, IStorage parentStorage)
-            : base(condition, parent, context, parentStorage)
+        public StateDeactivator(RuleInstance condition, BaseInstance parent, IEngineContext context, IStorage parentStorage, LocalCodeExecutionContext parentCodeExecutionContext)
+            : base(condition, parent, context, parentStorage, parentCodeExecutionContext)
         {
             _executionCoordinator = parent.ExecutionCoordinator;
         }

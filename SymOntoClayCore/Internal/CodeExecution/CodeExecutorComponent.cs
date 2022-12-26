@@ -45,7 +45,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _methodsResolver = dataResolversFactory.GetMethodsResolver();
             _numberValueLinearResolver = dataResolversFactory.GetNumberValueLinearResolver();
 
-            _globalExecutionContext = new LocalCodeExecutionContext(1);
+            _globalExecutionContext = new LocalCodeExecutionContext();
             _globalExecutionContext.Storage = context.Storage.GlobalStorage;
             _globalExecutionContext.Holder = context.CommonNamesStorage.DefaultHolder;
         }

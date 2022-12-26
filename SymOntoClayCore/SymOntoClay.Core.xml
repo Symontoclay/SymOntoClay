@@ -6171,6 +6171,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.GetCountOfCurrentProcesses">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.CodeItem,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.PrintProcessesList">
             <inheritdoc/>
         </member>
@@ -6292,6 +6295,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers.VarTriggerConditionNodeObserver.OnDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.ObjectInstance.KindOfInstance">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ProcessInfo.Status">

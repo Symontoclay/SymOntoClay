@@ -31,6 +31,7 @@ namespace SymOntoClay.Core.Internal.Instances
         Unknown,
         AppInstance,
         StateInstance,
-        ActionInstance
+        ActionInstance,
+        ObjectInstance
     }
 }

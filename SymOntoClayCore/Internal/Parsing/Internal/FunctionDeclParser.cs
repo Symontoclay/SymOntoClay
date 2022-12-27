@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -55,12 +56,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _namedFunction = CreateNamedFunctionAndSetAsCurrentCodeItem();
 
+#if DEBUG
+            //Log($"_namedFunction = {_namedFunction}");
+#endif
+
             _namedFunction.TypeOfAccess = _context.CurrentDefaultSetings.TypeOfAccess;
         }
 
         /// <inheritdoc/>
         protected override void OnFinish()
         {
+            if(_namedFunction.Name == null)
+            {
+                _namedFunction.Name = NameHelper.CreateEntityName();
+            }
+
             RemoveCurrentCodeEntity();
         }
 

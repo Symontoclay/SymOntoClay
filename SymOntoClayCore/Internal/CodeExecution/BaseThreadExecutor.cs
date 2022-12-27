@@ -308,196 +308,27 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 switch (currentCommand.OperationCode)
                 {
                     case OperationCode.Nop:
-                        _currentCodeFrame.CurrentPosition++;
+                        ProcessNop();                        
                         break;
 
                     case OperationCode.ClearStack:
-                        _currentCodeFrame.ValuesStack.Clear();
-                        _currentCodeFrame.CurrentPosition++;
+                        ProcessClearStack();
                         break;
 
                     case OperationCode.PushVal:
-                        {
-                            var value = currentCommand.Value;
-
-                            var kindOfValue = value.KindOfValue;
-
-                            switch (kindOfValue)
-                            {
-                                case KindOfValue.WaypointSourceValue:
-                                    {
-                                        var waypointSourceValue = value.AsWaypointSourceValue;
-
-                                        value = waypointSourceValue.ConvertToWaypointValue(_context, _currentCodeFrame.LocalContext);
-                                    }
-                                    break;
-
-                                case KindOfValue.ConditionalEntitySourceValue:
-                                    {
-                                        var conditionalEntitySourceValue = value.AsConditionalEntitySourceValue;
-
-                                        value = conditionalEntitySourceValue.ConvertToConditionalEntityValue(_context, _currentCodeFrame.LocalContext);
-                                    }
-                                    break;
-
-                                default:
-                                    break;
-                            }
-
-#if DEBUG
-                            //Log($"value = {value?.ToHumanizedString()}");
-#endif
-
-                            _currentCodeFrame.ValuesStack.Push(value);
-                            _currentCodeFrame.CurrentPosition++;
-                        }
+                        ProcessPushVal(currentCommand);
                         break;
 
                     case OperationCode.VarDecl:
-                        {
-                            var valueStack = _currentCodeFrame.ValuesStack;
-
-                            var annotation = valueStack.Pop();
-
-#if DEBUG
-                            //Log($"annotation = {annotation}");
-#endif
-
-                            var typesCount = currentCommand.CountParams;
-
-#if DEBUG
-                            //Log($"typesCount = {typesCount}");
-#endif
-
-                            var varPtr = new Var();
-
-                            while (typesCount > 0)
-                            {
-                                var typeName = valueStack.Pop();
-
-#if DEBUG
-                                //Log($"typeName = {typeName}");
-#endif
-
-                                if (!typeName.IsStrongIdentifierValue)
-                                {
-                                    throw new Exception($"Typename should be StrongIdentifierValue.");
-                                }
-
-                                varPtr.TypesList.Add(typeName.AsStrongIdentifierValue);
-
-                                typesCount--;
-                            }
-
-                            var varName = valueStack.Pop();
-
-#if DEBUG
-                            //Log($"varName = {varName}");
-#endif
-
-                            if (!varName.IsStrongIdentifierValue)
-                            {
-                                throw new Exception($"Varname should be StrongIdentifierValue.");
-                            }
-
-                            varPtr.Name = varName.AsStrongIdentifierValue;
-
-#if DEBUG
-                            //Log($"varPtr = {varPtr}");
-#endif
-
-                            _currentVarStorage.Append(varPtr);
-
-#if DEBUG
-                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-#endif
-                            _currentCodeFrame.ValuesStack.Push(varName);
-                            _currentCodeFrame.CurrentPosition++;
-                        }
+                        ProcessVarDecl(currentCommand);
                         break;
 
                     case OperationCode.CallBinOp:
-                        {
-                            var paramsList = TakePositionedParameters(3);
-
-#if DEBUG
-                            //Log($"paramsList = {paramsList.WriteListToString()}");
-                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-#endif
-
-                            var kindOfOperator = currentCommand.KindOfOperator;
-
-                            if (kindOfOperator == KindOfOperator.IsNot)
-                            {
-                                kindOfOperator = KindOfOperator.Is;
-                            }
-
-#if DEBUG
-                            //Log($"kindOfOperator = {kindOfOperator}");
-#endif
-
-                            var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, _currentCodeFrame.LocalContext);
-
-#if DEBUG
-                            //Log($"operatorInfo (1) = {operatorInfo}");
-#endif
-
-                            CallOperator(operatorInfo, paramsList);
-
-#if DEBUG
-                            //Log($"_currentCodeFrame (^) = {_currentCodeFrame.ToDbgString()}");
-#endif
-
-                            if (currentCommand.KindOfOperator == KindOfOperator.IsNot)
-                            {
-                                var result = _currentCodeFrame.ValuesStack.Pop();
-
-#if DEBUG
-                                //Log($"result = {result}");
-#endif
-
-                                result = result.AsLogicalValue.Inverse();
-
-#if DEBUG
-                                //Log($"result (2) = {result}");
-#endif
-
-                                _currentCodeFrame.ValuesStack.Push(result);
-
-#if DEBUG
-                                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-#endif
-                            }
-
-                            //_currentCodeFrame.CurrentPosition++;
-                        }
+                        ProcessCallBinOp(currentCommand);
                         break;
 
                     case OperationCode.CallUnOp:
-                        {
-                            var paramsList = TakePositionedParameters(2);
-
-#if DEBUG
-                            //Log($"paramsList = {paramsList.WriteListToString()}");
-                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-#endif
-
-                            var kindOfOperator = currentCommand.KindOfOperator;
-
-                            var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, _currentCodeFrame.LocalContext);
-
-#if DEBUG
-                            //Log($"operatorInfo (2)= {operatorInfo}");
-#endif
-
-                            CallOperator(operatorInfo, paramsList);
-
-#if DEBUG
-                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-#endif
-
-                            //_currentCodeFrame.CurrentPosition++;
-                        }
+                        ProcessCallUnOp(currentCommand);
                         break;
 
                     case OperationCode.Call:
@@ -537,29 +368,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     case OperationCode.Exec:
-                        {
-                            var currentValue = TryResolveFromVar(_currentCodeFrame.ValuesStack.Pop());
-
-#if DEBUG
-                            //Log($"currentValue = {currentValue.ToHumanizedString()}");
-#endif
-
-                            var kindOfCurrentValue = currentValue.KindOfValue;
-
-#if DEBUG
-                            //Log($"kindOfCurrentValue = {kindOfCurrentValue}");
-#endif
-
-                            switch (kindOfCurrentValue)
-                            {
-                                case KindOfValue.RuleInstanceValue:
-                                    ExecRuleInstanceValue(currentValue.AsRuleInstanceValue);
-                                    break;
-
-                                default:
-                                    throw new ArgumentOutOfRangeException(nameof(kindOfCurrentValue), kindOfCurrentValue, null);
-                            }
-                        }
+                        ProcessExec();
                         break;
 
                     case OperationCode.SetInheritance:
@@ -571,43 +380,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     case OperationCode.SetSEHGroup:
-                        {
-#if DEBUG
-                            //Log($"currentCommand = {currentCommand}");
-#endif
-
-                            var targetSEHGroup = _currentCodeFrame.CompiledFunctionBody.SEH[currentCommand.TargetPosition];
-
-#if DEBUG
-                            //Log($"targetSEHGroup = {targetSEHGroup}");
-#endif
-
-                            _currentCodeFrame.CurrentSEHGroup = targetSEHGroup;
-                            _currentCodeFrame.SEHStack.Push(targetSEHGroup);
-
-                            _currentCodeFrame.CurrentPosition++;
-                        }
+                        ProcessSetSEHGroup(currentCommand);
                         break;
 
                     case OperationCode.RemoveSEHGroup:
-                        {
-#if DEBUG
-                            //Log($"currentCommand = {currentCommand}");
-#endif
-
-                            _currentCodeFrame.SEHStack.Pop();
-
-                            if (_currentCodeFrame.SEHStack.Count == 0)
-                            {
-                                _currentCodeFrame.CurrentSEHGroup = null;
-                            }
-                            else
-                            {
-                                _currentCodeFrame.CurrentSEHGroup = _currentCodeFrame.SEHStack.Peek();
-                            }
-
-                            _currentCodeFrame.CurrentPosition++;
-                        }
+                        ProcessRemoveSEHGroup();
                         break;
 
                     case OperationCode.JumpTo:
@@ -922,7 +699,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                 Log($"instanceValue = {instanceValue}");
 #endif
 
-                                throw new NotImplementedException();
+                                _currentCodeFrame.ValuesStack.Push(instanceValue);
+
+                                _currentCodeFrame.CurrentPosition++;
+                                break;
                             }
 
                             throw new Exception($"The vaule {prototypeValue.ToHumanizedString()} can not be instantiated.");
@@ -943,6 +723,260 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 throw;
             }
+        }
+
+        private void ProcessRemoveSEHGroup()
+        {
+#if DEBUG
+            //Log($"currentCommand = {currentCommand}");
+#endif
+
+            _currentCodeFrame.SEHStack.Pop();
+
+            if (_currentCodeFrame.SEHStack.Count == 0)
+            {
+                _currentCodeFrame.CurrentSEHGroup = null;
+            }
+            else
+            {
+                _currentCodeFrame.CurrentSEHGroup = _currentCodeFrame.SEHStack.Peek();
+            }
+
+            _currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessSetSEHGroup(ScriptCommand currentCommand)
+        {
+#if DEBUG
+            //Log($"currentCommand = {currentCommand}");
+#endif
+
+            var targetSEHGroup = _currentCodeFrame.CompiledFunctionBody.SEH[currentCommand.TargetPosition];
+
+#if DEBUG
+            //Log($"targetSEHGroup = {targetSEHGroup}");
+#endif
+
+            _currentCodeFrame.CurrentSEHGroup = targetSEHGroup;
+            _currentCodeFrame.SEHStack.Push(targetSEHGroup);
+
+            _currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessExec()
+        {
+            var currentValue = TryResolveFromVar(_currentCodeFrame.ValuesStack.Pop());
+
+#if DEBUG
+            //Log($"currentValue = {currentValue.ToHumanizedString()}");
+#endif
+
+            var kindOfCurrentValue = currentValue.KindOfValue;
+
+#if DEBUG
+            //Log($"kindOfCurrentValue = {kindOfCurrentValue}");
+#endif
+
+            switch (kindOfCurrentValue)
+            {
+                case KindOfValue.RuleInstanceValue:
+                    ExecRuleInstanceValue(currentValue.AsRuleInstanceValue);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfCurrentValue), kindOfCurrentValue, null);
+            }
+        }
+
+        private void ProcessCallUnOp(ScriptCommand currentCommand)
+        {
+            var paramsList = TakePositionedParameters(2);
+
+#if DEBUG
+            //Log($"paramsList = {paramsList.WriteListToString()}");
+            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+            var kindOfOperator = currentCommand.KindOfOperator;
+
+            var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, _currentCodeFrame.LocalContext);
+
+#if DEBUG
+            //Log($"operatorInfo (2)= {operatorInfo}");
+#endif
+
+            CallOperator(operatorInfo, paramsList);
+
+#if DEBUG
+            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+            //_currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessCallBinOp(ScriptCommand currentCommand)
+        {
+            var paramsList = TakePositionedParameters(3);
+
+#if DEBUG
+            //Log($"paramsList = {paramsList.WriteListToString()}");
+            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+            var kindOfOperator = currentCommand.KindOfOperator;
+
+            if (kindOfOperator == KindOfOperator.IsNot)
+            {
+                kindOfOperator = KindOfOperator.Is;
+            }
+
+#if DEBUG
+            //Log($"kindOfOperator = {kindOfOperator}");
+#endif
+
+            var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, _currentCodeFrame.LocalContext);
+
+#if DEBUG
+            //Log($"operatorInfo (1) = {operatorInfo}");
+#endif
+
+            CallOperator(operatorInfo, paramsList);
+
+#if DEBUG
+            //Log($"_currentCodeFrame (^) = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+            if (currentCommand.KindOfOperator == KindOfOperator.IsNot)
+            {
+                var result = _currentCodeFrame.ValuesStack.Pop();
+
+#if DEBUG
+                //Log($"result = {result}");
+#endif
+
+                result = result.AsLogicalValue.Inverse();
+
+#if DEBUG
+                //Log($"result (2) = {result}");
+#endif
+
+                _currentCodeFrame.ValuesStack.Push(result);
+
+#if DEBUG
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+            }
+
+            //_currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessVarDecl(ScriptCommand currentCommand)
+        {
+            var valueStack = _currentCodeFrame.ValuesStack;
+
+            var annotation = valueStack.Pop();
+
+#if DEBUG
+            //Log($"annotation = {annotation}");
+#endif
+
+            var typesCount = currentCommand.CountParams;
+
+#if DEBUG
+            //Log($"typesCount = {typesCount}");
+#endif
+
+            var varPtr = new Var();
+
+            while (typesCount > 0)
+            {
+                var typeName = valueStack.Pop();
+
+#if DEBUG
+                //Log($"typeName = {typeName}");
+#endif
+
+                if (!typeName.IsStrongIdentifierValue)
+                {
+                    throw new Exception($"Typename should be StrongIdentifierValue.");
+                }
+
+                varPtr.TypesList.Add(typeName.AsStrongIdentifierValue);
+
+                typesCount--;
+            }
+
+            var varName = valueStack.Pop();
+
+#if DEBUG
+            //Log($"varName = {varName}");
+#endif
+
+            if (!varName.IsStrongIdentifierValue)
+            {
+                throw new Exception($"Varname should be StrongIdentifierValue.");
+            }
+
+            varPtr.Name = varName.AsStrongIdentifierValue;
+
+#if DEBUG
+            //Log($"varPtr = {varPtr}");
+#endif
+
+            _currentVarStorage.Append(varPtr);
+
+#if DEBUG
+            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+            _currentCodeFrame.ValuesStack.Push(varName);
+            _currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessPushVal(ScriptCommand currentCommand)
+        {
+            var value = currentCommand.Value;
+
+            var kindOfValue = value.KindOfValue;
+
+            switch (kindOfValue)
+            {
+                case KindOfValue.WaypointSourceValue:
+                    {
+                        var waypointSourceValue = value.AsWaypointSourceValue;
+
+                        value = waypointSourceValue.ConvertToWaypointValue(_context, _currentCodeFrame.LocalContext);
+                    }
+                    break;
+
+                case KindOfValue.ConditionalEntitySourceValue:
+                    {
+                        var conditionalEntitySourceValue = value.AsConditionalEntitySourceValue;
+
+                        value = conditionalEntitySourceValue.ConvertToConditionalEntityValue(_context, _currentCodeFrame.LocalContext);
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
+#if DEBUG
+            //Log($"value = {value?.ToHumanizedString()}");
+#endif
+
+            _currentCodeFrame.ValuesStack.Push(value);
+            _currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessClearStack()
+        {
+            _currentCodeFrame.ValuesStack.Clear();
+            _currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessNop()
+        {
+            _currentCodeFrame.CurrentPosition++;
         }
 
         private Value TryResolveFromVar(Value operand)
@@ -1426,10 +1460,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
-            var caller = valueStack.Pop();
+            var caller = TryResolveFromVar(valueStack.Pop());
 
 #if DEBUG
-            //Log($"caller = {caller}");
+            Log($"caller = {caller}");
             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
@@ -1454,11 +1488,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-            //Log($"namedParameters = {namedParameters?.WriteDict_1_ToString()}");
-            //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
-            //Log($"caller.IsPointRefValue = {caller.IsPointRefValue}");
-            //Log($"caller.IsStrongIdentifierValue = {caller.IsStrongIdentifierValue}");
+            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            Log($"namedParameters = {namedParameters?.WriteDict_1_ToString()}");
+            Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+            Log($"caller.IsPointRefValue = {caller.IsPointRefValue}");
+            Log($"caller.IsStrongIdentifierValue = {caller.IsStrongIdentifierValue}");
 #endif
 
             if (caller.IsPointRefValue)
@@ -1471,6 +1505,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 CallStrongIdentifierValue(caller.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption, true);
                 return;
+            }
+
+            if(caller.IsInstanceValue)
+            {
+                throw new NotImplementedException();
             }
 
             throw new NotImplementedException();

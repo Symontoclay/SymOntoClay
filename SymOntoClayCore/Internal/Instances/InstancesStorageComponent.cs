@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -41,12 +42,16 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             _context = context;
 
+            _projectLoader = new ProjectLoader(context);
+
             OnIdle += DispatchOnIdle;
         }
 
         private readonly IEngineContext _context;
         private readonly object _registryLockObj = new object();
         private readonly object _processLockObj = new object();
+
+        private readonly ProjectLoader _projectLoader;
 
         private Dictionary<StrongIdentifierValue, AppInstance> _namesDict;
         private AppInstance _rootInstanceInfo;
@@ -442,10 +447,20 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public override Value CreateInstance(CodeItem codeItem, LocalCodeExecutionContext executionContext)
         {
+#if DEBUG
+            Log($"codeItem = {codeItem}");
+#endif
+
             var instance = new ObjectInstance(codeItem, _context, executionContext.Storage, executionContext);
+
+            _projectLoader.LoadCodeItem(codeItem, executionContext.Storage);
+
             instance.Init();
 
-            throw new NotImplementedException();
+            var instanceValue = new InstanceValue(instance);
+            instanceValue.CheckDirty();
+
+            return instanceValue;
         }
 
 #if DEBUG

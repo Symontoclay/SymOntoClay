@@ -33,7 +33,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class InstanceValue : Value
     {
-        public InstanceValue(AppInstance instanceInfo)
+        public InstanceValue(IInstance instanceInfo)
         {
             InstanceInfo = instanceInfo;
         }
@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override InstanceValue AsInstanceValue => this;
 
-        public AppInstance InstanceInfo { get; private set; }
+        public IInstance InstanceInfo { get; private set; }
 
         /// <inheritdoc/>
         public override object GetSystemValue()

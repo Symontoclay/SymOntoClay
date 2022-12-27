@@ -43,6 +43,28 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
         }
 
+        public void LoadCodeItem(CodeItem codeItem, IStorage targetStorage)
+        {
+#if DEBUG
+            Log($"codeItem = {codeItem}");
+#endif
+
+            var defferedLibsList = new List<string>();
+
+            SaveItem(codeItem, targetStorage, defferedLibsList);
+
+            var subItems = LinearizeSubItems(codeItem);
+
+#if DEBUG
+            Log($"subItems.Count = {subItems.Count}");
+#endif
+
+            if(subItems.Any())
+            {
+                SaveItems(subItems, targetStorage, defferedLibsList);
+            }            
+        }
+
         public List<string> LoadFromSourceFiles(IStorage targetStorage, string projectFile)
         {
             return LoadFromSourceFiles(targetStorage, projectFile, string.Empty);
@@ -172,6 +194,15 @@ namespace SymOntoClay.Core.Internal.Serialization
             {
                 EnumerateSubItems(item.CodeEntities, result);
             }
+
+            return result.Distinct().ToList();
+        }
+
+        private List<CodeItem> LinearizeSubItems(CodeItem codeItem)
+        {
+            var result = new List<CodeItem>();
+
+            EnumerateSubItems(codeItem.SubItems, result);
 
             return result.Distinct().ToList();
         }

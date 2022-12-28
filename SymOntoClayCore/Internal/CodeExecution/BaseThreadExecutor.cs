@@ -388,13 +388,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     case OperationCode.JumpTo:
-                        {
-#if DEBUG
-                            //Log($"currentCommand = {currentCommand}");
-#endif
-
-                            _currentCodeFrame.CurrentPosition = currentCommand.TargetPosition;
-                        }
+                        ProcessJumpTo(currentCommand);
                         break;
 
                     case OperationCode.JumpToIfTrue:
@@ -406,32 +400,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     case OperationCode.Await:
-                        {
-                            var coordinator = _currentCodeFrame.ExecutionCoordinator;
-
-#if DEBUG
-                            //Log($"coordinator = {coordinator}");
-#endif
-
-                            if (coordinator == null)
-                            {
-                                _currentCodeFrame.CurrentPosition++;
-                                break;
-                            }
-
-                            if (coordinator.ExecutionStatus == ActionExecutionStatus.Executing)
-                            {
-                                break;
-                            }
-
-                            if (coordinator.ExecutionStatus == ActionExecutionStatus.Broken)
-                            {
-                                ProcessError(coordinator.RuleInstance);
-                                break;
-                            }
-
-                            _currentCodeFrame.CurrentPosition++;
-                        }
+                        ProcessAwait();
                         break;
 
                     case OperationCode.Wait:
@@ -439,274 +408,51 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     case OperationCode.CompleteAction:
-                        {
-                            _currentCodeFrame.ExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
-
-                            _currentCodeFrame.CurrentPosition++;
-                        }
+                        ProcessCompleteAction();
                         break;
 
                     case OperationCode.BreakActionVal:
-                        {
-                            var currentValue = _currentCodeFrame.ValuesStack.Peek();
-
-#if DEBUG
-                            //Log($"currentValue = {currentValue}");
-#endif
-
-                            var ruleInstance = currentValue.AsRuleInstanceValue.RuleInstance;
-
-                            _executionCoordinator.RuleInstance = ruleInstance;
-
-                            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
-
-                            _currentCodeFrame.CurrentPosition++;
-                        }
+                        ProcessBreakActionVal();
                         break;
 
                     case OperationCode.Error:
-                        {
-#if DEBUG
-                            //Log("Begin case OperationCode.Error");
-#endif
-
-#if DEBUG
-                            //Log($"currentCommand = {currentCommand}");
-                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-#endif
-
-                            var currentValue = _currentCodeFrame.ValuesStack.Peek();
-
-#if DEBUG
-                            //Log($"currentValue = {currentValue}");
-#endif
-
-                            var ruleInstance = currentValue.AsRuleInstanceValue.RuleInstance;
-
-                            ProcessError(ruleInstance);
-
-#if DEBUG
-                            //Log("End case OperationCode.Error");
-#endif
-                        }
+                        ProcessError();
                         break;
 
                     case OperationCode.Return:
-                        {
-#if DEBUG
-                            //Log("Begin case OperationCode.Return");
-#endif
-
-                            _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Completed;
-
-                            GoBackToPrevCodeFrame(ActionExecutionStatus.Complete);
-
-                            var currentValue = NullValue.Instance;
-
-                            if (_currentCodeFrame == null)
-                            {
-                                ExternalReturn = currentValue;
-                            }
-                            else
-                            {
-                                _currentCodeFrame.ValuesStack.Push(currentValue);
-                            }
-
-#if DEBUG
-                            //_instancesStorage.PrintProcessesList();
-
-                            //Log("End case OperationCode.Return");
-#endif
-                        }
+                        ProcessReturn();
                         break;
 
                     case OperationCode.ReturnVal:
-                        {
-#if DEBUG
-                            //Log("Begin case OperationCode.ReturnVal");
-                            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-#endif
-
-                            var currentValue = TryResolveFromVar(_currentCodeFrame.ValuesStack.Pop());
-
-#if DEBUG
-                            //Log($"currentValue = {currentValue}");
-#endif
-
-                            _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Completed;
-
-                            GoBackToPrevCodeFrame(ActionExecutionStatus.Complete);
-
-                            if (_currentCodeFrame == null)
-                            {
-                                ExternalReturn = currentValue;
-                            }
-                            else
-                            {
-                                _currentCodeFrame.ValuesStack.Push(currentValue);
-                            }
-
-#if DEBUG
-                            //_instancesStorage.PrintProcessesList();
-
-                            //Log("End case OperationCode.Return");
-#endif
-                        }
+                        ProcessReturnVal();
                         break;
 
                     case OperationCode.SetState:
-                        {
-                            var currentValue = _currentCodeFrame.ValuesStack.Pop();
-
-#if DEBUG
-                            //Log($"currentValue = {currentValue}");
-#endif
-
-                            if (!currentValue.IsStrongIdentifierValue)
-                            {
-                                throw new Exception($"Unexpected value '{currentValue.ToSystemString()}'.");
-                            }
-
-                            var stateName = currentValue.AsStrongIdentifierValue;
-
-#if DEBUG
-                            //Log($"stateName = {stateName}");
-#endif
-
-                            var state = _statesResolver.Resolve(stateName, _currentCodeFrame.LocalContext);
-
-#if DEBUG
-                            //Log($"state = {state}");
-#endif
-
-#if DEBUG
-                            //Log($"(_stateExecutionCoordinator != null) = {_stateExecutionCoordinator != null}");
-#endif
-
-                            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
-
-                            _context.InstancesStorage.ActivateState(state);
-
-                            _currentCodeFrame.CurrentPosition++;
-                        }
+                        ProcessSetState();
                         break;
 
                     case OperationCode.SetDefaultState:
-                        {
-                            var currentValue = _currentCodeFrame.ValuesStack.Pop();
-
-#if DEBUG
-                            //Log($"currentValue = {currentValue}");
-#endif
-
-                            if (!currentValue.IsStrongIdentifierValue)
-                            {
-                                throw new Exception($"Unexpected value '{currentValue.ToSystemString()}'.");
-                            }
-
-                            var stateName = currentValue.AsStrongIdentifierValue;
-
-#if DEBUG
-                            //Log($"stateName = {stateName}");
-#endif
-
-                            _globalStorage.StatesStorage.SetDefaultStateName(stateName);
-
-                            _currentCodeFrame.CurrentPosition++;
-                        }
+                        ProcessSetDefaultState();
                         break;
 
                     case OperationCode.CompleteState:
-                        {
-                            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
-
-                            _context.InstancesStorage.TryActivateDefaultState();
-
-                            _currentCodeFrame.CurrentPosition++;
-                        }
+                        ProcessCompleteState();
                         break;
 
                     case OperationCode.BreakStateVal:
-                        {
-                            var currentValue = _currentCodeFrame.ValuesStack.Peek();
-
-#if DEBUG
-                            //Log($"currentValue = {currentValue}");
-#endif
-
-                            var ruleInstance = currentValue.AsRuleInstanceValue.RuleInstance;
-
-                            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
-
-                            _globalLogicalStorage.Append(ruleInstance);
-
-                            _context.InstancesStorage.TryActivateDefaultState();
-
-                            _currentCodeFrame.CurrentPosition++;
-                        }
+                        ProcessBreakStateVal();
                         break;
 
                     case OperationCode.BreakState:
-                        {
-                            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
-
-                            _context.InstancesStorage.TryActivateDefaultState();
-
-                            _currentCodeFrame.CurrentPosition++;
-                        }
+                        ProcessBreakState();
                         break;
 
                     case OperationCode.Reject:
-                        {
-                            var localExecutionContext = _currentCodeFrame.LocalContext;
-
-#if DEBUG
-                            //Log($"localExecutionContext = {localExecutionContext}");
-#endif
-
-                            if (localExecutionContext.Kind != KindOfLocalCodeExecutionContext.AddingFact)
-                            {
-                                throw new NotSupportedException();
-                            }
-
-                            localExecutionContext.KindOfAddFactResult = KindOfAddFactOrRuleResult.Reject;
-
-                            _currentCodeFrame.CurrentPosition++;
-                        }
+                        ProcessReject();
                         break;
 
                     case OperationCode.Instantiate:
-                        {
-                            var valuesStack = _currentCodeFrame.ValuesStack;
-
-                            var annotationValue = valuesStack.Pop();
-
-#if DEBUG
-                            //Log($"annotationValue = {annotationValue}");
-#endif
-
-                            var prototypeValue = valuesStack.Pop();
-
-#if DEBUG
-                            Log($"prototypeValue = {prototypeValue}");
-#endif
-
-                            if(prototypeValue.IsCodeItemValue)
-                            {
-                                var instanceValue = _context.InstancesStorage.CreateInstance(prototypeValue.AsCodeItemValue.CodeItem, _currentCodeFrame.LocalContext);
-
-#if DEBUG
-                                Log($"instanceValue = {instanceValue}");
-#endif
-
-                                _currentCodeFrame.ValuesStack.Push(instanceValue);
-
-                                _currentCodeFrame.CurrentPosition++;
-                                break;
-                            }
-
-                            throw new Exception($"The vaule {prototypeValue.ToHumanizedString()} can not be instantiated.");
-                        }
+                        ProcessInstantiate();
                         break;
 
                     default:
@@ -723,6 +469,276 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 throw;
             }
+        }
+
+        private void ProcessInstantiate()
+        {
+            var valuesStack = _currentCodeFrame.ValuesStack;
+
+            var annotationValue = valuesStack.Pop();
+
+#if DEBUG
+            //Log($"annotationValue = {annotationValue}");
+#endif
+
+            var prototypeValue = valuesStack.Pop();
+
+#if DEBUG
+            Log($"prototypeValue = {prototypeValue}");
+#endif
+
+            if (prototypeValue.IsCodeItemValue)
+            {
+                var instanceValue = _context.InstancesStorage.CreateInstance(prototypeValue.AsCodeItemValue.CodeItem, _currentCodeFrame.LocalContext);
+
+#if DEBUG
+                Log($"instanceValue = {instanceValue}");
+#endif
+
+                _currentCodeFrame.ValuesStack.Push(instanceValue);
+
+                _currentCodeFrame.CurrentPosition++;
+                return;
+            }
+
+            throw new Exception($"The vaule {prototypeValue.ToHumanizedString()} can not be instantiated.");
+        }
+
+        private void ProcessReject()
+        {
+            var localExecutionContext = _currentCodeFrame.LocalContext;
+
+#if DEBUG
+            //Log($"localExecutionContext = {localExecutionContext}");
+#endif
+
+            if (localExecutionContext.Kind != KindOfLocalCodeExecutionContext.AddingFact)
+            {
+                throw new NotSupportedException();
+            }
+
+            localExecutionContext.KindOfAddFactResult = KindOfAddFactOrRuleResult.Reject;
+
+            _currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessBreakState()
+        {
+            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
+
+            _context.InstancesStorage.TryActivateDefaultState();
+
+            _currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessBreakStateVal()
+        {
+            var currentValue = _currentCodeFrame.ValuesStack.Peek();
+
+#if DEBUG
+            //Log($"currentValue = {currentValue}");
+#endif
+
+            var ruleInstance = currentValue.AsRuleInstanceValue.RuleInstance;
+
+            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
+
+            _globalLogicalStorage.Append(ruleInstance);
+
+            _context.InstancesStorage.TryActivateDefaultState();
+
+            _currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessCompleteState()
+        {
+            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
+
+            _context.InstancesStorage.TryActivateDefaultState();
+
+            _currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessSetDefaultState()
+        {
+            var currentValue = _currentCodeFrame.ValuesStack.Pop();
+
+#if DEBUG
+            //Log($"currentValue = {currentValue}");
+#endif
+
+            if (!currentValue.IsStrongIdentifierValue)
+            {
+                throw new Exception($"Unexpected value '{currentValue.ToSystemString()}'.");
+            }
+
+            var stateName = currentValue.AsStrongIdentifierValue;
+
+#if DEBUG
+            //Log($"stateName = {stateName}");
+#endif
+
+            _globalStorage.StatesStorage.SetDefaultStateName(stateName);
+
+            _currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessSetState()
+        {
+            var currentValue = _currentCodeFrame.ValuesStack.Pop();
+
+#if DEBUG
+            //Log($"currentValue = {currentValue}");
+#endif
+
+            if (!currentValue.IsStrongIdentifierValue)
+            {
+                throw new Exception($"Unexpected value '{currentValue.ToSystemString()}'.");
+            }
+
+            var stateName = currentValue.AsStrongIdentifierValue;
+
+#if DEBUG
+            //Log($"stateName = {stateName}");
+#endif
+
+            var state = _statesResolver.Resolve(stateName, _currentCodeFrame.LocalContext);
+
+#if DEBUG
+            //Log($"state = {state}");
+#endif
+
+#if DEBUG
+            //Log($"(_stateExecutionCoordinator != null) = {_stateExecutionCoordinator != null}");
+#endif
+
+            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
+
+            _context.InstancesStorage.ActivateState(state);
+
+            _currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessReturnVal()
+        {
+#if DEBUG
+            //Log("Begin case OperationCode.ReturnVal");
+            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+            var currentValue = TryResolveFromVar(_currentCodeFrame.ValuesStack.Pop());
+
+#if DEBUG
+            //Log($"currentValue = {currentValue}");
+#endif
+
+            _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Completed;
+
+            GoBackToPrevCodeFrame(ActionExecutionStatus.Complete);
+
+            if (_currentCodeFrame == null)
+            {
+                ExternalReturn = currentValue;
+            }
+            else
+            {
+                _currentCodeFrame.ValuesStack.Push(currentValue);
+            }
+
+#if DEBUG
+            //_instancesStorage.PrintProcessesList();
+
+            //Log("End case OperationCode.Return");
+#endif
+        }
+
+        private void ProcessReturn()
+        {
+#if DEBUG
+            //Log("Begin case OperationCode.Return");
+#endif
+
+            _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Completed;
+
+            GoBackToPrevCodeFrame(ActionExecutionStatus.Complete);
+
+            var currentValue = NullValue.Instance;
+
+            if (_currentCodeFrame == null)
+            {
+                ExternalReturn = currentValue;
+            }
+            else
+            {
+                _currentCodeFrame.ValuesStack.Push(currentValue);
+            }
+
+#if DEBUG
+            //_instancesStorage.PrintProcessesList();
+
+            //Log("End case OperationCode.Return");
+#endif
+        }
+
+        private void ProcessBreakActionVal()
+        {
+            var currentValue = _currentCodeFrame.ValuesStack.Peek();
+
+#if DEBUG
+            //Log($"currentValue = {currentValue}");
+#endif
+
+            var ruleInstance = currentValue.AsRuleInstanceValue.RuleInstance;
+
+            _executionCoordinator.RuleInstance = ruleInstance;
+
+            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
+
+            _currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessCompleteAction()
+        {
+            _currentCodeFrame.ExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
+
+            _currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessAwait()
+        {
+            var coordinator = _currentCodeFrame.ExecutionCoordinator;
+
+#if DEBUG
+            //Log($"coordinator = {coordinator}");
+#endif
+
+            if (coordinator == null)
+            {
+                _currentCodeFrame.CurrentPosition++;
+                return;
+            }
+
+            if (coordinator.ExecutionStatus == ActionExecutionStatus.Executing)
+            {
+                return;
+            }
+
+            if (coordinator.ExecutionStatus == ActionExecutionStatus.Broken)
+            {
+                ProcessError(coordinator.RuleInstance);
+                return;
+            }
+
+            _currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessJumpTo(ScriptCommand currentCommand)
+        {
+#if DEBUG
+            //Log($"currentCommand = {currentCommand}");
+#endif
+
+            _currentCodeFrame.CurrentPosition = currentCommand.TargetPosition;
         }
 
         private void ProcessRemoveSEHGroup()
@@ -1169,6 +1185,32 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
+        private void ProcessError()
+        {
+#if DEBUG
+            //Log("Begin case OperationCode.Error");
+#endif
+
+#if DEBUG
+            //Log($"currentCommand = {currentCommand}");
+            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+            var currentValue = _currentCodeFrame.ValuesStack.Peek();
+
+#if DEBUG
+            //Log($"currentValue = {currentValue}");
+#endif
+
+            var ruleInstance = currentValue.AsRuleInstanceValue.RuleInstance;
+
+            ProcessError(ruleInstance);
+
+#if DEBUG
+            //Log("End case OperationCode.Error");
+#endif
+        }
+
         private void ProcessError(RuleInstance ruleInstance)
         {
             RegisterError(ruleInstance);
@@ -1509,8 +1551,31 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if(caller.IsInstanceValue)
             {
-                throw new NotImplementedException();
+                CallInstanceValue(caller.AsInstanceValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
+                return;
             }
+
+            throw new NotImplementedException();
+        }
+
+        private void CallInstanceValue(InstanceValue caller,
+            KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
+            Value annotation, SyncOption syncOption)
+        {
+#if DEBUG
+            Log($"caller = {caller}");
+            Log($"kindOfParameters = {kindOfParameters}");
+            Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
+            Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+            Log($"annotation = {annotation}");
+            Log($"syncOption = {syncOption}");
+#endif
+
+            var executable = caller.GetExecutable(kindOfParameters, namedParameters, positionedParameters);
+
+#if DEBUG
+            Log($"executable = {executable}");
+#endif
 
             throw new NotImplementedException();
         }
@@ -1639,6 +1704,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     switch (status)
                     {
+                        case ProcessStatus.Completed:
+                            _currentCodeFrame.ValuesStack.Push(NullValue.Instance);
+                            break;
+
                         case ProcessStatus.Canceled:
                             _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Canceled;
                             _isCanceled = true;

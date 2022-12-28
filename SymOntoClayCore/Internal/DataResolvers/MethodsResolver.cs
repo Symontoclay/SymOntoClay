@@ -99,6 +99,43 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             return method;
         }
+
+        public bool IsFit(Function function, KindOfFunctionParameters kindOfParameters, IDictionary<StrongIdentifierValue, Value> namedParameters, IList<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return IsFit(function, kindOfParameters, namedParameters, positionedParameters, localCodeExecutionContext, _defaultOptions);
+        }
+
+        public bool IsFit(Function function, KindOfFunctionParameters kindOfParameters, IDictionary<StrongIdentifierValue, Value> namedParameters, IList<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            if(namedParameters != null)
+            {
+                namedParameters = NormalizeNamedParameters(namedParameters);
+            }
+
+#if DEBUG
+            Log($"kindOfParameters = {kindOfParameters}");
+#endif
+
+            switch (kindOfParameters)
+            {
+                case KindOfFunctionParameters.NoParameters:
+                    {
+                        var arguments = function.Arguments;
+
+                        if (arguments.IsNullOrEmpty() || arguments.All(p => p.HasDefaultValue))
+                        {
+                            return true;
+                        }
+
+                        return false;
+                    }
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+            }
+
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region private fields
@@ -543,7 +580,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private Dictionary<StrongIdentifierValue, Value> NormalizeNamedParameters(Dictionary<StrongIdentifierValue, Value> source)
+        private Dictionary<StrongIdentifierValue, Value> NormalizeNamedParameters(IDictionary<StrongIdentifierValue, Value> source)
         {
             var result = new Dictionary<StrongIdentifierValue, Value>();
 

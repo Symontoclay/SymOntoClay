@@ -137,6 +137,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return null;
         }
 
+        public virtual IExecutable GetExecutable(KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Clones the instance and returns cloned instance.
         /// </summary>

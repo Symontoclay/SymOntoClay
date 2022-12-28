@@ -3,8 +3,8 @@
     on Enter
     {
         'Begin' >> @>log;
-        //@a = fun(){return 1;};
-        //@a() >> @>log;
+        @a = fun(){return 1;};
+        @a() >> @>log;
         'End' >> @>log;
     }
 }

@@ -145,6 +145,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsLinguisticVariable => false;
         public virtual LinguisticVariable AsLinguisticVariable => null;
 
+        public virtual bool IsFunction => false;
+        public virtual Function AsFunction => null;
+
         public virtual bool IsNamedFunction => false;
         public virtual NamedFunction AsNamedFunction => null;
 

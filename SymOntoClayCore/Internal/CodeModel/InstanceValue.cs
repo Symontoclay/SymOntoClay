@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Instances;
@@ -59,6 +60,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override string ToSystemString()
         {
             throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public override IExecutable GetExecutable(KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters)
+        {
+            return InstanceInfo.GetExecutable(kindOfParameters, namedParameters, positionedParameters);
         }
 
         /// <inheritdoc/>

@@ -445,6 +445,12 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
+        public virtual IExecutable GetExecutable(KindOfFunctionParameters kindOfParameters, IDictionary<StrongIdentifierValue, Value> namedParameters, IList<Value> positionedParameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         protected override void OnDisposed()
         {
             foreach (var triggerInstance in _logicConditionalTriggersList)

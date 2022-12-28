@@ -2512,6 +2512,12 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Function.Kind">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Function.IsFunction">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Function.AsFunction">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Function.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Arguments">
             <inheritdoc/>
         </member>
@@ -3082,6 +3088,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.ToSystemString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.GetExecutable(SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.Dictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
@@ -6012,6 +6021,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.ResetParent(SymOntoClay.Core.Internal.CodeModel.IInstance)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.GetExecutable(SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.IDictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.OnDisposed">
             <inheritdoc/>
         </member>
@@ -6298,6 +6310,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ObjectInstance.KindOfInstance">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.ObjectInstance.GetExecutable(SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.IDictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value})">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ProcessInfo.Status">

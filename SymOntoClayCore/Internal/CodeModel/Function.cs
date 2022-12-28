@@ -38,6 +38,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.Function;
 
+        /// <inheritdoc/>
+        public override bool IsFunction => true;
+
+        /// <inheritdoc/>
+        public override Function AsFunction => this;
+
         public List<FunctionArgumentInfo> Arguments { get; set; } = new List<FunctionArgumentInfo>();
 
         /// <inheritdoc/>

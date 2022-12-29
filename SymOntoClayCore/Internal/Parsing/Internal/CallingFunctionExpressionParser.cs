@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.Parsing.Internal.Predictors;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -116,83 +117,52 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case State.WaitForMainParameter:
-                    switch(_currToken.TokenKind)
+                    if (_currToken.TokenKind == TokenKind.Word)
+                    {
+                        var predictedKeyWordTokenKind = PredictKeyWordTokenKind(KindOfSpecialPrediction.NamedParameter);
+
+#if DEBUG
+                        //Log($"predictedKeyWordTokenKind = {predictedKeyWordTokenKind}");
+#endif
+
+                        if (predictedKeyWordTokenKind == KeyWordTokenKind.NamedParameter)
+                        {
+                            _currentParameter = new CallingParameter();
+                            Result.Parameters.Add(_currentParameter);
+
+                            var value = NameHelper.CreateName(_currToken.Content);
+
+                            var node = new ConstValueAstExpression();
+                            node.Value = value;
+
+                            _currentParameter.Name = node;
+
+                            _state = State.GotNameOfNamedMainParameter;
+                            break;
+                        }
+                    }
+                    switch (_currToken.TokenKind)
                     {
                         case TokenKind.Identifier:
                         case TokenKind.Word:
-                            {
-                                _currentParameter = new CallingParameter();
-                                Result.Parameters.Add(_currentParameter);
-
-                                switch(_currToken.KeyWordTokenKind)
-                                {
-                                    case KeyWordTokenKind.Null:
-                                        {
-                                            var node = new ConstValueAstExpression();
-                                            node.Value = new NullValue();
-
-                                            _currentParameter.Value = node;
-                                        }
-                                        break;
-
-                                    default:
-                                        {
-                                            var value = NameHelper.CreateName(_currToken.Content);
-
-                                            var node = new ConstValueAstExpression();
-                                            node.Value = value;
-
-                                            _currentParameter.Value = node;
-                                        }
-                                        break;
-                                }
-
-                                _state = State.GotPositionedMainParameter;
-                            }
-                            break;
-
                         case TokenKind.Number:
+                        case TokenKind.String:
+                        case TokenKind.Var:
+                        case TokenKind.SystemVar:
+                        case TokenKind.Entity:
                             {
                                 _currentParameter = new CallingParameter();
                                 Result.Parameters.Add(_currentParameter);
 
                                 _context.Recovery(_currToken);
-
-                                var parser = new NumberParser(_context);
+                                var parser = new CodeExpressionStatementParser(_context, TokenKind.Comma, TokenKind.CloseRoundBracket);
                                 parser.Run();
 
-                                var node = new ConstValueAstExpression();
-                                node.Value = parser.Result;
+#if DEBUG
+                                //Log($"parser.Result = {parser.Result}");
+#endif
 
-                                _currentParameter.Value = node;
-                                _state = State.GotPositionedMainParameter;
-                            }
-                            break;
-
-                        case TokenKind.String:
-                            {
-                                _currentParameter = new CallingParameter();
-                                Result.Parameters.Add(_currentParameter);
-
-                                var node = new ConstValueAstExpression();
-                                node.Value = new StringValue(_currToken.Content);
-
-                                _currentParameter.Value = node;
-                                _state = State.GotPositionedMainParameter;
-                            }
-                            break;
-
-                        case TokenKind.Var:
-                            {
-                                _currentParameter = new CallingParameter();
-                                Result.Parameters.Add(_currentParameter);
-
-                                var value = NameHelper.CreateName(_currToken.Content);
-
-                                var node = new VarAstExpression();
-                                node.Name = value;
-
-                                _currentParameter.Value = node;
+                                _currentParameter.Value = parser.Result.Expression;
 
                                 _state = State.GotPositionedMainParameter;
                             }
@@ -308,6 +278,28 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.WaitForValueOfNamedMainParameter:
                     switch(_currToken.TokenKind)
                     {
+                        case TokenKind.Identifier:
+                        case TokenKind.Word:
+                        case TokenKind.Number:
+                        case TokenKind.String:
+                        case TokenKind.Var:
+                        case TokenKind.SystemVar:
+                        case TokenKind.Entity:
+                            {
+                                _context.Recovery(_currToken);
+                                var parser = new CodeExpressionStatementParser(_context, TokenKind.Comma, TokenKind.CloseRoundBracket);
+                                parser.Run();
+
+#if DEBUG
+                                //Log($"parser.Result = {parser.Result}");
+#endif
+
+                                _currentParameter.Value = parser.Result.Expression;
+
+                                _state = State.GotValueOfNamedMainParameter;
+                            }
+                            break;
+
                         case TokenKind.EntityCondition:
                             {
                                 _context.Recovery(_currToken);
@@ -317,62 +309,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                 var node = new ConstValueAstExpression();
                                 node.Value = parser.Result;
-
-                                _currentParameter.Value = node;
-
-                                _state = State.GotValueOfNamedMainParameter;
-                            }
-                            break;
-
-                        case TokenKind.Number:
-                            {
-                                _context.Recovery(_currToken);
-
-                                var parser = new NumberParser(_context);
-                                parser.Run();
-
-                                var node = new ConstValueAstExpression();
-                                node.Value = parser.Result;
-
-                                _currentParameter.Value = node;
-
-                                _state = State.GotValueOfNamedMainParameter;
-                            }
-                            break;
-
-                        case TokenKind.String:
-                            {
-                                var node = new ConstValueAstExpression();
-                                node.Value = new StringValue(_currToken.Content);
-
-                                _currentParameter.Value = node;
-
-                                _state = State.GotValueOfNamedMainParameter;
-                            }
-                            break;
-
-                        case TokenKind.Word:
-                        case TokenKind.Identifier:
-                        case TokenKind.Entity:
-                            {
-                                var value = NameHelper.CreateName(_currToken.Content);
-
-                                var node = new ConstValueAstExpression();
-                                node.Value = value;
-
-                                _currentParameter.Value = node;
-
-                                _state = State.GotValueOfNamedMainParameter;
-                            }
-                            break;
-
-                        case TokenKind.Var:
-                        case TokenKind.SystemVar:
-                            {
-                                var value = NameHelper.CreateName(_currToken.Content);
-
-                                var node = new VarAstExpression();
-                                node.Name = value;
 
                                 _currentParameter.Value = node;
 

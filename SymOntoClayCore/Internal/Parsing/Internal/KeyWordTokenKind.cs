@@ -97,6 +97,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Synonym,
         Idle,
         With,
-        Import
+        Import,
+
+        /// <summary>
+        /// Special value for prediction.
+        /// </summary>
+        NamedParameter
     }
 }

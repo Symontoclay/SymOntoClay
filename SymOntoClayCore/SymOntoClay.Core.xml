@@ -6730,6 +6730,11 @@
             Repsesents symbol `_`.
             </summary>
         </member>
+        <member name="F:SymOntoClay.Core.Internal.Parsing.Internal.KeyWordTokenKind.NamedParameter">
+            <summary>
+            Special value for prediction.
+            </summary>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Parsing.Internal.Lexer.Count">
             <summary>
             Number of remaining characters.
@@ -6817,6 +6822,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.Predictors.FunctionPredictor.OnRun">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Parsing.Internal.Predictors.NamedParameterPredictor.DefaultResult">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.Predictors.NamedParameterPredictor.OnRun">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.PrimaryRulePartParser.OnEnter">

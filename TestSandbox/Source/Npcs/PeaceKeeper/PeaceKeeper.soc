@@ -3,7 +3,18 @@
     on Enter
     {
         'Begin' >> @>log;
-        @@host.take(#@(gun));
+        @a = OtherFun(param: SomeFun());
+        @a >> @>log;
         'End' >> @>log;
+    }
+
+    fun SomeFun()
+    {
+        return fun(){return 1;};
+    }
+
+    fun OtherFun(@param)
+    {
+        return @param();
     }
 }

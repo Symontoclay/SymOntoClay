@@ -125,7 +125,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             Statements = source.Statements.Select(p => p.CloneAstStatement(context)).ToList();
 
-            CompiledFunctionBody = source.CompiledFunctionBody.Clone(context);
+            CompiledFunctionBody = source.CompiledFunctionBody?.Clone(context);
 
             AppendCodeItem(this, context);
         }

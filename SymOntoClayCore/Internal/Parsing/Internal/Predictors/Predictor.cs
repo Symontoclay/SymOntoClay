@@ -6,7 +6,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
 {
     public class Predictor : BaseLoggedComponent
     {
-        public Predictor(Token currToken, InternalParserContext context)
+        public Predictor(Token currToken, InternalParserContext context, KindOfSpecialPrediction? kindOfSpecialPrediction = null)
             : base(context.Logger)
         {
 #if DEBUG
@@ -23,7 +23,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
                             break;
 
                         default:
-                            throw new UnexpectedTokenException(currToken);
+                            if(kindOfSpecialPrediction == null)
+                            {
+                                throw new UnexpectedTokenException(currToken);
+                            }
+
+                            switch(kindOfSpecialPrediction.Value)
+                            {
+                                case KindOfSpecialPrediction.NamedParameter:
+                                    _concretePredictor = new NamedParameterPredictor(currToken, context);
+                                    break;
+
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(kindOfSpecialPrediction), kindOfSpecialPrediction, null);
+                            }
+                            break;
                     }
                     break;
 

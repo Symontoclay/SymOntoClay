@@ -304,13 +304,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             return false;
         }
 
-        protected KeyWordTokenKind PredictKeyWordTokenKind()
+        protected KeyWordTokenKind PredictKeyWordTokenKind(KindOfSpecialPrediction? kindOfSpecialPrediction = null)
         {
 #if DEBUG
             //Log($"_currToken = {_currToken}");
 #endif
 
-            var predictor = new Predictor(_currToken, _context);
+            var predictor = new Predictor(_currToken, _context, kindOfSpecialPrediction);
 
             return predictor.Predict();
         }

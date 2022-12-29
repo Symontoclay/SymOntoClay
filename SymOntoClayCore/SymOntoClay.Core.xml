@@ -411,6 +411,54 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.Command.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.IsSystemDefined">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.Arguments">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.CompiledFunctionBody">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.CodeItem">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.SystemHandler">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.OwnLocalCodeExecutionContext">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.TryActivate(SymOntoClay.Core.Internal.IEngineContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.Helpers.ConversionExecutableToCodeFrameAdditionalSettings.ToString">
             <inheritdoc/>
         </member>
@@ -642,6 +690,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.OwnLocalCodeExecutionContext">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
@@ -682,6 +733,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.SymOntoClay#Core#Internal#CodeExecution#IExecutable#TryActivate(SymOntoClay.Core.Internal.IEngineContext)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionPtr.OwnLocalCodeExecutionContext">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionPtr.WhereSection">
@@ -2539,6 +2593,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.SymOntoClay#Core#Internal#CodeExecution#IExecutable#TryActivate(SymOntoClay.Core.Internal.IEngineContext)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Function.OwnLocalCodeExecutionContext">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
             <inheritdoc/>
         </member>
@@ -2631,6 +2688,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.SymOntoClay#Core#Internal#CodeExecution#IExecutable#TryActivate(SymOntoClay.Core.Internal.IEngineContext)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.FunctionValue.OwnLocalCodeExecutionContext">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionValue.GetSystemValue">
@@ -2848,6 +2908,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.OwnLocalCodeExecutionContext">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.ToString">
@@ -3838,6 +3901,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.SymOntoClay#Core#Internal#CodeExecution#IExecutable#TryActivate(SymOntoClay.Core.Internal.IEngineContext)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Operator.OwnLocalCodeExecutionContext">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
@@ -5926,6 +5992,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.ActionInstance.OwnLocalCodeExecutionContext">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.AddingFactConditionalTriggerInstance.LogicalStorage_OnAddingFact(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">

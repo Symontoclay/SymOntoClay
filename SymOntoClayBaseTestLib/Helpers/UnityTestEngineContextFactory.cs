@@ -101,7 +101,20 @@ namespace SymOntoClay.Core.Tests.Helpers
 
             settings.TmpDir = Path.Combine(supportBasePath, "TMP");
 
-            if (!string.IsNullOrWhiteSpace(factorySettings.WorldFile))
+            if (string.IsNullOrWhiteSpace(factorySettings.WorldFile))
+            {
+                if (factorySettings.UseStandardLibrary)
+                {
+                    var assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(p => p.GetName().Name == "SymOntoClay.BaseTestLib").Location;
+
+                    var assemblyPath = (new FileInfo(assembly)).DirectoryName;
+
+                    var builtInStandardLibraryDir = Path.Combine(assemblyPath, "LibsForInstall", "stdlib");
+
+                    settings.BuiltInStandardLibraryDir = builtInStandardLibraryDir;
+                }
+            }
+            else
             {
                 var worldFile = factorySettings.WorldFile;
 
@@ -114,7 +127,8 @@ namespace SymOntoClay.Core.Tests.Helpers
                 var worldSpaceFilesSearcherOptions = new WorldSpaceFilesSearcherOptions()
                 {
                     InputDir = directory.FullName,
-                    AppName = "tst"
+                    AppName = "tst",
+                    SearchMainNpcFile = false
                 };
 
                 var targetFiles = WorldSpaceFilesSearcher.Run(worldSpaceFilesSearcherOptions);
@@ -132,6 +146,24 @@ namespace SymOntoClay.Core.Tests.Helpers
                 }
 
                 settings.LibsDirs = libsDirs;
+
+                if(factorySettings.UseStandardLibrary)
+                {
+                    if(string.IsNullOrWhiteSpace(targetFiles.SharedLibsDir))
+                    {
+                        var assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(p => p.GetName().Name == "SymOntoClay.BaseTestLib").Location;
+
+                        var assemblyPath = (new FileInfo(assembly)).DirectoryName;
+
+                        var builtInStandardLibraryDir = Path.Combine(assemblyPath, "LibsForInstall", "stdlib");
+
+                        settings.BuiltInStandardLibraryDir = builtInStandardLibraryDir;
+                    }
+                    else
+                    {
+                        throw new NotImplementedException();
+                    }
+                }
             }
 
             settings.InvokerInMainThread = invokingInMainThread;

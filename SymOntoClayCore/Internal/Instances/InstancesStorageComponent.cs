@@ -448,7 +448,7 @@ namespace SymOntoClay.Core.Internal.Instances
         public override Value CreateInstance(CodeItem codeItem, LocalCodeExecutionContext executionContext)
         {
 #if DEBUG
-            Log($"codeItem = {codeItem}");
+            //Log($"codeItem = {codeItem}");
 #endif
 
             var instance = new ObjectInstance(codeItem, _context, executionContext.Storage, executionContext);

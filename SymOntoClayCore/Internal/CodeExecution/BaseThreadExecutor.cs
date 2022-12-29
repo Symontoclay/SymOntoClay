@@ -302,7 +302,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -484,7 +484,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var prototypeValue = valuesStack.Pop();
 
 #if DEBUG
-            Log($"prototypeValue = {prototypeValue}");
+            //Log($"prototypeValue = {prototypeValue}");
 #endif
 
             if (prototypeValue.IsCodeItemValue)
@@ -492,7 +492,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var instanceValue = _context.InstancesStorage.CreateInstance(prototypeValue.AsCodeItemValue.CodeItem, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-                Log($"instanceValue = {instanceValue}");
+                //Log($"instanceValue = {instanceValue}");
 #endif
 
                 _currentCodeFrame.ValuesStack.Push(instanceValue);
@@ -1505,7 +1505,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var caller = TryResolveFromVar(valueStack.Pop());
 
 #if DEBUG
-            Log($"caller = {caller}");
+            //Log($"caller = {caller}");
             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
@@ -1530,11 +1530,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-            Log($"namedParameters = {namedParameters?.WriteDict_1_ToString()}");
-            Log($"positionedParameters = {positionedParameters.WriteListToString()}");
-            Log($"caller.IsPointRefValue = {caller.IsPointRefValue}");
-            Log($"caller.IsStrongIdentifierValue = {caller.IsStrongIdentifierValue}");
+            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            //Log($"namedParameters = {namedParameters?.WriteDict_1_ToString()}");
+            //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+            //Log($"caller.IsPointRefValue = {caller.IsPointRefValue}");
+            //Log($"caller.IsStrongIdentifierValue = {caller.IsStrongIdentifierValue}");
 #endif
 
             if (caller.IsPointRefValue)
@@ -1563,21 +1563,21 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             Value annotation, SyncOption syncOption)
         {
 #if DEBUG
-            Log($"caller = {caller}");
-            Log($"kindOfParameters = {kindOfParameters}");
-            Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
-            Log($"positionedParameters = {positionedParameters.WriteListToString()}");
-            Log($"annotation = {annotation}");
-            Log($"syncOption = {syncOption}");
+            //Log($"caller = {caller}");
+            //Log($"kindOfParameters = {kindOfParameters}");
+            //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
+            //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+            //Log($"annotation = {annotation}");
+            //Log($"syncOption = {syncOption}");
 #endif
 
             var executable = caller.GetExecutable(kindOfParameters, namedParameters, positionedParameters);
 
 #if DEBUG
-            Log($"executable = {executable}");
+            //Log($"executable = {executable}");
 #endif
 
-            throw new NotImplementedException();
+            CallExecutable(executable, executable.OwnLocalCodeExecutionContext, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
         }
 
         private void CallPointRefValue(PointRefValue caller,
@@ -1614,7 +1614,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"method = {method}");
 #endif
 
-            CallExecutable(method, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
+            CallExecutable(method, null, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
         }
 
         private void CallHost(StrongIdentifierValue methodName, 
@@ -1797,7 +1797,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 throw new Exception($"Method '{methodName.NameValue}' is not found.");
             }
 
-            CallExecutable(method, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
+            CallExecutable(method, null, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
         }
 
         private void ExecRuleInstanceValue(RuleInstanceValue ruleInstanceValue)
@@ -1877,10 +1877,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallExecutable(IExecutable executable, List<Value> positionedParameters)
         {
-            CallExecutable(executable, KindOfFunctionParameters.PositionedParameters, null, positionedParameters, null, SyncOption.Sync);
+            CallExecutable(executable, null, KindOfFunctionParameters.PositionedParameters, null, positionedParameters, null, SyncOption.Sync);
         }
 
-        private void CallExecutable(IExecutable executable, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, Value annotation, SyncOption syncOption)
+        private void CallExecutable(IExecutable executable, LocalCodeExecutionContext ownLocalCodeExecutionContext, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, Value annotation, SyncOption syncOption)
         {
             if(executable == null)
             {
@@ -1900,6 +1900,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"syncOption = {syncOption}");
 #endif
 
+            var targetLocalContext = ownLocalCodeExecutionContext == null? _currentCodeFrame.LocalContext : ownLocalCodeExecutionContext;
+
             if (executable.IsSystemDefined)
             {
                 Value result = null;
@@ -1907,15 +1909,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 switch(kindOfParameters)
                 {
                     case KindOfFunctionParameters.NoParameters:
-                        result = executable.SystemHandler.Call(new List<Value>(), _currentCodeFrame.LocalContext);
+                        result = executable.SystemHandler.Call(new List<Value>(), targetLocalContext);
                         break;
 
                     case KindOfFunctionParameters.PositionedParameters:
-                        result = executable.SystemHandler.Call(positionedParameters, _currentCodeFrame.LocalContext);
+                        result = executable.SystemHandler.Call(positionedParameters, targetLocalContext);
                         break;
 
                     case KindOfFunctionParameters.NamedParameters:
-                        result = executable.SystemHandler.Call(namedParameters.ToDictionary(p => p.Key.NameValue, p => p.Value), annotation, _currentCodeFrame.LocalContext);
+                        result = executable.SystemHandler.Call(namedParameters.ToDictionary(p => p.Key.NameValue, p => p.Value), annotation, targetLocalContext);
                         break;
 
                     default:
@@ -1949,7 +1951,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     };
                 }
 
-                var newCodeFrame = CodeFrameHelper.ConvertExecutableToCodeFrame(executable, kindOfParameters, namedParameters, positionedParameters, _currentCodeFrame.LocalContext, _context, additionalSettings);
+                var newCodeFrame = CodeFrameHelper.ConvertExecutableToCodeFrame(executable, kindOfParameters, namedParameters, positionedParameters, targetLocalContext, _context, additionalSettings);
 
 #if DEBUG
                 //Log($"newCodeFrame = {newCodeFrame}");

@@ -44,6 +44,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.Handlers
         }
 
         /// <inheritdoc/>
+        public LocalCodeExecutionContext OwnLocalCodeExecutionContext => null;
+
+        /// <inheritdoc/>
         public override string ToString()
         {
             return ToString(0u);

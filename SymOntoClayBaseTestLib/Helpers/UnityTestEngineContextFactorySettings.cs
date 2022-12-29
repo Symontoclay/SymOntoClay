@@ -48,6 +48,7 @@ namespace SymOntoClayBaseTestLib.Helpers
         public IList<string> DictsPaths { get; set; }
         public IList<IWordsDict> DictsList { get; set; }
         public bool UseDefaultNLPSettings { get; set; } = true;
+        public bool UseStandardLibrary { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -86,6 +87,7 @@ namespace SymOntoClayBaseTestLib.Helpers
             sb.PrintPODList(n, nameof(DictsPaths), DictsPaths);
             sb.PrintExistingList(n, nameof(DictsList), DictsList);
             sb.AppendLine($"{spaces}{nameof(UseDefaultNLPSettings)} = {UseDefaultNLPSettings}");
+            sb.AppendLine($"{spaces}{nameof(UseStandardLibrary)} = {UseStandardLibrary}");
 
             return sb.ToString();
         }

@@ -37,7 +37,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Storage
             standaloneStorageSettings.IsWorld = true;
             standaloneStorageSettings.Logger = coreContext.Logger;
             standaloneStorageSettings.ModulesStorage = coreContext.ModulesStorage;
-            
+
+            if (!string.IsNullOrWhiteSpace(settings.BuiltInStandardLibraryDir))
+            {
+                standaloneStorageSettings.AdditionalSourceCodePaths = new List<string> { settings.BuiltInStandardLibraryDir };
+            }
+
             standaloneStorageSettings.AppFile = settings.HostFile;
             standaloneStorageSettings.LogicQueryParseAndCache = coreContext.LogicQueryParseAndCache;
 

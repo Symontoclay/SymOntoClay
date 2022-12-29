@@ -113,7 +113,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            Log($"kindOfParameters = {kindOfParameters}");
+            //Log($"kindOfParameters = {kindOfParameters}");
 #endif
 
             switch (kindOfParameters)
@@ -128,6 +128,38 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         }
 
                         return false;
+                    }
+
+                case KindOfFunctionParameters.NamedParameters:
+                    {
+                        var rankMatrix = IsFit(function, namedParameters, localCodeExecutionContext, options);
+
+#if DEBUG
+                        //Log($"rankMatrix = {rankMatrix.WritePODListToString()}");
+#endif
+
+                        if(rankMatrix == null)
+                        {
+                            return false;
+                        }
+
+                        return true;
+                    }
+
+                case KindOfFunctionParameters.PositionedParameters:
+                    {
+                        var rankMatrix = IsFit(function, positionedParameters, localCodeExecutionContext, options);
+
+#if DEBUG
+                        //Log($"rankMatrix = {rankMatrix.WritePODListToString()}");
+#endif
+
+                        if (rankMatrix == null)
+                        {
+                            return false;
+                        }
+
+                        return true;
                     }
 
                 default:
@@ -799,7 +831,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private List<uint> IsFit(IExecutable function, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private List<uint> IsFit(IExecutable function, IDictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
@@ -873,7 +905,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private Value GetParameterValue(StrongIdentifierValue argumentName, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext)
+        private Value GetParameterValue(StrongIdentifierValue argumentName, IDictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"argumentName = {argumentName}");
@@ -978,7 +1010,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private List<uint> IsFit(IExecutable function, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private List<uint> IsFit(IExecutable function, IList<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var positionedParametersEnumerator = positionedParameters.GetEnumerator();
 

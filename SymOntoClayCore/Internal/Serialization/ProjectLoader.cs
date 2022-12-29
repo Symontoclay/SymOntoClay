@@ -46,7 +46,7 @@ namespace SymOntoClay.Core.Internal.Serialization
         public void LoadCodeItem(CodeItem codeItem, IStorage targetStorage)
         {
 #if DEBUG
-            Log($"codeItem = {codeItem}");
+            //Log($"codeItem = {codeItem}");
 #endif
 
             var defferedLibsList = new List<string>();
@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             var subItems = LinearizeSubItems(codeItem);
 
 #if DEBUG
-            Log($"subItems.Count = {subItems.Count}");
+            //Log($"subItems.Count = {subItems.Count}");
 #endif
 
             if(subItems.Any())

@@ -107,6 +107,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        public LocalCodeExecutionContext OwnLocalCodeExecutionContext => null;
+
+        /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
         {
             return CloneValue(context);

@@ -90,7 +90,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 }
             }
 
-            endPointsList = endPointsList.Distinct().ToList();
+            endPointsList = endPointsList.Where(p => p != null).Distinct().ToList();
 
 #if DEBUG
             //Log($"endPointsList = {endPointsList.WriteListToString()}");

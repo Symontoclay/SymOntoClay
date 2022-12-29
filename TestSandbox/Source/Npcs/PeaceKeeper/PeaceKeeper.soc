@@ -3,8 +3,7 @@
     on Enter
     {
         'Begin' >> @>log;
-        @a = fun(){return 1;};
-        @a() >> @>log;
+        @@host.take(#@(gun));
         'End' >> @>log;
     }
 }

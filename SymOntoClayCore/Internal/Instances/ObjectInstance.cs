@@ -16,12 +16,18 @@ namespace SymOntoClay.Core.Internal.Instances
             _methodsResolver = context.DataResolversFactory.GetMethodsResolver();
 
             _function = codeItem.AsFunction;
+
+            if(_function != null)
+            {
+                _functionExecutable = new ExecutableWithTargetLocalContext(_function, parentCodeExecutionContext);
+            }
         }
 
         /// <inheritdoc/>
         public override KindOfInstance KindOfInstance => KindOfInstance.ObjectInstance;
 
         private readonly Function _function;
+        private readonly ExecutableWithTargetLocalContext _functionExecutable;
         private readonly MethodsResolver _methodsResolver;
 
         /// <inheritdoc/>
@@ -31,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 if(_methodsResolver.IsFit(_function, kindOfParameters, namedParameters, positionedParameters, _localCodeExecutionContext))
                 {
-                    return _function;
+                    return _functionExecutable;
                 }
 
                 return null;

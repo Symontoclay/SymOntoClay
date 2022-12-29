@@ -76,5 +76,8 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             return _iOp.ContainsArgument(name);
         }
+
+        /// <inheritdoc/>
+        public LocalCodeExecutionContext OwnLocalCodeExecutionContext => null;
     }
 }

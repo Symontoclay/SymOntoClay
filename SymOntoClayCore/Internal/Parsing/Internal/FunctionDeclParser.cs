@@ -205,7 +205,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.Word:
                         case TokenKind.CloseFigureBracket:
+                        case TokenKind.CloseRoundBracket:
                         case TokenKind.Semicolon:
+                        case TokenKind.OpenRoundBracket:
                             _context.Recovery(_currToken);
                             Exit();
                             break;

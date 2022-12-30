@@ -76,6 +76,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case TokenKind.Identifier:
+                case TokenKind.Entity:
                     ProcessConceptLeaf();
                     break;
 

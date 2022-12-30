@@ -35,6 +35,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
             Exit();
         }
 
+        protected void Reject()
+        {
+            Result = KeyWordTokenKind.Unknown;
+            Exit();
+        }
+
         public KeyWordTokenKind Predict()
         {
             Run();

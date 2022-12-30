@@ -74,7 +74,17 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
                     {
                         var targetList = targetDict[count];
 
+#if DEBUG
+                        //Log($"targetList.Count = {targetList.Count}");
+                        //Log($"namedFunction.GetLongHashCode() = {namedFunction.GetLongHashCode()}");
+                        //Log($"targetList.FirstOrDefault()?.GetLongHashCode() = {targetList.FirstOrDefault()?.GetLongHashCode()}");
+#endif
+
                         StorageHelper.RemoveSameItems(targetList, namedFunction);
+
+#if DEBUG
+                        //Log($"targetList.Count (after) = {targetList.Count}");
+#endif
 
                         targetList.Add(namedFunction);
                     }

@@ -352,6 +352,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var rawList = GetRawMethodsList(name, positionedParameters.Count, storagesList, weightedInheritanceItems);
 
 #if DEBUG
+            //Log($"rawList.Count = {rawList.Count}");
             //Log($"rawList = {rawList.WriteListToString()}");
 #endif
 

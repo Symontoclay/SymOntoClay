@@ -35,6 +35,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
+                        case TokenKind.Var:
                             _state= State.GotParamName;
                             break;
 
@@ -48,6 +49,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
                     {
                         case TokenKind.Colon:
                             Complete();
+                            break;
+
+                        case TokenKind.CloseRoundBracket:
+                        case TokenKind.OpenRoundBracket:
+                            Reject();
                             break;
 
                         default:

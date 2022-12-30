@@ -110,7 +110,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 foreach (var argument in Arguments)
                 {
-                    result ^= argument.GetLongConditionalHashCode(options);
+                    result ^= argument.GetLongHashCode(options);
                 }
             }
 

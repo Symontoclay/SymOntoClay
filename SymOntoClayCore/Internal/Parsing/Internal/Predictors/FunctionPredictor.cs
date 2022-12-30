@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
@@ -33,6 +35,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
         protected override void OnRun()
         {
 #if DEBUG
+            //Log($"_state = {_state}");
             //Log($"_currToken = {_currToken}");
             //Log($"_openRoundBracketsCount = {_openRoundBracketsCount}");
             //Log($"_openFigureBracketsCount = {_openFigureBracketsCount}");
@@ -74,6 +77,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
                     break;
 
                 case State.InParamDecls:
+                    if(IsUsualContentOfParameter())
+                    {
+                        break;
+                    }
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.CloseRoundBracket:
@@ -140,6 +147,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
 
                         case TokenKind.CloseFigureBracket:
                             _openFigureBracketsCount--;
+
+                            if(_openFigureBracketsCount == 0)
+                            {
+                                Complete();
+                                break;
+                            }
                             break;
 
                         default:
@@ -154,24 +167,90 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
 
         private bool IsUsualContentOfBody()
         {
+            if(IsUsualContentOfExpression())
+            {
+                return true;
+            }
+
             switch (_currToken.TokenKind)
             {
                 case TokenKind.Word:
                     switch (_currToken.KeyWordTokenKind)
                     {
-                        case KeyWordTokenKind.Unknown:
+                        
                         case KeyWordTokenKind.Return:
                             return true;
 
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
-                    break;
-
-                case TokenKind.Number: 
-                    return true;
 
                 default: 
+                    return false;
+            }
+        }
+
+        private bool IsUsualContentOfParameter()
+        {
+            if (IsUsualContentOfExpression())
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool IsUsualContentOfExpression()
+        {
+            switch (_currToken.TokenKind)
+            {
+                case TokenKind.Word:
+                    switch (_currToken.KeyWordTokenKind)
+                    {
+                        case KeyWordTokenKind.Unknown:
+                            return true;
+
+                        default:
+                            return false;
+                    }
+
+                case TokenKind.Var:
+                case TokenKind.Channel:
+                case TokenKind.SystemVar:
+                case TokenKind.LogicalVar:
+                case TokenKind.EntityCondition:
+                case TokenKind.Point:
+                case TokenKind.Comma:
+                case TokenKind.Colon:
+                case TokenKind.Number:
+                case TokenKind.String:
+                case TokenKind.Identifier:
+                case TokenKind.Entity:
+                case TokenKind.Plus:
+                case TokenKind.Minus:
+                case TokenKind.Multiplication:
+                case TokenKind.Division:
+                case TokenKind.QuestionMark:
+                case TokenKind.AsyncMarker:
+                case TokenKind.DoubleAsyncMarker:
+                case TokenKind.OpenFactBracket:
+                case TokenKind.CloseFactBracket:
+                case TokenKind.Assign:
+                case TokenKind.More:
+                case TokenKind.MoreOrEqual:
+                case TokenKind.Less:
+                case TokenKind.LessOrEqual:
+                case TokenKind.And:
+                case TokenKind.Or:
+                case TokenKind.Not:
+                case TokenKind.LeftRightStream:
+                case TokenKind.PrimaryLogicalPartMark:
+                case TokenKind.LeftRightArrow:
+                case TokenKind.PositiveInfinity:
+                case TokenKind.NegativeInfinity:
+                    return true;
+
+                default:
                     return false;
             }
         }

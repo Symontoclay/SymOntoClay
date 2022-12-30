@@ -117,7 +117,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case State.WaitForMainParameter:
-                    if (_currToken.TokenKind == TokenKind.Word)
+                    if (_currToken.TokenKind == TokenKind.Word || _currToken.TokenKind == TokenKind.Var)
                     {
                         var predictedKeyWordTokenKind = PredictKeyWordTokenKind(KindOfSpecialPrediction.NamedParameter);
 

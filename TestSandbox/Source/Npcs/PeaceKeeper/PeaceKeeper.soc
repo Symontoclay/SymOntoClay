@@ -3,18 +3,15 @@
     on Enter
     {
         'Begin' >> @>log;
-        @a = OtherFun(param: SomeFun());
-        @a >> @>log;
+        @a = SomeFun();
+        @a() >> @>log;
         'End' >> @>log;
     }
 
     fun SomeFun()
     {
-        return fun(){return 1;};
-    }
+        @a = 2;
 
-    fun OtherFun(@param)
-    {
-        return @param();
+        return fun(){return @a + 1;};
     }
 }

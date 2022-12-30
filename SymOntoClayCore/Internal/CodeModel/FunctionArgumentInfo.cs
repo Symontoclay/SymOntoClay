@@ -66,15 +66,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new FunctionArgumentInfo();
             context[this] = result;
 
-            result.Name = Name.Clone(context);
+            result.Name = Name?.Clone(context);
             result.TypesList = TypesList?.Select(p => p.Clone(context)).ToList();
             result.HasDefaultValue = HasDefaultValue;
-            result.DefaultValue = DefaultValue.CloneValue(context);
+            result.DefaultValue = DefaultValue?.CloneValue(context);
 
             return result;
         }
 
-        public ulong GetLongConditionalHashCode(CheckDirtyOptions options)
+        public ulong GetLongHashCode(CheckDirtyOptions options)
         {
             Name.CheckDirty(options);
 
@@ -88,13 +88,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             DefaultValue?.CheckDirty(options);
 
-            var result = Name.GetLongConditionalHashCode(options);
+            var result = Name.GetLongHashCode(options);
 
             if (!TypesList.IsNullOrEmpty())
             {
                 foreach (var item in TypesList)
                 {
-                    result ^= item.GetLongConditionalHashCode(options);
+                    result ^= item.GetLongHashCode(options);
                 }
             }
 

@@ -13,36 +13,37 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
             //Log($"currToken = {currToken}");
 #endif
 
-            switch(currToken.TokenKind)
+            if (kindOfSpecialPrediction == null)
             {
-                case TokenKind.Word:
-                    switch(currToken.KeyWordTokenKind)
-                    {
-                        case KeyWordTokenKind.Fun:
-                            _concretePredictor = new FunctionPredictor(currToken, context);
-                            break;
+                switch (currToken.TokenKind)
+                {
+                    case TokenKind.Word:
+                        switch (currToken.KeyWordTokenKind)
+                        {
+                            case KeyWordTokenKind.Fun:
+                                _concretePredictor = new FunctionPredictor(currToken, context);
+                                break;
 
-                        default:
-                            if(kindOfSpecialPrediction == null)
-                            {
+                            default:
                                 throw new UnexpectedTokenException(currToken);
-                            }
+                        }
+                        break;
 
-                            switch(kindOfSpecialPrediction.Value)
-                            {
-                                case KindOfSpecialPrediction.NamedParameter:
-                                    _concretePredictor = new NamedParameterPredictor(currToken, context);
-                                    break;
+                    default:
+                        throw new UnexpectedTokenException(currToken);
+                }
+            }
+            else
+            {
+                switch (kindOfSpecialPrediction.Value)
+                {
+                    case KindOfSpecialPrediction.NamedParameter:
+                        _concretePredictor = new NamedParameterPredictor(currToken, context);
+                        break;
 
-                                default:
-                                    throw new ArgumentOutOfRangeException(nameof(kindOfSpecialPrediction), kindOfSpecialPrediction, null);
-                            }
-                            break;
-                    }
-                    break;
-
-                default:
-                    throw new UnexpectedTokenException(currToken);
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSpecialPrediction), kindOfSpecialPrediction, null);
+                }
             }
         }
 

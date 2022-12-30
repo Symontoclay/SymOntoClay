@@ -2548,6 +2548,42 @@ app PeaceKeeper
 
         [Test]
         [Parallelizable]
+        public void Case17_1()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter
+    {
+        'Begin' >> @>log;
+        fun(){return 1;}() >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("1", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
         public void Case17_a()
         {
             var text = @"app PeaceKeeper
@@ -2670,6 +2706,216 @@ app PeaceKeeper
 
                         case 2:
                             Assert.AreEqual("1", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case17_b_2()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter
+    {
+        'Begin' >> @>log;
+        @a = OtherFun(@param: SomeFun());
+        @a >> @>log;
+        'End' >> @>log;
+    }
+
+    fun SomeFun()
+    {
+        return fun(){return 1;};
+    }
+
+    fun OtherFun(@param)
+    {
+        return @param();
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("1", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case17_c()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter
+    {
+        'Begin' >> @>log;
+        @a = OtherFun(fun(){return 1;});
+        @a >> @>log;
+        'End' >> @>log;
+    }
+
+    fun OtherFun(@param)
+    {
+        return @param();
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("1", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case17_c_1()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter
+    {
+        'Begin' >> @>log;
+        @a = OtherFun(param: fun(){return 1;});
+        @a >> @>log;
+        'End' >> @>log;
+    }
+
+    fun OtherFun(@param)
+    {
+        return @param();
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("1", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case17_c_2()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter
+    {
+        'Begin' >> @>log;
+        @a = OtherFun(@param: fun(){return 1;});
+        @a >> @>log;
+        'End' >> @>log;
+    }
+
+    fun OtherFun(@param)
+    {
+        return @param();
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("1", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case18()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter
+    {
+        'Begin' >> @>log;
+        @a = fun(@param1){return @param1 + 1;};
+        @a(2) >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("3", message);
                             break;
 
                         case 3:

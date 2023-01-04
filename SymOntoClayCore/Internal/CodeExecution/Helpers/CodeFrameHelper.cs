@@ -88,7 +88,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             //Log($"kindOfParameters = {kindOfParameters}");
             //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
             //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
-            //_gbcLogger.Info($"parentLocalCodeExecutionContext.GetHashCode() = {parentLocalCodeExecutionContext.GetHashCode()}");
+            _gbcLogger.Info($"parentLocalCodeExecutionContext.GetHashCode() = {parentLocalCodeExecutionContext.GetHashCode()}");
 #endif
 
             var storagesList = parentLocalCodeExecutionContext.Storage.GetStorages();

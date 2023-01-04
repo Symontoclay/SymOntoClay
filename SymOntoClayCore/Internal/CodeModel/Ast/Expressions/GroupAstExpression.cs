@@ -115,7 +115,17 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            var sb = new StringBuilder();
+            sb.Append("(");
+
+            if(Expression != null)
+            {
+                sb.Append(Expression.ToHumanizedString(options));
+            }
+
+            sb.Append(")");
+
+            return sb.ToString();
         }
     }
 }

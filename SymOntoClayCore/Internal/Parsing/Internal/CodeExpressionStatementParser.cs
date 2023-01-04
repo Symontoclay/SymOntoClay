@@ -45,6 +45,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Result = new AstExpressionStatement();
         }
 
+        /// <inheritdoc/>
+        protected override void OnFinish()
+        {
+            Result.Expression = _nodePoint.BuildExpr<AstExpression>();
+
+#if DEBUG
+            //Log($"Result.Expression = {Result.Expression}");
+#endif
+        }
+
         public AstExpressionStatement Result { get; private set; }
 
         private IntermediateAstNodePoint _nodePoint = new IntermediateAstNodePoint();
@@ -58,7 +68,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
 #if DEBUG
             //Log($"_currToken = {_currToken}");
+            //Log($"_hasSomething = {_hasSomething}");
+            //Log($"_lastIsOperator?.ToHumanizedString() = {_lastIsOperator?.ToHumanizedString()}");
+            //Log($"_lastBinaryOperator?.ToHumanizedString() = {_lastBinaryOperator?.ToHumanizedString()}");
             //Log($"_nodePoint = {_nodePoint}");
+            //Log($"_nodePoint.BuildExpr<AstExpression>()?.ToHumanizedString() = {_nodePoint.BuildExpr<AstExpression>()?.ToHumanizedString()}");
 #endif
 
             switch (_currToken.TokenKind)
@@ -517,7 +531,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             var currentNode = _nodePoint.CurrentNode;
 
-            if (currentNode == null || currentNode.Kind == KindOfIntermediateAstNode.UnaryOperator || currentNode.Kind == KindOfIntermediateAstNode.BinaryOperator)
+#if DEBUG
+            //Log($"currentNode?.Kind = {currentNode?.Kind}");
+            //Log($"currentNode?.AstNode.GetType().FullName = {currentNode?.AstNode.GetType().FullName}");
+#endif
+
+            if (currentNode == null || (currentNode.Kind == KindOfIntermediateAstNode.UnaryOperator && !(currentNode.AstNode is CallingFunctionAstExpression)) || currentNode.Kind == KindOfIntermediateAstNode.BinaryOperator)
             {
                 ProcessGroup();
                 return;
@@ -799,16 +818,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.UnaryOperator, priority);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnFinish()
-        {
-            Result.Expression = _nodePoint.BuildExpr<AstExpression>();
-
-#if DEBUG
-            //Log($"Result.Expression = {Result.Expression}");
-#endif
         }
     }
 }

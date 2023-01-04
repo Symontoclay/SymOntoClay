@@ -88,8 +88,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             //Log($"kindOfParameters = {kindOfParameters}");
             //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
             //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+            //_gbcLogger.Info($"parentLocalCodeExecutionContext.GetHashCode() = {parentLocalCodeExecutionContext.GetHashCode()}");
 #endif
-            
+
             var storagesList = parentLocalCodeExecutionContext.Storage.GetStorages();
 
 #if DEBUG
@@ -131,6 +132,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             localCodeExecutionContext.Holder = parentLocalCodeExecutionContext.Holder;
 
 #if DEBUG
+            //_gbcLogger.Info($"localCodeExecutionContext = {localCodeExecutionContext.GetHashCode()}");
             //_gbcLogger.Info($"additionalSettings = {additionalSettings}");
 #endif
 

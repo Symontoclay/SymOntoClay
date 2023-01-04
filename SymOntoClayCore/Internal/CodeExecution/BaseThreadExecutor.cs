@@ -489,6 +489,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (prototypeValue.IsCodeItemValue)
             {
+#if DEBUG
+                //Log($"_currentCodeFrame.LocalContext.GetHashCode() = {_currentCodeFrame.LocalContext.GetHashCode()}");
+#endif
+
                 var instanceValue = _context.InstancesStorage.CreateInstance(prototypeValue.AsCodeItemValue.CodeItem, _currentCodeFrame.LocalContext);
 
 #if DEBUG
@@ -1575,6 +1579,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
             //Log($"executable = {executable}");
+            //Log($"executable.OwnLocalCodeExecutionContext?.GetHashCode() = {executable.OwnLocalCodeExecutionContext?.GetHashCode()}");
 #endif
 
             CallExecutable(executable, executable.OwnLocalCodeExecutionContext, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);

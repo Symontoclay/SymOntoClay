@@ -109,7 +109,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         private void NAppendVar(Var varItem)
         {
 #if DEBUG
-            //Log($"varItem = {varItem}");
+            //Log($"varItem = {varItem}; GetHashCode() = {GetHashCode()}");
 #endif
 
             if(_allVariablesList.Contains(varItem))

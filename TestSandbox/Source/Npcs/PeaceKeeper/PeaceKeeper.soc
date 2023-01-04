@@ -2,9 +2,24 @@
 {
     on Enter
     {
+        SomeFun()() >> @>log;
+    }
+
+    fun SomeFun()
+    {
+        @a = 2;
+
+        return fun(){return @a + 1;};
+    }
+}
+/*
+app PeaceKeeper
+{
+    on Enter
+    {
         'Begin' >> @>log;
-        @a = SomeFun();
-        @a() >> @>log;
+        @b = SomeFun();
+        @b() >> @>log;
         'End' >> @>log;
     }
 
@@ -15,3 +30,4 @@
         return fun(){return @a + 1;};
     }
 }
+*/

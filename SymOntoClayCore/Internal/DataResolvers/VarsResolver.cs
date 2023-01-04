@@ -165,7 +165,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             foreach (var storageItem in storagesList)
             {
 #if DEBUG
-                //Log($"storageItem.Key = {storageItem.Key}; storageItem.Value.Kind = '{storageItem.Value.Kind}'");
+                //Log($"storageItem.Storage.VarStorage.GetHashCode() = {storageItem.Storage.VarStorage.GetHashCode()}");
 #endif
 
                 var targetValue = storageItem.Storage.VarStorage.GetSystemValueDirectly(varName);
@@ -289,6 +289,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
 #if DEBUG
                 //Log($"storageItem = {storageItem}");
+                //Log($"storageItem.Storage.VarStorage.GetHashCode() = {storageItem.Storage.VarStorage.GetHashCode()}");
 #endif
 
                 var itemsList = storageItem.Storage.VarStorage.GetVarDirectly(name, weightedInheritanceItems);

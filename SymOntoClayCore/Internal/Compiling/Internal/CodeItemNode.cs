@@ -24,10 +24,28 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             CompilePushAnnotation(expression);
 
-            var command = new IntermediateScriptCommand();
-            command.OperationCode = OperationCode.Instantiate;
+            
+            if(expression.CodeItemValue.CodeItem.IsAnonymous)
+            {
+                var command = new IntermediateScriptCommand();
 
-            AddCommand(command);
+                command.OperationCode = OperationCode.Instantiate;
+
+                AddCommand(command);
+            }
+            else
+            {
+                var command = new IntermediateScriptCommand();
+
+                command.OperationCode = OperationCode.CodeItemDecl;
+
+                AddCommand(command);
+
+                AddCommand(new IntermediateScriptCommand()
+                {
+                    OperationCode = OperationCode.ClearStack
+                });
+            }            
 
 #if DEBUG
             //DbgPrintCommands();

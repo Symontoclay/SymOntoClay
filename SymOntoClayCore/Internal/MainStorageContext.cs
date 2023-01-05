@@ -68,7 +68,7 @@ namespace SymOntoClay.Core.Internal
 
         public LoggingProvider LogicalSearchExplainProvider { get; set; }
 
-        public EntityConstraintsService EntityConstraintsService { get; set; }
+        public ServicesFactory ServicesFactory { get; set; }
 
         /// <inheritdoc/>
         public ILogicQueryParseAndCache LogicQueryParseAndCache { get; set; }
@@ -89,7 +89,7 @@ namespace SymOntoClay.Core.Internal
 
         ILoggingProvider IMainStorageContext.LoggingProvider => LogicalSearchExplainProvider;
 
-        IEntityConstraintsService IMainStorageContext.EntityConstraintsService => EntityConstraintsService;
+        IServicesFactory IMainStorageContext.ServicesFactory => ServicesFactory;
 
         public virtual void Die()
         {
@@ -101,7 +101,7 @@ namespace SymOntoClay.Core.Internal
             InstancesStorage.Dispose();
             LoaderFromSourceCode.Dispose();
             LogicalSearchExplainProvider.Dispose();
-            EntityConstraintsService.Dispose();
+            ServicesFactory.Dispose();
         }
 
         /// <inheritdoc/>
@@ -115,7 +115,7 @@ namespace SymOntoClay.Core.Internal
             InstancesStorage.Dispose();
             LoaderFromSourceCode.Dispose();
             LogicalSearchExplainProvider.Dispose();
-            EntityConstraintsService.Dispose();
+            ServicesFactory.Dispose();
 
             base.OnDisposed();
         }

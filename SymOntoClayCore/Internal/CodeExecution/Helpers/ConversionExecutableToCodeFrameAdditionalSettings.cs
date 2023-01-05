@@ -9,6 +9,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
     {
         public long? Timeout { get; set; }
         public float? Priority { get; set; }
+        public bool AllowParentLocalStorages { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -30,6 +31,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
 
             sb.AppendLine($"{spaces}{nameof(Timeout)} = {Timeout}");
             sb.AppendLine($"{spaces}{nameof(Priority)} = {Priority}");
+            sb.AppendLine($"{spaces}{nameof(AllowParentLocalStorages)} = {AllowParentLocalStorages}");
 
             return sb.ToString();
         }

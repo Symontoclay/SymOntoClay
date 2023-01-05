@@ -65,7 +65,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             if(entityConstraintsConcepts.Any())
             {
-                var entityConstraintsService = context.EntityConstraintsService;
+                var entityConstraintsService = context.ServicesFactory.GetEntityConstraintsService();
 
                 var constraintsList = new List<EntityConstraints>();
 

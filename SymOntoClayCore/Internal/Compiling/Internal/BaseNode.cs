@@ -102,7 +102,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             {
                 CompilePushVal(typeItem);
             }
-
+            
             CompilePushAnnotation(varDeclAstExpression);
 
             var command = new IntermediateScriptCommand();
@@ -189,6 +189,9 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case OperationCode.CompleteStateVal:
                 case OperationCode.BreakState:
                 case OperationCode.BreakStateVal:
+                case OperationCode.Reject:
+                case OperationCode.Exec:
+                case OperationCode.CodeItemDecl:
                 case OperationCode.Instantiate:
                     return $"{operationCode}";
 

@@ -7188,10 +7188,28 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Parser.ParseRuleInstance(System.String,System.Boolean)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Services.CodeFrameService.ConvertCompiledFunctionBodyToCodeFrame(SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Services.CodeFrameService.ConvertExecutableToCodeFrame(SymOntoClay.Core.Internal.CodeExecution.IExecutable,SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.Dictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.Helpers.ConversionExecutableToCodeFrameAdditionalSettings)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Services.EntityConstraintsService.Init">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Services.EntityConstraintsService.GetConstraintsList">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Services.EntityConstraintsService.ConvertToEntityConstraint(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Services.ServicesFactory.OnDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Services.ServicesFactory.GetEntityConstraintsService">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Services.ServicesFactory.GetCodeFrameService">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.GetLongHashCode">

@@ -154,7 +154,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             if(context != null)
             {
-                convertOptions.DontConvertConceptsToInhRelations = context.EntityConstraintsService.GetConstraintsList();
+                convertOptions.DontConvertConceptsToInhRelations = context.ServicesFactory.GetEntityConstraintsService().GetConstraintsList();
 
 #if DEBUG
                 //_gbcLogger.Info($"convertOptions.DontConvertConceptsToInhRelations = {convertOptions.DontConvertConceptsToInhRelations.WriteListToString()}");

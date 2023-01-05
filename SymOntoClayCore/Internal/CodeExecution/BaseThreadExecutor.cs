@@ -31,12 +31,14 @@ using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Instances;
+using SymOntoClay.Core.Internal.Services;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -51,6 +53,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             : base(context.Logger)
         {
             _context = context;
+            _codeFrameService = context.ServicesFactory.GetCodeFrameService();
 
             _globalStorage = context.Storage.GlobalStorage;
             _globalLogicalStorage = _globalStorage.LogicalStorage;
@@ -78,6 +81,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         private readonly IEngineContext _context;
+        private readonly ICodeFrameService _codeFrameService;
 
         private readonly IStorage _globalStorage;
         private readonly ILogicalStorage _globalLogicalStorage;
@@ -302,7 +306,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -321,6 +325,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     case OperationCode.VarDecl:
                         ProcessVarDecl(currentCommand);
+                        break;
+
+                    case OperationCode.CodeItemDecl:
+                        ProcessCodeItemDecl(currentCommand);
                         break;
 
                     case OperationCode.CallBinOp:
@@ -490,7 +498,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             if (prototypeValue.IsCodeItemValue)
             {
 #if DEBUG
-                //Log($"_currentCodeFrame.LocalContext.GetHashCode() = {_currentCodeFrame.LocalContext.GetHashCode()}");
+                //Log($"_currentCodeFrame.LocalContext.Storage.VarStorage.GetHashCode() = {_currentCodeFrame.LocalContext.Storage.VarStorage.GetHashCode()}");
 #endif
 
                 var instanceValue = _context.InstancesStorage.CreateInstance(prototypeValue.AsCodeItemValue.CodeItem, _currentCodeFrame.LocalContext);
@@ -950,6 +958,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #endif
             _currentCodeFrame.ValuesStack.Push(varName);
             _currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessCodeItemDecl(ScriptCommand currentCommand)
+        {
+            throw new NotImplementedException();
         }
 
         private void ProcessPushVal(ScriptCommand currentCommand)
@@ -1817,7 +1830,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"compiledCode = {compiledCode.ToDbgString()}");
 #endif
 
-            var codeFrame = CodeFrameHelper.ConvertCompiledFunctionBodyToCodeFrame(compiledCode, _currentCodeFrame.LocalContext, _context);
+            var codeFrame = _codeFrameService.ConvertCompiledFunctionBodyToCodeFrame(compiledCode, _currentCodeFrame.LocalContext);
 
             ExecuteCodeFrame(codeFrame, null, SyncOption.Sync);
         }
@@ -1903,9 +1916,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"timeout = {timeout}");
             //Log($"priority = {priority}");
             //Log($"syncOption = {syncOption}");
+            //Log($"ownLocalCodeExecutionContext?.Storage.VarStorage.GetHashCode() = {ownLocalCodeExecutionContext?.Storage.VarStorage.GetHashCode()}");
 #endif
 
             var targetLocalContext = ownLocalCodeExecutionContext == null? _currentCodeFrame.LocalContext : ownLocalCodeExecutionContext;
+
+#if DEBUG
+            //Log($"targetLocalContext.Storage.VarStorage.GetHashCode() = {targetLocalContext.Storage.VarStorage.GetHashCode()}");
+#endif
 
             if (executable.IsSystemDefined)
             {
@@ -1952,11 +1970,22 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     additionalSettings = new ConversionExecutableToCodeFrameAdditionalSettings()
                     {
                         Timeout = timeout,
-                        Priority = priority
+                        Priority = priority,
+                        AllowParentLocalStorages = ownLocalCodeExecutionContext == null ? false : true
                     };
                 }
+                else
+                {
+                    if(ownLocalCodeExecutionContext != null)
+                    {
+                        additionalSettings = new ConversionExecutableToCodeFrameAdditionalSettings()
+                        {
+                            AllowParentLocalStorages = true
+                        };
+                    }
+                }
 
-                var newCodeFrame = CodeFrameHelper.ConvertExecutableToCodeFrame(executable, kindOfParameters, namedParameters, positionedParameters, targetLocalContext, _context, additionalSettings);
+                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(executable, kindOfParameters, namedParameters, positionedParameters, targetLocalContext, additionalSettings);
 
 #if DEBUG
                 //Log($"newCodeFrame = {newCodeFrame}");

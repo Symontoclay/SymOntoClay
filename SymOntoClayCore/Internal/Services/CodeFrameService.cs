@@ -1,48 +1,30 @@
-/*MIT License
-
-Copyright (c) 2020 - 2022 Sergiy Tolkachov
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.*/
-
-using NLog;
+﻿using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeExecution.Helpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Storage;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 
-namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
+namespace SymOntoClay.Core.Internal.Services
 {
-    public static class CodeFrameHelper
+    public class CodeFrameService : BaseComponent, ICodeFrameService
     {
-#if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
+        public CodeFrameService(IMainStorageContext context)
+            : base(context.Logger)
+        {
+            _context = context;
+        }
 
-        public static CodeFrame ConvertCompiledFunctionBodyToCodeFrame(CompiledFunctionBody compiledFunctionBody, LocalCodeExecutionContext parentLocalCodeExecutionContext, IMainStorageContext context)
+        private readonly IMainStorageContext _context;
+
+        /// <inheritdoc/>
+        public CodeFrame ConvertCompiledFunctionBodyToCodeFrame(CompiledFunctionBody compiledFunctionBody, LocalCodeExecutionContext parentLocalCodeExecutionContext)
         {
             var storagesList = parentLocalCodeExecutionContext.Storage.GetStorages();
 
@@ -55,7 +37,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
 #endif
 
             var localCodeExecutionContext = new LocalCodeExecutionContext(parentLocalCodeExecutionContext);
-            var localStorageSettings = RealStorageSettingsHelper.Create(context, storagesList.ToList(), false);
+            var localStorageSettings = RealStorageSettingsHelper.Create(_context, storagesList.ToList(), false);
 
             var newStorage = new LocalStorage(localStorageSettings);
 
@@ -80,15 +62,17 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             return codeFrame;
         }
 
-        public static CodeFrame ConvertExecutableToCodeFrame(IExecutable function, KindOfFunctionParameters kindOfParameters,
+        /// <inheritdoc/>
+        public CodeFrame ConvertExecutableToCodeFrame(IExecutable function, KindOfFunctionParameters kindOfParameters,
             Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
-            LocalCodeExecutionContext parentLocalCodeExecutionContext, IMainStorageContext context, ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null)
+            LocalCodeExecutionContext parentLocalCodeExecutionContext, ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null)
         {
 #if DEBUG
             //Log($"kindOfParameters = {kindOfParameters}");
             //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
             //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
-            _gbcLogger.Info($"parentLocalCodeExecutionContext.GetHashCode() = {parentLocalCodeExecutionContext.GetHashCode()}");
+            //Log($"parentLocalCodeExecutionContext.Storage.VarStorage.GetHashCode() = {parentLocalCodeExecutionContext.Storage.VarStorage.GetHashCode()}");
+            //Log($"additionalSettings = {additionalSettings}");
 #endif
 
             var storagesList = parentLocalCodeExecutionContext.Storage.GetStorages();
@@ -97,16 +81,21 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             //Log($"storagesList.Count = {storagesList.Count}");
             //foreach(var tmpStorage in storagesList)
             //{
-            //    Log($"tmpStorage = {tmpStorage}");
+            //    Log($"tmpStorage.Kind = {tmpStorage.Kind}");
+            //    Log($"tmpStorage = {tmpStorage.VarStorage.GetHashCode()}");
             //}
 #endif
 
             var localCodeExecutionContext = new LocalCodeExecutionContext(parentLocalCodeExecutionContext);
-            var localStorageSettings = RealStorageSettingsHelper.Create(context, storagesList.ToList(), false);
+            var localStorageSettings = RealStorageSettingsHelper.Create(_context, storagesList.ToList(), additionalSettings?.AllowParentLocalStorages ?? false);
 
             var newStorage = new LocalStorage(localStorageSettings);
 
             localCodeExecutionContext.Storage = newStorage;
+
+#if DEBUG
+            //Log($"localCodeExecutionContext.Storage.VarStorage.GetHashCode() = {localCodeExecutionContext.Storage.VarStorage.GetHashCode()}");
+#endif
 
             switch (kindOfParameters)
             {
@@ -122,7 +111,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    FillUpNamedParameters(localCodeExecutionContext, function, namedParameters, context);
+                    FillUpNamedParameters(localCodeExecutionContext, function, namedParameters);
                     break;
 
                 default:
@@ -132,8 +121,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             localCodeExecutionContext.Holder = parentLocalCodeExecutionContext.Holder;
 
 #if DEBUG
-            //_gbcLogger.Info($"localCodeExecutionContext = {localCodeExecutionContext.GetHashCode()}");
-            //_gbcLogger.Info($"additionalSettings = {additionalSettings}");
+            //Log($"localCodeExecutionContext = {localCodeExecutionContext.GetHashCode()}");
+            //Log($"additionalSettings = {additionalSettings}");
 #endif
 
             var codeFrame = new CodeFrame();
@@ -148,7 +137,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             var codeItem = function.CodeItem;
 
 #if DEBUG
-            //_gbcLogger.Info($"codeItem = {codeItem}");
+            //Log($"codeItem = {codeItem}");
 #endif
 
             codeFrame.Metadata = codeItem;
@@ -163,7 +152,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             var priority = additionalSettings?.Priority;
 
 #if DEBUG
-            //_gbcLogger.Info($"priority = {priority}");
+            //Log($"priority = {priority}");
 #endif
 
             if (priority.HasValue)
@@ -177,14 +166,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
                 if (codeItemPriority != null)
                 {
 #if DEBUG
-                    //_gbcLogger.Info($"codeItemPriority = {codeItemPriority}");
+                    //Log($"codeItemPriority = {codeItemPriority}");
 #endif
-                    var numberValueLinearResolver = context.DataResolversFactory.GetNumberValueLinearResolver();
+                    var numberValueLinearResolver = _context.DataResolversFactory.GetNumberValueLinearResolver();
 
                     var numberValue = numberValueLinearResolver.Resolve(codeItemPriority, parentLocalCodeExecutionContext);
 
 #if DEBUG
-                    //_gbcLogger.Info($"numberValue = {numberValue}");
+                    //Log($"numberValue = {numberValue}");
 #endif
 
                     if (!(numberValue == null || numberValue.KindOfValue == KindOfValue.NullValue))
@@ -196,7 +185,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
 
 
 #if DEBUG
-            //_gbcLogger.Info($"processInfo = {processInfo}");
+            //Log($"processInfo = {processInfo}");
 #endif
 
 #if DEBUG
@@ -206,7 +195,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             return codeFrame;
         }
 
-        private static void FillUpPositionedParameters(LocalCodeExecutionContext localCodeExecutionContext, IExecutable function, List<Value> positionedParameters)
+        private void FillUpPositionedParameters(LocalCodeExecutionContext localCodeExecutionContext, IExecutable function, List<Value> positionedParameters)
         {
             var varsStorage = localCodeExecutionContext.Storage.VarStorage;
 
@@ -239,20 +228,20 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             }
         }
 
-        private static void FillUpNamedParameters(LocalCodeExecutionContext localCodeExecutionContext, IExecutable function, Dictionary<StrongIdentifierValue, Value> namedParameters, IMainStorageContext context)
+        private void FillUpNamedParameters(LocalCodeExecutionContext localCodeExecutionContext, IExecutable function, Dictionary<StrongIdentifierValue, Value> namedParameters)
         {
             var varsStorage = localCodeExecutionContext.Storage.VarStorage;
 
             var usedParameters = new List<StrongIdentifierValue>();
 
-            var synonymsResolver = context.DataResolversFactory.GetSynonymsResolver();
+            var synonymsResolver = _context.DataResolversFactory.GetSynonymsResolver();
 
             foreach (var namedParameter in namedParameters)
             {
                 var parameterName = namedParameter.Key;
 
 #if DEBUG
-                //_gbcLogger.Info($"parameterName = {parameterName}");
+                //Log($"parameterName = {parameterName}");
 #endif
 
                 var kindOfParameterName = parameterName.KindOfName;
@@ -271,13 +260,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
                 }
 
 #if DEBUG
-                //_gbcLogger.Info($"parameterName (after) = {parameterName}");
+                //Log($"parameterName (after) = {parameterName}");
 #endif
 
                 parameterName = CheckParameterName(parameterName, function, synonymsResolver, localCodeExecutionContext);
 
 #if DEBUG
-                //_gbcLogger.Info($"parameterName (after 2) = {parameterName}");
+                //Log($"parameterName (after 2) = {parameterName}");
 #endif
 
                 if (parameterName == null)
@@ -293,7 +282,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             }
 
 #if DEBUG
-            //_gbcLogger.Info($"usedParameters = {usedParameters.WriteListToString()}");
+            //Log($"usedParameters = {usedParameters.WriteListToString()}");
 #endif
 
             var argumentsList = function.Arguments;
@@ -324,13 +313,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             }
         }
 
-        private static StrongIdentifierValue CheckParameterName(StrongIdentifierValue parameterName, IExecutable function, SynonymsResolver synonymsResolver, LocalCodeExecutionContext localCodeExecutionContext)
+        private StrongIdentifierValue CheckParameterName(StrongIdentifierValue parameterName, IExecutable function, SynonymsResolver synonymsResolver, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            //_gbcLogger.Info($"parameterName = {parameterName}");
+            //Log($"parameterName = {parameterName}");
 #endif
 
-            if(function.ContainsArgument(parameterName))
+            if (function.ContainsArgument(parameterName))
             {
                 return parameterName;
             }
@@ -338,13 +327,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             var synonymsList = synonymsResolver.GetSynonyms(parameterName, localCodeExecutionContext);
 
 #if DEBUG
-            //_gbcLogger.Info($"synonymsList = {synonymsList.WriteListToString()}");
+            //Log($"synonymsList = {synonymsList.WriteListToString()}");
 #endif
 
-            foreach(var synonym in synonymsList)
+            foreach (var synonym in synonymsList)
             {
 #if DEBUG
-                //_gbcLogger.Info($"synonym = {synonym}");
+                //Log($"synonym = {synonym}");
 #endif
 
                 if (function.ContainsArgument(synonym))
@@ -355,7 +344,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
                 var alternativeSynonym = NameHelper.CreateAlternativeArgumentName(synonym);
 
 #if DEBUG
-                //_gbcLogger.Info($"alternativeSynonym = {alternativeSynonym}");
+                //Log($"alternativeSynonym = {alternativeSynonym}");
 #endif
 
                 if (function.ContainsArgument(alternativeSynonym))
@@ -367,19 +356,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
             var alternativeParameterName = NameHelper.CreateAlternativeArgumentName(parameterName);
 
 #if DEBUG
-            //_gbcLogger.Info($"alternativeParameterName = {alternativeParameterName}");
+            //Log($"alternativeParameterName = {alternativeParameterName}");
 #endif
 
             synonymsList = synonymsResolver.GetSynonyms(alternativeParameterName, localCodeExecutionContext);
 
 #if DEBUG
-            //_gbcLogger.Info($"synonymsList = {synonymsList.WriteListToString()}");
+            //Log($"synonymsList = {synonymsList.WriteListToString()}");
 #endif
 
             foreach (var synonym in synonymsList)
             {
 #if DEBUG
-                //_gbcLogger.Info($"synonym = {synonym}");
+                //Log($"synonym = {synonym}");
 #endif
 
                 if (function.ContainsArgument(synonym))
@@ -390,7 +379,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
                 var alternativeSynonym = NameHelper.CreateAlternativeArgumentName(synonym);
 
 #if DEBUG
-                //_gbcLogger.Info($"alternativeSynonym = {alternativeSynonym}");
+                //Log($"alternativeSynonym = {alternativeSynonym}");
 #endif
 
                 if (function.ContainsArgument(alternativeSynonym))

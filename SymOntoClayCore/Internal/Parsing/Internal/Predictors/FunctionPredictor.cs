@@ -71,6 +71,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
                             _state = State.InParamDecls;
                             break;
 
+                        case TokenKind.Word:
+                        case TokenKind.Identifier:
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

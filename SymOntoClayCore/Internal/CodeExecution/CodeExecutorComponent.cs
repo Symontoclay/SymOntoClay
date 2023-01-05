@@ -38,6 +38,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             : base(context.Logger)
         {
             _context = context;
+            _codeFrameService = context.ServicesFactory.GetCodeFrameService();
 
             var dataResolversFactory = context.DataResolversFactory;
 
@@ -51,6 +52,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         private readonly IEngineContext _context;
+        private readonly ICodeFrameService _codeFrameService;
 
         private readonly OperatorsResolver _operatorsResolver;
         private readonly MethodsResolver _methodsResolver;
@@ -185,7 +187,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
             else
             {
-                var newCodeFrame = CodeFrameHelper.ConvertExecutableToCodeFrame(executable, kindOfParameters, namedParameters, positionedParameters, parentLocalCodeExecutionContext, _context);
+                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(executable, kindOfParameters, namedParameters, positionedParameters, parentLocalCodeExecutionContext);
 
 #if DEBUG
                 //Log($"newCodeFrame = {newCodeFrame.ToDbgString()}");

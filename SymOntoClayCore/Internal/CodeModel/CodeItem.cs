@@ -36,6 +36,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         
         public abstract KindOfCodeEntity Kind { get;}
         
+        public bool IsAnonymous { get; set; }
+
         public StrongIdentifierValue Name
         { 
             get
@@ -277,8 +279,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
-
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}"); 
+            sb.AppendLine($"{spaces}{nameof(IsAnonymous)} = {IsAnonymous}");
             sb.PrintObjProp(n, nameof(Name), Name);
 
             sb.PrintObjListProp(n, nameof(InheritanceItems), InheritanceItems);
@@ -311,7 +313,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
-
+            sb.AppendLine($"{spaces}{nameof(IsAnonymous)} = {IsAnonymous}");
             sb.PrintShortObjProp(n, nameof(Name), Name);
 
             sb.PrintShortObjListProp(n, nameof(InheritanceItems), InheritanceItems);
@@ -344,6 +346,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
+            sb.AppendLine($"{spaces}{nameof(IsAnonymous)} = {IsAnonymous}");
             sb.PrintBriefObjProp(n, nameof(Name), Name);
             sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
 

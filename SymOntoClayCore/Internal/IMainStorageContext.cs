@@ -55,6 +55,6 @@ namespace SymOntoClay.Core.Internal
 
         ILoggingProvider LoggingProvider { get; }
 
-        IEntityConstraintsService EntityConstraintsService { get; }
+        IServicesFactory ServicesFactory { get; }
     }
 }

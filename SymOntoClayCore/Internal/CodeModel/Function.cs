@@ -209,7 +209,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var sb = new StringBuilder("fun");
 
-            if(Name != null)
+            if(Name != null && !IsAnonymous)
             {
                 sb.Append($" {Name.NameValue}");
             }

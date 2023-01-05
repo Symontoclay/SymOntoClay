@@ -73,7 +73,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.InstancesStorage.LoadFromSourceFiles();
             context.LoaderFromSourceCode.LoadFromSourceFiles();
 
-            context.EntityConstraintsService.Init();
+            context.ServicesFactory.GetEntityConstraintsService().Init();
         }
 
         public static void LoadFromSourceCode(MainStorageContext context)
@@ -83,7 +83,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.InstancesStorage.LoadFromSourceFiles();
             context.LoaderFromSourceCode.LoadFromSourceFiles();
 
-            context.EntityConstraintsService.Init();
+            context.ServicesFactory.GetEntityConstraintsService().Init();
         }
 
         public static MainStorageContext CreateAndInitMainStorageContext(StandaloneStorageSettings settings)
@@ -128,7 +128,7 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             context.LogicalSearchExplainProvider = new LoggingProvider(context, settings);
 
-            context.EntityConstraintsService = new EntityConstraintsService(context);
+            context.ServicesFactory = new ServicesFactory(context);
         }
 
         private static void BaseInitBaseCoreContext(BaseCoreContext context, BaseCoreSettings settings)

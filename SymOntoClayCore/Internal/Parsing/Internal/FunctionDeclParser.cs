@@ -68,6 +68,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             if(_namedFunction.Name == null)
             {
+                _namedFunction.IsAnonymous = true;
                 _namedFunction.Name = NameHelper.CreateEntityName();
             }
 
@@ -201,20 +202,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case State.GotAction:
-                    switch (_currToken.TokenKind)
-                    {
-                        case TokenKind.Word:
-                        case TokenKind.CloseFigureBracket:
-                        case TokenKind.CloseRoundBracket:
-                        case TokenKind.Semicolon:
-                        case TokenKind.OpenRoundBracket:
-                            _context.Recovery(_currToken);
-                            Exit();
-                            break;
-
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
-                    }
+                    _context.Recovery(_currToken);
+                    Exit();
                     break;
 
                 default:

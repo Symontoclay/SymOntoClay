@@ -8,6 +8,7 @@ namespace SymOntoClay.Core.Internal
 {
     public interface IEntityConstraintsService
     {
+        void Init();
         IList<StrongIdentifierValue> GetConstraintsList();
         EntityConstraints ConvertToEntityConstraint(StrongIdentifierValue name);
     }

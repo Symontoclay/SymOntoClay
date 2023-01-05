@@ -2968,5 +2968,180 @@ app PeaceKeeper
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case20()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter
+    {
+        'Begin' >> @>log;
+        SomeFun()() >> @>log;
+        'End' >> @>log;
+    }
+
+    fun SomeFun()
+    {
+        @a = 2;
+        return fun(){return @a + 1;};
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("3", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case20_a()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter
+    {
+        'Begin' >> @>log;
+        SomeFun(2)() >> @>log;
+        'End' >> @>log;
+    }
+
+    fun SomeFun(@a)
+    {
+        return fun(){return @a + 1;};
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("3", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case21()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter
+    {
+        'Begin' >> @>log;
+        OtherFun()() >> @>log;
+        'End' >> @>log;
+    }
+
+    fun OtherFun()
+    {
+        return SomeFun;
+    }
+
+    fun SomeFun()
+    {
+        return 1;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("1", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case22()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter
+    {
+        'Begin' >> @>log;
+        OtherFun(SomeFun);
+        'End' >> @>log;
+    }
+
+    fun OtherFun(@fn)
+    {
+        @fn() >> @>log;
+    }
+
+    fun SomeFun()
+    {
+        return 1;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("1", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

@@ -31,6 +31,7 @@ using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Instances;
+using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.Core.Internal.Services;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Threads;
@@ -54,6 +55,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             _context = context;
             _codeFrameService = context.ServicesFactory.GetCodeFrameService();
+
+            _projectLoader = new ProjectLoader(context);
 
             _globalStorage = context.Storage.GlobalStorage;
             _globalLogicalStorage = _globalStorage.LogicalStorage;
@@ -82,6 +85,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private readonly IEngineContext _context;
         private readonly ICodeFrameService _codeFrameService;
+
+        private readonly ProjectLoader _projectLoader;
 
         private readonly IStorage _globalStorage;
         private readonly ILogicalStorage _globalLogicalStorage;
@@ -306,7 +311,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -962,7 +967,29 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessCodeItemDecl(ScriptCommand currentCommand)
         {
-            throw new NotImplementedException();
+            var valuesStack = _currentCodeFrame.ValuesStack;
+
+            var annotationValue = valuesStack.Pop();
+
+#if DEBUG
+            //Log($"annotationValue = {annotationValue}");
+#endif
+
+            var prototypeValue = valuesStack.Pop();
+
+#if DEBUG
+            //Log($"prototypeValue = {prototypeValue}");
+#endif
+
+            var codeItem = prototypeValue.AsCodeItemValue.CodeItem;
+
+#if DEBUG
+            //Log($"codeItem = {codeItem}");
+#endif
+
+            _projectLoader.LoadCodeItem(codeItem, _currentCodeFrame.LocalContext.Storage);
+
+            _currentCodeFrame.CurrentPosition++;
         }
 
         private void ProcessPushVal(ScriptCommand currentCommand)

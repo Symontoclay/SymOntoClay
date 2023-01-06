@@ -478,17 +478,29 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var parser = new FunctionDeclParser(_context);
             parser.Run();
 
+            var function = parser.Result;
+            function.TypeOfAccess = TypeOfAccess.Local;
+
 #if DEBUG
-            //Log($"parser.Result = {parser.Result}");
+            //Log($"function = {function}");
 #endif
 
-            var value = new CodeItemValue(parser.Result);
+            var value = new CodeItemValue(function);
 
             var expr = new CodeItemAstExpression() { CodeItemValue = value };
 
             var intermediateNode = new IntermediateAstNode(expr);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+#if DEBUG
+            //Log($"function.IsAnonymous = {function.IsAnonymous}");
+#endif
+
+            if(!function.IsAnonymous)
+            {
+                Exit();
+            }
         }
 
         private void ProcessVarDecl()

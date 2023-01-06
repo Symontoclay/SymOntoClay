@@ -285,6 +285,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     break;
 
                 case TypeOfAccess.Public:
+                case TypeOfAccess.Local:
                     return true;
 
                 case TypeOfAccess.Unknown:

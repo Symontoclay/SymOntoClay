@@ -62,7 +62,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             if(subItems.Any())
             {
                 SaveItems(subItems, targetStorage, defferedLibsList);
-            }            
+            }
         }
 
         public List<string> LoadFromSourceFiles(IStorage targetStorage, string projectFile)

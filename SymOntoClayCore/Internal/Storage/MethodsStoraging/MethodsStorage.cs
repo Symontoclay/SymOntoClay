@@ -49,9 +49,11 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
             {
 #if DEBUG
                 //Log($"namedFunction = {namedFunction}");
+                //Log($"namedFunction.Name = {namedFunction.Name}");
+                //Log($"namedFunction.TypeOfAccess = {namedFunction.TypeOfAccess}");
 #endif
 
-                if(namedFunction.TypeOfAccess != TypeOfAccess.Local)
+                if (namedFunction.TypeOfAccess != TypeOfAccess.Local)
                 {
                     AnnotatedItemHelper.CheckAndFillUpHolder(namedFunction, _realStorageContext.MainStorageContext.CommonNamesStorage);
                 }

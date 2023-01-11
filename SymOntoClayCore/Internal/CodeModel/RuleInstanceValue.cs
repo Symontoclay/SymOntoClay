@@ -32,6 +32,7 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
+    [Obsolete("Use RuleInstance directly.")]
     public class RuleInstanceValue : Value
     {
         public RuleInstanceValue(RuleInstance ruleInstance)

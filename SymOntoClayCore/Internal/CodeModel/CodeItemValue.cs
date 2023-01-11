@@ -9,6 +9,7 @@ using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
+    [Obsolete("Use CodeItem directly.")]
     public class CodeItemValue : Value
     {
         public CodeItemValue(CodeItem codeItem)

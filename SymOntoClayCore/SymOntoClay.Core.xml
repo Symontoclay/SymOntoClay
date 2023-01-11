@@ -2155,10 +2155,28 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.CodeItem.TypeOfAccess">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.CodeItem.KindOfValue">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.CodeItem.IsCodeItem">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.CodeItem.AsCodeItem">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeItem.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeItem.ToSystemString">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeItem.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeItem.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeItem.CloneValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeItem.CloneCodeItem">
@@ -4764,9 +4782,6 @@
             <summary>
             Reserved for CodeEntities which will be accessible in module.
             </summary>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.Value.IsEntityValue">
-            <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.CloneValue">
             <summary>

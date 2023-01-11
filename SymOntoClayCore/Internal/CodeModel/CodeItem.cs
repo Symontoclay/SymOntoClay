@@ -30,7 +30,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class CodeItem: AnnotatedItem, IMemberAccess, IReadOnlyMemberAccess
+    public abstract class CodeItem: Value, IMemberAccess, IReadOnlyMemberAccess
     {
         public static readonly TypeOfAccess DefaultTypeOfAccess = TypeOfAccess.Protected;
         
@@ -169,6 +169,27 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual IdleActionItem AsIdleActionItem => null;
 
         /// <inheritdoc/>
+        public override KindOfValue KindOfValue => KindOfValue.CodeItem;
+
+        /// <inheritdoc/>
+        public override bool IsCodeItem => true;
+
+        /// <inheritdoc/>
+        public override CodeItem AsCodeItem => this;
+
+        /// <inheritdoc/>
+        public override object GetSystemValue()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public override string ToSystemString()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
             Name?.CheckDirty(options);
@@ -192,6 +213,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
         {
             return CloneCodeItem(context);
+        }
+
+        /// <inheritdoc/>
+        public override Value CloneValue(Dictionary<object, object> cloneContext)
+        {
+            return CloneCodeItem(cloneContext);
         }
 
         /// <summary>

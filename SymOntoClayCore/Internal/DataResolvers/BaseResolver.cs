@@ -42,11 +42,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         protected readonly IMainStorageContext _context;
 
+        [Obsolete("Make the name none static.")]
         public static List<StorageUsingOptions> GetStoragesList(IStorage storage)
         {
             return GetStoragesList(storage, null);
         }
 
+        [Obsolete("Make the name none static.")]
         public static List<StorageUsingOptions> GetStoragesList(IStorage storage, CollectChainOfStoragesOptions options)
         {
             var result = new List<StorageUsingOptions>();
@@ -127,6 +129,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
+        [Obsolete("Make the name none static.")]
         public static List<T> FilterByTypeOfAccess<T>(IList<T> source, IMainStorageContext context, LocalCodeExecutionContext localCodeExecutionContext, bool allowUnknown)
             where T : IReadOnlyMemberAccess
         {
@@ -215,6 +218,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
+        [Obsolete("Make the name none static.")]
         private static bool IsFitByTypeOfAccess(IReadOnlyMemberAccess item, StrongIdentifierValue holder, InheritanceResolver inheritanceResolver, LocalCodeExecutionContext localCodeExecutionContext, bool holderIsEntity, bool hasHolderInItems, bool allowUnknown, IEntityLogger logger)
         {
             var typeOfAccess = item.TypeOfAccess;

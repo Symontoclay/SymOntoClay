@@ -34,6 +34,7 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
+    [Obsolete("Use Function directly.")]
     public class FunctionValue : Value, IExecutable
     {
         public FunctionValue(Function function)

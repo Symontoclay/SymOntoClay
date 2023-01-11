@@ -103,14 +103,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsConditionalEntityValue => false;
         public virtual ConditionalEntityValue AsConditionalEntityValue => null;
 
-        /// <inheritdoc/>
         public virtual bool IsEntityValue => false;
         public virtual EntityValue AsEntityValue => null;
 
         public virtual bool IsLogicalModalityExpressionValue => false;
         public virtual LogicalModalityExpressionValue AsLogicalModalityExpressionValue => null;
 
+        public virtual bool IsCodeItem => false;
+        public virtual CodeItem AsCodeItem => null;
+
+        [Obsolete]
         public virtual bool IsCodeItemValue => false;
+        [Obsolete]
         public virtual CodeItemValue AsCodeItemValue => null;
 
         public virtual bool IsSystemNull => false;

@@ -41,12 +41,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
         InstanceValue,
         HostValue,
         PointRefValue,
+        [Obsolete]
         RuleInstanceValue,
         MutablePartOfRuleInstance,
         LogicalSearchResultValue,
         LogicalQueryOperationValue,
         FuzzyLogicNonNumericSequenceValue,
         RangeValue,
+        [Obsolete]
         FunctionValue,
         ErrorValue,
         ActionInstanceValue,
@@ -54,6 +56,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         ConditionalEntityValue,
         EntityValue,
         LogicalModalityExpressionValue,
-        CodeItemValue
+        [Obsolete]
+        CodeItemValue,
+        CodeItem
     }
 }

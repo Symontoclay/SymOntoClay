@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         public override KindOfAstStatement Kind => KindOfAstStatement.CompleteStatement;
 
         public KindOfCompletion KindOfCompletion { get; set; } = KindOfCompletion.Unknown;
-        public RuleInstanceValue RuleInstanceValue { get; set; }
+        public RuleInstance RuleInstance { get; set; }
 
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
@@ -54,7 +54,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             context[this] = result;
 
             result.KindOfCompletion = KindOfCompletion;
-            result.RuleInstanceValue = RuleInstanceValue?.Clone(context);
+            result.RuleInstance = RuleInstance?.Clone(context);
 
             result.AppendAnnotations(this, context);
 
@@ -64,7 +64,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         /// <inheritdoc/>
         public override void CalculateLongHashCodes(CheckDirtyOptions options)
         {
-            RuleInstanceValue?.CheckDirty(options);
+            RuleInstance?.CheckDirty(options);
 
             base.CalculateLongHashCodes(options);
         }
@@ -76,7 +76,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(KindOfCompletion)} = {KindOfCompletion}");
-            sb.PrintObjProp(n, nameof(RuleInstanceValue), RuleInstanceValue);
+            sb.PrintObjProp(n, nameof(RuleInstance), RuleInstance);
 
             sb.Append(base.PropertiesToString(n));
 
@@ -90,7 +90,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(KindOfCompletion)} = {KindOfCompletion}");
-            sb.PrintShortObjProp(n, nameof(RuleInstanceValue), RuleInstanceValue);
+            sb.PrintShortObjProp(n, nameof(RuleInstance), RuleInstance);
 
             sb.Append(base.PropertiesToShortString(n));
 
@@ -104,7 +104,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(KindOfCompletion)} = {KindOfCompletion}");
-            sb.PrintBriefObjProp(n, nameof(RuleInstanceValue), RuleInstanceValue);
+            sb.PrintBriefObjProp(n, nameof(RuleInstance), RuleInstance);
 
             sb.Append(base.PropertiesToBriefString(n));
 

@@ -43,6 +43,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _parentCodeExecutionContext = parentCodeExecutionContext;
             _parent = parent;
             _trigger = trigger;
+            _baseResolver = context.DataResolversFactory.GetBaseResolver();
 
 #if DEBUG
             //Log($"_trigger = {_trigger}");
@@ -112,6 +113,7 @@ namespace SymOntoClay.Core.Internal.Instances
         protected readonly LocalCodeExecutionContext _parentCodeExecutionContext;
         private readonly BaseInstance _parent;
         private readonly InlineTrigger _trigger;
+        private BaseResolver _baseResolver;
 
         private readonly bool _hasFactBindingVariable;
         private readonly StrongIdentifierValue _factBindingVariable;
@@ -137,7 +139,7 @@ namespace SymOntoClay.Core.Internal.Instances
             localCodeExecutionContext.MutablePart = mutablePart;
             localCodeExecutionContext.AddedRuleInstance = ruleInstance;
 
-            var storagesList = BaseResolver.GetStoragesList(localCodeExecutionContext.Storage);
+            var storagesList = _baseResolver.GetStoragesList(localCodeExecutionContext.Storage);
 
             var targetStorage = storagesList.FirstOrDefault(p => p.Storage.Kind == KindOfStorage.Local);
 
@@ -145,11 +147,9 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if (_hasFactBindingVariable)
             {
-                var ruleInstanceValue = new RuleInstanceValue(ruleInstance);
+                ruleInstance.CheckDirty();
 
-                ruleInstanceValue.CheckDirty();
-
-                targetVarStorage.SetValue(_factBindingVariable, ruleInstanceValue);
+                targetVarStorage.SetValue(_factBindingVariable, ruleInstance);
             }
 
             if (varsList.Any())

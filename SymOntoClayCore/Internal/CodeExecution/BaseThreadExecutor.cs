@@ -500,13 +500,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"prototypeValue = {prototypeValue}");
 #endif
 
-            if (prototypeValue.IsCodeItemValue)
+            if (prototypeValue.IsCodeItem)
             {
 #if DEBUG
                 //Log($"_currentCodeFrame.LocalContext.Storage.VarStorage.GetHashCode() = {_currentCodeFrame.LocalContext.Storage.VarStorage.GetHashCode()}");
 #endif
 
-                var instanceValue = _context.InstancesStorage.CreateInstance(prototypeValue.AsCodeItemValue.CodeItem, _currentCodeFrame.LocalContext);
+                var instanceValue = _context.InstancesStorage.CreateInstance(prototypeValue.AsCodeItem, _currentCodeFrame.LocalContext);
 
 #if DEBUG
                 //Log($"instanceValue = {instanceValue}");
@@ -556,7 +556,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"currentValue = {currentValue}");
 #endif
 
-            var ruleInstance = currentValue.AsRuleInstanceValue.RuleInstance;
+            var ruleInstance = currentValue.AsRuleInstance;
 
             _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
 
@@ -705,7 +705,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"currentValue = {currentValue}");
 #endif
 
-            var ruleInstance = currentValue.AsRuleInstanceValue.RuleInstance;
+            var ruleInstance = currentValue.AsRuleInstance;
 
             _executionCoordinator.RuleInstance = ruleInstance;
 
@@ -812,8 +812,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             switch (kindOfCurrentValue)
             {
-                case KindOfValue.RuleInstanceValue:
-                    ExecRuleInstanceValue(currentValue.AsRuleInstanceValue);
+                case KindOfValue.RuleInstance:
+                    ExecRuleInstanceValue(currentValue.AsRuleInstance);
                     break;
 
                 default:
@@ -981,7 +981,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"prototypeValue = {prototypeValue}");
 #endif
 
-            var codeItem = prototypeValue.AsCodeItemValue.CodeItem;
+            var codeItem = prototypeValue.AsCodeItem;
 
 #if DEBUG
             //Log($"codeItem = {codeItem}");
@@ -1201,9 +1201,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 case KindOfValue.StrongIdentifierValue:
                     return ValueConverter.ConvertStrongIdentifierValueToLogicalValue(currentValue.AsStrongIdentifierValue, _context).SystemValue;
 
-                case KindOfValue.RuleInstanceValue:
+                case KindOfValue.RuleInstance:
                     {
-                        var ruleInstance = currentValue.AsRuleInstanceValue.RuleInstance;
+                        var ruleInstance = currentValue.AsRuleInstance;
 
                         var searchOptions = new LogicalSearchOptions();
                         searchOptions.QueryExpression = ruleInstance;
@@ -1246,7 +1246,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"currentValue = {currentValue}");
 #endif
 
-            var ruleInstance = currentValue.AsRuleInstanceValue.RuleInstance;
+            var ruleInstance = currentValue.AsRuleInstance;
 
             ProcessError(ruleInstance);
 
@@ -1845,13 +1845,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             CallExecutable(method, null, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
         }
 
-        private void ExecRuleInstanceValue(RuleInstanceValue ruleInstanceValue)
+        private void ExecRuleInstanceValue(RuleInstance ruleInstance)
         {
 #if DEBUG
-            //Log($"ruleInstanceValue = {ruleInstanceValue.ToHumanizedString()}");
+            //Log($"ruleInstance = {ruleInstance.ToHumanizedString()}");
 #endif
 
-            var compiledCode = _converterFactToImperativeCode.Convert(ruleInstanceValue.RuleInstance, _currentCodeFrame.LocalContext);
+            var compiledCode = _converterFactToImperativeCode.Convert(ruleInstance, _currentCodeFrame.LocalContext);
 
 #if DEBUG
             //Log($"compiledCode = {compiledCode.ToDbgString()}");

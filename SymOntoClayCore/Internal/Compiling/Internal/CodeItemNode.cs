@@ -20,12 +20,12 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             //Log($"expression = {expression}");
 #endif
 
-            CompilePushVal(expression.CodeItemValue);
+            CompilePushVal(expression.CodeItem);
 
             CompilePushAnnotation(expression);
 
             
-            if(expression.CodeItemValue.CodeItem.IsAnonymous)
+            if(expression.CodeItem.IsAnonymous)
             {
                 var command = new IntermediateScriptCommand();
 

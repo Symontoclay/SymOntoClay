@@ -35,7 +35,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         private readonly IMainStorageContext _context;
-        
+
+        private BaseResolver _baseResolver;
+        private readonly object _baseResolverLockObj = new object();
+
         private ChannelsResolver _channelsResolver;
         private readonly object _channelsResolverLockObj = new object();
 
@@ -92,6 +95,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private AnnotationsResolver _annotationsResolver;
         private readonly object _annotationsResolverLockObj = new object();
+
+        /// <inheritdoc/>
+        public BaseResolver GetBaseResolver()
+        {
+            lock(_baseResolverLockObj)
+            {
+                if(_baseResolver == null)
+                {
+                    _baseResolver = new BaseResolver(_context);
+                }
+
+                return _baseResolver;
+            }
+        }
 
         /// <inheritdoc/>
         public ChannelsResolver GetChannelsResolver()

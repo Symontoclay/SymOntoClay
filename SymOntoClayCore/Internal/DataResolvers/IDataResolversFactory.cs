@@ -28,6 +28,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public interface IDataResolversFactory
     {
+        BaseResolver GetBaseResolver();
+
         /// <summary>
         /// Gets instance of Channels resolver.
         /// </summary>

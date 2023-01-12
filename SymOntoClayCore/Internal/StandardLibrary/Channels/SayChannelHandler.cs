@@ -68,8 +68,8 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
 
             switch(kindOfValue)
             {
-                case KindOfValue.RuleInstanceValue:
-                    ProcessRuleInstanceValue(value.AsRuleInstanceValue);
+                case KindOfValue.RuleInstance:
+                    ProcessRuleInstanceValue(value.AsRuleInstance);
                     break;
 
                 case KindOfValue.StringValue:
@@ -85,13 +85,13 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
 
         private float DefaultSoundPower = 50;
 
-        private void ProcessRuleInstanceValue(RuleInstanceValue value)
+        private void ProcessRuleInstanceValue(RuleInstance value)
         {
 #if DEBUG
             //Log($"value = {value}");
 #endif
 
-            _soundPublisherProvider?.PushSpeechFact(DefaultSoundPower, value.RuleInstance);
+            _soundPublisherProvider?.PushSpeechFact(DefaultSoundPower, value);
         }
 
         private void ProcessStringValue(StringValue value)
@@ -100,7 +100,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
             //Log($"value = {value}");
 #endif
 
-            var factValue = value.ToRuleInstanceValue(_engineContext);
+            var factValue = value.ToRuleInstance(_engineContext);
 
 #if DEBUG
             //Log($"factValue = {factValue}");

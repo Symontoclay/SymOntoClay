@@ -258,9 +258,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             //Log($"ruleInstanceItem = {ruleInstanceItem}");
 #endif
 
-            var value = new RuleInstanceValue(ruleInstanceItem);
             var node = new ConstValueAstExpression();
-            node.Value = value;
+            node.Value = ruleInstanceItem;
 
             var intermediateNode = new IntermediateAstNode(node);
 
@@ -485,9 +484,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             //Log($"function = {function}");
 #endif
 
-            var value = new CodeItemValue(function);
-
-            var expr = new CodeItemAstExpression() { CodeItemValue = value };
+            var expr = new CodeItemAstExpression() { CodeItem = function };
 
             var intermediateNode = new IntermediateAstNode(expr);
 

@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             //Log($"statement = {statement}");
 #endif
 
-            CompileValue(statement.RuleInstanceValue);
+            CompileValue(statement.RuleInstance);
 
             var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.Error;

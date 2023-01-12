@@ -108,7 +108,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 //Log($"parser.Result = {parser.Result}");
 #endif
 
-                                _rawStatement.RuleInstanceValue = new RuleInstanceValue(parser.Result);
+                                _rawStatement.RuleInstance = parser.Result;
 
                                 _state = State.GotFact;
                             }

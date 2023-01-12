@@ -111,12 +111,12 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
             var target = operand.Target;
 
-            if (!target.IsRuleInstanceValue)
+            if (!target.IsRuleInstance)
             {
                 throw new NotImplementedException();
             }
 
-            var query = target.AsRuleInstanceValue.RuleInstance;
+            var query = target.AsRuleInstance;
 
 #if DEBUG
             //Log($"query = {query}");
@@ -166,12 +166,12 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
             var target = operand.Target;
 
-            if (!target.IsRuleInstanceValue)
+            if (!target.IsRuleInstance)
             {
                 throw new NotImplementedException();
             }
 
-            var ruleInstance = target.AsRuleInstanceValue.RuleInstance;
+            var ruleInstance = target.AsRuleInstance;
 
 #if DEBUG
             //Log($"ruleInstance = {ruleInstance}");

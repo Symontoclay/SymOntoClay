@@ -30,7 +30,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
 {
     public class AstErrorStatement : AstStatement
     {
-        public RuleInstanceValue RuleInstanceValue { get; set; }
+        public RuleInstance RuleInstance { get; set; }
 
         /// <inheritdoc/>
         public override KindOfAstStatement Kind => KindOfAstStatement.ErrorStatement;
@@ -52,7 +52,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var result = new AstErrorStatement();
             context[this] = result;
 
-            result.RuleInstanceValue = RuleInstanceValue?.Clone(context);
+            result.RuleInstance = RuleInstance?.Clone(context);
 
             result.AppendAnnotations(this, context);
 
@@ -70,7 +70,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         /// <inheritdoc/>
         public override void CalculateLongHashCodes(CheckDirtyOptions options)
         {
-            RuleInstanceValue.CheckDirty(options);
+            RuleInstance.CheckDirty(options);
 
             base.CalculateLongHashCodes(options);
         }
@@ -81,7 +81,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(RuleInstanceValue), RuleInstanceValue);
+            sb.PrintObjProp(n, nameof(RuleInstance), RuleInstance);
             //sb.PrintObjProp(n, nameof(SuperName), SuperName);
             //sb.PrintObjProp(n, nameof(Rank), Rank);
 
@@ -97,7 +97,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjProp(n, nameof(RuleInstanceValue), RuleInstanceValue);
+            sb.PrintShortObjProp(n, nameof(RuleInstance), RuleInstance);
             //sb.PrintShortObjProp(n, nameof(SuperName), SuperName);
             //sb.PrintShortObjProp(n, nameof(Rank), Rank);
 
@@ -113,7 +113,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjProp(n, nameof(RuleInstanceValue), RuleInstanceValue);
+            sb.PrintBriefObjProp(n, nameof(RuleInstance), RuleInstance);
             //sb.PrintBriefObjProp(n, nameof(SuperName), SuperName);
             //sb.PrintBriefObjProp(n, nameof(Rank), Rank);
 

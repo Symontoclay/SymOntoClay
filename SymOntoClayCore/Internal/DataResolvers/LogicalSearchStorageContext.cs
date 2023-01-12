@@ -79,7 +79,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return source;
             }
 
-            source = BaseResolver.FilterByTypeOfAccess(source, _mainStorageContext, _localCodeExecutionContext, true);
+            source = _logicalValueModalityResolver.FilterByTypeOfAccess(source, _localCodeExecutionContext, true);
 
             if (enableModalitiesControll)
             {

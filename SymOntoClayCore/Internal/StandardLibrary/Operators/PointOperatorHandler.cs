@@ -64,9 +64,9 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
             if (localCodeExecutionContext.Kind == KindOfLocalCodeExecutionContext.AddingFact)
             {
-                if (leftOperand.IsRuleInstanceValue && rightOperand.IsStrongIdentifierValue)
+                if (leftOperand.IsRuleInstance && rightOperand.IsStrongIdentifierValue)
                 {
-                    var ruleInstance = leftOperand.AsRuleInstanceValue.RuleInstance;
+                    var ruleInstance = leftOperand.AsRuleInstance;
 
                     if (ruleInstance == localCodeExecutionContext.AddedRuleInstance)
                     {

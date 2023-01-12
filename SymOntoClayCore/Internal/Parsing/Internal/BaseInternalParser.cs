@@ -102,8 +102,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         var parser = new LogicalQueryParser(_context);
                         parser.Run();
 
-                        var value = new RuleInstanceValue(parser.Result);
-                        return value;
+                        return parser.Result;
                     }
 
                 case TokenKind.EntityCondition:
@@ -189,8 +188,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         var parser = new LogicalQueryParser(_context);
                         parser.Run();
 
-                        var value = new RuleInstanceValue(parser.Result);
-                        result.Value = value;
+                        result.Value = parser.Result;
                         result.Kind = KindOfValueOnObjDefLevel.ConstLiteral;
                     }
                     break;

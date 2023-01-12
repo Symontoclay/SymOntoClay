@@ -195,9 +195,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 switch (Target.KindOfValue)
                 {
-                    case KindOfValue.RuleInstanceValue:
+                    case KindOfValue.RuleInstance:
                         {
-                            var val = Target.AsRuleInstanceValue;
+                            var val = Target.AsRuleInstance;
 
                             sb.Append(val.ToHumanizedString(options));
                         }

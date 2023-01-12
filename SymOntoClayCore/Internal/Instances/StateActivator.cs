@@ -41,12 +41,14 @@ namespace SymOntoClay.Core.Internal.Instances
             _stateName = _stateDef.Name;
             _appInstance = parent;
             _bindingVariables = activationInfoOfState.ActivatingConditions.BindingVariables;
+            _baseResolver = context.DataResolversFactory.GetBaseResolver();
         }
 
         private StateDef _stateDef;
         private AppInstance _appInstance;
         private StrongIdentifierValue _stateName;
         private BindingVariables _bindingVariables;
+        private BaseResolver _baseResolver;
 
         /// <inheritdoc/>
         protected override bool ShouldSearch()
@@ -74,7 +76,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if (_bindingVariables.Any())
             {
-                var storagesList = BaseResolver.GetStoragesList(localCodeExecutionContext.Storage);
+                var storagesList = _baseResolver.GetStoragesList(localCodeExecutionContext.Storage);
 
                 var targetStorage = storagesList.FirstOrDefault(p => p.Storage.Kind == KindOfStorage.Local);
 

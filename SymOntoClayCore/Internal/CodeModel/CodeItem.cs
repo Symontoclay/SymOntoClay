@@ -129,9 +129,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public List<StrongIdentifierValue> ImportsList { get; private set; } = new List<StrongIdentifierValue>();
 
-        public virtual bool IsRuleInstance => false;
-        public virtual RuleInstance AsRuleInstance => null;
-
         public virtual bool IsAction => false;
         public virtual ActionDef AsAction => null;
 

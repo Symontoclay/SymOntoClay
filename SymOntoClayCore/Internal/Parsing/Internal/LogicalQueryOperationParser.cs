@@ -107,9 +107,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 //Log($"ruleInstanceItem = {ruleInstanceItem}");
 #endif
 
-                                var value = new RuleInstanceValue(ruleInstanceItem);
-
-                                Result.Target = value;
+                                Result.Target = ruleInstanceItem;
 
                                 _state = State.GotTarget;
                             }

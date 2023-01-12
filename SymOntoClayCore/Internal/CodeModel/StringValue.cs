@@ -72,13 +72,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return SystemValue;
         }
 
-        public RuleInstanceValue ToRuleInstanceValue(IEngineContext engineContext)
+        public RuleInstance ToRuleInstance(IEngineContext engineContext)
         {
             lock(_toRuleInstanceValueLockObj)
             {
                 if (_usedSystemValueForRuleInstanceValue == SystemValue)
                 {
-                    return _ruleInstanceValue;
+                    return _ruleInstance;
                 }
 
                 _usedSystemValueForRuleInstanceValue = SystemValue;
@@ -102,16 +102,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     throw new NotImplementedException();
                 }
 
-                _ruleInstanceValue = new RuleInstanceValue(factsList.Single());
+                _ruleInstance = factsList.Single();
 
-                _ruleInstanceValue.CheckDirty();
+                _ruleInstance.CheckDirty();
 
-                return _ruleInstanceValue;
+                return _ruleInstance;
             }
         }
 
         private readonly object _toRuleInstanceValueLockObj = new object();
-        private RuleInstanceValue _ruleInstanceValue;
+        private RuleInstance _ruleInstance;
         private string _usedSystemValueForRuleInstanceValue;
 
         /// <inheritdoc/>

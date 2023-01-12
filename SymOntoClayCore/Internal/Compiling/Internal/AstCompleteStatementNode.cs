@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             {
                 case KindOfCompletion.Action:
                     {
-                        var ruleInstance = statement.RuleInstanceValue;
+                        var ruleInstance = statement.RuleInstance;
 
                         if(ruleInstance == null)
                         {
@@ -58,7 +58,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                             break;
                         }
 
-                        CompileValue(statement.RuleInstanceValue);
+                        CompileValue(statement.RuleInstance);
 
                         AddCommand(new IntermediateScriptCommand()
                         {
@@ -69,7 +69,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                 case KindOfCompletion.State:
                     {
-                        var ruleInstance = statement.RuleInstanceValue;
+                        var ruleInstance = statement.RuleInstance;
 
                         if(ruleInstance == null)
                         {
@@ -80,7 +80,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                             break;
                         }
 
-                        CompileValue(statement.RuleInstanceValue);
+                        CompileValue(statement.RuleInstance);
 
                         AddCommand(new IntermediateScriptCommand()
                         {

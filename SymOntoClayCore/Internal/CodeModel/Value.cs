@@ -70,8 +70,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsPointRefValue => false;
         public virtual PointRefValue AsPointRefValue => null;
 
-        public virtual bool IsRuleInstanceValue => false;
-        public virtual RuleInstanceValue AsRuleInstanceValue => null;
+        public virtual bool IsRuleInstance => false;
+        public virtual RuleInstance AsRuleInstance => null;
 
         public virtual bool IsMutablePartOfRuleInstanceValue => false;
         public virtual MutablePartOfRuleInstanceValue AsMutablePartOfRuleInstanceValue => null;
@@ -87,9 +87,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public virtual bool IsRangeValue => false;
         public virtual RangeValue AsRangeValue => null;
-
-        public virtual bool IsFunctionValue => false;
-        public virtual FunctionValue AsFunctionValue => null;
 
         public virtual bool IsErrorValue => false;
         public virtual ErrorValue AsErrorValue => null;
@@ -111,11 +108,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public virtual bool IsCodeItem => false;
         public virtual CodeItem AsCodeItem => null;
-
-        [Obsolete]
-        public virtual bool IsCodeItemValue => false;
-        [Obsolete]
-        public virtual CodeItemValue AsCodeItemValue => null;
 
         public virtual bool IsSystemNull => false;
 

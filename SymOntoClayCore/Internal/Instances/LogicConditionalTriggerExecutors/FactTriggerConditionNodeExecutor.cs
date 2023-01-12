@@ -143,12 +143,11 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 
                             if(destVar != null)
                             {
-                                var ruleInstanceValue = new RuleInstanceValue(processedRuleInstance);
-                                ruleInstanceValue.CheckDirty();
+                                processedRuleInstance.CheckDirty();
 
                                 var varItem = new Var();
                                 varItem.Name = destVar;
-                                varItem.Value = ruleInstanceValue;
+                                varItem.Value = processedRuleInstance;
                                 varItem.TypeOfAccess = TypeOfAccess.Local;
 
                                 resultVarList.Add(varItem);

@@ -19,7 +19,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         /// <inheritdoc/>
         public override CodeItemAstExpression AsCodeItemAstExpression => this;
 
-        public CodeItemValue CodeItemValue { get; set; }
+        public CodeItem CodeItem { get; set; }
 
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var result = new CodeItemAstExpression();
             context[this] = result;
 
-            result.CodeItemValue = CodeItemValue.Clone(context);
+            result.CodeItem = CodeItem.CloneCodeItem(context);
 
             result.AppendAnnotations(this, context);
 
@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         {
             base.DiscoverAllAnnotations(result);
 
-            CodeItemValue.DiscoverAllAnnotations(result);
+            CodeItem.DiscoverAllAnnotations(result);
         }
 
         /// <inheritdoc/>
@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(CodeItemValue), CodeItemValue);
+            sb.PrintObjProp(n, nameof(CodeItem), CodeItem);
 
             sb.Append(base.PropertiesToString(n));
 
@@ -72,7 +72,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjProp(n, nameof(CodeItemValue), CodeItemValue);
+            sb.PrintShortObjProp(n, nameof(CodeItem), CodeItem);
 
             sb.Append(base.PropertiesToShortString(n));
 
@@ -85,7 +85,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjProp(n, nameof(CodeItemValue), CodeItemValue);
+            sb.PrintBriefObjProp(n, nameof(CodeItem), CodeItem);
 
             sb.Append(base.PropertiesToBriefString(n));
 
@@ -95,7 +95,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            return CodeItemValue?.ToHumanizedString(options);
+            return CodeItem?.ToHumanizedString(options);
         }
     }
 }

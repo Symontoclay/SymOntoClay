@@ -51,31 +51,19 @@ namespace SymOntoClay.UnityAsset.Core.Internal.HostSupport
             //Log($"relativeCoordinate = {relativeCoordinate}");
 #endif
 
-            var invocableInMainThreadObj = new InvocableInMainThreadObj<Vector3>(() => {
-                return _platformSupport.ConvertFromRelativeToAbsolute(relativeCoordinate);
-            }, _invokerInMainThread);
-
-            return invocableInMainThreadObj.Run();
+            return _platformSupport.ConvertFromRelativeToAbsolute(relativeCoordinate);
         }
 
         /// <inheritdoc/>
         public Vector3 GetCurrentAbsolutePosition()
         {
-            var invocableInMainThreadObj = new InvocableInMainThreadObj<Vector3>(() => {
-                return _platformSupport.GetCurrentAbsolutePosition();
-            }, _invokerInMainThread);
-
-            return invocableInMainThreadObj.Run();
+            return _platformSupport.GetCurrentAbsolutePosition();
         }
 
         /// <inheritdoc/>
         public float GetDirectionToPosition(Vector3 position)
         {
-            var invocableInMainThreadObj = new InvocableInMainThreadObj<float>(() => {
-                return _platformSupport.GetDirectionToPosition(position);
-            }, _invokerInMainThread);
-
-            return invocableInMainThreadObj.Run();
+            return _platformSupport.GetDirectionToPosition(position);
         }
     }
 }

@@ -929,6 +929,12 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread.InvocableInMainThreadObj`1.Invoke">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread.InvokerInMainThread.RunInMainThread(System.Action)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread.InvokerInMainThread.RunInMainThread``1(System.Func{``0})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread.InvokerInMainThread.SetInvocableObj(SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread.IInvocableInMainThread)">
             <inheritdoc/>
         </member>

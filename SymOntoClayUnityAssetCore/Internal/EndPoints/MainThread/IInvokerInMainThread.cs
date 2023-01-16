@@ -28,6 +28,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread
 {
     public interface IInvokerInMainThread
     {
+        void RunInMainThread(Action function);
+        TResult RunInMainThread<TResult>(Func<TResult> function);
         void SetInvocableObj(IInvocableInMainThread invokableObj);
     }
 }

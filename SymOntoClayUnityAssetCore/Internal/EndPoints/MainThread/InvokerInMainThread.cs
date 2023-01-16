@@ -24,11 +24,39 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread
 {
     public class InvokerInMainThread : IInvokerInMainThread
     {
+        private static int MainThreadId = 1;
+
+        /// <inheritdoc/>
+        public void RunInMainThread(Action function)
+        {
+            if(Thread.CurrentThread.ManagedThreadId == MainThreadId)
+            {
+                function();
+                return;
+            }
+
+            var invocableInMainThreadObj = new InvocableInMainThread(function, this);
+            invocableInMainThreadObj.Run();
+        }
+
+        /// <inheritdoc/>
+        public TResult RunInMainThread<TResult>(Func<TResult> function)
+        {
+            if (Thread.CurrentThread.ManagedThreadId == MainThreadId)
+            {
+                return function();
+            }
+
+            var invocableInMainThreadObj = new InvocableInMainThreadObj<TResult>(function, this);
+            return invocableInMainThreadObj.Run();
+        }
+
         /// <inheritdoc/>
         public void SetInvocableObj(IInvocableInMainThread invokableObj)
         {

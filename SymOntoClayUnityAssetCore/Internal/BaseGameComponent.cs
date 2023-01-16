@@ -70,15 +70,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         /// <inheritdoc/>
         public void RunInMainThread(Action function)
         {
-            var invocableInMainThreadObj = new InvocableInMainThread(function, _invokerInMainThread);
-            invocableInMainThreadObj.Run();
+            _invokerInMainThread.RunInMainThread(function);
         }
 
         /// <inheritdoc/>
         public TResult RunInMainThread<TResult>(Func<TResult> function)
         {
-            var invocableInMainThreadObj = new InvocableInMainThreadObj<TResult>(function, _invokerInMainThread);
-            return invocableInMainThreadObj.Run();
+            return _invokerInMainThread.RunInMainThread(function);
         }
 
         public IStandardFactsBuilder StandardFactsBuilder => _standardFactsBuilder;

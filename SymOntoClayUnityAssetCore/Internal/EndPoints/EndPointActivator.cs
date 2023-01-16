@@ -87,11 +87,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             {
                 try
                 {
-                    var invocableInMainThreadObj = new InvocableInMainThread(() => {
+                    _invokingInMainThread.RunInMainThread(() => {
                         endpointInfo.MethodInfo.Invoke(platformListener, paramsList);
-                    }, _invokingInMainThread);
-
-                    invocableInMainThreadObj.Run();
+                    });
 
                     processInfo.Status = ProcessStatus.Completed;
                 }

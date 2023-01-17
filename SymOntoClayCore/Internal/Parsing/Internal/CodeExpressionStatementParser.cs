@@ -67,12 +67,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"_hasSomething = {_hasSomething}");
-            //Log($"_lastIsOperator?.ToHumanizedString() = {_lastIsOperator?.ToHumanizedString()}");
-            //Log($"_lastBinaryOperator?.ToHumanizedString() = {_lastBinaryOperator?.ToHumanizedString()}");
+            Log($"_currToken = {_currToken}");
+            Log($"_hasSomething = {_hasSomething}");
+            Log($"_lastIsOperator?.ToHumanizedString() = {_lastIsOperator?.ToHumanizedString()}");
+            Log($"_lastBinaryOperator?.ToHumanizedString() = {_lastBinaryOperator?.ToHumanizedString()}");
             //Log($"_nodePoint = {_nodePoint}");
-            //Log($"_nodePoint.BuildExpr<AstExpression>()?.ToHumanizedString() = {_nodePoint.BuildExpr<AstExpression>()?.ToHumanizedString()}");
+            Log($"_nodePoint.BuildExpr<AstExpression>()?.ToHumanizedString() = {_nodePoint.BuildExpr<AstExpression>()?.ToHumanizedString()}");
 #endif
 
             switch (_currToken.TokenKind)
@@ -193,9 +193,29 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     ProcessAnnotation();
                     break;
 
+                case TokenKind.OpenFigureBracket:
+                    ProcessFigureBracketConstruction();
+                    break;
+
                 default:
                     throw new UnexpectedTokenException(_currToken);
             }
+        }
+
+        private void ProcessFigureBracketConstruction()
+        {
+            ProcessObjectDeclaration();
+        }
+
+        private void ProcessObjectDeclaration()
+        {
+            _lastBinaryOperator = null;
+            _lastIsOperator = null;
+            _hasSomething = true;
+
+            _context.Recovery(_currToken);
+
+            throw new NotImplementedException();
         }
 
         private void ProcessAnnotation()

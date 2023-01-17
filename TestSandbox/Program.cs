@@ -1721,7 +1721,7 @@ action Go
         {
             _logger.Log("Begin");
 
-            _logger.Log($"Thread.CurrentThread.ManagedThreadId = {Thread.CurrentThread.ManagedThreadId}");
+            //_logger.Log($"Thread.CurrentThread.ManagedThreadId = {Thread.CurrentThread.ManagedThreadId}");
 
             var handler = new GeneralStartHandler();
             handler.Run();

@@ -2,13 +2,10 @@
 {
     on Enter
     {
-        fun SomeFun()
-        {
-            return 1;
-        }
-
         'Begin' >> @>log;
-        SomeFun() >> @>log;
+        
+        var @a = {};
+
         'End' >> @>log;
     }
 }

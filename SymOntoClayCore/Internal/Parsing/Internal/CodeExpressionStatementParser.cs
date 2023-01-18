@@ -67,12 +67,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
-            Log($"_hasSomething = {_hasSomething}");
-            Log($"_lastIsOperator?.ToHumanizedString() = {_lastIsOperator?.ToHumanizedString()}");
-            Log($"_lastBinaryOperator?.ToHumanizedString() = {_lastBinaryOperator?.ToHumanizedString()}");
+            //Log($"_currToken = {_currToken}");
+            //Log($"_hasSomething = {_hasSomething}");
+            //Log($"_lastIsOperator?.ToHumanizedString() = {_lastIsOperator?.ToHumanizedString()}");
+            //Log($"_lastBinaryOperator?.ToHumanizedString() = {_lastBinaryOperator?.ToHumanizedString()}");
             //Log($"_nodePoint = {_nodePoint}");
-            Log($"_nodePoint.BuildExpr<AstExpression>()?.ToHumanizedString() = {_nodePoint.BuildExpr<AstExpression>()?.ToHumanizedString()}");
+            //Log($"_nodePoint.BuildExpr<AstExpression>()?.ToHumanizedString() = {_nodePoint.BuildExpr<AstExpression>()?.ToHumanizedString()}");
 #endif
 
             switch (_currToken.TokenKind)
@@ -215,7 +215,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             _context.Recovery(_currToken);
 
-            throw new NotImplementedException();
+            var parser = new AnonymousObjectPaser(_context);
+            parser.Run();
+
+#if DEBUG
+            //Log($"parser.Result = {parser.Result}");
+#endif
+
+            var node = new CodeItemAstExpression() { CodeItem = parser.Result };
+
+            var intermediateNode = new IntermediateAstNode(node);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
         }
 
         private void ProcessAnnotation()

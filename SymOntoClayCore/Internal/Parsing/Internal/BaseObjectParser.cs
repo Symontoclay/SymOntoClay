@@ -94,6 +94,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case KindOfCodeEntity.Class:
                     return CreateClass();
 
+                case KindOfCodeEntity.AnonymousObject:
+                    return CreateAnonymousObject();
+
                 case KindOfCodeEntity.World:
                     return CreateWorld();
 

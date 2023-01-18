@@ -45,7 +45,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 {
                     OperationCode = OperationCode.ClearStack
                 });
-            }            
+            }
 
 #if DEBUG
             //DbgPrintCommands();

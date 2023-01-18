@@ -523,6 +523,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             return result;
         }
 
+        protected AnonymousObject CreateAnonymousObject()
+        {
+            var result = new AnonymousObject();
+
+            DefaultSettingsOfCodeEntityHelper.SetUpAnnotatedItem(result, CurrentDefaultSetings);
+
+            FillUpCodeItem(result);
+
+            return result;
+        }
+
         protected World CreateWorld()
         {
             var result = new World();

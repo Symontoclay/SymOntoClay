@@ -48,23 +48,32 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 #endif
 
             leftOperand = TryResolveFromVar(leftOperand, localCodeExecutionContext);
-            rightOperand = TryResolveFromVar(rightOperand, localCodeExecutionContext);
 
 #if DEBUG
-            //Log($"leftOperand (after) = {leftOperand}");
-            //Log($"rightOperand (after) = {rightOperand}");
+            Log($"leftOperand (after) = {leftOperand}");
+            Log($"rightOperand (after) = {rightOperand}");
 #endif
 
-            if ((leftOperand.IsHostValue || leftOperand.IsTaskValue) && rightOperand.IsStrongIdentifierValue)
+            if ((leftOperand.IsHostValue || leftOperand.IsTaskValue) && rightOperand.IsStrongIdentifierValue && rightOperand.AsStrongIdentifierValue.KindOfName == KindOfName.Concept)
             {
                 var result = new PointRefValue(leftOperand, rightOperand);
                 result.CheckDirty();
                 return result;
             }
 
+            if(leftOperand.IsInstanceValue && rightOperand.IsStrongIdentifierValue)
+            {
+                var rightIdentifier = rightOperand.AsStrongIdentifierValue;
+
+                if(rightIdentifier.KindOfName == KindOfName.Var)
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
             if (localCodeExecutionContext.Kind == KindOfLocalCodeExecutionContext.AddingFact)
             {
-                if (leftOperand.IsRuleInstance && rightOperand.IsStrongIdentifierValue)
+                if (leftOperand.IsRuleInstance && rightOperand.IsStrongIdentifierValue && rightOperand.AsStrongIdentifierValue.KindOfName == KindOfName.Concept)
                 {
                     var ruleInstance = leftOperand.AsRuleInstance;
 

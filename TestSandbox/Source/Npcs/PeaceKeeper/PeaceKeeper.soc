@@ -2,9 +2,13 @@
 {
     on Enter
     {
-        'Begin' >> @>log;
+        'Begin' >> @>log; 
         
-        var @a = {};
+        var @a = {
+            @b = 1;
+        };
+
+        @a.@b >> @>log;
 
         'End' >> @>log;
     }

@@ -51,8 +51,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
 #if DEBUG
             //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");
             //Log($"_state = {_state}");
+            //Log($"Result = {Result}");
 #endif
 
             switch (_state)

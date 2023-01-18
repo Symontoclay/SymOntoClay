@@ -460,6 +460,9 @@ namespace SymOntoClay.Core.Internal.Serialization
                 case KindOfCodeEntity.Class:
                     break;
 
+                case KindOfCodeEntity.AnonymousObject:
+                    break;
+
                 case KindOfCodeEntity.InlineTrigger:
                     targetStorage.TriggersStorage.Append(codeItem.AsInlineTrigger);
                     break;
@@ -610,6 +613,7 @@ namespace SymOntoClay.Core.Internal.Serialization
                 case KindOfCodeEntity.World:
                 case KindOfCodeEntity.Lib:
                 case KindOfCodeEntity.Class:
+                case KindOfCodeEntity.AnonymousObject:
                 case KindOfCodeEntity.InlineTrigger:
                 case KindOfCodeEntity.RelationDescription:
                 case KindOfCodeEntity.RuleOrFact:

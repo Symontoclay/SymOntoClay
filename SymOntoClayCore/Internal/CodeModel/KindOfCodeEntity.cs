@@ -47,6 +47,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         MutuallyExclusiveStatesSet,
         RelationDescription,
         Synonym,
-        IdleActionItem
+        IdleActionItem,
+        AnonymousObject
     }
 }

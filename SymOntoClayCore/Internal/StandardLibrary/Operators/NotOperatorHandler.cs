@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             //Log($"annotation = {annotation}");
 #endif
 
-            operand = TryResolveFromVar(operand, localCodeExecutionContext);
+            operand = TryResolveFromVarOrExpr(operand, localCodeExecutionContext);
 
 #if DEBUG
             //Log($"operand (after) = {operand}");

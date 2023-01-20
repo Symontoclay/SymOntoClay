@@ -3038,6 +3038,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.GetExecutable(SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.Dictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.GetVarValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
             <inheritdoc/>
         </member>
@@ -3559,7 +3562,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.MutablePartOfRuleInstanceValue.ToSystemString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.MutablePartOfRuleInstanceValue.SetProperty(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.MutablePartOfRuleInstanceValue.SetPropertyValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.MutablePartOfRuleInstanceValue.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
@@ -4991,6 +4994,9 @@
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory.GetAnnotationsResolver">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory.GetValueResolvingHelper">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.IDataResolversFactory.GetChannelsResolver">
             <summary>
             Gets instance of Channels resolver.
@@ -5887,6 +5893,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.GetExecutable(SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.IDictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.GetVarValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.OnDisposed">
             <inheritdoc/>
         </member>
@@ -6176,6 +6185,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.ObjectInstance.GetExecutable(SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.IDictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.ObjectInstance.GetVarValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ProcessInfo.Status">

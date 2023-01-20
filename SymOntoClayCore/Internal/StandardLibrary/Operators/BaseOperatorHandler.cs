@@ -36,14 +36,14 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         {
             var dataResolversFactory = engineContext.DataResolversFactory;
 
-            _varsResolver = dataResolversFactory.GetVarsResolver();
+            _valueResolvingHelper = dataResolversFactory.GetValueResolvingHelper();            
         }
 
-        private readonly VarsResolver _varsResolver;
+        private readonly ValueResolvingHelper _valueResolvingHelper;
 
-        protected Value TryResolveFromVar(Value operand, LocalCodeExecutionContext localCodeExecutionContext)
+        protected Value TryResolveFromVarOrExpr(Value operand, LocalCodeExecutionContext localCodeExecutionContext)
         {
-            return ValueResolvingHelper.TryResolveFromVar(operand, localCodeExecutionContext, _varsResolver);
+            return _valueResolvingHelper.TryResolveFromVarOrExpr(operand, localCodeExecutionContext);
         }
     }
 }

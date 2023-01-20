@@ -28,18 +28,54 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
 {
-    public static class ValueResolvingHelper
+    public class ValueResolvingHelper : BaseLoggedComponent
     {
-        public static Value TryResolveFromVar(Value operand, LocalCodeExecutionContext localCodeExecutionContext, VarsResolver varsResolver)
+        public ValueResolvingHelper(IMainStorageContext context)
+            : base(context.Logger)
         {
+            _context = context;
+            var dataResolversFactory = context.DataResolversFactory;
+
+            _varsResolver = dataResolversFactory.GetVarsResolver();
+        }
+
+        private readonly IMainStorageContext _context;
+        private readonly VarsResolver _varsResolver;
+
+        public Value TryResolveFromVarOrExpr(Value operand, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+#if DEBUG
+            Log($"operand = {operand}");
+#endif
+
             if (operand.IsStrongIdentifierValue)
             {
                 var identifier = operand.AsStrongIdentifierValue;
 
                 if (identifier.KindOfName == KindOfName.Var || identifier.KindOfName == KindOfName.SystemVar)
                 {
-                    return varsResolver.GetVarValue(identifier, localCodeExecutionContext);
+                    return _varsResolver.GetVarValue(identifier, localCodeExecutionContext);
                 }
+            }
+
+            if(operand.IsPointRefValue)
+            {
+                var pointRef = operand.AsPointRefValue;
+                var leftOperand = pointRef.LeftOperand;
+                var rightOperand = pointRef.RightOperand;
+
+#if DEBUG
+                Log($"leftOperand = {leftOperand}");
+                Log($"rightOperand = {rightOperand}");
+#endif
+
+                leftOperand = TryResolveFromVarOrExpr(leftOperand, localCodeExecutionContext);
+
+#if DEBUG
+                Log($"leftOperand (after) = {leftOperand}");
+#endif
+
+                return leftOperand.GetMemberValue(rightOperand.AsStrongIdentifierValue);
             }
 
             return operand;

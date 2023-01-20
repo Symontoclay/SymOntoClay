@@ -55,7 +55,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         /// <inheritdoc/>
         public Value Call(Value operand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
-            operand = TryResolveFromVar(operand, localCodeExecutionContext);
+            operand = TryResolveFromVarOrExpr(operand, localCodeExecutionContext);
 
 #if DEBUG
             //Log($"operand (after) = {operand}");

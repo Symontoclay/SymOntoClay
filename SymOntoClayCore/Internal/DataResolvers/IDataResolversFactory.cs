@@ -119,5 +119,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         IdleActionsResolver GetIdleActionsResolver();
 
         AnnotationsResolver GetAnnotationsResolver();
+
+        ValueResolvingHelper GetValueResolvingHelper();
     }
 }

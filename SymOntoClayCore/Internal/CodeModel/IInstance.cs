@@ -44,5 +44,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         IList<IInstance> GetTopIndependentInstances();
         bool ActivateIdleAction();
         IExecutable GetExecutable(KindOfFunctionParameters kindOfParameters, IDictionary<StrongIdentifierValue, Value> namedParameters, IList<Value> positionedParameters);
+        Value GetVarValue(StrongIdentifierValue varName);
     }
 }

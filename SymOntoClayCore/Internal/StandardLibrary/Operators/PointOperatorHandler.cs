@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
@@ -47,29 +48,41 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
 #endif
 
-            leftOperand = TryResolveFromVar(leftOperand, localCodeExecutionContext);
+            leftOperand = TryResolveFromVarOrExpr(leftOperand, localCodeExecutionContext);
 
 #if DEBUG
-            Log($"leftOperand (after) = {leftOperand}");
-            Log($"rightOperand (after) = {rightOperand}");
+            //Log($"leftOperand (after) = {leftOperand}");
+            //Log($"rightOperand (after) = {rightOperand}");
 #endif
 
-            if ((leftOperand.IsHostValue || leftOperand.IsTaskValue) && rightOperand.IsStrongIdentifierValue && rightOperand.AsStrongIdentifierValue.KindOfName == KindOfName.Concept)
+            if ((leftOperand.IsHostValue || leftOperand.IsTaskValue || leftOperand.IsInstanceValue) && rightOperand.IsStrongIdentifierValue/* && rightOperand.AsStrongIdentifierValue.KindOfName == KindOfName.Concept*/)
             {
                 var result = new PointRefValue(leftOperand, rightOperand);
                 result.CheckDirty();
                 return result;
             }
 
-            if(leftOperand.IsInstanceValue && rightOperand.IsStrongIdentifierValue)
-            {
-                var rightIdentifier = rightOperand.AsStrongIdentifierValue;
+//            if(leftOperand.IsInstanceValue && rightOperand.IsStrongIdentifierValue)
+//            {
+//                var rightIdentifier = rightOperand.AsStrongIdentifierValue;
 
-                if(rightIdentifier.KindOfName == KindOfName.Var)
-                {
-                    throw new NotImplementedException();
-                }
-            }
+//                if(rightIdentifier.KindOfName == KindOfName.Var)
+//                {
+//#if DEBUG
+//                    //var stopWatch = new Stopwatch();
+//                    //stopWatch.Start();
+//#endif
+
+//                    var result = leftOperand.GetVarValue(rightIdentifier);
+
+//#if DEBUG
+//                    //stopWatch.Stop();
+//                    //Log($"stopWatch.Elapsed = {stopWatch.Elapsed}");
+//#endif
+
+//                    return result;
+//                }
+//            }
 
             if (localCodeExecutionContext.Kind == KindOfLocalCodeExecutionContext.AddingFact)
             {

@@ -70,7 +70,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override void SetProperty(StrongIdentifierValue propertyName, Value value)
+        protected override void SetPropertyValue(StrongIdentifierValue propertyName, Value value)
         {
 #if DEBUG
             //_gbcLogger.Info($"propertyName = {propertyName}");

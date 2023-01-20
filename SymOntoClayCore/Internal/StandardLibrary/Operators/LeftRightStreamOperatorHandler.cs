@@ -55,12 +55,12 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             //Log($"annotation = {annotation}");
 #endif
 
-            leftOperand = TryResolveFromVar(leftOperand, localCodeExecutionContext);
-            rightOperand = TryResolveFromVar(rightOperand, localCodeExecutionContext);
+            leftOperand = TryResolveFromVarOrExpr(leftOperand, localCodeExecutionContext);
+            rightOperand = TryResolveFromVarOrExpr(rightOperand, localCodeExecutionContext);
 
 #if DEBUG
-            //Log($"leftOperand (after) = {leftOperand}");
-            //Log($"rightOperand (after) = {rightOperand}");
+            Log($"leftOperand (after) = {leftOperand}");
+            Log($"rightOperand (after) = {rightOperand}");
 #endif
 
             Value valueFromSource = null;

@@ -96,6 +96,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private AnnotationsResolver _annotationsResolver;
         private readonly object _annotationsResolverLockObj = new object();
 
+        private ValueResolvingHelper _valueResolvingHelper;
+        private readonly object _valueResolvingHelperLockObj = new object();
+
         /// <inheritdoc/>
         public BaseResolver GetBaseResolver()
         {
@@ -373,6 +376,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 return _annotationsResolver;
+            }
+        }
+
+        /// <inheritdoc/>
+        public ValueResolvingHelper GetValueResolvingHelper()
+        {
+            lock(_valueResolvingHelperLockObj)
+            {
+                if(_valueResolvingHelper == null)
+                {
+                    _valueResolvingHelper = new ValueResolvingHelper(_context);
+                }
+
+                return _valueResolvingHelper;
             }
         }
     }

@@ -69,6 +69,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        protected override Value GetVarValue(StrongIdentifierValue varName)
+        {
+            return InstanceInfo.GetVarValue(varName);
+        }
+
+        /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
             return base.CalculateLongHashCode(options) ^ (ulong)Math.Abs(InstanceInfo.GetHashCode());

@@ -13,7 +13,10 @@ namespace SymOntoClay.Core.Internal.Instances
         public ObjectInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, LocalCodeExecutionContext parentCodeExecutionContext)
             : base(codeItem, context, parentStorage, parentCodeExecutionContext, new ObjectStorageFactory(), null)
         {
-            _methodsResolver = context.DataResolversFactory.GetMethodsResolver();
+            var dataResolversFactory = context.DataResolversFactory;
+
+            _methodsResolver = dataResolversFactory.GetMethodsResolver();
+            _varsResolver = dataResolversFactory.GetVarsResolver();
 
             _function = codeItem.AsFunction;
 
@@ -29,6 +32,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly Function _function;
         private readonly ExecutableWithTargetLocalContext _functionExecutable;
         private readonly MethodsResolver _methodsResolver;
+        private readonly VarsResolver _varsResolver;
 
         /// <inheritdoc/>
         public override IExecutable GetExecutable(KindOfFunctionParameters kindOfParameters, IDictionary<StrongIdentifierValue, Value> namedParameters, IList<Value> positionedParameters)
@@ -44,6 +48,16 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
             throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public override Value GetVarValue(StrongIdentifierValue varName)
+        {
+#if DEBUG
+            //Log($"varName = {varName}");
+#endif
+
+            return _varsResolver.GetVarValue(varName, _localCodeExecutionContext);
         }
     }
 }

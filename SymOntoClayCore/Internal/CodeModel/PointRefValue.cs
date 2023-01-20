@@ -67,7 +67,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             if(RightOperand.IsStrongIdentifierValue)
             {
-                LeftOperand.SetProperty(RightOperand.AsStrongIdentifierValue, value);
+                LeftOperand.SetMemberValue(RightOperand.AsStrongIdentifierValue, value);
                 return;
             }
 

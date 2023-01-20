@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using Newtonsoft.Json.Linq;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.IndexedData;
@@ -117,12 +118,63 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public abstract string ToSystemString();
 
-        public virtual void SetProperty(StrongIdentifierValue propertyName, Value value)
+        public void SetMemberValue(StrongIdentifierValue memberName, Value value)
+        {
+            var kindOfName = memberName.KindOfName;
+
+            switch (kindOfName)
+            {
+                case KindOfName.Var:
+                    SetVarValue(memberName, value);
+                    break;
+
+                case KindOfName.Concept:
+                    SetPropertyValue(memberName, value);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
+            }
+        }
+
+        protected virtual void SetPropertyValue(StrongIdentifierValue propertyName, Value value)
         {
              throw new NotImplementedException();
         }
 
+        protected virtual void SetVarValue(StrongIdentifierValue varName, Value value)
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual void SetValue(Value value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Value GetMemberValue(StrongIdentifierValue memberName)
+        {
+            var kindOfName = memberName.KindOfName;
+
+            switch (kindOfName)
+            {
+                case KindOfName.Var:
+                    return GetVarValue(memberName);
+
+                case KindOfName.Concept:
+                    return GetPropertyValue(memberName);
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
+            }
+        }
+
+        protected virtual Value GetPropertyValue(StrongIdentifierValue propertyName)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected virtual Value GetVarValue(StrongIdentifierValue varName)
         {
             throw new NotImplementedException();
         }

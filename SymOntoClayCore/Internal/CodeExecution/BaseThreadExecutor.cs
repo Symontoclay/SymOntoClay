@@ -79,6 +79,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _statesResolver = dataResolversFactory.GetStatesResolver();
             _annotationsResolver = dataResolversFactory.GetAnnotationsResolver();
 
+            _valueResolvingHelper = dataResolversFactory.GetValueResolvingHelper();
+
             _converterFactToImperativeCode = context.ConvertersFactory.GetConverterFactToImperativeCode();
             _dateTimeProvider = context.DateTimeProvider;
         }
@@ -102,6 +104,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly LogicalSearchResolver _logicalSearchResolver;
         private readonly StatesResolver _statesResolver;
         private readonly AnnotationsResolver _annotationsResolver;
+        private readonly ValueResolvingHelper _valueResolvingHelper;
 
         private readonly ConverterFactToImperativeCode _converterFactToImperativeCode;
         private readonly IDateTimeProvider _dateTimeProvider;
@@ -311,7 +314,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -486,6 +489,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessInstantiate()
         {
+#if DEBUG
+            //var stopWatch = new Stopwatch();
+            //stopWatch.Start();
+#endif
+
             var valuesStack = _currentCodeFrame.ValuesStack;
 
             var annotationValue = valuesStack.Pop();
@@ -515,6 +523,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 _currentCodeFrame.ValuesStack.Push(instanceValue);
 
                 _currentCodeFrame.CurrentPosition++;
+
+#if DEBUG
+                //stopWatch.Stop();
+                //Log($"stopWatch.Elapsed = {stopWatch.Elapsed}");
+#endif
+
                 return;
             }
 
@@ -643,7 +657,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
-            var currentValue = TryResolveFromVar(_currentCodeFrame.ValuesStack.Pop());
+            var currentValue = TryResolveFromVarOrExpr(_currentCodeFrame.ValuesStack.Pop());
 
 #if DEBUG
             //Log($"currentValue = {currentValue}");
@@ -798,7 +812,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessExec()
         {
-            var currentValue = TryResolveFromVar(_currentCodeFrame.ValuesStack.Pop());
+            var currentValue = TryResolveFromVarOrExpr(_currentCodeFrame.ValuesStack.Pop());
 
 #if DEBUG
             //Log($"currentValue = {currentValue.ToHumanizedString()}");
@@ -1039,13 +1053,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentCodeFrame.CurrentPosition++;
         }
 
-        private Value TryResolveFromVar(Value operand)
+        private Value TryResolveFromVarOrExpr(Value operand)
         {
 #if DEBUG
             //Log($"operand = {operand}");
 #endif
 
-            return ValueResolvingHelper.TryResolveFromVar(operand, _currentCodeFrame.LocalContext, _varsResolver);
+            return _valueResolvingHelper.TryResolveFromVarOrExpr(operand, _currentCodeFrame.LocalContext);
         }
 
         private void Wait(ScriptCommand currentCommand)
@@ -1182,7 +1196,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private float? GetLogicalValueFromCurrentStackValue()
         {
-            var currentValue = TryResolveFromVar(_currentCodeFrame.ValuesStack.Pop());
+            var currentValue = TryResolveFromVarOrExpr(_currentCodeFrame.ValuesStack.Pop());
 
 #if DEBUG
             //Log($"currentValue = {currentValue}");
@@ -1482,7 +1496,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 if (resolveValueFromVar)
                 {
-                    result.Add(TryResolveFromVar(valueStack.Pop()));
+                    result.Add(TryResolveFromVarOrExpr(valueStack.Pop()));
                 }
                 else
                 {
@@ -1513,7 +1527,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (resolveValueFromVar)
                 {
-                    value = TryResolveFromVar(value);
+                    value = TryResolveFromVarOrExpr(value);
                 }
 
                 result[name] = value;
@@ -1546,7 +1560,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
-            var caller = TryResolveFromVar(valueStack.Pop());
+            var caller = TryResolveFromVarOrExpr(valueStack.Pop());
 
 #if DEBUG
             //Log($"caller = {caller}");

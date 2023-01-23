@@ -25,6 +25,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnFinish()
         {
+            base.OnFinish();
+
             Result.IsAnonymous = true;
             Result.Name = NameHelper.CreateEntityName();
         }

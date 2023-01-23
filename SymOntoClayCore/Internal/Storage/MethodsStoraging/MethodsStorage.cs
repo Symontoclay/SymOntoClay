@@ -48,6 +48,7 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
             lock (_lockObj)
             {
 #if DEBUG
+                //Log($"GetHashCode() = {GetHashCode()}");
                 //Log($"namedFunction = {namedFunction}");
                 //Log($"namedFunction.Name = {namedFunction.Name}");
                 //Log($"namedFunction.TypeOfAccess = {namedFunction.TypeOfAccess}");
@@ -151,6 +152,7 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
             lock (_lockObj)
             {
 #if DEBUG
+                //Log($"GetHashCode() = {GetHashCode()}");
                 //Log($"name = {name}");
                 //Log($"paramsCount = {paramsCount}");
 #endif

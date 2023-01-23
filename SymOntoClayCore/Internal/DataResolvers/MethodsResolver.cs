@@ -193,8 +193,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
 #if DEBUG
             //Log($"name = {name}");
-            //Log($"value = {value}");
-            //Log($"reason = {reason}");
             //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
             //Log($"storagesList.Count = {storagesList.Count}");
             //foreach (var tmpStorage in storagesList)
@@ -330,8 +328,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
 #if DEBUG
             //Log($"name = {name}");
-            //Log($"value = {value}");
-            //Log($"reason = {reason}");
             //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
             //Log($"storagesList.Count = {storagesList.Count}");
             //foreach (var tmpStorage in storagesList)
@@ -710,6 +706,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             foreach (var storageItem in storagesList)
             {
                 var itemsList = storageItem.Storage.MethodsStorage.GetNamedFunctionsDirectly(name, paramsCount, weightedInheritanceItems);
+
+#if DEBUG
+                //Log($"itemsList = {itemsList?.WriteListToString()}");
+#endif
 
                 if (!itemsList.Any())
                 {

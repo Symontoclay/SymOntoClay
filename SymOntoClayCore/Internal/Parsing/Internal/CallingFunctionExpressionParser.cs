@@ -150,7 +150,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Var:
                         case TokenKind.SystemVar:
                         case TokenKind.Entity:
-                            {
+                        case TokenKind.OpenFigureBracket:
+                        {
                                 _currentParameter = new CallingParameter();
                                 Result.Parameters.Add(_currentParameter);
 
@@ -285,6 +286,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Var:
                         case TokenKind.SystemVar:
                         case TokenKind.Entity:
+                        case TokenKind.OpenFigureBracket:
                             {
                                 _context.Recovery(_currToken);
                                 var parser = new CodeExpressionStatementParser(_context, TokenKind.Comma, TokenKind.CloseRoundBracket);

@@ -1211,6 +1211,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Import;
                             break;
                         }
+
+                        if (string.Compare(content, "new", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.New;
+                            break;
+                        }
                     }
                     break;
 

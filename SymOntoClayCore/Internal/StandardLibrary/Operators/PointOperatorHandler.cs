@@ -62,28 +62,6 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 return result;
             }
 
-//            if(leftOperand.IsInstanceValue && rightOperand.IsStrongIdentifierValue)
-//            {
-//                var rightIdentifier = rightOperand.AsStrongIdentifierValue;
-
-//                if(rightIdentifier.KindOfName == KindOfName.Var)
-//                {
-//#if DEBUG
-//                    //var stopWatch = new Stopwatch();
-//                    //stopWatch.Start();
-//#endif
-
-//                    var result = leftOperand.GetVarValue(rightIdentifier);
-
-//#if DEBUG
-//                    //stopWatch.Stop();
-//                    //Log($"stopWatch.Elapsed = {stopWatch.Elapsed}");
-//#endif
-
-//                    return result;
-//                }
-//            }
-
             if (localCodeExecutionContext.Kind == KindOfLocalCodeExecutionContext.AddingFact)
             {
                 if (leftOperand.IsRuleInstance && rightOperand.IsStrongIdentifierValue && rightOperand.AsStrongIdentifierValue.KindOfName == KindOfName.Concept)

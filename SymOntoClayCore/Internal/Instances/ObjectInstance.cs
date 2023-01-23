@@ -51,6 +51,29 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
+        public override void SetPropertyValue(StrongIdentifierValue propertyName, Value value)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public override void SetVarValue(StrongIdentifierValue varName, Value value)
+        {
+#if DEBUG
+            //Log($"varName = {varName}");
+            //Log($"value = {value}");
+#endif
+
+            _varsResolver.SetVarValue(varName, value, _localCodeExecutionContext);
+        }
+
+        /// <inheritdoc/>
+        public override Value GetPropertyValue(StrongIdentifierValue propertyName)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public override Value GetVarValue(StrongIdentifierValue varName)
         {
 #if DEBUG

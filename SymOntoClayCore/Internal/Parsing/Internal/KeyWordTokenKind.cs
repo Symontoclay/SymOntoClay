@@ -98,6 +98,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Idle,
         With,
         Import,
+        New,
 
         /// <summary>
         /// Special value for prediction.

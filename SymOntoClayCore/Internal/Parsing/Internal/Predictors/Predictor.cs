@@ -24,6 +24,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
                                 _concretePredictor = new FunctionPredictor(currToken, context);
                                 break;
 
+                            case KeyWordTokenKind.New:
+                                _concretePredictor = new NewPredictor(currToken, context);
+                                break;
+
                             default:
                                 throw new UnexpectedTokenException(currToken);
                         }

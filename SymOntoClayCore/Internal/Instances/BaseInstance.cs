@@ -451,6 +451,36 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
+        public virtual void SetPropertyValue(StrongIdentifierValue propertyName, Value value)
+        {
+#if DEBUG
+            //DebugLogger.Instance.Info(this);
+#endif
+
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public virtual void SetVarValue(StrongIdentifierValue varName, Value value)
+        {
+#if DEBUG
+            //DebugLogger.Instance.Info(this);
+#endif
+
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public virtual Value GetPropertyValue(StrongIdentifierValue propertyName)
+        {
+#if DEBUG
+            //DebugLogger.Instance.Info(this);
+#endif
+
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public virtual Value GetVarValue(StrongIdentifierValue varName)
         {
 #if DEBUG

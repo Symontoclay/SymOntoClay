@@ -1,15 +1,15 @@
-﻿app PeaceKeeper
+﻿class class1
+{
+   @b = 1;
+}
+
+app PeaceKeeper
 {
     on Enter
     {
         'Begin' >> @>log;
-        
-        var @a = {
-            @b = 1;
-        };
 
-        //@a.@b = 2;
-
+        @a = new class1;
         @a.@b >> @>log;
 
         'End' >> @>log;

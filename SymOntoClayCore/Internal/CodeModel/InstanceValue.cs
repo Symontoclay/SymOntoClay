@@ -69,9 +69,27 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        protected override Value GetPropertyValue(StrongIdentifierValue propertyName)
+        {
+            return InstanceInfo.GetPropertyValue(propertyName);
+        }
+
+        /// <inheritdoc/>
         protected override Value GetVarValue(StrongIdentifierValue varName)
         {
             return InstanceInfo.GetVarValue(varName);
+        }
+
+        /// <inheritdoc/>
+        protected override void SetPropertyValue(StrongIdentifierValue propertyName, Value value)
+        {
+            InstanceInfo.SetPropertyValue(propertyName, value);
+        }
+
+        /// <inheritdoc/>
+        protected override void SetVarValue(StrongIdentifierValue varName, Value value)
+        {
+            InstanceInfo.SetVarValue(varName, value);
         }
 
         /// <inheritdoc/>

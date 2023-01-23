@@ -59,8 +59,8 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             rightOperand = TryResolveFromVarOrExpr(rightOperand, localCodeExecutionContext);
 
 #if DEBUG
-            Log($"leftOperand (after) = {leftOperand}");
-            Log($"rightOperand (after) = {rightOperand}");
+            //Log($"leftOperand (after) = {leftOperand}");
+            //Log($"rightOperand (after) = {rightOperand}");
 #endif
 
             Value valueFromSource = null;

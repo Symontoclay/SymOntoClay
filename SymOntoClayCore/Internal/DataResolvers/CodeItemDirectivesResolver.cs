@@ -35,10 +35,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public CodeItemDirectivesResolver(IMainStorageContext context)
             : base(context)
         {
-            _inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
+            var dataResolversFactory = context.DataResolversFactory;
+
+            _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
+            _metadataResolver = dataResolversFactory.GetMetadataResolver();
         }
 
         private readonly InheritanceResolver _inheritanceResolver;
+        private readonly MetadataResolver _metadataResolver;
 
         public List<CodeItemDirective> Resolve(LocalCodeExecutionContext localCodeExecutionContext)
         {
@@ -78,8 +82,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"globalStorage = {globalStorage}");
 #endif
 
-            var metadataStorage = globalStorage.MetadataStorage;
-
             var resultsDict = new Dictionary<KindOfCodeItemDirective, CodeItemDirective>();
 
             foreach (var weightedInheritanceItem in weightedInheritanceItems)
@@ -88,7 +90,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //Log($"weightedInheritanceItem = {weightedInheritanceItem}");
 #endif
 
-                var codeItem = metadataStorage.GetByName(weightedInheritanceItem.SuperName);
+                var codeItem = _metadataResolver.Resolve(weightedInheritanceItem.SuperName, localCodeExecutionContext);
 
 #if DEBUG
                 //Log($"codeItem = {codeItem}");

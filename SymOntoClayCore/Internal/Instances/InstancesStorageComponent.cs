@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -42,12 +43,16 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             _context = context;
 
+            _metadataResolver = context.DataResolversFactory.GetMetadataResolver();
+
             _projectLoader = new ProjectLoader(context);
 
             OnIdle += DispatchOnIdle;
         }
 
         private readonly IEngineContext _context;
+        private readonly MetadataResolver _metadataResolver;
+
         private readonly object _registryLockObj = new object();
         private readonly object _processLockObj = new object();
 
@@ -449,6 +454,12 @@ namespace SymOntoClay.Core.Internal.Instances
         {
 #if DEBUG
             Log($"prototypeName = {prototypeName}");
+#endif
+
+            var codeItem = _metadataResolver.Resolve(prototypeName, executionContext);
+
+#if DEBUG
+            Log($"codeItem = {codeItem}");
 #endif
 
             throw new NotImplementedException();

@@ -460,16 +460,48 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         var predictedKeyWordTokenKind = PredictKeyWordTokenKind();
 
 #if DEBUG
-                        Log($"predictedKeyWordTokenKind = {predictedKeyWordTokenKind}");
+                        //Log($"predictedKeyWordTokenKind = {predictedKeyWordTokenKind}");
 #endif
 
-                        throw new NotImplementedException();
+                        switch (predictedKeyWordTokenKind)
+                        {
+                            case KeyWordTokenKind.Unknown:
+                                ProcessConceptLeaf();
+                                break;
+
+                            case KeyWordTokenKind.New:
+                                ProcessNew();
+                                break;
+
+                            default:
+                                throw new UnexpectedTokenException(_currToken);
+                        }
                     }
                     break;
 
                 default:
                     throw new UnexpectedTokenException(_currToken);
             }
+        }
+
+        private void ProcessNew()
+        {
+            _lastBinaryOperator = null;
+            _lastIsOperator = null;
+            _hasSomething = true;
+
+            _context.Recovery(_currToken);
+
+            var parser = new NewExpressionParser(_context);
+            parser.Run();
+
+#if DEBUG
+            //Log($"parser.Result = {parser.Result}");
+#endif
+
+            var intermediateNode = new IntermediateAstNode(parser.Result);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
         }
 
         private void ProcessLogicalQueryOperator()

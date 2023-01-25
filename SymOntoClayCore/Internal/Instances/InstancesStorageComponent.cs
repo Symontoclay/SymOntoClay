@@ -445,6 +445,16 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
+        public override Value CreateInstance(StrongIdentifierValue prototypeName, LocalCodeExecutionContext executionContext)
+        {
+#if DEBUG
+            Log($"prototypeName = {prototypeName}");
+#endif
+
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public override Value CreateInstance(CodeItem codeItem, LocalCodeExecutionContext executionContext)
         {
 #if DEBUG

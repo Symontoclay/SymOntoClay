@@ -508,31 +508,61 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"prototypeValue = {prototypeValue}");
 #endif
 
-            if (prototypeValue.IsCodeItem)
+            var instanceValue = CreateInstance(prototypeValue);
+
+#if DEBUG
+            //Log($"instanceValue = {instanceValue}");
+#endif
+
+            _currentCodeFrame.ValuesStack.Push(instanceValue);
+
+            _currentCodeFrame.CurrentPosition++;
+
+#if DEBUG
+            //stopWatch.Stop();
+            //Log($"stopWatch.Elapsed = {stopWatch.Elapsed}");
+#endif
+        }
+
+        private Value CreateInstance(Value prototypeValue)
+        {
+#if DEBUG
+            Log($"prototypeValue = {prototypeValue}");
+#endif
+
+#if DEBUG
+            //Log($"_currentCodeFrame.LocalContext.Storage.VarStorage.GetHashCode() = {_currentCodeFrame.LocalContext.Storage.VarStorage.GetHashCode()}");
+#endif
+
+            var kindOfValue = prototypeValue.KindOfValue;
+
+            switch(kindOfValue)
             {
-#if DEBUG
-                //Log($"_currentCodeFrame.LocalContext.Storage.VarStorage.GetHashCode() = {_currentCodeFrame.LocalContext.Storage.VarStorage.GetHashCode()}");
-#endif
-
-                var instanceValue = _context.InstancesStorage.CreateInstance(prototypeValue.AsCodeItem, _currentCodeFrame.LocalContext);
+                case KindOfValue.CodeItem:
+                    {
+                        var instanceValue = _context.InstancesStorage.CreateInstance(prototypeValue.AsCodeItem, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-                //Log($"instanceValue = {instanceValue}");
+                        //Log($"instanceValue = {instanceValue}");
 #endif
 
-                _currentCodeFrame.ValuesStack.Push(instanceValue);
+                        return instanceValue;
+                    }
 
-                _currentCodeFrame.CurrentPosition++;
+                case KindOfValue.StrongIdentifierValue:
+                    {
+                        var instanceValue = _context.InstancesStorage.CreateInstance(prototypeValue.AsStrongIdentifierValue, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-                //stopWatch.Stop();
-                //Log($"stopWatch.Elapsed = {stopWatch.Elapsed}");
+                        //Log($"instanceValue = {instanceValue}");
 #endif
 
-                return;
-            }
+                        return instanceValue;
+                    }
 
-            throw new Exception($"The vaule {prototypeValue.ToHumanizedString()} can not be instantiated.");
+                default:
+                    throw new Exception($"The vaule {prototypeValue.ToHumanizedString()} can not be instantiated.");
+            }            
         }
 
         private void ProcessReject()

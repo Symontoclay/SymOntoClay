@@ -151,6 +151,12 @@ namespace SymOntoClay.Core.Internal.Instances
         public virtual AppInstance MainEntity => null;
 
         /// <inheritdoc/>
+        public virtual Value CreateInstance(StrongIdentifierValue prototypeName, LocalCodeExecutionContext executionContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public virtual Value CreateInstance(CodeItem codeItem, LocalCodeExecutionContext executionContext)
         {
             throw new NotImplementedException();

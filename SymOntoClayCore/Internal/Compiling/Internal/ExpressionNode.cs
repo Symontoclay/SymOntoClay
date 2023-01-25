@@ -98,6 +98,14 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     }
                     break;
 
+                case KindOfAstExpression.New:
+                    {
+                        var node = new NewNode(_context);
+                        node.Run(expression.AsNewAstExpression);
+                        AddCommands(node.Result);
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }

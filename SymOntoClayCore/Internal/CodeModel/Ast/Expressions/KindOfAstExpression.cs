@@ -37,6 +37,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         Channel,
         CallingFunction,
         Group,
-        CodeItem
+        CodeItem,
+        New
     }
 }

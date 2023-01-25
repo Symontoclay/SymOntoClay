@@ -44,6 +44,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         public virtual bool IsCodeItemAstExpression => false;
         public virtual CodeItemAstExpression AsCodeItemAstExpression => null;
 
+        public virtual bool IsNewAstExpression => false;
+        public virtual NewAstExpression AsNewAstExpression => null;
+
         protected virtual IAstNode NLeft { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         protected virtual IAstNode NRight { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         IAstNode IAstNode.Left { get => NLeft; set => NLeft = value; }

@@ -56,6 +56,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
+                        case TokenKind.Var:
                             Complete();
                             break;
 

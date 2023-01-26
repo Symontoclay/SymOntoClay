@@ -527,7 +527,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private Value CreateInstance(Value prototypeValue)
         {
 #if DEBUG
-            Log($"prototypeValue = {prototypeValue}");
+            //Log($"prototypeValue = {prototypeValue}");
 #endif
 
 #if DEBUG
@@ -551,7 +551,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 case KindOfValue.StrongIdentifierValue:
                     {
-                        var instanceValue = _context.InstancesStorage.CreateInstance(prototypeValue.AsStrongIdentifierValue, _currentCodeFrame.LocalContext);
+                        var instanceValue = _context.InstancesStorage.CreateInstance(TryResolveFromVarOrExpr(prototypeValue).AsStrongIdentifierValue, _currentCodeFrame.LocalContext);
 
 #if DEBUG
                         //Log($"instanceValue = {instanceValue}");

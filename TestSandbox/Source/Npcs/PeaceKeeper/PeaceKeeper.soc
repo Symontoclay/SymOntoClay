@@ -9,7 +9,9 @@ app PeaceKeeper
     {
         'Begin' >> @>log;
 
-        @a = new class1;
+        @b = class1;
+
+        @a = new @b;
         @a.@b >> @>log;
 
         'End' >> @>log;

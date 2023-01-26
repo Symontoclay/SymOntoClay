@@ -28,8 +28,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -60,8 +60,47 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.Word:
                             {
+                                var nextToken = _context.GetToken();
+
+#if DEBUG
+                                //Log($"nextToken = {nextToken}");
+#endif
+
+                                if(nextToken.TokenKind == TokenKind.OpenRoundBracket)
+                                {
+                                    throw new UnexpectedTokenException(nextToken);
+                                }
+
+                                _context.Recovery(nextToken);
+
                                 var node = new ConstValueAstExpression();
                                 node.Value = NameHelper.CreateName(_currToken.Content);
+
+                                Result.Expression = node;
+
+                                Exit();
+                            }
+                            break;
+
+                        case TokenKind.Var:
+                            {
+                                var nextToken = _context.GetToken();
+
+#if DEBUG
+                                Log($"nextToken = {nextToken}");
+#endif
+
+                                if (nextToken.TokenKind == TokenKind.OpenRoundBracket)
+                                {
+                                    throw new UnexpectedTokenException(nextToken);
+                                }
+
+                                _context.Recovery(nextToken);
+
+                                var value = NameHelper.CreateName(_currToken.Content);
+
+                                var node = new VarAstExpression();
+                                node.Name = value;
 
                                 Result.Expression = node;
 

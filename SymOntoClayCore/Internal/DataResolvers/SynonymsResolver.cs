@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
             //Log($"name = {name}");
 #endif
-
+            
 #if DEBUG
             //Log($"storagesList.Count = {storagesList.Count}");
             //foreach (var tmpStorage in storagesList)

@@ -462,7 +462,12 @@ namespace SymOntoClay.Core.Internal.Instances
             Log($"codeItem = {codeItem}");
 #endif
 
-            throw new NotImplementedException();
+            if(codeItem == null)
+            {
+                throw new NotImplementedException();
+            }
+
+            return CreateInstance(codeItem, executionContext);
         }
 
         /// <inheritdoc/>

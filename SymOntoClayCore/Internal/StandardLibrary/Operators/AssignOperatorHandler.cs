@@ -45,15 +45,15 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         public Value Call(Value rightOperand, Value leftOperand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            //Log($"leftOperand = {leftOperand}");
-            //Log($"rightOperand = {rightOperand}");
+            Log($"leftOperand = {leftOperand}");
+            Log($"rightOperand = {rightOperand}");
             //Log($"annotation = {annotation}");
 #endif
 
             rightOperand = TryResolveFromVarOrExpr(rightOperand, localCodeExecutionContext);
 
 #if DEBUG
-            //Log($"rightOperand (after) = {rightOperand}");
+            Log($"rightOperand (after) = {rightOperand}");
 #endif
 
             var kindOfLeftOperand = leftOperand.KindOfValue;
@@ -75,7 +75,8 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                                     switch (kindOfRightOperand)
                                     {
                                         case KindOfValue.StrongIdentifierValue:
-                                            throw new NotImplementedException();
+                                            _varsResolver.SetVarValue(leftIdentifierValue, rightOperand, localCodeExecutionContext);
+                                            return rightOperand;
 
                                         default:
                                             _varsResolver.SetVarValue(leftIdentifierValue, rightOperand, localCodeExecutionContext);

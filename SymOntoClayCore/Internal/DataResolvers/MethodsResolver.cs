@@ -653,12 +653,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"paramsCount = {paramsCount}");
 #endif
 
+            if (!storagesList.Any())
+            {
+                return new List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>>();
+            }
+
             var synonymsList = _synonymsResolver.GetSynonyms(name, storagesList);
 
 #if DEBUG
             //Log($"synonymsList = {synonymsList.WriteListToString()}");
 #endif
-
+            
             var result = new List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>>();
 
             var itemsList = NGetRawMethodsList(name, paramsCount, storagesList, weightedInheritanceItems);
@@ -695,11 +700,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"name = {name}");
             //Log($"paramsCount = {paramsCount}");
 #endif
-
-            if (!storagesList.Any())
-            {
-                return new List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>>();
-            }
 
             var result = new List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>>();
 

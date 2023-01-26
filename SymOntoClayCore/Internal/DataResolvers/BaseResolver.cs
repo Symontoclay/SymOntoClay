@@ -326,6 +326,30 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
+        protected List<T> Filter<T>(List<T> source)
+            where T : AnnotatedItem
+        {
+            if (!source.Any())
+            {
+                return new List<T>();
+            }
+
+            var result = new List<T>();
+
+            foreach (var filteredItem in source)
+            {
+                if (!filteredItem.HasConditionalSections)
+                {
+                    result.Add(filteredItem);
+                    continue;
+                }
+
+                throw new NotImplementedException();
+            }
+
+            return result;
+        }
+
         protected List<WeightedInheritanceResultItemWithStorageInfo<T>> OrderAndDistinctByInheritance<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, ResolverOptions options)
             where T : AnnotatedItem
         {

@@ -50,8 +50,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public void SetVarValue(StrongIdentifierValue varName, Value value, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            //Log($"varName = {varName}");
-            //Log($"value = {value}");
+            Log($"varName = {varName}");
+            Log($"value = {value}");
 #endif
 
             if (varName.KindOfName != KindOfName.Var)

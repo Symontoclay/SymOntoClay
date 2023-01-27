@@ -7,13 +7,13 @@ app PeaceKeeper
 {
     on Enter
     {
-        'Begin' >> @>log;
+        //'Begin' >> @>log;
 
-        @b = class1;
+        @c = class1;
 
-        @a = new @b;
+        @a = new @c;
         @a.@b >> @>log;
 
-        'End' >> @>log;
+        //'End' >> @>log;
     }
 }

@@ -454,12 +454,13 @@ namespace SymOntoClay.Core.Internal.Instances
         {
 #if DEBUG
             Log($"prototypeName = {prototypeName}");
+            Log($"executionContext.Storage.VarStorage.GetHashCode() = {executionContext.Storage.VarStorage.GetHashCode()};executionContext.Storage.VarStorage.Kind = {executionContext.Storage.VarStorage.Kind}");
 #endif
 
             var codeItem = _metadataResolver.Resolve(prototypeName, executionContext);
 
 #if DEBUG
-            Log($"codeItem = {codeItem}");
+            //Log($"codeItem = {codeItem}");
 #endif
 
             if(codeItem == null)

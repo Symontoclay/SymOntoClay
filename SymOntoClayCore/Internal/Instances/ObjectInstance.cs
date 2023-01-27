@@ -77,7 +77,7 @@ namespace SymOntoClay.Core.Internal.Instances
         public override Value GetVarValue(StrongIdentifierValue varName)
         {
 #if DEBUG
-            //Log($"varName = {varName}");
+            Log($"varName = {varName}");
 #endif
 
             return _varsResolver.GetVarValue(varName, _localCodeExecutionContext);

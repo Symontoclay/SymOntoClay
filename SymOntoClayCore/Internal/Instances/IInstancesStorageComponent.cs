@@ -43,6 +43,7 @@ namespace SymOntoClay.Core.Internal.Instances
         AppInstance MainEntity { get; }
 
         Value CreateInstance(StrongIdentifierValue prototypeName, LocalCodeExecutionContext executionContext);
+        Value CreateInstance(InstanceValue instanceValue, LocalCodeExecutionContext executionContext);
         Value CreateInstance(CodeItem codeItem, LocalCodeExecutionContext executionContext);
 
 #if DEBUG

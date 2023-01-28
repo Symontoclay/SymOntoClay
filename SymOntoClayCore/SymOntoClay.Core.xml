@@ -6004,6 +6004,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.InstanceValue,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.CodeItem,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
@@ -6110,6 +6113,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.InstanceValue,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.CodeItem,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">

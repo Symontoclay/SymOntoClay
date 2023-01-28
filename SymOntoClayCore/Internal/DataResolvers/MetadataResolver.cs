@@ -28,7 +28,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public CodeItem Resolve(StrongIdentifierValue prototypeName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            //Log($"prototypeName = {prototypeName}");
+            Log($"prototypeName = {prototypeName}");
 #endif
 
             var storage = localCodeExecutionContext.Storage;

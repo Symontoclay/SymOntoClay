@@ -453,8 +453,8 @@ namespace SymOntoClay.Core.Internal.Instances
         public override Value CreateInstance(StrongIdentifierValue prototypeName, LocalCodeExecutionContext executionContext)
         {
 #if DEBUG
-            Log($"prototypeName = {prototypeName}");
-            Log($"executionContext.Storage.VarStorage.GetHashCode() = {executionContext.Storage.VarStorage.GetHashCode()};executionContext.Storage.VarStorage.Kind = {executionContext.Storage.VarStorage.Kind}");
+            //Log($"prototypeName = {prototypeName}");
+            //Log($"executionContext.Storage.VarStorage.GetHashCode() = {executionContext.Storage.VarStorage.GetHashCode()};executionContext.Storage.VarStorage.Kind = {executionContext.Storage.VarStorage.Kind}");
 #endif
 
             var codeItem = _metadataResolver.Resolve(prototypeName, executionContext);
@@ -464,6 +464,27 @@ namespace SymOntoClay.Core.Internal.Instances
 #endif
 
             if(codeItem == null)
+            {
+                throw new NotImplementedException();
+            }
+
+            return CreateInstance(codeItem, executionContext);
+        }
+
+        /// <inheritdoc/>
+        public override Value CreateInstance(InstanceValue instanceValue, LocalCodeExecutionContext executionContext)
+        {
+#if DEBUG
+            Log($"instanceValue = {instanceValue}");
+#endif
+
+            var codeItem = _metadataResolver.Resolve(instanceValue.InstanceInfo.Name, executionContext);
+
+#if DEBUG
+            Log($"codeItem = {codeItem}");
+#endif
+
+            if (codeItem == null)
             {
                 throw new NotImplementedException();
             }

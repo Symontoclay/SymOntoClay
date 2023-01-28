@@ -195,7 +195,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
                         var targetDict = _variablesDict[targetHolder];
 
 #if DEBUG
-                        //Log($"targetDict.Count = {targetDict.Count}");
+                        Log($"targetDict.Count = {targetDict.Count}");
 #endif
 
                         if (targetDict.ContainsKey(name))

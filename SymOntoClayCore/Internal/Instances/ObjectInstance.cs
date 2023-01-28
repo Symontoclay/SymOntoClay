@@ -80,7 +80,13 @@ namespace SymOntoClay.Core.Internal.Instances
             Log($"varName = {varName}");
 #endif
 
-            return _varsResolver.GetVarValue(varName, _localCodeExecutionContext);
+            var tmpResult = _varsResolver.GetVarValue(varName, _localCodeExecutionContext);
+
+#if DEBUG
+            Log($"tmpResult = {tmpResult}");
+#endif
+
+            return tmpResult;
         }
     }
 }

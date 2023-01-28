@@ -28,8 +28,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_currToken = {_currToken}");
+            //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -87,7 +87,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var nextToken = _context.GetToken();
 
 #if DEBUG
-                                Log($"nextToken = {nextToken}");
+                                //Log($"nextToken = {nextToken}");
 #endif
 
                                 if (nextToken.TokenKind == TokenKind.OpenRoundBracket)

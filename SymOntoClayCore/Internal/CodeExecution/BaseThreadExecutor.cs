@@ -527,16 +527,23 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private Value CreateInstance(Value prototypeValue)
         {
 #if DEBUG
-            //Log($"prototypeValue = {prototypeValue}");
+            Log($"prototypeValue = {prototypeValue}");
 #endif
 
+            prototypeValue = TryResolveFromVarOrExpr(prototypeValue);
+
 #if DEBUG
+            Log($"prototypeValue (after) = {prototypeValue}");
             //Log($"_currentCodeFrame.LocalContext.Storage.VarStorage.GetHashCode() = {_currentCodeFrame.LocalContext.Storage.VarStorage.GetHashCode()}");
 #endif
 
             var kindOfValue = prototypeValue.KindOfValue;
 
-            switch(kindOfValue)
+#if DEBUG
+            Log($"kindOfValue = {kindOfValue}");
+#endif
+
+            switch (kindOfValue)
             {
                 case KindOfValue.CodeItem:
                     {
@@ -551,10 +558,21 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 case KindOfValue.StrongIdentifierValue:
                     {
-                        var instanceValue = _context.InstancesStorage.CreateInstance(TryResolveFromVarOrExpr(prototypeValue).AsStrongIdentifierValue, _currentCodeFrame.LocalContext);
+                        var instanceValue = _context.InstancesStorage.CreateInstance(prototypeValue.AsStrongIdentifierValue, _currentCodeFrame.LocalContext);
 
 #if DEBUG
                         //Log($"instanceValue = {instanceValue}");
+#endif
+
+                        return instanceValue;
+                    }
+
+                case KindOfValue.InstanceValue:
+                    {
+                        var instanceValue = _context.InstancesStorage.CreateInstance(prototypeValue.AsInstanceValue, _currentCodeFrame.LocalContext);
+
+#if DEBUG
+                        Log($"instanceValue = {instanceValue}");
 #endif
 
                         return instanceValue;

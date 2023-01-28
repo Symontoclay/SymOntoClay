@@ -51,8 +51,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public void SetVarValue(StrongIdentifierValue varName, Value value, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"varName = {varName}");
-            Log($"value = {value}");
+            //Log($"varName = {varName}");
+            //Log($"value = {value}");
 #endif
 
             if (varName.KindOfName != KindOfName.Var)
@@ -63,20 +63,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var varPtr = Resolve(varName, localCodeExecutionContext, options);
 
 #if DEBUG
-            Log($"varPtr = {varPtr}");
+            //Log($"varPtr = {varPtr}");
 #endif
 
             if(varPtr == null)
             {
 #if DEBUG
-                Log($"localCodeExecutionContext.Storage.VarStorage.GetHashCode() = {localCodeExecutionContext.Storage.VarStorage.GetHashCode()};localCodeExecutionContext.Storage.VarStorage.Kind = {localCodeExecutionContext.Storage.VarStorage.Kind}");
+                //Log($"localCodeExecutionContext.Storage.VarStorage.GetHashCode() = {localCodeExecutionContext.Storage.VarStorage.GetHashCode()};localCodeExecutionContext.Storage.VarStorage.Kind = {localCodeExecutionContext.Storage.VarStorage.Kind}");
 #endif
 
                 varPtr = CreateAndSaveLocalVariable(varName, localCodeExecutionContext);
             }
 
 #if DEBUG
-            Log($"varPtr (after) = {varPtr}");
+            //Log($"varPtr (after) = {varPtr}");
 #endif
 
             CheckFitVariableAndValue(varPtr, value, localCodeExecutionContext, options);
@@ -191,13 +191,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private Value GetUsualVarValue(StrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"varName = {varName}");
+            //Log($"varName = {varName}");
 #endif
 
             var varPtr = Resolve(varName, localCodeExecutionContext, _defaultOptions);
 
 #if DEBUG
-            Log($"varPtr = {varPtr}");
+            //Log($"varPtr = {varPtr}");
 #endif
 
             if (varPtr == null)
@@ -206,7 +206,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            Log($"varPtr (after) = {varPtr}");
+            //Log($"varPtr (after) = {varPtr}");
 #endif
 
             return varPtr.Value;
@@ -249,19 +249,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return null;
             }
 
-            if(rawList.Any(p => p.ResultItem.TypeOfAccess == TypeOfAccess.Local))
-            {
-#if DEBUG
-                //Log($"rawList = {rawList.Where(p => p.ResultItem.TypeOfAccess == TypeOfAccess.Local).WriteListToString()}");
-#endif
-
-                return rawList.Single(p => p.ResultItem.TypeOfAccess == TypeOfAccess.Local).ResultItem;
-            }
-
             var filteredList = FilterCodeItems(rawList, localCodeExecutionContext);
 
 #if DEBUG
-            //Log($"filteredList = {filteredList.WriteListToString()}");
+            Log($"filteredList = {filteredList.WriteListToString()}");
 #endif
 
             if (!filteredList.Any())
@@ -270,6 +261,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             if(filteredList.Count == 1)
+            {
+                return filteredList.Single().ResultItem;
+            }
+
+            var maxStogageDistance = filteredList.Max(p => p.StorageDistance);
+
+#if DEBUG
+            Log($"maxStogageDistance = {maxStogageDistance}");
+#endif
+
+            filteredList = filteredList.Where(p => p.StorageDistance == maxStogageDistance).ToList();
+
+#if DEBUG
+            Log($"filteredList (after) = {filteredList.WriteListToString()}");
+#endif
+
+            if (filteredList.Count == 1)
             {
                 return filteredList.Single().ResultItem;
             }
@@ -293,7 +301,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             foreach (var storageItem in storagesList)
             {
 #if DEBUG
-                Log($"storageItem = {storageItem}");
+                //Log($"storageItem = {storageItem}");
                 Log($"storageItem.Storage.VarStorage.GetHashCode() = {storageItem.Storage.VarStorage.GetHashCode()}; storageItem.Storage.VarStorage.Kind = {storageItem.Storage.VarStorage.Kind}");
 #endif
 

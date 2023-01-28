@@ -496,7 +496,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             parser.Run();
 
 #if DEBUG
-            Log($"parser.Result = {parser.Result}");
+            //Log($"parser.Result = {parser.Result}");
 #endif
 
             var intermediateNode = new IntermediateAstNode(parser.Result);

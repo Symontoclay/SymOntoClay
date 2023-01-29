@@ -163,7 +163,7 @@ namespace SymOntoClay.SoundBuses
                 Task.Run(() => {
                     try
                     {
-                        receiver.CallBack(targetPower, distance, position, fact.Clone());
+                        receiver.CallBack(targetPower, distance, position, fact);
                     }
                     catch (Exception e)
                     {

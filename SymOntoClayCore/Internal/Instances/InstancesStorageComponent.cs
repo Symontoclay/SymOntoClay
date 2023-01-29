@@ -468,20 +468,20 @@ namespace SymOntoClay.Core.Internal.Instances
                 throw new NotImplementedException();
             }
 
-            return CreateInstance(codeItem, executionContext);
+            return NCreateInstance(codeItem, executionContext, false);
         }
 
         /// <inheritdoc/>
         public override Value CreateInstance(InstanceValue instanceValue, LocalCodeExecutionContext executionContext)
         {
 #if DEBUG
-            Log($"instanceValue = {instanceValue}");
+            //Log($"instanceValue = {instanceValue}");
 #endif
 
             var codeItem = _metadataResolver.Resolve(instanceValue.InstanceInfo.Name, executionContext);
 
 #if DEBUG
-            Log($"codeItem = {codeItem}");
+            //Log($"codeItem = {codeItem}");
 #endif
 
             if (codeItem == null)
@@ -489,7 +489,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 throw new NotImplementedException();
             }
 
-            return CreateInstance(codeItem, executionContext);
+            return NCreateInstance(codeItem, executionContext, false);
         }
 
         /// <inheritdoc/>
@@ -499,9 +499,25 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log($"codeItem = {codeItem}");
 #endif
 
+            return NCreateInstance(codeItem, executionContext, true);
+        }
+
+        private Value NCreateInstance(CodeItem codeItem, LocalCodeExecutionContext executionContext, bool loadCodeItem)
+        {
+#if DEBUG
+            //Log($"codeItem = {codeItem}");
+#endif
+
             var instance = new ObjectInstance(codeItem, _context, executionContext.Storage, executionContext);
 
-            _projectLoader.LoadCodeItem(codeItem, executionContext.Storage);
+            if(loadCodeItem)
+            {
+                _projectLoader.LoadCodeItem(codeItem, executionContext.Storage);
+            }
+
+#if DEBUG
+            //Log($"instance.Name = {instance.Name}");
+#endif
 
             instance.Init();
 

@@ -553,6 +553,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         DefaultSettingsOfCodeEntity IStorage.DefaultSettingsOfCodeEntity { get; set; }
+
+        /// <inheritdoc/>
+        public List<StorageUsingOptions> CodeItemsStoragesList { get; set; }
+
 #if DEBUG
         /// <inheritdoc/>
         void IStorage.DbgPrintFactsAndRules() => throw new NotImplementedException();

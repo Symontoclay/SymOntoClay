@@ -188,6 +188,7 @@ namespace SymOntoClay.Core.Internal.Storage
         void IStorage.CollectChainOfStorages(IList<StorageUsingOptions> result, IList<IStorage> usedStorages, int level, CollectChainOfStoragesOptions options)
         {
 #if DEBUG
+            //Log($"Kind = {Kind}");
             //Log($"result?.Count = {result?.Count}");
             //Log($"level = {level}");
 #endif
@@ -284,6 +285,9 @@ namespace SymOntoClay.Core.Internal.Storage
 
         /// <inheritdoc/>
         public DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get; set; }
+
+        /// <inheritdoc/>
+        public List<StorageUsingOptions> CodeItemsStoragesList { get; set; }
 
         private bool _isDisposed;
 

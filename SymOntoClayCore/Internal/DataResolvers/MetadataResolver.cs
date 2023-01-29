@@ -5,8 +5,10 @@ using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
 {
@@ -28,20 +30,29 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public CodeItem Resolve(StrongIdentifierValue prototypeName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"prototypeName = {prototypeName}");
+            //Log($"prototypeName = {prototypeName}");
 #endif
 
             var storage = localCodeExecutionContext.Storage;
 
-            var storagesList = GetStoragesList(storage);
+#if DEBUG
+            //var stopWatch = new Stopwatch();
+            //stopWatch.Start();
+#endif
+
+            var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
 
 #if DEBUG
+            //stopWatch.Stop();
+            //Log($"stopWatch.Elapsed = {stopWatch.Elapsed}");
             //Log($"name = {name}");
             //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
-            //Log($"storagesList.Count = {storagesList.Count}");
+            Log($"localCodeExecutionContext.GetHashCode() = {localCodeExecutionContext.GetHashCode()}");
+            Log($"storagesList.Count = {storagesList.Count}");
             //foreach (var tmpStorage in storagesList)
             //{
-            //    Log($"tmpStorage = {tmpStorage}");
+            //    //Log($"tmpStorage = {tmpStorage}");
+            //    Log($"tmpStorage.Storage.Kind = {tmpStorage.Storage.Kind}");
             //}
 #endif
 

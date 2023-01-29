@@ -55,6 +55,8 @@ namespace SymOntoClay.Core
         IList<IStorage> GetStorages();
         DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get; set; }
 
+        List<StorageUsingOptions> CodeItemsStoragesList { get; set; }
+
 #if DEBUG
         void DbgPrintFactsAndRules();
 #endif

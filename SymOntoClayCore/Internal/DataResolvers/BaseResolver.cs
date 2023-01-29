@@ -42,13 +42,29 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         protected readonly IMainStorageContext _context;
 
-        public List<StorageUsingOptions> GetStoragesList(IStorage storage)
+        public List<StorageUsingOptions> GetStoragesList(IStorage storage, KindOfStoragesList kindOfStoragesList = KindOfStoragesList.Full)
         {
-            return GetStoragesList(storage, null);
+            return GetStoragesList(storage, null, kindOfStoragesList);
         }
-
-        public List<StorageUsingOptions> GetStoragesList(IStorage storage, CollectChainOfStoragesOptions options)
+        
+        public List<StorageUsingOptions> GetStoragesList(IStorage storage, CollectChainOfStoragesOptions options, KindOfStoragesList kindOfStoragesList = KindOfStoragesList.Full)
         {
+            switch(kindOfStoragesList)
+            {
+                case KindOfStoragesList.Full:
+                    break;
+
+                case KindOfStoragesList.CodeItems:
+                    if(storage.CodeItemsStoragesList != null)
+                    {
+                        return storage.CodeItemsStoragesList;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfStoragesList), kindOfStoragesList, null);
+            }
+
             var result = new List<StorageUsingOptions>();
 
             var n = 0;
@@ -61,7 +77,21 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var usedStorages = new List<IStorage>();
 
             storage.CollectChainOfStorages(result, usedStorages, n, options);
-            
+
+            switch (kindOfStoragesList)
+            {
+                case KindOfStoragesList.Full:
+                    break;
+
+                case KindOfStoragesList.CodeItems:
+                    result = result.Where(p => p.Storage.Kind != KindOfStorage.WorldPublicFacts && p.Storage.Kind != KindOfStorage.Query && p.Storage.Kind != KindOfStorage.PerceptedFacts && p.Storage.Kind != KindOfStorage.PublicFacts && p.Storage.Kind != KindOfStorage.Sentence).ToList();
+                    storage.CodeItemsStoragesList = result;
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfStoragesList), kindOfStoragesList, null);
+            }
+
             return result;
         }
 

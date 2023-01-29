@@ -23,9 +23,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private State _state = State.Init;
 
         /// <inheritdoc/>
-        protected override void OnFinish()
+        protected override void OnEnter()
         {
-            base.OnFinish();
+            base.OnEnter();
 
             Result.IsAnonymous = true;
             Result.Name = NameHelper.CreateEntityName();

@@ -119,7 +119,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 collectChainOfStoragesOptions.InitialPriority = maxPriority;
                 collectChainOfStoragesOptions.UseFacts = false;
 
-
 #if DEBUG
                 //Log($"collectChainOfStoragesOptions = {collectChainOfStoragesOptions}");
 #endif

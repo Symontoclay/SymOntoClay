@@ -51,8 +51,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public void SetVarValue(StrongIdentifierValue varName, Value value, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"varName = {varName}");
-            Log($"value = {value}");
+            //Log($"varName = {varName}");
+            //Log($"value = {value}");
 #endif
 
             if (varName.KindOfName != KindOfName.Var)
@@ -63,7 +63,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var varPtr = Resolve(varName, localCodeExecutionContext, options);
 
 #if DEBUG
-            Log($"varPtr = {varPtr}");
+            //Log($"varPtr = {varPtr}");
 #endif
 
             if(varPtr == null)
@@ -241,7 +241,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var rawList = GetRawVarsList(varName, storagesList, weightedInheritanceItems);
 
 #if DEBUG
-            Log($"rawList = {rawList.WriteListToString()}");
+            //Log($"rawList = {rawList.WriteListToString()}");
 #endif
 
             if (!rawList.Any())
@@ -252,7 +252,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var filteredList = FilterCodeItems(rawList, localCodeExecutionContext);
 
 #if DEBUG
-            Log($"filteredList = {filteredList.WriteListToString()}");
+            //Log($"filteredList = {filteredList.WriteListToString()}");
 #endif
 
             if (!filteredList.Any())
@@ -268,13 +268,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var maxStogageDistance = filteredList.Max(p => p.StorageDistance);
 
 #if DEBUG
-            Log($"maxStogageDistance = {maxStogageDistance}");
+            //Log($"maxStogageDistance = {maxStogageDistance}");
 #endif
 
             filteredList = filteredList.Where(p => p.StorageDistance == maxStogageDistance).ToList();
 
 #if DEBUG
-            Log($"filteredList (after) = {filteredList.WriteListToString()}");
+            //Log($"filteredList (after) = {filteredList.WriteListToString()}");
 #endif
 
             if (filteredList.Count == 1)
@@ -288,7 +288,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private List<WeightedInheritanceResultItemWithStorageInfo<Var>> GetRawVarsList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
-            Log($"name = {name}");
+            //Log($"name = {name}");
 #endif
 
             if (!storagesList.Any())
@@ -302,13 +302,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
 #if DEBUG
                 //Log($"storageItem = {storageItem}");
-                Log($"storageItem.Storage.VarStorage.GetHashCode() = {storageItem.Storage.VarStorage.GetHashCode()}; storageItem.Storage.VarStorage.Kind = {storageItem.Storage.VarStorage.Kind}");
+                //Log($"storageItem.Storage.VarStorage.GetHashCode() = {storageItem.Storage.VarStorage.GetHashCode()}; storageItem.Storage.VarStorage.Kind = {storageItem.Storage.VarStorage.Kind}");
 #endif
 
                 var itemsList = storageItem.Storage.VarStorage.GetVarDirectly(name, weightedInheritanceItems);
 
 #if DEBUG
-                Log($"itemsList = {itemsList.WriteListToString()}");
+                //Log($"itemsList = {itemsList.WriteListToString()}");
 #endif
 
                 if (!itemsList.Any())

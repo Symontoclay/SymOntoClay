@@ -34,9 +34,11 @@ namespace SymOntoClay.Core.Internal.Instances
             : base(context.Logger)
         {
             _context = context;
+            _commonNamesStorage = context.CommonNamesStorage;
         }
 
         private readonly IMainStorageContext _context;
+        protected readonly ICommonNamesStorage _commonNamesStorage;
 
         public virtual void LoadFromSourceFiles()
         {
@@ -82,36 +84,47 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             var result = new Instance();
 
-            var newName = _context.CommonNamesStorage.SelfName;
-            result.Name = newName;
+            result.Name = _commonNamesStorage.SelfName;
 
 #if DEBUG
-            //Log($"newName = {newName}");
+            //Log($"result.Name = {result.Name}");
 #endif
 
-            result.Holder = _context.CommonNamesStorage.DefaultHolder;
+            FillUpAndRegisterInstance(result, superCodeEntity);
+
+#if DEBUG
+            //Log($"result = {result}");
+#endif
+
+            return result;
+        }
+
+        protected void FillUpAndRegisterInstance(CodeItem instance, CodeItem superCodeItem)
+        {
+            if(instance.Holder == null)
+            {
+                instance.Holder = _commonNamesStorage.DefaultHolder;
+            }            
 
             var inheritanceItem = new InheritanceItem()
             {
                 IsSystemDefined = false
             };
 
-            inheritanceItem.SubName = newName;
-            inheritanceItem.SuperName = superCodeEntity.Name;
+            inheritanceItem.SubName = instance.Name;
+            inheritanceItem.SuperName = superCodeItem.Name;
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
-            result.InheritanceItems.Add(inheritanceItem);
+            instance.InheritanceItems.Add(inheritanceItem);
 
 #if DEBUG
-            //Log($"result = {result}");
+            //Log($"instance = {instance}");
 #endif
 
             var globalStorage = _context.Storage.GlobalStorage;
 
-            globalStorage.MetadataStorage.Append(result);
+            globalStorage.MetadataStorage.Append(instance);
             globalStorage.InheritanceStorage.SetInheritance(inheritanceItem);
-
-            return result;
         }
 
         /// <inheritdoc/>

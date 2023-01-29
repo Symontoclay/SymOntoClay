@@ -4233,6 +4233,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#DefaultSettingsOfCodeEntity">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.CodeItemsStoragesList">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#DbgPrintFactsAndRules">
             <inheritdoc/>
         </member>
@@ -6378,7 +6381,7 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.AnnotationParser.OnRun">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.AnonymousObjectPaser.OnFinish">
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.AnonymousObjectPaser.OnEnter">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.AnonymousObjectPaser.OnRun">
@@ -7431,6 +7434,9 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.DefaultSettingsOfCodeEntity">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.CodeItemsStoragesList">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.AddParentStorage(SymOntoClay.Core.IStorage)">
             <inheritdoc/>
         </member>
@@ -7813,6 +7819,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.DefaultSettingsOfCodeEntity">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.CodeItemsStoragesList">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.IsDisposed">

@@ -177,7 +177,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"name = {name}");
+                //Log($"name = {name}");
 #endif
 
                 var result = new List<WeightedInheritanceResultItem<Var>>();
@@ -187,7 +187,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
                     var targetHolder = weightedInheritanceItem.SuperName;
 
 #if DEBUG
-                    Log($"targetHolder = {targetHolder}");
+                    //Log($"targetHolder = {targetHolder}");
 #endif
 
                     if(_variablesDict.ContainsKey(targetHolder))
@@ -195,7 +195,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
                         var targetDict = _variablesDict[targetHolder];
 
 #if DEBUG
-                        Log($"targetDict.Count = {targetDict.Count}");
+                        //Log($"targetDict.Count = {targetDict.Count}");
 #endif
 
                         if (targetDict.ContainsKey(name))

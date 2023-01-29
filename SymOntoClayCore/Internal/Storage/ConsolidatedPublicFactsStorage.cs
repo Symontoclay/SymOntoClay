@@ -133,6 +133,9 @@ namespace SymOntoClay.Core.Internal.Storage
         /// <inheritdoc/>
         public DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
+        /// <inheritdoc/>
+        public List<StorageUsingOptions> CodeItemsStoragesList { get; set; }
+
         public void AddPublicFactsStorageOfOtherGameComponent(IStorage storage)
         {
             lock(_lockObj)

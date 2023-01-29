@@ -139,7 +139,7 @@ namespace SymOntoClay.Core.Internal.Instances
             localCodeExecutionContext.MutablePart = mutablePart;
             localCodeExecutionContext.AddedRuleInstance = ruleInstance;
 
-            var storagesList = _baseResolver.GetStoragesList(localCodeExecutionContext.Storage);
+            var storagesList = _baseResolver.GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
             var targetStorage = storagesList.FirstOrDefault(p => p.Storage.Kind == KindOfStorage.Local);
 

@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"name = {name}");
 #endif
 
-            var storagesList = GetStoragesList(storage);
+            var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
 
             return GetSynonyms(name, storagesList);
         }

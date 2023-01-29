@@ -47,8 +47,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"stopWatch.Elapsed = {stopWatch.Elapsed}");
             //Log($"name = {name}");
             //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
-            Log($"localCodeExecutionContext.GetHashCode() = {localCodeExecutionContext.GetHashCode()}");
-            Log($"storagesList.Count = {storagesList.Count}");
+            //Log($"localCodeExecutionContext.GetHashCode() = {localCodeExecutionContext.GetHashCode()}");
+            //Log($"storagesList.Count = {storagesList.Count}");
             //foreach (var tmpStorage in storagesList)
             //{
             //    //Log($"tmpStorage = {tmpStorage}");

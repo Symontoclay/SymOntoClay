@@ -76,7 +76,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if (_bindingVariables.Any())
             {
-                var storagesList = _baseResolver.GetStoragesList(localCodeExecutionContext.Storage);
+                var storagesList = _baseResolver.GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
                 var targetStorage = storagesList.FirstOrDefault(p => p.Storage.Kind == KindOfStorage.Local);
 

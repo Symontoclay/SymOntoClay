@@ -54,7 +54,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var storage = localCodeExecutionContext.Storage;
 
-            var storagesList = GetStoragesList(storage);
+            var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
 
 #if DEBUG
             //Log($"storagesList.Count = {storagesList.Count}");

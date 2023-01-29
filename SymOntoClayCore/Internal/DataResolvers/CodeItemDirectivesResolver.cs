@@ -76,7 +76,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //}
 #endif
 
-            var globalStorage = GetStoragesList(storage).Single(p => p.Storage.Kind == KindOfStorage.Global).Storage;
+            var globalStorage = GetStoragesList(storage, KindOfStoragesList.CodeItems).Single(p => p.Storage.Kind == KindOfStorage.Global).Storage;
 
 #if DEBUG
             //Log($"globalStorage = {globalStorage}");

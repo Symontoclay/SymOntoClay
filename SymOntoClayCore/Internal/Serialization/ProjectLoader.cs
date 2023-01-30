@@ -303,6 +303,9 @@ namespace SymOntoClay.Core.Internal.Serialization
                 case KindOfCodeEntity.Function:
                     break;
 
+                case KindOfCodeEntity.Constructor:
+                    break;
+
                 case KindOfCodeEntity.Operator:
                     break;
 

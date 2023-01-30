@@ -103,6 +103,13 @@ namespace SymOntoClay.Core.Internal.Helpers
             SetUpCodeItem(namedFunction, defaultSettings, context);
         }
 
+        public static void SetUpConstructor(Constructor constructor, DefaultSettingsOfCodeEntity defaultSettings)
+        {
+            var context = new Dictionary<object, object>();
+
+            SetUpCodeItem(constructor, defaultSettings, context);
+        }
+
         public static void SetUpOperator(Operator op, DefaultSettingsOfCodeEntity defaultSettings)
         {
             var context = new Dictionary<object, object>();

@@ -40,6 +40,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Action,
         Actions,
         Fun,
+        Constructor,
         Operator,
         Is,
         On,

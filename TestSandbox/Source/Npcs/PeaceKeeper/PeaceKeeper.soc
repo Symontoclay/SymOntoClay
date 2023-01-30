@@ -1,16 +1,9 @@
 ﻿app PeaceKeeper
 {
-    on Enter
+    constructor()
     {
-        //'Begin' >> @>log;
-
-        @b = {
-            @b = 1;
-        };
-
-        @a = new @b;
-        @a.@b >> @>log;
-
-        //'End' >> @>log;
+        'Begin' >> @>log;
+        'End' >> @>log;
     }
+
 }

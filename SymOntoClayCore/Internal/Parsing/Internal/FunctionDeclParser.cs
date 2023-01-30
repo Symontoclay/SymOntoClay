@@ -153,7 +153,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             switch(_currToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.With:
-                                    ProcessWidth();
+                                    ProcessWith();
                                     break;
 
                                 default:
@@ -223,7 +223,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _state = State.GotParameters;
         }
 
-        private void ProcessWidth()
+        private void ProcessWith()
         {
             _context.Recovery(_currToken);
 

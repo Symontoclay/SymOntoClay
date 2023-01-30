@@ -673,6 +673,31 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             return result;
         }
 
+        protected Constructor CreateConstructorAndSetAsCurrentCodeItem()
+        {
+            var result = CreateConstructor();
+
+            SetCurrentCodeItem(result);
+
+            return result;
+        }
+
+        protected Constructor CreateConstructor()
+        {
+            var result = new Constructor();
+
+            DefaultSettingsOfCodeEntityHelper.SetUpConstructor(result, CurrentDefaultSetings);
+
+            FillUpCodeItem(result);
+
+            if (result.ParentCodeEntity != null)
+            {
+                result.Holder = result.ParentCodeEntity.Name;
+            }
+
+            return result;
+        }
+
         protected Operator CreateOperatorAndSetAsCurrentCodeItem()
         {
             var result = CreateOperator();

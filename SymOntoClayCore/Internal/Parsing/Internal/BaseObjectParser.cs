@@ -130,6 +130,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
         }
 
+        protected virtual void OnAddConstructor(Constructor constructor)
+        {
+        }
+
         protected virtual void OnAddOperator(Operator op)
         {
         }
@@ -149,7 +153,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected void ProcessGeneralContent()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
+            Log($"_currToken = {_currToken}");
             //Log($"(_context.CurrentDefaultSetings != null) = {_context.CurrentDefaultSetings != null}");
 #endif
 
@@ -187,6 +191,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 Result.SubItems.Add(namedFunction);
 
                                 OnAddNamedFunction(namedFunction);
+                            }
+                            break;
+
+                        case KeyWordTokenKind.Constructor:
+                            {
+                                _context.Recovery(_currToken);
+                                var parser = new ConstructorDeclParser(_context);
+
+                                parser.Run();
+
+                                var constructor = parser.Result;
+
+                                Result.SubItems.Add(constructor);
+
+                                OnAddConstructor(constructor);
                             }
                             break;
 

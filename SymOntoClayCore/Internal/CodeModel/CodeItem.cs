@@ -150,6 +150,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsNamedFunction => false;
         public virtual NamedFunction AsNamedFunction => null;
 
+        public virtual bool IsConstructor => false;
+        public virtual Constructor AsConstructor => null;
+
         public virtual bool IsField => false;
         public virtual Field AsField => null;
 

@@ -72,6 +72,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private MethodsResolver _methodsResolver;
         private readonly object _methodsResolverLockObj = new object();
 
+        private ConstructorsResolver _constructorsResolver;
+        private readonly object _constructorsResolverLockObj = new object();
+
         private CodeItemDirectivesResolver _codeItemDirectivesResolver;
         private readonly object _codeItemDirectivesResolverLockObj = new object();
 
@@ -267,6 +270,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 return _methodsResolver;
+            }
+        }
+
+        /// <inheritdoc/>
+        public ConstructorsResolver GetConstructorsResolver()
+        {
+            lock(_constructorsResolverLockObj)
+            {
+                if(_constructorsResolver == null)
+                {
+                    _constructorsResolver = new ConstructorsResolver(_context);
+                }
+
+                return _constructorsResolver;
             }
         }
 

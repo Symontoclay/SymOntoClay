@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.Core.Internal.Storage.ActionsStoraging;
 using SymOntoClay.Core.Internal.Storage.ChannelsStoraging;
+using SymOntoClay.Core.Internal.Storage.ConstructorsStoraging;
 using SymOntoClay.Core.Internal.Storage.FuzzyLogic;
 using SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging;
 using SymOntoClay.Core.Internal.Storage.InheritanceStoraging;
@@ -49,6 +50,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public LogicalStorage LogicalStorage { get; set; }
         public RelationsStorage RelationsStorage { get; set; }
         public MethodsStorage MethodsStorage { get; set; }
+        public ConstructorsStorage ConstructorsStorage { get; set; }
         public ActionsStorage ActionsStorage { get; set; }
         public StatesStorage StatesStorage { get; set; }
         public TriggersStorage TriggersStorage { get; set; }
@@ -85,6 +87,7 @@ namespace SymOntoClay.Core.Internal.Storage
             LogicalStorage.Dispose();
             RelationsStorage.Dispose();
             MethodsStorage.Dispose();
+            ConstructorsStorage.Dispose();
             ActionsStorage.Dispose();
             StatesStorage.Dispose();
             TriggersStorage.Dispose();

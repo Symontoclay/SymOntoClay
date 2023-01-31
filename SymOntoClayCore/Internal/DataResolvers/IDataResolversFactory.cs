@@ -96,6 +96,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         /// <returns>Instance of Methods resolver.</returns>
         MethodsResolver GetMethodsResolver();
 
+        ConstructorsResolver GetConstructorsResolver();
+
         /// <summary>
         /// Gets instance of CodeItemDirectives resolver.
         /// </summary>

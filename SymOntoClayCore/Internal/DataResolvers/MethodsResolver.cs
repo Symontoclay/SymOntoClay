@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             _synonymsResolver = dataResolversFactory.GetSynonymsResolver();
         }
         #endregion
-
+        
         #region public methods
         public IExecutable Resolve(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
         {

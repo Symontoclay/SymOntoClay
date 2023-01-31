@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage.ActionsStoraging;
 using SymOntoClay.Core.Internal.Storage.ChannelsStoraging;
+using SymOntoClay.Core.Internal.Storage.ConstructorsStoraging;
 using SymOntoClay.Core.Internal.Storage.FuzzyLogic;
 using SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging;
 using SymOntoClay.Core.Internal.Storage.InheritanceStoraging;
@@ -59,6 +60,7 @@ namespace SymOntoClay.Core.Internal.Storage
             _statesStorage = new EmptyStatesStorage(this, logger);
             _relationsStorage = new EmptyRelationsStorage(this, logger);
             _methodsStorage = new EmptyMethodsStorage(this, logger);
+            _constructorsStorage = new EmptyConstructorsStorage(this, logger);
             _actionsStorage = new EmptyActionsStorage(this, logger);
             _synonymsStorage = new EmptySynonymsStorage(this, logger);
             _operatorsStorage = new EmptyOperatorsStorage(this, logger);
@@ -77,6 +79,7 @@ namespace SymOntoClay.Core.Internal.Storage
         private EmptyStatesStorage _statesStorage;
         private EmptyRelationsStorage _relationsStorage;
         private EmptyMethodsStorage _methodsStorage;
+        private EmptyConstructorsStorage _constructorsStorage;
         private EmptyActionsStorage _actionsStorage;
         private EmptySynonymsStorage _synonymsStorage;
         private EmptyOperatorsStorage _operatorsStorage;
@@ -96,6 +99,9 @@ namespace SymOntoClay.Core.Internal.Storage
 
         /// <inheritdoc/>
         public IMethodsStorage MethodsStorage => _methodsStorage;
+
+        /// <inheritdoc/>
+        public IConstructorsStorage ConstructorsStorage => _constructorsStorage;
 
         /// <inheritdoc/>
         public IActionsStorage ActionsStorage => _actionsStorage;

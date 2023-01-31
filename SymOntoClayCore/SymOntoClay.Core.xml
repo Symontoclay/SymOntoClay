@@ -4210,6 +4210,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#MethodsStorage">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#ConstructorsStorage">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#ActionsStorage">
             <inheritdoc/>
         </member>
@@ -5038,6 +5041,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory.GetMethodsResolver">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory.GetConstructorsResolver">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory.GetCodeItemDirectivesResolver">
@@ -7435,6 +7441,9 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.MethodsStorage">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.ConstructorsStorage">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.ActionsStorage">
             <inheritdoc/>
         </member>
@@ -7529,6 +7538,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorageSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage.Append(SymOntoClay.Core.Internal.CodeModel.Constructor)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage.Append(SymOntoClay.Core.Internal.CodeModel.Constructor)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.EmptyFuzzyLogicStorage.Append(SymOntoClay.Core.Internal.CodeModel.LinguisticVariable)">
@@ -7805,6 +7820,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.MethodsStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.ConstructorsStorage">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.ActionsStorage">

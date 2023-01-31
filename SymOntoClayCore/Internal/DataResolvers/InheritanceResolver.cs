@@ -118,12 +118,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             return GetWeightedInheritanceItems(localCodeExecutionContext.Holder, localCodeExecutionContext, options);
         }
-
-        //public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(StrongIdentifierValue subName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
-        //{
-        //    return GetWeightedInheritanceItems(subName.NormalizedNameValue, localCodeExecutionContext, options);
-        //}
-
+        
         public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(StrongIdentifierValue subName, LocalCodeExecutionContext localCodeExecutionContext)
         {
             return GetWeightedInheritanceItems(subName, localCodeExecutionContext, DefaultOptions);

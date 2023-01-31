@@ -63,7 +63,7 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
 
                 var namedFunctionName = namedFunction.Name;
 
-                var paramsCountList = GetParamsCountList(namedFunction);
+                var paramsCountList = StorageHelper.GetParamsCountList(namedFunction);
 
 #if DEBUG
                 //Log($"paramsCountList = {paramsCountList.WritePODListToString()}");
@@ -205,35 +205,6 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
 
                 return result;
             }
-        }
-
-        private List<int> GetParamsCountList(NamedFunction namedFunction)
-        {
-            var result = new List<int>();
-
-            var argumentsList = namedFunction.Arguments;
-
-            if (!argumentsList.Any())
-            {
-                result.Add(0);
-                return result;
-            }
-
-            var totalCount = argumentsList.Count();
-            var argumentsWithoutDefaultValueCount = argumentsList.Count(p => !p.HasDefaultValue);
-
-            if (totalCount == argumentsWithoutDefaultValueCount)
-            {
-                result.Add(totalCount);
-                return result;
-            }
-
-            for (var i = argumentsWithoutDefaultValueCount; i <= totalCount; i++)
-            {
-                result.Add(i);
-            }
-
-            return result;
         }
 
         /// <inheritdoc/>

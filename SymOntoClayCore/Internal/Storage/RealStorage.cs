@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage.ActionsStoraging;
 using SymOntoClay.Core.Internal.Storage.ChannelsStoraging;
+using SymOntoClay.Core.Internal.Storage.ConstructorsStoraging;
 using SymOntoClay.Core.Internal.Storage.FuzzyLogic;
 using SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging;
 using SymOntoClay.Core.Internal.Storage.InheritanceStoraging;
@@ -77,19 +78,49 @@ namespace SymOntoClay.Core.Internal.Storage
             }
 
             _realStorageContext.LogicalStorage = new LogicalStorage(_kind, _realStorageContext);
+            _logicalStorage = _realStorageContext.LogicalStorage;
+
             _realStorageContext.RelationsStorage = new RelationsStorage(_kind, _realStorageContext);
+            _relationsStorage = _realStorageContext.RelationsStorage;
+
             _realStorageContext.MethodsStorage = new MethodsStorage(_kind, _realStorageContext);
+            _methodsStorage = _realStorageContext.MethodsStorage;
+
+            _realStorageContext.ConstructorsStorage = new ConstructorsStorage(_kind, _realStorageContext);
+            _constructorsStorage = _realStorageContext.ConstructorsStorage;
+
             _realStorageContext.ActionsStorage = new ActionsStorage(_kind, _realStorageContext);
+            _actionsStorage = _realStorageContext.ActionsStorage;
+
             _realStorageContext.StatesStorage = new StatesStorage(_kind, _realStorageContext);
+            _statesStorage = _realStorageContext.StatesStorage;
+
             _realStorageContext.TriggersStorage = new TriggersStorage(_kind, _realStorageContext);
+            _triggersStorage = _realStorageContext.TriggersStorage;
+
             _realStorageContext.InheritanceStorage = new InheritanceStorage(_kind, _realStorageContext);
+            _inheritanceStorage = _realStorageContext.InheritanceStorage;
+
             _realStorageContext.SynonymsStorage = new SynonymsStorage(_kind, _realStorageContext);
+            _synonymsStorage = _realStorageContext.SynonymsStorage;
+
             _realStorageContext.OperatorsStorage = new OperatorsStorage(_kind, _realStorageContext);
+            _operatorsStorage = _realStorageContext.OperatorsStorage;
+
             _realStorageContext.ChannelsStorage = new ChannelsStorage(_kind, _realStorageContext);
+            _channelsStorage = _realStorageContext.ChannelsStorage;
+
             _realStorageContext.MetadataStorage = new MetadataStorage(_kind, _realStorageContext);
+            _metadataStorage = _realStorageContext.MetadataStorage;
+
             _realStorageContext.VarStorage = new VarStorage(_kind, _realStorageContext);
+            _varStorage = _realStorageContext.VarStorage;
+
             _realStorageContext.FuzzyLogicStorage = new FuzzyLogicStorage(_kind, _realStorageContext);
+            _fuzzyLogicStorage = _realStorageContext.FuzzyLogicStorage;
+
             _realStorageContext.IdleActionItemsStorage = new IdleActionItemsStorage(_kind, _realStorageContext);
+            _idleActionItemsStorage = _realStorageContext.IdleActionItemsStorage;
         }
 
         private readonly KindOfStorage _kind;
@@ -100,47 +131,66 @@ namespace SymOntoClay.Core.Internal.Storage
         private readonly RealStorageContext _realStorageContext;
         private readonly object _lockObj = new object();
 
-        /// <inheritdoc/>
-        public ILogicalStorage LogicalStorage => _realStorageContext.LogicalStorage;
+        private readonly LogicalStorage _logicalStorage;
+        private readonly RelationsStorage _relationsStorage;
+        private readonly MethodsStorage _methodsStorage;
+        private readonly ConstructorsStorage _constructorsStorage;
+        private readonly ActionsStorage _actionsStorage;
+        private readonly StatesStorage _statesStorage;
+        private readonly TriggersStorage _triggersStorage;
+        private readonly InheritanceStorage _inheritanceStorage;
+        private readonly SynonymsStorage _synonymsStorage;
+        private readonly OperatorsStorage _operatorsStorage;
+        private readonly ChannelsStorage _channelsStorage;
+        private readonly MetadataStorage _metadataStorage;
+        private readonly VarStorage _varStorage;
+        private readonly FuzzyLogicStorage _fuzzyLogicStorage;
+        private readonly IdleActionItemsStorage _idleActionItemsStorage;
 
         /// <inheritdoc/>
-        public IRelationsStorage RelationsStorage => _realStorageContext.RelationsStorage;
+        public ILogicalStorage LogicalStorage => _logicalStorage;
 
         /// <inheritdoc/>
-        public IMethodsStorage MethodsStorage => _realStorageContext.MethodsStorage;
+        public IRelationsStorage RelationsStorage => _relationsStorage;
 
         /// <inheritdoc/>
-        public IActionsStorage ActionsStorage => _realStorageContext.ActionsStorage;
+        public IMethodsStorage MethodsStorage => _methodsStorage;
 
         /// <inheritdoc/>
-        public IStatesStorage StatesStorage => _realStorageContext.StatesStorage;
+        public IConstructorsStorage ConstructorsStorage => _constructorsStorage;
 
         /// <inheritdoc/>
-        public ITriggersStorage TriggersStorage => _realStorageContext.TriggersStorage;
+        public IActionsStorage ActionsStorage => _actionsStorage;
 
         /// <inheritdoc/>
-        public IInheritanceStorage InheritanceStorage => _realStorageContext.InheritanceStorage;
+        public IStatesStorage StatesStorage => _statesStorage;
+
+        /// <inheritdoc/>
+        public ITriggersStorage TriggersStorage => _triggersStorage;
+
+        /// <inheritdoc/>
+        public IInheritanceStorage InheritanceStorage => _inheritanceStorage;
    
         /// <inheritdoc/>
-        public ISynonymsStorage SynonymsStorage => _realStorageContext.SynonymsStorage;
+        public ISynonymsStorage SynonymsStorage => _synonymsStorage;
 
         /// <inheritdoc/>
-        public IOperatorsStorage OperatorsStorage => _realStorageContext.OperatorsStorage;
+        public IOperatorsStorage OperatorsStorage => _operatorsStorage;
 
         /// <inheritdoc/>
-        public IChannelsStorage ChannelsStorage => _realStorageContext.ChannelsStorage;
+        public IChannelsStorage ChannelsStorage => _channelsStorage;
 
         /// <inheritdoc/>
-        public IMetadataStorage MetadataStorage => _realStorageContext.MetadataStorage;
+        public IMetadataStorage MetadataStorage => _metadataStorage;
 
         /// <inheritdoc/>
-        public IVarStorage VarStorage => _realStorageContext.VarStorage;
+        public IVarStorage VarStorage => _varStorage;
 
         /// <inheritdoc/>
-        public IFuzzyLogicStorage FuzzyLogicStorage => _realStorageContext.FuzzyLogicStorage;
+        public IFuzzyLogicStorage FuzzyLogicStorage => _fuzzyLogicStorage;
 
         /// <inheritdoc/>
-        public IIdleActionItemsStorage IdleActionItemsStorage => _realStorageContext.IdleActionItemsStorage;
+        public IIdleActionItemsStorage IdleActionItemsStorage => _idleActionItemsStorage;
 
         /// <inheritdoc/>
         public void AddParentStorage(IStorage storage)

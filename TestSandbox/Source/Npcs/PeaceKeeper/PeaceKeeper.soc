@@ -5,5 +5,4 @@
         'Begin' >> @>log;
         'End' >> @>log;
     }
-
 }

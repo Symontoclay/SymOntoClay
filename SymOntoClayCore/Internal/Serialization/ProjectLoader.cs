@@ -520,6 +520,10 @@ namespace SymOntoClay.Core.Internal.Serialization
                     targetStorage.MethodsStorage.Append(codeItem.AsNamedFunction);
                     break;
 
+                case KindOfCodeEntity.Constructor:
+                    targetStorage.ConstructorsStorage.Append(codeItem.AsConstructor);
+                    break;
+
                 case KindOfCodeEntity.Action:
                     targetStorage.ActionsStorage.Append(codeItem.AsAction);
                     break;
@@ -622,6 +626,7 @@ namespace SymOntoClay.Core.Internal.Serialization
                 case KindOfCodeEntity.RuleOrFact:
                 case KindOfCodeEntity.LinguisticVariable:
                 case KindOfCodeEntity.Function:
+                case KindOfCodeEntity.Constructor:
                 case KindOfCodeEntity.Action:
                 case KindOfCodeEntity.State:
                 case KindOfCodeEntity.Operator:

@@ -75,7 +75,10 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log($"_localCodeExecutionContext = {_localCodeExecutionContext}");
 #endif
 
-            _triggersResolver = new TriggersResolver(context);
+            var dataResolversFactory = context.DataResolversFactory;
+
+            _triggersResolver = dataResolversFactory.GetTriggersResolver();
+            _constructorsResolver = dataResolversFactory.GetConstructorsResolver();
         }
 
         /// <inheritdoc/>
@@ -94,6 +97,7 @@ namespace SymOntoClay.Core.Internal.Instances
         protected readonly IStorage _storage;
         protected readonly LocalCodeExecutionContext _localCodeExecutionContext;
         private readonly TriggersResolver _triggersResolver;
+        private readonly ConstructorsResolver _constructorsResolver;
         private InstanceState _instanceState = InstanceState.Created;
         private List<LogicConditionalTriggerInstance> _logicConditionalTriggersList = new List<LogicConditionalTriggerInstance>();
         private List<AddingFactNonConditionalTriggerInstance> _addingFactNonConditionalTriggerInstancesList = new List<AddingFactNonConditionalTriggerInstance>();
@@ -122,6 +126,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
             ApplyCodeDirectives();
 
+            //var constructor = _constructorsResolver.Resolve();
+
             RunInitialTriggers();
 
             RunMutuallyExclusiveStatesSets();
@@ -147,22 +153,19 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 foreach(var targetTrigger in targetAddingFactTriggersList)
                 {
-                    var targetTriggerInfo = targetTrigger.ResultItem;
-
 #if DEBUG
                     //Log($"targetTrigger = {targetTrigger}");
-                    //Log($"targetTriggerInfo = {targetTriggerInfo}");
 #endif
 
-                    if(targetTriggerInfo.SetCondition == null)
+                    if(targetTrigger.SetCondition == null)
                     {
-                        var triggerInstance = new AddingFactNonConditionalTriggerInstance(targetTriggerInfo, this, _context, _storage, _localCodeExecutionContext);
+                        var triggerInstance = new AddingFactNonConditionalTriggerInstance(targetTrigger, this, _context, _storage, _localCodeExecutionContext);
                         triggerInstance.Init();
                         _addingFactNonConditionalTriggerInstancesList.Add(triggerInstance);
                     }
                     else
                     {
-                        var triggerInstance = new AddingFactConditionalTriggerInstance(targetTriggerInfo, this, _context, _storage, _localCodeExecutionContext);
+                        var triggerInstance = new AddingFactConditionalTriggerInstance(targetTrigger, this, _context, _storage, _localCodeExecutionContext);
                         triggerInstance.Init();
                         _addingFactConditionalTriggerInstancesList.Add(triggerInstance);
                     }
@@ -182,10 +185,9 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
 #if DEBUG
                     //Log($"targetTrigger = {targetTrigger}");
-                    //Log($"targetTrigger.ResultItem = {targetTrigger.ResultItem}");
 #endif
 
-                    var triggerInstance = new LogicConditionalTriggerInstance(targetTrigger.ResultItem, this, _context, _storage, _localCodeExecutionContext);
+                    var triggerInstance = new LogicConditionalTriggerInstance(targetTrigger, this, _context, _storage, _localCodeExecutionContext);
                     _logicConditionalTriggersList.Add(triggerInstance);
 
                     _globalTriggersStorage.Append(triggerInstance);
@@ -350,9 +352,9 @@ namespace SymOntoClay.Core.Internal.Instances
                     localCodeExecutionContext.Holder = holder;
 
                     var processInitialInfo = new ProcessInitialInfo();
-                    processInitialInfo.CompiledFunctionBody = targetTrigger.ResultItem.SetCompiledFunctionBody;
+                    processInitialInfo.CompiledFunctionBody = targetTrigger.SetCompiledFunctionBody;
                     processInitialInfo.LocalContext = localCodeExecutionContext;
-                    processInitialInfo.Metadata = targetTrigger.ResultItem;
+                    processInitialInfo.Metadata = targetTrigger;
                     processInitialInfo.Instance = this;
                     processInitialInfo.ExecutionCoordinator = executionCoordinator;
 

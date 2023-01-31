@@ -53,5 +53,34 @@ namespace SymOntoClay.Core.Internal.Storage
 
             return itemsWithTheSameLongHashCodeList;
         }
+
+        public static List<int> GetParamsCountList(Function function)
+        {
+            var result = new List<int>();
+
+            var argumentsList = function.Arguments;
+
+            if (!argumentsList.Any())
+            {
+                result.Add(0);
+                return result;
+            }
+
+            var totalCount = argumentsList.Count();
+            var argumentsWithoutDefaultValueCount = argumentsList.Count(p => !p.HasDefaultValue);
+
+            if (totalCount == argumentsWithoutDefaultValueCount)
+            {
+                result.Add(totalCount);
+                return result;
+            }
+
+            for (var i = argumentsWithoutDefaultValueCount; i <= totalCount; i++)
+            {
+                result.Add(i);
+            }
+
+            return result;
+        }
     }
 }

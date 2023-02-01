@@ -31,6 +31,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     public interface ICodeExecutorComponent
     {
         Value ExecuteBatchAsync(List<ProcessInitialInfo> processInitialInfoList);
+        Value ExecuteBatchSync(List<ProcessInitialInfo> processInitialInfoList);
         Value ExecuteAsync(ProcessInitialInfo processInitialInfo);
         Value CallOperator(KindOfOperator kindOfOperator, List<Value> paramsList, LocalCodeExecutionContext parentLocalCodeExecutionContext);
         Value CallExecutableSync(IExecutable executable, List<Value> positionedParameters, LocalCodeExecutionContext parentLocalCodeExecutionContext);

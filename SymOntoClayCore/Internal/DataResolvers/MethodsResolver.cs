@@ -653,11 +653,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"paramsCount = {paramsCount}");
 #endif
 
-            if (!storagesList.Any())
-            {
-                return new List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>>();
-            }
-
             var synonymsList = _synonymsResolver.GetSynonyms(name, storagesList);
 
 #if DEBUG

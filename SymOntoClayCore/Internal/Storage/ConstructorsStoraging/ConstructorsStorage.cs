@@ -1,8 +1,11 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
 {
@@ -80,6 +83,54 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
             var dict = new Dictionary<int, List<Constructor>>();
             _constructorsDict[holder] = dict;
             return dict;
+        }
+
+        /// <inheritdoc/>
+        public IList<WeightedInheritanceResultItem<Constructor>> GetConstructorsDirectly(int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+            lock (_lockObj)
+            {
+#if DEBUG
+                //Log($"GetHashCode() = {GetHashCode()}");
+                //Log($"paramsCount = {paramsCount}");
+#endif
+
+                var result = new List<WeightedInheritanceResultItem<Constructor>>();
+
+                foreach (var weightedInheritanceItem in weightedInheritanceItems)
+                {
+                    var targetHolder = weightedInheritanceItem.SuperName;
+
+#if DEBUG
+                    //Log($"targetHolder = {targetHolder}");
+#endif
+
+                    if(_constructorsDict.ContainsKey(targetHolder))
+                    {
+                        var targetDict = _constructorsDict[targetHolder];
+
+                        if (targetDict.ContainsKey(paramsCount))
+                        {
+                            var targetList = targetDict[paramsCount];
+
+                            foreach (var targetVal in targetList)
+                            {
+                                result.Add(new WeightedInheritanceResultItem<Constructor>(targetVal, weightedInheritanceItem));
+                            }
+                        }
+                    }
+                }
+
+                return result;
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _constructorsDict.Clear();
+
+            base.OnDisposed();
         }
     }
 }

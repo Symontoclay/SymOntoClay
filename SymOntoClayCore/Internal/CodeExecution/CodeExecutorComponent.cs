@@ -73,6 +73,35 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"processInitialInfoList = {processInitialInfoList.WriteListToString()}");
 #endif
 
+            var codeFramesList = ConvertProcessInitialInfosToCodeFrames(processInitialInfoList);
+
+            var threadExecutor = new AsyncThreadExecutor(_context);
+            threadExecutor.SetCodeFrames(codeFramesList);
+
+            return threadExecutor.Start();
+        }
+
+        /// <inheritdoc/>
+        public Value ExecuteBatchSync(List<ProcessInitialInfo> processInitialInfoList)
+        {
+#if DEBUG
+            //Log($"processInitialInfoList = {processInitialInfoList.WriteListToString()}");
+#endif
+
+            var codeFramesList = ConvertProcessInitialInfosToCodeFrames(processInitialInfoList);
+
+            var threadExecutor = new SyncThreadExecutor(_context);
+            threadExecutor.SetCodeFrames(codeFramesList);
+
+            return threadExecutor.Start();
+        }
+
+        private List<CodeFrame> ConvertProcessInitialInfosToCodeFrames(List<ProcessInitialInfo> processInitialInfoList)
+        {
+#if DEBUG
+            //Log($"processInitialInfoList = {processInitialInfoList.WriteListToString()}");
+#endif
+
             var codeFramesList = new List<CodeFrame>();
 
             foreach (var processInitialInfo in processInitialInfoList)
@@ -98,7 +127,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 //Log($"codeItemPriority = {codeItemPriority}");
 #endif
 
-                if(codeItemPriority != null)
+                if (codeItemPriority != null)
                 {
                     var numberValue = _numberValueLinearResolver.Resolve(codeItemPriority, _globalExecutionContext);
 
@@ -126,10 +155,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log("L>>>");
 #endif
 
-            var threadExecutor = new AsyncThreadExecutor(_context);
-            threadExecutor.SetCodeFrames(codeFramesList);
-
-            return threadExecutor.Start();
+            return codeFramesList;
         }
 
         /// <inheritdoc/>

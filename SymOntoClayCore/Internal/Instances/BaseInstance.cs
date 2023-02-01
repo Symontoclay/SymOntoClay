@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using Newtonsoft.Json.Linq;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
@@ -126,7 +127,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             ApplyCodeDirectives();
 
-            //var constructor = _constructorsResolver.Resolve();
+            RunConstructors();
 
             RunInitialTriggers();
 
@@ -304,6 +305,47 @@ namespace SymOntoClay.Core.Internal.Instances
             RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger.Enter);
         }
 
+        protected virtual void RunConstructors()
+        {
+            var constructors = _constructorsResolver.Resolve(Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+
+            if(constructors.Any())
+            {
+                var processInitialInfoList = new List<ProcessInitialInfo>();
+
+                constructors.Reverse();
+
+                foreach (var constructor in constructors)
+                {
+                    var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
+
+                    var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
+                    localCodeExecutionContext.Storage = new LocalStorage(localStorageSettings);
+
+                    localCodeExecutionContext.Holder = Name;
+
+                    var processInitialInfo = new ProcessInitialInfo();
+                    processInitialInfo.CompiledFunctionBody = constructor.CompiledFunctionBody;
+                    processInitialInfo.LocalContext = localCodeExecutionContext;
+                    processInitialInfo.Metadata = constructor;
+                    processInitialInfo.Instance = this;
+                    processInitialInfo.ExecutionCoordinator = _executionCoordinator;
+
+                    processInitialInfoList.Add(processInitialInfo);
+                }
+
+#if DEBUG
+                //Log($"processInitialInfoList = {processInitialInfoList.WriteListToString()}");
+#endif
+
+                var taskValue = _context.CodeExecutor.ExecuteBatchSync(processInitialInfoList);
+
+#if DEBUG
+                //Log($"taskValue = {taskValue}");
+#endif
+            }
+        }
+
         protected void RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger kindOfSystemEvent)
         {
             RunLifecycleTriggers(kindOfSystemEvent, Name);
@@ -338,7 +380,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 if(normalOrder)
                 {
                     targetSystemEventsTriggersList.Reverse();
-                }                
+                }
 
                 var processInitialInfoList = new List<ProcessInitialInfo>();
 
@@ -363,9 +405,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
 #if DEBUG
                 //Log($"processInitialInfoList = {processInitialInfoList.WriteListToString()}");
-                //Log($"appInstanceExecutionCoordinator?.ExecutionStatus = {appInstanceExecutionCoordinator?.ExecutionStatus}");
-                //Log($"stateExecutionCoordinator?.ExecutionStatus = {stateExecutionCoordinator?.ExecutionStatus}");
-                //Log($"actionExecutionCoordinator?.ExecutionStatus = {actionExecutionCoordinator?.ExecutionStatus}");
 #endif
 
                 var taskValue = _context.CodeExecutor.ExecuteBatchAsync(processInitialInfoList);

@@ -82,5 +82,11 @@ namespace SymOntoClay.Core.Internal.Instances
 
             return _varsResolver.GetVarValue(varName, _localCodeExecutionContext);
         }
+
+        /// <inheritdoc/>
+        protected override void RunConstructors()
+        {
+            //Do nothing! Constructors will be called in general executor after instantiating.
+        }
     }
 }

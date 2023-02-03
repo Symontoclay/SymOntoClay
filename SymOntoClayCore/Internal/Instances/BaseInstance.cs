@@ -59,7 +59,11 @@ namespace SymOntoClay.Core.Internal.Instances
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
             _storage = storageFactory.CreateStorage(localStorageSettings);
 
-            if(!varList.IsNullOrEmpty())
+#if DEBUG
+            Log($"_storage.Kind = {_storage.Kind}");
+#endif
+
+            if (!varList.IsNullOrEmpty())
             {
                 var varStorage = _storage.VarStorage;
 

@@ -1,4 +1,18 @@
-﻿class cls0
+﻿app PeaceKeeper
+{
+    on Enter
+    {
+        'Begin' >> @>log;        
+        var @a = {
+            @b = 1;
+        };
+        @a.@b >> @>log;
+        'End' >> @>log;
+    }
+}
+
+/*
+class cls0
 {
     private:
         @b = 0;
@@ -33,3 +47,4 @@ app PeaceKeeper is cls1, cls2
     private:
         @b = 3;
 }
+*/

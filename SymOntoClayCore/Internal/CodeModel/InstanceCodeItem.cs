@@ -27,9 +27,9 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class Instance: CodeItem
+    public class InstanceCodeItem: CodeItem
     {
-        public Instance()
+        public InstanceCodeItem()
         {
             TypeOfAccess = TypeOfAccess.Private;
         }
@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// Clones the instance and returns cloned instance.
         /// </summary>
         /// <returns>Cloned instance.</returns>
-        public Instance Clone()
+        public InstanceCodeItem Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
@@ -58,14 +58,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// </summary>
         /// <param name="context">Special context for providing references continuity.</param>
         /// <returns>Cloned instance.</returns>
-        public Instance Clone(Dictionary<object, object> context)
+        public InstanceCodeItem Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {
-                return (Instance)context[this];
+                return (InstanceCodeItem)context[this];
             }
 
-            var result = new Instance();
+            var result = new InstanceCodeItem();
             context[this] = result;
 
             result.AppendCodeItem(this, context);

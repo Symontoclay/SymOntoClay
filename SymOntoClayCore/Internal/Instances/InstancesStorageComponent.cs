@@ -508,6 +508,12 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log($"codeItem = {codeItem}");
 #endif
 
+            var targetCodeItem = CreateAndSaveInstanceCodeItem(codeItem, NameHelper.CreateEntityName());
+
+#if DEBUG
+            //Log($"targetCodeItem = {targetCodeItem}");
+#endif
+
             var instance = new ObjectInstance(codeItem, _context, executionContext.Storage, executionContext);
 
             if(loadCodeItem)

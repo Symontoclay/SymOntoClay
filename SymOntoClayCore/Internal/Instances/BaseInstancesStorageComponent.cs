@@ -74,17 +74,22 @@ namespace SymOntoClay.Core.Internal.Instances
             }
             else
             {
-                mainEntity = CreateAndSaveEntity(mainEntity);
+                mainEntity = CreateAndSaveInstanceCodeItem(mainEntity);
             }
 
             return mainEntity;
         }
 
-        protected CodeItem CreateAndSaveEntity(CodeItem superCodeEntity)
+        protected CodeItem CreateAndSaveInstanceCodeItem(CodeItem superCodeEntity)
         {
-            var result = new Instance();
+            return CreateAndSaveInstanceCodeItem(superCodeEntity, _commonNamesStorage.SelfName);
+        }
 
-            result.Name = _commonNamesStorage.SelfName;
+        protected CodeItem CreateAndSaveInstanceCodeItem(CodeItem superCodeEntity, StrongIdentifierValue name)
+        {
+            var result = new InstanceCodeItem();
+
+            result.Name = name;
 
 #if DEBUG
             //Log($"result.Name = {result.Name}");

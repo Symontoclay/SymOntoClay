@@ -1,34 +1,14 @@
 ﻿class cls0
 {
-    constructor(@param: string)
-    {
-        'Begin ctor 1 of cls0' >> @>log;
-        @param >> @>log;
-        @b >> @>log;
-        'End ctor 1 of cls0' >> @>log;
-    }
-
-    constructor(@param: number)
-    {
-        'Begin ctor 2 of cls0' >> @>log;
-        @param >> @>log;
-        @b >> @>log;
-        'End ctor 2 of cls0' >> @>log;
-    }
-
     private:
         @b = 0;
 }
 
 class cls1 is cls0
 {
-    constructor(@param: string)
-        : cls0('Cool!')
+    fun SomeFun1()
     {
-        'Begin ctor of cls1' >> @>log;
-        @param >> @>log;
         @b >> @>log;
-        'End ctor of cls1' >> @>log;
     }
 
     private:
@@ -37,37 +17,17 @@ class cls1 is cls0
 
 class cls2 is cls0
 {
-    constructor(@param: number)
-        : cls0(16)
-    {
-        'Begin ctor of ' >> @>log;
-        @param >> @>log;
-        @b >> @>log;
-        'End ctor of ' >> @>log;
-    }
-
     private:
         @b = 2;
 }
 
 app PeaceKeeper is cls1, cls2
 {
-    constructor()
-        : this('Hi')
+    on Enter
     {
-        'Begin ctor 1 of PeaceKeeper' >> @>log;
         @b >> @>log;
-        'End ctor 1 of PeaceKeeper' >> @>log;
-    }
 
-    constructor(@param: string)
-        : cls1('The Beatles!'),
-        cls2(12)
-    {
-        'Begin ctor 2 of PeaceKeeper' >> @>log;
-        @param >> @>log;
-        @b >> @>log;
-        'End ctor 2 of PeaceKeeper' >> @>log;
+        SomeFun1();
     }
 
     private:

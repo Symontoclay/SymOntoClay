@@ -16,7 +16,7 @@
         'End ctor 2 of cls0' >> @>log;
     }
 
-    protected:
+    private:
         @b = 0;
 }
 
@@ -31,7 +31,7 @@ class cls1 is cls0
         'End ctor of cls1' >> @>log;
     }
 
-    protected:
+    private:
         @b = 1;
 }
 
@@ -46,7 +46,7 @@ class cls2 is cls0
         'End ctor of ' >> @>log;
     }
 
-    protected:
+    private:
         @b = 2;
 }
 

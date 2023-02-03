@@ -39,7 +39,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             Parent = parent;
         }
-
+        
         public LocalCodeExecutionContext Parent { get;private set; }
 
         public StrongIdentifierValue Holder { get; set; }

@@ -50,6 +50,11 @@ namespace SymOntoClay.Core.Internal.Instances
             Name = codeItem.Name;
             _context = context;
 
+            var dataResolversFactory = context.DataResolversFactory;
+
+            _triggersResolver = dataResolversFactory.GetTriggersResolver();
+            _constructorsResolver = dataResolversFactory.GetConstructorsResolver();
+
             _globalTriggersStorage = context.Storage.GlobalStorage.TriggersStorage;
 
             _executionCoordinator = new ExecutionCoordinator(this);
@@ -79,11 +84,6 @@ namespace SymOntoClay.Core.Internal.Instances
 #if DEBUG
             //Log($"_localCodeExecutionContext = {_localCodeExecutionContext}");
 #endif
-
-            var dataResolversFactory = context.DataResolversFactory;
-
-            _triggersResolver = dataResolversFactory.GetTriggersResolver();
-            _constructorsResolver = dataResolversFactory.GetConstructorsResolver();
         }
 
         /// <inheritdoc/>

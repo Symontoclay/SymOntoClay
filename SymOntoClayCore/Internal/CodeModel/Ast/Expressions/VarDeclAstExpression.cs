@@ -30,7 +30,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
 {
-    public class VarDeclAstExpression : AstExpression
+    public class VarDeclAstExpression : AstExpression, IVarDecl
     {
         /// <inheritdoc/>
         public override KindOfAstExpression Kind => KindOfAstExpression.VarDecl;
@@ -41,7 +41,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         /// <inheritdoc/>
         public override VarDeclAstExpression AsVarDeclAstExpression => this;
 
+        /// <inheritdoc/>
         public StrongIdentifierValue Name { get; set; }
+
+        /// <inheritdoc/>
         public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
 
         /// <inheritdoc/>

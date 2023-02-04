@@ -94,7 +94,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             AddCommand(command);
         }
 
-        protected void CompileVarDecl(VarDeclAstExpression varDeclAstExpression)
+        protected void CompileVarDecl(IVarDecl varDeclAstExpression)
         {
             CompilePushVal(varDeclAstExpression.Name);
 
@@ -121,7 +121,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             AddCommand(command);
         }
 
-        protected void CompilePushAnnotation(AnnotatedItem annotatedItem)
+        protected void CompilePushAnnotation(IAnnotatedItem annotatedItem)
         {
             var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.PushVal;

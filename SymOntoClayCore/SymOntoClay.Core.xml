@@ -892,6 +892,9 @@
             <param name="context">Special context for providing references continuity.</param>
             <returns>Cloned instance.</returns>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.GetAnnotationValue">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.IsDisposed">
             <inheritdoc/>
         </member>
@@ -1378,6 +1381,12 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.VarDeclAstExpression.AsVarDeclAstExpression">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.VarDeclAstExpression.Name">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.VarDeclAstExpression.TypesList">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.VarDeclAstExpression.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -2594,6 +2603,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Field.AsField">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Field.TypesList">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Field.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">

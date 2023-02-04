@@ -16,8 +16,15 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         public void Run(List<Field> fields)
         {
 #if DEBUG
-            Log($"fields = {fields.WriteListToString()}");
+            //Log($"fields = {fields.WriteListToString()}");
 #endif
+
+            foreach(var field in fields)
+            {
+#if DEBUG
+                Log($"field = {field}");
+#endif
+            }
 
             throw new NotImplementedException();
         }

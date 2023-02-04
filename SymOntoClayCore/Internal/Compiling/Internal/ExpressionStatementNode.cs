@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             : base(context)
         {
         }
-
+        
         public void Run(AstExpressionStatement statement)
         {
 #if DEBUG

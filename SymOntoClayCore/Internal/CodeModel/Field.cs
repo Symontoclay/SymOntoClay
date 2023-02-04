@@ -32,7 +32,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class Field: CodeItem
+    public class Field: CodeItem, IVarDecl
     {
         public Field()
         {
@@ -49,6 +49,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override Field AsField => this;
 
         public AstExpression Value { get; set; }
+
+        /// <inheritdoc/>
         public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
 
         /// <inheritdoc/>

@@ -35,6 +35,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class StrongIdentifierValue: Value, IEquatable<StrongIdentifierValue>
     {
         public static readonly StrongIdentifierValue LogicalVarBlankIdentifier = NameHelper.CreateName("$_");
+        public static readonly StrongIdentifierValue Empty = new StrongIdentifierValue();
 
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.StrongIdentifierValue;
@@ -267,6 +268,21 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override string ToHumanizedString(DebugHelperOptions options)
         {
             return NameValue;
+        }
+
+        private static bool IsNullOrEmpty(StrongIdentifierValue value)
+        {
+            if(value == null)
+            {
+                return true;
+            }
+
+            if(value.IsEmpty)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

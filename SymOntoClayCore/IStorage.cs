@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -33,6 +34,8 @@ namespace SymOntoClay.Core
     public interface IStorage : ISymOntoClayDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         KindOfStorage Kind { get; }
+        StrongIdentifierValue TargetClassName { get; }
+
         //string Owner { get; }
         ILogicalStorage LogicalStorage { get; }
         IRelationsStorage RelationsStorage { get; }

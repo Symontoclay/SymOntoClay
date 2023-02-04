@@ -250,7 +250,7 @@ namespace SymOntoClay.Core.Internal.Instances
                         {
                             var localStorageSettings = RealStorageSettingsHelper.Create(_context);
 
-                            var storage = new SuperClassStorage(localStorageSettings);
+                            var storage = new SuperClassStorage(localStorageSettings, key);
 
                             _superClassesStorages[key] = storage;
 

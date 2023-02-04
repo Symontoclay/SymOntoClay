@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             : base(context)
         {
         }
-
+        
         public void Run(List<AstStatement> statements, LoopCompilingContext loopCompilingContext)
         {
 #if DEBUG

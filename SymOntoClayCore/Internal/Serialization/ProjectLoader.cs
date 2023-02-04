@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Storage;
@@ -24,10 +25,12 @@ namespace SymOntoClay.Core.Internal.Serialization
             : base(context.Logger)
         {
             _context = context;
+            _compiler = context.Compiler;
             _isDefferedImport = isDefferedImport;
         }
 
         private readonly IMainStorageContext _context;
+        private readonly ICompiler _compiler;
         private readonly bool _isDefferedImport;
         private DefaultSettingsOfCodeEntity _defaultSettingsOfCodeEntity;
         private IStorage _globalStorage;
@@ -450,20 +453,25 @@ namespace SymOntoClay.Core.Internal.Serialization
             {
                 case KindOfCodeEntity.World:
                     ProcessImport(codeItem, targetStorage, defferedLibsList);
+                    GeneratePreConstructor(codeItem, targetStorage);
                     break;
 
                 case KindOfCodeEntity.App:
                     ProcessImport(codeItem, targetStorage, defferedLibsList);
+                    GeneratePreConstructor(codeItem, targetStorage);
                     break;
 
                 case KindOfCodeEntity.Lib:
                     ProcessImport(codeItem, targetStorage, defferedLibsList);
+                    GeneratePreConstructor(codeItem, targetStorage);
                     break;
 
                 case KindOfCodeEntity.Class:
+                    GeneratePreConstructor(codeItem, targetStorage);
                     break;
 
                 case KindOfCodeEntity.AnonymousObject:
+                    GeneratePreConstructor(codeItem, targetStorage);
                     break;
 
                 case KindOfCodeEntity.InlineTrigger:
@@ -526,10 +534,12 @@ namespace SymOntoClay.Core.Internal.Serialization
 
                 case KindOfCodeEntity.Action:
                     targetStorage.ActionsStorage.Append(codeItem.AsAction);
+                    GeneratePreConstructor(codeItem, targetStorage);
                     break;
 
                 case KindOfCodeEntity.State:
                     targetStorage.StatesStorage.Append(codeItem.AsState);
+                    GeneratePreConstructor(codeItem, targetStorage);
                     break;
 
                 case KindOfCodeEntity.Operator:
@@ -540,25 +550,6 @@ namespace SymOntoClay.Core.Internal.Serialization
                     throw new NotImplementedException();
 
                 case KindOfCodeEntity.Field:
-                    {
-                        var varResolver = _context.DataResolversFactory.GetVarsResolver();
-
-                        var localCodeExecutionContext = new LocalCodeExecutionContext();
-                        localCodeExecutionContext.Holder = codeItem.Holder;
-                        localCodeExecutionContext.Storage = _globalStorage;
-
-                        var field = codeItem.AsField;
-
-#if DEBUG
-                        //Log($"field = {field}");
-#endif
-
-                        //varResolver.CheckFitVariableAndValue(field, field.Value, localCodeExecutionContext);
-
-                        //targetStorage.VarStorage.Append(field);
-
-                        throw new NotImplementedException();
-                    }
                     break;
 
                 case KindOfCodeEntity.MutuallyExclusiveStatesSet:
@@ -590,6 +581,32 @@ namespace SymOntoClay.Core.Internal.Serialization
 #if DEBUG
             //Log("End");
 #endif
+        }
+
+        private void GeneratePreConstructor(CodeItem codeItem, IStorage targetStorage)
+        {
+#if DEBUG
+            Log($"codeItem = {codeItem}");
+#endif
+
+            var subItems = codeItem.SubItems;
+
+            if(!subItems.IsNullOrEmpty())
+            {
+                var fieldsList = subItems.Where(p => p.IsField).Select(p => p.AsField).ToList();
+
+                if(fieldsList.Any())
+                {
+                    var compiledBody = _compiler.Compile(fieldsList);
+
+#if DEBUG
+                    Log($"compiledBody = {compiledBody}");
+                    Log($"compiledBody = {compiledBody.ToDbgString()}");
+#endif
+
+                    throw new NotImplementedException();
+                }
+            }
         }
 
         private void CheckCodeDirectives(CodeItem codeItem)

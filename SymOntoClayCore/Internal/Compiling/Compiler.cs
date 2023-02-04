@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.Compiling.Internal;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
@@ -29,6 +30,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.Compiling
 {
@@ -52,8 +54,24 @@ namespace SymOntoClay.Core.Internal.Compiling
             var node = new CodeBlockNode(_context);
             node.Run(statements, null);
 
-            var resultCommandsList = node.Result;
+            return ConvertToCompiledFunctionBody(node.Result);
+        }
 
+        /// <inheritdoc/>
+        public CompiledFunctionBody Compile(List<Field> fields)
+        {
+#if DEBUG
+            Log($"fields = {fields.WriteListToString()}");
+#endif
+
+            var node = new FieldsNode(_context);
+            node.Run(fields);
+
+            return ConvertToCompiledFunctionBody(node.Result);
+        }
+
+        private CompiledFunctionBody ConvertToCompiledFunctionBody(List<IntermediateScriptCommand> resultCommandsList)
+        {
 #if DEBUG
             //Log($"resultCommandsList = {resultCommandsList.WriteListToString()}");
 #endif

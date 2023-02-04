@@ -36,7 +36,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.Var;
 
-        public Value Value 
+        public Value Value
         { 
             get
             {

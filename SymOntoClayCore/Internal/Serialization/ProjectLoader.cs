@@ -553,9 +553,11 @@ namespace SymOntoClay.Core.Internal.Serialization
                         //Log($"field = {field}");
 #endif
 
-                        varResolver.CheckFitVariableAndValue(field, field.Value, localCodeExecutionContext);
+                        //varResolver.CheckFitVariableAndValue(field, field.Value, localCodeExecutionContext);
 
-                        targetStorage.VarStorage.Append(field);
+                        //targetStorage.VarStorage.Append(field);
+
+                        throw new NotImplementedException();
                     }
                     break;
 

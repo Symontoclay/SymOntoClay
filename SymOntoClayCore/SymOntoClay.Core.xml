@@ -2612,6 +2612,18 @@
             <param name="context">Special context for providing references continuity.</param>
             <returns>Cloned instance.</returns>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Field.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Field.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Field.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Field.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Function.Kind">
             <inheritdoc/>
         </member>
@@ -6441,6 +6453,12 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.AppPaser.OnRun">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.AstExpressionParser.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.AstExpressionParser.OnRun">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.AwaitStatementParser.OnEnter">
             <inheritdoc/>
         </member>
@@ -6493,9 +6511,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.CodeExpressionStatementParser.OnEnter">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.CodeExpressionStatementParser.OnFinish">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.CodeExpressionStatementParser.OnRun">

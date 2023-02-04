@@ -20,13 +20,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class Field: Var
+    public class Field: CodeItem
     {
         public Field()
         {
@@ -42,6 +48,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override Field AsField => this;
 
+        public AstExpression Value { get; set; }
+        public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
+
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> cloneContext)
         {
@@ -52,7 +61,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// Clones the instance and returns cloned instance.
         /// </summary>
         /// <returns>Cloned instance.</returns>
-        public new Field Clone()
+        public Field Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
@@ -63,7 +72,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// </summary>
         /// <param name="context">Special context for providing references continuity.</param>
         /// <returns>Cloned instance.</returns>
-        public new Field Clone(Dictionary<object, object> context)
+        public Field Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {
@@ -76,6 +85,69 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.AppendVar(this, context);
 
             return result;
+        }
+
+        protected void AppendVar(Field source, Dictionary<object, object> cloneContext)
+        {
+            Value = source.Value?.CloneAstExpression(cloneContext);
+            TypesList = source.TypesList?.Select(p => p.Clone(cloneContext)).ToList();
+
+            AppendCodeItem(source, cloneContext);
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.PrintObjProp(n, nameof(Value), Value);
+            sb.PrintObjListProp(n, nameof(TypesList), TypesList);
+
+            sb.Append(base.PropertiesToString(n));
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToShortString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.PrintShortObjProp(n, nameof(Value), Value);
+            sb.PrintShortObjListProp(n, nameof(TypesList), TypesList);
+
+            sb.Append(base.PropertiesToShortString(n));
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToBriefString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.PrintBriefObjProp(n, nameof(Value), Value);
+            sb.PrintBriefObjListProp(n, nameof(TypesList), TypesList);
+
+            sb.Append(base.PropertiesToBriefString(n));
+            return sb.ToString();
+        }
+
+        public string TypesListToHumanizedString()
+        {
+            if (TypesList.IsNullOrEmpty())
+            {
+                return "(any)";
+            }
+
+            return $"({string.Join(" | ", TypesList.Select(p => p.NameValue))})";
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString(DebugHelperOptions options)
+        {
+            return $"{Name.NameValue}: {TypesListToHumanizedString()}";
         }
     }
 }

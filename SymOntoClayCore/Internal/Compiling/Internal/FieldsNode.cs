@@ -24,6 +24,12 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 #if DEBUG
                 Log($"field = {field}");
 #endif
+
+                CompileVarDecl(field);
+
+#if DEBUG
+                DbgPrintCommands();
+#endif
             }
 
             throw new NotImplementedException();

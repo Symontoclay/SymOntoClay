@@ -607,7 +607,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _lastIsOperator = null;
             _hasSomething = true;
 
-            var parser = new CodeExpressionStatementParser(_context, TokenKind.CloseRoundBracket);
+            var parser = new AstExpressionParser(_context, TokenKind.CloseRoundBracket);
             parser.Run();
 
 #if DEBUG
@@ -626,7 +626,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             }
 
             var groupExpression = new GroupAstExpression();
-            groupExpression.Expression = parser.Result.Expression;
+            groupExpression.Expression = parser.Result;
 
             var intermediateNode = new IntermediateAstNode(groupExpression);
 

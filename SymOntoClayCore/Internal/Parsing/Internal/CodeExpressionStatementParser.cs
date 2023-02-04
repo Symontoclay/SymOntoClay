@@ -45,26 +45,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Result = new AstExpressionStatement();
         }
 
-//        /// <inheritdoc/>
-//        protected override void OnFinish()
-//        {
-//            Result.Expression = _nodePoint.BuildExpr<AstExpression>();
-
-//#if DEBUG
-//            //Log($"Result.Expression = {Result.Expression}");
-//#endif
-//        }
-
         public AstExpressionStatement Result { get; private set; }
 
         /// <inheritdoc/>
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
+            //Log($"_currToken = {_currToken}");
 #endif
+            _context.Recovery(_currToken);
 
-            throw new NotImplementedException();
+            var parser = new AstExpressionParser(_context, _terminationTokens);
+            parser.Run();
+
+            Result.Expression = parser.Result;
+
+            Exit();
         }
     }
 }

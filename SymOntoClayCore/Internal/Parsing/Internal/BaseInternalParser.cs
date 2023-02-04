@@ -316,7 +316,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected AstExpression ProcessCondition()
         {
             _context.Recovery(_currToken);
-            var parser = new CodeExpressionStatementParser(_context, TokenKind.CloseRoundBracket);
+            var parser = new AstExpressionParser(_context, TokenKind.CloseRoundBracket);
             parser.Run();
 
 #if DEBUG
@@ -334,7 +334,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 throw new UnexpectedTokenException(nextToken);
             }
 
-            return parser.Result.Expression;
+            return parser.Result;
         }
 
         protected List<AstStatement> ParseBody()

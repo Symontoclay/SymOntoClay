@@ -156,14 +156,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 Result.Parameters.Add(_currentParameter);
 
                                 _context.Recovery(_currToken);
-                                var parser = new CodeExpressionStatementParser(_context, TokenKind.Comma, TokenKind.CloseRoundBracket);
+                                var parser = new AstExpressionParser(_context, TokenKind.Comma, TokenKind.CloseRoundBracket);
                                 parser.Run();
 
 #if DEBUG
                                 //Log($"parser.Result = {parser.Result}");
 #endif
 
-                                _currentParameter.Value = parser.Result.Expression;
+                                _currentParameter.Value = parser.Result;
 
                                 _state = State.GotPositionedMainParameter;
                             }
@@ -289,14 +289,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.OpenFigureBracket:
                             {
                                 _context.Recovery(_currToken);
-                                var parser = new CodeExpressionStatementParser(_context, TokenKind.Comma, TokenKind.CloseRoundBracket);
+                                var parser = new AstExpressionParser(_context, TokenKind.Comma, TokenKind.CloseRoundBracket);
                                 parser.Run();
 
 #if DEBUG
                                 //Log($"parser.Result = {parser.Result}");
 #endif
 
-                                _currentParameter.Value = parser.Result.Expression;
+                                _currentParameter.Value = parser.Result;
 
                                 _state = State.GotValueOfNamedMainParameter;
                             }

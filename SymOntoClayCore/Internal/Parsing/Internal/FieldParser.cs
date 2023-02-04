@@ -64,8 +64,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_currToken = {_currToken}");
+            //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
             //Log($"_field = {_field}");
             //Log($"Result = {Result}");
 #endif
@@ -139,28 +139,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 case State.WaitForValue:
                     {
+                        _context.Recovery(_currToken);
 
+                        var parser = new AstExpressionParser(_context, TokenKind.Semicolon);
+                        parser.Run();
 
-                        throw new NotImplementedException();
+#if DEBUG
+                        //Log($"parser.Result = {parser.Result}");
+#endif
 
-//                        var parsingResult = ParseValueOnObjDefLevel();
-
-//#if DEBUG
-//                        //Log($"parsingResult = {parsingResult}");
-//#endif
-
-//                        var kindOfValueOnObjDefLevel = parsingResult.Kind;
-
-//                        switch (kindOfValueOnObjDefLevel)
-//                        {
-//                            case KindOfValueOnObjDefLevel.ConstLiteral:
-//                                _field.Value = parsingResult.Value;
-//                                _state = State.GotValue;
-//                                break;
-
-//                            default:
-//                                throw new ArgumentOutOfRangeException(nameof(kindOfValueOnObjDefLevel), kindOfValueOnObjDefLevel, null);
-//                        }
+                        _field.Value = parser.Result;
+                        _state = State.GotValue;
                     }
                     break;
 

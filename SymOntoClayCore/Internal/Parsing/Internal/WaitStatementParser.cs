@@ -122,14 +122,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private void ProcessExpresionItem()
         {
             _context.Recovery(_currToken);
-            var parser = new CodeExpressionStatementParser(_context, TokenKind.Comma, TokenKind.Semicolon);
+            var parser = new AstExpressionParser(_context, TokenKind.Comma, TokenKind.Semicolon);
             parser.Run();
 
 #if DEBUG
             //Log($"parser.Result = {parser.Result}");
 #endif
 
-            _rawStatement.Items.Add(parser.Result.Expression);
+            _rawStatement.Items.Add(parser.Result);
 
             _state = State.GotItem;
         }

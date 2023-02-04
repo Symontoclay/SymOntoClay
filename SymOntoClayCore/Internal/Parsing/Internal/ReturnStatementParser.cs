@@ -99,14 +99,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         default:
                             {
                                 _context.Recovery(_currToken);
-                                var parser = new CodeExpressionStatementParser(_context);
+                                var parser = new AstExpressionParser(_context);
                                 parser.Run();
 
 #if DEBUG
                                 //Log($"parser.Result = {parser.Result}");
 #endif
 
-                                Result.Expression = parser.Result.Expression;
+                                Result.Expression = parser.Result;
 
                                 Exit();
                             }

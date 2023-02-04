@@ -560,6 +560,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public List<StorageUsingOptions> CodeItemsStoragesList { get; set; }
 
+        /// <inheritdoc/>
+        public event Action OnParentStorageChanged;
+
 #if DEBUG
         /// <inheritdoc/>
         void IStorage.DbgPrintFactsAndRules() => throw new NotImplementedException();

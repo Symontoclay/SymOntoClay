@@ -54,6 +54,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _triggersResolver = dataResolversFactory.GetTriggersResolver();
             _constructorsResolver = dataResolversFactory.GetConstructorsResolver();
+            _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
 
             _globalTriggersStorage = context.Storage.GlobalStorage.TriggersStorage;
 
@@ -68,6 +69,15 @@ namespace SymOntoClay.Core.Internal.Instances
             Log($"_storage.Kind = {_storage.Kind}");
 #endif
 
+            _localCodeExecutionContext.Storage = _storage;
+            _localCodeExecutionContext.Holder = Name;
+
+#if DEBUG
+            //Log($"_localCodeExecutionContext = {_localCodeExecutionContext}");
+#endif
+
+            RebuildSuperClassesStorages();
+
             if (!varList.IsNullOrEmpty())
             {
                 var varStorage = _storage.VarStorage;
@@ -77,13 +87,6 @@ namespace SymOntoClay.Core.Internal.Instances
                     varStorage.Append(varItem);
                 }
             }
-
-            _localCodeExecutionContext.Storage = _storage;
-            _localCodeExecutionContext.Holder = Name;
-
-#if DEBUG
-            //Log($"_localCodeExecutionContext = {_localCodeExecutionContext}");
-#endif
         }
 
         /// <inheritdoc/>
@@ -101,8 +104,11 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly ITriggersStorage _globalTriggersStorage;
         protected readonly IStorage _storage;
         protected readonly LocalCodeExecutionContext _localCodeExecutionContext;
+
         private readonly TriggersResolver _triggersResolver;
         private readonly ConstructorsResolver _constructorsResolver;
+        private readonly InheritanceResolver _inheritanceResolver;
+
         private InstanceState _instanceState = InstanceState.Created;
         private List<LogicConditionalTriggerInstance> _logicConditionalTriggersList = new List<LogicConditionalTriggerInstance>();
         private List<AddingFactNonConditionalTriggerInstance> _addingFactNonConditionalTriggerInstancesList = new List<AddingFactNonConditionalTriggerInstance>();
@@ -113,6 +119,9 @@ namespace SymOntoClay.Core.Internal.Instances
         private List<IInstance> _childInstances = new List<IInstance>();
         private IInstance _parentInstance;
         private readonly object _childInstancesLockObj = new object();
+      
+        private readonly Dictionary<StrongIdentifierValue, IStorage> _superClassesStorages = new Dictionary<StrongIdentifierValue, IStorage>();
+        private readonly object _superClassesStoragesLockObj = new object();
 
         /// <inheritdoc/>
         public IExecutionCoordinator ExecutionCoordinator => _executionCoordinator;
@@ -202,6 +211,71 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
             _instanceState = InstanceState.Initialized;            
+        }
+
+        private void RebuildSuperClassesStorages()
+        {
+            var superClassesList = _inheritanceResolver.GetSuperClassesKeysList(Name, _localCodeExecutionContext);
+
+#if DEBUG
+            //Log($"superClassesList = {superClassesList.WriteListToString()}");
+#endif
+
+            lock(_superClassesStoragesLockObj)
+            {
+                if (superClassesList.Any())
+                {
+                    var existingKeys = _superClassesStorages.Keys.ToList();
+
+#if DEBUG
+                    //Log($"existingKeys = {existingKeys.WriteListToString()}");
+#endif
+
+                    var keysForAdding = superClassesList.Except(existingKeys);
+
+#if DEBUG
+                    Log($"keysForAdding = {keysForAdding.WriteListToString()}");
+#endif
+
+                    var keysForRemoving = existingKeys.Except(superClassesList);
+
+#if DEBUG
+                    Log($"keysForRemoving = {keysForRemoving.WriteListToString()}");
+#endif
+                    if(keysForAdding.Any())
+                    {
+                        //var parentStorage = _storage;
+
+                        foreach (var key in keysForAdding)
+                        {
+                            var localStorageSettings = RealStorageSettingsHelper.Create(_context);
+
+                            var storage = new SuperClassStorage(localStorageSettings);
+
+                            _superClassesStorages[key] = storage;
+
+                            _storage.AddParentStorage(storage);
+                        }
+                    }
+
+                    foreach(var key in keysForRemoving)
+                    {
+                        throw new NotImplementedException();
+                    }
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+
+#if DEBUG
+                var storagesList = _inheritanceResolver.GetStoragesList(_storage, KindOfStoragesList.CodeItems);
+                foreach (var tmpStorage in storagesList)
+                {
+                    Log($"tmpStorage.Storage.Kind = {tmpStorage.Storage.Kind}");
+                }
+#endif
+            }
         }
 
         /// <inheritdoc/>

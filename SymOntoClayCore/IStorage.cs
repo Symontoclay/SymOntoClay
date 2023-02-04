@@ -58,6 +58,8 @@ namespace SymOntoClay.Core
 
         List<StorageUsingOptions> CodeItemsStoragesList { get; set; }
 
+        event Action OnParentStorageChanged;
+
 #if DEBUG
         void DbgPrintFactsAndRules();
 #endif

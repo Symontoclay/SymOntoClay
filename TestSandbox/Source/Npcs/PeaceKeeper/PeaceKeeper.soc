@@ -1,4 +1,4 @@
-﻿app PeaceKeeper
+﻿/*app PeaceKeeper
 {
     on Enter
     {
@@ -9,9 +9,8 @@
         @a.@b >> @>log;
         'End' >> @>log;
     }
-}
+}*/
 
-/*
 class cls0
 {
     private:
@@ -47,4 +46,3 @@ app PeaceKeeper is cls1, cls2
     private:
         @b = 3;
 }
-*/

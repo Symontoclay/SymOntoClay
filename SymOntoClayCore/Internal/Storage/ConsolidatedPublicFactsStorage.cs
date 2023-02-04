@@ -253,6 +253,9 @@ namespace SymOntoClay.Core.Internal.Storage
             result.Add(this);
         }
 
+        /// <inheritdoc/>
+        public event Action OnParentStorageChanged;
+
 #if DEBUG
         /// <inheritdoc/>
         public void DbgPrintFactsAndRules()

@@ -4270,6 +4270,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.CodeItemsStoragesList">
             <inheritdoc/>
         </member>
+        <member name="E:SymOntoClay.Core.Internal.CodeModel.RuleInstance.OnParentStorageChanged">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#DbgPrintFactsAndRules">
             <inheritdoc/>
         </member>
@@ -7504,6 +7507,9 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.GetStorages">
             <inheritdoc/>
         </member>
+        <member name="E:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.OnParentStorageChanged">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.DbgPrintFactsAndRules">
             <inheritdoc/>
         </member>
@@ -7886,6 +7892,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.GetStorages">
+            <inheritdoc/>
+        </member>
+        <member name="E:SymOntoClay.Core.Internal.Storage.RealStorage.OnParentStorageChanged">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.DefaultSettingsOfCodeEntity">

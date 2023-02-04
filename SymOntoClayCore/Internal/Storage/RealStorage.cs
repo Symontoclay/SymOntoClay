@@ -210,7 +210,13 @@ namespace SymOntoClay.Core.Internal.Storage
                 
                 parentsList.Add(storage);
 
-                _realStorageContext.EmitOnAddParentStorage(storage);
+                CodeItemsStoragesList = null;
+
+                storage.OnParentStorageChanged += OnParentStorageChangedHandler;
+
+                _realStorageContext.EmitOnAddParentStorage(storage);         
+
+                OnParentStorageChanged?.Invoke();
             }
         }
 
@@ -229,9 +235,21 @@ namespace SymOntoClay.Core.Internal.Storage
                 {
                     parentsList.Remove(storage);
 
+                    CodeItemsStoragesList = null;
+
+                    storage.OnParentStorageChanged -= OnParentStorageChangedHandler;
+
                     _realStorageContext.EmitOnRemoveParentStorage(storage);
+                    OnParentStorageChanged?.Invoke();
                 }
             }
+        }
+
+        private void OnParentStorageChangedHandler()
+        {
+            CodeItemsStoragesList = null;
+
+            OnParentStorageChanged?.Invoke();
         }
 
         /// <inheritdoc/>
@@ -332,6 +350,9 @@ namespace SymOntoClay.Core.Internal.Storage
 
             return result;
         }
+
+        /// <inheritdoc/>
+        public event Action OnParentStorageChanged;
 
         /// <inheritdoc/>
         public DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get; set; }

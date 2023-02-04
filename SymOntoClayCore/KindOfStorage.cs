@@ -34,6 +34,7 @@ namespace SymOntoClay.Core
         Global,
         Local,
         Object,
+        SuperClass,
         State,
         Action,
         Query,

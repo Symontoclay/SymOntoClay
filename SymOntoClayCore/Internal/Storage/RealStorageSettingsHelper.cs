@@ -29,6 +29,11 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public static class RealStorageSettingsHelper
     {
+        public static RealStorageSettings Create(IMainStorageContext context)
+        {
+            return Create(context, new List<IStorage>(), true);
+        }
+
         public static RealStorageSettings Create(IMainStorageContext context, IStorage parentStorage)
         {
             return Create(context, new List<IStorage>() { parentStorage }, true);

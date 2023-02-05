@@ -61,7 +61,7 @@ namespace SymOntoClay.Core.Internal.Compiling
         public CompiledFunctionBody Compile(List<Field> fields)
         {
 #if DEBUG
-            Log($"fields = {fields.WriteListToString()}");
+            //Log($"fields = {fields.WriteListToString()}");
 #endif
 
             var node = new FieldsNode(_context);

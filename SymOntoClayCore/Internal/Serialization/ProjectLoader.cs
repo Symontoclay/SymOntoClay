@@ -600,11 +600,11 @@ namespace SymOntoClay.Core.Internal.Serialization
                     var compiledBody = _compiler.Compile(fieldsList);
 
 #if DEBUG
-                    Log($"compiledBody = {compiledBody}");
+                    //Log($"compiledBody = {compiledBody}");
                     Log($"compiledBody = {compiledBody.ToDbgString()}");
 #endif
 
-                    throw new NotImplementedException();
+                    //throw new NotImplementedException();
                 }
             }
         }
